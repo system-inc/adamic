@@ -5,6 +5,7 @@ package fresh
 
 import (
 	"fmt"
+	"maps"
 	"reflect"
 	"slices"
 	"sort"
@@ -285,89 +286,79 @@ type state struct {
 	// locals is what each tracked variable may hold, by IR local index; a pseudo-local past the
 	// program's locals holds a value an instruction keeps for a later one (a for...of's iterable,
 	// what the function returns).
-	locals map[int]value
+	locals facts[int, value]
 
 	// heap is what each confined object's fields, elements and map entries may hold.
-	heap map[object]map[string]value
+	heap facts[object, map[string]value]
 
 	// escaped is what whoever is outside this call may hold: placeholders always are. leaked is what
 	// this function let escape itself, its caller's arguments among them, which its summary says.
-	escaped objects
-	leaked  objects
+	escaped objectFacts
+	leaked  objectFacts
 
 	// clobbered is set once something this function can't see into has run (a call that isn't
 	// summarized), which may have written anything into its parameters.
 	clobbered bool
 }
 
-func newState() *state {
-	return &state{locals: map[int]value{}, heap: map[object]map[string]value{}, escaped: objects{}, leaked: objects{}}
-}
+func newState() *state { return &state{} }
 
 func (s *state) copy() *state {
-	made := newState()
-	for local, held := range s.locals {
-		made.locals[local] = held.copy()
-	}
-	for o, fields := range s.heap {
-		copied := map[string]value{}
-		for field, held := range fields {
-			copied[field] = held.copy()
-		}
-		made.heap[o] = copied
-	}
-	for o := range s.escaped {
-		made.escaped[o] = true
-	}
-	for o := range s.leaked {
-		made.leaked[o] = true
-	}
-	made.clobbered = s.clobbered
-	return made
+	made := *s
+	return &made
 }
 
 // join adds other's facts to s, and says whether anything was new.
 func (s *state) join(other *state) bool {
+	before := s.copy()
 	changed := false
-	for local, held := range other.locals {
-		mine := s.locals[local]
+	for local, held := range other.locals.changed(s.locals) {
+		mine := s.locals.get(local).copy()
 		if mine.merge(held) {
 			changed = true
 		}
-		s.locals[local] = mine
+		s.locals.set(local, mine)
 	}
-	for o, fields := range other.heap {
+	for o, fields := range other.heap.changed(s.heap) {
 		for field, held := range fields {
 			if s.store(o, field, held) {
 				changed = true
 			}
 		}
 	}
-	for o := range other.escaped {
+	for o := range other.escaped.changed(s.escaped.facts) {
 		changed = s.escaped.add(o) || changed
 	}
-	for o := range other.leaked {
+	for o := range other.leaked.changed(s.leaked.facts) {
 		changed = s.leaked.add(o) || changed
 	}
 	if other.clobbered && !s.clobbered {
 		s.clobbered, changed = true, true
 	}
 	if changed {
-		s.closeEscapes()
+		s.closeEscapes(before)
 	}
 	return changed
 }
 
 // store adds held to what o's field may hold, and says whether anything was new.
 func (s *state) store(o object, field string, held value) bool {
-	fields := s.heap[o]
-	if fields == nil {
-		fields = map[string]value{}
-		s.heap[o] = fields
-	}
-	mine := fields[field]
+	fields := s.heap.get(o)
+	mine := fields[field].copy()
 	changed := mine.merge(held)
-	fields[field] = mine
+	// An empty field is recorded too, as before: summaries include its name.
+	if changed || fields == nil {
+		fields = maps.Clone(fields)
+		if fields == nil {
+			fields = map[string]value{}
+		}
+		fields[field] = mine
+		s.heap.set(o, fields)
+	} else if _, exists := fields[field]; !exists {
+		fields = maps.Clone(fields)
+		fields[field] = mine
+		s.heap.set(o, fields)
+	}
 	return changed
 }
 
@@ -408,36 +399,43 @@ func (s *state) escapeObject(o object, leak bool) {
 		if !added {
 			continue
 		}
-		for _, held := range s.heap[next] {
+		for _, held := range s.heap.get(next) {
 			queue = append(queue, held.strong.sorted()...)
 			queue = append(queue, held.weak.sorted()...)
 		}
 	}
 }
 
-// closeEscapes keeps what escaped and leaked objects hold escaped and leaked: a join or a merge by
-// recency can give one something that hadn't been yet.
-func (s *state) closeEscapes() {
-	exposed := s.escaped.sorted()
-	for o := range s.heap {
-		if o < 0 && !s.escaped[o] {
-			exposed = append(exposed, o)
+// closeEscapes propagates new edges of exposed objects, and the edges of
+// newly escaped or leaked objects. Unchanged edges were already closed in the
+// input states, so walking the entire accumulated heap again adds no facts.
+func (s *state) closeEscapes(before *state) {
+	visit := func(o object) {
+		if o >= 0 && !s.escaped.get(o) {
+			return
 		}
-	}
-	for _, o := range exposed {
-		for _, held := range s.heap[o] {
-			if s.leaked[o] {
+		for _, held := range s.heap.get(o) {
+			if s.leaked.get(o) {
 				s.escape(held)
 			} else {
 				s.expose(held)
 			}
 		}
 	}
+	for o := range s.heap.changed(before.heap) {
+		visit(o)
+	}
+	for o := range s.escaped.changed(before.escaped.facts) {
+		visit(o)
+	}
+	for o := range s.leaked.changed(before.leaked.facts) {
+		visit(o)
+	}
 }
 
 // exposed reports whether whoever is outside may hold o.
 func (s *state) exposed(o object) bool {
-	return o == outside || o < 0 || s.escaped[o]
+	return o == outside || o < 0 || s.escaped.get(o)
 }
 
 // storeInto is a store into o that lets what's stored escape as o has: leaked into what's leaked,
@@ -449,7 +447,7 @@ func (s *state) storeInto(o object, field string, held value) bool {
 	}
 	changed := s.store(o, field, held)
 	switch {
-	case s.leaked[o]:
+	case s.leaked.get(o):
 		s.escape(held)
 	case s.exposed(o):
 		s.expose(held)
@@ -467,7 +465,7 @@ func (s *state) reach(from value) objects {
 		if !reached.add(o) {
 			continue
 		}
-		for _, held := range s.heap[o] {
+		for _, held := range s.heap.get(o) {
 			queue = append(queue, held.strong.sorted()...)
 		}
 	}
@@ -506,8 +504,13 @@ func (s *state) closesWith(holder value, held value, exposed func(object) bool) 
 
 // recent makes a site's newest instance one of its older ones, before the site makes another.
 func (s *state) recent(site int) {
+	before := s.copy()
 	from, to := newest(site), older(site)
-	rename := func(held *value) {
+	rename := func(held value) (value, bool) {
+		if !held.strong[from] && !held.weak[from] {
+			return held, false
+		}
+		held = held.copy()
 		if held.strong[from] {
 			delete(held.strong, from)
 			held.addStrong(to)
@@ -516,32 +519,42 @@ func (s *state) recent(site int) {
 			delete(held.weak, from)
 			held.addWeak(to)
 		}
+		return held, true
 	}
-	for local, held := range s.locals {
-		rename(&held)
-		s.locals[local] = held
-	}
-	for _, fields := range s.heap {
-		for field, held := range fields {
-			rename(&held)
-			fields[field] = held
+	for local, held := range s.locals.all() {
+		if renamed, changed := rename(held); changed {
+			s.locals.set(local, renamed)
 		}
 	}
-	if fields, ok := s.heap[from]; ok {
-		delete(s.heap, from)
+	for o, fields := range s.heap.all() {
+		var copied map[string]value
+		for field, held := range fields {
+			if renamed, changed := rename(held); changed {
+				if copied == nil {
+					copied = maps.Clone(fields)
+				}
+				copied[field] = renamed
+			}
+		}
+		if copied != nil {
+			s.heap.set(o, copied)
+		}
+	}
+	if fields, ok := s.heap.lookup(from); ok {
+		s.heap.remove(from)
 		for field, held := range fields {
 			s.store(to, field, held)
 		}
 	}
-	if s.escaped[from] {
-		delete(s.escaped, from)
+	if s.escaped.get(from) {
+		s.escaped.remove(from)
 		s.escaped.add(to)
 	}
-	if s.leaked[from] {
-		delete(s.leaked, from)
+	if s.leaked.get(from) {
+		s.leaked.remove(from)
 		s.leaked.add(to)
 	}
-	s.closeEscapes()
+	s.closeEscapes(before)
 }
 
 // freshness is the whole program's proof.
@@ -666,7 +679,7 @@ func (a *analysis) termOf(o object) term {
 func (a *analysis) load(from value, field string) value {
 	var loaded value
 	for o := range from.strong {
-		fields := a.state.heap[o]
+		fields := a.state.heap.get(o)
 		loaded.merge(fields[field])
 		loaded.merge(fields[anyField])
 		switch {
@@ -690,7 +703,7 @@ func (a *analysis) load(from value, field string) value {
 func (a *analysis) everything(from value) value {
 	var loaded value
 	for o := range from.strong {
-		for _, held := range a.state.heap[o] {
+		for _, held := range a.state.heap.get(o) {
 			loaded.merge(held)
 		}
 		switch {
@@ -722,9 +735,9 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 			}
 			if a.placeholders {
 				parameter := a.placeholder(term{param: index})
-				entry.locals[local] = value{strong: objects{parameter: true}, weak: objects{parameter: true}}
+				entry.locals.set(local, value{strong: objects{parameter: true}, weak: objects{parameter: true}})
 			} else {
-				entry.locals[local] = outsideValue()
+				entry.locals.set(local, outsideValue())
 			}
 		}
 	}
@@ -830,18 +843,18 @@ func (a *analysis) run(id flow.InstructionId) {
 		a.define(statement.Local, a.value(statement.Value))
 	case ir.Return:
 		returned := a.value(statement.Value)
-		held := a.state.locals[a.returnedLocal]
+		held := a.state.locals.get(a.returnedLocal).copy()
 		held.merge(returned)
-		a.state.locals[a.returnedLocal] = held
+		a.state.locals.set(a.returnedLocal, held)
 	case ir.Throw:
 		a.state.escape(a.value(statement.Value))
 	case ir.ForOf:
 		iterable := a.iterable(instruction.At)
 		if instruction.Part == 0 {
-			a.state.locals[iterable] = a.value(statement.Iterable)
+			a.state.locals.set(iterable, a.value(statement.Iterable))
 			break
 		}
-		elements := a.load(a.state.locals[iterable], elementKey)
+		elements := a.load(a.state.locals.get(iterable), elementKey)
 		if statement.Pattern == nil {
 			a.define(statement.Local, elements)
 			break
@@ -889,7 +902,7 @@ func (a *analysis) define(local int, held value) {
 		a.state.escape(held)
 		return
 	}
-	a.state.locals[local] = held
+	a.state.locals.set(local, held)
 }
 
 // write judges a write of held into the field (or elements) of holder, and makes it.
@@ -1025,7 +1038,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		if declared.Global || declared.Captured {
 			return outsideValue()
 		}
-		held, ok := a.state.locals[expression.Local]
+		held, ok := a.state.locals.lookup(expression.Local)
 		if !ok {
 			// Never given a value on any path here: a read the checker let through that this pass can't
 			// place, so it's taken as the most it could be.
@@ -1501,10 +1514,7 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 	}
 	// What had escaped before the call: while the callee runs, only code it can't see into could
 	// tie what it was given to what had, and then anything escaped counts.
-	before := objects{}
-	for o := range a.state.escaped {
-		before.add(o)
-	}
+	before := a.state.escaped
 	translate := func(held summaryValue) value {
 		var made value
 		for _, origin := range held.strong {
@@ -1539,7 +1549,7 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 	// Until nothing more is added: a store through one argument can change what another reaches,
 	// when the caller passed the same object for both.
 	for {
-		escaped, leaked := len(a.state.escaped), len(a.state.leaked)
+		escaped, leaked := a.state.escaped.size(), a.state.leaked.size()
 		changed := false
 		for _, origin := range callee.origins() {
 			for field, held := range callee.fields[origin] {
@@ -1558,7 +1568,7 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 		for _, t := range callee.leaks {
 			a.state.escape(translate(summaryValue{strongTerms: []term{t}}))
 		}
-		if !changed && escaped == len(a.state.escaped) && leaked == len(a.state.leaked) {
+		if !changed && escaped == a.state.escaped.size() && leaked == a.state.leaked.size() {
 			break
 		}
 	}
@@ -1570,7 +1580,7 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 		for _, key := range callee.deferredKeys() {
 			deferred := callee.deferred[key]
 			exposed := func(o object) bool {
-				return o == outside || o < 0 || before[o] || (callee.clobbers && a.state.exposed(o))
+				return o == outside || o < 0 || before.get(o) || (callee.clobbers && a.state.exposed(o))
 			}
 			a.judge(key, deferred.write, translate(deferred.holder), translate(deferred.stored), where, exposed)
 		}
@@ -1615,7 +1625,7 @@ func (a *analysis) argument(t term, arguments []value) value {
 		case a.state.exposed(o):
 			queue = append(queue, outside)
 		}
-		for _, held := range a.state.heap[o] {
+		for _, held := range a.state.heap.get(o) {
 			queue = append(queue, held.strong.sorted()...)
 			queue = append(queue, held.weak.sorted()...)
 		}
@@ -1774,7 +1784,7 @@ func (a *analysis) summarize(exit *state) *summary {
 			return false
 		}
 		site := siteOf(o)
-		return exit.leaked[newest(site)] || exit.leaked[older(site)]
+		return exit.leaked.get(newest(site)) || exit.leaked.get(older(site))
 	}
 	collapse := func(held value) summaryValue {
 		strong, weak := map[int]bool{}, map[int]bool{}
@@ -1805,10 +1815,10 @@ func (a *analysis) summarize(exit *state) *summary {
 		return made
 	}
 	made := &summary{fields: map[int]map[string]summaryValue{}, edges: map[term]map[string]summaryValue{}, deferred: map[writeKey]summaryDeferral{}, clobbers: exit.clobbered}
-	returned := exit.locals[a.returnedLocal]
+	returned := exit.locals.get(a.returnedLocal)
 	made.result = collapse(returned)
 	roots := []value{returned}
-	for o, fields := range exit.heap {
+	for o, fields := range exit.heap.all() {
 		if o >= 0 {
 			continue
 		}
@@ -1819,7 +1829,7 @@ func (a *analysis) summarize(exit *state) *summary {
 			roots = append(roots, held)
 		}
 	}
-	for o := range exit.leaked {
+	for o := range exit.leaked.all() {
 		if o < 0 {
 			made.leaks = append(made.leaks, a.termOf(o))
 		}
@@ -1847,7 +1857,7 @@ func (a *analysis) summarize(exit *state) *summary {
 		if gathered[origin] == nil {
 			gathered[origin] = map[string]value{}
 		}
-		for field, held := range exit.heap[o] {
+		for field, held := range exit.heap.get(o) {
 			mine := gathered[origin][field]
 			mine.merge(held)
 			gathered[origin][field] = mine
