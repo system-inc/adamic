@@ -172,3 +172,11 @@ longer be described as absent. Remaining visitor/registry installation is
 unfinished integration work. Dynamic native RegExp remains independently
 refused on this base. Both regex claims remain incomplete; no new claims or
 React parking. See ../wave09_core/LANDING_AREA_REPORT.md.
+
+## Runtime area refresh
+
+Rebased again onto area d65a8f931 with its allocator/string-search changes
+intact. Current main 39638d9e2 remains an ancestor. All eighteen owned checks,
+registry, bridge, Node and vet pass again, including all mutants/sanitizers.
+No new matcher, rule claim or React parking. Shared installation and both
+regex completions remain outstanding. See ../wave09_core/LANDING_RUNTIME_REPORT.md.
