@@ -1,4 +1,4 @@
-Freshness fix pushed: 5320b144f9142ca76a9472a61308c5096aea70e2 on codex/host-fs-fresh; cherry-picked as 558defe on the fs branch.
+Freshness fix pushed: 5320b144f9142ca76a9472a61308c5096aea70e2 on codex/host-fs-fresh; included as 34e4aaa on the rebased fs landing branch.
 Shared loader landing pushed: 69c71d5171801bc355400452a0dff8a93533ac2e on codex/host-node-types-land, rebased onto origin/main e8ba3d5.
 Built synchronous fs, raw Buffer reads/writes, readSync, catchable coded errors, Stats/Date and all eight requested System wrappers; 15 unit fixtures pass on both backends.
 All 31 behavioral mutants are caught solely by Node stdout, plus three freshness mutants and named refusal/layout/loader guard mutants described below.
@@ -97,3 +97,13 @@ Guard and proof mutants, all restored:
 - The first raw-byte mutant after adding a 0xff case produced byte 256 and UBSan caught it. That did not count as an oracle catch. It now increments modulo 256, and passes sanitizer/leak checks before Node stdout catches it.
 
 Linux is the gate of record. macOS uses st_mtimespec/st_atimespec; its libuv flush uses F_FULLFSYNC where this runtime uses fsync, so macOS flush equivalence is not claimed. Resource exhaustion, interrupted close/fsync, multi-gigabyte reads, concurrent deletion and the complete platform errno catalog are not exhaustively tested. Unknown errno values fall back to UNKNOWN; unusual Unicode inspection previews remain a fidelity limit. Stats provides the requested observed fields, not complete Node reflection. Numeric flags, unsupported encodings, bigint Stats, timestamp strings, arbitrary byte views, dynamic options and URL paths remain explicit NotYet. No PR was opened.
+
+Landing validation on origin/main e8ba3d5:
+
+- The fs and Buffer oracle command above passed again in /tmp/fs_file_land_oracle.log, 84.399s, after rebase.
+- The unchanged host acceptance runner was rerun with the rebased CLI: /tmp/fs_file_land_host.log, expected exit 1 with the same ten recorded blockers; all Node comparisons and ten source mutants agree.
+- Disable the fs Buffer borrow exception: TestNodeFSFileBufferBorrow fails with named node:fs.readSync NotYet in /tmp/fs_file_borrow_mutant.log, 1.302s. Restored test passes /tmp/fs_file_borrow_restored.log, 0.824s.
+- Date TimeClip normalizes negative zero after truncation; the rebase retained this original fs merge resolution.
+- go test ./internal/load ./internal/lower ./internal/native ./internal/flow ./internal/fresh ./internal/javascript -count=1 -timeout 30m: /tmp/fs_file_land_packages.log, PASS (load 5.076s, lower 69.885s, native 171.247s, flow 141.179s, fresh 90.594s; JavaScript has no package tests and is covered by the oracles).
+- go test ./internal/oracle -run ^TestCountsAreRecorded$ -count=1 -timeout 30m, without updates: /tmp/fs_file_land_counts.log, PASS 21.942s.
+- A final git fetch confirmed origin/main remains e8ba3d5.
