@@ -1,0 +1,9 @@
+=== RUN   TestFieldStoresMatchNode
+=== PAUSE TestFieldStoresMatchNode
+=== CONT  TestFieldStoresMatchNode
+    emit_speed_test.go:103: /tmp/adamic-gate/TestFieldStoresMatchNode557403534/001/borrowed-store: exit status 1
+        static store failed to mark an own property
+--- FAIL: TestFieldStoresMatchNode (0.47s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.477s
+FAIL
