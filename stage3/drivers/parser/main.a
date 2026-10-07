@@ -1,7 +1,10 @@
 // Run from the adapted tree root. run.sh stages this driver there.
 import { panic, programArguments, readTextFile } from 'adamic';
-import { createSourceFile, forEachChild, flattenDiagnosticMessageText, unescapeLeadingUnderscores, ScriptKind, ScriptTarget, SyntaxKind } from './src/compiler/_namespaces/ts.js';
-import type { Identifier, LiteralLikeNode, Node, PrivateIdentifier } from './src/compiler/_namespaces/ts.js';
+import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
+import { flattenDiagnosticMessageText } from './src/compiler/program.ts';
+import { unescapeLeadingUnderscores } from './src/compiler/utilitiesPublic.ts';
+import { ScriptKind, ScriptTarget, SyntaxKind } from './src/compiler/types.ts';
+import type { Identifier, LiteralLikeNode, Node, PrivateIdentifier } from './src/compiler/types.ts';
 import { kindNames } from './kinds.a';
 
 function written(text: string): string {
