@@ -1,0 +1,6 @@
+[codex/lint-wave1-06-land c650c0ab2] lint: a witness can carry its rule's options, so a rule that reports nothing by default can be witnessed (#zmh9v36)
+ Author: kirkouimet <kirk@kirkouimet.com>
+ Date: Wed Oct 7 04:57:14 2026 -0600
+ 5 files changed, 48 insertions(+), 8 deletions(-)
+ create mode 100644 stage1/cohere/lint/rules/no-bitwise/testdata/allowed.options.json
+ create mode 100644 stage1/cohere/lint/rules/no-bitwise/testdata/allowed.ts.txt

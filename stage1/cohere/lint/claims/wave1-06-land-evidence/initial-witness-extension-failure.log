@@ -1,0 +1,6 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:39: @next/next/no-before-interactive-script-outside-document witness reports no findings
+--- FAIL: TestOwnedWitnesses (3.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3.105s
+FAIL

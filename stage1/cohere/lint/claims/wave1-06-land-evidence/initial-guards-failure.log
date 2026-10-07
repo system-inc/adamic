@@ -1,0 +1,253 @@
+=== RUN   TestRulesAgree
+    lint_test.go:399: cohere cases: 2359 unique source/rule/options combinations
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-079/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-079/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-085/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-085/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-086/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-086/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-095/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-095/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree963954810/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree963954810/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-099/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-099/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree963954810/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree963954810/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree963954810/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-100/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree963954810/019/case-100/Thing.ts
+    lint_test.go:438: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestRulesAgree963954810/068/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+--- FAIL: TestRulesAgree (65.92s)
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3457049025/021/main.ts --manifest /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3457049025/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsempty_function_body_reported3939274359/021/main.ts --manifest /tmp/adamic-gate/TestMutantsempty_function_body_reported3939274359/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix4214025079/021/main.ts --manifest /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix4214025079/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1256733475/021/main.ts --manifest /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1256733475/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsduplicate_case_suppressed4100026924/021/main.ts --manifest /tmp/adamic-gate/TestMutantsduplicate_case_suppressed4100026924/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/no-octal-escape_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_8834560064/022/main.ts --manifest /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_8834560064/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/no-unexpected-multiline_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_81014382349/023/main.ts --manifest /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_81014382349/021/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/no-unused-private-class-members_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_83248528214/023/main.ts --manifest /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_83248528214/021/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/no-useless-constructor_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_8986465357/023/main.ts --manifest /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_8986465357/021/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/prefer-template_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83371013942/022/main.ts --manifest /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83371013942/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83481983116/022/main.ts --manifest /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83481983116/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83784229426/022/main.ts --manifest /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83784229426/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/react-no-find-dom-node_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_8487646786/022/main.ts --manifest /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_8487646786/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/react-no-is-mounted_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83632303496/022/main.ts --manifest /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83632303496/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr560705726/022/main.ts --manifest /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr560705726/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/wrong-diagnostic-id
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantswrong-diagnostic-id357087425/021/main.ts --manifest /tmp/adamic-gate/TestMutantswrong-diagnostic-id357087425/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/wrong-diagnostic-id#01
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantswrong-diagnostic-id#019021846/021/main.ts --manifest /tmp/adamic-gate/TestMutantswrong-diagnostic-id#019021846/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/method_listener_lost
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsmethod_listener_lost1772376284/021/main.ts --manifest /tmp/adamic-gate/TestMutantsmethod_listener_lost1772376284/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/wrong-global-type-name
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantswrong-global-type-name3008679658/021/main.ts --manifest /tmp/adamic-gate/TestMutantswrong-global-type-name3008679658/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/omit-empty-export-fix
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsomit-empty-export-fix3355472585/021/main.ts --manifest /tmp/adamic-gate/TestMutantsomit-empty-export-fix3355472585/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/wrapper_Number_ignored
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantswrapper_Number_ignored3442980309/021/main.ts --manifest /tmp/adamic-gate/TestMutantswrapper_Number_ignored3442980309/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/enum_bitwise_option_ignored
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored4230425712/021/main.ts --manifest /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored4230425712/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/predicate_finding_widened_to_its_owner
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner573453584/021/main.ts --manifest /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner573453584/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/console_receiver_widened
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsconsole_receiver_widened2956922410/021/main.ts --manifest /tmp/adamic-gate/TestMutantsconsole_receiver_widened2956922410/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/enum_reported_at_its_declaration_rather_than_its_name
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam412777208/021/main.ts --manifest /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam412777208/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/interface_accepts_type_suffix
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1766861132/021/main.ts --manifest /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1766861132/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/await_crosses_function_boundary
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary2822017275/021/main.ts --manifest /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary2822017275/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/int32_hint_option_ignored
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsint32_hint_option_ignored2343959175/022/main.ts --manifest /tmp/adamic-gate/TestMutantsint32_hint_option_ignored2343959175/020/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/continue_finding_stops_before_its_semicolon
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon3851129164/021/main.ts --manifest /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon3851129164/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/regex_fix_eats_extra_byte
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte353697524/021/main.ts --manifest /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte353697524/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/wrong-enclosing-scope
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantswrong-enclosing-scope2306245488/021/main.ts --manifest /tmp/adamic-gate/TestMutantswrong-enclosing-scope2306245488/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/label_option_widened
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantslabel_option_widened241091654/021/main.ts --manifest /tmp/adamic-gate/TestMutantslabel_option_widened241091654/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/condition_polarity_reversed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantscondition_polarity_reversed4130222057/021/main.ts --manifest /tmp/adamic-gate/TestMutantscondition_polarity_reversed4130222057/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/parentheses_around_a_discarded_construction_not_seen_through
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen4035239183/021/main.ts --manifest /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen4035239183/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/for_update_option_ignored
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsfor_update_option_ignored1998402514/021/main.ts --manifest /tmp/adamic-gate/TestMutantsfor_update_option_ignored1998402514/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/invent-unconfigured-restriction
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsinvent-unconfigured-restriction2537257809/021/main.ts --manifest /tmp/adamic-gate/TestMutantsinvent-unconfigured-restriction2537257809/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/return_parentheses_option_reversed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed445998209/021/main.ts --manifest /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed445998209/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/report-left-reference
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsreport-left-reference3253531619/021/main.ts --manifest /tmp/adamic-gate/TestMutantsreport-left-reference3253531619/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/comma_chain_reports_inner
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2692950131/021/main.ts --manifest /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2692950131/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/destructuring_hole_reported
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3683972104/021/main.ts --manifest /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3683972104/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/empty_placeholder_reported
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsempty_placeholder_reported1473321317/021/main.ts --manifest /tmp/adamic-gate/TestMutantsempty_placeholder_reported1473321317/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/boolean_inverse_changed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsboolean_inverse_changed3132060698/021/main.ts --manifest /tmp/adamic-gate/TestMutantsboolean_inverse_changed3132060698/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/comment_self_directive_exemption_removed
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed3228211685/021/main.ts --manifest /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed3228211685/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/with_statement_underlined_whole
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3300423825/021/main.ts --manifest /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3300423825/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/nested_generator_owns_outer_yield
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield4052815218/021/main.ts --manifest /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield4052815218/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/bom_removes_two_marks
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsbom_removes_two_marks396805041/021/main.ts --manifest /tmp/adamic-gate/TestMutantsbom_removes_two_marks396805041/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+=== RUN   TestMutants/directive_prefix_ignored
+    lint_test.go:751: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsdirective_prefix_ignored3607860410/021/main.ts --manifest /tmp/adamic-gate/TestMutantsdirective_prefix_ignored3607860410/019/manifest.txt]: exit status 70
+        adamic: panic: NotYet: stage-1 JSX parser adapter
+--- FAIL: TestMutants (18.10s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (0.27s)
+    --- FAIL: TestMutants/empty_function_body_reported (0.28s)
+    --- FAIL: TestMutants/suggestion_applied_as_fix (0.26s)
+    --- FAIL: TestMutants/var_declaration_suppressed (0.27s)
+    --- FAIL: TestMutants/duplicate_case_suppressed (0.27s)
+    --- FAIL: TestMutants/no-octal-escape_mutant_from_batch_8 (0.25s)
+    --- FAIL: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (0.25s)
+    --- FAIL: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (0.26s)
+    --- FAIL: TestMutants/no-useless-constructor_mutant_from_batch_8 (0.27s)
+    --- FAIL: TestMutants/prefer-template_mutant_from_batch_8 (0.31s)
+    --- FAIL: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (0.28s)
+    --- FAIL: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (0.25s)
+    --- FAIL: TestMutants/react-no-find-dom-node_mutant_from_batch_8 (0.25s)
+    --- FAIL: TestMutants/react-no-is-mounted_mutant_from_batch_8 (0.27s)
+    --- FAIL: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (0.27s)
+    --- FAIL: TestMutants/wrong-diagnostic-id (0.27s)
+    --- FAIL: TestMutants/wrong-diagnostic-id#01 (0.26s)
+    --- FAIL: TestMutants/method_listener_lost (0.27s)
+    --- FAIL: TestMutants/wrong-global-type-name (0.26s)
+    --- FAIL: TestMutants/omit-empty-export-fix (0.26s)
+    --- FAIL: TestMutants/wrapper_Number_ignored (0.25s)
+    --- FAIL: TestMutants/enum_bitwise_option_ignored (0.26s)
+    --- FAIL: TestMutants/predicate_finding_widened_to_its_owner (0.25s)
+    --- FAIL: TestMutants/console_receiver_widened (0.25s)
+    --- FAIL: TestMutants/enum_reported_at_its_declaration_rather_than_its_name (0.24s)
+    --- FAIL: TestMutants/interface_accepts_type_suffix (0.24s)
+    --- FAIL: TestMutants/await_crosses_function_boundary (0.24s)
+    --- FAIL: TestMutants/int32_hint_option_ignored (0.24s)
+    --- FAIL: TestMutants/continue_finding_stops_before_its_semicolon (0.25s)
+    --- FAIL: TestMutants/regex_fix_eats_extra_byte (0.28s)
+    --- FAIL: TestMutants/wrong-enclosing-scope (0.26s)
+    --- FAIL: TestMutants/label_option_widened (0.25s)
+    --- FAIL: TestMutants/condition_polarity_reversed (0.25s)
+    --- FAIL: TestMutants/parentheses_around_a_discarded_construction_not_seen_through (0.26s)
+    --- FAIL: TestMutants/for_update_option_ignored (0.25s)
+    --- FAIL: TestMutants/invent-unconfigured-restriction (0.25s)
+    --- FAIL: TestMutants/return_parentheses_option_reversed (0.28s)
+    --- FAIL: TestMutants/report-left-reference (0.25s)
+    --- FAIL: TestMutants/comma_chain_reports_inner (0.26s)
+    --- FAIL: TestMutants/destructuring_hole_reported (0.28s)
+    --- FAIL: TestMutants/empty_placeholder_reported (0.30s)
+    --- FAIL: TestMutants/boolean_inverse_changed (0.27s)
+    --- FAIL: TestMutants/comment_self_directive_exemption_removed (0.28s)
+    --- FAIL: TestMutants/with_statement_underlined_whole (0.26s)
+    --- FAIL: TestMutants/nested_generator_owns_outer_yield (0.26s)
+    --- FAIL: TestMutants/bom_removes_two_marks (0.33s)
+    --- FAIL: TestMutants/directive_prefix_ignored (0.31s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:39: @next/next/no-before-interactive-script-outside-document witness reports no findings
+--- FAIL: TestOwnedWitnesses (3.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	87.219s
+FAIL
