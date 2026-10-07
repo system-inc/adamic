@@ -1,0 +1,2212 @@
+{
+  "source_commit": "7ee90703c08ae4d8a189fd167480b41f4345739f",
+  "rebased_tip": "45e0f65186b01d746d02e015facb75840bc3ed3b",
+  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "area": "b84a9d9314b65d3d0261ee017e233287b4f071da",
+  "previous_published": "2d755d0e9803db4359f63642ce5572e6e081023f",
+  "packages": {
+    "scanner": 49.008,
+    "parser": 64.85,
+    "css": 1022.045,
+    "graphql": 55.431,
+    "selector": 38.246,
+    "values": 47.748,
+    "mediaquery": 16.841,
+    "json": 131.041,
+    "lint": 159.578
+  },
+  "required_tests": 93,
+  "required_skips": 0,
+  "source_selection": {
+    "source_selection_only": true,
+    "cases": 26,
+    "findings": 16,
+    "bytes": 6262,
+    "backends": [
+      "native",
+      "native-asan",
+      "source-node",
+      "emitted-node"
+    ],
+    "mutants": [
+      {
+        "name": "undef-ascii",
+        "exit": 0,
+        "stderr_bytes": 0,
+        "first_difference": 56
+      },
+      {
+        "name": "fragment-member",
+        "exit": 0,
+        "stderr_bytes": 0,
+        "first_difference": 4378
+      }
+    ],
+    "unresolved_alias": {
+      "normal_exit": 70,
+      "bypass_exit": 0
+    },
+    "commands": [
+      {
+        "name": "oracle-build",
+        "args": [
+          "go",
+          "build",
+          "-overlay",
+          "/workspace/wave-12/latest/source-selection/overlay.json",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/oracle",
+          "/workspace/adamic/cohere/adamic_wave12_selection_oracle.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "production-go",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/oracle",
+          "/workspace/wave-12/latest/source-selection/tsconfig.json",
+          "/workspace/wave-12/latest/source-selection/manifest"
+        ],
+        "code": 0
+      },
+      {
+        "name": "stage0",
+        "args": [
+          "go",
+          "build",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "./cmd/adamic"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-build",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "build",
+          "/workspace/wave-12/latest/source-selection/selection-main.a",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-run",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/native",
+          "/workspace/wave-12/latest/source-selection/1-0.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-1.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-2.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-3.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-4.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-5.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-6.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-7.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-8.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-9.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-10.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-11.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-12.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-13.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-14.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-15.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/2-0.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-1.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-2.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-3.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-4.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-5.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-6.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-7.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-8.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-9.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-build",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "build",
+          "/workspace/wave-12/latest/source-selection/selection-main.a",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/native-asan",
+          "--sanitize"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-run",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/native-asan",
+          "/workspace/wave-12/latest/source-selection/1-0.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-1.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-2.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-3.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-4.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-5.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-6.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-7.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-8.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-9.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-10.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-11.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-12.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-13.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-14.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-15.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/2-0.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-1.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-2.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-3.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-4.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-5.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-6.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-7.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-8.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-9.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "source-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/source-selection/selection-main.a",
+          "/workspace/wave-12/latest/source-selection/1-0.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-1.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-2.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-3.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-4.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-5.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-6.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-7.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-8.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-9.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-10.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-11.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-12.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-13.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-14.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-15.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/2-0.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-1.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-2.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-3.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-4.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-5.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-6.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-7.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-8.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-9.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-build",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "js",
+          "/workspace/wave-12/latest/source-selection/selection-main.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/source-selection/emitted.mjs",
+          "/workspace/wave-12/latest/source-selection/1-0.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-1.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-2.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-3.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-4.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-5.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-6.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-7.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-8.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-9.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-10.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-11.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-12.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-13.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-14.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-15.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/2-0.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-1.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-2.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-3.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-4.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-5.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-6.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-7.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-8.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-9.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "undef-ascii-build",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "build",
+          "/workspace/wave-12/latest/source-selection/selection-main.a",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/undef-ascii"
+        ],
+        "code": 0
+      },
+      {
+        "name": "undef-ascii-run",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/undef-ascii",
+          "/workspace/wave-12/latest/source-selection/1-0.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-1.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-2.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-3.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-4.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-5.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-6.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-7.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-8.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-9.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-10.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-11.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-12.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-13.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-14.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-15.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/2-0.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-1.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-2.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-3.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-4.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-5.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-6.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-7.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-8.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-9.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "fragment-member-build",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "build",
+          "/workspace/wave-12/latest/source-selection/selection-main.a",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/fragment-member"
+        ],
+        "code": 0
+      },
+      {
+        "name": "fragment-member-run",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/fragment-member",
+          "/workspace/wave-12/latest/source-selection/1-0.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-1.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-2.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-3.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-4.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-5.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-6.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-7.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-8.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-9.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-10.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-11.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-12.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-13.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-14.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/1-15.tsx",
+          "1",
+          "/workspace/wave-12/latest/source-selection/2-0.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-1.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-2.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-3.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-4.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-5.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-6.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-7.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-8.tsx",
+          "2",
+          "/workspace/wave-12/latest/source-selection/2-9.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unresolved-alias",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/native",
+          "/workspace/wave-12/latest/source-selection/alias.tsx",
+          "2"
+        ],
+        "code": 70
+      },
+      {
+        "name": "unresolved-bypass-build",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/adamic",
+          "build",
+          "/workspace/wave-12/latest/source-selection/selection-main.a",
+          "-o",
+          "/workspace/wave-12/latest/source-selection/unresolved-bypass"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unresolved-bypass-run",
+        "args": [
+          "/workspace/wave-12/latest/source-selection/unresolved-bypass",
+          "/workspace/wave-12/latest/source-selection/alias.tsx",
+          "2"
+        ],
+        "code": 0
+      }
+    ]
+  },
+  "partial": {
+    "reporting_only": true,
+    "cases": 18,
+    "findings": {
+      "react/jsx-fragments": 1,
+      "react/jsx-no-undef": 1,
+      "react/jsx-no-constructed-context-values": 16
+    },
+    "bytes": 7426,
+    "mutants": [
+      {
+        "rule": "jsx_fragments",
+        "first_difference": 77
+      },
+      {
+        "rule": "jsx_no_undef",
+        "first_difference": 351
+      },
+      {
+        "rule": "jsx_no_constructed_context_values",
+        "first_difference": 764
+      },
+      {
+        "rule": "constructed-context-unicode-quote",
+        "first_difference": 1997
+      }
+    ],
+    "guards": [
+      {
+        "guard": "construction-range",
+        "normal_exit": 70,
+        "mutant_exit": 0
+      }
+    ],
+    "metadata_mutants": [
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "refetch-instead-of-supplied-node"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "refetch-instead-of-supplied-node"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "refetch-instead-of-supplied-node"
+      },
+      {
+        "declaration": "no_redeclare.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "no_redeclare.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "no_redeclare.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "no_test_on_global_regex.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "no_test_on_global_regex.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "no_test_on_global_regex.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "no_write_only_collection.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "no_write_only_collection.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "no_write_only_collection.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_next/no_process_exit_after_output.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_next/no_process_exit_after_output.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_next/no_process_exit_after_output.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_next/no_uncleared_race_timeout.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_next/no_uncleared_race_timeout.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_next/no_uncleared_race_timeout.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_next/require_blocking_standard_streams.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_next/require_blocking_standard_streams.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_next/require_blocking_standard_streams.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_third/no_new_func.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_third/no_new_func.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_third/no_new_func.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_third/no_new_native_nonconstructor.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_third/no_new_native_nonconstructor.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_third/no_new_native_nonconstructor.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_third/no_new_wrappers.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_third/no_new_wrappers.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_third/no_new_wrappers.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_regex_literals.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_regex_literals.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_regex_literals.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_rest_params.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_rest_params.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_rest_params.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_fourth/exhaustive_deps.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_fourth/exhaustive_deps.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_fourth/exhaustive_deps.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "wrong-listener"
+      }
+    ],
+    "checker_gap": {
+      "source_node_exit": 70,
+      "emitted_js_exit": 1,
+      "bypass_mutant_exit": 0
+    },
+    "quote": {
+      "unicode_version": "17.0.0",
+      "cases": 6202,
+      "bytes": 76917,
+      "mutants": [
+        {
+          "name": "newline",
+          "first_difference": 86
+        },
+        {
+          "name": "ascii-control",
+          "first_difference": 106
+        },
+        {
+          "name": "unicode-control",
+          "first_difference": 885
+        },
+        {
+          "name": "supplementary-control",
+          "first_difference": 33046
+        },
+        {
+          "name": "surrogate-guard",
+          "normal_exit": 70,
+          "mutant_exit": 0
+        }
+      ]
+    },
+    "commands": [
+      {
+        "name": "oracle-build",
+        "args": [
+          "go",
+          "build",
+          "-overlay",
+          "/workspace/wave-12/latest/sixth/overlay.json",
+          "-o",
+          "/workspace/wave-12/latest/sixth/oracle",
+          "/workspace/adamic/cohere/adamic_wave12_sixth_oracle.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "production-go",
+        "args": [
+          "/workspace/wave-12/latest/sixth/oracle",
+          "/workspace/wave-12/latest/sixth/tsconfig.json",
+          "/workspace/wave-12/latest/sixth/manifest"
+        ],
+        "code": 0
+      },
+      {
+        "name": "stage0",
+        "args": [
+          "go",
+          "build",
+          "-o",
+          "/workspace/wave-12/latest/sixth/adamic",
+          "./cmd/adamic"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/native-asan",
+          "--sanitize"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/native-asan"
+        ],
+        "code": 0
+      },
+      {
+        "name": "source-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/sixth/source/main.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "js",
+          "/workspace/wave-12/latest/sixth/source/main.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/sixth/emitted.mjs"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_fragments-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/jsx_fragments-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_fragments-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/jsx_fragments-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_undef-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/jsx_no_undef-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_undef-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/jsx_no_undef-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_constructed_context_values-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/jsx_no_constructed_context_values-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_constructed_context_values-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/jsx_no_constructed_context_values-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unicode-quote-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/unicode-quote-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unicode-quote-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/unicode-quote-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "construction-range-guard-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/construction-range-guard"
+        ],
+        "code": 0
+      },
+      {
+        "name": "construction-range-guard-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/construction-range-guard"
+        ],
+        "code": 70
+      },
+      {
+        "name": "construction-range-guard-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/construction-range-guard-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "construction-range-guard-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/construction-range-guard-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "ast-kind-names",
+        "args": [
+          "go",
+          "run",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/kind_names.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/adamic/stage1/typescript/parser/main.ts",
+          "-o",
+          "/workspace/wave-12/latest/sixth/shared-parser"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-fragment",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/fragment.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-undef",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/undef.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-object",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/object.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-array",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/array.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-function",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/function.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-declaration",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/declaration.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-variable",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/variable.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-class",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/class.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-new",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/new.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-regex",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/regex.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-jsx",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/jsx.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-jsxfragment",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/jsxfragment.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-assignment",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/assignment.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-memo",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/memo.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-unstable",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/unstable.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-korean",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/korean.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-greek",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/greek.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-joiner",
+        "args": [
+          "/workspace/wave-12/latest/sixth/shared-parser",
+          "/workspace/wave-12/latest/sixth/joiner.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "checker-gap-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/checker_gap.a"
+        ],
+        "code": 70
+      },
+      {
+        "name": "checker-gap-emitted",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "js",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/checker_gap.a"
+        ],
+        "code": 1
+      },
+      {
+        "name": "checker-gap-bypass-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/sixth/checker-gap-bypass.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "checker-gap-bypass-emitted",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "js",
+          "/workspace/wave-12/latest/sixth/checker-gap-bypass.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-go-oracle",
+        "args": [
+          "go",
+          "run",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/quote_oracle.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-asan-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-native-asan",
+          "--sanitize"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-asan-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-native-asan"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-source-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/sixth/quote-check.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-emitted-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "js",
+          "/workspace/wave-12/latest/sixth/quote-check.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-emitted-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/latest/sixth/quote-emitted.mjs"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-newline-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-newline-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-newline-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-newline-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-newline-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-ascii-control-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-ascii-control-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-ascii-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-ascii-control-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-ascii-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-unicode-control-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-unicode-control-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-unicode-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-unicode-control-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-unicode-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-supplementary-control-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-supplementary-control-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-supplementary-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-supplementary-control-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-supplementary-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-surrogate-guard-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-surrogate-guard.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-surrogate-guard"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-surrogate-guard-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-surrogate-guard"
+        ],
+        "code": 70
+      },
+      {
+        "name": "quote-surrogate-mutant-build",
+        "args": [
+          "/workspace/wave-12/latest/sixth/adamic",
+          "build",
+          "/workspace/wave-12/latest/sixth/quote-surrogate-mutant-check.a",
+          "-o",
+          "/workspace/wave-12/latest/sixth/quote-surrogate-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-surrogate-mutant-run",
+        "args": [
+          "/workspace/wave-12/latest/sixth/quote-surrogate-mutant"
+        ],
+        "code": 0
+      }
+    ]
+  },
+  "timings": {
+    "root": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 5.513158154000848,
+          "phases": {
+            "load_ns": 920879410,
+            "query_ns": 388817821,
+            "queries": 2641,
+            "first_query_ns": 96894,
+            "run_ns": 4547971931
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.5033150039998873,
+          "phases": {
+            "load_ns": 333591892,
+            "rule_ns": 105255262,
+            "run_ns": 138830747
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.5010538539972913,
+          "phases": {
+            "load_ns": 342537467,
+            "rule_ns": 96334162,
+            "run_ns": 127907482
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 4.431208725996839,
+          "phases": {
+            "load_ns": 300868178,
+            "query_ns": 358266656,
+            "queries": 2641,
+            "first_query_ns": 26693,
+            "run_ns": 4068737884
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 7.901661208998121,
+          "phases": {
+            "load_ns": 389883329,
+            "query_ns": 1130130137,
+            "queries": 2641,
+            "first_query_ns": 31861,
+            "run_ns": 7487089173
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.4889654380021966,
+          "phases": {
+            "load_ns": 338405808,
+            "rule_ns": 100961489,
+            "run_ns": 132290194
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.5300532219989691,
+          "phases": {
+            "load_ns": 123939026,
+            "query_ns": 50360272,
+            "queries": 1463,
+            "first_query_ns": 115766,
+            "run_ns": 396899529
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.13599977700141608,
+          "phases": {
+            "load_ns": 102276170,
+            "rule_ns": 10834293,
+            "run_ns": 15523886
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.160169696999219,
+          "phases": {
+            "load_ns": 101798046,
+            "rule_ns": 34874710,
+            "run_ns": 45844591
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.5712796080006228,
+          "phases": {
+            "load_ns": 175238315,
+            "query_ns": 55956381,
+            "queries": 1463,
+            "first_query_ns": 110842,
+            "run_ns": 383809550
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.4874363569979323,
+          "phases": {
+            "load_ns": 118195705,
+            "query_ns": 40800101,
+            "queries": 1463,
+            "first_query_ns": 86101,
+            "run_ns": 357729342
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.15406786399762495,
+          "phases": {
+            "load_ns": 114734633,
+            "rule_ns": 17896166,
+            "run_ns": 25406442
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 5.513158154000848,
+          "load_median_seconds": 0.389883329,
+          "run_median_seconds": 4.547971931
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.5010538539972913,
+          "load_median_seconds": 0.338405808,
+          "run_median_seconds": 0.132290194
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.5300532219989691,
+          "load_median_seconds": 0.123939026,
+          "run_median_seconds": 0.38380955
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.15406786399762495,
+          "load_median_seconds": 0.10227617,
+          "run_median_seconds": 0.025406442
+        }
+      ]
+    },
+    "next": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 2.7658270039974013,
+          "phases": {
+            "load_ns": 337040769,
+            "query_ns": 97414554,
+            "queries": 108,
+            "first_query_ns": 105861,
+            "run_ns": 2273074443
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.4397284689985099,
+          "phases": {
+            "load_ns": 333025861,
+            "rule_ns": 40247540,
+            "run_ns": 75984400
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.4175859520000813,
+          "phases": {
+            "load_ns": 331332872,
+            "rule_ns": 38443418,
+            "run_ns": 70009267
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 3.1016570950014284,
+          "phases": {
+            "load_ns": 352221161,
+            "query_ns": 157433153,
+            "queries": 108,
+            "first_query_ns": 28899,
+            "run_ns": 2593503302
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 2.634698580000986,
+          "phases": {
+            "load_ns": 340327211,
+            "query_ns": 89823390,
+            "queries": 108,
+            "first_query_ns": 21282,
+            "run_ns": 2117879940
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.3984605730001931,
+          "phases": {
+            "load_ns": 316168118,
+            "rule_ns": 33321579,
+            "run_ns": 64714896
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.5021609780014842,
+          "phases": {
+            "load_ns": 123296921,
+            "query_ns": 23890707,
+            "queries": 348,
+            "first_query_ns": 72135,
+            "run_ns": 348140657
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.1402850260019477,
+          "phases": {
+            "load_ns": 117132374,
+            "rule_ns": 4164383,
+            "run_ns": 9516727
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.17008540499955416,
+          "phases": {
+            "load_ns": 136779467,
+            "rule_ns": 5662797,
+            "run_ns": 17231360
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.7774223990018072,
+          "phases": {
+            "load_ns": 288054681,
+            "query_ns": 32378517,
+            "queries": 348,
+            "first_query_ns": 689395,
+            "run_ns": 457957406
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.46559552600228926,
+          "phases": {
+            "load_ns": 113398655,
+            "query_ns": 20159335,
+            "queries": 348,
+            "first_query_ns": 95946,
+            "run_ns": 319201343
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.18972148600005312,
+          "phases": {
+            "load_ns": 160014538,
+            "rule_ns": 5033872,
+            "run_ns": 10261680
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 2.7658270039974013,
+          "load_median_seconds": 0.340327211,
+          "run_median_seconds": 2.273074443
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.4175859520000813,
+          "load_median_seconds": 0.331332872,
+          "run_median_seconds": 0.070009267
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.5021609780014842,
+          "load_median_seconds": 0.123296921,
+          "run_median_seconds": 0.348140657
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.17008540499955416,
+          "load_median_seconds": 0.136779467,
+          "run_median_seconds": 0.01026168
+        }
+      ]
+    },
+    "third": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 5.112431803998334,
+          "phases": {
+            "load_ns": 513450886,
+            "query_ns": 397737712,
+            "queries": 79,
+            "first_query_ns": 104979,
+            "run_ns": 4410737526
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.437749664997682,
+          "phases": {
+            "load_ns": 360533803,
+            "rule_ns": 6351365,
+            "run_ns": 45451691
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.6293996480017086,
+          "phases": {
+            "load_ns": 522405082,
+            "rule_ns": 4529574,
+            "run_ns": 62746677
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 4.824295583002822,
+          "phases": {
+            "load_ns": 660102541,
+            "query_ns": 390493131,
+            "queries": 79,
+            "first_query_ns": 35072,
+            "run_ns": 3876677606
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 3.854639307999605,
+          "phases": {
+            "load_ns": 634029416,
+            "query_ns": 320782876,
+            "queries": 79,
+            "first_query_ns": 26921,
+            "run_ns": 3001207610
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.9522559850011021,
+          "phases": {
+            "load_ns": 818163798,
+            "rule_ns": 18447879,
+            "run_ns": 95178655
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 1.3511132029998407,
+          "phases": {
+            "load_ns": 401440976,
+            "query_ns": 53893101,
+            "queries": 287,
+            "first_query_ns": 191559,
+            "run_ns": 898194538
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.35735057499914546,
+          "phases": {
+            "load_ns": 297998544,
+            "rule_ns": 2710961,
+            "run_ns": 14385866
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.2415594369995233,
+          "phases": {
+            "load_ns": 201455642,
+            "rule_ns": 1810560,
+            "run_ns": 16978696
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.6077694469968264,
+          "phases": {
+            "load_ns": 183785489,
+            "query_ns": 19363239,
+            "queries": 287,
+            "first_query_ns": 76712,
+            "run_ns": 379979108
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.5601553800006513,
+          "phases": {
+            "load_ns": 132715828,
+            "query_ns": 18142308,
+            "queries": 287,
+            "first_query_ns": 108169,
+            "run_ns": 384126095
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.1935316840026644,
+          "phases": {
+            "load_ns": 173223204,
+            "rule_ns": 1203795,
+            "run_ns": 8828287
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 4.824295583002822,
+          "load_median_seconds": 0.634029416,
+          "run_median_seconds": 3.876677606
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.6293996480017086,
+          "load_median_seconds": 0.522405082,
+          "run_median_seconds": 0.062746677
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.6077694469968264,
+          "load_median_seconds": 0.183785489,
+          "run_median_seconds": 0.384126095
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.2415594369995233,
+          "load_median_seconds": 0.201455642,
+          "run_median_seconds": 0.014385866
+        }
+      ]
+    },
+    "fourth": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 5.415204920998804,
+          "phases": {
+            "load_ns": 560130626,
+            "query_ns": 507926082,
+            "queries": 243,
+            "first_query_ns": 53993,
+            "run_ns": 4537865058
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.8838630329992156,
+          "phases": {
+            "load_ns": 394382333,
+            "rule_ns": 270799249,
+            "run_ns": 427208169
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.7585355939991132,
+          "phases": {
+            "load_ns": 567967070,
+            "rule_ns": 97861765,
+            "run_ns": 172163431
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 5.029403591997834,
+          "phases": {
+            "load_ns": 441289239,
+            "query_ns": 501619477,
+            "queries": 243,
+            "first_query_ns": 32933,
+            "run_ns": 4378217395
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 3.322409657997923,
+          "phases": {
+            "load_ns": 340001408,
+            "query_ns": 331675590,
+            "queries": 243,
+            "first_query_ns": 23492,
+            "run_ns": 2779002000
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.5330536590008705,
+          "phases": {
+            "load_ns": 353993005,
+            "rule_ns": 98048242,
+            "run_ns": 159665787
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.7003394009989279,
+          "phases": {
+            "load_ns": 252449687,
+            "query_ns": 32860202,
+            "queries": 312,
+            "first_query_ns": 85250,
+            "run_ns": 406333517
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.15335265199973946,
+          "phases": {
+            "load_ns": 129873793,
+            "rule_ns": 3530821,
+            "run_ns": 13719716
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.1333231220014568,
+          "phases": {
+            "load_ns": 104446828,
+            "rule_ns": 3020137,
+            "run_ns": 12654702
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.4296185460007109,
+          "phases": {
+            "load_ns": 107985617,
+            "query_ns": 17002800,
+            "queries": 312,
+            "first_query_ns": 62877,
+            "run_ns": 294295917
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.5194458650003071,
+          "phases": {
+            "load_ns": 128815991,
+            "query_ns": 21734952,
+            "queries": 312,
+            "first_query_ns": 66834,
+            "run_ns": 361483371
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.13021097499949974,
+          "phases": {
+            "load_ns": 109117751,
+            "rule_ns": 3392743,
+            "run_ns": 12917644
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 5.029403591997834,
+          "load_median_seconds": 0.441289239,
+          "run_median_seconds": 4.378217395
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.7585355939991132,
+          "load_median_seconds": 0.394382333,
+          "run_median_seconds": 0.172163431
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.5194458650003071,
+          "load_median_seconds": 0.128815991,
+          "run_median_seconds": 0.361483371
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.1333231220014568,
+          "load_median_seconds": 0.109117751,
+          "run_median_seconds": 0.012917644
+        }
+      ]
+    }
+  }
+}
