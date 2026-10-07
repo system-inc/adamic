@@ -263,3 +263,28 @@ and Markdown whitespace layout (416.56 s). The new type-aware largest unit is
 Lint has 38 units with `TestRulesAgree` largest (192.82 s), and CSS has 17 with
 `TestComposedMemoryChecksCanFail` largest (130.16 s). Bridge has two top-level units;
 `TestBridge` has no enumerable subtests.
+
+## Required WASI coverage
+
+The planner reads test source skip conditions. Direct `os.Getenv` comparisons and local aliases
+of variables whose names contain `WASI` identify required test parents. Their selected children
+inherit the requirement. Unknown predicates, dynamic environment names, `LookupEnv`, globals or
+helpers containing WASI environment reads fail planning and require an audit. The runtime branch's
+`TestWASIAgreesWithNode` and `TestWASIEmission` use the ordinary oracle fixture table, so both are
+enumerated before execution. This list is derived rather than maintained by test name.
+
+When present, `Plan.WASI` names the last shard, its source-derived gates and provisioning command.
+Every required unit belongs to that shard; ordinary work uses the other shards. Provision it with
+`bash cloud/setup.sh --wasi-sdk`, source the printed env file, then export
+`ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1`. Setup supplies `WASI_SYSROOT`. This requires the runtime
+setup implementation until it lands on main. The runner refuses missing variables, SDK headers,
+libc or executable SDK clang before executing shard tests. `TestWASI` gets a separate invocation
+with SDK clang on PATH; native checks retain native clang. Resumed evidence includes the entire SDK
+(header, library, compiler, linker and resources) in its input identity.
+
+Merge reads raw events and rejects every skip within a required unit, including a skipped parent
+of selected children, regardless of the reason. `TestWASIEmission` currently skips fixtures that do
+not lower on runtime. Those skips intentionally prevent a whole-green verdict under this rule;
+this unit does not edit existing tests to hide them. A missing-variable preflight refusal produces
+no test evidence. An old or mutated runner that bypasses that check and records skips is rejected
+by merge with the required unit names.

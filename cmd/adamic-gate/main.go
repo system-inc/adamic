@@ -32,6 +32,7 @@ type unit struct {
 	Test    string
 	Shard   int
 	Seconds float64
+	WASI    bool
 }
 
 func (u unit) key() string { return u.Package + "::" + u.Test }
@@ -44,6 +45,7 @@ type plan struct {
 	Units   []unit
 	Digest  string
 	Shards  []prediction
+	WASI    *wasiRequirement
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -316,7 +318,7 @@ func children(pkg, parent string) ([]string, error) {
 	}
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
-		case "TestNativeAgreesWithNode":
+		case "TestNativeAgreesWithNode", "TestWASIAgreesWithNode", "TestWASIEmission":
 			return fixtureRows("internal/oracle/oracle_test.go", "fixtures")
 		case "TestInputAgreesWithNode":
 			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
@@ -455,6 +457,13 @@ func makePlan(count int) (plan, error) {
 		}
 	}
 
+	if err := requireWASI(&p); err != nil {
+		return p, err
+	}
+	ordinaryCount := count
+	if p.WASI != nil && count > 1 {
+		ordinaryCount--
+	}
 	loads := make([]float64, count)
 	known := []int{}
 	seen := map[string]bool{}
@@ -472,7 +481,10 @@ func makePlan(count int) (plan, error) {
 			known = append(known, i)
 		} else {
 			hash := sha256.Sum256([]byte(u.key()))
-			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(count))
+			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(ordinaryCount))
+		}
+		if u.WASI {
+			u.Shard = count - 1
 		}
 	}
 	sort.Slice(known, func(i, j int) bool {
@@ -483,8 +495,12 @@ func makePlan(count int) (plan, error) {
 		return a.Seconds > b.Seconds
 	})
 	for _, i := range known {
+		if p.Units[i].WASI {
+			loads[count-1] += p.Units[i].Seconds
+			continue
+		}
 		best := 0
-		for j := 1; j < count; j++ {
+		for j := 1; j < ordinaryCount; j++ {
 			if loads[j] < loads[best] {
 				best = j
 			}
@@ -501,6 +517,14 @@ func makePlan(count int) (plan, error) {
 // Group only siblings under an identical literal prefix. Alternating whole slash-containing
 // patterns would form a Cartesian product in Go's -run parser and execute unplanned tests.
 func patterns(units []unit) []string {
+	// TestWASI needs SDK clang on PATH. Keep its invocation separate even with count=1.
+	for i, u := range units {
+		if strings.HasSuffix(u.Package, "/internal/native") && u.Test == "TestWASI" {
+			rest := append([]unit{}, units[:i]...)
+			rest = append(rest, units[i+1:]...)
+			return append(patterns(rest), "^TestWASI$")
+		}
+	}
 	groups := map[string][]string{}
 	for _, u := range units {
 		if u.Test == "" {
@@ -687,6 +711,11 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return err
 	}
 
+	if p.WASI != nil && p.WASI.Shard == index {
+		if err := wasiReady(); err != nil {
+			return err
+		}
+	}
 	context, err := executionIdentity()
 	if err != nil {
 		return err
@@ -734,6 +763,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
 		cmd := exec.Command(name, args...)
 		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
+		if name == "go" && len(args) > 0 && args[0] == "test" && p.WASI != nil && p.WASI.Shard == index && strings.HasSuffix(args[len(args)-1], "/internal/native") && args[len(args)-2] == "^TestWASI$" {
+			cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
+		}
 		cmd.Stdout = w
 		cmd.Stderr = commandStderr
 		t := time.Now()
@@ -1084,6 +1116,7 @@ func merge(dirs []string, out string) error {
 		if err != nil {
 			return err
 		}
+		m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
 		m.RawTerminalEvents += raw
 		for _, r := range results {
 			if r.Test != "" && r.Action == "fail" {
