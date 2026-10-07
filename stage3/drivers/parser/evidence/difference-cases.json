@@ -1,0 +1,56 @@
+{
+  "typescriptSourcePin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescriptGoPin": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+  "cases": {
+    "array-hole-control": "[,x];\n",
+    "class-implements": "class C implements N{}\n",
+    "class-extends-control": "class C extends N{}\n",
+    "binding-hole": "let[,x]=a;\n",
+    "heritage": "interface I extends N{}\n"
+  },
+  "runs": {
+    "tsc": {
+      "exit": 0,
+      "stderrBytes": 0
+    },
+    "stage1": {
+      "exit": 0,
+      "stderrBytes": 0
+    },
+    "stage1-whole": {
+      "exit": 0,
+      "stderrBytes": 0
+    },
+    "go": {
+      "exit": 0,
+      "stderrBytes": 0
+    },
+    "mutant": {
+      "exit": 0,
+      "stderrBytes": 0
+    }
+  },
+  "goAndStage1WholeDumpByteIdentical": true,
+  "goDumpBytes": 1457,
+  "goDumpSha256": "de98b2ce5c8f444365410e175237175659a34b9f43faf00006c3f2d6d87559f2",
+  "mutant": {
+    "source": "stage1 statements.ts interface heritage bases.push TypeReference changed to ExpressionWithTypeArguments",
+    "changedSourceSites": 1,
+    "changedNodeRecords": 1,
+    "caughtBy": "byte comparison against unmodified pinned Go oracle"
+  },
+  "shortestCorpusLines": [
+    {
+      "file": "types.ts",
+      "line": 3951,
+      "text": "export interface JSDoc extends Node {",
+      "trimmedCharacters": 37
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 412,
+      "text": ".map(([, synonyms]) => synonyms.join(\"/\"))",
+      "trimmedCharacters": 42
+    }
+  ]
+}

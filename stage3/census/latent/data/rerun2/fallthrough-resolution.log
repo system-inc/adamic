@@ -1,0 +1,22 @@
+docs/0.1.md
+internal/flow/build.go
+internal/ir/ir.go
+internal/javascript/javascript.go
+internal/load/load.go
+internal/load/load_test.go
+internal/lower/refusals.go
+internal/lower/statements.go
+internal/native/emit_statements.go
+internal/oracle/counts.md
+tsconfig.json
+Traceback (most recent call last):
+  File "/tmp/latent2-resolve-fall.py", line 27, in <module>
+    subprocess.run(['gofmt','-w',*[str(p/f) for f in files if f.endswith('.go')]],check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'gofmt'
