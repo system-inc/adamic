@@ -67,3 +67,57 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 	}
 	return members, nil
 }
+
+// Shared lazy dispatch calls this only for a demanded union read. Tagged
+// members defer unread descendants. Field-only membership needs a complete,
+// acyclic plain-data contract; unavailable adapters remain named obligations.
+func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
+	seen := map[ir.ViewContractID]bool{}
+	var supported func(ir.ViewContractID) bool
+	supported = func(id ir.ViewContractID) bool {
+		if id <= 0 || int(id) > len(l.result.ViewContracts) || seen[id] {
+			return false
+		}
+		contract := l.result.ViewContracts[id-1]
+		if contract.Unsupported != "" || contract.Nominal != "" {
+			return false
+		}
+		if contract.Kind == ir.ViewScalar {
+			return contract.Of == ir.Number || contract.Of == ir.String || contract.Of == ir.Boolean || contract.Of == ir.MaybeNumber || contract.Of == ir.MaybeBoolean
+		}
+		if contract.Kind == ir.ViewUndefined {
+			return true
+		}
+		if contract.Kind != ir.ViewObject {
+			return false
+		}
+		tagged := false
+		for _, field := range contract.Fields {
+			if field.Optional || field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+				continue
+			}
+			child := l.result.ViewContracts[field.Contract-1]
+			tagged = tagged || child.Kind == ir.ViewScalar && len(child.Allowed) != 0
+		}
+		if tagged {
+			return true
+		}
+		seen[id] = true
+		defer delete(seen, id)
+		for _, field := range contract.Fields {
+			if !supported(field.Contract) {
+				return false
+			}
+		}
+		return true
+	}
+	if root.Kind != ir.ViewUnion || root.Of != ir.Object || len(root.Members) == 0 {
+		return false
+	}
+	for _, id := range root.Members {
+		if !supported(id) {
+			return false
+		}
+	}
+	return true
+}

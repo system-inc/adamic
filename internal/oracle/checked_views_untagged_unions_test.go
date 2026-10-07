@@ -2,10 +2,13 @@ package oracle
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -179,7 +182,10 @@ func TestCheckedViewUntaggedSourceFrontier(t *testing.T) {
 				t.Fatal(err)
 			}
 			_, err = lower.Lower(context.Background(), loaded)
-			if err == nil || !strings.Contains(err.Error(), "checked view read of field value with unsupported untagged object union contract") {
+			if err == nil {
+				t.Skip("owner hooks installed; tested by SourceDispatch")
+			}
+			if !strings.Contains(err.Error(), "checked view read of field value with unsupported untagged object union contract") {
 				t.Fatalf("shared source frontier changed; remeasure admission: %v", err)
 			}
 			t.Logf("shared frontend refusal (both backends): %v", err)
@@ -192,5 +198,73 @@ func TestCheckedViewUntaggedSourceFrontier(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// Run with source-overlay.py's three owner hooks until the integrator applies
+// them. These tests compile the actual .a program, rather than adapter snapshots.
+func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
+	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a")
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), loaded)
+	if err != nil {
+		if os.Getenv("VIEW_UNTAGGED_SOURCE_REQUIRED") == "1" || !strings.Contains(err.Error(), "unsupported untagged object union") {
+			t.Fatal(err)
+		}
+		t.Skip("three owner hooks pending; use source-overlay.py for source validation")
+	}
+	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/source-refusals.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pins := map[string]string{}
+	if err = json.Unmarshal(data, &pins); err != nil {
+		t.Fatal(err)
+	}
+	for _, family := range []string{"binding-name", "option-element", "structural"} {
+		for _, variant := range []string{"good", "wrong", "nested", "absent"} {
+			t.Run(family+"/"+variant, func(t *testing.T) {
+				program, path := interfaceFixture(t, "untagged/fixtures/"+family+"-source-"+variant)
+				// untagged source mutation anchor
+				node := onNode(t, path)
+				t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
+				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+					if variant == "good" || variant == "absent" {
+						if difference := disagreement(node, got); difference != "" {
+							t.Fatal(backend + ": " + difference)
+						}
+					} else {
+						expected, ok := pins[family+"/"+variant]
+						if !ok {
+							t.Fatal("missing refusal pin")
+						}
+						if difference := disagreement(run{exitCode: 70, stderr: []byte(expected)}, got); difference != "" {
+							t.Errorf("%s: %s; got %#v", backend, difference, got)
+						}
+					}
+				}
+			})
+		}
+	}
+}
+
+// Fault injection at lowered source reads, using the same IR consumed by both backends.
+func dropUntaggedNestedSourceReads(program *ir.Program) {
+	mutate := func(expression ir.Expression) ir.Expression {
+		field, ok := expression.(ir.Property)
+		if ok && (field.Name == "payload" || field.Name == "label") {
+			field.View = ""
+			field.ViewContract = 0
+			return field
+		}
+		return expression
+	}
+	// Rewriting an outer expression visits its child on the next pass.
+	for i := 0; i < 3; i++ {
+		mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 	}
 }

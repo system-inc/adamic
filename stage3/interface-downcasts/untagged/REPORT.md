@@ -1,3 +1,76 @@
+Built: merged ba59427c; source selectors and three owner-hook handoffs; 12 source cases pass with an overlay.
+Commits: integration base ba59427ccc7afecae29a305c41e6e9c7867e5610; source checkpoint follows in this branch's Git history.
+Commands: overlay source/component oracle 4.509s; scoped lower/JS/native 1.058s/0.858s/3.875s; production frontier 1.436s, source dispatch explicitly skipped.
+Mutants: skip native/JS selection, accept native/JS wrong tags, drop lowered nested guards; all five caught by exact source pins and restored.
+Uncovered: production hooks and unchanged tsc pairs; exact family pairs/reads remaining are unmeasured, not zero.
+
+Revised whole-family estimate: October 14, 2026 UTC, conditional on the integrator
+installing the three hooks and a family-specific reachability inventory. This is a
+planning estimate. The current census cannot support an unconditional delivery date.
+
+The designated integration merge was a clean fast-forward. It brought lazy admission
+and all pushed lane tips; no individual lane branch was merged. Production shared
+files remain untouched, as required by territory ownership. source-hooks.patch contains
+three concrete hunks for lower/view_contracts.go, native/view_unions.go and
+javascript/view_unions.go. The integrator must apply them, format the shared files and
+replace the old source-refusal frontier with the source-dispatch evidence.
+
+The new helpers use the interned registry and shared slot initialization/type metadata.
+A member's own required finite tags select it lazily; payload reads keep shared guards.
+Field-only members require complete acyclic scalar/plain-object contracts. Other
+families, classes and accessor-based membership remain refused. Required shared tags
+keep the existing dispatch. JavaScript honors allowed undefined before object selection.
+The selected id is not stored as dynamic provenance: subsequent reads rely on the
+shared conservative checked-read machinery. This checkpoint does not certify every
+helper/generic/callback/field flow for these unions.
+
+Actual .a source programs exercise every member of the reduced 12-member name union,
+every member of the five-member option union, and both structural alternatives. Each
+shape also tests wrong membership, a nested wrong scalar, and viewed optional absence.
+Node controls provide the observed ordinary behavior; compiled invalid views instead
+stop with exact exit 70/stderr pins in source-refusals.json. These are representative
+shape fixtures, not unchanged full compiler interface fixtures or completed census pairs.
+The earlier component tests still include sanitized native execution.
+
+Measurement uses lazy/census/read-demand-pairs.json.gz and lazy/ADAPTED-CENSUS.md.
+The latter explicitly states at lines 64-65 that allocation reachability is unmeasured.
+lazy-candidate-progress.json ranks all 228 static object-union pairs/2,468 candidate
+reads, including tagged unions. All remain pending as census obligations; zero
+production pairs/reads are claimed complete. Exact untagged remaining counts are null.
+The old pair-progress.json 84/186 queue is historical and must not be used as the
+current exact denominator. The fresh pool's leading BindingName reads (112, 96, 57)
+have shared discriminants, so they cannot simply be charged to this lane. The reduced
+12-member name fixture is not evidence that these tagged pairs are completed here.
+
+Source mutation evidence:
+- source-skip-native and source-skip-javascript: binding-name/wrong continues with exit 0; exact refusal pin fails.
+- source-wrong-shape-native and source-wrong-shape-javascript: invalid kind 99 is admitted; the same exact refusal pin fails.
+- source-drop-transitive: remove payload/label guards in the actual lowered program; native exits by signal (-1), JavaScript prints true with exit 0. Both fail the expected exit 70 pin. No sanitizer failure is being treated as the check.
+
+Reproduction (all test output goes to files):
+
+```
+source /workspace/adamic-tools/env.sh
+python3 stage3/interface-downcasts/untagged/source-overlay.py /tmp/untagged-source-overlay
+VIEW_UNTAGGED_SOURCE_REQUIRED=1 GOFLAGS=-overlay=/tmp/untagged-source-overlay/overlay.json go test ./internal/oracle -run '^TestCheckedViewUntagged(Selection|SourceDispatch)$' -count=1 -v > /tmp/untagged-source-final.log 2>&1
+GOFLAGS=-overlay=/tmp/untagged-source-overlay/overlay.json go test ./internal/lower ./internal/javascript ./internal/native -run 'TestUntaggedView|TestView|TestLazyView|TestSharedArrayContractAdapter' -count=1 > /tmp/untagged-source-packages.log 2>&1
+GOFLAGS=-overlay=/tmp/untagged-source-overlay/overlay.json python3 stage3/interface-downcasts/untagged/run-source-mutants.py > /tmp/untagged-source-mutants.log 2>&1
+go test ./internal/lower ./internal/javascript ./internal/native ./internal/oracle -run 'TestUntaggedView|TestCheckedViewUntaggedSourceFrontier|TestCheckedViewUntaggedSourceDispatch' -count=1 -v > /tmp/untagged-production-frontier.log 2>&1
+```
+
+Setup: GOPROXY=https://proxy.golang.org|direct; submodules ready 9.847s,
+go build ready 213.987s, deferred test binaries 214.121s, build cache warm
+214.124s, done 214.165s; nproc=5, cgroup quota=4 CPUs. Environment source is
+/workspace/adamic-tools/env.sh. Logs are copied into this lane's logs directory.
+Full repository gate was not run. Whole-tsc checker diagnostics do not prevent these
+source fixtures, but prevent the claimed exact whole-program reachability census.
+
+Pending owner action is concrete and reviewable: apply source-hooks.patch on the
+integration branch and wake this lane with that tip. Until then, production source
+admission remains blocked by the shared-hook ownership rule, not lazy cast admission.
+
+Earlier checkpoint, retained as historical evidence:
+
 Built: member-specific tag filtering, selected-contract preservation and structural fallback components; no source admission.
 Commits: territory 6c321f8a; lane 4 refresh d15b4206; selector 566aad67; mutant checkpoint recorded in Git history.
 Commands: focused lower/oracle passed (0.006s/3.470s); counted absent controls passed (1.299s); touched-package vet passed.
