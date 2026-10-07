@@ -1,0 +1,74 @@
+[
+  {
+    "rule": "floating",
+    "byte": 11,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "eval",
+    "byte": 20,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "void",
+    "byte": 33,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "output",
+    "byte": 44,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "timer",
+    "byte": 54,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "blocking",
+    "byte": 67,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "promise",
+    "byte": 79,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "regex",
+    "byte": 93,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "rest",
+    "byte": 100,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "effect",
+    "byte": 112,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "render",
+    "byte": 123,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "static",
+    "byte": 134,
+    "exit": 0,
+    "stderr_bytes": 0
+  }
+]

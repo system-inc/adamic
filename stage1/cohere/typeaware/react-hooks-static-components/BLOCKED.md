@@ -109,3 +109,10 @@ No replacement rules are claimed while these reservations remain unresolved.
 Only this worker's own branch and rule directories are changed. Nothing is
 pushed to main or to an area branch. The existing landing report remains the
 oracle evidence; this follow-up adds dependency/ownership documentation only.
+
+## Numeric listener declaration
+
+`listeners.a` now declares SourceFile kind 307 using the pinned typescript-go
+number. Independent Go production-registration comparison, native sanitizer
+execution and a compiling declaration mutant pass. This is metadata only; the
+source analysis remains unported. See `../prefer-promise-reject-errors/LISTENER_REPORT.md`.
