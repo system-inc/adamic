@@ -232,3 +232,7 @@ Automatic approval review rejected the broad scripted exception/ownership/emitte
 ### Item 14: records-lowering
 
 Kept the existing recordStorageView check after cast proofs, avoiding the incoming duplicate while preserving every refusal. Added all three type-only Record composition/value/scanner oracle programs. Linux counts passed 29.660s; vet passed; whole uncached lower passed 49.954s and oracle passed 192.767s. No new failure or stage3 record change. No production check changed, so no new mutant was required. Logs: /tmp/landing-batch-3-14-*.log.
+
+### Item 15 blocked: namespaces-tsc 90f1baca0
+
+Exact merge attempted and aborted with 19 conflicted files. Incoming closed numeric enum guards conflict with flag-enums, NoFallthroughCasesInSwitch conflicts with taste-land, namespace localRead must preserve unknown-narrowing runtime union checks and captured/module-cycle readiness, and namespace readiness must coexist with assertion readiness in both emitters. No tests ran on this unresolved merge. Automatic approval review rejected the broad regex resolution for miscompilation/readiness risk; no rejected change was executed. Needs a separately reviewed resolution. Conflict transcript: /tmp/landing-batch-3-15-conflicts.txt; review patch: /tmp/landing-batch-3-15-unlanded.patch.
