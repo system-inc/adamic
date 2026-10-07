@@ -1,0 +1,131 @@
+// Production default options. The checker returns types and declaration origins.
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { unionFlag, intersectionFlag, stringLike, numberLike, bigintLike, booleanLike, nullish } from './flags.ts';
+
+class TemplateSymbol {
+    readonly present: boolean;
+    readonly name: string;
+    readonly declarations: number;
+    readonly library: boolean;
+    constructor(present: boolean, name: string, declarations: number, library: boolean) {
+        this.present = present;
+        this.name = name;
+        this.declarations = declarations;
+        this.library = library;
+    }
+}
+export class RestrictTemplateExpressions {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    symbol(frames: Frames): TemplateSymbol {
+        const present = frames.yes();
+        if(!present) {
+            return new TemplateSymbol(false, '', 0, false);
+        }
+        frames.natural();
+        frames.natural();
+        const name = frames.field();
+        const count = frames.natural();
+        let library = false;
+        for(let at = 0; at < count; at++) {
+            frames.field();
+            frames.field();
+            frames.natural();
+            frames.natural();
+            frames.yes();
+            library = frames.yes() || library;
+            frames.field();
+            frames.field();
+            frames.natural();
+            frames.natural();
+            const tags = frames.natural();
+            for(let tag = 0; tag < tags; tag++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                frames.field();
+            }
+            const parameters = frames.natural();
+            for(let parameter = 0; parameter < parameters; parameter++) {
+                frames.field();
+            }
+        }
+        return new TemplateSymbol(true, name, count, library);
+    }
+    listed(index: number, subject: TypeFact, seen: number[]): boolean {
+        if(seen.includes(subject.id)) {
+            return false;
+        }
+        seen.push(subject.id);
+        const frames = new Frames(this.rules.ask(index, `type-symbol-details\n${subject.id}`));
+        header(frames, 'type-symbol-details');
+        const own = this.symbol(frames);
+        const alias = this.symbol(frames);
+        frames.end();
+        const name = alias.present ? alias.name : own.name;
+        const declarations = own.present ? own : alias;
+        if(
+            !subject.error &&
+            ['Error', 'URL', 'URLSearchParams'].includes(name) &&
+            (declarations.declarations === 0 || declarations.library)
+        ) {
+            return true;
+        }
+        const bases = types(this.rules.ask(index, `base-shapes\n${subject.id}`), 'base-shapes');
+        for(const id of bases.roots) {
+            if(this.listed(index, bases.type(id), seen)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    allowed(index: number, facts: Types, subject: TypeFact): boolean {
+        if((subject.flags & unionFlag) !== 0) {
+            return subject.parts.every((id) => this.allowed(index, facts, facts.type(id)));
+        }
+        if((subject.flags & intersectionFlag) !== 0) {
+            return subject.parts.some((id) => this.allowed(index, facts, facts.type(id)));
+        }
+        if((subject.flags & stringLike) !== 0) {
+            return true;
+        }
+        if(this.listed(index, subject, [])) {
+            return true;
+        }
+        if((subject.flags & (1 | booleanLike | nullish | numberLike | bigintLike)) !== 0) {
+            return true;
+        }
+        return this.rules.name(subject, index) === 'RegExp';
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'TemplateExpression') {
+                continue;
+            }
+            const parent = this.rules.parents[index] ?? -1;
+            if(parent >= 0 && this.rules.parser.node(parent).kind === 'TaggedTemplateExpression') {
+                continue;
+            }
+            for(const span of node.children.slice(1)) {
+                const expression = this.rules.parser.node(span).children[0] ?? -1;
+                const facts = types(this.rules.ask(expression, 'type-shape'), 'type-shape');
+                if(!this.allowed(expression, facts, facts.root())) {
+                    this.rules.add(
+                        'restrict-template-expressions',
+                        'invalidType',
+                        `Invalid type "${this.rules.name(facts.root(), expression)}" of template literal expression.`,
+                        expression,
+                    );
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,135 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+
+export class UsageType {
+    readonly flags: number;
+    readonly objects: number;
+    readonly start: number;
+    readonly end: number;
+    readonly file: string;
+    readonly constraint: number;
+    readonly defaultType: number;
+    readonly array: boolean;
+    readonly tuple: boolean;
+    readonly readonly_: boolean;
+    readonly name: string;
+    readonly alias: readonly number[];
+    readonly parts: readonly number[];
+    readonly arguments_: readonly number[];
+    readonly properties: readonly number[];
+    readonly indexes: readonly number[];
+    readonly signatures: readonly number[];
+    readonly parameters: readonly number[];
+    readonly typeParameters: readonly number[];
+    readonly returns: readonly number[];
+    constructor(
+        flags: number,
+        objects: number,
+        start: number,
+        end: number,
+        file: string,
+        constraint: number,
+        defaultType: number,
+        array: boolean,
+        tuple: boolean,
+        readonly_: boolean,
+        name: string,
+        alias: readonly number[],
+        parts: readonly number[],
+        arguments_: readonly number[],
+        properties: readonly number[],
+        indexes: readonly number[],
+        signatures: readonly number[],
+        parameters: readonly number[],
+        typeParameters: readonly number[],
+        returns: readonly number[],
+    ) {
+        this.flags = flags;
+        this.objects = objects;
+        this.start = start;
+        this.end = end;
+        this.file = file;
+        this.constraint = constraint;
+        this.defaultType = defaultType;
+        this.array = array;
+        this.tuple = tuple;
+        this.readonly_ = readonly_;
+        this.name = name;
+        this.alias = alias;
+        this.parts = parts;
+        this.arguments_ = arguments_;
+        this.properties = properties;
+        this.indexes = indexes;
+        this.signatures = signatures;
+        this.parameters = parameters;
+        this.typeParameters = typeParameters;
+        this.returns = returns;
+    }
+}
+export class UsageShape {
+    readonly root: number;
+    readonly records: readonly UsageType[];
+    constructor(text: string) {
+        const frames = new Frames(text);
+        header(frames, 'usage-shape');
+        this.root = frames.natural();
+        const length = frames.natural();
+        const records: UsageType[] = [];
+        for(let at = 0; at < length; at++) {
+            records.push(
+                new UsageType(
+                    frames.natural(),
+                    frames.natural(),
+                    frames.natural(),
+                    frames.natural(),
+                    frames.field(),
+                    frames.natural(),
+                    frames.natural(),
+                    frames.yes(),
+                    frames.yes(),
+                    frames.yes(),
+                    frames.field(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                    frames.ids(),
+                ),
+            );
+        }
+        frames.end();
+        this.records = records;
+        const ids: number[] = [this.root];
+        for(const record of records) {
+            ids.push(record.constraint);
+            ids.push(record.defaultType);
+            for(const list of [
+                record.alias,
+                record.parts,
+                record.arguments_,
+                record.properties,
+                record.indexes,
+                record.signatures,
+                record.parameters,
+                record.typeParameters,
+                record.returns,
+            ]) {
+                for(const id of list) {
+                    ids.push(id);
+                }
+            }
+        }
+        for(const id of ids) {
+            if(id > length) {
+                panic('invalid checker usage graph identity');
+            }
+        }
+    }
+    type(id: number): UsageType {
+        return this.records[id - 1] ?? panic('missing checker usage graph identity');
+    }
+}
