@@ -1,0 +1,9 @@
+export class OutcomeArms {
+    readonly name: string;
+    readonly count: number;
+    readonly arms: number[] = [];
+    constructor(name: string, count: number) {
+        this.name = name;
+        this.count = count;
+    }
+}

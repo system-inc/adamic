@@ -1,0 +1,133 @@
+import { OutcomeArms } from './outcome_arms.a';
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { awaitedShape } from './awaited_shape.a';
+import { typeDeclarationAncestry } from './type_declaration_ancestry.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const outcomeNames = [
+    'JsonParseOutcomeType',
+    'JsoncParseOutcomeType',
+    'JsonFileReadOutcomeType',
+    'JsonFileWriteOutcomeType',
+    'PackageJsonReadOutcomeType',
+];
+const outcomeFiles = [
+    '/nexus/source/structured-text/json/Json.ts',
+    '/nexus/source/structured-text/json/Jsonc.ts',
+    '/nexus/source/structured-text/json/JsonFile.ts',
+    '/nexus/source/structured-text/json/JsonFile.ts',
+    '/nexus/source/system/PackageJson.ts',
+];
+const outcomeMessage =
+    'This call returns a `{{typeName}}` and the statement throws it away, so the arm that says it failed (a write that never landed, a file that would not parse) is never read and the code runs on as if it succeeded. Keep the outcome and handle its failure arm, or return it to a caller that will. If ignoring it is the intent, say so with `void`.';
+
+export class NoDiscardedOutcome {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    typeName(index: number, awaited: boolean): string {
+        const raw = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(!raw.present) {
+            return '';
+        }
+        const facts = awaited ? awaitedShape(this.rules, index, raw.root().id) : raw;
+        if(!facts.present) {
+            return '';
+        }
+        const groups = new Map<string, OutcomeArms>();
+        for(const id of facts.parts(facts.root())) {
+            for(const declaration of typeDeclarationAncestry(this.rules, index, id)) {
+                const arm = declaration.chain[0];
+                if(arm === undefined || arm.kind !== 'TypeLiteral') {
+                    continue;
+                }
+                let at = 1;
+                while(declaration.chain[at]?.kind === 'ParenthesizedType') {
+                    at++;
+                }
+                const union = declaration.chain[at];
+                if(union === undefined || union.kind !== 'UnionType') {
+                    continue;
+                }
+                at++;
+                while(declaration.chain[at]?.kind === 'ParenthesizedType') {
+                    at++;
+                }
+                const alias = declaration.chain[at];
+                const before = declaration.chain[at - 1];
+                const parent = declaration.chain[at + 1];
+                if(
+                    alias === undefined ||
+                    before === undefined ||
+                    alias.kind !== 'TypeAliasDeclaration' ||
+                    parent?.kind !== 'SourceFile' ||
+                    alias.declaredStart !== before.start ||
+                    alias.declaredEnd !== before.end
+                ) {
+                    continue;
+                }
+                let recognized = false;
+                for(let known = 0; known < outcomeNames.length; known++) {
+                    if(alias.name === outcomeNames[known] && declaration.file.endsWith(outcomeFiles[known] ?? '')) {
+                        recognized = true;
+                    }
+                }
+                if(!recognized) {
+                    continue;
+                }
+                const key = `${declaration.file}:${union.start}:${union.end}`;
+                let group = groups.get(key);
+                if(group === undefined) {
+                    group = new OutcomeArms(alias.name, union.members);
+                    groups.set(key, group);
+                }
+                if(!group.arms.includes(arm.start)) {
+                    group.arms.push(arm.start);
+                }
+            }
+        }
+        for(const name of outcomeNames) {
+            for(const group of groups.values()) {
+                if(group.name === name && group.arms.length === group.count) {
+                    return name;
+                }
+            }
+        }
+        return '';
+    }
+    check(index: number): void {
+        const statement = this.rules.parser.node(index);
+        let expression = this.rules.skip(statement.children[0] ?? -1);
+        let awaited = false;
+        if(this.rules.parser.node(expression).kind === 'AwaitExpression') {
+            expression = this.rules.skip(this.rules.parser.node(expression).children[0] ?? -1);
+            awaited = true;
+        }
+        if(this.rules.parser.node(expression).kind !== 'CallExpression') {
+            return;
+        }
+        const name = this.typeName(expression, awaited);
+        if(name === '') {
+            return;
+        }
+        this.rules.findings.push(
+            new Diagnostic(
+                'correctness-no-discarded-outcome',
+                'outcomeDiscarded',
+                outcomeMessage.replace('{{typeName}}', name),
+                this.rules.byte(this.rules.start(statement)),
+                this.rules.byte(statement.end),
+                'nexus/',
+            ),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'ExpressionStatement') {
+                this.check(index);
+            }
+        }
+    }
+}

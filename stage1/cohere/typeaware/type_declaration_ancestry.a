@@ -1,0 +1,46 @@
+import { AncestorNode } from './ancestor_node.a';
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class DeclarationAncestry {
+    readonly file: string;
+    readonly chain: readonly AncestorNode[];
+    constructor(file: string, chain: readonly AncestorNode[]) {
+        this.file = file;
+        this.chain = chain;
+    }
+}
+export function typeDeclarationAncestry(rules: Rules, index: number, id: number): DeclarationAncestry[] {
+    const frames = new Frames(rules.ask(index, `type-declaration-ancestry\n${id}`));
+    header(frames, 'type-declaration-ancestry');
+    const declarations: DeclarationAncestry[] = [];
+    const count = frames.natural();
+    for(let at = 0; at < count; at++) {
+        const file = frames.field();
+        const length = frames.natural();
+        const chain: AncestorNode[] = [];
+        for(let parent = 0; parent < length; parent++) {
+            const kind = frames.field();
+            const start = frames.natural();
+            const end = frames.natural();
+            const name = frames.field();
+            const members = frames.natural();
+            let declaredStart = -1;
+            let declaredEnd = -1;
+            let declaredKind = '';
+            if(frames.yes()) {
+                declaredStart = frames.natural();
+                declaredEnd = frames.natural();
+                declaredKind = frames.field();
+            }
+            if(start > end || declaredStart > declaredEnd) {
+                panic('invalid declaration ancestry span');
+            }
+            chain.push(new AncestorNode(kind, start, end, name, members, declaredStart, declaredEnd, declaredKind));
+        }
+        declarations.push(new DeclarationAncestry(file, chain));
+    }
+    frames.end();
+    return declarations;
+}

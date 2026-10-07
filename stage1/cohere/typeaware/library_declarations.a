@@ -1,0 +1,72 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { DeclarationFact, DocTag, SymbolDetail } from './caller.ts';
+
+function declaration(frames: Frames): DeclarationFact {
+    const file = frames.field();
+    const kind = frames.field();
+    const start = frames.natural();
+    const end = frames.natural();
+    const declarationFile = frames.yes();
+    const library = frames.yes();
+    const parentKind = frames.field();
+    const parentName = frames.field();
+    const parentStart = frames.natural();
+    const parentEnd = frames.natural();
+    const count = frames.natural();
+    const tags: DocTag[] = [];
+    for(let at = 0; at < count; at++) {
+        tags.push(new DocTag(frames.field(), frames.field(), frames.natural(), frames.natural(), frames.field()));
+    }
+    const length = frames.natural();
+    const parameters: string[] = [];
+    for(let at = 0; at < length; at++) {
+        parameters.push(frames.field());
+    }
+    return new DeclarationFact(
+        file,
+        kind,
+        start,
+        end,
+        declarationFile,
+        library,
+        parentKind,
+        parentName,
+        parentStart,
+        parentEnd,
+        tags,
+        parameters,
+    );
+}
+function symbol(frames: Frames): SymbolDetail {
+    const present = frames.yes();
+    let id = 0;
+    let flags = 0;
+    let name = '';
+    const declarations: DeclarationFact[] = [];
+    if(present) {
+        id = frames.natural();
+        flags = frames.natural();
+        name = frames.field();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            declarations.push(declaration(frames));
+        }
+    }
+    return new SymbolDetail(present, id, flags, name, declarations);
+}
+export function nodeSymbol(rules: Rules, index: number): SymbolDetail {
+    const frames = new Frames(rules.ask(index, 'node-symbol-details'));
+    header(frames, 'node-symbol-details');
+    const result = symbol(frames);
+    frames.end();
+    return result;
+}
+export function typeSymbol(rules: Rules, index: number, id: number): SymbolDetail {
+    const frames = new Frames(rules.ask(index, `type-symbol-details\n${id}`));
+    header(frames, 'type-symbol-details');
+    const result = symbol(frames);
+    symbol(frames);
+    frames.end();
+    return result;
+}

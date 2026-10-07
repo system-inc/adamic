@@ -1,0 +1,29 @@
+export class AncestorNode {
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly name: string;
+    readonly members: number;
+    readonly declaredStart: number;
+    readonly declaredEnd: number;
+    readonly declaredKind: string;
+    constructor(
+        kind: string,
+        start: number,
+        end: number,
+        name: string,
+        members: number,
+        declaredStart: number,
+        declaredEnd: number,
+        declaredKind: string,
+    ) {
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.name = name;
+        this.members = members;
+        this.declaredStart = declaredStart;
+        this.declaredEnd = declaredEnd;
+        this.declaredKind = declaredKind;
+    }
+}

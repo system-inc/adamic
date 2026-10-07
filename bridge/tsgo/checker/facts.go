@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "type-declaration-ancestry":
+		return p.typeDeclarationAncestry(out, question)
 	case "awaited-shape":
 		return p.awaitedShape(out, c, question)
 	case "constraint-shape":
