@@ -1,3 +1,62 @@
+# Predicate callback fix rerun: red at the overload result
+
+6feee11b is merged in unpushed scratch c40d2a4e. The previous callback minimal
+now builds and runs native `true`, exit 0, empty stderr. Focused predicate and
+checked-overload-result tests pass (0.683s). The validated slice still refuses
+core.ts:54:116: every's outer `array is readonly U[]` result on a bodyless
+overload has no body proving its parameter. The callback at column 101 is cleared.
+Reduced native-predicate-overload-result.a reproduces at 3:109.
+
+Unsplit, split and repeat builds all exit 1 at this same refusal, before C.
+C bytes/lines, clang wall times, parser binary size, native user time and both
+native reference comparisons are unavailable; no native output-byte mutant can
+run. Cache contains zero objects; repeat is not warm. nproc 5, perf absent.
+Same-input Node runs all match the 81-file reference (cmp 0), best user time
+6.162363s. Reference: 36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+The committed 10,406-case manifest remains the conditional native acceptance
+input; no native case run occurred, and its Node run was not repeated this turn.
+
+## Ordered discovery behind stubs
+
+Only row 1 is observed on the validated slice. All subsequent rows are found
+behind explicit scratch-only bypasses, listed with exact diagnostics and eleven
+Node-checked minimal programs in evidence/front10/build/report.json. The final
+source patch and compiler-proof bypass are retained there as compressed evidence;
+they are not source adaptations, do not enter the acceptance slice, and were
+never committed to the scratch compiler. The real scratch predicate verifier
+has been restored. No compiler edits are pushed on this proof branch.
+
+1. `src/compiler/core.ts:54`: every overload result; minimal `native-predicate-overload-result.a`.
+2. `src/compiler/core.ts:195`: sameMap generic array cast; minimal `native-generic-array-cast.a` (found behind a stub).
+3. `src/compiler/core.ts:230`: flatMap empty fallback; minimal `native-generic-empty-array.a` (found behind a stub).
+4. `src/compiler/core.ts:283`: some overload result; minimal `native-some-predicate-overload.a` (found behind a stub).
+5. `src/compiler/core.ts:421`: toSorted brand cast; minimal `native-sorted-array-brand.a` (found behind a stub).
+6. `src/compiler/core.ts:525`: reduceLeft arguments; minimal `native-arguments-length.a` (found behind a stub).
+7. `src/compiler/core.ts:542`: hasOwnProperty detached method; minimal `native-has-own-property.a` (found behind a stub).
+8. `src/compiler/core.ts:594`: isArray builtin predicate; minimal `native-array-is-array-predicate.a` (found behind a stub).
+9. `src/compiler/core.ts:619`: predicate to AnyFunction view; minimal `native-predicate-function-view.a` (found behind a stub).
+10. `src/compiler/core.ts:890`: process any cast; minimal `native-process-any-cast.a` (found behind a stub).
+11. `src/compiler/debug.ts:26`: Debug namespace; minimal `native-debug-namespace.a` (found behind a stub).
+
+Discovery stops at Debug's namespace: further continuation needs broad namespace
+transformation, beyond the isolated probes used here. This is not an exhaustive
+blocker list. The temporary source-only erasure of some's predicate caused
+nodeFactory checker errors; those were probe artifacts, not new source blockers.
+The original annotation was restored for subsequent probes. Namespace Node
+execution uses the merged scratch oracle's transform mode; the strip-only
+runner's unsupported-syntax attempt is also retained honestly in the report.
+
+Replay builds with measure-builds.py and native-proof.py using the paths recorded
+in report.json; the latter invokes both native references only after a binary
+exists. Minimal builds use parser-front10-adamic from c40d2a4e plus the retained
+SDK and predicateRefusal integration. Ordinary minima run with oracle/node.mjs;
+the namespace minimal uses the scratch transform runner. No full gate claimed.
+Native status remains syntax tree and parse diagnostics identical on Node,
+JSDoc unverified, error recovery unverified. No new temporaries made.
+
+---
+
 # Newest-tip reference checkpoint: Node green, native red
 
 The fresh full adapted tree and refreshed slice match every committed per-case
