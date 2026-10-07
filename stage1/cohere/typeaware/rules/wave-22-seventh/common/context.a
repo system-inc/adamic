@@ -13,11 +13,13 @@ export class Context extends Base {
     readonly names=new Map<number,number>();
     readonly caseCache=new Map<number,number[]>();
     readonly source: string;
+    hasJsxAttributes=false;
     constructor(bindings: Bindings) {
         super(bindings);this.source=bindings.rules.scanner.text;
         const kinds=kindNumbers();
         for(let i=0;i<this.sourceCount;i++) {
             const raw=bindings.rules.parser.node(i);const node=this.node(i);
+            if(node.kind===Kind.JsxAttribute){this.hasJsxAttributes=true;}
             this.operators.set(i,node.kind===Kind.BinaryExpression&&node.children.length===3?this.node(node.children[1]??-1).kind:kinds.get(raw.operator)??0);this.starts.set(i,bindings.rules.start(raw));this.ends.set(i,raw.end);
             this.nativeRanges.set(`${node.kind}:${node.pos}:${node.end}`,i);
             this.initializers.set(i,bindings.shape.initializer(i));this.names.set(i,bindings.shape.name(i));
