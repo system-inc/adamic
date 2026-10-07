@@ -1267,7 +1267,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	} else if len(arguments) > 1 {
 		return nil, true, l.notYet(node, "join with more than one argument")
 	}
-	return ir.ArrayJoin{Array: array, Separator: separator, Element: element}, true, nil
+	return l.viewArrayJoin(node, receiver, array, separator, element), true, nil
 }
 
 // arrayMethods are the array methods arrayMethod lowers, beside the visits.
