@@ -13,3 +13,8 @@ func (ArrayHoles) Type() Type { return Array }
 type ArrayRangeErrorIs struct{ Value Expression }
 
 func (ArrayRangeErrorIs) Type() Type { return Boolean }
+
+// ArraySetLength applies ArraySetLength semantics and may throw RangeError.
+type ArraySetLength struct{ Array, Length Expression }
+
+func (ArraySetLength) Type() Type { return Number }

@@ -283,6 +283,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return result
 	case ir.ArrayMap:
+		if e.hasArrayHoles() {
+			return e.arrayHolesMap(expression)
+		}
 		if mapped, ok := e.mapped(expression); ok {
 			return mapped
 		}
@@ -316,6 +319,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.libraryArraySearch(expression)
 	case ir.ArrayRangeErrorIs:
 		return fmt.Sprintf("adamic_array_is_range_error(%s)", e.value(expression.Value))
+	case ir.ArraySetLength:
+		return e.arrayHolesLength(expression)
 	case ir.ArrayHoles:
 		return e.arrayHoles(expression)
 	case ir.ArrayFill:
@@ -527,6 +532,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
 	case ir.ArrayJoin:
+		if e.hasArrayHoles() {
+			array := e.value(expression.Array)
+			separator := e.value(expression.Separator)
+			return e.own(ir.String, fmt.Sprintf("adamic_array_holes_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+		}
 		if expression.Depth > 0 {
 			return e.libraryArrayJoin(expression)
 		}

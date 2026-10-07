@@ -73,6 +73,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
+	builder.WriteString("const adamicArrayHolesSetIndex = (array, index, value) => { array[index] = value; };\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
@@ -370,7 +371,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
-		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
+		setter := "adamicSetIndex"
+		if hasArrayHoles(e.program) {
+			setter = "adamicArrayHolesSetIndex"
+		}
+		e.line("%s(%s, %s, %s);", setter, e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
 	case ir.Return:
 		if statement.Value == nil {
 			e.line("return;")
@@ -831,6 +836,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + ".reverse()"
 	case ir.ArrayRangeErrorIs:
 		return "(" + e.value(expression.Value) + " instanceof RangeError)"
+	case ir.ArraySetLength:
+		return "(" + e.value(expression.Array) + ".length = " + e.value(expression.Length) + ")"
 	case ir.ArrayHoles:
 		return "new Array(" + e.value(expression.Length) + ")"
 	case ir.ArrayFill:
@@ -884,6 +891,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
 	case ir.ArrayMap:
+		if hasArrayHoles(e.program) {
+			return "adamicVisit(" + e.value(expression.Array) + ", 'map', " + e.value(expression.Callback) + ")"
+		}
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
 		if expression.Method == "find" || expression.Method == "findIndex" || expression.Method == "findLast" || expression.Method == "findLastIndex" {

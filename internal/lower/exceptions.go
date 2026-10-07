@@ -163,7 +163,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
-		case ir.Throw, ir.ArrayHoles:
+		case ir.Throw, ir.ArrayHoles, ir.ArraySetLength:
 			found = true
 		case ir.NodeHostCall:
 			found = node.Throws

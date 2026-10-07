@@ -10,6 +10,9 @@ import (
 
 // assignment lowers =, and the compound assignments, to a local.
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+	if statements, known, err := l.arrayLengthWrite(node); known {
+		return statements, err
+	}
 	if value, known, err := l.processValue(node); known {
 		if err != nil {
 			return nil, err

@@ -1,12 +1,16 @@
 package oracle
 
 import (
+	"errors"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
 func TestArrayHolesMilestone(t *testing.T) {
-	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a"} {
+	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a", "library_array_holes_references.a", "library_array_holes_callbacks.a", "library_array_holes_resize.a", "library_array_holes_toString.a", "library_array_holes_keys.a", "library_array_holes_catch.a"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 			if err != nil {
@@ -32,10 +36,56 @@ func TestArrayHolesMilestone(t *testing.T) {
 }
 
 func init() {
-	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a"} {
+	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a", "library_array_holes_references.a", "library_array_holes_callbacks.a", "library_array_holes_resize.a", "library_array_holes_toString.a", "library_array_holes_keys.a", "library_array_holes_catch.a"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
 		}{"internal/oracle/testdata/" + name, true, false})
+	}
+}
+
+func TestArrayHolesRefusals(t *testing.T) {
+	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/library_array_holes_refuse_*.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(paths) != 30 {
+		t.Fatalf("want all 30 refusal fixtures, got %d", len(paths))
+	}
+	for _, path := range paths {
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			absolute, err := filepath.Abs(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var truth run
+			if filepath.Base(path) == "library_array_holes_refuse_console.a" {
+				truth = execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), absolute)
+			} else {
+				truth = onNode(t, absolute)
+			}
+			if truth.exitCode != 0 || len(truth.stderr) != 0 {
+				t.Fatalf("Node source did not finish: %d %s", truth.exitCode, truth.stderr)
+			}
+			if filepath.Base(path) == "library_array_holes_refuse_console.a" {
+				_, err := load.Load([]string{absolute})
+				var check *load.CheckError
+				if !errors.As(err, &check) {
+					t.Fatalf("want the existing typed console refusal, got %v", err)
+				}
+				t.Logf("%v; Node stdout %q", err, truth.stdout)
+				return
+			}
+			_, err = lowered(t, absolute)
+			var notYet *lower.NotYet
+			var refused *lower.Refused
+			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+				t.Fatalf("want a named compile refusal, got %v", err)
+			}
+			if err == nil || (!strings.Contains(err.Error(), "array") && !strings.Contains(err.Error(), "Array") && !strings.Contains(err.Error(), "in") && !strings.Contains(err.Error(), "hasOwnProperty") && !strings.Contains(err.Error(), "console")) {
+				t.Fatalf("refusal has no operation reason: %v", err)
+			}
+			t.Logf("%v; Node stdout %q", err, truth.stdout)
+		})
 	}
 }
