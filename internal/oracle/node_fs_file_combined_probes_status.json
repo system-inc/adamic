@@ -96,39 +96,75 @@
     }
   },
   {
-    "file": "cloud/reports/host-proof-combined/probes/18_undefined.a",
-    "source": "let activeSession: undefined; console.log(String(activeSession));",
+    "file": "cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a",
+    "source": "const system = { exit(code?: number): void { console.log(String(code)); } }; system.exit(0);",
     "native": {
       "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/18_undefined.a:1:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a:1:23: stage 0 can't lower a function value with an optional parameter yet\n"
     },
     "javascript": {
       "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/18_undefined.a:1:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a:1:23: stage 0 can't lower a function value with an optional parameter yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/18_undefined.a",
+    "source": "let activeSession: undefined; console.log(String(activeSession));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/22_ambient_hash.a",
+    "source": "declare function createSHA256Hash(data: string): string; console.log('unused');",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/22_ambient_hash.a:1:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/22_ambient_hash.a:1:1: stage 0 can't lower a function without a body yet\n"
     }
   },
   {
     "file": "cloud/reports/host-proof-combined/probes/22_undefined.a",
     "source": "const crypto: undefined = undefined; console.log(crypto ? 'present' : 'absent');",
     "native": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/22_undefined.a:1:7: stage 0 can't lower a value of type undefined yet\n"
+      "exit": 0,
+      "diagnostic": ""
     },
     "javascript": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/22_undefined.a:1:7: stage 0 can't lower a value of type undefined yet\n"
+      "exit": 0,
+      "diagnostic": ""
     }
   },
   {
     "file": "cloud/reports/host-proof-combined/probes/non_null_narrowed_scalar.a",
-    "source": "function narrowed(value: number | string | undefined): number { if (typeof value === 'number') return value!; return 1; } console.log(narrowed(0));",
+    "source": "function narrowed(value: number | string | undefined): number { if (typeof value === 'number') return value!; return 1; } console.log(String(narrowed(0)));",
     "native": {
       "exit": 1,
-      "diagnostic": "cloud/reports/host-proof-combined/probes/non_null_narrowed_scalar.a:1:135: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\n"
+      "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-4173259983/main.c:19:28: error: invalid operands to binary expression ('double' and 'void *')\n   19 |                 if (!(adamic_temporary_1 != NULL)) {\n      |                       ~~~~~~~~~~~~~~~~~~ ^  ~~~~\n1 error generated.\n\n"
     },
     "javascript": {
-      "exit": 1,
-      "diagnostic": "cloud/reports/host-proof-combined/probes/non_null_narrowed_scalar.a:1:135: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\n"
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/null_classifier.a",
+    "source": "function tag(value: unknown): string { return typeof value; }\nconsole.log(tag(null));\nconsole.log(tag(undefined));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
     }
   }
 ]

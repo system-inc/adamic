@@ -220,11 +220,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
     }
   },
   {
@@ -232,11 +232,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
     }
   },
   {
@@ -244,11 +244,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
     }
   },
   {
@@ -270,11 +270,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
     }
   },
   {
