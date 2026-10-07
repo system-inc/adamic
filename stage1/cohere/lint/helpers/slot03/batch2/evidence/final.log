@@ -1,0 +1,36 @@
+=== RUN   TestBatch2Helpers
+    batch2_test.go:61: 208636 lines match real Go, Node source and sanitized native
+--- PASS: TestBatch2Helpers (30.92s)
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/intrinsic_element_named.a
+    batch2_test.go:101: compiled semantic mutant caught at line 24: got "true" Go "false"
+=== RUN   TestBatch2Mutants/hole_edges.a
+    batch2_test.go:101: compiled semantic mutant caught at line 179230: got "false,false" Go "true,false"
+=== RUN   TestBatch2Mutants/read_class_values.a
+    batch2_test.go:101: compiled semantic mutant caught at line 185959: got "Attribute::" Go "Callee::"
+--- PASS: TestBatch2Mutants (83.27s)
+    --- PASS: TestBatch2Mutants/intrinsic_element_named.a (27.15s)
+    --- PASS: TestBatch2Mutants/hole_edges.a (24.81s)
+    --- PASS: TestBatch2Mutants/read_class_values.a (27.59s)
+=== RUN   TestSlot03HelpersMatchCohere
+    slot03_test.go:105: 1115085 helper output lines match Go, Node source and sanitized native
+--- PASS: TestSlot03HelpersMatchCohere (6.08s)
+=== RUN   TestSlot03HelperMutants
+=== RUN   TestSlot03HelperMutants/component_base_name.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 159: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/tailwind_space.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 847: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 1114948: got "JsxAttribute,CallExpression,StringLiteral" Go "JsxAttribute,CallExpression,VariableDeclaration"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/shared-list
+    slot03_test.go:160: compiled semantic mutant caught at line 1114949: got "StringLiteral,CallExpression,VariableDeclaration" Go "JsxAttribute,CallExpression,VariableDeclaration"
+--- PASS: TestSlot03HelperMutants (8.71s)
+    --- PASS: TestSlot03HelperMutants/component_base_name.a/value (1.70s)
+    --- PASS: TestSlot03HelperMutants/tailwind_space.a/value (1.64s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/value (1.49s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/shared-list (1.32s)
+=== RUN   TestConsumerCoverageRejectsMutant
+    slot03_test.go:277: missing-consumer mutant caught: consumer capture mismatch: missing [better-tailwindcss/no-unknown-classes] extra []
+--- PASS: TestConsumerCoverageRejectsMutant (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	128.997s
