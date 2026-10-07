@@ -1,0 +1,7 @@
+import { panic } from 'adamic';
+export function variableDeclarationList(builder: number, node: number, isDeclarationList: boolean, hasDeclarations: boolean, declarations: number[], visit: (builder: number, node: number) => void): void {
+    if (node === -1) { return; }
+    if (!isDeclarationList) { panic('variableDeclarationList requires a declaration-list node'); }
+    if (!hasDeclarations) { return; }
+    for (const declaration of declarations) { visit(builder, declaration); }
+}

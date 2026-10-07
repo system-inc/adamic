@@ -1,0 +1,44 @@
+import { panic } from 'adamic';
+export interface IngestNode { atRule: boolean; container: boolean; name: string; params: string; children: number[]; }
+export interface SkippedDirective { name: string; params: string; path: string; }
+export interface ImportResult { value: string; error: number; }
+export interface IngestDependencies {
+    resolveImport: (node: number, path: string) => ImportResult;
+    loadFile: (path: string) => number;
+    theme: (node: number, path: string) => number;
+    utility: (node: number, path: string) => number;
+    customVariant: (node: number) => void;
+}
+// Numeric arena handles preserve node identity; -1 means no dependency error.
+export function ingest(nodes: IngestNode[], roots: number[], path: string, skipped: SkippedDirective[], deps: IngestDependencies): number {
+    for (const id of roots) {
+        const node = (nodes[id] ?? panic('invalid arena identity'));
+        if (!node.atRule) {
+            if (node.container) {
+                const error = ingest(nodes, node.children, path, skipped, deps);
+                if (error !== -1) { return error; }
+            }
+            continue;
+        }
+        if (node.name === '@import') {
+            const resolved = deps.resolveImport(id, path);
+            if (resolved.error !== -1) { return resolved.error; }
+            const error = deps.loadFile(resolved.value);
+            if (error !== -1) { return error; }
+        } else if (node.name === '@theme') {
+            const error = deps.theme(id, path);
+            if (error !== -1) { return error; }
+        } else if (node.name === '@utility') {
+            const error = deps.utility(id, path);
+            if (error !== -1) { return error; }
+        } else if (node.name === '@custom-variant') {
+            deps.customVariant(id);
+        } else if (node.name === '@config' || node.name === '@plugin') {
+            skipped.push({name: node.name, params: node.params, path});
+        } else if (node.container) {
+            const error = ingest(nodes, node.children, path, skipped, deps);
+            if (error !== -1) { return error; }
+        }
+    }
+    return -1;
+}

@@ -1,0 +1,67 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { ingest } from './stylesheet_ingest.a';
+import { nestedFunction } from './nested_function.a';
+import { variableDeclarationList } from './variable_declaration_list.a';
+import type { IngestNode, SkippedDirective } from './stylesheet_ingest.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function field(row: number, name: string): number { return json.field(row, name); }
+function text(row: number, name: string): string { return json.node(field(row,name)).text; }
+function number(row: number, name: string): number { return json.node(field(row,name)).number; }
+function flag(row: number, name: string): boolean { return text(row,name) === 'true'; }
+let calls = 0;
+let trace = '';
+let fail = 0;
+function call(op: string, node: number, path: string): number {
+    trace += `${op}:${node}:${path};`;
+    calls++;
+    return calls === fail ? 7 : -1;
+}
+for (const row of json.node(field(root,'CSS')).children) {
+    const nodes: IngestNode[] = [];
+    for (const raw of json.node(field(row,'Nodes')).children) {
+        const children: number[] = [];
+        for (const child of json.node(field(raw,'Children')).children) { children.push(json.node(child).number); }
+        nodes.push({atRule:flag(raw,'AtRule'),container:flag(raw,'Container'),name:text(raw,'Name'),params:text(raw,'Params'),children});
+    }
+    const roots: number[] = [];
+    for (const id of json.node(field(row,'Roots')).children) { roots.push(json.node(id).number); }
+    trace = ''; calls = 0; fail = number(row,'Fail');
+    const skipped: SkippedDirective[] = [];
+    const result = ingest(nodes, roots, text(row,'Path'), skipped, {
+        resolveImport: (id,path) => ({value:`resolved:${(nodes[id] ?? panic('invalid arena identity')).params}`,error:call('resolve',id,path)}),
+        loadFile: (path) => call('load',-1,path),
+        theme: (id,path) => call('theme',id,path),
+        utility: (id,path) => call('utility',id,path),
+        customVariant: (id) => { call('custom',id,''); }
+    });
+    console.log(`result:${result}:${trace}`);
+    for (const s of skipped) { console.log(`skip:${s.name}:${s.params}:${s.path}`); }
+}
+interface Block { events: number[]; }
+interface Builder { current: number; }
+let blocks: Block[] = [];
+let builders: Builder[] = [];
+let mode = 0;
+function hook(op: string, builder: number, node: number): void {
+    const b = builders[builder] ?? panic('builder identity');
+    calls++; trace += `${op}:${builder}:${node};`;
+    (blocks[b.current] ?? panic('current block')).events.push(node);
+    if (mode === 1) { b.current = 1-builder; (blocks[b.current] ?? panic('next block')).events.push(100+node); }
+}
+for (const row of json.node(field(root,'CFG')).children) {
+    builders = [{current:0},{current:1}]; blocks = [{events:[11]},{events:[22]}]; calls=0;trace='';mode=number(row,'Mode');
+    const builder = number(row,'Builder'); const node = number(row,'Node');
+    const declarations: number[] = [];
+    for (const raw of json.node(field(row,'Declarations')).children) { declarations.push(json.node(raw).number); }
+    if (text(row,'Op') === 'nested') { nestedFunction(builder,node,(b,n) => hook('header',b,n)); }
+    else { variableDeclarationList(builder,node,flag(row,'IsList'),flag(row,'HasList'),declarations,(b,n) => hook('decl',b,n)); }
+    console.log(`calls:${calls}:${trace}`);
+    for (let i=0;i<builders.length;i++) { console.log(`builder:${i}:${(builders[i] ?? panic('builder')).current}`); }
+    for (let i=0;i<blocks.length;i++) { let values=''; for (const e of (blocks[i] ?? panic('block')).events) { values += `${e},`; } console.log(`block:${i}:${values}`); }
+}
