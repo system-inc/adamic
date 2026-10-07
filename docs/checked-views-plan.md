@@ -431,3 +431,34 @@ and the required brand/schema proof support, arriving by October 9. This is a
 conditional working estimate, not an unconditional promise to erase phantom
 brands or admit incomplete dictionaries/callable signatures. Completion evidence
 and remaining pair/read totals are updated at every push.
+
+## Untagged object union unit, October 7
+
+Worker branch `codex/views-untagged-object-unions` starts at lane 4 583d19b7.
+The user authorizes this plan addition. Own only new files named
+`view_unions_untagged.go` and `view_unions_untagged_test.go` in lower/native/
+JavaScript, runtime `view_unions_untagged.c/.h`, oracle
+`checked_views_untagged_unions_test.go`, and the new
+`stage3/interface-downcasts/untagged/` subtree. Existing mixed-union files,
+shared contracts/dispatch/IR/readiness and counts remain with their owners.
+
+Frozen demand: 84 pairs and 186 explicit reads. Rank by reads descending,
+then checker receiver type id and field. Family labels overlap and include
+narrowed/intersection receivers and array/callable alternatives; keep these in
+the queue rather than silently reclassifying them. Component tests do not
+remove pairs. A pair completes only with actual source read lowering and both
+backend positive/negative pins plus semantic mutants.
+
+Required owner handoff: shared lazy read dispatch supplies the evaluated value,
+its union member contracts and non-panicking presence/readiness/logical-kind
+probes. Member-specific kind tags select candidates, never certify payloads.
+Structural alternatives must permit later candidates after a failed match;
+selected member contracts must survive nested reads and aliases. Reuse existing
+mixed-union selection and shared probes rather than duplicate readiness state.
+Any hook needed in an existing file will be recorded here before implementation.
+
+Working whole-family estimate: October 12, 2026 UTC, conditional on lazy read
+hooks and normalized probes arriving by October 9. Unsupported descendants and
+other-lane alternatives remain named read obligations; no cast-time eagerness
+or trusting Unknown is permitted. This supersedes the provisional October 10
+estimate made before reading the lane handoff documents.
