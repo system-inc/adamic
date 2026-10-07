@@ -79,5 +79,10 @@ Markdown dependencies 0.087s, clang 0.212s, Go build 26.324s, test binaries defe
 26.504s, build cache warm 26.505s, done 26.540s. No fetch failure or workaround.
 Go1.27.1, Node24.19.0, clang20.1.8; setup's full timing lines are in setup.log.
 
-Full named catch ledgers, raw validation logs and memory/wall JSON observations
-are retained in mutant_evidence/. No scratch source mutant or instrumentation is committed.
+Full named catch ledgers and memory/wall JSON observations are committed in
+mutant_evidence/. Raw logs remain local at /tmp/markdown-mutants-*.log (also
+copied into the ignored local mutant_evidence/*.log files). Automatic approval
+review rejected the optional raw-log upload because it contains private paths
+and test data; no raw log payload is pushed. The source change, aggregate results,
+complete catch ledgers and timing metrics are pushed. No scratch source mutant
+or instrumentation is committed.
