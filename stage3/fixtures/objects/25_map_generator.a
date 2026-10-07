@@ -1,0 +1,8 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:332
+// Census reason: yield (generators)
+export function* mapIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U): Generator<U, void, unknown> {
+    for (const x of iter) {
+        yield mapFn(x);
+    }
+}
+console.log([...mapIterator([1, 2, 3], x => x * 2)].join(","));
