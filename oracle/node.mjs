@@ -21,7 +21,7 @@ registerHooks({
 	load(url, context, nextLoad) {
 		if (url.endsWith('.a') || url.endsWith('.ts')) {
 			const source = readFileSync(fileURLToPath(url), 'utf8');
-			return { format: 'module', source: stripTypeScriptTypes(source), shortCircuit: true };
+			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform' }), shortCircuit: true };
 		}
 		return nextLoad(url, context);
 	},
