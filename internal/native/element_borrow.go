@@ -11,7 +11,7 @@ import (
 // take an element out of any array. The array stays alive because a names it for the whole function,
 // and the element stays in it, so the array's count is the variable's.
 
-// planElementBorrows finds the declarations whose variables borrow, keyed by statement, and marks
+// planElementBorrows finds declarations and loop bindings that borrow, keyed by statement, and marks
 // each variable Borrowed, as a borrowed parameter is: reuse in place and moves into consumed
 // parameters refuse those, since the count they'd take is the array's.
 //
@@ -37,6 +37,11 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 					borrows[&list[position]] = true
 					program.Locals[declare.Local].Borrowed = true
 					lending[borrowedArray(declare)] = true
+				}
+				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
+					borrows[&list[position]] = true
+					program.Locals[loop.Local].Borrowed = true
+					lending[loop.Iterable.(ir.Read).Local] = true
 				}
 				walkStatement(list[position], func(ir.Expression) {}, statements)
 			}
@@ -220,4 +225,16 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 		e.hold(owner)
 	}
 	e.end()
+}
+
+// loopBorrowable uses the same local and lending facts as indexed element declarations.
+// Together with the body's changes check, this also proves the iterator needs no array count:
+// an unassigned, uncaptured local or parameter keeps the array alive until the loop exits.
+// Lending prevents moves into consumed parameters from taking that owner away. A throw or early
+// exit ends the iterator before the enclosing variable's scope or the caller's hold ends.
+func loopBorrowable(program *ir.Program, function int, loop ir.ForOf, assigned map[int]bool) bool {
+	if loop.Iterable.Type() != ir.Array || loop.MapPart != "" || loop.RegexIterator || loop.Pattern != nil || loop.Element != program.Locals[loop.Local].Type {
+		return false
+	}
+	return borrowable(program, function, ir.Declare{Local: loop.Local, Value: ir.ArrayIndex{Array: loop.Iterable, Element: loop.Element}}, assigned)
 }
