@@ -1,0 +1,129 @@
+{
+  "event": "cpu-clock:u",
+  "frequency": 997,
+  "samples": 32662,
+  "sampled_cpu_seconds_approximate": 32.760279958,
+  "dispatch_frame_inclusive_percent": 26.88445288102382,
+  "top_self": [
+    {
+      "symbol": "adamic_release",
+      "self_percent": 15.170534566162512,
+      "cpu_seconds_approximate": 4.969909595,
+      "self_under_dispatch_frame_percent": 5.771232625068888
+    },
+    {
+      "symbol": "adamic_retain",
+      "self_percent": 8.462433408854325,
+      "cpu_seconds_approximate": 2.772316876,
+      "self_under_dispatch_frame_percent": 1.6532974098340578
+    },
+    {
+      "symbol": "adamic_function_69_Parser_node",
+      "self_percent": 6.435613250872573,
+      "cpu_seconds_approximate": 2.108324918,
+      "self_under_dispatch_frame_percent": 4.552691200783785
+    },
+    {
+      "symbol": "adamic_function_22_Scanner_code",
+      "self_percent": 5.890637438001347,
+      "cpu_seconds_approximate": 1.929789316,
+      "self_under_dispatch_frame_percent": 0.29391953952605476
+    },
+    {
+      "symbol": "adamic_virtual",
+      "self_percent": 5.400771538791256,
+      "cpu_seconds_approximate": 1.769307876,
+      "self_under_dispatch_frame_percent": 0.9001285897985426
+    },
+    {
+      "symbol": "[unknown]",
+      "self_percent": 5.253811769028228,
+      "cpu_seconds_approximate": 1.721163444,
+      "self_under_dispatch_frame_percent": 1.9349703018798603
+    },
+    {
+      "symbol": "adamic_string_equal",
+      "self_percent": 5.152776927316147,
+      "cpu_seconds_approximate": 1.688064147,
+      "self_under_dispatch_frame_percent": 1.6747290429244994
+    },
+    {
+      "symbol": "adamic_function_33_Scanner_scan",
+      "self_percent": 3.738289143347009,
+      "cpu_seconds_approximate": 1.224673989,
+      "self_under_dispatch_frame_percent": 0.26330292082542406
+    },
+    {
+      "symbol": "adamic_object_check_write",
+      "self_percent": 3.4413079419508907,
+      "cpu_seconds_approximate": 1.127382116,
+      "self_under_dispatch_frame_percent": 0.06735656114138755
+    },
+    {
+      "symbol": "adamic_array_search_from",
+      "self_percent": 2.7708039924070786,
+      "cpu_seconds_approximate": 0.907723145,
+      "self_under_dispatch_frame_percent": 2.084991733512951
+    },
+    {
+      "symbol": "adamic_function_23_Scanner_advance",
+      "self_percent": 2.406466229869573,
+      "cpu_seconds_approximate": 0.788365074,
+      "self_under_dispatch_frame_percent": 0.0826648704917029
+    },
+    {
+      "symbol": "adamic_allocate",
+      "self_percent": 2.3146163737676813,
+      "cpu_seconds_approximate": 0.758274804,
+      "self_under_dispatch_frame_percent": 0.8878819423182903
+    },
+    {
+      "symbol": "adamic_string_char_code",
+      "self_percent": 2.2839997550670503,
+      "cpu_seconds_approximate": 0.748244714,
+      "self_under_dispatch_frame_percent": 0.17145306472353194
+    },
+    {
+      "symbol": "adamic_array_index_of",
+      "self_percent": 2.0268201579817524,
+      "cpu_seconds_approximate": 0.663991958,
+      "self_under_dispatch_frame_percent": 1.5063376400710307
+    },
+    {
+      "symbol": "adamic_array_push",
+      "self_percent": 1.78494887024677,
+      "cpu_seconds_approximate": 0.584754247,
+      "self_under_dispatch_frame_percent": 0.9552385034596779
+    },
+    {
+      "symbol": "find",
+      "self_percent": 1.4695976976302738,
+      "cpu_seconds_approximate": 0.48144432,
+      "self_under_dispatch_frame_percent": 0.07960320862163983
+    },
+    {
+      "symbol": "adamic_function_223_Linter_walk",
+      "self_percent": 1.4481660645398322,
+      "cpu_seconds_approximate": 0.474423257,
+      "self_under_dispatch_frame_percent": 0.0
+    },
+    {
+      "symbol": "adamic_object_free_children",
+      "self_percent": 1.4053027983589492,
+      "cpu_seconds_approximate": 0.460381131,
+      "self_under_dispatch_frame_percent": 0.0
+    },
+    {
+      "symbol": "adamic_function_205_visitRules",
+      "self_percent": 1.3287612516073726,
+      "cpu_seconds_approximate": 0.435305906,
+      "self_under_dispatch_frame_percent": 1.3287612516073726
+    },
+    {
+      "symbol": "adamic_function_4_isIdentifierStart",
+      "self_percent": 1.1144449207029576,
+      "cpu_seconds_approximate": 0.365095276,
+      "self_under_dispatch_frame_percent": 0.04898658992100913
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 25K of event 'cpu-clock:u'
+# Event count (approx.): 25154462711
+#
+# Overhead  Symbol                                                  IPC   [IPC Coverage]
+# ........  ......................................................  ....................
+#
+    13.57%  [.] adamic_release                                      -      -
+     8.75%  [.] adamic_retain                                       -      -
+     7.60%  [.] adamic_function_22_Scanner_code                     -      -
+     5.77%  [.] adamic_string_equal                                 -      -
+     5.08%  [.] adamic_virtual                                      -      -
+     4.93%  [.] adamic_function_33_Scanner_scan                     -      -
+     4.56%  [.] adamic_object_check_write                           -      -
+     3.47%  [.] adamic_function_23_Scanner_advance                  -      -
+     3.01%  [.] adamic_string_char_code                             -      -
+     2.97%  [.] adamic_function_69_Parser_node                      -      -
+     2.51%  [.] adamic_function_223_Linter_walk                     -      -
+     2.13%  [.] adamic_allocate                                     -      -
+     1.89%  [.] find                                                -      -
+     1.79%  [.] adamic_object_free_children                         -      -
+     1.59%  [.] adamic_function_4_isIdentifierStart                 -      -
+     1.41%  [.] adamic_array_set                                    -      -
+     1.24%  [.] adamic_function_28_Scanner_identifier               -      -
+     1.22%  [.] adamic_function_210_Linter_indexParents             -      -
+     1.16%  [.] adamic_array_push                                   -      -
+     1.06%  [.] adamic_function_124_ParseNode_new                   -      -
+     0.89%  [.] adamic_function_67_Parser_kind                      -      -
+     0.81%  [.] decode                                              -      -
+     0.77%  [.] adamic_array_search_from                            -      -
+     0.76%  [.] adamic_function_147_Statements_statement            -      -
+     0.75%  [.] adamic_string_slice                                 -      -
+     0.75%  [.] cfree                                               -      -
+     0.68%  [.] adamic_function_70_Parser_make                      -      -
+     0.67%  [.] adamic_array_index_of                               -      -
+     0.61%  [.] adamic_function_34_Scanner_punctuation              -      -
+     0.59%  [.] adamic_string_locate                                -      -
+     0.57%  [.] adamic_object_callee                                -      -
+     0.50%  [.] malloc                                              -      -
+     0.50%  [.] 0x00000000001724e1                                  -      -
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

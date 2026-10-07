@@ -297,7 +297,7 @@ export class Linter {
         ) {
             this.variable(index, parent);
         }
-        visitRules(this.context ?? panic('missing rule context'), index);
+        visitRules(this.context ?? panic('missing rule context'), index, node.kind);
         for(const child of node.children) {
             this.walk(child, index);
         }

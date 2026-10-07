@@ -18,7 +18,8 @@ registry call: `@next/next/no-assign-module-variable`,
 `@typescript-eslint/no-extra-non-null-assertion`, `@typescript-eslint/no-misused-new`,
 `@typescript-eslint/no-unnecessary-parameter-property-assignment`,
 `@typescript-eslint/prefer-as-const`, and `default-case-last`.
-See [BATCH6.md](BATCH6.md) for the selection pin and current evidence.
+See [BATCH6.md](BATCH6.md) for the selection pin and original evidence, and
+[BATCH6_PERF.md](BATCH6_PERF.md) for Linux profiles and node-kind dispatch.
 
 The runner indexes parents before dispatching the fifteen listeners in one preorder traversal. Child
 indexes and a parallel parent-index array retain Go's ancestry queries without

@@ -1,0 +1,26 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 1K of event 'cpu-clock:u'
+# Event count (approx.): 1806419209
+#
+# Overhead  Symbol                                   IPC   [IPC Coverage]
+# ........  .......................................  ....................
+#
+    39.53%  [.] adamic_function_2_IndexedNodes_node  -      -
+    19.27%  [.] adamic_release                       -      -
+     8.22%  [.] main                                 -      -
+     6.61%  [.] 0x00000000001724e1                   -      -
+     5.77%  [.] adamic_retain                        -      -
+     5.72%  [.] adamic_string_equal                  -      -
+     5.61%  [.] 0x00000000001724e7                   -      -
+     3.66%  [.] adamic_virtual                       -      -
+     1.89%  [.] 0x00000000001724da                   -      -
+     1.89%  [.] 0x00000000001724e5                   -      -
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

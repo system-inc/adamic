@@ -1,0 +1,133 @@
+{
+  "event": "cpu-clock:u",
+  "frequency": 997,
+  "binary_sha256": "ad01c2312f907263e116ab44c80278d441f6626f2edd7c98d23fa01ee3c844a8",
+  "manifest_sha256": "af8d3bf659eb0ee0d8f7f420758134b786226ecf20a1ac404ddc1bd6ede5be49",
+  "samples": 25079,
+  "sampled_cpu_seconds_approximate": 25.154462711,
+  "top_self": [
+    {
+      "symbol": "adamic_release",
+      "self_percent": 13.573108975636988,
+      "cpu_seconds_approximate": 3.414242636,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_retain",
+      "self_percent": 8.752342597392241,
+      "cpu_seconds_approximate": 2.201604755,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_22_Scanner_code",
+      "self_percent": 7.599984050400733,
+      "cpu_seconds_approximate": 1.911735154,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_string_equal",
+      "self_percent": 5.765780134774114,
+      "cpu_seconds_approximate": 1.450351014,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_virtual",
+      "self_percent": 5.083934766139,
+      "cpu_seconds_approximate": 1.278836475,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_33_Scanner_scan",
+      "self_percent": 4.932413573108976,
+      "cpu_seconds_approximate": 1.240722133,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "[unknown]",
+      "self_percent": 4.637345986682084,
+      "cpu_seconds_approximate": 1.166499467,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_object_check_write",
+      "self_percent": 4.557597990350493,
+      "cpu_seconds_approximate": 1.146439287,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_23_Scanner_advance",
+      "self_percent": 3.4690378404242592,
+      "cpu_seconds_approximate": 0.87261783,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_string_char_code",
+      "self_percent": 3.014474261334184,
+      "cpu_seconds_approximate": 0.758274804,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_69_Parser_node",
+      "self_percent": 2.9706128633518083,
+      "cpu_seconds_approximate": 0.747241705,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_223_Linter_walk",
+      "self_percent": 2.512061884445153,
+      "cpu_seconds_approximate": 0.63189567,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_allocate",
+      "self_percent": 2.129271502053511,
+      "cpu_seconds_approximate": 0.535606806,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "find",
+      "self_percent": 1.8860401132421547,
+      "cpu_seconds_approximate": 0.474423257,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_object_free_children",
+      "self_percent": 1.7943299174608238,
+      "cpu_seconds_approximate": 0.45135405,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_4_isIdentifierStart",
+      "self_percent": 1.5909725268152637,
+      "cpu_seconds_approximate": 0.400200591,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_array_set",
+      "self_percent": 1.4075521352526017,
+      "cpu_seconds_approximate": 0.354062177,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_28_Scanner_identifier",
+      "self_percent": 1.2360939431396787,
+      "cpu_seconds_approximate": 0.31093279,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_function_210_Linter_indexParents",
+      "self_percent": 1.2161569440567805,
+      "cpu_seconds_approximate": 0.305917745,
+      "self_under_dispatch_frame_percent": null
+    },
+    {
+      "symbol": "adamic_array_push",
+      "self_percent": 1.1563459468080866,
+      "cpu_seconds_approximate": 0.29087261,
+      "self_under_dispatch_frame_percent": null
+    }
+  ],
+  "dispatch_frame_inclusive_percent": null,
+  "dispatch_frame_observed": false,
+  "dispatch_note": "Missing frames can be inlined; a missing frame is not zero cost."
+}

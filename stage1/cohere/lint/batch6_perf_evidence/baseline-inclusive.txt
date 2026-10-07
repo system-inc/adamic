@@ -1,0 +1,102 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 32K of event 'cpu-clock:u'
+# Event count (approx.): 32760279958
+#
+# Children      Self  Symbol                                                  IPC   [IPC Coverage]
+# ........  ........  ......................................................  ....................
+#
+    96.83%     0.00%  [.] main                                                -      -
+    96.83%     0.00%  [.] 0x00007fc18e452ca8                                  -      -
+    96.83%     0.00%  [.] adamic_function_207_run                             -      -
+    93.20%     0.12%  [.] adamic_function_209_Linter_run                      -      -
+    47.58%     0.00%  [.] adamic_function_122_Parser_file                     -      -
+    47.49%     0.61%  [.] adamic_function_147_Statements_statement            -      -
+    41.56%     0.05%  [.] adamic_function_142_Statements_functionDeclaration  -      -
+    41.42%     1.45%  [.] adamic_function_223_Linter_walk                     -      -
+    39.86%     0.12%  [.] adamic_function_129_Statements_block                -      -
+    26.88%     1.33%  [.] adamic_function_205_visitRules                      -      -
+    25.66%     0.17%  [.] adamic_function_118_Parser_assignment               -      -
+    23.76%     3.74%  [.] adamic_function_33_Scanner_scan                     -      -
+    22.91%     0.20%  [.] adamic_function_117_Parser_binary                   -      -
+    21.56%     0.11%  [.] adamic_function_68_Parser_next                      -      -
+    21.14%     0.20%  [.] adamic_function_116_Parser_unary                    -      -
+    19.03%     0.03%  [.] adamic_function_121_Parser_expression               -      -
+    18.71%     0.02%  [.] adamic_function_164_closure                         -      -
+    18.68%     0.06%  [.] adamic_function_95_Parser_rootExpression            -      -
+    16.71%    15.17%  [.] adamic_release                                      -      -
+    15.18%     0.31%  [.] adamic_function_108_Parser_suffix                   -      -
+    11.55%     0.04%  [.] adamic_function_107_Parser_arguments                -      -
+    10.75%     0.04%  [.] adamic_function_119_Parser_allowInAssignment        -      -
+    10.50%     0.93%  [.] adamic_function_28_Scanner_identifier               -      -
+     9.94%     0.05%  [.] adamic_function_131_Statements_variableList         -      -
+     8.97%     6.44%  [.] adamic_function_69_Parser_node                      -      -
+     8.76%     0.26%  [.] adamic_function_75_Parser_primary                   -      -
+     8.58%     5.89%  [.] adamic_function_22_Scanner_code                     -      -
+     8.46%     8.46%  [.] adamic_retain                                       -      -
+     8.03%     0.01%  [.] adamic_function_94_Parser_rootAssignment            -      -
+     8.00%     0.00%  [.] adamic_function_163_closure                         -      -
+     6.41%     0.79%  [.] adamic_function_50_RuleContext_node                 -      -
+     6.30%     2.77%  [.] adamic_array_search_from                            -      -
+     6.17%     0.03%  [.] adamic_function_72_Parser_expect                    -      -
+     5.40%     5.40%  [.] adamic_virtual                                      -      -
+     5.16%     0.36%  [.] adamic_function_58_RuleContext_functionLike         -      -
+     5.15%     5.15%  [.] adamic_string_equal                                 -      -
+     4.96%     0.17%  [.] adamic_function_74_Parser_identifier                -      -
+     4.30%     0.04%  [.] adamic_function_150_closure                         -      -
+     4.28%     0.02%  [.] adamic_function_151_closure                         -      -
+     4.22%     0.02%  [.] adamic_function_145_Statements_switchStatement      -      -
+     4.20%     0.45%  [.] adamic_function_70_Parser_make                      -      -
+     3.99%     0.94%  [.] adamic_function_210_Linter_indexParents             -      -
+     3.87%     0.29%  [.] adamic_function_211_Linter_node                     -      -
+     3.84%     0.02%  [.] adamic_function_144_Statements_forStatement         -      -
+     3.75%     0.02%  [.] adamic_function_91_Parser_parameters                -      -
+     3.49%     0.17%  [.] adamic_function_14_arrowAhead                       -      -
+     3.44%     3.44%  [.] adamic_object_check_write                           -      -
+     3.34%     0.21%  [.] adamic_function_86_Parser_type                      -      -
+     3.02%     0.00%  [.] adamic_function_160_closure                         -      -
+     2.81%     2.28%  [.] adamic_string_char_code                             -      -
+     2.80%     2.41%  [.] adamic_function_23_Scanner_advance                  -      -
+     2.80%     0.79%  [.] adamic_function_124_ParseNode_new                   -      -
+     2.65%     0.00%  [.] adamic_function_140_Statements_moduleDeclaration    -      -
+     2.45%     0.58%  [.] adamic_function_52_RuleContext_enabled              -      -
+     2.42%     0.00%  [.] adamic_function_115_Parser_object                   -      -
+     2.42%     0.00%  [.] adamic_function_100_Parser_block                    -      -
+     2.31%     2.31%  [.] adamic_allocate                                     -      -
+     2.26%     2.03%  [.] adamic_array_index_of                               -      -
+     2.20%     0.04%  [.] adamic_function_71_Parser_token                     -      -
+     2.08%     0.03%  [.] adamic_function_130_Statements_semicolon            -      -
+     1.99%     0.01%  [.] adamic_function_120_Parser_allowInExpression        -      -
+     1.91%     0.05%  [.] adamic_map_get                                      -      -
+     1.78%     1.78%  [.] adamic_array_push                                   -      -
+     1.75%     1.47%  [.] find                                                -      -
+     1.72%     0.13%  [.] adamic_function_218_Linter_equality                 -      -
+     1.64%     0.01%  [.] adamic_function_90_Parser_typeLiteral               -      -
+     1.59%     0.00%  [.] adamic_function_171_closure                         -      -
+     1.54%     0.03%  [.] adamic_function_221_Linter_duplicateCases           -      -
+     1.51%     1.41%  [.] adamic_object_free_children                         -      -
+     1.51%     0.40%  [.] adamic_array_new                                    -      -
+     1.48%     0.52%  [.] adamic_string_slice                                 -      -
+     1.43%     0.01%  [.] adamic_function_96_Parser_arrow                     -      -
+     1.35%     0.02%  [.] adamic_function_213_Linter_start                    -      -
+     1.32%     0.01%  [.] adamic_function_220_Linter_signature                -      -
+     1.27%     0.00%  [.] adamic_function_97_Parser_returnType                -      -
+     1.26%     0.37%  [.] adamic_function_5_isIdentifierPart                  -      -
+     1.25%     0.00%  [.] adamic_function_112_Parser_array                    -      -
+     1.21%     0.02%  [.] adamic_function_42_RuleContext_text                 -      -
+     1.13%     0.77%  [.] adamic_function_67_Parser_kind                      -      -
+     1.11%     1.11%  [.] adamic_function_4_isIdentifierStart                 -      -
+     1.04%     1.04%  [.] cfree                                               -      -
+     1.04%     0.39%  [.] adamic_function_16_Speculation_new                  -      -
+     1.03%     0.04%  [.] adamic_function_46_RuleContext_parts                -      -
+     1.03%     1.03%  [.] malloc                                              -      -
+     1.02%     0.02%  [.] adamic_function_53_RuleContext_start                -      -
+     1.02%     1.02%  [.] adamic_array_set                                    -      -
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
