@@ -1,0 +1,6 @@
+import { tsgoInspect } from 'adamic';
+import { Frames, header } from '../frames.ts';
+export function sourceAwaitContext(program: number, path: string, bytes: number): boolean {
+    const frames = new Frames(tsgoInspect(program, path, 0, bytes, 'SourceFile', 'source-context')); header(frames, 'source-context');
+    const external = frames.yes(); const declaration = frames.yes(); frames.end(); return external && !declaration;
+}

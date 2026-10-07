@@ -1,0 +1,18 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+export class ModuleFile {
+    readonly path: string; readonly declaration: boolean; readonly targets: string[] = []; readonly kinds: string[] = []; readonly onlys: boolean[] = []; readonly literals: boolean[] = [];
+    constructor(path: string, declaration: boolean) { this.path = path; this.declaration = declaration; }
+}
+export class ProgramModules {
+    readonly files: ModuleFile[] = [];
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'program-modules')); header(frames, 'program-modules'); const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = new ModuleFile(frames.field(), frames.yes()); const imports = frames.natural();
+            for(let edge = 0; edge < imports; edge++) { file.kinds.push(frames.field()); file.onlys.push(frames.yes()); file.literals.push(frames.yes()); file.targets.push(frames.field()); }
+            this.files.push(file);
+        }
+        frames.end();
+    }
+}

@@ -1,0 +1,62 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../diagnostic.ts';
+import type { OutputContext } from './output_context.a';
+import { CallDeclaration } from './call_declaration.a';
+import { OutputFlow } from './output_flow.a';
+import { PathState, PathPosition, chainOf } from './path_state.a';
+export class NoProcessExitAfterOutput {
+    readonly context: OutputContext; readonly writers = new Map<string, boolean>();
+    constructor(context: OutputContext) { this.context = context; }
+    bodyWrites(c: OutputContext, index: number): number {
+        if(c.isRoot(index)) { return 0; }
+        let mask = c.write(index) ? 1 : c.exit(index) ? 2 : 0;
+        for(const child of c.rules().parser.node(index).children) { mask |= this.bodyWrites(c, child); }
+        return mask;
+    }
+    writes(index: number): boolean {
+        const c = this.context; if(c.write(index)) { return true; }
+        const facts = new CallDeclaration(c.rules(), index); const declaration = facts.declaration;
+        if(declaration === undefined || !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(declaration.kinds[0] ?? '') || declaration.bodyKind === '' || (declaration.path !== c.rules().path && !declaration.external) || (declaration.functionFlags & 1) !== 0 || (facts.returnFlags & 262144) !== 0) { return false; }
+        const parent = c.parent(c.outer(index));
+        if((declaration.functionFlags & 2) !== 0 && (parent < 0 || c.node(parent) !== 'AwaitExpression')) { return false; }
+        const key = `${declaration.path}:${declaration.starts[0] ?? 0}:${declaration.ends[0] ?? 0}`;
+        if(!this.writers.has(key)) {
+            const file = c.file(declaration.path); const body = file.body(declaration); let mask = 0;
+            if(file.node(body) === 'Block') { for(const child of file.rules().parser.node(body).children) { mask |= this.bodyWrites(file, child); } }
+            else { mask = this.bodyWrites(file, body); }
+            this.writers.set(key, (mask & 1) !== 0 && (mask & 2) === 0);
+        }
+        return this.writers.get(key) ?? false;
+    }
+    analyze(root: number, exits: readonly number[]): void {
+        const c = this.context; const graph = new OutputFlow(c.bindings, root); const recorded = new Set<number>(); const reported = new Set<number>();
+        for(const block of graph.blocks) { for(let at = 0; at < block.nodes.length; at++) { const node = block.nodes[at] ?? -1; if(block.sites[at] === 'expression' && c.exit(node) && !c.catchBinding(node, root)) { recorded.add(node); } } }
+        if(exits.some((exit) => !recorded.has(exit))) { return; }
+        const empty: string[] = []; const queue: PathPosition[] = [new PathPosition(0, new PathState(empty))]; const seen = new Set<string>(); seen.add('0:');
+        for(let head = 0; head < queue.length; head++) {
+            const current = queue[head]; if(current === undefined) { continue; } const block = graph.blocks[current.block]; if(block === undefined) { continue; }
+            let state = current.state; let ended = false;
+            for(let at = 0; at < block.nodes.length; at++) {
+                const node = block.nodes[at] ?? -1;
+                if(block.sites[at] === 'statement' && c.node(node) === 'Block' && c.parent(node) >= 0 && c.node(c.parent(node)) === 'CatchClause') { state = state.entering(c.parent(c.parent(node))); }
+                if(block.sites[at] !== 'expression' || c.node(node) !== 'CallExpression' || c.catchBinding(node, root)) { continue; }
+                if(c.exit(node)) { if(state.chains.length > 0) { reported.add(node); } ended = true; break; }
+                if(this.writes(node) && !c.holdsExit(node)) { state = state.with(chainOf(c, node, root)); }
+            }
+            if(ended) { continue; }
+            for(const next of block.successors) { if(!(graph.blocks[next]?.reachable ?? false)) { continue; } const key = `${next}:${state.key()}`; if(!seen.has(key)) { seen.add(key); queue.push(new PathPosition(next, state)); } }
+        }
+        for(const exit of exits) {
+            if(reported.has(exit)) { const node = c.rules().parser.node(exit); c.rules().findings.push(new Diagnostic('correctness-no-process-exit-after-output', 'exitAfterOutput', "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.", c.rules().byte(c.rules().start(node)), c.rules().byte(node.end), 'nexus/')); }
+        }
+    }
+    run(): void {
+        const c = this.context; const roots = new Map<number, number[]>(); const rootOrder: number[] = [];
+        for(let at = 0; at < c.rules().parser.nodes.length; at++) { if(c.exit(at)) { const root = c.rootOf(at); if(root >= 0) { if(!roots.has(root)) { roots.set(root, []); rootOrder.push(root); } (roots.get(root) ?? panic('missing root')).push(at); } } }
+        for(const root of rootOrder) {
+            let writes = false;
+            for(let at = 0; at < c.rules().parser.nodes.length; at++) { if(c.node(at) === 'CallExpression' && c.rootOf(at) === root && this.writes(at)) { writes = true; break; } }
+            if(writes) { this.analyze(root, roots.get(root) ?? panic('missing root')); }
+        }
+    }
+}

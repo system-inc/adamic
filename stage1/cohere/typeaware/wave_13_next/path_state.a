@@ -1,0 +1,25 @@
+import type { OutputContext } from './output_context.a';
+export class PathState {
+    readonly chains: readonly string[];
+    constructor(chains: readonly string[]) { this.chains = chains; }
+    holds(outer: string, inner: string): boolean { return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`)); }
+    with(chain: string): PathState {
+        const next: string[] = [];
+        for(const held of this.chains) { if(this.holds(chain, held)) { return this; } if(!this.holds(held, chain)) { next.push(held); } }
+        next.push(chain); next.sort((a, b) => a < b ? -1 : a > b ? 1 : 0); return new PathState(next);
+    }
+    entering(statement: number): PathState { return new PathState(this.chains.filter((chain) => !chain.includes(`,${statement},`))); }
+    key(): string { return this.chains.join('|'); }
+}
+export class PathPosition {
+    readonly block: number; readonly state: PathState;
+    constructor(block: number, state: PathState) { this.block = block; this.state = state; }
+}
+export function chainOf(context: OutputContext, index: number, root: number): string {
+    const ids: number[] = []; let previous = index;
+    for(let at = context.parent(index); at >= 0 && at !== root; at = context.parent(at)) {
+        if(context.node(at) === 'TryStatement' && context.child(at, 0) === previous && context.rules().parser.node(at).children.some((child) => context.node(child) === 'CatchClause')) { ids.push(at); }
+        previous = at;
+    }
+    ids.sort((a, b) => a - b); return `,${ids.length > 0 ? `${ids.join(',')},` : ''}`;
+}

@@ -203,6 +203,16 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "source-context":
+		return p.sourceContext(c, node, question)
+	case "platform-symbol":
+		return p.platformSymbol(c, node, question)
+	case "call-declaration":
+		return p.callDeclaration(c, node, question)
+	case "output-flow":
+		return p.outputFlow(c, node, question)
+	case "program-modules":
+		return p.programModules(c, node, question)
 	case "export-symbol-chain":
 		return p.exportSymbolChain(c, node, question)
 	case "export-module-properties":

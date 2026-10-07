@@ -1,0 +1,33 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+export class PlatformDeclaration {
+    readonly path: string; readonly declarationFile: boolean; readonly library: boolean; readonly external: boolean;
+    readonly flags: number; readonly functionFlags: number;
+    readonly kinds: string[] = []; readonly names: string[] = []; readonly nameKinds: string[] = []; readonly starts: number[] = []; readonly ends: number[] = []; readonly globals: boolean[] = [];
+    bodyKind = ''; bodyStart = 0; bodyEnd = 0;
+    constructor(frames: Frames) {
+        this.path = frames.field(); this.declarationFile = frames.yes(); this.library = frames.yes(); this.external = frames.yes();
+        this.flags = frames.natural(); this.functionFlags = frames.natural(); const count = frames.natural();
+        for(let at = 0; at < count; at++) { this.kinds.push(frames.field()); this.names.push(frames.field()); this.nameKinds.push(frames.field()); this.starts.push(frames.natural()); this.ends.push(frames.natural()); this.globals.push(frames.yes()); }
+        if(frames.yes()) { this.bodyKind = frames.field(); this.bodyStart = frames.natural(); this.bodyEnd = frames.natural(); }
+    }
+}
+export class PlatformSymbol {
+    readonly id: number; readonly flags: number; readonly declarations: PlatformDeclaration[] = [];
+    constructor(frames: Frames) {
+        const present = frames.yes(); this.id = present ? frames.natural() : 0; this.flags = present ? frames.natural() : 0;
+        const count = present ? frames.natural() : 0;
+        for(let at = 0; at < count; at++) { this.declarations.push(new PlatformDeclaration(frames)); }
+    }
+}
+export class PlatformSymbols {
+    readonly direct: PlatformSymbol; readonly resolved: PlatformSymbol;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'platform-symbol')); header(frames, 'platform-symbol');
+        this.direct = new PlatformSymbol(frames); this.resolved = new PlatformSymbol(frames); frames.end();
+    }
+}
+export function requiredDeclaration(symbol: PlatformSymbol): PlatformDeclaration {
+    return symbol.declarations[0] ?? panic('missing platform declaration');
+}

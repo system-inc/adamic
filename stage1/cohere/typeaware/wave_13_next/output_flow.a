@@ -1,0 +1,23 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Bindings } from '../bindings.ts';
+export class OutputBlock {
+    readonly reachable: boolean; readonly sites: string[] = []; readonly nodes: number[] = []; readonly successors: number[] = [];
+    constructor(reachable: boolean) { this.reachable = reachable; }
+}
+export class OutputFlow {
+    readonly blocks: OutputBlock[] = [];
+    constructor(bindings: Bindings, root: number) {
+        const frames = new Frames(bindings.rules.ask(root, 'output-flow')); header(frames, 'output-flow'); const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const block = new OutputBlock(frames.yes()); const events = frames.natural();
+            for(let event = 0; event < events; event++) {
+                block.sites.push(frames.field()); const kind = frames.field(); const first = frames.natural(); const last = frames.natural();
+                block.nodes.push(bindings.spans.get(`${kind}:${first}:${last}`) ?? panic(`output graph node absent: ${kind}:${first}:${last}`));
+            }
+            const successors = frames.natural(); for(let next = 0; next < successors; next++) { block.successors.push(frames.natural()); }
+            this.blocks.push(block);
+        }
+        frames.end();
+    }
+}

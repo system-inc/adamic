@@ -1,0 +1,11 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import { PlatformDeclaration } from './platform_symbol.a';
+export class CallDeclaration {
+    readonly declaration: PlatformDeclaration | undefined; readonly returnFlags: number;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'call-declaration')); header(frames, 'call-declaration');
+        this.declaration = frames.yes() ? new PlatformDeclaration(frames) : undefined;
+        this.returnFlags = this.declaration === undefined ? 0 : frames.natural(); frames.end();
+    }
+}

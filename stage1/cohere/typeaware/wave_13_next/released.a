@@ -1,0 +1,4 @@
+import { programArguments, tsgoProgram, tsgoRelease, tsgoInspect } from 'adamic';
+const args = programArguments(); const file = args[1] ?? ''; const program = tsgoProgram(args[0] ?? '', [file]);
+tsgoRelease(program);
+console.log(tsgoInspect(program, file, 0, 1, 'SourceFile', 'source-context'));

@@ -1,0 +1,97 @@
+import { Frames, header } from '../frames.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import type { OutputContext } from './output_context.a';
+export class NoUnclearedRaceTimeout {
+    readonly context: OutputContext;
+    constructor(context: OutputContext) { this.context = context; }
+    promise(index: number): number {
+        const c = this.context; let at = c.skip(index);
+        if(c.node(at) === 'Identifier') {
+            const symbol = c.symbol(at).direct; if(symbol.declarations.length !== 1) { return -1; }
+            const declaration = symbol.declarations[0]; if(declaration === undefined || declaration.path !== c.rules().path || declaration.kinds[0] !== 'VariableDeclaration') { return -1; }
+            const declared = c.locate(declaration); const list = c.parent(declared);
+            if(list < 0 || c.node(list) !== 'VariableDeclarationList' || !['2', '6'].includes(c.rules().parser.node(list).semantic)) { return -1; }
+            at = c.skip(c.bindings.shape.initializer(declared));
+        }
+        if(at < 0 || c.node(at) !== 'NewExpression') { return -1; }
+        const constructor = c.skip(c.child(at, 0));
+        if(c.node(constructor) !== 'Identifier' || c.rules().parser.node(constructor).text !== 'Promise') { return -1; }
+        const declarations = c.symbol(constructor).direct.declarations;
+        // IsSymbolFromDefaultLibrary asks whether at least one declaration is a
+        // default-library declaration; membership of race requires every one.
+        return declarations.some((d) => d.library) ? at : -1;
+    }
+    timer(index: number): boolean {
+        const c = this.context; const callee = c.skip(c.child(index, 0)); let name = -1;
+        if(c.node(callee) === 'Identifier') { name = callee; }
+        else if(c.node(callee) === 'PropertyAccessExpression') {
+            const receiver = c.skip(c.child(callee, 0));
+            if(c.node(receiver) !== 'Identifier' || !['globalThis', 'window'].includes(c.rules().parser.node(receiver).text)) { return false; }
+            name = c.last(callee);
+        }
+        if(name < 0 || c.node(name) !== 'Identifier' || c.rules().parser.node(name).text !== 'setTimeout') { return false; }
+        const declarations = c.symbol(name).direct.declarations;
+        return declarations.length > 0 && declarations.every((d) => d.declarationFile && ((d.kinds[1] === 'SourceFile' && !d.external) || (d.kinds[1] === 'ModuleBlock' && (d.globals[2] ?? false)) || (d.kinds[1] === 'InterfaceDeclaration' && d.names[1] === 'WindowOrWorkerGlobalScope' && d.library)));
+    }
+    plainTarget(index: number): boolean {
+        const c = this.context; const outer = c.outer(index); const parent = c.parent(outer);
+        return parent >= 0 && c.node(parent) === 'BinaryExpression' && c.child(parent, 0) === outer && c.node(c.child(parent, 1)) === 'EqualsToken';
+    }
+    neverRead(index: number): boolean {
+        const c = this.context; const symbol = c.symbol(index).direct;
+        if(symbol.declarations.length !== 1) { return false; }
+        const declaration = symbol.declarations[0]; if(declaration === undefined || declaration.kinds[0] !== 'VariableDeclaration' || declaration.path !== c.rules().path) { return false; }
+        const name = c.bindings.shape.name(c.locate(declaration)); const text = c.rules().parser.node(name).text;
+        for(let at = 0; at < c.rules().parser.nodes.length; at++) {
+            const node = c.rules().parser.node(at);
+            if(node.kind !== 'Identifier' || node.text !== text || at === name) { continue; }
+            let id = c.symbol(at).direct.id;
+            if(c.parent(at) >= 0 && c.node(c.parent(at)) === 'ShorthandPropertyAssignment') {
+                const frames = new Frames(c.rules().ask(at, 'symbol-identities')); header(frames, 'symbol-identities');
+                frames.natural(); frames.natural(); frames.yes(); frames.natural(); const shorthand = frames.natural(); frames.end(); if(shorthand !== 0) { id = shorthand; }
+            }
+            if(id === symbol.id && !this.plainTarget(at)) { return false; }
+        }
+        return true;
+    }
+    lost(executor: number, call: number): boolean {
+        const c = this.context; const outer = c.outer(call); const parent = c.parent(outer); if(parent < 0) { return false; }
+        if(['ExpressionStatement', 'VoidExpression'].includes(c.node(parent)) || parent === executor) { return true; }
+        if(c.node(parent) === 'VariableDeclaration' && c.bindings.shape.initializer(parent) === outer) {
+            const name = c.bindings.shape.name(parent); return name >= 0 && c.node(name) === 'Identifier' && this.neverRead(name);
+        }
+        if(c.node(parent) === 'BinaryExpression' && c.node(c.child(parent, 1)) === 'EqualsToken' && c.child(parent, 2) === outer) {
+            const target = c.skip(c.child(parent, 0)); const assignment = c.outer(parent);
+            return c.node(target) === 'Identifier' && c.parent(assignment) >= 0 && c.node(c.parent(assignment)) === 'ExpressionStatement' && this.neverRead(target);
+        }
+        return false;
+    }
+    visit(index: number, executor: number): void {
+        const c = this.context;
+        if(c.bindings.functionKind(c.node(index)) || ['ClassDeclaration', 'ClassExpression', 'MethodSignature', 'CallSignature', 'ConstructSignature', 'FunctionType', 'ConstructorType'].includes(c.node(index))) { return; }
+        if(c.node(index) === 'CallExpression' && this.timer(index) && this.lost(executor, index)) {
+            const node = c.rules().parser.node(index);
+            c.rules().findings.push(new Diagnostic('correctness-no-uncleared-race-timeout', 'unclearedRaceTimeout', "This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.", c.rules().byte(c.rules().start(node)), c.rules().byte(node.end), 'nexus/'));
+        }
+        for(const child of c.rules().parser.node(index).children) { this.visit(child, executor); }
+    }
+    run(): void {
+        const c = this.context;
+        for(let index = 0; index < c.rules().parser.nodes.length; index++) {
+            if(c.node(index) !== 'CallExpression') { continue; }
+            const callee = c.skip(c.child(index, 0)); if(c.node(callee) !== 'PropertyAccessExpression') { continue; }
+            const name = c.last(callee); if(c.node(name) !== 'Identifier' || c.rules().parser.node(name).text !== 'race') { continue; }
+            const declarations = c.symbol(name).direct.declarations;
+            if(declarations.length === 0 || !declarations.every((d) => d.library && d.kinds[1] === 'InterfaceDeclaration' && d.names[1] === 'PromiseConstructor')) { continue; }
+            const array = c.skip(c.child(index, c.rules().parser.node(index).children.length - c.rules().parser.node(index).list));
+            if(array < 0 || c.node(array) !== 'ArrayLiteralExpression') { continue; }
+            for(const element of c.rules().parser.node(array).children) {
+                const promise = this.promise(element); if(promise < 0) { continue; }
+                const node = c.rules().parser.node(promise); if(node.list === 0) { continue; }
+                const executor = c.skip(node.children[node.children.length - node.list] ?? -1);
+                if(!['ArrowFunction', 'FunctionExpression'].includes(c.node(executor))) { continue; }
+                const body = c.last(executor); if(body >= 0) { this.visit(body, executor); }
+            }
+        }
+    }
+}
