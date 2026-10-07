@@ -314,6 +314,12 @@ func freshOptionalValue(node *ast.Node) bool {
 // An annotation can have already hidden fields, and a let can later hold a different shape.
 func (l *lowering) exactObjectAlias(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindCallExpression && l.literalObjectKeys(node, 0) {
+		arguments := node.AsCallExpression().Arguments.Nodes
+		// Object.assign returns this new target. Only its surface keys are exact;
+		// nested field views still undergo optional and mutable relation checks.
+		return len(arguments) > 0 && ast.SkipParentheses(arguments[0]).Kind == ast.KindObjectLiteralExpression
+	}
 	if node.Kind != ast.KindIdentifier {
 		return false
 	}

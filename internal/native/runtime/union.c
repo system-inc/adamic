@@ -96,6 +96,13 @@ void adamic_register_shape_types(adamic_shape_types *metadata) {
 	shape_types = metadata;
 }
 
+int adamic_shape_type(const adamic_shape *shape, size_t index) {
+	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
+		if (entry->shape == shape) return entry->types[index];
+	}
+	return 0;
+}
+
 static bool named(const char *name, const char *const *names, size_t count) {
 	for (size_t index = 0; index < count; index++) {
 		if (strcmp(name, names[index]) == 0) return true;
@@ -127,7 +134,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 	if (value->kind == adamic_kind_object) {
 		const adamic_object *object = (const adamic_object *)value;
 		for (size_t index = 0; index < object->shape->count; index++) {
-			if (strcmp(name, object->shape->names[index]) != 0) continue;
+			if (strcmp(name, object->shape->names[index]) != 0 || adamic_object_orders(object)[index] == 0) continue;
 			if (object->class == NULL || name[0] != '#') return true;
 			const adamic_shape *public = object->class->public_shape;
 			if (named(name, public->names, public->count)) return true;
@@ -153,12 +160,12 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 }
 
 static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
+	if (adamic_object_orders(object)[index] == 0 || !adamic_object_initialized(object)[index]) return NULL;
 	const adamic_value slot = object->slots[index];
 	if (object->shape->references[index]) return adamic_retain(slot.reference);
-	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
-		if (entry->shape != object->shape) continue;
+	{
 		// These are ir.Type's scalar representations, written by the emitter.
-		switch (entry->types[index]) {
+		switch (object->dynamic_shape ? object->dynamic_types[index] : adamic_shape_type(object->shape, index)) {
 		case 1: return adamic_box_number(slot.number);
 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 		case 9: {

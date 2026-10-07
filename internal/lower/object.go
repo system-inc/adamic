@@ -109,7 +109,15 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-				return nil, l.notYet(property, "a spread that adds a field the source doesn't have (construct a literal with all fields written explicitly instead of spreading)")
+				contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+				if contextual == nil {
+					return nil, l.notYet(property, "a spread that adds a field the source doesn't have (construct a literal with all fields written explicitly instead of spreading)")
+				}
+				declared := l.checker.GetPropertyOfType(contextual, fieldName)
+				if declared == nil || declared.Flags&ast.SymbolFlagsOptional == 0 {
+					return nil, l.notYet(property, "a spread that adds a field the source doesn't have (construct a literal with all fields written explicitly instead of spreading)")
+				}
+				literal.NoReuse = true
 			}
 			if declared := l.declaredField(node, fieldName); declared != 0 {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
@@ -129,6 +137,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		literal.Empty = empty
+	}
+	missing, err := l.optionalLiteralSlots(node, literal.Fields)
+	if err != nil {
+		return nil, err
+	}
+	literal.Missing = missing
+	if len(missing) != 0 && literal.Spread != nil {
+		literal.NoReuse = true
 	}
 	return literal, nil
 }

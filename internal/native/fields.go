@@ -17,6 +17,9 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 		e.fieldOffsets = uniformFieldOffsets(e.program)
 	}
 	if index, found := e.fieldOffsets[name]; found && index >= 0 {
+		if _, dynamic := e.fieldOffsets["\x00dynamic"]; dynamic {
+			return fmt.Sprintf("(%s->dynamic_shape ? adamic_object_field(%s, %s, &%s) : &%s->slots[%d])", object, object, cString(name), e.cache(), object, index)
+		}
 		return fmt.Sprintf("(&%s->slots[%d])", object, index)
 	}
 	return ""
@@ -81,8 +84,11 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	}
 	walkExpressions(program, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
+			if literal.Spread != nil && (len(literal.Missing) != 0 || literal.NoReuse) {
+				offsets["\x00dynamic"] = -1
+			}
 			if literal.Spread == nil {
-				record(literal.Fields)
+				record(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
 			} else if literal.SpreadMaybeUndefined {
 				record(emptyFields(literal))
 			}

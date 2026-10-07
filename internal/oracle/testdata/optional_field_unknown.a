@@ -1,0 +1,29 @@
+interface MaybeRecord { slot?: number; text?: string }
+function inspect(value: unknown): void {
+	if (typeof value === 'object' && value !== null) {
+		console.log(`${'slot' in value}|${'pending' in value}`);
+		if ('slot' in value) console.log(typeof value.slot);
+		if ('pending' in value) console.log(typeof value.pending);
+	}
+}
+const source: MaybeRecord = {};
+const copied: MaybeRecord = { ...source };
+inspect(copied);
+copied.slot = 0;
+inspect(copied);
+const again: MaybeRecord = { ...copied };
+inspect(again);
+delete again.slot;
+inspect(again);
+again.slot = 9;
+inspect(again);
+class Pending {
+	pending!: number;
+	slot?: number;
+}
+const pending = new Pending();
+inspect(pending);
+pending.pending = 0;
+inspect(pending);
+const ready: { pending: number; slot?: number } = { ...pending };
+inspect(ready);

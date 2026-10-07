@@ -78,10 +78,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) {
-			found = &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
-			return true
-		}
 		if err := l.nodeLibraryRefusal(node); err != nil {
 			found = err
 			return true

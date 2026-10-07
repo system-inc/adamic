@@ -63,7 +63,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
 		// Reflection cannot use a widened view: a hidden field can have another representation.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if !((name == "keys" || name == "assign") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
@@ -141,6 +141,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape (construct a new literal with every destination field declared explicitly)")
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
+					if into.Flags&ast.SymbolFlagsOptional != 0 {
+						toType = l.checker.GetNonNullableType(toType)
+					}
 					of, known := l.representation(fromType)
 					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")

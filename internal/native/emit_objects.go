@@ -128,7 +128,18 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if literal.NoReuse {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
-		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		copy := e.spreadCopy(literal, source)
+		if len(literal.Missing) != 0 || literal.NoReuse {
+			reserved := e.shape(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
+			if len(literal.Fields)+len(literal.Missing) > 0 && e.dynamicProperties() {
+				e.line("adamic_register_shape_types(&%s_metadata);", reserved)
+			}
+			copy = fmt.Sprintf("adamic_object_copy_reserving_checked(%s, &%s, %s)", source, reserved, cString(literal.SpreadReadiness))
+			if literal.SpreadMaybeUndefined {
+				copy = fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+			}
+		}
+		object := e.own(ir.Object, copy)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -136,7 +147,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -167,7 +178,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
-	if len(literal.Fields) > 0 && e.dynamicProperties() {
+	if len(literal.Fields)+len(literal.Missing) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
 	}
 	if literal.Class != 0 {
@@ -203,6 +214,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
+	for index, field := range literal.Missing {
+		e.line("%s->slots[%d].%s = %s;", object, len(literal.Fields)+index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value)))
+		e.line("adamic_object_absent(%s, %d);", object, len(literal.Fields)+index)
+	}
 	return object
 }
 
@@ -220,7 +235,7 @@ func (e *emitter) shape(fields []ir.Field) string {
 // too, so it's the class's own, never shared with a literal of the same fields.
 func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
 	if len(literal.Methods) == 0 {
-		return e.shape(literal.Fields)
+		return e.shape(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
 	}
 	names, types := []string{}, []ir.Type{}
 	for _, field := range literal.Fields {

@@ -81,7 +81,7 @@ console.log((missing?.steady ?? -3).toString());
 	generated := C(program)
 	// Semantic parity alone would also pass if the optimization disappeared entirely.
 	lookup := func(name string) bool {
-		return regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
+		return regexp.MustCompile(`adamic_object_(?:(?:data_)?field|maybe_number)\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
 	}
 	// Required reads keep the uniform-slot proof. Writes also guard presence and may
 	// contain a checked fallback in their slot declaration.
@@ -90,7 +90,7 @@ console.log((missing?.steady ?? -3).toString());
 			if strings.HasPrefix(strings.TrimSpace(line), "adamic_value *") {
 				continue
 			}
-			if regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(line) {
+			if regexp.MustCompile(`adamic_object_(?:(?:data_)?field|maybe_number)\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(line) {
 				return true
 			}
 		}
@@ -195,7 +195,7 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		t.Fatal(err)
 	}
 	generated := C(program)
-	if !regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
+	if !regexp.MustCompile(`adamic_object_(?:(?:data_)?field|maybe_number)\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
 		t.Fatal("regex program specialized a field before named-group layouts entered the proof")
 	}
 	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", path)

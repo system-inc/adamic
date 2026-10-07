@@ -43,7 +43,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
-  if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
+  if (adamic_object_orders(object)[index] != 0 && name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
  }
  return false;
 }
@@ -77,7 +77,8 @@ static size_t *ordered(const adamic_object *object) {
  // Stable insertion sort preserves order of ordinary strings.
  for (size_t index = 0; index < count; index++) {
   size_t place = index;
-  while (place > 0 && compare_names(object->shape->names[index], object->shape->names[indices[place - 1]]) < 0) {
+  while (place > 0 && (compare_names(object->shape->names[index], object->shape->names[indices[place - 1]]) < 0 ||
+   (compare_names(object->shape->names[index], object->shape->names[indices[place - 1]]) == 0 && adamic_object_orders(object)[index] < adamic_object_orders(object)[indices[place - 1]]))) {
    indices[place] = indices[place - 1];
    place--;
   }
@@ -100,7 +101,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || adamic_object_orders(object)[indices[at]] == 0) continue;
   adamic_array_push(keys, (adamic_value){.reference = key_string(name)});
  }
  free(indices);
@@ -122,7 +123,7 @@ adamic_array *adamic_object_values_checked(const adamic_object *object, bool ref
  for (size_t at = 0; at < object->shape->count; at++) {
   size_t index = indices[at];
   const char *name = object->shape->names[index];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || adamic_object_orders(object)[index] == 0) continue;
   adamic_slot_cache cache = {NULL, 0};
   adamic_value value = expression == NULL ? object->slots[index] : *adamic_object_read(object, name, &cache, expression);
   if (references) adamic_retain(value.reference);
@@ -147,6 +148,7 @@ void adamic_object_assign_checked(adamic_object *target, const adamic_object *so
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
+  if (adamic_object_orders(source)[index] == 0) continue;
   adamic_slot_cache read_cache = {NULL, 0};
   adamic_value value = expression == NULL ? source->slots[index] : *adamic_object_read(source, name, &read_cache, expression);
   adamic_object_check_write(target, name);

@@ -194,7 +194,7 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 	return nullable
 }
 
-// Native absent-spread slots and ambient class fields are storage, not proof of JS presence.
+// Ambient class fields and unsupported methods still lack JavaScript presence descriptors.
 func (l *lowering) presenceHazard(name string) string {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -203,13 +203,6 @@ func (l *lowering) presenceHazard(name string) string {
 	reason := ""
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindObjectLiteralExpression {
-			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
-					reason = "a possibly absent spread has no property presence descriptors"
-				}
-			}
-		}
 		if node.Kind == ast.KindClassDeclaration {
 			for _, member := range node.Members() {
 				if member.Kind == ast.KindMethodDeclaration && member.Name().Text() == name {

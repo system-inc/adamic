@@ -532,7 +532,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	e.taking = outer
 	for index, field := range literal.Fields {
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)
@@ -567,7 +567,15 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 		return
 	}
 	lines := []string{}
-	for index, field := range literal.Empty {
+	own := map[string]bool{}
+	for _, field := range literal.Fields {
+		own[field.Name] = true
+	}
+	for index, field := range emptyFields(literal) {
+		if own[field.Name] {
+			continue
+		}
+		lines = append(lines, fmt.Sprintf("\tadamic_object_absent(%s, %d);", object, index))
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
 		}
@@ -585,7 +593,18 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 // emptyFields is the layout of the object an undefined spread makes: the source type's fields the
 // literal doesn't give, then the literal's own, which are written by name after.
 func emptyFields(literal ir.ObjectLiteral) []ir.Field {
-	return append(slices.Clone(literal.Empty), literal.Fields...)
+	fields := append(slices.Clone(literal.Empty), literal.Fields...)
+	given := map[string]bool{}
+	for _, field := range fields {
+		given[field.Name] = true
+	}
+	for _, field := range literal.Missing {
+		if !given[field.Name] {
+			fields = append(fields, field)
+			given[field.Name] = true
+		}
+	}
+	return fields
 }
 
 // take emits a read of a field a reused spread replaces: moved out of the object when it's unique,
