@@ -97,7 +97,28 @@ with no change to its typeaware port inventory; the bridge tip remains 5afbdb83.
 No conflicting full or short rule-name claim was found for these three. This
 claim update is pushed before implementation.
 
-Status: blocked by the shared native parser lacking JSX grammar. The independent
-Go oracle accepts three positive JSX controls and reports one finding per rule;
-the unchanged native parser exits 70 on each. See WAVE_23_REACT_BLOCKER_REPORT.md.
-These claims remain reserved, with no native rule ports or parity claimed.
+Status: parked. react-hooks/set-state-in-effect, react-hooks/set-state-in-render
+and react-hooks/static-components require cohere's native high-level IR,
+single-assignment and capture analyses, being ported on #dnv6f2c. Shared JSX
+support is landing on area/stage1-lint. Existing Go controls, native capability
+probes, numeric listener declarations and rule.json manifests are pushed.
+No native rule decision parity is claimed. Under the new parking instruction,
+these count as finished for the landing-first cap and remain reserved.
+
+
+## Sixth continuation after parking the analysis-dependent React rules
+
+Reserved after fetching every origin head, with main f8013f0b already included
+and all prior oracle gates pushed at 569f8d48:
+
+- react/jsx-fragments
+- react/jsx-no-constructed-context-values
+- react/jsx-no-undef
+
+The ranking remains combined compiler/repository volume with lexical ties.
+Selection examined 529 origin refs and 33 distinct Markdown reservation blobs,
+with 154 ranked rules already claimed and the production port exclusions.
+These are the first three unclaimed entries and do not use native HIR/SSA or
+capture passes; their analyses are AST and checker queries. Shared JSX frontend
+integration is still needed for native execution. No conflicting claim was found.
+This claim update is pushed before implementation or declaration work.
