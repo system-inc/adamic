@@ -40,6 +40,18 @@ func (h *harness) continueChecks(stage0, entry, archive, oracle, binary, config,
 			h.t.Fatal(err)
 		}
 		rewritten := strings.Replace(absolute(string(runner)), filepath.Join(owned, m.file), mutant, 1)
+		if m.file == "no_process_exit_after_output.a" {
+			// Both clients must import the same nominal class identity. The
+			// dependent rule's behavior stays unchanged in this mutant graph.
+			dependentPath := filepath.Join(owned, "require_blocking_standard_streams.a")
+			dependent, err := os.ReadFile(dependentPath)
+			if err != nil {
+				h.t.Fatal(err)
+			}
+			dependentSource := strings.Replace(absolute(string(dependent)), filepath.Join(owned, m.file), mutant, 1)
+			dependentEntry := h.write("mutant-exit-dependent.a", dependentSource)
+			rewritten = strings.Replace(rewritten, dependentPath, dependentEntry, 1)
+		}
 		executable := h.build(stage0, "mutant-"+m.name, h.write("runner-"+m.name+".a", rewritten), archive, false)
 		got := h.must("mutant-"+m.name+"-run", exec.Command(executable, config, manifest))
 		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth) {
