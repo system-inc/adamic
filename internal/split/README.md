@@ -6,7 +6,7 @@ Run the command on a checked Adamic source:
 
 Each line contains the IR function name, wasm or javascript, an optional entry
 marker, and the first failed eligibility rule. Analyze also returns the original
-function index and declaration position. Decisions are sorted by file, line and
+function index and declaration name-token position. Decisions are sorted by file, line and
 column, with IR order breaking ties. Synthetic functions without declarations
 sort last and retain nil boundary metadata.
 
@@ -19,8 +19,8 @@ not count as a write.
 
 Boundary types come from Function.Boundary, populated in lowering by the same
 checker-type schema builder used by decodeJson. Unsupported types have nil
-schemas. A private string table prevents metadata-only literals from changing
-emission. Boundary mode preserves undefined field alternatives; decodeJson's
+schemas. One BoundaryStringTable on ir.Program interns metadata literals separately
+from codegen, with no lowering copies or per-parameter table copies. Boundary mode preserves undefined field alternatives; decodeJson's
 existing admission rules and descriptors remain unchanged. Numbers, booleans,
 strings and their literal subtypes are scalars. Arrays contain scalars; objects
 contain those types and objects with at most two object levels. Only fields may
@@ -69,8 +69,9 @@ owner review before merge.
 
 
 The only schema-builder factor is lowering.jsonDecodeSchema(node, rootType,
-boundary) in internal/lower/library_json_decode.go. decodeJson calls it with
-false; function metadata calls it with true using a private string table. The
+boundary, intern) in internal/lower/library_json_decode.go. decodeJson calls it with
+false and the existing codegen interner l.constant; function metadata calls it
+with true and ir.Program.BoundaryStrings.Intern. The
 encoder worker should reuse this visitor, rather than introduce another builder.
 
 ## Mutation evidence
@@ -105,3 +106,47 @@ in 98s, total 98s; nproc was 5. The final platform validation logs use the prefi
 /tmp/workers-boundary-platform-. Package tests, the uncached TestJSONDecode
 oracle, go vet ./..., the 344-program analysis sweep, and the complete byte
 comparison passed. The complete repository test gate was not run.
+
+
+## Compiler review follow-up
+
+The changes above 8f4da8e preserve history. Declaration positions come directly
+from scanner.GetLineAndCharacterOfPosition at the name token (unnamed closures
+and constructors use the declaration token). Constructor metadata receives a
+nil receiver exactly where runtime Parameters receives its receiver, including
+the metadata-only addition beside insertion in class_inheritance.go. Public
+allocators copy the complete declared parameter boundary and are refused with
+signature: constructor not crossable.
+
+The unions.a fixture pins both an undiscriminated object union and a broad
+number | string | boolean union as signature: parameter 1 not crossable. It
+also runs ordinary source Node, emitted JavaScript and sanitized native, and
+pins live parent/child initializer alignment and a boundary-only string literal
+absent from codegen. The two consecutive boundary visitor blocks are merged.
+
+Review validation logs use /tmp/workers-boundary-review-. The 399-source base
+and hook snapshots compare byte for byte, including all 344 C/JavaScript pairs,
+refusal diagnostics and decodeJson descriptors. The uncached TestJSONDecode
+oracle passed in 29.1s (38 native and 63 Node misses); touched package tests,
+repository vet and the 344-program sweep passed. All eighteen distinct mutants
+were caught by assertion failures, with each mutation restored: the twelve
+original classifier and hook mutants, plus these review checks:
+
+| Mutant | Check that caught it |
+| --- | --- |
+| string-table: use codegen interner for boundary | TestBoundaryStringTable and byte snapshot diff |
+| name-position: use declaration instead of name | TestBoundaryParameterOrderAndPositions |
+| receiver-alignment: omit initializer receiver schema | TestBoundaryConstructorAlignment |
+| allocator-alignment: discard first declared schema | TestConstructorBoundary |
+| constructor-refusal: omit named refusal | TestFixtures constructor tables |
+| union-fence: accept union nodes | TestBoundaryUnionFences and TestFixtures |
+
+No encodeJson code is present in this base, so its integration is not tested.
+The shared builder's new interning argument is the encoder coordination point.
+
+
+The interner mutant also passes ordinary fixture execution but fails the
+399-source byte comparison. Its logs are
+/tmp/workers-boundary-review-mutant-string-table-{tests,snapshot,diff}.log.
+The assertion mutant summary is /tmp/workers-boundary-review-mutants.log.
+No full repository test gate, Wasm emission or bridge generation was run.
