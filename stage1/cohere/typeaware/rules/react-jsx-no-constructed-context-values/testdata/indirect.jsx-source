@@ -1,0 +1,19 @@
+declare const X:any, flag:any;
+function Wrap() { return <X.Provider value={({})}/>; }
+function Assert() { return <X.Provider value={([] as any)}/>; }
+function TrueBranch() { return <X.Provider value={flag ? {} : []}/>; }
+function FalseBranch() { return <X.Provider value={flag ? 1 : []}/>; }
+function OrLeft() { return <X.Provider value={{} || []}/>; }
+function AndRight() { return <X.Provider value={1 && []}/>; }
+function NullishRight() { return <X.Provider value={null ?? []}/>; }
+function Assignment() { let v:any; return <X.Provider value={v = []}/>; }
+function Member() { return <X.Provider value={({}).x}/>; }
+function Binding() { const v = {};
+ return <X.Provider value={v}/>; }
+function Function() { function v() {}
+ return <X.Provider value={v}/>; }
+function Chain() { const a = {}; const v = a;
+ return <X.Provider value={v}/>; }
+function Bare0() { const Provider = (createContext(null)); return <Provider value={{}}/>; }
+function Bare1() { const Provider = ((React.createContext)(null)); return <Provider value={{}}/>; }
+function Bare2() { const Provider = (otherFactory(null)); return <Provider value={{}}/>; }

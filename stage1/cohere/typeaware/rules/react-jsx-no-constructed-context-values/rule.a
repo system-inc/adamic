@@ -1,5 +1,6 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
+import { Value, constructionOf, resolvesToCreateContext } from './numeric_constructions.a';
 
 export class Input {
     kind = 0;
@@ -13,6 +14,9 @@ export class Input {
     valueStart = 0;
     valueEnd = 0;
     valueLine = 1;
+    values: Value[] = [];
+    valueIndex = -1;
+    tagIndex = -1;
 }
 export class Rule {
     component(node: Input): boolean {
@@ -38,10 +42,39 @@ export class Rule {
     visit(node: Input): Diagnostic | undefined {
         if(![285, 286].includes(node.kind)) { return undefined; }
         if(node.tagKind === 79) {
-            panic('jsx-no-constructed-context-values requires resolved createContext initializer facts');
+            if(node.tagIndex < 0) { panic('jsx-no-constructed-context-values requires resolved createContext initializer facts'); }
+            if(!resolvesToCreateContext(node.values, node.tagIndex)) { return undefined; }
         }
-        if(node.tagKind !== 211 || node.propertyKind !== 79 || node.propertyName !== 'Provider') {
+        if(node.tagKind !== 79 && (node.tagKind !== 211 || node.propertyKind !== 79 || node.propertyName !== 'Provider')) {
             return undefined;
+        }
+        if(node.valueIndex >= 0) {
+            const found = constructionOf(node.values, node.valueIndex);
+            if(found === undefined) {
+                if(this.component(node)) { panic('constructed-context requires memo stability facts for unresolved construction'); }
+                return undefined;
+            }
+            if(!this.component(node)) { return undefined; }
+            const value = node.values[found.index] ?? panic('missing construction');
+            const usage = node.values[found.usage];
+            const label = found.label === '' ? (found.kind === 262 ? 'function declaration' : this.construction(found.kind)) : found.label;
+            const functionKind = label === 'function expression' || label === 'function declaration';
+            const remedy = functionKind ? 'useCallback' : 'useMemo';
+            const suffix = functionKind ? 'Func' : '';
+            const id = (usage === undefined ? 'defaultMsg' : 'withIdentifierMsg') + suffix;
+            let prefix = `The ${label} passed as the value prop to the Context provider (at line ${value.line})`;
+            if(usage !== undefined) {
+                const name = usage.kind === 79 ? usage.name : '';
+                for(let index = 0; index < name.length; index++) {
+                    if(name.charCodeAt(index) < 32 || name.charCodeAt(index) >= 127 || name.charCodeAt(index) === 34 || name.charCodeAt(index) === 92) {
+                        panic('constructed-context requires Go quoted identifier rendering');
+                    }
+                }
+                prefix = `The "${name}" ${label} (at line ${value.line}) passed as the value prop to the Context provider (at line ${usage.line})`;
+            }
+            return new Diagnostic('jsx-no-constructed-context-values', id,
+                `${prefix} changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`,
+                value.start, value.end, 'react/');
         }
         const construction = this.construction(node.valueKind);
         if(construction === '' || !this.component(node)) { return undefined; }

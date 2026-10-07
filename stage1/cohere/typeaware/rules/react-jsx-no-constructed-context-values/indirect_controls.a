@@ -1,0 +1,189 @@
+import { programArguments } from 'adamic';
+import { Rule, Input } from './rule.a';
+import { Value } from './numeric_constructions.a';
+const rule = new Rule();
+const lines: string[] = [];
+const n0 = new Input(); n0.kind = 285; n0.tagKind = 211; n0.propertyKind = 79; n0.propertyName = "Provider"; n0.nearestFunctionKind = 262; n0.nearestFunctionName = "Wrap"; n0.valueIndex = 0;
+const v0_0 = new Value(); v0_0.kind = 217; v0_0.start = 75; v0_0.end = 79; v0_0.line = 2; v0_0.first = 1; v0_0.second = -1; v0_0.operatorKind = 0; v0_0.nearestFunction = 1;
+n0.values.push(v0_0);
+const v0_1 = new Value(); v0_1.kind = 210; v0_1.start = 76; v0_1.end = 78; v0_1.line = 2; v0_1.first = -1; v0_1.second = -1; v0_1.operatorKind = 0; v0_1.nearestFunction = 1;
+n0.values.push(v0_1);
+const f0 = rule.visit(n0); if(f0 !== undefined) { lines.push(f0.written()); }
+const n1 = new Input(); n1.kind = 285; n1.tagKind = 211; n1.propertyKind = 79; n1.propertyName = "Provider"; n1.nearestFunctionKind = 262; n1.nearestFunctionName = "Assert"; n1.valueIndex = 0;
+const v1_0 = new Value(); v1_0.kind = 217; v1_0.start = 132; v1_0.end = 143; v1_0.line = 3; v1_0.first = 1; v1_0.second = -1; v1_0.operatorKind = 0; v1_0.nearestFunction = 1;
+n1.values.push(v1_0);
+const v1_1 = new Value(); v1_1.kind = 234; v1_1.start = 133; v1_1.end = 142; v1_1.line = 3; v1_1.first = 2; v1_1.second = -1; v1_1.operatorKind = 0; v1_1.nearestFunction = 1;
+n1.values.push(v1_1);
+const v1_2 = new Value(); v1_2.kind = 209; v1_2.start = 133; v1_2.end = 135; v1_2.line = 3; v1_2.first = -1; v1_2.second = -1; v1_2.operatorKind = 0; v1_2.nearestFunction = 1;
+n1.values.push(v1_2);
+const f1 = rule.visit(n1); if(f1 !== undefined) { lines.push(f1.written()); }
+const n3 = new Input(); n3.kind = 285; n3.tagKind = 211; n3.propertyKind = 79; n3.propertyName = "Provider"; n3.nearestFunctionKind = 262; n3.nearestFunctionName = "TrueBranch"; n3.valueIndex = 0;
+const v3_0 = new Value(); v3_0.kind = 227; v3_0.start = 200; v3_0.end = 214; v3_0.line = 4; v3_0.first = 1; v3_0.second = 2; v3_0.operatorKind = 0; v3_0.nearestFunction = 1;
+n3.values.push(v3_0);
+const v3_1 = new Value(); v3_1.kind = 210; v3_1.start = 207; v3_1.end = 209; v3_1.line = 4; v3_1.first = -1; v3_1.second = -1; v3_1.operatorKind = 0; v3_1.nearestFunction = 1;
+n3.values.push(v3_1);
+const v3_2 = new Value(); v3_2.kind = 209; v3_2.start = 212; v3_2.end = 214; v3_2.line = 4; v3_2.first = -1; v3_2.second = -1; v3_2.operatorKind = 0; v3_2.nearestFunction = 1;
+n3.values.push(v3_2);
+const f3 = rule.visit(n3); if(f3 !== undefined) { lines.push(f3.written()); }
+const n4 = new Input(); n4.kind = 285; n4.tagKind = 211; n4.propertyKind = 79; n4.propertyName = "Provider"; n4.nearestFunctionKind = 262; n4.nearestFunctionName = "FalseBranch"; n4.valueIndex = 0;
+const v4_0 = new Value(); v4_0.kind = 227; v4_0.start = 272; v4_0.end = 285; v4_0.line = 5; v4_0.first = 1; v4_0.second = 2; v4_0.operatorKind = 0; v4_0.nearestFunction = 1;
+n4.values.push(v4_0);
+const v4_1 = new Value(); v4_1.kind = 8; v4_1.start = 279; v4_1.end = 280; v4_1.line = 5; v4_1.first = -1; v4_1.second = -1; v4_1.operatorKind = 0; v4_1.nearestFunction = 1;
+n4.values.push(v4_1);
+const v4_2 = new Value(); v4_2.kind = 209; v4_2.start = 283; v4_2.end = 285; v4_2.line = 5; v4_2.first = -1; v4_2.second = -1; v4_2.operatorKind = 0; v4_2.nearestFunction = 1;
+n4.values.push(v4_2);
+const f4 = rule.visit(n4); if(f4 !== undefined) { lines.push(f4.written()); }
+const n5 = new Input(); n5.kind = 285; n5.tagKind = 211; n5.propertyKind = 79; n5.propertyName = "Provider"; n5.nearestFunctionKind = 262; n5.nearestFunctionName = "OrLeft"; n5.valueIndex = 0;
+const v5_0 = new Value(); v5_0.kind = 226; v5_0.start = 338; v5_0.end = 346; v5_0.line = 6; v5_0.first = 1; v5_0.second = 2; v5_0.operatorKind = 56; v5_0.nearestFunction = 1;
+n5.values.push(v5_0);
+const v5_1 = new Value(); v5_1.kind = 210; v5_1.start = 338; v5_1.end = 340; v5_1.line = 6; v5_1.first = -1; v5_1.second = -1; v5_1.operatorKind = 0; v5_1.nearestFunction = 1;
+n5.values.push(v5_1);
+const v5_2 = new Value(); v5_2.kind = 209; v5_2.start = 344; v5_2.end = 346; v5_2.line = 6; v5_2.first = -1; v5_2.second = -1; v5_2.operatorKind = 0; v5_2.nearestFunction = 1;
+n5.values.push(v5_2);
+const f5 = rule.visit(n5); if(f5 !== undefined) { lines.push(f5.written()); }
+const n6 = new Input(); n6.kind = 285; n6.tagKind = 211; n6.propertyKind = 79; n6.propertyName = "Provider"; n6.nearestFunctionKind = 262; n6.nearestFunctionName = "AndRight"; n6.valueIndex = 0;
+const v6_0 = new Value(); v6_0.kind = 226; v6_0.start = 401; v6_0.end = 408; v6_0.line = 7; v6_0.first = 1; v6_0.second = 2; v6_0.operatorKind = 55; v6_0.nearestFunction = 1;
+n6.values.push(v6_0);
+const v6_1 = new Value(); v6_1.kind = 8; v6_1.start = 401; v6_1.end = 402; v6_1.line = 7; v6_1.first = -1; v6_1.second = -1; v6_1.operatorKind = 0; v6_1.nearestFunction = 1;
+n6.values.push(v6_1);
+const v6_2 = new Value(); v6_2.kind = 209; v6_2.start = 406; v6_2.end = 408; v6_2.line = 7; v6_2.first = -1; v6_2.second = -1; v6_2.operatorKind = 0; v6_2.nearestFunction = 1;
+n6.values.push(v6_2);
+const f6 = rule.visit(n6); if(f6 !== undefined) { lines.push(f6.written()); }
+const n7 = new Input(); n7.kind = 285; n7.tagKind = 211; n7.propertyKind = 79; n7.propertyName = "Provider"; n7.nearestFunctionKind = 262; n7.nearestFunctionName = "NullishRight"; n7.valueIndex = 0;
+const v7_0 = new Value(); v7_0.kind = 226; v7_0.start = 467; v7_0.end = 477; v7_0.line = 8; v7_0.first = 1; v7_0.second = 2; v7_0.operatorKind = 60; v7_0.nearestFunction = 1;
+n7.values.push(v7_0);
+const v7_1 = new Value(); v7_1.kind = 105; v7_1.start = 467; v7_1.end = 471; v7_1.line = 8; v7_1.first = -1; v7_1.second = -1; v7_1.operatorKind = 0; v7_1.nearestFunction = 1;
+n7.values.push(v7_1);
+const v7_2 = new Value(); v7_2.kind = 209; v7_2.start = 475; v7_2.end = 477; v7_2.line = 8; v7_2.first = -1; v7_2.second = -1; v7_2.operatorKind = 0; v7_2.nearestFunction = 1;
+n7.values.push(v7_2);
+const f7 = rule.visit(n7); if(f7 !== undefined) { lines.push(f7.written()); }
+const n8 = new Input(); n8.kind = 285; n8.tagKind = 211; n8.propertyKind = 79; n8.propertyName = "Provider"; n8.nearestFunctionKind = 262; n8.nearestFunctionName = "Assignment"; n8.valueIndex = 0;
+const v8_0 = new Value(); v8_0.kind = 226; v8_0.start = 545; v8_0.end = 551; v8_0.line = 9; v8_0.first = -1; v8_0.second = 1; v8_0.operatorKind = 63; v8_0.nearestFunction = 1;
+n8.values.push(v8_0);
+const v8_1 = new Value(); v8_1.kind = 209; v8_1.start = 549; v8_1.end = 551; v8_1.line = 9; v8_1.first = -1; v8_1.second = -1; v8_1.operatorKind = 0; v8_1.nearestFunction = 1;
+n8.values.push(v8_1);
+const f8 = rule.visit(n8); if(f8 !== undefined) { lines.push(f8.written()); }
+const n9 = new Input(); n9.kind = 285; n9.tagKind = 211; n9.propertyKind = 79; n9.propertyName = "Provider"; n9.nearestFunctionKind = 262; n9.nearestFunctionName = "Member"; n9.valueIndex = 0;
+const v9_0 = new Value(); v9_0.kind = 211; v9_0.start = 604; v9_0.end = 610; v9_0.line = 10; v9_0.first = 1; v9_0.second = -1; v9_0.operatorKind = 0; v9_0.nearestFunction = 1;
+n9.values.push(v9_0);
+const v9_1 = new Value(); v9_1.kind = 217; v9_1.start = 604; v9_1.end = 608; v9_1.line = 10; v9_1.first = 2; v9_1.second = -1; v9_1.operatorKind = 0; v9_1.nearestFunction = 1;
+n9.values.push(v9_1);
+const v9_2 = new Value(); v9_2.kind = 210; v9_2.start = 605; v9_2.end = 607; v9_2.line = 10; v9_2.first = -1; v9_2.second = -1; v9_2.operatorKind = 0; v9_2.nearestFunction = 1;
+n9.values.push(v9_2);
+const f9 = rule.visit(n9); if(f9 !== undefined) { lines.push(f9.written()); }
+const n10 = new Input(); n10.kind = 285; n10.tagKind = 211; n10.propertyKind = 79; n10.propertyName = "Provider"; n10.nearestFunctionKind = 262; n10.nearestFunctionName = "Binding"; n10.valueIndex = 0;
+const v10_0 = new Value(); v10_0.kind = 79; v10_0.start = 679; v10_0.end = 680; v10_0.line = 12; v10_0.first = -1; v10_0.second = -1; v10_0.operatorKind = 0; v10_0.nearestFunction = 1;
+v10_0.declarationFactsReady = true; v10_0.declarations.push(1); v10_0.name = "v";
+n10.values.push(v10_0);
+const v10_1 = new Value(); v10_1.kind = 260; v10_1.start = 644; v10_1.end = 650; v10_1.line = 11; v10_1.first = 2; v10_1.second = -1; v10_1.operatorKind = 0; v10_1.nearestFunction = 1;
+n10.values.push(v10_1);
+const v10_2 = new Value(); v10_2.kind = 210; v10_2.start = 648; v10_2.end = 650; v10_2.line = 11; v10_2.first = -1; v10_2.second = -1; v10_2.operatorKind = 0; v10_2.nearestFunction = 1;
+n10.values.push(v10_2);
+const f10 = rule.visit(n10); if(f10 !== undefined) { lines.push(f10.written()); }
+const n11 = new Input(); n11.kind = 285; n11.tagKind = 211; n11.propertyKind = 79; n11.propertyName = "Provider"; n11.nearestFunctionKind = 262; n11.nearestFunctionName = "Function"; n11.valueIndex = 0;
+const v11_0 = new Value(); v11_0.kind = 79; v11_0.start = 752; v11_0.end = 753; v11_0.line = 14; v11_0.first = -1; v11_0.second = -1; v11_0.operatorKind = 0; v11_0.nearestFunction = 1;
+v11_0.declarationFactsReady = true; v11_0.declarations.push(1); v11_0.name = "v";
+n11.values.push(v11_0);
+const v11_1 = new Value(); v11_1.kind = 262; v11_1.start = 709; v11_1.end = 724; v11_1.line = 13; v11_1.first = -1; v11_1.second = -1; v11_1.operatorKind = 0; v11_1.nearestFunction = 1;
+n11.values.push(v11_1);
+const f11 = rule.visit(n11); if(f11 !== undefined) { lines.push(f11.written()); }
+const n12 = new Input(); n12.kind = 285; n12.tagKind = 211; n12.propertyKind = 79; n12.propertyName = "Provider"; n12.nearestFunctionKind = 262; n12.nearestFunctionName = "Chain"; n12.valueIndex = 0;
+const v12_0 = new Value(); v12_0.kind = 79; v12_0.start = 833; v12_0.end = 834; v12_0.line = 16; v12_0.first = -1; v12_0.second = -1; v12_0.operatorKind = 0; v12_0.nearestFunction = 1;
+v12_0.declarationFactsReady = true; v12_0.declarations.push(1); v12_0.name = "v";
+n12.values.push(v12_0);
+const v12_1 = new Value(); v12_1.kind = 260; v12_1.start = 799; v12_1.end = 804; v12_1.line = 15; v12_1.first = 2; v12_1.second = -1; v12_1.operatorKind = 0; v12_1.nearestFunction = 1;
+n12.values.push(v12_1);
+const v12_2 = new Value(); v12_2.kind = 79; v12_2.start = 803; v12_2.end = 804; v12_2.line = 15; v12_2.first = -1; v12_2.second = -1; v12_2.operatorKind = 0; v12_2.nearestFunction = 1;
+v12_2.declarationFactsReady = true; v12_2.declarations.push(3); v12_2.name = "a";
+n12.values.push(v12_2);
+const v12_3 = new Value(); v12_3.kind = 260; v12_3.start = 785; v12_3.end = 791; v12_3.line = 15; v12_3.first = 4; v12_3.second = -1; v12_3.operatorKind = 0; v12_3.nearestFunction = 1;
+n12.values.push(v12_3);
+const v12_4 = new Value(); v12_4.kind = 210; v12_4.start = 789; v12_4.end = 791; v12_4.line = 15; v12_4.first = -1; v12_4.second = -1; v12_4.operatorKind = 0; v12_4.nearestFunction = 1;
+n12.values.push(v12_4);
+const f12 = rule.visit(n12); if(f12 !== undefined) { lines.push(f12.written()); }
+const bare0 = new Input(); bare0.kind = 285; bare0.tagKind = 79; bare0.tagIndex = 1; bare0.nearestFunctionKind = 262; bare0.nearestFunctionName = "Bare0"; bare0.valueIndex = 0;
+const b0_0 = new Value(); b0_0.kind = 210;
+b0_0.start = 924; b0_0.end = 926; b0_0.line = 17;
+bare0.values.push(b0_0);
+const b0_1 = new Value(); b0_1.kind = 79;
+b0_1.declarationFactsReady = true; b0_1.declarations.push(2);
+bare0.values.push(b0_1);
+const b0_2 = new Value(); b0_2.kind = 260;
+b0_2.first = 3;
+bare0.values.push(b0_2);
+const b0_3 = new Value(); b0_3.kind = 217;
+b0_3.first = 4;
+bare0.values.push(b0_3);
+const b0_4 = new Value(); b0_4.kind = 213;
+b0_4.first = 5;
+bare0.values.push(b0_4);
+const b0_5 = new Value(); b0_5.kind = 79;
+b0_5.name = "createContext";
+bare0.values.push(b0_5);
+const b0_6 = new Value(); b0_6.kind = 211;
+b0_6.first = 7;
+b0_6.name = "createContext";
+bare0.values.push(b0_6);
+const b0_7 = new Value(); b0_7.kind = 79;
+b0_7.name = "React";
+bare0.values.push(b0_7);
+const bf0 = rule.visit(bare0); if(bf0 !== undefined) { lines.push(bf0.written()); }
+const bare1 = new Input(); bare1.kind = 285; bare1.tagKind = 79; bare1.tagIndex = 1; bare1.nearestFunctionKind = 262; bare1.nearestFunctionName = "Bare1"; bare1.valueIndex = 0;
+const b1_0 = new Value(); b1_0.kind = 210;
+b1_0.start = 1024; b1_0.end = 1026; b1_0.line = 18;
+bare1.values.push(b1_0);
+const b1_1 = new Value(); b1_1.kind = 79;
+b1_1.declarationFactsReady = true; b1_1.declarations.push(2);
+bare1.values.push(b1_1);
+const b1_2 = new Value(); b1_2.kind = 260;
+b1_2.first = 3;
+bare1.values.push(b1_2);
+const b1_3 = new Value(); b1_3.kind = 217;
+b1_3.first = 4;
+bare1.values.push(b1_3);
+const b1_4 = new Value(); b1_4.kind = 213;
+b1_4.first = 5;
+bare1.values.push(b1_4);
+const b1_5 = new Value(); b1_5.kind = 217;
+b1_5.first = 6;
+bare1.values.push(b1_5);
+const b1_6 = new Value(); b1_6.kind = 211;
+b1_6.first = 7;
+b1_6.name = "createContext";
+bare1.values.push(b1_6);
+const b1_7 = new Value(); b1_7.kind = 79;
+b1_7.name = "React";
+bare1.values.push(b1_7);
+const bf1 = rule.visit(bare1); if(bf1 !== undefined) { lines.push(bf1.written()); }
+const bare2 = new Input(); bare2.kind = 285; bare2.tagKind = 79; bare2.tagIndex = 1; bare2.nearestFunctionKind = 262; bare2.nearestFunctionName = "Bare2"; bare2.valueIndex = 0;
+const b2_0 = new Value(); b2_0.kind = 210;
+b2_0.start = 1115; b2_0.end = 1117; b2_0.line = 19;
+bare2.values.push(b2_0);
+const b2_1 = new Value(); b2_1.kind = 79;
+b2_1.declarationFactsReady = true; b2_1.declarations.push(2);
+bare2.values.push(b2_1);
+const b2_2 = new Value(); b2_2.kind = 260;
+b2_2.first = 3;
+bare2.values.push(b2_2);
+const b2_3 = new Value(); b2_3.kind = 217;
+b2_3.first = 4;
+bare2.values.push(b2_3);
+const b2_4 = new Value(); b2_4.kind = 213;
+b2_4.first = 5;
+bare2.values.push(b2_4);
+const b2_5 = new Value(); b2_5.kind = 79;
+b2_5.name = "otherFactory";
+bare2.values.push(b2_5);
+const b2_6 = new Value(); b2_6.kind = 211;
+b2_6.first = 7;
+b2_6.name = "createContext";
+bare2.values.push(b2_6);
+const b2_7 = new Value(); b2_7.kind = 79;
+b2_7.name = "React";
+bare2.values.push(b2_7);
+const bf2 = rule.visit(bare2); if(bf2 !== undefined) { lines.push(bf2.written()); }
+lines.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); for(const line of lines) { console.log(line); }
+if(programArguments().includes('--satisfies')) {
+    const unsupported = new Input(); unsupported.kind = 285; unsupported.tagKind = 211; unsupported.propertyKind = 79; unsupported.propertyName = 'Provider'; unsupported.nearestFunctionKind = 262; unsupported.nearestFunctionName = 'C'; unsupported.valueIndex = 0;
+    const value = new Value(); value.kind = 238; unsupported.values.push(value); rule.visit(unsupported);
+}

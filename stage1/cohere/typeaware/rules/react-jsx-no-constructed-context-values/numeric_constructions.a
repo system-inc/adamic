@@ -1,0 +1,105 @@
+import { panic } from 'adamic';
+
+// A flat raw tree avoids owning cycles when a declaration initializes itself.
+// Links and function identities are facts, never precomputed rule verdicts.
+export class Value {
+    kind = 0;
+    start = 0;
+    end = 0;
+    line = 1;
+    name = '';
+    first = -1;
+    second = -1;
+    operatorKind = 0;
+    nearestFunction = -1;
+    declarations: number[] = [];
+    declarationFactsReady = false;
+}
+export class Construction {
+    kind: number;
+    label = '';
+    index: number;
+    usage = -1;
+    constructor(kind: number, index: number) {
+        this.kind = kind;
+        this.index = index;
+    }
+}
+export function constructionOf(values: readonly Value[], index: number, depth = 0): Construction | undefined {
+    if(index < 0 || depth > 16) { return undefined; }
+    const node = values[index] ?? panic('constructed-context value link outside raw tree');
+    if([210, 209, 218, 219, 231, 214, 13, 284, 285, 288].includes(node.kind)) {
+        return new Construction(node.kind, index);
+    }
+    if(node.kind === 238) { panic('production Go constructed-context panics on SatisfiesExpression'); }
+    if([217, 234].includes(node.kind)) {
+        return constructionOf(values, node.first, depth + 1);
+    }
+    if(node.kind === 227) {
+        const left = constructionOf(values, node.first, depth + 1);
+        return left === undefined ? constructionOf(values, node.second, depth + 1) : left;
+    }
+    if(node.kind === 226) {
+        if(node.operatorKind >= 63 && node.operatorKind <= 78) {
+            const found = constructionOf(values, node.second, depth + 1);
+            if(found !== undefined) { found.label = 'assignment expression'; found.usage = index; }
+            return found;
+        }
+        if(![55, 56, 60].includes(node.operatorKind)) { return undefined; }
+        const left = constructionOf(values, node.first, depth + 1);
+        return left === undefined ? constructionOf(values, node.second, depth + 1) : left;
+    }
+    if(node.kind === 211) {
+        const found = constructionOf(values, node.first, depth + 1);
+        if(found !== undefined) { found.usage = node.first; }
+        return found;
+    }
+    if(node.kind === 79) {
+        if(!node.declarationFactsReady) { panic('constructed-context identifier requires raw declaration facts'); }
+        const last = node.declarations[node.declarations.length - 1] ?? -1;
+        if(last < 0) { return undefined; }
+        const declaration = values[last] ?? panic('constructed-context declaration outside raw tree');
+        if(declaration.nearestFunction !== node.nearestFunction) { return undefined; }
+        if(declaration.kind === 262) {
+            const found = new Construction(262, last); found.usage = index; return found;
+        }
+        if(declaration.kind === 260) {
+            const found = constructionOf(values, declaration.first, depth + 1);
+            if(found !== undefined) { found.usage = index; }
+            return found;
+        }
+    }
+    return undefined;
+}
+
+function unparenthesized(values: readonly Value[], index: number): number {
+    for(let depth = 0; depth <= values.length; depth++) {
+        if(index < 0) { return -1; }
+        const value = values[index] ?? panic('provider link outside raw tree');
+        if(value.kind !== 217) { return index; }
+        index = value.first;
+    }
+    panic('provider parentheses cycle in raw tree');
+}
+export function resolvesToCreateContext(values: readonly Value[], tagIndex: number): boolean {
+    const tag = values[tagIndex] ?? panic('provider requires raw tag facts');
+    if(!tag.declarationFactsReady) { panic('provider requires raw tag declaration facts'); }
+    for(const index of tag.declarations) {
+        const declaration = values[index] ?? panic('provider declaration outside raw tree');
+        if(declaration.kind !== 260) { continue; }
+        const initializer = unparenthesized(values, declaration.first);
+        if(initializer < 0) { continue; }
+        const call = values[initializer] ?? panic('missing provider initializer');
+        if(call.kind !== 213) { continue; }
+        const calleeIndex = unparenthesized(values, call.first);
+        if(calleeIndex < 0) { continue; }
+        const callee = values[calleeIndex] ?? panic('missing provider callee');
+        if(callee.kind === 79 && callee.name === 'createContext') { return true; }
+        if(callee.kind !== 211 || callee.name !== 'createContext') { continue; }
+        const receiverIndex = unparenthesized(values, callee.first);
+        if(receiverIndex < 0) { continue; }
+        const receiver = values[receiverIndex] ?? panic('missing provider receiver');
+        if(receiver.kind === 79 && receiver.name === 'React') { return true; }
+    }
+    return false;
+}

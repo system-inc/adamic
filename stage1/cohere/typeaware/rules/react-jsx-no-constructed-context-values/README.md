@@ -1,3 +1,6 @@
 This is a numeric supplied-input judgment adapter, not an integrated source-to-rule port. `rule.json` lists pinned parser SyntaxKind numbers. `visit` receives its input directly; it does not traverse a file or refetch the entry node. Checker declaration fields are raw facts, supplied manually by positive controls while shared JSX/numeric-node and checker adapters are unavailable. Missing checker facts refuse rather than pretending to be resolved. The shared generator is not wired to this adapter API.
 
 See ../react-jsx-fragments/REPORT.md for exact scope, independent production Go controls, compiling mutants, sanitizer results, options, limits and commands.
+
+
+The numeric adapter now also judges parenthesized/as expressions, conditional and logical branches, assignments, property receivers, local variable/function declarations and identifier chains. Input.values is a flat raw tree; Input.valueIndex selects the value expression. Value.first/second are child indexes, Value.declarations contains raw declaration indexes in checker order, and Value.nearestFunction is a function identity. Input.tagIndex enables bare providers initialized by createContext or React.createContext. Missing declarations refuse explicitly. See REPORT.md for independent Go evidence and remaining gaps.

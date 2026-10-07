@@ -1,0 +1,61 @@
+panic: interface conversion: ast.nodeData is *ast.SatisfiesExpression, not *ast.AsExpression
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsAsExpression(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9351
+github.com/system-inc/cohere/internal/lint/rules/react.jsxNoConstructedContextValuesConstructionOf({0x3f40d0a4c708, {0x1fe1630, 0x3f40d10d7620}, 0x3f40d0a53508, 0x3f40d0a488a0, 0x3f40cfdb8708, 0x0}, 0x3f40d09d7d80, 0x0?)
+	/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go:484 +0x80c
+github.com/system-inc/cohere/internal/lint/rules/react.jsxNoConstructedContextValuesConstructionOf({0x3f40d0a4c708, {0x1fe1630, 0x3f40d10d7620}, 0x3f40d0a53508, 0x3f40d0a488a0, 0x3f40cfdb8708, 0x0}, 0x3f40d0a3cb60, 0x3f40cfa46f50?)
+	/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go:475 +0x30e
+github.com/system-inc/cohere/internal/lint/rules/react.init.func20.1(0x3f40cfd72ff0, 0x3f40cfa46fa8?, 0x3f40cfd72fa0)
+	/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go:230 +0xc5
+github.com/system-inc/cohere/internal/lint/rules/react.init.func20.3(0xe4452d?)
+	/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go:281 +0x34
+main.main.func2(0x3f40cfd72ff0)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:141 +0x91
+main.main.func2.1(0x5bb7d4?)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1163
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3f40cfa47d78?, 0x3f40cfa471f8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8716 +0x1262
+main.main.func2(0x3f40cff47d40)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0xed
+main.main.func2.1(0xe4457a?)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3f40cfa47d78?, 0x3f40cfa473f8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+main.main.func2(0x3f40d0a2b800)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0xed
+main.main.func2.1(0xe4457a?)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x3f40cfdd7808, 0x3f40cfa47648)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x448567?, 0x3f40cfa47648)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2
+main.main.func2(0x3f40cfdd7808)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0xed
+main.main.func2.1(0x3f40cfa476b8?)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x3f40d0a4c708, 0x3f40cfa47878)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2786 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3f40cfa478a8?, 0x3f40cfa47878)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+main.main.func2(0x3f40d0a4c708)
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:144 +0xed
+main.main()
+	/workspace/adamic/cohere/adamic_wave15_indirect_oracle.go:146 +0x1126

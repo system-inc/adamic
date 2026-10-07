@@ -1,0 +1,2 @@
+declare const X:any;
+function Satisfy() { return <X.Provider value={({} satisfies any)}/>; }
