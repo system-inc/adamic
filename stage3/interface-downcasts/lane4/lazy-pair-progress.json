@@ -1,0 +1,5069 @@
+{
+  "baseline": "ba59427ccc7afecae29a305c41e6e9c7867e5610",
+  "inventory": "stage3/interface-downcasts/lazy/census/read-demand-pairs.json.gz",
+  "inventory_sha256": "ff738cfeabeecad1dbf481ee7f2a8b0c68d34eee10ecec573d4daece72d2451c",
+  "limits": "Exact supplied static candidate inventory; lazy REPORT explicitly leaves production allocation-flow reachability unmeasured. Family columns overlap. No whole-tsc compilation claim.",
+  "families": {
+    "__String": {
+      "total_pairs": 14,
+      "total_reads": 511,
+      "remaining_pairs": 14,
+      "remaining_reads": 511
+    },
+    "mixed primitive union": {
+      "total_pairs": 23,
+      "total_reads": 538,
+      "remaining_pairs": 23,
+      "remaining_reads": 538
+    }
+  },
+  "pairs": [
+    {
+      "type_id": 6997,
+      "view_reason": {
+        "kind": "union-member",
+        "from": 9174
+      },
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 224,
+      "sites": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 866,
+          "column": 33,
+          "start": 32778,
+          "end": 32794,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1039,
+          "column": 26,
+          "start": 40402,
+          "end": 40424,
+          "text": "param.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1040,
+          "column": 158,
+          "start": 40584,
+          "end": 40604,
+          "text": "tag.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1077,
+          "column": 18,
+          "start": 42216,
+          "end": 42238,
+          "text": "param.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1078,
+          "column": 152,
+          "start": 42392,
+          "end": 42411,
+          "text": "tp.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1428,
+          "column": 9,
+          "start": 57044,
+          "end": 57069,
+          "text": "node.typeName.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 1301,
+          "column": 92,
+          "start": 44528,
+          "end": 44544,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 1306,
+          "column": 91,
+          "start": 44742,
+          "end": 44758,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 1317,
+          "column": 66,
+          "start": 45163,
+          "end": 45179,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2712,
+          "column": 12,
+          "start": 94807,
+          "end": 94825,
+          "text": "e.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2720,
+          "column": 12,
+          "start": 95033,
+          "end": 95051,
+          "text": "n.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3827,
+          "column": 9,
+          "start": 144831,
+          "end": 144856,
+          "text": "node.typeName.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3849,
+          "column": 54,
+          "start": 146036,
+          "end": 146074,
+          "text": "(expression as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3957,
+          "column": 9,
+          "start": 150588,
+          "end": 150606,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4072,
+          "column": 18,
+          "start": 155835,
+          "end": 155869,
+          "text": "initializer.expression.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4073,
+          "column": 21,
+          "start": 155907,
+          "end": 155941,
+          "text": "initializer.expression.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4074,
+          "column": 21,
+          "start": 155977,
+          "end": 156011,
+          "text": "initializer.expression.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4095,
+          "column": 34,
+          "start": 156744,
+          "end": 156760,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4100,
+          "column": 34,
+          "start": 156892,
+          "end": 156908,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4232,
+          "column": 20,
+          "start": 163201,
+          "end": 163217,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4262,
+          "column": 14,
+          "start": 164339,
+          "end": 164353,
+          "text": "id.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4263,
+          "column": 17,
+          "start": 164388,
+          "end": 164402,
+          "text": "id.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4478,
+          "column": 22,
+          "start": 174145,
+          "end": 174161,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4757,
+          "column": 18,
+          "start": 185520,
+          "end": 185541,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4762,
+          "column": 91,
+          "start": 185737,
+          "end": 185755,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4831,
+          "column": 18,
+          "start": 188160,
+          "end": 188181,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4833,
+          "column": 56,
+          "start": 188364,
+          "end": 188382,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5445,
+          "column": 33,
+          "start": 211968,
+          "end": 211984,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5585,
+          "column": 12,
+          "start": 219139,
+          "end": 219155,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5585,
+          "column": 43,
+          "start": 219170,
+          "end": 219186,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 6828,
+          "column": 12,
+          "start": 267762,
+          "end": 267776,
+          "text": "id.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 7554,
+          "column": 43,
+          "start": 297390,
+          "end": 297406,
+          "text": "expr.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11128,
+          "column": 33,
+          "start": 445624,
+          "end": 445640,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11145,
+          "column": 15,
+          "start": 446214,
+          "end": 446240,
+          "text": "node.namespace.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11206,
+          "column": 38,
+          "start": 448765,
+          "end": 448786,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11527,
+          "column": 52,
+          "start": 465779,
+          "end": 465814,
+          "text": "(nameArg as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11703,
+          "column": 51,
+          "start": 478805,
+          "end": 478826,
+          "text": "className.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11766,
+          "column": 54,
+          "start": 482561,
+          "end": 482585,
+          "text": "functionName.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11838,
+          "column": 55,
+          "start": 486526,
+          "end": 486551,
+          "text": "parameterName.escapedText"
+        },
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5193,
+          "column": 16,
+          "start": 223923,
+          "end": 223947,
+          "text": "node.tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6336,
+          "column": 44,
+          "start": 274884,
+          "end": 274900,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/factory/emitHelpers.ts",
+          "line": 1490,
+          "column": 12,
+          "start": 68996,
+          "end": 69031,
+          "text": "firstSegment.expression.escapedText"
+        },
+        {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 219,
+          "column": 29,
+          "start": 6374,
+          "end": 6402,
+          "text": "jsxFactory.right.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 500,
+          "column": 86,
+          "start": 13584,
+          "end": 13605,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 3297,
+          "column": 25,
+          "start": 166898,
+          "end": 166932,
+          "text": "methodDeclaration.name.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 5947,
+          "column": 21,
+          "start": 291267,
+          "end": 291312,
+          "text": "(expression as MetaProperty).name.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8619,
+          "column": 52,
+          "start": 424668,
+          "end": 424684,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9104,
+          "column": 25,
+          "start": 450123,
+          "end": 450142,
+          "text": "tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9417,
+          "column": 96,
+          "start": 466200,
+          "end": 466225,
+          "text": "node.typeName.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9468,
+          "column": 137,
+          "start": 469430,
+          "end": 469449,
+          "text": "tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9477,
+          "column": 137,
+          "start": 470035,
+          "end": 470054,
+          "text": "tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9743,
+          "column": 73,
+          "start": 486254,
+          "end": 486273,
+          "text": "a.right.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9743,
+          "column": 97,
+          "start": 486278,
+          "end": 486297,
+          "text": "b.right.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9751,
+          "column": 24,
+          "start": 486531,
+          "end": 486544,
+          "text": "a.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9751,
+          "column": 42,
+          "start": 486549,
+          "end": 486562,
+          "text": "b.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9803,
+          "column": 25,
+          "start": 489260,
+          "end": 489279,
+          "text": "tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10806,
+          "column": 16,
+          "start": 538626,
+          "end": 538641,
+          "text": "lhs.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10806,
+          "column": 36,
+          "start": 538646,
+          "end": 538677,
+          "text": "(rhs as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10814,
+          "column": 16,
+          "start": 538837,
+          "end": 538862,
+          "text": "lhs.namespace.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10814,
+          "column": 46,
+          "start": 538867,
+          "end": 538915,
+          "text": "(rhs as JsxNamespacedName).namespace.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10815,
+          "column": 13,
+          "start": 538932,
+          "end": 538952,
+          "text": "lhs.name.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10815,
+          "column": 38,
+          "start": 538957,
+          "end": 539000,
+          "text": "(rhs as JsxNamespacedName).name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1888,
+          "column": 69,
+          "start": 66306,
+          "end": 66356,
+          "text": "getFirstIdentifier(jsxFragmentFactory).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2450,
+          "column": 69,
+          "start": 98058,
+          "end": 98118,
+          "text": "getFirstIdentifier(file.localJsxFragmentFactory).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2456,
+          "column": 65,
+          "start": 98409,
+          "end": 98447,
+          "text": "getFirstIdentifier(entity).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2473,
+          "column": 37,
+          "start": 99158,
+          "end": 99207,
+          "text": "getFirstIdentifier(_jsxFactoryEntity).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2496,
+          "column": 49,
+          "start": 100257,
+          "end": 100309,
+          "text": "getFirstIdentifier(file.localJsxFactory).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3241,
+          "column": 52,
+          "start": 142308,
+          "end": 142343,
+          "text": "(nameArg as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3401,
+          "column": 45,
+          "start": 153698,
+          "end": 153723,
+          "text": "errorLocation.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3472,
+          "column": 38,
+          "start": 157535,
+          "end": 157559,
+          "text": "parent.right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3713,
+          "column": 93,
+          "start": 171207,
+          "end": 171246,
+          "text": "commonJSPropertyAccess.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4186,
+          "column": 79,
+          "start": 200659,
+          "end": 200675,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4521,
+          "column": 46,
+          "start": 219548,
+          "end": 219577,
+          "text": "left.parent.right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4575,
+          "column": 79,
+          "start": 222593,
+          "end": 222610,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4578,
+          "column": 97,
+          "start": 222890,
+          "end": 222907,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4606,
+          "column": 109,
+          "start": 224716,
+          "end": 224733,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4612,
+          "column": 60,
+          "start": 225193,
+          "end": 225222,
+          "text": "name.parent.right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 6146,
+          "column": 58,
+          "start": 315334,
+          "end": 315361,
+          "text": "firstIdentifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 6392,
+          "column": 111,
+          "start": 330403,
+          "end": 330419,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8257,
+          "column": 55,
+          "start": 455573,
+          "end": 455624,
+          "text": "typeParameterToName(typeParam, context).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8442,
+          "column": 60,
+          "start": 467372,
+          "end": 467399,
+          "text": "firstIdentifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8448,
+          "column": 63,
+          "start": 467831,
+          "end": 467858,
+          "text": "firstIdentifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8845,
+          "column": 33,
+          "start": 493114,
+          "end": 493132,
+          "text": "result.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9717,
+          "column": 61,
+          "start": 552077,
+          "end": 552123,
+          "text": "propertyAccessRequire.parent.right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 11465,
+          "column": 67,
+          "start": 667505,
+          "end": 667532,
+          "text": "firstIdentifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16344,
+          "column": 28,
+          "start": 949705,
+          "end": 949737,
+          "text": "(node as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16466,
+          "column": 124,
+          "start": 956604,
+          "end": 956629,
+          "text": "parameterName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16466,
+          "column": 216,
+          "start": 956696,
+          "end": 956721,
+          "text": "parameterName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17137,
+          "column": 22,
+          "start": 997882,
+          "end": 997904,
+          "text": "identifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17319,
+          "column": 21,
+          "start": 1007775,
+          "end": 1007800,
+          "text": "node.typeName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20025,
+          "column": 84,
+          "start": 1171005,
+          "end": 1171024,
+          "text": "current.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20027,
+          "column": 126,
+          "start": 1171268,
+          "end": 1171287,
+          "text": "current.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24396,
+          "column": 40,
+          "start": 1453334,
+          "end": 1453356,
+          "text": "sourceName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24397,
+          "column": 40,
+          "start": 1453426,
+          "end": 1453448,
+          "text": "targetName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26124,
+          "column": 45,
+          "start": 1550919,
+          "end": 1550941,
+          "text": "param.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27695,
+          "column": 17,
+          "start": 1651248,
+          "end": 1651264,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27810,
+          "column": 43,
+          "start": 1658018,
+          "end": 1658059,
+          "text": "(node as QualifiedName).right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27851,
+          "column": 24,
+          "start": 1660496,
+          "end": 1660537,
+          "text": "(source as MetaProperty).name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27851,
+          "column": 70,
+          "start": 1660542,
+          "end": 1660583,
+          "text": "(target as MetaProperty).name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27885,
+          "column": 21,
+          "start": 1663068,
+          "end": 1663111,
+          "text": "(source as QualifiedName).right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28780,
+          "column": 60,
+          "start": 1711226,
+          "end": 1711242,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30125,
+          "column": 54,
+          "start": 1794194,
+          "end": 1794221,
+          "text": "callAccess.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30656,
+          "column": 193,
+          "start": 1827024,
+          "end": 1827041,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30713,
+          "column": 47,
+          "start": 1830238,
+          "end": 1830276,
+          "text": "getFirstIdentifier(entity).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30748,
+          "column": 54,
+          "start": 1831786,
+          "end": 1831810,
+          "text": "exportedName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30875,
+          "column": 50,
+          "start": 1838821,
+          "end": 1838841,
+          "text": "rootName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31056,
+          "column": 70,
+          "start": 1850583,
+          "end": 1850599,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31591,
+          "column": 14,
+          "start": 1880179,
+          "end": 1880212,
+          "text": "container.parent.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31591,
+          "column": 63,
+          "start": 1880228,
+          "end": 1880261,
+          "text": "container.parent.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31591,
+          "column": 110,
+          "start": 1880275,
+          "end": 1880308,
+          "text": "container.parent.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31605,
+          "column": 14,
+          "start": 1881151,
+          "end": 1881177,
+          "text": "container.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31605,
+          "column": 56,
+          "start": 1881193,
+          "end": 1881219,
+          "text": "container.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 31605,
+          "column": 96,
+          "start": 1881233,
+          "end": 1881259,
+          "text": "container.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32239,
+          "column": 134,
+          "start": 1916870,
+          "end": 1916888,
+          "text": "e.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32298,
+          "column": 62,
+          "start": 1920716,
+          "end": 1920730,
+          "text": "id.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32339,
+          "column": 22,
+          "start": 1923231,
+          "end": 1923308,
+          "text": "((declaration.left as AccessExpression).expression as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33424,
+          "column": 45,
+          "start": 1987045,
+          "end": 1987061,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33803,
+          "column": 60,
+          "start": 2008106,
+          "end": 2008125,
+          "text": "tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33862,
+          "column": 92,
+          "start": 2011815,
+          "end": 2011845,
+          "text": "attributeDecl.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34021,
+          "column": 120,
+          "start": 2021978,
+          "end": 2022002,
+          "text": "node.tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34268,
+          "column": 120,
+          "start": 2036445,
+          "end": 2036469,
+          "text": "node.tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34944,
+          "column": 52,
+          "start": 2071972,
+          "end": 2071989,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34951,
+          "column": 61,
+          "start": 2072508,
+          "end": 2072525,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 35161,
+          "column": 49,
+          "start": 2085151,
+          "end": 2085171,
+          "text": "propNode.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 35161,
+          "column": 114,
+          "start": 2085216,
+          "end": 2085236,
+          "text": "propNode.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 36397,
+          "column": 53,
+          "start": 2155841,
+          "end": 2155868,
+          "text": "node.expression.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 37921,
+          "column": 36,
+          "start": 2246355,
+          "end": 2246371,
+          "text": "left.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 37961,
+          "column": 82,
+          "start": 2248443,
+          "end": 2248464,
+          "text": "prop.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38285,
+          "column": 17,
+          "start": 2266098,
+          "end": 2266119,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38334,
+          "column": 16,
+          "start": 2268520,
+          "end": 2268541,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38355,
+          "column": 30,
+          "start": 2269517,
+          "end": 2269538,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38415,
+          "column": 16,
+          "start": 2272877,
+          "end": 2272895,
+          "text": "d.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38465,
+          "column": 73,
+          "start": 2275417,
+          "end": 2275448,
+          "text": "associatedName.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 39519,
+          "column": 101,
+          "start": 2336305,
+          "end": 2336327,
+          "text": "param.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41015,
+          "column": 80,
+          "start": 2422066,
+          "end": 2422088,
+          "text": "node.right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41172,
+          "column": 39,
+          "start": 2430689,
+          "end": 2430705,
+          "text": "expr.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42007,
+          "column": 84,
+          "start": 2479194,
+          "end": 2479215,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42014,
+          "column": 54,
+          "start": 2479687,
+          "end": 2479708,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42014,
+          "column": 90,
+          "start": 2479723,
+          "end": 2479744,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42016,
+          "column": 84,
+          "start": 2479899,
+          "end": 2479920,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42110,
+          "column": 56,
+          "start": 2484377,
+          "end": 2484393,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42246,
+          "column": 60,
+          "start": 2492185,
+          "end": 2492207,
+          "text": "param.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 43892,
+          "column": 78,
+          "start": 2578693,
+          "end": 2578727,
+          "text": "promiseConstructorName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 43917,
+          "column": 61,
+          "start": 2580946,
+          "end": 2580966,
+          "text": "rootName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44145,
+          "column": 21,
+          "start": 2591485,
+          "end": 2591513,
+          "text": "commonEntityName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44145,
+          "column": 54,
+          "start": 2591518,
+          "end": 2591550,
+          "text": "individualEntityName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44788,
+          "column": 56,
+          "start": 2625795,
+          "end": 2625813,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 45021,
+          "column": 62,
+          "start": 2638153,
+          "end": 2638174,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46680,
+          "column": 69,
+          "start": 2729505,
+          "end": 2729552,
+          "text": "(current as LabeledStatement).label.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46680,
+          "column": 121,
+          "start": 2729557,
+          "end": 2729579,
+          "text": "node.label.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46699,
+          "column": 51,
+          "start": 2730332,
+          "end": 2730359,
+          "text": "node.expression.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46833,
+          "column": 17,
+          "start": 2738624,
+          "end": 2738640,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46845,
+          "column": 38,
+          "start": 2738989,
+          "end": 2739005,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46854,
+          "column": 13,
+          "start": 2739244,
+          "end": 2739260,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46870,
+          "column": 32,
+          "start": 2740068,
+          "end": 2740084,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46883,
+          "column": 71,
+          "start": 2740671,
+          "end": 2740702,
+          "text": "lastJSDocParam.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46890,
+          "column": 91,
+          "start": 2741253,
+          "end": 2741269,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47000,
+          "column": 21,
+          "start": 2746612,
+          "end": 2746635,
+          "text": "source.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47873,
+          "column": 54,
+          "start": 2795534,
+          "end": 2795555,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47874,
+          "column": 68,
+          "start": 2795654,
+          "end": 2795675,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47980,
+          "column": 39,
+          "start": 2801187,
+          "end": 2801209,
+          "text": "identifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47980,
+          "column": 94,
+          "start": 2801242,
+          "end": 2801264,
+          "text": "identifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47984,
+          "column": 42,
+          "start": 2801670,
+          "end": 2801692,
+          "text": "identifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48435,
+          "column": 101,
+          "start": 2826433,
+          "end": 2826454,
+          "text": "errorNode.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48832,
+          "column": 54,
+          "start": 2850674,
+          "end": 2850698,
+          "text": "exportedName.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50175,
+          "column": 83,
+          "start": 2918786,
+          "end": 2918802,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50182,
+          "column": 44,
+          "start": 2919074,
+          "end": 2919090,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50182,
+          "column": 63,
+          "start": 2919093,
+          "end": 2919115,
+          "text": "name.right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50223,
+          "column": 78,
+          "start": 2921101,
+          "end": 2921133,
+          "text": "(node as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50324,
+          "column": 52,
+          "start": 2927009,
+          "end": 2927037,
+          "text": "node.parent.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50508,
+          "column": 78,
+          "start": 2936423,
+          "end": 2936443,
+          "text": "location.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 51241,
+          "column": 38,
+          "start": 2976574,
+          "end": 2976595,
+          "text": "reference.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 51259,
+          "column": 13,
+          "start": 2977450,
+          "end": 2977471,
+          "text": "reference.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 51511,
+          "column": 63,
+          "start": 2991852,
+          "end": 2991879,
+          "text": "firstIdentifier.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52741,
+          "column": 105,
+          "start": 3066567,
+          "end": 3066593,
+          "text": "node.namespace.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52812,
+          "column": 61,
+          "start": 3071004,
+          "end": 3071046,
+          "text": "forInOrOfStatement.initializer.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53038,
+          "column": 39,
+          "start": 3084512,
+          "end": 3084559,
+          "text": "(current as LabeledStatement).label.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53038,
+          "column": 91,
+          "start": 3084564,
+          "end": 3084586,
+          "text": "node.label.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53220,
+          "column": 17,
+          "start": 3094073,
+          "end": 3094089,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53313,
+          "column": 29,
+          "start": 3098381,
+          "end": 3098402,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53317,
+          "column": 159,
+          "start": 3098691,
+          "end": 3098712,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53330,
+          "column": 184,
+          "start": 3099499,
+          "end": 3099520,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53332,
+          "column": 163,
+          "start": 3099714,
+          "end": 3099735,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54146,
+          "column": 40,
+          "start": 3139732,
+          "end": 3139767,
+          "text": "(n1.name as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54146,
+          "column": 87,
+          "start": 3139779,
+          "end": 3139814,
+          "text": "(n2.name as Identifier).escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/destructuring.ts",
+          "line": 141,
+          "column": 82,
+          "start": 5015,
+          "end": 5032,
+          "text": "value.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/destructuring.ts",
+          "line": 203,
+          "column": 16,
+          "start": 7999,
+          "end": 8017,
+          "text": "target.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/destructuring.ts",
+          "line": 272,
+          "column": 104,
+          "start": 11282,
+          "end": 11305,
+          "text": "initializer.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/ts.ts",
+          "line": 2012,
+          "column": 16,
+          "start": 84329,
+          "end": 84350,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 2626,
+          "column": 103,
+          "start": 121741,
+          "end": 121765,
+          "text": "propertyName.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/typeSerializer.ts",
+          "line": 213,
+          "column": 64,
+          "start": 9204,
+          "end": 9230,
+          "text": "parameter.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/typeSerializer.ts",
+          "line": 426,
+          "column": 56,
+          "start": 18548,
+          "end": 18581,
+          "text": "serializedConstituent.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/typeSerializer.ts",
+          "line": 455,
+          "column": 24,
+          "start": 19879,
+          "end": 19895,
+          "text": "left.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/typeSerializer.ts",
+          "line": 455,
+          "column": 45,
+          "start": 19900,
+          "end": 19917,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "line": 575,
+          "column": 23,
+          "start": 22659,
+          "end": 22675,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "line": 637,
+          "column": 56,
+          "start": 24955,
+          "end": 24971,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "line": 275,
+          "column": 83,
+          "start": 11005,
+          "end": 11026,
+          "text": "elem.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "line": 319,
+          "column": 99,
+          "start": 13799,
+          "end": 13817,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "line": 651,
+          "column": 61,
+          "start": 29760,
+          "end": 29779,
+          "text": "tagName.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "line": 883,
+          "column": 73,
+          "start": 33809,
+          "end": 33825,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "line": 918,
+          "column": 48,
+          "start": 35559,
+          "end": 35576,
+          "text": "label.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "line": 922,
+          "column": 51,
+          "start": 35789,
+          "end": 35806,
+          "text": "label.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "line": 2310,
+          "column": 103,
+          "start": 100917,
+          "end": 100941,
+          "text": "propertyName.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "line": 4841,
+          "column": 60,
+          "start": 222168,
+          "end": 222189,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "line": 5063,
+          "column": 44,
+          "start": 231314,
+          "end": 231336,
+          "text": "expression.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/declarations.ts",
+          "line": 1666,
+          "column": 75,
+          "start": 84390,
+          "end": 84412,
+          "text": "input.name.escapedText"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3301,
+          "column": 51,
+          "start": 164056,
+          "end": 164069,
+          "text": "a.escapedText"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3301,
+          "column": 69,
+          "start": 164074,
+          "end": 164087,
+          "text": "b.escapedText"
+        },
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 343,
+          "column": 77,
+          "start": 14172,
+          "end": 14197,
+          "text": "node.typeName.escapedText"
+        },
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 366,
+          "column": 63,
+          "start": 15599,
+          "end": 15617,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 610,
+          "column": 58,
+          "start": 29290,
+          "end": 29308,
+          "text": "p.name.escapedText"
+        },
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 1154,
+          "column": 39,
+          "start": 61100,
+          "end": 61116,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 853,
+          "column": 151,
+          "start": 35441,
+          "end": 35462,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 1628,
+          "column": 49,
+          "start": 75278,
+          "end": 75300,
+          "text": "node.label.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 1794,
+          "column": 19,
+          "start": 84877,
+          "end": 84899,
+          "text": "node.label.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2645,
+          "column": 39,
+          "start": 125853,
+          "end": 125869,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2645,
+          "column": 70,
+          "start": 125884,
+          "end": 125900,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2922,
+          "column": 85,
+          "start": 140049,
+          "end": 140071,
+          "text": "expression.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3412,
+          "column": 70,
+          "start": 168488,
+          "end": 168508,
+          "text": "rootExpr.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3572,
+          "column": 57,
+          "start": 177147,
+          "end": 177163,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3611,
+          "column": 45,
+          "start": 178960,
+          "end": 178981,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3615,
+          "column": 39,
+          "start": 179238,
+          "end": 179259,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3736,
+          "column": 41,
+          "start": 185663,
+          "end": 185684,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3800,
+          "column": 60,
+          "start": 188727,
+          "end": 188743,
+          "text": "node.escapedText"
+        }
+      ],
+      "pair_id": "6997:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 4329,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 8878,
+        "field": "symbol",
+        "site": {
+          "file": "src/compiler/utilities.ts",
+          "line": 4751,
+          "column": 9,
+          "start": 185380,
+          "end": 185391,
+          "text": "node.symbol"
+        }
+      },
+      "type": "Symbol",
+      "field": "escapedName",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 223,
+      "sites": [
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 383,
+          "column": 54,
+          "start": 16653,
+          "end": 16671,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/tracing.ts",
+          "line": 318,
+          "column": 29,
+          "start": 12838,
+          "end": 12857,
+          "text": "symbol?.escapedName"
+        },
+        {
+          "file": "src/compiler/tracing.ts",
+          "line": 318,
+          "column": 79,
+          "start": 12888,
+          "end": 12906,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 874,
+          "column": 39,
+          "start": 33132,
+          "end": 33150,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 648,
+          "column": 24,
+          "start": 16017,
+          "end": 16035,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 665,
+          "column": 60,
+          "start": 16488,
+          "end": 16512,
+          "text": "moduleSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5455,
+          "column": 23,
+          "start": 212421,
+          "end": 212439,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5460,
+          "column": 23,
+          "start": 212575,
+          "end": 212593,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11609,
+          "column": 76,
+          "start": 471977,
+          "end": 472000,
+          "text": "localSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11654,
+          "column": 63,
+          "start": 475276,
+          "end": 475339,
+          "text": "getSymbolOfDeclaration(location as EnumDeclaration).escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2683,
+          "column": 51,
+          "start": 109828,
+          "end": 109846,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3307,
+          "column": 26,
+          "start": 146305,
+          "end": 146323,
+          "text": "result.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3348,
+          "column": 207,
+          "start": 149802,
+          "end": 149823,
+          "text": "candidate.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 3954,
+          "column": 39,
+          "start": 186445,
+          "end": 186468,
+          "text": "node.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4020,
+          "column": 75,
+          "start": 189791,
+          "end": 189814,
+          "text": "valueSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4366,
+          "column": 48,
+          "start": 210764,
+          "end": 210782,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4434,
+          "column": 17,
+          "start": 214161,
+          "end": 214185,
+          "text": "sourceSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 4472,
+          "column": 130,
+          "start": 216908,
+          "end": 216926,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5094,
+          "column": 51,
+          "start": 256175,
+          "end": 256193,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5484,
+          "column": 35,
+          "start": 277168,
+          "end": 277186,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5790,
+          "column": 42,
+          "start": 294178,
+          "end": 294197,
+          "text": "symbol!.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5798,
+          "column": 24,
+          "start": 294567,
+          "end": 294600,
+          "text": "symbolFromSymbolTable.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5799,
+          "column": 24,
+          "start": 294661,
+          "end": 294694,
+          "text": "symbolFromSymbolTable.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5815,
+          "column": 21,
+          "start": 296147,
+          "end": 296180,
+          "text": "symbolFromSymbolTable.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5815,
+          "column": 59,
+          "start": 296185,
+          "end": 296204,
+          "text": "symbol!.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 5845,
+          "column": 73,
+          "start": 298176,
+          "end": 298194,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 6438,
+          "column": 129,
+          "start": 333841,
+          "end": 333863,
+          "text": "nodeSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 6919,
+          "column": 46,
+          "start": 364915,
+          "end": 364943,
+          "text": "type.aliasSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 7685,
+          "column": 109,
+          "start": 419223,
+          "end": 419249,
+          "text": "propertySymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 7759,
+          "column": 67,
+          "start": 423989,
+          "end": 424015,
+          "text": "propertySymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8212,
+          "column": 37,
+          "start": 452957,
+          "end": 452974,
+          "text": "param.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8215,
+          "column": 41,
+          "start": 453178,
+          "end": 453203,
+          "text": "originalParam.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8242,
+          "column": 45,
+          "start": 454883,
+          "end": 454901,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8246,
+          "column": 37,
+          "start": 455057,
+          "end": 455074,
+          "text": "param.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8610,
+          "column": 51,
+          "start": 477574,
+          "end": 477592,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8611,
+          "column": 29,
+          "start": 477636,
+          "end": 477654,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8611,
+          "column": 73,
+          "start": 477680,
+          "end": 477698,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8616,
+          "column": 51,
+          "start": 478017,
+          "end": 478035,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8617,
+          "column": 29,
+          "start": 478079,
+          "end": 478097,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8617,
+          "column": 73,
+          "start": 478123,
+          "end": 478141,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8659,
+          "column": 84,
+          "start": 480934,
+          "end": 480952,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8720,
+          "column": 124,
+          "start": 485667,
+          "end": 485685,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8793,
+          "column": 82,
+          "start": 490059,
+          "end": 490077,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8794,
+          "column": 77,
+          "start": 490159,
+          "end": 490177,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8997,
+          "column": 56,
+          "start": 502221,
+          "end": 502239,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9633,
+          "column": 126,
+          "start": 544241,
+          "end": 544259,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9809,
+          "column": 60,
+          "start": 558645,
+          "end": 558663,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9848,
+          "column": 58,
+          "start": 561395,
+          "end": 561413,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10022,
+          "column": 86,
+          "start": 573406,
+          "end": 573419,
+          "text": "m.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10061,
+          "column": 90,
+          "start": 576325,
+          "end": 576338,
+          "text": "n.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10062,
+          "column": 69,
+          "start": 576453,
+          "end": 576466,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10071,
+          "column": 114,
+          "start": 577332,
+          "end": 577350,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10103,
+          "column": 71,
+          "start": 579458,
+          "end": 579474,
+          "text": "last.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10131,
+          "column": 67,
+          "start": 581365,
+          "end": 581378,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10259,
+          "column": 58,
+          "start": 590018,
+          "end": 590031,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10339,
+          "column": 104,
+          "start": 595747,
+          "end": 595760,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10407,
+          "column": 169,
+          "start": 600252,
+          "end": 600270,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10448,
+          "column": 60,
+          "start": 603338,
+          "end": 603356,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10488,
+          "column": 29,
+          "start": 606122,
+          "end": 606140,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10495,
+          "column": 105,
+          "start": 606772,
+          "end": 606790,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10606,
+          "column": 56,
+          "start": 614917,
+          "end": 614935,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10620,
+          "column": 29,
+          "start": 615822,
+          "end": 615840,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10620,
+          "column": 82,
+          "start": 615875,
+          "end": 615893,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10652,
+          "column": 57,
+          "start": 617529,
+          "end": 617547,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10739,
+          "column": 78,
+          "start": 624560,
+          "end": 624578,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10774,
+          "column": 86,
+          "start": 627298,
+          "end": 627311,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10829,
+          "column": 60,
+          "start": 630691,
+          "end": 630704,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10830,
+          "column": 66,
+          "start": 630792,
+          "end": 630805,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10831,
+          "column": 77,
+          "start": 630884,
+          "end": 630897,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10832,
+          "column": 98,
+          "start": 631023,
+          "end": 631036,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 10833,
+          "column": 104,
+          "start": 631173,
+          "end": 631186,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 11275,
+          "column": 24,
+          "start": 657111,
+          "end": 657129,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 11659,
+          "column": 25,
+          "start": 677308,
+          "end": 677324,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 11928,
+          "column": 26,
+          "start": 693895,
+          "end": 693925,
+          "text": "declaration.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12024,
+          "column": 55,
+          "start": 699679,
+          "end": 699697,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12039,
+          "column": 39,
+          "start": 700719,
+          "end": 700737,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12040,
+          "column": 48,
+          "start": 700804,
+          "end": 700822,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12041,
+          "column": 42,
+          "start": 700891,
+          "end": 700909,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12060,
+          "column": 39,
+          "start": 701937,
+          "end": 701955,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12061,
+          "column": 48,
+          "start": 702022,
+          "end": 702040,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12062,
+          "column": 42,
+          "start": 702109,
+          "end": 702127,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12196,
+          "column": 95,
+          "start": 710078,
+          "end": 710096,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12244,
+          "column": 13,
+          "start": 712694,
+          "end": 712712,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12268,
+          "column": 78,
+          "start": 714558,
+          "end": 714571,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13522,
+          "column": 53,
+          "start": 786219,
+          "end": 786237,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13724,
+          "column": 24,
+          "start": 796013,
+          "end": 796031,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13734,
+          "column": 41,
+          "start": 796429,
+          "end": 796445,
+          "text": "base.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13743,
+          "column": 29,
+          "start": 796921,
+          "end": 796937,
+          "text": "base.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13744,
+          "column": 29,
+          "start": 796975,
+          "end": 796991,
+          "text": "base.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14038,
+          "column": 55,
+          "start": 812784,
+          "end": 812802,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14622,
+          "column": 34,
+          "start": 847814,
+          "end": 847827,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14731,
+          "column": 97,
+          "start": 854566,
+          "end": 854582,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14752,
+          "column": 25,
+          "start": 856165,
+          "end": 856181,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15083,
+          "column": 38,
+          "start": 876058,
+          "end": 876074,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15084,
+          "column": 89,
+          "start": 876168,
+          "end": 876184,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15086,
+          "column": 41,
+          "start": 876352,
+          "end": 876368,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15956,
+          "column": 130,
+          "start": 928270,
+          "end": 928290,
+          "text": "t.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15956,
+          "column": 175,
+          "start": 928315,
+          "end": 928335,
+          "text": "t.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16213,
+          "column": 63,
+          "start": 942384,
+          "end": 942407,
+          "text": "paramSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16216,
+          "column": 32,
+          "start": 942584,
+          "end": 942607,
+          "text": "paramSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16466,
+          "column": 198,
+          "start": 956678,
+          "end": 956691,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17030,
+          "column": 53,
+          "start": 991785,
+          "end": 991803,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17130,
+          "column": 67,
+          "start": 997531,
+          "end": 997549,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17130,
+          "column": 90,
+          "start": 997554,
+          "end": 997572,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18178,
+          "column": 71,
+          "start": 1057453,
+          "end": 1057476,
+          "text": "keyProperty.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18953,
+          "column": 24,
+          "start": 1102823,
+          "end": 1102839,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19129,
+          "column": 40,
+          "start": 1112533,
+          "end": 1112551,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19143,
+          "column": 40,
+          "start": 1113222,
+          "end": 1113240,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20137,
+          "column": 56,
+          "start": 1177137,
+          "end": 1177153,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20142,
+          "column": 33,
+          "start": 1177587,
+          "end": 1177603,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20208,
+          "column": 43,
+          "start": 1181030,
+          "end": 1181051,
+          "text": "rightProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20211,
+          "column": 29,
+          "start": 1181155,
+          "end": 1181176,
+          "text": "rightProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20216,
+          "column": 43,
+          "start": 1181349,
+          "end": 1181369,
+          "text": "leftProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20219,
+          "column": 29,
+          "start": 1181480,
+          "end": 1181500,
+          "text": "leftProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20220,
+          "column": 47,
+          "start": 1181552,
+          "end": 1181572,
+          "text": "leftProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20225,
+          "column": 56,
+          "start": 1181959,
+          "end": 1181979,
+          "text": "leftProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20238,
+          "column": 33,
+          "start": 1183107,
+          "end": 1183127,
+          "text": "leftProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20242,
+          "column": 29,
+          "start": 1183221,
+          "end": 1183241,
+          "text": "leftProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20264,
+          "column": 44,
+          "start": 1184508,
+          "end": 1184524,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20345,
+          "column": 34,
+          "start": 1188429,
+          "end": 1188452,
+          "text": "type.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20725,
+          "column": 51,
+          "start": 1209546,
+          "end": 1209564,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22169,
+          "column": 13,
+          "start": 1301515,
+          "end": 1301539,
+          "text": "sourceSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22169,
+          "column": 42,
+          "start": 1301544,
+          "end": 1301568,
+          "text": "targetSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22180,
+          "column": 74,
+          "start": 1302311,
+          "end": 1302337,
+          "text": "sourceProperty.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22250,
+          "column": 57,
+          "start": 1307004,
+          "end": 1307029,
+          "text": "source.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22250,
+          "column": 87,
+          "start": 1307034,
+          "end": 1307059,
+          "text": "target.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22315,
+          "column": 90,
+          "start": 1311370,
+          "end": 1311392,
+          "text": "sourceProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22999,
+          "column": 57,
+          "start": 1352748,
+          "end": 1352764,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 23051,
+          "column": 112,
+          "start": 1357294,
+          "end": 1357310,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24226,
+          "column": 40,
+          "start": 1442198,
+          "end": 1442224,
+          "text": "sourceProperty.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24239,
+          "column": 72,
+          "start": 1443013,
+          "end": 1443039,
+          "text": "sourceProperty.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24287,
+          "column": 45,
+          "start": 1446062,
+          "end": 1446087,
+          "text": "properties[i].escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24550,
+          "column": 58,
+          "start": 1464257,
+          "end": 1464279,
+          "text": "sourceProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24563,
+          "column": 30,
+          "start": 1465087,
+          "end": 1465109,
+          "text": "targetProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24589,
+          "column": 68,
+          "start": 1466697,
+          "end": 1466719,
+          "text": "sourceProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24927,
+          "column": 99,
+          "start": 1487331,
+          "end": 1487353,
+          "text": "targetProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24999,
+          "column": 41,
+          "start": 1491359,
+          "end": 1491375,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25181,
+          "column": 48,
+          "start": 1501537,
+          "end": 1501553,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25201,
+          "column": 72,
+          "start": 1502491,
+          "end": 1502511,
+          "text": "property.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25892,
+          "column": 51,
+          "start": 1539093,
+          "end": 1539111,
+          "text": "source.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25912,
+          "column": 25,
+          "start": 1539936,
+          "end": 1539956,
+          "text": "property.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25968,
+          "column": 35,
+          "start": 1542583,
+          "end": 1542599,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25984,
+          "column": 71,
+          "start": 1543246,
+          "end": 1543262,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25990,
+          "column": 48,
+          "start": 1543555,
+          "end": 1543571,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25996,
+          "column": 33,
+          "start": 1543792,
+          "end": 1543808,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26003,
+          "column": 25,
+          "start": 1544088,
+          "end": 1544104,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26007,
+          "column": 34,
+          "start": 1544278,
+          "end": 1544294,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26008,
+          "column": 33,
+          "start": 1544332,
+          "end": 1544348,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26551,
+          "column": 62,
+          "start": 1576177,
+          "end": 1576199,
+          "text": "targetProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27480,
+          "column": 62,
+          "start": 1637733,
+          "end": 1637755,
+          "text": "targetProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27985,
+          "column": 48,
+          "start": 1667957,
+          "end": 1667983,
+          "text": "sourceProperty.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28043,
+          "column": 91,
+          "start": 1670907,
+          "end": 1670920,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28069,
+          "column": 13,
+          "start": 1672447,
+          "end": 1672467,
+          "text": "p.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32006,
+          "column": 62,
+          "start": 1903017,
+          "end": 1903064,
+          "text": "getSymbolOfDeclaration(declaration).escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32493,
+          "column": 64,
+          "start": 1932396,
+          "end": 1932414,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32641,
+          "column": 125,
+          "start": 1941690,
+          "end": 1941710,
+          "text": "p.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32644,
+          "column": 79,
+          "start": 1941909,
+          "end": 1941929,
+          "text": "p.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32648,
+          "column": 149,
+          "start": 1942184,
+          "end": 1942207,
+          "text": "prop.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32651,
+          "column": 164,
+          "start": 1942434,
+          "end": 1942447,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32651,
+          "column": 221,
+          "start": 1942491,
+          "end": 1942504,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32652,
+          "column": 52,
+          "start": 1942560,
+          "end": 1942573,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32671,
+          "column": 145,
+          "start": 1943397,
+          "end": 1943417,
+          "text": "p.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32672,
+          "column": 169,
+          "start": 1943656,
+          "end": 1943679,
+          "text": "prop.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32680,
+          "column": 33,
+          "start": 1944090,
+          "end": 1944103,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32683,
+          "column": 61,
+          "start": 1944350,
+          "end": 1944363,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32683,
+          "column": 118,
+          "start": 1944407,
+          "end": 1944420,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32685,
+          "column": 52,
+          "start": 1944504,
+          "end": 1944517,
+          "text": "s.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33480,
+          "column": 37,
+          "start": 1990403,
+          "end": 1990421,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33591,
+          "column": 71,
+          "start": 1997096,
+          "end": 1997114,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33604,
+          "column": 75,
+          "start": 1998035,
+          "end": 1998053,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33691,
+          "column": 37,
+          "start": 2002878,
+          "end": 2002896,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33846,
+          "column": 95,
+          "start": 2010650,
+          "end": 2010668,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33860,
+          "column": 72,
+          "start": 2011580,
+          "end": 2011598,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33983,
+          "column": 40,
+          "start": 2019694,
+          "end": 2019711,
+          "text": "right.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33985,
+          "column": 174,
+          "start": 2019917,
+          "end": 2019933,
+          "text": "left.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34136,
+          "column": 24,
+          "start": 2028591,
+          "end": 2028647,
+          "text": "propertiesOfJsxElementAttribPropInterface[0].escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34816,
+          "column": 44,
+          "start": 2064574,
+          "end": 2064611,
+          "text": "lexicallyScopedIdentifier.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 35142,
+          "column": 71,
+          "start": 2084219,
+          "end": 2084235,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 35211,
+          "column": 154,
+          "start": 2089014,
+          "end": 2089037,
+          "text": "type.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 37535,
+          "column": 13,
+          "start": 2225183,
+          "end": 2225211,
+          "text": "jsxFactorySymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38421,
+          "column": 20,
+          "start": 2273168,
+          "end": 2273205,
+          "text": "signature.parameters[pos].escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38432,
+          "column": 16,
+          "start": 2273810,
+          "end": 2273835,
+          "text": "restParameter.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38445,
+          "column": 32,
+          "start": 2274518,
+          "end": 2274535,
+          "text": "param.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38472,
+          "column": 59,
+          "start": 2275644,
+          "end": 2275669,
+          "text": "restParameter.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 40997,
+          "column": 38,
+          "start": 2420645,
+          "end": 2420661,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41403,
+          "column": 25,
+          "start": 2443007,
+          "end": 2443023,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41626,
+          "column": 26,
+          "start": 2457676,
+          "end": 2457697,
+          "text": "tp.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41650,
+          "column": 43,
+          "start": 2458851,
+          "end": 2458872,
+          "text": "tp.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42795,
+          "column": 25,
+          "start": 2521097,
+          "end": 2521115,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 45803,
+          "column": 41,
+          "start": 2682049,
+          "end": 2682078,
+          "text": "inputType.symbol?.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46800,
+          "column": 125,
+          "start": 2735838,
+          "end": 2735854,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47000,
+          "column": 49,
+          "start": 2746640,
+          "end": 2746665,
+          "text": "target.symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47341,
+          "column": 54,
+          "start": 2764548,
+          "end": 2764566,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47342,
+          "column": 58,
+          "start": 2764627,
+          "end": 2764645,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47420,
+          "column": 62,
+          "start": 2769308,
+          "end": 2769332,
+          "text": "declaredProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47421,
+          "column": 66,
+          "start": 2769401,
+          "end": 2769425,
+          "text": "declaredProp.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47539,
+          "column": 62,
+          "start": 2775540,
+          "end": 2775556,
+          "text": "base.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47564,
+          "column": 83,
+          "start": 2777386,
+          "end": 2777402,
+          "text": "base.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47701,
+          "column": 22,
+          "start": 2786766,
+          "end": 2786779,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47707,
+          "column": 43,
+          "start": 2787029,
+          "end": 2787045,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47709,
+          "column": 33,
+          "start": 2787149,
+          "end": 2787165,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47729,
+          "column": 22,
+          "start": 2787759,
+          "end": 2787772,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47736,
+          "column": 43,
+          "start": 2788078,
+          "end": 2788094,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 47738,
+          "column": 30,
+          "start": 2788161,
+          "end": 2788177,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48425,
+          "column": 64,
+          "start": 2825795,
+          "end": 2825828,
+          "text": "alreadyExportedSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48435,
+          "column": 125,
+          "start": 2826457,
+          "end": 2826475,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48555,
+          "column": 78,
+          "start": 2834777,
+          "end": 2834801,
+          "text": "targetSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48575,
+          "column": 80,
+          "start": 2835637,
+          "end": 2835655,
+          "text": "target.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49844,
+          "column": 28,
+          "start": 2902098,
+          "end": 2902116,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49866,
+          "column": 147,
+          "start": 2903137,
+          "end": 2903155,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50555,
+          "column": 38,
+          "start": 2938551,
+          "end": 2938564,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50556,
+          "column": 37,
+          "start": 2938606,
+          "end": 2938619,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50573,
+          "column": 109,
+          "start": 2939427,
+          "end": 2939445,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 50680,
+          "column": 55,
+          "start": 2945362,
+          "end": 2945380,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53751,
+          "column": 164,
+          "start": 3122660,
+          "end": 3122673,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53835,
+          "column": 43,
+          "start": 3126518,
+          "end": 3126532,
+          "text": "s1.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53835,
+          "column": 69,
+          "start": 3126544,
+          "end": 3126558,
+          "text": "s2.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54098,
+          "column": 40,
+          "start": 3138004,
+          "end": 3138018,
+          "text": "s1.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54098,
+          "column": 66,
+          "start": 3138030,
+          "end": 3138044,
+          "text": "s2.escapedName"
+        },
+        {
+          "file": "src/compiler/transformers/declarations.ts",
+          "line": 1471,
+          "column": 68,
+          "start": 72251,
+          "end": 72264,
+          "text": "p.escapedName"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2413,
+          "column": 39,
+          "start": 113620,
+          "end": 113638,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3631,
+          "column": 50,
+          "start": 180159,
+          "end": 180186,
+          "text": "prototypeSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3638,
+          "column": 29,
+          "start": 180509,
+          "end": 180536,
+          "text": "prototypeSymbol.escapedName"
+        }
+      ],
+      "pair_id": "4329:escapedName",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 7618,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/checker.ts:2468659:2468684"
+      },
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 15,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6360,
+          "column": 51,
+          "start": 276010,
+          "end": 276026,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 1573,
+          "column": 38,
+          "start": 68401,
+          "end": 68417,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28777,
+          "column": 107,
+          "start": 1711087,
+          "end": 1711103,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30653,
+          "column": 117,
+          "start": 1826569,
+          "end": 1826586,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 32252,
+          "column": 87,
+          "start": 1917497,
+          "end": 1917511,
+          "text": "id.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34810,
+          "column": 80,
+          "start": 2064321,
+          "end": 2064339,
+          "text": "privId.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34827,
+          "column": 117,
+          "start": 2065353,
+          "end": 2065370,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34905,
+          "column": 87,
+          "start": 2069637,
+          "end": 2069654,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 43186,
+          "column": 102,
+          "start": 2541790,
+          "end": 2541811,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 43186,
+          "column": 128,
+          "start": 2541816,
+          "end": 2541842,
+          "text": "subsequentName.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/utilities.ts",
+          "line": 835,
+          "column": 38,
+          "start": 33629,
+          "end": 33645,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/utilities.ts",
+          "line": 850,
+          "column": 36,
+          "start": 34127,
+          "end": 34143,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 3344,
+          "column": 51,
+          "start": 155569,
+          "end": 155585,
+          "text": "node.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 693,
+          "column": 81,
+          "start": 25250,
+          "end": 25266,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2610,
+          "column": 13,
+          "start": 123900,
+          "end": 123916,
+          "text": "node.escapedText"
+        }
+      ],
+      "pair_id": "7618:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 7619,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 9165,
+        "field": "node",
+        "site": {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 1560,
+          "column": 95,
+          "start": 67604,
+          "end": 67613,
+          "text": "part.node"
+        }
+      },
+      "type": "Identifier | PrivateIdentifier",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 14,
+      "sites": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 858,
+          "column": 39,
+          "start": 32439,
+          "end": 32474,
+          "text": "identifierOrPrivateName.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2368,
+          "column": 62,
+          "start": 79253,
+          "end": 79269,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5401,
+          "column": 20,
+          "start": 210135,
+          "end": 210151,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34958,
+          "column": 55,
+          "start": 2072943,
+          "end": 2072960,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34958,
+          "column": 108,
+          "start": 2072996,
+          "end": 2073013,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34959,
+          "column": 114,
+          "start": 2073166,
+          "end": 2073183,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34966,
+          "column": 21,
+          "start": 2073530,
+          "end": 2073547,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34980,
+          "column": 141,
+          "start": 2074520,
+          "end": 2074537,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34983,
+          "column": 73,
+          "start": 2074721,
+          "end": 2074738,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 34989,
+          "column": 79,
+          "start": 2075102,
+          "end": 2075119,
+          "text": "right.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 35167,
+          "column": 35,
+          "start": 2085525,
+          "end": 2085545,
+          "text": "propNode.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 35174,
+          "column": 65,
+          "start": 2086067,
+          "end": 2086087,
+          "text": "propNode.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44321,
+          "column": 30,
+          "start": 2598785,
+          "end": 2598801,
+          "text": "name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44321,
+          "column": 51,
+          "start": 2598806,
+          "end": 2598827,
+          "text": "className.escapedText"
+        }
+      ],
+      "pair_id": "7619:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 10393,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:315640:315665"
+      },
+      "type": "TransientSymbol",
+      "field": "escapedName",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 10,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1565,
+          "column": 17,
+          "start": 48871,
+          "end": 48899,
+          "text": "globalThisSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2917,
+          "column": 22,
+          "start": 124090,
+          "end": 124117,
+          "text": "undefinedSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12395,
+          "column": 25,
+          "start": 722558,
+          "end": 722576,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 12465,
+          "column": 29,
+          "start": 727471,
+          "end": 727489,
+          "text": "member.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16344,
+          "column": 65,
+          "start": 949742,
+          "end": 949769,
+          "text": "argumentsSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33622,
+          "column": 41,
+          "start": 1998923,
+          "end": 1998939,
+          "text": "prop.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33854,
+          "column": 41,
+          "start": 2011126,
+          "end": 2011153,
+          "text": "attributeSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33855,
+          "column": 45,
+          "start": 2011218,
+          "end": 2011245,
+          "text": "attributeSymbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41408,
+          "column": 25,
+          "start": 2443357,
+          "end": 2443375,
+          "text": "symbol.escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44788,
+          "column": 79,
+          "start": 2625818,
+          "end": 2625845,
+          "text": "argumentsSymbol.escapedName"
+        }
+      ],
+      "pair_id": "10393:escapedName",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 9170,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 7670,
+        "field": "name",
+        "site": {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 905,
+          "column": 28,
+          "start": 34575,
+          "end": 34614,
+          "text": "(expr as PropertyAccessExpression).name"
+        }
+      },
+      "type": "MemberName",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 9,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10821,
+          "column": 12,
+          "start": 539400,
+          "end": 539450,
+          "text": "(lhs as PropertyAccessExpression).name.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10821,
+          "column": 67,
+          "start": 539455,
+          "end": 539505,
+          "text": "(rhs as PropertyAccessExpression).name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27895,
+          "column": 20,
+          "start": 1663687,
+          "end": 1663710,
+          "text": "access.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28701,
+          "column": 13,
+          "start": 1706310,
+          "end": 1706333,
+          "text": "parent.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 37918,
+          "column": 49,
+          "start": 2246236,
+          "end": 2246257,
+          "text": "left.name.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41071,
+          "column": 102,
+          "start": 2425238,
+          "end": 2425259,
+          "text": "left.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "line": 259,
+          "column": 49,
+          "start": 8521,
+          "end": 8542,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/transformers/es2018.ts",
+          "line": 374,
+          "column": 49,
+          "start": 13868,
+          "end": 13889,
+          "text": "node.name.escapedText"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2479,
+          "column": 159,
+          "start": 117070,
+          "end": 117088,
+          "text": "d.name.escapedText"
+        }
+      ],
+      "pair_id": "9170:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 6849,
+      "view_reason": {
+        "kind": "union-member",
+        "from": 10962
+      },
+      "type": "(string | number)[]",
+      "field": "<element>",
+      "declared_type": "string | number",
+      "declared_families": [
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "array element or consumer reads",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": true,
+      "read_count": 8,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22517,
+          "column": 42,
+          "start": 1322822,
+          "end": 1322829,
+          "text": "args[0]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22550,
+          "column": 69,
+          "start": 1325233,
+          "end": 1325240,
+          "text": "args[0]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22550,
+          "column": 78,
+          "start": 1325242,
+          "end": 1325249,
+          "text": "args[1]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22566,
+          "column": 148,
+          "start": 1326476,
+          "end": 1326483,
+          "text": "args[0]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22566,
+          "column": 157,
+          "start": 1326485,
+          "end": 1326492,
+          "text": "args[1]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22570,
+          "column": 159,
+          "start": 1326848,
+          "end": 1326855,
+          "text": "args[0]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22570,
+          "column": 168,
+          "start": 1326857,
+          "end": 1326864,
+          "text": "args[1]"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22570,
+          "column": 177,
+          "start": 1326866,
+          "end": 1326873,
+          "text": "args[2]"
+        }
+      ],
+      "pair_id": "6849:<element>",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 46428,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:447356:447401"
+      },
+      "type": "StringLiteralType | NumberLiteralType",
+      "field": "value",
+      "declared_type": "string | number",
+      "declared_families": [
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 6,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11175,
+          "column": 46,
+          "start": 447355,
+          "end": 447408,
+          "text": "(type as StringLiteralType | NumberLiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9006,
+          "column": 39,
+          "start": 502847,
+          "end": 502904,
+          "text": "(nameType as StringLiteralType | NumberLiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 11248,
+          "column": 35,
+          "start": 655743,
+          "end": 655800,
+          "text": "(nameType as StringLiteralType | NumberLiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 11736,
+          "column": 88,
+          "start": 681913,
+          "end": 681966,
+          "text": "(type as StringLiteralType | NumberLiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19408,
+          "column": 88,
+          "start": 1131121,
+          "end": 1131179,
+          "text": "(indexType as StringLiteralType | NumberLiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27912,
+          "column": 90,
+          "start": 1664434,
+          "end": 1664487,
+          "text": "(type as StringLiteralType | NumberLiteralType).value"
+        }
+      ],
+      "pair_id": "46428:value",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 9228,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 8815,
+        "field": "name",
+        "site": {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 942,
+          "column": 12,
+          "start": 36049,
+          "end": 36065,
+          "text": "declaration.name"
+        }
+      },
+      "type": "Identifier | undefined",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8397,
+          "column": 13,
+          "start": 413932,
+          "end": 413955,
+          "text": "identifier?.escapedText"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8405,
+          "column": 13,
+          "start": 414361,
+          "end": 414384,
+          "text": "identifier?.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9718,
+          "column": 69,
+          "start": 552243,
+          "end": 552261,
+          "text": "alias?.escapedText"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44800,
+          "column": 13,
+          "start": 2626502,
+          "end": 2626525,
+          "text": "identifier?.escapedText"
+        }
+      ],
+      "pair_id": "9228:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 8654,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/tracing.ts:13096:13113"
+      },
+      "type": "UnionType",
+      "field": "keyPropertyName",
+      "declared_type": "__String | undefined",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28038,
+          "column": 13,
+          "start": 1670483,
+          "end": 1670508,
+          "text": "unionType.keyPropertyName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28049,
+          "column": 17,
+          "start": 1671253,
+          "end": 1671278,
+          "text": "unionType.keyPropertyName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28049,
+          "column": 63,
+          "start": 1671299,
+          "end": 1671324,
+          "text": "unionType.keyPropertyName"
+        }
+      ],
+      "pair_id": "8654:keyPropertyName",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 9761,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 41213,
+        "field": "<element>",
+        "site": {
+          "file": "src/compiler/utilities.ts",
+          "line": 6086,
+          "column": 20,
+          "start": 237658,
+          "end": 237677,
+          "text": "diagnostics[result]"
+        }
+      },
+      "type": "Diagnostic",
+      "field": "skippedOn",
+      "declared_type": "keyof CompilerOptions | undefined",
+      "declared_families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 5099,
+          "column": 37,
+          "start": 265816,
+          "end": 265827,
+          "text": "d.skippedOn"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 5099,
+          "column": 60,
+          "start": 265839,
+          "end": 265850,
+          "text": "d.skippedOn"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1509,
+          "column": 32,
+          "start": 68508,
+          "end": 68528,
+          "text": "diagnostic.skippedOn"
+        }
+      ],
+      "pair_id": "9761:skippedOn",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 97934,
+      "view_reason": {
+        "kind": "union-member",
+        "from": 97937
+      },
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "pendingEmit",
+      "declared_type": "IncrementalBuildInfoBundlePendingEmit | undefined",
+      "declared_families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2282,
+          "column": 33,
+          "start": 107245,
+          "end": 107266,
+          "text": "buildInfo.pendingEmit"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2282,
+          "column": 104,
+          "start": 107316,
+          "end": 107337,
+          "text": "buildInfo.pendingEmit"
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 1583,
+          "column": 17,
+          "start": 68924,
+          "end": 68992,
+          "text": "(incrementalBuildInfo as IncrementalBundleEmitBuildInfo).pendingEmit"
+        }
+      ],
+      "pair_id": "97934:pendingEmit",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 6998,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:91787:91805"
+      },
+      "type": "SourceFile",
+      "field": "localJsxFragmentNamespace",
+      "declared_type": "__String | undefined",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2441,
+          "column": 25,
+          "start": 97341,
+          "end": 97371,
+          "text": "file.localJsxFragmentNamespace"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2442,
+          "column": 32,
+          "start": 97407,
+          "end": 97437,
+          "text": "file.localJsxFragmentNamespace"
+        }
+      ],
+      "pair_id": "6998:localJsxFragmentNamespace",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 6998,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:91787:91805"
+      },
+      "type": "SourceFile",
+      "field": "localJsxNamespace",
+      "declared_type": "__String | undefined",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2487,
+          "column": 13,
+          "start": 99740,
+          "end": 99762,
+          "text": "file.localJsxNamespace"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2488,
+          "column": 20,
+          "start": 99786,
+          "end": 99808,
+          "text": "file.localJsxNamespace"
+        }
+      ],
+      "pair_id": "6998:localJsxNamespace",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 10782,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:447184:447210"
+      },
+      "type": "UniqueESSymbolType",
+      "field": "escapedName",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11172,
+          "column": 16,
+          "start": 447183,
+          "end": 447223,
+          "text": "(type as UniqueESSymbolType).escapedName"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27911,
+          "column": 56,
+          "start": 1664301,
+          "end": 1664341,
+          "text": "(type as UniqueESSymbolType).escapedName"
+        }
+      ],
+      "pair_id": "10782:escapedName",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 37515,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 9680,
+        "field": "contents",
+        "site": {
+          "file": "src/compiler/utilities.ts",
+          "line": 877,
+          "column": 30,
+          "start": 25703,
+          "end": 25717,
+          "text": "scope.contents"
+        }
+      },
+      "type": "PackageJsonInfoContents",
+      "field": "peerDependencies",
+      "declared_type": "string | false | undefined",
+      "declared_families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2415,
+          "column": 9,
+          "start": 118333,
+          "end": 118374,
+          "text": "packageJsonInfo.contents.peerDependencies"
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2418,
+          "column": 12,
+          "start": 118530,
+          "end": 118571,
+          "text": "packageJsonInfo.contents.peerDependencies"
+        }
+      ],
+      "pair_id": "37515:peerDependencies",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 97892,
+      "view_reason": {
+        "kind": "union-member",
+        "from": 97900
+      },
+      "type": "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
+      "field": "signature",
+      "declared_type": "string | false | undefined",
+      "declared_families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2232,
+          "column": 18,
+          "start": 104632,
+          "end": 104650,
+          "text": "fileInfo.signature"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2234,
+          "column": 49,
+          "start": 104748,
+          "end": 104766,
+          "text": "fileInfo.signature"
+        }
+      ],
+      "pair_id": "97892:signature",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 6995,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 6997,
+        "field": "emitNode",
+        "site": {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1582,
+          "column": 34,
+          "start": 63010,
+          "end": 63023,
+          "text": "node.emitNode"
+        }
+      },
+      "type": "EmitNode | undefined",
+      "field": "constantValue",
+      "declared_type": "string | number | undefined",
+      "declared_families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 234,
+          "column": 12,
+          "start": 8079,
+          "end": 8107,
+          "text": "node.emitNode?.constantValue"
+        }
+      ],
+      "pair_id": "6995:constantValue",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 7612,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/transformers/classFields.ts:93654:93700"
+      },
+      "type": "GeneratedIdentifier",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6327,
+          "column": 44,
+          "start": 274468,
+          "end": 274484,
+          "text": "node.escapedText"
+        }
+      ],
+      "pair_id": "7612:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 8588,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 6828,
+        "field": "localSymbol",
+        "site": {
+          "file": "src/compiler/utilities.ts",
+          "line": 7612,
+          "column": 13,
+          "start": 299942,
+          "end": 299958,
+          "text": "decl.localSymbol"
+        }
+      },
+      "type": "Symbol | undefined",
+      "field": "escapedName",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38412,
+          "column": 20,
+          "start": 2272660,
+          "end": 2272683,
+          "text": "restSymbol?.escapedName"
+        }
+      ],
+      "pair_id": "8588:escapedName",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 9477,
+      "view_reason": {
+        "kind": "union-member",
+        "from": 40721
+      },
+      "type": "LeftHandSideExpression & Identifier",
+      "field": "escapedText",
+      "declared_type": "__String",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 38035,
+          "column": 62,
+          "start": 2252537,
+          "end": 2252564,
+          "text": "node.expression.escapedText"
+        }
+      ],
+      "pair_id": "9477:escapedText",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 97180,
+      "view_reason": {
+        "kind": "array-consumer-element",
+        "from": 97210,
+        "field": "map",
+        "site": {
+          "file": "src/compiler/builder.ts",
+          "line": 574,
+          "column": 12,
+          "start": 24441,
+          "end": 24456,
+          "text": "diagnostics.map"
+        }
+      },
+      "type": "ReusableDiagnostic",
+      "field": "skippedOn",
+      "declared_type": "keyof CompilerOptions | undefined",
+      "declared_families": [
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 579,
+          "column": 28,
+          "start": 24825,
+          "end": 24845,
+          "text": "diagnostic.skippedOn"
+        }
+      ],
+      "pair_id": "97180:skippedOn",
+      "state": "pending source integration",
+      "evidence": []
+    },
+    {
+      "type_id": 97923,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 97922,
+        "field": "fileInfos",
+        "site": {
+          "file": "src/compiler/builder.ts",
+          "line": 2290,
+          "column": 9,
+          "start": 107730,
+          "end": 107749,
+          "text": "buildInfo.fileInfos"
+        }
+      },
+      "type": "readonly IncrementalMultiFileEmitBuildInfoFileInfo[]",
+      "field": "forEach",
+      "declared_type": "(callbackfn: (value: IncrementalMultiFileEmitBuildInfoFileInfo, index: number, array: readonly IncrementalMultiFileEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void",
+      "declared_families": [
+        "callable contracts"
+      ],
+      "families": [
+        "array element or consumer reads",
+        "array intrinsic contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": true,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2290,
+          "column": 9,
+          "start": 107730,
+          "end": 107757,
+          "text": "buildInfo.fileInfos.forEach"
+        }
+      ],
+      "pair_id": "97923:forEach",
+      "state": "pending source integration",
+      "evidence": []
+    }
+  ]
+}
