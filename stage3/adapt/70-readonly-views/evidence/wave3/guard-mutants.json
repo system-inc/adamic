@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "parameter-writer",
+    "adapt_exit": 1,
+    "files_edited_by_guard": 0
+  },
+  {
+    "mutant": "parameter-callee-writer",
+    "adapt_exit": 1,
+    "files_edited_by_guard": 0
+  },
+  {
+    "mutant": "parameter-escape",
+    "adapt_exit": 1,
+    "files_edited_by_guard": 0
+  },
+  {
+    "mutant": "parameter-destructure-writer",
+    "adapt_exit": 1,
+    "files_edited_by_guard": 0
+  },
+  {
+    "mutant": "parameter-iteration-writer",
+    "adapt_exit": 1,
+    "files_edited_by_guard": 0
+  },
+  {
+    "mutant": "audit-iteration-writer",
+    "adapt_exit": 1,
+    "files_edited_by_guard": 0
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "discovery_identical": {
+    "sys.ts": "8554062d87fb1333de9ec61c2f00cd63f3a5efe4ffc13dd46257426a63f9bb61",
+    "tracing.ts": "5a2b7b64db980c18868e10500879b326acb61bfb35a88912ab5cc7e0c922060d",
+    "hostErrors.ts": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf"
+  },
+  "idempotence": {
+    "files": 0,
+    "propertyReads": 0,
+    "byteReads": 0,
+    "helperAdded": false,
+    "evidence": []
+  },
+  "buffer_mutant": {
+    "exit": 1,
+    "checker_code": 2322,
+    "unasserted_reads": 1
+  },
+  "stock_module_options": "Adamic ESNext/Bundler, strict options enabled"
+}

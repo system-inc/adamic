@@ -1,0 +1,48 @@
+
+Top 20 inclusive instructions (same-name inline records collapsed):
+ 1,487,564,813  99.99% main
+ 1,470,103,119  98.81% adamic_function_328_Printer_print'2
+   923,171,385  62.05% adamic_function_252_compose
+   459,867,750  30.91% adamic_function_251_nestedCSS
+   459,838,509  30.91% adamic_function_251_nestedCSS'2
+   399,214,697  26.83% adamic_release
+   347,597,928  23.36% adamic_function_328_Printer_print
+   343,793,200  23.11% adamic_function_326_Printer_sequence
+   301,421,528  20.26% adamic_function_229_parseValue
+   270,119,864  18.16% adamic_function_360_closure'2
+   251,028,702  16.87% adamic_function_245_calculateLoc
+   243,123,414  16.34% adamic_function_245_calculateLoc'2
+   233,393,617  15.69% adamic_function_360_closure
+   220,577,221  14.83% adamic_function_326_Printer_sequence'2
+   194,938,237  13.10% adamic_function_329_Printer_declaration
+   177,825,726  11.95% regex_execute
+   171,427,225  11.52% adamic_function_333_Printer_comma
+   165,240,141  11.11% regex_run
+   140,747,712   9.46% adamic_function_12_Tree_children
+   139,993,503   9.41% adamic_function_325_Printer_list
+
+Top 20 self instructions (same-name inline records collapsed):
+   278,155,915  18.70% adamic_release
+   108,246,554   7.28% find
+    87,897,255   5.91% free
+    63,671,456   4.28% adamic_allocate
+    55,120,830   3.70% adamic_retain
+    50,530,924   3.40% malloc
+    49,550,587   3.33% regex_run
+    41,170,995   2.77% adamic_string_equal
+    39,521,532   2.66% adamic_function_7_Tree_at
+    31,443,885   2.11% adamic_string_units
+    30,296,277   2.04% adamic_object_free_children
+    29,221,896   1.96% adamic_virtual
+    17,963,856   1.21% adamic_map_set
+    17,905,044   1.20% let_go
+    14,449,691   0.97% adamic_function_12_Tree_children
+    14,299,880   0.96% adamic_string_slice
+    12,991,008   0.87% adamic_function_16_ObjectNode_clear
+    12,857,231   0.86% adamic_string_units_before
+    12,306,900   0.83% adamic_array_push
+    11,670,488   0.78% adamic_array_new
+
+{
+  "instructions": 1487775242
+}

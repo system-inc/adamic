@@ -1,0 +1,46 @@
+{
+  "all_dynamic_reads_and_membership_checks": 1041,
+  "all_classes": {
+    "fixed_set_excludes_prototype": 962,
+    "user_input": 36,
+    "unknown": 43
+  },
+  "string_capable_including_literal_helper_calls": 145,
+  "string_capable_classes": {
+    "fixed_set_excludes_prototype": 66,
+    "user_input": 36,
+    "unknown": 43
+  },
+  "dynamic_string_keys_only": 130,
+  "non_string_key_domain": 896,
+  "by_kind": {
+    "element": 993,
+    "hasProperty": 36,
+    "hasOwnProperty.call": 12
+  },
+  "string_by_kind": {
+    "element": 97,
+    "hasProperty": 36,
+    "hasOwnProperty.call": 12
+  },
+  "for_in_loops": 27,
+  "for_in_body_sites": 57,
+  "literal_in_tests_excluded": 10,
+  "non_literal_in_tests": 0,
+  "original_census_sites": 68,
+  "original_census_dynamic_reads": 45,
+  "user_input_sources_overlapping": {
+    "tsconfig": 18,
+    "command line": 8,
+    "package.json": 15,
+    "source code": 2
+  },
+  "user_input_source_combinations": {
+    "tsconfig + command line": 5,
+    "command line": 3,
+    "tsconfig": 11,
+    "package.json": 13,
+    "source code": 2,
+    "tsconfig + package.json": 2
+  }
+}

@@ -14,8 +14,24 @@ import (
 // layout the constructor's object literal has, for an object of that shape: a compare and a load,
 // inline. Any other object is looked up by name through the field cache, as is every other field:
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
-// adamic/nominal-class refuses it, so the shape is checked, never assumed.
+// adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	// Constructor objects can inherit live data from their parent. Even a uniform offset
+	// names only their own storage, not necessarily the field JavaScript reads. The IR
+	// enumerates every static layout; keep lookup for names any such layout contains.
+	for _, layout := range e.program.Classes {
+		if !layout.Static {
+			continue
+		}
+		for _, field := range layout.Fields {
+			if field.Name == name {
+				return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+			}
+		}
+	}
+	if slot := e.uniformFieldSlot(object, name); slot != "" {
+		return slot
+	}
 	lookup := fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if class == 0 || !cName.MatchString(object) {
 		return lookup
@@ -55,6 +71,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		// spread's fields first, so a field's expression that writes one of them (a call that sets
 		// it) must not show in the result.
 		source := e.value(literal.Spread)
+		if literal.NoReuse {
+			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
+		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))

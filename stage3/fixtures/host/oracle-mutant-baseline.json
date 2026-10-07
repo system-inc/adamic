@@ -1,0 +1,4 @@
+{
+  "sha256": "18d62ca0818c8c3ec592f25f8d1504d8f34eb3dd788c334b6786906ff9bbca6e",
+  "unified_diff": "--- reference/unreachableJavascriptChecked.errors.txt\n+++ local/unreachableJavascriptChecked.errors.txt\n@@ -1,5 +1,5 @@\n-unreachable.js(3,5): error TS7027: Unreachable code detected.\r\n-unreachable.js(6,5): error TS7027: Unreachable code detected.\r\n+unreachable.js(3,5): error TS7027: Unreachable code detected. [host mutant]\r\n+unreachable.js(6,5): error TS7027: Unreachable code detected. [host mutant]\r\n \r\n \r\n ==== unreachable.js (2 errors) ====\r\n@@ -9,10 +9,10 @@\n         ~~~~~~~~~\r\n         return 3;\r\n     ~~~~~~~~~~~~~\r\n-!!! error TS7027: Unreachable code detected.\r\n+!!! error TS7027: Unreachable code detected. [host mutant]\r\n         function f() {}\r\n         return 4;\r\n         ~~~~~~~~~\r\n-!!! error TS7027: Unreachable code detected.\r\n+!!! error TS7027: Unreachable code detected. [host mutant]\r\n     }\r\n     "
+}

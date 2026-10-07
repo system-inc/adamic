@@ -1,0 +1,209 @@
+[
+  {
+    "file": "01_scanner_frame.a",
+    "tsc": [
+      "src/compiler/scanner.ts:1022",
+      "src/compiler/scanner.ts:1131",
+      "src/compiler/scanner.ts:1139",
+      "src/compiler/scanner.ts:1148",
+      "src/compiler/scanner.ts:1156",
+      "src/compiler/scanner.ts:1348",
+      "src/compiler/scanner.ts:2438",
+      "src/compiler/scanner.ts:2461",
+      "src/compiler/scanner.ts:3673",
+      "src/compiler/scanner.ts:3681",
+      "src/compiler/scanner.ts:3689",
+      "src/compiler/scanner.ts:3930",
+      "src/compiler/scanner.ts:3952",
+      "src/compiler/scanner.ts:3977",
+      "src/compiler/scanner.ts:3981",
+      "src/compiler/scanner.ts:3985",
+      "src/compiler/scanner.ts:3989",
+      "src/compiler/scanner.ts:3993",
+      "src/compiler/scanner.ts:3999",
+      "src/compiler/scanner.ts:4003",
+      "src/compiler/scanner.ts:4007",
+      "src/compiler/scanner.ts:4011",
+      "src/compiler/scanner.ts:4015",
+      "src/compiler/scanner.ts:4019",
+      "src/compiler/scanner.ts:4029",
+      "src/compiler/scanner.ts:592",
+      "src/compiler/scanner.ts:609",
+      "src/compiler/scanner.ts:4034"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "decimal false 12389 5\noctal true 007 3\nlookahead 2 restored 0\nrange 42 next restored 0\nafter true 42 007 name\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/nested-functions/01_scanner_frame.a:49:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "02_scanner_digits.a",
+    "tsc": [
+      "src/compiler/scanner.ts:1348",
+      "src/compiler/scanner.ts:1148",
+      "src/compiler/scanner.ts:1156"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "false 12389 5\ntrue 007 3\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/02_scanner_digits.a:17:14: stage 0 can't lower reading scanDigits yet"
+    }
+  },
+  {
+    "file": "03_scanner_hoisting.a",
+    "tsc": [
+      "src/compiler/scanner.ts:3985"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "const x = 1;\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/03_scanner_hoisting.a:5:12: stage 0 can't lower reading getText yet"
+    }
+  },
+  {
+    "file": "04_scanner_escaped_text.a",
+    "tsc": [
+      "src/compiler/scanner.ts:3985"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "const x = 1;\nlet y = 2;\nconst x = 1;\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/04_scanner_escaped_text.a:5:12: stage 0 can't lower reading getText yet"
+    }
+  },
+  {
+    "file": "05_scanner_reassigned_text.a",
+    "tsc": [
+      "src/compiler/scanner.ts:3985"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "let y = 2;\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/05_scanner_reassigned_text.a:6:5: stage 0 can't lower a function inside a function (a closure) yet"
+    }
+  },
+  {
+    "file": "06_parser_token_state.a",
+    "tsc": [
+      "src/compiler/parser.ts:2194",
+      "src/compiler/parser.ts:2198"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "initial 0\ntoken 87\ntoken 80\ntoken 64\ntoken 9\ntoken 27\ntoken 1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/06_parser_token_state.a:8:14: stage 0 can't lower reading token yet"
+    }
+  },
+  {
+    "file": "07_binder_symbol_count.a",
+    "tsc": [
+      "src/compiler/binder.ts:630"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "x\nf\ny\n2 1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/07_binder_symbol_count.a:13:14: stage 0 can't lower reading createSymbol yet"
+    }
+  },
+  {
+    "file": "08_checker_symbol_recursion.a",
+    "tsc": [
+      "src/compiler/checker.ts:17129"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "ts\nts.SyntaxKind.Identifier\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/08_checker_symbol_recursion.a:6:12: stage 0 can't lower reading getSymbolPath yet"
+    }
+  },
+  {
+    "file": "09_checker_constituent_recursion.a",
+    "tsc": [
+      "src/compiler/checker.ts:18832",
+      "src/compiler/checker.ts:18838"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "leaf 1\nunion 2\nintersection 3\nalias 1\norigin 2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/nested-functions/09_checker_constituent_recursion.a:15:94: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "10_checker_arrow_cleanup.a",
+    "tsc": [
+      "src/compiler/checker.ts:10284"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "result undefined\nrestored source.ts\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a:15:7: stage 0 can't lower a value of type undefined yet"
+    }
+  },
+  {
+    "file": "11_scanner_method_wrapper.a",
+    "tsc": [
+      "src/compiler/scanner.ts:3985"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "const x = 1;\nlet y = 2;\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/nested-functions/11_scanner_method_wrapper.a:8:16: stage 0 can't lower reading getText yet"
+    }
+  }
+]

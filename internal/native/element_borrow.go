@@ -14,9 +14,16 @@ import (
 // planElementBorrows finds the declarations whose variables borrow, keyed by statement, and marks
 // each variable Borrowed, as a borrowed parameter is: reuse in place and moves into consumed
 // parameters refuse those, since the count they'd take is the array's.
-func planElementBorrows(program *ir.Program) map[*ir.Statement]bool {
+//
+// It also gives the arrays they borrow from (lending). The borrow leans on the array staying alive in
+// its variable for the rest of the block, and changes can't see a move: a call to a function that
+// only reads its array still frees it when the parameter is consumed (borrow_element_super_move.a).
+// Every possible call target must preserve the elements for the borrow to stand.
+// Reuse never moves an array that lends (reusePlan.movable).
+func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
 	changing := changingFunctions(program)
 	borrows := map[*ir.Statement]bool{}
+	lending := map[int]bool{}
 	for index := range program.Functions {
 		function := &program.Functions[index]
 		if function.Closure {
@@ -29,13 +36,24 @@ func planElementBorrows(program *ir.Program) map[*ir.Statement]bool {
 				if declare, ok := list[position].(ir.Declare); ok && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:]) {
 					borrows[&list[position]] = true
 					program.Locals[declare.Local].Borrowed = true
+					lending[borrowedArray(declare)] = true
 				}
 				walkStatement(list[position], func(ir.Expression) {}, statements)
 			}
 		}
 		statements(function.Body)
 	}
-	return borrows
+	return borrows, lending
+}
+
+// borrowedArray is the variable naming the array a borrowing declaration's element comes from, the
+// shape borrowable accepted.
+func borrowedArray(declare ir.Declare) int {
+	value := declare.Value
+	if coalesce, ok := value.(ir.Coalesce); ok {
+		value = coalesce.Value
+	}
+	return value.(ir.ArrayIndex).Array.(ir.Read).Local
 }
 
 // borrowable reports whether a declaration's variable could borrow: a local of the function, never
@@ -108,7 +126,7 @@ func changes(program *ir.Program, changing map[int]bool, list []ir.Statement) bo
 				found = true
 			}
 			walkStatement(statement, func(expression ir.Expression) {
-				if !unchanging(changing, expression) {
+				if !unchanging(program, changing, expression) {
 					found = true
 				}
 			}, statements)
@@ -120,10 +138,11 @@ func changes(program *ir.Program, changing map[int]bool, list []ir.Statement) bo
 
 // unchanging reports whether an expression, on its own, can't take an element out of an array: a
 // pure one (borrow.go), an object literal, an array literal with no spread (reuse could take one
-// over), a push, a closure made but not called, or a call to a function that doesn't change any.
-func unchanging(changing map[int]bool, expression ir.Expression) bool {
+// over), a push, an Error made without calling user code, a closure made but not called, or a call to a
+// function that doesn't change any. The walk still checks every operand, including an Error's message.
+func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expression) bool {
 	switch expression := expression.(type) {
-	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.Defined:
+	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError, ir.Defined:
 		return true
 	case ir.ArrayLiteral:
 		for _, spread := range expression.Spread {
@@ -133,7 +152,23 @@ func unchanging(changing map[int]bool, expression ir.Expression) bool {
 		}
 		return true
 	case ir.Call:
-		return !changing[expression.Function]
+		for _, target := range program.CallTargets(expression) {
+			if changing[target] {
+				return false
+			}
+		}
+		return true
+	case ir.CallClosure:
+		targets := program.ClosureTargets(expression)
+		if targets.Unknown {
+			return false
+		}
+		for _, target := range targets.Functions {
+			if changing[target] {
+				return false
+			}
+		}
+		return true
 	}
 	return pureKind(expression)
 }

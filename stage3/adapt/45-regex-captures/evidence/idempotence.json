@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "files_hashed": 82834,
+  "reports": [
+    {
+      "files": 0,
+      "edits": 0,
+      "evidence": [],
+      "declined": [
+        {
+          "site": "XML value groups 2 and 3",
+          "reason": "alternative branches; whole-expression checked boundary authorized instead"
+        },
+        {
+          "site": "range operator group 1",
+          "reason": "optional; truthful parameter includes undefined"
+        }
+      ]
+    },
+    {
+      "files": 0,
+      "edits": 0
+    }
+  ],
+  "identical_bytes": true,
+  "excluded": [
+    ".git",
+    "node_modules"
+  ]
+}

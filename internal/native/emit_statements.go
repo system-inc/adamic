@@ -117,7 +117,11 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
-			e.line("%s;", e.callCode(call, e.arguments(call)))
+			if call.Accessor != "" {
+				e.accessorCall(call)
+			} else {
+				e.line("%s;", e.callCode(call, e.arguments(call)))
+			}
 			if e.program.CallMayThrow(call) {
 				e.checkThrown()
 			}
@@ -148,7 +152,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("}")
 		e.line("adamic_object_check_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
-		e.line("adamic_value *%s = %s;", slot, e.fieldSlot(object, statement.Name, statement.Class))
+		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), e.cache())
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()

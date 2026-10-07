@@ -54,8 +54,12 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 	for (size_t index = 0; index < count; index++) {
 		itself = itself || parts[index] == string;
 	}
+	// Room is capacity against the length after: a shared slice, or a slice of a constant, has a count
+	// of 1 and a capacity of 0 below its length, and capacity - length would wrap around to nearly all
+	// of memory and write into bytes that are its owner's. length + added can't overflow, as the loop
+	// above held it under SIZE_MAX / 2.
 	adamic_string *result = string;
-	if (string->heap.references == 1 && !itself && string->capacity - length >= added) {
+	if (string->heap.references == 1 && !itself && length + added <= string->capacity) {
 		// The bytes are about to change, so what was cached about the old ones goes: the length in
 		// units, and the position index (string_index.c).
 		adamic_string_free_index(string);

@@ -1,0 +1,6 @@
+=== RUN   TestProfileSnapshotsAgree
+    lint_test.go:276: cohere cases: 873 unique source/rule/options combinations
+    profile_test.go:157: /workspace/scratch/lint-perf/4-kind-switches: release, profiled and Node identical to Go: 16141929 bytes
+--- PASS: TestProfileSnapshotsAgree (15.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	15.457s

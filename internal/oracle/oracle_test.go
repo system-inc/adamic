@@ -37,6 +37,12 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/typeof_null.a", true, false},
+	{"internal/oracle/testdata/call_targets_element.a", true, false},
+	{"internal/oracle/testdata/call_targets_region.a", true, false},
+	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
+	{"internal/oracle/testdata/call_targets_closure.a", true, false},
+	{"internal/oracle/testdata/call_targets_sort.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -77,8 +83,14 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/json_stringify_keys.a", true, false},
 	{"internal/oracle/testdata/json_stringify_replacer.a", true, false},
 	{"internal/oracle/testdata/library_function_expressions.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_recurse.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_store.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_loops.a", true, false},
 	{"internal/oracle/testdata/library_for_in.a", true, false},
+	{"internal/oracle/testdata/library_for_in_keys.a", true, false},
+	{"internal/oracle/testdata/library_for_in_live.a", true, false},
 	{"internal/oracle/testdata/library_globals.a", true, false},
+	{"internal/oracle/testdata/library_globals_typeof.a", true, false},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},
@@ -206,11 +218,16 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_positions.a", true, false},
 	{"internal/oracle/testdata/long_literals.a", true, false},
 	{"internal/oracle/testdata/class_layouts.a", true, false},
+	{"internal/oracle/testdata/inherited_static_field_read.a", true, false},
 	{"internal/oracle/testdata/ascii_scan.a", true, false},
 	{"internal/oracle/testdata/size_class_churn.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
+	// A narrowed read (ir.Defined) of a global, a field and a captured variable, lent to a call whose
+	// later argument writes the place it was read from (integration's reading of aa17d3c).
+	{"internal/oracle/testdata/borrow_defined_lent.a", true, false},
+	{"internal/oracle/testdata/borrow_defined_lent_field.a", true, false},
 	{"internal/oracle/testdata/writes_in_try.a", true, false},
 	{"internal/oracle/testdata/class_as_interface.a", true, false},
 	{"internal/oracle/testdata/optional_class_method.a", true, false},
@@ -233,11 +250,28 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
+	// A constructor whose object a closure captures, kept in a global (integration's reading of
+	// fa49e43): the object outlives its statement, so no region.
+	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
+	{"internal/oracle/testdata/borrow_element_throw.a", true, false},
+	{"internal/oracle/testdata/borrow_element_virtual_store.a", true, false},
+	// A variable borrowed from an array, then the array moved into a consumed parameter of a
+	// function that only reads it, through a virtual call and through super (integration's reading
+	// of aa17d3c): the array is never moved while something borrows from it.
+	{"internal/oracle/testdata/borrow_element_virtual_move.a", true, false},
+	{"internal/oracle/testdata/borrow_element_super_move.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
+	// An assignment that throws never gives its variable a value, so the statement before it can't
+	// take that variable's old value while a catch, a finally or the code after a swallowing catch
+	// reads it; and a field or element write whose value throws.
+	{"internal/oracle/testdata/throw_keeps_old_value.a", true, false},
+	{"internal/oracle/testdata/throw_keeps_old_value_variants.a", true, false},
+	{"internal/oracle/testdata/throw_in_writes.a", true, false},
+	{"internal/oracle/testdata/throw_global_move.a", true, false},
 	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
 	{"internal/oracle/testdata/spread_undefined.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
@@ -304,6 +338,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/search_from.a", true, false},
 	{"internal/oracle/testdata/shared_slices.a", true, false},
 	{"internal/oracle/testdata/string_append.a", true, false},
+	{"internal/oracle/testdata/shared_slice_append.a", true, false},
 	{"internal/oracle/testdata/search_from_sweep.a", true, false},
 	// Numbers as text around the integer fast path: every power of two and of ten, their neighbors
 	// and negatives, -0, and the safe range's edges.
@@ -313,6 +348,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// A method called on a spread's source inside the literal runs code with the source as this
+	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
+	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
+	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
@@ -340,6 +379,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_match.a", true, false},
 	{"internal/oracle/testdata/regexp_search.a", true, false},
 	{"internal/oracle/testdata/regexp_unicode.a", true, false},
+	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

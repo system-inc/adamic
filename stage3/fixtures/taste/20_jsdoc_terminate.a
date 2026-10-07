@@ -1,0 +1,33 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:3910
+// From TypeScript 6.0.3, src/compiler/parser.ts:3916
+// Census reason: a label
+type TypeNode = number;
+const SyntaxKind = {CloseBraceToken: 20, EndOfFileToken: 1, CommaToken: 28, WhitespaceTrivia: 5};
+let tokens: number[] = [];
+let cursor = 0;
+const pos = 0;
+const moduleTag = 77;
+const scanner = {setSkipJsDocLeadingAsterisks: (skip: boolean): void => {console.log(String(skip));}};
+function token(): number {return tokens[cursor] ?? 1;}
+function nextTokenJSDoc(): void {cursor += 1;}
+function finishNode(node: TypeNode, start: number): TypeNode {return node;}
+function parseJSDocType(): TypeNode {
+terminate:
+            while (true) {
+                switch (token()) {
+                    case SyntaxKind.CloseBraceToken:
+                    case SyntaxKind.EndOfFileToken:
+                    case SyntaxKind.CommaToken:
+                    case SyntaxKind.WhitespaceTrivia:
+                        break terminate;
+                    default:
+                        nextTokenJSDoc();
+                }
+            }
+    scanner.setSkipJsDocLeadingAsterisks(false);
+    return finishNode(moduleTag, pos);
+}
+for (const delimiter of [20, 1, 28, 5]) {
+    tokens = [80, 80, delimiter]; cursor = 0;
+    console.log(String(parseJSDocType()) + ":" + String(cursor));
+}
