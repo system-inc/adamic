@@ -13,4 +13,6 @@ class Sibling extends Base {
 function call(base: Base): number { return base.value(); }
 const fixed = () => 1;
 let mutable = () => 2;
+function named(): number { return 5; }
+const namedBinding = named;
 console.log(`${call(new Base())} ${call(new Child())} ${call(new Grandchild())} ${call(new Sibling())} ${fixed()} ${mutable()}`);
