@@ -108,7 +108,8 @@ stop, and remaining notes for a compile stop. It records all observations in JSO
 python3 notes/records-lowering/verify.py /tmp/adamic-gate/records-final-all
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_' -count=1 -timeout 10m -v
 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
-# The same order_edges-only oracle command was run with the one-line mutant and failed.
+# This command failed with the one-line mutant, then passed after restoration.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a' -count=1 -timeout 10m -v
 gofmt -l cmd internal
 go vet ./...
 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...
@@ -127,3 +128,33 @@ passed in 16.042s; count recording passed in 27.472s. Formatting and vet were cl
 The all-package gate was interrupted by an environment reconnect after 23 packages
 had completed successfully. The remaining 21 packages were resumed with the same
 uncached settings. Their exact command is recorded in `gate-command.sh`.
+
+The resumed 30-minute gate timed out in `stage1/cohere/markdownblocks` while
+`TestMarkdownTextSplitting` awaited a sanitizer build. It was retried alone:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 60m ./stage1/cohere/markdownblocks
+```
+
+The remaining gate also timed out in `stage1/cohere/typeaware` during volume/mutation
+checks. All other remaining packages passed or had no tests. The type-aware retry:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 60m ./stage1/cohere/typeaware
+```
+
+Type-aware passed its retry in 1743.523s. Markdown completed in 3373.036s
+with one failure: `TestMarkdownUnicodeWidths` could not load the scratch
+`emoji-regex` dependency. All other Markdown tests had no failures. Installed
+the pinned dependencies and reran just that failed test:
+
+```sh
+npm install --prefix /tmp/adamic-markdown-width --ignore-scripts --no-audit --no-fund emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/markdownblocks -run '^TestMarkdownUnicodeWidths$'
+```
+
+The repaired Unicode-width test passed in 258.925s. Every test now has a
+successful result across the original gate, completion run and targeted retries.
+There was no uninterrupted all-package pass: the environment reconnect, two
+30-minute timeouts and missing scratch npm dependencies are recorded above.
+No compiler changes were needed for validation. Only the coverage branch is pushed.
