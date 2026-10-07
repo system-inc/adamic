@@ -1,8 +1,12 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
 import { reactEs6ComponentClass, type ReactClassNode } from './react_es6_component_class.a';
+import { tailwindDefaultClassLiteralSettings, type ClassLiteralSettings } from './tailwind_default_class_literal_settings.a';
 interface ClassFixtureNode extends ReactClassNode { readonly componentBase: boolean; }
 import { structureFileContext } from './structure_file_context.a';
+function printSettings(settings: ClassLiteralSettings): void {
+    console.log(`${settings.attributeNames.join('|')};${settings.calleeNames.join('|')};${settings.variablePatterns.join('|')}`);
+}
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
 if (file.kind === 'Error') { panic(file.message); }
@@ -11,6 +15,16 @@ for (const line of file.text.split('\n')) {
     const reader = new OptionsJson(line);
     const root = reader.parse();
     if (root < 0) { panic(reader.error); }
+    if (args[1] === 'defaults') {
+        const first = tailwindDefaultClassLiteralSettings();
+        printSettings(first);
+        first.attributeNames[0] = 'mutated attribute';
+        first.calleeNames[0] = 'mutated callee';
+        first.variablePatterns[0] = 'mutated pattern';
+        printSettings(first);
+        printSettings(tailwindDefaultClassLiteralSettings());
+        continue;
+    }
     if (args[1] === 'class') {
         const nodes: ClassFixtureNode[] = [];
         for (const row of reader.node(root).children) {

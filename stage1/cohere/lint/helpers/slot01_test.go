@@ -47,6 +47,9 @@ func slot01Fixture(t *testing.T, dependency string, consumers int, mode string) 
 			name = strings.TrimPrefix(name, "next/")
 			namespace = "next"
 		}
+		if namespace == "better-tailwindcss" {
+			namespace = "tailwind"
+		}
 		if namespace == "@typescript-eslint" {
 			namespace = "typescript"
 		}
@@ -127,12 +130,20 @@ func slot01Build(t *testing.T, entry string) string {
 	}
 	return binary
 }
+
+// Not parallel: keep sanitized native builds and corpus outputs bounded on cloud workers.
 func TestSlot01FileContextMatchesCohere(t *testing.T) {
 	slot01Check(t, contextDependency, 18, "context", "structure_file_context.a", "fileName.split('\\\\').join('/')", "fileName")
 }
 
+// Not parallel: keep sanitized native builds and corpus outputs bounded on cloud workers.
 func TestSlot01Es6ComponentClassMatchesCohere(t *testing.T) {
 	slot01Check(t, "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs6ComponentClass", 14, "class", "react_es6_component_class.a", "node.kind !== 'ClassExpression'", "true")
+}
+
+// Not parallel: keep sanitized native builds and corpus outputs bounded on cloud workers.
+func TestSlot01TailwindDefaultsMatchCohere(t *testing.T) {
+	slot01Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind.DefaultClassLiteralSettings", 12, "defaults", "tailwind_default_class_literal_settings.a", "attributeNames: ['class', 'className']", "attributeNames: ['className']")
 }
 
 func slot01Check(t *testing.T, dependency string, consumers int, mode, mutantFile, old, replacement string) {
@@ -143,7 +154,7 @@ func slot01Check(t *testing.T, dependency string, consumers int, mode, mutantFil
 	compare(t, run(t, "", slot01Build(t, entry), cases, mode), want)
 	t.Logf("%d Go answers matched Node and sanitized native", bytes.Count(want, []byte("\n")))
 	directory := t.TempDir()
-	for _, file := range []string{"slot01_main.a", "structure_file_context.a", "react_es6_component_class.a", "options_json.ts"} {
+	for _, file := range []string{"slot01_main.a", "structure_file_context.a", "react_es6_component_class.a", "tailwind_default_class_literal_settings.a", "options_json.ts"} {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			t.Fatal(err)
@@ -168,5 +179,42 @@ func slot01Check(t *testing.T, dependency string, consumers int, mode, mutantFil
 	if bytes.Equal(mutant, want) {
 		t.Fatal("compiled semantic mutant survived")
 	}
-	t.Logf("compiled %s mutant caught by Go output comparison", mutantFile)
+	slot01MutantWitness(t, mutant, want, mutantFile)
+	if mode == "defaults" {
+		for _, field := range []struct{ name, literal string }{
+			{"attributeNames", "['class', 'className']"},
+			{"calleeNames", "['mergeClassNames', 'createVariantClassNames']"},
+			{"variablePatterns", "['.*[Cc]lassName$', '.*[Cc]lassNames$']"},
+		} {
+			data, err := os.ReadFile(mutantFile)
+			if err != nil {
+				t.Fatal(err)
+			}
+			anchor := field.name + ": " + field.literal
+			if strings.Count(string(data), anchor) != 1 {
+				t.Fatal("freshness anchor drift")
+			}
+			data = []byte("const sharedList: string[] = " + field.literal + ";\n" + strings.Replace(string(data), anchor, field.name+": sharedList", 1))
+			if err := os.WriteFile(filepath.Join(directory, mutantFile), data, 0644); err != nil {
+				t.Fatal(err)
+			}
+			mutated := run(t, "", slot01Build(t, filepath.Join(directory, "slot01_main.a")), cases, mode)
+			if bytes.Equal(mutated, want) {
+				t.Fatalf("shared %s mutant survived", field.name)
+			}
+			slot01MutantWitness(t, mutated, want, "shared "+field.name)
+		}
+	}
+}
+
+func slot01MutantWitness(t *testing.T, got, want []byte, name string) {
+	t.Helper()
+	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+	for i := 0; i < len(a) && i < len(b); i++ {
+		if a[i] != b[i] {
+			t.Logf("compiled %s mutant caught at output line %d: got %q, Go %q", name, i+1, a[i], b[i])
+			return
+		}
+	}
+	t.Logf("compiled %s mutant caught by output length", name)
 }

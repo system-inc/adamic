@@ -17,6 +17,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/react"
 	"github.com/system-inc/cohere/internal/lint/rules/structure"
+	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
 )
 
 func main() {
@@ -116,10 +117,20 @@ func main() {
 			continue
 		}
 		must(encode.Encode(path))
+		if os.Args[4] == "defaults" {
+			first := tailwind.DefaultClassLiteralSettings()
+			printSettings(expected, first)
+			first.AttributeNames[0] = "mutated attribute"
+			first.CalleeNames[0] = "mutated callee"
+			first.VariablePatterns[0] = "mutated pattern"
+			printSettings(expected, first)
+			printSettings(expected, tailwind.DefaultClassLiteralSettings())
+			continue
+		}
 		c := structure.FileContextFor(path)
 		fmt.Fprintf(expected, "%t %t %t %t %t %t %t %t %t\n", c.IsReactFile, c.IsSpecialNextJsFile, c.IsNetworkServiceFile, c.IsLinkComponentFile, c.IsHorizontalRuleComponentFile, c.IsInLibrariesStructure, c.IsPageFile, c.IsLayoutFile, c.IsLocalStorageServiceFile)
 	}
-	fmt.Fprintf(os.Stderr, "%d fixture strings; %d path observations\n", fixtureCount, len(sources))
+	fmt.Fprintf(os.Stderr, "%d fixture strings; %d helper input batches (%s)\n", fixtureCount, len(sources), os.Args[4])
 }
 func must(err error) {
 	if err != nil {
@@ -144,15 +155,23 @@ func writeClass(source string, encode *json.Encoder, expected *os.File) {
 		node.ForEachChild(func(child *ast.Node) bool { visit(child); return false })
 	}
 	visit(file.AsNode())
+	id := func(node *ast.Node) int {
+		index, present := ids[node]
+		if !present {
+			panic("parser named field absent from child traversal")
+		}
+		return index
+	}
 	list := func(raw *ast.NodeList) []int {
 		result := []int{}
 		if raw != nil {
 			for _, node := range raw.Nodes {
-				result = append(result, ids[node])
+				result = append(result, id(node))
 			}
 		}
 		return result
 	}
+	positive := 0
 	rows := [][]any{}
 	for _, node := range nodes {
 		kind := "Other"
@@ -170,13 +189,24 @@ func writeClass(source string, encode *json.Encoder, expected *os.File) {
 			types = list(node.AsHeritageClause().Types)
 		case ast.KindExpressionWithTypeArguments:
 			kind = "ExpressionWithTypeArguments"
-			expression = ids[node.AsExpressionWithTypeArguments().Expression]
+			expression = id(node.AsExpressionWithTypeArguments().Expression)
 		}
 		rows = append(rows, []any{kind, expression, heritage, types, react.AdamicComponentBase(node)})
 	}
 	must(encode.Encode(rows))
 	fmt.Fprintln(expected, react.IsEs6ComponentClass(nil))
 	for _, node := range nodes {
-		fmt.Fprintln(expected, react.IsEs6ComponentClass(node))
+		answer := react.IsEs6ComponentClass(node)
+		if answer {
+			positive++
+		}
+		fmt.Fprintln(expected, answer)
 	}
+	if positive > 0 {
+		fmt.Fprintf(os.Stderr, "class batch: %d nodes, %d positive answers\n", len(nodes), positive)
+	}
+}
+
+func printSettings(output *os.File, settings tailwind.ClassLiteralSettings) {
+	fmt.Fprintf(output, "%s;%s;%s\n", strings.Join(settings.AttributeNames, "|"), strings.Join(settings.CalleeNames, "|"), strings.Join(settings.VariablePatterns, "|"))
 }

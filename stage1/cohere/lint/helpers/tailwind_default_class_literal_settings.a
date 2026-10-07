@@ -1,0 +1,15 @@
+export interface ClassLiteralSettings {
+    readonly attributeNames: string[];
+    readonly calleeNames: string[];
+    readonly variablePatterns: string[];
+}
+
+// Go returns ordered slices allocated anew on each call. Callers may edit one
+// configuration without changing defaults returned to another rule or file.
+export function tailwindDefaultClassLiteralSettings(): ClassLiteralSettings {
+    return {
+        attributeNames: ['class', 'className'],
+        calleeNames: ['mergeClassNames', 'createVariantClassNames'],
+        variablePatterns: ['.*[Cc]lassName$', '.*[Cc]lassNames$'],
+    };
+}
