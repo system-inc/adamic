@@ -1,0 +1,5 @@
+// Numeric subscription declaration for the shared kind-indexed driver.
+// Values are the pinned cohere TypeScript parser AST Kind IDs.
+// JsxOpeningElement: 287.
+// JsxSelfClosingElement: 286.
+export const listenerSyntaxKinds: readonly number[] = [287, 286];

@@ -1,0 +1,28 @@
+=== RUN   TestNumericListenerDeclarations
+    listener_test.go:117: 11 owned declarations, 406 bytes match pinned Go numeric SyntaxKinds on all three execution paths
+--- PASS: TestNumericListenerDeclarations (0.29s)
+=== RUN   TestNumericListenerDeclarationMutant
+    listener_test.go:127: SourceFile -> VariableDeclaration compiled and finished cleanly; only Go subscription comparison caught it on emitted JavaScript: line 1 port="consistent-this\t261" Go="consistent-this\t307"
+        Go context:
+        consistent-this	307
+        func-name-matching	261,227,303,173
+        eslint-comments-require-description	307
+        next-google-font-display	287,286
+        tailwind-no-physical-direction	10,14,229
+    listener_test.go:127: SourceFile -> VariableDeclaration compiled and finished cleanly; only Go subscription comparison caught it on ASan/UBSan native: line 1 port="consistent-this\t261" Go="consistent-this\t307"
+        Go context:
+        consistent-this	307
+        func-name-matching	261,227,303,173
+        eslint-comments-require-description	307
+        next-google-font-display	287,286
+        tailwind-no-physical-direction	10,14,229
+    listener_test.go:127: SourceFile -> VariableDeclaration compiled and finished cleanly; only Go subscription comparison caught it on source Node: line 1 port="consistent-this\t261" Go="consistent-this\t307"
+        Go context:
+        consistent-this	307
+        func-name-matching	261,227,303,173
+        eslint-comments-require-description	307
+        next-google-font-display	287,286
+        tailwind-no-physical-direction	10,14,229
+--- PASS: TestNumericListenerDeclarationMutant (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	0.570s
