@@ -1,0 +1,230 @@
+{
+  "SourceCommit": "47fbaf174d168f14cd50dedcaabfaa09c51cdefd",
+  "RunnerCommit": "1e9192b65a41bcd108ff04c09b732864b28a5bbe",
+  "Predictions": [
+    {
+      "Shard": 0,
+      "Seconds": 3456.4556345710002,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "@layoutOnce",
+        "Shard": 0,
+        "Seconds": 3456.4556345710002,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 2
+    },
+    {
+      "Shard": 1,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "@formatterOnce",
+        "Shard": 1,
+        "Seconds": 1342.48,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 3
+    },
+    {
+      "Shard": 2,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestMutants",
+        "Shard": 2,
+        "Seconds": 1069.12,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 0
+    },
+    {
+      "Shard": 3,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownASTPreprocessing",
+        "Shard": 3,
+        "Seconds": 1037.67,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 0
+    },
+    {
+      "Shard": 4,
+      "Seconds": 1613.8650000000002,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+        "Test": "TestVolumeAgreementAndMutants",
+        "Shard": 4,
+        "Seconds": 731.7550000000001,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 2
+    },
+    {
+      "Shard": 5,
+      "Seconds": 1613.87,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+        "Test": "TestPortMatchesGoCohere",
+        "Shard": 5,
+        "Seconds": 686,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 2
+    },
+    {
+      "Shard": 6,
+      "Seconds": 1613.87,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+        "Test": "TestTypeAwareAgreementAndMutants",
+        "Shard": 6,
+        "Seconds": 615.05,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 0
+    },
+    {
+      "Shard": 7,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+        "Test": "TestMarkdownInline",
+        "Shard": 7,
+        "Seconds": 588.25,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 0
+    },
+    {
+      "Shard": 8,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestCanonicalizeUnicodeNode",
+        "Shard": 8,
+        "Seconds": 571.08,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 1
+    },
+    {
+      "Shard": 9,
+      "Seconds": 1613.87,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestEmittedJavaScriptMismatch",
+        "Shard": 9,
+        "Seconds": 507.02,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 3
+    },
+    {
+      "Shard": 10,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+        "Test": "TestCSSPrinterAgreesWithGo/default",
+        "Shard": 10,
+        "Seconds": 466.25,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 3
+    },
+    {
+      "Shard": 11,
+      "Seconds": 1613.8700000000003,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestJsxLintTrees",
+        "Shard": 11,
+        "Seconds": 464.71,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 0
+    },
+    {
+      "Shard": 12,
+      "Seconds": 1613.87,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/bridge/tsgo",
+        "Test": "TestBridge",
+        "Shard": 12,
+        "Seconds": 458.15,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 1
+    },
+    {
+      "Shard": 13,
+      "Seconds": 1613.8700000000001,
+      "ParentSeconds": 0,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestDotARename",
+        "Shard": 13,
+        "Seconds": 418.81,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 2
+    },
+    {
+      "Shard": 14,
+      "Seconds": 1731.0749999999996,
+      "ParentSeconds": 0.06999999999996476,
+      "Largest": {
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "@gateOnce",
+        "Shard": 14,
+        "Seconds": 1368.8449999999996,
+        "WASI": false,
+        "RequiredEnvironment": null
+      },
+      "Unknown": 0
+    }
+  ],
+  "ActualTestSeconds": 2421.176,
+  "ShardWallSeconds": 2527.139608037,
+  "SetupSeconds": 84.939,
+  "RunnerPreflightAndChecksSeconds": 104.14783675999979,
+  "FixtureMarkerSeconds": 448.888553,
+  "FixtureBeforeFirstMutantSeconds": 466.611156,
+  "MutantChecks": 30,
+  "MutantSecondsSum": 3736.7400000000002,
+  "PeakConcurrentMutants": 2,
+  "BuildFlags": "concurrency=\"auto\" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max=\"400000 100000\" go=\"go version go1.27.1 linux/amd64\" clang=\"clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\" node=\"v24.19.0\" load_before=\"0.50 2.15 3.88 2/261 28575\" load_after=\"1.80 1.97 2.06 1/262 31786\" uncached=1 GOFLAGS=\"\" CGO_ENABLED=\"\" GOMAXPROCS=\"\" width_deps=\"/workspace/adamic-tools/markdown-width\"",
+  "Pass": 39,
+  "Fail": 0,
+  "Skip": 0,
+  "Errors": null
+}

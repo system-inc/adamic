@@ -73,7 +73,7 @@ func TestCompareGateLogsReference(t *testing.T) {
 		gitFixture(t, remote, "add", "plain.tgz")
 		gitFixture(t, remote, "commit", "-qm", "Reference evidence")
 	}
-	update("commit="+commit+"\n", log)
+	update("commit="+commit+"\ngo=go version go1.27.1 linux/amd64\nnode=v24.19.0\n", log)
 	checkout := t.TempDir()
 	gitFixture(t, checkout, "init", "-q")
 	gitFixture(t, checkout, "remote", "add", "origin", remote)
@@ -87,7 +87,7 @@ func TestCompareGateLogsReference(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	m := merged{Green: true, Plan: plan{Commit: commit}, Results: results, Pass: 1, Skip: 1, TestEvents: 2}
+	m := merged{Green: true, Plan: plan{Commit: commit, GoVersion: "go version go1.27.1 linux/amd64", NodeVersion: "v24.19.0"}, Results: results, Pass: 1, Skip: 1, TestEvents: 2}
 	if err := saveJSON(filepath.Join(root, "merged.json"), m); err != nil {
 		t.Fatal(err)
 	}
@@ -101,7 +101,7 @@ func TestCompareGateLogsReference(t *testing.T) {
 	if err := compare(root, reference); err == nil || !strings.Contains(err.Error(), "plain tested commit") {
 		t.Fatal("different tested SHA accepted", err)
 	}
-	update("commit="+commit+"\n", strings.Replace(log, `"Action":"pass","Package":"p","Test":"TestPass"`, `"Action":"fail","Package":"p","Test":"TestPass"`, 1))
+	update("commit="+commit+"\ngo=go version go1.27.1 linux/amd64\nnode=v24.19.0\n", strings.Replace(log, `"Action":"pass","Package":"p","Test":"TestPass"`, `"Action":"fail","Package":"p","Test":"TestPass"`, 1))
 	if err := compare(root, reference); err == nil || !strings.Contains(err.Error(), "compare failed") {
 		t.Fatal("different terminal verdict accepted", err)
 	}

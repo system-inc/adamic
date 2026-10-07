@@ -151,5 +151,8 @@ func extractPlainReference(archive, root, commit string) (string, error) {
 	if !fullCommit.MatchString(recorded) || recorded != commit {
 		return "", fmt.Errorf("plain tested commit %q differs from merged commit %s", recorded, commit)
 	}
+	if err := os.WriteFile(filepath.Join(root, "run-notes.txt"), []byte(notes), 0600); err != nil {
+		return "", err
+	}
 	return log, nil
 }

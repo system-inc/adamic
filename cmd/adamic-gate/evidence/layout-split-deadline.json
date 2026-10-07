@@ -1,0 +1,22 @@
+{
+  "SnapshotUTC": "2026-10-07T19:29:34.219258+00:00",
+  "Complete": false,
+  "SourceCommit": "47fbaf174d168f14cd50dedcaabfaa09c51cdefd",
+  "HalfA": {
+    "ElapsedLowerBoundSeconds": 1827.033694,
+    "CompletedMutants": {
+      "TestMarkdownListLayout": 3,
+      "TestMarkdownLeafComposition": 3,
+      "TestMarkdownCodeBlockLayout": 3,
+      "TestMarkdownWhitespaceLayout": 4
+    },
+    "EndOfRunMemoryPeakBytes": null,
+    "SetupSeconds": 43.8480269908905
+  },
+  "HalfB": {
+    "Started": false,
+    "EndOfRunMemoryPeakBytes": null
+  },
+  "ProvenanceFixCommit": "be217bbddd8bf627c94263ef89c771734d9b09af",
+  "Limitation": "two sequential fresh cgroups on one cloud box, not two independently provisioned cloud machines"
+}

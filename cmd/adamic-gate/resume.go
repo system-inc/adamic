@@ -47,7 +47,23 @@ func predictions(p plan, weights map[string]float64) []prediction {
 	for i := range result {
 		result[i].Shard = i
 	}
+	grouped := map[string]bool{}
+	for _, group := range p.Affinity {
+		r := &result[group.Shard]
+		r.Seconds += group.Seconds
+		r.Unknown += group.Unknown
+		u := unit{Package: group.Package, Test: "@" + group.Fixture, Shard: group.Shard, Seconds: group.Seconds}
+		if r.Largest.Package == "" || u.Seconds > r.Largest.Seconds || (u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
+			r.Largest = u
+		}
+		for _, test := range group.Tests {
+			grouped[group.Package+"::"+test] = true
+		}
+	}
 	for _, u := range p.Units {
+		if grouped[u.key()] {
+			continue
+		}
 		r := &result[u.Shard]
 		r.Seconds += u.Seconds
 		if _, ok := weights[u.key()]; !ok {
