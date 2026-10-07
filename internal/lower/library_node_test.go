@@ -1,7 +1,12 @@
 package lower
 
 import (
+	"context"
 	"errors"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -13,7 +18,7 @@ func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
 		{`import {toNamespacedPath} from 'node:path'; toNamespacedPath('x');`, "node:path.toNamespacedPath"},
 		{`import {userInfo} from 'node:os'; userInfo();`, "node:os.userInfo"},
 		{`import {randomUUID} from 'node:crypto'; randomUUID();`, "node:crypto.randomUUID"},
-		{`import {Buffer} from 'node:buffer'; Buffer.byteLength('x');`, "node:buffer.byteLength"},
+		{`import {Buffer} from 'node:buffer'; Buffer.byteLength('x');`, "node:buffer.BufferConstructor.byteLength"},
 		{`import {sep} from 'node:path'; console.log(sep);`, "node:path.sep"},
 		{`import {readFile} from 'node:fs'; const saved=readFile;`, "node:fs.readFile"},
 	} {
@@ -35,5 +40,41 @@ func TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames(t *testing.T) {
 		if _, err := lowerSource(t, source); err != nil {
 			t.Fatal(err)
 		}
+	}
+}
+
+func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
+	file := filepath.Join(t.TempDir(), "main.a")
+	source := `import type {Stats,Dirent} from 'node:fs'; function stats(value:Stats):void{value.isFile();} function dirent(value:Dirent):void{value.isFile();}`
+	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{file})
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked, release := program.Checker(context.Background(), program.Files()[0])
+	defer release()
+	lowering := lowering{program: program, checker: checked}
+	names := map[string]bool{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression {
+			names[lowering.nodeLibraryMember(node)] = true
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	program.Files()[0].AsNode().ForEachChild(visit)
+	for _, name := range []string{"node:fs.StatsBase.isFile", "node:fs.Dirent.isFile"} {
+		if !names[name] {
+			t.Fatalf("missing distinct member %s in %v", name, names)
+		}
+	}
+}
+
+func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`); err != nil {
+		t.Fatal(err)
 	}
 }
