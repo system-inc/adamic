@@ -1,0 +1,18 @@
+=== RUN   TestWave22AgreementAndMutants
+    wave_22_test.go:163: controls: 27900 identical finding bytes; findings 104
+    wave_22_test.go:170: 206 independent control sources
+    wave_22_test.go:176: controls-asan: 27900 identical finding bytes; findings 104
+    wave_22_test.go:187: nullish-suggestion: exit 0, empty stderr, byte oracle catches byte 327
+    wave_22_test.go:187: qualifier-fix: exit 0, empty stderr, byte oracle catches byte 17734
+    wave_22_test.go:187: private-read: exit 0, empty stderr, byte oracle catches byte 3472
+    wave_22_test.go:200: scope-export-mutant: exit 0, empty stderr, byte oracle catches byte 23847
+    wave_22_test.go:226: repository: 18485 identical finding bytes; findings 0
+    wave_22_test.go:227: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_test.go:236: repository time: native 0.415629s Go 0.219768s; native tsgo: load_ns=130632935 query_ns=2155668 queries=30 first_query_ns=180738 run_ns=272592895; Go cohere: load_ns=124084077 rule_ns=1003840 run_ns=72249711
+    wave_22_test.go:226: compiler: 5857 identical finding bytes; findings 0
+    wave_22_test.go:227: compiler-asan: 5857 identical finding bytes; findings 0
+    wave_22_test.go:236: compiler time: native 4.873780s Go 0.665738s; native tsgo: load_ns=806899604 query_ns=556395244 queries=6486 first_query_ns=6057687 run_ns=4044001483; Go cohere: load_ns=539356274 rule_ns=15874167 run_ns=64556371
+    wave_22_test.go:252: released handle: panic 70; registry mutant exits 0, caught by required refusal
+--- PASS: TestWave22AgreementAndMutants (113.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	113.722s
