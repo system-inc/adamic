@@ -41,3 +41,13 @@ The first 45 helper-ready names already occur in origin claim files. Once that
 46-name handoff is exhausted, selection follows inventory.json array order on
 origin/codex/lint-inventory. New helper packages are dependencies, not claims of
 rule completion. This claim update is pushed before any new implementation.
+
+## Next three after bf9675da
+
+The completed claimed implementations and evidence were pushed at bf9675da before this selection. Main is ef3d907ecdc4c771b016f7d9c52372def057a340. The refreshed audit searched all 340 origin branches and 52 distinct claim blobs. No original helper-ready rule remains available. Following the syntax-only inventory array order, the next three unported-on-main and unclaimed names are:
+
+1. better-tailwindcss/no-deprecated-classes
+2. better-tailwindcss/no-duplicate-classes
+3. better-tailwindcss/no-unknown-classes
+
+This claim update is committed and pushed before writing any implementation for these three rules.
