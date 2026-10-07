@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ReferenceNode {
+    readonly declarationName: boolean; readonly write: boolean; readonly id: number; readonly declarations: readonly boolean[];
+    constructor(declarationName: boolean, write: boolean, id: number, declarations: readonly boolean[]) { this.declarationName = declarationName; this.write = write; this.id = id; this.declarations = declarations; }
+}
+export class ReferenceNodes {
+    readonly rules: Rules; readonly cache = new Map<number, ReferenceNode>();
+    constructor(rules: Rules) { this.rules = rules; }
+    fact(at: number): ReferenceNode {
+        if(!this.cache.has(at)) {
+            const f = new Frames(this.rules.ask(at, 'reference-node')); header(f, 'reference-node'); const name = f.yes(); const write = f.yes(); let id = 0; const declarations: boolean[] = [];
+            if(f.yes()) { id = f.natural(); const count = f.natural(); for(let i = 0; i < count; i++) { f.field(); declarations.push(f.yes()); } }
+            f.end(); this.cache.set(at, new ReferenceNode(name, write, id, declarations));
+        }
+        return this.cache.get(at) ?? panic('reference fact');
+    }
+    constructorGlobal(at: number): boolean { const facts = this.fact(at); return facts.declarations.length > 0 && facts.declarations[0] === true; }
+}

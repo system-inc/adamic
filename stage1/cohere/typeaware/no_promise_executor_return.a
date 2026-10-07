@@ -1,0 +1,43 @@
+import type { Rules } from './rules.ts';
+import { CoreConstructors } from './core_constructor_facts.a';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+const message = 'This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.';
+export class NoPromiseExecutorReturn {
+    readonly rules: Rules; readonly facts: CoreConstructors; readonly allowVoid: boolean;
+    constructor(rules: Rules, allowVoid = false) { this.rules = rules; this.facts = new CoreConstructors(rules); this.allowVoid = allowVoid; }
+    executor(at: number): boolean {
+        const parent = this.rules.parents[at] ?? -1; if(parent < 0) { return false; } const node = this.rules.parser.node(parent); if(node.kind !== 'NewExpression' || this.facts.args(parent)[0] !== at) { return false; }
+        const callee = node.children[0] ?? -1; const c = this.rules.parser.node(callee);
+        return c.kind === 'Identifier' && c.text === 'Promise' && this.facts.references.constructorGlobal(callee);
+    }
+    voidSuggestion(at: number): Suggestion {
+        const node = this.rules.parser.node(at); const start = this.rules.start(node); const parent = this.rules.parents[at] ?? -1;
+        const prefix = parent >= 0 && this.rules.parser.node(parent).kind === 'ReturnStatement' && this.rules.scanner.text.slice(start - 6, start) === 'return' ? ' void ' : 'void ';
+        const parens = ['BinaryExpression', 'ConditionalExpression', 'YieldExpression', 'ArrowFunction'].includes(node.kind);
+        const repairs: Repair[] = []; repairs.push(new Repair(this.rules.byte(start), this.rules.byte(start), parens ? `${prefix}(` : prefix));
+        if(parens) { repairs.push(new Repair(this.rules.byte(node.end), this.rules.byte(node.end), ')')); }
+        return new Suggestion('prependVoid', 'Prepend `void` to the expression, saying the value is deliberately discarded.', repairs);
+    }
+    wrap(at: number): Suggestion { const node = this.rules.parser.node(at); const start = this.rules.byte(this.rules.start(node)); const end = this.rules.byte(node.end); const repairs: Repair[] = []; repairs.push(new Repair(start, start, '{')); repairs.push(new Repair(end, end, '}')); return new Suggestion('wrapBraces', 'Wrap the expression in `{}`, making the arrow body a statement rather than a return.', repairs); }
+    enclosing(at: number): number { let parent = this.rules.parents[at] ?? -1; while(parent >= 0) { const kind = this.rules.parser.node(parent).kind; if(this.facts.bindings.functionKind(kind)) { return parent; } if(kind === 'SourceFile') { return -1; } parent = this.rules.parents[parent] ?? -1; } return -1; }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(node.kind === 'ArrowFunction') {
+                const body = this.facts.body(i); if(body < 0 || this.rules.parser.node(body).kind === 'Block' || !this.executor(i)) { continue; }
+                if(this.allowVoid && this.rules.parser.node(this.rules.skip(body)).kind === 'VoidExpression') { continue; }
+                const finding = this.facts.finding(this.rules.skip(body), 'no-promise-executor-return', 'returnsValue', message);
+                if(this.allowVoid) { finding.suggestions.push(this.voidSuggestion(body)); }
+                const b = this.rules.parser.node(body);
+                if(!['FunctionExpression', 'ClassExpression'].includes(b.kind) || this.facts.bindings.shape.name(body) >= 0) { finding.suggestions.push(this.wrap(body)); }
+                this.rules.findings.push(finding);
+            }
+            else if(node.kind === 'ReturnStatement' && node.children.length > 0) {
+                const argument = node.children[0] ?? -1; const enclosing = this.enclosing(i); if(enclosing < 0 || !this.executor(enclosing)) { continue; }
+                if(this.allowVoid && this.rules.parser.node(this.rules.skip(argument)).kind === 'VoidExpression') { continue; }
+                const finding = this.facts.finding(i, 'no-promise-executor-return', 'returnsValue', message); if(this.allowVoid) { finding.suggestions.push(this.voidSuggestion(argument)); } this.rules.findings.push(finding);
+            }
+        }
+    }
+}

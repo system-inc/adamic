@@ -1,0 +1,20 @@
+[
+  {
+    "fixture": "no_object_constructor-016.tsx",
+    "source": "<foo />\n                Object()\n",
+    "go_findings": 1,
+    "native_exit": 70
+  },
+  {
+    "fixture": "no_object_constructor-017.tsx",
+    "source": "<foo></foo>\n                Object()\n",
+    "go_findings": 1,
+    "native_exit": 70
+  },
+  {
+    "fixture": "no_object_constructor-046.a",
+    "source": "var yield = 5;\n\n                yield: while (foo) {\n                    if (bar)\n                        break yield\n                    new Object();\n                }\n",
+    "go_findings": 1,
+    "native_exit": 70
+  }
+]

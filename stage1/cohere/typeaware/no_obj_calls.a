@@ -1,0 +1,95 @@
+import type { Rules } from './rules.ts';
+import { CoreConstructors } from './core_constructor_facts.a';
+const globals = ['Atomics', 'JSON', 'Math', 'Reflect', 'Intl', 'Temporal'];
+const globalObjects = ['global', 'globalThis', 'self', 'window'];
+class StaticText {
+    readonly text: string; readonly string: boolean; readonly valid: boolean;
+    constructor(text: string, string: boolean, valid: boolean) { this.text = text; this.string = string; this.valid = valid; }
+}
+export class NoObjCalls {
+    readonly rules: Rules; readonly facts: CoreConstructors; readonly identifiers: number[] = []; readonly following: string[] = [];
+    constructor(rules: Rules) { this.rules = rules; this.facts = new CoreConstructors(rules); }
+    constant(at: number): StaticText {
+        at = this.rules.skip(at); const node = this.rules.parser.node(at);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new StaticText(node.text, true, true); }
+        if(node.kind === 'NumericLiteral') { return new StaticText(node.text, false, true); }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return new StaticText(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null', false, true); }
+        if(node.kind === 'TemplateExpression') { let text = this.rules.parser.node(node.children[0] ?? -1).text; for(const child of node.children.slice(1)) { const span = this.rules.parser.node(child); const value = this.constant(span.children[0] ?? -1); if(!value.valid) { return new StaticText('', false, false); } text += value.text + this.rules.parser.node(span.children[1] ?? -1).text; } return new StaticText(text, true, true); }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'PlusToken') { const a = this.constant(node.children[0] ?? -1); const b = this.constant(node.children[2] ?? -1); if(a.valid && b.valid && (a.string || b.string)) { return new StaticText(a.text + b.text, true, true); } }
+        return new StaticText('', false, false);
+    }
+    valueReference(at: number): boolean {
+        const parent = this.rules.parents[at] ?? -1; if(parent < 0) { return false; } const node = this.rules.parser.node(parent);
+        if(this.facts.bindings.declaring(at) && !['ShorthandPropertyAssignment', 'ExportSpecifier'].includes(node.kind)) { return false; }
+        if(['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'JsxAttribute', 'ImportSpecifier'].includes(node.kind)) { return false; }
+        if(node.kind === 'PropertyAccessExpression') { return node.children[node.children.length - 1] !== at; }
+        if(node.kind === 'BindingElement') { return this.facts.bindings.shape.name(parent) === at || this.facts.bindings.shape.initializer(parent) === at; }
+        if(node.kind === 'ExportSpecifier') { return !this.facts.bindings.declaring(at); }
+        if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(node.kind)) { const text = this.rules.parser.node(at).text; const first = text.charCodeAt(0); return !(first >= 97 && first <= 122) && !text.includes('-'); }
+        return true;
+    }
+    writes(at: number): boolean {
+        const p = this.rules.parents[at] ?? -1; if(p >= 0 && this.rules.parser.node(p).kind === 'PropertyAccessExpression' && this.rules.parser.node(p).children[this.rules.parser.node(p).children.length - 1] === at) { return false; }
+        let current = at;
+        while((this.rules.parents[current] ?? -1) >= 0) {
+            const parent = this.rules.parents[current] ?? -1; const node = this.rules.parser.node(parent);
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(node.kind)) { current = parent; continue; }
+            if(node.kind === 'PropertyAssignment') { if(node.children[node.children.length - 1] !== current) { return false; } current = parent; continue; }
+            return this.facts.references.fact(current).write;
+        }
+        return this.facts.references.fact(current).write;
+    }
+    pass(at: number): boolean {
+        const parent = this.rules.parents[at] ?? -1; if(parent < 0) { return false; } const node = this.rules.parser.node(parent);
+        if(['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression', 'ExpressionWithTypeArguments'].includes(node.kind)) { return true; }
+        if(node.kind === 'ConditionalExpression') { return node.children[2] === at || node.children[4] === at; }
+        if(node.kind === 'BinaryExpression') { const op = this.rules.parser.node(node.children[1] ?? -1).kind; return ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(op) || (op === 'CommaToken' && node.children[2] === at); }
+        return false;
+    }
+    name(at: number): string {
+        at = this.rules.skip(at); const node = this.rules.parser.node(at); if(node.kind === 'Identifier') { return node.text; }
+        if(node.kind === 'PropertyAccessExpression') { return this.rules.parser.node(node.children[node.children.length - 1] ?? -1).text; }
+        if(node.kind === 'ElementAccessExpression') { const argument = this.rules.parser.node(node.children[node.children.length - 1] ?? -1); return ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(argument.kind) ? argument.text : ''; }
+        return '';
+    }
+    report(at: number, global: string): void {
+        const name = this.name(this.rules.parser.node(at).children[0] ?? -1);
+        const direct = name === global; const callee = name === '' ? 'a value' : `\`${name}\``;
+        const message = direct ? `This calls \`${global}\`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.` : `This calls ${callee}, which holds \`${global}\`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on \`${global}\` instead.`;
+        this.rules.findings.push(this.facts.finding(at, 'no-obj-calls', direct ? 'unexpectedCall' : 'unexpectedRefCall', message));
+    }
+    reads(key: string, references: readonly number[], global: string): void {
+        if(this.following.includes(key)) { return; } this.following.push(key); for(const ref of references) { this.value(ref, global); } this.following.pop();
+    }
+    value(at: number, global: string): void {
+        while(this.pass(at)) { at = this.rules.parents[at] ?? -1; }
+        const parent = this.rules.parents[at] ?? -1; if(parent < 0) { return; } const node = this.rules.parser.node(parent);
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            if(node.children[0] !== at || global !== '') { return; } const name = node.children[node.children.length - 1] ?? -1; const key = node.kind === 'PropertyAccessExpression' ? new StaticText(this.rules.parser.node(name).text, true, true) : this.constant(name);
+            if(key.valid && globals.includes(key.text)) { this.value(parent, key.text); } return;
+        }
+        if(['CallExpression', 'NewExpression'].includes(node.kind)) { if(node.children[0] === at && global !== '') { this.report(parent, global); } return; }
+        if(node.kind === 'BinaryExpression') { const op = this.rules.parser.node(node.children[1] ?? -1).kind; if(node.children[2] === at && ['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(op)) { this.target(node.children[0] ?? -1, global); this.value(parent, global); } return; }
+        if(['VariableDeclaration', 'Parameter', 'BindingElement'].includes(node.kind) && this.facts.bindings.shape.initializer(parent) === at) { this.target(this.facts.bindings.shape.name(parent), global); }
+        if(node.kind === 'ShorthandPropertyAssignment' && node.children[node.children.length - 1] === at && node.children.length > 1) { this.target(node.children[0] ?? -1, global); }
+    }
+    property(key: number, target: number, global: string): void {
+        if(global !== '' || key < 0) { return; } const node = this.rules.parser.node(key); const name = node.kind === 'ComputedPropertyName' ? this.constant(node.children[0] ?? -1) : new StaticText(node.text, true, ['Identifier', 'StringLiteral', 'NumericLiteral'].includes(node.kind));
+        if(name.valid && globals.includes(name.text)) { this.target(target, name.text); }
+    }
+    target(at: number, global: string): void {
+        if(at < 0) { return; } at = this.rules.skip(at); const node = this.rules.parser.node(at);
+        if(node.kind === 'Identifier') { const id = this.facts.references.fact(at).id; if(id !== 0) { const refs = this.identifiers.filter((r) => this.rules.parser.node(r).text === node.text && this.facts.references.fact(r).id === id); this.reads(`symbol:${id}`, refs, global); } return; }
+        if(node.kind === 'ObjectBindingPattern') { for(const element of node.children) { const e = this.rules.parser.node(element); if(e.children.some((c) => this.rules.parser.node(c).kind === 'DotDotDotToken')) { continue; } const value = this.facts.bindings.shape.name(element); const initializer = this.facts.bindings.shape.initializer(element); const names = e.children.filter((c) => c !== initializer); this.property(names[0] ?? -1, value, global); } return; }
+        if(node.kind === 'ObjectLiteralExpression') { for(const element of node.children) { const e = this.rules.parser.node(element); if(e.kind === 'PropertyAssignment') { this.property(e.children[0] ?? -1, e.children[e.children.length - 1] ?? -1, global); } else if(e.kind === 'ShorthandPropertyAssignment') { this.property(e.children[0] ?? -1, e.children[0] ?? -1, global); } } return; }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') { this.target(node.children[0] ?? -1, global); }
+    }
+    run(): void {
+        if(!globals.concat(globalObjects).some((name) => this.rules.scanner.text.includes(name))) { return; }
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) { if(this.rules.parser.node(i).kind === 'Identifier' && this.valueReference(i)) { this.identifiers.push(i); } }
+        for(const name of globals.concat(globalObjects)) {
+            const refs = this.identifiers.filter((r) => this.rules.parser.node(r).text === name && this.facts.references.fact(r).declarations.every((d) => d));
+            if(refs.length > 0 && !refs.some((r) => this.writes(r))) { this.reads(`global:${name}`, refs, globals.includes(name) ? name : ''); }
+        }
+    }
+}

@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "reference-node":
+		return p.referenceNode(out, c, node, question)
 	case "resolved-declaration":
 		return p.resolvedDeclaration(out, c, node, question)
 	case "program-modules":

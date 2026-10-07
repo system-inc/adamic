@@ -1,0 +1,618 @@
+file	/workspace/wave21-core-final/no_obj_calls-000.a
+file	/workspace/wave21-core-final/no_obj_calls-001.a
+file	/workspace/wave21-core-final/no_obj_calls-002.a
+file	/workspace/wave21-core-final/no_obj_calls-003.a
+file	/workspace/wave21-core-final/no_obj_calls-004.a
+file	/workspace/wave21-core-final/no_obj_calls-005.a
+file	/workspace/wave21-core-final/no_obj_calls-006.a
+0	6	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls-007.a
+25	32	no-obj-calls	unexpectedRefCall	This calls `m`, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls-008.a
+0	16	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls-009.a
+0	6	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls-010.a
+0	17	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-000.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-001.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-002.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-003.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-004.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-005.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-006.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-007.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-008.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-009.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-010.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-011.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-012.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-013.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-014.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-015.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-016.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-017.a
+0	17	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-018.a
+8	25	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-019.a
+2	19	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-020.a
+0	17	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-021.a
+8	25	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-022.a
+4	24	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-023.a
+0	36	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+17	34	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-024.a
+8	28	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-025.a
+26	46	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-026.a
+8	28	no-obj-calls	unexpectedCall	This calls `Atomics`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-027.a
+8	25	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-028.a
+10	31	no-obj-calls	unexpectedCall	This calls `Temporal`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-029.a
+22	28	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-030.a
+22	32	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-031.a
+0	9	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-032.a
+0	9	no-obj-calls	unexpectedCall	This calls `Atomics`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-033.a
+0	13	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-034.a
+0	13	no-obj-calls	unexpectedCall	This calls `Atomics`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-035.a
+0	6	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-036.a
+0	10	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-037.a
+0	10	no-obj-calls	unexpectedCall	This calls `Temporal`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-038.a
+0	14	no-obj-calls	unexpectedCall	This calls `Temporal`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-039.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-040.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-041.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-042.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-043.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-044.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-045.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-046.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-047.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-048.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-049.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-050.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-051.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-052.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-053.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-054.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-055.a
+0	6	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-056.a
+8	14	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-057.a
+2	8	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-058.a
+0	6	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-059.a
+0	8	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-060.a
+0	10	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-061.a
+0	13	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-062.a
+0	10	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-063.a
+1	9	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-064.a
+8	14	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-065.a
+4	13	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-066.a
+8	18	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-067.a
+0	14	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+6	12	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-068.a
+8	17	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-069.a
+8	21	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-070.a
+26	35	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-071.a
+26	39	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-072.a
+8	17	no-obj-calls	unexpectedCall	This calls `Atomics`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-073.a
+8	21	no-obj-calls	unexpectedCall	This calls `Atomics`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-074.a
+8	14	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-075.a
+8	18	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-076.a
+23	29	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-077.a
+23	33	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-078.a
+22	32	no-obj-calls	unexpectedCall	This calls `Temporal`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-079.a
+22	36	no-obj-calls	unexpectedCall	This calls `Temporal`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-080.a
+8	29	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-081.a
+0	21	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-082.a
+8	30	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-083.a
+8	27	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-084.a
+27	32	no-obj-calls	unexpectedRefCall	This calls `foo`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-085.a
+27	36	no-obj-calls	unexpectedRefCall	This calls `foo`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-086.a
+38	43	no-obj-calls	unexpectedRefCall	This calls `foo`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-087.a
+38	47	no-obj-calls	unexpectedRefCall	This calls `foo`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-088.a
+44	53	no-obj-calls	unexpectedRefCall	This calls `foo`, which holds `Temporal`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Temporal` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-089.a
+8	29	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-090.a
+8	31	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-091.a
+17	20	no-obj-calls	unexpectedRefCall	This calls `f`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-092.a
+0	12	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-093.a
+23	26	no-obj-calls	unexpectedRefCall	This calls `a`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-094.a
+32	35	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-095.a
+25	28	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-096.a
+23	26	no-obj-calls	unexpectedRefCall	This calls `a`, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-097.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-098.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-099.a
+21	24	no-obj-calls	unexpectedRefCall	This calls `x`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-100.a
+0	20	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-101.a
+0	20	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-102.a
+0	25	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-103.a
+0	19	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+0	19	no-obj-calls	unexpectedRefCall	This calls a value, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-104.a
+0	11	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-105.a
+0	13	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-106.a
+0	13	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-107.a
+0	16	no-obj-calls	unexpectedRefCall	This calls a value, which holds `Reflect`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Reflect` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-108.a
+0	15	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-109.a
+0	7	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-110.a
+0	13	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-111.a
+0	25	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-112.a
+0	8	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-113.a
+0	23	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-114.a
+22	30	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-115.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-116.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-117.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-118.a
+30	40	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-119.a
+35	38	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-120.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-121.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-122.a
+19	22	no-obj-calls	unexpectedRefCall	This calls `x`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-123.a
+34	37	no-obj-calls	unexpectedRefCall	This calls `f`, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-124.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-125.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-126.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-127.a
+16	23	no-obj-calls	unexpectedRefCall	This calls `m`, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-128.a
+21	38	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-129.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-130.a
+31	38	no-obj-calls	unexpectedRefCall	This calls `Math2`, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-131.a
+0	23	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-132.a
+0	21	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-133.a
+0	24	no-obj-calls	unexpectedCall	This calls `Reflect`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-134.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-135.a
+0	6	no-obj-calls	unexpectedCall	This calls `Intl`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-136.a
+34	37	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-137.a
+36	39	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-138.a
+29	35	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-139.a
+39	42	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-140.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-141.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-142.a
+36	39	no-obj-calls	unexpectedRefCall	This calls `b`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+41	44	no-obj-calls	unexpectedRefCall	This calls `c`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-143.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-144.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-145.a
+30	33	no-obj-calls	unexpectedRefCall	This calls `x`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-146.a
+7	13	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-147.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-148.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-149.a
+0	16	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-150.a
+16	21	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-151.a
+29	36	no-obj-calls	unexpectedRefCall	This calls `JSON2`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-152.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-153.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-154.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-155.a
+28	31	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-156.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-157.a
+file	/workspace/wave21-core-final/no_obj_calls_corpus-158.a
+39	42	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-159.a
+0	16	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-160.a
+25	28	no-obj-calls	unexpectedRefCall	This calls `a`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-161.a
+31	34	no-obj-calls	unexpectedRefCall	This calls `a`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/no_obj_calls_corpus-162.a
+file	/workspace/wave21-core-final/no_object_constructor-000.a
+0	10	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	10	({})
+file	/workspace/wave21-core-final/no_object_constructor-001.a
+0	8	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	8	({})
+file	/workspace/wave21-core-final/no_object_constructor-002.a
+17	25	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	17	25	({})
+file	/workspace/wave21-core-final/no_object_constructor-003.a
+0	8	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	8	({})
+file	/workspace/wave21-core-final/no_object_constructor-004.a
+12	22	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	12	22	{}
+file	/workspace/wave21-core-final/no_object_constructor-005.a
+1	13	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	1	13	{}
+file	/workspace/wave21-core-final/no_object_constructor-006.a
+20	28	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	20	28	({})
+file	/workspace/wave21-core-final/no_object_constructor-007.a
+22	30	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	22	30	({})
+file	/workspace/wave21-core-final/no_object_constructor-008.a
+24	32	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	24	32	({})
+file	/workspace/wave21-core-final/no_object_constructor-009.a
+22	30	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	22	30	({})
+file	/workspace/wave21-core-final/no_object_constructor-010.a
+20	28	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	20	28	({})
+file	/workspace/wave21-core-final/no_object_constructor-011.a
+42	50	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	42	50	({})
+file	/workspace/wave21-core-final/no_object_constructor-012.a
+37	45	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	37	45	({})
+file	/workspace/wave21-core-final/no_object_constructor-013.a
+34	42	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	34	42	({})
+file	/workspace/wave21-core-final/no_object_constructor-014.a
+38	46	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	38	46	({})
+file	/workspace/wave21-core-final/no_object_constructor-015.a
+39	47	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteralAfterSemicolon	Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.	1	39	47	({})
+file	/workspace/wave21-core-final/no_object_constructor-018.a
+19	27	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	19	27	({})
+file	/workspace/wave21-core-final/no_object_constructor-019.a
+34	42	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	34	42	({})
+file	/workspace/wave21-core-final/no_object_constructor-020.a
+29	37	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	29	37	({})
+file	/workspace/wave21-core-final/no_object_constructor-021.a
+5	13	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	5	13	({})
+file	/workspace/wave21-core-final/no_object_constructor-022.a
+6	14	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	6	14	({})
+file	/workspace/wave21-core-final/no_object_constructor-023.a
+2	10	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	2	10	({})
+file	/workspace/wave21-core-final/no_object_constructor-024.a
+7	15	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	7	15	({})
+file	/workspace/wave21-core-final/no_object_constructor-025.a
+13	21	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	13	21	({})
+file	/workspace/wave21-core-final/no_object_constructor-026.a
+10	18	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	10	18	({})
+file	/workspace/wave21-core-final/no_object_constructor-027.a
+3	11	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	3	11	({})
+file	/workspace/wave21-core-final/no_object_constructor-028.a
+29	37	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	29	37	({})
+file	/workspace/wave21-core-final/no_object_constructor-029.a
+24	32	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	24	32	({})
+file	/workspace/wave21-core-final/no_object_constructor-030.a
+32	40	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	32	40	({})
+file	/workspace/wave21-core-final/no_object_constructor-031.a
+37	45	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	37	45	({})
+file	/workspace/wave21-core-final/no_object_constructor-032.a
+20	28	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	20	28	({})
+file	/workspace/wave21-core-final/no_object_constructor-033.a
+20	28	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	20	28	({})
+file	/workspace/wave21-core-final/no_object_constructor-034.a
+64	72	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	64	72	({})
+file	/workspace/wave21-core-final/no_object_constructor-035.a
+65	73	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	65	73	({})
+file	/workspace/wave21-core-final/no_object_constructor-036.a
+48	56	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	48	56	({})
+file	/workspace/wave21-core-final/no_object_constructor-037.a
+25	33	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	25	33	({})
+file	/workspace/wave21-core-final/no_object_constructor-038.a
+57	65	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	57	65	({})
+file	/workspace/wave21-core-final/no_object_constructor-039.a
+60	68	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	60	68	({})
+file	/workspace/wave21-core-final/no_object_constructor-040.a
+31	39	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	31	39	({})
+file	/workspace/wave21-core-final/no_object_constructor-041.a
+47	55	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	47	55	({})
+file	/workspace/wave21-core-final/no_object_constructor-042.a
+63	71	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	63	71	({})
+file	/workspace/wave21-core-final/no_object_constructor-043.a
+42	50	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	42	50	({})
+file	/workspace/wave21-core-final/no_object_constructor-044.a
+43	51	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	43	51	({})
+file	/workspace/wave21-core-final/no_object_constructor-045.a
+38	46	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	38	46	({})
+file	/workspace/wave21-core-final/no_object_constructor-047.a
+24	32	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	24	32	({})
+file	/workspace/wave21-core-final/no_object_constructor-048.a
+24	32	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	24	32	({})
+file	/workspace/wave21-core-final/no_object_constructor-049.a
+file	/workspace/wave21-core-final/no_object_constructor-050.a
+file	/workspace/wave21-core-final/no_object_constructor-051.a
+file	/workspace/wave21-core-final/no_object_constructor-052.a
+file	/workspace/wave21-core-final/no_object_constructor-053.a
+file	/workspace/wave21-core-final/no_object_constructor-054.a
+0	12	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	12	({})
+file	/workspace/wave21-core-final/no_object_constructor-055.a
+0	8	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	8	({})
+file	/workspace/wave21-core-final/no_object_constructor-056.a
+0	10	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	10	({})
+file	/workspace/wave21-core-final/no_object_constructor-057.a
+12	22	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	12	22	{}
+file	/workspace/wave21-core-final/no_object_constructor-058.a
+1	13	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	1	13	{}
+file	/workspace/wave21-core-final/no_promise_executor_return-000.a
+file	/workspace/wave21-core-final/no_promise_executor_return-001.a
+file	/workspace/wave21-core-final/no_promise_executor_return-002.a
+file	/workspace/wave21-core-final/no_promise_executor_return-003.a
+file	/workspace/wave21-core-final/no_promise_executor_return-004.a
+file	/workspace/wave21-core-final/no_promise_executor_return-005.a
+file	/workspace/wave21-core-final/no_promise_executor_return-006.a
+file	/workspace/wave21-core-final/no_promise_executor_return-007.a
+file	/workspace/wave21-core-final/no_promise_executor_return-008.a
+file	/workspace/wave21-core-final/no_promise_executor_return-009.a
+file	/workspace/wave21-core-final/no_promise_executor_return-010.a
+file	/workspace/wave21-core-final/no_promise_executor_return-011.a
+file	/workspace/wave21-core-final/no_promise_executor_return-012.a
+file	/workspace/wave21-core-final/no_promise_executor_return-013.a
+file	/workspace/wave21-core-final/no_promise_executor_return-014.a
+file	/workspace/wave21-core-final/no_promise_executor_return-015.a
+file	/workspace/wave21-core-final/no_promise_executor_return-016.a
+file	/workspace/wave21-core-final/no_promise_executor_return-017.a
+file	/workspace/wave21-core-final/no_promise_executor_return-018.a
+file	/workspace/wave21-core-final/no_promise_executor_return-019.a
+file	/workspace/wave21-core-final/no_promise_executor_return-020.a
+file	/workspace/wave21-core-final/no_promise_executor_return-021.a
+file	/workspace/wave21-core-final/no_promise_executor_return-022.a
+file	/workspace/wave21-core-final/no_promise_executor_return-023.a
+file	/workspace/wave21-core-final/no_promise_executor_return-024.a
+file	/workspace/wave21-core-final/no_promise_executor_return-025.a
+file	/workspace/wave21-core-final/no_promise_executor_return-026.a
+file	/workspace/wave21-core-final/no_promise_executor_return-027.a
+file	/workspace/wave21-core-final/no_promise_executor_return-028.a
+file	/workspace/wave21-core-final/no_promise_executor_return-029.a
+file	/workspace/wave21-core-final/no_promise_executor_return-030.a
+file	/workspace/wave21-core-final/no_promise_executor_return-031.a
+file	/workspace/wave21-core-final/no_promise_executor_return-032.a
+file	/workspace/wave21-core-final/no_promise_executor_return-033.a
+file	/workspace/wave21-core-final/no_promise_executor_return-034.a
+file	/workspace/wave21-core-final/no_promise_executor_return-035.a
+file	/workspace/wave21-core-final/no_promise_executor_return-036.a
+file	/workspace/wave21-core-final/no_promise_executor_return-037.a
+file	/workspace/wave21-core-final/no_promise_executor_return-038.a
+file	/workspace/wave21-core-final/no_promise_executor_return-039.a
+file	/workspace/wave21-core-final/no_promise_executor_return-040.a
+file	/workspace/wave21-core-final/no_promise_executor_return-041.a
+file	/workspace/wave21-core-final/no_promise_executor_return-042.a
+file	/workspace/wave21-core-final/no_promise_executor_return-043.a
+file	/workspace/wave21-core-final/no_promise_executor_return-044.a
+file	/workspace/wave21-core-final/no_promise_executor_return-045.a
+file	/workspace/wave21-core-final/no_promise_executor_return-046.a
+file	/workspace/wave21-core-final/no_promise_executor_return-047.a
+file	/workspace/wave21-core-final/no_promise_executor_return-048.a
+file	/workspace/wave21-core-final/no_promise_executor_return-049.a
+file	/workspace/wave21-core-final/no_promise_executor_return-050.a
+file	/workspace/wave21-core-final/no_promise_executor_return-051.a
+file	/workspace/wave21-core-final/no_promise_executor_return-052.a
+file	/workspace/wave21-core-final/no_promise_executor_return-053.a
+file	/workspace/wave21-core-final/no_promise_executor_return-058.a
+file	/workspace/wave21-core-final/no_promise_executor_return-059.a
+41	50	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-068.a
+17	21	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	17	17	{	21	21	}
+file	/workspace/wave21-core-final/no_promise_executor_return-070.a
+24	26	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	26	26	}
+file	/workspace/wave21-core-final/no_promise_executor_return-072.a
+19	27	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-079.a
+44	53	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-080.a
+35	44	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-081.a
+41	58	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-082.a
+35	47	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-083.a
+41	54	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-084.a
+33	40	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	33	33	{	40	40	}
+file	/workspace/wave21-core-final/no_promise_executor_return-085.a
+33	37	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	33	33	{	37	37	}
+file	/workspace/wave21-core-final/no_promise_executor_return-086.a
+41	61	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-087.a
+35	54	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-088.a
+33	38	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	33	33	{	38	38	}
+file	/workspace/wave21-core-final/no_promise_executor_return-089.a
+35	62	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-090.a
+52	61	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-091.a
+41	50	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-092.a
+75	84	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-093.a
+20	34	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-094.a
+19	20	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	18	18	{	21	21	}
+file	/workspace/wave21-core-final/no_promise_executor_return-095.a
+25	27	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	28	28	}
+file	/workspace/wave21-core-final/no_promise_executor_return-096.a
+26	35	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-097.a
+20	29	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-098.a
+18	19	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	18	18	{	19	19	}
+file	/workspace/wave21-core-final/no_promise_executor_return-099.a
+44	53	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-100.a
+47	56	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-101.a
+49	58	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-102.a
+51	60	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-103.a
+70	83	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-104.a
+37	46	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-105.a
+61	70	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-106.a
+29	38	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-107.a
+26	35	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-108.a
+26	35	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-109.a
+24	25	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	25	25	}
+file	/workspace/wave21-core-final/no_promise_executor_return-110.a
+24	31	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	31	31	}
+file	/workspace/wave21-core-final/no_promise_executor_return-111.a
+24	37	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	37	37	}
+file	/workspace/wave21-core-final/no_promise_executor_return-112.a
+24	38	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-113.a
+24	32	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-114.a
+24	41	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	41	41	}
+file	/workspace/wave21-core-final/no_promise_executor_return-115.a
+24	36	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	36	36	}
+file	/workspace/wave21-core-final/no_promise_executor_return-116.a
+24	26	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	26	26	}
+file	/workspace/wave21-core-final/no_promise_executor_return-117.a
+27	36	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-118.a
+48	57	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-122.a
+19	21	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	18	18	{	22	22	}
+file	/workspace/wave21-core-final/no_promise_executor_return-125.a
+41	50	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-126.a
+19	27	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-127.a
+24	38	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-128.a
+35	44	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-129.a
+67	76	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-130.a
+file	/workspace/wave21-core-final/no_promise_executor_return-131.a
+file	/workspace/wave21-core-final/no_promise_executor_return-132.a
+file	/workspace/wave21-core-final/no_promise_executor_return-133.a
+file	/workspace/wave21-core-final/no_promise_executor_return-134.a
+file	/workspace/wave21-core-final/no_promise_executor_return-135.a
+20	29	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	0
+file	/workspace/wave21-core-final/no_promise_executor_return-136.a
+18	19	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	18	18	{	19	19	}
+file	/workspace/wave21-core-final/no_promise_executor_return-152.a
+17	21	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	17	17	{	21	21	}
+file	/workspace/wave21-core-final/no_promise_executor_return-155.a
+24	26	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	26	26	}
+file	/workspace/wave21-core-final/no_promise_executor_return-166.a
+33	40	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	33	33	{	40	40	}
+file	/workspace/wave21-core-final/no_promise_executor_return-167.a
+33	37	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	33	33	{	37	37	}
+file	/workspace/wave21-core-final/no_promise_executor_return-168.a
+33	38	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	33	33	{	38	38	}
+file	/workspace/wave21-core-final/no_promise_executor_return-169.a
+19	20	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	18	18	{	21	21	}
+file	/workspace/wave21-core-final/no_promise_executor_return-170.a
+25	27	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	28	28	}
+file	/workspace/wave21-core-final/no_promise_executor_return-171.a
+18	19	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	18	18	{	19	19	}
+file	/workspace/wave21-core-final/no_promise_executor_return-172.a
+24	25	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	25	25	}
+file	/workspace/wave21-core-final/no_promise_executor_return-173.a
+24	31	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	31	31	}
+file	/workspace/wave21-core-final/no_promise_executor_return-174.a
+24	37	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	37	37	}
+file	/workspace/wave21-core-final/no_promise_executor_return-175.a
+24	41	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	41	41	}
+file	/workspace/wave21-core-final/no_promise_executor_return-176.a
+24	36	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	36	36	}
+file	/workspace/wave21-core-final/no_promise_executor_return-177.a
+24	26	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	24	24	{	26	26	}
+file	/workspace/wave21-core-final/no_promise_executor_return-178.a
+file	/workspace/wave21-core-final/no_promise_executor_return-179.a
+file	/workspace/wave21-core-final/no_promise_executor_return-180.a
+file	/workspace/wave21-core-final/no_promise_executor_return-181.a
+file	/workspace/wave21-core-final/no_promise_executor_return-182.a
+file	/workspace/wave21-core-final/core-boundary-000.a
+0	6	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/core-boundary-001.a
+11	14	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/core-boundary-002.a
+0	8	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	8	({})
+file	/workspace/wave21-core-final/core-boundary-003.a
+15	16	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	15	15	{	16	16	}
+file	/workspace/wave21-core-final/core-boundary-004.a
+file	/workspace/wave21-core-final/core-boundary-005.a
+0	13	no-obj-calls	unexpectedRefCall	This calls a value, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/core-boundary-006.a
+file	/workspace/wave21-core-final/core-boundary-007.a
+file	/workspace/wave21-core-final/core-boundary-008.a
+file	/workspace/wave21-core-final/core-boundary-009.a
+17	23	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+file	/workspace/wave21-core-final/core-boundary-010.a
+26	29	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/core-boundary-011.a
+33	36	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+file	/workspace/wave21-core-final/core-boundary-012.a
+32	40	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	32	40	{}
+68	69	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	wrapBraces	Wrap the expression in `{}`, making the arrow body a statement rather than a return.	2	67	67	{	70	70	}
+file	/workspace/wave21-core-final/core-boundary-013.a
+findings 242

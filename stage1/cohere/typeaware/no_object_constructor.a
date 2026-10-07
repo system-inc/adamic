@@ -1,0 +1,87 @@
+import type { Rules } from './rules.ts';
+import { CoreConstructors } from './core_constructor_facts.a';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+const message = 'This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.';
+export class NoObjectConstructor {
+    readonly rules: Rules; readonly facts: CoreConstructors;
+    constructor(rules: Rules) { this.rules = rules; this.facts = new CoreConstructors(rules); }
+    parens(at: number): boolean {
+        const node = this.rules.parser.node(at); let parent = this.rules.parents[at] ?? -1;
+        while(parent >= 0 && this.rules.parser.node(parent).pos === node.pos) { if(this.rules.parser.node(parent).kind === 'ExpressionStatement') { return true; } parent = this.rules.parents[parent] ?? -1; }
+        parent = this.rules.parents[at] ?? -1; return parent >= 0 && this.rules.parser.node(parent).kind === 'ArrowFunction' && this.facts.body(parent) === at;
+    }
+    moduleString(index: number): boolean {
+        let at = this.facts.innermost(index);
+        while(at >= 0) { const node = this.rules.parser.node(at); const parent = this.rules.parents[at] ?? -1; if(node.end === index + 1 && (['ImportDeclaration', 'ExportDeclaration'].includes(node.kind) || (parent >= 0 && ['ImportDeclaration', 'ExportDeclaration'].includes(this.rules.parser.node(parent).kind)))) { return true; } at = parent; }
+        return false;
+    }
+    header(index: number): boolean {
+        let at = this.facts.innermost(index);
+        while(at >= 0) {
+            const node = this.rules.parser.node(at);
+            if(['DoStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement', 'IfStatement', 'WhileStatement', 'WithStatement'].includes(node.kind)) {
+                if(node.kind === 'DoStatement') { return node.end > index; }
+                let body = node.children[node.children.length - 1] ?? -1;
+                if(node.kind === 'IfStatement') { body = node.children[1] ?? -1; const otherwise = node.children[2] ?? -1; if(otherwise >= 0 && this.rules.start(this.rules.parser.node(otherwise)) > index) { body = otherwise; } }
+                if(body >= 0 && this.rules.parser.node(body).end > index && this.rules.start(this.rules.parser.node(body)) >= index) { return true; }
+            }
+            if(['CallExpression', 'NewExpression', 'ParenthesizedExpression', 'ArrowFunction', 'FunctionExpression', 'FunctionDeclaration'].includes(node.kind)) { return false; }
+            at = this.rules.parents[at] ?? -1;
+        }
+        return false;
+    }
+    brace(index: number): boolean {
+        let at = this.facts.innermost(index);
+        while(at >= 0) {
+            const node = this.rules.parser.node(at); const parent = this.rules.parents[at] ?? -1;
+            if(node.end === index + 1) {
+                if(['ObjectLiteralExpression', 'FunctionExpression', 'ClassExpression'].includes(node.kind)) { return true; }
+                if(node.kind === 'Block') { return parent >= 0 && this.rules.parser.node(parent).kind === 'FunctionExpression'; }
+                if(['ClassDeclaration', 'FunctionDeclaration', 'ArrowFunction', 'IfStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement', 'WhileStatement', 'WithStatement', 'SwitchStatement', 'TryStatement', 'ModuleDeclaration', 'InterfaceDeclaration', 'EnumDeclaration'].includes(node.kind)) { return false; }
+            }
+            at = parent;
+        }
+        return false;
+    }
+    wordChar(at: number): boolean { const code = this.rules.scanner.text.charCodeAt(at); return code === 95 || code === 36 || (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122); }
+    keyword(word: string, start: number): boolean {
+        let at = this.facts.innermost(start); if(at < 0) { return false; } if(word === 'else' || word === 'do') { return true; }
+        const node = this.rules.parser.node(at); const parent = this.rules.parents[at] ?? -1;
+        if(['StringLiteral', 'PrivateIdentifier'].includes(node.kind) || (node.kind === 'Identifier' && parent >= 0 && this.rules.parser.node(parent).kind === 'PropertyAccessExpression')) { return false; }
+        let ancestor = at;
+        while(ancestor >= 0) { const kind = this.rules.parser.node(ancestor).kind; if(kind === 'VariableDeclaration') { return this.facts.bindings.shape.initializer(ancestor) < 0; } if(kind === 'VariableStatement') { break; } ancestor = this.rules.parents[ancestor] ?? -1; }
+        while(at >= 0) {
+            const n = this.rules.parser.node(at);
+            if(n.end === start + word.length) {
+                if(['ReturnStatement', 'YieldExpression', 'BreakStatement', 'ContinueStatement', 'DebuggerStatement', 'ImportDeclaration', 'ExportDeclaration'].includes(n.kind)) { return true; }
+                if(n.kind === 'LabeledStatement') { const body = n.children[n.children.length - 1] ?? -1; if(['BreakStatement', 'ContinueStatement'].includes(this.rules.parser.node(body).kind)) { return true; } }
+            }
+            at = this.rules.parents[at] ?? -1;
+        }
+        return false;
+    }
+    preceding(at: number): boolean {
+        const text = this.rules.scanner.text; let index = this.rules.start(this.rules.parser.node(at)) - 1;
+        while(index >= 0 && [' ', '\t', '\r', '\n', '\v', '\f'].includes(text.slice(index, index + 1))) { index--; }
+        if(index < 0) { return false; } const char = text.slice(index, index + 1);
+        if([';', '{', ':'].includes(char)) { return false; }
+        if(char === '>') { return !(index > 0 && text.slice(index - 1, index) === '='); }
+        if(char === '+' || char === '-') { return !(index > 0 && text.slice(index - 1, index) === char); }
+        if(char === ')') { return !this.header(index); }
+        if(char === '}') { return this.brace(index); }
+        if(char === '"' || char === "'") { return !this.moduleString(index); }
+        if(this.wordChar(index)) { let start = index; while(start > 0 && this.wordChar(start - 1)) { start--; } return !this.keyword(text.slice(start, index + 1), start); }
+        return true;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i); if(!['CallExpression', 'NewExpression'].includes(node.kind)) { continue; }
+            const callee = node.children[0] ?? -1; const c = this.rules.parser.node(callee);
+            if(c.kind !== 'Identifier' || c.text !== 'Object' || node.list > 0 || !this.facts.references.constructorGlobal(callee)) { continue; }
+            let replacement = '{}'; let id = 'useLiteral'; let text = 'Replace with an object literal.';
+            if(this.parens(i)) { replacement = '({})'; if(this.preceding(i)) { replacement = ';({})'; id = 'useLiteralAfterSemicolon'; text = 'Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.'; } }
+            const finding = this.facts.finding(i, 'no-object-constructor', 'preferLiteral', message); const repairs: Repair[] = []; repairs.push(new Repair(finding.start, finding.end, replacement)); finding.suggestions.push(new Suggestion(id, text, repairs)); this.rules.findings.push(finding);
+        }
+    }
+}

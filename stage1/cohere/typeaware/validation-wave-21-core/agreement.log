@@ -1,0 +1,26 @@
+=== RUN   TestWave21CoreRules
+    wave_21_core_fixtures_test.go:102: no_obj_calls: 11 extracted upstream fixture rows
+    wave_21_core_fixtures_test.go:102: no_obj_calls_corpus: 163 extracted upstream fixture rows
+    wave_21_core_fixtures_test.go:102: no_object_constructor: 59 extracted upstream fixture rows
+    wave_21_core_fixtures_test.go:102: no_promise_executor_return: 183 extracted upstream fixture rows
+    wave_21_core_test.go:52: controls: 114046 identical finding/fix/suggestion bytes; findings 242
+    wave_21_core_test.go:53: allow-void: 33063 identical finding/fix/suggestion bytes; findings 48
+    wave_21_core_test.go:56: controls-asan: 114046 identical finding/fix/suggestion bytes; findings 242
+    wave_21_core_test.go:57: allow-void-asan: 33063 identical finding/fix/suggestion bytes; findings 48
+    wave_21_core_test.go:94: obj-calls judgment/edit mutant: exit 0; byte comparison catches byte 398
+    wave_21_core_test.go:94: object-constructor judgment/edit mutant: exit 0; byte comparison catches byte 44075
+    wave_21_core_test.go:94: promise-return judgment/edit mutant: exit 0; byte comparison catches byte 74316
+    wave_21_core_test.go:107: reference-node: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_core_test.go:116: shared parser gap 0: Go findings 1; native exit status 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 5 in /workspace/wave21-core-final/no_object_constructor-016.tsx
+    wave_21_core_test.go:116: shared parser gap 1: Go findings 1; native exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 7 in /workspace/wave21-core-final/no_object_constructor-017.tsx
+    wave_21_core_test.go:116: shared parser gap 2: Go findings 1; native exit status 70: adamic: panic: parser slice expected semicolon at 37 in /workspace/wave21-core-final/no_object_constructor-046.a
+    wave_21_core_test.go:123: reference suffix mutant compiles; malformed-question assertion catches it
+    wave_21_core_test.go:126: compiler: 5087 identical finding bytes; findings 0
+    wave_21_core_test.go:127: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_core_test.go:133: compiler quiet timing native 2.934743s Go 0.353567s
+    wave_21_core_test.go:126: repository: 18485 identical finding bytes; findings 0
+    wave_21_core_test.go:127: repository-asan: 18485 identical finding bytes; findings 0
+    wave_21_core_test.go:133: repository quiet timing native 0.336652s Go 0.109850s
+--- PASS: TestWave21CoreRules (81.53s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	81.533s

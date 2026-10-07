@@ -1,0 +1,12 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { ReferenceNodes } from './reference_node.a';
+import { Diagnostic } from './diagnostic.ts';
+export class CoreConstructors {
+    readonly rules: Rules; readonly bindings: Bindings; readonly references: ReferenceNodes;
+    constructor(rules: Rules) { this.rules = rules; this.bindings = new Bindings(rules); this.references = new ReferenceNodes(rules); }
+    args(at: number): number[] { const node = this.rules.parser.node(at); return node.list <= 0 ? [] : node.children.slice(node.children.length - node.list); }
+    body(at: number): number { const node = this.rules.parser.node(at); return node.kind === 'ArrowFunction' ? node.children[node.children.length - 1] ?? -1 : node.children.find((c) => this.rules.parser.node(c).kind === 'Block') ?? -1; }
+    finding(at: number, rule: string, id: string, message: string): Diagnostic { const node = this.rules.parser.node(at); return new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''); }
+    innermost(at: number): number { let result = -1; let length = this.rules.scanner.text.length + 1; for(let i = 0; i < this.rules.parser.nodes.length; i++) { const n = this.rules.parser.node(i); if(n.pos <= at && at < n.end && n.end - n.pos < length) { result = i; length = n.end - n.pos; } } return result; }
+}

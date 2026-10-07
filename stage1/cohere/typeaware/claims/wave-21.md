@@ -88,3 +88,11 @@ combined descending volume, with lexical ties, are reserved here:
 
 None is ported on either base branch or named in any fetched origin claim.
 This claim update is pushed before implementation.
+
+Fourth batch implementation and validation: all three native rule classes are
+ported with complete finding/fix/suggestion agreement on supported controls and
+both frozen corpora, per-rule mutants and released/sanitizer checks. The object-
+constructor rule remains blocked on two JSX inputs and one keyword-label input
+in the shared parser; its rule and suggestion logic are complete. See
+../WAVE_21_CORE_REPORT.md and ../validation-wave-21-core/ for exact refusals.
+These reservations are retained, not released. No subsequent batch was claimed.
