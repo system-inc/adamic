@@ -1,0 +1,20 @@
+91/100 valid upstream and independent source controls, with no admitted input omitted
+batch-0 4209 identical bytes 7 findings, normal and ASan/UBSan
+batch-1 951 identical bytes 1 findings, normal and ASan/UBSan
+batch-2 3038 identical bytes 4 findings, normal and ASan/UBSan
+batch-3 4757 identical bytes 6 findings, normal and ASan/UBSan
+batch-4 4038 identical bytes 5 findings, normal and ASan/UBSan
+batch-5 1881 identical bytes 2 findings, normal and ASan/UBSan
+batch-6 5476 identical bytes 7 findings, normal and ASan/UBSan
+batch-7 3319 identical bytes 4 findings, normal and ASan/UBSan
+batch-8 1881 identical bytes 2 findings, normal and ASan/UBSan
+batch-9 3620 identical bytes 5 findings, normal and ASan/UBSan
+batch-10 2074 identical bytes 3 findings, normal and ASan/UBSan
+batch-11 1611 identical bytes 2 findings, normal and ASan/UBSan
+effect-setter semantic mutant exits 0, independent Go bytes catch it
+render-unconditional semantic mutant exits 0, independent Go bytes catch it
+static-creator semantic mutant exits 0, independent Go bytes catch it
+adjacency-alias semantic mutant exits 0, independent Go bytes catch it
+compiler 5318 identical prepared-input bytes; native source lowering remains untested
+repository 18485 identical prepared-input bytes; native source lowering remains untested
+PARTIAL CORE PASS: 48 findings 36855 bytes; prepared HIR only, source adapter absent

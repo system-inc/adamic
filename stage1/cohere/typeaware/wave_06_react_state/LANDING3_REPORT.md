@@ -1,7 +1,7 @@
 Built: landing refresh of all twelve complete wave 06 rules and the three partial React prepared-HIR validators on origin/main f8013f0b. No new claims or shared implementation edits.
 Commit: the rebased implementation parent is 733c380c06486f74de94e0f5607e64d25d606f0; this evidence commit is pushed only to codex/typeaware-wave-06.
 Checks: original, Nexus, constructors, callbacks, React cores/backends/refusals, bridge, vet and filtered uncached Node oracle all pass after rebasing.
-Mutants: all twelve complete rule mutants, three raw-question mutants, stale-handle guards, four React core mutants, three reporting mutants, three refusal mutants, seven bridge mutants and Node one-byte mutant caught.
+Mutants: all twelve complete rule mutants, four raw-question mutants, stale-handle guards, four React core mutants, three reporting mutants, three refusal mutants, seven bridge mutants and Node one-byte mutant caught.
 Not covered: native React source lowering and numeric parser/driver integration remain blocked. No full root gate or new claims.
 
 Main advanced from e8ba3d5d to f8013f0baac41ddc340d76f83bddde38536a8f07. The branch rebased cleanly and every owned suite was rebuilt and rerun. A final remote read confirms main remains that SHA and the own remote before replacement is 66cc4d5bfbd6179ef0375166526a6929daa74109. User-authorized rebasing requires replacing the own branch with an exact force-with-lease against that SHA; main and area branches are never pushed.

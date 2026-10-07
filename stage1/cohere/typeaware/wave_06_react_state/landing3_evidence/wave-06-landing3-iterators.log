@@ -1,0 +1,31 @@
+=== RUN   TestLibraryMapSetIteratorCopiesRefused
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_keys_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_keys_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_values_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_values_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_entries_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_entries_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_keys_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_keys_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_values_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_values_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_entries_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_entries_assign
+--- PASS: TestLibraryMapSetIteratorCopiesRefused (2.21s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_keys_spread (0.23s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_keys_assign (0.19s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_values_spread (0.18s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_values_assign (0.20s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_entries_spread (0.18s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_entries_assign (0.18s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_keys_spread (0.18s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_keys_assign (0.18s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_values_spread (0.19s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_values_assign (0.18s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_entries_spread (0.17s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_entries_assign (0.16s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.218s

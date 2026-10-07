@@ -1,0 +1,13 @@
+controls 23338 identical bytes findings 51
+controls-asan 23338 identical bytes findings 51
+no_new_func semantic mutant exits 0, Go byte comparison catches it
+no_new_native_nonconstructor semantic mutant exits 0, Go byte comparison catches it
+no_new_wrappers semantic mutant exits 0, Go byte comparison catches it
+fact mutant exits 0, Go finding bytes catch the wrong declaration-file flag; released handle panic 70 verified
+compiler 5318 identical bytes findings 0
+compiler-asan 5318 identical bytes findings 0
+compiler-timed 5318 identical bytes findings 0
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+repository-timed 18485 identical bytes findings 0
+PASS
