@@ -121,3 +121,58 @@ library_object_order.a in 0.657s, log /tmp/stage3-landing-oracle.log. Commands
 used -count=1 and redirected test output to files. Ordinary fixtures still use
 the unmodified oracle/node.mjs; the temporary transform runner follows the
 mode used by codex/flag-enums and codex/namespaces-tsc.
+
+
+## Two-line meter follow-up
+
+Branched from origin/area/stage3 ce83c6a56b1b820a0fa77e440d98ccfacfcd192c.
+Only stage3/meter changed. Every invocation fetches main and area, snapshots
+their respective apply scripts and adaptations, and measures both trees with
+one ordinary census binary. The compiler and both tree commits are recorded.
+Existing JSON fields remain the area observation; trees.main and trees.area
+contain both complete observations with the new checker measures.
+
+Completed fresh run: runs/20261007T053859Z.fVzNrN/report.md and report.json.
+Main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06: whole program 0/78,
+own file 22/78. Area 2a622d263fc4f1e8cad2f8498367c98f1e2f3712:
+whole program 1/79, own file 25/79. Area includes hostErrors.ts, absent from
+main. Whole program uses the existing loaded-program checker gate. Own file
+attributes primary diagnostic locations across all census observations,
+deduplicates repeats, and counts global/external findings separately.
+
+Commands and observed results, with outputs retained in that run directory:
+
+```sh
+bash cloud/setup.sh > /tmp/meter-two-lines-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+bash stage3/meter/twice-daily.sh > /tmp/meter-two-lines-run.log 2>&1
+CENSUS_BINARY=/tmp/adamic-gate/stage3-meter.CjYpiQ/census python3 -m unittest discover -s stage3/meter -p '*_test.py' > /tmp/meter-two-lines-tests.log 2>&1
+go vet ./stage3/census/tool > /tmp/meter-two-lines-vet.log 2>&1
+bash -n stage3/meter/twice-daily.sh
+git diff --check
+```
+
+Setup: Go/clang/Node ready at 0s; submodules ready at 20s; cache warm and
+complete at 274s. nproc 5; cgroup quota 400000/100000; 17.6 GB.
+Both apply/census phases completed and the paired JSON/table were emitted.
+Eleven tests pass, no skips, including the real checker probe. Vet, shell
+syntax and diff whitespace checks pass. See setup.log, tests.log and vet.log.
+
+The real probe changes an imported dependency's number initializer to a string.
+Before: both files pass both measures. After: neither loaded program passes,
+but only dependency.a changes its own-file result, leaving main.a passing.
+
+Scratch report.py mutants were run independently without editing live code:
+
+| Mutant | Check that caught it |
+| --- | --- |
+| Own-file result copied from root's whole-program result | test_planted_diagnostic_changes_only_its_own_file and test_type_error_in_dependency_changes_only_dependency_own_file fail their attribution assertions |
+| Area census reused for main | test_pair_preserves_area_fields_and_prints_four_numbers_first fails the four-number comparison |
+| Malformed diagnostic format silently ignored | test_malformed_diagnostic_is_rejected fails because no ValueError is raised |
+
+Every mutant returned nonzero solely from the expected assertion, without a
+setup error. Complete assertion traces are in mutants.log. Raw census JSONL
+is retained locally compressed in main/area, excluded from Git as before.
+No compiler, runner, bucket fixture or adaptation was edited. The complete
+integration gate, native compiler execution and cron installation were not
+part of this meter-only change.
