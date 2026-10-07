@@ -231,3 +231,13 @@ registry and merged harness checks. Exact commands, outputs and costs are
 in ../wave_26_react_attributes/LANDING_AREA_REPORT.md. A final explicit
 all-head fetch with pruning found 433 current origin refs and zero
 unclaimed ranked rules. No further rules were claimed.
+
+## Current-main area landing re-green, October 7
+
+Rebased onto area b84a9d93 containing current main c7991b90. All twenty-one
+ports were re-greened after main advanced during the earlier run. Twenty-five
+current-base gate commands passed, including new lowering/record/oracle checks,
+with zero selected test skips. See ../wave_26_react_attributes/LANDING_CURRENT_REPORT.md
+for commands, outputs, every mutant, the earlier disk retry and native/Go costs.
+The final pruned audit scanned 463 current origin refs and found no unclaimed
+ranked rules. No additional claim was made.
