@@ -1,0 +1,1 @@
+declare const Ctx:any; declare function useMemo<T>(f:()=>T,deps:unknown[]):T; let cache:any; function make(){const value=cache || {}; cache=value; return value;} function Component(){const theme=make(); const value=useMemo(()=>({theme}),[theme]); return <Ctx.Provider value={value}/>;} export{};

@@ -123,16 +123,26 @@ capture passes; their analyses are AST and checker queries. Shared JSX frontend
 integration is still needed for native execution. No conflicting claim was found.
 This claim update is pushed before implementation or declaration work.
 
-Status of the sixth continuation: named ast.Kind rule.json declarations,
-independent Go registration/finding controls and metadata mutants are pushed.
-The branch now includes the integrated shared JSX frontend from
-origin/area/stage1-lint at 7481e032. All three existing native JSX capability
-inputs parse successfully with exit 0 and empty stderr. The previous parser
-blocker is resolved. react/jsx-no-undef now has a native supplied-node implementation, default and
-allowGlobals controls, production-Go byte comparisons on both frozen corpora,
-sanitizer checks, a compiled oracle-only mutant and released-handle rejection.
-react/jsx-fragments and react/jsx-no-constructed-context-values decision ports
-remain outstanding; those two reservations are not completed ports.
-These three AST/checker rules do not require the HIR/SSA passes parked above.
-Native findings/fixes/suggestions parity is claimed only for jsx-no-undef
-in the sixth continuation; no parity is claimed for the other two.
+Status of the sixth continuation: jsx-no-undef and jsx-fragments are native
+supplied-node ports, checked against production Go on their default and option
+controls and both frozen corpora, with sanitizer, compiled mutant and released-
+handle checks. Their rule.json kinds use ast.Kind names and node: true.
+
+react/jsx-no-constructed-context-values is parked on native capture and escape
+analysis for its memo-stability companion, including resolved-callee identity
+flow and closure capture. The companion is
+cohere/internal/lint/rules/react/jsx_no_constructed_context_values_stability.go;
+its functionEvaluation, anyEscapes and staysHome logic distinguishes a new value
+from a cached escaping value. This dependency was missed when the initial
+selection characterized all three rules as AST/checker-only. Native capture
+analysis is being ported on #dnv6f2c. Independent Go fresh-versus-cached controls,
+listener declarations and prior capability probes are retained. No native
+context-rule findings/fixes/suggestions parity is claimed. Under the explicit
+React parking instruction, this counts as finished for the landing-first cap
+and remains reserved.
+
+The shared JSX frontend is included through origin/area/stage1-lint at d65a8f93;
+the previous parser blocker is resolved. All three original capability inputs
+parse successfully with exit 0 and empty stderr. No further rules are claimed:
+a fresh scan of 609 origin refs and 33 distinct Markdown claim blobs covers all
+197 ranked entries through claims or production-port exclusions.

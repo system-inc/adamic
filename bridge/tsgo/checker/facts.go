@@ -695,7 +695,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		}
 		g.write(out)
 	default:
-		return p.inspectCallbackSymbolFacts(out, c, node, question)
+		return p.inspectJsxDeclarationSyntax(out, c, node, question)
 	}
 	return out.String(), nil
 }

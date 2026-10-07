@@ -1,0 +1,33 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../typescript/parser/nodes.ts';
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from './unary_minus.ts';
+import { Rules } from './rules.ts';
+import { JsxFragments, jsxFragmentsKinds } from './jsx_fragments.a';
+const args = programArguments();
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(args[0] ?? panic('missing config'), paths);
+let count = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const parser = new Parser(source.text, path);
+    parser.file();
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const rules = new Rules(program, path, parser, scanner, offsets, new UnaryMinus(program, path, parser, scanner, offsets));
+    const rule = new JsxFragments(rules, args.includes('--element'));
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.node(index);
+        if(jsxFragmentsKinds.includes(node.kind)) { rule.visit(node, index); }
+    }
+    rules.findings.sort((left, right) => left.written() < right.written() ? -1 : left.written() > right.written() ? 1 : 0);
+    count += rules.findings.length;
+    console.log(`file\t${written(path)}`);
+    for(const finding of rules.findings) { console.log(finding.written()); }
+}
+console.log(`findings ${count}`);
+tsgoRelease(program);

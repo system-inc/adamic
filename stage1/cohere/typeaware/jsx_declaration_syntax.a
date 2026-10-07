@@ -1,0 +1,37 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { Parser } from '../../typescript/parser/parser.ts';
+
+export class JsxDeclarationSyntax {
+    readonly kind: string;
+    readonly parent: string;
+    readonly grand: string;
+    readonly imported: string;
+    readonly module: string;
+    readonly initializer: string;
+    constructor(frames: Frames) {
+        this.kind = frames.field(); this.parent = frames.field(); this.grand = frames.field();
+        this.imported = frames.field(); this.module = frames.field(); this.initializer = frames.field();
+    }
+}
+export function jsxDeclarationSyntax(rules: Rules, index: number): JsxDeclarationSyntax[] {
+    const frames = new Frames(rules.ask(index, 'jsx-declaration-syntax'));
+    header(frames, 'jsx-declaration-syntax');
+    const count = frames.natural();
+    const result: JsxDeclarationSyntax[] = [];
+    for(let at = 0; at < count; at++) { result.push(new JsxDeclarationSyntax(frames)); }
+    frames.end();
+    return result;
+}
+export class JsxInitializerSyntax {
+    readonly parser: Parser;
+    readonly index: number;
+    constructor(raw: string) {
+        this.parser = new Parser(`const adamicJsxInitializer = ${raw};`, 'initializer.a');
+        const root = this.parser.file();
+        const statement = this.parser.node(this.parser.node(root).children[0] ?? -1);
+        const list = this.parser.node(statement.children[0] ?? -1);
+        const declaration = this.parser.node(list.children[0] ?? -1);
+        this.index = declaration.children[declaration.children.length - 1] ?? -1;
+    }
+}
