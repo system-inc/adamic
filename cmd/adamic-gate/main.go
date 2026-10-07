@@ -705,7 +705,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if packageJobs < 1 {
 		return errors.New("jobs must be positive")
 	}
-	context = digestJSON([]any{context, packageJobs})
+	context = schedulingIdentity(context, packageJobs)
 	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
 	if _, err := os.Stat(out); err == nil {
 		if !resume {

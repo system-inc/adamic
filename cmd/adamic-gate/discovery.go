@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -34,10 +35,21 @@ func registeredFixtures(file, variable string) ([]string, error) {
 	if err := saveJSON(overlay, map[string]any{"Replace": map[string]string{original: replacement}}); err != nil {
 		return nil, err
 	}
-	listing, err := output("go", "test", "-overlay="+overlay, "-count=1", "-json", "-run", "^TestAdamicGateRegisteredFixtures$", "./"+filepath.ToSlash(filepath.Dir(file)))
+	logPath := filepath.Join(root, "discovery.jsonl")
+	log, err := os.Create(logPath)
 	if err != nil {
 		return nil, err
 	}
+	cmd := exec.Command("go", "test", "-overlay="+overlay, "-count=1", "-json", "-run", "^TestAdamicGateRegisteredFixtures$", "./"+filepath.ToSlash(filepath.Dir(file)))
+	cmd.Stdout, cmd.Stderr = log, log
+	commandErr := cmd.Run()
+	closeErr := log.Close()
+	bytes, readErr := os.ReadFile(logPath)
+	if commandErr != nil || closeErr != nil || readErr != nil {
+		return nil, fmt.Errorf("fixture discovery failed: %v %v %v\n%s", commandErr, closeErr, readErr, bytes)
+	}
+	listing := string(bytes)
+
 	var names []string
 	seen := map[string]bool{}
 	passed := false

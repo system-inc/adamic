@@ -58,7 +58,7 @@ func predictions(p plan, weights map[string]float64) []prediction {
 		}
 		if strings.Contains(u.Test, "/") {
 			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
-			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+			invocation := fmt.Sprintf("%d::%s", u.Shard, parent)
 			if !seen[invocation] && known[parent] {
 				residual := weights[parent] - childSeconds[parent]
 				if residual > 0 {
@@ -67,6 +67,17 @@ func predictions(p plan, weights map[string]float64) []prediction {
 				}
 			}
 			seen[invocation] = true
+		}
+	}
+	for _, c := range p.Complements {
+		parent := c.Package + "::" + c.Parent
+		invocation := fmt.Sprintf("%d::%s", c.Shard, parent)
+		if !seen[invocation] && known[parent] {
+			residual := weights[parent] - childSeconds[parent]
+			if residual > 0 {
+				result[c.Shard].ParentSeconds += residual
+				result[c.Shard].Seconds += residual
+			}
 		}
 	}
 	return result

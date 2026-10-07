@@ -69,6 +69,9 @@ func init() {for _,name:=range []string{"left/b", "right/a", "new/fixture"} {fix
 }
 
 func TestComplementRequiredAndDuplicatesRefused(t *testing.T) {
+	if schedulingIdentity("context", 1) == schedulingIdentity("context", 4) {
+		t.Fatal("package concurrency omitted from resume identity")
+	}
 	p := plan{Count: 2, Units: []unit{{Package: "probe", Test: "TestParent/known", Shard: 0}}}
 	p.Complements = complements(p)
 	r := result{Package: "probe", Test: "TestParent/new", Action: "pass"}
@@ -91,5 +94,23 @@ func TestComplementRequiredAndDuplicatesRefused(t *testing.T) {
 	data, _ := json.Marshal(selections(p, 1, "probe"))
 	if !strings.Contains(string(data), "Skip") {
 		t.Fatal("complement not in plan commands")
+	}
+}
+
+func TestComplementCheckpointRequiresParentTerminal(t *testing.T) {
+	dir := t.TempDir()
+	p := plan{Count: 2, Units: []unit{{Package: "probe", Test: "TestParent/known", Shard: 0}}}
+	p.Complements = complements(p)
+	log := `{"Action":"run","Package":"probe","Test":"TestParent/new"}
+{"Action":"pass","Package":"probe","Test":"TestParent/new"}
+{"Action":"pass","Package":"probe"}
+`
+	if err := os.WriteFile(filepath.Join(dir, "test.jsonl"), []byte(log), 0600); err != nil {
+		t.Fatal(err)
+	}
+	e := packageEvidence{Package: "probe", Invocations: []invocation{{Package: "probe", Args: selectionArgs("probe", selections(p, 1, "probe")[0]), Uncached: true}}}
+	err := completePackage(dir, e, p, 1, "probe")
+	if err == nil || !strings.Contains(err.Error(), "complement parent has no terminal event") {
+		t.Fatal("complement without parent terminal accepted", err)
 	}
 }
