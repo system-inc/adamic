@@ -43,3 +43,18 @@ The newly added comment helper report is a separate handoff, not the original
 New implementations and their messages are .a files. The inherited default
 registration/harness blockers remain. Validation will use a documented scratch
 compatibility overlay; no shared-file changes are authorized or committed.
+
+## Third batch
+
+Fetched all 320 origin refs after pushing the previous work on 2026-10-07.
+All 46 helper-ready rules are represented in origin claim Markdown. The next
+three rules in the inventory syntax-ready wave, absent from main production
+registrations and from claim Markdown on all fetched origin branches, are:
+
+- @typescript-eslint/no-unnecessary-type-constraint
+- @typescript-eslint/prefer-as-const
+- @typescript-eslint/prefer-enum-initializers
+
+Claim audit JSON files enumerate rejected candidates and are not interpreted as
+claims. Rule-name mentions in actual claim Markdown, including reserved/skipped
+dispositions, were conservatively excluded. This claim is pushed before code.
