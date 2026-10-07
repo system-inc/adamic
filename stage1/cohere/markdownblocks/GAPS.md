@@ -6,6 +6,153 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native tokenizer event primitives and full mdast construction
+
+`tokenArena.ts` and `tokenizerEvents.ts` port token identity, copied points,
+consume/previous/expected-code state, enter/exit events, reused token fields,
+column skips, checkpoints/rollback, token chunk slicing and serialization.
+Numeric token/context/construct IDs keep the graph acyclic. Actual Go private
+createTokenizer and the pinned fork's unchanged private factory run a small
+controlled construct program independently. It exercises successful checks that
+roll back, line skips and reused field objects on every special code. The native
+probe drives those same effects explicitly; it does not implement the construct
+factory or Markdown grammar. The fork's private consumed/stack cells are not
+public: the adapter infers their terminal true/empty values from its completed
+state program; Go reads them directly. Public events, points, source slices,
+previous and currentConstruct come from both actual engines.
+
+All 79,873 cases agree: the 4,943 accumulated documents, all 65,536 UTF-16 units
+including lone surrogates, special-code sequences through length five, empty and
+column/BOM/NUL/CRLF/tab edges. Native serialization follows Go's UTF-16 decoding,
+replacing unmatched surrogates. Original source strings retain them internally,
+but direct UTF-8 stdout replaces them too. This is byte parity of the exposed
+observations, not proof that the two engines store lone surrogates identically.
+Zero-span code-chunk SliceStream is an invalid Go operation; the controlled
+program does not call it. Streaming writes, construct attempts/interrupt views,
+resolver ordering and subtokenization are still unported.
+
+`mdastCompile.ts`, `mdastNode.ts` and `mdastArena.ts` construct the complete non-MDX
+Go mdast from resolved events: list-item insertion and spread inference, all core
+enter/exit handlers, buffers/text merging, references and escapes, autolinks,
+footnotes, strikethrough, tables/task lists, math, wiki links and liquid.
+`parseFrontMatter.ts` recognizes, blanks and inserts front matter, preserving
+all UTF-16 lengths, explicit languages, delimiters and raw values. Embedding is
+absent from this parsing/construction layer; raw contents stay raw.
+
+The Go adapter transports actual PRE-COMPILATION resolved tokens, event ordering,
+all context chunk streams, flags and private chunk indices. It does not supply
+constructed nodes, listItem events, inferred list spreads or token text slices.
+Native computes slices and the tree. Its 5,008-document gate includes all 876
+physical files, all accumulated generated documents, extension cases and 54
+additional front-matter contexts. Expected trees come from actual Go ParseMarkdown
+and the pinned fork's actual full source parser. Independently, the unchanged Go
+and fork event compilers reconstruct trees from the same event transport. Both
+routes agree with native/source/backend, sanitizers and leaks.
+
+The canonical protocol compares every Go construction field, null/absent flags,
+child order and coordinates. Go byte offsets are converted to UTF-16 for the
+comparison. Original HAST data, originalLabelText and open JavaScript object
+properties that Go omits are outside this typed Go projection. In particular the
+fork's frontMatter.start coordinate object is not Go's list-start integer, and
+its raw value belongs in the Go FrontMatter record, not Go's literal Value field.
+No Markdown grammar decisions are native yet: actual Go supplies resolved lexical
+events. The new full node arena has not replaced the existing layout transport or
+been composed with the earlier standalone preprocessing/path arena. This is a
+native constructor and event primitive slice, not a complete native source parser
+or Markdown formatter.
+
+Seven new zero-exit output mutants are caught: event rollback, virtual-space
+serialization, restored construct, text construction, list spread, YAML closing
+fallback and the generated identifier case table. Three additional expected-exit70
+message mutants are caught solely by stderr. Full coverage and exact observations
+are in REPORT.txt. Malformed event messages below are held to Go; fatal panics are
+not Go's recoverable error values or the fork's catchable exceptions. Leak checks
+apply to successful construction, not fatal-panic probes.
+
+### Identifier normalization witnesses
+
+Go normalizes identifiers with simple lower/upper/lower Unicode mappings. The
+fork uses JavaScript full casing and context-sensitive final sigma. The native
+`identifier.ts` uses generated Go Unicode17.0.0 tables. All 1,112,064 Unicode
+scalars agree with actual cohere NormalizeIdentifier followed by Go ToLower on
+native/source/backend, with sanitizers/leaks and a case-table mutant. No mapping
+is accepted solely because its generator produced it. The generator is
+`testdata/identifier_go.go --generate`, built through the test's Go overlay.
+
+`gaps/identifier_case.jsonl` contains three full Markdown proving programs:
+sharp-s, dotted-I and Greek final sigma. The complete canonical Go outputs are
+[identifier_case_go.txt](gaps/identifier_case_go.txt), and the complete pinned
+fork outputs are [identifier_case_fork.txt](gaps/identifier_case_fork.txt).
+The test asserts both complete files and holds native construction to Go on all
+three, with source/backend/sanitizers/leaks. Identifier values differ as follows:
+
+| Label | Go identifier | Fork identifier |
+| --- | --- | --- |
+| straße | straße | strasse |
+| İ | i (U+0069) | i + U+0307 |
+| ΟΣ | οσ (U+03BF U+03C3) | ος (U+03BF U+03C2) |
+
+These witnesses use identical definition/reference labels, so both grammars
+resolve their references; the identifier fields still differ. They do not claim
+that different labels which fold together in only one implementation produce the
+same lexical events or tree.
+
+### Malformed-event diagnostic witnesses
+
+`gaps/event_unclosed.txt`, `event_not-open.txt` and `event_mismatch.txt` are minimal
+native event proving programs. Go's actual compiler is invoked by
+`testdata/mdast_go.go --error <name>` through its overlay bridge. The fork's actual
+compiler is invoked by `testdata/mdast_library.mjs <bundles> --error <name>`.
+Each complete Go/fork output pair is retained and asserted:
+
+Unclosed, Go:
+```text
+Cannot close document, a token (`paragraph`) is still open
+```
+Unclosed, fork:
+```text
+Cannot close document, a token (`paragraph`, 1:1-1:1) is still open
+```
+Not open, Go:
+```text
+Cannot close `paragraph`: it’s not open
+```
+Not open, fork:
+```text
+Cannot close `paragraph` (1:1-1:1): it’s not open
+```
+Mismatch, Go:
+```text
+Cannot close `strong`: a different token (`paragraph`) is open
+```
+Mismatch, fork:
+```text
+Cannot close `strong` (1:1-1:1): a different token (`paragraph`, 1:1-1:1) is open
+```
+
+Native/source/backend emit `adamic: panic: ` followed by the complete Go text,
+with empty stdout and exit70. The test normalizes Go's recovered panic and the
+fork's thrown Error to message values before comparing. It does not claim that
+all three original process-level exception behaviors are equal. Three native
+message mutants retain exit70/empty stdout and are caught only by stderr bytes.
+
+### Additional literal-port compiler gaps
+
+- `gaps/15_string_or.ts`: Node prints `fallback` and `x`; string `||` is NotYet,
+  `a BinaryExpression with a string and a string`. Production uses explicit
+  comparisons/conditionals for truthy-string defaults.
+- `gaps/16_array_shift.ts`: Node prints `1` and `2`; lowering is NotYet,
+  `.shift on a value`. Production task-list removal uses discarded splice(0,1).
+- `gaps/17_long_optional_chain.ts`: Node prints `1`; lowering is NotYet,
+  `an optional chain longer than one step`. Production checks the chunk then
+  reads its text length. All three exact diagnostics and Node outputs are held.
+
+The context source registry is readonly: a mutable array of chunk-owning source
+objects is refused as potentially cyclic, even after using a nominal wrapper.
+The readonly registry compiles and leaks nothing. This is the existing structural
+array representation issue, not a compiler change. Classes are split into their
+own files and all production code passes cohere's full 276-rule checker.
+
 ## Native Markdown printer AstPath
 
 `astPath.ts` ports the alternating node/property/array/index path stack, using

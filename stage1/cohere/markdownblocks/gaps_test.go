@@ -26,6 +26,9 @@ func TestParserRepresentationProbes(t *testing.T) {
 		{path: "gaps/10_multiple_push.ts", stdout: "1,2\n", notYet: "push with other than one value"},
 		{path: "gaps/11_function_expression.ts", stdout: "value\n", notYet: "a function expression (an arrow function captures this as written)"},
 		{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n", notYet: "an array of never"},
+		{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n", notYet: "a BinaryExpression with a string and a string"},
+		{path: "gaps/16_array_shift.ts", stdout: "1\n2\n", notYet: ".shift on a value"},
+		{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
 			t.Parallel()
