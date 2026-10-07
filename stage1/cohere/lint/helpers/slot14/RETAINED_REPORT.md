@@ -1,5 +1,9 @@
 # Slot 14 retained helpers and landing
 
+Current landing status: see AREA_LANDING_REPORT.md. The earlier main-only
+parking claims below are historical and are superseded by the area rebase.
+
+
 Two executable .a helpers are delivered, each in its own file:
 regexp.decodeFixedHex and regexp.decodeUnicodeEscape. Claims were pushed before
 code; the latter reuses the former. The earlier Tailwind races remain withdrawn

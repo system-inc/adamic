@@ -9,14 +9,14 @@
 === RUN   TestNoRestrictedExportsIgnoresExportEquals
 === PAUSE TestNoRestrictedExportsIgnoresExportEquals
 === CONT  TestNoRestrictedExportsMatchesUpstream
-=== CONT  TestNoRestrictedExportsNamedRestrictionWinsOverTheDefaultFlags
 === CONT  TestNoRestrictedExportsIgnoresExportEquals
---- PASS: TestNoRestrictedExportsNamedRestrictionWinsOverTheDefaultFlags (0.00s)
 === CONT  TestNoRestrictedExportsRejectsContradictoryConfiguration
-=== CONT  TestNoRestrictedExportsIsSilentWithNoConfiguration
 --- PASS: TestNoRestrictedExportsIgnoresExportEquals (0.00s)
+=== CONT  TestNoRestrictedExportsNamedRestrictionWinsOverTheDefaultFlags
+=== CONT  TestNoRestrictedExportsIsSilentWithNoConfiguration
 --- PASS: TestNoRestrictedExportsRejectsContradictoryConfiguration (0.00s)
+--- PASS: TestNoRestrictedExportsNamedRestrictionWinsOverTheDefaultFlags (0.00s)
 --- PASS: TestNoRestrictedExportsIsSilentWithNoConfiguration (0.00s)
---- PASS: TestNoRestrictedExportsMatchesUpstream (0.00s)
+--- PASS: TestNoRestrictedExportsMatchesUpstream (0.01s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.010s
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.013s
