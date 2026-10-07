@@ -196,3 +196,26 @@ claims. This report-only update does not change the previously tested source.
 Boolean-prop-naming remains partial for arbitrary runtime regular expressions,
 cross-file props annotations and typed memo/forwardRef wrappers; the latter two
 remain unfinished local implementation, not shared-harness blockers.
+
+## Rule metadata continuation, October 7
+
+The subsequent user instruction specifies rule.json kinds rather than numeric
+parser values. The fetched lint-harness-dot-a branch supplies concrete examples
+whose kinds arrays contain syntax-kind names. This resolves the declaration
+format ambiguity recorded above without requiring a numeric parser enum.
+
+Added declarations under typeaware/rules for the current three React claims:
+unsupported-syntax listens to Identifier, WithStatement and ClassDeclaration;
+use-memo listens to CallExpression; boolean-prop-naming listens to SourceFile.
+These match the corresponding upstream Go listener maps. SourceFile is the
+upstream boolean-prop-naming entry point, which analyzes component descendants.
+The declarations contain only name and kinds; they do not advertise a visit
+method or factory that these classes do not yet implement.
+
+The current runner does not consume these declarations. Existing run methods
+still scan the projection and compare string kinds, so speed compliance remains
+unfinished local work. No claim of handed-node or kind-indexed dispatch support
+is made. No shared files were changed and no new rules were claimed. Source
+implementations are unchanged; prior oracle results apply, and no native tests
+were rerun for this metadata-only change. JSON shape and upstream listener names
+were checked independently before committing.
