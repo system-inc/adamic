@@ -33,12 +33,12 @@ func TestOwnedWitnesses(t *testing.T) {
 	for _, d := range prepareRegistry(t, ".") {
 		paths := ownedWitnesses(t, directory, d.Slug)
 		for _, path := range paths {
-			selected := path + "\t" + d.Name
-			answer := execute(t, "", oracle, "--manifest", manifest(t, []string{selected}), "--count")
+			pair := recoveryRows(t, oracle, []string{path + "\t" + d.Name, path + "\tall"})
+			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
 			if string(answer.output) == "0\n" {
 				t.Fatalf("%s witness reports no findings", d.Name)
 			}
-			rows = append(rows, selected, path+"\tall")
+			rows = append(rows, pair...)
 		}
 	}
 	path := manifest(t, rows)

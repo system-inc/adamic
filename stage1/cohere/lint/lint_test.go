@@ -208,6 +208,38 @@ func manifest(t *testing.T, rows []string) string {
 	}
 	return path
 }
+
+// recoveryRows marks "recovery" each row whose file typescript-go's parse reports a diagnostic, when no other
+// mode claims it, so the oracle compares that row's findings rather than refusing it as invalid corpus or
+// fixing a file Go would not. A legacy octal escape is the case: no-octal-escape exists to report one, and
+// TypeScript's parser reports it too. Other rows are left as they were.
+func recoveryRows(t *testing.T, oracle string, rows []string) []string {
+	t.Helper()
+	if len(rows) == 0 {
+		return rows
+	}
+	answer := execute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	flags := strings.Fields(string(answer.output))
+	if len(flags) != len(rows) {
+		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := make([]string, len(rows))
+	for index, row := range rows {
+		result[index] = row
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result
+}
 func generated(t *testing.T) []string {
 	sources := []string{
 		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
@@ -395,7 +427,7 @@ func TestRulesAgree(t *testing.T) {
 			rows = append(rows, row)
 		}
 	}
-	compare(t, oracle, binary, directory, manifest(t, rows))
+	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
 }
 
 // Not parallel: the large sanitized corpus runs before timing samples.
@@ -671,9 +703,11 @@ func TestMutants(t *testing.T) {
 		}
 		t.Run(change.Name, func(t *testing.T) {
 			rows := generated(t)
+			var witnesses []string
 			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
-				rows = append(rows, source+"\t"+descriptor.Name)
+				witnesses = append(witnesses, source+"\t"+descriptor.Name)
 			}
+			rows = append(rows, recoveryRows(t, oracle, witnesses)...)
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {

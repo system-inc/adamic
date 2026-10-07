@@ -137,7 +137,9 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
 	return len(diagnostics)
 }
-func collect(path, source string, fields []string) []rule.Diagnostic {
+
+// parse is the file as typescript-go parses it, in the script kind its extension names.
+func parse(path, source string) *ast.SourceFile {
 	kind := core.ScriptKindTS
 	switch {
 	case strings.HasSuffix(path, ".tsx"):
@@ -147,7 +149,11 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	case strings.HasSuffix(path, ".js"):
 		kind = core.ScriptKindJS
 	}
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, kind)
+	return parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, kind)
+}
+
+func collect(path, source string, fields []string) []rule.Diagnostic {
+	file := parse(path, source)
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
@@ -300,6 +306,27 @@ func main() {
 	data, err := os.ReadFile(args[1])
 	if err != nil {
 		panic(err)
+	}
+	// --diagnostics answers, per row, whether typescript-go's parse of its file reports a diagnostic: 1 or 0.
+	// A test marks such a row "recovery", which compares findings only, rather than asking the oracle to
+	// fix a file Go would refuse (a legacy octal escape, say, which no-octal-escape exists to report).
+	if len(args) > 2 && args[2] == "--diagnostics" {
+		for _, row := range strings.Split(string(data), "\n") {
+			if row == "" {
+				continue
+			}
+			path := strings.Split(row, "\t")[0]
+			source, err := os.ReadFile(path)
+			if err != nil {
+				panic(err)
+			}
+			if len(parse(path, string(source)).Diagnostics()) != 0 {
+				fmt.Fprintln(out, 1)
+			} else {
+				fmt.Fprintln(out, 0)
+			}
+		}
+		return
 	}
 	countOnly := len(args) > 2 && args[2] == "--count"
 	count, index := 0, 0
