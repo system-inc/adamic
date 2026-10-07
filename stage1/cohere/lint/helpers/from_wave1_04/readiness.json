@@ -139,7 +139,8 @@
       "removed": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -388,7 +389,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveBreakpointWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveNamedValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.roundTripsAsJavaScriptNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.segment",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.sortedKeys",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.splitThemeKey",
@@ -545,7 +545,8 @@
       "removed": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -735,7 +736,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveBreakpointWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveNamedValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.roundTripsAsJavaScriptNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.segment",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.sortedKeys",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.splitThemeKey",
@@ -753,7 +753,8 @@
       "removed": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -962,7 +963,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.rotateEmitter",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.roundTripsAsJavaScriptNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scaleEmitter",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.segment",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.shadowFamilyEmitter",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.sortedKeys",
@@ -981,7 +981,8 @@
       "removed": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -1174,7 +1175,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveBreakpointWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveNamedValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.roundTripsAsJavaScriptNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.segment",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.sortedKeys",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.splitThemeKey",
@@ -1191,7 +1191,8 @@
   "helpers": [
     "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
-    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace"
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
   ],
-  "dependency_removals": 16
+  "dependency_removals": 20
 }

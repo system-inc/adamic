@@ -84,3 +84,8 @@ vet and six uncached input probes pass. See from_wave1_04/TRIM_REPORT.md.
    actual Go on all four consumer fixture domains plus bounded exhaustive
    grammar and Unicode controls, on source Node, emitted JavaScript and
    sanitized native. Require compiling semantic mutants. Claim pushed before code.
+
+Delivery 4: scanNumber is implemented and tested. 101,547 cases, 802,813 exact
+Go bytes and both compiling scanner mutants pass on source Node, emitted
+JavaScript and ASan/UBSan native. Complete four-helper gate PASS 35.578s with
+all nine semantic mutants, vet PASS. See from_wave1_04/SCAN_REPORT.md.

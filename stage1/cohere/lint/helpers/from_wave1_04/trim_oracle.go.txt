@@ -23,6 +23,7 @@ type Case struct {
 }
 type Corpus struct {
 	Spaces []int
+	Digits []int
 	Cases  []Case
 }
 
@@ -41,7 +42,7 @@ func written(value string) string {
 	return b.String()
 }
 func main() {
-	if os.Args[1] == "--generate" {
+	if os.Args[1] == "--generate" || os.Args[1] == "--generate-scan" {
 		data, err := os.ReadFile(os.Args[2])
 		if err != nil {
 			panic(err)
@@ -50,7 +51,7 @@ func main() {
 		if err = json.Unmarshal(data, &inputs); err != nil {
 			panic(err)
 		}
-		corpus := Corpus{Spaces: collapse.Wave104JavaScriptSpaces()}
+		corpus := Corpus{Spaces: collapse.Wave104JavaScriptSpaces(), Digits: collapse.Wave104Digits()}
 		consumers := map[string]bool{"better-tailwindcss/enforce-consistent-class-order": true, "better-tailwindcss/enforce-shorthand-classes": true, "better-tailwindcss/no-conflicting-classes": true, "better-tailwindcss/no-unknown-classes": true}
 		for _, input := range inputs {
 			if !consumers[input.Rule] {
@@ -83,10 +84,33 @@ func main() {
 			if point >= 0xd800 && point <= 0xdfff {
 				continue
 			}
-			corpus.Cases = append(corpus.Cases, Case{Value: " " + string(point) + "X"})
+			prefix := " "
+			if os.Args[1] == "--generate-scan" {
+				prefix = "1"
+			}
+			corpus.Cases = append(corpus.Cases, Case{Value: prefix + string(point) + "X"})
 		}
 		for _, value := range []string{"", " ", " \t\n\r\v\f", "X ", "\ufeff\u2000X \t", "\u0085X", "\u180eX", "\u200bX", " \U0001f600 X", " \U0010ffffX", "\u2028\u2029"} {
 			corpus.Cases = append(corpus.Cases, Case{Value: value})
+		}
+
+		if os.Args[1] == "--generate-scan" {
+			var words func(string, int)
+			words = func(word string, depth int) {
+				corpus.Cases = append(corpus.Cases, Case{Value: word})
+				if depth == 5 {
+					return
+				}
+				for _, character := range []byte("+-01.eEX") {
+					words(word+string(character), depth+1)
+				}
+			}
+			words("", 0)
+			for _, number := range []string{"", ".", "+", "-", "0", "1", "10", ".5", "1.5", "5.", "1e", "1e+", "1e-", "1e+5", "1E-5", "+.5", "-.5", "0001", "1e0002", "2.25E+30", "-0", "NaN", "Infinity"} {
+				for _, suffix := range []string{"", "x", "%", "px", "em", "é", "😀", " ", "\n", ".", "e+"} {
+					corpus.Cases = append(corpus.Cases, Case{Value: number + suffix})
+				}
+			}
 		}
 		data, err = json.Marshal(corpus)
 		if err != nil {
@@ -97,7 +121,11 @@ func main() {
 		}
 		return
 	}
-	data, err := os.ReadFile(os.Args[1])
+	input := os.Args[1]
+	if input == "--scan" {
+		input = os.Args[2]
+	}
+	data, err := os.ReadFile(input)
 	if err != nil {
 		panic(err)
 	}
@@ -108,6 +136,10 @@ func main() {
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	for i, c := range corpus.Cases {
-		fmt.Fprintf(out, "%d\t%s\n", i, written(collapse.Wave104TrimLeadingJavaScriptSpace(c.Value)))
+		if os.Args[1] == "--scan" {
+			fmt.Fprintf(out, "%d\t%d\n", i, collapse.Wave104ScanNumber(c.Value))
+		} else {
+			fmt.Fprintf(out, "%d\t%s\n", i, written(collapse.Wave104TrimLeadingJavaScriptSpace(c.Value)))
+		}
 	}
 }

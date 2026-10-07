@@ -10,3 +10,14 @@ func Wave104JavaScriptSpaces() []int {
 	}
 	return spaces
 }
+
+func Wave104ScanNumber(value string) int { return scanNumber(value) }
+func Wave104Digits() []int {
+	var digits []int
+	for point := 0; point < 256; point++ {
+		if isDigit(byte(point)) {
+			digits = append(digits, point)
+		}
+	}
+	return digits
+}

@@ -1,0 +1,27 @@
+=== RUN   TestScanNumberMatchesGo
+    scan_test.go:49: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field values
+    scan_test.go:49: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field values
+    scan_test.go:49: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field values
+    scan_test.go:49: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field values
+    scan_test.go:49: 101547 cases: every BMP scalar following an ASCII prefix, every <=5-character word from +-01.eEX and 253 number/suffix combinations
+    scan_test.go:57: 802813 exact Go bytes on source Node, emitted JavaScript and ASan/UBSan native
+--- PASS: TestScanNumberMatchesGo (8.18s)
+=== RUN   TestScanNumberMutants
+    scan_test.go:63: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field values
+    scan_test.go:63: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field values
+    scan_test.go:63: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field values
+    scan_test.go:63: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field values
+    scan_test.go:63: 101547 cases: every BMP scalar following an ASCII prefix, every <=5-character word from +-01.eEX and 253 number/suffix combinations
+=== RUN   TestScanNumberMutants/accept_a_dot_without_fractional_digits
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught accept a dot without fractional digits on source Node: line 393 got="392\t2" Go="392\t0"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught accept a dot without fractional digits on emitted JavaScript: line 393 got="392\t2" Go="392\t0"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught accept a dot without fractional digits on ASan/UBSan native: line 393 got="392\t2" Go="392\t0"
+=== RUN   TestScanNumberMutants/consume_an_incomplete_exponent
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught consume an incomplete exponent on source Node: line 416 got="415\t2" Go="415\t1"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught consume an incomplete exponent on emitted JavaScript: line 416 got="415\t2" Go="415\t1"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught consume an incomplete exponent on ASan/UBSan native: line 416 got="415\t2" Go="415\t1"
+--- PASS: TestScanNumberMutants (7.68s)
+    --- PASS: TestScanNumberMutants/accept_a_dot_without_fractional_digits (3.43s)
+    --- PASS: TestScanNumberMutants/consume_an_incomplete_exponent (3.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	15.868s

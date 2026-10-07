@@ -1,0 +1,20 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { scanNumber } from './scan_number.a';
+const args = programArguments();
+const data = readTextFile(args[0] ?? panic('usage: cases.json'));
+if(data.kind === 'Error') { panic(data.message); }
+const json = new OptionsJson(data.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+const digits: number[] = [];
+for(const node of json.node(json.field(root,'Digits')).children) { digits.push(Number(json.node(node).text)); }
+const isDigit = (point: number): boolean => {
+    for(const digit of digits) { if(point === digit) { return true; } }
+    return false;
+};
+let ordinal = 0;
+for(const row of json.node(json.field(root,'Cases')).children) {
+    const value = json.node(json.field(row,'Value')).text;
+    console.log(`${ordinal}\t${scanNumber(value,isDigit)}`);
+    ordinal++;
+}

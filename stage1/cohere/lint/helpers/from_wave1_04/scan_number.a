@@ -1,0 +1,21 @@
+// Go's anchored number grammar. Every consumed character is ASCII, so the
+// returned UTF-16 index is also the Go byte count. Digit is an explicit dependency.
+export function scanNumber(value: string, isDigit: (character: number) => boolean): number {
+    let index = 0;
+    if(index < value.length && (value.charCodeAt(index) === 43 || value.charCodeAt(index) === 45)) { index++; }
+    while(index < value.length && value.charCodeAt(index) >= 48 && value.charCodeAt(index) <= 57) { index++; }
+    if(index < value.length && value.charCodeAt(index) === 46) {
+        index++;
+        const digitsStart = index;
+        while(index < value.length && value.charCodeAt(index) >= 48 && value.charCodeAt(index) <= 57) { index++; }
+        if(index === digitsStart) { return 0; }
+    } else if(index === 0 || !isDigit(value.charCodeAt(index - 1))) { return 0; }
+    if(index < value.length && (value.charCodeAt(index) === 101 || value.charCodeAt(index) === 69)) {
+        let exponent = index + 1;
+        if(exponent < value.length && (value.charCodeAt(exponent) === 43 || value.charCodeAt(exponent) === 45)) { exponent++; }
+        const digitsStart = exponent;
+        while(exponent < value.length && value.charCodeAt(exponent) >= 48 && value.charCodeAt(exponent) <= 57) { exponent++; }
+        if(exponent > digitsStart) { index = exponent; }
+    }
+    return index;
+}
