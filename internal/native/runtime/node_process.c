@@ -32,6 +32,7 @@ static char **saved_values;
 static double monotonic_origin, epoch_origin;
 static adamic_array *arguments, *execution_arguments;
 static adamic_string *current_directory;
+static adamic_object *performance_object;
 
 static double milliseconds(clockid_t clock) {
     struct timespec value;
@@ -63,6 +64,7 @@ static void clear_marks(const adamic_string *name) {
 
 static void finish_host(void) {
     clear_marks(NULL);
+    if (performance_object != NULL) { adamic_release(performance_object); performance_object = NULL; }
     if (arguments != NULL) { adamic_release(arguments); }
     if (execution_arguments != NULL) { adamic_release(execution_arguments); }
     if (current_directory != NULL) { adamic_release(current_directory); }
@@ -277,16 +279,21 @@ static double mark_time(const adamic_string *name, double fallback) {
     for (mark_record *record = marks; record != NULL; record = record->next) {
         if (record->length == name->length && memcmp(record->bytes, name->bytes, name->length) == 0) { return record->time; }
     }
-    adamic_string prefix = ADAMIC_STRING("SyntaxError: The \"");
-    adamic_string suffix = ADAMIC_STRING("\" performance mark has not been set");
+    adamic_string prefix = ADAMIC_STRING("The \""), suffix = ADAMIC_STRING("\" performance mark has not been set");
+    static adamic_string name_error = ADAMIC_STRING("SyntaxError");
     adamic_string *message = adamic_string_concat(3, (adamic_string *const[]){&prefix, (adamic_string *)name, &suffix});
-    adamic_panic(message->bytes, message->length);
+    adamic_thrown = adamic_error_new(message);
+    adamic_thrown->slots[0].reference = &name_error;
+    adamic_release(message);
+    return 0;
 }
 
 adamic_object *adamic_node_measure(const adamic_string *name, const adamic_string *start, const adamic_string *end) {
     // Node resolves the end mark first, including which missing-mark error wins.
     double finish = mark_time(end, adamic_node_performance_now());
+    if (adamic_thrown != NULL) { return NULL; }
     double begin = mark_time(start, 0);
+    if (adamic_thrown != NULL) { return NULL; }
     return entry(name, true, begin, finish - begin);
 }
 
@@ -360,4 +367,43 @@ void adamic_node_chdir(const adamic_string *directory) {
     if (adamic_thrown != NULL) { return; }
     host_directory_error(error, "chdir", from, directory);
     adamic_release(from);
+}
+
+static adamic_value performance_now_method(adamic_closure *self, adamic_value *args) { (void)self; (void)args; return (adamic_value){.number = adamic_node_performance_now()}; }
+static adamic_value performance_mark_method(adamic_closure *self, adamic_value *args) { (void)self; return (adamic_value){.reference = adamic_node_mark(args[0].reference)}; }
+static adamic_value performance_measure_method(adamic_closure *self, adamic_value *args) { (void)self; return (adamic_value){.reference = adamic_node_measure(args[0].reference, args[1].reference, args[2].reference)}; }
+static adamic_value performance_clear_marks_method(adamic_closure *self, adamic_value *args) { (void)self; adamic_node_clear_marks(args[0].reference); return (adamic_value){.reference = NULL}; }
+static adamic_value performance_clear_measures_method(adamic_closure *self, adamic_value *args) { (void)self; adamic_node_clear_measures(args[0].reference); return (adamic_value){.reference = NULL}; }
+static adamic_closure performance_now_closure = {{0, adamic_kind_closure, 0}, performance_now_method, 0};
+static adamic_closure performance_mark_closure = {{0, adamic_kind_closure, 0}, performance_mark_method, 0};
+static adamic_closure performance_measure_closure = {{0, adamic_kind_closure, 0}, performance_measure_method, 0};
+static adamic_closure performance_clear_marks_closure = {{0, adamic_kind_closure, 0}, performance_clear_marks_method, 0};
+static adamic_closure performance_clear_measures_closure = {{0, adamic_kind_closure, 0}, performance_clear_measures_method, 0};
+static adamic_closure *const performance_methods[] = {&performance_now_closure, &performance_mark_closure, &performance_measure_closure, &performance_clear_marks_closure, &performance_clear_measures_closure};
+
+adamic_object *adamic_node_performance(void) {
+    if (performance_object == NULL) {
+        static const char *const names[] = {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"};
+        static const bool references[] = {false, true, true, true, true, true};
+        static const adamic_shape shape = {6, names, references, NULL};
+        performance_object = adamic_object_new(&shape);
+        performance_object->slots[0].number = epoch_origin;
+        for (size_t index = 0; index < 5; index++) { performance_object->slots[index+1].reference = performance_methods[index]; }
+    }
+    return adamic_retain(performance_object);
+}
+
+// Only the built-in closures need their omitted string arguments supplied. User closures keep
+// their existing calling convention, and void views must release built-in entry return values.
+adamic_value adamic_node_performance_invoke(adamic_closure *closure, adamic_value *args, size_t count, bool discard) {
+    for (size_t index = 0; index < 5; index++) {
+        if (closure == performance_methods[index]) {
+            adamic_value padded[3] = {{.reference = NULL}, {.reference = NULL}, {.reference = NULL}};
+            for (size_t at = 0; at < count && at < 3; at++) { padded[at] = args[at]; }
+            adamic_value result = closure->code(closure, padded);
+            if (discard && (index == 1 || index == 2)) { adamic_release(result.reference); result.reference = NULL; }
+            return result;
+        }
+    }
+    return closure->code(closure, args);
 }

@@ -103,6 +103,7 @@ func TestNodeProcessMutants(t *testing.T) {
 		{"memory range", "node_process_host.a", "result->slots[0].number = used;", "result->slots[0].number = used - used - 1;"},
 		{"monotonic now", "node_process_performance.a", "milliseconds(CLOCK_MONOTONIC) - monotonic_origin", "monotonic_origin - milliseconds(CLOCK_MONOTONIC)"},
 		{"time origin range", "node_process_performance.a", "return epoch_origin;", "return epoch_origin - epoch_origin - 1;"},
+		{"performance hooks", "node_process_performance_core.a", "performance_object->slots[0].number = epoch_origin;", "performance_object->slots[0].number = 0;"},
 		{"mark", "node_process_performance.a", "return entry(name, false, now, 0);", "return entry(name, false, now, 1);"},
 		{"measure", "node_process_performance.a", "finish - begin", "begin - finish"},
 		{"clear all marks", "node_process_cleared_marks.a", "name == NULL || (record->length", "name != NULL && (record->length"},
@@ -244,9 +245,10 @@ func TestNodeProcessCachedDirectory(t *testing.T) {
 func TestNodeProcessUnsupportedOperationsStayLoud(t *testing.T) {
 	t.Parallel()
 	for name, source := range map[string]string{
-		"measure catch":      "function compute(): void { performance.measure('x', 'absent'); } try { compute(); } catch { console.log('caught'); }",
-		"write backpressure": "const accepted = process.stdout.write('x'); console.log(String(accepted));",
-		"nextTick callback":  "process.nextTick(() => { console.log('tick'); });",
+		"performance entries": "import { performance } from 'node:perf_hooks'; performance.getEntries();",
+		"measure options":     "import { performance } from 'node:perf_hooks'; performance.measure('x', {start: 0});",
+		"write backpressure":  "const accepted = process.stdout.write('x'); console.log(String(accepted));",
+		"nextTick callback":   "process.nextTick(() => { console.log('tick'); });",
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

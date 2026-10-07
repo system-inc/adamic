@@ -22,4 +22,6 @@ void adamic_node_clear_marks(const adamic_string *name);
 void adamic_node_clear_measures(const adamic_string *name);
 void adamic_node_environment_set(const adamic_string *name, const adamic_string *value);
 bool adamic_node_environment_delete(const adamic_string *name);
+adamic_object *adamic_node_performance(void);
+adamic_value adamic_node_performance_invoke(adamic_closure *closure, adamic_value *args, size_t count, bool discard);
 #endif

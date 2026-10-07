@@ -1,3 +1,23 @@
+Built pinned-Node performance objects and tsc hook discovery; process error narrowing with `in` remains a language blocker.
+Commits: shared loader merged as 6bc30e2; performance checkpoint follows this report.
+Commands: performance Node/native/JavaScript oracle PASS 2.768s; eight clean native semantic mutants caught; count run 14 allocations/14 frees.
+Mutants: now sign, epoch range, mark duration, measure sign, named/all mark deletion, measure clearing, hook-object epoch; all caught by Node comparison.
+Not covered at this checkpoint: unchanged assigned System acceptance fixtures, timers, scheduled nextTick, os.tmpdir and unknown-error narrowing.
+
+## Performance checkpoint, pinned Node declarations
+
+Merged 69c71d5. Installed official @types/node 25.3.3 with npm under stage3/api/node_modules; dependency files are not committed. There are no private node declarations. The shared prelude adapter also replaces the old process constant with NodeJS.Process while checking Node imports, avoiding conflicting global declarations.
+
+node_process_performance.a and node_process_performance_core.a pass both backends with sanitizers and leak checking. The latter uses tsc performanceCore hook discovery with its require supplied by a static namespace import. Type-only adaptations make timeOrigin readonly and optional properties explicitly include undefined; object truthiness becomes explicit undefined checks. These are documented in the fixture, not claimed as an unchanged upstream acceptance program. Generic interface calls pad omitted builtin arguments natively, release ignored entry returns, and preserve Node method receiver behavior in JavaScript. Missing-mark SyntaxError name/message is catchable, resolving the end mark first. Unbuilt getEntries and measure options refuse by member name.
+
+Machine-dependent clocks remain predicate comparisons: now is finite, nonnegative and nondecreasing; timeOrigin is stable epoch milliseconds. Mark startTime and measure duration are finite and tied to this clock, not byte-equal to another process; duration can be negative. clearMeasures has no observable registry in the implemented non-enumerating surface.
+
+Latest error contract: native directory errors already have own string code/message fields. Numeric exit validation still needs ERR_OUT_OF_RANGE, and the requested typeof/non-null/`'code' in error` source test is blocked by the explicit compiler refusal of `in`. One-line reproducer: `function code(error: unknown) { if (typeof error === "object" && error !== null && "code" in error) return error.code; }`. No compiler-policy exemption was introduced. This checkpoint does not claim that test passes.
+
+Standing landing rule acknowledged: rebase current origin/main into codex/host-process-land, re-green the oracle, push only that branch; never push main or force-push.
+
+Earlier reports below are historical evidence and limitations; this checkpoint supersedes their shared-loader and missing-mark-panic statements.
+
 Built env string writes/deletion, chdir cache invalidation and catchable directory errors with code/message; performance.measure failures still panic and cannot be caught.
 Commits: fixtures merge 5728bc7, runtime/harness 6272a910c986ae5945067f70cef0c31573c43f54 on codex/host-process; earlier implementation ad56ba3 and declaration correction cb90701 retained.
 Commands: assigned-fixture harness reports 8 Checker/Checker; filtered process oracle PASS 6.642s, lower PASS 8.344s, affected-package vet PASS; exact logs retained.

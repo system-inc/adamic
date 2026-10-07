@@ -7,26 +7,45 @@ import (
 	"strings"
 )
 
+func init() {
+	RegisterNodeLibraryMembers("node:perf_hooks.performance", "node:performance.performance")
+	for _, name := range []string{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"} {
+		RegisterNodeLibraryMembers("node:perf_hooks.Performance." + name)
+	}
+	for _, name := range []string{"name", "entryType", "startTime", "duration"} {
+		RegisterNodeLibraryMembers("node:perf_hooks.PerformanceEntry." + name)
+	}
+	RegisterNodeLibraryMembers("node:perf_hooks.PerformanceMark.entryType", "node:perf_hooks.PerformanceMeasure.entryType")
+}
+
 // Ambient declarations are recognized by their module and declaration, never by a user's spelling.
 func (l *lowering) nodeProcessPath(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
 	if ast.IsIdentifier(node) {
 		symbol := l.symbol(node)
+		if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+			symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+		}
 		if symbol == nil || len(symbol.Declarations) == 0 {
 			return ""
 		}
+		for _, declaration := range symbol.Declarations {
+			if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) && declaration.Kind == ast.KindModuleDeclaration && declaration.Name().Text() == "node:perf_hooks" {
+				return "performanceModule"
+			}
+		}
 		declaration := symbol.Declarations[0]
-		if !load.IsPrelude(ast.GetSourceFileOfNode(declaration)) {
+		if !load.IsPrelude(ast.GetSourceFileOfNode(declaration)) && !load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
 			return ""
 		}
 		for parent := declaration.Parent; parent != nil; parent = parent.Parent {
 			if parent.Kind == ast.KindModuleDeclaration {
 				switch parent.Name().Text() {
-				case "node:process":
+				case "node:process", "process":
 					return "process." + symbol.Name
-				case "node:os":
+				case "node:os", "os":
 					return "os." + symbol.Name
-				case "node:perf_hooks":
+				case "node:perf_hooks", "perf_hooks":
 					return symbol.Name
 				}
 			}
@@ -40,6 +59,9 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 		access := node.AsPropertyAccessExpression()
 		if access.QuestionDotToken == nil {
 			if path := l.nodeProcessPath(access.Expression); path != "" {
+				if path == "performanceModule" && node.Name().Text() == "performance" {
+					return "performance"
+				}
 				return path + "." + node.Name().Text()
 			}
 		}
@@ -178,7 +200,7 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 			if err != nil {
 				return nil, true, err
 			}
-			if value.Type() != ir.String && value.Type() != ir.Object {
+			if _, absent := value.(ir.Undefined); !absent && value.Type() != ir.String {
 				return nil, true, l.notYet(argument, path+" with a non-string argument")
 			}
 			if _, absent := value.(ir.Undefined); absent {
@@ -192,6 +214,25 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		return call, true, nil
 	}
 	switch path {
+	case "performanceModule":
+		parent := node.Parent
+		if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.Name().Kind != ast.KindObjectBindingPattern {
+			return nil, true, l.notYet(node, "node:perf_hooks namespace as a value outside performance destructuring")
+		}
+		for _, binding := range parent.Name().AsBindingPattern().Elements.Nodes {
+			name := binding.Name().Text()
+			if binding.AsBindingElement().PropertyName != nil {
+				name = binding.AsBindingElement().PropertyName.Text()
+			}
+			if name != "performance" {
+				return nil, true, l.notYet(node, "node:perf_hooks."+name)
+			}
+		}
+		l.result.ClosuresMayThrow = true
+		return ir.ObjectLiteral{Fields: []ir.Field{{Name: "performance", Value: ir.ProcessCall{Operation: "performance", Of: ir.Object}}}}, true, nil
+	case "performance":
+		l.result.ClosuresMayThrow = true
+		call.Operation, call.Of = "performance", ir.Object
 	case "process.platform":
 		call.Operation, call.Of = "platform", ir.String
 	case "process.pid":
@@ -229,6 +270,9 @@ func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
 		return false
 	}
 	path := l.nodeProcessPath(node)
+	if name := l.nodeLibraryMember(node); strings.HasPrefix(name, "node:perf_hooks.Performance.") {
+		path = "performance." + node.Name().Text()
+	}
 	switch path {
 	case "performance.now", "performance.mark", "performance.measure", "performance.clearMarks", "performance.clearMeasures":
 		return true

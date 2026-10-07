@@ -35,6 +35,7 @@ var inputFixtures = []struct {
 }{
 	{"internal/oracle/testdata/node_process_host.a", []string{"plain", "", "with space", "héllo 🌍", "--prof", "bad\xff"}, false, false},
 	{"internal/oracle/testdata/node_process_performance.a", nil, false, false},
+	{"internal/oracle/testdata/node_process_performance_core.a", nil, false, false},
 	{"internal/oracle/testdata/node_process_system.a", []string{"--noEmit", "tiny.a"}, false, false},
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
