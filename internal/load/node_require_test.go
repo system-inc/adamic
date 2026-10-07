@@ -105,3 +105,16 @@ const hooks = tryGetPerformance();`
 		})
 	}
 }
+
+func TestLocalRequireDoesNotLoadNodeGlobals(t *testing.T) {
+	t.Parallel()
+	program, err := nodeSource(t, `function require(name: string): string { return name; } const module = { exports: 'local' }; console.log(require(module.exports));`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range program.compiler.GetSourceFiles() {
+		if IsNodeLibrary(file) {
+			t.Fatal("local require or module activated Node globals")
+		}
+	}
+}

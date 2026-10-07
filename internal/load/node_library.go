@@ -1,6 +1,7 @@
 package load
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -62,8 +63,14 @@ func usesNodeModules(program *compiler.Program) bool {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if node.Kind == ast.KindIdentifier && (node.Text() == "require" || node.Text() == "module") {
-				found = true
-				return true
+				// A user's local require or module is ordinary Adamic, not a Node dependency.
+				checker, release := program.GetTypeCheckerForFile(context.Background(), file)
+				symbol := checker.GetSymbolAtLocation(node)
+				release()
+				if symbol == nil || len(symbol.Declarations) == 0 {
+					found = true
+					return true
+				}
 			}
 			node.ForEachChild(visit)
 			return found

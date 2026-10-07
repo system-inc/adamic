@@ -12,7 +12,7 @@ func TestRequireUsesTheFSImportIntrinsic(t *testing.T) {
 	for _, source := range []string{
 		`const fs = require('fs'); console.log(` + "`${fs.existsSync('.')}`" + `);`,
 		`const fs = (require('node:fs')); console.log(` + "`${fs.existsSync('.')}`" + `);`,
-		`function check(): boolean { const fs = require('fs'); return fs.existsSync('.'); } console.log(` + "`${check()}`" + `);`,
+		`function check(): boolean { const fs: typeof import('fs') = require('fs'); return fs.existsSync('.'); } console.log(` + "`${check()}`" + `);`,
 	} {
 		program, err := lowerSource(t, source)
 		if err != nil {
@@ -97,6 +97,13 @@ func TestRequirePathAndImportHaveTheSameIR(t *testing.T) {
 		}
 		if !reflect.DeepEqual(required, imported) {
 			t.Fatalf("require(%q) IR differs from import", specifier)
+		}
+		typed, err := lowerSource(t, "const path: typeof import('path') = require('"+specifier+"');"+body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(typed, imported) {
+			t.Fatalf("typed require(%q) IR differs from import", specifier)
 		}
 	}
 }

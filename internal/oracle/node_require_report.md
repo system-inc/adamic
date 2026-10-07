@@ -1,7 +1,7 @@
 Built: literal fs and path require use the existing library hosts and the pinned Node declarations on codex/require-builtins-2.
 Commits: d46ab6a dependency base; ff093cd cherry-pick of c880985; 36abd5f merge of the existing directory/path host.
-Checks: focused loader/lower, required Node oracles, complete counts regeneration and vet pass; the final full gate has passed load, lower, flow, freshness and native; it is still running.
-Mutants: nonliteral acceptance fails TestCommonJSRefusals with got <nil>; structural fs type fails exact checker type and member identity.
+Checks: focused loader/lower, required Node oracles, complete counts regeneration and vet pass; final load/lower/flow/fresh, focused Node oracle, counts and vet pass; the full gate passed every compiler package before its unrelated long-running checks were stopped.
+Mutants: nonliteral acceptance fails refusal tests; structural fs type fails checker identity; local-name activation fails the Node-global isolation test.
 Uncovered: perf_hooks lowering awaits the library host SHA; the actual submodule performanceCore has one separate exact-optional-property diagnostic.
 
 ## Current implementation
@@ -13,7 +13,7 @@ branch to reuse its path runtime rather than add another implementation.
 Conflicts retained both fs-file and directory IR handling and runtime field
 layouts. No main or area/ branch was pushed to or merged into.
 
-Require identifiers activate the same pinned @types/node 25.3.3 loader as
+Unbound require/module identifiers activate the same pinned @types/node 25.3.3 loader as
 node:* imports. The declaration refinement augments Node's actual NodeJS.Require
 interface; it declares no fs/path/performance host members. Individual literal
 overloads preserve the exact imported module type and member declaration
@@ -82,7 +82,23 @@ results so far:
 - Both mutants were rerun on this branch, each exits 1 through its intended
   test assertions. Both source files were restored before final validation.
 - go vet ./... exits 0; gofmt and git diff --check have no output.
-- go test -count=1 -timeout=30m ./... has passed load (7.767s), lower (72.253s), flow (146.560s), fresh (76.536s), native (411.372s) and bridge (422.187s). Remaining packages are still running in the final gate log.
+- go test -count=1 -timeout=30m ./... at e3f1efd passed load (7.767s),
+  lower (72.253s), flow (146.560s), fresh (76.536s), native (411.372s),
+  complete oracle (436.670s) and bridge (422.187s). It was stopped after more
+  than twelve minutes while Unicode and stage-1 checks remained. Exit 1 from
+  interruption; this is a partial gate, not a complete green repository gate.
+- After the final local-binding detection correction, go test -count=1
+  -timeout=30m ./internal/load ./internal/lower ./internal/flow ./internal/fresh:
+  exit 0; load 5.816s, lower 45.568s, flow 83.150s, fresh 52.396s.
+- Final focused Node oracle and count verification (same filter as above,
+  without -update-counts): exit 0, 10.045s. Final vet and formatting pass.
+- The actual sys.ts fs/path bindings use explicit typeof-import annotations.
+  The added lowering checks preserve those annotations and compare the path
+  IR to namespace imports: exit 0, 1.564s.
+- Local require/module symbols now keep the ordinary prelude and do not load
+  Node globals. The scope mutant ignores binding identity; its regression
+  test exits 1 with 'local require or module activated Node globals'. The
+  mutant was restored before all final package and oracle checks.
 
 ## Historical first attempt
 
