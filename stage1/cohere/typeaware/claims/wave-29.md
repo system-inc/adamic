@@ -34,3 +34,13 @@ Original three rules completed, tested and pushed in 0fa8f823, including configu
 This update is committed and pushed before any new rule code is written. Earlier available candidates became claimed by other workers and were skipped during the refreshed scan. The remaining emitted-JavaScript checker-adapter gap is a shared harness dependency; native findings, fixes and suggestions are still held to Go.
 
 Native implementations and comparison evidence for these three rules are in [wave-29-next/REPORT.md](../wave-29-next/REPORT.md). All configured and frozen-corpus comparisons, three rule mutants, raw shorthand facts, released handles and sanitizers pass. JSX parsing and the emitted-JavaScript checker adapter remain shared dependencies and are explicitly reported; no further claims were taken.
+
+## Third batch
+
+Previous six native rule ports are tested and pushed through 7f4eabb8. The shared JSX parser and emitted-JavaScript checker adapter limitations remain documented in wave-29-next/REPORT.md. A refreshed scan of 389 origin refs and 33 unique claim Markdown blobs found 26 baseline ports, 141 other claimed names, and 30 available names in the 197-rule volume ranking. The first three remaining names, all with combined default volume zero, are:
+
+1. `react-hooks/set-state-in-effect`.
+2. `react-hooks/set-state-in-render`.
+3. `react-hooks/static-components`.
+
+This claim update is committed and pushed before implementation. No other rules are claimed by this update.
