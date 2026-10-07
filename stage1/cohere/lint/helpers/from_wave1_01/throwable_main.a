@@ -1,0 +1,12 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { IdentifierContext, isThrowableIdentifier } from './is_throwable_identifier.a';
+
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const context = new IdentifierContext(Number(fields[0]), fields[1] === '1', fields[2] === '1', fields[3] === '1', Number(fields[4]), fields[5] === '1');
+    console.log(`${isThrowableIdentifier(context) ? 1 : 0}`);
+}

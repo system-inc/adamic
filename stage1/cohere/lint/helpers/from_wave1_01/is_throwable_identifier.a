@@ -1,0 +1,61 @@
+// These are the parent fields and identities inspected by Go, projected by the AST adapter.
+export class IdentifierContext {
+    readonly parentKind: number;
+    readonly tagNameIsNode: boolean;
+    readonly bindingHasRest: boolean;
+    readonly bindingPropertyIsNode: boolean;
+    readonly grandparentKind: number;
+    readonly nameIsNode: boolean;
+    constructor(parentKind: number, tagNameIsNode: boolean, bindingHasRest: boolean, bindingPropertyIsNode: boolean, grandparentKind: number, nameIsNode: boolean) {
+        this.parentKind = parentKind;
+        this.tagNameIsNode = tagNameIsNode;
+        this.bindingHasRest = bindingHasRest;
+        this.bindingPropertyIsNode = bindingPropertyIsNode;
+        this.grandparentKind = grandparentKind;
+        this.nameIsNode = nameIsNode;
+    }
+}
+
+// Numeric kinds are pinned to cohere's parser, not stock TypeScript's enum.
+export function isThrowableIdentifier(context: IdentifierContext): boolean {
+    if(context.parentKind < 0) { return false; }
+    if(context.tagNameIsNode && (context.parentKind === 287 || context.parentKind === 288 || context.parentKind === 286)) {
+        return false;
+    }
+    switch(context.parentKind) {
+        case 257: // LabeledStatement
+        case 253: // BreakStatement
+        case 252: // ContinueStatement
+        case 208: // ArrayBindingPattern
+        case 277: // ImportSpecifier
+        case 282: // ExportSpecifier
+        case 274: // ImportClause
+        case 275: // NamespaceImport
+        case 281: // NamespaceExport
+        case 292: // JsxAttribute
+        case 296: // JsxNamespacedName
+        case 300: // CatchClause
+            return false;
+        case 209: // BindingElement
+            if(context.bindingHasRest || context.bindingPropertyIsNode) { return false; }
+            return context.grandparentKind === 207; // ObjectBindingPattern
+        case 263: // FunctionDeclaration
+        case 219: // FunctionExpression
+        case 220: // ArrowFunction
+        case 264: // ClassDeclaration
+        case 232: // ClassExpression
+        case 261: // VariableDeclaration
+        case 303: // PropertyAssignment
+        case 173: // PropertyDeclaration
+        case 175: // MethodDeclaration
+        case 178: // GetAccessor
+        case 179: // SetAccessor
+        case 267: // EnumDeclaration
+        case 268: // ModuleDeclaration
+        case 265: // InterfaceDeclaration
+        case 266: // TypeAliasDeclaration
+            return !context.nameIsNode;
+        default:
+            return true;
+    }
+}

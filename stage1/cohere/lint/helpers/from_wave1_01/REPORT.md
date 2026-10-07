@@ -1,8 +1,8 @@
-Built: enter, returnFrame, throwFrame and throwTarget, one helper per .a file; sixteen prerequisite entries across four rules.
-Commits: this continuation claims 036c836de and e9d4dc76d pushed before their code; prior helpers refreshed at 2534ca1b8; parked rules d508f5ef2.
-Checks: full touched package PASS 39.739s against actual Go on all four consumers plus controls, source Node, emitted JavaScript, ASan/UBSan native; vet and uncached compiler oracle pass.
-Mutants: eight compiling state/identity/frame/target mutations caught solely by comparison on all three backends.
-Not covered: complete CFG/rule integration, zero complete rules unblocked, invalid nil-frame panic bytes, malformed duplicate-index graphs, full repository gate or speed claims.
+Built: enterDisconnected and isThrowableIdentifier; six helpers total, twenty-four prerequisites across four rules.
+Commits: claims 0fb1cc406 and 7fb957e4d pushed before code; disconnected entry 7f103900a; parked rules 092de10ce; final implementation and evidence follow.
+Checks: full touched package PASS 58.437s, 30,746 actual Go observations and 151,542 bytes per backend; vet and uncached compiler input oracle PASS.
+Mutants: thirteen compiling semantic mutants caught solely by output comparison on source Node, emitted JavaScript and ASan/UBSan native.
+Not covered: complete CFG/AST/rule integration, zero complete rules unblocked, invalid nil-pointer panic bytes, exhaustive contexts, full repository/corpus gate or throughput.
 
 Observed calls: array-callback-return 79 (632 bytes), consistent-return 123 (984 bytes), no-unreachable-loop 8,861 (70,936 bytes), react-hooks/rules-of-hooks 495 (4,309 bytes), controls 120 (960 bytes), identical on each backend. Four helper prerequisite edges removed across these exact four rules; zero complete rule blocker sets removed. The helper takes a handed block and reads no syntax kinds.
 
@@ -63,3 +63,24 @@ Claim 0fb1cc406 pushed before code after auditing all 575 origin refs and 20 dis
 TestDisconnectedEntryMatchesGo PASS 9.821s. Actual Go calls/output bytes per backend: array-callback-return 5/50, consistent-return 5/50, no-unreachable-loop 610/6,100, react-hooks/rules-of-hooks 6/60, controls 180/1,800. Total 806 observations and 8,060 bytes on source Node, emitted JavaScript and ASan/UBSan native. Existing suites plus five supplementary increment-loop bodies per rule; the supplements are not upstream fixtures. Initial missing-call capture failure is retained; it correctly refused to certify zero observations. Driver optional-number lowering refusal is retained and corrected with an explicit checked current block. Neither is a semantic mutant. First unsourced gofmt invocation reported command not found; sourcing the printed tools environment fixed it.
 
 Ignore-current-reachability and discard-existing-incoming-edge mutants compile and execute successfully, then only Go byte comparison catches both on every backend. This adds four prerequisite entries, twenty total across the same four consumers, zero complete rules unblocked. Source files are .a; no shared file or regex changed. Invalid nil-current panic bytes, full graph/rule integration, complete corpus/full repository gate and speed are not covered.
+
+## Sixth helper
+
+Claim 7fb957e4d pushed before code after enterDisconnected was green/pushed at 7f103900a. Refreshed 578 origin refs, all 20 distinct helper claims and HELPERS.md; isThrowableIdentifier ties the highest remaining four-consumer fan-out. Names, tag names, rest tokens, property-name identity and grandparent kind are handed context views, no string-kind relevance dispatch or AST refetch. Constants are Go parser numbers from its compiler-checked generated table.
+
+TestThrowableIdentifierMatchesGo PASS 35.544s. Actual private Go calls/output bytes on each backend: array-callback-return 52/104, consistent-return 58/116, no-unreachable-loop 5,260/10,520, react-hooks/rules-of-hooks 605/1,210, parsed/factory controls 90/180. Total 6,065 calls and 12,130 bytes. Every upstream matching consumer test runs unchanged, then independent controls call the same Go body. All three mutants compile and run, then only byte comparison catches declaration-name polarity reversal, removed binding-rest exemption and JSX tag identity inversion on all three backends.
+
+Two new helpers add eight prerequisite entries, twenty-four cumulative across the same four exact rules, zero complete rule blocker sets removed. Together all six helpers compare 30,746 calls and 151,542 bytes per backend. Full rule findings/fixes, graph/AST adapter integration, invalid nil-node/current panic bytes and exhaustive arbitrary contexts are outside this certificate. No new rule, shared harness file or regex matcher changed.
+
+## Third full gate and handoff
+
+Exact commands, every output redirected to the retained batch3 logs:
+
+    source /workspace/adamic-tools/env.sh
+    go test ./stage1/cohere/lint/helpers/from_wave1_01 -count=1 -timeout 15m -v
+    go vet ./stage1/cohere/lint/helpers/from_wave1_01
+    ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -timeout 10m -v
+
+Full owned package PASS 58.437s. Vet silent success; uncached compiler input oracle PASS 0.966s, six probe misses. All thirteen semantic mutants compile and run successfully, then comparison alone kills them on all three backends: retained reachability; retained current block; outermost finally; skipped frame zero; outermost exception handler; inverted catch/finally predicate; catch selected outside try; finally instead of catch; ignored current reachability; discarded incoming edges; reversed declaration-name polarity; removed rest-binding exemption; inverted JSX tag identity. Development failures are retained separately and not credited as mutant kills.
+
+Setup ready timings all 0s; cache warm and total 33s, nproc 5. Both own branches include current origin/main c01907a70 and preserve developer-tool changes. Rule branch 092de10ce is parked under the explicit shared-harness exception: the ab70f38d4 merge was aborted after ten unowned shared-file conflicts, named in its LANDING.md. This helper branch changes only its own helper directory and claim, not finding.ts, context.ts, main.ts, shared generator/oracle/comparison. No regex matcher introduced. Full-source corpus and complete repository gate were not repeated. Temporary captures are regenerated during tests; pinned cohere 715ba94f3608a6500086b1076ce5cb7e51b836db. No further helper reserved after this completed pair.

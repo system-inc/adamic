@@ -4,7 +4,8 @@
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].returnFrame",
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget",
-    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enterDisconnected"
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enterDisconnected",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier"
   ],
   "consumers": [
     "array-callback-return",
@@ -12,7 +13,7 @@
     "no-unreachable-loop",
     "react-hooks/rules-of-hooks"
   ],
-  "prerequisite_edges_removed": 20,
+  "prerequisite_edges_removed": 24,
   "complete_rules_unblocked": 0,
-  "boundary": "handed non-null block state and identity; adjacent CFG and full rule integration remain"
+  "boundary": "handed block state and identity, try-frame views and identifier parent-kind/identity views; full CFG, AST adapter and rule integration remain"
 }

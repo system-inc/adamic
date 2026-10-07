@@ -1,0 +1,18 @@
+=== RUN   TestThrowableIdentifierMatchesGo
+    is_throwable_identifier_test.go:49: array-callback-return: 52 actual Go calls, 104 bytes per backend
+    is_throwable_identifier_test.go:49: consistent-return: 58 actual Go calls, 116 bytes per backend
+    is_throwable_identifier_test.go:49: no-unreachable-loop: 5260 actual Go calls, 10520 bytes per backend
+    is_throwable_identifier_test.go:49: react-hooks_rules-of-hooks: 605 actual Go calls, 1210 bytes per backend
+    is_throwable_identifier_test.go:49: controls: 90 actual Go calls, 180 bytes per backend
+    is_throwable_identifier_test.go:81: declaration name polarity reversed compiles and runs; comparison alone catches side 0
+    is_throwable_identifier_test.go:81: declaration name polarity reversed compiles and runs; comparison alone catches side 1
+    is_throwable_identifier_test.go:81: declaration name polarity reversed compiles and runs; comparison alone catches side 2
+    is_throwable_identifier_test.go:81: binding rest exclusion removed compiles and runs; comparison alone catches side 0
+    is_throwable_identifier_test.go:81: binding rest exclusion removed compiles and runs; comparison alone catches side 1
+    is_throwable_identifier_test.go:81: binding rest exclusion removed compiles and runs; comparison alone catches side 2
+    is_throwable_identifier_test.go:81: JSX tag identity inverted compiles and runs; comparison alone catches side 0
+    is_throwable_identifier_test.go:81: JSX tag identity inverted compiles and runs; comparison alone catches side 1
+    is_throwable_identifier_test.go:81: JSX tag identity inverted compiles and runs; comparison alone catches side 2
+--- PASS: TestThrowableIdentifierMatchesGo (35.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	35.544s
