@@ -1,0 +1,8 @@
+/workspace/adamic/stage1/cohere/typeaware/prefer_regexp_exec.a:1:1 error fix --fix would rewrite this file: @typescript-eslint/consistent-type-imports, prefer-template
+/workspace/adamic/stage1/cohere/typeaware/correctness_no_identical_branches.a:3:31 error TS2307 Cannot find module './resolved_signature_equal.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/no_for_in_array.a:5:32 error TS2307 Cannot find module './number_index_type.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/prefer_regexp_exec.a:7:30 error TS2307 Cannot find module './regular_expression_syntax.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/wave_11_suite.a:8:34 error TS2307 Cannot find module './prefer_regexp_exec.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/wave_11_suite.a:9:30 error TS2307 Cannot find module './no_for_in_array.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/wave_11_suite.a:10:37 error TS2307 Cannot find module './correctness_no_identical_branches.a' or its corresponding type declarations.
+✗ ☠️ 0.05s • 6 type errors • 1 file would change (7 checked) • Adamic readiness not measured: types bailed • ⚠ only 7 of 8 files • ⚠ 👑 lint did not run • 💅 formatting not checked • ⚠ 1 rule skipped every file
