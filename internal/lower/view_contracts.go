@@ -40,7 +40,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
 	}
 	contract := ir.ViewContract{Name: l.checker.TypeToString(target), Of: of}
-	if interfaceScalar(target) {
+	if interfaceScalar(target) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
 		contract.Allowed = l.viewContractLiterals(target)
 	} else {
@@ -48,7 +48,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	}
 	// A union retains each member contract; common fields are not a certificate
 	// for the other fields of any selected member.
-	if target.Flags()&checker.TypeFlagsUnion != 0 && !interfaceScalar(target) {
+	if target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || of == ir.Union) {
 		contract.Kind = ir.ViewUnion
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
@@ -63,7 +63,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 			contract.Members = append(contract.Members, child)
 		}
 	}
-	if contract.Kind == ir.ViewObject || contract.Kind == ir.ViewUnion {
+	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(property))
 			if err != nil {

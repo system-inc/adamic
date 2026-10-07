@@ -1,8 +1,8 @@
-Built: lane 1 transitive objects/interfaces and tagged object-union fields with readiness; the complete union family is not finished.
-Commits: plan 4dbf3b6a, main merge 00d6006a, objects df7bc5da, interfaces 94cf7156; tagged object-union subset checkpoint follows.
-Commands and outputs: final lower/IR PASS 22.076s/23.033s; broad uncached Node/view oracle PASS 87.320s; counts PASS 32.737s; scoped vet PASS, four new rows only.
-Mutants: dropped field/readiness/type, no-proof erasure, object/interface transitivity, union membership and double evaluation caught by semantic assertions with valid C.
-Not covered: null/undefined/mixed and optional unions, union cast targets, arrays/callables, erasure and timings; complete tsc sites remain 0/1,758 and 0/1,178.
+Built: overlapping blocker census; merged lane 2 helpers; shared array registry adapter and physical storage tags, with array admission still disabled.
+Commits: prior tip 609ed395; lane 2 merge f709a1c5 from 2a16ce35; largest-blocker prerequisites follow on this feature branch only.
+Commands and outputs: full lower/JS PASS 10.312s/0.369s; native PASS 115.486s; broad uncached Node/count oracle PASS 115.748s; final oracle PASS 34.190s; vet PASS.
+Mutants: eight existing semantic mutants caught again; discarded child-contract errors caught by the unknown-contract compiler assertion without C compilation.
+Not covered: native array read/mutation integration, nullish/optional/mixed admission, proof integration or timings; complete sites remain 0/1,758 tagged and 0/1,178 untagged.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -456,3 +456,52 @@ Final restored-source count/family check PASS 25.857s. Final full touched lower/
 packages PASS 22.076s/23.033s and broad uncached ordinary source Node plus view,
 default-cast, required-field and readiness regressions PASS 87.320s. The complete
 repository adapter gate remains unrun; these are package and oracle checks.
+
+## Renewed blocking-family census and array prerequisite
+
+The pre-implementation overlapping census of all 2,936 pinned sites ranks arrays/
+tuples first (2,909), nullish members second (2,903), optional properties fourth
+(2,889). Callable contracts are third (2,890). Every family, per-site witness and
+measurement limit is published in blocking-families-sites.json and
+blocking-families-summary.json, with the table in docs/checked-views-blockers.md.
+This walks declared target contracts through nested fields, stopping at lane 2
+array/callable boundaries. It is not observed read frequency or successful lowering.
+No span/text mismatch or stock TypeScript diagnostic occurs.
+
+Largest-first action: merge lane 2 tip 2a16ce35 as f709a1c5 and provide its missing
+shared primitives. viewArrayContractHook is now registered by
+internArrayViewContract, reserving array ids before recursive element building.
+The error-only lane 2 callback captures the common element id and propagates
+errors. Primitive mixed storage descriptors retain explicit union member ids,
+not a universal pointer/scalar certificate. Unknown and tuple contracts still
+fail; no runtime admission is added in this prerequisite.
+
+Native arrays gain element_kind: 0 unknown, 1 number, 2 boolean, 7 packed maybe
+number, 10 heap pointer. Fresh plain literals write actual physical storage;
+other producers, spread/reuse and uncertified copies remain unknown. This is not
+a field-initialization representation, logical-shape proof or permission to erase
+a check. The physical byte fits padding: old/new sizes 56/56, offset 33, measured
+with a separate C layout probe. Each plain literal adds one byte store. No speed
+benchmark is claimed. All existing allocation/count rows remain unchanged.
+
+Lane 2 has no native element-read helper on its pushed tip. Its own report also
+leaves mutation/copy/iteration/callback coverage incomplete. Those reserved helper
+files now have the needed common metadata, and the plan records their handoff.
+Arrays remain NotYet until every necessary read/write path is enforced. Current
+complete sites are still zero, not an inferred increase from descriptor support.
+The lane 1 deadline is at risk until that native integration is ready. Next
+independent lane 1 family is nullish members, then optional and mixed/full unions.
+
+Setup completed in 27.591s, nproc 5, quota 4 CPUs. Timing lines: Go 0.023s, Node
+0.024s, submodules 0.066s, clang 0.186s, markdown 0.914s, Go build 27.386s,
+cache warm 27.562s. The returned env script remains /workspace/adamic-tools/env.sh.
+Current main 71d7e491 is already an ancestor; merge reports already up to date.
+No main or area branch was written and no protected orchestration file edited.
+
+Tests: full lower/JS and native packages, broad uncached source Node/view/count
+oracle, final scoped restored-source oracle, scoped vet, eight production-source
+view mutants, shared adapter recursion/unknown-contract assertions. The first
+child-error mutant attempt left an unused Go variable and is not counted; the
+corrected compiling mutant discards the error and is killed by the semantic
+unknown-element assertion. Full repository adapter gate and performance/read-share
+measurements are not claimed. Logs are array-prerequisite-*.log.
