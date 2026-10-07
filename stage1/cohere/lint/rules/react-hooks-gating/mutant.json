@@ -1,0 +1,6 @@
+{
+  "name": "gating_invalid_suppressed",
+  "from": "if(!this.valid(condition))",
+  "to": "if(false)",
+  "file": "rule.a"
+}
