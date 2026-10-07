@@ -1,6 +1,6 @@
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
-import { message } from './messages.a';
+import { message } from './messages.ts';
 
 const pattern = /^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$/;
 const fields = /[^\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/g;

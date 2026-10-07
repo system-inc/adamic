@@ -1,6 +1,6 @@
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
-import { message } from './messages.a';
+import { message } from './messages.ts';
 
 export class Rule {
     readonly context: RuleContext;

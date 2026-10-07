@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
-import { message } from './messages.a';
+import { message } from './messages.ts';
 
 const separator = /\s-{2,}\s/u;
 const upstream = /^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:\s|$)/u;
