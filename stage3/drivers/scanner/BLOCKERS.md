@@ -1,5 +1,16 @@
 # Scanner blockers
 
+## October 7: scratch omission of V8 capture exposes assertion contract
+
+An untracked scratch copy removes only the captureStackTrace if-block from
+Debug.fail after removing debugger. Next exact refusal:
+`debug.ts:15:142: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)`.
+This is Debug.assert's `asserts expression` return contract. Census reason:
+adamic/no-type-predicate. No demonstrated closing feature branch. The V8 block
+omission is a diagnostic probe only; no adaptation drops failure-stack behavior
+on the deliverable branch. No assertion predicate rewrite is authorized by
+adaptation 54's published plan, so it has not been made there.
+
 ## October 7: debugger removed, function widening is next
 
 Temporary 54 removes only debugger from the reached Debug.fail member. Next:
