@@ -1,0 +1,14 @@
+build exit 0
+case 0
+panic: json: unknown field "allowLoop"
+
+goroutine 1 [running]:
+main.oracleRestrictedTypesOptions({0x10f470640540, 0x1945718?, 0x0?})
+	/workspace/adamic/cohere/adamic_inline_43.go:29 +0x18f
+main.collect({0x10f47077f500, 0x25}, {0x10f4706bc990, 0x86}, {0x10f470640540, 0x7, 0xc})
+	/workspace/adamic/cohere/adamic_inline_0.go:173 +0x3c9
+main.run({0x10f47077f500?, 0x10f4708c08c0?}, 0x0, 0x10f4708c08c0)
+	/workspace/adamic/cohere/adamic_inline_0.go:58 +0x12f
+main.main()
+	/workspace/adamic/cohere/adamic_inline_0.go:242 +0x374
+oracle exit 2
