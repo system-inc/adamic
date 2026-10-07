@@ -2,7 +2,7 @@
 
 ## Deliberate compile regressions first
 
-None through merge 8.
+None landed through all 25 ordered items and the current-main integration. Item 13 would regress nested-functions/06_parser_token_state.a from Compiles to Refused, so that merge was dropped; its exact failure and reason are recorded below. Every landed stage3 change preserves all bytes outside stage0, including every recorded Node observation.
 
 ## Merge 1: compiler/landing-batch-1 e5d34c099
 
@@ -319,3 +319,55 @@ Required post-c-1 TestMarkdownUnicodeWidths passed 461.170s, including all 12774
 ### Item 25: integer coverage
 
 Resolved oracle list conflict by keeping regexp_split_pair_pattern.a and all five integer coverage fixtures, matching the reusable c-1 resolution. Regenerated counts on Linux in 28.229s, adding five rows. Formatting and vet passed. Final ordered-batch full uncached oracle 347.215s, flow 262.020s, lower 111.261s, native 276.084s and stage3 fixtures 43.069s all passed. Drivers and Node observations unchanged; no stage3 record change or new failure. All integer mutants reran in the full oracle. Log: /tmp/landing-batch-3-final-25.log.
+
+## Current main integration
+
+Pinned current origin/main 71d7e491b3c9724f7a0e2ee754592149e7f9790b, still current at final remote check. Ten conflicts: retain project/multi-root CLI with WASI target selection; both flow exclusions; both array-loop/returned-field/strong-chain borrow plans with statement-keyed emission; argc=3 closure ABI with main's borrowed map key; Darwin pthread stack bounds and WASI bounds; both oracle fixture inventories; typed parser paths with main's script-kind-aware lint adapter. Linux counts generated, never hand edited. Main's new lint registration workflow preserved; registry generation ran before building its driver.
+
+Interaction repairs: main's new direct field store omitted non-null-check's initialized-bit update. Restored the existing runtime setter after a store, preserving deliberate deinitialization. The two failing programs were non_null_definite.a (Node exit 0 and stdout "0 0\n0 0\n", native exit 70 after "0 0\n", read-before-assignment this.count), and non_null_initialized.a (Node exit 0; native exit 70 after 9, read-before-assignment state.count). Neither was a wrong-output exit-0 finding. Removing the store bookkeeping through a Go overlay is caught by TestFieldReadinessRepresentation's pinned runtime exit (0.561s); production source unchanged. Main's leak-input factory is adapted to Node FS using a new directory per run. Main's fuzzer parser uses batch-1's typed parser-path API. WASI export-alias expectation now recognizes taste-land's supported export lists. The shrink test uses permanent any and Function refusals instead of obsolete non-null/predicate blankets, preserving its exact minimum and signature-drift assertions. First seed attempt was checker-invalid because it logged Function directly; typeof keeps it checker-valid and exercises the intended refusals.
+
+Initial integration oracle failed those readiness interactions; CLI failed the obsolete alias expectation; fuzzer failed its obsolete refusal seed. Flow 360.442s, lower 155.967s, native 463.813s and stage3 58.445s passed on that first run. All repairs are retained together in the tested merge, because automatic review rejected staging an intermediate merge without its required readiness fix.
+
+Final: whole repository vet passed. Linux counts regenerated 32.616s. Full uncached oracle 504.364s, flow 354.068s, lower 143.770s, native 412.210s, stage3 59.177s, CLI 7.431s, fuzzer 52.176s and dry guard 40.469s all passed. Focused initialized-field oracle passed 0.616s; CLI/fuzzer focused repaired packages passed 2.005s/11.191s. Lint's script-kind, .a rename, emitted-JavaScript mismatch, complete suggestions, automatic-fix-plus-suggestion and registration-mutant checks passed 974.419s; every descriptor validated. This is focused lint coverage, not the entire lint corpus.
+
+Markdown widths passed after c-1 461.170s, after main runtime integration 591.058s, and after the final readiness repair 407.446s. Each covers 1277427 inputs, both Node paths, native sanitizer/release/leak checks, regeneration and width mutants. Reported JavaScript exit 70 with empty stderr did not reproduce. Existing stage3 status files match the ordered-batch tip byte for byte; no regeneration or Compiles regression in the main integration.
+
+No production wrong-output-with-exit-0 finding was observed. Performance benchmarks, the entire repository test suite, full lint corpus, Darwin execution and optional WASI host execution were not run. The runtime readiness setter adds a field-name lookup on direct writes; no performance claim for that interaction repair.
+
+Automatic review rejected broad native-layout/exception/namespace resolution scripts earlier, an attempted raw-pointer readiness-index optimization, and staging a merge without its tested fix. Rejected commands did not run. Safer alternatives were used where they fit; item 9 was dropped for a larger layout interaction, item 13 for actual larger regressions, item 15 remains blocked for a separately reviewed namespace resolution.
+
+## Final ordered landing table
+
+Tests: C = Linux count regeneration; V = formatting/vet; O = whole Node oracle; F/L/N/S = flow/lower/native/stage3; G = full uncached O/F/L/N/S checkpoint. Rows name the pinned incoming SHA, not a moving branch tip. Every checkpoint passed before its push.
+
+| # | Branch | Pinned SHA | Result | Conflicts and resolution | Tests | New failures |
+|---|---|---|---|---|---|---|
+| 1 | compiler/landing-batch-1 | e5d34c099 | Merged | Typed paths/project, enum/record/predicate proofs, initialization and runtime checks combined | C,V,O,F,L,N,S | Small admission/driver interactions repaired; Node expected output preserved |
+| 2 | compiler/taste-land | bb61f951d | Merged | Both emitters, truthiness, labels and record/enum guards retained | C,V,O,F,L,N,S | Constant-case and reference conversion interactions repaired |
+| 3 | codex/nested-functions | 79c036100 | Merged | Shared environments, readiness, optional ABI and three-state booleans combined | C,V,O,F,L,N,S | Supported symbol recursion moved to differential coverage |
+| 4 | codex/non-null-check | a02613eff | Merged | Readiness versus nested preallocation, scalar and field checks combined | C,V,G | Scalar NULL comparison/preallocation interactions repaired |
+| 5 | codex/optional-chain-after-call | 611f6e093 | Merged | Both narrowed helpers and catchable TypeError behavior preserved | C,V,O,F,L,N | None |
+| 6 | codex/flow-ranges-callback-alias | 0893c66d0 | Merged | Clean; added record/callback alias witness | C,V,O,F | None |
+| 7 | codex/unknown-narrowing | 616870dd3 | Merged | Node FS/Buffer, unknown views, record/enum/predicate/capture proofs retained | C,V,O,F,L,N,S | Typed APIs, optional booleans, null sentinel, FS wrappers and borrows repaired |
+| 8 | codex/discriminant-writes | 5fbec436f | Merged | Clean; implementation already present; census retained | C,V,G,census | None |
+| 9 | codex/optional-field-write | 514b93610 | Skipped | Presence ranks/dynamic descriptors conflict with readiness byte tails and unknown views | Layout audit | Runtime layout integration exceeded small repair scope; automatic review rejected broad rewrite |
+| 10 | codex/imported-const-case | ed65a81f4 | Merged | Taste exports/control flow retained; imported label preserves checked cycle read | C,V,O,L | TDZ folding interaction repaired and mutant caught |
+| 11 | codex/arrow-block-view-site | 71f830530 | Merged | Structural block-site exclusion retained | C,V,O,L | Deliberately refused probe excluded from flow glob at checkpoint 12 |
+| 12 | codex/refusal-pass-rulings | 5fbf1ab7f | Merged | All active refusals retained; obsolete Record blanket narrowed to unsupported storage | C,V,G | Three stale expectations and weak/FS count offsets repaired |
+| 13 | codex/error-classes-counts | 75a30c4fb | Skipped | Partial additive resolutions tested, then entirely discarded | Compile,V,C,S (failed) | Scanner capture Compiles regression, unknown/object Error cause gap and wrong runner exception; larger interaction |
+| 14 | codex/records-lowering | a2572f0b9 | Merged | Existing recordStorageView order retained; all three fixtures added | C,V,O,L | None |
+| 15 | codex/namespaces-tsc | 90f1baca0 | Skipped/blocked | Nineteen conflicts; no proposed broad rewrite executed | Conflict audit | Automatic review rejected broad namespace/readiness resolution; no runtime tests run |
+| 16 | codex/multi-root | 48a1a6ada | Already merged | Exact SHA is an ancestor; merge says Already up to date | G | None |
+| 17 | codex/c-portability | 949090876 | Merged | absent and zeroInitializer retained; runtime header test copies every embedded header | C,V,O,N,GCC mutants | Scratch header omission repaired |
+| 18 | cloud/grok-enums-coverage | 744befd8 | Merged | Counts regenerated; all four incoming drivers/observations unchanged | C,V,O | None; no open-enum driver change needed |
+| 19 | codex/cohere-dry-guard | 9045cdb | Merged | cb2c256 reused; manifest references current proofs and ownership decisions | C,V,dry/all seven mutants | Stale inventory repaired; synthetic pending-only mutant replaces obsolete mutant |
+| 20 | codex/diagnostics-audit | d4369cf | Merged | Validated string-only resolutions preserve all executable checks and audited IDs | C,V,L,S,G,selector,Markdown gaps,dry | Gap wording repaired; 17 stage0 diagnostic changes, Node bytes exact |
+| 21 | codex/flow-stale-comments | cc3fd40 | Merged | Clean; provenance retained | C,V,F,dry | None |
+| 22 | codex/escape-hatches | 0f30b52 | Merged | Complete landed document retained; probes/tools added | C,V,L | None; historical findings remain labeled historical |
+| 23 | compiler/inherited-not-yet | bc90fd0 | Merged | Member-aware classification plus reflection ID; adcff66 cherry-picked | C,V,L,S,CSS,dry,classification mutant | Stale array.values expectation and closed CSS truthiness gap repaired |
+| 24 | codex/integer-fast-paths | a183e50 | Merged | Clean; existing readiness and portability retained | C,V,G,integer mutants,Markdown widths | None |
+| 25 | coverage/integer-fast-paths | 97d3929 | Merged | Keep regexp and all five integer fixtures; regenerate counts | C,V,G | None |
+
+Skipped call-targets as directed. MayThrow commits 2dbee1148, 5af7bfbc6 and 3ab8f94c1 were already ancestors; c-1 merges introduce no duplicate commits. origin/cloud/integrate-c-1 was never merged. Reused adcff66, b058229 and cb2c256; 92f6c81 and 0bff67b did not fit current blockers/diagnostics, so generated current expectations under the record condition instead.
+
+Resolved source files pass whitespace checks. The entire incoming-main diff contains whitespace in recorded logs, patch evidence and deliberate CRLF lint witnesses; those incoming artifacts were preserved, rather than rewriting their observations.

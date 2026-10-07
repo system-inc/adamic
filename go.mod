@@ -19,6 +19,7 @@ replace (
 	github.com/microsoft/TypeScript/tsc/shim/compiler => ./cohere/TypeScript-shim/compiler
 	github.com/microsoft/TypeScript/tsc/shim/core => ./cohere/TypeScript-shim/core
 	github.com/microsoft/TypeScript/tsc/shim/locale => ./cohere/TypeScript-shim/locale
+	github.com/microsoft/TypeScript/tsc/shim/parser => ./cohere/TypeScript-shim/parser
 	github.com/microsoft/TypeScript/tsc/shim/scanner => ./cohere/TypeScript-shim/scanner
 	github.com/microsoft/TypeScript/tsc/shim/tsoptions => ./cohere/TypeScript-shim/tsoptions
 	github.com/microsoft/TypeScript/tsc/shim/tspath => ./cohere/TypeScript-shim/tspath
@@ -35,6 +36,7 @@ require (
 	github.com/microsoft/TypeScript/tsc/shim/compiler v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/core v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/locale v0.0.0
+	github.com/microsoft/TypeScript/tsc/shim/parser v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/scanner v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/tsoptions v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/tspath v0.0.0

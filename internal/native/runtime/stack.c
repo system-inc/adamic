@@ -16,11 +16,19 @@
 #include <stdint.h>
 #if defined(__APPLE__)
 #include <pthread.h>
-#else
+#elif !defined(ADAMIC_TARGET_WASI)
 #include <sys/resource.h>
 #endif
 
 uintptr_t adamic_stack_limit;
+
+#ifdef ADAMIC_TARGET_WASI
+// wasm-ld reserves a downward-growing linear stack. Keep 16 KB for the panic path.
+extern unsigned char __stack_low;
+__attribute__((constructor)) static void find_stack_limit(void) {
+	adamic_stack_limit = (uintptr_t)&__stack_low + 16384;
+}
+#else
 
 // The stack assumed when the process's is unlimited, and the room kept below the limit for the frame
 // that finds it crossed and for the panic that follows, at most: sanitized frames are several times
@@ -66,6 +74,8 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : 0;
 #endif
 }
+
+#endif
 
 _Noreturn void adamic_stack_overflow(void) {
 	static const char message[] = "RangeError: Maximum call stack size exceeded";

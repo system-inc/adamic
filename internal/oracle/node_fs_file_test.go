@@ -134,7 +134,12 @@ func TestNodeFSFileAgreesWithNode(t *testing.T) {
 					t.Errorf("%s filesystem: %s", name, difference)
 				}
 			}
-			if leaked := inputLeaks(t, fsFilePrepare(t, shared, "leaks"), program, binary); leaked != "" {
+			leakRun := 0
+			prepared := func() inputRun {
+				leakRun++
+				return fsFilePrepare(t, shared, fmt.Sprintf("leaks-%d", leakRun))
+			}
+			if leaked := inputLeaks(t, prepared, program, binary); leaked != "" {
 				t.Errorf("leaks: %s", leaked)
 			}
 			t.Logf("Node bytes, effects, ASan/UBSan and leak check passed")

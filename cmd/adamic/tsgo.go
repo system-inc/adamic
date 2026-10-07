@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -16,6 +17,13 @@ func buildInput(paths []string, project, output string, arguments []string) int 
 	archive := ""
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
+		case "--target":
+			index++
+			if index >= len(arguments) || options.Target != "" || arguments[index] != "wasm32-wasi" {
+				fmt.Fprintln(os.Stderr, usage)
+				return 2
+			}
+			options.Target = arguments[index]
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -32,7 +40,27 @@ func buildInput(paths []string, project, output string, arguments []string) int 
 			return 2
 		}
 	}
-	program, code := compileInput(paths, project, archive != "")
+	if err := native.ValidateOptions(options); err != nil {
+		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+		return 1
+	}
+	if options.Target != "" && archive != "" {
+		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
+		return 1
+	}
+	var program *ir.Program
+	var code int
+	handler := -1
+	if options.Target == "wasm32-wasi" {
+		if len(paths) != 1 || project != "" {
+			fmt.Fprintln(os.Stderr, "adamic: wasm32-wasi requires one source file without --project")
+			return 1
+		}
+		program, handler, code = compileWASI(paths[0])
+		options.Request = handler >= 0
+	} else {
+		program, code = compileInput(paths, project, archive != "")
+	}
 	if program == nil {
 		return code
 	}
@@ -49,7 +77,15 @@ func buildInput(paths []string, project, output string, arguments []string) int 
 			err = native.BuildTSGo(source, output, archive, options)
 		}
 	} else {
-		err = native.Build(native.C(program), output, options)
+		var source string
+		if options.Target == "wasm32-wasi" {
+			source, err = native.WASI(program, handler)
+		} else {
+			source = native.C(program)
+		}
+		if err == nil {
+			err = native.Build(source, output, options)
+		}
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)

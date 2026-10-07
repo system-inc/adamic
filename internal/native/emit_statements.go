@@ -194,9 +194,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
-		e.line("adamic_object_check_write(%s, %s);", object, cString(statement.Name))
+		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), e.cache())
+		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
@@ -206,9 +206,8 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		if statement.Uninitialized {
-			e.line("adamic_object_set_initialized(%s, %s, false);", object, cString(statement.Name))
-		}
+		// Direct field stores must update readiness just like the runtime write path.
+		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
 		e.end()
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
@@ -352,9 +351,9 @@ func (e *emitter) loop(statement ir.Loop) {
 	}
 }
 
-// forOf emits for (const element of array). The array is held (retained) for the whole loop, as
-// JavaScript's iterator holds it even if the variable naming it is reassigned, and its length is read
-// again before each pass. Over a map, what's held is an iterator, which holds the map and keeps it
+// forOf emits for (const element of array). Unless the element borrow proof keeps the array
+// alive in its variable, the iterator holds its own count even if that variable is reassigned.
+// Its length is read again before each pass. Over a map, an iterator holds the map and keeps it
 // from compacting until every way out of the loop has let go of it.
 func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("{")
@@ -365,13 +364,14 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overString := statement.Iterable.Type() == ir.String
 	overMap := statement.MapPart != ""
 	overRegex := statement.RegexIterator
-	borrowLoop := !overMap && !overString && !overRegex && statement.Pattern == nil && e.program.Locals[statement.Local].Borrowed
+	borrowLoop := e.elementBorrows[e.at]
 	if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
 	} else if borrowLoop {
+		// The same proof lends both the element and the array. Neither owns a count here.
 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
 	} else {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
+		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
 	}
 	if !borrowLoop {
 		e.hold(held)

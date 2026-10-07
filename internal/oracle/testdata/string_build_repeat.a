@@ -1,0 +1,15 @@
+// Repetition can join halves at each copy boundary while keeping its unit count.
+function show(text: string): void {
+	const codes: number[] = [];
+	for (let index = 0; index < text.length; index++) {
+		codes.push(text.charCodeAt(index));
+		codes.push(text.codePointAt(index) ?? -1);
+	}
+	console.log(`${text.length} ${text.codePointAt(0) ?? -1}: ${codes.join(',')}`);
+}
+for (const text of ['a', 'é', '世', '🌍', '\ud83c', '\udf0d', '\udf0d\ud83c', 'a🌍é']) {
+	for (const count of [0, 1, 2, 3.9, NaN]) {
+		show(text.repeat(count));
+	}
+}
+show(String.fromCharCode(0xd83c, 0xdf0d).repeat(2));

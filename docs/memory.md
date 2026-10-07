@@ -1017,6 +1017,670 @@ Not covered by this unit: borrowing `for...of` bindings, avoiding the iterator's
 borrowing global call arguments, or resolving virtual override effects. Those need different
 emission or call-effect proofs. The borrowed declaration rule stays conservative on array
 stores, reassignment, removal, closure calls, callbacks and operations it cannot prove.
+### Borrowed loop bindings and global call arguments (built, October 7, 2026)
+
+Starting at `ef3d907`, nbody's indexed declarations already borrow. Its remaining
+7,000,019 retains come from three emission paths:
+
+| Source | Repeated retains | Why the baseline counts it |
+|---|---:|---|
+| `advance`'s five `for...of` bindings | 5,000,000 | `forOf` always calls `declareLocal(..., false)`, which retains every reference binding and schedules its release |
+| `advance`'s iterator array | 1,000,000 | `forOf` holds the array for the loop, including reassignment and unwinding |
+| The global `bodies` argument to `advance` | 1,000,000 | `arguments` calls `value`; a call is not a pure consumer, so `read` snapshots the global with a retain |
+
+The other 19 retains are ten constructor/array-insertion counts, six for
+`offsetMomentum`'s iterator and bindings, and three more global arguments.
+The baseline release count is 7,000,023. Here is the actual generated C, with
+unrelated field operations omitted:
+
+```c
+/* Before, advance's loop. */
+adamic_array * adamic_temporary_86 = adamic_retain(adamic_local_4_bodies);
+for (size_t adamic_temporary_87 = 0; adamic_temporary_87 < adamic_temporary_86->length; adamic_temporary_87++) {
+    adamic_object * adamic_local_30_body = adamic_retain((adamic_object *)adamic_temporary_86->elements[adamic_temporary_87].reference);
+    /* Read and write body's x, y, z fields. */
+    adamic_release(adamic_local_30_body);
+}
+adamic_release(adamic_temporary_86);
+/* Before, the main loop's call. */
+adamic_array * adamic_temporary_194 = adamic_retain(adamic_global_2_bodies);
+adamic_function_2_advance(adamic_temporary_194, (0x1.47ae147ae147bp-07));
+adamic_release(adamic_temporary_194);
+/* After: the binding and argument snapshot hold no count. */
+adamic_object * adamic_local_30_body = (adamic_object *)adamic_temporary_86->elements[adamic_temporary_87].reference;
+adamic_array * adamic_temporary_194 = adamic_global_2_bodies;
+adamic_function_2_advance(adamic_temporary_194, (0x1.47ae147ae147bp-07));
+```
+
+**The loop proof.** `planElementBorrows` also plans a plain array loop binding,
+using `borrowable`'s local, capture, type, and assignment facts, and `changes` on
+the entire body. Both the binding and array must be unassigned throughout the
+function; this is deliberately stronger than checking only the body. The binding
+is marked `Borrowed` before reuse runs, and the array is marked lending. The
+emitter gives the binding the element pointer and schedules no release for it.
+The iterator retains its array and releases it on every exit. Field stores and
+pushes are safe: they do not remove the element. Index stores, removal,
+reordering, in-place array reuse, unknown callbacks, closure calls, and mutating
+named calls still refuse the borrow. Virtual calls are refused because the
+static method's summary does not cover overrides. This uses the same virtual
+guard as the preceding borrowed-element unit, now merged into this branch.
+
+`MakeError` itself cannot remove an element, so it is allowed, with its operands
+still checked. A throw caught inside the body preserves the borrowed pointer;
+a throw leaving the body releases the iterator, never the borrowed binding.
+Maps, strings, regex iterators, destructuring bindings, closures, captured
+sources, and global sources do not receive the new binding optimization.
+
+**The iterator count.** Its hold remains the one array count this loop explicitly
+owns. The million iterator holds in nbody are unchanged. For an iterable already
+owned by the statement, `kept` transfers that count into the iterator instead of
+retaining it again and releasing the temporary. For a local or borrowed parameter,
+`kept` retains as before. Eliminating nbody's iterator hold would need a separate
+proof that another owner survives every body exit; this unit keeps the hold.
+
+**The global argument proof.** `lentArgument` accepts only a direct reference
+global read handed to a borrowed, unconsumed parameter. Every later argument must
+be pure, and `touches` must return false for every `CallTargets` implementation.
+It recursively checks reachable calls and refuses unknown closure and callback
+effects. It also refuses reads of the global, which is stronger than the needed
+no-write proof. Every target must have a borrowed, unconsumed parameter. The
+snapshot and any initialization check remain, preserving JavaScript evaluation
+order. A return of the parameter takes its own count as before. Captured reads,
+pass-through casts and narrowings, unions, consumed parameters, effectful later
+arguments, and calls reaching the global keep their counts. Neither `pureKind`
+nor `consumes` was widened; `TestPassThroughsAreNotConsumers` passes unchanged.
+
+**Measurements.** clang 20.1.8, Go 1.27.1, Node 24.19.0, Linux 6.18.44,
+AMD EPYC 9V74, `nproc` 5, CPU quota 4. `cloud/setup.sh` reported Go ready 0s,
+clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 15s,
+done 15s. Five before/after native `-O2` runs were interleaved without sanitizers;
+one-minute load was 0.39 both before and after. Best times were 0.423612s before
+and 0.403722s after, a 4.7% difference small enough for cloud noise to hide.
+All ten runs printed `-0.169075164` and `-0.169086185`.
+
+| nbody | Before | After |
+|---|---:|---:|
+| Allocations / frees | 8 / 8 | 8 / 8 |
+| Retains | 7,000,019 | 1,000,011 |
+| Releases | 7,000,023 | 1,000,015 |
+| Peak live / in regions | 7 / 0 | 7 / 0 |
+
+Exactly 5,000,005 binding pairs and 1,000,003 argument pairs disappeared.
+The 1,000,001 iterator holds remain, plus ten constructor/insertion retains.
+The release total additionally includes two formatted strings, final global
+cleanup, and the initial NULL global replacement.
+
+**Fixtures and mutants.** `borrow_loop.a` builds labels at runtime and independently
+exercises index stores, pop, splice, named mutation, closure mutation, an overriding
+mutator, reassignment, push, consumed binding reuse, capture, assignment, temporary
+iterables, and both caught and escaping throws. `borrow_global_call.a` exercises a
+safe borrow, deep global replacement, replacement by a later argument, and an
+overriding callee replacing the global. Both run against source Node, backend Node,
+release native, ASan, UBSan, and LeakSanitizer.
+
+A push alone cannot free the current element. Nor can reassignment of the array
+variable while the iterator owns the old array. Thus there is no honest ASan
+use-after-free fixture for those operations alone. Push is allowed and tested;
+the conservative reassignment refusal is held by the plan assertion, while
+removing the iterator hold makes the reassignment fixture fail under ASan.
+Binding capture and assignment refusals, and the lending bookkeeping assertion,
+are independently checked rather than claimed as sanitizer failures.
+The first captured-binding mutant survived because a closure invocation separately
+refused borrowing. Removing that invocation isolated the guard; its rerun failed.
+
+Run `source /workspace/adamic-tools/env.sh` and
+`python3 internal/native/testdata/run-loop-borrow-mutants.py > /tmp/loop-mutants.log 2>&1`.
+It restores every mutation, writes individual logs under `/tmp/adamic-loop-mutants`,
+and fails if a mutant survives or only breaks a build. Twenty loop/global mutants all
+failed: thirteen ASan reports and seven compiler behavior assertions. The merged runner
+also tests the virtual guard on the earlier indexed-element fixture,
+`borrow_element_virtual_store.a`, as `element-virtual-call`.
+
+| Mutant | Catcher |
+|---|---|
+| Ignore `SetIndex` | ASan, `storeBody` |
+| Allow `ArrayPop` | ASan, `popBody` |
+| Allow `ArraySplice` | ASan, `spliceBody` |
+| Ignore changing named callees | ASan, `callBody` |
+| Allow closure calls | ASan, `closureBody` |
+| Allow virtual calls using only the static summary | ASan, `virtualBody` |
+| Allow an assigned array variable | `TestLoopBorrowPlan`, `reassignBody` |
+| Allow an assigned binding | `TestLoopBorrowPlan`, `assignedBinding` |
+| Allow a captured binding | `TestLoopBorrowPlan`, `capturedBinding` |
+| Do not mark the binding borrowed | ASan, `bindingReuse` |
+| Do not mark the array lending | `TestLoopBorrowPlan`, missing lending fact |
+| Disable loop borrowing | `TestLoopBorrowPlan` and `TestNbodyBorrowedLoopC` |
+| Schedule a borrowed binding's release on a throw | ASan, `throwBody` |
+| Omit the iterator retain in `reassignBody` | ASan, `reassignBody` |
+| Leave the transferred iterator count in the statement cleanup | ASan, `freshBody` |
+| Ignore global `touches` | ASan, `replace` |
+| Ignore later-argument purity | ASan, `read` |
+| Check only the static global callee | ASan, `Replacer.read` |
+| Refuse safe error construction | `TestLoopBorrowPlan`, `throwBody` |
+| Disable global lending | `TestGlobalArgumentLending` |
+
+**Every moved counts row.** Across 136 existing rows, allocations and frees fell
+by one each, retains by 17,238, releases by 17,234, and the sum of peaks by one;
+region counts did not move. Two new rows were added. The complete diff follows.
+A/F/R/L/P/G mean allocations, frees, retains, releases, peak, and in regions.
+Each cause was measured by disabling that feature alone and regenerating the
+entire counts table. Parenthesized R/L numbers are final minus that counterfactual,
+so interacting causes need not add up. Bindings remove loop-element counts;
+global arguments remove safe call snapshot pairs; iterator transfer removes
+redundant temporary pairs. Shared safety is safe error construction plus the
+virtual guard. In `exceptions.a`, error construction permits borrowing; in
+`borrow_element_virtual_move.a`, the guard prevents the first borrow, permits
+safe array moves into consumed parameters, and lets unique mapping reuse an array.
+That row's +1 retain/+4 releases and one fewer allocation/free/peak are the same
+shared-guard effects measured in the preceding unit. `return_panic_fires.a` stops
+before its statement releases temporaries, so its retain and release deltas differ.
+
+| Fixture | Before A/F/R/L/P/G | After A/F/R/L/P/G | Measured cause |
+|---|---|---|---|
+| `library_object_keys.a` | 88/88/35/75/24/0 | 88/88/32/72/24/0 | iterator transfer (-3 R, -3 L) |
+| `library_object_is.a` | 163/163/29/198/7/0 | 163/163/21/190/7/0 | iterator transfer (-8 R, -8 L) |
+| `library_object_order.a` | 84/84/31/71/44/0 | 84/84/30/70/44/0 | iterator transfer (-1 R, -1 L) |
+| `class_oct6_deep.a` | 43/43/23/55/20/0 | 43/43/22/54/20/0 | iterator transfer (-1 R, -1 L) |
+| `class_oct6_parameters.a` | 43/43/16/44/10/0 | 43/43/15/43/10/0 | iterator transfer (-1 R, -1 L) |
+| `class_oct6_release.a` | 372/372/180/441/26/0 | 372/372/177/438/26/0 | iterator transfer (-3 R, -3 L) |
+| `class_oct6_subclass_holder.a` | 76/76/55/116/12/0 | 76/76/54/115/12/0 | iterator transfer (-1 R, -1 L) |
+| `library_array_with.a` | 68/68/57/123/10/0 | 68/68/43/109/10/0 | global arguments (-13 R, -13 L), iterator transfer (-1 R, -1 L) |
+| `library_array_flat_map.a` | 50/50/66/115/17/0 | 50/50/62/111/17/0 | bindings (-4 R, -4 L) |
+| `library_array_flat.a` | 33/33/84/100/19/0 | 33/33/55/71/19/0 | bindings (-24 R, -24 L), global arguments (-5 R, -5 L) |
+| `library_array_spliced.a` | 72/72/59/133/12/0 | 72/72/40/114/12/0 | global arguments (-18 R, -18 L), iterator transfer (-1 R, -1 L) |
+| `library_array_copy_within.a` | 615/615/141/754/7/0 | 615/615/126/739/7/0 | global arguments (-4 R, -4 L), iterator transfer (-11 R, -11 L) |
+| `library_array_search.a` | 87/87/11/98/11/0 | 87/87/10/97/11/0 | iterator transfer (-1 R, -1 L) |
+| `json_stringify_scalars.a` | 100/100/38/170/5/0 | 100/100/37/169/5/0 | iterator transfer (-1 R, -1 L) |
+| `json_stringify_options.a` | 74/74/30/83/6/0 | 74/74/29/82/6/0 | iterator transfer (-1 R, -1 L) |
+| `json_stringify_numbers.a` | 66/66/2/108/3/0 | 66/66/1/107/3/0 | iterator transfer (-1 R, -1 L) |
+| `library_fnexpr_loops.a` | 182/182/197/269/82/0 | 182/182/194/266/82/0 | iterator transfer (-3 R, -3 L) |
+| `library_for_in.a` | 79/79/135/123/65/0 | 79/79/130/118/65/0 | iterator transfer (-5 R, -5 L) |
+| `library_for_in_keys.a` | 38/38/110/79/34/0 | 38/38/108/77/34/0 | iterator transfer (-2 R, -2 L) |
+| `library_for_in_live.a` | 39/39/63/80/21/0 | 39/39/59/76/21/0 | iterator transfer (-4 R, -4 L) |
+| `internal/load/testdata/0.1/compile/03_shapes.ts` | 13/13/17/25/7/0 | 13/13/16/24/7/0 | iterator transfer (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/05_wordcount.ts` | 49/49/73/78/26/0 | 49/49/71/76/26/0 | iterator transfer (-2 R, -2 L) |
+| `internal/load/testdata/0.1/compile/06_stack.ts` | 39/39/61/87/7/0 | 39/39/60/86/7/0 | iterator transfer (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/07_modules/main.ts` | 14/14/14/26/10/0 | 14/14/9/21/10/0 | bindings (-4 R, -4 L), global arguments (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/08_results.ts` | 26/25/37/49/4/0 | 26/25/36/48/4/0 | iterator transfer (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/09_tree.ts` | 19/19/85/126/16/0 | 19/19/82/123/16/0 | global arguments (-2 R, -2 L), iterator transfer (-1 R, -1 L) |
+| `bitwise_sweep.a` | 4152674/4152674/2076/4154757/9/0 | 4152674/4152674/1260/4153941/9/0 | iterator transfer (-816 R, -816 L) |
+| `objects.a` | 58/58/59/110/18/0 | 58/58/47/98/18/0 | bindings (-5 R, -5 L), global arguments (-5 R, -5 L), iterator transfer (-2 R, -2 L) |
+| `maps_and_text.a` | 59/59/41/94/10/0 | 59/59/39/92/10/0 | iterator transfer (-2 R, -2 L) |
+| `sorting.a` | 61/61/57/75/38/0 | 61/61/55/73/38/0 | iterator transfer (-2 R, -2 L) |
+| `classes.a` | 16/16/24/42/10/0 | 16/16/16/34/10/0 | global arguments (-8 R, -8 L) |
+| `indexing.a` | 33/33/13/46/6/0 | 33/33/12/45/6/0 | iterator transfer (-1 R, -1 L) |
+| `casts.a` | 9/9/17/25/6/0 | 9/9/16/24/6/0 | iterator transfer (-1 R, -1 L) |
+| `cast_fails.a` | 2/0/5/3/2/0 | 2/0/4/2/2/0 | iterator transfer (-1 R, -1 L) |
+| `updates.a` | 27/27/27/57/9/0 | 27/27/23/53/9/0 | global arguments (-4 R, -4 L) |
+| `string_index.a` | 89/89/29/126/7/0 | 89/89/28/125/7/0 | iterator transfer (-1 R, -1 L) |
+| `visits.a` | 95/95/125/209/23/0 | 95/95/124/208/23/0 | iterator transfer (-1 R, -1 L) |
+| `searches.a` | 106/106/82/174/19/0 | 106/106/81/173/19/0 | iterator transfer (-1 R, -1 L) |
+| `defaults.a` | 38/36/17/52/6/2 | 38/36/15/50/6/2 | global arguments (-2 R, -2 L) |
+| `strings_more.a` | 128/128/30/164/11/0 | 128/128/29/163/11/0 | iterator transfer (-1 R, -1 L) |
+| `library_math_number_math.a` | 1280/1280/50/1331/8/0 | 1280/1280/25/1306/8/0 | iterator transfer (-25 R, -25 L) |
+| `library_math_number_convert.a` | 199/199/197/365/7/0 | 199/199/196/364/7/0 | iterator transfer (-1 R, -1 L) |
+| `library_math_number_prototype.a` | 71/71/2/74/8/0 | 71/71/1/73/8/0 | iterator transfer (-1 R, -1 L) |
+| `navigation.a` | 162/162/40/189/16/0 | 162/162/36/185/16/0 | iterator transfer (-4 R, -4 L) |
+| `number_formats.a` | 235/235/46/263/18/0 | 235/235/45/262/18/0 | iterator transfer (-1 R, -1 L) |
+| `precision_range.a` | 4/3/2/5/2/0 | 4/3/1/4/2/0 | iterator transfer (-1 R, -1 L) |
+| `radixes.a` | 696/696/97/332/25/0 | 696/696/95/330/25/0 | iterator transfer (-2 R, -2 L) |
+| `timsort.a` | 2769/2769/3779/6232/308/0 | 2769/2769/3778/6231/308/0 | iterator transfer (-1 R, -1 L) |
+| `sort_top_level.a` | 33/33/80/97/19/0 | 33/33/79/96/19/0 | iterator transfer (-1 R, -1 L) |
+| `splices.a` | 74/74/41/108/12/0 | 74/74/29/96/12/0 | global arguments (-12 R, -12 L) |
+| `array_from.a` | 94/94/57/132/25/0 | 94/94/56/131/25/0 | iterator transfer (-1 R, -1 L) |
+| `weak_parent.a` | 86/86/264/313/41/0 | 86/86/253/302/41/0 | global arguments (-8 R, -8 L), iterator transfer (-3 R, -3 L) |
+| `doubly_linked.a` | 90/90/545/578/49/0 | 90/90/525/558/49/0 | global arguments (-20 R, -20 L) |
+| `fresh_parser.a` | 294/294/338/508/34/0 | 294/294/292/462/34/0 | global arguments (-4 R, -4 L), iterator transfer (-42 R, -42 L) |
+| `fresh_writes.a` | 330/330/409/525/132/0 | 330/330/369/485/132/0 | global arguments (-4 R, -4 L), iterator transfer (-36 R, -36 L) |
+| `fresh_calls.a` | 147/147/268/323/39/0 | 147/147/239/294/39/0 | global arguments (-2 R, -2 L), iterator transfer (-27 R, -27 L) |
+| `exceptions.a` | 133/133/171/246/20/0 | 133/133/159/234/20/0 | bindings (-5 R, -5 L), global arguments (-3 R, -3 L), iterator transfer (-4 R, -4 L), shared safety (-5 R, -5 L) |
+| `param_assigned_in_try.a` | 46/46/32/67/12/0 | 46/46/31/66/12/0 | global arguments (-1 R, -1 L) |
+| `invariance_readonly.a` | 30/30/39/52/16/0 | 30/30/38/51/16/0 | iterator transfer (-1 R, -1 L) |
+| `tuples_kept.a` | 31/31/54/74/13/0 | 31/31/52/72/13/0 | iterator transfer (-2 R, -2 L) |
+| `undefined_strings.a` | 15/15/21/43/6/0 | 15/15/19/41/6/0 | global arguments (-2 R, -2 L) |
+| `maybe_booleans.a` | 48/48/51/101/11/0 | 48/48/47/97/11/0 | global arguments (-3 R, -3 L), iterator transfer (-1 R, -1 L) |
+| `unions.a` | 1449/1449/1111/2573/16/0 | 1449/1449/1107/2569/16/0 | bindings (-3 R, -3 L), iterator transfer (-1 R, -1 L) |
+| `maybe_number_slots.a` | 484/484/305/798/16/0 | 484/484/304/797/16/0 | iterator transfer (-1 R, -1 L) |
+| `case_mapping.a` | 203/203/20/217/16/0 | 203/203/19/216/16/0 | iterator transfer (-1 R, -1 L) |
+| `undefined_elements.a` | 20/20/46/43/9/0 | 20/20/45/42/9/0 | iterator transfer (-1 R, -1 L) |
+| `map_zero_keys.a` | 29/29/24/49/8/0 | 29/29/23/48/8/0 | iterator transfer (-1 R, -1 L) |
+| `adversarial_exits.a` | 120/120/80/175/25/0 | 120/120/63/158/25/0 | bindings (-13 R, -13 L), global arguments (-3 R, -3 L), iterator transfer (-1 R, -1 L) |
+| `adversarial_iteration.a` | 59/59/120/152/21/0 | 59/59/118/150/21/0 | iterator transfer (-2 R, -2 L) |
+| `string_positions.a` | 436/436/301/607/134/0 | 436/436/300/606/134/0 | iterator transfer (-1 R, -1 L) |
+| `class_layouts.a` | 70/70/112/159/27/0 | 70/70/103/150/27/0 | global arguments (-8 R, -8 L), iterator transfer (-1 R, -1 L) |
+| `size_class_churn.a` | 675173/675173/270039/675213/8005/0 | 675173/675173/270038/675212/8005/0 | iterator transfer (-1 R, -1 L) |
+| `class_as_interface.a` | 372/372/360/525/60/0 | 372/372/356/521/60/0 | global arguments (-1 R, -1 L), iterator transfer (-3 R, -3 L) |
+| `optional_class_method.a` | 40/40/47/74/9/0 | 40/40/44/71/9/0 | iterator transfer (-3 R, -3 L) |
+| `spread_snapshot.a` | 22/22/4/25/11/0 | 22/22/3/24/11/0 | global arguments (-1 R, -1 L) |
+| `reuse.a` | 76/76/57/122/16/0 | 76/76/55/120/16/0 | global arguments (-2 R, -2 L) |
+| `regions.a` | 316/260/219/409/50/56 | 316/260/213/403/50/56 | global arguments (-6 R, -6 L) |
+| `borrow_loop.a` | new | 88/86/94/142/7/2 | new fixture |
+| `borrow_global_call.a` | new | 18/16/10/23/6/2 | new fixture |
+| `borrow_element_virtual_move.a` | 26/24/10/22/12/2 | 25/23/11/26/11/2 | shared safety (1 R, 4 L) |
+| `spread_undefined.a` | 45/45/27/65/10/0 | 45/45/26/64/10/0 | iterator transfer (-1 R, -1 L) |
+| `trig_reduction.a` | 133/133/14/148/7/0 | 133/133/1/135/7/0 | iterator transfer (-13 R, -13 L) |
+| `sets.a` | 224/224/13016/13113/65/0 | 224/224/13011/13108/65/0 | bindings (-4 R, -4 L), iterator transfer (-1 R, -1 L) |
+| `library_map_set.a` | 170/170/219/320/24/0 | 170/170/135/236/24/0 | global arguments (-84 R, -84 L) |
+| `library_map_set_keys.a` | 76/76/70/135/15/0 | 76/76/64/129/15/0 | global arguments (-6 R, -6 L) |
+| `library_map_set_construct.a` | 180/180/229/275/52/0 | 180/180/228/274/52/0 | iterator transfer (-1 R, -1 L) |
+| `maybe_collections.a` | 64/64/166/225/20/0 | 64/64/165/224/20/0 | iterator transfer (-1 R, -1 L) |
+| `collections.a` | 363/363/395/565/101/0 | 363/363/391/561/101/0 | iterator transfer (-4 R, -4 L) |
+| `power_of_two_string.a` | 19/19/2/22/4/0 | 19/19/1/21/4/0 | iterator transfer (-1 R, -1 L) |
+| `declared_later.a` | 56/56/76/128/15/0 | 56/56/75/127/15/0 | iterator transfer (-1 R, -1 L) |
+| `return_panic.a` | 13/13/14/27/9/0 | 13/13/13/26/9/0 | bindings (-1 R, -1 L) |
+| `return_panic_fires.a` | 5/0/8/7/5/0 | 5/0/6/6/5/0 | global arguments (-2 R, -1 L) |
+| `from_codes.a` | 408/408/56/416/12/0 | 408/408/53/413/12/0 | global arguments (-1 R, -1 L), iterator transfer (-2 R, -2 L) |
+| `bitwise.a` | 9304/9304/1406/9379/45/0 | 9304/9304/1369/9342/45/0 | iterator transfer (-37 R, -37 L) |
+| `tuple_values.a` | 119/119/126/207/37/0 | 119/119/122/203/37/0 | global arguments (-2 R, -2 L), iterator transfer (-2 R, -2 L) |
+| `generic_values.a` | 22/22/39/52/10/0 | 22/22/33/46/10/0 | global arguments (-6 R, -6 L) |
+| `undefined_references.a` | 17/17/37/52/11/0 | 17/17/34/49/11/0 | bindings (-3 R, -3 L) |
+| `utf8_view.a` | 59/59/34/80/7/0 | 59/59/33/79/7/0 | iterator transfer (-1 R, -1 L) |
+| `search_from.a` | 292/292/168/329/22/0 | 292/292/159/320/22/0 | iterator transfer (-9 R, -9 L) |
+| `shared_slices.a` | 12675/12675/5999/12774/87/0 | 12675/12675/5992/12767/87/0 | global arguments (-5 R, -5 L), iterator transfer (-2 R, -2 L) |
+| `string_append.a` | 249/249/95/285/49/0 | 249/249/89/279/49/0 | bindings (-6 R, -6 L) |
+| `search_from_sweep.a` | 133/133/34/155/10/0 | 133/133/33/154/10/0 | iterator transfer (-1 R, -1 L) |
+| `integer_format.a` | 106826/106826/58737/146871/20/0 | 106826/106826/48056/136190/20/0 | iterator transfer (-10681 R, -10681 L) |
+| `reuse_spread_method_alias.a` | 8/8/8/15/6/0 | 8/8/7/14/6/0 | iterator transfer (-1 R, -1 L) |
+| `try_assignments.a` | 37/37/9/42/6/0 | 37/37/8/41/6/0 | iterator transfer (-1 R, -1 L) |
+| `library_string_conversion.a` | 15/15/4/21/3/0 | 15/15/3/20/3/0 | iterator transfer (-1 R, -1 L) |
+| `library_string_indices.a` | 639/639/200/845/8/0 | 639/639/56/701/8/0 | global arguments (-129 R, -129 L), iterator transfer (-15 R, -15 L) |
+| `library_string_raw.a` | 45/45/61/95/11/0 | 45/45/58/92/11/0 | global arguments (-3 R, -3 L) |
+| `library_map_set_setops.a` | 590/590/347/666/17/0 | 590/590/336/655/17/0 | global arguments (-11 R, -11 L) |
+| `regexp.a` | 455/455/369/422/62/0 | 455/455/364/417/62/0 | iterator transfer (-5 R, -5 L) |
+| `sweeps/regexp_methods.a` | 448046/448046/131098/340026/68/0 | 448046/448046/126442/335370/68/0 | iterator transfer (-4656 R, -4656 L) |
+| `regexp_exec.a` | 179/179/82/160/18/0 | 179/179/77/155/18/0 | global arguments (-5 R, -5 L) |
+| `regexp_match.a` | 83/83/85/103/18/0 | 83/83/84/102/18/0 | iterator transfer (-1 R, -1 L) |
+| `class_features_static.a` | 110/110/84/191/28/0 | 110/110/59/166/28/0 | global arguments (-25 R, -25 L) |
+| `class_features_static_private.a` | 42/42/71/112/12/0 | 42/42/53/94/12/0 | global arguments (-18 R, -18 L) |
+| `class_features_private.a` | 47/47/37/65/15/0 | 47/47/29/57/15/0 | global arguments (-8 R, -8 L) |
+| `class_features_accessors.a` | 67/67/53/110/21/0 | 67/67/47/104/21/0 | global arguments (-6 R, -6 L) |
+| `class_features_twice.a` | 26/26/6/35/6/0 | 26/26/4/33/6/0 | global arguments (-2 R, -2 L) |
+| `class_features_retained.a` | 48/48/57/88/18/0 | 48/48/42/73/18/0 | global arguments (-15 R, -15 L) |
+| `class_features_distinct.a` | 48/48/50/81/14/0 | 48/48/48/79/14/0 | global arguments (-2 R, -2 L) |
+| `class_inheritance.a` | 150/150/29/170/23/0 | 150/150/24/165/23/0 | global arguments (-4 R, -4 L), iterator transfer (-1 R, -1 L) |
+| `class_inheritance_exceptions.a` | 29/29/22/42/8/0 | 29/29/19/39/8/0 | iterator transfer (-3 R, -3 L) |
+| `class_inheritance_memory.a` | 48/42/22/60/11/6 | 48/42/20/58/11/6 | global arguments (-2 R, -2 L) |
+| `class_inheritance_generic.a` | 89/89/104/167/39/0 | 89/89/85/148/39/0 | global arguments (-18 R, -18 L), iterator transfer (-1 R, -1 L) |
+| `class_inheritance_interface.a` | 37/37/45/71/13/0 | 37/37/44/70/13/0 | iterator transfer (-1 R, -1 L) |
+| `class_inheritance_conditional.a` | 164/164/148/251/35/0 | 164/164/146/249/35/0 | global arguments (-2 R, -2 L) |
+| `user_iterators.a` | 669/669/466/915/67/0 | 669/669/465/914/67/0 | iterator transfer (-1 R, -1 L) |
+| `literal_optional_shapes.a` | 36/36/40/68/9/0 | 36/36/39/67/9/0 | iterator transfer (-1 R, -1 L) |
+| `e4eec87_u03_discriminated_undefined.a` | 10/10/14/20/6/0 | 10/10/12/18/6/0 | global arguments (-1 R, -1 L), iterator transfer (-1 R, -1 L) |
+| `e4eec87_f1_field_narrowed.a` | 1/0/2/3/1/0 | 1/0/1/2/1/0 | global arguments (-1 R, -1 L) |
+| `e4eec87_f1_field_present.a` | 6/6/2/9/3/0 | 6/6/1/8/3/0 | global arguments (-1 R, -1 L) |
+| `object_prototype.a` | 142/142/317/440/22/0 | 142/142/165/288/22/0 | global arguments (-150 R, -150 L), iterator transfer (-2 R, -2 L) |
+| `regexp_cycle_fields.a` | 61/61/134/132/44/0 | 61/61/132/130/44/0 | global arguments (-2 R, -2 L) |
+| `regexp_cycle_collections.a` | 31/31/86/90/23/0 | 31/31/85/89/23/0 | iterator transfer (-1 R, -1 L) |
+| `utf8_sweep.a` | 38498/38498/7702/38502/7706/0 | 38498/38498/7701/38501/7706/0 | iterator transfer (-1 R, -1 L) |
+| `arguments.a` | 77/77/15/69/27/0 | 77/77/14/68/27/0 | iterator transfer (-1 R, -1 L) |
+| `read_arguments.a` | 15/15/12/19/9/0 | 15/15/11/18/9/0 | iterator transfer (-1 R, -1 L) |
+| `walk.a` | 222/222/123/294/36/0 | 222/222/117/288/36/0 | iterator transfer (-6 R, -6 L) |
+
+**Validation run.** Test output went to files, never through a pipe. The final
+unmutated commands and results were:
+
+```text
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle
+ok github.com/system-inc/adamic/internal/native 111.817s
+ok github.com/system-inc/adamic/internal/oracle 108.826s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/borrow_|TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestPassThroughsAreNotConsumers|TestCountsAreRecorded' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/native 0.188s
+ok github.com/system-inc/adamic/internal/oracle 13.163s
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 12.211s
+go vet ./...
+exit 0, no output
+gofmt -l cmd internal
+exit 0, no output
+git diff --check
+exit 0, no output
+```
+
+The whole repository gate was not run; the complete two touched packages were.
+Iterator hold elimination, borrowing from captured/global sources, closure-body
+binding optimization, destructuring, and write-only global effect summaries were
+not covered. The existing stable-array and borrowed-parameter requirements remain
+conservative. The owned-iterable mutant was further isolated to retain local
+sources correctly but leave an owned temporary scheduled for statement cleanup;
+`freshBody` failed under ASan. This proves the transfer itself, independently of
+the reassignment hold test. Logs are `/tmp/loop-packages.log`,
+`/tmp/loop-worker.log`, `/tmp/loop-counts.log`, `/tmp/loop-vet.log`,
+`/tmp/loop-mutants-final.log`, `/tmp/loop-mutant-transfer-final.log`, and
+`/tmp/loop-bench.log`. The per-feature measurements are
+`/tmp/loop-counts-no-{bindings,global-arguments,iterator-transfer,shared-safety}.md`.
+
+### Merge verification, October 7, 2026
+
+Merged `658dbc4` (`codex/borrowed-element-reads`) into `75d3be5`
+(`codex/borrowed-loop-bindings`) with two parents, without rebasing. Both fixture
+sets and both borrowing reports remain. The shared `MakeError` allowance and
+virtual-call guard are preserved with the loop binding and lending changes.
+`TestNbodyIndexedElementsBorrow` now counts only `ir.Declare` entries in the shared
+plan: its five indexed declarations remain checked independently of the two new
+loop bindings. The throwing declaration test also ignores non-declaration entries.
+
+After all mutants were restored, the focused native checks and sanitizer oracle
+passed for `borrow_element_virtual_store.a`, `borrow_element_throw.a`,
+`borrow_loop.a`, and `borrow_global_call.a` (native 0.228s, oracle 0.800s).
+The original twenty mutants plus `element-virtual-call` were all caught:
+fourteen ASan reports and seven compiler assertions. The additional virtual guard
+mutant fails with ASan heap-use-after-free in `inspect` on
+`borrow_element_virtual_store.a`, proving the earlier main bug remains covered.
+The first focused run overlapped a deliberate mutant and was discarded; the
+reported run was repeated after restoration, before the complete package gate.
+
+```text
+source /workspace/adamic-tools/env.sh
+python3 internal/native/testdata/run-loop-borrow-mutants.py > /tmp/loop-merge-mutants.log 2>&1
+all 21 caught; exit 0
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 12.325s
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle
+ok github.com/system-inc/adamic/internal/native 123.226s
+ok github.com/system-inc/adamic/internal/oracle 123.011s
+go vet ./...
+exit 0, no output
+gofmt -l cmd internal
+exit 0, no output
+git diff --check
+exit 0, no output
+```
+
+The regenerated table adds only the two restored fixture rows; existing rows,
+including the loop/global fixtures, did not change from `75d3be5`. The earlier
+fixture counts remain 38/38/34/54/8/0 for throw and 13/11/9/15/7/2 for virtual
+store, in allocations/frees/retains/releases/peak/regions order. Complete native
+and oracle packages were run, not the whole repository gate. Final logs are
+`/tmp/loop-merge-focus-final.log`, `/tmp/loop-merge-mutants.log`,
+`/tmp/loop-merge-packages.log`, `/tmp/loop-merge-counts.log`, and
+`/tmp/loop-merge-vet.log`.
+
+### The loop's array borrows the same owner, October 7, 2026
+
+Starting from `6c6417a` (`codex/borrowed-loop-bindings`), `forOf` now uses the
+existing `elementBorrows` fact for both the binding and its iterator array.
+`loopBorrowable` requires a plain array loop with a lendable reference binding,
+and `borrowable` requires that the binding and the source array are locals of
+this function, uncaptured and never assigned. A parameter qualifies as a local.
+The body's `changes` check proves that no expression, statement, or reachable
+nonvirtual named callee can take an element out of any array. The source is
+marked lending before reuse runs, so a call cannot move its variable's count
+into a consumed parameter. The source's owner therefore outlives every iterator
+step. The emitter snapshots the pointer but takes no iterator count and schedules
+no iterator release, on the normal path or on any early or exceptional exit.
+No new purity or call-effect allowance was added.
+
+This deliberately reuses the whole element proof. Assignment anywhere in the
+function refuses it, even outside the body; assigned or captured bindings,
+non-reference elements, destructuring, closures, maps, strings, regex iterators,
+globals, captured sources, and fresh-call sources keep their existing holds.
+An operation not on the existing allowed list still refuses the borrow.
+
+**A throw is an exit, not an invalidation.** An unchanged local's scope or a
+parameter's caller still holds the array until the iterator has ended, including
+when a throw ends it. Thus `throwBody` can borrow both binding and array. A throw
+alone cannot honestly demonstrate that a redundant iterator hold is needed.
+`throwHeldBody` instead reassigns its source and immediately throws; its iterator
+must own the old array and release that count during unwinding. Its mutant omits
+the retain but preserves the unwind release, which ASan catches on the throw
+path before another length test can run. This specifically proves exceptional
+cleanup ownership, separately from the four full hold-removal mutants.
+
+**Fixtures and mutants.** The existing `borrow_loop.a` has independent
+`reassignBody` and `freshBody` probes. It now also has `closureReassignBody`
+(a called closure writes the captured array variable), `globalReassignBody`
+(a named call writes the global source), `throwHeldBody`, and `parameterBody`
+(a caller-held fresh argument borrowed safely for the entire callee loop).
+Labels and arrays are made at runtime. `TestLoopArrayHoldC` checks the actual
+iterator temporary in eleven fixture functions and both nbody loop functions,
+including positive local, parameter, push, and throw cases. Existing plan tests
+continue to require the borrowed binding and lending facts.
+
+Run `python3 internal/native/testdata/run-loop-array-hold-mutants.py` with the
+setup environment sourced. Every mutation is restored even on failure; complete
+outputs are in `/tmp/adamic-loop-array-hold-mutants/<mutant>.log`.
+All seven mutants were caught, independently:
+
+| Mutant | Catcher |
+|---|---|
+| Remove the entire iterator hold in `reassignBody` | ASan heap-use-after-free, next loop length read |
+| Remove the entire iterator hold in `closureReassignBody` | ASan heap-use-after-free, next loop length read |
+| Remove the entire iterator hold in `globalReassignBody` | ASan heap-use-after-free, next loop length read |
+| Remove the entire iterator hold in `freshBody` | ASan heap-use-after-free, first loop length read after statement cleanup |
+| Omit the retain, keep unwind cleanup in `throwHeldBody` | ASan heap-use-after-free, unwind release |
+| Schedule iterator cleanup for borrowed `throwBody` | ASan heap-use-after-free, array read after its catch |
+| Disable hold elision, preserving binding borrows | `TestLoopArrayHoldC`, redundant owned iterators |
+
+**Nbody, observed.** The only C changes are the array retain and release in
+`offsetMomentum` and in `advance`. The latter runs one million times and the
+former once, removing exactly 1,000,001 pairs. The ten remaining retains are
+five constructor returns and five array insertions. The fourteen releases also
+include the two formatted energy strings, final global cleanup, and the initial
+NULL global replacement.
+
+| nbody | Before | After |
+|---|---:|---:|
+| Allocations / frees | 8 / 8 | 8 / 8 |
+| Retains | 1,000,011 | 10 |
+| Releases | 1,000,015 | 14 |
+| Peak live / in regions | 7 / 0 | 7 / 0 |
+
+clang 20.1.8, Go 1.27.1, Node 24.19.0, Linux 6.18.44, AMD EPYC 9V74.
+`nproc` reports 5, cgroup quota 4 CPUs. `bash cloud/setup.sh` completed:
+Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, cache warm
+105s, done 105s. The generated environment file is
+`/workspace/adamic-tools/env.sh`, sourced in every build and test shell.
+
+`go run ./bench -only nbody -rounds 5` reported best native times 0.442s
+before and 0.412s after, and identical answers against Node (0.719s and
+0.651s). The baseline overlapped setup's cache warming, with one-minute load
+9.34 to 11.38; the after run was at 3.30 to 2.79. These are not comparable
+speedup measurements. Both native binaries were then interleaved for seven
+rounds, alternating which ran first, with no other test workload running.
+Best times were **0.407087s before and 0.410165s after**, at one-minute load
+2.79 to 2.65. All fourteen runs printed `-0.169075164` then `-0.169086185`.
+There is no observed timing improvement despite the deterministic count reduction.
+
+**The entire counts diff.** All 308 rows were regenerated twice: with the new
+fixture and hold elision disabled, then with the final compiler. This isolates
+fixture additions from the optimization. Only the twelve rows below differ from
+`6c6417a`; the other 296 are unchanged. A/F/R/L/P/G mean allocations, frees,
+retains, releases, peak live, and values in regions. The C diff was inspected
+for each row to identify the loops listed, including the lowered library helpers.
+Every optimizer-only change is an equal reduction of retains and releases,
+38 of each in total; no allocation, free, peak, or region changes.
+
+| Fixture | Before A/F/R/L/P/G | After A/F/R/L/P/G | Cause of removed hold pairs |
+|---|---|---|---|
+| `library_array_flat_map.a` | 50/50/62/111/17/0 | 50/50/60/109/17/0 | 2 loop entries in the generated string-array `array_flat_map` helper |
+| `library_array_flat.a` | 33/33/55/71/19/0 | 33/33/41/57/19/0 | 14 loop entries in generated `array_flat` helpers, including nested arrays |
+| `internal/load/testdata/0.1/compile/07_modules/main.ts` | 14/14/9/21/10/0 | 14/14/8/20/10/0 | 1 call to `pathLength` in `07_modules/geometry.ts` |
+| `objects.a` | 58/58/47/98/18/0 | 58/58/45/96/18/0 | 2 calls to `firstNamed` |
+| `exceptions.a` | 133/133/159/234/20/0 | 133/133/156/231/20/0 | 3 calls to `find`, including its throw paths |
+| `unions.a` | 1449/1449/1107/2569/16/0 | 1449/1449/1106/2568/16/0 | 1 entry to `lookups` |
+| `adversarial_exits.a` | 120/120/63/158/25/0 | 120/120/60/155/25/0 | 3 calls to `find`, including continue and return paths |
+| `borrow_loop.a` | 88/86/94/142/7/2 | 128/126/125/196/14/2 | 5 entries: `pushBody`, `throwBody`, `caughtBody`, `bindingReuse`, `parameterBody`; new fixture work measured separately |
+| `sets.a` | 224/224/13011/13108/65/0 | 224/224/13010/13107/65/0 | 1 call to `count` over its array parameter; Set iterator holds are unchanged |
+| `return_panic.a` | 13/13/13/26/9/0 | 13/13/12/25/9/0 | 1 call to `firstWord`; the separate panic-firing fixture is unchanged |
+| `undefined_references.a` | 17/17/34/49/11/0 | 17/17/30/45/11/0 | 4 calls to `find`, including early returns |
+| `string_append.a` | 249/249/89/279/49/0 | 249/249/88/278/49/0 | 1 entry to `seams` over local `pieces` |
+
+With elision disabled but the expanded fixture present, `borrow_loop.a` is
+128/126/130/201/14/2. Its four added probes and the global initializer therefore
+add **40 allocations, 40 frees, 36 retains, 59 releases, and 7 peak live** relative
+to the old fixture. The new global array stays live while the closure-reassignment
+probe runs, contributing to the higher peak. Elision removes five pairs from that
+expanded fixture, giving 128/126/125/196/14/2. This is additional fixture work,
+not a lifetime change in the optimization. Summed across the whole checked-in
+table, the net diff is +40 allocations, +40 frees, -2 retains, +21 releases,
++7 in the sum of peaks, and no change in regions. There are no added rows.
+
+**The previous borrowing guards were rerun.**
+`python3 internal/native/testdata/run-loop-borrow-mutants.py` still catches every
+one of its 21 independent mutants on the final compiler. Each exits 1, with
+14 sanitizer failures and 7 behavior assertions; no build-warning kill counts.
+Together with the new runner, all 28 mutants were caught (20 ASan, 8 assertions).
+The runner's exact names and observed catchers in this run are:
+
+| Mutants | Catcher |
+|---|---|
+| `set-index`, `pop`, `splice`, `named-call`, `closure-call`, `binding-owned`, `throw-owned`, `iterator-hold`, `global-touches`, `later-argument`, `virtual-call`, `global-virtual-targets`, `iterator-transfer`, `element-virtual-call` | ASan heap-use-after-free in the borrowing oracle fixtures |
+| `array-assigned`, `binding-assigned`, `binding-captured`, `lending-fact`, `borrow-disabled`, `error-construction` | `TestLoopBorrowPlan` (also emitted-C assertions for disabled borrowing) |
+| `global-disabled` | `TestGlobalArgumentLending` |
+
+**Validation and limits.** The final unmutated commands wrote their full output
+to log files and passed:
+
+```text
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestLoopBorrowPlan|TestLoopArrayHoldC|TestNbodyBorrowedLoopC|TestNativeAgreesWithNode/internal/oracle/testdata/borrow_loop' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/native 0.158s
+ok github.com/system-inc/adamic/internal/oracle 4.772s
+python3 internal/native/testdata/run-loop-array-hold-mutants.py
+7 caught; exit 0
+python3 internal/native/testdata/run-loop-borrow-mutants.py
+21 caught; exit 0
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+holds kept counterfactual: ok github.com/system-inc/adamic/internal/oracle 10.862s
+final compiler: ok github.com/system-inc/adamic/internal/oracle 10.462s
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle
+ok github.com/system-inc/adamic/internal/native 110.598s
+ok github.com/system-inc/adamic/internal/oracle 107.531s
+go vet ./...
+exit 0, no output
+gofmt -l cmd internal
+exit 0, no output
+git diff --check
+exit 0, no output
+```
+
+This includes the entire touched packages, source Node and backend Node,
+release native, ASan, UBSan, LeakSanitizer, and the complete recorded counts
+check. The full repository gate was not run under the worker-gate exception;
+stage-1 packages were only compiled by setup and vetted. This unit does not
+weaken the existing whole-function assignment or element-mutation conditions,
+optimize closure bodies, or remove holds from non-reference, destructured,
+global, captured, map, string, or regex sources.
+
+Logs: `/tmp/loop-hold-setup.log`, `/tmp/loop-hold-focus.log`,
+`/tmp/loop-hold-mutants.log`, `/tmp/loop-hold-regression-mutants.log`,
+`/tmp/loop-hold-counts-kept.log`, `/tmp/loop-hold-counts.log`,
+`/tmp/loop-hold-packages.log`, `/tmp/loop-hold-vet.log`,
+`/tmp/loop-hold-before-bench.log`, `/tmp/loop-hold-after-bench.log`, and
+`/tmp/loop-hold-paired-bench.log`. The counterfactual table is
+`/tmp/loop-hold-counts-kept.md`; preserved generated C is
+`/tmp/loop-hold-before.c` and `/tmp/loop-hold-after.c`.
+
+### Calls that can free a loop's array (coverage, October 7, 2026)
+
+`borrow_loop_calls.a` sits on `2b63ccb`, which is `6c6417a` plus the iterator
+borrowing a stable local or parameter. Both proofs are one fact, so one fixture
+covers both. The strings are built at runtime. A callee that pops (including
+through another parameter holding the same array, a branch, a try, or a deeper
+call), spreads, maps, stores an index, or is reached virtually keeps the
+iterator's count and retains the binding. A callee that reads a length, forwards
+to such a read, or only pushes does not: the binding is borrowed and the
+iterator takes no count. `TestLoopCallCoverage` checks that plan and the
+iterator temporary for all 26 loops.
+
+Two elided loops are cases a call really can free, and another owner still holds
+the array. `scanCopy` copies a global into a local and then calls a function
+that replaces the global; the local's count is the owner. `scanLent` takes the
+global as a borrowed parameter and calls the function that replaces it.
+`reportQuiet` does lend its global, because that callee never touches it.
+`scanLent` does not: lending follows the callee and sees the assignment, so the
+call retains. The loop then borrows. Replacing the global drops the global's
+count and leaves the argument's. Both labels print, and the global's length is
+then 0. A field copied into a local survives a call that replaces the field.
+Iterating the field expression directly does not borrow; the iterator holds
+that read.
+
+| Mutant | Catcher |
+|---|---|
+| A direct call counts as unchanging | ASan heap-use-after-free in `popLocal`, the element `remove` freed |
+| Global lending does not follow callees | ASan heap-use-after-free in `scanLent`, after `resetLent` releases the global |
+
+Run `source /opt/adamic-tools/env.sh` and
+`python3 internal/native/testdata/run-loop-call-mutants.py`. Each mutant is
+restored. Logs are `/tmp/adamic-loop-call-mutants/<mutant>.log`. Both exited 1
+with that ASan report and no other failure mode.
+
+The new counts row is 263/261/189/355/25/2. `TestCountsAreRecorded -update-counts`
+regenerated the whole table after merging `codex/loop-array-hold` into `e8ba3d5`.
+Call targets from that main changed the rows the two sides had disagreed on:
+`library_object_keys.a` 32/72 retains/releases, `library_object_is.a` 21/190,
+`class_as_interface.a` 345/510, `optional_class_method.a` 44/71,
+`class_inheritance_memory.a` 20/58, `class_inheritance_generic.a` 85/148,
+`class_inheritance_interface.a` 44/70, `class_inheritance_conditional.a` 146/249,
+`devirtualize.a` 23/63, `user_iterators.a` 465/914, and `prompt_then_read.a`
+2/2/2/4/2/0. The direct-call mutant now skips `CallTargets` instead of the old
+`Virtual == 0` test, which this main no longer has. It still frees the element
+under `popLocal`.
+
+```text
+source /opt/adamic-tools/env.sh
+go test ./internal/native -run 'TestLoopCallCoverage|TestLoopArrayHoldC|TestLoopBorrowPlan|TestGlobalArgumentLending|TestNbodyBorrowedLoopC' -count=1 -timeout 10m
+ok github.com/system-inc/adamic/internal/native 0.266s
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 22.942s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/borrow_loop' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/oracle 0.943s
+python3 internal/native/testdata/run-loop-call-mutants.py
+call-unchanging and touches-ignores-callees caught; exit 0
+```
+
+The oracle run is source Node, the JavaScript backend, release native, ASan,
+UBSan, and LeakSanitizer for this fixture. The whole repository gate was not
+run. Closure-body binding optimization, destructuring, and write-only global
+effect summaries remain uncovered, as they were before this fixture.
+
+### Strong field borrow chains
+
+A strong field read can borrow transitively from a stable root (`borrow.go`,
+`element_borrow.go`). For example, `node.parent`, `node.parent.kind`, and
+`node.children` can be read without taking a count; an uncaptured, unassigned
+local initialized by such a read can borrow for its scope too. Existing borrowed
+parameters carry `Local.Borrowed`; an unassigned ordinary local already holds its
+own count. A captured or global root does not qualify.
+
+The proof checks the whole function, including enclosing blocks, loops, catches
+and finallies. No assignment can replace the root. No statement or reachable
+callee can replace any field on the chain. Named calls use every `CallTargets`
+implementation, recursive bodies included; callback calls use `ClosureTargets`,
+with `Unknown` refusing the borrow. Field names conservatively match every holder,
+not just related types, since the native IR does not carry that relation. Unknown
+operations and object spreads refuse. Emission also refuses a root that reuse
+consumes, moves or takes over. Borrowing declarations mark their variables
+`Borrowed` and their root as lending before reuse is planned.
+
+A borrowed chain is snapshotted at its source read. A store or an owned return
+still takes a count through the existing ownership helpers. A captured declaration
+still creates an owning capture cell. An argument to an existing borrowed
+parameter needs no temporary retain when the chain survives the function's calls;
+a consumed argument still takes the count its convention requires.
+
+This proof follows strong property loads and `Defined` only. It does not infer an
+owner through a weak target read, a call result, an optional chain or an indexed
+load. Weak targets need a separate strong owner; accessor results need the
+compiler's borrowed-return provenance. The pass does not change parameter
+conventions, for-of emission, accessor returns or devirtualization.
+
+The nine `borrow_chain_*.a` fixtures run against source on Node, native with
+sanitizers, and the JavaScript backend. The tree-walk fixture loses nine pairs;
+the chained-argument fixture goes from one retain to zero. Refusals keep the count
+that protects the saved parent, override argument or capture. Mutants borrowing
+across a field write, a reassigned root, a writing override or an Unknown callback,
+and a generated capture cell with its retain removed, each fail under ASan.
+Disabling declaration borrowing fails the positive planner control; changing a
+recorded retain fails the counts gate.
+
+The current-main 321-fixture comparison removes 514 retains and 509 releases, with no
+rises or changes to allocation, free, peak or region counts. Five extra removed
+retains are absent optional string reads in `literal_optional_shapes.a`: their
+NULL values were passed on by `??` without a corresponding temporary release.
+Batch8 removes 15,334,163 pairs on the 77-file compiler corpus, while its best
+release time moves only 2.4 percent. Full evidence, commands and remaining
+accessor/iterator work are in [the borrow-chains report](../internal/native/performance/borrow-chains/REPORT.md).
 
 ## Strings, specifically
 
@@ -1032,6 +1696,6 @@ Since a string is immutable, a slice can read its parent's bytes in place, as a 
 
 ## How this is held honest
 
-- Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check (`leaks --atExit` on macOS, LeakSanitizer on Linux) for anything never freed. A mutant that drops releases is caught by the leak check (`2a2e30b`).
+- Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check for anything never freed: LeakSanitizer on Linux; on macOS the counted build, whose allocations must be its frees and its values in regions, and `leaks --atExit` on that binary for what the runtime takes from malloc outside the counts. (`leaks` alone can't see a value: the size-class allocator's chunks stay reachable from its own table.) A mutant that drops releases is caught by the leak check (`2a2e30b`).
 - Every change to counting or reuse is checked by the oracle against Node, byte for byte.
 - Retains and releases per fixture are counted (`adamic build --count`), and every oracle fixture's counts are checked in as `internal/oracle/counts.md`. A change that moves them fails the gate until the table is updated, so its effect shows in review as a diff of numbers, not a feeling.
