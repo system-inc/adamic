@@ -1,0 +1,134 @@
+{
+  "old_worker_tip": "f6598c04674fc66d6486eb49ca1e5abb7b5ff69b",
+  "rebased_implementation": "7a943b1778210ff26d595523f2c2a481f146b99e",
+  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "area": "b46914832d70e00847d82d5d221ab7bb24040c53",
+  "retained_own_helpers": 65,
+  "new_claims": 0,
+  "registry_descriptors": 40,
+  "packages": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "seconds": 148.517,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+      "seconds": 215.485,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave10",
+      "seconds": 20.732,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave11",
+      "seconds": 17.499,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave12",
+      "seconds": 17.467,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave13",
+      "seconds": 108.204,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave14",
+      "seconds": 22.596,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave15",
+      "seconds": 32.037,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave16",
+      "seconds": 56.363,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave17",
+      "seconds": 33.685,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave18",
+      "seconds": 48.029,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave19",
+      "seconds": 164.433,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave2",
+      "seconds": 17.124,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave20",
+      "seconds": 32.438,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave21",
+      "seconds": 67.53,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave22",
+      "seconds": 46.299,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave3_space",
+      "seconds": 20.389,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave4",
+      "seconds": 22.091,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave5",
+      "seconds": 25.416,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave6",
+      "seconds": 33.607,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave7",
+      "seconds": 28.208,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave8",
+      "seconds": 31.834,
+      "result": "PASS"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave9",
+      "seconds": 15.454,
+      "result": "PASS"
+    }
+  ],
+  "named_mutant_subtests": 170,
+  "logged_omission_catches": 78,
+  "harness_seconds": 337.429,
+  "oracle_seconds": 2.937,
+  "runtime_seconds": 0.826,
+  "setup_seconds": 88,
+  "nproc": 5,
+  "selected_skips": 0
+}

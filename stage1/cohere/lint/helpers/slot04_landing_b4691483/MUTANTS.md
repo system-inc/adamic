@@ -1,0 +1,1034 @@
+# Retained mutant observations on b46914832
+
+Every line below comes from the fresh helpers.log. It identifies retained mutant subtests and their catches, including standalone guard/drift mutants and consumer omissions. Line numbers link to the complete raw log, which also contains every baseline comparison. The suite passes only after its mutants are caught. Detailed mutation source and limits remain in each helper package report.
+
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers
+
+- [Line 4](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:4): === RUN   TestHelperMutants
+- [Line 5](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:5): === RUN   TestHelperMutants/options_json.ts
+- [Line 6](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:6): helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+- [Line 7](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:7): === RUN   TestHelperMutants/option_schema.ts
+- [Line 8](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:8): helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+- [Line 9](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:9): === RUN   TestHelperMutants/policy_message.ts
+- [Line 10](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:10): helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare \`{{constructor}}\`, which names no declared failure. Raise it through the tier that declares it, \`AccountModule.error(identifier, data, cause)\`, \`ApiWorker.error(...)\` or \`Base.error(...)\`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare \`sentinel é😀\`, which names no declared failure. Raise it through the tier that declares it, \`AccountModule.error(identifier, data, cause)\`, \`ApiWorker.error(...)\` or \`Base.error(...)\`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+- [Line 11](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:11): === RUN   TestHelperMutants/strict_options.ts
+- [Line 12](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:12): helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+- [Line 13](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:13): --- PASS: TestHelperMutants (58.57s)
+- [Line 14](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:14): --- PASS: TestHelperMutants/options_json.ts (8.92s)
+- [Line 15](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:15): --- PASS: TestHelperMutants/option_schema.ts (14.76s)
+- [Line 16](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:16): --- PASS: TestHelperMutants/policy_message.ts (13.00s)
+- [Line 17](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:17): --- PASS: TestHelperMutants/strict_options.ts (9.68s)
+- [Line 26](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:26): === RUN   TestSlot04ElementPartsMutant
+- [Line 27](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:27): slot04_test.go:91: sanitized native compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+- [Line 28](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:28): slot04_test.go:91: Node source compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+- [Line 29](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:29): --- PASS: TestSlot04ElementPartsMutant (3.02s)
+- [Line 37](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:37): === RUN   TestSlot04SettingsKeyMutant
+- [Line 38](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:38): slot04_test.go:154: sanitized native compiling mutant caught at line 1: got "1,", Go "1,1,"
+- [Line 39](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:39): slot04_test.go:154: Node source compiling mutant caught at line 1: got "1,", Go "1,1,"
+- [Line 40](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:40): --- PASS: TestSlot04SettingsKeyMutant (3.69s)
+- [Line 45](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:45): === RUN   TestSlot04CompiledReaderMutant
+- [Line 46](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:46): slot04_test.go:222: sanitized native compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+- [Line 47](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:47): slot04_test.go:222: Node source compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+- [Line 48](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:48): --- PASS: TestSlot04CompiledReaderMutant (3.23s)
+- [Line 50](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:50): slot04_test.go:321: consumers.json covers all 24 consumers; removing @next/next/google-font-display is caught
+- [Line 51](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:51): slot04_test.go:321: tailwind-consumers.json covers all 12 consumers; removing better-tailwindcss/enforce-canonical-classes is caught
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments
+
+- [Line 58](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:58): === RUN   TestCommentMutants
+- [Line 59](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:59): === RUN   TestCommentMutants/can_begin_at.ts
+- [Line 60](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:60): comments_test.go:139: compiled semantic mutant caught at line 251: got "cached 0 0"; Go "cached 1 1"
+- [Line 61](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:61): === RUN   TestCommentMutants/collect_list_interiors.ts
+- [Line 62](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:62): comments_test.go:139: compiled semantic mutant caught at line 3: got "cached 0 0"; Go "cached 1 1"
+- [Line 63](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:63): === RUN   TestCommentMutants/sort_by_position.ts
+- [Line 64](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:64): comments_test.go:139: compiled semantic mutant caught at line 60: got "47 54 1 0 47 0\t/* f */"; Go "6 13 1 0 6 0\t/* t */"
+- [Line 65](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:65): === RUN   TestCommentMutants/all.ts
+- [Line 66](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:66): comments_test.go:139: compiled semantic mutant caught at line 201: got "cached 0 0"; Go "cached 1 1"
+- [Line 67](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:67): === RUN   TestCommentMutants/for_file.ts
+- [Line 68](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:68): comments_test.go:139: compiled semantic mutant caught at line 2: got "cache 0 0 0"; Go "cache 1 0 0"
+- [Line 69](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:69): --- PASS: TestCommentMutants (85.96s)
+- [Line 70](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:70): --- PASS: TestCommentMutants/can_begin_at.ts (16.38s)
+- [Line 71](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:71): --- PASS: TestCommentMutants/collect_list_interiors.ts (15.11s)
+- [Line 72](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:72): --- PASS: TestCommentMutants/sort_by_position.ts (16.56s)
+- [Line 73](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:73): --- PASS: TestCommentMutants/all.ts (20.04s)
+- [Line 74](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:74): --- PASS: TestCommentMutants/for_file.ts (14.77s)
+- [Line 81](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:81): === RUN   TestJsxAdapterGuardMutant
+- [Line 83](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:83): --- PASS: TestJsxAdapterGuardMutant (18.47s)
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave10
+
+- [Line 94](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:94): === RUN   TestCompilingMutants
+- [Line 95](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:95): === RUN   TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault
+- [Line 96](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:96): helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- [Line 97](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:97): helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 98](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:98): helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 99](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:99): === RUN   TestCompilingMutants/is_exported_by_name.ahasDefault_=_true;
+- [Line 100](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:100): helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- [Line 101](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:101): helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 102](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:102): helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 103](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:103): === RUN   TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_}
+- [Line 104](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:104): helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- [Line 105](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:105): helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 106](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:106): helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 107](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:107): === RUN   TestCompilingMutants/has_export_modifier.atag_===_'export-keyword'
+- [Line 108](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:108): helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- [Line 109](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:109): helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 110](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:110): helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 111](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:111): === RUN   TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_}
+- [Line 112](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:112): helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- [Line 113](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:113): helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 114](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:114): helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 115](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:115): === RUN   TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers);
+- [Line 116](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:116): helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- [Line 117](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:117): helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 118](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:118): helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 119](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:119): --- PASS: TestCompilingMutants (15.73s)
+- [Line 120](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:120): --- PASS: TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault (1.89s)
+- [Line 121](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:121): --- PASS: TestCompilingMutants/is_exported_by_name.ahasDefault_=_true; (2.31s)
+- [Line 122](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:122): --- PASS: TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_} (2.85s)
+- [Line 123](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:123): --- PASS: TestCompilingMutants/has_export_modifier.atag_===_'export-keyword' (2.56s)
+- [Line 124](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:124): --- PASS: TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_} (2.35s)
+- [Line 125](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:125): --- PASS: TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers); (2.69s)
+- [Line 127](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:127): helpers_test.go:247: consumer omission caught: structure/network-require-hook-request-suffix
+- [Line 128](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:128): helpers_test.go:247: consumer omission caught: @next/next/no-typos
+- [Line 129](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:129): helpers_test.go:247: consumer omission caught: @typescript-eslint/no-useless-empty-export
+- [Line 130](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:130): helpers_test.go:247: consumer omission caught: structure/boundary-no-project-theme-value
+- [Line 131](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:131): helpers_test.go:247: consumer omission caught: structure/network-require-hook-variables-type
+- [Line 132](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:132): helpers_test.go:247: consumer omission caught: structure/next-no-near-miss-route-export
+- [Line 133](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:133): helpers_test.go:247: consumer omission caught: structure/react-component-no-const-assignment
+- [Line 134](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:134): helpers_test.go:247: consumer omission caught: structure/react-component-require-named-export
+- [Line 135](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:135): helpers_test.go:247: consumer omission caught: nexus/consistency-no-screaming-snake-case
+- [Line 136](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:136): helpers_test.go:247: consumer omission caught: structure/network-require-hook-options-parameter
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave11
+
+- [Line 154](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:154): === RUN   TestCompilingMutants
+- [Line 155](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:155): === RUN   TestCompilingMutants/digit.acharacter_>=_48
+- [Line 156](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:156): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 157](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:157): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 158](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:158): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 159](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:159): === RUN   TestCompilingMutants/digit.acharacter_<=_57
+- [Line 160](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:160): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 161](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:161): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 162](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:162): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 163](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:163): === RUN   TestCompilingMutants/bracketed.aword.length_>=_2
+- [Line 164](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:164): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 165](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:165): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 166](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:166): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 167](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:167): === RUN   TestCompilingMutants/bracketed.aword[0]_===_91
+- [Line 168](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:168): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 169](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:169): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 170](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:170): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 171](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:171): === RUN   TestCompilingMutants/any_prefix.aprefix.length_>_value.length
+- [Line 172](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:172): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 173](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:173): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 174](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:174): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 175](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:175): === RUN   TestCompilingMutants/any_prefix.aif(matches)_{_return_true;_}
+- [Line 176](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:176): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 177](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:177): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 178](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:178): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 179](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:179): --- PASS: TestCompilingMutants (10.45s)
+- [Line 180](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:180): --- PASS: TestCompilingMutants/digit.acharacter_>=_48 (1.49s)
+- [Line 181](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:181): --- PASS: TestCompilingMutants/digit.acharacter_<=_57 (1.58s)
+- [Line 182](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:182): --- PASS: TestCompilingMutants/bracketed.aword.length_>=_2 (1.73s)
+- [Line 183](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:183): --- PASS: TestCompilingMutants/bracketed.aword[0]_===_91 (1.57s)
+- [Line 184](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:184): --- PASS: TestCompilingMutants/any_prefix.aprefix.length_>_value.length (1.28s)
+- [Line 185](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:185): --- PASS: TestCompilingMutants/any_prefix.aif(matches)_{_return_true;_} (1.60s)
+- [Line 187](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:187): helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 188](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:188): helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 189](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:189): helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 190](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:190): helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave12
+
+- [Line 208](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:208): === RUN   TestCompilingMutants
+- [Line 209](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:209): === RUN   TestCompilingMutants/quoted_literal.aword.length_<_2
+- [Line 210](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:210): helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- [Line 211](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:211): helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 212](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:212): helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 213](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:213): === RUN   TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34
+- [Line 214](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:214): helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- [Line 215](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:215): helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 216](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:216): helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 217](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:217): === RUN   TestCompilingMutants/replace_value_node.anode.tag_=_'word';
+- [Line 218](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:218): helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- [Line 219](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:219): helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 220](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:220): helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 221](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:221): === RUN   TestCompilingMutants/replace_value_node.anode.edges_=_empty;
+- [Line 222](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:222): helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- [Line 223](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:223): helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 224](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:224): helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 225](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:225): === RUN   TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_}
+- [Line 226](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:226): helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- [Line 227](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:227): helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 228](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:228): helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 229](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:229): === RUN   TestCompilingMutants/union_node_sets.aentries.set(id,true);
+- [Line 230](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:230): helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- [Line 231](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:231): helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 232](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:232): helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 233](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:233): --- PASS: TestCompilingMutants (13.21s)
+- [Line 234](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:234): --- PASS: TestCompilingMutants/quoted_literal.aword.length_<_2 (1.92s)
+- [Line 235](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:235): --- PASS: TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34 (1.43s)
+- [Line 236](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:236): --- PASS: TestCompilingMutants/replace_value_node.anode.tag_=_'word'; (2.14s)
+- [Line 237](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:237): --- PASS: TestCompilingMutants/replace_value_node.anode.edges_=_empty; (2.01s)
+- [Line 238](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:238): --- PASS: TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_} (2.40s)
+- [Line 239](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:239): --- PASS: TestCompilingMutants/union_node_sets.aentries.set(id,true); (2.92s)
+- [Line 241](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:241): helpers_test.go:262: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 242](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:242): helpers_test.go:262: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 243](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:243): helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 244](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:244): helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave13
+
+- [Line 259](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:259): === RUN   TestCompilingMutants
+- [Line 260](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:260): === RUN   TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier);
+- [Line 261](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:261): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 262](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:262): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 263](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:263): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 264](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:264): === RUN   TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion
+- [Line 265](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:265): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 266](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:266): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 267](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:267): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 268](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:268): === RUN   TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode
+- [Line 269](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:269): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 270](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:270): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 271](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:271): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 272](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:272): === RUN   TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0
+- [Line 273](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:273): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 274](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:274): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 275](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:275): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 276](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:276): === RUN   TestCompilingMutants/group_construct.afirst_===_58_||
+- [Line 277](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:277): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 278](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:278): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 279](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:279): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 280](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:280): === RUN   TestCompilingMutants/group_construct.areturn_4;
+- [Line 281](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:281): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 282](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:282): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 283](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:283): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 284](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:284): --- PASS: TestCompilingMutants (23.87s)
+- [Line 285](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:285): --- PASS: TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier); (3.76s)
+- [Line 286](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:286): --- PASS: TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion (3.92s)
+- [Line 287](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:287): --- PASS: TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode (3.06s)
+- [Line 288](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:288): --- PASS: TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0 (3.89s)
+- [Line 289](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:289): --- PASS: TestCompilingMutants/group_construct.afirst_===_58_|| (4.65s)
+- [Line 290](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:290): --- PASS: TestCompilingMutants/group_construct.areturn_4; (4.02s)
+- [Line 292](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:292): helpers_test.go:251: consumer omission caught: @next/next/no-html-link-for-pages
+- [Line 293](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:293): helpers_test.go:251: consumer omission caught: @typescript-eslint/no-empty-object-type
+- [Line 294](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:294): helpers_test.go:251: consumer omission caught: no-restricted-exports
+- [Line 295](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:295): helpers_test.go:251: consumer omission caught: no-restricted-imports
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave14
+
+- [Line 310](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:310): === RUN   TestCompilingMutants
+- [Line 311](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:311): === RUN   TestCompilingMutants/mod_float.avalue_%_divisor
+- [Line 312](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:312): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 313](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:313): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 314](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:314): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 315](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:315): === RUN   TestCompilingMutants/format_number.avalue_>=_1e21
+- [Line 316](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:316): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 317](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:317): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 318](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:318): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 319](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:319): === RUN   TestCompilingMutants/format_number.areturn_'-0';
+- [Line 320](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:320): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 321](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:321): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 322](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:322): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 323](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:323): === RUN   TestCompilingMutants/multiple_of.aif(!parsed.ok)
+- [Line 324](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:324): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 325](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:325): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 326](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:326): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 327](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:327): === RUN   TestCompilingMutants/multiple_of.aif(parsed.value_<_0)
+- [Line 328](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:328): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 329](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:329): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 330](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:330): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 331](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:331): === RUN   TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value
+- [Line 332](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:332): helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- [Line 333](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:333): helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 334](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:334): helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 335](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:335): --- PASS: TestCompilingMutants (18.79s)
+- [Line 336](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:336): --- PASS: TestCompilingMutants/mod_float.avalue_%_divisor (3.46s)
+- [Line 337](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:337): --- PASS: TestCompilingMutants/format_number.avalue_>=_1e21 (3.42s)
+- [Line 338](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:338): --- PASS: TestCompilingMutants/format_number.areturn_'-0'; (2.73s)
+- [Line 339](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:339): --- PASS: TestCompilingMutants/multiple_of.aif(!parsed.ok) (3.20s)
+- [Line 340](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:340): --- PASS: TestCompilingMutants/multiple_of.aif(parsed.value_<_0) (2.50s)
+- [Line 341](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:341): --- PASS: TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value (3.07s)
+- [Line 343](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:343): helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 344](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:344): helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 345](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:345): helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 346](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:346): helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave15
+
+- [Line 361](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:361): === RUN   TestCompilingMutants
+- [Line 362](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:362): === RUN   TestCompilingMutants/positive_integer.a/[^0-9]/u
+- [Line 363](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:363): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 364](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:364): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 365](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:365): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 366](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:366): === RUN   TestCompilingMutants/positive_integer.avalue_===_''_||
+- [Line 367](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:367): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 368](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:368): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 369](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:369): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 370](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:370): === RUN   TestCompilingMutants/positive_integer.avalue.length_>_15
+- [Line 371](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:371): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 372](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:372): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 373](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:373): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 374](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:374): === RUN   TestCompilingMutants/positive_integer.avalue.startsWith('0')
+- [Line 375](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:375): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 376](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:376): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 377](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:377): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 378](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:378): === RUN   TestCompilingMutants/round_trip.aif(!parsed.ok)
+- [Line 379](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:379): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 380](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:380): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 381](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:381): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 382](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:382): === RUN   TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21)
+- [Line 383](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:383): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 384](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:384): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 385](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:385): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 386](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:386): === RUN   TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value
+- [Line 387](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:387): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 388](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:388): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 389](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:389): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 390](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:390): === RUN   TestCompilingMutants/spacing_multiplier.avalue,0.25,parse
+- [Line 391](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:391): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 392](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:392): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 393](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:393): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 394](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:394): === RUN   TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf(
+- [Line 395](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:395): helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- [Line 396](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:396): helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 397](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:397): helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 398](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:398): --- PASS: TestCompilingMutants (29.11s)
+- [Line 399](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:399): --- PASS: TestCompilingMutants/positive_integer.a/[^0-9]/u (2.44s)
+- [Line 400](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:400): --- PASS: TestCompilingMutants/positive_integer.avalue_===_''_|| (6.04s)
+- [Line 401](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:401): --- PASS: TestCompilingMutants/positive_integer.avalue.length_>_15 (7.61s)
+- [Line 402](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:402): --- PASS: TestCompilingMutants/positive_integer.avalue.startsWith('0') (1.95s)
+- [Line 403](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:403): --- PASS: TestCompilingMutants/round_trip.aif(!parsed.ok) (1.59s)
+- [Line 404](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:404): --- PASS: TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21) (3.40s)
+- [Line 405](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:405): --- PASS: TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value (1.87s)
+- [Line 406](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:406): --- PASS: TestCompilingMutants/spacing_multiplier.avalue,0.25,parse (1.89s)
+- [Line 407](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:407): --- PASS: TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf( (1.80s)
+- [Line 409](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:409): helpers_test.go:265: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 410](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:410): helpers_test.go:265: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 411](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:411): helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 412](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:412): helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave16
+
+- [Line 427](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:427): === RUN   TestCompilingMutants
+- [Line 428](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:428): === RUN   TestCompilingMutants/modifier_value.a!modifier.present
+- [Line 429](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:429): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 430](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:430): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 431](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:431): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 432](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:432): === RUN   TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary'
+- [Line 433](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:433): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 434](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:434): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 435](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:435): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 436](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:436): === RUN   TestCompilingMutants/modifier_value.avalue:modifier.value
+- [Line 437](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:437): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 438](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:438): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 439](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:439): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 440](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:440): === RUN   TestCompilingMutants/arbitrary_argument.adataType_===_'*'
+- [Line 441](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:441): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 442](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:442): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 443](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:443): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 444](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:444): === RUN   TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType
+- [Line 445](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:445): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 446](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:446): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 447](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:447): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 448](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:448): === RUN   TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_''
+- [Line 449](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:449): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 450](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:450): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 451](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:451): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 452](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:452): === RUN   TestCompilingMutants/variable_reference.a!entry.present
+- [Line 453](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:453): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 454](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:454): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 455](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:455): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 456](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:456): === RUN   TestCompilingMutants/variable_reference.aentry.options_&_2
+- [Line 457](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:457): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 458](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:458): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 459](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:459): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 460](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:460): === RUN   TestCompilingMutants/variable_reference.aentry.value_!==_''
+- [Line 461](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:461): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 462](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:462): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 463](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:463): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 464](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:464): === RUN   TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey))
+- [Line 465](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:465): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 466](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:466): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 467](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:467): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 468](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:468): --- PASS: TestCompilingMutants (18.95s)
+- [Line 469](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:469): --- PASS: TestCompilingMutants/modifier_value.a!modifier.present (1.84s)
+- [Line 470](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:470): --- PASS: TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary' (1.82s)
+- [Line 471](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:471): --- PASS: TestCompilingMutants/modifier_value.avalue:modifier.value (1.83s)
+- [Line 472](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:472): --- PASS: TestCompilingMutants/arbitrary_argument.adataType_===_'*' (2.31s)
+- [Line 473](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:473): --- PASS: TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType (1.44s)
+- [Line 474](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:474): --- PASS: TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_'' (1.73s)
+- [Line 475](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:475): --- PASS: TestCompilingMutants/variable_reference.a!entry.present (1.83s)
+- [Line 476](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:476): --- PASS: TestCompilingMutants/variable_reference.aentry.options_&_2 (2.09s)
+- [Line 477](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:477): --- PASS: TestCompilingMutants/variable_reference.aentry.value_!==_'' (1.95s)
+- [Line 478](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:478): --- PASS: TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey)) (1.70s)
+- [Line 480](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:480): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 481](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:481): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 482](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:482): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 483](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:483): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave17
+
+- [Line 498](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:498): === RUN   TestCompilingMutants
+- [Line 499](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:499): === RUN   TestCompilingMutants/named_color.alower(value)
+- [Line 500](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:500): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 501](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:501): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 502](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:502): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 503](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:503): === RUN   TestCompilingMutants/named_color.a"black"
+- [Line 504](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:504): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 505](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:505): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 506](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:506): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 507](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:507): === RUN   TestCompilingMutants/named_color.alower(value)#01
+- [Line 508](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:508): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 509](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:509): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 510](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:510): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 511](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:511): === RUN   TestCompilingMutants/color.a/^#/
+- [Line 512](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:512): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 513](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:513): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 514](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:514): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 515](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:515): === RUN   TestCompilingMutants/color.a/^(rgba?
+- [Line 516](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:516): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 517](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:517): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 518](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:518): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 519](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:519): === RUN   TestCompilingMutants/color.a\(/i
+- [Line 520](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:520): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 521](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:521): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 522](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:522): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 523](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:523): === RUN   TestCompilingMutants/color.argba?
+- [Line 524](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:524): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 525](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:525): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 526](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:526): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 527](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:527): === RUN   TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;}
+- [Line 528](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:528): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 529](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:529): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 530](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:530): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 531](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:531): === RUN   TestCompilingMutants/length.a'Q'
+- [Line 532](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:532): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 533](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:533): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 534](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:534): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 535](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:535): === RUN   TestCompilingMutants/length.a/^--spacing
+- [Line 536](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:536): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 537](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:537): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 538](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:538): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 539](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:539): === RUN   TestCompilingMutants/length.a\(/i
+- [Line 540](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:540): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 541](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:541): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 542](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:542): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 543](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:543): === RUN   TestCompilingMutants/length.areturn_hasMathFunction(value)
+- [Line 544](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:544): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 545](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:545): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 546](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:546): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 547](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:547): --- PASS: TestCompilingMutants (29.21s)
+- [Line 548](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:548): --- PASS: TestCompilingMutants/named_color.alower(value) (2.68s)
+- [Line 549](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:549): --- PASS: TestCompilingMutants/named_color.a"black" (2.79s)
+- [Line 550](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:550): --- PASS: TestCompilingMutants/named_color.alower(value)#01 (1.99s)
+- [Line 551](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:551): --- PASS: TestCompilingMutants/color.a/^#/ (2.01s)
+- [Line 552](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:552): --- PASS: TestCompilingMutants/color.a/^(rgba? (2.19s)
+- [Line 553](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:553): --- PASS: TestCompilingMutants/color.a\(/i (2.13s)
+- [Line 554](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:554): --- PASS: TestCompilingMutants/color.argba? (2.34s)
+- [Line 555](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:555): --- PASS: TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;} (2.19s)
+- [Line 556](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:556): --- PASS: TestCompilingMutants/length.a'Q' (2.48s)
+- [Line 557](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:557): --- PASS: TestCompilingMutants/length.a/^--spacing (2.61s)
+- [Line 558](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:558): --- PASS: TestCompilingMutants/length.a\(/i (2.78s)
+- [Line 559](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:559): --- PASS: TestCompilingMutants/length.areturn_hasMathFunction(value) (2.65s)
+- [Line 561](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:561): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 562](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:562): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 563](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:563): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 564](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:564): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave18
+
+- [Line 579](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:579): === RUN   TestCompilingMutants
+- [Line 580](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:580): === RUN   TestCompilingMutants/background_size.asize_===_'cover'
+- [Line 581](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:581): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 582](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:582): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 583](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:583): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 584](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:584): === RUN   TestCompilingMutants/background_size.aif(allValid)
+- [Line 585](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:585): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 586](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:586): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 587](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:587): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 588](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:588): === RUN   TestCompilingMutants/background_size.acount_>_0
+- [Line 589](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:589): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 590](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:590): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 591](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:591): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 592](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:592): === RUN   TestCompilingMutants/background_size.avalues.length_!==_2
+- [Line 593](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:593): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 594](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:594): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 595](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:595): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 596](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:596): === RUN   TestCompilingMutants/resolve_with.aif(!key.ok)
+- [Line 597](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:597): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 598](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:598): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 599](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:599): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 600](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:600): === RUN   TestCompilingMutants/resolve_with.aif(!nested.present)
+- [Line 601](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:601): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 602](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:602): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 603](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:603): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 604](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:604): === RUN   TestCompilingMutants/resolve_with.anested.options_&_1
+- [Line 605](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:605): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 606](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:606): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 607](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:607): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 608](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:608): === RUN   TestCompilingMutants/resolve_with.abase.options_&_1
+- [Line 609](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:609): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 610](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:610): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 611](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:611): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 612](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:612): === RUN   TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0)
+- [Line 613](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:613): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 614](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:614): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 615](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:615): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 616](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:616): === RUN   TestCompilingMutants/theme_argument.anested.length-1
+- [Line 617](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:617): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 618](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:618): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 619](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:619): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 620](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:620): === RUN   TestCompilingMutants/theme_argument.aif(!result.ok)
+- [Line 621](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:621): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 622](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:622): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 623](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:623): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 624](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:624): === RUN   TestCompilingMutants/theme_argument.aif(!result.extra.has(last))
+- [Line 625](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:625): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 626](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:626): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 627](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:627): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 628](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:628): --- PASS: TestCompilingMutants (44.13s)
+- [Line 629](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:629): --- PASS: TestCompilingMutants/background_size.asize_===_'cover' (3.45s)
+- [Line 630](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:630): --- PASS: TestCompilingMutants/background_size.aif(allValid) (2.63s)
+- [Line 631](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:631): --- PASS: TestCompilingMutants/background_size.acount_>_0 (3.80s)
+- [Line 632](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:632): --- PASS: TestCompilingMutants/background_size.avalues.length_!==_2 (3.58s)
+- [Line 633](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:633): --- PASS: TestCompilingMutants/resolve_with.aif(!key.ok) (3.45s)
+- [Line 634](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:634): --- PASS: TestCompilingMutants/resolve_with.aif(!nested.present) (3.25s)
+- [Line 635](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:635): --- PASS: TestCompilingMutants/resolve_with.anested.options_&_1 (4.82s)
+- [Line 636](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:636): --- PASS: TestCompilingMutants/resolve_with.abase.options_&_1 (4.80s)
+- [Line 637](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:637): --- PASS: TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0) (3.92s)
+- [Line 638](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:638): --- PASS: TestCompilingMutants/theme_argument.anested.length-1 (3.62s)
+- [Line 639](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:639): --- PASS: TestCompilingMutants/theme_argument.aif(!result.ok) (3.15s)
+- [Line 640](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:640): --- PASS: TestCompilingMutants/theme_argument.aif(!result.extra.has(last)) (3.25s)
+- [Line 642](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:642): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 643](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:643): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 644](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:644): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 645](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:645): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave19
+
+- [Line 660](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:660): === RUN   TestCompilingMutants
+- [Line 661](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:661): === RUN   TestCompilingMutants/walk.atag==='declaration'
+- [Line 662](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:662): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 663](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:663): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 664](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:664): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 665](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:665): === RUN   TestCompilingMutants/walk.atag==='context'
+- [Line 666](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:666): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 667](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:667): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 668](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:668): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 669](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:669): === RUN   TestCompilingMutants/walk.atag==='at-rule'
+- [Line 670](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:670): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 671](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:671): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 672](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:672): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 673](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:673): === RUN   TestCompilingMutants/resolve_declaration.a!present_||_value===''
+- [Line 674](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:674): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 675](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:675): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 676](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:676): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 677](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:677): === RUN   TestCompilingMutants/resolve_declaration.amarkDropped(id)
+- [Line 678](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:678): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 679](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:679): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 680](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:680): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 681](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:681): === RUN   TestCompilingMutants/resolve_declaration.areplace(id,print(nodes))
+- [Line 682](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:682): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 683](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:683): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 684](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:684): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 685](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:685): === RUN   TestCompilingMutants/resolve_value_functions.astate.usedValue=true
+- [Line 686](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:686): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 687](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:687): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 688](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:688): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 689](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:689): === RUN   TestCompilingMutants/resolve_value_functions.astate.resolvedRatio=true
+- [Line 690](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:690): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 691](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:691): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 692](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:692): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 693](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:693): === RUN   TestCompilingMutants/resolve_value_functions.astate.nonRatio.set(declaration,true)
+- [Line 694](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:694): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 695](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:695): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 696](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:696): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 697](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:697): === RUN   TestCompilingMutants/resolve_value_functions.astate.usedModifier=true
+- [Line 698](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:698): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 699](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:699): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 700](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:700): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 701](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:701): === RUN   TestCompilingMutants/resolve_value_functions.areplace(id,result.text);___}_else_if
+- [Line 702](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:702): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 703](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:703): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 704](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:704): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 705](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:705): === RUN   TestCompilingMutants/resolve_value_functions.aif(!result.ok)_{_return_true;_}____state.resolvedValue
+- [Line 706](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:706): helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- [Line 707](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:707): helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 708](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:708): helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 709](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:709): --- PASS: TestCompilingMutants (147.36s)
+- [Line 710](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:710): --- PASS: TestCompilingMutants/walk.atag==='declaration' (11.57s)
+- [Line 711](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:711): --- PASS: TestCompilingMutants/walk.atag==='context' (14.99s)
+- [Line 712](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:712): --- PASS: TestCompilingMutants/walk.atag==='at-rule' (12.60s)
+- [Line 713](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:713): --- PASS: TestCompilingMutants/resolve_declaration.a!present_||_value==='' (13.75s)
+- [Line 714](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:714): --- PASS: TestCompilingMutants/resolve_declaration.amarkDropped(id) (11.72s)
+- [Line 715](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:715): --- PASS: TestCompilingMutants/resolve_declaration.areplace(id,print(nodes)) (10.07s)
+- [Line 716](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:716): --- PASS: TestCompilingMutants/resolve_value_functions.astate.usedValue=true (12.48s)
+- [Line 717](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:717): --- PASS: TestCompilingMutants/resolve_value_functions.astate.resolvedRatio=true (13.75s)
+- [Line 718](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:718): --- PASS: TestCompilingMutants/resolve_value_functions.astate.nonRatio.set(declaration,true) (9.42s)
+- [Line 719](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:719): --- PASS: TestCompilingMutants/resolve_value_functions.astate.usedModifier=true (12.58s)
+- [Line 720](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:720): --- PASS: TestCompilingMutants/resolve_value_functions.areplace(id,result.text);___}_else_if (11.99s)
+- [Line 721](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:721): --- PASS: TestCompilingMutants/resolve_value_functions.aif(!result.ok)_{_return_true;_}____state.resolvedValue (11.91s)
+- [Line 723](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:723): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 724](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:724): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 725](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:725): helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 726](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:726): helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave2
+
+- [Line 738](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:738): === RUN   TestWave2CompilingMutants
+- [Line 739](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:739): === RUN   TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false
+- [Line 740](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:740): wave2_test.go:158: sanitized native compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+- [Line 741](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:741): wave2_test.go:158: Node source compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+- [Line 742](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:742): === RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies);
+- [Line 743](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:743): wave2_test.go:158: sanitized native compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+- [Line 744](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:744): wave2_test.go:158: Node source compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+- [Line 745](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:745): === RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies);
+- [Line 746](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:746): wave2_test.go:158: sanitized native compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+- [Line 747](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:747): wave2_test.go:158: Node source compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+- [Line 748](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:748): --- PASS: TestWave2CompilingMutants (9.04s)
+- [Line 749](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:749): --- PASS: TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false (1.90s)
+- [Line 750](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:750): --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies); (1.98s)
+- [Line 751](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:751): --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies); (1.59s)
+- [Line 753](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:753): wave2_test.go:225: all 11 consumers covered; canonical-class consumer omission caught
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave20
+
+- [Line 765](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:765): === RUN   TestCompilingMutants
+- [Line 766](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:766): === RUN   TestCompilingMutants/descends_for_jsx_search.aif(!present)
+- [Line 767](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:767): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 768](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:768): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 769](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:769): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 770](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:770): === RUN   TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement
+- [Line 771](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:771): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 772](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:772): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 773](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:773): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 774](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:774): === RUN   TestCompilingMutants/search_for_jsx_or_hook.adepth>20
+- [Line 775](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:775): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 776](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:776): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 777](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:777): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 778](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:778): === RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx)
+- [Line 779](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:779): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 780](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:780): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 781](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:781): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 782](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:782): === RUN   TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id)
+- [Line 783](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:783): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 784](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:784): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 785](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:785): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 786](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:786): === RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement))
+- [Line 787](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:787): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 788](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:788): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 789](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:789): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 790](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:790): === RUN   TestCompilingMutants/search_for_jsx_or_hook.adepth+1
+- [Line 791](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:791): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 792](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:792): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 793](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:793): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 794](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:794): === RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_}
+- [Line 795](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:795): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 796](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:796): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 797](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:797): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 798](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:798): === RUN   TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0,
+- [Line 799](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:799): helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- [Line 800](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:800): helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 801](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:801): helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 802](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:802): --- PASS: TestCompilingMutants (23.98s)
+- [Line 803](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:803): --- PASS: TestCompilingMutants/descends_for_jsx_search.aif(!present) (2.35s)
+- [Line 804](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:804): --- PASS: TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement (2.86s)
+- [Line 805](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:805): --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth>20 (2.73s)
+- [Line 806](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:806): --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx) (1.97s)
+- [Line 807](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:807): --- PASS: TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id) (2.15s)
+- [Line 808](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:808): --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement)) (2.24s)
+- [Line 809](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:809): --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth+1 (2.22s)
+- [Line 810](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:810): --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_} (1.78s)
+- [Line 811](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:811): --- PASS: TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0, (2.20s)
+- [Line 813](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:813): helpers_test.go:254: consumer omission caught: structure/react-component-require-properties-parameter
+- [Line 814](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:814): helpers_test.go:254: consumer omission caught: structure/consistency-require-matching-file-name
+- [Line 815](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:815): helpers_test.go:254: consumer omission caught: structure/react-component-no-destructuring
+- [Line 816](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:816): helpers_test.go:254: consumer omission caught: structure/react-component-no-separate-named-export
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave21
+
+- [Line 831](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:831): === RUN   TestCompilingMutants
+- [Line 832](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:832): === RUN   TestCompilingMutants/class_tokens_of.astart:start+begin
+- [Line 833](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:833): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 834](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:834): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 835](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:835): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 836](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:836): === RUN   TestCompilingMutants/class_tokens_of.aend:start+index
+- [Line 837](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:837): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 838](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:838): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 839](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:839): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 840](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:840): === RUN   TestCompilingMutants/class_tokens_of.aseparator:separator
+- [Line 841](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:841): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 842](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:842): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 843](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:843): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 844](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:844): === RUN   TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;}
+- [Line 845](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:845): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 846](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:846): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 847](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:847): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 848](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:848): === RUN   TestCompilingMutants/class_tokens_in.aend>source.length
+- [Line 849](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:849): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 850](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:850): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 851](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:851): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 852](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:852): === RUN   TestCompilingMutants/class_tokens_in.astart>end
+- [Line 853](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:853): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 854](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:854): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 855](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:855): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 856](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:856): === RUN   TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index]
+- [Line 857](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:857): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 858](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:858): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 859](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:859): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 860](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:860): === RUN   TestCompilingMutants/bare_argument.aargument!=='integer'
+- [Line 861](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:861): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 862](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:862): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 863](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:863): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 864](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:864): === RUN   TestCompilingMutants/bare_argument.aif(inferred==='')
+- [Line 865](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:865): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 866](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:866): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 867](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:867): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 868](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:868): === RUN   TestCompilingMutants/bare_argument.aparts.length!==2
+- [Line 869](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:869): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 870](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:870): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 871](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:871): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 872](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:872): === RUN   TestCompilingMutants/bare_argument.aratio:true,ok:true
+- [Line 873](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:873): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 874](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:874): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 875](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:875): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 876](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:876): === RUN   TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved)
+- [Line 877](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:877): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 878](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:878): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 879](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:879): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 880](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:880): === RUN   TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive
+- [Line 881](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:881): helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- [Line 882](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:882): helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 883](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:883): helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 884](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:884): --- PASS: TestCompilingMutants (58.74s)
+- [Line 885](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:885): --- PASS: TestCompilingMutants/class_tokens_of.astart:start+begin (3.63s)
+- [Line 886](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:886): --- PASS: TestCompilingMutants/class_tokens_of.aend:start+index (6.15s)
+- [Line 887](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:887): --- PASS: TestCompilingMutants/class_tokens_of.aseparator:separator (3.65s)
+- [Line 888](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:888): --- PASS: TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;} (4.10s)
+- [Line 889](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:889): --- PASS: TestCompilingMutants/class_tokens_in.aend>source.length (5.27s)
+- [Line 890](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:890): --- PASS: TestCompilingMutants/class_tokens_in.astart>end (4.35s)
+- [Line 891](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:891): --- PASS: TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index] (4.15s)
+- [Line 892](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:892): --- PASS: TestCompilingMutants/bare_argument.aargument!=='integer' (3.71s)
+- [Line 893](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:893): --- PASS: TestCompilingMutants/bare_argument.aif(inferred==='') (4.52s)
+- [Line 894](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:894): --- PASS: TestCompilingMutants/bare_argument.aparts.length!==2 (5.02s)
+- [Line 895](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:895): --- PASS: TestCompilingMutants/bare_argument.aratio:true,ok:true (3.83s)
+- [Line 896](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:896): --- PASS: TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved) (3.65s)
+- [Line 897](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:897): --- PASS: TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive (4.37s)
+- [Line 899](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:899): helpers_test.go:258: consumer omission caught: better-tailwindcss/no-duplicate-classes
+- [Line 900](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:900): helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 901](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:901): helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unnecessary-whitespace
+- [Line 902](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:902): helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 903](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:903): helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 904](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:904): helpers_test.go:258: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 905](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:905): helpers_test.go:258: consumer omission caught: better-tailwindcss/no-deprecated-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave22
+
+- [Line 926](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:926): === RUN   TestCompilingMutants
+- [Line 927](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:927): === RUN   TestCompilingMutants/compile_candidate.aif(!candidate.present_||_!candidate.functional){return_{nodes:[],ok:false};}
+- [Line 928](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:928): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 929](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:929): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 930](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:930): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 931](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:931): === RUN   TestCompilingMutants/compile_candidate.aif(!definition.found){return_{nodes:[],ok:false};}
+- [Line 932](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:932): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 933](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:933): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 934](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:934): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 935](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:935): === RUN   TestCompilingMutants/compiler_rule_options.aif(raw.length===0){return_{options:{},error:''};}
+- [Line 936](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:936): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 937](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:937): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 938](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:938): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 939](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:939): === RUN   TestCompilingMutants/compile.acompileCandidate(candidate,0,
+- [Line 940](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:940): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 941](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:941): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 942](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:942): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 943](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:943): === RUN   TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue)
+- [Line 944](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:944): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 945](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:945): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 946](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:946): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 947](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:947): === RUN   TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent)
+- [Line 948](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:948): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 949](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:949): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 950](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:950): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 951](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:951): === RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier)
+- [Line 952](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:952): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 953](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:953): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 954](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:954): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 955](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:955): === RUN   TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier)
+- [Line 956](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:956): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 957](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:957): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 958](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:958): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 959](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:959): === RUN   TestCompilingMutants/compile_candidate.aif(removals!==1)
+- [Line 960](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:960): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 961](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:961): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 962](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:962): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 963](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:963): === RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2)
+- [Line 964](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:964): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 965](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:965): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 966](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:966): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 967](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:967): === RUN   TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent)
+- [Line 968](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:968): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 969](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:969): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 970](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:970): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 971](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:971): === RUN   TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0)
+- [Line 972](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:972): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 973](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:973): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 974](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:974): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 975](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:975): === RUN   TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys);
+- [Line 976](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:976): helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- [Line 977](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:977): helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- [Line 978](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:978): helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- [Line 979](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:979): --- PASS: TestCompilingMutants (35.98s)
+- [Line 980](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:980): --- PASS: TestCompilingMutants/compile_candidate.aif(!candidate.present_||_!candidate.functional){return_{nodes:[],ok:false};} (3.07s)
+- [Line 981](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:981): --- PASS: TestCompilingMutants/compile_candidate.aif(!definition.found){return_{nodes:[],ok:false};} (2.41s)
+- [Line 982](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:982): --- PASS: TestCompilingMutants/compiler_rule_options.aif(raw.length===0){return_{options:{},error:''};} (2.31s)
+- [Line 983](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:983): --- PASS: TestCompilingMutants/compile.acompileCandidate(candidate,0, (2.92s)
+- [Line 984](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:984): --- PASS: TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue) (3.51s)
+- [Line 985](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:985): --- PASS: TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent) (2.39s)
+- [Line 986](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:986): --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier) (2.34s)
+- [Line 987](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:987): --- PASS: TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier) (2.39s)
+- [Line 988](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:988): --- PASS: TestCompilingMutants/compile_candidate.aif(removals!==1) (2.41s)
+- [Line 989](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:989): --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2) (1.91s)
+- [Line 990](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:990): --- PASS: TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent) (2.66s)
+- [Line 991](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:991): --- PASS: TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0) (2.30s)
+- [Line 992](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:992): --- PASS: TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys); (2.32s)
+- [Line 994](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:994): helpers_test.go:259: consumer omission caught: react-hooks/error-boundaries
+- [Line 995](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:995): helpers_test.go:259: consumer omission caught: react-hooks/incompatible-library
+- [Line 996](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:996): helpers_test.go:259: consumer omission caught: react-hooks/void-use-memo
+- [Line 997](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:997): helpers_test.go:259: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 998](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:998): helpers_test.go:259: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 999](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:999): helpers_test.go:259: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 1000](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1000): helpers_test.go:259: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 1001](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1001): helpers_test.go:259: consumer omission caught: react-hooks/config
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave3_space
+
+- [Line 1016](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1016): === RUN   TestSpaceCompilingMutants
+- [Line 1017](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1017): === RUN   TestSpaceCompilingMutants/javascript_space.acase_0xfeff:
+- [Line 1018](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1018): space_test.go:184: Node source compiling mutant caught at line 109: got "blank false", Go "blank true"
+- [Line 1019](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1019): space_test.go:184: sanitized native compiling mutant caught at line 109: got "blank false", Go "blank true"
+- [Line 1020](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1020): space_test.go:184: emitted JavaScript compiling mutant caught at line 109: got "blank false", Go "blank true"
+- [Line 1021](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1021): === RUN   TestSpaceCompilingMutants/blank.areturn_true;
+- [Line 1022](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1022): space_test.go:184: Node source compiling mutant caught at line 1: got "blank false", Go "blank true"
+- [Line 1023](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1023): space_test.go:184: sanitized native compiling mutant caught at line 1: got "blank false", Go "blank true"
+- [Line 1024](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1024): space_test.go:184: emitted JavaScript compiling mutant caught at line 1: got "blank false", Go "blank true"
+- [Line 1025](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1025): === RUN   TestSpaceCompilingMutants/blank.aindex++
+- [Line 1026](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1026): space_test.go:184: Node source compiling mutant caught at line 268: got "blank true", Go "blank false"
+- [Line 1027](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1027): space_test.go:184: sanitized native compiling mutant caught at line 268: got "blank true", Go "blank false"
+- [Line 1028](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1028): space_test.go:184: emitted JavaScript compiling mutant caught at line 268: got "blank true", Go "blank false"
+- [Line 1029](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1029): === RUN   TestSpaceCompilingMutants/value_separator.acase_58:_
+- [Line 1030](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1030): space_test.go:184: Node source compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+- [Line 1031](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1031): space_test.go:184: sanitized native compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+- [Line 1032](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1032): space_test.go:184: emitted JavaScript compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+- [Line 1033](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1033): === RUN   TestSpaceCompilingMutants/value_separator.acase_60:_case_10:
+- [Line 1034](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1034): space_test.go:184: Node source compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+- [Line 1035](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1035): space_test.go:184: sanitized native compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+- [Line 1036](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1036): space_test.go:184: emitted JavaScript compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+- [Line 1037](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1037): --- PASS: TestSpaceCompilingMutants (7.29s)
+- [Line 1038](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1038): --- PASS: TestSpaceCompilingMutants/javascript_space.acase_0xfeff: (1.04s)
+- [Line 1039](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1039): --- PASS: TestSpaceCompilingMutants/blank.areturn_true; (1.29s)
+- [Line 1040](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1040): --- PASS: TestSpaceCompilingMutants/blank.aindex++ (1.37s)
+- [Line 1041](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1041): --- PASS: TestSpaceCompilingMutants/value_separator.acase_58:_ (1.14s)
+- [Line 1042](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1042): --- PASS: TestSpaceCompilingMutants/value_separator.acase_60:_case_10: (1.43s)
+- [Line 1044](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1044): space_test.go:252: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave4
+
+- [Line 1059](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1059): === RUN   TestBytesCompilingMutants
+- [Line 1060](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1060): === RUN   TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1]
+- [Line 1061](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1061): bytes_test.go:183: Node source compiling mutant caught at line 16: got "top 0", Go "top 1"
+- [Line 1062](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1062): bytes_test.go:183: sanitized native compiling mutant caught at line 16: got "top 0", Go "top 1"
+- [Line 1063](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1063): bytes_test.go:183: emitted JavaScript compiling mutant caught at line 16: got "top 0", Go "top 1"
+- [Line 1064](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1064): === RUN   TestBytesCompilingMutants/peek_byte.areturn_input[index]
+- [Line 1065](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1065): bytes_test.go:183: Node source compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+- [Line 1066](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1066): bytes_test.go:183: sanitized native compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+- [Line 1067](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1067): bytes_test.go:183: emitted JavaScript compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+- [Line 1068](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1068): === RUN   TestBytesCompilingMutants/peek_byte.areturn_0;
+- [Line 1069](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1069): bytes_test.go:183: Node source compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+- [Line 1070](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1070): bytes_test.go:183: sanitized native compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+- [Line 1071](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1071): bytes_test.go:183: emitted JavaScript compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+- [Line 1072](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1072): --- PASS: TestBytesCompilingMutants (4.97s)
+- [Line 1073](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1073): --- PASS: TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1] (1.05s)
+- [Line 1074](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1074): --- PASS: TestBytesCompilingMutants/peek_byte.areturn_input[index] (1.26s)
+- [Line 1075](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1075): --- PASS: TestBytesCompilingMutants/peek_byte.areturn_0; (1.73s)
+- [Line 1077](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1077): bytes_test.go:251: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- [Line 1087](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1087): === RUN   TestSortedKeysCompilingMutants
+- [Line 1088](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1088): === RUN   TestSortedKeysCompilingMutants/omit_false_values
+- [Line 1089](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1089): bytes_test.go:341: Node source compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+- [Line 1090](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1090): bytes_test.go:341: sanitized native compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+- [Line 1091](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1091): bytes_test.go:341: emitted JavaScript compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+- [Line 1092](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1092): === RUN   TestSortedKeysCompilingMutants/reverse_UTF8
+- [Line 1093](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1093): bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- [Line 1094](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1094): bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- [Line 1095](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1095): bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- [Line 1096](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1096): === RUN   TestSortedKeysCompilingMutants/UTF16_comparator
+- [Line 1097](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1097): bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- [Line 1098](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1098): bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- [Line 1099](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1099): bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- [Line 1100](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1100): --- PASS: TestSortedKeysCompilingMutants (6.17s)
+- [Line 1101](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1101): --- PASS: TestSortedKeysCompilingMutants/omit_false_values (1.63s)
+- [Line 1102](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1102): --- PASS: TestSortedKeysCompilingMutants/reverse_UTF8 (2.10s)
+- [Line 1103](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1103): --- PASS: TestSortedKeysCompilingMutants/UTF16_comparator (1.91s)
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave5
+
+- [Line 1120](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1120): === RUN   TestStringsCompilingMutants
+- [Line 1121](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1121): === RUN   TestStringsCompilingMutants/comment.akind:_'comment'
+- [Line 1122](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1122): strings_test.go:187: Node source compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+- [Line 1123](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1123): strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+- [Line 1124](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1124): strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+- [Line 1125](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1125): === RUN   TestStringsCompilingMutants/comment.avaluePresent:_false
+- [Line 1126](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1126): strings_test.go:187: Node source compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+- [Line 1127](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1127): strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+- [Line 1128](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1128): strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+- [Line 1129](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1129): === RUN   TestStringsCompilingMutants/declaration.avaluePresent:_true
+- [Line 1130](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1130): strings_test.go:187: Node source compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+- [Line 1131](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1131): strings_test.go:187: sanitized native compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+- [Line 1132](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1132): strings_test.go:187: emitted JavaScript compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+- [Line 1133](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1133): === RUN   TestStringsCompilingMutants/declaration.aparams:_[],_property,
+- [Line 1134](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1134): strings_test.go:187: Node source compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+- [Line 1135](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1135): strings_test.go:187: sanitized native compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+- [Line 1136](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1136): strings_test.go:187: emitted JavaScript compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+- [Line 1137](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1137): === RUN   TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46
+- [Line 1138](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1138): strings_test.go:187: Node source compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+- [Line 1139](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1139): strings_test.go:187: sanitized native compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+- [Line 1140](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1140): strings_test.go:187: emitted JavaScript compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+- [Line 1141](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1141): === RUN   TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index
+- [Line 1142](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1142): strings_test.go:187: Node source compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+- [Line 1143](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1143): strings_test.go:187: sanitized native compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+- [Line 1144](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1144): strings_test.go:187: emitted JavaScript compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+- [Line 1145](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1145): --- PASS: TestStringsCompilingMutants (13.20s)
+- [Line 1146](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1146): --- PASS: TestStringsCompilingMutants/comment.akind:_'comment' (1.50s)
+- [Line 1147](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1147): --- PASS: TestStringsCompilingMutants/comment.avaluePresent:_false (1.77s)
+- [Line 1148](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1148): --- PASS: TestStringsCompilingMutants/declaration.avaluePresent:_true (1.88s)
+- [Line 1149](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1149): --- PASS: TestStringsCompilingMutants/declaration.aparams:_[],_property, (1.78s)
+- [Line 1150](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1150): --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46 (2.59s)
+- [Line 1151](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1151): --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index (2.25s)
+- [Line 1153](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1153): strings_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave6
+
+- [Line 1171](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1171): === RUN   TestStringsCompilingMutants
+- [Line 1172](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1172): === RUN   TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2
+- [Line 1173](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1173): helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+- [Line 1174](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1174): helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+- [Line 1175](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1175): helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+- [Line 1176](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1176): === RUN   TestStringsCompilingMutants/theme_prefix_key.aresult.push(45);
+- [Line 1177](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1177): helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+- [Line 1178](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1178): helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+- [Line 1179](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1179): helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+- [Line 1180](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1180): === RUN   TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root)
+- [Line 1181](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1181): helpers_test.go:185: Node source compiling mutant caught at line 6: got "added false", Go "added true"
+- [Line 1182](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1182): helpers_test.go:185: sanitized native compiling mutant caught at line 6: got "added false", Go "added true"
+- [Line 1183](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1183): helpers_test.go:185: emitted JavaScript compiling mutant caught at line 6: got "added false", Go "added true"
+- [Line 1184](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1184): === RUN   TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix;
+- [Line 1185](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1185): helpers_test.go:185: Node source compiling mutant caught at line 3: got "changed ", Go "changed 137"
+- [Line 1186](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1186): helpers_test.go:185: sanitized native compiling mutant caught at line 3: got "changed ", Go "changed 137"
+- [Line 1187](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1187): helpers_test.go:185: emitted JavaScript compiling mutant caught at line 3: got "changed ", Go "changed 137"
+- [Line 1188](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1188): --- PASS: TestStringsCompilingMutants (16.04s)
+- [Line 1189](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1189): --- PASS: TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2 (4.02s)
+- [Line 1190](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1190): --- PASS: TestStringsCompilingMutants/theme_prefix_key.aresult.push(45); (4.14s)
+- [Line 1191](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1191): --- PASS: TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root) (2.42s)
+- [Line 1192](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1192): --- PASS: TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix; (3.76s)
+- [Line 1194](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1194): helpers_test.go:253: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- [Line 1196](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1196): === RUN   TestPrefixKeyShortKeyRefusalAndMutant
+- [Line 1199](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1199): helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad0
+- [Line 1200](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1200): helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad0
+- [Line 1201](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1201): helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad0
+- [Line 1202](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1202): helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad1
+- [Line 1203](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1203): helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad1
+- [Line 1204](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1204): helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad1
+- [Line 1205](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1205): --- PASS: TestPrefixKeyShortKeyRefusalAndMutant (5.78s)
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave7
+
+- [Line 1222](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1222): === RUN   TestStringsCompilingMutants
+- [Line 1223](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1223): === RUN   TestStringsCompilingMutants/has_variant.asystem.variants.has(root)
+- [Line 1224](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1224): helpers_test.go:186: Node source compiling mutant caught at line 1: got "has false", Go "has true"
+- [Line 1225](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1225): helpers_test.go:186: sanitized native compiling mutant caught at line 1: got "has false", Go "has true"
+- [Line 1226](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1226): helpers_test.go:186: emitted JavaScript compiling mutant caught at line 1: got "has false", Go "has true"
+- [Line 1227](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1227): === RUN   TestStringsCompilingMutants/variant_kind.a??_'static'
+- [Line 1228](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1228): helpers_test.go:186: Node source compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+- [Line 1229](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1229): helpers_test.go:186: sanitized native compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+- [Line 1230](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1230): helpers_test.go:186: emitted JavaScript compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+- [Line 1231](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1231): === RUN   TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static';
+- [Line 1232](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1232): helpers_test.go:186: Node source compiling mutant caught at line 2: got "kind static", Go "kind "
+- [Line 1233](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1233): helpers_test.go:186: sanitized native compiling mutant caught at line 2: got "kind static", Go "kind "
+- [Line 1234](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1234): helpers_test.go:186: emitted JavaScript compiling mutant caught at line 2: got "kind static", Go "kind "
+- [Line 1235](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1235): === RUN   TestStringsCompilingMutants/variant_compounds_with.a===_'compound'
+- [Line 1236](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1236): helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- [Line 1237](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1237): helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- [Line 1238](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1238): helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- [Line 1239](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1239): === RUN   TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent)
+- [Line 1240](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1240): helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- [Line 1241](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1241): helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- [Line 1242](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1242): helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- [Line 1243](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1243): --- PASS: TestStringsCompilingMutants (12.15s)
+- [Line 1244](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1244): --- PASS: TestStringsCompilingMutants/has_variant.asystem.variants.has(root) (2.19s)
+- [Line 1245](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1245): --- PASS: TestStringsCompilingMutants/variant_kind.a??_'static' (2.21s)
+- [Line 1246](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1246): --- PASS: TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static'; (1.99s)
+- [Line 1247](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1247): --- PASS: TestStringsCompilingMutants/variant_compounds_with.a===_'compound' (1.94s)
+- [Line 1248](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1248): --- PASS: TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent) (2.69s)
+- [Line 1250](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1250): helpers_test.go:254: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave8
+
+- [Line 1268](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1268): === RUN   TestStringsCompilingMutants
+- [Line 1269](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1269): === RUN   TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit)
+- [Line 1270](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1270): helpers_test.go:187: Node source compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+- [Line 1271](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1271): helpers_test.go:187: sanitized native compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+- [Line 1272](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1272): helpers_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+- [Line 1273](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1273): === RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_}
+- [Line 1274](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1274): helpers_test.go:187: Node source compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+- [Line 1275](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1275): helpers_test.go:187: sanitized native compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+- [Line 1276](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1276): helpers_test.go:187: emitted JavaScript compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+- [Line 1277](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1277): === RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_0)
+- [Line 1278](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1278): helpers_test.go:187: Node source compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+- [Line 1279](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1279): helpers_test.go:187: sanitized native compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+- [Line 1280](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1280): helpers_test.go:187: emitted JavaScript compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+- [Line 1281](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1281): === RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01
+- [Line 1282](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1282): helpers_test.go:187: Node source compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+- [Line 1283](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1283): helpers_test.go:187: sanitized native compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+- [Line 1284](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1284): helpers_test.go:187: emitted JavaScript compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+- [Line 1285](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1285): === RUN   TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator'
+- [Line 1286](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1286): helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- [Line 1287](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1287): helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- [Line 1288](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1288): helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- [Line 1289](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1289): === RUN   TestStringsCompilingMutants/write_value_css.abuilder.push(41)
+- [Line 1290](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1290): helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- [Line 1291](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1291): helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- [Line 1292](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1292): helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- [Line 1293](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1293): --- PASS: TestStringsCompilingMutants (15.97s)
+- [Line 1294](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1294): --- PASS: TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit) (2.27s)
+- [Line 1295](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1295): --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_} (3.38s)
+- [Line 1296](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1296): --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0) (1.94s)
+- [Line 1297](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1297): --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01 (2.56s)
+- [Line 1298](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1298): --- PASS: TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator' (2.63s)
+- [Line 1299](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1299): --- PASS: TestStringsCompilingMutants/write_value_css.abuilder.push(41) (2.05s)
+- [Line 1301](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1301): helpers_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+## github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave9
+
+- [Line 1313](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1313): === RUN   TestCompilingMutants
+- [Line 1314](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1314): === RUN   TestCompilingMutants/load_design_system_through.adependencies.stat(path)
+- [Line 1315](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1315): helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- [Line 1316](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1316): helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 1317](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1317): helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 1318](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1318): === RUN   TestCompilingMutants/load_design_system_through.aif(loaded.failed)
+- [Line 1319](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1319): helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- [Line 1320](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1320): helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 1321](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1321): helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 1322](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1322): === RUN   TestCompilingMutants/ingest_utility_block.aprevious_+_2
+- [Line 1323](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1323): helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- [Line 1324](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1324): helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 1325](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1325): helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 1326](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1326): === RUN   TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body});
+- [Line 1327](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1327): helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- [Line 1328](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1328): helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 1329](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1329): helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 1330](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1330): === RUN   TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies);
+- [Line 1331](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1331): helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- [Line 1332](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1332): helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 1333](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1333): helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 1334](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1334): === RUN   TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(','));
+- [Line 1335](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1335): helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- [Line 1336](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1336): helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- [Line 1337](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1337): helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- [Line 1338](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1338): --- PASS: TestCompilingMutants (12.71s)
+- [Line 1339](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1339): --- PASS: TestCompilingMutants/load_design_system_through.adependencies.stat(path) (1.78s)
+- [Line 1340](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1340): --- PASS: TestCompilingMutants/load_design_system_through.aif(loaded.failed) (1.75s)
+- [Line 1341](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1341): --- PASS: TestCompilingMutants/ingest_utility_block.aprevious_+_2 (2.04s)
+- [Line 1342](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1342): --- PASS: TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body}); (1.56s)
+- [Line 1343](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1343): --- PASS: TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies); (1.97s)
+- [Line 1344](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1344): --- PASS: TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(',')); (3.27s)
+- [Line 1346](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1346): helpers_test.go:211: loader-body drift mutant caught
+- [Line 1349](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1349): helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- [Line 1350](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1350): helpers_test.go:281: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- [Line 1351](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1351): helpers_test.go:281: consumer omission caught: better-tailwindcss/no-unknown-classes
+- [Line 1352](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1352): helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-canonical-classes
+- [Line 1353](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1353): helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- [Line 1354](/workspace/adamic/stage1/cohere/lint/helpers/slot04_landing_b4691483/helpers.log:1354): helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-variant-order
+
+## Shared harness
+
+The ordinary comparison caught the clean-running emitted-JavaScript stdout mutant. The second suggestion-edit endpoint mutant was caught on source Node, emitted JavaScript and sanitized native. Their full observations are in harness.log.
