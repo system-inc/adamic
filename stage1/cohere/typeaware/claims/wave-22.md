@@ -129,3 +129,15 @@ path requires capture/alias escape analysis, the parked prerequisite. The
 selection inventory and inspected refs are in validation-wave-22-sixth/selection.json.
 This claim is pushed before implementation. New rule directories will declare
 rule.json kinds and use .a listener sources receiving the provided node.
+
+## Sixth batch implementation status
+
+react/jsx-fragments, react/jsx-no-undef and react/no-adjacent-inline-elements
+are implemented as .a node listeners with rule.json kinds and numeric kinds.
+Their controls and frozen corpora match Go byte for byte with per-rule mutants
+and sanitizers. They are validated against the published JSX parser dependency
+at a8a62d62ca49db7415e14c3887dd305022b17309 in an isolated source tree.
+Current main still blocks the direct parser build with its constructor
+escape refusal and has not integrated JSX. Shared parser/harness integration
+is pending; those files were not edited. See WAVE_22_SIXTH_REPORT.md.
+The earlier three React graph claims remain parked. No further rules claimed.
