@@ -1,0 +1,49 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { description, destructureDescription } from './messages.a';
+
+const assignments = ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'];
+const wrappers = ['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'TypeAssertionExpression', 'SatisfiesExpression'];
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly allowed: string[];
+    readonly destructuring: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.allowed = context.settings.list('allowednames', context.settings.list('allownames', []));
+        this.destructuring = context.settings.read('reportdestructuring', context.settings.read('allowdestructuring', 'true') === 'false' ? 'true' : 'false') === 'true';
+    }
+    identifier(index: number): void {
+        if(this.allowed.includes(this.context.node(index).text)) { return; }
+        this.context.report(index, '@typescript-eslint/no-this-alias', 'thisAssignment', description, '', '', '');
+    }
+    pattern(index: number): void {
+        if(!this.destructuring) { return; }
+        this.context.report(index, '@typescript-eslint/no-this-alias', 'thisDestructure', destructureDescription, '', '', '');
+    }
+    visit(index: number, parent: number): void {
+        const path = this.context.parser.path;
+        if(!['.ts', '.tsx', '.mts', '.cts'].some(extension => path.endsWith(extension))) { return; }
+        const node = this.context.node(index);
+        if(node.kind === 'VariableDeclaration') {
+            const name = node.children[0] ?? panic('declaration without name');
+            const initializer = node.children[node.children.length - 1] ?? -1;
+            if(initializer === name || initializer < 0 || this.context.node(initializer).kind !== 'ThisKeyword') { return; }
+            if(this.context.node(name).kind === 'Identifier') { this.identifier(name); }
+            else { this.pattern(name); }
+            return;
+        }
+        const operator = node.children[1] ?? panic('binary without operator');
+        const right = node.children[2] ?? panic('binary without right');
+        if(!assignments.includes(this.context.node(operator).kind) || this.context.node(right).kind !== 'ThisKeyword') { return; }
+        let target = node.children[0] ?? panic('binary without left');
+        if(['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(this.context.node(target).kind)) { this.pattern(target); return; }
+        while(wrappers.includes(this.context.node(target).kind)) {
+            const wrapped = this.context.node(target);
+            target = wrapped.children[wrapped.kind === 'TypeAssertionExpression' ? 1 : 0] ?? panic('target wrapper without expression');
+        }
+        if(this.context.node(target).kind === 'Identifier') { this.identifier(target); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

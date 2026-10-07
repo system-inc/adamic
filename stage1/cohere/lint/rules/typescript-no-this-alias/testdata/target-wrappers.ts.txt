@@ -1,0 +1,9 @@
+const emoji = '😀';
+let é;
+((é)) = this;
+(é as unknown) = this;
+(é satisfies unknown) = this;
+(é!) = this;
+const derived = (this);
+this.member = this;
+const { member } = this;
