@@ -112,6 +112,11 @@ function run(row: string, countOnly: boolean): number {
         console.log(
             `range ${start} ${end} ${finding.id} ${repair}\t${written(replacement)}\t${written(description)}\t${editStart} ${editEnd}`,
         );
+        for(const extra of finding.extraFixes) {
+            console.log(
+                `fix-edit\t${offsets[extra.start] ?? panic('fix outside source')} ${offsets[extra.end] ?? panic('fix end outside source')}\t${written(extra.text)}`,
+            );
+        }
         if(complete) {
             for(const suggestion of finding.suggestions) {
                 console.log(
