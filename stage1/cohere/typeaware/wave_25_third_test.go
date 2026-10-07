@@ -230,6 +230,7 @@ func wave25ThirdControls(h *harness) []string {
 	return roots
 }
 
+// Not parallel: native builds and sanitizer runs share this machine.
 func TestWave25ThirdAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {

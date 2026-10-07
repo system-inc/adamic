@@ -228,6 +228,7 @@ func TestWave25FifthAgreementAndMutants(t *testing.T) {
 	t.Log("released syntax question: panic 70, invalid or released checker handle")
 }
 
+// Not parallel: native builds and sanitizer runs share this machine.
 func TestWave25FifthBooleanRefusals(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
