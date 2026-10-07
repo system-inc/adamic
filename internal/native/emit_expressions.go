@@ -569,17 +569,24 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.CodePoints {
 			function = "adamic_string_from_code_points"
 		}
+		var call string
 		if expression.Spread != nil {
-			return e.own(ir.String, fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread)))
+			call = fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread))
+		} else {
+			codes := make([]string, 0, len(expression.Codes))
+			for _, code := range expression.Codes {
+				codes = append(codes, e.value(code))
+			}
+			call = function + "(0, NULL)"
+			if len(codes) != 0 {
+				call = fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", "))
+			}
 		}
-		codes := make([]string, 0, len(expression.Codes))
-		for _, code := range expression.Codes {
-			codes = append(codes, e.value(code))
+		result := e.own(ir.String, call)
+		if expression.CodePoints {
+			e.checkThrown()
 		}
-		if len(codes) == 0 {
-			return e.own(ir.String, function+"(0, NULL)")
-		}
-		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+		return result
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:
