@@ -1,0 +1,30 @@
+{
+  "original": [
+    "github.com/system-inc/adamic/stage1/cohere/typeaware\t232.296s"
+  ],
+  "timeout": [
+    "github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next\t77.470s"
+  ],
+  "process": [
+    "github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next\t205.160s"
+  ],
+  "bridge": [
+    "github.com/system-inc/adamic/bridge/tsgo/checker\t0.205s"
+  ],
+  "node": [
+    "github.com/system-inc/adamic/internal/oracle\t57.163s"
+  ],
+  "mutants": [
+    "github.com/system-inc/adamic/internal/oracle\t4.344s"
+  ],
+  "options": [
+    "github.com/system-inc/adamic/stage1/cohere/lint\t42.745s"
+  ],
+  "lint": [
+    "github.com/system-inc/adamic/stage1/cohere/lint\t328.957s"
+  ],
+  "typescript": [
+    "github.com/system-inc/adamic/stage1/typescript/parser\t57.968s",
+    "github.com/system-inc/adamic/stage1/typescript/scanner\t41.503s"
+  ]
+}
