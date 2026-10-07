@@ -47,3 +47,12 @@ rejected a broad size-based cleanup; a narrower cleanup verified ELF/archive
 signatures in three superseded owned build directories, preserving sources/logs.
 The clean rerun above passed. No new rules are claimed while remaining existing
 checker/source and regex gaps prevent complete ports.
+
+Availability follow-up: fresh git fetch left main and area unchanged. Scanned
+605 origin refs and 33 unique typeaware claim blobs. Of 197 checker-dependent
+ranked rules, 172 are mentioned by complete name in claims; the remaining 25
+are documented baseline ports (16 original TypeScript rules and nine ranked
+coverage additions; method-signature-style is outside this checker-dependent
+ranking). No unclaimed/unported rule remains. The exact refs, claim blob IDs
+and excluded names are in validation-area/availability-scan.json. No source
+changed, so the immediately preceding rebase oracle evidence remains applicable.
