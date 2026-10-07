@@ -1,0 +1,163 @@
+=== RUN   TestRulesAgree
+    lint_test.go:399: cohere cases: 2137 unique source/rule/options combinations
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-113/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-113/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-113/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-115/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-119/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-119/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-119/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-120/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-120/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-120/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-129/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-129/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-129/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-131/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-131/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-133/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-133/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-133/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-133/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-134/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-134/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-134/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-134/Thing.ts
+    lint_test.go:438: node [--disable-warning=ExperimentalWarning /workspace/scratch/wave12-area-validation/oracle/node.mjs /workspace/scratch/wave12-area-validation/stage1/cohere/lint/main.ts --manifest /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/069/manifest.txt]: exit status 70
+        adamic: panic: parser slice unsupported primary Unknown at 87 in /workspace/scratch/wave12-b469-gate/TestRulesAgree3437581462/019/case-389/Thing.ts
+--- FAIL: TestRulesAgree (98.58s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:514: compiler and stage1: 448 files
+    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 20823038 bytes
+--- PASS: TestCompilerAndStage1Agree (140.48s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:39: nexus/boundary-no-nexus-outside-import witness reports no findings
+--- FAIL: TestOwnedWitnesses (9.32s)
+=== RUN   TestWave12OptionsAndShapes
+    wave12_initial_test.go:29: Go, Node, emitted JavaScript, native identical: 34987 bytes
+--- PASS: TestWave12OptionsAndShapes (43.04s)
+=== RUN   TestLandingExistingCandidates
+    wave12_landing_test.go:97: cohere cases: 22 unique source/rule/options combinations
+    wave12_nexus_test.go:85: captured case-000 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { Detail } from '@structure/source/widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-001 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { format } from '@structure/source/internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-002 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:85: captured case-003 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-004 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import(somePath);\n"
+    wave12_nexus_test.go:85: captured case-005 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = require('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-006 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Detail } from '../widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-007 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Thing } from '../widget/Thing';\n"
+    wave12_nexus_test.go:85: captured case-008 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { format } from '../internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-009 nexus/boundary-no-internal-import /repo/source/widget/Thing.ts "import { Detail } from './internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-010 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './Detail';\n"
+    wave12_nexus_test.go:85: captured case-011 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './deep/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-012 nexus/boundary-no-internal-import /repo/source/widget/nested/Thing.ts "import { Detail } from '../internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-013 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus-template/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-014 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repository/libraries/nexus/code-quality/Thing.ts source="const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-015 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = require('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-016 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const thing = require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-017 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "declare const loader: { require(name: string): unknown };\nconst thing = loader.require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-018 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-019 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load(name: string) {\n    return await import(name);\n}\n"
+    wave12_nexus_test.go:85: captured case-020 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import '@base';\n"
+    wave12_nexus_test.go:85: captured case-021 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import * as NodePath from 'node:path';\n"
+    wave12_nexus_test.go:85: captured case-022 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import Thing from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-023 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import {\n  Thing,\n  Other,\n} from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-024 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '../Thing';\n"
+    wave12_nexus_test.go:85: captured case-025 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-026 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@basement/Thing';\n"
+    wave12_nexus_test.go:85: captured case-027 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@nexus/code-quality/Thing';\n"
+    wave12_nexus_test.go:85: captured case-028 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@projections/Thing';\n"
+    wave12_nexus_test.go:85: captured case-029 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-030 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-031 nexus/boundary-no-nexus-outside-import /repository/libraries/structure/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-032 nexus/boundary-no-nexus-outside-import /repository/source/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-033 nexus/boundary-no-project-import /repo/application/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-034 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-035 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-036 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:85: captured case-037 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = import('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-038 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = require('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-039 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-040 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@projector/Thing';\n"
+    wave12_nexus_test.go:85: captured case-041 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-042 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-043 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { secret } from '@project/ProjectSettingsSecret';\n"
+    wave12_nexus_test.go:85: captured case-044 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { settings } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:106: cohere cases: 42 unique source/rule/options combinations
+    wave12_landing_test.go:182: 356 compiler/stage1 source files across 6 registered candidates; 2221 total fixture, witness, path and corpus cases
+    wave12_landing_test.go:185: Go, Node, emitted JavaScript, native identical: 79633235 bytes
+=== RUN   TestLandingExistingCandidates/base-correctness-require-orm-column-declare
+    wave12_landing_test.go:217: orm_bare_decorator_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: orm_bare_decorator_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: orm_bare_decorator_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome
+    wave12_landing_test.go:217: boolean_outcome_companion_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: boolean_outcome_companion_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: boolean_outcome_companion_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/next-no-document-import-in-page
+    wave12_landing_test.go:217: next_document_import_path_exemption_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: next_document_import_path_exemption_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: next_document_import_path_exemption_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-boundary-no-internal-import
+    wave12_landing_test.go:217: last_internal_owner compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: last_internal_owner compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: last_internal_owner compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-boundary-no-nexus-outside-import
+    wave12_landing_test.go:217: alias_prefix_boundary compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: alias_prefix_boundary compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: alias_prefix_boundary compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-boundary-no-project-import
+    wave12_landing_test.go:217: whitelist_widened compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: whitelist_widened compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: whitelist_widened compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome#01
+    wave12_landing_test.go:217: role-suffix regex disabled compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:217: role-suffix regex disabled compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:217: role-suffix regex disabled compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+--- PASS: TestLandingExistingCandidates (483.54s)
+    --- PASS: TestLandingExistingCandidates/base-correctness-require-orm-column-declare (40.10s)
+    --- PASS: TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome (33.99s)
+    --- PASS: TestLandingExistingCandidates/next-no-document-import-in-page (39.39s)
+    --- PASS: TestLandingExistingCandidates/nexus-boundary-no-internal-import (38.73s)
+    --- PASS: TestLandingExistingCandidates/nexus-boundary-no-nexus-outside-import (39.65s)
+    --- PASS: TestLandingExistingCandidates/nexus-boundary-no-project-import (40.55s)
+    --- PASS: TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome#01 (39.42s)
+=== RUN   TestWave12ConfiguredProjectWitness
+    wave12_project_witness_test.go:20: Go, Node, emitted JavaScript, native identical: 524 bytes
+    wave12_project_witness_test.go:21: configured raw project-import witness: one Go finding; source Node, emitted JavaScript and sanitized native agree
+--- PASS: TestWave12ConfiguredProjectWitness (48.77s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	823.783s
+FAIL
