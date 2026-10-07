@@ -1,0 +1,26 @@
+=== RUN   TestCompositionMatchesGo
+    css_test.go:334: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.222892148s, 108309 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (2.86s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	2.862s
+    css_test.go:356: === RUN   TestAdamicCompositionCases
+            adamic_compose_side_test.go:79: composed trees: 24076 inputs, 5006 parsed
+        --- PASS: TestAdamicCompositionCases (1.31s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.319s
+    css_test.go:380: 24076 composed trees/error positions agree with Go on native ASan/UBSan, Node and JavaScript backend; LeakSanitizer clean
+=== RUN   TestCompositionMatchesGo/catches_custom_properties_lose_their_block_values
+    css_test.go:397: Node composition caught: line 162, byte 1001: "tOffset\":14},\"type\":\"css-decl\",\"value\":\"\"},{\"nodes\":[{\"prop\":\"a\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":\"b\"},\"source\":{\"end\":{\"column\":28,\"line\":1,\"offset\":2", Go cohere "tOffset\":14},\"type\":\"css-decl\",\"value\":\" \"},{\"prop\":\"--c\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":30,\"line\":1,\"offset\":30},\"endOffset\":30,\""
+=== RUN   TestCompositionMatchesGo/catches_comments_always_disappear_from_values
+    css_test.go:397: Node composition caught: line 3126, byte 77: "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"cd\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"startOff", Go cohere "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"c/* x */d\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"s"
+=== RUN   TestCompositionMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:397: Node composition caught: line 6, byte 2264: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"endOffset\":27,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"endOffset\":28,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte"
+--- PASS: TestCompositionMatchesGo (76.79s)
+    --- PASS: TestCompositionMatchesGo/catches_custom_properties_lose_their_block_values (2.36s)
+    --- PASS: TestCompositionMatchesGo/catches_comments_always_disappear_from_values (2.52s)
+    --- PASS: TestCompositionMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte (2.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	76.806s

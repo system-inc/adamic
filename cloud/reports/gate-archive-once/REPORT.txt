@@ -1,0 +1,101 @@
+Built independent archive selection on devtools/gate-archive-once; default --gate-inputs is unchanged.
+Implementation commit: 3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65; based on bd575e8b590c2862ad3cafdc1c4e25fa7216aca3.
+Proof: 44 setup tests passed (5 optional integration skips); named consumer skips without archive and passes with it.
+Mutants: seven caught: archive leakage, stale export, ignored archive-only request, dropped default archive, archive-free archive build, conflict success status, and lost conflict diagnostic.
+Not covered: planner changes, native consumer changes, a new VM, or execution on macOS (portable selection is exercised with mocks).
+
+Interface and assumption
+------------------------
+bash cloud/setup.sh --gate-inputs-no-archive
+  Provides every existing gate input except ADAMIC_CLANG_TSGO_ARCHIVE and explicitly unsets that variable, even if an old archive remains installed.
+bash cloud/setup.sh --gate-archive
+  Provides only the archive among optional gate inputs. It clears the other optional gate variables. Ordinary worker toolchain, module, width dependencies and root build preparation still run. This interpretation is recorded in the implementation commit.
+bash cloud/setup.sh --gate-inputs
+  Retains all inputs including the archive.
+Source the printed env.sh after every invocation. Conflicting archive-free/archive-requesting flags fail before preparation in either order. No new cache was added; the archive's existing Go build-ID key and output-byte checks remain intact, and ADAMIC_GATE_UNCACHED=1 retains its bypass.
+
+Planner and shard brief handoff
+-------------------------------
+The shard whose plan contains package github.com/system-inc/adamic/internal/native, test TestSplitTSGoAgrees, must request the archive with --gate-inputs. Every other shard can use --gate-inputs-no-archive. The shard number depends on the plan; the historical shard-2 observation does not identify the current consumer shard.
+An archive-only follow-up is also possible with --gate-archive, but its resulting env.sh clears the other optional gate inputs; do not use that environment to run a shard that needs those inputs without restoring them.
+Before running a planned TestSplitTSGoAgrees, the planner must refuse execution if ADAMIC_CLANG_TSGO_ARCHIVE is unset or empty. The refusal must name TestSplitTSGoAgrees, ADAMIC_CLANG_TSGO_ARCHIVE, and the setup remedy. Never accept a skip as coverage. No planner or native source was changed in this unit.
+
+Observed census finding
+-----------------------
+After setup --gate-inputs-no-archive, sourcing env.sh and checking that the variable is empty:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestSplitTSGoAgrees$' -count=1 -timeout=30m -v
+Exit 0, SKIP at units_tsgo_test.go:19: "set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive". Thus today's consumer silently skips; it does not fail loudly. See consumer-without.log.
+After setup --gate-archive and sourcing env.sh, the identical command passed in 30.797s. Both checker uncached=0 and uncached=1 produced 85 identical bytes, findings 0, queries 1. See consumer-with.log. The archive-only setup built and stamped the archive; its flags show gate-inputs=false gate-archive=true.
+
+Measurements
+------------
+The measurement driver measure.py interleaves archive-free and full setup on the same box and implementation commit. Each cold measurement removes the checker installation (including its stamp); its warm measurement reuses it immediately. The Go build cache, toolchains, verified modules, npm inputs and fetched corpus inputs were already present. These are cold archive-installation measurements with warmed compilation, not fresh-VM/network-cold measurements, and cannot be compared directly to the user's 601s/171s observation. GOFLAGS=-trimpath is the same in both modes. Cache bypass is off; ADAMIC_GATE_UNCACHED=1 is used for the consumer proof above.
+Every individual setup log contains its build-flags line with commit, nproc, cgroup cpu.max, Go, clang, Node, load before/after, and cached status. timings.json records exact instruments, external wall time and load before/after. The complete interleaved timing table and individual flags follow below.
+
+Empty Go-cache attempt (excluded from successful measurements): setup --gate-inputs-no-archive exited 1 after 108.245s before the final build-flags line. list.log and packages.json were empty; the failure supplied no diagnostic. Available disk had dropped to 186 MiB on /workspace and 172 MiB on /tmp around this attempt. Disk pressure is observed; its causal role is not proven. The original log and JSON are preserved as empty-go-cache-attempt.*. No fresh-box cold compilation timing was obtained. No Forbidden fetch occurred.
+
+loop/state | before: --gate-inputs | after: --gate-inputs-no-archive | instrument
+1/cold | 15.958s | 15.291s | exact commands in timings.json; logs 1-with-cold.log, 1-without-cold.log
+1/warm | 13.737s | 13.563s | exact commands in timings.json; logs 1-with-warm.log, 1-without-warm.log
+2/cold | 14.839s | 12.963s | exact commands in timings.json; logs 2-with-cold.log, 2-without-cold.log
+2/warm | 13.145s | 13.523s | exact commands in timings.json; logs 2-with-warm.log, 2-without-warm.log
+3/cold | 15.964s | 14.045s | exact commands in timings.json; logs 3-with-cold.log, 3-without-cold.log
+3/warm | 13.678s | 13.993s | exact commands in timings.json; logs 3-with-warm.log, 3-without-warm.log
+
+Best of three (archive install cold / archive warm; Go compilation warm in all successful runs):
+with: cold 14.839s; warm 13.145s
+without: cold 12.963s; warm 13.523s
+
+Individual build flags and exact instruments:
+
+1-without-cold.log: 15.291s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=1.22 2.02 1.43 2/853 250488 load-after=1.57 2.05 1.45 1/855 251394
+
+1-without-warm.log: 13.563s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=1.57 2.05 1.45 1/855 251417 load-after=2.19 2.16 1.50 1/856 252240
+
+1-with-cold.log: 15.958s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=2.19 2.16 1.50 1/856 252263 load-after=2.90 2.32 1.56 1/857 253426
+
+1-with-warm.log: 13.737s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=2.90 2.32 1.56 1/857 253449 load-after=3.23 2.42 1.61 2/858 254373
+
+2-without-cold.log: 12.963s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=3.23 2.42 1.61 1/858 254396 load-after=2.89 2.37 1.60 1/859 255205
+
+2-without-warm.log: 13.523s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=2.89 2.37 1.60 1/859 255228 load-after=2.85 2.39 1.62 1/861 256033
+
+2-with-cold.log: 14.839s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=2.85 2.39 1.62 1/861 256056 load-after=2.87 2.42 1.64 1/860 257133
+
+2-with-warm.log: 13.145s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=2.87 2.42 1.64 1/860 257156 load-after=2.66 2.39 1.65 1/862 258067
+
+3-without-cold.log: 14.045s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=2.66 2.39 1.65 1/862 258090 load-after=2.86 2.46 1.68 1/862 258895
+
+3-without-warm.log: 13.993s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=2.86 2.46 1.68 1/862 258918 load-after=2.96 2.49 1.70 1/863 259740
+
+3-with-cold.log: 15.964s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=2.96 2.49 1.70 1/863 259763 load-after=3.09 2.56 1.74 1/864 260833
+
+3-with-warm.log: 13.678s
+ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=3.09 2.56 1.74 2/864 260856 load-after=3.09 2.57 1.75 1/865 261719
+
+Archive step durations: {"cold": [2.344, 1.884, 2.014], "warm": [0.135, 0.135, 0.138]}. Archive-free setup has no archive step. Existing recursive module preparation took about 12s on every run and dominates the warm totals. This unit did not change module cache behavior.
+
+Seven mutant logs are named mutant-*.log; each fails an assertion (not fixture import). Exact drivers: python3 cloud/reports/gate-archive-once/mutants.py; python3 -m unittest discover -s cloud -p 'test_*.py'. bash -n cloud/setup.sh and git diff --check also passed.

@@ -1,0 +1,29 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:122: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.281503483s, 105527 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.04s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.045s
+=== RUN   TestThePortParsesAsGoCohereDoes/Go_agreement
+    css_test.go:142: 24076 cases agree with Go, leak clean
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:184: PostCSS: 24074 exact agreements, 2 occurrences of the proved surrogate gap
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values
+    css_test.go:202: native caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+    css_test.go:202: Node caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values
+    css_test.go:202: native caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+    css_test.go:202: Node caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:202: native caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+    css_test.go:202: Node caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+--- PASS: TestThePortParsesAsGoCohereDoes (40.35s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/Go_agreement (12.78s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (1.51s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values (8.08s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values (7.00s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte (7.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	40.358s

@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_fixture_key_component (test_css_gate_inputs.CSSInputs.test_every_fixture_key_component) (name='CSS_COUNTS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 44, in test_every_fixture_key_component
+    self.assertNotEqual(before, gate.css_fixture_key(), name)
+AssertionError: '2c710bb8fa7c5cd968f98f5d6df487a5860de72428ef7bbab373e0af1c00c952' == '2c710bb8fa7c5cd968f98f5d6df487a5860de72428ef7bbab373e0af1c00c952' : CSS_COUNTS
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

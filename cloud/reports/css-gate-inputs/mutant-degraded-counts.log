@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_counts_reject_degraded_corpus (test_css_gate_inputs.CSSInputs.test_counts_reject_degraded_corpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 50, in test_counts_reject_degraded_corpus
+    with self.assertRaisesRegex(ValueError, 'CSS fixture counts differ'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

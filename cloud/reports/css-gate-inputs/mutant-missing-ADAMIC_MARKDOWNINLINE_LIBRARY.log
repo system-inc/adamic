@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_exports_and_ordinary_unset (test_css_gate_inputs.CSSInputs.test_exports_and_ordinary_unset)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 34, in test_exports_and_ordinary_unset
+    self.assertEqual(exports.get(name), path)
+AssertionError: None != '/tmp/inputs/css-printer/node_modules/prettier'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

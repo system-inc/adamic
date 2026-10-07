@@ -1,0 +1,110 @@
+....hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpmr2rwlp4/inputs/css-fixtures-oo__bgv5/checkout/.git/
+warning: filtering not recognized by server, ignoring
+From /tmp/adamic-gate/tmpmr2rwlp4/source
+ * branch            67052a6c825bada4bd647da7c925bcaa5a4fd7b6 -> FETCH_HEAD
+HEAD is now at 67052a6 First
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpmr2rwlp4/inputs/css-fixtures-xhrbbije/checkout/.git/
+warning: filtering not recognized by server, ignoring
+From /tmp/adamic-gate/tmpmr2rwlp4/source
+ * branch            67052a6c825bada4bd647da7c925bcaa5a4fd7b6 -> FETCH_HEAD
+HEAD is now at 67052a6 First
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpmr2rwlp4/inputs/css-fixtures-u7v7xed6/checkout/.git/
+warning: filtering not recognized by server, ignoring
+From /tmp/adamic-gate/tmpmr2rwlp4/source
+ * branch            31d808e96b477d4e2559bdcc78d87b3757ffe399 -> FETCH_HEAD
+HEAD is now at 31d808e Second
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpmr2rwlp4/inputs/css-fixtures-kgkq_096/checkout/.git/
+warning: filtering not recognized by server, ignoring
+From /tmp/adamic-gate/tmpmr2rwlp4/source
+ * branch            67052a6c825bada4bd647da7c925bcaa5a4fd7b6 -> FETCH_HEAD
+HEAD is now at 67052a6 First
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpmr2rwlp4/inputs/css-fixtures-7bzcyoiy/checkout/.git/
+warning: filtering not recognized by server, ignoring
+From /tmp/adamic-gate/tmpmr2rwlp4/source
+ * branch            67052a6c825bada4bd647da7c925bcaa5a4fd7b6 -> FETCH_HEAD
+HEAD is now at 67052a6 First
+.[eval]:8
+    if (actual !== expected) throw Error(`${name}: expected prettier ${expected}, got ${actual}`);
+                             ^
+
+Error: ADAMIC_CSSNUMBERS_LIBRARY: expected prettier 3.9.6, got 0.0.0
+    at [eval]:8:36
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.19.0
+.
+----------------------------------------------------------------------
+Ran 6 tests in 0.343s
+
+OK
