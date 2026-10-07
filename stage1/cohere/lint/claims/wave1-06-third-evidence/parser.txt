@@ -1,0 +1,10 @@
+=== RUN   TestJSXBoundary
+    parser_probe_test.go:97: control.ts.txt backend=0 exit=0 stdout="SourceFile\n" stderr=""
+    parser_probe_test.go:97: control.ts.txt backend=1 exit=0 stdout="SourceFile\n" stderr=""
+    parser_probe_test.go:97: control.ts.txt backend=2 exit=0 stdout="SourceFile\n" stderr=""
+    parser_probe_test.go:97: font.tsx.txt backend=0 exit=70 stdout="" stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /workspace/adamic/stage1/cohere/lint/claims/wave1-06-next-evidence/font.tsx.txt\n"
+    parser_probe_test.go:97: font.tsx.txt backend=1 exit=70 stdout="" stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /workspace/adamic/stage1/cohere/lint/claims/wave1-06-next-evidence/font.tsx.txt\n"
+    parser_probe_test.go:97: font.tsx.txt backend=2 exit=70 stdout="" stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /workspace/adamic/stage1/cohere/lint/claims/wave1-06-next-evidence/font.tsx.txt\n"
+--- PASS: TestJSXBoundary (16.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/claims/wave1-06-next-evidence	16.432s
