@@ -66,6 +66,9 @@ type template struct {
 func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
 	// Box<T> inside Maker<Node> is a Box<Node>: what it is, for the cycle finder.
 	classType = l.concrete(classType)
+	if classType == nil || !isClassInstance(classType) {
+		return nil, l.notYet(where, "instantiating a class from its constructor type instead of an instance type")
+	}
 	if view := l.classView(classType, declaration); view != nil {
 		classType = view
 	} else {
@@ -338,6 +341,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return l.call(node)
 	}
 	class := method.Declarations[0].Parent
+	if class == nil || class.Name() == nil {
+		return nil, l.notYet(node, "a method of an anonymous class")
+	}
 	declaration, isClass := l.classes[l.symbol(class.Name())]
 	if !isClass {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")

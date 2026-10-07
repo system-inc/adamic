@@ -26,8 +26,11 @@ func instantiateType(receiver *checker.Checker, proven *checker.Type, mapper *ty
 // instantiates with, or the one in force when the class has none.
 func (l *lowering) typeMapperOf(declaration *ast.Node, classType *checker.Type) *typeMapper {
 	parameters := declaration.TypeParameters()
+	if len(parameters) == 0 || classType == nil || classType.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return l.typeMapper
+	}
 	arguments := l.checker.GetTypeArguments(classType)
-	if len(parameters) == 0 || len(parameters) != len(arguments) {
+	if len(parameters) != len(arguments) {
 		return l.typeMapper
 	}
 	sources := []*checker.Type{}

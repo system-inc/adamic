@@ -1,0 +1,23 @@
+class Stepper {
+	static down(this: typeof Stepper, count: number): number {
+		return count + 1;
+	}
+
+	static shown(count: number = 3): string {
+		return `default${count + 1}`;
+	}
+
+	static write(count: number): void {
+		console.log(`write${count}`);
+	}
+}
+class Child extends Stepper {}
+const Alias = Stepper;
+const Again = Alias;
+console.log(`${Alias.down(3)}/${Again.down(5)}/${Child.down(7)}`);
+function invokeAlias(count: number): number {
+	return Again.down(count);
+}
+console.log(`${invokeAlias(9)}`);
+console.log(Again.shown());
+Again.write(2);
