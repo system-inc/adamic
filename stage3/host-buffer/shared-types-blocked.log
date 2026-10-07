@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a (0.03s)
+        oracle_test.go:578: Load: /workspace/adamic/internal/oracle/testdata/node_buffer_crypto.a:1:28: error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.038s
+FAIL
