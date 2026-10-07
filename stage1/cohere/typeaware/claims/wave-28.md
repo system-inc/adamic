@@ -49,3 +49,5 @@ All nine earlier ports are tested and pushed at `431ab666b8d3fc3919f8d6a434e5853
 No matching implementation literal was found in the 34 distinct origin typeaware trees. No selected rule was skipped. This claim is pushed before fourth-batch implementation.
 
 Fourth-batch status: claimed but unported. Native JSX parsing rejects all three Go-positive controls before rule execution. The required native SSA/control-flow IR is also absent on this branch. See `../wave28_fourth/REPORT.md` and its reproduction evidence. Stopped without editing shared files or claiming another batch.
+
+Resumption audit: JSX support is published on `origin/codex/stage1-jsx-lint` at `a8a62d62`, but is not integrated on this branch/main/bridge/harness. The native SSA and control-flow substrate required by all three remains unavailable in the inspected stage1 sources. The blocker reproduction passes again; all three remain claimed and unported. See the report's resumption audit.
