@@ -1,0 +1,3 @@
+import { fileStatus } from 'adamic';
+const args: [string] = ['.'];
+fileStatus(...[...args] as const);
