@@ -147,7 +147,7 @@ func run(args []string) error {
 		return merge(flags.Args(), *out)
 	case "compare":
 		if len(args) != 3 {
-			return errors.New("compare <merged directory or JSON> <unsharded JSON log>")
+			return errors.New("compare <merged directory or JSON> <unsharded JSON log or git:remote:gate-logs/sha/plain>")
 		}
 		return compare(args[1], args[2])
 	case "timings":
@@ -1358,6 +1358,14 @@ func compare(path, log string) error {
 	var m merged
 	if err := loadJSON(path, &m); err != nil {
 		return err
+	}
+	if strings.HasPrefix(log, "git:") {
+		local, cleanup, err := fetchPlainReference(log, m.Plan.Commit)
+		if err != nil {
+			return err
+		}
+		defer cleanup()
+		log = local
 	}
 	whole, _, raw, err := readLog(log)
 	if err != nil {

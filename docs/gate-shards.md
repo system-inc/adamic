@@ -1,5 +1,87 @@
 # Gate shards
 
+## Provisioned whole-gate timings, October 7
+
+The timing file was regenerated with the tool, rather than estimated from package spans:
+
+```sh
+adamic-gate timings -out cmd/adamic-gate/timings.json /workspace/plain-2adf65c/gate-out/test.jsonl
+```
+
+Input: `gate-logs/2adf65c2514e/plain:plain.tgz`, `gate-out/test.jsonl`, tested commit
+`2adf65c2514eefbbb073bfdab922d00a4e80a3d3`, 4,114 pass, 0 fail, 21 skip,
+4,135 distinct terminal tests. The gate duration recorded by that worker is
+3,471.920 seconds. Build flags: `nproc=5`, `cpu.max="400000 100000"`,
+`go="go version go1.27.1 linux/amd64"`, `clang="clang version 20.1.8 (87f0227)"`,
+`node="v24.19.0"`, uncached gate, setup `--gate-inputs`. Gate load before/after
+was not recorded; setup recorded 0.25/6.51, which is a different interval.
+These fields apply to the source observations behind every prediction below.
+
+| Shards | Maximum predicted seconds | Maximum predicted minutes |
+| ---: | ---: | ---: |
+| 8 | 2,034.970 | 33.92 |
+| 10 | 1,656.950 | 27.62 |
+| 12 | 1,404.950 | 23.42 |
+| 14 | 1,224.940 | 20.42 |
+| 15 | 1,152.940 | 19.22 |
+| 16 | 1,089.910 | 18.17 |
+
+Fifteen is the first passing tested count; sixteen has more margin. Instrument:
+`adamic-gate plan -count N`, using the regenerated timings and the current source.
+These are sums of recorded elapsed work plus repeated parent setup, not measured
+fleet wall times. Missing timings, compilation, discovery, vet and contention
+are not included. New integration and gate-tool tests have unknown weights;
+no production shards or new 58-minute plain reference were run on this box.
+The full per-shard predictions, including each shard's largest unit, are in
+`cmd/adamic-gate/evidence/replan-provisioned.json`.
+
+| Largest single unit | Seconds | Minutes |
+| --- | ---: | ---: |
+| `internal/unicodeproperties::TestCanonicalizeUnicodeNode` | 822.510 | 13.71 |
+| `stage1/cohere/json::TestPortMatchesGoCohere` | 762.200 | 12.70 |
+| `stage1/cohere/markdownblocks::TestMarkdownWhitespaceLayout` | 762.150 | 12.70 |
+| `stage1/cohere/markdownblocks::TestMarkdownASTPreprocessing` | 729.800 | 12.16 |
+| `stage1/cohere/markdownblocks::TestMarkdownQuoteLayout` | 626.800 | 10.45 |
+
+No planned unit exceeds 15 minutes. The 2,762.341-second Markdown package terminal
+is an aggregate span, not one unit: its top-level tests are already selectable.
+The Unicode sweep and JSON parity test contain no `t.Run` around their heavy work.
+Markdown layout mutants are selectable, but the parent performs corpus generation,
+compilation and batch parity outside them; splitting those children would repeat
+the heavy work. No test files were changed.
+
+## Compare with a plain reference branch
+
+Local raw logs remain supported. To fetch and compare a reference at the merged
+plan's SHA, use:
+
+```sh
+adamic-gate compare /workspace/merged git:origin:gate-logs/TESTED_SHA/plain
+```
+
+The branch's SHA may be abbreviated to at least seven hex digits. The archive
+must contain `gate-out/test.jsonl` and `gate-out/run-notes.txt`, with exactly one
+`commit=<full tested SHA>` line matching `merged.json`'s `Plan.Commit`. A plain
+reference at 2adf65c supplies timing weights for newer code, but cannot certify
+a fleet at the new tip. Run the new reference at that fleet's exact SHA and
+provide its corresponding branch to compare.
+
+The command fetches fresh evidence into a temporary disk-backed directory and
+removes it afterward. It neither checks out the evidence branch nor reuses a
+cached archive. Every Git child has a bounded process-group deadline. Only the
+two expected regular archive members are copied; missing, linked or duplicate
+members, a wrong tested SHA, and corrupt compression are refused. The ordinary
+comparison still checks every test verdict and the terminal event count.
+
+The real local-remote test compares green, replaces the same branch's archive
+with a wrong-SHA mutant and requires refusal, then changes one terminal verdict
+and requires failure. A source-overlay mutant removing the tested-SHA check
+fails this test. All 42 named gate-package tests pass with `-race`; vet and
+Darwin arm64 cross-compilation pass. A transport smoke check fetched the actual
+origin archive and compared it with a summary derived from that same log:
+4,135 terminal events, empty diff. That validates transport, not a new fleet.
+Proof logs are in `cmd/adamic-gate/evidence/replan-proofs.tar.gz`.
+
 Build `go build -o /workspace/adamic-gate ./cmd/adamic-gate` after `bash cloud/setup.sh`
 and source the environment file setup prints. The mandatory Markdown width oracle also needs
 its three pinned dependencies, which cloud/setup.sh does not install:
