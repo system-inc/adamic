@@ -26,7 +26,9 @@ func TestParallelRunnerAgreesAndCanFail(t *testing.T) {
 
 	var generated *Program
 	var refused *Program
-	for seed := uint64(1); seed <= 80; seed++ {
+	// Main added generator features; the captured-let witness now first appears at seed 114.
+	// Search the same 300-seed budget as the move coverage check, keeping both witnesses required.
+	for seed := uint64(1); seed <= 300; seed++ {
 		candidate := GenerateWithout(seed, []string{"moves"})
 		if generated == nil && candidate.Refusal == "" && strings.Contains(candidate.Source(), "// parallel-shape: strings") {
 			generated = candidate
@@ -36,13 +38,13 @@ func TestParallelRunnerAgreesAndCanFail(t *testing.T) {
 		}
 	}
 	if generated == nil {
-		t.Fatal("no string parallel program in seeds 1..80")
+		t.Fatal("no string parallel program in seeds 1..300")
 	}
 	if outcome := checkout.Try(generated.Source(), filepath.Join(directory, "generated")); outcome.Verdict != Agreed {
 		t.Fatalf("generated string parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
 	if refused == nil {
-		t.Fatal("no captured-let refusal in seeds 1..80")
+		t.Fatal("no captured-let refusal in seeds 1..300")
 	}
 	if outcome := checkout.Try(refused.Source(), filepath.Join(directory, "refused")); outcome.Verdict != Refused {
 		t.Fatalf("captured let: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
