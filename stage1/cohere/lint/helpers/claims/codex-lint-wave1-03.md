@@ -45,3 +45,12 @@ input data; separately owned nodesFromStaticDeclarations and PropertySort compos
 an explicit body-reading dependency. Actual Go on every consuming rule's runtime
 name inputs, every registered static utility and controls, source Node, emitted
 JavaScript and sanitized native with compiling semantic mutants. Push before code.
+
+### Second helper outcome
+
+FrameworkStaticReading matches 6,239 Go cases and 1,085,222 bytes across source
+Node, emitted JavaScript and sanitized native. All 890 registrations and all six
+consumer suites are covered. Three compiling semantic mutants are caught solely
+by comparison on all paths. This removes six more dependency entries, zero final
+blockers. Converter/sorter callback integration remains explicitly separate.
+See ../slot_wave1_03/STATIC_REPORT.md and its raw evidence.

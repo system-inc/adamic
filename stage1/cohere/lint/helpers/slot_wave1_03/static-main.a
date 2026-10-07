@@ -1,0 +1,46 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { StaticDeclaration, StaticBodyReading, frameworkStaticReading } from './framework_static_reading.a';
+const args = programArguments();
+const read = readTextFile(args[0] ?? panic('missing static corpus'));
+if(read.kind === 'Error') { panic(read.message); }
+const json = new OptionsJson(read.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+function field(index: number, name: string): number {
+    const result = json.field(index, name); if(result < 0) { panic('missing ' + name); } return result;
+}
+function text(index: number, name: string): string { return json.node(field(index, name)).text; }
+function hex(text: string): string {
+    let result = ''; const digits = '0123456789abcdef';
+    for(let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        for(let shift = 12; shift >= 0; shift -= 4) { result += digits.slice((code >>> shift) & 15, ((code >>> shift) & 15) + 1); }
+    }
+    return result;
+}
+let dependency = new StaticBodyReading([], 0, true);
+let calls = 0; let trace = '';
+function readBody(declarations: readonly StaticDeclaration[]): StaticBodyReading {
+    calls++;
+    for(const value of declarations) {
+        trace += hex(value.property) + ':' + hex(value.value) + ':' + `${value.valuePresent}` + ':' + `${value.important}` + ';';
+    }
+    return dependency;
+}
+for(const row of json.node(root).children) {
+    const registrations = new Map<string, readonly StaticDeclaration[]>();
+    const declarations: StaticDeclaration[] = [];
+    for(const entry of json.node(field(row, 'Declarations')).children) {
+        declarations.push(new StaticDeclaration(text(entry, 'Property'), text(entry, 'Value'), text(entry, 'ValuePresent') === 'true', text(entry, 'Important') === 'true'));
+    }
+    const name = text(row, 'Name');
+    if(text(row, 'Present') === 'true') { registrations.set(name, declarations); }
+    const order: number[] = [];
+    for(const entry of json.node(field(row, 'Order')).children) { order.push(json.node(entry).number); }
+    dependency = new StaticBodyReading(order, json.node(field(row, 'Count')).number, text(row, 'OrderNil') === 'true');
+    calls = 0; trace = '';
+    const result = frameworkStaticReading(name, registrations, readBody);
+    let output = `found=${result.found};count=${result.count};nil=${result.orderNil};calls=${calls};order=`;
+    for(const value of result.order) { output += `${value},`; }
+    console.log(output + ';body=' + trace);
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 64, in <module>
+    build(HERE/'main.a',S/'baseline','build-baseline');compare(HERE/'main.a',S/'baseline','baseline')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 55, in build
+    def build(entry,dir,label):run(['go','run','-overlay='+str(S/'build-overlay.json'),virtual_build,entry,dir],label)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 12, in run
+    assert completed.returncode==0,(log,completed.returncode,(S/(log+'.err')).read_text()[-5000:])
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('build-baseline', 1, "panic: /workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/main.a:41:11: Adamic 0.1 refuses 'dependency', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function dependency() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n\ngoroutine 1 [running]:\nmain.main()\n\t/workspace/adamic/adamic_owned_add_build.go:14 +0x29f\nexit status 2\n")

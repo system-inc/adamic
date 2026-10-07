@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 69, in <module>
+    build(d/'main.a',d/'built','build-'+name);compare(d/'main.a',d/'built',name,True)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 59, in compare
+    got=strict(cmd,label+'-'+path)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 15, in strict
+    out=run(cmd,log,cwd);assert not (S/(log+'.err')).read_bytes(),log;return out
+        ^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 12, in run
+    assert completed.returncode==0,(log,completed.returncode,(S/(log+'.err')).read_text()[-5000:])
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('default-precedence-node', 70, 'adamic: panic: unexpected dependency\n')

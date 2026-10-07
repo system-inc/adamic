@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 39, in <module>
+    output=run(['go','test','-overlay='+str(S/'go-overlay.json'),'./internal/lint/rules/tailwind','-run','^Test('+pattern+')','-count=1','-v','-timeout=10m'],'consumer-'+str(i),COHERE,env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/validate.py", line 12, in run
+    assert completed.returncode==0,(log,completed.returncode,(S/(log+'.err')).read_text()[-5000:])
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('consumer-4', 1, '')

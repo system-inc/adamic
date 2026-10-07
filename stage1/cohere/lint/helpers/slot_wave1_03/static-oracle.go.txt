@@ -1,0 +1,36 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	tailwind "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
+	"os"
+)
+
+func main() {
+	if os.Args[1] == "--names" {
+		data, _ := json.Marshal(tailwind.AdamicStaticNames())
+		fmt.Println(string(data))
+		return
+	}
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var names []string
+	if err := json.Unmarshal(data, &names); err != nil {
+		panic(err)
+	}
+	rows := tailwind.AdamicStaticCases(names)
+	if len(os.Args) > 2 && os.Args[2] == "--cases" {
+		data, err := json.Marshal(rows)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(string(data))
+		return
+	}
+	for _, row := range rows {
+		fmt.Println(row.Output)
+	}
+}

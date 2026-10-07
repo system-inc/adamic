@@ -1,0 +1,35 @@
+// Registration lookup; the declaration converter and property sorter are explicit dependencies.
+export class StaticDeclaration {
+    readonly property: string;
+    readonly value: string;
+    readonly valuePresent: boolean;
+    readonly important: boolean;
+    constructor(property: string, value: string, valuePresent: boolean, important: boolean) {
+        this.property = property; this.value = value; this.valuePresent = valuePresent; this.important = important;
+    }
+}
+export class StaticBodyReading {
+    readonly order: readonly number[];
+    readonly count: number;
+    readonly orderNil: boolean;
+    constructor(order: readonly number[], count: number, orderNil: boolean) {
+        this.order = order; this.count = count; this.orderNil = orderNil;
+    }
+}
+export class StaticReading {
+    readonly found: boolean;
+    readonly order: readonly number[];
+    readonly count: number;
+    readonly orderNil: boolean;
+    constructor(found: boolean, order: readonly number[], count: number, orderNil: boolean) {
+        this.found = found; this.order = order; this.count = count; this.orderNil = orderNil;
+    }
+}
+export function frameworkStaticReading(name: string,
+    registrations: ReadonlyMap<string, readonly StaticDeclaration[]>,
+    readBody: (declarations: readonly StaticDeclaration[]) => StaticBodyReading): StaticReading {
+    const declarations = registrations.get(name);
+    if(declarations === undefined) { return new StaticReading(false, [], 0, true); }
+    const sorted = readBody(declarations);
+    return new StaticReading(true, [], sorted.count, sorted.orderNil);
+}

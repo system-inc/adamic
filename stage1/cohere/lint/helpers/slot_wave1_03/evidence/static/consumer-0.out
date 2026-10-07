@@ -1,0 +1,98 @@
+=== RUN   TestEnforceCanonicalClassesReportsCollapses
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses
+=== RUN   TestEnforceCanonicalClassesStaysSilent
+=== PAUSE TestEnforceCanonicalClassesStaysSilent
+=== CONT  TestEnforceCanonicalClassesReportsCollapses
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== CONT  TestEnforceCanonicalClassesStaysSilent
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== RUN   TestEnforceCanonicalClassesStaysSilent/single_class
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/single_class
+=== RUN   TestEnforceCanonicalClassesStaysSilent/statics
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/statics
+=== RUN   TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values
+=== CONT  TestEnforceCanonicalClassesStaysSilent/statics
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== CONT  TestEnforceCanonicalClassesStaysSilent/single_class
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+--- PASS: TestEnforceCanonicalClassesReportsCollapses (0.00s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/padding_axes (0.02s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/gap_axes (0.02s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes (0.02s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface (0.02s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/arbitrary_values (0.02s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/negative_margins (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/border_edges (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/rounded_corners (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps (0.01s)
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== CONT  TestEnforceCanonicalClassesStaysSilent/no_pair_present
+--- PASS: TestEnforceCanonicalClassesStaysSilent (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/different_values (0.00s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/statics (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/one_side_is_important (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/single_class (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_roots (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/no_pair_present (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_attribute (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.078s

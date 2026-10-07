@@ -1,0 +1,100 @@
+package tailwind
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"sort"
+	"strings"
+	"sync"
+	"unicode/utf16"
+)
+
+var adamicStaticMutex sync.Mutex
+var adamicStaticSeen = map[string]bool{}
+var adamicStaticObserving bool
+var adamicStaticCalls int
+var adamicStaticTrace string
+
+func adamicStaticReadBody(declarations []StaticDeclaration) Sort {
+	// Consumer suites are parallel; only the single-threaded oracle enables traces.
+	if adamicStaticObserving {
+		adamicStaticCalls++
+		for _, d := range declarations {
+			adamicStaticTrace += fmt.Sprintf("%s:%s:%t:%t;", adamicStaticHex(d.Property), adamicStaticHex(d.Value), d.ValuePresent, d.Important)
+		}
+	}
+	return PropertySort(nodesFromStaticDeclarations(declarations))
+}
+func adamicCaptureStatic(name string) {
+	path := os.Getenv("ADAMIC_STATIC_CAPTURE")
+	if path == "" {
+		return
+	}
+	adamicStaticMutex.Lock()
+	defer adamicStaticMutex.Unlock()
+	if adamicStaticSeen[name] {
+		return
+	}
+	adamicStaticSeen[name] = true
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	data, _ := json.Marshal(name)
+	fmt.Fprintln(file, string(data))
+}
+
+type AdamicStaticCase struct {
+	Name         string
+	Present      bool
+	Declarations []StaticDeclaration
+	Order        []int
+	Count        int
+	OrderNil     bool
+	Output       string
+}
+
+func adamicStaticHex(text string) string {
+	var b strings.Builder
+	for _, unit := range utf16.Encode([]rune(text)) {
+		fmt.Fprintf(&b, "%04x", unit)
+	}
+	return b.String()
+}
+func AdamicStaticCases(names []string) []AdamicStaticCase {
+	// Empty registration distinguishes map presence from a nonempty body.
+	FrameworkStaticDeclarations["adamic-empty-registration"] = []StaticDeclaration{}
+	FrameworkStaticDeclarations["adamic-body-control"] = []StaticDeclaration{{"display", "", true, true}, {"color", "red", false, false}, {"unknown😀", "value", true, false}}
+	result := []AdamicStaticCase{}
+	for _, name := range names {
+		declarations, present := FrameworkStaticDeclarations[name]
+		sorted := PropertySort(nodesFromStaticDeclarations(declarations))
+		row := AdamicStaticCase{Name: name, Present: present, Declarations: append([]StaticDeclaration{}, declarations...), Order: sorted.Order, Count: sorted.Count, OrderNil: sorted.Order == nil}
+		adamicStaticCalls = 0
+		adamicStaticTrace = ""
+		adamicStaticObserving = true
+		reading, found := FrameworkStaticReading(name)
+		adamicStaticObserving = false
+		calls := adamicStaticCalls
+		trace := adamicStaticTrace
+		var b strings.Builder
+		fmt.Fprintf(&b, "found=%t;count=%d;nil=%t;calls=%d;order=", found, reading.Count, reading.Order == nil, calls)
+		for _, v := range reading.Order {
+			fmt.Fprintf(&b, "%d,", v)
+		}
+		fmt.Fprintf(&b, ";body=%s", trace)
+		row.Output = b.String()
+		result = append(result, row)
+	}
+	return result
+}
+func AdamicStaticNames() []string {
+	names := []string{}
+	for name := range FrameworkStaticDeclarations {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
+}

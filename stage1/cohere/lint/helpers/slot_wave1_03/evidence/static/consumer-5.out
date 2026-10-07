@@ -1,0 +1,110 @@
+=== RUN   TestNoUnknownClassesReportsTypos
+=== PAUSE TestNoUnknownClassesReportsTypos
+=== RUN   TestNoUnknownClassesStaysSilent
+=== PAUSE TestNoUnknownClassesStaysSilent
+=== RUN   TestUnknownIgnoreExemptsProjectClasses
+=== PAUSE TestUnknownIgnoreExemptsProjectClasses
+=== RUN   TestUnknownClassFixturesActuallyRan
+=== PAUSE TestUnknownClassFixturesActuallyRan
+=== CONT  TestNoUnknownClassesReportsTypos
+=== RUN   TestNoUnknownClassesReportsTypos/misspelled_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/misspelled_utility
+=== RUN   TestNoUnknownClassesReportsTypos/invented_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/invented_utility
+=== RUN   TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== PAUSE TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== RUN   TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== PAUSE TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== RUN   TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== PAUSE TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== RUN   TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== PAUSE TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== RUN   TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== RUN   TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== CONT  TestNoUnknownClassesStaysSilent
+=== CONT  TestUnknownIgnoreExemptsProjectClasses
+=== PAUSE TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== RUN   TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== PAUSE TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestNoUnknownClassesReportsTypos/misspelled_utility
+=== CONT  TestUnknownClassFixturesActuallyRan
+=== RUN   TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== PAUSE TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== RUN   TestNoUnknownClassesStaysSilent/gradient_stops
+=== PAUSE TestNoUnknownClassesStaysSilent/gradient_stops
+=== RUN   TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== PAUSE TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== RUN   TestNoUnknownClassesStaysSilent/group_and_peer
+=== PAUSE TestNoUnknownClassesStaysSilent/group_and_peer
+=== RUN   TestNoUnknownClassesStaysSilent/group_with_a_name
+=== PAUSE TestNoUnknownClassesStaysSilent/group_with_a_name
+=== RUN   TestNoUnknownClassesStaysSilent/arbitrary_property
+=== PAUSE TestNoUnknownClassesStaysSilent/arbitrary_property
+=== RUN   TestNoUnknownClassesStaysSilent/arbitrary_value
+=== PAUSE TestNoUnknownClassesStaysSilent/arbitrary_value
+=== RUN   TestNoUnknownClassesStaysSilent/variants
+=== PAUSE TestNoUnknownClassesStaysSilent/variants
+=== RUN   TestNoUnknownClassesStaysSilent/importance
+=== PAUSE TestNoUnknownClassesStaysSilent/importance
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== RUN   TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== PAUSE TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== RUN   TestNoUnknownClassesStaysSilent/unrelated_callee
+=== PAUSE TestNoUnknownClassesStaysSilent/unrelated_callee
+=== CONT  TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_variable_surface
+--- PASS: TestUnknownClassFixturesActuallyRan (0.02s)
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== CONT  TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== CONT  TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== CONT  TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== CONT  TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== CONT  TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== CONT  TestNoUnknownClassesReportsTypos/invented_utility
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_callee
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_attribute
+--- PASS: TestUnknownIgnoreExemptsProjectClasses (0.04s)
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_value
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== CONT  TestNoUnknownClassesStaysSilent/importance
+=== CONT  TestNoUnknownClassesStaysSilent/variants
+=== CONT  TestNoUnknownClassesStaysSilent/group_and_peer
+--- PASS: TestNoUnknownClassesReportsTypos (0.00s)
+    --- PASS: TestNoUnknownClassesReportsTypos/misspelled_utility (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/on_a_variable_surface (0.03s)
+    --- PASS: TestNoUnknownClassesReportsTypos/on_a_callee_surface (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/another_root-prefixed_typo (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/invented_utility (0.02s)
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_property
+=== CONT  TestNoUnknownClassesStaysSilent/group_with_a_name
+=== CONT  TestNoUnknownClassesStaysSilent/gradient_stops
+=== CONT  TestNoUnknownClassesStaysSilent/multi-rule_component_class
+--- PASS: TestNoUnknownClassesStaysSilent (0.00s)
+    --- PASS: TestNoUnknownClassesStaysSilent/ordinary_utilities (0.03s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/arbitrary_value (0.00s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility (0.00s)
+    --- PASS: TestNoUnknownClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/importance (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/variants (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/group_and_peer (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/arbitrary_property (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/group_with_a_name (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/gradient_stops (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/multi-rule_component_class (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.075s

@@ -32,3 +32,15 @@ Validation refuses an empty consumer capture. Tests replace only the consumer
 fixture's external package search path in a scratch overlay; no source worktree
 or shared harness is edited. Source fixtures and actual Go rule expectations are
 unchanged. See REPORT.md for measured coverage and exclusions.
+
+## FrameworkStaticReading
+
+`framework_static_reading.a` is the second helper. Supply the Go-generated
+registration table and a dependency that composes declaration conversion with
+property sorting. It preserves presence, one-call-only behavior and the complete
+order/count/nil-order result. STATIC_REPORT.md and static-readiness.json list all
+six consumers, measured parity and explicit integration limits.
+
+The same package test command runs both helpers. `validate-static.py --scratch
+<directory>` runs the second helper alone, with actual runtime name capture, every
+registered utility, additional controls and three compiling semantic mutants.
