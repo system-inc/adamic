@@ -1,3 +1,13 @@
+Built: rebased nine delivered helper implementations unchanged onto landed origin/area/stage1-lint d65a8f931c98655936ae04c6899f38f14862b73e, including current main 39638d9e2.
+Commits: prior pushed helper 4c049acb6, rebased implementation dd987705e before this evidence commit; rule sibling is undergoing its landed-harness comparison.
+Checks: complete owned helper package PASS 219.304s, vet clean; actual Go, source Node, emitted JavaScript and sanitized native comparisons pass. Setup cache warm/total 157s, nproc 5 (four-core quota).
+Mutants: all 24 existing controls pass again, including 23 semantic comparisons and the explicit unsupported-separator refusal comparison; nil preconditions remain separately checked.
+Uncovered: exact counter bigint-return lowering, full CFG/rule integration and repository-wide gate remain outside the supported contracts; no new helper was claimed.
+
+Fresh commands: `go test ./stage1/cohere/lint/helpers/wave12 -count=1 -v -timeout=20m` and `go vet ./stage1/cohere/lint/helpers/wave12`, each redirected directly to the retained area evidence logs. The nine helpers retain six Tailwind consumers and seven CFG prerequisites for array-callback-return, consistent-return, no-unreachable-loop and react-hooks/rules-of-hooks; zero final rule blockers removed. Shared harness files match integration, and no main or area branch was pushed. All prior reports below are historical and their old harness blockers do not describe the new landed harness.
+
+---
+
 Built nine delivered helpers, including new decorator and type-parameter delegation, rebased onto current origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad.
 Before rebase: helper branch ce35afe4f, rule sibling c485ad2cb; rule branch freshly re-greened and pushed at 0fcae8191.
 Complete nine-helper suite PASS 125.005s, vet clean, all 24 controls pass; new helpers match 30,954 observations / 62,024 bytes on actual Go, source Node, emitted JS and sanitized native.
