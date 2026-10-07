@@ -245,3 +245,34 @@ and streams are in validation/landing-b8fb.
 
 This turn handles landing readiness. The three latest claims remain incomplete
 as described above. No new claim was taken and no main or area branch was pushed.
+
+## Atomic syntax predicate continuation
+
+On unchanged current main b8fb957aa839, added require_atomic_updates/syntax.a.
+The driver supplies indexed parent and structural expression/name fields and
+operator text. Adamic decides declaration-name exclusion, plain assignment
+targets through member chains and property assignment anchoring. There is no
+string-kind relevance dispatch and no parser refetch. Manifest kinds stay named.
+
+The independent Go overlay parses 24 controls, captures raw structural fields
+and invokes unchanged isDeclarationName, isPlainAssignmentTarget and
+propertyAssignmentHeadedBy. All 74 identifier observations agree byte for byte.
+Controls include property names versus objects, computed keys, nested chains,
+binding elements, parameters, ordinary reads and all 16 assignment operators.
+The member-object guard mutant compiles and exits zero with empty sanitizer
+stderr, then fails only the Go predicate comparison. Raw captures, expected
+results and exact native streams are in validation/atomic-syntax.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_atomic_syntax.py /workspace/wave01-atomic-syntax /workspace/wave-01-fourth-adamic > /tmp/wave01-atomic-syntax.log 2>&1
+```
+
+Output: PASS 24 parsed controls, 74 identifier predicates; sanitizer-clean
+member-name mutant caught by Go bytes. gofmt and git diff --check pass. No
+checker handles are created; no handle check or full-rule timing is claimed.
+This comparison uses captured Go syntax and does not prove native parser facts
+match it. Full atomic event/CFG construction, symbol resolution, escape filtering,
+two-phase deferral integration and final finding rendering remain unfinished.
+Await and symbol integration remain incomplete too. No new claims were taken;
+existing completed-rule corpus gates were unchanged and were not repeated.

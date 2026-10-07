@@ -1,0 +1,56 @@
+import { panic } from 'adamic';
+// The driver supplies structural fields, not rule predicates or refetched nodes.
+export class AtomicSyntaxNode {
+    readonly parent: number;
+    readonly memberObject: number;
+    readonly binaryLeft: number;
+    readonly declarationName: number;
+    readonly operator: string;
+    constructor(parent: number, memberObject: number, binaryLeft: number, declarationName: number, operator: string) {
+        this.parent = parent;
+        this.memberObject = memberObject;
+        this.binaryLeft = binaryLeft;
+        this.declarationName = declarationName;
+        this.operator = operator;
+    }
+}
+export class AtomicSyntax {
+    readonly nodes: readonly AtomicSyntaxNode[];
+    constructor(nodes: readonly AtomicSyntaxNode[]) {
+        this.nodes = nodes;
+    }
+    declarationName(index: number): boolean {
+        const parent = (this.nodes[index] ?? panic('missing atomic node')).parent;
+        return parent >= 0 && (this.nodes[parent] ?? panic('missing atomic parent')).declarationName === index;
+    }
+    assignment(index: number, propertyOnly: boolean, plainOnly: boolean): number {
+        let current = index;
+        let sawMember = false;
+        while(current >= 0) {
+            const parentIndex = (this.nodes[current] ?? panic('missing atomic node')).parent;
+            if(parentIndex < 0) {
+                return -1;
+            }
+            const parent = this.nodes[parentIndex] ?? panic('missing atomic parent');
+            if(parent.memberObject >= 0) {
+                if(parent.memberObject !== current) {
+                    return -1;
+                }
+                sawMember = true;
+                current = parentIndex;
+                continue;
+            }
+            if(parent.binaryLeft !== current) {
+                return -1;
+            }
+            if(propertyOnly && !sawMember) {
+                return -1;
+            }
+            if(plainOnly) {
+                return parent.operator === '=' ? parentIndex : -1;
+            }
+            return ['=', '+=', '-=', '*=', '**=', '/=', '%=', '<<=', '>>=', '>>>=', '&=', '|=', '^=', '||=', '&&=', '??='].includes(parent.operator) ? parentIndex : -1;
+        }
+        return -1;
+    }
+}
