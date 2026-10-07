@@ -25,7 +25,7 @@ function ownFile(source) {
     return source && !source.isDeclarationFile && path.relative(tree, source.fileName).startsWith('src/') && !path.relative(tree, source.fileName).startsWith('../');
 }
 function rootDeclaration(node) {
-    while (node.parent && !ts.isSourceFile(node.parent)) node = node.parent;
+    while (node.parent && !ts.isSourceFile(node.parent) && !ts.isModuleBlock(node.parent)) node = node.parent;
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node) || ts.isSourceFile(node)) return undefined;
     return node;
 }
@@ -37,7 +37,7 @@ function actual(symbol) {
     }
     return symbol;
 }
-function add(symbol) {
+function add(symbol, qualified = false) {
     symbol = actual(symbol);
     const moduleSource = symbol?.declarations?.find(ts.isSourceFile);
     if (moduleSource && ownFile(moduleSource)) {
@@ -51,6 +51,10 @@ function add(symbol) {
     for (const declaration of symbol?.declarations || []) {
         const source = declaration.getSourceFile();
         if (!ownFile(source)) continue;
+        if (ts.isModuleDeclaration(declaration)) {
+            if (!qualified) for (const member of checker.getExportsOfModule(symbol)) add(member);
+            continue;
+        }
         const root = rootDeclaration(declaration);
         if (!root) continue;
         if (!reached.has(root)) { reached.add(root); queue.push(root); }
@@ -105,7 +109,9 @@ for (let index = 0; index < queue.length; index++) {
                 imports.set(binding, {binding, symbol: resolved, target: target.getSourceFile(),
                     value: (previous?.value || false) || (!!(resolved.flags & ts.SymbolFlags.Value) && !typePosition(node))});
             }
-            add(symbol);
+            const qualified = (ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node)
+                || (ts.isQualifiedName(node.parent) && node.parent.left === node);
+            add(symbol, qualified);
         }
         ts.forEachChild(node, visit);
     }
@@ -115,7 +121,9 @@ const byFile = new Map();
 for (const node of reached) {
     const source = node.getSourceFile();
     if (!byFile.has(source)) byFile.set(source, []);
-    byFile.get(source).push(node);
+    let outer = node;
+    while (outer.parent && !ts.isSourceFile(outer.parent)) outer = outer.parent;
+    if (!byFile.get(source).includes(outer)) byFile.get(source).push(outer);
 }
 // A module used as a namespace value has its own source-file declaration.
 // Keep its original export facade; every exported declaration is reached above.
@@ -150,17 +158,35 @@ for (const [source, nodes] of [...byFile].sort((a,b) => a[0].fileName.localeComp
         importLines++;
     }
     let result = imports;
-    for (const node of nodes.sort((a,b) => a.pos-b.pos)) {
-        // Full-start includes the original comments and whitespace attached to the statement.
-        const text = source.text.slice(node.getFullStart(), node.end);
+    function append(node, from, to, kind = ts.SyntaxKind[node.kind]) {
+        const text = source.text.slice(from, to);
         const start = source.getLineAndCharacterOfPosition(node.getStart(source));
-        const record = {file: relative, kind: ts.SyntaxKind[node.kind], start: node.getFullStart(), end: node.end,
+        const record = {file: relative, kind, start: from, end: to,
             line: start.line+1, names: node.name ? [node.name.text] : ts.isVariableStatement(node) ? node.declarationList.declarations.map(d => d.name.getText(source)) : [],
             bytes: Buffer.byteLength(text), lines: text.split('\n').length,
             sha256: crypto.createHash('sha256').update(text).digest('hex'), output_start: result.length};
         result += text; record.output_end = result.length; ledger.push(record);
         lines += record.lines; bytes += record.bytes;
     }
+    function containsReached(node) {
+        if (reached.has(node)) return true;
+        return ts.isModuleDeclaration(node) && node.body && (ts.isModuleBlock(node.body)
+            ? node.body.statements.some(containsReached) : containsReached(node.body));
+    }
+    function emit(node) {
+        if (ts.isModuleDeclaration(node) && node.body) {
+            const body = node.body;
+            if (!ts.isModuleBlock(body)) {
+                append(node, node.getFullStart(), body.getFullStart(), 'NamespaceHeader');
+                emit(body); return;
+            }
+            append(node, node.getFullStart(), body.getStart(source)+1, 'NamespaceHeader');
+            for (const member of body.statements) if (containsReached(member)) emit(member);
+            const tail = body.statements.length ? body.statements[body.statements.length-1].end : body.getStart(source)+1;
+            append(node, tail, node.end, 'NamespaceClosing');
+        } else append(node, node.getFullStart(), node.end);
+    }
+    for (const node of nodes.sort((a,b) => a.pos-b.pos)) emit(node);
     fs.mkdirSync(path.dirname(destination), {recursive: true}); fs.writeFileSync(destination, result);
 }
 const summary = {typescript: ts.version, tree, entries, declarations: ledger.length,
