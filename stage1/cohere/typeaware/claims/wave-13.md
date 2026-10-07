@@ -31,3 +31,7 @@ combined volume and lexical ties, are:
 
 Claim update is committed and pushed before implementation. Shared generators
 and test harnesses will not be edited. New executable Adamic files use .a.
+
+Continuation status: blocked before implementation. These three claims are not
+completed ports. See wave_13_next/BLOCKED.md for the missing raw compiler facts
+and the shared dispatcher restriction. No further rules were claimed.
