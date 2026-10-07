@@ -1,0 +1,305 @@
+directory	rule	before	after
+stage1/	@typescript-eslint/consistent-type-imports	5	0
+stage1/	@typescript-eslint/dot-notation	0	0
+stage1/	@typescript-eslint/method-signature-style	0	0
+stage1/	@typescript-eslint/no-base-to-string	0	0
+stage1/	@typescript-eslint/no-confusing-void-expression	0	0
+stage1/	@typescript-eslint/no-extraneous-class	0	0
+stage1/	@typescript-eslint/no-inferrable-types	26	0
+stage1/	@typescript-eslint/no-meaningless-void-operator	0	0
+stage1/	@typescript-eslint/no-misused-spread	0	0
+stage1/	@typescript-eslint/no-redeclare	0	0
+stage1/	@typescript-eslint/no-shadow	16	16
+stage1/	@typescript-eslint/no-unnecessary-boolean-literal-compare	0	0
+stage1/	@typescript-eslint/no-unnecessary-template-expression	0	0
+stage1/	@typescript-eslint/no-unnecessary-type-parameters	0	0
+stage1/	@typescript-eslint/no-unused-expressions	0	0
+stage1/	@typescript-eslint/no-unused-vars	11	11
+stage1/	@typescript-eslint/no-useless-default-assignment	0	0
+stage1/	@typescript-eslint/prefer-for-of	0	0
+stage1/	@typescript-eslint/prefer-includes	0	0
+stage1/	@typescript-eslint/prefer-nullish-coalescing	2	2
+stage1/	@typescript-eslint/prefer-regexp-exec	0	0
+stage1/	@typescript-eslint/prefer-return-this-type	0	0
+stage1/	@typescript-eslint/require-array-sort-compare	0	0
+stage1/	@typescript-eslint/strict-void-return	0	0
+stage1/	@typescript-eslint/switch-exhaustiveness-check	11	11
+stage1/	@typescript-eslint/unbound-method	0	0
+stage1/	TS1484	0	0
+stage1/	TS2375	0	0
+stage1/	TS2379	0	0
+stage1/	TS2412	0	0
+stage1/	adamic/invariant-mutable	0	0
+stage1/	adamic/no-unchecked-cast	0	0
+stage1/	constructor-super	0	0
+stage1/	fix	120	0
+stage1/	logical-assignment-operators	3	3
+stage1/	max-classes-per-file	11	11
+stage1/	nexus/consistency-no-ambiguous-identifier	844	844
+stage1/	nexus/consistency-no-for-in	0	0
+stage1/	nexus/consistency-no-long-line-comment	76	76
+stage1/	nexus/consistency-no-multiline-arrow-function	6	7
+stage1/	nexus/consistency-no-property-alias	30	30
+stage1/	nexus/consistency-no-shouting	46	46
+stage1/	nexus/consistency-no-stuttering-name	3	3
+stage1/	nexus/consistency-require-type-suffix	48	48
+stage1/	nexus/correctness-no-caller-data-mutation	32	32
+stage1/	nexus/correctness-no-discarded-pure-result	0	0
+stage1/	nexus/correctness-no-identical-branches	0	0
+stage1/	no-constant-condition	2	2
+stage1/	no-empty-function	0	0
+stage1/	no-empty-pattern	0	0
+stage1/	no-fallthrough	1	1
+stage1/	no-implicit-coercion	0	0
+stage1/	no-lonely-if	0	0
+stage1/	no-param-reassign	17	17
+stage1/	no-prototype-builtins	0	0
+stage1/	no-self-assign	0	0
+stage1/	no-self-compare	0	0
+stage1/	no-this-before-super	0	0
+stage1/	no-undef-init	8	0
+stage1/	no-unreachable-loop	0	0
+stage1/	no-unsafe-finally	0	0
+stage1/	no-use-before-define	55	55
+stage1/	no-useless-assignment	7	7
+stage1/	no-useless-backreference	0	0
+stage1/	no-useless-call	0	0
+stage1/	no-useless-concat	0	0
+stage1/	operator-assignment	0	0
+stage1/	prefer-const	0	0
+stage1/	prefer-exponentiation-operator	0	0
+stage1/	prefer-regex-literals	0	0
+stage1/	prefer-template	22	22
+stage1/	preserve-caught-error	0	0
+stage1/	radix	0	0
+stage1/	use-isnan	0	0
+stage1/	yoda	0	0
+stage1/	TOTAL	1402	1244
+internal/oracle/testdata	@typescript-eslint/consistent-type-imports	0	0
+internal/oracle/testdata	@typescript-eslint/dot-notation	1	1
+internal/oracle/testdata	@typescript-eslint/method-signature-style	10	10
+internal/oracle/testdata	@typescript-eslint/no-base-to-string	8	8
+internal/oracle/testdata	@typescript-eslint/no-confusing-void-expression	1	1
+internal/oracle/testdata	@typescript-eslint/no-extraneous-class	5	5
+internal/oracle/testdata	@typescript-eslint/no-inferrable-types	4	2
+internal/oracle/testdata	@typescript-eslint/no-meaningless-void-operator	0	0
+internal/oracle/testdata	@typescript-eslint/no-misused-spread	2	2
+internal/oracle/testdata	@typescript-eslint/no-redeclare	0	0
+internal/oracle/testdata	@typescript-eslint/no-shadow	18	18
+internal/oracle/testdata	@typescript-eslint/no-unnecessary-boolean-literal-compare	1	1
+internal/oracle/testdata	@typescript-eslint/no-unnecessary-template-expression	167	167
+internal/oracle/testdata	@typescript-eslint/no-unnecessary-type-parameters	3	3
+internal/oracle/testdata	@typescript-eslint/no-unused-expressions	1	1
+internal/oracle/testdata	@typescript-eslint/no-unused-vars	44	44
+internal/oracle/testdata	@typescript-eslint/no-useless-default-assignment	1	1
+internal/oracle/testdata	@typescript-eslint/prefer-for-of	3	3
+internal/oracle/testdata	@typescript-eslint/prefer-includes	3	3
+internal/oracle/testdata	@typescript-eslint/prefer-nullish-coalescing	0	0
+internal/oracle/testdata	@typescript-eslint/prefer-regexp-exec	6	6
+internal/oracle/testdata	@typescript-eslint/prefer-return-this-type	3	3
+internal/oracle/testdata	@typescript-eslint/require-array-sort-compare	3	3
+internal/oracle/testdata	@typescript-eslint/strict-void-return	2	2
+internal/oracle/testdata	@typescript-eslint/switch-exhaustiveness-check	2	2
+internal/oracle/testdata	@typescript-eslint/unbound-method	2	2
+internal/oracle/testdata	TS1484	0	0
+internal/oracle/testdata	TS2375	0	0
+internal/oracle/testdata	TS2379	0	0
+internal/oracle/testdata	TS2412	0	0
+internal/oracle/testdata	adamic/invariant-mutable	18	18
+internal/oracle/testdata	adamic/no-unchecked-cast	1	1
+internal/oracle/testdata	constructor-super	4	4
+internal/oracle/testdata	fix	296	0
+internal/oracle/testdata	logical-assignment-operators	2	2
+internal/oracle/testdata	max-classes-per-file	26	26
+internal/oracle/testdata	nexus/consistency-no-ambiguous-identifier	239	239
+internal/oracle/testdata	nexus/consistency-no-for-in	13	13
+internal/oracle/testdata	nexus/consistency-no-long-line-comment	25	25
+internal/oracle/testdata	nexus/consistency-no-multiline-arrow-function	90	98
+internal/oracle/testdata	nexus/consistency-no-property-alias	2	2
+internal/oracle/testdata	nexus/consistency-no-shouting	6	6
+internal/oracle/testdata	nexus/consistency-no-stuttering-name	2	2
+internal/oracle/testdata	nexus/consistency-require-type-suffix	166	166
+internal/oracle/testdata	nexus/correctness-no-caller-data-mutation	37	37
+internal/oracle/testdata	nexus/correctness-no-discarded-pure-result	1	1
+internal/oracle/testdata	nexus/correctness-no-identical-branches	3	3
+internal/oracle/testdata	no-constant-condition	3	3
+internal/oracle/testdata	no-empty-function	1	1
+internal/oracle/testdata	no-empty-pattern	1	1
+internal/oracle/testdata	no-fallthrough	0	0
+internal/oracle/testdata	no-implicit-coercion	1	1
+internal/oracle/testdata	no-lonely-if	1	1
+internal/oracle/testdata	no-param-reassign	17	17
+internal/oracle/testdata	no-prototype-builtins	48	48
+internal/oracle/testdata	no-self-assign	6	6
+internal/oracle/testdata	no-self-compare	25	25
+internal/oracle/testdata	no-this-before-super	4	4
+internal/oracle/testdata	no-undef-init	7	0
+internal/oracle/testdata	no-unreachable-loop	22	22
+internal/oracle/testdata	no-unsafe-finally	19	19
+internal/oracle/testdata	no-use-before-define	18	18
+internal/oracle/testdata	no-useless-assignment	8	8
+internal/oracle/testdata	no-useless-backreference	1	1
+internal/oracle/testdata	no-useless-call	1	1
+internal/oracle/testdata	no-useless-concat	19	19
+internal/oracle/testdata	operator-assignment	20	20
+internal/oracle/testdata	prefer-const	3	4
+internal/oracle/testdata	prefer-exponentiation-operator	1	1
+internal/oracle/testdata	prefer-regex-literals	5	5
+internal/oracle/testdata	prefer-template	79	79
+internal/oracle/testdata	preserve-caught-error	1	1
+internal/oracle/testdata	radix	3	3
+internal/oracle/testdata	use-isnan	1	1
+internal/oracle/testdata	yoda	1	1
+internal/oracle/testdata	TOTAL	1537	1241
+docs examples	@typescript-eslint/consistent-type-imports	0	0
+docs examples	@typescript-eslint/dot-notation	0	0
+docs examples	@typescript-eslint/method-signature-style	0	0
+docs examples	@typescript-eslint/no-base-to-string	0	0
+docs examples	@typescript-eslint/no-confusing-void-expression	0	0
+docs examples	@typescript-eslint/no-extraneous-class	0	0
+docs examples	@typescript-eslint/no-inferrable-types	0	0
+docs examples	@typescript-eslint/no-meaningless-void-operator	0	0
+docs examples	@typescript-eslint/no-misused-spread	0	0
+docs examples	@typescript-eslint/no-redeclare	0	0
+docs examples	@typescript-eslint/no-shadow	0	0
+docs examples	@typescript-eslint/no-unnecessary-boolean-literal-compare	0	0
+docs examples	@typescript-eslint/no-unnecessary-template-expression	0	0
+docs examples	@typescript-eslint/no-unnecessary-type-parameters	0	0
+docs examples	@typescript-eslint/no-unused-expressions	0	0
+docs examples	@typescript-eslint/no-unused-vars	0	0
+docs examples	@typescript-eslint/no-useless-default-assignment	0	0
+docs examples	@typescript-eslint/prefer-for-of	0	0
+docs examples	@typescript-eslint/prefer-includes	0	0
+docs examples	@typescript-eslint/prefer-nullish-coalescing	0	0
+docs examples	@typescript-eslint/prefer-regexp-exec	0	0
+docs examples	@typescript-eslint/prefer-return-this-type	0	0
+docs examples	@typescript-eslint/require-array-sort-compare	0	0
+docs examples	@typescript-eslint/strict-void-return	0	0
+docs examples	@typescript-eslint/switch-exhaustiveness-check	0	0
+docs examples	@typescript-eslint/unbound-method	0	0
+docs examples	TS1484	0	0
+docs examples	TS2375	0	0
+docs examples	TS2379	0	0
+docs examples	TS2412	0	0
+docs examples	adamic/invariant-mutable	0	0
+docs examples	adamic/no-unchecked-cast	0	0
+docs examples	constructor-super	0	0
+docs examples	fix	38	0
+docs examples	logical-assignment-operators	0	0
+docs examples	max-classes-per-file	0	0
+docs examples	nexus/consistency-no-ambiguous-identifier	0	0
+docs examples	nexus/consistency-no-for-in	0	0
+docs examples	nexus/consistency-no-long-line-comment	0	0
+docs examples	nexus/consistency-no-multiline-arrow-function	1	1
+docs examples	nexus/consistency-no-property-alias	0	0
+docs examples	nexus/consistency-no-shouting	0	0
+docs examples	nexus/consistency-no-stuttering-name	0	0
+docs examples	nexus/consistency-require-type-suffix	5	5
+docs examples	nexus/correctness-no-caller-data-mutation	1	1
+docs examples	nexus/correctness-no-discarded-pure-result	0	0
+docs examples	nexus/correctness-no-identical-branches	0	0
+docs examples	no-constant-condition	0	0
+docs examples	no-empty-function	0	0
+docs examples	no-empty-pattern	0	0
+docs examples	no-fallthrough	0	0
+docs examples	no-implicit-coercion	0	0
+docs examples	no-lonely-if	0	0
+docs examples	no-param-reassign	0	0
+docs examples	no-prototype-builtins	0	0
+docs examples	no-self-assign	0	0
+docs examples	no-self-compare	0	0
+docs examples	no-this-before-super	0	0
+docs examples	no-undef-init	2	0
+docs examples	no-unreachable-loop	0	0
+docs examples	no-unsafe-finally	0	0
+docs examples	no-use-before-define	0	0
+docs examples	no-useless-assignment	0	0
+docs examples	no-useless-backreference	0	0
+docs examples	no-useless-call	0	0
+docs examples	no-useless-concat	0	0
+docs examples	operator-assignment	0	0
+docs examples	prefer-const	0	0
+docs examples	prefer-exponentiation-operator	0	0
+docs examples	prefer-regex-literals	0	0
+docs examples	prefer-template	0	0
+docs examples	preserve-caught-error	0	0
+docs examples	radix	0	0
+docs examples	use-isnan	0	0
+docs examples	yoda	0	0
+docs examples	TOTAL	47	7
+rest	@typescript-eslint/consistent-type-imports	1	1
+rest	@typescript-eslint/dot-notation	0	0
+rest	@typescript-eslint/method-signature-style	19	19
+rest	@typescript-eslint/no-base-to-string	0	0
+rest	@typescript-eslint/no-confusing-void-expression	0	0
+rest	@typescript-eslint/no-extraneous-class	0	0
+rest	@typescript-eslint/no-inferrable-types	0	0
+rest	@typescript-eslint/no-meaningless-void-operator	1	1
+rest	@typescript-eslint/no-misused-spread	0	0
+rest	@typescript-eslint/no-redeclare	5	5
+rest	@typescript-eslint/no-shadow	0	0
+rest	@typescript-eslint/no-unnecessary-boolean-literal-compare	0	0
+rest	@typescript-eslint/no-unnecessary-template-expression	2	2
+rest	@typescript-eslint/no-unnecessary-type-parameters	0	0
+rest	@typescript-eslint/no-unused-expressions	0	0
+rest	@typescript-eslint/no-unused-vars	0	0
+rest	@typescript-eslint/no-useless-default-assignment	0	0
+rest	@typescript-eslint/prefer-for-of	1	1
+rest	@typescript-eslint/prefer-includes	0	0
+rest	@typescript-eslint/prefer-nullish-coalescing	0	0
+rest	@typescript-eslint/prefer-regexp-exec	0	0
+rest	@typescript-eslint/prefer-return-this-type	0	0
+rest	@typescript-eslint/require-array-sort-compare	0	0
+rest	@typescript-eslint/strict-void-return	0	0
+rest	@typescript-eslint/switch-exhaustiveness-check	0	0
+rest	@typescript-eslint/unbound-method	0	0
+rest	TS1484	1	1
+rest	TS2375	1	1
+rest	TS2379	1	1
+rest	TS2412	3	3
+rest	adamic/invariant-mutable	0	0
+rest	adamic/no-unchecked-cast	0	0
+rest	constructor-super	0	0
+rest	fix	51	1
+rest	logical-assignment-operators	0	0
+rest	max-classes-per-file	0	0
+rest	nexus/consistency-no-ambiguous-identifier	59	59
+rest	nexus/consistency-no-for-in	0	0
+rest	nexus/consistency-no-long-line-comment	1	1
+rest	nexus/consistency-no-multiline-arrow-function	1	1
+rest	nexus/consistency-no-property-alias	1	1
+rest	nexus/consistency-no-shouting	0	0
+rest	nexus/consistency-no-stuttering-name	0	0
+rest	nexus/consistency-require-type-suffix	16	16
+rest	nexus/correctness-no-caller-data-mutation	4	4
+rest	nexus/correctness-no-discarded-pure-result	0	0
+rest	nexus/correctness-no-identical-branches	0	0
+rest	no-constant-condition	0	0
+rest	no-empty-function	1	1
+rest	no-empty-pattern	0	0
+rest	no-fallthrough	0	0
+rest	no-implicit-coercion	0	0
+rest	no-lonely-if	0	0
+rest	no-param-reassign	2	2
+rest	no-prototype-builtins	0	0
+rest	no-self-assign	0	0
+rest	no-self-compare	0	0
+rest	no-this-before-super	0	0
+rest	no-undef-init	0	0
+rest	no-unreachable-loop	0	0
+rest	no-unsafe-finally	0	0
+rest	no-use-before-define	0	0
+rest	no-useless-assignment	0	0
+rest	no-useless-backreference	0	0
+rest	no-useless-call	0	0
+rest	no-useless-concat	0	0
+rest	operator-assignment	0	0
+rest	prefer-const	0	0
+rest	prefer-exponentiation-operator	0	0
+rest	prefer-regex-literals	0	0
+rest	prefer-template	0	0
+rest	preserve-caught-error	0	0
+rest	radix	0	0
+rest	use-isnan	0	0
+rest	yoda	0	0
+rest	TOTAL	171	121

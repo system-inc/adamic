@@ -1,0 +1,456 @@
+Built: pinned cohere audit, directory-separated formatting and safe lint commits, and a shrinking baseline gate for .ts and .a.
+Commits: directory commit SHAs are listed below; the normalization correction is 2616312. Gate commit 41b7360.
+Commands and outputs: before 3157 findings, after 2613; formatting 505 to 1; lint 2646 to 2606; types 6 to 6. Full oracle passes in 61.651s; normal Go cloud gate passes in 13.734s. Stage1 results below.
+Mutants: .a and .ts explicit-any probes fail on no-explicit-any only; .a type and formatting probes and baseline guard proofs are listed below. All probes removed.
+Not covered: full go test ./... and broad stage1/performance runs; the 64 MB JSON repository corpus was stopped after 545s. Selected tests across all 17 stage1 packages passed; optional npm library comparisons other than width were not installed. Direct cohere .a discovery and nested formatting are broken at the pin.
+
+Task #77nj6af. Branch codex/cohere-on-adamic. Base origin/main ef3d907.
+Observed cohere pin: 715ba94f3608a6500086b1076ce5cb7e51b836db. Cohere itself is unchanged.
+Setup: bash cloud/setup.sh, then source /workspace/adamic-tools/env.sh.
+setup: go ready (0s); clang ready (0s); node ready (0s); submodules ready (0s); build cache warm (324s).
+setup: done in 324s on 5 processors; cgroup cpu.max 400000 100000; 17.6 GB. nproc=5.
+Go 1.27.1, clang 20.1.8, Node 24.19.0.
+
+AUDIT SCOPE AND OBSERVATIONS
+The literal whole-repository command was: /tmp/cohere-77nj6af --no-fix --no-cache --json.
+Its full output is direct-before.jsonl and direct-before.stderr. It stopped after 205 proposed rewrites, before any final summary.
+The failure is in cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.bug-hir_loc_diff_2.js: TypeScript syntax in a .js fixture was rejected by the babel printer.
+Two intentionally malformed Adamic Test262 .js controls also produced parser warnings; they are excluded only from the mirror format walk.
+A separate direct no-format run completed: 1385 lint findings, 0 type errors, 42 proposed-fix files, 249 files in scope, 180 readiness files. All findings were in .ts files.
+Observation: rg sourceExtensions over cohere/TypeScript/tsc/internal, cohere/internal and cohere/command found no implementation. Native formatter registration lists only .ts and .tsx.
+The direct run does not cover the 350 tracked .a files. The config commit did not make this pinned binary discover or format .a.
+Inference supported by the pin and the planted .a mutant: a direct-only gate would silently omit Adamic source. The wrapper prevents that omission.
+The Python3 standard-library wrapper makes a disposable copy of repository-owned tracked and nonignored untracked files, maps .a to .a.ts, and adjusts suffixes in the copies.
+It includes all .ts aliases and .tsx files in the checker, preserves the compiler options and prelude, and runs types, lint and no-fix formatting independently.
+The type and lint scopes each contain 606 original source files, including all 350 .a files. Existing refusal, gap and review ignore patterns still apply.
+The six type diagnostics are intentional meter adaptation/optional-property test inputs, not errors to repair here. Independent lint prevents those six from masking the rest of the repository.
+The formatter receives an explicit file list honoring those exclusions. Original tsconfig.json and CohereSettings.json are checked separately from synthesized configurations.
+Markdown fences are formatted, not independently typechecked. The ten executable docs programs are covered through internal/load/testdata/0.1/compile and by their raw Node observations.
+All audit commands use --no-cache and report without writing source. The wrapper writes only disposable files; --record is an explicit baseline update.
+
+COUNTS BY RULE: every finding, including six types and one format finding per drifted file
+rule	before	after	removed
+@typescript-eslint/consistent-type-imports	6	1	5
+@typescript-eslint/dot-notation	1	1	0
+@typescript-eslint/method-signature-style	29	29	0
+@typescript-eslint/no-base-to-string	8	8	0
+@typescript-eslint/no-confusing-void-expression	1	1	0
+@typescript-eslint/no-extraneous-class	5	5	0
+@typescript-eslint/no-inferrable-types	30	2	28
+@typescript-eslint/no-meaningless-void-operator	1	1	0
+@typescript-eslint/no-misused-spread	2	2	0
+@typescript-eslint/no-redeclare	5	5	0
+@typescript-eslint/no-shadow	34	34	0
+@typescript-eslint/no-unnecessary-boolean-literal-compare	1	1	0
+@typescript-eslint/no-unnecessary-template-expression	169	169	0
+@typescript-eslint/no-unnecessary-type-parameters	3	3	0
+@typescript-eslint/no-unused-expressions	1	1	0
+@typescript-eslint/no-unused-vars	55	55	0
+@typescript-eslint/no-useless-default-assignment	1	1	0
+@typescript-eslint/prefer-for-of	4	4	0
+@typescript-eslint/prefer-includes	3	3	0
+@typescript-eslint/prefer-nullish-coalescing	2	2	0
+@typescript-eslint/prefer-regexp-exec	6	6	0
+@typescript-eslint/prefer-return-this-type	3	3	0
+@typescript-eslint/require-array-sort-compare	3	3	0
+@typescript-eslint/strict-void-return	2	2	0
+@typescript-eslint/switch-exhaustiveness-check	13	13	0
+@typescript-eslint/unbound-method	2	2	0
+TS1484	1	1	0
+TS2375	1	1	0
+TS2379	1	1	0
+TS2412	3	3	0
+adamic/invariant-mutable	18	18	0
+adamic/no-unchecked-cast	1	1	0
+constructor-super	4	4	0
+fix	505	1	504
+logical-assignment-operators	5	5	0
+max-classes-per-file	37	37	0
+nexus/consistency-no-ambiguous-identifier	1142	1142	0
+nexus/consistency-no-for-in	13	13	0
+nexus/consistency-no-long-line-comment	102	102	0
+nexus/consistency-no-multiline-arrow-function	98	107	-9
+nexus/consistency-no-property-alias	33	33	0
+nexus/consistency-no-shouting	52	52	0
+nexus/consistency-no-stuttering-name	5	5	0
+nexus/consistency-require-type-suffix	235	235	0
+nexus/correctness-no-caller-data-mutation	74	74	0
+nexus/correctness-no-discarded-pure-result	1	1	0
+nexus/correctness-no-identical-branches	3	3	0
+no-constant-condition	5	5	0
+no-empty-function	2	2	0
+no-empty-pattern	1	1	0
+no-fallthrough	1	1	0
+no-implicit-coercion	1	1	0
+no-lonely-if	1	1	0
+no-param-reassign	36	36	0
+no-prototype-builtins	48	48	0
+no-self-assign	6	6	0
+no-self-compare	25	25	0
+no-this-before-super	4	4	0
+no-undef-init	17	0	17
+no-unreachable-loop	22	22	0
+no-unsafe-finally	19	19	0
+no-use-before-define	73	73	0
+no-useless-assignment	15	15	0
+no-useless-backreference	1	1	0
+no-useless-call	1	1	0
+no-useless-concat	19	19	0
+operator-assignment	20	20	0
+prefer-const	3	4	-1
+prefer-exponentiation-operator	1	1	0
+prefer-regex-literals	5	5	0
+prefer-template	101	101	0
+preserve-caught-error	1	1	0
+radix	3	3	0
+use-isnan	1	1	0
+yoda	1	1	0
+TOTAL	3157	2613	544
+
+COUNTS BY DIRECTORY
+directory	before	after
+stage1/	1402	1244
+internal/oracle/testdata	1537	1241
+docs examples	47	7
+rest	171	121
+docs examples means docs/** plus internal/load/testdata/0.1/compile/**. All other paths, including prelude.d.ts and internal/oracle/counts.md, are rest.
+counts-by-directory.tsv records every rule by each of the four directories, including zero cells. counts-by-rule.tsv is the machine-readable total table.
+
+CLASSIFICATION: every rule, with an original-source example
+Formatting: fix/would-change where the changer is format. 505 files were formatted in 15 separate directory commits; counts.md was subsequently restored, leaving 504 net format fixes.
+Fixable lint: a rule listed as a changer by the pinned fix engine. Availability of a fix is not proof it is safe for an adversarial fixture.
+Review: soundness findings, behavioral test subjects, policy mismatches, and findings without an automatic fixer. No rule was disabled in Adamic settings.
+rule	group	example	code	reason
+@typescript-eslint/consistent-type-imports	fixable lint	stage1/cohere/css/convert.ts:2	import { Tree } from './tree.ts';	Automatic except cmd/adamic-meter/testdata/adapt/main.ts: its purpose is to prove the meter fixes a value import in memory. Retained.
+@typescript-eslint/dot-notation	fixable lint	internal/oracle/testdata/regexp.a:75	console.log(`${absent.groups?.missing} ${absent.groups?.['word']} ${absent.groups?.other}`);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/method-signature-style	review	internal/load/prelude.d.ts:5	log(message: string): void;	Soundness concern in the external prelude and merged collection interfaces. Changing these signatures changes library typing; do not mechanically alter them in a formatting unit.
+@typescript-eslint/no-base-to-string	review	internal/oracle/testdata/object_prototype.a:12	console.log(plain.toString());	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-confusing-void-expression	fixable lint	internal/oracle/testdata/visits.a:19	words.forEach((word) => console.log(`[${word}]`));	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/no-extraneous-class	review	internal/oracle/testdata/class_features_static.a:3	class StaticBase {	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-inferrable-types	fixable lint	stage1/cohere/css/input.ts:19	constructor(text: string, stripBOM: boolean = true) {	Automatic except the two intentional string widenings in normalize.a: removing them creates TS2367. Both findings are retained and reported to @system_cohere.
+@typescript-eslint/no-meaningless-void-operator	fixable lint	cmd/adamic-meter/testdata/corpus/refused.ts:2	void later;	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/no-misused-spread	review	internal/oracle/testdata/class_features_private.a:24	const copied = { ...child };	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-redeclare	review	internal/load/prelude.d.ts:42	interface Set<T> {	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-shadow	review	stage1/cohere/css/convert.ts:30	const index = tree.make();	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-unnecessary-boolean-literal-compare	fixable lint	internal/oracle/testdata/booleans.a:15	console.log(`${flag === false} ${flag !== yes}`);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/no-unnecessary-template-expression	fixable lint	internal/fresh/testdata/regexp_tree.ts:12	const root = build(`leaf${3}`, 3);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/no-unnecessary-type-parameters	review	internal/oracle/testdata/class_inheritance_generic.a:33	class ArrayBox<T> extends Box<readonly T[]> {}	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-unused-expressions	review	internal/oracle/testdata/class_inheritance_conditional.a:40	flag ? super(mark('yes')) : super(mark('no'));	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-unused-vars	review	stage1/cohere/css/convert.ts:9	function position(tree: Tree, pos: Position, input: Input): number {	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/no-useless-default-assignment	fixable lint	internal/oracle/testdata/undefined_references.a:31	function greet(name: string | undefined = undefined): string {	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/prefer-for-of	review	internal/flow/testdata/mutations.a:34	for (let index = 0; index < counters.length; index++) {	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/prefer-includes	fixable lint	internal/oracle/testdata/regexp.a:34	console.log(`${sticky.test('ba')} ${sticky.lastIndex} ${sticky.test('ba')} ${sticky.lastIndex}`);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/prefer-nullish-coalescing	review	stage1/cohere/css/parser.ts:573	if(bracket === undefined) {	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/prefer-regexp-exec	fixable lint	internal/oracle/testdata/regexp.a:40	const nonGlobalMatch = 'aba'.match(/(a)|(b)/);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/prefer-return-this-type	fixable lint	internal/oracle/testdata/regexp_cycle_fields.a:53	grow(depth: number): Link {	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+@typescript-eslint/require-array-sort-compare	review	internal/oracle/testdata/library_array_copy.a:4	const sorted = original.toSorted();	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/strict-void-return	review	internal/oracle/testdata/collections.a:74	letters.forEach((value) => `${value}!`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+@typescript-eslint/switch-exhaustiveness-check	review	stage1/cohere/gitignore/gitignore.ts:513	switch (line[index]) {	The fixtures include deliberate default branches. Read the full switch before treating an omitted named case as a missing behavior.
+@typescript-eslint/unbound-method	review	internal/oracle/testdata/library_fnexpr_store.a:17	const saved = box.callback;	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+TS1484	review	cmd/adamic-meter/testdata/adapt/main.ts:1	import { Shape } from './types.ts';	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+TS2375	review	cmd/adamic-meter/testdata/optional/main.ts:9	return { p: value };	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+TS2379	review	cmd/adamic-meter/testdata/optional/main.ts:14	consume({ p: undefined });	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+TS2412	review	cmd/adamic-meter/testdata/optional/main.ts:6	slot.p = undefined;	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+adamic/invariant-mutable	review	internal/oracle/testdata/library_string_raw.a:2	console.log(String.raw(template, 1, true));	Review soundness relations separately from intentional fixture coverage. String.raw's library signature has a writable raw property, while the builtin only reads it; a library/rule boundary needs review.
+adamic/no-unchecked-cast	review	internal/oracle/testdata/casts.a:26	const named = { name: 'Ken', age: 83 } as Named;	Possible false positive: casts.a upcasts a fresh {name, age} object to readonly Named; stage 0 permits this safe upcast. Report to @system_cohere.
+constructor-super	review	internal/oracle/testdata/class_inheritance_conditional.a:48	constructor(flag: boolean) {	Intentional constructor error fixtures must retain their observable failures.
+fix	formatting	stage1/cohere/css/GAPS.md:1	# CSS slice gaps	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+logical-assignment-operators	fixable lint	stage1/cohere/css/print_doc.ts:98	if(n.kind === 'group') { n.broken = n.broken || broken; return n.broken; }	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+max-classes-per-file	review	stage1/cohere/css/input.ts:2	import { panic, utf8Length } from 'adamic';	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+nexus/consistency-no-ambiguous-identifier	review	stage1/cohere/css/convert.ts:263	for(let i = 0; i < count; i++) {	Ports preserve upstream variable names such as i, n and parser fields. Renaming APIs and tests is a separate policy decision.
+nexus/consistency-no-for-in	review	internal/oracle/testdata/library_fnexpr_loops.a:34	for (let key in bag) {	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+nexus/consistency-no-long-line-comment	fixable lint	stage1/cohere/formatfiles/disk.ts:1	// The file system as the formatfiles Go sees it through os.Lstat, os.Stat and os.ReadFile, read with	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+nexus/consistency-no-multiline-arrow-function	fixable lint	stage1/cohere/formatfiles/enumerate.ts:226	const visit = (path: string, status: LinkStatus, failed: boolean): WalkStep => {	Automatic fixer exists, but hoisting or changing callback representations needs review. The formatter itself adds 9 findings by spreading formerly short arrows across lines.
+nexus/consistency-no-property-alias	review	stage1/cohere/css/parser.ts:201	const kind = (tokens[start] ?? panic('missing property part')).kind;	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+nexus/consistency-no-shouting	review	stage1/cohere/formatfiles/disk.ts:3	// the gitignore slice's GAPS.md waited for ("a WorkingTree read from disk can take the in-memory one's	Upstream token constants preserve their names; review compatibility before renaming.
+nexus/consistency-no-stuttering-name	review	stage1/cohere/css/convert.ts:33	object.setString('value', value.value);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+nexus/consistency-require-type-suffix	review	stage1/cohere/css/print.ts:264	export type FormatResult = { readonly kind: 'Formatted'; readonly text: string } | { readonly kind: 'Refused'; readonly message: string };	Ports preserve upstream type names such as Token and Node. Adding suffixes is an API/policy change.
+nexus/correctness-no-caller-data-mutation	review	stage1/cohere/css/parser.ts:31	tokens.pop();	Many ports and fixtures deliberately mutate caller-owned parser state or collections. Requires an API/policy decision, not an automatic rewrite.
+nexus/correctness-no-discarded-pure-result	review	internal/oracle/testdata/library_array_with.a:16	try { empty.with(0, 7); } catch (error) { if (error instanceof Error) { console.log(`${error.name}|${error.message}`); } }	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+nexus/correctness-no-identical-branches	review	internal/oracle/testdata/fresh_refused/array_from.a:8	node.nodes = Array.from({ length: 1 }, (_, index) => (index >= 0 ? node : node)); // closes the cycle	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-constant-condition	review	stage1/cohere/css/tokenize.ts:154	} while(true);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-empty-function	review	cmd/adamic-meter/testdata/corpus/refused.ts:1	async function later(): Promise<void> {}	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-empty-pattern	review	internal/oracle/testdata/user_iterators.a:181	const [] = range(2, 'empty-pattern');	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-fallthrough	review	stage1/cohere/graphql/parser.ts:360	case '$':	Review the GraphQL grouped cases against Go and Node before adding a break; changing parser control flow here could miscompile.
+no-implicit-coercion	review	internal/oracle/testdata/library_math_number_convert.a:2	for (const text of texts) console.log(`${text.length} ${Number(text)} ${1 / Number(text)} ${+text}`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-lonely-if	fixable lint	internal/oracle/testdata/class_inheritance_conditional.a:23	if(nested) {	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+no-param-reassign	review	stage1/cohere/css/convert.ts:241	start = start < 0 ? Math.max(0, length + start) : Math.min(start, length);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-prototype-builtins	review	internal/oracle/testdata/has_own.a:3	console.log(`${empty.hasOwnProperty("foo")}`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-self-assign	review	internal/oracle/testdata/self_assignments.a:5	flag = flag;	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-self-compare	review	internal/oracle/testdata/library_globals.a:1	console.log(`${Object === Object} ${Array === Array} ${String === String} ${Number === Number} ${JSON === JSON} ${Map === Map} ${Set === Set}`);	Oracle fixtures intentionally exercise self-comparison, NaN and object identity.
+no-this-before-super	review	internal/oracle/testdata/class_inheritance_conditional.a:39	constructor(flag: boolean) {	Intentional constructor error fixtures must retain their observable failures.
+no-undef-init	fixable lint	stage1/cohere/css/compose.ts:121	let rules: number[] | undefined = undefined;	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+no-unreachable-loop	review	internal/oracle/testdata/finally_leaves.a:138	for (let index = 0; index < 5; index += 1) {	Fixtures exercise early exits and control flow deliberately; do not remove their test subject.
+no-unsafe-finally	review	internal/oracle/testdata/exceptions.a:140	throw new Error(`replaced ${fail ? 'a throw' : 'a return'}`);	Oracle fixtures intentionally test finally overriding return and throw; rewriting would remove coverage.
+no-use-before-define	review	stage1/cohere/css/convert.ts:254	result += repeatText('�', Math.min(next, end) - Math.max(offset, start));	Function declarations are hoisted and mutually recursive ports rely on them. The rule is stricter than JavaScript semantics.
+no-useless-assignment	review	stage1/cohere/values/tokenize.ts:207	let code = 0;	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-useless-backreference	review	internal/oracle/testdata/regexp.a:8	console.log(show(/\1(a)/.exec('a')));	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-useless-call	review	internal/oracle/testdata/library_math_number_prototype.a:7	console.log(`${Number.prototype.toString.call(Number.prototype)} ${Number.prototype.toFixed(undefined)} ${Number.prototype.toExponential()} ${Number.prototype.toPrecision()}`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+no-useless-concat	review	internal/oracle/testdata/library_array_copy.a:10	const words = ['a' + 'b', 'c' + 'd', 'e' + 'f'];	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+operator-assignment	fixable lint	internal/oracle/testdata/classes.a:35	this.count = this.count + 1;	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+prefer-const	fixable lint	internal/oracle/testdata/library_fnexpr_loops.a:34	for (let key in bag) {	Automatic fixer exists for ordinary initialized locals; destructuring/fixture contracts need review. Removing an undefined initializer exposes one additional finding in tuple_values.a.
+prefer-exponentiation-operator	fixable lint	internal/oracle/testdata/objects.a:76	console.log(`${Math.floor(-1.5)} ${Math.trunc(-1.5)} ${Math.ceil(1.2)} ${Math.sqrt(2)} ${Math.pow(2, 0.5)} ${Math.E} ${Math.PI}`);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+prefer-regex-literals	review	internal/oracle/testdata/regexp.a:68	console.log(`${new RegExp('\\/').source} ${new RegExp('/').source} ${/\//.source}`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+prefer-template	fixable lint	stage1/cohere/css/print.ts:41	return !n.truth('namespace') ? d.text('') : d.text((n.data().booleans.get('namespace') === true ? '' : n.string('namespace').trim()) + '|');	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+preserve-caught-error	review	internal/oracle/testdata/finally_leaves.a:36	throw new Error(word('second ', index));	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+radix	review	internal/oracle/testdata/number_parsing.a:2	console.log(`${Number.parseInt('42px', 10)} ${parseInt('0x1F')} ${Number.parseInt('-0')} ${Number.parseInt('zz', 36)} ${parseInt('7', 99)}`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+use-isnan	review	internal/oracle/testdata/number_parsing.a:8	console.log(`${NaN} ${-Infinity} ${Number.POSITIVE_INFINITY} ${Number.NEGATIVE_INFINITY} ${Number.NaN === Number.NaN}`);	Review against the Node/Go fixture purpose before changing behavior or relaxing the rule.
+yoda	fixable lint	internal/oracle/testdata/maybe_booleans.a:86	console.log(`${counts.get('none') === counts.get('missing')} ${1 === counts.get('one')} ${counts.get('none') !== 1}`);	Automatic fixer exists; retained where fixture behavior or API contracts need review.
+
+APPLIED FIXES AND REJECTED FIXES
+Selected automatic lint rules: @typescript-eslint/no-inferrable-types, no-undef-init, @typescript-eslint/consistent-type-imports.
+27 files changed in three separate lint commits; restoring normalize.a leaves 26 files with net lint changes. A temporary allowlist disabled every other fixer only in scratch; checked-in CohereSettings.json was not weakened.
+Removing the two normalize.a string annotations narrowed different strings to disjoint literal types and produced TS2367. The independent after type audit caught it; both annotations were restored in a follow-up commit.
+unsafe-auto-fix.jsonl retains the complete audit of that rejected state. Example: const decomposed: string = "e\u0301" and const precomposed: string = "\u00e9" must remain widened before decomposed === precomposed.
+The meter value-import control and all refused/gap/review sources were retained; no excluded source was rewritten.
+Formatting exposes 9 additional nexus/consistency-no-multiline-arrow-function findings: 4 in library_array_find_last.a, 4 in library_array_flat_map.a, 1 in stage1/cohere/css/print.ts.
+Removing the undefined initializer in tuple_values.a exposes one prefer-const finding on a variable assigned once by destructuring. These 10 known findings are explicitly recorded, not hidden.
+Net lint reduction is 40: 28 no-inferrable-types, 17 no-undef-init and 5 consistent-type-imports removed; 10 findings exposed. Total reduction including formatting is 544.
+
+The full counts oracle caught Markdown column-padding changes in internal/oracle/counts.md. Commit da4a802 restores its generated table bytes without changing counts, prose, or assertions. One format/would-change finding remains baselined to preserve byte-identical generation.
+
+BASELINE GATE
+python3 cloud/cohere_gate.py is part of both CLAUDE.md and go test ./cloud (TestRepositoryPassesCohereBaseline).
+The gate builds cohere from the pinned submodule; COHERE_BINARY is available for repeated local proofs with the already-built pin.
+Identity is original path, rule, messageId, severity, message and trimmed source line; line-number movement is ignored. Multiplicity is retained, so a duplicate violation also fails.
+A new finding fails even if some other finding disappeared. --record can only remove entries from an existing baseline, not trade or add them.
+The gate rejects stale baseline entries until --record removes them, and refuses baseline growth relative to origin/main and committed HEAD. --record compares current findings to all available ceilings. Deleting the local baseline cannot bootstrap new findings, including during the initial gate introduction before main contains a baseline.
+Missing summaries, empty source scope, crashes, unsupported output schema, incomplete phases, alias collisions and unexpected output records fail closed.
+
+MUTANTS AND VALIDATION
+A .a exported function with any argument and return annotations: exit 1, two new @typescript-eslint/no-explicit-any findings, type and format phases clean.
+The same .ts and .tsx probes: exit 1 on the same rule only.
+A .a const declared number and initialized with a string: exit 1 on TS2322 only; independent lint still ran.
+A .a export with omitted operator spaces: exit 1 on fix/would-change only, with clean type and lint phases.
+Increasing one baseline multiplicity: exit 1, baseline grew relative to --base-ref HEAD. Restored exact original baseline.
+--record with the explicit-any .a mutant: exit 1, two new no-explicit-any findings; baseline bytes unchanged.
+Deleting the baseline, planting the .a explicit-any probe and running --record while origin/main has no baseline: exit 1, new no-explicit-any findings; no replacement baseline was written. Original bytes restored.
+A fake executable exits 0 without a JSON summary: exit 1, incomplete types check. No finding list can turn a missing run into a pass.
+Node before/after: 303 completed top-level oracle and executable docs-source observations, stdout/stderr/exit codes byte-identical. killed_after_output.a intentionally waits for a signal and hit the 20-second direct-capture timeout; the full oracle supplies its signal.
+INITIAL_TEST: go test -count=1 -timeout 30m ./internal/oracle ./stage1/... > /tmp/adamic-before-77nj6af.log 2>&1. Oracle passed in 507.345s; the broad stage1 run was stopped after fifteen minutes, exit 143.
+Selected test commands, all stdout/stderr redirected directly to the named log files:
+1. go test -v -count=1 -timeout 30m ./internal/oracle > /tmp/adamic-oracle-final-77nj6af.log 2>&1: PASS 61.651s, including exact generated counts table and every Native/Node oracle.
+2. go test -v -count=1 -timeout 30m ./internal/oracle ./cmd/adamic-meter ./internal/load ./internal/flow ./internal/fresh ./internal/native ./internal/regexp ./bridge/tsgo/... > /tmp/adamic-oracle-after-77nj6af.log 2>&1: all non-oracle packages passed (full results in tests-packages-first.log.gz). Oracle's counts check saw the transient rejected normalize autofix; corrected final full oracle passed as in (1).
+3. go test -v -count=1 ./cloud > /tmp/adamic-cloud-final-77nj6af.log 2>&1: PASS 13.734s, real binary rebuilt from pinned cohere; 2613 baseline findings, 0 removed, 0 new.
+4. go test -v -count=1 -timeout 30m -run '^(TestThePortParsesAsGoCohereDoes|TestThePortAnswersAsGoCohereAndGitDo|TestPortMatchesGoCohere|TestRulesAgree|TestScannerAgreesWithTypescriptGo|TestExpressionsAgree|TestCSSStrings|TestCSSNumbers|TestMarkdownInline|TestMarkdown.*|TestFrontMatterStage|TestMicromarkInputChunks|TestSixRuleAgreementAndMutants)$/^(Go_agreement|natively_and_on_Node,_as_Go_cohere)$' ./stage1/... > /tmp/adamic-stage1-filtered-77nj6af.log 2>&1.
+This aggregate exits 1 because the 64 MB JSON corpus was stopped at 545.169s, and redundant Markdown/type-aware runs were stopped while complete separate selected runs continued. Positive byte-parity results: CSS 54.601s; formatfiles 14.517s; gitignore 15.203s; GraphQL 37.831s (3426 texts); lint 120.907s (751320 bytes); mediaquery 17.609s; selector 39.278s; suppression 37.791s; values 38.588s. Do not treat 'no tests to run' rows as coverage; full separate number/string/scanner tests are below.
+5. go test -v -count=1 -timeout 20m -run '^(TestCSSNumbers|TestCSSStrings|TestMarkdownInline|TestMarkdownSourceDecoding|TestMarkdownUnicodeWidths|TestMarkdownTextSplitting|TestSixRuleAgreementAndMutants)$' ./stage1/cohere/cssnumbers ./stage1/cohere/cssstrings ./stage1/cohere/markdowninline ./stage1/cohere/markdownblocks ./stage1/cohere/typeaware > /tmp/adamic-stage1-additional-77nj6af.log 2>&1.
+PASS: numbers 225.752s (89786 cases), strings 36.756s (18674), Markdown inline 761.183s (106913), decoding 329.73s (2242317 source strings), splitting 505.60s (1191151 inputs), type-aware six-rule agreement/mutants 744.035s (81006 identical finding bytes). Aggregate initially exits 1 only because width's three pinned external npm packages were absent.
+6. npm install --prefix /tmp/adamic-markdown-width --no-audit --no-fund --ignore-scripts emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3 > /tmp/adamic-width-deps-77nj6af.log 2>&1: 3 packages installed in 1s. Versions are pinned in cohere's bundled third-party notices, not guessed. No repository dependency files changed.
+ADAMIC_MARKDOWNWIDTH_DEPS=/tmp/adamic-markdown-width go test -v -count=1 -timeout 20m -run '^TestMarkdownUnicodeWidths$' ./stage1/cohere/markdownblocks > /tmp/adamic-width-final-77nj6af.log 2>&1: PASS 203.186s, 1215770 widths, native/Node/backend/Go/original dependencies/fork parity and three native mutants.
+7. go test -v -count=1 -timeout 15m -run '^(TestScannerAgreesWithTypescriptGo|TestExpressionsAgree)$' ./stage1/typescript/scanner ./stage1/typescript/parser > /tmp/adamic-typescript-stage1-77nj6af.log 2>&1: PASS scanner 196.411s and parser 180.189s, including their complete native/Node mutants.
+8. go test -v -count=1 -timeout 15m -run '^(TestAdditionalJSONBoundaries|TestThreePortMutantsAreCaught|TestSingleFileStdoutDriver)$' ./stage1/cohere/json > /tmp/adamic-json-filtered-77nj6af.log 2>&1: PASS 54.051s, Node/native/backend boundary and single-file parity; all three JSON mutants caught on Node and native. This replaces the stopped large JSON corpus, not its coverage claim.
+9. go test -v -count=1 -timeout 15m -run '^TestPathAnswersAsGosPathPackage$' ./stage1/cohere/gitignore > /tmp/adamic-path-mutants-77nj6af.log 2>&1: PASS 7.360s, all six refreshed path mutants caught natively and on Node; original path sweep byte-identical on Go, native, Node and JS backend.
+10. go test -v -count=1 -timeout 15m -overlay=/tmp/cohere-anchor-proof-77nj6af/overlay.json -run '^TestAdamicFormattingMutantsOnNode$' ./stage1/cohere/graphql ./stage1/cohere/formatfiles ./stage1/cohere/suppression ./stage1/cohere/values ./stage1/cohere/gitignore ./stage1/cohere/css > /tmp/adamic-anchor-mutants-77nj6af.log 2>&1: PASS all six packages. Every original Node result equals Go cohere; all 68 mutants produce a byte mismatch while exiting successfully. The opt-in 100 MiB gitignore size-limit mutant is skipped. These 68 proofs are Node-only; do not claim complete native mutant reruns for them.
+Literal mutation anchors were refreshed in directory-separated commits; strict exact-one-match guards and the actual mutations/output comparisons remain. Reproduce the temporary test overlay from node-mutant-overlay.zip, rewriting its absolute repository/scratch paths for the current checkout.
+All logs are preserved below, including the cancelled aggregate runs and missing-dependency failure. Performance-named tests were not run; some selected semantic tests include their own timing loops. Full compiler/type-aware volume and optional standalone npm parser libraries remain untested.
+Gofmt and git diff --check pass for all edited Go infrastructure/tests. Cohere and all four forbidden Go files have empty diffs against the base.
+
+
+FOR @system_cohere (report only; no external message sent)
+1. Pin 715ba94 lacks sourceExtensions discovery and .a printer registrations, despite Adamic configuration documenting them. The .a alias mutant proves the workaround coverage.
+2. Whole-repository no-fix checking dies in a declared cohere submodule .js fixture before producing a summary. See direct-before.stderr for the exact file and message.
+3. no-inferrable-types is unsafe for intentional const string widenings; it introduces TS2367 in normalize.a. See unsafe-auto-fix.jsonl and the correction commit.
+4. The formatter creates physical multiline arrows that the inherited house lint then rejects. Before/after rule and per-file counts above are the reproducer.
+5. The Markdown formatter changes generated counts.md table padding, violating the generator byte contract. Retained as one formatting baseline entry.
+6. adamic/no-unchecked-cast rejects the safe fresh-object-to-readonly-Named upcast in casts.a. Stage 0 accepts it and Node output is observed; review the cohere type relation.
+
+COMMIT SHAS
+424868f04bbe2062e8d0a8970a470ebee18c3d23	format	.claude	2 files
+7be9be0251ea4cf92f2a1cf78b70d057933a40bb	format	bench	12 files
+43c8d3b3df00d0e0bdcc3b21a6cbd0e238279d5c	format	bridge	6 files
+c15b47a0d2079ca84c5f224012e81ea9ac45b219	format	cloud	2 files
+57ce4fb226b232340765d56bc164b67658708373	format	cmd	10 files
+9d06c84ec949b0d0652e32828fc1098630076e3f	format	docs	29 files
+677e3374d07a22d1ecc0b1fff7f2b731186e11db	format	internal/flow	2 files
+201a08a8bdf7a450b7c60ec488c0ea3c21d044e0	format	internal/fresh	1 files
+46ebfce87f0d1a43471b6c438c1b69a092261267	format	internal/load	10 files
+1ee7dbec2d5f76b49d29bab2689e8dca40f28e1c	format	internal/native	3 files
+8ccf28bd52bac1a4c0e507f638a75ff0805a201d	format	internal/oracle	298 files
+f3146e2868dc7678fa3782721f3b4ecca61d2422	format	internal/regexp	6 files
+25ea349d74430c6bc54ccc72174b501e7be09a95	format	oracle	2 files
+654ca0dd825b52f55ebe42f9b414f5f5da6da833	format	root	2 files
+799b77f1f561dbc4f36db4835884616d632ed6eb	format	stage1	120 files
+de86366e34196d4b7afcf01641f1da089b40e7ee	lint	internal/load	2 files
+314597e2f67f6e1ff1a239db5ac2acfb75401822	lint	internal/oracle	10 files
+24261194bda151acfd062f6a9522aca13adc23ba	lint	stage1	15 files
+2616312	correction	internal/oracle/testdata/normalize.a
+
+ADDITIONAL COMMITS
+da4a802ecd2adbc9fb272f871a3ac102e13736e4 Keep the generated counts table byte identical to its oracle
+3fc0b036c1bc32317a1cc43e2f474c37599ee6dd Keep GraphQL mutant anchors aligned with formatted source
+41b73603b99983cc114aceda7a9ea82668ecc133 Gate Adamic sources against a shrinking cohere baseline
+04987f560b4f99cc779d7a634b03c05241f90e86 Keep css mutant anchors aligned with formatted source
+4bb6d3b82262954d138916128574d411bc9ce252 Keep formatfiles mutant anchors aligned with formatted source
+d0516ef0b97e98c3ff48b7630e15172d71770ed9 Keep gitignore mutant anchors aligned with formatted source
+d21368484e102514d3cef1755291c3178c4310b2 Keep suppression mutant anchors aligned with formatted source
+0913ad4aa719c77e995dffaf187f5454bfdab200 Keep values mutant anchors aligned with formatted source
+b2d2aefe3a4da3da70c060009c7fbe7b60ecad7c Preserve ordinary string values in the cohere source mirror
+a62da7be85b7dab4dae8a5201ffbdadf140af66a Cover future TSX sources in the cohere baseline gate
+3ca6b17d15336f0840fc28631b1e393d646ce476 Enforce the committed baseline while introducing the gate
+
+EVERY STAGE1 MUTANT OBSERVED
+adamic-anchor-mutants-77nj6af.log:
+  adamic_formatting_mutants_test.go:15: Node caught: line 411: "error Syntax Error: Unexpected character: U+FEFF. (1:1)", Go cohere "Document[0,6]{definitions=(OperationDefinition[1,6]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[1,6]{selections=(Field[3,4]{alias=undefined name=Name[3,4]{value=\"a\"} arguments=undefined directives=undefined selectionSet=undefined})}})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1119: "error Syntax Error: Expected \"on\", found <EOF>. (2:75)", Go cohere "error Syntax Error: Unexpected character: U+00A0. (2:58)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 769: "error Syntax Error: Unexpected Name \"Document[0\". (1:1)", Go cohere "error Syntax Error: Unexpected Name \"Document\". (1:1)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 11045: "error Syntax Error: Invalid number, expected digit but got: \"a\". (12:2)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u00G0\". (6:40)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 449: "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{FFFFFFFFF\". (1:9)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{FFFFFFFF\". (1:9)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1008: "error Syntax Error: Invalid character within String: U+10FFFF. (3:2)", Go cohere "Document[0,190]{definitions=(UnionTypeDefinition[2,66]{description=StringValue[2,7]{value=\"\\u{10FFFF}\\u{D7FF}\" block=false} name=Name[14,17]{value=\"x_y\"} directives=(Directive[18,46]{name=Name[20,21]{value=\"a\"} arguments=(Argument[23,29]{name=Name[23,24]{value=\"A\"} value=ListValue[27,29]{values=()}} Argument[30,36]{name=Name[30,32]{value=\"__\"} value=EnumValue[35,36]{value=\"Z\"}} Argument[37,44]{name=Name[37,39]{value=\"a0\"} value=IntValue[43,44]{value=\"9\"}})}) types=(NamedType[51,53]{name=Name[51,53]{value=\"_9\"}} NamedType[57,60]{name=Name[57,60]{value=\"x_y\"}} NamedType[64,66]{name=Name[64,66]{value=\"a0\"}})} SchemaDefinition[67,124]{description=StringValue[67,83]{value=\"\\u{D}\\u{1F600}\" block=false} directives=(Directive[91,106]{name=Name[93,95]{value=\"a9\"} arguments=(Argument[98,104]{name=Name[98,100]{value=\"Za\"} value=EnumValue[102,104]{value=\"aZ\"}})}) operationTypes=(OperationTypeDefinition[113,122]{operation=\"query\" type=NamedType[120,122]{name=Name[120,122]{value=\"a9\"}}})} OperationDefinition[125,189]{operation=\"subscription\" description=StringValue[125,135]{value=\"x\\u{9}  \" block=true} name=Name[149,157]{value=\"fragment\"} variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[158,189]{selections=(InlineFragment[164,187]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[168,187]{selections=(Field[170,185]{alias=undefined name=Name[170,172]{value=\"a9\"} arguments=undefined directives=(Directive[173,185]{name=Name[175,176]{value=\"A\"} arguments=(Argument[179,184]{name=Name[179,180]{value=\"z\"} value=EnumValue[183,184]{value=\"_\"}})}) selectionSet=undefined})}})}})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 485: "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{1\\u{D83D}\". (1:9)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{1\\u{FFFD}\". (1:9)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 549: "error Syntax Error: Unexpected character: \"?\". (5:3)", Go cohere "error Syntax Error: Unexpected character: \"?\". (3:3)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 335: "Document[0,54]{definitions=(OperationDefinition[0,54]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,54]{selections=(Field[2,52]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,51]{name=Name[4,5]{value=\"s\"} value=StringValue[7,51]{value=\"  first line\\u{A}    second\\u{A}  third\" block=true}}) directives=undefined selectionSet=undefined})}})}", Go cohere "Document[0,54]{definitions=(OperationDefinition[0,54]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,54]{selections=(Field[2,52]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,51]{name=Name[4,5]{value=\"s\"} value=StringValue[7,51]{value=\"  first line\\u{A}  second\\u{A}third\" block=true}}) directives=undefined selectionSet=undefined})}})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 42: "Document[0,166]{definitions=(OperationDefinition[0,165]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,165]{selections=(Field[6,164]{alias=undefined name=Name[6,7]{value=\"a\"} arguments=(Argument[8,69]{name=Name[8,9]{value=\"s\"} value=StringValue[10,69]{value=\"quote\" backslash\\\\ newline\\u{A} tab\\u{9} unicode\\u{E9} slash/\" block=false}} Argument[70,92]{name=Name[70,71]{value=\"t\"} value=StringValue[72,92]{value=\"   one line   \" block=true}} Argument[93,103]{name=Name[93,94]{value=\"u\"} value=StringValue[95,103]{value=\"\" block=true}} Argument[104,158]{name=Name[104,105]{value=\"v\"} value=StringValue[106,158]{value=\"first\\u{A}  indented\\u{A}has \\\\\"\"\" triple\" block=true}} Argument[159,163]{name=Name[159,160]{value=\"w\"} value=StringValue[161,163]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}", Go cohere "Document[0,166]{definitions=(OperationDefinition[0,165]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,165]{selections=(Field[6,164]{alias=undefined name=Name[6,7]{value=\"a\"} arguments=(Argument[8,69]{name=Name[8,9]{value=\"s\"} value=StringValue[10,69]{value=\"quote\" backslash\\\\ newline\\u{A} tab\\u{9} unicode\\u{E9} slash/\" block=false}} Argument[70,92]{name=Name[70,71]{value=\"t\"} value=StringValue[72,92]{value=\"   one line   \" block=true}} Argument[93,103]{name=Name[93,94]{value=\"u\"} value=StringValue[95,103]{value=\"\" block=true}} Argument[104,158]{name=Name[104,105]{value=\"v\"} value=StringValue[106,158]{value=\"first\\u{A}  indented\\u{A}has \"\"\" triple\" block=true}} Argument[159,163]{name=Name[159,160]{value=\"w\"} value=StringValue[161,163]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 505: "error Syntax Error: Invalid number, unexpected digit after 0: \"0\". (1:8)", Go cohere "error Syntax Error: Invalid number, unexpected digit after 0: \"0\". (1:9)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 489: "Document[0,14]{definitions=(OperationDefinition[0,14]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,14]{selections=(Field[2,12]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,11]{name=Name[4,5]{value=\"s\"} value=StringValue[7,11]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}", Go cohere "error Syntax Error: Invalid character escape sequence: \"\\\\x\". (1:9)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 567: "error Syntax Error: Unexpected Name \"extend\". (1:1)", Go cohere "error Syntax Error: Unexpected Name \"an\". (1:8)"
+  adamic_formatting_mutants_test.go:15: Node caught: line 4: "Document[0,171]{definitions=(OperationDefinition[0,66]{operation=\"query\" description=undefined name=Name[8,13]{value=\"Named\"} variableDefinitions=(VariableDefinition[14,21]{description=undefined variable=Variable[14,17]{name=Name[15,17]{value=\"id\"}} type=NonNullType[18,21]{type=NamedType[18,20]{name=Name[18,20]{value=\"ID\"}}} defaultValue=undefined directives=()} VariableDefinition[22,47]{description=undefined variable=Variable[22,28]{name=Name[23,28]{value=\"first\"}} type=NamedType[29,32]{name=Name[29,32]{value=\"Int\"}} defaultValue=IntValue[33,35]{value=\"10\"} directives=(Directive[36,47]{name=Name[37,47]{value=\"deprecated\"} arguments=undefined})}) directives=() selectionSet=SelectionSet[48,66]{selections=(Field[49,65]{alias=undefined name=Name[49,53]{value=\"user\"} arguments=(Argument[54,60]{name=Name[54,56]{value=\"id\"} value=Variable[57,60]{name=Name[58,60]{value=\"id\"}}}) directives=() selectionSet=SelectionSet[61,65]{selections=(Field[62,64]{alias=undefined name=Name[62,64]{value=\"id\"} arguments=undefined directives=() selectionSet=undefined})}})}} OperationDefinition[67,84]{operation=\"query\" description=undefined name=undefined variableDefinitions=(VariableDefinition[74,80]{description=undefined variable=Variable[74,76]{name=Name[75,76]{value=\"a\"}} type=NamedType[77,80]{name=Name[77,80]{value=\"Int\"}} defaultValue=undefined directives=()}) directives=() selectionSet=SelectionSet[81,84]{selections=(Field[82,83]{alias=undefined name=Name[82,83]{value=\"a\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[85,93]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=() selectionSet=SelectionSet[90,93]{selections=(Field[91,92]{alias=undefined name=Name[91,92]{value=\"b\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[94,97]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[94,97]{selections=(Field[95,96]{alias=undefined name=Name[95,96]{value=\"c\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[98,113]{operation=\"mutation\" description=undefined name=Name[109,110]{value=\"M\"} variableDefinitions=undefined directives=() selectionSet=SelectionSet[110,113]{selections=(Field[111,112]{alias=undefined name=Name[111,112]{value=\"d\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[114,137]{operation=\"subscription\" description=undefined name=Name[127,128]{value=\"S\"} variableDefinitions=undefined directives=(Directive[129,134]{name=Name[130,134]{value=\"live\"} arguments=undefined}) selectionSet=SelectionSet[134,137]{selections=(Field[135,136]{alias=undefined name=Name[135,136]{value=\"e\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[138,170]{operation=\"mutation\" description=undefined name=undefined variableDefinitions=(VariableDefinition[147,166]{description=undefined variable=Variable[147,149]{name=Name[148,149]{value=\"b\"}} type=NonNullType[150,160]{type=ListType[150,159]{type=NonNullType[151,158]{type=NamedType[151,157]{name=Name[151,157]{value=\"String\"}}}}} defaultValue=ListValue[161,166]{values=(StringValue[162,165]{value=\"x\" block=false})} directives=()}) directives=() selectionSet=SelectionSet[167,170]{selections=(Field[168,169]{alias=undefined name=Name[168,169]{value=\"f\"} arguments=undefined directives=() selectionSet=undefined})}})}", Go cohere "Document[0,171]{definitions=(OperationDefinition[0,66]{operation=\"query\" description=undefined name=Name[8,13]{value=\"Named\"} variableDefinitions=(VariableDefinition[14,21]{description=undefined variable=Variable[14,17]{name=Name[15,17]{value=\"id\"}} type=NonNullType[18,21]{type=NamedType[18,20]{name=Name[18,20]{value=\"ID\"}}} defaultValue=undefined directives=undefined} VariableDefinition[22,47]{description=undefined variable=Variable[22,28]{name=Name[23,28]{value=\"first\"}} type=NamedType[29,32]{name=Name[29,32]{value=\"Int\"}} defaultValue=IntValue[33,35]{value=\"10\"} directives=(Directive[36,47]{name=Name[37,47]{value=\"deprecated\"} arguments=undefined})}) directives=undefined selectionSet=SelectionSet[48,66]{selections=(Field[49,65]{alias=undefined name=Name[49,53]{value=\"user\"} arguments=(Argument[54,60]{name=Name[54,56]{value=\"id\"} value=Variable[57,60]{name=Name[58,60]{value=\"id\"}}}) directives=undefined selectionSet=SelectionSet[61,65]{selections=(Field[62,64]{alias=undefined name=Name[62,64]{value=\"id\"} arguments=undefined directives=undefined selectionSet=undefined})}})}} OperationDefinition[67,84]{operation=\"query\" description=undefined name=undefined variableDefinitions=(VariableDefinition[74,80]{description=undefined variable=Variable[74,76]{name=Name[75,76]{value=\"a\"}} type=NamedType[77,80]{name=Name[77,80]{value=\"Int\"}} defaultValue=undefined directives=undefined}) directives=undefined selectionSet=SelectionSet[81,84]{selections=(Field[82,83]{alias=undefined name=Name[82,83]{value=\"a\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[85,93]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[90,93]{selections=(Field[91,92]{alias=undefined name=Name[91,92]{value=\"b\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[94,97]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[94,97]{selections=(Field[95,96]{alias=undefined name=Name[95,96]{value=\"c\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[98,113]{operation=\"mutation\" description=undefined name=Name[109,110]{value=\"M\"} variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[110,113]{selections=(Field[111,112]{alias=undefined name=Name[111,112]{value=\"d\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[114,137]{operation=\"subscription\" description=undefined name=Name[127,128]{value=\"S\"} variableDefinitions=undefined directives=(Directive[129,134]{name=Name[130,134]{value=\"live\"} arguments=undefined}) selectionSet=SelectionSet[134,137]{selections=(Field[135,136]{alias=undefined name=Name[135,136]{value=\"e\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[138,170]{operation=\"mutation\" description=undefined name=undefined variableDefinitions=(VariableDefinition[147,166]{description=undefined variable=Variable[147,149]{name=Name[148,149]{value=\"b\"}} type=NonNullType[150,160]{type=ListType[150,159]{type=NonNullType[151,158]{type=NamedType[151,157]{name=Name[151,157]{value=\"String\"}}}}} defaultValue=ListValue[161,166]{values=(StringValue[162,165]{value=\"x\" block=false})} directives=undefined}) directives=undefined selectionSet=SelectionSet[167,170]{selections=(Field[168,169]{alias=undefined name=Name[168,169]{value=\"f\"} arguments=undefined directives=undefined selectionSet=undefined})}})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 26: "Document[0,193]{definitions=(OperationDefinition[0,192]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,192]{selections=(Field[6,191]{alias=Name[6,11]{value=\"alias\"} name=Name[12,17]{value=\"field\"} arguments=(Argument[18,21]{name=Name[18,19]{value=\"a\"} value=IntValue[20,21]{value=\"1\"}} Argument[22,29]{name=Name[22,23]{value=\"b\"} value=StringValue[24,29]{value=\"two\" block=false}} Argument[30,37]{name=Name[30,31]{value=\"c\"} value=EnumValue[32,37]{value=\"THREE\"}} Argument[38,44]{name=Name[38,39]{value=\"d\"} value=NullValue[40,44]} Argument[45,51]{name=Name[45,46]{value=\"e\"} value=BooleanValue[47,51]{value=true}} Argument[52,59]{name=Name[52,53]{value=\"f\"} value=BooleanValue[54,59]{value=false}} Argument[60,67]{name=Name[60,61]{value=\"g\"} value=FloatValue[62,67]{value=\"1.5e3\"}} Argument[68,72]{name=Name[68,69]{value=\"h\"} value=Variable[70,72]{name=Name[71,72]{value=\"v\"}}} Argument[73,80]{name=Name[73,74]{value=\"i\"} value=ListValue[75,80]{values=(IntValue[76,77]{value=\"1\"} IntValue[78,79]{value=\"2\"})}} Argument[81,96]{name=Name[81,82]{value=\"j\"} value=ObjectValue[83,96]{fields=(ObjectField[84,87]{name=Name[84,85]{value=\"k\"} value=IntValue[86,87]{value=\"1\"}} ObjectField[88,95]{name=Name[88,89]{value=\"l\"} value=ObjectValue[90,95]{fields=(ObjectField[91,94]{name=Name[91,92]{value=\"m\"} value=IntValue[93,94]{value=\"2\"}})}})}}) directives=(Directive[97,112]{name=Name[98,105]{value=\"include\"} arguments=(Argument[106,111]{name=Name[106,108]{value=\"if\"} value=Variable[109,111]{name=Name[110,111]{value=\"x\"}}})} Directive[112,127]{name=Name[113,117]{value=\"skip\"} arguments=(Argument[118,126]{name=Name[118,120]{value=\"if\"} value=BooleanValue[121,126]{value=false}})}) selectionSet=SelectionSet[127,191]{selections=(FragmentSpread[128,144]{name=Name[131,137]{value=\"Spread\"} arguments=undefined directives=(Directive[138,144]{name=Name[139,144]{value=\"defer\"} arguments=undefined})} InlineFragment[145,158]{typeCondition=NamedType[151,155]{name=Name[151,155]{value=\"Type\"}} directives=undefined selectionSet=SelectionSet[155,158]{selections=(Field[156,157]{alias=undefined name=Name[156,157]{value=\"x\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[159,183]{typeCondition=undefined directives=(Directive[163,180]{name=Name[164,171]{value=\"include\"} arguments=(Argument[172,179]{name=Name[172,174]{value=\"if\"} value=BooleanValue[175,179]{value=true}})}) selectionSet=SelectionSet[180,183]{selections=(Field[181,182]{alias=undefined name=Name[181,182]{value=\"y\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[184,190]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[187,190]{selections=(Field[188,189]{alias=undefined name=Name[188,189]{value=\"z\"} arguments=undefined directives=undefined selectionSet=undefined})}})}})}})}", Go cohere "Document[0,193]{definitions=(OperationDefinition[0,192]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,192]{selections=(Field[6,191]{alias=Name[6,11]{value=\"alias\"} name=Name[12,17]{value=\"field\"} arguments=(Argument[18,21]{name=Name[18,19]{value=\"a\"} value=IntValue[20,21]{value=\"1\"}} Argument[22,29]{name=Name[22,23]{value=\"b\"} value=StringValue[24,29]{value=\"two\" block=false}} Argument[30,37]{name=Name[30,31]{value=\"c\"} value=EnumValue[32,37]{value=\"THREE\"}} Argument[38,44]{name=Name[38,39]{value=\"d\"} value=NullValue[40,44]} Argument[45,51]{name=Name[45,46]{value=\"e\"} value=BooleanValue[47,51]{value=true}} Argument[52,59]{name=Name[52,53]{value=\"f\"} value=BooleanValue[54,59]{value=false}} Argument[60,67]{name=Name[60,61]{value=\"g\"} value=FloatValue[62,67]{value=\"1.5e3\"}} Argument[68,72]{name=Name[68,69]{value=\"h\"} value=Variable[70,72]{name=Name[71,72]{value=\"v\"}}} Argument[73,80]{name=Name[73,74]{value=\"i\"} value=ListValue[75,80]{values=(IntValue[76,77]{value=\"1\"} IntValue[78,79]{value=\"2\"})}} Argument[81,96]{name=Name[81,82]{value=\"j\"} value=ObjectValue[83,96]{fields=(ObjectField[84,87]{name=Name[84,85]{value=\"k\"} value=IntValue[86,87]{value=\"1\"}} ObjectField[88,95]{name=Name[88,89]{value=\"l\"} value=ObjectValue[90,95]{fields=(ObjectField[91,94]{name=Name[91,92]{value=\"m\"} value=IntValue[93,94]{value=\"2\"}})}})}}) directives=(Directive[97,112]{name=Name[98,105]{value=\"include\"} arguments=(Argument[106,111]{name=Name[106,108]{value=\"if\"} value=Variable[109,111]{name=Name[110,111]{value=\"x\"}}})} Directive[112,127]{name=Name[113,117]{value=\"skip\"} arguments=(Argument[118,126]{name=Name[118,120]{value=\"if\"} value=BooleanValue[121,126]{value=false}})}) selectionSet=SelectionSet[127,191]{selections=(FragmentSpread[128,144]{name=Name[131,137]{value=\"Spread\"} directives=(Directive[138,144]{name=Name[139,144]{value=\"defer\"} arguments=undefined})} InlineFragment[145,158]{typeCondition=NamedType[151,155]{name=Name[151,155]{value=\"Type\"}} directives=undefined selectionSet=SelectionSet[155,158]{selections=(Field[156,157]{alias=undefined name=Name[156,157]{value=\"x\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[159,183]{typeCondition=undefined directives=(Directive[163,180]{name=Name[164,171]{value=\"include\"} arguments=(Argument[172,179]{name=Name[172,174]{value=\"if\"} value=BooleanValue[175,179]{value=true}})}) selectionSet=SelectionSet[180,183]{selections=(Field[181,182]{alias=undefined name=Name[181,182]{value=\"y\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[184,190]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[187,190]{selections=(Field[188,189]{alias=undefined name=Name[188,189]{value=\"z\"} arguments=undefined directives=undefined selectionSet=undefined})}})}})}})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 306: "error Syntax Error: Unexpected Name \"FRAGMENT_VARIABLE_DEFINITION\". (3:25)", Go cohere "Document[0,431]{definitions=(DirectiveDefinition[0,111]{description=StringValue[0,15]{value=\"directive\" block=true} name=Name[27,30]{value=\"dir\"} arguments=(InputValueDefinition[31,41]{description=undefined name=Name[31,32]{value=\"a\"} type=NamedType[34,37]{name=Name[34,37]{value=\"Int\"}} defaultValue=IntValue[40,41]{value=\"1\"} directives=undefined} InputValueDefinition[43,52]{description=undefined name=Name[43,44]{value=\"b\"} type=NamedType[46,52]{name=Name[46,52]{value=\"String\"}} defaultValue=undefined directives=undefined}) directives=undefined repeatable=true locations=(Name[70,75]{value=\"FIELD\"} Name[78,93]{value=\"FRAGMENT_SPREAD\"} Name[96,111]{value=\"INLINE_FRAGMENT\"})} DirectiveDefinition[112,137]{description=undefined name=Name[123,128]{value=\"plain\"} arguments=undefined directives=undefined repeatable=false locations=(Name[132,137]{value=\"QUERY\"})} DirectiveDefinition[138,431]{description=undefined name=Name[149,152]{value=\"all\"} arguments=undefined directives=(Directive[153,158]{name=Name[154,158]{value=\"meta\"} arguments=undefined}) repeatable=false locations=(Name[162,190]{value=\"FRAGMENT_VARIABLE_DEFINITION\"} Name[193,212]{value=\"VARIABLE_DEFINITION\"} Name[215,221]{value=\"SCHEMA\"} Name[224,230]{value=\"SCALAR\"} Name[233,239]{value=\"OBJECT\"} Name[242,258]{value=\"FIELD_DEFINITION\"} Name[261,280]{value=\"ARGUMENT_DEFINITION\"} Name[283,292]{value=\"INTERFACE\"} Name[295,300]{value=\"UNION\"} Name[303,307]{value=\"ENUM\"} Name[310,320]{value=\"ENUM_VALUE\"} Name[323,335]{value=\"INPUT_OBJECT\"} Name[338,360]{value=\"INPUT_FIELD_DEFINITION\"} Name[363,383]{value=\"DIRECTIVE_DEFINITION\"} Name[386,394]{value=\"MUTATION\"} Name[397,409]{value=\"SUBSCRIPTION\"} Name[412,431]{value=\"FRAGMENT_DEFINITION\"})})}"
+  adamic_formatting_mutants_test.go:15: Node caught: line 617: "declined \".i̇\" 1", Go cohere "declined \".i\" 1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1061: "declined \".😀\" 1", Go cohere "declined \".\ue000\" 1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1054: "walked 9", Go cohere "walked 10"
+  adamic_formatting_mutants_test.go:15: Node caught: line 584: "file \"/tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-1/del\x7f.ts\"", Go cohere "file \"/tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-1/del\\u007f.ts\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 921: "has \"/tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-7/node_modules/quote\".ts\" 0", Go cohere "has \"/tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-7/node_modules/quote\\\".ts\" 0"
+  adamic_formatting_mutants_test.go:15: Node caught: line 554: "walked 2", Go cohere "enumerate error gitignore: /tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-0/.gitignore is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1786: "declined \"(none)\" 1", Go cohere "declined \".\" 1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 700: "walked 1", Go cohere "enumerate error walking /tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-3: gitignore: /tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-3/.cache is a repository of its own"
+  adamic_formatting_mutants_test.go:15: Node caught: line 904: "walked 12", Go cohere "enumerate error /tmp/adamic-gate/TestAdamicFormattingMutantsOnNode1856342143/001/trees/generated-7/.prettierignore: Prettier config remains where cohere no longer reads it; delete it, since the format block's \"ignore\" in the Nexus tier (NexusCohereSettings.json) and the ignorePatterns of CohereSettings.json say what the walk skips"
+  adamic_formatting_mutants_test.go:15: Node caught: line 7404: "comment 126 178 -", Go cohere "comment 122 286 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 6183: "comment 10 32 eslint-disable-line", Go cohere "comment 4 32 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 6080: "comment 3 30 eslint-disable-line", Go cohere "comment 3 30 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 6585: "comment 210 275 eslint-disable", Go cohere "comment 210 275 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 6415: "query probe/reports-on-directives 0 0", Go cohere "comment 144 216 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 6791: "comment 293 319 -", Go cohere "comment 294 319 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 946: "comment 0 17 eslint-disable", Go cohere "comment 0 17 -"
+  adamic_formatting_mutants_test.go:15: Node caught: line 7093: "comment 334 358 -", Go cohere "comment 334 358 eslint-disable-line"
+  adamic_formatting_mutants_test.go:15: Node caught: line 2236: "query no-enum 110 1", Go cohere "query no-enum 110 0"
+  adamic_formatting_mutants_test.go:15: Node caught: line 35: "query probe/reports-on-directives 0 1", Go cohere "query probe/reports-on-directives 0 0"
+  adamic_formatting_mutants_test.go:15: Node caught: line 6254: "directive 0 file rules= reason=\"\" line=0 start=0 end=0 pos=0 end=20", Go cohere "directive 0 file rules= reason=\"\" line=0 start=0 end=1 pos=0 end=20"
+  adamic_formatting_mutants_test.go:15: Node caught: line 5679: "query probe/reports-on-directives 0 0", Go cohere "comment 35 119 eslint-disable-next-line"
+  adamic_formatting_mutants_test.go:15: Node caught: line 180: "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:1,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\"", Go cohere "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:NaN,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 7: "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=10 value=\"-\"", Go cohere "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=1 value=\"-\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 256: "      word isColor=false isHex=false raws={after:\" \",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\"", Go cohere "      word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 347: "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"1e1\"", Go cohere "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"11e\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 1451: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\x7fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\\u007fb\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 1454: "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\x1fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\\u001fb\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 1330: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1331: "    word isColor=false isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\"", Go cohere "    word isColor=true isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 1338: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1346: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1354: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1365: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:2,line:1}} sourceIndex=1 value=\"a=b\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a=b\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 1380: "error ParserError: Syntax Error at line: 1, column 8", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1398: "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=3", Go cohere "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=4"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1404: "root raws={after:\"\",before:\"\"} nodes=1", Go cohere "error ParserError: Expected closing parenthesis at line: 1, column 4"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1416: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 1423: "error TypeError: Cannot read properties of undefined (reading '0')", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 888: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=8", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=7"
+  adamic_formatting_mutants_test.go:15: Node caught: line 16: "0 ::\ta/b/deep/x", Go cohere "1 .gitignore:10:**/deep/x\ta/b/deep/x"
+  adamic_formatting_mutants_test.go:15: Node caught: line 45: "0 ::\tsub/inner/local\t0 ::", Go cohere "1 sub/.gitignore:2:local\tsub/inner/local\t0 ::"
+  adamic_formatting_mutants_test.go:15: Node caught: line 4: "1 .gitignore:1:*.log\tsub/app.log", Go cohere "0 sub/.gitignore:1:!*.log\tsub/app.log"
+  adamic_formatting_mutants_test.go:15: Node caught: line 120: "error gitignore: /repository/.git/info/exclude is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to", Go cohere "1 .git/info/exclude:1:*.tmp\ta.tmp"
+  adamic_formatting_mutants_test.go:15: Node caught: line 16590: "error gitignore: quoted entry 1, \"\\\"q\\\" \\\\ \\a\\b\\f\\r\\v\\x01\\x1F\\x7F é 🌍\\n\", holds a newline or a NUL byte, which no ignore-file line can", Go cohere "error gitignore: quoted entry 1, \"\\\"q\\\" \\\\ \\a\\b\\f\\r\\v\\x01\\x1f\\x7f é 🌍\\n\", holds a newline or a NUL byte, which no ignore-file line can"
+  adamic_formatting_mutants_test.go:15: Node caught: line 17820: "glob 1229 0", Go cohere "glob 1229 1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 17928: "glob 1337 1", Go cohere "glob 1337 0"
+  adamic_formatting_mutants_test.go:15: Node caught: line 17977: "glob 1386 0", Go cohere "glob 1386 1"
+  adamic_formatting_mutants_test.go:15: Node caught: line 76: "0 ::\ttabbed\t", Go cohere "1 .gitignore:1:tabbed\t\ttabbed\t"
+  adamic_formatting_mutants_test.go:15: Node caught: line 91: "0 ::\tsub/./x.tmp", Go cohere "1 .gitignore:3:sub/*.tmp\tsub/./x.tmp"
+  adamic_formatting_mutants_test.go:15: Node caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+  adamic_formatting_mutants_test.go:15: Node caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+
+adamic-path-mutants-77nj6af.log:
+  path_test.go:113: on Node, caught: line 10: "//////a\ta\t/", Go cohere "/a\ta\t/"
+  path_test.go:113: natively, caught: line 10: "//////a\ta\t/", Go cohere "/a\ta\t/"
+  path_test.go:113: on Node, caught: line 367: "/.\t.\t/", Go cohere "/\t.\t/"
+  path_test.go:113: natively, caught: line 367: "/.\t.\t/", Go cohere "/\t.\t/"
+  path_test.go:113: on Node, caught: line 489: "/..\t..\t/", Go cohere "/\t..\t/"
+  path_test.go:113: natively, caught: line 489: "/..\t..\t/", Go cohere "/\t..\t/"
+  path_test.go:113: on Node, caught: line 531: "/.../\t...\t/...", Go cohere "/...\t...\t/..."
+  path_test.go:113: natively, caught: line 531: "/.../\t...\t/...", Go cohere "/...\t...\t/..."
+  path_test.go:113: on Node, caught: line 1884: ".a/../a\ta\t.", Go cohere "a\ta\t."
+  path_test.go:113: natively, caught: line 1884: ".a/../a\ta\t.", Go cohere "a\ta\t."
+  path_test.go:113: on Node, caught: line 10: "/a\ta\t/a", Go cohere "/a\ta\t/"
+  path_test.go:113: natively, caught: line 10: "/a\ta\t/a", Go cohere "/a\ta\t/"
+
+adamic-typescript-stage1-77nj6af.log:
+  scanner_test.go:383: Node caught by byte comparison: line 348: port "EqualsEqualsToken 0 2 0", Go "ExclamationEqualsToken 0 2 0"
+  scanner_test.go:383: native caught by byte comparison: line 348: port "EqualsEqualsToken 0 2 0", Go "ExclamationEqualsToken 0 2 0"
+  scanner_test.go:383: Node caught by byte comparison: line 689: port "NumericLiteral 0 4 512\t12", Go "error 6189 2 1"
+  scanner_test.go:383: native caught by byte comparison: line 689: port "NumericLiteral 0 4 512\t12", Go "error 6189 2 1"
+  scanner_test.go:383: Node caught by byte comparison: line 126235: port "SlashToken 0 1 0", Go "RegularExpressionLiteral 0 6 0\t/abc/g"
+  scanner_test.go:383: native caught by byte comparison: line 126235: port "SlashToken 0 1 0", Go "RegularExpressionLiteral 0 6 0\t/abc/g"
+  parser_test.go:216: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+  parser_test.go:216: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+  parser_test.go:226: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+  parser_test.go:226: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+  parser_test.go:237: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+  parser_test.go:237: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+
+adamic-stage1-additional-77nj6af.log:
+  port_test.go:338: caught by output case 7244, byte 3: got "a\"0\"" want "a\"0.\""
+  port_test.go:338: caught by output case 7244, byte 3: got "a\"0\"" want "a\"0.\""
+  port_test.go:338: caught by output case 3978, byte 2: got "a.0a" want "a..0a"
+  port_test.go:338: caught by output case 3978, byte 2: got "a.0a" want "a..0a"
+  port_test.go:338: caught by output case 0, byte 3780: got "\\n\\n@theme {\\n    --1: #010203;\\n    --2: #040506;\\n    --fr" want "\\n\\n@theme {\\n    --color-weird-1: #010203;\\n    --color-wei"
+  port_test.go:338: caught by output case 0, byte 3780: got "\\n\\n@theme {\\n    --1: #010203;\\n    --2: #040506;\\n    --fr" want "\\n\\n@theme {\\n    --color-weird-1: #010203;\\n    --color-wei"
+  port_test.go:313: caught by output case 0, byte 1213: got "rpus-root <that repo's source tree> --json independent.json\\" want "rpus-root <that repo\"s source tree> --json independent.json\\"
+  port_test.go:313: caught by output case 0, byte 1213: got "rpus-root <that repo's source tree> --json independent.json\\" want "rpus-root <that repo\"s source tree> --json independent.json\\"
+  port_test.go:313: caught by output case 142, byte 2: got "aa\"\\\\\"" want "aa'\\\\'"
+  port_test.go:313: caught by output case 142, byte 2: got "aa\"\\\\\"" want "aa'\\\\'"
+  port_test.go:313: caught by output case 818, byte 2: got "a'\"'" want "a'\\\\\"'"
+  port_test.go:313: caught by output case 818, byte 2: got "a'\"'" want "a'\\\\\"'"
+  port_test.go:332: caught by output case 589, byte 3352: got "    | <pre><code>/\\\\\\\\** @enum {number} \\\\*/</code><br/><cod" want "    | <pre><code>/\\\\** @enum {number} \\\\*/</code><br/><code>"
+  port_test.go:332: caught by output case 589, byte 3352: got "    | <pre><code>/\\\\\\\\** @enum {number} \\\\*/</code><br/><cod" want "    | <pre><code>/\\\\** @enum {number} \\\\*/</code><br/><code>"
+  port_test.go:332: caught by output case 6, byte 658: got "mic`: `adamic types \\\\| c \\\\| build \\\\| js <file>`.\\n- `inte" want "mic`: `adamic types | c | build | js <file>`.\\n- `internal/l"
+  port_test.go:332: caught by output case 6, byte 658: got "mic`: `adamic types \\\\| c \\\\| build \\\\| js <file>`.\\n- `inte" want "mic`: `adamic types | c | build | js <file>`.\\n- `internal/l"
+  port_test.go:332: caught by output case 6, byte 1: got "`# Adamic\\n\\n> In dedication, with gratit" want "``# Adamic\\n\\n> In dedication, with grati"
+  port_test.go:332: caught by output case 6, byte 1: got "`# Adamic\\n\\n> In dedication, with gratit" want "``# Adamic\\n\\n> In dedication, with grati"
+  decode_test.go:163: caught by decoded bytes
+  decode_test.go:163: caught by decoded bytes
+  decode_test.go:163: caught by decoded bytes
+  text_test.go:148: caught by observable token fields
+  text_test.go:148: caught by observable token fields
+  text_test.go:148: caught by observable token fields
+  suite_test.go:200: declaration-source: production cohere oracle catches byte 167
+  suite_test.go:216: wrong-node: production cohere oracle catches byte 4769; findings 155
+  suite_test.go:216: last-declaration: production cohere oracle catches byte 83; findings 188
+  suite_test.go:216: nullable-default: production cohere oracle catches byte 7021; findings 220
+  suite_test.go:252: union-members: production cohere oracle catches byte 12142
+  suite_test.go:266: type-name: production cohere oracle catches byte 33770; findings 186
+  suite_test.go:266: raw-shape-constraint: production cohere oracle catches byte 69117; findings 187
+  suite_test.go:266: assignability-direction: production cohere oracle catches byte 22536; findings 187
+  suite_test.go:266: resolved-signature: production cohere oracle catches byte 57893; findings 187
+  suite_test.go:279: released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation
+  suite_test.go:288: facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow
+  suite_test.go:302: facts-empty: panic 70, invalid checker facts frame
+  suite_test.go:302: facts-integer: panic 70, invalid checker facts integer
+  suite_test.go:302: facts-length: panic 70, invalid checker facts length
+  suite_test.go:302: facts-version: panic 70, unsupported checker facts schema
+
+adamic-json-filtered-77nj6af.log:
+  port_test.go:299: Node caught missing final newline on probe.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+  port_test.go:299: Node caught missing final newline on package.json: "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+  port_test.go:299: Node caught missing final newline on package.json: "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+  port_test.go:299: Node caught missing final newline on probe.json: "ok\t[1__0]"; Go "ok\t[1__0]\\n"
+  port_test.go:299: native caught missing final newline on probe.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+  port_test.go:299: native caught missing final newline on package.json: "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+  port_test.go:299: native caught missing final newline on package.json: "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+  port_test.go:299: native caught missing final newline on probe.json: "ok\t[1__0]"; Go "ok\t[1__0]\\n"
+  port_test.go:299: Node caught wrong filename parser on package.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+  port_test.go:299: Node caught wrong filename parser on package.json: "ok\t{ \"text\": \"é😀\", \"empty\": [] }\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+  port_test.go:299: native caught wrong filename parser on package.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+  port_test.go:299: native caught wrong filename parser on package.json: "ok\t{ \"text\": \"é😀\", \"empty\": [] }\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+  port_test.go:299: Node caught missing colon space on probe.json: "ok\t{ \"a\":1, \"b\":[2, 3] }\\n"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+  port_test.go:299: Node caught missing colon space on package.json: "ok\t{\\n  \"a\":1,\\n  \"b\":[\\n    2,\\n    3\\n  ]\\n}\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+  port_test.go:299: Node caught missing colon space on package.json: "ok\t{\\n  \"text\":\"é😀\",\\n  \"empty\":[]\\n}\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+  port_test.go:299: native caught missing colon space on probe.json: "ok\t{ \"a\":1, \"b\":[2, 3] }\\n"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+  port_test.go:299: native caught missing colon space on package.json: "ok\t{\\n  \"a\":1,\\n  \"b\":[\\n    2,\\n    3\\n  ]\\n}\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+  port_test.go:299: native caught missing colon space on package.json: "ok\t{\\n  \"text\":\"é😀\",\\n  \"empty\":[]\\n}\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+
+adamic-width-final-77nj6af.log:
+  width_test.go:136: caught by observable width output
+  width_test.go:136: caught by observable width output
+  width_test.go:136: caught by observable width output
+

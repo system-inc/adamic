@@ -1,0 +1,3 @@
+cohere: /workspace/adamic/cmd/adamic-test262/testdata/corpus/negative_parse.js does not parse before any fix is applied (TS1109: Expression expected.)
+cohere: /workspace/adamic/cmd/adamic-test262/testdata/mini/test/skip/negative.js does not parse before any fix is applied (TS1109: Expression expected.)
+cohere: reading the nested repositories: formatting /workspace/adamic/cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.bug-hir_loc_diff_2.js in nested repository cohere: /workspace/adamic/cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.bug-hir_loc_diff_2.js: TSTypeParameterInstantiation at byte 912 is TypeScript syntax, which the babel parser does not read
