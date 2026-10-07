@@ -1,8 +1,8 @@
-Built: eight retained rule ports rebased onto landed area 7481e032; return-void now uses JS RegExp literals, with raw regex and JSX controls.
-Commits: this area evidence follows the owned rule rebase; helper branch is pushed at 78002cef4 on the same area and main 39638d9e.
-Commands: shared TestOwnedWitnesses PASS (71,769 matching Go bytes); shared mutants and vet PASS; final TestRulesAgree FAIL on top-level await.
-Mutants: eight original retained rule mutants plus one regex translation mutant compile and are caught on source Node, emitted JavaScript and sanitized native; twelve helper mutants also pass after rebase.
-Not covered: complete upstream parity, current broad compiler/stage1 corpus, new throughput or full gate; top-level await and JSX fix reparsing block landing, so no new helper claim.
+Built: eight retained rule ports rebased onto landed area d65a8f931; return-void uses JS RegExp literals and raw regex/JSX controls.
+Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at e053989fb on the same area and main 39638d9e.
+Commands: latest supported shared witnesses PASS (71,769 Go bytes), eight active rule mutants PASS and vet PASS; uncached lastIndexOf oracle PASS.
+Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native; the former braces mutant was also caught on area 7481e032.
+Not covered: complete upstream parity, current broad compiler/stage1 corpus, new throughput or full gate; top-level await and JSX fixed-source reparsing block landing, so no new helper claim.
 
 ## Landed harness and ledger
 
@@ -38,3 +38,13 @@ Supported raw witnesses, including the regex controls and a JSX callback with an
 The top-level-await frontend gap extends beyond the only-harness parking exception. Neither failure is silently counted as Go parity. This rule branch is pushed for review but not declared landing-ready or fully green. Shared parser or repair files are outside this unit, so no workaround or shared edit is made. No new helper is claimed.
 
 The helper branch's three direct-helper packages passed again: 4,470 cases, 820,676 matching Go bytes and twelve semantic mutants; helper vet is empty and passing. Their same six Tailwind consumers remain documented in their reports: eighteen dependency occurrences removed, zero final blockers removed. Full consuming-rule parity is not claimed. Toolchain setup is reused from the logged 128s setup; nproc 5. No main or area branch is pushed and no PR is opened.
+
+## Latest area runtime rebase
+
+The final fetch found area d65a8f931c98655936ae04c6899f38f14862b73e, containing the native runtime profile landing. Main remains 39638d9e. Both owned branches rebased cleanly again and retained the native heap, string-build and string-search changes. No shared compiler, runtime, parser or harness file was edited by this unit. Earlier sections above describe the initial 7481e032 run.
+
+The latest shared command is go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestMutants)$/(delay-resolve-name-ignored|return-void-unicode-whitespace-mutant|default-case-last-semantic-mutant|for-direction-semantic-mutant|guard-for-in-semantic-mutant|no-constructor-return-semantic-mutant|no-delete-var-semantic-mutant|no-eq-null-semantic-mutant)$' -count=1 -v -timeout=20m. Its complete output and fresh vet are retained as area-latest-rules.log and area-latest-vet.log. The former braces mutant is historical evidence on the preceding area; the active return-void descriptor now carries the stronger whitespace translation mutant.
+
+The fresh uncached TestRuntimeLastIndexOfMatchesNode passed in 5.963s: Node, emitted JavaScript, native release and ASan/UBSan agree on 758 output bytes; native cache hits=0 misses=3, Node hits=0 misses=2. This is an inherited runtime check, not a newly claimed mutant. All twelve helper mutants and 4,470 cases were rerun on this runtime and passed. The final full upstream rule gate and failing JSX fix control above were run on 7481e032; the subsequent area change modifies native runtime code, not the frontend or shared fixed-source parser. Those source-Node failures therefore remain blockers rather than evidence of a new complete green run.
+
+Latest combined shared run exited zero in 172.166s: active mutants 150.98s and supported witness comparison 21.17s, with 71,769 matching Go bytes. Fresh rule/registry vet exited zero with empty output. This is bounded supported coverage; the full upstream failure is not converted into a passing claim. Both branches are on current fetched area d65a8f931 and main 39638d9e. No new work is claimed.
