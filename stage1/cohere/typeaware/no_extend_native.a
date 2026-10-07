@@ -1,0 +1,42 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Reassign } from './reassign.ts';
+import { globalBinding, accessObject, staticName } from './wave_11_third_support.a';
+const builtins = ["AggregateError", "Array", "ArrayBuffer", "Atomics", "BigInt", "BigInt64Array", "BigUint64Array", "Boolean", "DataView", "Date", "Error", "EvalError", "FinalizationRegistry", "Float16Array", "Float32Array", "Float64Array", "Function", "Infinity", "Int16Array", "Int32Array", "Int8Array", "Intl", "Iterator", "JSON", "Map", "Math", "NaN", "Number", "Object", "Promise", "Proxy", "RangeError", "ReferenceError", "Reflect", "RegExp", "Set", "SharedArrayBuffer", "String", "Symbol", "SyntaxError", "TypeError", "URIError", "Uint16Array", "Uint32Array", "Uint8Array", "Uint8ClampedArray", "WeakMap", "WeakRef", "WeakSet"];
+export class NoExtendNative {
+    readonly rules: Rules; readonly writes: Reassign;
+    constructor(rules: Rules) { this.rules = rules; this.writes = new Reassign(rules); }
+    builtin(index: number): string {
+        if(index < 0) { return ''; }
+        index = this.rules.skip(index);
+        if(staticName(this.rules, index) !== 'prototype') { return ''; }
+        const object = this.rules.skip(accessObject(this.rules, index)); const receiver = this.rules.parser.node(object);
+        return receiver.kind === 'Identifier' && builtins.includes(receiver.text) && globalBinding(this.rules, object) ? receiver.text : '';
+    }
+    defineProperty(index: number): boolean {
+        index = this.rules.skip(index);
+        if(!['defineProperty', 'defineProperties'].includes(staticName(this.rules, index))) { return false; }
+        const object = this.rules.skip(accessObject(this.rules, index)); const receiver = this.rules.parser.node(object);
+        return receiver.kind === 'Identifier' && receiver.text === 'Object' && globalBinding(this.rules, object);
+    }
+    report(index: number, builtin: string): void {
+        const node = this.rules.parser.node(index);
+        const message = "This adds a property to `{{builtin}}.prototype`, which every object of that type in the program shares, including ones created by code that has never heard of this file. The property shows up in every `for...in` over such an object, it silently loses to a future standard method of the same name, and nothing at the call site says where it came from. Put the function somewhere it can be imported instead.".replace('{{builtin}}', builtin);
+        this.rules.findings.push(new Diagnostic('no-extend-native', 'unexpected', message,
+            this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0) { continue; }
+            let builtin = '';
+            if(node.kind === 'BinaryExpression' && this.writes.assignment(this.rules.parser.node(node.children[1] ?? -1).kind)) {
+                const target = this.rules.skip(node.children[0] ?? -1);
+                builtin = this.builtin(accessObject(this.rules, target));
+            } else if(node.kind === 'CallExpression' && node.list > 0 && this.defineProperty(node.children[0] ?? -1)) {
+                builtin = this.builtin(node.children[node.children.length - node.list] ?? -1);
+            }
+            if(builtin !== '') { this.report(index, builtin); }
+        }
+    }
+}

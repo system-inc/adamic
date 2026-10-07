@@ -1,0 +1,31 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Bindings } from './bindings.ts';
+import { Reassign } from './reassign.ts';
+export class NoFuncAssign {
+    readonly rules: Rules; readonly bindings: Bindings; readonly writes: Reassign;
+    readonly anchors = new Map<number, boolean>(); readonly names = new Map<string, boolean>();
+    constructor(rules: Rules, bindings: Bindings) { this.rules = rules; this.bindings = bindings; this.writes = new Reassign(rules); }
+    declaration(index: number): number {
+        return this.bindings.list(index, 'binding-declarations', false)[0] ?? -1;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || !['FunctionDeclaration', 'FunctionExpression'].includes(node.kind)) { continue; }
+            const nameIndex = this.bindings.shape.name(index);
+            if(nameIndex < 0) { continue; }
+            const name = this.rules.parser.node(nameIndex);
+            if(name.kind !== 'Identifier') { continue; }
+            const declaration = this.declaration(nameIndex);
+            if(declaration >= 0) { this.anchors.set(declaration, true); this.names.set(name.text, true); }
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || node.kind !== 'Identifier' || !this.names.has(node.text) ||
+                !this.writes.writes(index) || !this.anchors.has(this.declaration(index))) { continue; }
+            this.rules.findings.push(new Diagnostic('no-func-assign', 'noFuncAssign', "This assigns to the name a function declares. The declaration is hoisted, so the assignment usually parses and runs without complaint, and what it costs shows up somewhere else: every later call of the name invokes whatever was assigned instead of the function. Inside the function's own body the mistake is quieter still, because the write happens on the first call and the second call reaches a different value. A named function expression is stricter, where the binding is immutable and the write throws in strict mode. Assign to a separate variable, or declare the function as a variable if it is meant to be replaced.",
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+}

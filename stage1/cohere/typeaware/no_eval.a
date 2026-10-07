@@ -1,0 +1,66 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Shadow } from './shadow.ts';
+import { globalBinding, accessObject, staticName, calleeInner } from './wave_11_third_support.a';
+const globalNames = ['global', 'window', 'globalThis'];
+const wrappers = ['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'ExpressionWithTypeArguments'];
+export class NoEval {
+    readonly rules: Rules; readonly shape: Shadow;
+    constructor(rules: Rules) { this.rules = rules; this.shape = new Shadow(rules); }
+    direct(index: number): boolean {
+        let current = index; let parent = this.rules.parents[current] ?? -1;
+        while(parent >= 0) {
+            const node = this.rules.parser.node(parent);
+            if(wrappers.includes(node.kind)) { current = parent; parent = this.rules.parents[current] ?? -1; }
+            else { return node.kind === 'CallExpression' && node.children[0] === current; }
+        }
+        return false;
+    }
+    reference(index: number): boolean {
+        const parentIndex = this.rules.parents[index] ?? -1;
+        if(parentIndex < 0) { return false; }
+        const parent = this.rules.parser.node(parentIndex);
+        if(parent.kind === 'PropertyAccessExpression') { return parent.children[parent.children.length - 1] !== index; }
+        if(['VariableDeclaration', 'Parameter', 'PropertyDeclaration', 'BindingElement'].includes(parent.kind)) {
+            return this.shape.initializer(parentIndex) === index;
+        }
+        if(parent.kind === 'PropertyAssignment') { return parent.children[parent.children.length - 1] === index; }
+        if(parent.kind === 'EnumMember') {
+            const last = parent.children[parent.children.length - 1] ?? -1;
+            return parent.children.length > 1 && last === index;
+        }
+        return !['QualifiedName', 'PropertySignature', 'MethodDeclaration', 'MethodSignature', 'FunctionDeclaration',
+            'FunctionExpression', 'ClassDeclaration', 'ClassExpression', 'ImportSpecifier', 'ExportSpecifier',
+            'ImportClause', 'NamespaceImport', 'ShorthandPropertyAssignment', 'TypeReference'].includes(parent.kind);
+    }
+    globalObject(index: number): boolean {
+        index = calleeInner(this.rules, index); const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') { return globalNames.includes(node.text); }
+        const name = staticName(this.rules, index);
+        if(!globalNames.includes(name)) { return false; }
+        const object = calleeInner(this.rules, accessObject(this.rules, index));
+        const receiver = this.rules.parser.node(object);
+        if(receiver.kind === 'Identifier') { return receiver.text === name; }
+        return staticName(this.rules, object) === name && this.globalObject(object);
+    }
+    report(index: number): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(new Diagnostic('no-eval', 'noEval', "This reaches the `eval` function, which compiles a string as code at runtime. A direct call also runs that code with full access to the surrounding scope, so any part of the string an attacker controls becomes an injection into this function's locals. It defeats every static tool that would otherwise see what the program does, and it is slow because the engine cannot optimize a scope it may rewrite. For JSON use JSON.parse; for dynamic property access use bracket notation; otherwise restructure so nothing is evaluated from a string.",
+            this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0) { continue; }
+            if(node.kind === 'CallExpression') {
+                const callee = node.children[0] ?? -1; const inner = this.rules.parser.node(calleeInner(this.rules, callee));
+                if(inner.kind === 'Identifier' && inner.text === 'eval') { this.report(callee); }
+            } else if(node.kind === 'Identifier' && node.text === 'eval') {
+                if(!this.direct(index) && this.reference(index) && globalBinding(this.rules, index)) { this.report(index); }
+            } else if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) &&
+                staticName(this.rules, index) === 'eval' && this.globalObject(accessObject(this.rules, index))) {
+                this.report(node.children[node.children.length - 1] ?? -1);
+            }
+        }
+    }
+}
