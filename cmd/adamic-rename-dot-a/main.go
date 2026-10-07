@@ -2,6 +2,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
 	goast "go/ast"
@@ -67,10 +69,16 @@ func classification(name string) (bool, string) {
 	if strings.HasSuffix(name, ".d.ts") {
 		return false, "TypeScript ambient declaration, not an executable Adamic program"
 	}
+	if strings.HasPrefix(name, "stage3/drivers/tsc/corpus/") {
+		return false, "Upstream TypeScript diagnostic corpus, not an Adamic port"
+	}
+	if strings.HasPrefix(name, "bridge/tsgo/testdata/") {
+		return false, "TypeScript checker input for the upstream tsc bridge, not an Adamic port"
+	}
 	if strings.HasPrefix(name, "cmd/adamic-meter/testdata/") {
 		return false, "TypeScript input corpus for measuring rejection and source adaptation before the gate"
 	}
-	for _, prefix := range []string{"stage1/", "internal/load/testdata/0.1/", "internal/oracle/testdata/", "examples/", "dedication/", "bench/"} {
+	for _, prefix := range []string{"stage3/", "internal/fresh/testdata/", "stage1/", "internal/load/testdata/0.1/", "internal/oracle/testdata/", "examples/", "dedication/", "bench/"} {
 		if strings.HasPrefix(name, prefix) {
 			return true, ""
 		}
@@ -113,11 +121,11 @@ func prepare(root string) (plan, error) {
 		p.renames[name] = destination
 	}
 	for _, name := range names {
-		if name == "cohere" || strings.HasPrefix(name, "cohere/") || strings.HasPrefix(name, "cmd/adamic-rename-dot-a/") || name == "cloud/dot-a-dry-run.txt" || name == "docs/dot-a.md" {
+		if strings.HasPrefix(name, "stage3/drivers/tsc/corpus/") || name == "cohere" || strings.HasPrefix(name, "cohere/") || strings.HasPrefix(name, "cmd/adamic-rename-dot-a/") || name == "cloud/dot-a-dry-run.txt" || name == "docs/dot-a.md" {
 			continue
 		}
 		extension := filepath.Ext(name)
-		if extension != ".a" && extension != ".ts" && extension != ".go" && extension != ".md" && extension != ".json" && extension != ".mjs" && extension != ".sh" {
+		if extension != ".a" && extension != ".ts" && extension != ".go" && extension != ".md" && extension != ".json" && extension != ".mjs" && extension != ".sh" && extension != ".py" && extension != ".cjs" && extension != ".txt" && extension != ".csv" && extension != ".html" && extension != ".yaml" && extension != ".yml" && extension != ".toml" {
 			continue
 		}
 		data, err := os.ReadFile(filepath.Join(root, name))
@@ -141,8 +149,19 @@ func prepare(root string) (plan, error) {
 				if filterError != nil {
 					return p, filterError
 				}
+				if strings.Contains(name, "/tools/generate_") {
+					// Parsed generator literals already carry their complete path rewrite.
+					edits = slices.DeleteFunc(edits, func(existing edit) bool {
+						return slices.ContainsFunc(filters, func(parsed edit) bool { return existing.start >= parsed.start && existing.end <= parsed.end })
+					})
+				}
 				edits = append(edits, filters...)
 				sort.Slice(edits, func(i, j int) bool { return edits[i].start < edits[j].start })
+			}
+		}
+		for index := 1; index < len(edits); index++ {
+			if edits[index].start < edits[index-1].end {
+				return p, fmt.Errorf("overlapping reference edits in %s: review their purpose before applying", name)
 			}
 		}
 		if len(edits) > 0 {
@@ -206,8 +225,15 @@ func sourceEdits(name, source string, renames map[string]string) ([]edit, error)
 var reference = regexp.MustCompile(`[A-Za-z0-9_./*+-]+\.ts`)
 
 func referenceEdits(name, source string, renames map[string]string) []edit {
+	if name == "stage1/cohere/typeaware/testdata/tsconfig.json" {
+		return mixedConfigEdits(source)
+	}
 	var edits []edit
+	protected := observationRanges(name, source)
 	for _, span := range reference.FindAllStringIndex(source, -1) {
+		if slices.ContainsFunc(protected, func(region [2]int) bool { return span[0] >= region[0] && span[1] <= region[1] }) {
+			continue
+		}
 		before := source[span[0]:span[1]]
 		if strings.HasPrefix(strings.TrimLeft(before, "./"), "cohere/") || strings.HasSuffix(before, ".d.ts") || strings.HasSuffix(before, ".a.ts") {
 			continue
@@ -218,9 +244,14 @@ func referenceEdits(name, source string, renames map[string]string) []edit {
 		known := local || root
 		if !known {
 			for old := range renames {
-				if strings.HasSuffix(old, "/"+strings.TrimPrefix(before, "./")) {
+				if strings.HasSuffix(old, "/"+strings.TrimPrefix(strings.TrimLeft(before, "./"), "source/")) {
 					// Bare names in fixture tests and port reports are relative to the suite.
-					if strings.HasPrefix(name, "stage1/") || strings.HasSuffix(name, "_test.go") || strings.HasPrefix(name, "docs/") || strings.HasPrefix(name, "bench/") {
+					document := name == "docs/0.1.md" || name == "docs/memory.md" || strings.HasPrefix(name, "docs/stage1")
+					port := strings.HasPrefix(name, "stage1/") && strings.HasPrefix(old, "stage1/") && (filepath.Ext(name) != ".go" || strings.HasSuffix(name, "_test.go"))
+					fixture := strings.HasPrefix(name, "stage3/fixtures/") && strings.HasPrefix(old, "stage3/fixtures/")
+					test := strings.HasSuffix(name, "_test.go") && strings.Split(name, "/")[0] == strings.Split(old, "/")[0]
+					benchmark := strings.HasPrefix(name, "bench/") && strings.HasPrefix(old, "bench/")
+					if port || fixture || test || document || benchmark {
 						known = true
 						break
 					}
@@ -251,6 +282,90 @@ func referenceEdits(name, source string, renames map[string]string) []edit {
 	return edits
 }
 
+// This config validates itself before callers substitute generated TypeScript roots.
+// Keep those .ts controls and recognize the repository's renamed Adamic inputs.
+func mixedConfigEdits(source string) []edit {
+	var fields map[string]json.RawMessage
+	if json.Unmarshal([]byte(source), &fields) != nil {
+		return nil
+	}
+	var edits []edit
+	appendValue := func(key, value string) {
+		raw, exists := fields[key]
+		if !exists {
+			at := strings.LastIndex(source, "}")
+			edits = append(edits, edit{at, at, "", "," + strconv.Quote(key) + ":[" + strconv.Quote(value) + "]"})
+			return
+		}
+		var values []string
+		if json.Unmarshal(raw, &values) != nil || slices.Contains(values, value) {
+			return
+		}
+		at := strings.Index(source, string(raw)) + strings.LastIndex(string(raw), "]")
+		prefix := ""
+		if len(values) > 0 {
+			prefix = ","
+		}
+		edits = append(edits, edit{at, at, "", prefix + strconv.Quote(value)})
+	}
+	appendValue("include", "*.a")
+	appendValue("sourceExtensions", ".a")
+	appendValue("files", "../../../../internal/load/prelude.d.ts")
+	sort.Slice(edits, func(i, j int) bool { return edits[i].start < edits[j].start })
+	return edits
+}
+
+// Recorded observations and upstream provenance describe literal TypeScript data.
+// They are not fixture paths, even when a basename matches an Adamic port.
+func observationRanges(name, source string) [][2]int {
+	if filepath.Ext(name) != ".json" {
+		return nil
+	}
+	decoder := json.NewDecoder(bytes.NewBufferString(source))
+	var protected [][2]int
+	var visit func() error
+	visit = func() error {
+		value, err := decoder.Token()
+		if err != nil {
+			return err
+		}
+		delimiter, ok := value.(json.Delim)
+		if !ok {
+			return nil
+		}
+		if delimiter == '{' {
+			for decoder.More() {
+				key, err := decoder.Token()
+				if err != nil {
+					return err
+				}
+				if key == "node" || key == "stdout" || key == "stderr" || key == "tsc" {
+					var raw json.RawMessage
+					if err := decoder.Decode(&raw); err != nil {
+						return err
+					}
+					end := int(decoder.InputOffset())
+					protected = append(protected, [2]int{end - len(raw), end})
+				} else if err := visit(); err != nil {
+					return err
+				}
+			}
+		} else if delimiter == '[' {
+			for decoder.More() {
+				if err := visit(); err != nil {
+					return err
+				}
+			}
+		}
+		_, err = decoder.Token()
+		return err
+	}
+	if err := visit(); err != nil {
+		return nil
+	}
+	return protected
+}
+
 // Corpus walkers still need upstream TypeScript, and must include renamed Adamic.
 // Parse Go so parentheses and compound directory predicates stay correct.
 func sourceFilterEdits(name, source string) ([]edit, error) {
@@ -274,6 +389,15 @@ func sourceFilterEdits(name, source string) ([]edit, error) {
 		return true
 	})
 	goast.Inspect(file, func(node goast.Node) bool {
+		if strings.Contains(name, "/tools/generate_") {
+			if literal, ok := node.(*goast.BasicLit); ok && literal.Kind == token.STRING {
+				value, err := strconv.Unquote(literal.Value)
+				if err == nil && strings.HasSuffix(value, ".ts") && !strings.HasSuffix(value, ".d.ts") && !strings.Contains(value, "*") {
+					start, end := positions.Position(literal.Pos()).Offset, positions.Position(literal.End()).Offset
+					edits = append(edits, edit{start, end, source[start:end], strconv.Quote(strings.TrimSuffix(value, ".ts") + ".a")})
+				}
+			}
+		}
 		call, ok := node.(*goast.CallExpr)
 		if !ok || len(call.Args) != 2 {
 			return true
@@ -325,6 +449,7 @@ func sourceFilterEdits(name, source string) ([]edit, error) {
 
 func (p plan) print() {
 	fmt.Println("EXCLUDE cohere/: upstream submodule, including its TypeScript submodule")
+	fmt.Println("EXCLUDE stage3/drivers/tsc/corpus/: single-file upstream diagnostic inputs with no relative imports")
 	fmt.Println("EXCLUDE *.mjs: Node tooling, not Adamic source (references may be edited)")
 	for _, name := range p.excluded {
 		fmt.Println("EXCLUDE " + name)

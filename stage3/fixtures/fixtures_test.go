@@ -113,9 +113,7 @@ func validFixturePath(name string) bool {
 	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
 }
 
-// The enum and namespace branches use Node's transform mode. Derive that runner
-// from the current source oracle, preserving its runtime and import hooks while
-// leaving the ordinary erasable runner untouched.
+// Enum and namespace fixtures require transform mode in the shared source loader.
 func transformedNodeRunner(t *testing.T, repository string) string {
 	t.Helper()
 	path := filepath.Join(repository, "oracle/node.mjs")
@@ -124,6 +122,19 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 		t.Fatal(err)
 	}
 	text := string(source)
+	if strings.Count(text, "import './register-dot-a.mjs';") == 1 {
+		loader, err := os.ReadFile(filepath.Join(repository, "oracle/register-dot-a.mjs"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if strings.Count(string(loader), "stripTypeScriptTypes(source, { mode: 'transform', sourceUrl: url })") != 1 {
+			t.Fatal("shared source Node loader changed: review the transform-mode hook")
+		}
+		return path
+	}
+	if strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") == 1 {
+		return path
+	}
 	if strings.Count(text, "stripTypeScriptTypes(source)") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}

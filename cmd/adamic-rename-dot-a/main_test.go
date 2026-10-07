@@ -36,6 +36,7 @@ func TestPlanAndRerun(t *testing.T) {
 		"examples/existing.a":                         "import { value } from './dep.t\\u0073';\n",
 		"stage1/cohere/slice/testdata/fake_test.go":   "package fake\n// *.ts\n",
 		"stage1/cohere/slice/main.ts":                 "const x = 1;",
+		"stage1/cohere/slice/profile_test.go":         "package profile\n// source/slice/main.ts ../../slice/main.ts\n",
 		"stage1/cohere/slice/README.md":               "stage1/cohere/slice/main.ts",
 		"docs/example.md":                             "[main](../examples/main.ts)\n",
 		"internal/flow/flow_test.go":                  "package flow\n// ../load/testdata/0.1/compile/*.ts\n",
@@ -72,7 +73,7 @@ func TestPlanAndRerun(t *testing.T) {
 	if !strings.Contains(string(data), `"./dep.a"`) {
 		t.Fatalf("escaped import: %s", data)
 	}
-	for _, name := range []string{"stage1/cohere/slice/README.md", "docs/example.md", "tsconfig.json", "CohereSettings.json", "internal/flow/flow_test.go"} {
+	for _, name := range []string{"stage1/cohere/slice/profile_test.go", "stage1/cohere/slice/README.md", "docs/example.md", "tsconfig.json", "CohereSettings.json", "internal/flow/flow_test.go"} {
 		data, _ = os.ReadFile(filepath.Join(root, name))
 		if strings.Contains(string(data), ".ts") {
 			t.Fatalf("stale reference in %s: %s", name, data)
@@ -145,5 +146,109 @@ func main(){fmt.Println(accepts("upstream.ts",false),accepts("port.a",false),acc
 	}
 	if len(again.changes) != 0 {
 		t.Fatalf("source filter is not idempotent: %+v", again.changes)
+	}
+}
+
+func TestStage3PurposeAndStatus(t *testing.T) {
+	t.Parallel()
+	root := repository(t, map[string]string{
+		"docs/tsc-strictness.md":                "upstream main.ts parser.ts",
+		"stage1/main.ts":                        "console.log(1);",
+		"stage3/fixtures/paths_test.go":         "package fixtures\n// main.ts is a deliberately invalid path\n",
+		"stage3/fixtures/enums/value.ts":        "enum Value { One }; console.log(Value.One);",
+		"stage3/fixtures/enums/status.json":     `[{"file":"value.ts","stage0":{"what":"stage3/fixtures/enums/value.ts:1"},"node":{"stdout":"value.ts\\nmain.ts"},"tsc":["src/compiler/types.ts"]}]`,
+		"stage3/drivers/tsc/corpus/input.ts":    "const source = 1;",
+		"stage3/drivers/tsc/corpus/bad/input.a": "const invalid = foo<?>;",
+		"bridge/tsgo/testdata/sample.ts":        "export const value = 1;",
+	})
+	p, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(p.renames) != 2 || len(p.changes) != 1 || len(p.changes[0].edits) != 2 {
+		t.Fatalf("stage3 plan: %+v", p)
+	}
+	if err := p.apply(root); err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(filepath.Join(root, "stage3/fixtures/enums/status.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(data), `"file":"value.a"`) || !strings.Contains(string(data), "value.a:1") || !strings.Contains(string(data), "src/compiler/types.ts") || !strings.Contains(string(data), "value.ts") {
+		t.Fatalf("status: %s", data)
+	}
+	if _, err := os.Stat(filepath.Join(root, "bridge/tsgo/testdata/sample.ts")); err != nil {
+		t.Fatal(err)
+	}
+	again, err := prepare(root)
+	if err != nil || len(again.renames) != 0 || len(again.changes) != 0 {
+		t.Fatalf("repeat: %+v %v", again, err)
+	}
+}
+
+func TestGeneratedAdamicNames(t *testing.T) {
+	t.Parallel()
+	root := repository(t, map[string]string{"stage1/cohere/markdownblocks/data.ts": "export const data = 1;", "stage1/cohere/markdownblocks/tools/generate_data/main.go": `package main
+const output = "stage1/cohere/markdownblocks/data.ts"
+const suffix = ".ts"
+const temporary = "adamic-data-*.ts"
+`})
+	p, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(p.changes) != 1 || len(p.changes[0].edits) != 2 {
+		t.Fatalf("generator: %+v", p)
+	}
+	if err := p.apply(root); err != nil {
+		t.Fatal(err)
+	}
+	again, err := prepare(root)
+	if err != nil || len(again.changes) != 0 {
+		t.Fatalf("generator repeat: %+v %v", again, err)
+	}
+}
+
+func TestOverlappingEditsRefuseBeforeWriting(t *testing.T) {
+	t.Parallel()
+	root := repository(t, map[string]string{
+		"stage1/main.ts": "console.log(1);",
+		"stage1/path_test.go": `package paths
+import "strings"
+func matches() bool { return strings.HasSuffix("main.ts", ".ts") }
+`,
+	})
+	if _, err := prepare(root); err == nil || !strings.Contains(err.Error(), "overlapping reference edits") {
+		t.Fatalf("overlap: %v", err)
+	}
+	if _, err := os.Stat(filepath.Join(root, "stage1/main.ts")); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestMixedTypeScriptConfig(t *testing.T) {
+	t.Parallel()
+	root := repository(t, map[string]string{
+		"stage1/cohere/typeaware/testdata/tsconfig.json": `{"compilerOptions":{"strict":true},"include":["*.ts"]}`,
+		"stage1/cohere/typeaware/testdata/probe.ts":      "console.log(1);",
+	})
+	p, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = p.apply(root); err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(filepath.Join(root, "stage1/cohere/typeaware/testdata/tsconfig.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(data), `"include":["*.ts","*.a"]`) || !strings.Contains(string(data), `"sourceExtensions":[".a"]`) || !strings.Contains(string(data), "prelude.d.ts") {
+		t.Fatalf("mixed config: %s", data)
+	}
+	again, err := prepare(root)
+	if err != nil || len(again.changes) != 0 {
+		t.Fatalf("mixed repeat: %+v %v", again, err)
 	}
 }

@@ -1,8 +1,8 @@
 # Adamic source is .a
 
 Every new Adamic source file uses `.a`. `.ts` is TypeScript that has not passed the
-gate. The integration worker chooses the rename moment immediately after
-integration 16. This preparation branch changes no existing source filename.
+gate. The integration worker runs the rename on fresh main after the stage 3 stack,
+with the cohere reformat as two commits under one uncached gate. This preparation branch changes no existing source filename.
 
 From the repository root, preview the complete plan:
 
@@ -24,14 +24,19 @@ missing tracked paths after a rename. Review the printed plan before applying.
 The apply is not a repository-wide atomic transaction; an I/O failure can leave
 partial changes, so use a clean checkout and inspect any error before retrying.
 
-The inventory includes stage 1 ports and their gap fixtures, the spec's compile
+The inventory includes stage 3 authored programs and fixtures, stage 1 ports and their gap fixtures, the spec's compile
 and refusal fixtures, oracle fixtures, benchmarks, dedication and examples.
 Refusal and gap fixtures move as language test inputs even though their purpose
 is to be rejected. Existing `.a` files stay in place. The TypeScript parser finds
 static imports, re-exports, dynamic imports and import types in both extensions;
 ordinary source strings and comments are preserved. Go fixture paths, globs and parsed corpus predicates accepting both extensions,
-document links and commands, JSON patterns and tooling references are updated
-against the rename inventory. No source import is found with a regular expression.
+document links and commands, JSON patterns, fixture lists and tooling references are updated
+against the rename inventory. Status fixture paths and diagnostic paths are rewritten;
+recorded Node stdout/stderr and upstream `tsc` provenance are preserved as literal
+data. Bare test filenames are restricted to their suite. The upstream tsc driver
+corpus is not parsed or rewritten: its documented selection prohibits relative
+imports and deliberately includes diagnostic inputs outside Adamic.
+No source import is found with a regular expression.
 On current main both JSON configurations use directory patterns already covering
 `.a`; `tsconfig.json` also already declares `sourceExtensions: [".a"]`.
 
@@ -44,6 +49,9 @@ The files intentionally kept as TypeScript are:
 | `cmd/adamic-meter/testdata/adapt/types.ts` | Types belonging to that adaptation input |
 | `cmd/adamic-meter/testdata/corpus/not_yet.ts` | Input used to measure unsupported TypeScript |
 | `cmd/adamic-meter/testdata/corpus/refused.ts` | Input used to measure rejected TypeScript |
+| `cmd/adamic-meter/testdata/optional/main.ts` | Pre-gate input for optional-return adaptation |
+| `bridge/tsgo/testdata/sample.ts` | Upstream tsc checker input for the bridge |
+| `stage3/drivers/tsc/corpus/**` | Upstream single-file diagnostic inputs, often intentionally invalid, with no relative imports; existing `.a` names stay unchanged |
 | `cohere/**`, including `cohere/TypeScript/**` | Upstream submodules, not this repository's Adamic source |
 
 Node tooling stays `.mjs`. `.gitattributes` marks `.a` as text with normal diffs
@@ -78,7 +86,97 @@ independently of Adamic lowering. Node execution does not certify the types.
 Branches adding new `.ts` Adamic files must rename them at merge with
 `go run ./cmd/adamic-rename-dot-a --apply .` and commit the generated reference edits.
 
-## Recorded validation
+## October 7 refresh
+
+The branch merges current main `b6b1538` with merge commit `877621e`.
+The refreshed [dry run](../cloud/dot-a-dry-run.txt) records 249 renames and
+1,464 reference rewrites in 263 files. This is the inventory at that main commit;
+run the same command on fresh main to include any later in-flight additions.
+Stage 3's current authored sources and oracle fixtures already use `.a`.
+Of the renamed files, 226 are stage 1 ports/fixtures, 16 are spec fixtures,
+six are benchmarks and one is the fresh-analysis regex fixture.
+
+The stage 3 runner guard now accepts the shared loader after checking transform
+mode, accepts an inline runner already in transform mode, and retains the older
+inline-runner conversion. The merged branch's `go test -count=1 -timeout 30m
+./stage3/fixtures` passed, with output in `/tmp/dot-a-refresh-branch-stage3.log`.
+
+The final scratch checkout is `/tmp/dot-a-final-proof`, cloned at main
+`b6b1538`. Preparation assets were copied in: the command, parser module entry,
+shared loader/wrapper, oracle cache identity and stage 3 runner guard. No renamed
+source from scratch is committed. Applying the final binary printed
+`TOTAL files=249 references=1464 reference_files=263`; its immediate repeat printed
+`TOTAL files=0 references=0 reference_files=0` before staging.
+
+Scratch vet, load and lower passed with exit 0. The complete uncached oracle and
+stage 3 fixtures passed without a fixture filter. The first build retry hit
+temporary storage exhaustion; obsolete scratch copies were removed and build
+was rerun. The first combined stage 1 run passed 15 test packages, but type-aware
+config validation failed and Markdown had regeneration/dependency failures and
+a package timeout. The mixed config retains `.ts`, includes `.a`, and seeds config
+validation with the unchanged prelude declaration before callers replace roots.
+Formatter scratch inputs remain pre-gate TypeScript `.ts`; generated outputs
+use `.a`. Type-aware and all 20 Markdown tests are being rerun, the latter in
+three disjoint groups, each with the 30-minute limit. Final results will be added
+when those runs finish. The exact commands are:
+
+```sh
+go build ./... > /tmp/dot-a-release-build.log 2>&1
+go vet ./... > /tmp/dot-a-release-vet.log 2>&1
+go test -count=1 -timeout 30m ./internal/load ./internal/lower > /tmp/dot-a-release-load-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -p 2 ./internal/oracle ./stage3/fixtures ./stage1/... ./cmd/adamic-rename-dot-a > /tmp/dot-a-release-gate.log 2>&1
+```
+
+The standalone codemod tests and both Node loader tests passed. CSS numbers again
+ran end to end after rename: direct `--import`, the wrapper and native each exited
+0, printed `0.1e2kHz "1.000px"` plus newline and had empty stderr. Both output
+comparisons passed. Build/run evidence is in `/tmp/dot-a-refresh-cssnumbers-build.log`
+and `/tmp/dot-a-refresh-{direct,wrapper,native}.{out,err}`.
+
+Toolchain setup completed in 118 seconds and `nproc` printed 5:
+
+```text
+setup: go ready (0s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+setup: node ready (1s)
+setup: submodules ready (1s)
+setup: build cache warm (118s)
+setup: done in 118s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+```
+
+Eleven new mutants were caught, each by a test failure with exit 1:
+
+| Mutant | What caught it |
+| --- | --- |
+| Omit stage 3 classification | `TestStage3PurposeAndStatus`: authored source is unclassified |
+| Omit status references | Same test: fixture and diagnostic paths remain stale |
+| Parse the upstream diagnostic corpus | Same test: intentionally invalid upstream input is parsed |
+| Rename the bridge's upstream input | Same test: extra rename is rejected |
+| Rewrite recorded Node observations | Same test: extra golden edits are rejected |
+| Allow cross-suite bare filenames | Same test: negative path case is rewritten |
+| Rewrite upstream tsc citations | Same test: upstream document acquires an unwanted edit |
+| Omit parent-relative and snapshot references | `TestPlanAndRerun`: relocation/profile references remain stale |
+| Keep generator output extensions `.ts` | `TestGeneratedAdamicNames`: parsed output names remain stale |
+| Accept overlapping edits | `TestOverlappingEditsRefuseBeforeWriting`: unsafe plan is accepted |
+| Remove the shared loader's transform mode | Stage 3 `TestFixtures`: runner guard rejects the loader |
+
+Mutant logs are `/tmp/dot-a-refresh-mutant-*.log`. An earlier attempt that removed
+only stage 3's suffix fallback survived: that fixture's local path already
+resolved without the fallback. The targeted status-omission mutant above was
+then caught. Earlier scratch runs exposed accidental changes to Node goldens
+and a negative path case. Those were fixed, their regressions and mutants were
+added, and superseded scratch runs were replaced by the final run.
+
+The full `./...` test gate, opt-in throughput/profile and external-library tests,
+cohere's upcoming reformat, non-Linux platforms and
+I/O-failure injection are outside this verification. The whole oracle and all
+ordinary stage 1 tests are included in the command above.
+
+Pinned ordinary width-test dependencies were installed under
+`/tmp/adamic-markdown-width`: emoji-regex 10.6.0, get-east-asian-width 1.6.0
+and narrow-emojis 0.0.3. Install output is `/tmp/dot-a-width-dependencies.log`.
+
+## Original preparation validation
 
 The full dry run against main `5d4c801` is in
 [cloud/dot-a-dry-run.txt](../cloud/dot-a-dry-run.txt): 126 files, 592 reference
