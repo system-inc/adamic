@@ -1,0 +1,308 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/module_name_ignored
+    lint_test.go:724: module_name_ignored caught on Node: case 140 line 2612: port "fixed\tlet a = 1, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_name_ignored1952380346/015/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsmodule_name_ignored1952380346/015/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 			0 23
+        fixed	let a = 1, module = {};\u000a
+    lint_test.go:724: module_name_ignored caught on emitted JavaScript: case 140 line 2612: port "fixed\tlet a = 1, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_name_ignored1952380346/015/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsmodule_name_ignored1952380346/015/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 			0 23
+        fixed	let a = 1, module = {};\u000a
+    lint_test.go:724: module_name_ignored caught on native: case 140 line 2612: port "fixed\tlet a = 1, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_name_ignored1952380346/015/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsmodule_name_ignored1952380346/015/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 			0 23
+        fixed	let a = 1, module = {};\u000a
+=== RUN   TestMutants/optional_parameter_ignored
+    lint_test.go:724: optional_parameter_ignored caught on Node: case 140 line 2612: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored3955330889/015/typescript-default-param-last-0.ts:1:12"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored3955330889/015/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 			11 21
+        fixed	function f(a?: number, b: number) {}\u000a
+    lint_test.go:724: optional_parameter_ignored caught on emitted JavaScript: case 140 line 2612: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored3955330889/015/typescript-default-param-last-0.ts:1:12"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored3955330889/015/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 			11 21
+        fixed	function f(a?: number, b: number) {}\u000a
+    lint_test.go:724: optional_parameter_ignored caught on native: case 140 line 2612: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored3955330889/015/typescript-default-param-last-0.ts:1:12"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored3955330889/015/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 			11 21
+        fixed	function f(a?: number, b: number) {}\u000a
+=== RUN   TestMutants/nexus-import-require-node-namespace_semantic
+    lint_test.go:724: nexus-import-require-node-namespace_semantic caught on Node: case 140 line 2613: port "  nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeWrongFileSystem from 'node:fs'", Go "  nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnexus-import-require-node-namespace_semantic2305474809/015/nexus-import-require-node-namespace-0.ts:1:1
+          nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+        
+        range 0 25 requireNodePrefix fix	'node:fs'		20 24
+        /tmp/adamic-gate/TestMutantsnexus-import-require-node-namespace_semantic2305474809/015/nexus-import-require-node-namespace-0.ts:1:8
+          nexus/import-require-node-namespace  Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+    lint_test.go:724: nexus-import-require-node-namespace_semantic caught on emitted JavaScript: case 140 line 2613: port "  nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeWrongFileSystem from 'node:fs'", Go "  nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnexus-import-require-node-namespace_semantic2305474809/015/nexus-import-require-node-namespace-0.ts:1:1
+          nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+        
+        range 0 25 requireNodePrefix fix	'node:fs'		20 24
+        /tmp/adamic-gate/TestMutantsnexus-import-require-node-namespace_semantic2305474809/015/nexus-import-require-node-namespace-0.ts:1:8
+          nexus/import-require-node-namespace  Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+    lint_test.go:724: nexus-import-require-node-namespace_semantic caught on native: case 140 line 2613: port "  nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeWrongFileSystem from 'node:fs'", Go "  nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnexus-import-require-node-namespace_semantic2305474809/015/nexus-import-require-node-namespace-0.ts:1:1
+          nexus/import-require-node-namespace  Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+        
+        range 0 25 requireNodePrefix fix	'node:fs'		20 24
+        /tmp/adamic-gate/TestMutantsnexus-import-require-node-namespace_semantic2305474809/015/nexus-import-require-node-namespace-0.ts:1:8
+          nexus/import-require-node-namespace  Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+=== RUN   TestMutants/no-multi-str_semantic_mutant
+    lint_test.go:724: no-multi-str semantic mutant caught on Node: case 140 line 2612: port "fixed\tvar x = 'foo\\u005c\\u2029bar';\\u000a", Go "/tmp/adamic-gate/TestMutantsno-multi-str_semantic_mutant2006654941/015/no-multi-str-0.ts:1:9"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-multi-str_semantic_mutant2006654941/015/no-multi-str-0.ts:1:9
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 8 20 multilineString 			8 20
+        fixed	var x = 'foo\u005c\u2029bar';\u000a
+    lint_test.go:724: no-multi-str semantic mutant caught on emitted JavaScript: case 140 line 2612: port "fixed\tvar x = 'foo\\u005c\\u2029bar';\\u000a", Go "/tmp/adamic-gate/TestMutantsno-multi-str_semantic_mutant2006654941/015/no-multi-str-0.ts:1:9"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-multi-str_semantic_mutant2006654941/015/no-multi-str-0.ts:1:9
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 8 20 multilineString 			8 20
+        fixed	var x = 'foo\u005c\u2029bar';\u000a
+    lint_test.go:724: no-multi-str semantic mutant caught on native: case 140 line 2612: port "fixed\tvar x = 'foo\\u005c\\u2029bar';\\u000a", Go "/tmp/adamic-gate/TestMutantsno-multi-str_semantic_mutant2006654941/015/no-multi-str-0.ts:1:9"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-multi-str_semantic_mutant2006654941/015/no-multi-str-0.ts:1:9
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 8 20 multilineString 			8 20
+        fixed	var x = 'foo\u005c\u2029bar';\u000a
+=== RUN   TestMutants/no-nonoctal-decimal-escape_semantic_mutant
+    lint_test.go:724: no-nonoctal-decimal-escape semantic mutant caught on Node: case 140 line 2616: port "suggestion\tnonoctalDecimalEscape\tReplace `\\u005c0\\u005c9` with `\\u005cu00009`, which matches the same characters without turning the repair into a legacy octal escape.\t1", Go "suggestion\tnonoctalDecimalEscape\tReplace `\\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.\t1"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsno-nonoctal-decimal-escape_semantic_mutant3822255381/015/no-nonoctal-decimal-escape-0.ts:1:21
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 20 22 nonoctalDecimalEscape suggestions			20 22
+        suggestion	nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.	1
+        suggestion-edit	20 22	9
+        suggestion	nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.	1
+        suggestion-edit	20 22	\u005c\u005c9
+        recovery findings only
+    lint_test.go:724: no-nonoctal-decimal-escape semantic mutant caught on emitted JavaScript: case 140 line 2616: port "suggestion\tnonoctalDecimalEscape\tReplace `\\u005c0\\u005c9` with `\\u005cu00009`, which matches the same characters without turning the repair into a legacy octal escape.\t1", Go "suggestion\tnonoctalDecimalEscape\tReplace `\\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.\t1"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsno-nonoctal-decimal-escape_semantic_mutant3822255381/015/no-nonoctal-decimal-escape-0.ts:1:21
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 20 22 nonoctalDecimalEscape suggestions			20 22
+        suggestion	nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.	1
+        suggestion-edit	20 22	9
+        suggestion	nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.	1
+        suggestion-edit	20 22	\u005c\u005c9
+        recovery findings only
+    lint_test.go:724: no-nonoctal-decimal-escape semantic mutant caught on native: case 140 line 2616: port "suggestion\tnonoctalDecimalEscape\tReplace `\\u005c0\\u005c9` with `\\u005cu00009`, which matches the same characters without turning the repair into a legacy octal escape.\t1", Go "suggestion\tnonoctalDecimalEscape\tReplace `\\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.\t1"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsno-nonoctal-decimal-escape_semantic_mutant3822255381/015/no-nonoctal-decimal-escape-0.ts:1:21
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 20 22 nonoctalDecimalEscape suggestions			20 22
+        suggestion	nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.	1
+        suggestion-edit	20 22	9
+        suggestion	nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.	1
+        suggestion-edit	20 22	\u005c\u005c9
+        recovery findings only
+=== RUN   TestMutants/no-octal_semantic_mutant
+    lint_test.go:724: no-octal semantic mutant caught on Node: case 140 line 2612: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal_semantic_mutant2835425638/015/no-octal-0.ts:1:9"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-octal_semantic_mutant2835425638/015/no-octal-0.ts:1:9
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 8 10 noOctal 			8 10
+        recovery findings only
+    lint_test.go:724: no-octal semantic mutant caught on emitted JavaScript: case 140 line 2612: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal_semantic_mutant2835425638/015/no-octal-0.ts:1:9"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-octal_semantic_mutant2835425638/015/no-octal-0.ts:1:9
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 8 10 noOctal 			8 10
+        recovery findings only
+    lint_test.go:724: no-octal semantic mutant caught on native: case 140 line 2612: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal_semantic_mutant2835425638/015/no-octal-0.ts:1:9"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-octal_semantic_mutant2835425638/015/no-octal-0.ts:1:9
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 8 10 noOctal 			8 10
+        recovery findings only
+=== RUN   TestMutants/structure-network-no-invalidate-cache-literal-key_semantic
+    lint_test.go:724: structure-network-no-invalidate-cache-literal-key_semantic caught on Node: case 140 line 2612: port "fixed\tservice.cache.invalidate(['users', `posts-${id}`]);\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:27"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:27
+          structure/network-no-invalidate-cache-literal-key  This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+        
+        range 26 33 noArrayWithStringLiteralInvalidateCache 			26 33
+        /tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:36
+    lint_test.go:724: structure-network-no-invalidate-cache-literal-key_semantic caught on emitted JavaScript: case 140 line 2612: port "fixed\tservice.cache.invalidate(['users', `posts-${id}`]);\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:27"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:27
+          structure/network-no-invalidate-cache-literal-key  This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+        
+        range 26 33 noArrayWithStringLiteralInvalidateCache 			26 33
+        /tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:36
+    lint_test.go:724: structure-network-no-invalidate-cache-literal-key_semantic caught on native: case 140 line 2612: port "fixed\tservice.cache.invalidate(['users', `posts-${id}`]);\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:27"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:27
+          structure/network-no-invalidate-cache-literal-key  This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+        
+        range 26 33 noArrayWithStringLiteralInvalidateCache 			26 33
+        /tmp/adamic-gate/TestMutantsstructure-network-no-invalidate-cache-literal-key_se3520078578/015/structure-network-no-invalidate-cache-literal-key-0.ts:1:36
+=== RUN   TestMutants/structure-network-no-string-literal-query_semantic
+    lint_test.go:724: structure-network-no-string-literal-query_semantic caught on Node: case 140 line 2612: port "fixed\tconst Document = 'query { id }'; client.useGraphQlQuery(Document);\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-no-string-literal-query_semantic2970518252/015/structure-network-no-string-literal-query-0.ts:1:57"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsstructure-network-no-string-literal-query_semantic2970518252/015/structure-network-no-string-literal-query-0.ts:1:57
+          structure/network-no-string-literal-query  This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+        
+        range 56 64 noStringLiteralGraphQlQuery 			56 64
+        fixed	const Document = 'query { id }'; client.useGraphQlQuery(Document);\u000a
+    lint_test.go:724: structure-network-no-string-literal-query_semantic caught on emitted JavaScript: case 140 line 2612: port "fixed\tconst Document = 'query { id }'; client.useGraphQlQuery(Document);\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-no-string-literal-query_semantic2970518252/015/structure-network-no-string-literal-query-0.ts:1:57"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsstructure-network-no-string-literal-query_semantic2970518252/015/structure-network-no-string-literal-query-0.ts:1:57
+          structure/network-no-string-literal-query  This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+        
+        range 56 64 noStringLiteralGraphQlQuery 			56 64
+        fixed	const Document = 'query { id }'; client.useGraphQlQuery(Document);\u000a
+    lint_test.go:724: structure-network-no-string-literal-query_semantic caught on native: case 140 line 2612: port "fixed\tconst Document = 'query { id }'; client.useGraphQlQuery(Document);\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-no-string-literal-query_semantic2970518252/015/structure-network-no-string-literal-query-0.ts:1:57"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsstructure-network-no-string-literal-query_semantic2970518252/015/structure-network-no-string-literal-query-0.ts:1:57
+          structure/network-no-string-literal-query  This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+        
+        range 56 64 noStringLiteralGraphQlQuery 			56 64
+        fixed	const Document = 'query { id }'; client.useGraphQlQuery(Document);\u000a
+--- PASS: TestMutants (154.76s)
+    --- PASS: TestMutants/module_name_ignored (19.33s)
+    --- PASS: TestMutants/optional_parameter_ignored (17.52s)
+    --- PASS: TestMutants/nexus-import-require-node-namespace_semantic (18.61s)
+    --- PASS: TestMutants/no-multi-str_semantic_mutant (17.77s)
+    --- PASS: TestMutants/no-nonoctal-decimal-escape_semantic_mutant (19.07s)
+    --- PASS: TestMutants/no-octal_semantic_mutant (19.65s)
+    --- PASS: TestMutants/structure-network-no-invalidate-cache-literal-key_semantic (20.70s)
+    --- PASS: TestMutants/structure-network-no-string-literal-query_semantic (19.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	154.777s
