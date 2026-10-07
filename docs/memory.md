@@ -1036,6 +1036,177 @@ Two mutants, each run against `regions.a` and each caught:
 | A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check |
 | A region literal holds every field without a retain, its heap strings included | ASan heap-use-after-free, on a label string the region's end let go of |
 
+### Cheaper statement-region end (region-end)
+
+Built on main `50045bd`, separately from the unmerged iteration arenas.
+`07efb19` changes only existing statement regions. The shared allocator is
+inline so its two entry points incur no extra helper call at release `-O2`
+(checked in clang assembly). heap.c and count.c were untouched. Region
+planning's freshness/escape rules and heap-object zeroing stay unchanged.
+The supplied M4 Max sample motivated this unit; measurements below are fresh
+Linux observations, not a reproduction of that macOS profile.
+
+**Outside children decide whether there is a release walk.** A region starts
+with holds_outside false. A region literal's same-region fields and constant
+undefined need no marker. For each other reference field, the emitter calls
+adamic_region_hold before storing it, whether kept retains or moves the
+reference. A non-NULL reference with a nonzero count sets the bit; dynamic
+immortals leave it clear. When the bit is clear, region_end does not visit any
+object or field. When set, it keeps the existing child-release walk, while
+all blocks still exist. Main already filters immortal/regional children in
+class_inheritance.c's release_field, so removing the walk changes no release
+counts. The bit and allocator choice are metadata, not counted allocations.
+
+A nonescaping consumer can still write a heap child into its parameter.
+region.go therefore computes a separate conservative fixed point over direct
+and virtual call targets: a reference property write, callback/opaque
+operation, or a callee containing one forces the statement's bit before it
+runs. This summary does not grant any new allocation an escape proof. Reads
+and plain literal allocation are harmless; unknown operations force cleanup.
+It can conservatively retain a walk for a write to an unrelated object.
+Class allocation always forces cleanup, since subsequent constructor stores
+are not restricted to same-region references.
+
+**Weak cleanup is independent.** weak.c's adamic_weak_forget_region checks
+whether the table is empty once, then visits its slots and invalidates targets
+whose addresses are in this region's used block ranges. Removing the last
+entry frees the table and resets its capacity, which ends the loop. The
+release walk runs first, since freeing outside children can remove handles.
+Pure regions still invalidate Weak targets before freeing blocks. With no
+Weak, there is one empty-table check per end instead of one call/check per
+object. With Weak, this is a table-capacity scan with block-range membership
+checks; dense Weak workloads were not timed here.
+
+**Only a fully filled ordinary literal skips zeroing.** Its field expressions,
+conversions and possible throwing calls finish before allocation. Then the
+emitter uses adamic_object_new_filled_in and writes every shape slot's active
+member. Only nonthrowing retains, the marker and scalar stores occur between
+allocation and completion; nothing publishes the object in that interval.
+A throw in a field expression therefore finds no half-filled parent object.
+Earlier completed children are still well-formed and cleaned on the existing
+throw path. Constructors conservatively use adamic_object_new_in, which
+zeroes slots and forces cleanup; spreads and heap allocation keep their old
+paths. The filled allocator is not permission to move allocation ahead of
+field evaluation.
+
+**How it is held.** region_end.a has pure trees, runtime string children, a
+transitive nonescaping consumer that replaces a field with a heap string,
+a later field that throws after a child has been built, and a successful
+region after the catch. It runs against Node through the oracle. The current
+planner refuses escaping Weak stores, so TestRegionEndWeakTargets exercises
+that runtime contract directly: targets in different blocks, an unrelated
+heap target, and a region whose target is the last entry in the Weak table.
+A missed target is actually read after the region ends, not merely compared
+with NULL. TestRegionEndThrowInitialization also runs the .a witness against
+Node under both sanitizers with an aligned malloc fill byte of 240, so an
+alignment diagnostic does not mask the ASan invalid read.
+
+| Mutant, restored after its run | Caught by |
+|---|---|
+| adamic_region_hold does not set holds_outside | LeakSanitizer: regions.a leaks 3,864 bytes in 56 allocations; region_end.a also leaks |
+| batch Weak cleanup omits regional targets | ASan heap-use-after-free in TestRegionEndWeakTargets |
+| filled literal allocation moved before its field expressions, across a throw | ASan SEGV invalid read in release_field in TestRegionEndThrowInitialization |
+| later consumer reference writes do not force cleanup | LeakSanitizer: region_end.a leaks 73 bytes in one allocation |
+
+These are targeted mutant runs, not whole-oracle mutant runs. The zeroing
+mutant first failed the ordinary oracle under UBSan's alignment check; the
+aligned-fill run above supplies the requested ASan witness. No mutant is
+credited only for an answer difference or a compiler failure. The ordinary
+new fixture and existing region/throw/constructor-capture fixtures passed.
+Regenerating the counts table added only the new fixture's row; every
+existing row remained byte-for-byte unchanged.
+
+**Measured 2026-10-06.** Before is main `50045bd`; after is `1921f57`.
+Both use identical sources and release flags (`native.Flags`, clang 20.1.8,
+`-O2`, no LTO). CSS is absent on this main too: use the frozen `6476d7a` port
+and `ccfd64f` css-release evidence from the previous survey. Neither side
+includes ccfd64f's separate release fast path. CSS consumes the same 4,952
+shared inputs with `print_main.ts shared.txt count`; JSON consumes the same
+1,096 inputs with `main.ts --cases cases.txt`, producing 63,704,214 bytes.
+Trees is the existing depth-18 benchmark, 68,332,244 allocations; regions.a is
+one ordinary fixture run, including its three-round small-tree loop.
+
+Counts, one counted build/run per snapshot (after rebuilt at the inline commit):
+
+| driver | version | allocations | frees | in regions | retains | releases | peak live |
+|---|---|---:|---:|---:|---:|---:|---:|
+| trees | Before | 68,332,244 | 1,572,900 | 66,759,344 | 67,982,686 | 67,982,728 | 2,097,149 |
+| trees | After | 68,332,244 | 1,572,900 | 66,759,344 | 67,982,686 | 67,982,728 | 2,097,149 |
+| regions.a | Before | 316 | 260 | 56 | 219 | 409 | 50 |
+| regions.a | After | 316 | 260 | 56 | 219 | 409 | 50 |
+| CSS parse/print | Before | 23,347,421 | 23,347,421 | 0 | 85,979,081 | 89,181,243 | 145,450 |
+| CSS parse/print | After | 23,347,421 | 23,347,421 | 0 | 85,979,081 | 89,181,243 | 145,450 |
+| JSON format | Before | 104,362,078 | 104,362,078 | 0 | 302,478,215 | 301,718,362 | 13,759,795 |
+| JSON format | After | 104,362,078 | 104,362,078 | 0 | 302,478,215 | 301,718,362 | 13,759,795 |
+
+All six columns are unchanged on every measured driver. Trees' 66,759,344
+regional values now avoid both the object/field walk and slot zeroing; its
+remaining retain/release calls in check are outside this unit. regions.a's
+regional nodes hold runtime heap labels, so they still require child cleanup.
+CSS and JSON execute no statement regions on either snapshot: this unit does
+not address the real drivers' missing whole-input coverage. JSON's generated
+C is byte-for-byte identical; CSS's changed region variants have no executing
+caller in this corpus.
+
+Time is best of five alternating before/after pairs. The native C fork/wait4
+launcher measures process startup, file I/O and output; hash comparison and
+counting are outside the timer. RSS is the native child's peak on its fastest
+run, not the Python driver's inherited peak. All test/build/sanitizer jobs
+finished before timing. Shared Linux x86-64 EPYC 9V74, five visible CPUs with a
+four-CPU quota, 16 GiB cgroup memory limit, Go 1.27.1 and Node 24.19.0. Load is
+the one-minute average at each driver's start and end. Setup reported Go,
+clang, Node and submodules ready at 0 s, cache warm and done at 66 s; nproc 5.
+
+| driver | Before seconds | After seconds | time change | Before RSS MiB | After RSS MiB | load, start to end |
+|---|---:|---:|---:|---:|---:|---:|
+| trees | 1.631854 | 1.283309 | -21.36% | 129.0 | 129.0 | 0.04 to 0.25 |
+| regions.a | 0.000752 | 0.000763 | +1.48% | 0.8 | 0.8 | 0.25 to 0.25 |
+| CSS parse/print | 1.801035 | 1.775470 | -1.42% | 23.4 | 23.3 | 0.25 to 0.47 |
+| JSON format | 11.742555 | 11.893889 | +1.29% | 1338.9 | 1338.9 | 0.47 to 0.93 |
+
+Trees improves 21.36% with unchanged rounded RSS. CSS's -1.42% and JSON's
++1.29% are observations with overlapping run ranges, not evidence of a
+formatter benefit or a new lifetime cost. The sub-millisecond regions.a
++1.48% is especially dominated by startup and scheduling. No new M4 Max
+profile or dense-Weak timing is claimed; constructors remain conservative.
+
+**Checks and reproduction.** Formatting and `go vet ./...` passed. The full
+uncached repository gate passed at 07efb19, including all stage1 ports. After
+the inline-only refinement, the complete native/fresh/oracle gate passed
+uncached again at 1921f57, and all four mutants were rerun with the catches
+above. The final measured CSS build passed all 24,076 archived Go inputs in
+both print-option sets under ASan, UBSan and LeakSanitizer, empty stderr,
+3,172,898 and 3,227,590 identical bytes. Final JSON passed those sanitizers on
+all 1,096 measured inputs, empty stderr and 63,704,214 Node/Go-identical bytes.
+Every timed and counted answer matches the fresh Node answer hash.
+
+```
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /tmp/region-end/full-gate.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native/... ./internal/fresh/... ./internal/oracle > /tmp/region-end/final-gate.log 2>&1
+go test -count=1 -timeout 30m ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts > /tmp/region-end/counts-update.log 2>&1
+```
+
+Build each compiler with `go build -o <snapshot>-adamic ./cmd/adamic` from
+its revision, then each existing entry with `adamic build <entry> -o <binary>`,
+and once with `--count`. For trees use bench/trees.ts; for the fixture use
+internal/oracle/testdata/regions.a. Recover CSS and the fixed corpora as in
+ccfd64f's css-release report. CSS shared input SHA256 is
+faf62ec1e054167e192cdb427fd689dfde759dfa0cbaa9dc59253d54bd42eef7;
+JSON input SHA256 is
+bc394e563cbb5a4dccc264285c69825fabc21552b56ac6b13b7708008f26fba1.
+The final compiler snapshot was rebuilt after inlining, with counts and
+answers rechecked before timing.
+
+Artifacts are in `/tmp/region-end`: results-final.json records all five pairs,
+RSS, loads, exact arguments, counts and output hashes; timing.log keeps every
+round. prepare.py, rebuild-after.py, timing.py and sanitize-corpora.py retain
+commands. mutants.py and mutants-final-run.log retain the four targeted
+mutations, controls and restoration. full-gate.log, final-gate.log,
+sanitized-corpora-final.log, vet-final.log and gofmt-final.log retain checks.
+The sanitizer script links the exact native.Flags archive (keyed by all
+runtime inputs, flags and clang identity). No runtime source hook outside
+region.c, weak.c and adamic.h was needed.
+
 ### No retain of the constant undefined
 
 Retain passes over the null pointer, but each `adamic_retain(NULL)` was still a call. Every place the emitter retains a value it keeps now goes through `retained` (`emit.go`). When the value's C is the null pointer constant, however it's parenthesized or cast (an `undefined`, a missing argument, `undefined` boxed into a union), it is kept as it is, with no call. Before this, the 0.1 fixtures and the oracle's held 50 such calls: 27 into object fields, 13 into globals and locals, 4 into array elements, 6 elsewhere. None are left.

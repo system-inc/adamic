@@ -166,6 +166,24 @@ void adamic_weak_forget(void *target) {
 	pthread_mutex_unlock(&table_lock);
 }
 
+void adamic_weak_forget_region(const adamic_region *region) {
+	if (table_count == 0) {
+		return;
+	}
+	for (size_t slot = 0; slot < table_capacity; slot++) {
+		uintptr_t entry = table[slot];
+		if (entry == EMPTY || entry == TOMBSTONE) {
+			continue;
+		}
+		adamic_weak *handle = reveal(entry);
+		if (adamic_region_contains(region, reveal(handle->target))) {
+			handle->target = 0;
+			remove_entry(&table[slot]);
+			// Removing the last entry frees the table and resets capacity to zero; the loop stops.
+		}
+	}
+}
+
 void adamic_weak_dropped(adamic_weak *handle) {
 	pthread_mutex_lock(&table_lock);
 	if (handle->target != 0) {
