@@ -21,9 +21,7 @@ this worker. The remaining rule is not declared ported.
 
 ## Outcome
 
-Consistent-type-assertions is blocked on the shared .a registration and suggestion
-record contracts. No partial rule is registered. Reproducible evidence and exact
-validation commands are in wave1-01-report.md and wave1-01-evidence/.
+The original investigation report in wave1-01-report.md and wave1-01-evidence/ is historical. Consistent-type-assertions is now implemented and registered in its own .a directory. Its fixtures, structured suggestions, semantic mutant and projected compiler/stage1 corpus pass on all three backends. Independent JSX parsing and the shared harness import failure remain explicit limitations. Current evidence is in ../rules/typescript-consistent-type-assertions/testdata/evidence/REPORT.md.
 
 ## Next three rules, October 7
 
