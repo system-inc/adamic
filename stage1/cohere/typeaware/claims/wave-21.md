@@ -41,3 +41,20 @@ Continuation completion: all three continuation rules are implemented and
 verified in c565946d. See ../WAVE_21_NEXT_REPORT.md and
 ../validation-wave-21-next/ for byte comparisons, mutants, sanitizer results
 and timings. No further claims were taken after Ahra's correction.
+
+## Released-reservation-aware continuation
+
+Fetched all 325 origin refs after the instruction to include explicit releases.
+Wave 22 now actively reserves no-misused-promises, no-misused-spread and
+concurrency-no-lost-update, so those released reservations are skipped.
+The first three available rules in the same combined-volume ranking are:
+
+| Original remaining position | Rule | Combined findings |
+| --- | --- | ---: |
+| 97 | nexus/correctness-no-process-exit-after-output | 0 |
+| 98 | nexus/correctness-no-uncleared-race-timeout | 0 |
+| 99 | nexus/correctness-require-blocking-standard-streams | 0 |
+
+No matching native implementation on origin/main or origin/codex/tsgo-c-library
+and no active origin claim was found. These three are reserved for this branch.
+This claim update is pushed before writing implementation code.
