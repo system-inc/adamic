@@ -74,3 +74,23 @@ func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
 		t.Fatalf("got %v, want the explicit missing runtime-container reason", err)
 	}
 }
+
+func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
+	for _, test := range []struct{ name, reason string }{
+		{"debug_log.a", "callable object properties"},
+		{"class_merge.a", "constructor identity"},
+		{"debug_class.a", "constructor registration"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			source, err := os.ReadFile("testdata/namespaces_notyet/" + test.name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
+				t.Fatalf("got %v, want NotYet %s", err, test.reason)
+			}
+		})
+	}
+}

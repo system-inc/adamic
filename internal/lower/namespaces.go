@@ -192,12 +192,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 				}
 			case ast.KindVariableStatement:
 				list := member.AsVariableStatement().DeclarationList
-				if list.Flags&ast.NodeFlagsBlockScoped == 0 {
-					// Namespace var uses hoisted module storage.
-				}
 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
 					if !ast.IsIdentifier(variable.Name()) {
-						return l.notYet(variable, "a namespace binding without a plain initialized name")
+						return l.notYet(variable, "destructuring inside a namespace; use plain singleton bindings")
 					}
 				}
 			default:
@@ -248,7 +245,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 }
 
 // Namespace vars are hoisted and their export assignments are staged in JavaScript. Until we
-// model those partial objects, no call runs while a runtime namespace is still uninitialized.
+// model those partial objects, arbitrary calls wait until every runtime namespace is initialized.
 // Bodies of functions are deferred; private bindings keep their ordinary checked lexical storage.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 	if err := l.enumInitialization(modules); err != nil {

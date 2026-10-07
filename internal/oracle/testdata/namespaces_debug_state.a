@@ -3,6 +3,7 @@ namespace Debug {
  export let text: string | undefined;
  export let enabled = false;
  export function update(): void {currentLogLevel += 2; text = 'inside'.repeat(2); enabled = true;}
+ export function qualified(): void {Debug.currentLogLevel += 1; Debug.text = 'qualified'.repeat(2);}
  export function read(): string {return `${currentLogLevel}:${text ?? 'none'}:${enabled}`;}
 }
 console.log(Debug.read());
@@ -15,4 +16,6 @@ Debug.update();
 console.log(`${Debug.currentLogLevel}:${Debug.text ?? 'none'}:${Debug.enabled}`);
 if (Debug.text !== undefined) {console.log(Debug.text.toUpperCase());}
 Debug.text = undefined;
+console.log(Debug.read());
+Debug.qualified();
 console.log(Debug.read());

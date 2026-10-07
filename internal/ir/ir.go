@@ -256,7 +256,9 @@ type Local struct {
 
 	// NamespaceState stays unready until assigned when its type excludes undefined.
 	NamespaceState bool
-	NamespaceVar   bool
+
+	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
+	NamespaceVar bool
 
 	// Function is the function that declares it, -1 for the module's top level.
 	Function int

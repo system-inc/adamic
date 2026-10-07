@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_debug_state.a"} {
+	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_debug_modules/main.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -21,6 +21,14 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/namespaces_unready.a", true, true})
+
+	for _, name := range []string{"BuilderState", "JsxNames", "ReactNames", "BinaryExpressionState", "Parser.JSDocParser"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{"stage3/namespaces/shapes/" + name + ".a", true, false})
+	}
 
 }
 
@@ -131,6 +139,7 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 func TestNamespaceStateMutants(t *testing.T) {
 	for _, test := range []struct{ name, path string }{
 		{"lose assignment", "namespaces_parser_state.a"},
+		{"lose hoisting", "namespaces_parser_state.a"},
 		{"skip ready check", "namespaces_unready.a"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
@@ -143,6 +152,17 @@ func TestNamespaceStateMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			changed := false
+			if test.name == "lose hoisting" {
+				kept := []ir.Statement{}
+				for _, statement := range program.Main {
+					if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "token" {
+						changed = true
+					} else {
+						kept = append(kept, statement)
+					}
+				}
+				program.Main = kept
+			}
 			for index := range program.Functions {
 				body := program.Functions[index].Body
 				for at, statement := range body {
@@ -151,7 +171,7 @@ func TestNamespaceStateMutants(t *testing.T) {
 							body[at] = ir.Evaluate{Value: assign.Value}
 							changed = true
 						}
-					} else if returned, ok := statement.(ir.Return); ok {
+					} else if returned, ok := statement.(ir.Return); ok && test.name == "skip ready check" {
 						if read, ok := returned.Value.(ir.Read); ok && read.Checked {
 							read.Checked = false
 							returned.Value = read
