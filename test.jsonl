@@ -2,3 +2,12 @@
 {"Time":"2026-10-07T22:01:43.549475805Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree"}
 {"Time":"2026-10-07T22:01:43.549610398Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"=== RUN   TestCompilerAndStage1Agree\n","OutputType":"frame"}
 {"Time":"2026-10-07T22:01:43.555930323Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:514: compiler and stage1: 397 files\n"}
+{"Time":"2026-10-07T22:05:01.191100303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 20769420 bytes\n"}
+{"Time":"2026-10-07T22:05:01.20164016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"--- PASS: TestCompilerAndStage1Agree (197.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:05:01.201676535Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Elapsed":197.65}
+{"Time":"2026-10-07T22:05:01.201702394Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:05:01.208038225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t197.681s\n"}
+{"Time":"2026-10-07T22:05:01.208187299Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":197.682}
+{"Time":"2026-10-07T22:05:10.379292811Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-07T22:05:10.393443713Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree"}
+{"Time":"2026-10-07T22:05:10.393545106Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"=== RUN   TestCompilerExpressionsAgree\n","OutputType":"frame"}
