@@ -31,10 +31,10 @@ runtime declarations in the survey, including nested ones. An eleventh,
 | BuilderState | builderState.ts:100 | 25 functions, three interfaces; merges with an interface of the same name. Its namespace structure fits the subset. |
 | JsxNames | checker.ts:54223 | Ten exported string constants. The wrapper fits; their branded casts are an independent obligation. |
 | ReactNames | checker.ts:54236 | One exported string constant, likewise branded. |
-| Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; initializer calls, its class, overloads and runtime merging remain. |
+| Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; its class, overloads and runtime merging remain; calls use reachability checks. |
 | Debug.log | debug.ts:137 | Four functions merged into the callable `log`; needs a callable object whose attached properties keep identity and ownership. |
 | BinaryExpressionState | factory/utilities.ts:1273 | Nine functions, seven exported, coexisting with a generic callable type alias. Its namespace structure fits the subset. |
-| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; initializer calls, binding value types and overloads remain. |
+| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; binding value types and overloads remain; calls use reachability checks. |
 | Parser.JSDocParser | parser.ts:8790 | Six functions and two enums; its isolated namespace declaration structure now lowers. Surrounding parser state and function bodies remain independent obligations. |
 | IncrementalParser | parser.ts:9946 | 13 functions, an interface and an enum; its enum scope is covered; two overload signatures and function bodies remain. |
 | tracingEnabled | tracing.ts:37 | 12 functions, nine variable statements and an enum; private mutable tracing state and namespace-object escape through `tracing = tracingEnabled`. Needs a real runtime object, not just qualification. |
@@ -61,15 +61,23 @@ state live in ordinary module storage. Existing flow, borrow, reuse, region,
 exception and cycle analyses see ordinary declarations and calls; none is
 disabled. Mutable contents of exported objects still obey ordinary slot rules.
 
-JavaScript hoists namespace variables and assigns exports in stages. Until
-partial namespace objects and early reads are represented exactly, Adamic
-conservatively refuses arbitrary calls or construction before all runtime namespaces in
-the dependency closure are initialized, as well as namespace reads before their
-own initialization. Put namespaces before executable module code. Initializer
-calls remain NotYet; console calls and executable bodies run in source order,
-and function bodies are deferred.
-This preserves accepted initialization order without substituting a native TDZ
-error for JavaScript's undefined property behavior.
+JavaScript hoists namespace variables and assigns exports in stages. Before
+module evaluation, a private generated boolean is false for each runtime
+namespace; completing its body sets that boolean to true. The static walk follows
+known function declarations, immutable aliases, callbacks, default arguments and
+recursive helpers by checker symbol. It refuses reads of pending namespaces that
+those calls can reach. An unrelated Map construction or pure helper call may run
+before a namespace, including inside a namespace initializer.
+
+Parameters, mutable function values, virtual methods and constructors can leave
+an unresolved edge. Their eventual qualified namespace reads check the generated
+boolean using ordinary IR shared by both backends, including reads of pure
+exported functions. No edge is assumed harmless merely because its target is
+unknown. Calls check the callee before argument effects; simple writes evaluate
+the right side before their final write check. Direct known premature reads stay
+NotYet. Partial namespace containers still have no representation: an unresolved
+read while the body is incomplete stops loudly, even if some exports have been
+assigned. Neither container escape nor callable/class merging is admitted.
 
 Node fixtures exercise private mutable state, nested generic functions,
 same-spelled constants/functions, type/value name coexistence, detached function
@@ -163,7 +171,8 @@ check in both backends, rather than treating native zero bits as a typed value.
 This check intentionally stops a checker-accepted type lie where Node reads
 undefined. Flat object namespace var bindings hoist their identifier leaves and assign them
 in source order. Arrays, nested patterns, defaults and rest remain NotYet.
-Function-local var remains unsupported. Arbitrary calls during namespace initialization remain NotYet.
+Function-local var remains unsupported. Initializer calls use the namespace
+reachability and readiness rule above.
 Mutable exports are admitted by the later live-storage step.
 
 The parser-state fixture observes a var before its declaration, initializes a
@@ -179,8 +188,9 @@ integrated through the split lowering files. Ordinary and const enums may be
 declared directly in a namespace, including nested JSDocParser. Symbols retain
 the enum's declaration identity. Ordinary objects use the existing forward and
 reverse maps and ownership rules; const members inline. Computed, ambient,
-merged and prematurely observed enums remain NotYet. The existing closed-domain
-checks also guard namespace enum values through writable views and containers.
+merged and prematurely observed enums remain NotYet. Namespace enums now follow current main's numeric-enum policy: a whole numeric
+enum is open to numbers, while string enum identity, member-specific literal
+promises and writable enum-object views retain their checks.
 
 The parser-enum fixture covers two parser enum scopes, a nested JSDoc parser,
 const member inlining, numeric aliases/reverse mapping, and IncrementalParser.
@@ -191,9 +201,9 @@ independent Node stdout.
 
 Namespace statements now run in source order at module evaluation, with nested
 bodies evaluated at their declaration. Console calls, local assignments and
-ordinary control flow are admitted. Arbitrary calls and construction while any
-runtime namespace is pending remain NotYet: they could see partially assigned
-exports through deferred code. Initializer calls have the same restriction.
+ordinary control flow are admitted. Calls and construction are admitted when they do not reach a pending namespace.
+Known premature namespace reads stay NotYet; unresolved targets carry runtime
+readiness checks at their eventual namespace accesses.
 Direct singleton var is hoisted; var hidden inside namespace control flow remains
 NotYet until its block and function scope are modeled. Early qualified namespace
 reads remain NotYet, including reads before a nested namespace's body finishes.
@@ -264,9 +274,9 @@ not adapted original compiler implementations.
 | ReactNames | Lowers | Original branded casts untested |
 | BinaryExpressionState | Lowers | Original callable types and bodies untested |
 | Parser.JSDocParser | Lowers | Original bodies and surrounding parser state untested |
-| Parser | NotYet | Scanner/factory initializer call during namespace evaluation |
+| Parser | NotYet | Bodyless overload signature after safe initializer calls |
 | IncrementalParser | NotYet | Two overload signatures without bodies |
-| Debug | NotYet | Cache initializer call; class, overloads and log merge also remain |
+| Debug | NotYet | Namespace class; overloads and log merge also remain |
 | Debug.log | NotYet | Callable namespace object |
 | tracingEnabled | NotYet | Escaped runtime container |
 
@@ -317,9 +327,9 @@ The factory oracle compares both callable bindings with Node; a same-signature
 wrong-method mutant is caught by stdout. Replacing the structured diagnostic
 with an ordinary error is caught by its location regression.
 
-## Remaining original bodies after the current-main merge
+## Original bodies at f893faf2
 
-The fresh twelve-slice matrix remains five Compiles, five NotYet and two Refused.
+At f893faf2 the twelve-slice matrix was five Compiles, five NotYet and two Refused.
 BuilderState canReuseOldState and Debug.log also need the boolean-only operator
 decision; JsxNames and ReactNames need a primitive-brand construction decision.
 Tracing still requires a canonical runtime container with alias-write semantics;
@@ -341,3 +351,21 @@ original namespace slices still have five Compiles, five NotYet and two Refused;
 this minimal Debug probe does not establish full Debug or parser execution.
 [Integration repair, exact source, mutants and fresh counts](../stage3/namespaces/DEBUG_PROBE.md)
 record the evidence.
+
+## Reachable initialization calls from core.ts
+
+The exact `new Map<never, never>()` before Debug from parser probe 77aaea49 now
+prints `0:false`, matching Node. Empty never-key/value maps use storage slots
+without inventing inhabitants; writable widening remains refused. Direct and
+helper calls reaching pending Debug stay located NotYet. Indirect state reads,
+pure function calls, void calls, const-enum reads and writes stop with the same error and effects
+as Node in the new fixtures. Three compiler mutants prove the static refusal pin, runtime check and
+const-enum hook independently.
+
+The refreshed original-source matrix is six Compiles, three NotYet and three
+Refused. Current main's open numeric-enum policy admits fixture 09; its source
+was not edited. Main's checked-cast policy changes 02 and 03 from NotYet to
+Refused. Fixture 06 and its refusal are unchanged. The initialization unit
+clears the separate core Map probe; it does not change those three policy rows.
+[Reachability report, programs, diagnostics, counts and validation](../stage3/namespaces/REACHABILITY.md)
+record the observations and remaining limits.
