@@ -141,3 +141,13 @@ not checker facts or the pending .a/suggestion harness changes. No rule stubs or
 shared-file edits were made. The three reservations remain explicit and are not
 marked complete; no further rules are claimed. Evidence and the prerequisite map
 are in ../WAVE_11_SIXTH_REPORT.md.
+
+## Landing revalidation
+
+Rebased all wave-11 commits onto origin/main e8ba3d5d after main advanced during
+an earlier complete validation run. All fifteen implemented rules passed their
+final-base native Go-byte comparisons, normal and sanitized corpus checks,
+existing rule/raw-question mutants and released-handle checks again. Bridge
+checks and the expanded compiler oracle passed. Detailed limits, old/new commit
+maps and logs are in ../WAVE_11_LANDING_REPORT.md. The three sixth-batch React
+claims remain blocked and unported; no additional rules are reserved.
