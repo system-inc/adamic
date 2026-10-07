@@ -75,3 +75,18 @@ Implementation begins only after this claim commit is pushed successfully.
 Claim abdad124 was pushed before implementation. These three native .a ports
 and their byte comparisons, mutants, sanitizers and released-handle checks are
 complete in WAVE_25_FOURTH_REPORT.md. No additional rules are claimed.
+
+## Fifth batch, October 7
+
+The preceding three rules are complete, tested and pushed in 056799e9.
+An explicit fetch of every origin head refreshed 394 refs; all 77 distinct
+textual claim blobs were checked. The first three unported, unclaimed rules
+in the combined-volume ranking are reserved here:
+
+- react-hooks/unsupported-syntax (combined volume 0)
+- react-hooks/use-memo (combined volume 0)
+- react/boolean-prop-naming (combined volume 0)
+
+Baseline main: e011f8f60899586d6373a5ccb07335ad82cfbf3c
+Baseline tsgo-c-library: 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6
+Implementation begins only after this claim is pushed.
