@@ -1,0 +1,5 @@
+// Reduced from TypeScript 6.0.3, src/compiler/scanner.ts:2362
+let pos = 0;
+function report(value: number): void { console.log(`${value}`); }
+report(pos++);
+console.log(`${pos}`);

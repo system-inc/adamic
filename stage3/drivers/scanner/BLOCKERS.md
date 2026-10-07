@@ -1,5 +1,47 @@
 # Scanner blockers
 
+## October 7: ten stops behind Map and Uint16Array discovery stubs
+
+Discovery only, using compiler scratch 04a365a8. Nothing stubbed enters the
+validated slice. Its byte audit still passes. Full diagnostics, bypass sequence,
+commands and source Node observations: `evidence/discovery-after-union-map.json`.
+All probes below run on Node with exit 0 and empty stderr, and reproduce the
+listed compiler stop. No scanner C was emitted and no equivalence is claimed.
+
+First, stubbing getNameOfScriptTarget's body bypasses the Map iterator and reaches
+utilities.ts:65:11, Uint16Array<ArrayBuffer>. Existing minimal probe:
+`uint16-array-constructor.a`. Stubbing parsePseudoBigInt then reaches these ten
+ordered stops (discovery locations; shrinking stubs change later line numbers):
+
+| Order | Location | Exact stop | Minimal probe | Required feature |
+| --- | --- | --- | --- | --- |
+| 1 | nested_functions.go:99 while lowering createScanner | nil-pointer panic at bodyless nested overload signature | nested-overload-declaration.a | Skip overload signatures and lower implementation |
+| 2 | scanner.ts:694:32 | BinaryExpression with a string and a number | string-number-concatenation.a | JavaScript string-number concatenation |
+| 3 | scanner.ts:752:26 | BinaryExpression with a string and a number | string-number-concatenation.a | Same feature, next coercion site |
+| 4 | scanner.ts:776:15 | destructuring a string | string-length-destructuring.a | String property destructuring |
+| 5 | scanner.ts:1630:67 | first-class nested function reference from another nested function | nested-sibling-callback.a | Sibling nested callback value |
+| 6 | scanner.ts:1805:62 | PostfixUnaryExpression | postfix-call-argument.a | Value-used postfix increment |
+| 7 | scanner.ts:2049:25 | first-class nested function reference from another nested function | nested-generic-sibling-call.a | Generic sibling call with callback capturing a sibling |
+| 8 | scanner.ts:2093:21 | first-class nested function reference from another nested function | nested-ancestor-call.a | Ancestor nested function call from deeper nesting |
+| 9 | scanner.ts:2267:138 | PrefixUnaryExpression on a number | prefix-call-argument.a | Value-used prefix increment |
+| 10 | scanner.ts:555:18 | function returning T | generic-function-property.a | Generic arrow wrapper in returned scanner object |
+
+The ten count ordered sites, including repeated diagnostic families, rather than
+ten distinct compiler features. Every NotYet above has the usual prefix
+`stage 0 can't lower a ... yet`. The panic is a compiler crash, not a refusal.
+Source spans are documented in each minimal probe. These representation-specific
+reasons are not separately named in REPORT.md; required features in the table are
+source-based inferences, with ownership left to compiler.
+
+Bypasses are recorded explicitly: stub the Map-using helper and bigint helper;
+remove nested error overload signatures; use String calls at numeric coercions;
+read string .length directly; omit conflict-marker error callbacks; split the
+postfix argument increment; omit the regex scanRange callback; stub the regex
+worker; use a compound assignment for the prefix argument. All are untracked
+exploration changes, not proposed adaptations. No mutant is claimed for a native
+scanner comparison because every run stops before C emission. Prior probe/output
+mutants remain recorded in the preceding real-build evidence.
+
 ## October 7: Map storage fixed; union iterator binding is first real stop
 
 Merged host-blockers 2606e8b4 into the unpushed scratch already carrying
