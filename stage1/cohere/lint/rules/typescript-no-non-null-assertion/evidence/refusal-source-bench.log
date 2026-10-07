@@ -1,0 +1,18 @@
+=== RUN   TestThirdReportingRefusal
+    lint_test.go:865: Node: explicit reporting refusal, exit 70
+    lint_test.go:865: emitted JavaScript: explicit reporting refusal, exit 70
+    lint_test.go:865: sanitized native: explicit reporting refusal, exit 70
+--- PASS: TestThirdReportingRefusal (13.38s)
+=== RUN   TestThirdSourceThroughput
+    lint_test.go:897: @typescript-eslint/no-non-null-asserted-optional-chain Go: 7 findings, 211.759164ms, 33.06 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-non-null-asserted-optional-chain native: 7 findings, 1.396237896s, 5.01 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-non-null-asserted-optional-chain Node: 7 findings, 866.419285ms, 8.08 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-non-null-assertion Go: 1123 findings, 211.679963ms, 5305.18 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-non-null-assertion native: 1123 findings, 1.235574496s, 908.89 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-non-null-assertion Node: 1123 findings, 904.653212ms, 1241.36 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-this-alias Go: 0 findings, 206.102373ms, 0.00 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-this-alias native: 0 findings, 1.276475159s, 0.00 findings/s (208 compiler/stage1 files, one run)
+    lint_test.go:897: @typescript-eslint/no-this-alias Node: 0 findings, 1.054661149s, 0.00 findings/s (208 compiler/stage1 files, one run)
+--- PASS: TestThirdSourceThroughput (12.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.152s

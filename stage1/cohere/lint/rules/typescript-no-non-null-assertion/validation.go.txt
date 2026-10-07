@@ -1,0 +1,156 @@
+
+func thirdDescriptors(t *testing.T) []registry.Descriptor {
+ var result []registry.Descriptor
+ for _,descriptor:=range prepareRegistry(t,".") {
+  if strings.HasPrefix(descriptor.Slug,"typescript-no-non-null-") || descriptor.Slug=="typescript-no-this-alias" { result=append(result,descriptor) }
+ }
+ if len(result)!=3 {t.Fatalf("wanted 3 new descriptors, got %d",len(result))}
+ return result
+}
+func TestThirdWitnesses(t *testing.T) {
+ var rows []string
+ for _,descriptor:=range thirdDescriptors(t) {
+  for _,source:=range ownedWitnesses(t,".",descriptor.Slug) {
+   rows=append(rows,source+"\t"+descriptor.Name+"\t\t\tfalse\tnull\tapply",source+"\tall\t\t\tfalse\tnull\tapply")
+  }
+ }
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
+func TestThirdUpstream(t *testing.T) {
+ var rows []string
+ selected:=map[string]bool{}
+ for _,descriptor:=range thirdDescriptors(t) {selected[descriptor.Name]=true}
+ for _,row:=range upstream(t) {
+  if selected[strings.Split(row,"\t")[1]] {rows=append(rows,row+"\tapply")}
+ }
+ t.Logf("new rule upstream cases: %d",len(rows))
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
+func TestThirdCompiler(t *testing.T) {
+ source:=os.Getenv("ADAMIC_TYPESCRIPT_SOURCE");if source=="" {t.Fatal("missing compiler checkout")}
+ pin:=execute(t,"","git","-C",source,"rev-parse","HEAD")
+ if strings.TrimSpace(string(pin.output))!=compilerCommit {t.Fatal("compiler pin differs")}
+ var rows []string
+ count:=0
+ for _,root:=range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err:=filepath.WalkDir(root,func(path string,entry fs.DirEntry,err error)error {
+   if err!=nil {return err}
+   if !entry.IsDir() && (strings.HasSuffix(path,".ts") || strings.HasSuffix(path,".a")) {
+    absolute,err:=filepath.Abs(path);if err!=nil{return err}
+    count++
+    for _,descriptor:=range thirdDescriptors(t) {rows=append(rows,absolute+"\t"+descriptor.Name)}
+   }
+   return nil
+  });if err!=nil {t.Fatal(err)}
+ }
+ t.Logf("compiler and stage1: %d files, %d rule/file pairs",count,len(rows))
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
+func TestThirdMutants(t *testing.T) {
+ oracle:=goOracle(t)
+ for _,descriptor:=range thirdDescriptors(t) {
+  t.Run(descriptor.Slug,func(t *testing.T) {
+   var rows []string
+   for _,source:=range ownedWitnesses(t,".",descriptor.Slug) {rows=append(rows,source+"\t"+descriptor.Name+"\t\t\tfalse\tnull\tapply")}
+   path:=manifest(t,rows)
+   var change struct{Name,File,From,To string}
+   data,err:=os.ReadFile(filepath.Join("rules",descriptor.Slug,"mutant.json"));if err!=nil {t.Fatal(err)}
+   if err:=json.Unmarshal(data,&change);err!=nil {t.Fatal(err)}
+   want:=execute(t,"",oracle,"--manifest",path).output
+   directory:=mutant(t,change.From,change.To,filepath.Join("rules",descriptor.Slug,change.File))
+   for _,side:=range []struct{name string;run execution}{
+    {"Node",node(t,directory,path,false)},
+    {"emitted JavaScript",emitted(t,directory,path)},
+    {"sanitized native",execute(t,"",buildPort(t,directory,true),"--manifest",path)},
+   } {
+    if bytes.Equal(side.run.output,want) {t.Fatalf("mutant survived on %s",side.name)}
+    t.Logf("%s caught only by output comparison on %s: %s",change.Name,side.name,difference(side.run.output,want))
+   }
+  })
+ }
+}
+func TestThirdThroughput(t *testing.T) {
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ oracle:=goOracle(t);binary:=buildPort(t,directory,false)
+ for _,descriptor:=range thirdDescriptors(t) {
+  source:=ownedWitnesses(t,".",descriptor.Slug)[0]
+  var rows []string
+  for index:=0;index<1000;index++ {rows=append(rows,source+"\t"+descriptor.Name)}
+  path:=manifest(t,rows)
+  var want []byte
+  for _,side:=range []struct{name string;run execution}{
+   {"Go",execute(t,"",oracle,"--manifest",path,"--count")},
+   {"native",execute(t,"",binary,"--manifest",path,"--count")},
+   {"Node",node(t,directory,path,true)},
+  } {
+   if want==nil {want=side.run.output}
+   if !bytes.Equal(want,side.run.output) {t.Fatal("benchmark counts differ")}
+   var count int;if _,err:=fmt.Sscan(string(want),&count);err!=nil {t.Fatal(err)}
+   t.Logf("%s %s: %d findings, %s, %.2f findings/s (1000 repeated owned witnesses, one run)",descriptor.Name,side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds())
+  }
+ }
+}
+
+func TestThirdReportingRefusal(t *testing.T) {
+ main,err:=filepath.Abs("main.ts");if err!=nil {t.Fatal(err)}
+ prepareRegistry(t,".")
+ program,err:=load.Load([]string{main});if err!=nil {t.Fatal(err)}
+ lowered,err:=lower.Lower(context.Background(),program);if err!=nil {t.Fatal(err)}
+ js:=filepath.Join(t.TempDir(),"original-main.mjs")
+ if err:=os.WriteFile(js,[]byte(javascript.JavaScript(lowered)),0644);err!=nil {t.Fatal(err)}
+ binary:=filepath.Join(t.TempDir(),"original-main")
+ if err:=native.Build(native.C(lowered),binary,native.Options{Sanitize:true});err!=nil {t.Fatal(err)}
+ source:=ownedWitnesses(t,".","typescript-no-non-null-assertion")[0]
+ path:=manifest(t,[]string{source+"\t@typescript-eslint/no-non-null-assertion"})
+ runner,err:=filepath.Abs(filepath.Join(repository,"oracle/node.mjs"));if err!=nil {t.Fatal(err)}
+ for _,side:=range []struct{name,command string;args []string}{
+  {"Node","node",[]string{"--disable-warning=ExperimentalWarning",runner,main,"--manifest",path}},
+  {"emitted JavaScript","node",[]string{"--disable-warning=ExperimentalWarning",runner,js,"--manifest",path}},
+  {"sanitized native",binary,[]string{"--manifest",path}},
+ } {
+  output,err:=os.CreateTemp(t.TempDir(),"refusal-");if err!=nil {t.Fatal(err)}
+  command:=exec.Command(side.command,side.args...);command.Stdout=output;command.Stderr=output
+  runError:=command.Run();if err:=output.Close();err!=nil {t.Fatal(err)}
+  data,err:=os.ReadFile(output.Name());if err!=nil {t.Fatal(err)}
+  exit,ok:=runError.(*exec.ExitError)
+  expected:="case 0\nadamic: panic: non-null rules require a driver that reports complete suggestion edits\n"
+  if !ok || exit.ExitCode()!=70 || string(data)!=expected {t.Fatalf("%s reporting refusal: %v %s",side.name,runError,data)}
+  t.Logf("%s: explicit reporting refusal, exit 70",side.name)
+ }
+}
+func TestThirdSourceThroughput(t *testing.T) {
+ source:=os.Getenv("ADAMIC_TYPESCRIPT_SOURCE");if source=="" {t.Fatal("missing compiler checkout")}
+ pin:=execute(t,"","git","-C",source,"rev-parse","HEAD")
+ if strings.TrimSpace(string(pin.output))!=compilerCommit {t.Fatal("compiler pin differs")}
+ var files []string
+ for _,root:=range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err:=filepath.WalkDir(root,func(path string,entry fs.DirEntry,err error)error {
+   if err!=nil{return err}
+   if !entry.IsDir() && (strings.HasSuffix(path,".ts") || strings.HasSuffix(path,".a")) {
+    absolute,err:=filepath.Abs(path);if err!=nil{return err};files=append(files,absolute)
+   }
+   return nil
+  });if err!=nil {t.Fatal(err)}
+ }
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ oracle:=goOracle(t);binary:=buildPort(t,directory,false)
+ for _,descriptor:=range thirdDescriptors(t) {
+  var rows []string
+  for _,path:=range files {rows=append(rows,path+"\t"+descriptor.Name)}
+  path:=manifest(t,rows)
+  var want []byte
+  for _,side:=range []struct{name string;run execution}{
+   {"Go",execute(t,"",oracle,"--manifest",path,"--count")},
+   {"native",execute(t,"",binary,"--manifest",path,"--count")},
+   {"Node",node(t,directory,path,true)},
+  } {
+   if want==nil {want=side.run.output}
+   if !bytes.Equal(want,side.run.output) {t.Fatal("benchmark counts differ")}
+   var count int;if _,err:=fmt.Sscan(string(want),&count);err!=nil {t.Fatal(err)}
+   t.Logf("%s %s: %d findings, %s, %.2f findings/s (%d compiler/stage1 files, one run)",descriptor.Name,side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds(),len(files))
+  }
+ }
+}

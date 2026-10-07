@@ -1,0 +1,111 @@
+=== RUN   TestThirdMutants
+=== RUN   TestThirdMutants/typescript-no-non-null-asserted-optional-chain
+    lint_test.go:814: assertion removes preceding byte caught only by output comparison on Node: case 0 line 7: port "edit 55 56\t", Go "edit 56 57\t"
+        Go context:
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-non-null-asserted-optional-chain4143470662/001/typescript-no-non-null-asserted-optional-chain-0.ts:2:23
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 46 57 noNonNullOptionalChain
+        suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+        edit 56 57	
+        suggested	declare const foo: any;\u000aexport const result = (foo?.bar);\u000aexport const valid = foo?.bar!.baz;\u000a
+        fixed	declare const foo: any;\u000aexport const result = (foo?.bar)!;\u000aexport const valid = foo?.bar!.baz;\u000a
+    lint_test.go:814: assertion removes preceding byte caught only by output comparison on emitted JavaScript: case 0 line 7: port "edit 55 56\t", Go "edit 56 57\t"
+        Go context:
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-non-null-asserted-optional-chain4143470662/001/typescript-no-non-null-asserted-optional-chain-0.ts:2:23
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 46 57 noNonNullOptionalChain
+        suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+        edit 56 57	
+        suggested	declare const foo: any;\u000aexport const result = (foo?.bar);\u000aexport const valid = foo?.bar!.baz;\u000a
+        fixed	declare const foo: any;\u000aexport const result = (foo?.bar)!;\u000aexport const valid = foo?.bar!.baz;\u000a
+    lint_test.go:814: assertion removes preceding byte caught only by output comparison on sanitized native: case 0 line 7: port "edit 55 56\t", Go "edit 56 57\t"
+        Go context:
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-non-null-asserted-optional-chain4143470662/001/typescript-no-non-null-asserted-optional-chain-0.ts:2:23
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 46 57 noNonNullOptionalChain
+        suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+        edit 56 57	
+        suggested	declare const foo: any;\u000aexport const result = (foo?.bar);\u000aexport const valid = foo?.bar!.baz;\u000a
+        fixed	declare const foo: any;\u000aexport const result = (foo?.bar)!;\u000aexport const valid = foo?.bar!.baz;\u000a
+=== RUN   TestThirdMutants/typescript-no-non-null-assertion
+    lint_test.go:814: optional suggestion edits omitted caught only by output comparison on Node: case 0 line 6: port "fixed\tdeclare const \\u00e9: any;\\u000aexport const text = '\\ud83d\\ude00';\\u000aexport const result = \\u00e9!\\u000a// why.\\u000a.bar;\\u000a", Go "suggestion\tsuggestOptionalChain\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-non-null-assertion3982085739/001/typescript-no-non-null-assertion-0.ts:3:23
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 73 76 noNonNull
+        suggestion	suggestOptionalChain	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.
+        edit 75 76	
+        edit 83 84	?.
+        suggested	declare const \u00e9: any;\u000aexport const text = '\ud83d\ude00';\u000aexport const result = \u00e9\u000a// why?.\u000a.bar;\u000a
+        fixed	declare const \u00e9: any;\u000aexport const text = '\ud83d\ude00';\u000aexport const result = \u00e9!\u000a// why.\u000a.bar;\u000a
+    lint_test.go:814: optional suggestion edits omitted caught only by output comparison on emitted JavaScript: case 0 line 6: port "fixed\tdeclare const \\u00e9: any;\\u000aexport const text = '\\ud83d\\ude00';\\u000aexport const result = \\u00e9!\\u000a// why.\\u000a.bar;\\u000a", Go "suggestion\tsuggestOptionalChain\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-non-null-assertion3982085739/001/typescript-no-non-null-assertion-0.ts:3:23
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 73 76 noNonNull
+        suggestion	suggestOptionalChain	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.
+        edit 75 76	
+        edit 83 84	?.
+        suggested	declare const \u00e9: any;\u000aexport const text = '\ud83d\ude00';\u000aexport const result = \u00e9\u000a// why?.\u000a.bar;\u000a
+        fixed	declare const \u00e9: any;\u000aexport const text = '\ud83d\ude00';\u000aexport const result = \u00e9!\u000a// why.\u000a.bar;\u000a
+    lint_test.go:814: optional suggestion edits omitted caught only by output comparison on sanitized native: case 0 line 6: port "fixed\tdeclare const \\u00e9: any;\\u000aexport const text = '\\ud83d\\ude00';\\u000aexport const result = \\u00e9!\\u000a// why.\\u000a.bar;\\u000a", Go "suggestion\tsuggestOptionalChain\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-non-null-assertion3982085739/001/typescript-no-non-null-assertion-0.ts:3:23
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 73 76 noNonNull
+        suggestion	suggestOptionalChain	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.
+        edit 75 76	
+        edit 83 84	?.
+        suggested	declare const \u00e9: any;\u000aexport const text = '\ud83d\ude00';\u000aexport const result = \u00e9\u000a// why?.\u000a.bar;\u000a
+        fixed	declare const \u00e9: any;\u000aexport const text = '\ud83d\ude00';\u000aexport const result = \u00e9!\u000a// why.\u000a.bar;\u000a
+=== RUN   TestThirdMutants/typescript-no-this-alias
+    lint_test.go:814: assignment aliases omitted caught only by output comparison on Node: case 0 line 2: port "fixed\tconst self = this;\\u000aconst wrapped = (this);\\u000alet target; (target as any) += this;\\u000a", Go "/tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:1:7"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:3:14
+    lint_test.go:814: assignment aliases omitted caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tconst self = this;\\u000aconst wrapped = (this);\\u000alet target; (target as any) += this;\\u000a", Go "/tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:1:7"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:3:14
+    lint_test.go:814: assignment aliases omitted caught only by output comparison on sanitized native: case 0 line 2: port "fixed\tconst self = this;\\u000aconst wrapped = (this);\\u000alet target; (target as any) += this;\\u000a", Go "/tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:1:7"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment
+        /tmp/adamic-gate/TestThirdMutantstypescript-no-this-alias1008824993/001/typescript-no-this-alias-0.ts:3:14
+--- PASS: TestThirdMutants (41.64s)
+    --- PASS: TestThirdMutants/typescript-no-non-null-asserted-optional-chain (12.95s)
+    --- PASS: TestThirdMutants/typescript-no-non-null-assertion (13.52s)
+    --- PASS: TestThirdMutants/typescript-no-this-alias (13.21s)
+=== RUN   TestThirdThroughput
+    lint_test.go:836: @typescript-eslint/no-non-null-asserted-optional-chain Go: 1000 findings, 21.932075ms, 45595.32 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-non-null-asserted-optional-chain native: 1000 findings, 36.983644ms, 27038.98 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-non-null-asserted-optional-chain Node: 1000 findings, 141.728874ms, 7055.73 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-non-null-assertion Go: 1000 findings, 20.272345ms, 49328.28 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-non-null-assertion native: 1000 findings, 32.49845ms, 30770.70 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-non-null-assertion Node: 1000 findings, 142.945477ms, 6995.67 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-this-alias Go: 2000 findings, 24.245567ms, 82489.31 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-this-alias native: 2000 findings, 32.491434ms, 61554.69 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:836: @typescript-eslint/no-this-alias Node: 2000 findings, 145.279884ms, 13766.53 findings/s (1000 repeated owned witnesses, one run)
+--- PASS: TestThirdThroughput (6.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	47.718s

@@ -1,0 +1,6 @@
+=== RUN   TestThirdCompiler
+    lint_test.go:792: compiler and stage1: 208 files, 624 rule/file pairs
+    lint_test.go:794: Go, Node, emitted JavaScript, native identical: 38294173 bytes
+--- PASS: TestThirdCompiler (84.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	84.528s

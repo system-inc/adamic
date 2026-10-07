@@ -1,0 +1,45 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+    input_test.go:110: gate cache probe hit
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+    input_test.go:110: gate cache probe hit
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+    input_test.go:110: gate cache probe hit
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+    input_test.go:110: gate cache probe hit
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+    input_test.go:110: gate cache probe hit
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+    input_test.go:110: gate cache probe hit
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (0.12s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.12s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.12s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/walk.a (0.13s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.15s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.04s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=6 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.175s
