@@ -1,5 +1,5 @@
 Built batch8 and the supplied batch4 TypeScript syntax driver on current main; scratch attribution includes integer fast paths and numeric Map hashing.
-Runtime commits: 8b629af, b7059e0, 4ffed41, 0f58c62; fixture/count registration b02f762; report is the pushed branch tip.
+Runtime commits: 8b629af, b7059e0, 4ffed41, 0f58c62; fixture/count registration b02f762; clean integration tip 8c171be; report is the pushed profile branch tip.
 Commands and outputs: best-of-five interleaved Go/native/Node, full byte parity, Linux perf call graphs, core.ts Callgrind, package gates; tables and logs below.
 Mutants: release drain/decrement/children and wrong recorded counts caught by live/count checks; search offset/halves/miss and equality identity/bytes caught against Node.
 Not covered: type-aware profiling belongs to the bridge worker by instruction; batch6 not rebuilt, full repository gate and other architectures not run; runtime branch stays from main, with no lint/emitter/map-hash merges.
@@ -252,6 +252,29 @@ Full native package: PASS, 137.073s. Uncached relevant oracle: PASS, 5.281s. Cou
 Search mutations compile and execute: returning byte offsets, searching surrogate halves as ordinary bytes, and returning zero for absence each disagree with Node. Equality mutations invert the header identity condition or bypass memcmp and produce a false true for distinct equal-length heap strings, caught against Node. Release mutations skip last-reference draining or decrement twice; explicit live-count assertions catch leaked pending values or prematurely freed shared values. The initial uncounted skipped-drain control **survived**: the pending free queue kept values reachable to LeakSanitizer. The control was strengthened with runtime live counts, rerun, and killed the same mutant. This survivor and its correction are retained in logs. Compile-time rejection is not counted as a killed semantic mutant.
 
 The lastIndexOf test exercises empty/absent/overlong needles, repeated ASCII, multibyte BMP characters, paired and lone surrogates, embedded NUL, every substring of its pieces, and sliced heap strings. Node, release, ASan/UBSan and the JavaScript backend agree on 758 output bytes. The release control covers null, immortal, shared and final references and a 100,000-object chain with heap strings, in normal and sanitizer modes.
+
+## Clean runtime integration branch
+
+`codex/lint-runtime-fixes` is based on current origin/main e011f8f60899586d6373a5ccb07335ad82cfbf3c and pushed at **8c171be2163f8bad0410e7061520812f766b863d**. It contains exactly the requested five cherry-picks, eight changed runtime/test/fixture files, and no profiling artifacts, lint batches, integer-fast-path or map-hash integrations.
+
+| Profile source commit | Integration cherry-pick |
+|---|---|
+| 8b629af | a24561a72c5a8358c24d5f4953adb6f8259ed6f6 |
+| b7059e0 | 77b48689c90bca7430757acd6a34e747af0923c2 |
+| 4ffed41 | 59a085087eefb2c3bb3f0c2cb2874784449d0506 |
+| 0f58c62 | cc0c246e4e0f590182966623922dbfef7455a0e6 |
+| b02f762 | 8c171be2163f8bad0410e7061520812f766b863d |
+
+Toolchain setup on this branch: Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s, build cache warm 139s, total 139s. `nproc` is 5; cgroup cpu.max is 400000/100000. Every command sourced `/workspace/adamic-tools/env.sh`; output went directly to a log:
+
+```sh
+ADAMIC_TOOLS=/workspace/adamic-tools bash cloud/setup.sh > /tmp/lint-fixes-setup.log 2>&1
+go test ./internal/native -count=1 -timeout 30m > /tmp/lint-fixes-native.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m > /tmp/lint-fixes-counts.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestRuntimeLastIndexOfMatchesNode$' -count=1 -timeout 30m > /tmp/lint-fixes-search.log 2>&1
+```
+
+Native package PASS 126.350s; all recorded counts PASS 21.400s; uncached search comparison against Node PASS 0.669s. No count-table or source adjustment was needed. `git diff --check` and working-tree status are clean. Existing semantic mutants and their failures are recorded above; these cherry-picks introduce no additional checks. The complete repository test gate was not rerun. Logs and exact source-to-integration commit mapping are preserved under `evidence/lint-fixes-*`; they stay on the profile branch.
 
 ## Remaining gap
 
