@@ -1,0 +1,326 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+v24.19.0
+setup: node ready (0s)
+setup: submodules ready (1s)
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	0.044s [no tests to run]
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.010s [no tests to run]
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+ok  	github.com/system-inc/adamic/cloud	0.004s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.013s [no tests to run]
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.007s [no tests to run]
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	0.007s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+ok  	github.com/system-inc/adamic/internal/flow	0.090s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/fresh	0.080s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/fuzz	0.039s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/ir	0.022s [no tests to run]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	0.064s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/lower	0.066s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/native	0.029s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/oracle	0.058s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/regexp	0.013s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	0.018s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/css	0.045s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	0.071s [no tests to run]
+# github.com/system-inc/adamic/stage1/cohere/formatfiles
+# [github.com/system-inc/adamic/stage1/cohere/formatfiles]
+vet: stage1/cohere/formatfiles/formatfiles_test.go:8:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/gitignore.test
+$WORK/b323/_testmain.go:7:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+$WORK/b323/_testmain.go:9:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/gitignore
+# [github.com/system-inc/adamic/stage1/cohere/gitignore]
+vet: stage1/cohere/gitignore/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
+stage1/cohere/lint/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/lint/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/cohere/lint/gaps_test.go:6:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/lint/gaps_test.go:7:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/lint/gaps_test.go:8:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/lint/gaps_test.go:9:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/lint/gaps_test.go:10:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/lint/harness_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/lint/harness_test.go:5:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/lint/harness_test.go:6:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/lint/harness_test.go:6:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/lint/helpers [github.com/system-inc/adamic/stage1/cohere/lint/helpers.test]
+stage1/cohere/lint/helpers/helpers_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:5:2: could not import compress/gzip (open /home/agent/.cache/go-build/4d/4d2206e5133e0bb66675de7e63245cc1d4c647662ddda63e74629862e187f9a4-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:6:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:7:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:8:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:9:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:10:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:11:2: could not import io (open /home/agent/.cache/go-build/66/6679b9449c0e834ddf048fa8c0643d1dcd7b5e9ef50623ce3a86b2f535a1702c-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:12:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:13:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/lint/helpers/helpers_test.go:13:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments [github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments.test]
+stage1/cohere/lint/helpers/comments/comments_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:5:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:6:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:7:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:8:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:9:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:10:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:11:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:12:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:13:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/lint/helpers/comments/comments_test.go:13:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12 [github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12.test]
+stage1/cohere/lint/helpers/wave12/bigint_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/bigint_test.go:5:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/bigint_test.go:6:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/bigint_test.go:7:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/bigint_test.go:8:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/bigint_test.go:9:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/counter_gap_test.go:5:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/counter_gap_test.go:6:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/counter_gap_test.go:7:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/labels_test.go:7:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/lint/helpers/wave12/labels_test.go:7:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/lint/inventory [github.com/system-inc/adamic/stage1/cohere/lint/inventory.test]
+stage1/cohere/lint/inventory/main.go:5:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/lint/inventory/main.go:6:2: could not import flag (open /home/agent/.cache/go-build/6d/6df70f1496c2e92b786835f74c8846a9fe78aaec05ef0717dec14d7d0960ae3f-d: no such file or directory)
+stage1/cohere/lint/inventory/main.go:7:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/lint/inventory/main.go:8:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/lint/inventory/main.go:9:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/lint/inventory/main.go:10:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/lint/inventory/main.go:33:2: declared and not used: engine
+stage1/cohere/lint/inventory/main_test.go:8:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/lint/registry [github.com/system-inc/adamic/stage1/cohere/lint/registry.test]
+stage1/cohere/lint/registry/registry.go:5:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:6:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:7:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:8:2: could not import go/ast (open /home/agent/.cache/go-build/22/22b68bbc8c2d486b818bae7eeedd20e8168c35b11ecc5664cbdc3dd7e58b5863-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:11:2: could not import go/token (open /home/agent/.cache/go-build/cf/cf9accc55a9bd4338cc12eb0f856dfeb5ce458e42acbbddc8a6641b837e73ec2-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:12:2: could not import io (open /home/agent/.cache/go-build/66/6679b9449c0e834ddf048fa8c0643d1dcd7b5e9ef50623ce3a86b2f535a1702c-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:13:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:14:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:15:2: could not import regexp (open /home/agent/.cache/go-build/34/34b75ba7875cbb55a81491e890e05790a93e09af772c9b448dcb82824486a991-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:16:2: could not import sort (open /home/agent/.cache/go-build/79/791c9d38d1ecc97b9038c4ef8c25e8e3b3ade406419cd76af6563fc9e6e0e9e0-d: no such file or directory)
+stage1/cohere/lint/registry/registry.go:16:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/markdownblocks [github.com/system-inc/adamic/stage1/cohere/markdownblocks.test]
+stage1/cohere/markdownblocks/ast_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:5:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:6:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:7:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:8:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:9:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:10:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:11:2: could not import time (open /home/agent/.cache/go-build/c3/c3beca8e80d518b9d575a82fecc6a05470acc51e86e94b88bc41d5dbe2c065b0-d: no such file or directory)
+stage1/cohere/markdownblocks/ast_test.go:13:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/markdownblocks/audit_test.go:5:2: could not import crypto/sha256 (open /home/agent/.cache/go-build/8c/8ccd5ba70fc14a6e9341417cdaa890341d814bd745de8ecb7e746c8329c466c8-d: no such file or directory)
+stage1/cohere/markdownblocks/audit_test.go:5:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:5:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:6:2: could not import crypto/sha256 (open /home/agent/.cache/go-build/8c/8ccd5ba70fc14a6e9341417cdaa890341d814bd745de8ecb7e746c8329c466c8-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:7:2: could not import flag (open /home/agent/.cache/go-build/6d/6df70f1496c2e92b786835f74c8846a9fe78aaec05ef0717dec14d7d0960ae3f-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:8:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:9:2: could not import go/ast (open /home/agent/.cache/go-build/22/22b68bbc8c2d486b818bae7eeedd20e8168c35b11ecc5664cbdc3dd7e58b5863-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:11:2: could not import go/token (open /home/agent/.cache/go-build/cf/cf9accc55a9bd4338cc12eb0f856dfeb5ce458e42acbbddc8a6641b837e73ec2-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:12:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:13:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_classes/main.go:14:2: could not import strconv (open /home/agent/.cache/go-build/cc/cc3d09a73b2608d56be41802c7d8512bb6b6cd4817ca493804cce0bb60f3c19d-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:5:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:6:2: could not import crypto/sha256 (open /home/agent/.cache/go-build/8c/8ccd5ba70fc14a6e9341417cdaa890341d814bd745de8ecb7e746c8329c466c8-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:7:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:8:2: could not import flag (open /home/agent/.cache/go-build/6d/6df70f1496c2e92b786835f74c8846a9fe78aaec05ef0717dec14d7d0960ae3f-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:9:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:10:2: could not import go/ast (open /home/agent/.cache/go-build/22/22b68bbc8c2d486b818bae7eeedd20e8168c35b11ecc5664cbdc3dd7e58b5863-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:12:2: could not import go/token (open /home/agent/.cache/go-build/cf/cf9accc55a9bd4338cc12eb0f856dfeb5ce458e42acbbddc8a6641b837e73ec2-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:13:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:14:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:15:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_entities/main.go:15:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width
+stage1/cohere/markdownblocks/tools/generate_width/main.go:5:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:6:2: could not import crypto/sha256 (open /home/agent/.cache/go-build/8c/8ccd5ba70fc14a6e9341417cdaa890341d814bd745de8ecb7e746c8329c466c8-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:7:2: could not import flag (open /home/agent/.cache/go-build/6d/6df70f1496c2e92b786835f74c8846a9fe78aaec05ef0717dec14d7d0960ae3f-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:8:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:9:2: could not import go/ast (open /home/agent/.cache/go-build/22/22b68bbc8c2d486b818bae7eeedd20e8168c35b11ecc5664cbdc3dd7e58b5863-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:11:2: could not import go/token (open /home/agent/.cache/go-build/cf/cf9accc55a9bd4338cc12eb0f856dfeb5ce458e42acbbddc8a6641b837e73ec2-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:12:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:13:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:14:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:15:2: could not import regexp/syntax (open /home/agent/.cache/go-build/38/384638ba33a3bc8fba45ee919f64f1253351a4b3511553f0065a7df8764ac954-d: no such file or directory)
+stage1/cohere/markdownblocks/tools/generate_width/main.go:15:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/markdowninline [github.com/system-inc/adamic/stage1/cohere/markdowninline.test]
+stage1/cohere/markdowninline/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/markdowninline/gaps_test.go:5:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/markdowninline/gaps_test.go:6:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/markdowninline/gaps_test.go:8:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/markdowninline/gaps_test.go:9:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/markdowninline/port_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/markdowninline/port_test.go:6:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/markdowninline/port_test.go:7:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/cohere/markdowninline/port_test.go:8:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/markdowninline/port_test.go:9:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/markdowninline/port_test.go:9:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/mediaquery [github.com/system-inc/adamic/stage1/cohere/mediaquery.test]
+stage1/cohere/mediaquery/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:6:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:7:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:8:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:10:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:11:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/mediaquery/gaps_test.go:12:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/mediaquery/mediaquery_test.go:8:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/mediaquery/mediaquery_test.go:10:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/mediaquery/mediaquery_test.go:10:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/selector [github.com/system-inc/adamic/stage1/cohere/selector.test]
+stage1/cohere/selector/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:6:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:7:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:8:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:10:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:11:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/selector/gaps_test.go:12:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/selector/selector_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/selector/selector_test.go:6:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/selector/selector_test.go:6:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/suppression [github.com/system-inc/adamic/stage1/cohere/suppression.test]
+stage1/cohere/suppression/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:6:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:7:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:8:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:10:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:11:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/suppression/gaps_test.go:12:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/suppression/suppression_test.go:8:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/suppression/suppression_test.go:10:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/suppression/suppression_test.go:10:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/typeaware [github.com/system-inc/adamic/stage1/cohere/typeaware.test]
+stage1/cohere/typeaware/profile_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/typeaware/profile_test.go:5:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/cohere/typeaware/profile_test.go:6:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/cohere/typeaware/profile_test.go:7:2: could not import os/exec (open /home/agent/.cache/go-build/62/628607a184a5bf70750fc41809a7dacce286efa665b88c7d1debb28279e5c368-d: no such file or directory)
+stage1/cohere/typeaware/profile_test.go:8:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/typeaware/profile_test.go:9:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/typeaware/profile_test.go:10:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/typeaware/suite_test.go:5:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/typeaware/suite_test.go:7:8: could not import go/ast (open /home/agent/.cache/go-build/22/22b68bbc8c2d486b818bae7eeedd20e8168c35b11ecc5664cbdc3dd7e58b5863-d: no such file or directory)
+stage1/cohere/typeaware/suite_test.go:8:2: could not import go/parser (open /home/agent/.cache/go-build/f8/f83ed11557637b25a6a232cc590880f9225ed0cf7f5839ada5ba7439f4d06c0c-d: no such file or directory)
+stage1/cohere/typeaware/suite_test.go:8:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/values [github.com/system-inc/adamic/stage1/cohere/values.test]
+stage1/cohere/values/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:6:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:7:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:8:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:10:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:11:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/cohere/values/gaps_test.go:12:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/cohere/values/values_test.go:8:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/cohere/values/values_test.go:10:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage1/cohere/values/values_test.go:10:2: too many errors
+# github.com/system-inc/adamic/stage1/typescript/parser [github.com/system-inc/adamic/stage1/typescript/parser.test]
+stage1/typescript/parser/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/typescript/parser/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/typescript/parser/gaps_test.go:6:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/typescript/parser/gaps_test.go:7:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/typescript/parser/gaps_test.go:8:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/typescript/parser/gaps_test.go:10:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/typescript/parser/gaps_test.go:11:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/typescript/parser/generated_test.go:4:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage1/typescript/parser/generated_test.go:5:2: could not import math/rand (open /home/agent/.cache/go-build/5b/5b062abf5e5360653844345a881f3e2f92767ea8686e456296a1469a70a7bad2-d: no such file or directory)
+stage1/typescript/parser/generated_test.go:6:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/typescript/parser/generated_test.go:6:2: too many errors
+# github.com/system-inc/adamic/stage1/typescript/scanner [github.com/system-inc/adamic/stage1/typescript/scanner.test]
+stage1/typescript/scanner/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage1/typescript/scanner/gaps_test.go:5:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage1/typescript/scanner/gaps_test.go:6:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage1/typescript/scanner/gaps_test.go:7:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+stage1/typescript/scanner/gaps_test.go:9:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage1/typescript/scanner/gaps_test.go:10:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage1/typescript/scanner/profile_test.go:5:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage1/typescript/scanner/profile_test.go:7:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+stage1/typescript/scanner/profile_test.go:12:2: could not import github.com/system-inc/adamic/internal/native (open /home/agent/.cache/go-build/40/40bcdffc4582aff536d1f8212e0d4ce1dd480098d3921da342dffeec5975b355-d: no such file or directory)
+stage1/typescript/scanner/scanner_test.go:4:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+stage1/typescript/scanner/scanner_test.go:4:2: too many errors
+# github.com/system-inc/adamic/stage1/cohere/graphql.test
+$WORK/b325/_testmain.go:7:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+$WORK/b325/_testmain.go:9:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+$WORK/b325/_testmain.go:10:2: could not import testing/internal/testdeps (open /home/agent/.cache/go-build/b3/b37849530f1470284a0bbf700fef23211901cefcf8ef3b96819626109cac043d-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/graphql
+# [github.com/system-inc/adamic/stage1/cohere/graphql]
+vet: stage1/cohere/graphql/gaps_test.go:4:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+# github.com/system-inc/adamic/stage3/census/tool
+stage3/census/tool/main.go:5:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage3/census/tool/main.go:6:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage3/census/tool/main.go:7:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage3/census/tool/main.go:8:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+stage3/census/tool/main.go:9:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage3/census/tool/main.go:10:2: could not import path/filepath (open /home/agent/.cache/go-build/5f/5f89bd0ff9fb8f0de2f45b7ea959e98d6bfcde1ab8dcaa24abea01cd0c70f1f1-d: no such file or directory)
+stage3/census/tool/main.go:11:2: could not import sort (open /home/agent/.cache/go-build/79/791c9d38d1ecc97b9038c4ef8c25e8e3b3ade406419cd76af6563fc9e6e0e9e0-d: no such file or directory)
+stage3/census/tool/main.go:12:2: could not import time (open /home/agent/.cache/go-build/c3/c3beca8e80d518b9d575a82fecc6a05470acc51e86e94b88bc41d5dbe2c065b0-d: no such file or directory)
+stage3/census/tool/main.go:14:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage3/census/tool/main.go:15:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+stage3/census/tool/main.go:15:2: too many errors
+# github.com/system-inc/adamic/stage3/drivers/parser/probe
+stage3/drivers/parser/probe/main.go:5:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+stage3/drivers/parser/probe/main.go:6:2: could not import encoding/json (open /home/agent/.cache/go-build/6e/6ee72dcc6379f7aa8768e3e1eb1fe36d329d38966d462dfe717f880f7c7543b4-d: no such file or directory)
+stage3/drivers/parser/probe/main.go:7:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+stage3/drivers/parser/probe/main.go:8:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+stage3/drivers/parser/probe/main.go:10:2: could not import github.com/system-inc/adamic/internal/load (open /home/agent/.cache/go-build/c8/c889dda6bfe7d7a7c7074788e74a52798ed999bcba551f3d32673884c76c892a-d: no such file or directory)
+stage3/drivers/parser/probe/main.go:11:2: could not import github.com/system-inc/adamic/internal/lower (open /home/agent/.cache/go-build/6c/6c2e9c98dac02f7a0d9f4cdfe2c5d2090d78892ac119094888d1161084ea1a99-d: no such file or directory)
+# net/url
+../adamic-tools/go/src/net/url/url.go:18:2: could not import bytes (open /home/agent/.cache/go-build/1a/1a9ceaf0ac5983407b1c8988f68258bfdc38bf14a3c8eb0b04ac676ce60e3bd1-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:19:2: could not import errors (open /home/agent/.cache/go-build/85/85be88377cd933a517aa198cb48396ec27e4dcfd1a854baa31c2ab880f7dfd23-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:20:2: could not import fmt (open /home/agent/.cache/go-build/9e/9e9dac3263e08c1b75c5e32a44f61871e360a6cc18adb10046db2489cf320111-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:21:2: could not import internal/godebug (open /home/agent/.cache/go-build/7f/7fe567de193e3045833defa0f415e1ef8bed42a37ed29fd8f79f7654f99010a4-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:22:2: could not import net/netip (open /home/agent/.cache/go-build/14/14734ecab175a85950141581fe942fcb9e8093b7585fdf3d5cb38126fa874c76-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:23:2: could not import path (open /home/agent/.cache/go-build/17/17d5f22ec6ca2c2ff18a67a0d62993f5e7925e8d96d5f3c2e42e2cf12935ebcf-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:24:2: could not import slices (open /home/agent/.cache/go-build/e4/e4baaa8e2a83d40777c65a5af0c4443587a80afe6a6810cef6919f9af42686dc-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:25:2: could not import strconv (open /home/agent/.cache/go-build/cc/cc3d09a73b2608d56be41802c7d8512bb6b6cd4817ca493804cce0bb60f3c19d-d: no such file or directory)
+../adamic-tools/go/src/net/url/url.go:26:2: could not import strings (open /home/agent/.cache/go-build/9f/9f61e958341d7fd45b19f9d8904f42a115753661dc269fff409166f7a903c639-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/json.test
+$WORK/b327/_testmain.go:7:2: could not import os (open /home/agent/.cache/go-build/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d: no such file or directory)
+$WORK/b327/_testmain.go:9:2: could not import testing (open /home/agent/.cache/go-build/26/26a47130d14af2cdc8a5d8e598cf8c137bcce2c9fa326179aaaf05c3fb8a056d-d: no such file or directory)
+$WORK/b327/_testmain.go:10:2: could not import testing/internal/testdeps (open /home/agent/.cache/go-build/b3/b37849530f1470284a0bbf700fef23211901cefcf8ef3b96819626109cac043d-d: no such file or directory)
+# github.com/system-inc/adamic/stage1/cohere/json
+# [github.com/system-inc/adamic/stage1/cohere/json]
+vet: stage1/cohere/json/audit_test.go:5:2: could not import context (open /home/agent/.cache/go-build/08/088b6284723aab346bd7c558014ee461e8fa550588a4fd6c58e27888d23bb8c7-d: no such file or directory)
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	0.009s [no tests to run]
+FAIL	github.com/system-inc/adamic/stage1/cohere/formatfiles [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/gitignore [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/graphql [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12 [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/inventory [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdowninline [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/mediaquery [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/selector [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/suppression [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/values [build failed]
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser [build failed]
+FAIL	github.com/system-inc/adamic/stage1/typescript/scanner [build failed]
+?   	github.com/system-inc/adamic/stage3/census/latent/tool	[no test files]
+FAIL	github.com/system-inc/adamic/stage3/census/tool [build failed]
+FAIL	github.com/system-inc/adamic/stage3/drivers/parser/probe [build failed]
+FAIL	github.com/system-inc/adamic/stage3/fixtures [build failed]
+FAIL
