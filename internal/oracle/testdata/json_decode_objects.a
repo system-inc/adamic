@@ -1,0 +1,45 @@
+import { decodeJson } from 'adamic';
+interface Item { readonly first: string; readonly second: number; readonly note?: string; }
+for (const text of ['{"extra":1,"second":2,"first":"one"}', '{"first":"old","first":"new","second":2}', '{"first":"one","second":2,"note":"yes"}', '{"first":"one","second":2}', '{"first":"one"}', '{"first":"one","second":2,"note":null}', 'null', '[]']) {
+ const result = decodeJson<Item>(text);
+ if (result.kind === 'Ok') console.log(`${Object.keys(result.value).join(',')} ${result.value.first} ${result.value.second} ${result.value.note ?? 'absent'}`);
+ else console.log(result.message);
+}
+const tuple = decodeJson<readonly [string, number, boolean]>('["pair",2,true]');
+if (tuple.kind === 'Ok') console.log(`${tuple.value[0]} ${tuple.value[1]} ${tuple.value[2]}`);
+else console.log(tuple.message);
+for (const text of ['[]', '["pair",2]', '["pair",2,true,0]', '["pair","bad",true]', '{}']) console.log(decodeJson<readonly [string, number, boolean]>(text).kind);
+interface Nested { readonly inner: Item; readonly values: readonly number[]; }
+const nested = decodeJson<Nested>('{"inner":{"first":"inside","second":3},"values":[1,2,3]}');
+if (nested.kind === 'Ok') console.log(`${nested.value.inner.first} ${nested.value.values.join(',')}`);
+else console.log(nested.message);
+for (const text of ['["one","two"]','["one",42]','{}']) {
+ const result = decodeJson<readonly string[]>(text);
+ if (result.kind === 'Ok') console.log(result.value.join(','));
+ else console.log(result.message);
+}
+type Shape = { readonly kind: 'Circle'; readonly radius: number } | { readonly kind: 'Box'; readonly width: number };
+for (const text of ['{"kind":"Circle","radius":2,"width":99}', '{"kind":"Box","width":3}', '{"kind":"Bad"}', '{"radius":2}', '{"kind":42}', '{"kind":"Circle","radius":"bad"}', 'null']) {
+ const result = decodeJson<Shape>(text);
+ if (result.kind === 'Ok') {
+  if (result.value.kind === 'Circle') console.log(`circle ${result.value.radius}`);
+  else console.log(`box ${result.value.width}`);
+ } else console.log(result.message);
+}
+
+interface Optional<T> { readonly value?: T; }
+for (const text of ['{}','{"value":"one"}','{"value":"bad"}']) console.log(decodeJson<Optional<'one'|'two'>>(text).kind);
+const numeric = decodeJson<{readonly '2':number;readonly '1':number;readonly z:number}>('{"z":3,"2":2,"1":1,"extra":9}');
+if (numeric.kind === 'Ok') console.log(Object.keys(numeric.value).join(','));
+else console.log(numeric.message);
+
+const unusual = decodeJson<{readonly '\uD800':string;readonly '__proto__':number;readonly '#data':boolean}>('{"\\uD800":"unit","__proto__":1,"#data":true}');
+if (unusual.kind === 'Ok') console.log(Object.keys(unusual.value).join(','));
+else console.log(unusual.message);
+
+interface Fields { readonly count?: number; readonly enabled?: boolean; readonly values?: readonly number[]; readonly inner?: Item; }
+for (const text of ['{}', '{"count":0,"enabled":false,"values":[1,2],"inner":{"first":"nested","second":4}}', '{"enabled":"wrong"}', '{"count":null}']) {
+ const result = decodeJson<Fields>(text);
+ if (result.kind === 'Ok') console.log(`${Object.keys(result.value).join(',')} ${result.value.count ?? -1} ${result.value.values?.length ?? -1} ${result.value.inner?.first ?? 'absent'}`);
+ else console.log(result.message);
+}

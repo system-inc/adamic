@@ -76,6 +76,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
+		if node.Kind == ast.KindCallExpression && l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") {
+			_, found = l.decodeJsonType(node)
+			if found != nil {
+				return true
+			}
+		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {
 			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
