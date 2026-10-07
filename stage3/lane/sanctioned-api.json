@@ -27,6 +27,11 @@
       "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"UndefinedKeyword\"]]]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"AmdDependency\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"ArrowFunction\",\"modifiers\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
@@ -55,6 +60,11 @@
       "declaration": "member:[\"ts\",\"BreakStatement\",\"label\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"BuilderProgramHost\",\"createHash\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"UnionType\",[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"CallChain\",\"_optionalChainBrand\"]#0",
@@ -115,6 +125,11 @@
       "declaration": "member:[\"ts\",\"ClassLikeDeclarationBase\",\"typeParameters\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CommentRange\",\"hasTrailingNewLine\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"hasTrailingNewLine\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"hasTrailingNewLine\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"CompilerHost\",\"jsDocParsingMode\"]#0",
@@ -1099,10 +1114,14 @@
   ],
   "counts": {
     "20": 189,
+    "30": 0,
+    "32": 3,
+    "33": 0,
     "40": 28,
     "70": 1,
     "75": 1
   },
+  "excluded_method_conversions": 10,
   "owners": [
     {
       "adaptation": "20",
@@ -2849,6 +2868,30 @@
       "line": 9185
     },
     {
+      "adaptation": "32",
+      "path": [
+        "AmdDependency",
+        "name"
+      ],
+      "line": 5907
+    },
+    {
+      "adaptation": "32",
+      "path": [
+        "CommentRange",
+        "hasTrailingNewLine"
+      ],
+      "line": 5682
+    },
+    {
+      "adaptation": "32",
+      "path": [
+        "BuilderProgramHost",
+        "createHash"
+      ],
+      "line": 9674
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -2873,6 +2916,70 @@
     {
       "file": "stage3/adapt/75-optional-widening/api-additions.cjs",
       "sha256": "3fb6c96780195ab064b3ea5ba604d701f02b5d183c61f2719a1f0ffecee85a4d"
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/handoff-sites.json",
+      "sha256": "615e55b325eaa8c91de45650dacf8df6b88e6b76a7bc8a663c5e0ac40bea73a7"
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/owner-handoffs/api.json",
+      "sha256": "619f8039652982c4f0a418a21f03703ef9cb9a3011eaa27a707ef4f0dcd31131"
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
+      "sha256": "c4854d728af114d35c82c282fac9c380d6def13c1ec29b9c2ba54531cac6e720"
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/resumed-watch/api.json",
+      "sha256": "97928c24fd61e676ae1e4293f820f07f9189e536e1e268cb051ff5fc1fa6e2ab"
+    },
+    {
+      "file": "stage3/adapt/30-indexed-reads/remaining-api.json",
+      "sha256": "dbb27170ebbaf78142585a1200ffd2e100b6a493acf6934af9d08d4dc14e2c9a"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/declarations/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/emitter/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/es2018/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/module/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/module-close/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/sourcemap/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/system/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/system-close/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/ts/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/utilities/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/visitorPublic/api-projection.json",
+      "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
     }
   ],
   "baseline_diffs": [
@@ -3657,6 +3764,15 @@
     "         readonly expression: Expression;\n",
     "     }\n",
     "     interface FileReference extends TextRange {\n",
+    "@@ -5679,7 +5679,7 @@\n",
+    "     }\n",
+    "     type CommentKind = SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia;\n",
+    "     interface CommentRange extends TextRange {\n",
+    "-        hasTrailingNewLine?: boolean;\n",
+    "+        hasTrailingNewLine?: boolean | undefined;\n",
+    "         kind: CommentKind;\n",
+    "     }\n",
+    "     interface SynthesizedComment extends CommentRange {\n",
     "@@ -5703,7 +5703,7 @@\n",
     "         readonly right: Identifier;\n",
     "     }\n",
@@ -3768,6 +3884,15 @@
     "     }\n",
     "     type FlowType = Type | IncompleteType;\n",
     "     interface IncompleteType {\n",
+    "@@ -5904,7 +5904,7 @@\n",
+    "     }\n",
+    "     interface AmdDependency {\n",
+    "         path: string;\n",
+    "-        name?: string;\n",
+    "+        name?: string | undefined;\n",
+    "     }\n",
+    "     /**\n",
+    "      * Subset of properties from SourceFile that are used in multiple utility functions\n",
     "@@ -5964,6 +5964,7 @@\n",
     "     }\n",
     "     interface JsonSourceFile extends SourceFile {\n",
@@ -4043,6 +4168,15 @@
     "     }\n",
     "     interface ExtendedConfigCacheEntry {\n",
     "         extendedResult: TsConfigSourceFile;\n",
+    "@@ -9671,7 +9672,7 @@\n",
+    "         /**\n",
+    "          * If provided this would be used this hash instead of actual file shape text for detecting changes\n",
+    "          */\n",
+    "-        createHash?: (data: string) => string;\n",
+    "+        createHash?: ((data: string) => string) | undefined;\n",
+    "         /**\n",
+    "          * When emit or emitNextAffectedFile are called without writeFile,\n",
+    "          * this callback if present would be used to write files\n",
     "@@ -9795,7 +9796,7 @@\n",
     "         rootNames: readonly string[];\n",
     "         options: CompilerOptions;\n",

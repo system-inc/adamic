@@ -53,6 +53,20 @@ uses these adaptations' mechanical proof data:
   (`evidence/wave6/api-attribution.json`), proved by the same parsed-owner
   reconstruction as `20-optional-declarations/check-baselines.cjs`. Add undefined
   to each exact original AST type, retaining the function/conditional parentheses.
+- 30: `remaining-api.json` proves only the existing 189/28/1 owners and
+  contributes no additional public owner. Its README hands the optional types
+  in types.ts to 32 rather than approving a consumer rewrite.
+- 32: `handoff-sites.json` and `owner-handoffs/api.json` identify the public
+  `AmdDependency.name` and `CommentRange.hasTrailingNewLine` property unions.
+  `public-host-sites.json` and `resumed-watch/api.json` additionally prove
+  `BuilderProgramHost.createHash`, which was already a property. Match exact
+  owner paths, original AST types and before/after proof data. Include only
+  existing optional properties whose change is exactly an undefined union;
+  preserve function-type parentheses as adaptation 20 does. Original methods
+  are excluded even when the host ledger labels them as public owners.
+- 33: read every `api-projection.json` under its proof directory. Each records
+  zero additional public changes; its AllDecorators and RawSourceMap handoffs
+  are internal. A newly recorded public change requires explicit reconstruction.
 - 40: `class-rules.json`, with the composed proof's 27 public brands and the
   `ErrorCallback.arg0` payload. Resolve source owners and original any tokens
   before replacing their emitted types, exactly as adaptation 30's composed
@@ -62,7 +76,7 @@ uses these adaptations' mechanical proof data:
 - 75: its wave-2 `api.json` public addition. Its own `api-additions.cjs` must
   remove that exact optional property and recover the prerequisite byte for byte.
 
-Generation asserts the 189/28/1/1 counts, unique owner lines and original AST
+Generation asserts the 189/0/3/0/28/1/1 counts for 20/30/32/33/40/70/75, unique owner lines and original AST
 forms, and records the proof files' SHA-256 hashes. `sanctioned-api.json` includes
 the exact generated diff and normalized before/after declarations. The raw
 manifest diff is provenance; runtime approval uses normalized declarations.
@@ -106,7 +120,8 @@ bash -n stage3/lane/run.sh
 
 Tests plant valid API diffs with an unsanctioned member and a missing sanctioned
 member, an incorrect passing count, and a different single failure title.
-Additional tests cover changed types, a multiline indexed-access union, accepted
+Additional tests verify the three property handoffs and exclusion of method conversions,
+and cover changed types, a multiline indexed-access union, accepted
 and unproved reference changes, comment additions, source pin, diff tampering,
 platform/version mismatch, missing evidence, exits, pending counts and filtered
 runs. They execute the same checker CLI on isolated declaration snapshots and

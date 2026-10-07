@@ -26,6 +26,7 @@ class LandingLaneTests(unittest.TestCase):
         cls.original = ("declare namespace ts {\n"
                         "    interface Host {\n"
                         "        optional?: number;\n"
+                        "        method?(s: string): void;\n"
                         '        trace?: { trace(s: string): void }["trace"];\n'
                         "    }\n"
                         "    type Brand = { brand: any };\n"
@@ -156,6 +157,29 @@ class LandingLaneTests(unittest.TestCase):
     def test_diff_must_describe_snapshots(self):
         self.diff = '--- reference/api/typescript.d.ts\n+++ local/api/typescript.d.ts\n'
         self.killed('baseline.diff does not exactly describe')
+
+    def test_method_conversion_is_not_a_property_union(self):
+        self.local = self.local.replace('method?(s: string): void;',
+                                        'method?: { method(s: string): void; }["method"] | undefined;')
+        report = self.killed('unsanctioned API declaration')
+        self.assertEqual(len(report['errors']), 1)
+
+    def test_manifest_includes_only_proved_property_handoffs(self):
+        manifest = json.loads((LANE / 'sanctioned-api.json').read_text())
+        sites = json.loads((LANE.parent / 'adapt/32-indexed-reads-program/public-host-sites.json').read_text())
+        changes = {row['declaration'] for row in manifest['normalized_changes']}
+        owners = {tuple(row['path']) for row in manifest['owners'] if row['adaptation'] == '32'}
+        self.assertEqual(owners, {('AmdDependency', 'name'), ('CommentRange', 'hasTrailingNewLine'),
+                                  ('BuilderProgramHost', 'createHash')})
+        methods = [site for site in sites if site['public'] and '?(' in site['before']]
+        self.assertEqual(manifest['excluded_method_conversions'], len(methods))
+        for site in methods:
+            key = 'member:' + json.dumps(['ts', site['interface'], site['name']], separators=(',', ':')) + '#0'
+            self.assertNotIn(key, changes)
+        self.assertEqual(manifest['counts']['30'], 0)
+        self.assertEqual(manifest['counts']['32'], 3)
+        self.assertEqual(manifest['counts']['33'], 0)
+        self.assertEqual(len(changes), 222)
 
     def test_unknown_platform(self):
         self.execution['platform']['node'] = 'v24.19.1'

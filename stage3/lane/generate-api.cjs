@@ -16,6 +16,11 @@ const proofPaths = [
     'adapt/40-explicit-any/class-rules.json',
     'adapt/75-optional-widening/evidence/wave2/api.json',
     'adapt/75-optional-widening/api-additions.cjs',
+    'adapt/32-indexed-reads-program/handoff-sites.json',
+    'adapt/32-indexed-reads-program/owner-handoffs/api.json',
+    'adapt/32-indexed-reads-program/public-host-sites.json',
+    'adapt/32-indexed-reads-program/resumed-watch/api.json',
+    'adapt/30-indexed-reads/remaining-api.json',
 ];
 const proof = relative => JSON.parse(fs.readFileSync(path.join(stage, relative), 'utf8'));
 const attribution = proof(proofPaths[0]);
@@ -104,7 +109,82 @@ for (const record of attribution.readonly_owners) {
     assert.equal(range.length, 1);
     edits.push({ at: range[0].getStart(source), text: 'Readonly<' }, { at: range[0].end, text: '>' });
 }
-assert.equal(new Set(owners.map(owner => owner.line)).size, 218, 'sanctioned owner line sets overlap');
+// Read every partition's public owner proof. Internal handoffs never enter the API.
+const review30 = proof('adapt/30-indexed-reads/remaining-api.json');
+assert.equal(review30.status, 'pass');
+assert.equal(review30.snapshot_declarations, 218);
+assert.equal(review30.adaptation20_lines.length, 189);
+assert.equal(review30.adaptation40_lines.length, 28);
+assert.equal(review30.adaptation70_lines.length, 1);
+const partition33 = path.join(stage, 'adapt/33-indexed-reads-emit/proof');
+function review33(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+        const file = path.join(directory, entry.name);
+        if (entry.isDirectory()) review33(file);
+        else if (entry.name === 'api-projection.json') {
+            const relative = path.relative(stage, file);
+            const record = proof(relative);
+            assert.equal(record.status, 'pass', relative);
+            assert.equal(record.additional_api_changes, 0, 'new public 33 owner requires explicit reconstruction: ' + relative);
+            proofPaths.push(relative);
+        }
+    }
+}
+review33(partition33);
+const handoffSites = proof('adapt/32-indexed-reads-program/handoff-sites.json');
+const handoffReport = proof('adapt/32-indexed-reads-program/owner-handoffs/api.json');
+assert.equal(handoffReport.status, 'pass');
+const publicHandoffs = handoffSites.filter(site => site.public && site.action === 'owner-union');
+assert.equal(publicHandoffs.length, 2);
+assert.equal(handoffReport.handoff_owners.length, publicHandoffs.length);
+function undefinedUnion(node, beforeType, afterType) {
+    assert(node.questionToken && node.type && ts.isPropertySignature(node), 'only existing optional properties are sanctioned');
+    assert.equal(node.type.getText(source), beforeType, 'original handoff property type drift');
+    const wrap = ts.isFunctionTypeNode(node.type) || ts.isConstructorTypeNode(node.type) || ts.isConditionalTypeNode(node.type);
+    assert.equal(afterType, (wrap ? '(' + beforeType + ')' : beforeType) + ' | undefined', 'handoff must only add undefined');
+    if (wrap) edits.push({ at: node.type.getStart(source), text: '(' });
+    edits.push({ at: node.type.end, text: (wrap ? ')' : '') + ' | undefined' });
+}
+for (const site of publicHandoffs) {
+    const records = handoffReport.handoff_owners.filter(record => JSON.stringify(record.path) === JSON.stringify([site.interface, site.name]));
+    assert.equal(records.length, 1, 'missing handoff owner proof');
+    const node = owned(records[0], ts.isPropertySignature, '32');
+    undefinedUnion(node, site.before, site.after);
+}
+// The host ledger calls these "public-method" even for an existing property.
+// Classify the pristine AST, never the label, to exclude all method conversions.
+const hostSites = proof('adapt/32-indexed-reads-program/public-host-sites.json');
+const hostReport = proof('adapt/32-indexed-reads-program/resumed-watch/api.json');
+assert.equal(hostReport.status, 'pass');
+let propertyHosts = 0, excludedMethods = 0;
+for (const site of hostSites.filter(record => record.public)) {
+    const owner = [site.interface, site.name];
+    const candidates = nodes(source, node => (ts.isMethodSignature(node) || ts.isPropertySignature(node)) &&
+        JSON.stringify(ownerPath(node)) === JSON.stringify(owner));
+    assert.equal(candidates.length, 1, 'ambiguous public host owner');
+    if (ts.isMethodSignature(candidates[0])) { excludedMethods++; continue; }
+    const records = hostReport.public_host_owners.filter(record => JSON.stringify(record.owner) === JSON.stringify(owner));
+    assert.equal(records.length, 1, 'missing property host proof');
+    assert.equal(records[0].before, site.before);
+    assert.equal(records[0].after, site.after);
+    function member(text) {
+        const model = parse('host-property.d.ts', 'interface Proof { ' + text + ' }');
+        assert.equal(model.statements.length, 1);
+        assert.equal(model.statements[0].members.length, 1);
+        const result = model.statements[0].members[0];
+        assert(ts.isPropertySignature(result) && result.questionToken && result.type);
+        return result;
+    }
+    const old = member(site.before), after = member(site.after);
+    const node = owned({ path: owner, line: records[0].line }, ts.isPropertySignature, '32');
+    const canonical = require('./normalize-api.cjs').canonical;
+    assert.deepEqual(canonical(node), canonical(old), 'original public host property drift');
+    assert.equal(after.name.getText(after.getSourceFile()), site.name);
+    undefinedUnion(node, old.type.getText(old.getSourceFile()), after.type.getText(after.getSourceFile()));
+    propertyHosts++;
+}
+assert.equal(propertyHosts, 1);
+assert.equal(new Set(owners.map(owner => owner.line)).size, 221, 'sanctioned owner line sets overlap');
 let prerequisite = original;
 for (const edit of edits.sort((a, b) => b.at - a.at)) {
     prerequisite = prerequisite.slice(0, edit.at) + edit.text + prerequisite.slice(edit.end ?? edit.at);
@@ -125,7 +205,8 @@ for (const addition of optional.additions) {
 // Adaptation 75's own guard must remove exactly that member and reproduce the prerequisite.
 const additions = require('../adapt/75-optional-widening/api-additions.cjs')(prerequisite, expected);
 assert.deepEqual(additions, optional.additions);
-console.log(JSON.stringify({ source_commit: pin, original, expected, normalized_changes: require('./normalize-api.cjs').changes(original, expected), counts: { '20': 189, '40': 28, '70': 1, '75': 1 },
+console.log(JSON.stringify({ source_commit: pin, original, expected, normalized_changes: require('./normalize-api.cjs').changes(original, expected), counts: { '20': 189, '30': 0, '32': publicHandoffs.length + propertyHosts, '33': 0, '40': 28, '70': 1, '75': 1 },
+    excluded_method_conversions: excludedMethods,
     owners: [...owners, ...additions.map(addition => ({ adaptation: '75', path: [addition.owner, addition.property], line: addition.line }))],
     proofs: proofPaths.map(file => ({ file: 'stage3/' + file,
         sha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(stage, file))).digest('hex') })) }));
