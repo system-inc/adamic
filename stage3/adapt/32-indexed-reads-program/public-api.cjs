@@ -24,7 +24,7 @@ for(const site of api40Sites){
 let api40Only=original;
 for(const e of edits.filter(e=>e.adaptation===40).sort((a,b)=>b.at-a.at))api40Only=api40Only.slice(0,e.at)+e.text+api40Only.slice(e.end);
 const public32=[];
-for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname,'public-host-sites.json'))},'utf8')).filter(r=>r.public)){
+for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname,'public-host-sites.json'))},'utf8')).filter(r=>r.public && r.kind !== 'restored-public-method')){
  assert.equal(site.kind,'public-method');
  const source=parse(site.file,fs.readFileSync(path.join(pristine,'src/compiler',site.file),'utf8'));
  const iface=source.statements.filter(n=>ts.isInterfaceDeclaration(n)&&n.name.text===site.interface);assert.equal(iface.length,1);
@@ -47,7 +47,13 @@ for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirnam
  edits.push({at,end:n.end,text:replacement,adaptation:32});
  public32.push({owner:[site.interface,site.name],before:n.getText(before),after:site.after,line:before.getLineAndCharacterOfPosition(n.getStart(before)).line+1});
 }
-assert.equal(public32.length,11,'public host owner census drift');
+assert.equal(public32.length,1,'public property owner census drift');
+for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname,'public-host-sites.json'))},'utf8')).filter(r=>r.kind==='restored-public-method')){
+ const n=findOwned(n=>ts.isMethodSignature(n),[site.interface,site.name]);assert.equal(tokens(n.getText(before)),tokens(site.before));
+ const src=parse(site.file,fs.readFileSync(path.join(adapted,'src/compiler',site.file),'utf8'));
+ const iface=src.statements.filter(n=>ts.isInterfaceDeclaration(n)&&n.name.text===site.interface);assert.equal(iface.length,1);
+ const member=iface[0].members.filter(n=>n.name?.getText(src)===site.name);assert.equal(member.length,1);assert(ts.isMethodSignature(member[0]));assert.equal(member[0].getText(src),site.before);
+}
 const adaptedRequire=require('node:module').createRequire(path.join(adapted,'package.json'));
 const formatter=adaptedRequire('@dprint/formatter').createFromBuffer(fs.readFileSync(adaptedRequire('@dprint/typescript').getPath()));
 // Pin the formatter to upstream's pristine script; do not infer config from output.
@@ -76,6 +82,10 @@ for (const site of handoffSites) {
     edits.push({at:candidates[0].type.end,text:" | undefined",adaptation:"32-handoff",handoffOwner:site.interface});
     handoffProof.push({path:[site.interface,site.name],line:before.getLineAndCharacterOfPosition(candidates[0].getStart(before)).line+1});
 }
+const jsonOwner=findOwned(n=>ts.isInterfaceDeclaration(n),['JsonSourceFile']);
+assert(!jsonOwner.members.some(n=>n.name?.getText(before)==='extendedSourceFiles'));
+const jsonLast=jsonOwner.members[jsonOwner.members.length-1];
+edits.push({at:jsonLast.end,text:"\\n        extendedSourceFiles?: string[];",adaptation:75});
 let previous32Expected=original;
 for(const e of edits.filter(e=>e.adaptation!==32).sort((a,b)=>b.at-a.at))previous32Expected=previous32Expected.slice(0,e.at)+e.text+previous32Expected.slice(e.end===undefined?e.at:e.end);
 previous32Expected=format(previous32Expected);

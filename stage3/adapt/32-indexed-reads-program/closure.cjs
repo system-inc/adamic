@@ -5,6 +5,22 @@ function plan(ts, file, text, check) {
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
     const edits = [];
     for (const site of sites.filter(s => s.file === file)) {
+        if (site.kind === "restored-public-method") {
+            const found = [];
+            function visit(n) {
+                if ((ts.isMethodSignature(n) || ts.isPropertySignature(n)) && n.name.getText(sf) === site.name && ts.isInterfaceDeclaration(n.parent) && n.parent.name.text === site.interface) found.push(n);
+                ts.forEachChild(n, visit);
+            }
+            visit(sf);
+            if (found.length !== 1 || !found[0].questionToken) throw new Error("restored method owner drift");
+            const n = found[0], actual = n.getText(sf);
+            if (actual === site.after && ts.isPropertySignature(n)) {
+                if (check) throw new Error("public method restoration missing");
+                edits.push({at:n.getStart(sf), end:n.end, text:site.before});
+            }
+            else if (actual !== site.before || !ts.isMethodSignature(n)) throw new Error("restored method signature drift");
+            continue;
+        }
         if (site.kind === "optional-helper-call") {
             const found=[];
             function visit(n) {

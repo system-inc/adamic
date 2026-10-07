@@ -828,3 +828,43 @@ handoff API lines and the existing 20/40/70 exceptions are checked mechanically.
 Tracing already uses adaptation 47 and retains exactly four Node host bindings;
 performanceCore remains skipped. closure-declined.json is current and
 resumed-resolved.json records the resolved historical declines.
+
+## Public method restoration, 06:35 ruling
+
+The current method-restoration wave supersedes the historical watch.ts closure.
+Ten public owners are restored byte for byte to their original MethodSignature:
+CompilerHost.getDefaultLibLocation, createHash and readDirectory;
+ModuleResolutionHost.trace, directoryExists, getDirectories and realpath;
+ProgramHost.createHash, realpath and getEnvironmentVariable. The ledger records
+each restoration and the adapter accepts only the original method or the exact
+previous property spelling; it plans every file before any write.
+
+BuilderProgramHost.createHash was a **property upstream**, not a method. Its
+sanctioned property union remains, as do all property-form handoffs. The four
+internal host owner edits are outside the ten public-method restorations.
+
+Both watch.ts object-literal findings are declined. createProgramHost returns
+the same object through createWatchCompilerHostOfConfigFile /
+createWatchCompilerHostOfFilesAndCompilerOptions and through the public
+createSolutionBuilderHost / createSolutionBuilderWithWatchHost factories.
+createCompilerHostFromProgramHost is consumed by createWatchProgram and
+createSolutionBuilderState; both pass its compilerHost to an injected
+CreateProgram callback. Neither boundary restricts reflection by the caller.
+Following every arbitrary callback consumer is impossible, so presence cannot
+be proved unobservable. An actual public Node consumer is a counterexample:
+with System.createHash absent, both returned/injected objects own createHash
+with value undefined. Omitting it changes in, hasOwnProperty, Object.keys,
+spread, for...in and Object.assign. No object-literal rewrite is made.
+
+presence-review.cjs resolves producer and forwarding-function references by
+stock 6.0.3 symbols across src, inventories related host locals and potential
+reflection/forwarding statements, then runs that counterexample against the
+built compiler. This is evidence for **declining**, not a claim that escaped
+objects have a closed, fully enumerated consumer set. The absence assertions
+in previous waves are unchanged.
+
+The API proof reconstructs only sanctioned property/type edits from pristine
+API owners, including adaptation 75's sole JsonSourceFile property. It validates
+all ten restored source methods against their original signatures; none is an
+allowed API edit. Proof results and the lane verdict are recorded in
+proof/method-restoration/.
