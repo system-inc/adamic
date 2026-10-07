@@ -16,193 +16,187 @@
 === PAUSE TestCanonicalClassesPlacementIsAccountedFor
 === CONT  TestEnforceCanonicalClassesReportsCollapses
 === RUN   TestEnforceCanonicalClassesReportsCollapses/padding_axes
-=== CONT  TestCanonicalFixturesActuallyRan
-    enforce_canonical_classes_test.go:494: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
---- FAIL: TestCanonicalFixturesActuallyRan (0.00s)
-=== CONT  TestCanonicalLogicalOption
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/padding_axes
-=== CONT  TestCanonicalProposesNoFix
-    enforce_canonical_classes_test.go:292: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
---- SKIP: TestCanonicalProposesNoFix (0.00s)
-=== CONT  TestCanonicalClassesPlacementIsAccountedFor
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling
-=== CONT  TestEnforceCanonicalClassesStaysSilent
-=== NAME  TestCanonicalLogicalOption
-    enforce_canonical_classes_test.go:563: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
---- SKIP: TestCanonicalLogicalOption (0.00s)
-=== CONT  TestCanonicalCollapseOption
 === RUN   TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
-=== NAME  TestCanonicalCollapseOption
-    enforce_canonical_classes_test.go:538: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
---- SKIP: TestCanonicalCollapseOption (0.00s)
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
-=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-4
-=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values
 === RUN   TestEnforceCanonicalClassesReportsCollapses/border_edges
-=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-4
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/border_edges
-=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values
-=== RUN   TestCanonicalMessageNamesTheShorterSpelling/size-8
-=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
-=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/size-8
-=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
 === RUN   TestEnforceCanonicalClassesReportsCollapses/rounded_corners
-=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/rounded_corners
 === RUN   TestEnforceCanonicalClassesReportsCollapses/gap_axes
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/gap_axes
 === RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
-=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
-=== RUN   TestCanonicalMessageNamesTheShorterSpelling/border-x
-=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/border-x
-=== RUN   TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
-=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
-=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
-=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
-=== RUN   TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
-=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-4
-    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 === RUN   TestEnforceCanonicalClassesReportsCollapses/negative_margins
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== CONT  TestCanonicalCollapseOption
+    enforce_canonical_classes_test.go:538: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalFixturesActuallyRan
+    enforce_canonical_classes_test.go:494: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+=== CONT  TestCanonicalClassesPlacementIsAccountedFor
+=== CONT  TestCanonicalLogicalOption
+    enforce_canonical_classes_test.go:563: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalProposesNoFix
+    enforce_canonical_classes_test.go:292: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling
 === RUN   TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+--- SKIP: TestCanonicalCollapseOption (0.00s)
+=== CONT  TestEnforceCanonicalClassesStaysSilent
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values
+--- SKIP: TestCanonicalLogicalOption (0.00s)
+--- SKIP: TestCanonicalProposesNoFix (0.00s)
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/size-8
+--- FAIL: TestCanonicalFixturesActuallyRan (0.00s)
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
 === RUN   TestEnforceCanonicalClassesStaysSilent/one_side_is_important
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
-=== PAUSE TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
 === PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_is_important
 === RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_roots
 === PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_roots
 === RUN   TestEnforceCanonicalClassesStaysSilent/single_class
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling/size-8
 === PAUSE TestEnforceCanonicalClassesStaysSilent/single_class
 === RUN   TestEnforceCanonicalClassesStaysSilent/statics
 === PAUSE TestEnforceCanonicalClassesStaysSilent/statics
 === RUN   TestEnforceCanonicalClassesStaysSilent/no_pair_present
-=== RUN   TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
 === PAUSE TestEnforceCanonicalClassesStaysSilent/no_pair_present
 === RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
-=== NAME  TestCanonicalMessageNamesTheShorterSpelling/size-8
-    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== NAME  TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
-    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling/border-x
-=== PAUSE TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
 === PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
 === RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_callee
-=== NAME  TestCanonicalMessageNamesTheShorterSpelling/border-x
-    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 === PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_callee
 === CONT  TestEnforceCanonicalClassesStaysSilent/different_values
-=== CONT  TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
-=== NAME  TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
-    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== CONT  TestEnforceCanonicalClassesStaysSilent/single_class
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
 === NAME  TestEnforceCanonicalClassesStaysSilent/different_values
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== NAME  TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
-    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
 === RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
-=== CONT  TestEnforceCanonicalClassesStaysSilent/single_class
---- PASS: TestCanonicalMessageNamesTheShorterSpelling (0.00s)
-    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/p-4 (0.00s)
-    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/size-8 (0.00s)
-    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/sm:p-4 (0.00s)
-    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/border-x (0.00s)
-    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/p-[3px] (0.00s)
-    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md (0.00s)
-=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
-=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
 === NAME  TestEnforceCanonicalClassesStaysSilent/single_class
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesStaysSilent/statics
-    enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
-=== CONT  TestEnforceCanonicalClassesStaysSilent/no_pair_present
-=== NAME  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
-    enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_roots
-    enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
 === RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
 === NAME  TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== CONT  TestEnforceCanonicalClassesStaysSilent/statics
+=== NAME  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
-=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
-=== NAME  TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== NAME  TestEnforceCanonicalClassesStaysSilent/statics
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 === PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== CONT  TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== NAME  TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+    enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== NAME  TestEnforceCanonicalClassesStaysSilent/no_pair_present
+    enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-4
 === NAME  TestEnforceCanonicalClassesStaysSilent/one_side_is_important
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 === CONT  TestEnforceCanonicalClassesReportsCollapses/padding_axes
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/negative_margins
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/padding_axes
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
 === NAME  TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
     enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== NAME  TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+    enforce_canonical_classes_test.go:246: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 === NAME  TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
-    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
-    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
-    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/rounded_corners
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
-    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/rounded_corners
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 --- PASS: TestEnforceCanonicalClassesStaysSilent (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/different_values (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/single_class (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesStaysSilent/statics (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesStaysSilent/unrelated_callee (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesStaysSilent/unrelated_roots (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/unrelated_attribute (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesStaysSilent/unrelated_callee (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesStaysSilent/statics (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/no_pair_present (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/one_side_is_important (0.00s)
     --- SKIP: TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height (0.00s)
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+    --- SKIP: TestEnforceCanonicalClassesStaysSilent/unrelated_roots (0.00s)
 === CONT  TestEnforceCanonicalClassesReportsCollapses/gap_axes
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== NAME  TestCanonicalMessageNamesTheShorterSpelling/p-4
+    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== NAME  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
 === NAME  TestEnforceCanonicalClassesReportsCollapses/gap_axes
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== CONT  TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/border_edges
-    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
-=== NAME  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== NAME  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 === NAME  TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/border_edges
 === NAME  TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== NAME  TestEnforceCanonicalClassesReportsCollapses/border_edges
+    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== NAME  TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/size-8
+    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/border-x
+    enforce_canonical_classes_test.go:273: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+--- PASS: TestCanonicalMessageNamesTheShorterSpelling (0.00s)
+    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/p-4 (0.00s)
+    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/sm:p-4 (0.00s)
+    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md (0.00s)
+    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/p-[3px] (0.00s)
+    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/size-8 (0.00s)
+    --- SKIP: TestCanonicalMessageNamesTheShorterSpelling/border-x (0.00s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+    enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/negative_margins
     enforce_canonical_classes_test.go:171: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a collapse
 --- PASS: TestEnforceCanonicalClassesReportsCollapses (0.00s)
     --- SKIP: TestEnforceCanonicalClassesReportsCollapses/padding_axes (0.00s)
     --- SKIP: TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/arbitrary_values (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/rounded_corners (0.00s)
     --- SKIP: TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/negative_margins (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/gap_axes (0.00s)
-    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/border_edges (0.00s)
     --- SKIP: TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/gap_axes (0.00s)
     --- SKIP: TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant (0.00s)
     --- SKIP: TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/rounded_corners (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/arbitrary_values (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/border_edges (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps (0.00s)
+    --- SKIP: TestEnforceCanonicalClassesReportsCollapses/negative_margins (0.00s)
 === NAME  TestCanonicalClassesPlacementIsAccountedFor
     live_placement_test.go:277: enforce-canonical-classes: asked about 0 classes, placed 0, reported 0 findings
     live_placement_test.go:279:   declined: 0 that read as static or arbitrary, 0 other
     live_placement_test.go:287: the rule placed 0 classes and the corpus places 7,287; a population that dropped this far means a whole category of class stopped resolving to a root, and the finding count would be measuring that silence
 --- FAIL: TestCanonicalClassesPlacementIsAccountedFor (0.02s)
 FAIL
-FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.026s
+FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.025s
 FAIL
