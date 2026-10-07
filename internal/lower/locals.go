@@ -2,7 +2,6 @@
 package lower
 
 import (
-	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -22,6 +21,11 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			destructured, err := l.destructure(name, declaration.AsVariableDeclaration().Initializer)
 			if err != nil {
 				return nil, err
+			}
+			for index, statement := range destructured {
+				if declared, ok := statement.(ir.Declare); ok && l.result.Locals[declared.Local].NamespaceVar {
+					destructured[index] = ir.Assign{Local: declared.Local, Value: declared.Value}
+				}
 			}
 			statements = append(statements, destructured...)
 			continue
@@ -107,7 +111,7 @@ func skipped(binding *ast.Node) bool {
 func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	symbol := l.symbol(name)
 	if symbol == nil {
-		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
+		return 0, l.notYet(name, "the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
 	inferred := l.evolvingObject(name)

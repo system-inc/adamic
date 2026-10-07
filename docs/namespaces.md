@@ -34,7 +34,7 @@ runtime declarations in the survey, including nested ones. An eleventh,
 | Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; initializer calls, its class, overloads and runtime merging remain. |
 | Debug.log | debug.ts:137 | Four functions merged into the callable `log`; needs a callable object whose attached properties keep identity and ownership. |
 | BinaryExpressionState | factory/utilities.ts:1273 | Nine functions, seven exported, coexisting with a generic callable type alias. Its namespace structure fits the subset. |
-| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage and enum scopes are covered; initializer calls, the factory var destructuring and overloads remain. |
+| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage and enum scopes are covered; initializer calls, non-flat destructuring and overloads remain. |
 | Parser.JSDocParser | parser.ts:8790 | Six functions and two enums; its isolated namespace declaration structure now lowers. Surrounding parser state and function bodies remain independent obligations. |
 | IncrementalParser | parser.ts:9946 | 13 functions, an interface and an enum; its enum scope is covered; two overload signatures and function bodies remain. |
 | tracingEnabled | tracing.ts:37 | 12 functions, nine variable statements and an enum; private mutable tracing state and namespace-object escape through `tracing = tracingEnabled`. Needs a real runtime object, not just qualification. |
@@ -161,8 +161,9 @@ whose declared type includes undefined begins with undefined. Storage whose type
 excludes undefined stays unready until assigned; reads use the existing ready
 check in both backends, rather than treating native zero bits as a typed value.
 This check intentionally stops a checker-accepted type lie where Node reads
-undefined. Function-local var and destructuring namespace declarations remain
-unsupported. Arbitrary calls during namespace initialization remain NotYet.
+undefined. Flat object namespace var bindings hoist their identifier leaves and assign them
+in source order. Arrays, nested patterns, defaults and rest remain NotYet.
+Function-local var remains unsupported. Arbitrary calls during namespace initialization remain NotYet.
 Mutable exports are admitted by the later live-storage step.
 
 The parser-state fixture observes a var before its declaration, initializes a
@@ -269,7 +270,7 @@ not adapted original compiler implementations.
 | Debug.log | NotYet | Callable namespace object |
 | tracingEnabled | NotYet | Escaped runtime container |
 
-Parser also has a destructured var factory binding and 18 bodyless overload
+Parser also has a flat destructured var factory binding, now admitted, and 18 bodyless overload
 signatures. The isolation deliberately retains them; normalizing those away
 would overstate progress. IncrementalParser's enum now lowers in the cut-down
 runtime fixture, but that is weaker than its complete declaration shape.
@@ -303,3 +304,15 @@ NotYet. The unchanged nextTokenJSDoc and parseOptionalJsdoc bodies print
 `true 1`, `false 1`, `3 3`, matching independent Node. Dropping the returned
 store is caught by Node stdout with clean native execution and sanitizers.
 Removing the scalar-only boundary is caught by its NotYet regression.
+
+## Parser factory bindings and located missing symbols
+
+The cut at parser.ts:1472 binds factory methods through a flat object var pattern.
+The checker has symbols for its identifier leaves, not the pattern itself.
+Namespace hoisting now registers those leaves, and destructuring assigns the
+hoisted singleton storage. Unsupported nested/default/rest bindings retain
+NotYet. A remaining missing-symbol declaration error is a structured NotYet
+with its source location, so census consumers can locate it.
+The factory oracle compares both callable bindings with Node; a same-signature
+wrong-method mutant is caught by stdout. Replacing the structured diagnostic
+with an ordinary error is caught by its location regression.

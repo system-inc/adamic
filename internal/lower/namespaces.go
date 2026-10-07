@@ -193,7 +193,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			case ast.KindVariableStatement:
 				list := member.AsVariableStatement().DeclarationList
 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
-					if !ast.IsIdentifier(variable.Name()) {
+					if !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {
 						return l.notYet(variable, "destructuring inside a namespace; use plain singleton bindings")
 					}
 				}
@@ -321,17 +321,47 @@ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
 			continue
 		}
 		for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-			local, err := l.declareLocal(declaration.Name())
-			if err != nil {
-				return nil, err
+			names := []*ast.Node{declaration.Name()}
+			if !ast.IsIdentifier(declaration.Name()) {
+				if !namespaceObjectBindings(declaration.Name()) {
+					return nil, l.notYet(declaration.Name(), "destructuring inside a namespace; only flat object var bindings are hoisted")
+				}
+				names = nil
+				for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
+					names = append(names, binding.Name())
+				}
 			}
-			var value ir.Expression
-			if l.includesUndefined(l.checker.GetTypeAtLocation(declaration.Name())) {
-				value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
+			for _, name := range names {
+				local, err := l.declareLocal(name)
+				if err != nil {
+					return nil, err
+				}
+				var value ir.Expression
+				if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+					value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
+				}
+				hoisted = append(hoisted, ir.Declare{Local: local, Value: value})
 			}
-			hoisted = append(hoisted, ir.Declare{Local: local, Value: value})
 		}
 	}
 	body, err := l.statements(namespaceStatements(node))
 	return append(hoisted, body...), err
+}
+
+// The parser's factory destructuring declares symbols on the renamed identifiers,
+// not on the ObjectBindingPattern. Other binding forms retain their own NotYet.
+func namespaceObjectBindings(pattern *ast.Node) bool {
+	if pattern.Kind != ast.KindObjectBindingPattern {
+		return false
+	}
+	for _, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		declared := binding.AsBindingElement()
+		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
+			return false
+		}
+		if declared.PropertyName != nil && !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+			return false
+		}
+	}
+	return true
 }
