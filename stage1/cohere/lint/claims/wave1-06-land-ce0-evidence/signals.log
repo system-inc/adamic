@@ -1,0 +1,44 @@
+=== RUN   TestASignalLeavesWhatWasPrinted
+=== PAUSE TestASignalLeavesWhatWasPrinted
+=== CONT  TestASignalLeavesWhatWasPrinted
+=== RUN   TestASignalLeavesWhatWasPrinted/terminated
+=== PAUSE TestASignalLeavesWhatWasPrinted/terminated
+=== RUN   TestASignalLeavesWhatWasPrinted/interrupt
+=== PAUSE TestASignalLeavesWhatWasPrinted/interrupt
+=== RUN   TestASignalLeavesWhatWasPrinted/hangup
+=== PAUSE TestASignalLeavesWhatWasPrinted/hangup
+=== RUN   TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+=== PAUSE TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+=== RUN   TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+=== PAUSE TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+=== RUN   TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+=== PAUSE TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+=== CONT  TestASignalLeavesWhatWasPrinted/terminated
+=== CONT  TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+=== NAME  TestASignalLeavesWhatWasPrinted/terminated
+    output_test.go:306: gate cache probe miss
+=== NAME  TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+    output_test.go:306: gate cache probe miss
+=== CONT  TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+=== CONT  TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+=== NAME  TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+    output_test.go:306: gate cache probe miss
+=== NAME  TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+    output_test.go:306: gate cache probe miss
+=== CONT  TestASignalLeavesWhatWasPrinted/hangup
+=== CONT  TestASignalLeavesWhatWasPrinted/interrupt
+    output_test.go:306: gate cache probe miss
+=== NAME  TestASignalLeavesWhatWasPrinted/hangup
+    output_test.go:306: gate cache probe miss
+--- PASS: TestASignalLeavesWhatWasPrinted (0.00s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored (13.21s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/terminated (13.24s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored (6.32s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored (6.35s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/hangup (6.30s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/interrupt (6.31s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=6
+ok  	github.com/system-inc/adamic/internal/oracle	25.891s
