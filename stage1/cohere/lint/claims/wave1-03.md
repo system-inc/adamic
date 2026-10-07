@@ -116,3 +116,16 @@ prior Tailwind JSX gap remains explicit. Normal .a registration and full repair
 serialization are still shared-harness work. Unsupported repair-heavy registered
 execution fails explicitly rather than discarding repairs. Full report and raw
 evidence: ../rules/typescript-no-unnecessary-type-constraint/REPORT.md.
+
+## Continuation batch 4
+
+All previous owned rule work was pushed through 6c1993fa before this fetch.
+All original 46 helper-ready names are claimed. From the syntax-ready inventory
+queue, the first three names absent from main ports and all origin claims are:
+
+1. no-async-promise-executor
+2. no-case-declarations
+3. no-compare-neg-zero
+
+This update is pushed before writing these rules. Shared integration/JSX limits
+for previous claims remain documented rather than treated as matching results.
