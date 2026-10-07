@@ -1,0 +1,11 @@
+// Non-owning indexes preserve Go AST node identity without reference cycles.
+// The adapter must supply the named fields, not guess from child visitation order.
+// -1 is Go nil. Identifier text is decoded parser text, never source spelling.
+export interface HelperNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly expression: number;
+    readonly name: number;
+    readonly tagName: number;
+    readonly attributes: number;
+}

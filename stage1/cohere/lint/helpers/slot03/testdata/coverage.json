@@ -1,0 +1,27 @@
+{
+  "symbols": [
+    "react.isComponentBaseName"
+  ],
+  "rules": [
+    "react/no-arrow-function-lifecycle",
+    "react/no-did-mount-set-state",
+    "react/no-did-update-set-state",
+    "react/no-direct-mutation-state",
+    "react/no-string-refs",
+    "react/no-this-in-sfc",
+    "react/no-typos",
+    "react/no-unused-class-component-methods",
+    "react/no-will-update-set-state",
+    "react/prefer-stateless-function",
+    "react/require-optimization",
+    "react/state-in-constructor",
+    "structure/consistency-require-matching-file-name",
+    "structure/react-component-no-display-name"
+  ],
+  "sources": 1199,
+  "packages": [
+    "./internal/lint/rules/react",
+    "./internal/lint/rules/structure"
+  ],
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}

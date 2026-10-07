@@ -1,0 +1,12 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isComponentBaseName } from './component_base_name.a';
+const argumentsList = programArguments();
+const input = readTextFile(argumentsList[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(root).children) {
+    console.log(`${isComponentBaseName(json.node(item).text)}`);
+}
