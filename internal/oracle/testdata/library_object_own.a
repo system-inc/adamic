@@ -1,6 +1,6 @@
 // Own fields are declared on the instance. Methods live on the prototype, so hasOwn is false for them.
 class Item {
-    value: number = 3;
+    value = 3;
     readonly name: string = 'item';
     describe(): string {
         return this.name;

@@ -33,8 +33,8 @@ const built = `${'Amélie'.repeat(2)}-${'ǅ'}`;
 console.log(
     `${built.normalize('NFD').normalize() === built.normalize()} ${built.normalize('NFKD').normalize('NFKD') === built.normalize('NFKD')}`,
 );
-const decomposed: string = 'e\u0301';
-const precomposed: string = '\u00e9';
+const decomposed = 'e\u0301';
+const precomposed = '\u00e9';
 console.log(
     `${decomposed === precomposed} ${decomposed.normalize() === precomposed} ${precomposed.normalize('NFD').length}`,
 );

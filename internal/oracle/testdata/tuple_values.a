@@ -101,7 +101,7 @@ while(below) {
     [remainder, below] = cut(remainder, 'a/');
 }
 let either: string | number = 0;
-let maybeCount: number | undefined = undefined;
+let maybeCount: number | undefined;
 [maybeCount, either] = swap(['twelve', 12]);
 console.log(`${remainder} ${below} ${either} ${maybeCount ?? -1} ${typeof either}`);
 [, either] = swap(['word', 1]);

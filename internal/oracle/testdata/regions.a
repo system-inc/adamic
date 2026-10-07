@@ -30,7 +30,7 @@ function count(node: Node | undefined): number {
     return 1 + count(node.left) + count(node.right) + (node.label.length > 4 ? 0 : 0);
 }
 
-let kept: Node | undefined = undefined;
+let kept: Node | undefined;
 
 // Read through a function: at the top level the checker narrows kept to the undefined it started as.
 function keptLabel(): string {

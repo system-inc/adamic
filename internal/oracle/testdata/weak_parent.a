@@ -54,7 +54,7 @@ const byName = new Map<string, Weak<TreeNode>>();
 for(const child of root.children) {
     byName.set(child.name, child);
 }
-let last: Weak<TreeNode> = undefined;
+let last: Weak<TreeNode>;
 const remember = (node: TreeNode): void => {
     last = node;
 };

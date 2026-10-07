@@ -10,7 +10,7 @@ function find(index: number): string | undefined {
 function show(key: string | undefined): string {
     return key ?? 'none';
 }
-let held: string | undefined = undefined;
+let held: string | undefined;
 console.log(show(held));
 held = `h${1}`;
 console.log(show(held));

@@ -19,7 +19,7 @@ function joined(separator?: string): string {
 }
 console.log(`${joined()} ${joined(' - ')} ${['a', 'b'].join(undefined)}`);
 
-let fill: string | undefined = undefined;
+let fill: string | undefined;
 const shown: string[] = [];
 for(let round = 0; round < 3; round += 1) {
     shown.push(`${round}`.padStart(4, fill));

@@ -48,7 +48,7 @@ function bumpAll(item: Item | undefined): Item | undefined {
 }
 
 function list(length: number): Item | undefined {
-    let head: Item | undefined = undefined;
+    let head: Item | undefined;
     for(let index = length; index > 0; index--) {
         head = { value: index * 10, next: head };
     }
