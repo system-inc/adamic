@@ -1,0 +1,67 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { Rule as ConstRule } from '../no-multi-str/rule.a';
+import { Rule as ConstraintRule } from './rule.a';
+import { Rule as EnumRule } from '../no-octal/rule.a';
+import { Diagnostic, Edit } from '../typescript-prefer-as-const/records.a';
+function parents(parser: Parser, root: number, parent: number, result: number[]): void {
+    result[root] = parent;
+    for(const child of parser.node(root).children) parents(parser, child, root, result);
+}
+function run(row: string, countOnly: boolean, legacy: boolean): number {
+    const fields = row.split('\t'); const path = fields[0] ?? panic('missing path'); const selected = fields[1] ?? '';
+    const file = readTextFile(path); if(file.kind === 'Error') panic(file.message);
+    const parser = new Parser(file.text, path); const root = parser.file();
+    const ancestry = parser.nodes.map(() => -1); parents(parser, root, -1, ancestry);
+    const context = new RuleContext(file.text, parser, new Scanner(file.text), selected, '', '', false, ancestry, new Settings());
+    const constants = new ConstRule(context); const constraints = new ConstraintRule(context); const enums = new EnumRule(context);
+    // Preorder is retained explicitly; parser arena order is postorder.
+    const pending = [root];
+    while(pending.length > 0) {
+        const index = pending.pop() ?? panic('missing traversal index');
+        if(selected === 'no-multi-str') { if(legacy) constants.visit(index); else constants.analyze(index); }
+        if(selected === 'no-nonoctal-decimal-escape') { if(legacy) constraints.visit(index); else constraints.analyze(index); }
+        if(selected === 'no-octal') { if(legacy) enums.visit(index); else enums.analyze(index); }
+        const children = parser.node(index).children;
+        for(let position = children.length - 1; position >= 0; position--) pending.push(children[position] ?? panic('missing child'));
+    }
+    const diagnostics: Diagnostic[] = [];
+    for(const record of constants.records) diagnostics.push(record);
+    for(const record of constraints.records) diagnostics.push(record);
+    for(const record of enums.records) diagnostics.push(record);
+    diagnostics.sort((a, b) => a.start - b.start);
+    if(countOnly) return diagnostics.length;
+    const offsets = [0]; let bytes = 0;
+    for(let position = 0; position < file.text.length; position++) {
+        const code = file.text.codePointAt(position) ?? 0;
+        if(code > 65535) { offsets.push(bytes); position++; }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4; offsets.push(bytes);
+    }
+    const fixes: Edit[] = [];
+    for(const record of diagnostics) {
+        console.log(record.render(offsets, file.text, path).slice(0, -1));
+        for(const edit of record.fixes) fixes.push(edit);
+    }
+    fixes.sort((a, b) => a.start === b.start ? a.end - b.end : a.start - b.start);
+    let fixed = file.text; let previous = fixed.length;
+    for(let index = fixes.length - 1; index >= 0; index--) {
+        const edit = fixes[index] ?? panic('missing edit');
+        if(edit.end > previous) panic('overlapping fixes');
+        fixed = fixed.slice(0, edit.start) + edit.text + fixed.slice(edit.end); previous = edit.start;
+    }
+    if(fixed !== file.text) new Parser(fixed, path).file();
+    console.log('fixed\t' + written(fixed)); return diagnostics.length;
+}
+const args = programArguments(); const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') panic(manifest.message);
+const countOnly = args.includes('--count'); let count = 0; let index = 0;
+for(const row of manifest.text.split('\n')) {
+    if(row === '') continue;
+    if(!countOnly) console.log(`case ${index}`);
+    count += run(row, countOnly, args.includes('--legacy')); index++;
+}
+if(countOnly) console.log(`${count}`);
