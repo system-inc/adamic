@@ -4,7 +4,7 @@
 
 Accepted by @system_adamic on October 6, 2026. These are language decisions; the observations below remain measurements of the recorded main commit, not claims that these changes have landed.
 
-1. **Downcasts:** runtime tag checks on tagged members; refuse casts that cannot be checked.
+1. **Downcasts:** runtime tag checks on tagged members plus checked field reads; untagged interface downcasts create transitive checked views. The October 7 ruling below supersedes the construction-or-refusal proposal.
 2. **Non-null !:** a runtime nullish check that panics loudly and includes the expression's text.
 3. **As written:** any, as unknown as, expando additions, Object.defineProperty and Function are refused. Upcasts and satisfies require proof. Type predicates and assertion functions require proof from their bodies or are refused. Bivariant methods require a proven contravariant relation or are refused.
 4. **Definite assignment:** field!: and let x!: are refused for now; another branch lands that refusal. The target is proven initialization where flow establishes it, otherwise a loud read-before-assignment check like Adamic's temporal dead zone. This is a temporary refusal.
@@ -824,8 +824,8 @@ Primitive `number | string | boolean` union assertions remain refused. Their pac
 
 ## Cast appendix: base interfaces and construction invariants
 
-Status: proposal for the lead to take to @system_adamic before landing. This
-appendix does not amend the accepted decisions above. Branch
+Status: historical construction-or-refusal proposal, superseded by the October 7
+checked-view ruling below. The corpus observations and ledgers remain evidence. Branch
 `codex/interface-downcasts` starts at main `ef3d907`; checked-downcasts
 `e816797f07a70952e214be079a1da54db80fbd7c` was read, not merged. Main did
 not contain this document, so its existing text is preserved from that branch.
@@ -1044,3 +1044,86 @@ through aliases; and a compiler mutant dropping only the construction obligation
 The missing-payload mutant must get past the discriminant test and be killed by
 the construction assertion in the test harness, not clang or a sanitizer. The
 prototype does not claim to compile unchanged tsc or verify its staged factories.
+
+
+## Cast ruling: checked views, decided October 7, 2026
+
+Accepted by @system_adamic: choice (c). The construction proof is an eraser,
+not an admission gate. The earlier choice (b) and its default-off prototype are
+historical; the implementation steps below replace them. This records the ruling,
+not a claim that all implementation steps have finished.
+
+First land tagged interface downcasts, the 1,758 cases identified above. Check
+the requested discriminant at the cast, evaluating the operand once and preserving
+identity. Every subsequent field read through the narrowed view that lacks a
+valid proof checks presence, initialized state and the declared runtime type tag
+before loading the payload in its target representation. Initialization alone
+never proves type, and a matching kind never proves another field's initialization.
+Literal and enum refinements need value checks in addition to a primitive tag.
+A safe read must also convert between stored and target representations where
+necessary, rather than reinterpret a boxed union as a raw scalar.
+
+Failing reads flush preceding stdout, print one newline-terminated message to
+stderr and terminate with exit 70, without running catch or finally:
+
+```
+adamic: panic: field read failed: <expression text>.<field> is not initialized
+adamic: panic: field read failed: <expression text>.<field> is not a <type>
+```
+
+Capture the receiver expression text at compile time. Evaluate the receiver and
+load the field once; diagnostics must not invoke user conversion code. The existing
+cast-failure contract applies when the tag test fails at the cast.
+
+Staged construction is legal. A Node may carry Identifier's kind before escapedText
+is filled; createBaseIdentifier may fill it later; undefined! and null! initializers
+record uninitialized state; cloneNode may copy staged fields. Presence, current
+initialization and actual type metadata must survive copies, assignments, aliases,
+reuse and region allocation. The non-null worker on `codex/non-null-check` owns
+field initialization state and will push that representation separately. This unit
+merges and uses that helper instead of adding a second bitmap or state convention.
+Removing the old admission gate before all three read checks exist is unsafe.
+`ADAMIC_INTERFACE_DOWNCASTS` is removed when the default implementation is ready.
+
+A compatible dominating store or a construction certificate valid at this read
+can erase the checks. A failed proof leaves a check, rather than refusing the
+program. Neither an asserted type nor the ! syntax is a proof. A tag test proves
+only the tested tag unless an independent construction invariant proves more.
+Calls, alias writes, uncertain exceptional paths and dynamic copies invalidate
+facts unless their effects are independently proved. An unused malformed factory
+must no longer make an otherwise checked program a compile-time refusal.
+
+Second land the 1,178 untagged interface downcasts. They create checked views
+without testing a discriminant at the cast. A field read uses the same three
+checks. An object-valued result is another checked view, including through locals,
+parameters, returns, aliases and containers, until an independent proof or a valid
+tagged narrowing establishes the needed facts. Erasing the view marker at one
+of those boundaries is an unsound implementation, not an optimization.
+
+Refuse an unproven operation whose target contract cannot be certified at runtime,
+such as a newly asserted callable member's parameter/result signature. A typeof
+function check cannot prove that signature. Retain the existing refusals of any,
+unrelated double assertions and unsafe function variance. Missing payloads, staged
+fields and a wrong payload type are no longer admission refusals: their unproven
+reads terminate according to the field-read contract. Unsupported runtime contracts
+must be reported by target/member and counted against the original ledger; existing
+backend capability gaps must be distinguished from those language refusals.
+
+Both backends emit the same checks. A passing checked program matches the original
+source on Node byte for byte. Node's source execution is unchecked, so a failing
+check is validated by an independent assertion of its complete failure contract.
+Required mutants drop a field check, drop initialization tracking, erase without
+proof, skip a transitive view, and evaluate an operand twice. Each must emit valid
+code and be killed by a semantic assertion, not clang or a sanitizer.
+
+Third measure actual remaining checks after erasure on named tsc slices and release
+runtime against an explicitly named unchecked benchmark control. Report read-site
+and dynamic-read denominators separately, compiler/release flags, repetitions,
+outputs and timing spread. Source occurrences alone are not execution heat. The
+unchecked control is an experimental artifact, not a production option. If checks
+are costly, improve proofs; never reduce the required checks. No benchmark or
+checked-read share is claimed by this decision entry.
+
+Tagged (c) lands first. Untagged checked views have a deadline of 18:00 UTC on
+October 8. If that step cannot finish, report it early with the highest-exposure
+untagged locations, clearly distinguishing static counts from measured hot paths.
