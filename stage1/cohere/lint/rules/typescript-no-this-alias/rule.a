@@ -1,0 +1,44 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+const assignment = 'This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.';
+const destructure = 'This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.';
+const operators = ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'];
+const wrappers = ['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression'];
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        const path = context.parser.path;
+        if(!path.endsWith('.ts') && !path.endsWith('.tsx') && !path.endsWith('.mts') && !path.endsWith('.cts')) { return; }
+        const node = context.node(index);
+        let target = -1;
+        let right = -1;
+        if(node.kind === 'VariableDeclaration') {
+            target = node.children[0] ?? panic('missing declaration name');
+            right = node.children[node.children.length - 1] ?? panic('missing declaration child');
+        }
+        else {
+            const token = node.children[1] ?? panic('missing binary operator');
+            if(!operators.includes(context.node(token).kind)) { return; }
+            target = node.children[0] ?? panic('missing binary left');
+            right = node.children[2] ?? panic('missing binary right');
+        }
+        if(context.node(right).kind !== 'ThisKeyword') { return; }
+        const original = context.node(target).kind;
+        const pattern = ['ObjectBindingPattern', 'ArrayBindingPattern', 'ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(original);
+        if(pattern) {
+            if(context.settings.read('reportdestructuring', 'false') !== 'true') { return; }
+            context.report(target, '@typescript-eslint/no-this-alias', 'thisDestructure', destructure, '', '', '');
+            return;
+        }
+        if(node.kind === 'BinaryExpression') {
+            while(wrappers.includes(context.node(target).kind)) { target = context.node(target).children[0] ?? panic('missing wrapper operand'); }
+        }
+        const name = context.node(target);
+        if(name.kind !== 'Identifier') { return; }
+        if(context.settings.list('allowednames', []).includes(name.text)) { return; }
+        context.report(target, '@typescript-eslint/no-this-alias', 'thisAssignment', assignment, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
