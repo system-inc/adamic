@@ -168,16 +168,12 @@ BRIEF
 }
 
 preparePlan() {
-	if [ -n "${ADAMIC_GATE_PLAN:-}" ]; then
-		planFile=$ADAMIC_GATE_PLAN
-	else
-		planBrief > "$work/plan.md"
-		launch "$fleet-plan" "$work/plan.md"
-		await "${ADAMIC_GATE_PLAN_WAIT:-3600}" plan
-		git show "origin/$prefix/plan:plan.tgz" > "$work/plan.tgz"
-		tar xzf "$work/plan.tgz" -C "$work"
-		planFile=$work/plan.json
-	fi
+	planBrief > "$work/plan.md"
+	launch "$fleet-plan" "$work/plan.md"
+	await "${ADAMIC_GATE_PLAN_WAIT:-3600}" plan
+	git show "origin/$prefix/plan:plan.tgz" > "$work/plan.tgz"
+	tar xzf "$work/plan.tgz" -C "$work"
+	planFile=$work/plan.json
 	readPlan
 }
 

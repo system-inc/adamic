@@ -16,7 +16,10 @@ import (
 	"strings"
 )
 
-type sourceRecord struct{ Name, Index, Digest string }
+type sourceRecord struct {
+	Name, Index, Digest string
+	Mode                uint32
+}
 type inputRecord struct{ Kind, Digest string }
 type frozenIdentity struct {
 	Version       int
@@ -56,7 +59,11 @@ func sourceRecords() ([]sourceRecord, error) {
 			if err != nil {
 				return fmt.Errorf("source %s: %w", name, err)
 			}
-			records = append(records, sourceRecord{Name: filepath.ToSlash(name), Index: metadata, Digest: digest})
+			info, err := os.Lstat(name)
+			if err != nil {
+				return err
+			}
+			records = append(records, sourceRecord{Name: filepath.ToSlash(name), Index: metadata, Digest: digest, Mode: uint32(info.Mode())})
 			if strings.HasPrefix(metadata, "160000 ") {
 				if err := walk(name); err != nil {
 					return err
@@ -235,7 +242,7 @@ func planningInputs(p plan, index int) (map[string]inputRecord, error) {
 	if values["ADAMIC_MARKDOWNWIDTH_DEPS"] == "" {
 		values["default-markdown-width"] = "/tmp/adamic-markdown-width"
 	}
-	for _, variable := range []string{"GOFLAGS", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
+	for _, variable := range []string{"GOFLAGS", "NODE_OPTIONS", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
 		for index, token := range strings.Fields(os.Getenv(variable)) {
 			path := token
 			if _, value, ok := strings.Cut(token, "="); ok {
