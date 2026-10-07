@@ -91,3 +91,18 @@ built string through an exported function, and resets optional token state.
 The unready fixture proves a typed number read before assignment stops with the
 same ready check in native and generated JavaScript. This is singleton storage
 support, not proof that parser.ts or all its function bodies compile.
+
+## Stage 3: namespace enums
+
+The constant-valued enum implementation from `codex/enums` (`7127080`) is
+integrated through the split lowering files. Ordinary and const enums may be
+declared directly in a namespace, including nested JSDocParser. Symbols retain
+the enum's declaration identity. Ordinary objects use the existing forward and
+reverse maps and ownership rules; const members inline. Computed, ambient,
+merged and prematurely observed enums remain NotYet. The existing closed-domain
+checks also guard namespace enum values through writable views and containers.
+
+The parser-enum fixture covers two parser enum scopes, a nested JSDoc parser,
+const member inlining, numeric aliases/reverse mapping, and IncrementalParser.
+A mutant replacing SourceElements with 99 must finish cleanly and disagree with
+independent Node stdout.

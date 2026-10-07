@@ -850,6 +850,9 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 // switchStatement lowers switch, whose cases 0.1 requires to be constants.
 func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsSwitchStatement()
+	if err := l.enumSwitch(node); err != nil {
+		return nil, err
+	}
 	value, err := l.expression(statement.Expression)
 	if err != nil {
 		return nil, err
@@ -873,7 +876,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			switch test.(type) {
 			case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
 			default:
-				return nil, l.notYet(clause, "a case that isn't a constant")
+				if l.enumMember(clause.AsCaseOrDefaultClause().Expression) == nil {
+					return nil, l.notYet(clause, "a case that isn't a constant")
+				}
 			}
 			if test.Type() != value.Type() {
 				return nil, l.notYet(clause, "a case whose type differs from the switch's")

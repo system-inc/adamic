@@ -34,6 +34,7 @@ type widening struct {
 
 	// readonlyField names a readonly field seen as a writable one, when that's the slot.
 	readonlyField string
+	enum          bool
 
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
@@ -86,6 +87,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		}
 		return l.widened(constraint, to, visited)
 	}
+	if !l.enumAssignable(from, to) {
+		return &widening{source: from, target: to, enum: true}
+	}
 	if !l.structured(from) || !l.structured(to) {
 		// A class instance target is walked as any object is: its fields are slots as a literal's
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
@@ -99,7 +103,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			takes, given := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])
-			if !l.checker.IsTypeAssignableTo(given, takes) {
+			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
 				return &widening{source: takes, target: given, parameter: true}
@@ -159,7 +163,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			// enters, is the same field.
 			return &widening{source: source, target: target, readonlyField: viewed.Name}
 		}
-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -200,7 +204,7 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 	}
 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 		source, target := fromArguments[index], toArguments[index]
-		if mutable && !l.checker.IsTypeAssignableTo(target, source) {
+		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -444,6 +448,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	}
 	if found == nil {
 		return nil
+	}
+	if found.enum {
+		if enumObjectSymbol(found.target) != nil {
+			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+		}
+		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
 	}
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"

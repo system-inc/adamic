@@ -363,6 +363,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.enumExpression(node); known {
+		return value, err
+	}
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
 	}

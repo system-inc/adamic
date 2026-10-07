@@ -9,6 +9,9 @@ import (
 func TestNamespaceLimitsStayLoud(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
+		{"computed enum", "namespace N {enum E {A=Math.floor(2)}}", "computed enum"},
+		{"reopened enum", "namespace N {enum E {A} enum E {B=1}}", "merged enum"},
+		{"early enum", "namespace N {function read():number{return E.A;} const x=read(); enum E {A}}", "enum before"},
 		{"object value", "namespace N {export const x=1;} const value=N;", "namespace object"},
 		{"reflection", "namespace N {export const x=1;} console.log(Object.keys(N).join(' '));", "namespace object"},
 		{"reopening", "namespace N {export const x=1;} namespace N {export const y=2;}", "reopened namespace"},

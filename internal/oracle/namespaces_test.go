@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a"} {
+	for _, path := range []string{"internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -25,10 +25,14 @@ func init() {
 }
 
 func TestNamespaceSemanticMutants(t *testing.T) {
-	for _, family := range []string{"wrong scoped function", "wrong scoped constant"} {
+	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/namespaces.a"))
+			fixture := "namespaces.a"
+			if family == "wrong namespace enum" {
+				fixture = "namespaces_parser_enums.a"
+			}
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -37,7 +41,26 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			changed := false
-			if family == "wrong scoped function" {
+			if family == "wrong namespace enum" {
+				for _, statement := range program.Main {
+					declaration, ok := statement.(ir.Declare)
+					if !ok {
+						continue
+					}
+					literal, ok := declaration.Value.(ir.ObjectLiteral)
+					if !ok {
+						continue
+					}
+					if program.Locals[declaration.Local].Name == "ParsingContext" {
+						for index := range literal.Fields {
+							if literal.Fields[index].Name == "SourceElements" {
+								literal.Fields[index].Value = ir.NumberConstant{Value: 99}
+								changed = true
+							}
+						}
+					}
+				}
+			} else if family == "wrong scoped function" {
 				for index := range program.Functions {
 					if program.Functions[index].Name == "left" {
 						program.Functions[index].Body = []ir.Statement{ir.Return{Value: ir.NumberConstant{Value: 90}}}
