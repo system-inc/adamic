@@ -1,0 +1,39 @@
+import { panic, readTextFile, programArguments, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { Rules } from '../../rules.ts';
+import { Bindings } from '../../bindings.ts';
+import { OutputCFG } from '../output_cfg.a';
+const args = programArguments();
+const file = args[1] ?? panic('file');
+const source = readTextFile(file);
+if(source.kind === 'Error') {
+    panic(source.message);
+}
+const program = tsgoProgram(args[0] ?? panic('config'), [file]);
+const parser = new Parser(source.text, file);
+const scanner = new Scanner(source.text);
+const offsets = byteOffsets(source.text);
+const unary = new UnaryMinus(program, file, parser, scanner, offsets);
+const rules = new Rules(program, file, parser, scanner, offsets, unary);
+const root = parser.file();
+for(let at = 0; at < parser.nodes.length; at++) {
+    rules.parents.push(-1);
+}
+rules.links(root, -1);
+const events = new Map<number, readonly number[]>();
+for(let at = 0; at < parser.nodes.length; at++) {
+    if(parser.node(at).kind === 'CallExpression') {
+        events.set(at, [0]);
+    }
+}
+const bindings = new Bindings(rules);
+const graph = new OutputCFG(rules, bindings, events);
+graph.analyze(root);
+for(const block of graph.blocks) {
+    if(block.index >= 0 && block.reachable) {
+        console.log(`call ${rules.text(parser.node(block.index))}`);
+    }
+}
+tsgoRelease(program);

@@ -5,6 +5,11 @@ import { Scanner } from '../../../typescript/scanner/scanner.ts';
 import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
 import { Rules } from '../rules.ts';
 import { NoUnclearedRaceTimeout } from './no_uncleared_race_timeout.a';
+import { Bindings } from '../bindings.ts';
+import { OutputIdentity } from './output_identity.a';
+import { NoProcessExitAfterOutput } from './no_process_exit_after_output.a';
+import { RuntimeModules } from './runtime_modules.a';
+import { RequireBlockingStandardStreams, blockingCandidate } from './require_blocking_standard_streams.a';
 
 const args = programArguments();
 const config = args[0] ?? panic('missing config');
@@ -31,6 +36,13 @@ for(const path of paths) {
     }
     rules.links(root, -1);
     new NoUnclearedRaceTimeout(rules).run();
+    const bindings = new Bindings(rules);
+    const identity = new OutputIdentity(rules, bindings);
+    new NoProcessExitAfterOutput(rules, bindings, identity).run();
+    if(blockingCandidate(rules, bindings, identity)) {
+        const modules = new RuntimeModules(rules, root);
+        new RequireBlockingStandardStreams(rules, bindings, identity, modules).run(root);
+    }
     for(const finding of rules.findings) {
         finding.sortKey = finding.written();
     }

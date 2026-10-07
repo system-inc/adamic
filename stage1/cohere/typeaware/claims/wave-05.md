@@ -38,14 +38,18 @@ configuration and skip-types records are not ports. Positive controls are
 required because the recorded corpus counts are zero. Implementation stays in
 this wave's own directories, without editing the shared generator or harness.
 
-Continuation 1 status: the uncleared-race-timeout rule is implemented and
-validated normally and under sanitizers on both frozen corpora, with 22 DOM and
-Node controls, a comparison-only mutant, and released-handle checks.
-The process-exit and blocking-stream rules remain unported. The attempted
-reuse of the native CFG through a derived class is refused by stage 0 at
-shared `bindings.ts:49:33`, before native code is generated. The reproducer and
-exact refusal are retained in `../wave_05_next/gaps/cfg_probe.a` and its report.
-No shared bindings, compiler, registration generator or test harness were edited.
-Stopped this continuation on that blocker under Ahra's correction; no additional
-rules are claimed. The two incomplete reservations remain explicitly marked
-blocked rather than advertised as ports.
+Continuation 1 status: all three reserved rules are implemented and validated.
+The timer rule retains its prior DOM and Node controls. The output rules match
+production Go on 30 direct controls and 30 module programs, and all three match
+both frozen corpora normally and under ASan, UBSan and LSan. Each rule has a
+comparison-only mutant; a CFG-edge mutant, direct bridge-guard mutants and
+released-handle checks also pass their assertions.
+
+The previous constructor refusal was overcome inside this wave's directory:
+its own forward CFG accepts fully constructed bindings instead of constructing
+bindings while its own constructor is still being lowered. No inheritance,
+shared compiler/bindings repair, registration generator or shared harness edit
+was needed. New raw checker questions each have their own Go and .a files and
+one physical switch-registration line. Details are in
+`../wave_05_next/OUTPUT_REPORT.md`; the old refusal remains as historical evidence.
+No additional rules are claimed in this update.

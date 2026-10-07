@@ -203,6 +203,9 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "runtime-modules": return p.runtimeModules(node, question)
+	case "output-symbol": return p.outputSymbol(c, node, question)
+	case "output-callee": return p.outputCallee(c, node, question)
 	case "symbol-ancestry": return p.symbolAncestry(c, node, question)
 	case "usage-shape": return p.usageShape(c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":

@@ -39,7 +39,7 @@ func written(text string) string {
 	return out.String()
 }
 
-var coverageNames = map[string]bool{"nexus/correctness-no-uncleared-race-timeout": true}
+var coverageNames = map[string]bool{"nexus/correctness-no-uncleared-race-timeout": true, "nexus/correctness-no-process-exit-after-output": true, "nexus/correctness-require-blocking-standard-streams": true}
 
 func main() {
 	args := os.Args[1:]

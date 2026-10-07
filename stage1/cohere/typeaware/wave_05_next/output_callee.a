@@ -1,0 +1,39 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+export class OutputCallee {
+    readonly present: boolean;
+    file = '';
+    kind = '';
+    start = 0;
+    end = 0;
+    external = false;
+    generator = false;
+    async = false;
+    returnFlags = 0;
+    body = false;
+    bodyKind = '';
+    bodyStart = 0;
+    bodyEnd = 0;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'output-callee'));
+        header(frames, 'output-callee');
+        this.present = frames.yes();
+        if(this.present) {
+            this.file = frames.field();
+            this.kind = frames.field();
+            this.start = frames.natural();
+            this.end = frames.natural();
+            this.external = frames.yes();
+            this.generator = frames.yes();
+            this.async = frames.yes();
+            this.returnFlags = frames.natural();
+            this.body = frames.yes();
+            if(this.body) {
+                this.bodyKind = frames.field();
+                this.bodyStart = frames.natural();
+                this.bodyEnd = frames.natural();
+            }
+        }
+        frames.end();
+    }
+}

@@ -1,0 +1,108 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+
+export class OutputAncestor {
+    readonly kind: string;
+    readonly name: string;
+    readonly nameKind: string;
+    readonly flags: number;
+    readonly keyword: string;
+    constructor(kind: string, name: string, nameKind: string, flags: number, keyword: string) {
+        this.kind = kind;
+        this.name = name;
+        this.nameKind = nameKind;
+        this.flags = flags;
+        this.keyword = keyword;
+    }
+}
+export class OutputDeclaration {
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly flags: number;
+    readonly declarationFile: boolean;
+    readonly library: boolean;
+    readonly external: boolean;
+    readonly parents: readonly OutputAncestor[];
+    constructor(
+        file: string,
+        kind: string,
+        start: number,
+        end: number,
+        flags: number,
+        declarationFile: boolean,
+        library: boolean,
+        external: boolean,
+        parents: readonly OutputAncestor[],
+    ) {
+        this.file = file;
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.flags = flags;
+        this.declarationFile = declarationFile;
+        this.library = library;
+        this.external = external;
+        this.parents = parents;
+    }
+}
+export class OutputSymbol {
+    readonly present: boolean;
+    readonly identity: number;
+    readonly flags: number;
+    readonly declarations: readonly OutputDeclaration[];
+    constructor(rules: Rules, index: number, followAlias = true) {
+        const frames = new Frames(rules.ask(index, followAlias ? 'output-symbol' : 'output-symbol\nown'));
+        header(frames, 'output-symbol');
+        this.present = frames.yes();
+        let identity = 0;
+        let flags = 0;
+        const declarations: OutputDeclaration[] = [];
+        if(this.present) {
+            identity = frames.natural();
+            flags = frames.natural();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const file = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                const declarationFlags = frames.natural();
+                const declarationFile = frames.yes();
+                const library = frames.yes();
+                const external = frames.yes();
+                const parents: OutputAncestor[] = [];
+                const length = frames.natural();
+                for(let parent = 0; parent < length; parent++) {
+                    parents.push(
+                        new OutputAncestor(
+                            frames.field(),
+                            frames.field(),
+                            frames.field(),
+                            frames.natural(),
+                            frames.field(),
+                        ),
+                    );
+                }
+                declarations.push(
+                    new OutputDeclaration(
+                        file,
+                        kind,
+                        start,
+                        end,
+                        declarationFlags,
+                        declarationFile,
+                        library,
+                        external,
+                        parents,
+                    ),
+                );
+            }
+        }
+        frames.end();
+        this.identity = identity;
+        this.flags = flags;
+        this.declarations = declarations;
+    }
+}

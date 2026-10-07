@@ -1,0 +1,6 @@
+import { panic, programArguments, tsgoProgram, tsgoRelease, tsgoInspect } from 'adamic';
+const args = programArguments();
+const file = args[1] ?? panic('file');
+const program = tsgoProgram(args[0] ?? panic('config'), [file]);
+tsgoRelease(program);
+console.log(tsgoInspect(program, file, 0, 5, 'Identifier', args[2] ?? panic('question')));

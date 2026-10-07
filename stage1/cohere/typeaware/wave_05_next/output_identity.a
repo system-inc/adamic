@@ -1,0 +1,259 @@
+import { panic, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { Rules } from '../rules.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Bindings } from '../bindings.ts';
+import { OutputSymbol } from './output_symbol.a';
+import { OutputCallee } from './output_callee.a';
+const roots = [
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'ArrowFunction',
+    'MethodDeclaration',
+    'Constructor',
+    'GetAccessor',
+    'SetAccessor',
+    'ClassStaticBlockDeclaration',
+];
+const consoleMethods = ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'];
+export function loadRules(program: number, path: string): Rules {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+    const rules = new Rules(program, path, parser, scanner, offsets, unary);
+    const root = parser.file();
+    for(let at = 0; at < parser.nodes.length; at++) {
+        rules.parents.push(-1);
+    }
+    rules.links(root, -1);
+    return rules;
+}
+export class OutputIdentity {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly symbols = new Map<number, OutputSymbol>();
+    readonly writes = new Map<number, boolean>();
+    readonly exits = new Map<number, boolean>();
+    readonly bodies = new Map<string, boolean>();
+    readonly files = new Map<string, Rules>();
+    constructor(rules: Rules, bindings: Bindings) {
+        this.rules = rules;
+        this.bindings = bindings;
+    }
+    symbol(index: number, alias = true): OutputSymbol {
+        // Own symbol mode is deliberately not cached with alias-resolved facts.
+        if(!alias) {
+            return new OutputSymbol(this.rules, index, false);
+        }
+        if(!this.symbols.has(index)) {
+            this.symbols.set(index, new OutputSymbol(this.rules, index));
+        }
+        return this.symbols.get(index) ?? panic('missing output symbol');
+    }
+    isRoot(index: number): boolean {
+        const kind = this.rules.parser.node(index).kind;
+        return (
+            kind === 'SourceFile' ||
+            roots.includes(kind) ||
+            (kind === 'PropertyDeclaration' && this.bindings.shape.initializer(index) >= 0)
+        );
+    }
+    member(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            return index;
+        }
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = node.children[node.children.length - 1] ?? -1;
+            if(name >= 0 && this.rules.parser.node(name).kind === 'Identifier') {
+                return name;
+            }
+        }
+        return -1;
+    }
+    processMember(index: number): boolean {
+        const symbol = this.symbol(index);
+        return (
+            symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.every((d) => {
+                const owner = d.parents[0];
+                const block = d.parents[1];
+                const namespace = d.parents[2];
+                return (
+                    d.declarationFile &&
+                    ['MethodSignature', 'PropertySignature'].includes(d.kind) &&
+                    owner?.kind === 'InterfaceDeclaration' &&
+                    owner.name === 'Process' &&
+                    block?.kind === 'ModuleBlock' &&
+                    namespace?.kind === 'ModuleDeclaration' &&
+                    namespace.nameKind === 'Identifier' &&
+                    namespace.name === 'NodeJS'
+                );
+            })
+        );
+    }
+    isExit(index: number): boolean {
+        if(!this.exits.has(index)) {
+            const node = this.rules.parser.node(index);
+            const name = node.kind === 'CallExpression' ? this.member(this.rules.skip(node.children[0] ?? -1)) : -1;
+            this.exits.set(
+                index,
+                name >= 0 && this.rules.parser.node(name).text === 'exit' && this.processMember(name),
+            );
+        }
+        return this.exits.get(index) ?? false;
+    }
+    isWrite(index: number): boolean {
+        if(this.writes.has(index)) {
+            return this.writes.get(index) ?? false;
+        }
+        const call = this.rules.parser.node(index);
+        let answer = false;
+        if(call.kind === 'CallExpression') {
+            const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+            if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+                const name = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+                const named =
+                    callee.kind === 'PropertyAccessExpression' ||
+                    ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(name.kind);
+                const receiver = this.rules.skip(callee.children[0] ?? -1);
+                const object = this.rules.parser.node(receiver);
+                if(
+                    named &&
+                    consoleMethods.includes(name.text) &&
+                    object.kind === 'Identifier' &&
+                    object.text === 'console'
+                ) {
+                    const symbol = this.symbol(receiver, false);
+                    answer =
+                        symbol.present &&
+                        symbol.declarations.length > 0 &&
+                        symbol.declarations.every((d) => {
+                            const list = d.parents[0];
+                            const statement = d.parents[1];
+                            const container = d.parents[2];
+                            return (
+                                d.declarationFile &&
+                                d.kind === 'VariableDeclaration' &&
+                                list?.kind === 'VariableDeclarationList' &&
+                                statement?.kind === 'VariableStatement' &&
+                                ((container?.kind === 'SourceFile' && !d.external) ||
+                                    (container?.kind === 'ModuleBlock' && d.parents[3]?.keyword === 'GlobalKeyword'))
+                            );
+                        });
+                }
+                else if(named && name.text === 'write') {
+                    const stream = this.member(receiver);
+                    answer =
+                        stream >= 0 &&
+                        ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) &&
+                        this.processMember(stream);
+                }
+            }
+        }
+        this.writes.set(index, answer);
+        return answer;
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.rules.parser.node(index).children) {
+            if(this.isRoot(child)) {
+                continue;
+            }
+            if(this.isExit(child) || this.holdsExit(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    inCatchBinding(index: number, root: number): boolean {
+        let previous = index;
+        let parent = this.bindings.parent(index);
+        while(parent >= 0 && parent !== root) {
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'CatchClause' && this.rules.parser.node(previous).kind === 'VariableDeclaration') {
+                return true;
+            }
+            previous = parent;
+            parent = this.bindings.parent(parent);
+        }
+        return false;
+    }
+    bodyScan(index: number, target: OutputIdentity): number {
+        if(target.isRoot(index)) {
+            return 0;
+        }
+        if(target.isExit(index)) {
+            return 2;
+        }
+        let result = target.isWrite(index) ? 1 : 0;
+        for(const child of target.rules.parser.node(index).children) {
+            result |= this.bodyScan(child, target);
+        }
+        return result;
+    }
+    writer(index: number): boolean {
+        if(this.isWrite(index)) {
+            return true;
+        }
+        const callee = new OutputCallee(this.rules, index);
+        if(
+            !callee.present ||
+            !callee.body ||
+            !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(
+                callee.kind,
+            ) ||
+            (callee.file !== this.rules.path && !callee.external) ||
+            callee.generator ||
+            (callee.returnFlags & 262144) !== 0
+        ) {
+            return false;
+        }
+        if(callee.async) {
+            let parent = this.bindings.parent(index);
+            while(parent >= 0 && this.rules.parser.node(parent).kind === 'ParenthesizedExpression') {
+                parent = this.bindings.parent(parent);
+            }
+            if(parent < 0 || this.rules.parser.node(parent).kind !== 'AwaitExpression') {
+                return false;
+            }
+        }
+        const key = `${callee.file}:${callee.start}:${callee.end}`;
+        if(this.bodies.has(key)) {
+            return this.bodies.get(key) ?? false;
+        }
+        let rules = this.rules;
+        if(callee.file !== rules.path) {
+            if(!this.files.has(callee.file)) {
+                this.files.set(callee.file, loadRules(rules.program, callee.file));
+            }
+            rules = this.files.get(callee.file) ?? panic('missing foreign body');
+        }
+        let body = -1;
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const node = rules.parser.node(at);
+            if(
+                node.kind === callee.bodyKind &&
+                rules.byte(node.pos) === callee.bodyStart &&
+                rules.byte(node.end) === callee.bodyEnd
+            ) {
+                body = at;
+                break;
+            }
+        }
+        if(body < 0) {
+            panic('resolved body absent from native tree');
+        }
+        const bindings = new Bindings(rules);
+        const target = new OutputIdentity(rules, bindings);
+        const answer = this.bodyScan(body, target) === 1;
+        this.bodies.set(key, answer);
+        return answer;
+    }
+}

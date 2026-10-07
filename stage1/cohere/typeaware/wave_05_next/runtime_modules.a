@@ -1,0 +1,49 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+export const streamSuffixes = ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'];
+export class RuntimeModules {
+    readonly files: string[] = [];
+    readonly declarationFiles = new Map<string, boolean>();
+    readonly edges = new Map<string, string[]>();
+    readonly imported = new Map<string, boolean>();
+    readonly canBlock = new Map<string, boolean>();
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'runtime-modules'));
+        header(frames, 'runtime-modules');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = frames.field();
+            this.files.push(file);
+            this.declarationFiles.set(file, frames.yes());
+            const computed = frames.yes();
+            if(computed || streamSuffixes.some((suffix) => file.endsWith(suffix))) {
+                this.canBlock.set(file, true);
+            }
+            const edges: string[] = [];
+            const length = frames.natural();
+            for(let edge = 0; edge < length; edge++) {
+                const target = frames.field();
+                edges.push(target);
+                this.imported.set(target, true);
+            }
+            this.edges.set(file, edges);
+        }
+        frames.end();
+        let changed = true;
+        while(changed) {
+            changed = false;
+            for(const file of this.files) {
+                if(this.canBlock.has(file)) {
+                    continue;
+                }
+                if(
+                    (this.edges.get(file) ?? panic('missing module edges')).some((target) => this.canBlock.has(target))
+                ) {
+                    this.canBlock.set(file, true);
+                    changed = true;
+                }
+            }
+        }
+    }
+}
