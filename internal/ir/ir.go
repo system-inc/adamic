@@ -10,6 +10,9 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
+	ViewOrigins []Expression
+
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks struct{ Proven, Checked, Unobservable int }
@@ -338,6 +341,7 @@ type (
 	// number field read that way is number | undefined.
 	Property struct {
 		// View names a required field read whose presence, readiness and representation are checked.
+		ViewWhere    string
 		View         string
 		ViewType     string
 		ViewAllowed  []Expression

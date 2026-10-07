@@ -1,0 +1,47 @@
+package lower
+
+import (
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+func TestLazyViewDemandUsesSharedFlow(t *testing.T) {
+	for _, name := range []string{"helper merge", "ordinary only", "callback unknown", "missing producer"} {
+		t.Run(name, func(t *testing.T) {
+			object := func() ir.ObjectLiteral {
+				return ir.ObjectLiteral{Fields: []ir.Field{{Name: "name", Value: ir.NumberConstant{Value: 1}}}}
+			}
+			program := &ir.Program{
+				Locals:            []ir.Local{{Type: ir.Object}, {Type: ir.Object}, {Type: ir.Object}},
+				CheckedFields:     map[string]bool{"opaque": true},
+				ViewContracts:     []ir.ViewContract{{Kind: ir.ViewCallable, Unsupported: "callable"}},
+				ViewContractTypes: map[int]ir.ViewContractID{42: 1},
+				ViewOrigins:       []ir.Expression{ir.Read{Local: 0, Of: ir.Object}},
+				Main:              []ir.Statement{ir.Declare{Local: 0, Value: object()}, ir.Declare{Local: 2, Value: object()}},
+				Functions:         []ir.Function{{Parameters: []int{1}, Body: []ir.Statement{ir.Evaluate{Value: ir.Property{Object: ir.Read{Local: 1, Of: ir.Object}, Name: "opaque", Of: ir.Closure, ViewTypeID: 42, ViewWhere: "helper.a:9:69"}}}}},
+			}
+			// All variants supply an ordinary value of the same declared type.
+			program.Main = append(program.Main, ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.Read{Local: 2, Of: ir.Object}}}})
+			switch name {
+			case "helper merge":
+				program.Main = append(program.Main, ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.Read{Local: 0, Of: ir.Object}}}})
+			case "callback unknown":
+				program.Main = append(program.Main, ir.Evaluate{Value: ir.MakeClosure{Function: 0}})
+			case "missing producer":
+				program.ViewOrigins = []ir.Expression{ir.Read{Local: 1, Of: ir.Object}}
+				program.Main = program.Main[:2]
+			}
+			l := &lowering{result: program}
+			err := l.checkLazyViewReads()
+			if name == "ordinary only" {
+				if err != nil {
+					t.Fatalf("disjoint allocations refused: %v", err)
+				}
+			} else if err == nil || !strings.Contains(err.Error(), "field opaque with unsupported callable") || !strings.Contains(err.Error(), "helper.a:9:69") {
+				t.Fatalf("want refusal at demanded read, got %v", err)
+			}
+		})
+	}
+}

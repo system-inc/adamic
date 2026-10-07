@@ -50,9 +50,6 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if found != nil {
 			return true
 		}
-		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
-			found = l.notYet(part, "a getter in a checked field contract")
-		}
 		if part.Kind == ast.KindObjectBindingPattern {
 			for _, binding := range part.AsBindingPattern().Elements.Nodes {
 				name := binding.Name()
@@ -68,12 +65,6 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAssignment && part.Name() != nil && fields[part.Name().Text()] {
-			value := ast.SkipParentheses(part.AsPropertyAssignment().Initializer)
-			if value.Kind != ast.KindNullKeyword && l.includesNull(l.checker.GetTypeAtLocation(value)) {
-				found = l.notYet(part, "a nullable hidden field requiring a distinct null runtime tag")
-			}
-		}
 		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
@@ -87,7 +78,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
 
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Object) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
+					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}
@@ -110,6 +101,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	for field := range fields {
 		l.result.CheckedFields[field] = true
 	}
+	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
 	return value, nil
 }
 
@@ -331,22 +323,31 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 // viewSchema is the exact contract-admission portion of the shared entry point.
 // Inventories can audit it without claiming program lowering or alias admission.
 func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
-	if l.callableViewContract(target) {
-		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
-	}
-	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
+	id, err := l.viewContract(node, target)
+	if err != nil {
+		return nil, err
 	}
 	fields := map[string]bool{}
-	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
-		return nil, err
+	seen := map[ir.ViewContractID]bool{}
+	var visit func(ir.ViewContractID)
+	visit = func(id ir.ViewContractID) {
+		if id == 0 || seen[id] {
+			return
+		}
+		seen[id] = true
+		contract := l.result.ViewContracts[id-1]
+		for _, field := range contract.Fields {
+			fields[field.Name] = true
+			if field.Optional {
+				l.optionalViewWriteField(field.Name)
+			}
+			visit(field.Contract)
+		}
+		for _, member := range contract.Members {
+			visit(member)
+		}
+		visit(contract.Element)
 	}
-	if _, err := l.viewContract(node, target); err != nil {
-		return nil, err
-	}
+	visit(id)
 	return fields, nil
 }

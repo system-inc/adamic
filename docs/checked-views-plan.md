@@ -355,3 +355,14 @@ pairs and source witnesses are in stage3/interface-downcasts/lane2/read-census.
 Existing controls include function-field, class-method, callable missing/kind/
 uninitialized fixtures and the pinned opaque-signature refusal. The previous
 signature mutant was caught; its evidence is retained in parser-return-logs.
+
+### Lazy admission checkpoint, October 7, 2026
+
+Lazy unsupported descriptors now admit unread members. The shared allocation flow
+checks demanded callable reads, joining helpers and retaining Unknown callbacks.
+Tagged, untagged, and unread mixed-union fixtures match Node in native sanitized,
+native release, and JavaScript runs. The helper mutant refuses at its opaque read.
+Focused lower and oracle tests passed; array consumer coverage and the full view
+suite are still pending. The earlier lane 2 and lane 3 merges preceded the new
+integrator-only coordination rule. Future dependency merges use views-integration.
+No integration branch was advertised by origin at this checkpoint.
