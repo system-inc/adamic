@@ -1,0 +1,345 @@
+=== RUN   TestDesignSystemIsBuiltOnceUnderTheRealWalk
+    design_system_live_walk_test.go:97: no corpus repository at /Users/kirkouimet/Projects/ahra, so there is no real walk to measure
+--- SKIP: TestDesignSystemIsBuiltOnceUnderTheRealWalk (0.00s)
+=== RUN   TestLiveWalkCoversEveryRegisteredTailwindRule
+=== PAUSE TestLiveWalkCoversEveryRegisteredTailwindRule
+=== RUN   TestClassOrderOptions
+=== PAUSE TestClassOrderOptions
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering
+=== RUN   TestEnforceConsistentClassOrderStaysSilent
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent
+=== RUN   TestClassOrderMessageNamesTheOrder
+=== PAUSE TestClassOrderMessageNamesTheOrder
+=== RUN   TestClassOrderFixMatchesThePlugin
+=== PAUSE TestClassOrderFixMatchesThePlugin
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace
+=== RUN   TestClassOrderDimensionsAreAllUsed
+=== PAUSE TestClassOrderDimensionsAreAllUsed
+=== RUN   TestClassOrderVariantDimensions
+=== PAUSE TestClassOrderVariantDimensions
+=== RUN   TestClassOrderDepthIsNotADimension
+=== PAUSE TestClassOrderDepthIsNotADimension
+=== RUN   TestClassOrderReadingsKeepCustomProperties
+=== PAUSE TestClassOrderReadingsKeepCustomProperties
+=== RUN   TestClassOrderRootsResolveAgainstTheDesignSystem
+=== PAUSE TestClassOrderRootsResolveAgainstTheDesignSystem
+=== RUN   TestClassOrderMarkersLeadRegardlessOfVariant
+=== PAUSE TestClassOrderMarkersLeadRegardlessOfVariant
+=== RUN   TestClassOrderMarkersKeepSourceOrder
+=== PAUSE TestClassOrderMarkersKeepSourceOrder
+=== RUN   TestClassOrderFixturesActuallyRan
+=== PAUSE TestClassOrderFixturesActuallyRan
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== RUN   TestSharedReaderFindsWhatEachRuleFindsAlone
+=== PAUSE TestSharedReaderFindsWhatEachRuleFindsAlone
+=== CONT  TestLiveWalkCoversEveryRegisteredTailwindRule
+=== CONT  TestClassOrderDepthIsNotADimension
+=== CONT  TestClassOrderMessageNamesTheOrder
+=== CONT  TestEnforceConsistentClassOrderStaysSilent
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== CONT  TestClassOrderVariantDimensions
+=== NAME  TestClassOrderDepthIsNotADimension
+    enforce_consistent_class_order_test.go:554: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== NAME  TestClassOrderVariantDimensions
+    enforce_consistent_class_order_test.go:483: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== CONT  TestClassOrderDimensionsAreAllUsed
+    enforce_consistent_class_order_test.go:426: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace
+=== NAME  TestClassOrderMessageNamesTheOrder
+    enforce_consistent_class_order_test.go:317: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderMarkersKeepSourceOrder
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== NAME  TestClassOrderMarkersKeepSourceOrder
+    enforce_consistent_class_order_test.go:688: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+=== CONT  TestSharedReaderFindsWhatEachRuleFindsAlone
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+--- PASS: TestLiveWalkCoversEveryRegisteredTailwindRule (0.00s)
+=== CONT  TestClassOrderFixMatchesThePlugin
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves
+--- SKIP: TestClassOrderDepthIsNotADimension (0.00s)
+--- SKIP: TestClassOrderVariantDimensions (0.00s)
+--- SKIP: TestClassOrderDimensionsAreAllUsed (0.00s)
+=== NAME  TestSharedReaderFindsWhatEachRuleFindsAlone
+    shared_reader_walk_test.go:55: no installed tailwindcss on this machine, so there is no design system to ask
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin
+--- SKIP: TestClassOrderMessageNamesTheOrder (0.00s)
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+=== RUN   TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== CONT  TestClassOrderFixturesActuallyRan
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+--- SKIP: TestClassOrderMarkersKeepSourceOrder (0.00s)
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+--- SKIP: TestSharedReaderFindsWhatEachRuleFindsAlone (0.00s)
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+=== PAUSE TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== NAME  TestClassOrderFixturesActuallyRan
+    enforce_consistent_class_order_test.go:735: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+--- FAIL: TestClassOrderFixturesActuallyRan (0.00s)
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+=== RUN   TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== PAUSE TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/single_class
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/single_class
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== RUN   TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+=== PAUSE TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+=== CONT  TestClassOrderRootsResolveAgainstTheDesignSystem
+=== RUN   TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== PAUSE TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== RUN   TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+=== NAME  TestClassOrderRootsResolveAgainstTheDesignSystem
+    enforce_consistent_class_order_test.go:646: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== CONT  TestClassOrderMarkersLeadRegardlessOfVariant
+=== PAUSE TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+--- SKIP: TestClassOrderRootsResolveAgainstTheDesignSystem (0.00s)
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== CONT  TestClassOrderOptions
+=== CONT  TestClassOrderReadingsKeepCustomProperties
+=== NAME  TestClassOrderMarkersLeadRegardlessOfVariant
+    enforce_consistent_class_order_test.go:672: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== RUN   TestClassOrderOptions/asc
+=== PAUSE TestClassOrderOptions/asc
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== NAME  TestClassOrderReadingsKeepCustomProperties
+    enforce_consistent_class_order_test.go:604: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== RUN   TestClassOrderOptions/desc
+--- SKIP: TestClassOrderMarkersLeadRegardlessOfVariant (0.00s)
+=== PAUSE TestClassOrderOptions/desc
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== RUN   TestClassOrderOptions/official
+=== PAUSE TestClassOrderOptions/official
+=== NAME  TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+    enforce_consistent_class_order_test.go:395: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== RUN   TestClassOrderOptions/asc_is_not_locale_order
+=== NAME  TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+    enforce_consistent_class_order_test.go:827: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== PAUSE TestClassOrderOptions/asc_is_not_locale_order
+=== RUN   TestClassOrderOptions/desc_is_not_locale_order
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== PAUSE TestClassOrderOptions/desc_is_not_locale_order
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== NAME  TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+    enforce_consistent_class_order_test.go:395: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+    enforce_consistent_class_order_test.go:827: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+--- SKIP: TestClassOrderReadingsKeepCustomProperties (0.00s)
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== NAME  TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+    enforce_consistent_class_order_test.go:827: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== RUN   TestClassOrderOptions/desc_ignores_the_engine
+=== PAUSE TestClassOrderOptions/desc_ignores_the_engine
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== RUN   TestClassOrderOptions/unknown_classes_first_by_default
+=== PAUSE TestClassOrderOptions/unknown_classes_first_by_default
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== RUN   TestClassOrderOptions/unknown_classes_sorted_ascending_at_the_start
+=== PAUSE TestClassOrderOptions/unknown_classes_sorted_ascending_at_the_start
+=== RUN   TestClassOrderOptions/unknown_classes_sorted_descending_at_the_end
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== PAUSE TestClassOrderOptions/unknown_classes_sorted_descending_at_the_end
+=== RUN   TestClassOrderOptions/unknown_classes_keep_their_order_by_default
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== PAUSE TestClassOrderOptions/unknown_classes_keep_their_order_by_default
+=== RUN   TestClassOrderOptions/unknown_classes_at_the_end_keep_their_order
+=== PAUSE TestClassOrderOptions/unknown_classes_at_the_end_keep_their_order
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderFixMatchesThePlugin/two_classes_reversed
+    enforce_consistent_class_order_test.go:370: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/single_class
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+    enforce_consistent_class_order_test.go:370: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+    enforce_consistent_class_order_test.go:370: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+    enforce_consistent_class_order_test.go:370: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+    enforce_consistent_class_order_test.go:370: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+    enforce_consistent_class_order_test.go:796: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+    enforce_consistent_class_order_test.go:796: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+    enforce_consistent_class_order_test.go:796: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+    enforce_consistent_class_order_test.go:796: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+    enforce_consistent_class_order_test.go:796: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+    enforce_consistent_class_order_test.go:796: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/asc
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/unknown_classes_at_the_end_keep_their_order
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/unknown_classes_keep_their_order_by_default
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/unknown_classes_sorted_descending_at_the_end
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/unknown_classes_sorted_ascending_at_the_start
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/unknown_classes_first_by_default
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/desc_ignores_the_engine
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/desc_is_not_locale_order
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/asc_is_not_locale_order
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/official
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestClassOrderOptions/desc
+    enforce_consistent_class_order_options_test.go:80: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+--- PASS: TestClassOrderReportsWithoutAFixItCannotPlace (0.00s)
+    --- SKIP: TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal (0.00s)
+    --- SKIP: TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves (0.00s)
+--- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves (0.00s)
+    --- SKIP: TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class (0.00s)
+    --- SKIP: TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat (0.00s)
+    --- SKIP: TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole (0.00s)
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/already_ordered
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+--- PASS: TestEnforceConsistentClassOrderReportsMisordering (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/variant_before_base (0.00s)
+--- PASS: TestEnforceConsistentClassOrderStaysSilent (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unrelated_callee (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/base_before_variant (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/single_class (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/already_ordered (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unranked_class_first (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring (0.00s)
+--- PASS: TestClassOrderFixMatchesThePlugin (0.00s)
+    --- SKIP: TestClassOrderFixMatchesThePlugin/two_classes_reversed (0.00s)
+    --- SKIP: TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped (0.00s)
+    --- SKIP: TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule (0.00s)
+    --- SKIP: TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten (0.00s)
+    --- SKIP: TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order (0.00s)
+--- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin (0.00s)
+    --- SKIP: TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class (0.00s)
+    --- SKIP: TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch (0.00s)
+    --- SKIP: TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole (0.00s)
+    --- SKIP: TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first (0.00s)
+    --- SKIP: TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched (0.00s)
+    --- SKIP: TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class (0.00s)
+--- PASS: TestClassOrderOptions (0.00s)
+    --- SKIP: TestClassOrderOptions/asc (0.00s)
+    --- SKIP: TestClassOrderOptions/unknown_classes_at_the_end_keep_their_order (0.00s)
+    --- SKIP: TestClassOrderOptions/unknown_classes_keep_their_order_by_default (0.00s)
+    --- SKIP: TestClassOrderOptions/unknown_classes_sorted_descending_at_the_end (0.00s)
+    --- SKIP: TestClassOrderOptions/unknown_classes_sorted_ascending_at_the_start (0.00s)
+    --- SKIP: TestClassOrderOptions/unknown_classes_first_by_default (0.00s)
+    --- SKIP: TestClassOrderOptions/desc_ignores_the_engine (0.00s)
+    --- SKIP: TestClassOrderOptions/desc_is_not_locale_order (0.00s)
+    --- SKIP: TestClassOrderOptions/asc_is_not_locale_order (0.00s)
+    --- SKIP: TestClassOrderOptions/official (0.00s)
+    --- SKIP: TestClassOrderOptions/desc (0.00s)
+FAIL
+FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.013s
+FAIL
