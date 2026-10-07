@@ -1,6 +1,12 @@
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { ambientName } from './wave16_facts.a';
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// ThrowStatement = 258.
+export function listenerKinds(): readonly number[] {
+    return [258];
+}
+
 export class NoThrowLiteral {
     readonly rules: Rules;
     constructor(rules: Rules) {

@@ -5,6 +5,12 @@ import { Reassign } from './reassign.ts';
 import { ambientName } from './wave16_facts.a';
 import { precedence } from '../../typescript/parser/grammar.ts';
 
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// CallExpression = 214.
+export function listenerKinds(): readonly number[] {
+    return [214];
+}
+
 export class PreferExponentiationOperator {
     readonly rules: Rules;
     constructor(rules: Rules) {

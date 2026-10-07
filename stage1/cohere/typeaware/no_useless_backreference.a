@@ -3,6 +3,12 @@ import { Diagnostic } from './diagnostic.ts';
 import { FifthBindings, FifthConstants } from './fifth_bindings.a';
 import { RegexpTracker } from './regexp_tracker.a';
 import { BackreferenceStructure } from './backreference_structure.a';
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// RegularExpressionLiteral = 13, SourceFile = 307.
+export function listenerKinds(): readonly number[] {
+    return [13, 307];
+}
+
 export class NoUselessBackreference {
     readonly rules: Rules;
     constructor(rules: Rules) {

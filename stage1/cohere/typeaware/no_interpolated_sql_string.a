@@ -15,6 +15,12 @@ class SqlSpans {
         this.closeIndex = closeIndex;
     }
 }
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// TemplateExpression = 229.
+export function listenerKinds(): readonly number[] {
+    return [229];
+}
+
 export class NoInterpolatedSqlString {
     readonly rules: Rules;
     readonly bindings: Bindings;

@@ -4,6 +4,12 @@ import { Reassign } from './reassign.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { ambientName } from './wave16_facts.a';
 
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// SourceFile = 307.
+export function listenerKinds(): readonly number[] {
+    return [307];
+}
+
 export class NoImportAssign {
     readonly bindings: Bindings;
     readonly rules: Rules;

@@ -2,6 +2,12 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { ambientName } from './wave16_facts.a';
 
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// CallExpression = 214, BinaryExpression = 227, SwitchStatement = 256.
+export function listenerKinds(): readonly number[] {
+    return [214, 227, 256];
+}
+
 export class UseIsnan {
     readonly rules: Rules;
     constructor(rules: Rules) {

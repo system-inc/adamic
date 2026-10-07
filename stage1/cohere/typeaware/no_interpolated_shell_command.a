@@ -24,6 +24,12 @@ class Heredoc {
         this.tabs = tabs;
     }
 }
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// CallExpression = 214.
+export function listenerKinds(): readonly number[] {
+    return [214];
+}
+
 export class NoInterpolatedShellCommand {
     readonly rules: Rules;
     readonly bindings: Bindings;

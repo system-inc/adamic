@@ -3,6 +3,12 @@ import { Bindings } from './bindings.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { symbolOrigins } from './symbol_origins.a';
 import { listenerTypeFacts, ListenerTypes, ListenerType } from './listener_type_facts.a';
+// Numeric SyntaxKind values from the pinned Go parser, for the incoming kind-indexed driver.
+// CallExpression = 214.
+export function listenerKinds(): readonly number[] {
+    return [214];
+}
+
 export class NoGlobalListenerTargetAssertion {
     readonly rules: Rules;
     readonly bindings: Bindings;
