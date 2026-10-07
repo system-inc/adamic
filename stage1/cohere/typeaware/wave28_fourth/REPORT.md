@@ -77,3 +77,11 @@ go vet ./stage1/cohere/typeaware/wave28_fourth > /tmp/wave28-speed-vet.log 2>&1
 ```
 
 No completed rule code changed, so the nine full gates on this same main were not repeated. Full repository tests, numeric listeners, new performance measurements and completed React ports remain uncovered.
+
+## Integrated area parser readiness
+
+The user explicitly authorized rebase onto origin/area/stage1-lint. Area 7481e032 includes harness 41eb6eab2 (merge 50a5f105), native JSX descent and main 39638d9e. The previous rejection assertion now fails because native parsing succeeds; the initial failed log is retained. The owned probe now requires successful parsing, with a deliberately injected refusal caught by that expected-success comparison on each control. This is parser readiness evidence, not a native rule mutant or completed port. Ordinary non-JSX parsing also passes. No shared harness, registration or parser source was edited.
+
+All three analysis claims remain parked for native high-level IR, single-assignment and capture analysis (#dnv6f2c). Closing the parser gap does not provide their analysis algorithms.
+
+Command: ADAMIC_WAVE28_STAGE0=/workspace/wave28-area-third/adamic ADAMIC_WAVE28_FOURTH_ARTIFACTS=/workspace/wave28-area-fourth-ready go test ./stage1/cohere/typeaware/wave28_fourth -count=1 -timeout=10m -v. PASS 22.864s.

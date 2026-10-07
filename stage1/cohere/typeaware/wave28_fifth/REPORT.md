@@ -39,3 +39,11 @@ source /workspace/adamic-tools/env.sh
 ADAMIC_WAVE28_STAGE0=/workspace/wave28-c019-third/adamic ADAMIC_WAVE28_FIFTH_ARTIFACTS=/workspace/wave28-named-probe go test ./stage1/cohere/typeaware/wave28_fifth -count=1 -timeout=10m -v > /tmp/wave28-named-test.log 2>&1
 go vet ./stage1/cohere/typeaware/wave28_fifth > /tmp/wave28-named-vet.log 2>&1
 ```
+
+## Integrated area parser readiness
+
+The user explicitly authorized rebase onto origin/area/stage1-lint. Area 7481e032 includes harness 41eb6eab2 (merge 50a5f105), native JSX descent and main 39638d9e. The previous rejection assertion now fails because native parsing succeeds; the initial failed log is retained. The owned probe now requires successful parsing, with a deliberately injected refusal caught by that expected-success comparison on each control. This is parser readiness evidence, not a native rule mutant or completed port. Ordinary non-JSX parsing also passes. No shared harness, registration or parser source was edited.
+
+All three named listener declarations still agree with unmodified production Go, and all three Identifier-substitution mutants are caught. These three remain claimed and unported, awaiting implementation; shared JSX parsing is no longer their blocker. No extra rules were claimed.
+
+Command: ADAMIC_WAVE28_STAGE0=/workspace/wave28-area-third/adamic ADAMIC_WAVE28_FIFTH_ARTIFACTS=/workspace/wave28-area-fifth-ready go test ./stage1/cohere/typeaware/wave28_fifth -count=1 -timeout=10m -v. PASS 22.950s.

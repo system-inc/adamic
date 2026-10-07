@@ -1,0 +1,14 @@
+=== RUN   TestSharedParserReadiness
+    blocker_test.go:115: react/jsx-fragments: Go 1 finding, native parser accepts JSX
+    blocker_test.go:120: react/jsx-fragments: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:115: react/jsx-no-constructed-context-values: Go 1 finding, native parser accepts JSX
+    blocker_test.go:120: react/jsx-no-constructed-context-values: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:115: react/jsx-no-undef: Go 1 finding, native parser accepts JSX
+    blocker_test.go:120: react/jsx-no-undef: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:151: react/jsx-fragments listener kinds [JsxElement JsxFragment JsxSelfClosingElement] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:151: react/jsx-no-constructed-context-values listener kinds [JsxOpeningElement JsxSelfClosingElement] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:151: react/jsx-no-undef listener kinds [JsxOpeningElement JsxSelfClosingElement] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:158: ordinary non-JSX parser control passes
+--- PASS: TestSharedParserReadiness (22.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	22.950s

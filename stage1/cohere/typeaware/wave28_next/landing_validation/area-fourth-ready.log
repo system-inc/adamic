@@ -1,0 +1,11 @@
+=== RUN   TestSharedParserReadiness
+    blocker_test.go:116: react-hooks/set-state-in-effect: Go 1 finding, native parser accepts JSX; native analysis remains parked
+    blocker_test.go:121: react-hooks/set-state-in-effect: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:116: react-hooks/set-state-in-render: Go 1 finding, native parser accepts JSX; native analysis remains parked
+    blocker_test.go:121: react-hooks/set-state-in-render: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:116: react-hooks/static-components: Go 1 finding, native parser accepts JSX; native analysis remains parked
+    blocker_test.go:121: react-hooks/static-components: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:128: ordinary non-JSX parser control passes
+--- PASS: TestSharedParserReadiness (22.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fourth	22.864s

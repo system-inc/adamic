@@ -9,8 +9,8 @@ import (
 	"testing"
 )
 
-// A blocker reproduction, not a rule parity gate. Outputs always go to files.
-func TestSharedParserBlocker(t *testing.T) {
+// Parser readiness only; parked native analysis is still unavailable. Outputs always go to files.
+func TestSharedParserReadiness(t *testing.T) {
 	repository, err := filepath.Abs("../../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -24,7 +24,7 @@ func TestSharedParserBlocker(t *testing.T) {
 	}
 	stage0 := os.Getenv("ADAMIC_WAVE28_STAGE0")
 	if stage0 == "" {
-		t.Skip("set ADAMIC_WAVE28_STAGE0 to run native parser blocker reproduction")
+		t.Skip("set ADAMIC_WAVE28_STAGE0 to run native parser readiness reproduction")
 	}
 	write := func(name, text string) string {
 		path := filepath.Join(directory, name)
@@ -86,7 +86,7 @@ declare function createComponent(): any;
 		t.Fatal(err)
 	}
 	mutantSource := strings.Replace(string(probe), "../../../typescript/parser/parser.ts", filepath.Join(repository, "stage1/typescript/parser/parser.ts"), 1)
-	mutantSource = strings.Replace(mutantSource, "parser.file();", "// Mutant skips parsing and exits successfully.", 1)
+	mutantSource = strings.Replace(mutantSource, "parser.file();", "panic('mutant rejected valid JSX');", 1)
 	mutantEntry := write("mutant.a", mutantSource)
 	mutant := filepath.Join(directory, "parser-mutant")
 	if _, stderr, err := run("mutant-build", exec.Command(stage0, "build", mutantEntry, "-o", mutant)); err != nil {
@@ -110,15 +110,15 @@ declare function createComponent(): any;
 			t.Fatalf("invalid fixture: %s", stderr)
 		}
 		stdout, stderr, err = run(names[i]+"-native", exec.Command(binary, path))
-		if err == nil || !strings.Contains(string(stderr), "parser slice expected GreaterThanToken, got SlashToken") {
-			t.Fatalf("missing JSX blocker %s: %v %s %s", rules[i], err, stdout, stderr)
-		}
-		t.Logf("%s: Go 1 finding, native parser rejects JSX: %s", rules[i], strings.TrimSpace(string(stderr)))
-		stdout, stderr, err = run(names[i]+"-mutant", exec.Command(mutant, path))
 		if err != nil || string(stdout) != "parsed\n" || len(stderr) != 0 {
-			t.Fatalf("mutant must exit normally: %v %s %s", err, stdout, stderr)
+			t.Fatalf("JSX parser readiness %s: %v %s %s", rules[i], err, stdout, stderr)
 		}
-		t.Logf("%s: parser bypass mutant exits 0 and is rejected by expected-rejection comparison", rules[i])
+		t.Logf("%s: Go 1 finding, native parser accepts JSX; native analysis remains parked", rules[i])
+		stdout, stderr, err = run(names[i]+"-mutant", exec.Command(mutant, path))
+		if err == nil || !strings.Contains(string(stderr), "mutant rejected valid JSX") {
+			t.Fatalf("parser refusal mutant survived: %v %s %s", err, stdout, stderr)
+		}
+		t.Logf("%s: parser refusal mutant is caught by expected-success comparison", rules[i])
 	}
 	ordinary := write("ordinary.a", "function useThing() { return 1; }\n")
 	stdout, stderr, err := run("ordinary-native", exec.Command(binary, ordinary))

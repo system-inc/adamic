@@ -67,3 +67,7 @@ The React high-level-analysis claims are parked and their status is pushed at f7
 No implementation match was found for these three across the inspected origin typeaware trees. Their production Go sources use JSX node listeners and AST/checker walks rather than HIR/SSA/capture lowering. This claim is pushed before implementation or owned blocker checks. JSX parsing remains an integration dependency to inspect.
 
 Fifth-batch status: claimed, blocked and unported. Named rule.json kinds agree with the actual production Go listeners; three Go-positive JSX controls are rejected by current main's native parser before listener execution. JSX integration through area/stage1-lint is the named blocker. See ../wave28_fifth/REPORT.md. These are not parked HIR/SSA claims; no sixth batch is claimed.
+
+## Area integration refresh
+
+Explicitly rebased onto origin/area/stage1-lint at 7481e0324e34a2537aafa9db7eeacda50405611b, including current main 39638d9e and harness 41eb6eab2 through merge 50a5f105. All nine completed-rule full gates are green again. Shared JSX parsing now accepts all six claimed JSX controls. The fourth-batch analysis claims remain parked for native HIR/SSA/capture analysis. The fifth-batch claims are **awaiting implementation, unported**; their earlier parser blocker is closed. No sixth batch is claimed.

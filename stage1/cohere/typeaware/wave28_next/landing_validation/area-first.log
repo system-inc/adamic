@@ -1,0 +1,23 @@
+=== RUN   TestWave28AgreementAndMutants
+    wave_28_test.go:174: production test sources and extra controls: 255 accepted, 0 parse-invalid excluded
+    wave_28_test.go:176: controls: 45164 identical finding bytes; findings 126
+    wave_28_test.go:182: base/correctness-require-verify-optional-parity: 12 control findings
+    wave_28_test.go:182: block-scoped-var: 47 control findings
+    wave_28_test.go:182: getter-return: 67 control findings
+    wave_28_test.go:186: controls-asan: 45164 identical finding bytes; findings 126
+    wave_28_test.go:197: parity mutant: exit 0, empty stderr, independent Go bytes catch byte 36449
+    wave_28_test.go:197: scope mutant: exit 0, empty stderr, independent Go bytes catch byte 48
+    wave_28_test.go:197: getter mutant: exit 0, empty stderr, independent Go bytes catch byte 21523
+    wave_28_test.go:210: repository: 18485 identical finding bytes; findings 0
+    wave_28_test.go:211: repository-asan: 18485 identical finding bytes; findings 0
+    wave_28_test.go:216: repository native process_s=0.443495 findings 0 tsgo: load_ns=150152543 query_ns=0 queries=0 first_query_ns=0 run_ns=284403108
+    wave_28_test.go:216: repository Go process_s=0.303894 findings 0 cohere: load_ns=158748555 rule_ns=25182948 run_ns=117386925
+    wave_28_test.go:210: compiler: 5010 identical finding bytes; findings 0
+    wave_28_test.go:211: compiler-asan: 5010 identical finding bytes; findings 0
+    wave_28_test.go:216: compiler native process_s=5.604017 findings 0 tsgo: load_ns=447088845 query_ns=1404983210 queries=193228 first_query_ns=5939241 run_ns=5125539524
+    wave_28_test.go:216: compiler Go process_s=2.177135 findings 0 cohere: load_ns=380409353 rule_ns=1719151317 run_ns=1764493777
+    wave_28_test.go:229: released handle: panic 70, invalid or released checker handle
+    wave_28_test.go:234: released-registry mutant: exit 0, caught by required panic 70
+--- PASS: TestWave28AgreementAndMutants (210.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	210.888s

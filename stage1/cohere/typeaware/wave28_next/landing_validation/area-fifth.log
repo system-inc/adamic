@@ -1,0 +1,7 @@
+=== RUN   TestSharedParserBlocker
+    blocker_test.go:113: missing JSX blocker react/jsx-fragments: <nil> parsed
+         
+--- FAIL: TestSharedParserBlocker (19.82s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	19.821s
+FAIL

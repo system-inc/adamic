@@ -1,4 +1,4 @@
-// Blocker reproduction only. This does not implement the three claimed rules.
+// Parser readiness reproduction only. This does not implement the three claimed rules.
 import { panic, programArguments, readTextFile } from 'adamic';
 import { Parser } from '../../../typescript/parser/parser.ts';
 const args = programArguments();
