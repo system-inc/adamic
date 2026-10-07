@@ -3,14 +3,17 @@ package markdownblocks
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -83,6 +86,8 @@ func TestMarkdownStructureLayout(t *testing.T) {
 }
 
 func buildLayoutFixture(t *testing.T) *layoutFixture {
+	var workers sync.WaitGroup
+	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
 	const slice = "whitespace"
 	root, err := filepath.Abs(repository)
@@ -120,13 +125,63 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 	overlayPath := filepath.Join(dir, "overlay.json")
 	write(t, overlayPath, overlay)
 	goBinary := filepath.Join(dir, "go-list-fixtures")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("Go bridge: %v\n%s", err, output)
-	}
 	nativeCases, canonicalCases := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
-	want := execute(t, nil, goBinary, cases, nativeCases, canonicalCases)
+	listTask := startFixtureTask(&workers, func() (run, error) {
+		command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
+		command.Dir = cohere
+		if output, err := command.CombinedOutput(); err != nil {
+			return run{}, fmt.Errorf("Go bridge: %v\n%s", err, output)
+		}
+		return executeResult(t, nil, goBinary, cases, nativeCases, canonicalCases)
+	})
+	layoutDriver, err := filepath.Abs("testdata/document_go.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	layoutPath := filepath.Join(cohere, "cmd/adamic_markdown_doclayout/main.go")
+	layoutOverlay, err := json.Marshal(map[string]any{"Replace": map[string]string{layoutPath: layoutDriver}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	layoutOverlayPath := filepath.Join(dir, "layout.overlay.json")
+	write(t, layoutOverlayPath, layoutOverlay)
+	goLayout := filepath.Join(dir, "go-layout")
+	docBuild := startFixtureTask(&workers, func() (struct{}, error) {
+		command := bounded(t, "go", "build", "-overlay="+layoutOverlayPath, "-o", goLayout, layoutPath)
+		command.Dir = cohere
+		if output, err := command.CombinedOutput(); err != nil {
+			return struct{}{}, fmt.Errorf("Go layout: %v\n%s", err, output)
+		}
+		return struct{}{}, nil
+	})
+	main, err := filepath.Abs("testdata/list_probe.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowerTask := startFixtureTask(&workers, func() (*ir.Program, error) { return loweredResult(main) })
+	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
+	if fork == "" {
+		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
+	}
+	script, err := filepath.Abs("testdata/document_library.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	markdownScript, err := filepath.Abs("testdata/library.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	libraryTask := startFixtureTask(&workers, func() (run, error) {
+		return executeResult(t, nil, "node", markdownScript, fork, cases, "fork", "off-only")
+	})
+	program := lowerTask.await(t)
+	// Emit once; both native modes still compile separately with their original flags.
+	source := native.C(program)
+	sanitizedBuild := startFixtureTask(&workers, func() (string, error) {
+		return nativeBinaryResult(source, native.Options{Sanitize: true})
+	})
+	releaseBuild := startFixtureTask(&workers, func() (string, error) { return nativeBinaryResult(source, native.Options{}) })
+	want := listTask.await(t)
 	clean(t, "Go list fixtures", want)
 	// Width slots are retained only for the canonical Go/fork doc protocol.
 	// Poison every text-width field in the native protocol to prove no oracle service remains.
@@ -181,36 +236,44 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 			write(t, filepath.Join(keep, name), value)
 		}
 	}
-	layoutDriver, err := filepath.Abs("testdata/document_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	layoutPath := filepath.Join(cohere, "cmd/adamic_markdown_doclayout/main.go")
-	layoutOverlay, err := json.Marshal(map[string]any{"Replace": map[string]string{layoutPath: layoutDriver}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	layoutOverlayPath := filepath.Join(dir, "layout.overlay.json")
-	write(t, layoutOverlayPath, layoutOverlay)
-	goLayout := filepath.Join(dir, "go-layout")
-	layoutCommand := bounded(t, "go", "build", "-overlay="+layoutOverlayPath, "-o", goLayout, layoutPath)
-	layoutCommand.Dir = cohere
-	if output, err := layoutCommand.CombinedOutput(); err != nil {
-		t.Fatalf("Go layout: %v\n%s", err, output)
-	}
-	goResult := execute(t, nil, goLayout, canonicalCases)
+	docTask := startFixtureTask(&workers, func() (run, error) {
+		if _, err := docBuild.result(); err != nil {
+			return run{}, err
+		}
+		return executeResult(t, nil, goLayout, canonicalCases)
+	})
+	sourceTask := startFixtureTask(&workers, func() (run, error) { return onNodeResult(t, main, nativeCases) })
+	backendPath := filepath.Join(dir, "program.mjs")
+	write(t, backendPath, []byte(javascript.JavaScript(program)))
+	backendTask := startFixtureTask(&workers, func() (run, error) { return onNodeResult(t, backendPath, nativeCases) })
+	nativeTask := startFixtureTask(&workers, func() (run, error) {
+		binary, err := sanitizedBuild.result()
+		if err != nil {
+			return run{}, err
+		}
+		var environment []string
+		if runtime.GOOS == "linux" {
+			environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+		}
+		return executeResult(t, environment, binary, nativeCases)
+	})
+	releaseTask := startFixtureTask(&workers, func() (run, error) {
+		binary, err := releaseBuild.result()
+		if err != nil {
+			return run{}, err
+		}
+		return executeResult(t, nil, binary, nativeCases)
+	})
+	originalTask := startFixtureTask(&workers, func() (run, error) { return executeResult(t, nil, "node", script, fork, canonicalCases) })
+	goResult := docTask.await(t)
 	clean(t, "Go document layout", goResult)
 	equal(t, "Go document layout", goResult.stdout, want.stdout)
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program := lowered(t, main)
-	answer, binary := natively(t, program, nativeCases)
+	answer := nativeTask.await(t)
+	binary := sanitizedBuild.await(t)
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"source Node lists", onNode(t, main, nativeCases)}, {"backend lists", onJavaScriptBackend(t, program, nativeCases)}, {"native lists", answer}} {
+	}{{"source Node lists", sourceTask.await(t)}, {"backend lists", backendTask.await(t)}, {"native lists", answer}} {
 		clean(t, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
 			offset := firstDifference(string(side.result.stdout), string(want.stdout))
@@ -223,22 +286,10 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 	if report := leaks(t, program, binary, nativeCases); report != "" {
 		t.Fatal(report)
 	}
-	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
-	if fork == "" {
-		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
-	}
-	script, err := filepath.Abs("testdata/document_library.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	original := execute(t, nil, "node", script, fork, canonicalCases)
+	original := originalTask.await(t)
 	clean(t, "original document printer", original)
 	equal(t, "original document printer", original.stdout, want.stdout)
-	markdownScript, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	sourceAnswers := auditResults(t, "original Markdown parser/layout", execute(t, nil, "node", markdownScript, fork, cases, "fork", "off-only"))
+	sourceAnswers := auditResults(t, "original Markdown parser/layout", libraryTask.await(t))
 	if len(sourceAnswers) != len(inputs) {
 		t.Fatal("original Markdown oracle lost a document")
 	}
@@ -250,7 +301,7 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 		}
 	}
 	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
-	release := releaseRun(t, program, nativeCases)
+	release := releaseTask.await(t)
 	clean(t, "release block layout", release)
 	equal(t, "release block layout", release.stdout, want.stdout)
 	return &layoutFixture{
