@@ -1,5 +1,25 @@
 # Scanner blockers
 
+## October 7: adaptation 55 closes function widening
+
+Fetched first: no function-widening branch. Per compiler update none lands
+before noon. Merged origin/main e8ba3d5 into this delivery branch without
+rebasing. Adaptation 55 changes three reached Debug stack marker parameter
+types from AnyFunction to {}, preserving every runtime statement and marker
+identity. Census reason: method-signature-style. Compiler feature: function
+widening, pending; temporary adaptation 55 closes this refusal.
+
+Node: all 509,014 tokens byte-identical; planted token-end offset caught by
+diff exit 1. Stack marker mutant caught with "marker was not preserved".
+Full upstream baseline: 106,367 pass, zero failures/pending/differences.
+Evidence: native55-baseline-report.json, native55-next-blocker.log and
+native55-stack-marker{,-mutant}.log in evidence/.
+
+Next actual refusal: debug.ts:18:133, assertion predicate
+(adamic/no-type-predicate). proven-predicates remote remains b4366a7;
+the promised 01a1143b admission seam is not yet available on that branch.
+Plans 56 and 57 have already been pushed, before implementation.
+
 ## October 7: final refreshed feature probe and stopping point
 
 Refreshed and merged the four current tips in the **unpushed** scratch branch:
