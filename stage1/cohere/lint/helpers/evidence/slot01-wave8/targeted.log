@@ -1,0 +1,32 @@
+=== RUN   TestSlot01Wave8Decimal
+    slot01_wave8_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27441 decimal queries
+    slot01_wave8_test.go:142: 54882 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave8_test.go:142: compiled regexp_decimal_escape.a mutant caught at output line 51577: got "123456789", Go "1234567"
+--- PASS: TestSlot01Wave8Decimal (22.62s)
+=== RUN   TestSlot01Wave8Octal
+    slot01_wave8_test.go:147: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 26508 octal queries
+    slot01_wave8_test.go:147: 53016 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave8_test.go:147: compiled regexp_legacy_octal.a mutant caught at output line 49739: got "302", Go "37"
+--- PASS: TestSlot01Wave8Octal (21.71s)
+=== RUN   TestSlot01Wave8Coverage
+    slot01_wave8_test.go:152: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 598884 covers queries
+    slot01_wave8_test.go:152: 598884 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave8_test.go:152: compiled regexp_class_atom_covers.a mutant caught at output line 6: got "false", Go "true"
+--- PASS: TestSlot01Wave8Coverage (48.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	92.907s

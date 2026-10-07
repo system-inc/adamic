@@ -1,0 +1,6 @@
+// Numeric discriminants follow the Go classAtomKind enum: rune, range, set, dash.
+export function regexpClassAtomCovers(kind: number, low: number, high: number, rune: number): boolean {
+    if (kind === 0 || kind === 3) { return rune === low; }
+    if (kind === 1) { return rune >= low && rune <= high; }
+    return false;
+}

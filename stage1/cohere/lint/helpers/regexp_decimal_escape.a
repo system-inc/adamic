@@ -1,0 +1,12 @@
+// Input bytes and offset retain Go byte indexing, including UTF-8 continuation bytes.
+export function regexpDecimalEscape(source: readonly number[], offset: number): { readonly value: number; readonly width: number } {
+    let value = 0;
+    let width = 0;
+    while (offset + width < source.length) {
+        const character = source[offset + width] ?? 0;
+        if (character < 48 || character > 57) { break; }
+        if (value < 1048576) { value = value * 10 + character - 48; }
+        width++;
+    }
+    return { value, width };
+}

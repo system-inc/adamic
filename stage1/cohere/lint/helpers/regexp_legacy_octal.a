@@ -1,0 +1,15 @@
+// Caller supplies a present byte, as required by Go's direct source[i] access.
+export function regexpLegacyOctal(source: readonly number[], offset: number): { readonly value: number; readonly width: number } {
+    const first = source[offset] ?? 0;
+    if (first < 48 || first > 55) { return { value: 0, width: 0 }; }
+    const digits = first > 51 ? 2 : 3;
+    let value = first - 48;
+    let width = 1;
+    while (width < digits && offset + width < source.length) {
+        const character = source[offset + width] ?? 0;
+        if (character < 48 || character > 55) { break; }
+        value = value * 8 + character - 48;
+        width++;
+    }
+    return { value, width };
+}
