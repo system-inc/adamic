@@ -63,3 +63,18 @@ The audit inspected 356 origin refs, 133 claimed ranking names and 25 checker
 ports on main/the bridge branch, leaving 39 entries. Matching module filename
 checks across all origin refs found no competing ports. This claim update is
 pushed before implementation. Shared harness and generator files stay untouched.
+
+## Fifth batch after completing twelve rules
+
+Fourth batch implementation 974dc275 and evidence acb1ff7c are pushed.
+After fetching all origin heads, the next three available checker-dependent
+entries in the combined VOLUME_REPORT ranking are:
+
+- `react-hooks/set-state-in-effect` (0 compiler, 0 repository).
+- `react-hooks/set-state-in-render` (0 compiler, 0 repository).
+- `react-hooks/static-components` (0 compiler, 0 repository).
+
+Audit: 389 origin refs, 142 claimed ranking names, 25 checker ports on
+main/the bridge branch, 30 remaining entries. Exact matching module filenames
+across origin refs found no competing ports. This claim is pushed before code.
+Shared harness and generator files remain untouched.
