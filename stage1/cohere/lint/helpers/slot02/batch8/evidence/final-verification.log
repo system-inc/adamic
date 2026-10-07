@@ -1,0 +1,13 @@
+Complete helper oracle PASS 500.874s
+77 compiling semantic mutants caught: 64 prior plus 13 retained new
+Retained isolated four-way Go oracle PASS 22.984s
+641 runtime source/options records cover all four consumers
+12 prerequisite entries removed; zero final blockers
+24 retained owned helpers total
+Source/options and coverage reproduce byte for byte
+No control-escape duplicate .a source delivered
+Inventory PASS 4.695s
+Uncached input oracle PASS 2.445s, six fixtures, zero cache hits and six probe misses
+Vet exit zero, empty log
+Setup 45s, nproc 5
+Current main f8013f0 unchanged; retained claims unique across twenty branches

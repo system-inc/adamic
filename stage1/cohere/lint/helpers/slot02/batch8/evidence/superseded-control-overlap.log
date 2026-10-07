@@ -1,0 +1,51 @@
+=== RUN   TestSlot02Batch8
+    slot02_batch8_test.go:78: regexp.EscapeClassRune: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:78: regexp.identityEscape: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:78: regexp.decodeControlEscape: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:104: 641 captured source/options inputs; 272 rune values; 1800 byte queries; 8 contexts; 1735 runtime option strings
+    slot02_batch8_test.go:133: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch8/class_dash_escaping
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 48: got "class:45,"; Go "class:92,45,"
+=== RUN   TestSlot02Batch8/class_open_bracket_escaping
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 94: got "class:91,"; Go "class:92,91,"
+=== RUN   TestSlot02Batch8/invalid_rune_replacement
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 1: got "class:63,"; Go "class:65533,"
+=== RUN   TestSlot02Batch8/Unicode_identity_restriction
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 6801: got "escape:0:0:-2147483648:-3:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/slash_identity_exemption
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 7095: got "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,47,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"; Go "escape:0:0:47:-3:false::"
+=== RUN   TestSlot02Batch8/dash_outside_class
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 7083: got "escape:0:0:45:-3:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,45,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/identity_width
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 273: got "escape:0:0:-2147483648:-2:false::"; Go "escape:0:0:-2147483648:-3:false::"
+=== RUN   TestSlot02Batch8/identity_error_cause
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 6801: got "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/control_class_guard
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 13569: got "escape:0:0:16:2:false::"; Go "escape:0:0:92:0:false::"
+=== RUN   TestSlot02Batch8/control_underscore
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 17404: got "escape:0:0:92:0:false::"; Go "escape:0:0:31:2:false::"
+=== RUN   TestSlot02Batch8/control_modulo
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 13814: got "escape:0:0:33:2:false::"; Go "escape:0:0:1:2:false::"
+=== RUN   TestSlot02Batch8/control_width
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 13654: got "escape:0:0:1:1:false::"; Go "escape:0:0:1:2:false::"
+=== RUN   TestSlot02Batch8/Unicode_control_errors
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 20529: got "escape:0:0:92:0:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,99,32,110,97,109,105,110,103,32,110,111,32,99,111,110,116,114,111,108,32,99,104,97,114,97,99,116,101,114,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/Annex_B_fallback_width
+    slot02_batch8_test.go:187: compiled semantic mutant caught at line 13329: got "escape:0:0:92:1:false::"; Go "escape:0:0:92:0:false::"
+--- PASS: TestSlot02Batch8 (41.79s)
+    --- PASS: TestSlot02Batch8/class_dash_escaping (2.39s)
+    --- PASS: TestSlot02Batch8/class_open_bracket_escaping (2.27s)
+    --- PASS: TestSlot02Batch8/invalid_rune_replacement (2.41s)
+    --- PASS: TestSlot02Batch8/Unicode_identity_restriction (2.21s)
+    --- PASS: TestSlot02Batch8/slash_identity_exemption (2.63s)
+    --- PASS: TestSlot02Batch8/dash_outside_class (2.56s)
+    --- PASS: TestSlot02Batch8/identity_width (3.01s)
+    --- PASS: TestSlot02Batch8/identity_error_cause (2.38s)
+    --- PASS: TestSlot02Batch8/control_class_guard (2.47s)
+    --- PASS: TestSlot02Batch8/control_underscore (3.04s)
+    --- PASS: TestSlot02Batch8/control_modulo (2.98s)
+    --- PASS: TestSlot02Batch8/control_width (3.72s)
+    --- PASS: TestSlot02Batch8/Unicode_control_errors (3.16s)
+    --- PASS: TestSlot02Batch8/Annex_B_fallback_width (3.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	41.806s

@@ -1,0 +1,48 @@
+=== RUN   TestSlot02Batch8
+    slot02_batch8_test.go:78: regexp.EscapeClassRune: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:78: regexp.identityEscape: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:78: regexp.literalRune: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:104: 641 captured source/options inputs; 272 rune values; 8 contexts; 1735 runtime option strings
+    slot02_batch8_test.go:133: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch8/class_dash_escaping
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 48: got "class:45,"; Go "class:92,45,"
+=== RUN   TestSlot02Batch8/class_open_bracket_escaping
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 94: got "class:91,"; Go "class:92,91,"
+=== RUN   TestSlot02Batch8/invalid_rune_replacement
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 1: got "class:63,"; Go "class:65533,"
+=== RUN   TestSlot02Batch8/Unicode_identity_restriction
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 6801: got "escape:0:0:-2147483648:-3:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/slash_identity_exemption
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 7095: got "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,47,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"; Go "escape:0:0:47:-3:false::"
+=== RUN   TestSlot02Batch8/dash_outside_class
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 7083: got "escape:0:0:45:-3:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,45,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/identity_width
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 273: got "escape:0:0:-2147483648:-2:false::"; Go "escape:0:0:-2147483648:-3:false::"
+=== RUN   TestSlot02Batch8/identity_error_cause
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 6801: got "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/literal_lowercase_hex
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13341: got "literal:92,117,48,48,48,65,"; Go "literal:92,117,48,48,48,97,"
+=== RUN   TestSlot02Batch8/literal_minimum_hex_width
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13331: got "literal:92,117,48,48,48,"; Go "literal:92,117,48,48,48,48,"
+=== RUN   TestSlot02Batch8/literal_supplementary_boundary
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13593: got "literal:65535,"; Go "literal:92,117,102,102,102,102,"
+=== RUN   TestSlot02Batch8/literal_z_passthrough
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13453: got "literal:92,117,48,48,55,97,"; Go "literal:122,"
+=== RUN   TestSlot02Batch8/literal_negative_padding
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13330: got "literal:92,117,45,48,48,48,49,"; Go "literal:92,117,45,48,48,49,"
+--- PASS: TestSlot02Batch8 (22.97s)
+    --- PASS: TestSlot02Batch8/class_dash_escaping (1.55s)
+    --- PASS: TestSlot02Batch8/class_open_bracket_escaping (1.55s)
+    --- PASS: TestSlot02Batch8/invalid_rune_replacement (2.41s)
+    --- PASS: TestSlot02Batch8/Unicode_identity_restriction (1.28s)
+    --- PASS: TestSlot02Batch8/slash_identity_exemption (1.70s)
+    --- PASS: TestSlot02Batch8/dash_outside_class (1.44s)
+    --- PASS: TestSlot02Batch8/identity_width (1.41s)
+    --- PASS: TestSlot02Batch8/identity_error_cause (1.32s)
+    --- PASS: TestSlot02Batch8/literal_lowercase_hex (1.74s)
+    --- PASS: TestSlot02Batch8/literal_minimum_hex_width (1.79s)
+    --- PASS: TestSlot02Batch8/literal_supplementary_boundary (1.57s)
+    --- PASS: TestSlot02Batch8/literal_z_passthrough (1.62s)
+    --- PASS: TestSlot02Batch8/literal_negative_padding (1.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	22.984s

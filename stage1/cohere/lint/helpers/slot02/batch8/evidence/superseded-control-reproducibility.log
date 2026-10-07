@@ -1,0 +1,23 @@
+{
+  "symbols": [
+    "regexp.EscapeClassRune",
+    "regexp.identityEscape",
+    "regexp.decodeControlEscape"
+  ],
+  "rules": [
+    "@next/next/no-html-link-for-pages",
+    "@typescript-eslint/no-empty-object-type",
+    "no-restricted-exports",
+    "no-restricted-imports"
+  ],
+  "sources": 641,
+  "packages": [
+    "./internal/lint/rules/core",
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/typescript"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}
+stage1/cohere/lint/helpers/slot02/batch8/testdata/sources.jsonl.gz 7a2441355e3c62eb1d32503fd40e6a1e1db9325a51f57c6dd2ec91121f61f111 byte-identical
+stage1/cohere/lint/helpers/slot02/batch8/testdata/coverage.json 640e93c0dd829a2df239ddf8c625aeda62c60e3b0ce38857111a400f3df505bc byte-identical

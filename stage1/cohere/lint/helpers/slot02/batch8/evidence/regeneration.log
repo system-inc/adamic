@@ -1,0 +1,21 @@
+{
+  "symbols": [
+    "regexp.EscapeClassRune",
+    "regexp.identityEscape",
+    "regexp.decodeControlEscape"
+  ],
+  "rules": [
+    "@next/next/no-html-link-for-pages",
+    "@typescript-eslint/no-empty-object-type",
+    "no-restricted-exports",
+    "no-restricted-imports"
+  ],
+  "sources": 641,
+  "packages": [
+    "./internal/lint/rules/core",
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/typescript"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}
