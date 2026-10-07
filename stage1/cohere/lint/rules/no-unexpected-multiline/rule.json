@@ -1,0 +1,16 @@
+{
+  "name": "no-unexpected-multiline",
+  "order": 7,
+  "kinds": [
+    "BinaryExpression",
+    "CallExpression",
+    "ElementAccessExpression",
+    "TaggedTemplateExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoUnexpectedMultiline",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnexpectedMultiline",
+  "factory": "create",
+  "class": "Rule"
+}

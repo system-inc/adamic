@@ -1,4 +1,6 @@
 // Twenty syntax-only cohere rules. Node indexes keep the visitor's ancestry acyclic.
+import { RuleContext } from './context.ts';
+import { createRuleSet, type RuleSet } from './.generated/registry.ts';
 import { panic, utf8Length } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
@@ -188,7 +190,18 @@ function compareFindings(left: Finding, right: Finding): number {
     if(position !== 0) {
         return position;
     }
-    return (left.rule === 'no-labels' ? -1 : 0) - (right.rule === 'no-labels' ? -1 : 0);
+    const labelOrder = (left.rule === 'no-labels' ? -1 : 0) - (right.rule === 'no-labels' ? -1 : 0);
+    if(labelOrder !== 0) {
+        return labelOrder;
+    }
+    // Registration collects no-var separately; retain the Go order for tied declarations.
+    if(left.rule === 'no-var' && right.rule === 'vars-on-top') {
+        return -1;
+    }
+    if(left.rule === 'vars-on-top' && right.rule === 'no-var') {
+        return 1;
+    }
+    return 0;
 }
 function compareEdits(left: Finding, right: Finding): number {
     const position = left.editStart - right.editStart;
@@ -212,6 +225,7 @@ export class Linter {
     anchors: boolean[] = [];
     parents: number[] = [];
     root = -1;
+    rules: RuleSet | undefined = undefined;
     volume: VolumeRules | undefined = undefined;
     readonly selected: string;
     readonly mode: string;
@@ -249,15 +263,42 @@ export class Linter {
             this.selected,
             this.settings,
         );
+        this.ancestry(this.root, -1);
+        const context = new RuleContext(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.selected,
+            this.mode,
+            this.nullPolicy,
+            this.allowCatch,
+            this.parents,
+            this.settings,
+        );
+        this.rules = createRuleSet(context);
+        this.rules.prepare(this.root);
         this.volume.prepare(this.root);
         this.walk(this.root, -1);
+        this.rules.finish(this.root);
+        for(const finding of this.rules.context.findings) {
+            this.findings.push(finding);
+        }
         this.findings.sort(compareFindings);
+    }
+    ancestry(index: number, parent: number): void {
+        this.parents[index] = parent;
+        for(const child of this.node(index).children) {
+            this.ancestry(child, index);
+        }
     }
     node(index: number): ParseNode {
         return this.parser.node(index);
     }
     enabled(name: string): boolean {
-        return this.selected === 'all' || this.selected === name;
+        return (
+            !['no-debugger', 'no-empty', 'eqeqeq', 'no-var', 'no-duplicate-case'].includes(name) &&
+            (this.selected === 'all' || this.selected === name)
+        );
     }
     start(index: number): number {
         const node = this.node(index);
@@ -424,6 +465,9 @@ export class Linter {
         }
     }
     walk(index: number, parent: number): void {
+        if(this.rules !== undefined) {
+            this.rules.visit(index, parent);
+        }
         this.parents[index] = parent;
         const node = this.node(index);
         const parentKind = parent < 0 ? '' : this.node(parent).kind;
