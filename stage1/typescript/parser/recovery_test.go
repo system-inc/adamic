@@ -137,6 +137,7 @@ func TestRecoveryMutants(t *testing.T) {
 		{"stranded-export", "this.error(diagnostic.code, diagnostic.message);", "this.error(diagnostic.code + (context === 'source' ? 1 : 0), diagnostic.message);", "export", false, false, "parser.ts"},
 		{"generic-child", "result.push(this.make('TypeParameter', pos, children));", "result.push(this.make('TypeParameter', pos, children.slice(0, 0)));", recoveryCases[3], false, false, "parser.ts"},
 		{"eof-loop", "return this.scanner.kind;", "return this.scanner.kind === 'EndOfFile' ? 'Identifier' : this.scanner.kind;", recoveryCases[1], true, false, "parser.ts"},
+		{"corpus-eof-loop", "return this.scanner.kind;", "return this.scanner.kind === 'EndOfFile' ? 'Identifier' : this.scanner.kind;", recoveryCases[1], true, false, "parser.ts"},
 		{"speculative-roots", "this.roots.splice(state.roots);", "this.roots.splice(this.roots.length);", "type T = ({ x = 1 }) => U;", false, true, "parser.ts"},
 		{"function-expression-name", "if(this.bindingIdentifier()) {\n            children.push(this.identifier());\n        }\n        const oldAwait", "if(this.kind() === 'Identifier' || this.kind().endsWith('Keyword')) {\n            children.push(this.identifier());\n        }\n        const oldAwait", "const x = { a: function function f() {} };", false, false, "parser.ts"},
 		{"missing-type-qualifier", "const name = this.entityName(true);", "const name = this.missingIdentifier(1110, 'Type expected.');", "type T = .A | B;", false, false, "parser.ts"},
@@ -199,12 +200,16 @@ func TestRecoveryMutants(t *testing.T) {
 				{"Node", "node", append([]string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts")}, args...)},
 				{"native", binary, args},
 			} {
-				got, err := recoveryRun(t, path+"."+side.name, side.command, side.args...)
+				limit := 2 * time.Second
+				if mutation.name == "corpus-eof-loop" {
+					limit = incompleteDeadline
+				}
+				got, err := recoveryRunLimit(t, limit, path+"."+side.name, side.command, side.args...)
 				if mutation.timeout {
-					if err == nil || !strings.Contains(err.Error(), "timeout after 2s") {
+					if err == nil || !strings.Contains(err.Error(), fmt.Sprintf("timeout after %s", limit)) {
 						t.Fatalf("%s must be caught by the deadline, got %v", side.name, err)
 					}
-					t.Logf("%s: nonterminating mutant caught by 2s deadline; input %s", side.name, path)
+					t.Logf("%s: nonterminating mutant caught by %s deadline; input %s", side.name, limit, path)
 				} else {
 					if err != nil {
 						t.Fatalf("%s mutant must finish normally: %v", side.name, err)
