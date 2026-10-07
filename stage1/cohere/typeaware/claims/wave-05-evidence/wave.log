@@ -1,0 +1,27 @@
+=== RUN   TestWave05AgreementAndMutants
+    wave_05_test.go:65: controls: 6597 identical finding bytes; findings 20
+    wave_05_test.go:71: controls-asan: 6597 identical finding bytes; findings 20
+    wave_05_test.go:114: template mutant: exit 0; independent Go byte comparison catches byte 235
+    wave_05_test.go:114: parameter mutant: exit 0; independent Go byte comparison catches byte 1379
+    wave_05_test.go:114: dead-store mutant: exit 0; independent Go byte comparison catches byte 3255
+    wave_05_test.go:121: repository: 24608 identical finding bytes; findings 13
+    wave_05_test.go:122: repository-asan: 24608 identical finding bytes; findings 13
+    wave_05_test.go:121: compiler: 23501 identical finding bytes; findings 70
+    wave_05_test.go:122: compiler-asan: 23501 identical finding bytes; findings 70
+    wave_05_test.go:135: released handle: exit 70, invalid or released checker handle
+    wave_05_test.go:143: released registry mutant: exits 0; required exit 70 catches it
+    wave_05_test.go:165: repository go round 0: 0.177355 seconds; findings 13; cohere: load_ns=61538552 rule_ns=57025975 run_ns=102504057
+    wave_05_test.go:165: repository native round 0: 0.531729 seconds; findings 13; tsgo: load_ns=58971875 query_ns=127527437 queries=20277 first_query_ns=353302 run_ns=466468263
+    wave_05_test.go:165: repository native round 1: 0.531979 seconds; findings 13; tsgo: load_ns=75225865 query_ns=122985953 queries=20277 first_query_ns=1118194 run_ns=448465247
+    wave_05_test.go:165: repository go round 1: 0.195461 seconds; findings 13; cohere: load_ns=63167521 rule_ns=62019611 run_ns=118947942
+    wave_05_test.go:165: repository go round 2: 0.183527 seconds; findings 13; cohere: load_ns=60849473 rule_ns=62470329 run_ns=109590985
+    wave_05_test.go:165: repository native round 2: 0.502443 seconds; findings 13; tsgo: load_ns=65804579 query_ns=112635381 queries=20277 first_query_ns=145149 run_ns=427412638
+    wave_05_test.go:165: compiler go round 0: 0.655541 seconds; findings 70; cohere: load_ns=226571123 rule_ns=373579813 run_ns=410530841
+    wave_05_test.go:165: compiler native round 0: 14.288000 seconds; findings 70; tsgo: load_ns=270250864 query_ns=1301376728 queries=135676 first_query_ns=5257441 run_ns=13987114972
+    wave_05_test.go:165: compiler native round 1: 13.964897 seconds; findings 70; tsgo: load_ns=250132817 query_ns=1266962860 queries=135676 first_query_ns=5469391 run_ns=13688226018
+    wave_05_test.go:165: compiler go round 1: 0.577005 seconds; findings 70; cohere: load_ns=221426046 rule_ns=302073687 run_ns=335997747
+    wave_05_test.go:165: compiler go round 2: 0.587785 seconds; findings 70; cohere: load_ns=209647255 rule_ns=324831534 run_ns=360596536
+    wave_05_test.go:165: compiler native round 2: 14.029293 seconds; findings 70; tsgo: load_ns=235291147 query_ns=1270339585 queries=135676 first_query_ns=4940394 run_ns=13767663162
+--- PASS: TestWave05AgreementAndMutants (175.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	175.516s

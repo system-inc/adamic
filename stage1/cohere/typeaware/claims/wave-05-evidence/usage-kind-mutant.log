@@ -1,0 +1,8 @@
+=== RUN   TestUsageShapeFactsAndRefusals
+=== PAUSE TestUsageShapeFactsAndRefusals
+=== CONT  TestUsageShapeFactsAndRefusals
+    usage_shape_test.go:128: usage-shape accepted a value node: <nil>
+--- FAIL: TestUsageShapeFactsAndRefusals (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.011s
+FAIL

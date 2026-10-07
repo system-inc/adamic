@@ -1,0 +1,7 @@
+Scratch build overlay only; the cohere submodule was not edited.
+
+--- internal/format/native/typescript.go
++++ internal/format/native/typescript.go
+@@
++	Register(".a", print)
+ 	Register(".ts", print)

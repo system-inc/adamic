@@ -1,0 +1,32 @@
+{
+  "controls": {
+    "bytes": 6597,
+    "sha256": "6b526f0e8ff0fe37d36d434fca36c81f5b13422eae9ea78778c8ecd05516471a",
+    "normal_native_equal": true,
+    "sanitized_native_equal": true
+  },
+  "repository": {
+    "bytes": 24608,
+    "sha256": "fc2e5b20165eed2eed7bcc5422d853b9e31d1d8c006c4062a10492018d1a4bc1",
+    "normal_native_equal": true,
+    "sanitized_native_equal": true
+  },
+  "compiler": {
+    "bytes": 23501,
+    "sha256": "e6a0804590940fe7c83d206fa121280caf70588bfa8980a2274ddf7bea9f15bc",
+    "normal_native_equal": true,
+    "sanitized_native_equal": true
+  },
+  "template-mutant": {
+    "bytes": 6345,
+    "sha256": "4ac9987b78f6f0af37f1a90e0067ae5c4f1f1e2540d960c058ae3bbffc8179b5"
+  },
+  "parameter-mutant": {
+    "bytes": 5522,
+    "sha256": "b3cd66ee87d9a126a4bba5a6927e1e59da97ed358e5b835f7dbd173d0af2cb68"
+  },
+  "dead-store-mutant": {
+    "bytes": 11485,
+    "sha256": "de8be5e1c5cd73da44ea8dac1131b0210bf4c909fdd31aea90e375a06f4811da"
+  }
+}
