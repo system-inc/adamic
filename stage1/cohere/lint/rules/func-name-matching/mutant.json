@@ -1,0 +1,6 @@
+{
+  "name": "reverse func-name-matching judgement",
+  "file": "rule.ts",
+  "from": "name === own",
+  "to": "name !== own"
+}

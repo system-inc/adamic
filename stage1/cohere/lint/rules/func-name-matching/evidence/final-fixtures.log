@@ -1,0 +1,11 @@
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:448: func-name-matching upstream unique configurations=135
+    validation_test.go:448: consistent-this upstream unique configurations=62
+    validation_test.go:448: structure/tailwind-no-physical-direction upstream unique configurations=54
+    validation_test.go:448: @eslint-community/eslint-comments/require-description upstream unique configurations=109
+    validation_test.go:448: @next/next/google-font-display upstream unique configurations=16
+    validation_test.go:455: independent parser comparison: 363 cases; 18 JSX cases explicitly blocked
+    validation_test.go:456: Go, Node, emitted JavaScript, ASan/UBSan native: 82729 identical bytes
+--- PASS: TestRulesAndSuggestions (24.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	24.254s

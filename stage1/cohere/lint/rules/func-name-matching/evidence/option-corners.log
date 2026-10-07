@@ -1,0 +1,5 @@
+=== RUN   TestDecodedOptionCorners
+    validation_test.go:634: Go, Node, emitted JavaScript, ASan/UBSan native: 1012 identical bytes
+--- PASS: TestDecodedOptionCorners (17.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	17.409s

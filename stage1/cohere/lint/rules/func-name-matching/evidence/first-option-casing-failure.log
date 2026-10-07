@@ -1,0 +1,21 @@
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:400: func-name-matching upstream unique configurations=135
+    validation_test.go:400: consistent-this upstream unique configurations=62
+    validation_test.go:401: Node line 498 port="fixed\tmodule.exports = function foo(name) {};" Go="finding func-name-matching matchProperty 0 38\tFunction name `foo` should match property name `exports`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the property it is reached through, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous."
+        Go context:
+        case 158
+        fixed	var {a} = function foo() {}
+        case 159
+        fixed	var {} = function foo() {}
+        case 160
+        fixed	module.exports = function exports(name) {};
+        case 161
+        finding func-name-matching matchProperty 0 38	Function name `foo` should match property name `exports`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the property it is reached through, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous.
+        fixes 0
+        suggestions 0
+        fixed	module.exports = function foo(name) {};
+        case 162
+--- FAIL: TestRulesAndSuggestions (32.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	32.130s
+FAIL

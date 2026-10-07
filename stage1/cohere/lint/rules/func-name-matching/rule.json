@@ -1,0 +1,16 @@
+{
+  "name": "func-name-matching",
+  "kinds": [
+    "VariableDeclaration",
+    "BinaryExpression",
+    "PropertyAssignment",
+    "PropertyDeclaration"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleFuncNameMatching",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestFuncNameMatching"
+}

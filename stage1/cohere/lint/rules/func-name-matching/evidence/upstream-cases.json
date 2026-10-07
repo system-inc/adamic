@@ -1,0 +1,3281 @@
+[
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-line\n",
+    "Options": null
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint */",
+    "Options": {
+      "ignore": [
+        "eslint"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable */",
+    "Options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-enable */",
+    "Options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable",
+    "Options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* cohere-disable */",
+    "Options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable */",
+    "Options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-line */",
+    "Options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-line",
+    "Options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line */",
+    "Options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// cohere-disable-next-line foo",
+    "Options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line",
+    "Options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* cohere-enable */",
+    "Options": {
+      "ignore": [
+        "eslint-enable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-enable */",
+    "Options": {
+      "ignore": [
+        "eslint-enable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* exported */",
+    "Options": {
+      "ignore": [
+        "exported"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* global */",
+    "Options": {
+      "ignore": [
+        "global"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* globals */",
+    "Options": {
+      "ignore": [
+        "globals"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* istanbul ignore next */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8",
+        "istanbul"
+      ]
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* c8 ignore next */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* c8 ignore next -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* c8x ignore */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// c8 ignore next",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// c8 ignore next -- covered elsewhere",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/*\n * eslint-disable\n */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/*\n eslint-disable\n */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* c8 ignore next */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* c8 without options */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* cohere-disable */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* cohere-disable -- generated */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* cohere-enable */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* cohere-enable -- generated */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint eqeqeq: \"off\", curly: \"error\" */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint eqeqeq: \"off\", curly: \"error\" -- Here's a description about why this configuration is necessary. */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable */\nfoo();\n// eslint-disable-next-line -- why\nbar();\n/* eslint-enable */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable -- \t */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable eqeqeq */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-line\n */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-line */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-line -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-line eqeqeq */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line\tfoo\t--\treason */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line\n */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line eqeqeq */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line eqeqeq -- */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disable-next-line, foo */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-disabled */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-enable */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-enable -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-enable eqeqeq */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-env */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* eslint-env node */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* exported */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* exported -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* global */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* global -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* global _ */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* globals */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* globals -- description */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* globals _ */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* just eslint in a normal comment */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/* oxlint-enable foo */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/** eslint-disable */",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "/*eslint-disable*/",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// a note about cohere-disable",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// a note about eslint-disable",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// c8 ignore next",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// cohere-disable-next-line foo -- ",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// cohere-disable-next-line foo--bar",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// cohere-disable-next-line no-alert",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// cohere-disable-next-line no-alert -- the kiosk build has no other channel",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// cohere-disabled",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint eqeqeq: 0",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable -- generated",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable eqeqeq",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-line",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-line -- description",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-line eqeqeq",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-line eqeqeq -- description",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line -- description",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line eqeqeq",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line eqeqeq -- description",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo --",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo --\t",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo -- ",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo -- -- ",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo -- --bar",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo -- bar",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo ---  bar",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo--bar",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-disable-next-line foo -- bar",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// eslint-enable",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// global foo",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// oxlint-disable-next-line foo",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "// verify-disable-next-line foo",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "//eslint-disable-line",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "const a = 1;\n    /* eslint-disable */\nconst b = 2;",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "const a = \u003cdiv\u003e{/* eslint-disable-line */}\u003c/div\u003e;",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "const s = '/* eslint-disable */';",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "x;\n/* eslint-disable",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "x; // cohere-disable-line",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "x; // eslint-disable-line foo",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "File": "/repository/source/RequireDescription.tsx",
+    "Source": "{/* cohere-disable-next-line */}",
+    "Options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003cFoo.link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://example.com/css?family=Krona+One\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?display=fallback\u0026family=Krona+One\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026amp;display=block\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026amp;display=optional\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026display\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026display=auto\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026display=block\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026display=optional\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\u0026display=something\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css?family=Krona+One\u0026display=swap\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink href={fontUrl} /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = () =\u003e \u003clink rel=\"preconnect\" href=\"https://fonts.gstatic.com\" /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "@next/next/google-font-display",
+    "File": "Component.tsx",
+    "Source": "export const Test = (props) =\u003e \u003clink {...props} /\u003e;",
+    "Options": null
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self = this; var vm = this;",
+    "Options": {
+      "Aliases": [
+        "self",
+        "vm"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "() =\u003e { var self; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "({foo, bar} = this)",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "[foo, bar] = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "class C { m() { var self; } }",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "const self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "function f() { var self; }",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "let self; self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "self += this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "self = 42",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "that = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var [foo, bar] = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var context = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = () =\u003e { function g() { var self; } };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = () =\u003e { var context = this; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = () =\u003e { var self = 42; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = () =\u003e { var self = this; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = () =\u003e { var self; self = this; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = () =\u003e { var self; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = function() { var self = 42; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = function() { var self; self = this; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var f = function() { var self; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var foo = 42, self = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var foo = {}; foo.bar = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var foo, self; foo = 42; self = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var foo, self; self = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var o = { m: function() { var self; } };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self = 42",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self = this, other = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; (function() { self = this; }())",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; (self = this);",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; a ? self = this : 0;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; a, self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; for(;;) { self = this; }",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; for(var i=0;;) self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; function f() { var self; self = this; }",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; if(a) self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; label: self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; self = 42",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; self = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; self = this; self = 42;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; self ||= this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; switch(a){case 1: self = this;}",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; try { self = this; } catch(e) {}",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; var f = () =\u003e { self = this; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; var f = function() { self = this; };",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; var self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; while(a) { self = this; }",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; with(o) self = this;",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self; { self = this; }",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var that = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var {foo, bar} = this",
+    "Options": {
+      "Aliases": [
+        "self"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "context = this",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "self = 42",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "self = this",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var context = this",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var foo = 42, self = this",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var foo = 42, that = this",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "consistent-this",
+    "File": "/repository/source/ConsistentThis.ts",
+    "Source": "var self = 42",
+    "Options": {
+      "Aliases": [
+        "that"
+      ]
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(class { x = function x() {}; })",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(class { x = function y() {}; })",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(obj?.aaa).foo = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({['foo']: function bar() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({['foo']: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({['❤']: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[/abc/]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[1]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[[1, 2, 3]]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[`x`]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[foo]: function bar() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[null]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[true]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({[{x: 1}]: function foo() {}})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({a} = function foo() {})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({} = function foo() {})",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "[] = function foo() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "[a] = function foo() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x = function () {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x = function x() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x = function y() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x; foo() { a.b.#x = function x() {}; } }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x; foo() { a.b.#x = function y() {}; } }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x; foo() { this.#x = function x() {}; } }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { #x; foo() { this.#x = function y() {}; } }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 'x' = function () {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 'x' = function x() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 'x' = function y() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 'xy ' = function foo() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 'xy ' = function xy() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 1 = function x0() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { 1 = function x1() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { ['x'] = function () {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { ['x'] = function x() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { ['x'] = function y() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { ['xy '] = function foo() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { ['xy '] = function xy() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [1] = function x0() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [1] = function x1() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [f()] = function f() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [f()] = function g() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [x] = function () {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [x] = function x() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { [x] = function y() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { static x = function x() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { static x = function y() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { x = (function x() {})(); }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { x = (function y() {})(); }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { x = function () {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { x = function x() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "class C { x = function y() {}; }",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "foo \u0026\u0026= function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "foo \u0026\u0026= function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "foo = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "foo = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "function a(foo = function bar() {}) {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "let foo = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "let obj = {'foo': function bar() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "let obj = {foo: function bar() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "module.exports = function foo(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "module['exports'] = function foo(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.bar.foo = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.bar.foo = function baz() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.bar.foo = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo = function foo(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo = function() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo ||= function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo ||= function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj['foo'] = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj['foo'] = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj['foo'] ??= function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj['foo'] ??= function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj['foo//bar'] = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj['x' + 2] = function bar(){};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj[foo] = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var [ bar ] = [ function bar(){} ];",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var [] = function foo() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var [a] = function foo() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var foo = () =\u003e {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var foo = function bar() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var foo = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var foo = function foo(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var foo = function() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var foo;",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = { '\\u1885': function foo() {} };",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = { 'ᢅ': function foo() {} };",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {'foo': function bar() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {'foo': function foo() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {'foo//bar': function foo() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {['x' + 2]: function bar(){}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {[foo]: function bar() {}} ",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {foo: function bar() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {foo: function foo() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {foo: function() {}};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var {a} = function foo() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var {} = function foo() {}",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "module.exports = function exports(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": true
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "module.exports = function foo(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": true
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "module['exports'] = function exports(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": true
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "module['exports'] = function foo(name) {};",
+    "Options": {
+      "considerPropertyDescriptor": false,
+      "includeCommonJSModuleExports": true
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(Object?.defineProperties)(foo, { bar: { value: function bar() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(Object?.defineProperties)(foo, { bar: { value: function baz() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(Object?.defineProperty)(foo, 'bar', { value: function bar() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "(Object?.defineProperty)(foo, 'bar', { value: function baz() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "({ value: function value() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.create(proto, { ['bar']: { value: function bar() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.create(proto, { bar: { value() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.create(proto, { bar: { value: function bar() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.create(proto, { bar: { value: function baz() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperties(foo, { ['bar']: { value: function bar() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperties(foo, { bar: { value() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperties(foo, { bar: { value: function bar() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperties(foo, { bar: { value: function baz() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperty(foo, 'b' + 'ar', { value: function bar() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperty(foo, 'bar', { value() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperty(foo, 'bar', { value: function bar() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object.defineProperty(foo, 'bar', { value: function baz() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object?.defineProperties(foo, { bar: { value: function bar() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object?.defineProperties(foo, { bar: { value: function baz() {} } })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object?.defineProperty(foo, 'bar', { value: function bar() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Object?.defineProperty(foo, 'bar', { value: function baz() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Reflect.defineProperty(foo, 'b' + 'ar', { value: function baz() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Reflect.defineProperty(foo, 'bar', { value() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Reflect.defineProperty(foo, 'bar', { value: function bar() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "Reflect.defineProperty(foo, 'bar', { value: function baz() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "foo({ value: function bar() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "foo({ value: function value() {} })",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.bar.foo = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "obj.foo = function foo() {};",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = { value: function foo(name) {} }",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = { value: function value() {} }",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {foo: function foo() {}};",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "func-name-matching",
+    "File": "/repository/source/FuncNameMatching.ts",
+    "Source": "var obj = {foo: function() {}};",
+    "Options": {
+      "considerPropertyDescriptor": true,
+      "includeCommonJSModuleExports": false
+    }
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/Thing.js",
+    "Source": "export const c = 'flex ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = '';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'border-s-2 rounded-e-md';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex -ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex -text-left';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-l';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-l-2';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-r';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-r-2';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex left-0';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ltr:mr-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex md:hover:ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex md:ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex md:rtl:ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ml-';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex mlauto';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex mr-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ms-4 me-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex overflow-hidden';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex pl-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex pr-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ps-4 pe-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex right-0';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-l';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-l-md';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-r';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-r-md';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rtl:ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-ml-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-mr-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-pl-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-pr-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex start-0 end-0';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex text-left';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex text-right';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex text-start text-end';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'ml-4 mr-4';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = \u003cdiv className=\"flex ml-4\" /\u003e;\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = `flex ${other} ml-4`;\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = `flex ml-4 ${other}`;\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = `flex ml-4`;\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = mergeClassNames('flex ml-4');\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const key = 'someIdentifierName';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const link = 'See docs/text-left.md';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const message = 'Align the text to the left side';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const message = 'You have items left in your cart';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const note = 'ml-4;';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const path = '/repository/source/Thing.ts';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const theme = [\n    'flex items-center',\n    'fixed left-[50%]',\n];\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const token = '{{ml-4}}';\n",
+    "Options": null
+  },
+  {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const url = 'https://example.com/left/right';\n",
+    "Options": null
+  }
+]
