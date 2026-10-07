@@ -1,0 +1,14 @@
+==3708== Callgrind, a call-graph generating cache profiler
+==3708== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==3708== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==3708== Command: /workspace/scratch/parse-speed/native-parse --manifest /workspace/scratch/parse-speed/compiler.txt --count
+==3708== 
+==3708== For interactive control, run 'callgrind_control -h'.
+==3708== brk segment overflow in thread #1: can't grow to 0x4838000
+==3708== (see section Limitations in user manual)
+==3708== NOTE: further instances of this message will not be shown
+==3708== 
+==3708== Events    : Ir
+==3708== Collected : 9259261285
+==3708== 
+==3708== I   refs:      9,259,261,285

@@ -1,0 +1,11 @@
+==3758== Callgrind, a call-graph generating cache profiler
+==3758== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==3758== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==3758== Command: /workspace/scratch/parse-speed/go-batch8 --manifest /workspace/scratch/parse-speed/compiler.txt --count
+==3758== 
+==3758== For interactive control, run 'callgrind_control -h'.
+==3758== 
+==3758== Events    : Ir
+==3758== Collected : 3036940751
+==3758== 
+==3758== I   refs:      3,036,940,751

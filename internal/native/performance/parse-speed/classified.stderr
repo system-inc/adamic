@@ -1,0 +1,21 @@
+==4408== Callgrind, a call-graph generating cache profiler
+==4408== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==4408== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==4408== Command: /workspace/scratch/parse-speed/native-instrumented --manifest /workspace/scratch/parse-speed/compiler.txt --count
+==4408== 
+==4408== For interactive control, run 'callgrind_control -h'.
+==4408== brk segment overflow in thread #1: can't grow to 0x4838000
+==4408== (see section Limitations in user manual)
+==4408== NOTE: further instances of this message will not be shown
+token punctuation scans=890192 string_allocations=4822
+token keywords scans=128102 string_allocations=132970
+token identifiers scans=380828 string_allocations=383187
+token literals scans=18193 string_allocations=139960
+token other scans=78 string_allocations=0
+kind calls=24049704 same_header=1247243 null=0 different_length=21046212 empty=0 memcmp=3003492
+other calls=1039883 same_header=643398 null=0 different_length=203722 empty=2548 memcmp=833613
+==4408== 
+==4408== Events    : Ir
+==4408== Collected : 15103739138
+==4408== 
+==4408== I   refs:      15,103,739,138
