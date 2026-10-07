@@ -1,0 +1,77 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/empty_directive_reason_accepted
+    lint_test.go:491: empty directive reason accepted caught on Node: case 24 line 522: port "fixed\t/* eslint-disable -- */\\u000a", Go "/tmp/adamic-gate/TestMutantsempty_directive_reason_accepted1500079527/007/eslint-comments-require-description-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsempty_directive_reason_accepted1500079527/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 23 missingDescription 		
+        fixed	/* eslint-disable -- */\u000a
+    lint_test.go:491: empty directive reason accepted caught on emitted JavaScript: case 24 line 522: port "fixed\t/* eslint-disable -- */\\u000a", Go "/tmp/adamic-gate/TestMutantsempty_directive_reason_accepted1500079527/007/eslint-comments-require-description-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsempty_directive_reason_accepted1500079527/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 23 missingDescription 		
+        fixed	/* eslint-disable -- */\u000a
+    lint_test.go:491: empty directive reason accepted caught on native: case 24 line 522: port "fixed\t/* eslint-disable -- */\\u000a", Go "/tmp/adamic-gate/TestMutantsempty_directive_reason_accepted1500079527/007/eslint-comments-require-description-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsempty_directive_reason_accepted1500079527/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 23 missingDescription 		
+        fixed	/* eslint-disable -- */\u000a
+=== RUN   TestMutants/physical_direction_exemption_omitted
+    lint_test.go:491: physical direction exemption omitted caught on Node: case 24 line 527: port "  structure/tailwind-no-physical-direction  The class \"rtl:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"md:hover:text-left\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"md:hover:text-start\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_omitted3543264824/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 62 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_omitted3543264824/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 62 useLogicalClass 		
+        fixed	export const classes = 'flex ml-4 rtl:mr-4 md:hover:text-left';\u000a
+    lint_test.go:491: physical direction exemption omitted caught on emitted JavaScript: case 24 line 527: port "  structure/tailwind-no-physical-direction  The class \"rtl:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"md:hover:text-left\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"md:hover:text-start\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_omitted3543264824/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 62 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_omitted3543264824/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 62 useLogicalClass 		
+        fixed	export const classes = 'flex ml-4 rtl:mr-4 md:hover:text-left';\u000a
+    lint_test.go:491: physical direction exemption omitted caught on native: case 24 line 527: port "  structure/tailwind-no-physical-direction  The class \"rtl:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"md:hover:text-left\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"md:hover:text-start\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_omitted3543264824/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 62 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_omitted3543264824/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 62 useLogicalClass 		
+        fixed	export const classes = 'flex ml-4 rtl:mr-4 md:hover:text-left';\u000a
+--- PASS: TestMutants (33.73s)
+    --- PASS: TestMutants/empty_directive_reason_accepted (11.82s)
+    --- PASS: TestMutants/physical_direction_exemption_omitted (16.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	33.732s

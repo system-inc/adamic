@@ -1,0 +1,17 @@
+=== RUN   TestWave02UpstreamSubset
+    lint_test.go:324: cohere cases: 379 unique source/rule/options combinations
+    lint_test.go:612: Go parse exclusion 105 /tmp/adamic-gate/TestWave02UpstreamSubset241504653/003/case-105.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}: ['*/' expected.]
+    lint_test.go:621: Adamic parse exclusion 148 /tmp/adamic-gate/TestWave02UpstreamSubset241504653/003/case-365.tsx	structure/tailwind-no-physical-direction			false	null: Error: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestWave02UpstreamSubset241504653/003/case-365.tsx
+    lint_test.go:625: coverage: 160 accepted, 2 excluded, 162 total
+    lint_test.go:637: Go, Node, emitted JavaScript, native identical: 49281 bytes
+--- PASS: TestWave02UpstreamSubset (19.14s)
+=== RUN   TestWave02Throughput
+    lint_test.go:680: structure/tailwind-no-physical-direction Go: 2000 findings, 21.112674ms, 94729.83 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:680: structure/tailwind-no-physical-direction native: 2000 findings, 19.187534ms, 104234.34 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:680: structure/tailwind-no-physical-direction Node: 2000 findings, 140.045224ms, 14281.10 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:680: @eslint-community/eslint-comments/require-description Go: 1000 findings, 22.265504ms, 44912.52 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:680: @eslint-community/eslint-comments/require-description native: 1000 findings, 9.455919ms, 105753.87 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:680: @eslint-community/eslint-comments/require-description Node: 1000 findings, 120.714203ms, 8284.03 findings/s (1000 repeated owned witnesses, one run)
+--- PASS: TestWave02Throughput (5.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	24.468s

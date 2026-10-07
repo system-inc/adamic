@@ -1,0 +1,7 @@
+=== RUN   TestWave02JSXBlocker
+    lint_test.go:706: Node: exit 70, adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx
+    lint_test.go:706: emitted JavaScript: exit 70, adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx
+    lint_test.go:706: sanitized native: exit 70, adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx
+--- PASS: TestWave02JSXBlocker (15.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	15.871s

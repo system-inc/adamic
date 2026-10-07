@@ -1,0 +1,10 @@
+{
+  "name": "structure/tailwind-no-physical-direction",
+  "kinds": ["StringLiteral", "NoSubstitutionTemplateLiteral", "TemplateExpression"],
+  "visit": "visit",
+  "oracle": "oraclePhysicalDirection",
+  "upstreamPackage": "tailwind",
+  "upstreamTest": "TestNoPhysicalDirection",
+  "factory": "create",
+  "class": "Rule"
+}

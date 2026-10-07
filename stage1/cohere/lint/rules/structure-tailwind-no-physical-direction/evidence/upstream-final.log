@@ -1,0 +1,18 @@
+=== RUN   TestWave02UpstreamSubset
+    lint_test.go:324: cohere cases: 379 unique source/rule/options combinations
+    lint_test.go:612: Go parse diagnostics 105 /tmp/adamic-gate/TestWave02UpstreamSubset1401693989/003/case-105.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}: ['*/' expected.]
+    lint_test.go:621: Adamic parse exclusion 148 /tmp/adamic-gate/TestWave02UpstreamSubset1401693989/003/case-365.tsx	structure/tailwind-no-physical-direction			false	null: Error: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestWave02UpstreamSubset1401693989/003/case-365.tsx
+    lint_test.go:625: coverage: 161 accepted, 1 excluded, 162 total
+    lint_test.go:637: /tmp/adamic-gate/TestWave02UpstreamSubset1401693989/001/oracle [--manifest /tmp/adamic-gate/TestWave02UpstreamSubset1401693989/010/manifest.txt]: exit status 2
+        panic: fix failed: /tmp/adamic-gate/TestWave02UpstreamSubset1401693989/003/case-105.tsx does not parse before any fix is applied (TS1010: '*/' expected.) {FileName:/tmp/adamic-gate/TestWave02UpstreamSubset1401693989/003/case-105.tsx Text:x;
+        	/* eslint-disable Changed:false Passes:0 Applied:[] Rejected:[] Converged:false UnconvergedRules:[] Transformed:false TransformSkipped:false TransformSkipReason: Failed:false}
+        
+        goroutine 1 [running]:
+        main.run({0x14f699d4b32a?, 0x14f699d3e040?}, 0x0, 0x14f699d3e040)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:82 +0x8d4
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:156 +0x36d
+--- FAIL: TestWave02UpstreamSubset (19.46s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	19.466s
+FAIL

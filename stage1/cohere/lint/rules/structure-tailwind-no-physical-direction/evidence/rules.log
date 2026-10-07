@@ -1,0 +1,176 @@
+=== RUN   TestRulesAgree
+    lint_test.go:324: cohere cases: 379 unique source/rule/options combinations
+    lint_test.go:374: /tmp/adamic-gate/TestRulesAgree131218213/001/oracle [--manifest /tmp/adamic-gate/TestRulesAgree131218213/013/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestRulesAgree131218213/010/case-103.ts: [Unterminated regular expression literal.]
+        
+        goroutine 1 [running]:
+        main.collect({0x1210f6084a1c, 0x38}, {0x1210f5e27180?, 0x1?}, {0x1210f61eb200, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:91 +0xaa5
+        main.run({0x1210f6084a1c?, 0x1210f606e040?}, 0x0, 0x1210f606e040)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x2f7
+--- FAIL: TestRulesAgree (49.16s)
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+    lint_test.go:491: debugger fix suppressed caught on Node: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed376961976/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed376961976/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+    lint_test.go:491: debugger fix suppressed caught on emitted JavaScript: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed376961976/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed376961976/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+    lint_test.go:491: debugger fix suppressed caught on native: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed376961976/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed376961976/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:491: empty function body reported caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:491: empty function body reported caught on emitted JavaScript: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:491: empty function body reported caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2136704121/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:491: suggestion applied as fix caught on Node: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix2487164204/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix2487164204/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+    lint_test.go:491: suggestion applied as fix caught on emitted JavaScript: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix2487164204/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix2487164204/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+    lint_test.go:491: suggestion applied as fix caught on native: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix2487164204/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix2487164204/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:491: var declaration suppressed caught on Node: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:12
+    lint_test.go:491: var declaration suppressed caught on emitted JavaScript: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:12
+    lint_test.go:491: var declaration suppressed caught on native: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2139928251/004/generated-3.ts:1:12
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:414: next-google-font-display: missing rule descriptor
+=== RUN   TestMutants/empty_directive_reason_accepted
+    lint_test.go:414: next-google-font-display: missing rule descriptor
+=== RUN   TestMutants/physical_direction_exemption_omitted
+    lint_test.go:414: next-google-font-display: missing rule descriptor
+--- FAIL: TestMutants (56.63s)
+    --- PASS: TestMutants/debugger_fix_suppressed (13.12s)
+    --- PASS: TestMutants/empty_function_body_reported (13.75s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (14.10s)
+    --- PASS: TestMutants/var_declaration_suppressed (13.52s)
+    --- FAIL: TestMutants/duplicate_case_suppressed (0.01s)
+    --- FAIL: TestMutants/empty_directive_reason_accepted (0.01s)
+    --- FAIL: TestMutants/physical_direction_exemption_omitted (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	105.805s
+FAIL

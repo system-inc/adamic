@@ -1,0 +1,8 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:31: go [build -overlay=/tmp/adamic-gate/TestOwnedWitnesses1815590601/001/overlay.json -o /tmp/adamic-gate/TestOwnedWitnesses1815590601/001/oracle /workspace/adamic/cohere/adamic_lint_oracle.go /workspace/adamic/cohere/adamic_lint_registry.go /workspace/adamic/cohere/adamic_lint_no_debugger.go /workspace/adamic/cohere/adamic_lint_no_empty.go /workspace/adamic/cohere/adamic_lint_eqeqeq.go /workspace/adamic/cohere/adamic_lint_no_var.go /workspace/adamic/cohere/adamic_lint_no_duplicate_case.go /workspace/adamic/cohere/adamic_lint_structure_tailwind_no_physical_direction.go]: <nil>
+        go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+        go: downloading github.com/dlclark/regexp2 v1.11.5
+--- FAIL: TestOwnedWitnesses (44.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	44.059s
+FAIL

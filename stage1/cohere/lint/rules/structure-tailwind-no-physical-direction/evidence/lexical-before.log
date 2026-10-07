@@ -1,0 +1,17 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Node: case 10 line 65: port "range 0 40 missingDescription \t\t", Go "range 0 27 missingDescription \t\t"
+        Go context:
+        fixed	switch(x){case 1:break;case 1:break;}\u000a
+        case 10
+        /tmp/adamic-gate/TestOwnedWitnesses941189560/018/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 27 missingDescription 		
+        /tmp/adamic-gate/TestOwnedWitnesses941189560/018/eslint-comments-require-description-0.ts:3:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 97 120 missingDescription 		
+--- FAIL: TestOwnedWitnesses (13.44s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	13.449s
+FAIL

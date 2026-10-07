@@ -1,0 +1,6 @@
+=== RUN   TestWave02CompilerSubset
+    lint_test.go:625: coverage: 200 accepted, 0 excluded, 200 total
+    lint_test.go:657: Go, Node, emitted JavaScript, native identical: 12542232 bytes
+--- PASS: TestWave02CompilerSubset (38.46s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	38.466s
