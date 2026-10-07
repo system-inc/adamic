@@ -96,3 +96,30 @@ ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/markdownblo
 ```
 
 The typeaware tests do not use oracle result caching.
+
+Recovery results: typeaware passed (732.806s). Every package in the remaining
+recovery run passed except TestMarkdownUnicodeWidths, which failed because the
+scratch npm width dependencies were absent, before any width comparison ran.
+Installed the exact versions named in widthTables.ts and REPORT.txt, then ran
+only that failed check:
+
+```sh
+npm install --prefix /tmp/adamic-markdown-width --ignore-scripts --no-audit --no-fund emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/markdownblocks -run '^TestMarkdownUnicodeWidths$' > /tmp/adamic-gate/string-build-width-recovery.log 2>&1
+```
+
+That test passed (139.357s). Every package/check in the full gate has a passing
+result across the initial run and these recovery runs. The original full-gate
+invocation itself was interrupted, not a single uninterrupted green run.
+No compiler changes or test skips were needed.
+
+Publication commands:
+
+```sh
+git commit -m 'Cover string building and cached UTF-16 reads in the oracle'
+git push -u origin coverage/string-build-speed
+git commit -m 'Record gate recovery and pinned dependency checks'
+git push origin coverage/string-build-speed
+```
+
+The first push succeeded without a retry.
