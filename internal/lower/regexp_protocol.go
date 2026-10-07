@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
+	regex "github.com/system-inc/adamic/internal/regexp"
 	"strings"
 )
 
@@ -27,7 +28,11 @@ func (l *lowering) regexSplitPatternsSafe(node *ast.Node, depth int) bool {
 	}
 	pattern, flags, known := l.regexSplitConstant(node)
 	if known {
-		return !strings.Contains(flags, "u") || !strings.Contains(pattern, `\B`) && !strings.Contains(pattern, `(?!\W)`)
+		if !strings.Contains(flags, "u") {
+			return true
+		}
+		program, err := regex.Compile(pattern, flags)
+		return err == nil && !program.MayMatchInsideUnicodePair()
 	}
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindArrayLiteralExpression {
