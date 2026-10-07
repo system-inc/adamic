@@ -16,6 +16,9 @@ type Program struct {
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
+	// BoundaryStrings belong only to declaration metadata, never codegen.
+	BoundaryStrings BoundaryStringTable
+
 	// Regexps contain immutable C bytecode compiled during lowering.
 	Regexps []RegExpProgram
 

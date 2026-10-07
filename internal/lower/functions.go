@@ -4,9 +4,8 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/system-inc/adamic/internal/ir"
-	"strconv"
-	"strings"
 )
 
 // functionBody lowers a module function declaration's parameters and body.
@@ -58,18 +57,17 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
 func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	function := l.result.Functions[index]
-	where := l.program.Where(declaration)
-	columnAt := strings.LastIndex(where, ":")
-	lineAt := strings.LastIndex(where[:columnAt], ":")
-	function.Position.File = where[:lineAt]
-	function.Position.Line, _ = strconv.Atoi(where[lineAt+1 : columnAt])
-	function.Position.Column, _ = strconv.Atoi(where[columnAt+1:])
-	if this >= 0 {
-		function.Boundary.Parameters = append(function.Boundary.Parameters, nil)
+	name := declaration.Name()
+	if name == nil {
+		name = declaration
 	}
+	source := ast.GetSourceFileOfNode(name)
+	line, column := scanner.GetLineAndCharacterOfPosition(source, scanner.GetTokenPosOfNode(name, source, false))
+	function.Position = ir.SourcePosition{File: l.program.FileName(source), Line: line + 1, Column: column + 1}
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
+		function.Boundary.Parameters = append(function.Boundary.Parameters, nil)
 	}
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
@@ -153,7 +151,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if declaration.Kind == ast.KindConstructor && l.instance != nil && l.instance.constructor >= 0 {
 		allocator := &l.result.Functions[l.instance.constructor]
 		allocator.Position = function.Position
-		allocator.Boundary.Parameters = append([]*ir.JSONDecodeSchema(nil), function.Boundary.Parameters[1:]...)
+		allocator.Boundary.Parameters = append([]*ir.JSONDecodeSchema(nil), function.Boundary.Parameters...)
 	}
 	if l.signed == nil {
 		l.signed = map[int]signed{}
@@ -247,15 +245,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 // Descriptor construction must not intern boundary-only literals into codegen's
 // string table. The same builder runs against a private table and reports no errors.
 func (l *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSONDecodeSchema {
-	scratch := *l
-	program := *l.result
-	program.Strings = append([]string(nil), program.Strings...)
-	scratch.result = &program
-	scratch.strings = make(map[string]int, len(l.strings))
-	for text, index := range l.strings {
-		scratch.strings[text] = index
-	}
-	schema, err := scratch.jsonDecodeSchema(node, proven, true)
+	schema, err := l.jsonDecodeSchema(node, proven, true, l.result.BoundaryStrings.Intern)
 	if err != nil {
 		return nil
 	}

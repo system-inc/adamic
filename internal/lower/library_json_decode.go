@@ -67,12 +67,12 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 	if l.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
 		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: "decodeJson<" + l.checker.TypeToString(rootType) + "> containing null"}}
 	}
-	return l.jsonDecodeSchema(node, rootType, false)
+	return l.jsonDecodeSchema(node, rootType, false, l.constant)
 }
 
 // jsonDecodeSchema is the one checker-type descriptor builder. Boundary mode
 // preserves undefined for fields; JSON decoding keeps its existing refusal.
-func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boundary bool) (ir.JSONDecodeSchema, error) {
+func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boundary bool, intern func(string) int) (ir.JSONDecodeSchema, error) {
 	schema := ir.JSONDecodeSchema{}
 	seen := map[*checker.Type]int{}
 	var visit func(*checker.Type) (int, error)
@@ -82,8 +82,6 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 	visit = func(t *checker.Type) (int, error) {
 		if boundary {
 			t = l.concrete(t)
-		}
-		if boundary {
 			held, _ := l.representation(t)
 			if l.weakTarget(t) != nil || held == ir.Weak {
 				return 0, refuse(t)
@@ -101,12 +99,21 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 		schema.Nodes = append(schema.Nodes, ir.JSONDecodeNode{})
 		n := ir.JSONDecodeNode{Expected: l.checker.TypeToString(t)}
 		flags := t.Flags()
-		if literal, of, ok := l.literalConstant(t); ok {
+		var literal ir.Expression
+		var of ir.Type
+		var ok bool
+		if flags&checker.TypeFlagsStringLiteral != 0 {
+			text, isText := t.AsLiteralType().Value().(string)
+			literal, of, ok = ir.StringConstant{Index: intern(text)}, ir.String, isText
+		} else {
+			literal, of, ok = l.literalConstant(t)
+		}
+		if ok {
 			n.Kind = "literal"
 			n.Of = of
 			switch v := literal.(type) {
 			case ir.StringConstant:
-				n.Literal = l.result.Strings[v.Index]
+				n.Literal = t.AsLiteralType().Value().(string)
 				n.LiteralUnits = ir.JSONLiteralUnits(n.Literal)
 			case ir.NumberConstant:
 				n.Number = v.Value

@@ -141,10 +141,19 @@ func Analyze(program *ir.Program) []Function {
 			}
 		}
 	}
+	constructors := map[int]bool{}
+	for _, class := range program.Classes {
+		if class.Constructor >= 0 {
+			constructors[class.Constructor] = true
+		}
+	}
 	result := make([]Function, n)
 	for i, function := range program.Functions {
 		reason := reasons[i]
-		if pure[i] {
+		if constructors[i] && reason == "" {
+			reason = "signature: constructor not crossable"
+		}
+		if pure[i] && reason == "" {
 			if len(function.Boundary.Parameters) != len(function.Parameters) {
 				reason = "signature: missing boundary schema"
 			}

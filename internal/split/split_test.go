@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -106,7 +107,7 @@ func TestBoundaryParameterOrderAndPositions(t *testing.T) {
 		if function.Boundary.Return == nil || function.Boundary.Return.Nodes[function.Boundary.Return.Root].Kind != "number" {
 			t.Fatal("return schema")
 		}
-		if filepath.Base(function.Position.File) != "decisions.a" || function.Position.Line != 112 || function.Position.Column != 1 {
+		if filepath.Base(function.Position.File) != "decisions.a" || function.Position.Line != 112 || function.Position.Column != 10 {
 			t.Fatalf("position: %+v", function.Position)
 		}
 		return
@@ -165,5 +166,64 @@ func TestUnknownOperationIsImpure(t *testing.T) {
 	decisions := split.Analyze(program)
 	if len(decisions) != 1 || decisions[0].Eligible || decisions[0].Reason != "impure: unknown operation futureOperation" {
 		t.Fatalf("unknown operation: %+v", decisions)
+	}
+}
+
+func TestBoundaryUnionFences(t *testing.T) {
+	program := lowered(t, "testdata/unions.a")
+	seen := 0
+	for _, decision := range split.Analyze(program) {
+		if decision.Name == "objectUnion" || decision.Name == "broadUnion" {
+			schema := program.Functions[decision.Index].Boundary.Parameters[0]
+			if schema == nil || schema.Nodes[schema.Root].Kind != "union" {
+				t.Fatalf("boundary union missing: %s", decision.Name)
+			}
+			if decision.Eligible || decision.Reason != "signature: parameter 1 not crossable" {
+				t.Fatalf("union crossed: %+v", decision)
+			}
+			seen++
+		}
+	}
+	if seen != 2 {
+		t.Fatalf("union fixtures missing: %d", seen)
+	}
+}
+func TestBoundaryConstructorAlignment(t *testing.T) {
+	program := lowered(t, "testdata/unions.a")
+	initializers := 0
+	for _, function := range program.Functions {
+		if function.Position.File == "" {
+			continue
+		}
+		if len(function.Parameters) != len(function.Boundary.Parameters) {
+			t.Fatalf("misaligned %s: %d parameters, %d schemas", function.Name, len(function.Parameters), len(function.Boundary.Parameters))
+		}
+		if function.Name == "Parent_new_initialize" || function.Name == "Child_new_initialize" {
+			if function.Boundary.Parameters[0] != nil || function.Boundary.Parameters[1] == nil {
+				t.Fatalf("receiver schema: %+v", function)
+			}
+			initializers++
+		}
+	}
+	if initializers != 2 {
+		t.Fatalf("live initializers: %d", initializers)
+	}
+}
+
+func TestBoundaryStringTable(t *testing.T) {
+	program := lowered(t, "testdata/unions.a")
+	if !reflect.DeepEqual(program.BoundaryStrings.Values, []string{"boundary-only"}) {
+		t.Fatalf("metadata strings: %q", program.BoundaryStrings.Values)
+	}
+	if program.BoundaryStrings.Intern("boundary-only") != 0 || len(program.BoundaryStrings.Values) != 1 {
+		t.Fatal("metadata table did not reuse literal")
+	}
+	for _, text := range program.Strings {
+		if text == "boundary-only" {
+			t.Fatal("boundary literal entered codegen table")
+		}
+	}
+	if strings.Contains(native.C(program), "boundary-only") || strings.Contains(javascript.JavaScript(program), "boundary-only") {
+		t.Fatal("metadata literal emitted")
 	}
 }
