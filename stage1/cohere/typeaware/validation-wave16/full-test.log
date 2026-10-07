@@ -1,0 +1,22 @@
+=== RUN   TestWave16AgreementAndMutants
+    wave16_test.go:99: controls: 29690 identical finding bytes; findings 65
+    wave16_test.go:107: controls-asan: 29690 identical finding bytes; findings 65
+=== RUN   TestWave16AgreementAndMutants/import-write
+    wave16_test.go:124: import-write: exit 0, Go byte oracle catches byte 63; findings 59
+=== RUN   TestWave16AgreementAndMutants/exponent-base
+    wave16_test.go:124: exponent-base: exit 0, Go byte oracle catches byte 15651; findings 65
+=== RUN   TestWave16AgreementAndMutants/nan-comma
+    wave16_test.go:124: nan-comma: exit 0, Go byte oracle catches byte 12061; findings 63
+=== NAME  TestWave16AgreementAndMutants
+    wave16_test.go:132: repository: 19351 identical finding bytes; findings 2
+    wave16_test.go:133: repository-asan: 19351 identical finding bytes; findings 2
+    wave16_test.go:140: compiler: 6379 identical finding bytes; findings 1
+    wave16_test.go:141: compiler-asan: 6379 identical finding bytes; findings 1
+    wave16_test.go:153: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_test.go:158: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16AgreementAndMutants (66.67s)
+    --- PASS: TestWave16AgreementAndMutants/import-write (5.48s)
+    --- PASS: TestWave16AgreementAndMutants/exponent-base (5.82s)
+    --- PASS: TestWave16AgreementAndMutants/nan-comma (5.88s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	66.672s

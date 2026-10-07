@@ -1,0 +1,8 @@
+=== RUN   TestWave16AgreementAndMutants
+    wave16_test.go:92: wave16: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/prefer_exponentiation_operator.a:143:57: stage 0 can't lower .charAt on a string yet
+--- FAIL: TestWave16AgreementAndMutants (2.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	2.258s
+FAIL

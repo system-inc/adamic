@@ -1,0 +1,8 @@
+=== RUN   TestWave16AgreementAndMutants
+    wave16_test.go:92: wave16: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_import_assign.a:25:105: stage 0 can't lower an array of never yet
+--- FAIL: TestWave16AgreementAndMutants (93.82s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	93.825s
+FAIL

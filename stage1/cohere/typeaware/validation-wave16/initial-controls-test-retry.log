@@ -1,0 +1,8 @@
+=== RUN   TestWave16AgreementAndMutants
+    wave16_test.go:92: wave16: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_import_assign.a:67:62: stage 0 can't lower a PrefixUnaryExpression on a boolean | undefined yet
+--- FAIL: TestWave16AgreementAndMutants (2.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	2.127s
+FAIL
