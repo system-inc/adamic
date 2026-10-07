@@ -45,3 +45,7 @@ Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer liter
 ## Landing cap
 
 [LANDING_REPORT.md](LANDING_REPORT.md) records the clean rebase onto origin/main e8ba3d5 and complete helper-subtree oracle rerun. All seventeen retained helpers remain unchanged; all six packages and forty-one compiling semantic mutants pass. No new helper was reserved during this landing unit.
+
+## Seventh batch
+
+[batch7/REPORT.md](batch7/REPORT.md) records descriptor functional-root registration, theme namespace construction and utility evaluator construction. Three retained helpers add eighteen dependency removals across six rules, with eleven compiling semantic mutants caught in four-way Go comparisons. Current origin/main remains e8ba3d5; no additional helper is reserved.
