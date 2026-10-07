@@ -5,6 +5,8 @@ import { CallDeclaration } from './call_declaration.a';
 import { OutputFlow } from './output_flow.a';
 import { PathState, PathPosition, chainOf } from './path_state.a';
 export class NoProcessExitAfterOutput {
+    // Pinned parser SyntaxKind values for the incoming shared driver.
+    readonly listenerKinds: number[] = [307];
     readonly context: OutputContext; readonly writers = new Map<string, boolean>();
     constructor(context: OutputContext) { this.context = context; }
     bodyWrites(c: OutputContext, index: number): number {

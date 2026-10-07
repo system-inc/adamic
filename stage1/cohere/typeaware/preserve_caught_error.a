@@ -10,6 +10,8 @@ const messageCaughtErrorShadowed = "This attaches a `cause` spelled like the cau
 const messageIncludeCause = "Attach the caught error as the `cause` option. This changes what the thrown error carries, so it is offered rather than applied.";
 
 export class PreserveCaughtError {
+    // Pinned parser SyntaxKind values for the incoming shared driver.
+    readonly listenerKinds: number[] = [258];
     readonly bindings: Bindings;
     constructor(bindings: Bindings) { this.bindings = bindings; }
     global(index: number): boolean {

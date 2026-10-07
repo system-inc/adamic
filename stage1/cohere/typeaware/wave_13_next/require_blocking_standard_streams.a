@@ -33,6 +33,8 @@ export class RootResult {
     readonly exits: number[] = []; readonly started: number[] = [];
 }
 export class RequireBlockingStandardStreams {
+    // Pinned parser SyntaxKind values for the incoming shared driver.
+    readonly listenerKinds: number[] = [307];
     readonly context: OutputContext; readonly index: BlockingIndex; readonly functions = new Map<string, number>();
     constructor(context: OutputContext, index: BlockingIndex) { this.context = context; this.index = index; }
     callLike(c: OutputContext, node: number): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(c.node(node)); }

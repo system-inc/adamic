@@ -7,6 +7,8 @@ const message = 'This returns a value from a promise executor, and nothing can e
 const prepend = 'Prepend `void` to the expression, saying the value is deliberately discarded.';
 const wrap = 'Wrap the expression in `{}`, making the arrow body a statement rather than a return.';
 export class NoPromiseExecutorReturn {
+    // Pinned parser SyntaxKind values for the incoming shared driver.
+    readonly listenerKinds: number[] = [220, 254];
  readonly c: OutputContext; readonly allowVoid: boolean;
  constructor(c: OutputContext, allowVoid: boolean) { this.c = c; this.allowVoid = allowVoid; }
  executor(index: number): boolean {

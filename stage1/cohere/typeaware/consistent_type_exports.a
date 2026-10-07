@@ -6,6 +6,8 @@ import { Repair } from './repair.ts';
 
 const typeMessage = 'Every name in this export is a type, so the statement emits an import at runtime that resolves to nothing. Writing `export type` tells the compiler and any bundler that the whole statement can be erased.';
 export class ConsistentTypeExports {
+    // Pinned parser SyntaxKind values for the incoming shared driver.
+    readonly listenerKinds: number[] = [307];
     readonly rules: Rules;
     readonly facts: ExportSymbolChain;
     readonly modules: ExportModuleProperties;

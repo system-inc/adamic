@@ -4,6 +4,8 @@ import { Diagnostic } from './diagnostic.ts';
 
 const message = 'This declares a variable without a value and nothing ever assigns one, so every read of it is `undefined`. The code below it is written as though the value arrives from somewhere, which is what makes this hard to see in review: the comparison, the property access, the fallback all read as ordinary until you notice nothing on the other side ever writes. The usual cause is an assignment that was deleted, moved into a branch that no longer runs, or never written. Give it an initializer, assign it where the value is known, or delete the declaration.';
 export class NoUnassignedVars {
+    // Pinned parser SyntaxKind values for the incoming shared driver.
+    readonly listenerKinds: number[] = [261];
     readonly bindings: Bindings;
     readonly writes: Reassign;
     constructor(bindings: Bindings) { this.bindings = bindings; this.writes = new Reassign(bindings.rules); }
