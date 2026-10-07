@@ -1,0 +1,3 @@
+Merged main ce0750f28; area remains 65017b318. Native startup now resets inherited ignored interrupt/hangup/terminate dispositions as Node does. Lint rule code, oracle, ledger and 495-file corpus inputs unchanged.
+
+Fresh full TestRulesAgree + TestOwnedWitnesses PASS 128.780s on this branch, comparing Go, Node, emitted JavaScript and native. Original wave07 production graph is identical except standalone profile tests/validation scripts and reports, so this proof covers both. Focused signal regression ran on identical compiler/runtime sources in wave06: six cases PASS 25.891s. Prior four owned-mutant, 495-file corpus and four unconditional profile-test proofs remain applicable; no rerun of those or full repository gate claimed.
