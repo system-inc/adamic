@@ -1501,3 +1501,53 @@ Node="v24.19.0", oracle results uncached, native runtime build cache warm.
 Raw evidence: `cmd/adamic-gate/evidence/oracle-once-47b8b8d5.tgz`. The prior
 compile blocker section remains as historical evidence and is now resolved
 by the area repair. No new cache or production check was introduced.
+
+### Provision the checker archive on its owner only
+
+Merged setup branch 77fc4632 via merge 7cf1320d, then implemented the runner
+and fleet side in 9310d552. Plan.Archive identifies the sole consumer,
+`github.com/system-inc/adamic/internal/native::TestSplitTSGoAgrees`, its shard,
+and ADAMIC_CLANG_TSGO_ARCHIVE. Ordinary packing defers this consumer; after
+packing, its owner is the lightest predicted shard including repeated parent
+residuals (lowest index wins exact ties). For the measured-source 9310d552
+22-shard plan, the owner is shard 10: 1027.150 s before the consumer,
+1096.550 s with its 69.400 s historical unit price. This is a plan prediction,
+not a new test timing.
+
+Fleet obtains a declared plan from a plan box before launching workers (or
+accepts ADAMIC_GATE_PLAN for an existing plan). `fleet.sh briefs <full SHA>
+<plan.json>` produces reviewable briefs without launching anything. The real
+22-shard plan generated exactly one archive phase, in shard-10.md; all 22
+briefs use --gate-inputs-no-archive. A plan box publishes plan.tgz on the
+run's plan log branch. This unit still lets shard/merge enumerate for themselves;
+the queued frozen-plan unit will consume that artifact directly.
+
+Assumption resolving the setup API conflict: 77fc4632 deliberately rejects
+--gate-inputs-no-archive and --gate-archive in one invocation. Furthermore,
+archive-only setup unsets the other gate inputs. The owner therefore copies
+the non-archive env.sh outside the checkout, runs --gate-archive separately,
+saves its archive path, restores the copied env.sh, and exports that archive
+path. Every other shard runs only the non-archive phase. WASI setup flags and
+required boolean opt-ins remain provisioned. Record both setup phases
+separately and sum them for the owner; no combined-flag command is required.
+
+Before execution identity hashing or running tests, the runner inspects both
+coverage units and Plan.Archive. An undeclared/misplaced consumer, an unset
+archive variable, or a missing/nonregular file refuses by shard, test, and
+variable name. A real shard-10 CLI invocation with the variable unset refused
+before creating test evidence: `TestSplitTSGoAgrees refuses:
+ADAMIC_CLANG_TSGO_ARCHIVE missing`. Merge's existing skip census remains the
+independent post-run authority.
+
+Proofs: focused race tests passed, full `go test -race ./cmd/adamic-gate
+-count=1` passed (111.500 s), go vet passed, and Bash syntax/diff checks passed.
+Three mutants were caught: drop archive preflight by
+TestArchiveLightestAndMissingInput; drop parent residual by
+TestArchiveCountsRepeatedParentSetup; archive every worker by
+TestFleetTwentyTwoArchiveBriefs. The first test also mutates the plan's owner
+onto a worker without an archive and requires the refusal to name the test.
+No compiler or stage1 test was changed. No new cache was introduced. We did
+not launch 22 boxes or remeasure cold setup costs; the setup branch's measured
+costs and proofs remain its evidence, not this worker's measurements.
+Raw plan, 22 briefs, CLI refusal, tests and mutant logs are in
+cmd/adamic-gate/evidence/archive-shard.tgz.

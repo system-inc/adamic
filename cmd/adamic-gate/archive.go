@@ -56,7 +56,7 @@ func archiveReady(p plan, index int) error {
 		}
 		path := os.Getenv(archiveVariable)
 		if path == "" {
-			return fmt.Errorf("shard %d %s refuses: %s missing; run bash cloud/setup.sh --gate-inputs-no-archive --gate-archive", index, archiveUnit, archiveVariable)
+			return fmt.Errorf("shard %d %s refuses: %s missing; run archive setup separately after non-archive input setup; see docs/gate-shards.md", index, archiveUnit, archiveVariable)
 		}
 		info, err := os.Stat(path)
 		if err != nil || !info.Mode().IsRegular() {
