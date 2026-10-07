@@ -91,9 +91,24 @@ entries in descending combined volume with lexical ties are reserved before code
 Implementations and evidence belong in `wave_06_react_state/`. No additional
 rules are reserved by this claim.
 
-The fourth continuation is **unfinished and remains claimed**. Portable reporting
-portions, explicit analysis refusal and independent probe evidence are pushed
-under `wave_06_react_state/`. Native React HIR/SSA/capture/memoization and
-control/post-dominance support block all three source analyses; the base native
-parser also refuses JSX. See `wave_06_react_state/REPORT.md`. No further claims
-will be taken until these three analyses are complete.
+The fourth continuation is **parked** under Ahra's explicit React parking instruction. All prepared-HIR validators, reporting, refusals, numeric listener declarations and their oracle/sanitizer evidence are pushed through `5cb1ec2bf7302e7dbe3e56f71d9a19b5fcabdf3d`, rebased and re-green on main `f8013f0baac41ddc340d76f83bddde38536a8f07`.
+
+Parked rules and blockers:
+
+- `react-hooks/set-state-in-effect`: native source-to-HIR lowering, SSA, captures and manual memoization erasure.
+- `react-hooks/set-state-in-render`: native source-to-HIR lowering, SSA, compilation-unit selection and scope-aware memo classification.
+- `react-hooks/static-components`: native JSX lowering, SSA and compilation-unit selection.
+
+The analysis modules are being ported on #dnv6f2c and JSX support is landing on `area/stage1-lint`. Prepared-HIR validation and post-dominance already exist locally; the missing dependency is the source adapter. See `wave_06_react_state/CORE_REPORT.md` and `LANDING3_REPORT.md`. Parked counts as finished for landing-first only, not completed source parity.
+
+## Fifth continuation claim
+
+A fresh all-heads fetch confirms main remains f8013f0b and the only own pushed branch is landing-ready at 5cb1ec2b. Selection scans 529 origin references, 33 distinct claim blobs and all 197 checker-dependent ranked rules, with 154 claimed ranked rules and 25 main/base source mentions excluded. Combined volume is descending with lexical ties.
+
+Reserved before implementation:
+
+1. `react/jsx-fragments` (0 compiler, 0 repository)
+2. `react/jsx-no-undef` (0 compiler, 0 repository)
+3. `react/no-adjacent-inline-elements` (0 compiler, 0 repository)
+
+The intervening `react/jsx-no-constructed-context-values` is skipped under the analysis exclusion: its stability extension uses function evaluation and capture/escape checks (`functionEvaluation`, `anyEscapes`, `StaysHome` in jsx_no_constructed_context_values_stability.go). The selected rules do not need that analysis. Implementations and private validation belong in `wave_06_jsx/`. JSX/numeric-driver integration may still be blocked by the shared parser; findings must refuse rather than silently omit unsupported source analyses.
