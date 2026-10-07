@@ -1,0 +1,90 @@
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 7232 token/bare observations
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 5879 token/bare observations
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 1586 token/bare observations
+--- PASS: TestClassTokenBareGoNodeNativeJavaScript (20.04s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/witnesses.json (3.20s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/consumers.json (1.22s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/calls.json (0.87s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/class_tokens_of.astart:start+begin
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.aend:start+index
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.aseparator:separator
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;}
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.aend>source.length
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.astart>end
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index]
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aargument!=='integer'
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred===''
+    helpers_test.go:80: /tmp/adamic-gate/TestCompilingMutantsbare_argument.ainferred===1416536045/001/slot04_wave21/bare_argument.a:13:5: error TS2367: This comparison appears to be unintentional because the types '""' and '"number"' have no overlap.
+        /tmp/adamic-gate/TestCompilingMutantsbare_argument.ainferred===1416536045/001/slot04_wave21/bare_argument.a:14:5: error TS2367: This comparison appears to be unintentional because the types '""' and '"percentage"' have no overlap.
+        /tmp/adamic-gate/TestCompilingMutantsbare_argument.ainferred===1416536045/001/slot04_wave21/bare_argument.a:8:5: error TS2367: This comparison appears to be unintentional because the types '""' and '"ratio"' have no overlap.
+=== RUN   TestCompilingMutants/bare_argument.aparts.length!==2
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aratio:true,ok:true
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved)
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- FAIL: TestCompilingMutants (63.23s)
+    --- PASS: TestCompilingMutants/class_tokens_of.astart:start+begin (3.87s)
+    --- PASS: TestCompilingMutants/class_tokens_of.aend:start+index (5.02s)
+    --- PASS: TestCompilingMutants/class_tokens_of.aseparator:separator (5.72s)
+    --- PASS: TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;} (5.35s)
+    --- PASS: TestCompilingMutants/class_tokens_in.aend>source.length (4.72s)
+    --- PASS: TestCompilingMutants/class_tokens_in.astart>end (5.75s)
+    --- PASS: TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index] (3.99s)
+    --- PASS: TestCompilingMutants/bare_argument.aargument!=='integer' (5.22s)
+    --- FAIL: TestCompilingMutants/bare_argument.ainferred==='' (0.07s)
+    --- PASS: TestCompilingMutants/bare_argument.aparts.length!==2 (5.77s)
+    --- PASS: TestCompilingMutants/bare_argument.aratio:true,ok:true (4.21s)
+    --- PASS: TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved) (6.10s)
+    --- PASS: TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive (4.00s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-deprecated-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-duplicate-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unnecessary-whitespace
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+--- PASS: TestConsumerCoverage (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave21	83.338s
+FAIL

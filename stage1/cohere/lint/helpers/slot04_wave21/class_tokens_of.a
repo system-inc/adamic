@@ -1,0 +1,11 @@
+export type ClassToken={bytes:number[];start:number;end:number;separator:boolean};
+// Go indexes bytes here, including each byte of non-ASCII text.
+export function classTokensOf(value:readonly number[],start:number,isSpace:(byte:number)=>boolean):ClassToken[]{
+ const tokens:ClassToken[]=[];let index=0;
+ while(index<value.length){
+  const begin=index;const separator=isSpace(value[index] ?? 0);
+  while(index<value.length && isSpace(value[index] ?? 0)===separator){index++;}
+  tokens.push({bytes:value.slice(begin,index),start:start+begin,end:start+index,separator:separator});
+ }
+ return tokens;
+}

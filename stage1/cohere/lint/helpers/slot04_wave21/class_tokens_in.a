@@ -1,0 +1,9 @@
+import {classTokensOf} from './class_tokens_of.a';
+import type {ClassToken} from './class_tokens_of.a';
+export type TokenResult={tokens:ClassToken[];ok:boolean;present:boolean};
+export function classTokensIn(source:readonly number[],start:number,end:number,value:readonly number[],isSpace:(byte:number)=>boolean):TokenResult{
+ if(start<0 || end>source.length || start>end){return {tokens:[],ok:false,present:false};}
+ if(end-start!==value.length){return {tokens:[],ok:false,present:false};}
+ for(let index=0;index<value.length;index++){if(source[start+index]!==value[index]){return {tokens:[],ok:false,present:false};}}
+ return {tokens:classTokensOf(value,start,isSpace),ok:true,present:true};
+}

@@ -1,0 +1,89 @@
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 7232 token/bare observations
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 5879 token/bare observations
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 1586 token/bare observations
+--- PASS: TestClassTokenBareGoNodeNativeJavaScript (7.99s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/witnesses.json (2.68s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/consumers.json (1.13s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/calls.json (0.79s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/class_tokens_of.astart:start+begin
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.aend:start+index
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.aseparator:separator
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;}
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.aend>source.length
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.astart>end
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index]
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aargument!=='integer'
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aif(inferred==='')
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aparts.length!==2
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aratio:true,ok:true
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved)
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (65.50s)
+    --- PASS: TestCompilingMutants/class_tokens_of.astart:start+begin (4.57s)
+    --- PASS: TestCompilingMutants/class_tokens_of.aend:start+index (5.21s)
+    --- PASS: TestCompilingMutants/class_tokens_of.aseparator:separator (4.83s)
+    --- PASS: TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;} (4.49s)
+    --- PASS: TestCompilingMutants/class_tokens_in.aend>source.length (4.20s)
+    --- PASS: TestCompilingMutants/class_tokens_in.astart>end (4.80s)
+    --- PASS: TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index] (3.96s)
+    --- PASS: TestCompilingMutants/bare_argument.aargument!=='integer' (5.09s)
+    --- PASS: TestCompilingMutants/bare_argument.aif(inferred==='') (5.96s)
+    --- PASS: TestCompilingMutants/bare_argument.aparts.length!==2 (4.42s)
+    --- PASS: TestCompilingMutants/bare_argument.aratio:true,ok:true (5.17s)
+    --- PASS: TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved) (5.76s)
+    --- PASS: TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive (4.36s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-duplicate-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unnecessary-whitespace
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-deprecated-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave21	73.536s

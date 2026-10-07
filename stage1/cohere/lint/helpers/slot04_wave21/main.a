@@ -1,0 +1,19 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {classTokensOf} from './class_tokens_of.a';
+import type {ClassToken} from './class_tokens_of.a';
+import {classTokensIn} from './class_tokens_in.a';
+import {resolveBareArgument} from './bare_argument.a';
+function field(c:OptionsJson,id:number,key:string):number{const n=c.node(id);return n.children[n.keys.indexOf(key)] ?? panic('field');}
+function text(c:OptionsJson,id:number,key:string):string{return c.node(field(c,id,key)).text;}
+function ints(c:OptionsJson,id:number,key:string):number[]{const values:number[]=[];for(const n of c.node(field(c,id,key)).children){values.push(Number(c.node(n).text));}return values;}
+function output(label:string,tokens:readonly ClassToken[],ok:boolean,present:boolean):void{console.log(`${label}|${ok}|${present}|${tokens.length}`);for(const t of tokens){let bytes='';for(const b of t.bytes){bytes+=`${b},`;}console.log(`${t.separator}|${t.start}|${t.end}|${bytes}`);}}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const source=ints(c,row,'SourceBytes');const value=ints(c,row,'ValueBytes');const spaces=ints(c,row,'Spaces');const start=Number(text(c,row,'Start'));const end=Number(text(c,row,'End'));const space=(b:number):boolean=>spaces.includes(b);
+ output('of',classTokensOf(value,start,space),true,true);const result=classTokensIn(source,start,end,value,space);output('in',result.tokens,result.ok,result.present);
+ const bare=field(c,row,'Bare');const resolved=text(c,bare,'Resolved');const parts:string[]=[];const positive=new Map<string,boolean>();const trimmed=new Map<string,string>();
+ for(const p of c.node(field(c,bare,'Parts')).children){const s=text(c,p,'Text');parts.push(s);positive.set(s,text(c,p,'Positive')==='true');trimmed.set(s,text(c,p,'Trimmed'));}positive.set(text(c,bare,'PercentSource'),text(c,bare,'PercentPositive')==='true');
+ const argument=text(c,bare,'Argument');const r=resolveBareArgument(argument,text(c,bare,'Candidate'),text(c,bare,'Fraction'),(s:string,t:string):string=>{if(s!==resolved || t!==argument){panic('infer input');}return text(c,bare,'Inferred');},(s:string):string[]=>{if(s!==resolved){panic('segment input');}return parts;},(s:string):boolean=>positive.get(s) ?? false,(s:string):boolean=>{if(s!==resolved){panic('spacing input');}return text(c,bare,'Spacing')==='true';},(s:string):string=>trimmed.get(s) ?? panic('trim input'),(s:string):string[]=>{if(s!==text(c,bare,'ParseSource')){panic('parse input');}return [text(c,bare,'Printed')];});
+ console.log(`bare|${r.ok}|${r.ratio}|${r.nodes.join('')}`);
+}

@@ -1,0 +1,16 @@
+export type BareResult<T>={nodes:T[];ratio:boolean;ok:boolean};
+export function resolveBareArgument<T>(argument:string,value:string,fraction:string,infer:(source:string,type:string)=>string,segment:(source:string)=>string[],positive:(source:string)=>boolean,spacing:(source:string)=>boolean,trim:(source:string)=>string,parse:(source:string)=>T[]):BareResult<T>{
+ if(argument!=='number' && argument!=='integer' && argument!=='ratio' && argument!=='percentage'){return {nodes:[],ratio:false,ok:false};}
+ const resolved=argument==='ratio'?fraction:value;
+ if(resolved===''){return {nodes:[],ratio:false,ok:false};}
+ const inferred=infer(resolved,argument);
+ if(inferred===''){return {nodes:[],ratio:false,ok:false};}
+ if(inferred==='ratio'){
+  const parts=segment(resolved);
+  if(parts.length!==2 || !positive(parts[0] ?? '') || !positive(parts[1] ?? '')){return {nodes:[],ratio:false,ok:false};}
+  return {nodes:parse(trim(parts[0] ?? '')+' / '+trim(parts[1] ?? '')),ratio:true,ok:true};
+ }
+ if(inferred==='number' && !spacing(resolved)){return {nodes:[],ratio:false,ok:false};}
+ if(inferred==='percentage' && !positive(resolved.endsWith('%')?resolved.slice(0,-1):resolved)){return {nodes:[],ratio:false,ok:false};}
+ return {nodes:parse(resolved),ratio:false,ok:true};
+}
