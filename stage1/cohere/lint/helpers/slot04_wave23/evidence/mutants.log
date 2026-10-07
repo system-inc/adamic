@@ -1,0 +1,53 @@
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/build.aentry.incoming=true;
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsbuild.aentry.incoming=true2314147813/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/build.aentry.reachable=true;
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsbuild.aentry.reachable=true3776392833/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);}
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsbuild.aif(endReachable){ops.markFinal(build1197883686/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/build.aops.expression(builder,root.type);
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsbuild.aops.expression(builder,root.type)2851806357/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/build.aif(root.bodyBlock)
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsbuild.aif(root.bodyBlock)2137307174/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/expr.aif(ops.hookPresent){ops.expression(id);}
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsexpr.aif(ops.hookPresent){ops.expression(id3115814556/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/expr.aops.read(id);
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsexpr.aops.read(id)4152000417/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/expr.aops.throwableFork();
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsexpr.aops.throwableFork()2879152907/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/expr.aif(node.update)
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsexpr.aif(node.update)2488315785/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/expr.aops.yieldNow();
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsexpr.aops.yieldNow()1809740182/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/expr.aops.nestedFunction(id);
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantsexpr.aops.nestedFunction(id)2873218481/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/pattern_bind.aops.write(id);
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantspattern_bind.aops.write(id)1370498619/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/pattern_bind.aif(node.hole){return;}
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantspattern_bind.aif(node.hole){return}1455525343/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/pattern_bind.aif(element.computed){ops.expression(element.key);}ops.bindDefault(element.target,element.fallback);
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantspattern_bind.aif(element.computed){ops.expr2495188685/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/pattern_bind.aif(node.equals)
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantspattern_bind.aif(node.equals)3714651458/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+=== RUN   TestCompilingMutants/pattern_bind.aelse_if(element.spread){patternBind(element.target,at,ops);}
+    helpers_test.go:78: /tmp/adamic-gate/TestCompilingMutantspattern_bind.aelse_if(element.spread){patte3575294675/001/slot04_wave23/main.a:32:91: stage 0 can't lower assigning a field of a value yet
+--- FAIL: TestCompilingMutants (9.66s)
+    --- FAIL: TestCompilingMutants/build.aentry.incoming=true; (0.07s)
+    --- FAIL: TestCompilingMutants/build.aentry.reachable=true; (0.06s)
+    --- FAIL: TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);} (0.06s)
+    --- FAIL: TestCompilingMutants/build.aops.expression(builder,root.type); (0.06s)
+    --- FAIL: TestCompilingMutants/build.aif(root.bodyBlock) (0.06s)
+    --- FAIL: TestCompilingMutants/expr.aif(ops.hookPresent){ops.expression(id);} (0.06s)
+    --- FAIL: TestCompilingMutants/expr.aops.read(id); (0.07s)
+    --- FAIL: TestCompilingMutants/expr.aops.throwableFork(); (0.06s)
+    --- FAIL: TestCompilingMutants/expr.aif(node.update) (0.07s)
+    --- FAIL: TestCompilingMutants/expr.aops.yieldNow(); (0.06s)
+    --- FAIL: TestCompilingMutants/expr.aops.nestedFunction(id); (0.06s)
+    --- FAIL: TestCompilingMutants/pattern_bind.aops.write(id); (0.06s)
+    --- FAIL: TestCompilingMutants/pattern_bind.aif(node.hole){return;} (0.06s)
+    --- FAIL: TestCompilingMutants/pattern_bind.aif(element.computed){ops.expression(element.key);}ops.bindDefault(element.target,element.fallback); (0.06s)
+    --- FAIL: TestCompilingMutants/pattern_bind.aif(node.equals) (0.06s)
+    --- FAIL: TestCompilingMutants/pattern_bind.aelse_if(element.spread){patternBind(element.target,at,ops);} (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave23	9.664s
+FAIL

@@ -1,0 +1,26 @@
+export interface EntryBlock {incoming:boolean;reachable:boolean;}
+export interface BuildRoot {readonly sourceFile:boolean;readonly staticBlock:boolean;readonly property:boolean;readonly statements:readonly number[];readonly parameters:readonly number[];readonly type:number;readonly body:number;readonly bodyBlock:boolean;readonly initializer:number;}
+export interface BuildOps<B,G> {readonly create:()=>B;readonly newBlock:(builder:B)=>EntryBlock;readonly initial:(builder:B,entry:EntryBlock)=>void;readonly statements:(builder:B,nodes:readonly number[])=>void;readonly statement:(builder:B,node:number)=>void;readonly parameter:(builder:B,node:number)=>void;readonly expression:(builder:B,node:number)=>void;readonly current:(builder:B)=>EntryBlock;readonly markFinal:(builder:B,block:EntryBlock)=>void;readonly finish:(builder:B,endReachable:boolean)=>G;}
+// Graph allocation, hooks and subordinate walkers belong to the supplied builder.
+export function build<B,G>(root:BuildRoot,ops:BuildOps<B,G>):G {
+    const builder=ops.create();
+    const entry=ops.newBlock(builder);
+    entry.incoming=true;
+    entry.reachable=true;
+    ops.initial(builder,entry);
+    if(root.sourceFile){ops.statements(builder,root.statements);}
+    else if(root.staticBlock){ops.statement(builder,root.body);}
+    else if(root.property){ops.expression(builder,root.initializer);}
+    else {
+        for(const parameter of root.parameters){ops.parameter(builder,parameter);}
+        ops.expression(builder,root.type);
+        if(root.body>=0){
+            if(root.bodyBlock){ops.statement(builder,root.body);}
+            else{ops.expression(builder,root.body);}
+        }
+    }
+    const current=ops.current(builder);
+    const endReachable=current.reachable;
+    if(endReachable){ops.markFinal(builder,current);}
+    return ops.finish(builder,endReachable);
+}

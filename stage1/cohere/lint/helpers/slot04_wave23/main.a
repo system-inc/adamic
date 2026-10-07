@@ -1,0 +1,25 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {build} from './build.a';
+import type {BuildRoot,BuildOps,EntryBlock} from './build.a';
+function action(trace:string[],name:string,node:number):void{trace.push(`${name}:${node}`);}
+function field(c:OptionsJson,id:number,key:string):number{const n=c.node(id);return n.children[n.keys.indexOf(key)] ?? panic('field');}
+function text(c:OptionsJson,id:number,key:string):string{return c.node(field(c,id,key)).text;}
+function flag(c:OptionsJson,id:number,key:string):boolean{return text(c,id,key)==='true';}
+function num(c:OptionsJson,id:number,key:string):number{return Number(text(c,id,key));}
+function ints(c:OptionsJson,id:number,key:string):number[]{const out:number[]=[];for(const n of c.node(field(c,id,key)).children){out.push(Number(c.node(n).text));}return out;}
+interface View {root:boolean;buildRoot:BuildRoot;}
+interface State {current:EntryBlock;blocks:number;finals:number;trace:string[];}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const views=new Map<number,View>();
+ for(const node of c.node(field(c,row,'Nodes')).children){
+ views.set(views.size,{root:flag(c,node,'Root'),buildRoot:{sourceFile:flag(c,node,'SourceFile'),staticBlock:flag(c,node,'StaticBlock'),property:flag(c,node,'Property'),statements:ints(c,node,'Statements'),parameters:ints(c,node,'Parameters'),type:num(c,node,'Type'),body:num(c,node,'Body'),bodyBlock:flag(c,node,'BodyBlock'),initializer:num(c,node,'Initializer')}});
+ }
+ for(let hook=0;hook<2;hook++){for(let terminal=0;terminal<2;terminal++){const abrupt=terminal===1;
+ for(let id=0;id<views.size;id++){const view=views.get(id) ?? panic('build identity');if(!view.root){continue;}
+ const ops:BuildOps<State,string>={create:():State=>({current:{incoming:false,reachable:false},blocks:0,finals:0,trace:[]}),newBlock:(b:State):EntryBlock=>{b.trace.push(`new:${b.blocks}`);b.blocks++;return {incoming:false,reachable:false};},initial:(b:State,entry:EntryBlock):void=>{b.current=entry;},statements:(b:State,nodes:readonly number[]):void=>{b.trace.push(`statements:${nodes.join(',')}`);if(abrupt){b.current.reachable=false;}},statement:(b:State,n:number):void=>{b.trace.push(`statement:${n}`);if(abrupt){b.current.reachable=false;}},parameter:(b:State,n:number):void=>{b.trace.push(`parameter:${n}`);if(abrupt){b.current.reachable=false;}},expression:(b:State,n:number):void=>{b.trace.push(`expr:${n}`);if(abrupt){b.current.reachable=false;}},current:(b:State):EntryBlock=>b.current,markFinal:(b:State,_block:EntryBlock):void=>{b.trace.push('final:0');b.finals++;},finish:(b:State,end:boolean):string=>`${b.trace.join(';')}|${end}|${b.blocks}|${b.finals}|0|${b.current.incoming}|${b.current.reachable}`};
+ console.log(`build|${id}|${hook}|${abrupt}|${build(view.buildRoot,ops)}`);
+ }
+ }}
+}

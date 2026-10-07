@@ -1,0 +1,84 @@
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/build.aentry.incoming=true;
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aentry.reachable=true;
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aops.expression(builder,root.type);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(root.bodyBlock)
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aif(ops.hookPresent){ops.expression(id);}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.read(id);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.throwableFork();
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aif(node.update)
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.yieldNow();
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.nestedFunction(id);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aops.write(id);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aif(node.hole){return;}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aif(element.computed){ops.expression(element.key);}ops.bindDefault(element.target,element.fallback);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aif(node.equals)
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aelse_if(element.spread){patternBind(element.target,at,ops);}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+--- PASS: TestCompilingMutants (48.06s)
+    --- PASS: TestCompilingMutants/build.aentry.incoming=true; (2.55s)
+    --- PASS: TestCompilingMutants/build.aentry.reachable=true; (3.12s)
+    --- PASS: TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);} (3.62s)
+    --- PASS: TestCompilingMutants/build.aops.expression(builder,root.type); (2.86s)
+    --- PASS: TestCompilingMutants/build.aif(root.bodyBlock) (3.34s)
+    --- PASS: TestCompilingMutants/expr.aif(ops.hookPresent){ops.expression(id);} (4.13s)
+    --- PASS: TestCompilingMutants/expr.aops.read(id); (2.55s)
+    --- PASS: TestCompilingMutants/expr.aops.throwableFork(); (2.73s)
+    --- PASS: TestCompilingMutants/expr.aif(node.update) (3.11s)
+    --- PASS: TestCompilingMutants/expr.aops.yieldNow(); (3.00s)
+    --- PASS: TestCompilingMutants/expr.aops.nestedFunction(id); (3.16s)
+    --- PASS: TestCompilingMutants/pattern_bind.aops.write(id); (2.48s)
+    --- PASS: TestCompilingMutants/pattern_bind.aif(node.hole){return;} (2.63s)
+    --- PASS: TestCompilingMutants/pattern_bind.aif(element.computed){ops.expression(element.key);}ops.bindDefault(element.target,element.fallback); (2.75s)
+    --- PASS: TestCompilingMutants/pattern_bind.aif(node.equals) (2.57s)
+    --- PASS: TestCompilingMutants/pattern_bind.aelse_if(element.spread){patternBind(element.target,at,ops);} (2.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave23	48.068s

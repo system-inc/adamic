@@ -1,0 +1,46 @@
+[
+  {
+    "Name": "nil",
+    "Nil": true
+  },
+  {
+    "Name": "control-0",
+    "Source": ""
+  },
+  {
+    "Name": "control-1",
+    "Source": "x; undefined; NaN; Infinity;"
+  },
+  {
+    "Name": "control-2",
+    "Source": "(((x))); ++x; --obj.x; +x; -x; !x; x++; obj.x--;"
+  },
+  {
+    "Name": "control-3",
+    "Source": "a+b; a&&b; a?b:c; obj.x;obj[k]; fn(a);new Thing(a);tag`hello`;"
+  },
+  {
+    "Name": "control-4",
+    "Source": "function* f(a:T=defaultValue){yield a;yield;}"
+  },
+  {
+    "Name": "control-5",
+    "Source": "class A {x=foo(); static {bar();} method(x:T):U{return x;}} const f=(x:T):U=>x;"
+  },
+  {
+    "Name": "control-6",
+    "Source": "const [a,,b=foo(),...rest]=xs;const {[key()]:x=1,y,...tail}=obj;"
+  },
+  {
+    "Name": "control-7",
+    "Source": "([a,,b=foo(),...rest]=xs);({[key()]:x,y=bar(),...tail}=obj);"
+  },
+  {
+    "Name": "control-8",
+    "Source": "(x! as T);(x satisfies T);(<T>x); x+=y;"
+  },
+  {
+    "Name": "control-9",
+    "Source": "const x=<div>{foo}</div>; const y=function inner(a){return a;};"
+  }
+]

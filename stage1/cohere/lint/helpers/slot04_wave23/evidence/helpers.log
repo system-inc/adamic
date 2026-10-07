@@ -1,0 +1,199 @@
+=== RUN   TestActualGoComparisons
+    helpers_test.go:145: witnesses.json rows 0:11: Go, source Node, sanitized native, emitted JavaScript match 2176 observations
+    helpers_test.go:145: consumers.json rows 0:20: Go, source Node, sanitized native, emitted JavaScript match 2132 observations
+    helpers_test.go:145: consumers.json rows 20:40: Go, source Node, sanitized native, emitted JavaScript match 2320 observations
+    helpers_test.go:145: consumers.json rows 40:60: Go, source Node, sanitized native, emitted JavaScript match 2544 observations
+    helpers_test.go:145: consumers.json rows 60:80: Go, source Node, sanitized native, emitted JavaScript match 2888 observations
+    helpers_test.go:145: consumers.json rows 80:100: Go, source Node, sanitized native, emitted JavaScript match 2192 observations
+    helpers_test.go:145: consumers.json rows 100:120: Go, source Node, sanitized native, emitted JavaScript match 2368 observations
+    helpers_test.go:145: consumers.json rows 120:140: Go, source Node, sanitized native, emitted JavaScript match 2576 observations
+    helpers_test.go:145: consumers.json rows 140:160: Go, source Node, sanitized native, emitted JavaScript match 2216 observations
+    helpers_test.go:145: consumers.json rows 160:180: Go, source Node, sanitized native, emitted JavaScript match 2584 observations
+    helpers_test.go:145: consumers.json rows 180:200: Go, source Node, sanitized native, emitted JavaScript match 2548 observations
+    helpers_test.go:145: consumers.json rows 200:220: Go, source Node, sanitized native, emitted JavaScript match 2180 observations
+    helpers_test.go:145: consumers.json rows 220:240: Go, source Node, sanitized native, emitted JavaScript match 2812 observations
+    helpers_test.go:145: consumers.json rows 240:260: Go, source Node, sanitized native, emitted JavaScript match 2536 observations
+    helpers_test.go:145: consumers.json rows 260:280: Go, source Node, sanitized native, emitted JavaScript match 2236 observations
+    helpers_test.go:145: consumers.json rows 280:300: Go, source Node, sanitized native, emitted JavaScript match 2112 observations
+    helpers_test.go:145: consumers.json rows 300:320: Go, source Node, sanitized native, emitted JavaScript match 1956 observations
+    helpers_test.go:145: consumers.json rows 320:340: Go, source Node, sanitized native, emitted JavaScript match 2720 observations
+    helpers_test.go:145: consumers.json rows 340:360: Go, source Node, sanitized native, emitted JavaScript match 2944 observations
+    helpers_test.go:145: consumers.json rows 360:380: Go, source Node, sanitized native, emitted JavaScript match 3472 observations
+    helpers_test.go:145: consumers.json rows 380:400: Go, source Node, sanitized native, emitted JavaScript match 1888 observations
+    helpers_test.go:145: consumers.json rows 400:420: Go, source Node, sanitized native, emitted JavaScript match 1752 observations
+    helpers_test.go:145: consumers.json rows 420:440: Go, source Node, sanitized native, emitted JavaScript match 1880 observations
+    helpers_test.go:145: consumers.json rows 440:460: Go, source Node, sanitized native, emitted JavaScript match 2200 observations
+    helpers_test.go:145: consumers.json rows 460:480: Go, source Node, sanitized native, emitted JavaScript match 1688 observations
+    helpers_test.go:145: consumers.json rows 480:500: Go, source Node, sanitized native, emitted JavaScript match 1552 observations
+    helpers_test.go:145: consumers.json rows 500:520: Go, source Node, sanitized native, emitted JavaScript match 1744 observations
+    helpers_test.go:145: consumers.json rows 520:540: Go, source Node, sanitized native, emitted JavaScript match 1720 observations
+    helpers_test.go:145: consumers.json rows 540:560: Go, source Node, sanitized native, emitted JavaScript match 1944 observations
+    helpers_test.go:145: consumers.json rows 560:580: Go, source Node, sanitized native, emitted JavaScript match 2032 observations
+    helpers_test.go:145: consumers.json rows 580:600: Go, source Node, sanitized native, emitted JavaScript match 2256 observations
+    helpers_test.go:145: consumers.json rows 600:620: Go, source Node, sanitized native, emitted JavaScript match 2304 observations
+    helpers_test.go:145: consumers.json rows 620:640: Go, source Node, sanitized native, emitted JavaScript match 2520 observations
+    helpers_test.go:145: consumers.json rows 640:660: Go, source Node, sanitized native, emitted JavaScript match 1668 observations
+    helpers_test.go:145: consumers.json rows 660:680: Go, source Node, sanitized native, emitted JavaScript match 1916 observations
+    helpers_test.go:145: consumers.json rows 680:700: Go, source Node, sanitized native, emitted JavaScript match 1460 observations
+    helpers_test.go:145: consumers.json rows 700:720: Go, source Node, sanitized native, emitted JavaScript match 1788 observations
+    helpers_test.go:145: consumers.json rows 720:740: Go, source Node, sanitized native, emitted JavaScript match 1312 observations
+    helpers_test.go:145: consumers.json rows 740:760: Go, source Node, sanitized native, emitted JavaScript match 1696 observations
+    helpers_test.go:145: consumers.json rows 760:780: Go, source Node, sanitized native, emitted JavaScript match 1976 observations
+    helpers_test.go:145: consumers.json rows 780:800: Go, source Node, sanitized native, emitted JavaScript match 2432 observations
+    helpers_test.go:145: consumers.json rows 800:820: Go, source Node, sanitized native, emitted JavaScript match 2232 observations
+    helpers_test.go:145: consumers.json rows 820:840: Go, source Node, sanitized native, emitted JavaScript match 2088 observations
+    helpers_test.go:145: consumers.json rows 840:860: Go, source Node, sanitized native, emitted JavaScript match 2424 observations
+    helpers_test.go:145: consumers.json rows 860:880: Go, source Node, sanitized native, emitted JavaScript match 2680 observations
+    helpers_test.go:145: consumers.json rows 880:900: Go, source Node, sanitized native, emitted JavaScript match 2512 observations
+    helpers_test.go:145: consumers.json rows 900:920: Go, source Node, sanitized native, emitted JavaScript match 1720 observations
+    helpers_test.go:145: consumers.json rows 920:940: Go, source Node, sanitized native, emitted JavaScript match 2008 observations
+    helpers_test.go:145: consumers.json rows 940:960: Go, source Node, sanitized native, emitted JavaScript match 1984 observations
+    helpers_test.go:145: consumers.json rows 960:980: Go, source Node, sanitized native, emitted JavaScript match 2200 observations
+    helpers_test.go:145: consumers.json rows 980:1000: Go, source Node, sanitized native, emitted JavaScript match 1668 observations
+    helpers_test.go:145: consumers.json rows 1000:1020: Go, source Node, sanitized native, emitted JavaScript match 1956 observations
+    helpers_test.go:145: consumers.json rows 1020:1040: Go, source Node, sanitized native, emitted JavaScript match 1840 observations
+    helpers_test.go:145: consumers.json rows 1040:1060: Go, source Node, sanitized native, emitted JavaScript match 2256 observations
+    helpers_test.go:145: consumers.json rows 1060:1080: Go, source Node, sanitized native, emitted JavaScript match 1712 observations
+    helpers_test.go:145: consumers.json rows 1080:1100: Go, source Node, sanitized native, emitted JavaScript match 1920 observations
+    helpers_test.go:145: consumers.json rows 1100:1120: Go, source Node, sanitized native, emitted JavaScript match 1568 observations
+    helpers_test.go:145: consumers.json rows 1120:1140: Go, source Node, sanitized native, emitted JavaScript match 1632 observations
+    helpers_test.go:145: consumers.json rows 1140:1160: Go, source Node, sanitized native, emitted JavaScript match 1784 observations
+    helpers_test.go:145: consumers.json rows 1160:1180: Go, source Node, sanitized native, emitted JavaScript match 1928 observations
+    helpers_test.go:145: consumers.json rows 1180:1200: Go, source Node, sanitized native, emitted JavaScript match 1904 observations
+    helpers_test.go:145: consumers.json rows 1200:1220: Go, source Node, sanitized native, emitted JavaScript match 1720 observations
+    helpers_test.go:145: consumers.json rows 1220:1240: Go, source Node, sanitized native, emitted JavaScript match 2080 observations
+    helpers_test.go:145: consumers.json rows 1240:1260: Go, source Node, sanitized native, emitted JavaScript match 2336 observations
+    helpers_test.go:145: consumers.json rows 1260:1280: Go, source Node, sanitized native, emitted JavaScript match 2432 observations
+    helpers_test.go:145: consumers.json rows 1280:1300: Go, source Node, sanitized native, emitted JavaScript match 2040 observations
+    helpers_test.go:145: consumers.json rows 1300:1320: Go, source Node, sanitized native, emitted JavaScript match 2264 observations
+    helpers_test.go:145: consumers.json rows 1320:1340: Go, source Node, sanitized native, emitted JavaScript match 2320 observations
+    helpers_test.go:145: consumers.json rows 1340:1360: Go, source Node, sanitized native, emitted JavaScript match 2596 observations
+    helpers_test.go:145: consumers.json rows 1360:1380: Go, source Node, sanitized native, emitted JavaScript match 3268 observations
+    helpers_test.go:145: consumers.json rows 1380:1400: Go, source Node, sanitized native, emitted JavaScript match 3504 observations
+    helpers_test.go:145: consumers.json rows 1400:1420: Go, source Node, sanitized native, emitted JavaScript match 2304 observations
+    helpers_test.go:145: consumers.json rows 1420:1440: Go, source Node, sanitized native, emitted JavaScript match 2560 observations
+    helpers_test.go:145: consumers.json rows 1440:1460: Go, source Node, sanitized native, emitted JavaScript match 2440 observations
+    helpers_test.go:145: consumers.json rows 1460:1480: Go, source Node, sanitized native, emitted JavaScript match 3056 observations
+    helpers_test.go:145: consumers.json rows 1480:1500: Go, source Node, sanitized native, emitted JavaScript match 2624 observations
+    helpers_test.go:145: consumers.json rows 1500:1520: Go, source Node, sanitized native, emitted JavaScript match 2888 observations
+    helpers_test.go:145: consumers.json rows 1520:1540: Go, source Node, sanitized native, emitted JavaScript match 3408 observations
+    helpers_test.go:145: consumers.json rows 1540:1560: Go, source Node, sanitized native, emitted JavaScript match 2784 observations
+    helpers_test.go:145: consumers.json rows 1560:1580: Go, source Node, sanitized native, emitted JavaScript match 2536 observations
+    helpers_test.go:145: consumers.json rows 1580:1600: Go, source Node, sanitized native, emitted JavaScript match 3184 observations
+    helpers_test.go:145: consumers.json rows 1600:1620: Go, source Node, sanitized native, emitted JavaScript match 3192 observations
+    helpers_test.go:145: consumers.json rows 1620:1640: Go, source Node, sanitized native, emitted JavaScript match 3336 observations
+    helpers_test.go:145: consumers.json rows 1640:1660: Go, source Node, sanitized native, emitted JavaScript match 3088 observations
+    helpers_test.go:145: consumers.json rows 1660:1680: Go, source Node, sanitized native, emitted JavaScript match 2824 observations
+    helpers_test.go:145: consumers.json rows 1680:1700: Go, source Node, sanitized native, emitted JavaScript match 2952 observations
+    helpers_test.go:145: consumers.json rows 1700:1720: Go, source Node, sanitized native, emitted JavaScript match 2776 observations
+    helpers_test.go:145: consumers.json rows 1720:1740: Go, source Node, sanitized native, emitted JavaScript match 2848 observations
+    helpers_test.go:145: consumers.json rows 1740:1760: Go, source Node, sanitized native, emitted JavaScript match 3016 observations
+    helpers_test.go:145: consumers.json rows 1760:1780: Go, source Node, sanitized native, emitted JavaScript match 3312 observations
+    helpers_test.go:145: consumers.json rows 1780:1800: Go, source Node, sanitized native, emitted JavaScript match 3496 observations
+    helpers_test.go:145: consumers.json rows 1800:1820: Go, source Node, sanitized native, emitted JavaScript match 3976 observations
+    helpers_test.go:145: consumers.json rows 1820:1840: Go, source Node, sanitized native, emitted JavaScript match 3312 observations
+    helpers_test.go:145: consumers.json rows 1840:1860: Go, source Node, sanitized native, emitted JavaScript match 2732 observations
+    helpers_test.go:145: consumers.json rows 1860:1880: Go, source Node, sanitized native, emitted JavaScript match 1988 observations
+    helpers_test.go:145: consumers.json rows 1880:1900: Go, source Node, sanitized native, emitted JavaScript match 2236 observations
+    helpers_test.go:145: consumers.json rows 1900:1920: Go, source Node, sanitized native, emitted JavaScript match 1544 observations
+    helpers_test.go:145: consumers.json rows 1920:1940: Go, source Node, sanitized native, emitted JavaScript match 1776 observations
+    helpers_test.go:145: consumers.json rows 1940:1960: Go, source Node, sanitized native, emitted JavaScript match 2532 observations
+    helpers_test.go:145: consumers.json rows 1960:1980: Go, source Node, sanitized native, emitted JavaScript match 3908 observations
+    helpers_test.go:145: consumers.json rows 1980:2000: Go, source Node, sanitized native, emitted JavaScript match 3404 observations
+    helpers_test.go:145: consumers.json rows 2000:2020: Go, source Node, sanitized native, emitted JavaScript match 8360 observations
+    helpers_test.go:145: consumers.json rows 2020:2040: Go, source Node, sanitized native, emitted JavaScript match 4244 observations
+    helpers_test.go:145: consumers.json rows 2040:2060: Go, source Node, sanitized native, emitted JavaScript match 6940 observations
+    helpers_test.go:145: consumers.json rows 2060:2080: Go, source Node, sanitized native, emitted JavaScript match 3824 observations
+    helpers_test.go:145: consumers.json rows 2080:2100: Go, source Node, sanitized native, emitted JavaScript match 2944 observations
+    helpers_test.go:145: consumers.json rows 2100:2119: Go, source Node, sanitized native, emitted JavaScript match 2912 observations
+--- PASS: TestActualGoComparisons (88.33s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/build.aentry.incoming=true;
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aentry.reachable=true;
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aops.expression(builder,root.type);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(root.bodyBlock)
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aif(ops.hookPresent){ops.expression(id);}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.read(id);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.throwableFork();
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aif(node.update)
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.yieldNow();
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/expr.aops.nestedFunction(id);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aops.write(id);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aif(node.hole){return;}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aif(element.computed){ops.expression(element.key);}ops.bindDefault(element.target,element.fallback);
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aif(node.equals)
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/pattern_bind.aelse_if(element.spread){patternBind(element.target,at,ops);}
+    helpers_test.go:208: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:208: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+--- PASS: TestCompilingMutants (50.33s)
+    --- PASS: TestCompilingMutants/build.aentry.incoming=true; (2.72s)
+    --- PASS: TestCompilingMutants/build.aentry.reachable=true; (2.81s)
+    --- PASS: TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);} (2.36s)
+    --- PASS: TestCompilingMutants/build.aops.expression(builder,root.type); (2.50s)
+    --- PASS: TestCompilingMutants/build.aif(root.bodyBlock) (2.40s)
+    --- PASS: TestCompilingMutants/expr.aif(ops.hookPresent){ops.expression(id);} (2.69s)
+    --- PASS: TestCompilingMutants/expr.aops.read(id); (3.00s)
+    --- PASS: TestCompilingMutants/expr.aops.throwableFork(); (2.78s)
+    --- PASS: TestCompilingMutants/expr.aif(node.update) (2.44s)
+    --- PASS: TestCompilingMutants/expr.aops.yieldNow(); (4.41s)
+    --- PASS: TestCompilingMutants/expr.aops.nestedFunction(id); (3.73s)
+    --- PASS: TestCompilingMutants/pattern_bind.aops.write(id); (3.08s)
+    --- PASS: TestCompilingMutants/pattern_bind.aif(node.hole){return;} (3.31s)
+    --- PASS: TestCompilingMutants/pattern_bind.aif(element.computed){ops.expression(element.key);}ops.bindDefault(element.target,element.fallback); (4.24s)
+    --- PASS: TestCompilingMutants/pattern_bind.aif(node.equals) (3.26s)
+    --- PASS: TestCompilingMutants/pattern_bind.aelse_if(element.spread){patternBind(element.target,at,ops);} (3.06s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:279: consumer omission caught: no-unreachable-loop
+    helpers_test.go:279: consumer omission caught: react-hooks/rules-of-hooks
+    helpers_test.go:279: consumer omission caught: array-callback-return
+    helpers_test.go:279: consumer omission caught: consistent-return
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave23	138.709s
