@@ -99,6 +99,39 @@ func main() {
 		fixtureCount += found
 	}
 
+	if os.Args[4] == "container" {
+		count, parsed, errors := 0, 0, 0
+		write := func(kind string) {
+			must(encode.Encode(kind))
+			fmt.Fprintln(expected, (&collapse.Node{Kind: collapse.NodeKind(kind)}).IsContainer())
+			count++
+		}
+		for _, kind := range []string{"rule", "at-rule", "context", "at-root", "declaration", "comment", "", "Rule", "AT-RULE", " context", "unknown"} {
+			write(kind)
+		}
+		sources = append(sources, "/* comment */ .a {color:red; @media (width >= 40rem) { .b {display:block} }}", "@theme { --color-red: red; }")
+		for _, source := range sources {
+			write(source)
+			nodes, err := collapse.ParseCSS(source)
+			if err != nil {
+				errors++
+				continue
+			}
+			var visit func(*collapse.Node)
+			visit = func(node *collapse.Node) {
+				write(string(node.Kind))
+				parsed++
+				for _, child := range node.Nodes {
+					visit(child)
+				}
+			}
+			for _, node := range nodes {
+				visit(node)
+			}
+		}
+		fmt.Fprintf(os.Stderr, "%d fixture strings; %d container queries; %d parsed CSS nodes; %d CSS parse errors (not helper failures)\n", fixtureCount, count, parsed, errors)
+		return
+	}
 	if os.Args[4] == "hex" {
 		count := 0
 		for _, source := range sources {
@@ -118,8 +151,10 @@ func main() {
 	}
 	queries := 0
 	must(encode.Encode([]any{"Other", [][]any{}, "href"}))
-	fmt.Fprintln(expected, false)
-	fmt.Fprintln(expected, "")
+	wrongKind := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/wrong.tsx", Path: tspath.Path("/wrong.tsx")}, "", core.ScriptKindTSX)
+	wrongValue, wrongFound := jsx.StringAttributeValue(wrongKind.AsNode(), "href", jsx.MatchExactly)
+	fmt.Fprintln(expected, wrongFound)
+	fmt.Fprintln(expected, wrongValue)
 	for _, source := range sources {
 		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/fixture.tsx", Path: tspath.Path("/fixture.tsx")}, source, core.ScriptKindTSX)
 		var visit func(*ast.Node) bool

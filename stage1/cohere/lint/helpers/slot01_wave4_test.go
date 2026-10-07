@@ -113,7 +113,7 @@ func slot01Wave4Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave4_main.a", "jsx_string_attribute_value.a", "collapse_is_hex_digit.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave4_main.a", "jsx_string_attribute_value.a", "collapse_is_hex_digit.a", "collapse_node_is_container.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -144,4 +144,76 @@ func slot01Wave4Check(t *testing.T, dependency, mode, file, old, replacement str
 // Not parallel: bounded Go capture and sanitizer builds.
 func TestSlot01Wave4HexMatchesCohere(t *testing.T) {
 	slot01Wave4Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit", "hex", "collapse_is_hex_digit.a", "character <= 70", "character < 70")
+}
+
+// Not parallel: bounded external Go capture and sanitizer compilation.
+func TestSlot01Wave4ContainerMatchesCohere(t *testing.T) {
+	slot01Wave4Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer", "container", "collapse_node_is_container.a", "node.kind === 'context'", "false")
+}
+
+// Not parallel: bounded sanitizer builds and external captures.
+func TestSlot01Wave4StringDecoderMutant(t *testing.T) {
+	slot01Wave4Check(t, "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue", "jsx", "jsx_string_attribute_value.a", "unescape(value.text)", "value.text")
+}
+func TestSlot01Wave4StringNilFirstMutant(t *testing.T) {
+	slot01Wave4Check(t, "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue", "jsx", "jsx_string_attribute_value.a", "if (initializer < 0) { return { value: '', found: false }; }", "if (initializer < 0) { continue; }")
+}
+
+// Not parallel: bounded compilation of a runtime-domain refusal mutant.
+func TestSlot01Wave4HexDomainRefusal(t *testing.T) {
+	entry, _ := filepath.Abs("slot01_wave4_main.a")
+	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
+	dir := t.TempDir()
+	cases := filepath.Join(dir, "bad.jsonl")
+	if err := os.WriteFile(cases, []byte("256\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	observe := func(command string, args ...string) {
+		t.Helper()
+		cmd := exec.Command(command, args...)
+		log, err := os.CreateTemp(t.TempDir(), "refusal-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer log.Close()
+		cmd.Stdout = log
+		var stderr bytes.Buffer
+		cmd.Stderr = &stderr
+		if err := cmd.Run(); err == nil {
+			t.Fatal("non-byte input accepted")
+		}
+		if !strings.Contains(stderr.String(), "hex digit input must be a byte") {
+			t.Fatalf("unexpected refusal: %s", &stderr)
+		}
+	}
+	observe("node", "--disable-warning=ExperimentalWarning", runner, entry, cases, "hex")
+	observe(slot01Build(t, entry), cases, "hex")
+	observe("node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, "hex")
+	for _, name := range []string{"slot01_wave4_main.a", "jsx_string_attribute_value.a", "collapse_is_hex_digit.a", "collapse_node_is_container.a", "options_json.ts"} {
+		data, err := os.ReadFile(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if name == "collapse_is_hex_digit.a" {
+			old := "if (!Number.isInteger(character) || character < 0 || character > 255) { panic('hex digit input must be a byte'); }"
+			if strings.Count(string(data), old) != 1 {
+				t.Fatal("domain mutant drift")
+			}
+			data = []byte(strings.Replace(string(data), old, "", 1))
+		}
+		if name == "slot01_wave4_main.a" {
+			data = []byte(strings.ReplaceAll(string(data), "./options_json.ts", "./options_json.a"))
+		}
+		if name == "options_json.ts" {
+			name = "options_json.a"
+		}
+		if err := os.WriteFile(filepath.Join(dir, name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	mutant := run(t, "", slot01Build(t, filepath.Join(dir, "slot01_wave4_main.a")), cases, "hex")
+	if string(mutant) != "false\n" {
+		t.Fatalf("unexpected domain mutant output: %q", mutant)
+	}
+	t.Log("compiled byte-domain guard mutant accepted 256 and printed false; source/native/emitted-JS refusal checks catch it")
 }

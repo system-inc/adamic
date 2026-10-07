@@ -1,0 +1,5 @@
+export interface CollapseContainerNode { readonly kind: string; }
+// Go's receiver must be non-null. Child-list presence does not decide this.
+export function collapseNodeIsContainer(node: CollapseContainerNode): boolean {
+    return node.kind === 'rule' || node.kind === 'at-rule' || node.kind === 'context' || node.kind === 'at-root';
+}
