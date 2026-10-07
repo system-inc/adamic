@@ -192,3 +192,44 @@ func TestParallelCachedMatchesSerial(t *testing.T) {
 		t.Fatal("parallel limit selected different tests")
 	}
 }
+
+func TestOrderedProgress(t *testing.T) {
+	t.Parallel()
+	corpus := t.TempDir()
+	directory := filepath.Join(corpus, "test")
+	if err := os.MkdirAll(directory, 0700); err != nil {
+		t.Fatal(err)
+	}
+	skipped, err := os.ReadFile("testdata/mini/test/skip/negative.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for index := 0; index < 50; index++ {
+		if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("%02d.js", index)), skipped, 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	passed, err := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); err != nil {
+		t.Fatal(err)
+	}
+	e, err := prepare("../..", corpus, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	e.inProcess = true
+	e.jobs = 4
+	var log bytes.Buffer
+	e.log = &log
+	report, err := e.runFilter("", 0, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := " 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\n"
+	if log.String() != want || report.Pass != 1 || report.Skipped != 50 {
+		t.Fatalf("ordered progress: %q, want %q", log.String(), want)
+	}
+}
