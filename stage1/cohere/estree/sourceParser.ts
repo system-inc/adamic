@@ -156,6 +156,16 @@ export class Parser {
                 }
                 return this.token();
             }
+            case 'AtToken': {
+                const decorators: number[] = [];
+                while(this.kind() === 'AtToken') {
+                    decorators.push(this.decorator());
+                }
+                if(this.kind() !== 'ClassKeyword') {
+                    return panic('ESTree decorator expression requires a class');
+                }
+                return this.classDeclaration(pos, decorators, true);
+            }
             case 'ClassKeyword':
                 return this.classDeclaration(pos, [], true);
             case 'FunctionKeyword':
@@ -187,6 +197,20 @@ export class Parser {
         const state = this.mark();
         this.next();
         const result = this.bindingIdentifier() && (this.scanner.flags & 1) === 0;
+        this.rewind(state);
+        return result;
+    }
+    nextAwaitOperand(): boolean {
+        const state = this.mark();
+        this.next();
+        const kind = this.kind();
+        const result =
+            (this.scanner.flags & 1) === 0 &&
+            (kind === 'Identifier' ||
+                kind.endsWith('Keyword') ||
+                kind === 'NumericLiteral' ||
+                kind === 'BigIntLiteral' ||
+                kind === 'StringLiteral');
         this.rewind(state);
         return result;
     }
@@ -1454,12 +1478,12 @@ export class Parser {
             const expression = this.unary();
             return this.make('TypeAssertionExpression', pos, [type, expression]);
         }
-        if(operator === 'AwaitKeyword' && (this.awaitContext || this.peek() === 'Identifier')) {
+        if(operator === 'AwaitKeyword' && (this.awaitContext || this.nextAwaitOperand())) {
             this.next();
             const expression = this.unary();
             return this.make('AwaitExpression', pos, [expression]);
         }
-        if(operator === 'YieldKeyword' && (this.yieldContext || this.peek() === 'Identifier')) {
+        if(operator === 'YieldKeyword' && (this.yieldContext || this.nextAwaitOperand())) {
             this.next();
             const children: number[] = [];
             if(

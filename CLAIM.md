@@ -57,8 +57,8 @@ the implemented boundary without claiming complete JavaScript formatting.
 ## Current checkpoint status
 
 The follow-up is porting the largest refusal group first: JSX, including Go's
-TSX dispatch for .js/.mjs/.cjs. The recorded source audit now has 15,300 identical
-files, 46 output mismatches and 429 acceptance disagreements. A local parser
+TSX dispatch for .js/.mjs/.cjs. The recorded source audit now has 15,364 identical
+files, 46 output mismatches and 364 acceptance disagreements. A local parser
 copy under stage1/cohere/estree extends the main 5d4c801 parser; its shared scanner,
 statements and lookahead remain dependencies. No shared parser/compiler/runtime
 files are edited. The claim remains incomplete. Follow-up evidence lives in

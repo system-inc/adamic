@@ -29,6 +29,11 @@ export function answer(path: string, text: string): string {
     }
     const converter = new Converter(parser, convertedText);
     converter.babel = babel;
+    for(let id = 0; id < parser.nodes.length; id++) {
+        if(parser.nodes[id]?.kind === 'Decorator' && (converter.parents[id] ?? -1) < 0) {
+            return panic('ESTree unattached decorator');
+        }
+    }
     const comments = mergeComments(converter.arena, collectComments(converter, root));
     if(babel) {
         for(const id of comments) {

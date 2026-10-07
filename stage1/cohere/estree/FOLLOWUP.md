@@ -128,3 +128,28 @@ No raw-byte API is exposed by this toolchain; a runtime-team raw reader is
 required for original malformed-byte parity. Valid literal U+FFFD is still
 conservatively refused because it cannot be distinguished from loss. The
 minimal programs are gaps/rawInput.ts and gaps/cookedSurrogate.ts.
+
+### Decorated expressions and await/yield checkpoint
+
+UTF-8 checkpoint 94db1f81d68e535486292375412c879652a1e3db was pushed.
+Decorated class expressions are parsed with their decorator children. Await and
+yield use Go's same-line identifier/keyword/numeric/bigint/string lookahead,
+rather than only an identifier. The source audit rescues 64 files: 15,364
+identical, 242 refused Go answers, 122 accepted Go refusals, 46 wrong outputs,
+11,595 both refused. Acceptance disagreements fall to 364. The initial expansion
+newly accepted one orphan decorator; the explicit parent check fixes that and
+one previous incorrect acceptance. The final audit has no match regression.
+
+`go test -count=1 -v ./stage1/cohere/estree -run '^TestRecoveredExpression|
+^TestUnattachedDecorator$' > /tmp/estree-expressions-gate-final.log 2>&1`:
+PASS 58.495s, seven generated files and 8,717 matching bytes, line-break mutant
+caught on Node/native at line 302, orphan decorator refusals in all three
+builds. `go test -count=1 -v ./stage1/cohere/estree
+-run '^TestUnattachedDecoratorControl$' > /tmp/estree-expressions-control.log
+2>&1`: PASS 19.599s, both samples refused by Go; disabling the parent guard
+accepts both on Node/native and fails the acceptance predicate.
+`ADAMIC_ESTREE_CORPUS=/tmp/estree-expressions-rescued go test -count=1 -v
+./stage1/cohere/estree -run '^TestRepositoryAgreement$' >
+/tmp/estree-expressions-rescued.log 2>&1`: PASS 20.632s, all 64 files,
+2,142,447 bytes on all three port builds. Cohere is green. The first mutant
+anchor was not unique; that failed attempt is not credited as a mutant.
