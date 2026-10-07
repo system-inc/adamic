@@ -28,3 +28,12 @@ Withdrawn: FindEntryPoint. The all-origin refresh revealed an earlier claim on c
 Withdrawn: DesignSystemForProgram. No cache implementation delivered. Program/recording-filesystem/load-result and mutex APIs are absent from this base; the raw probe fails TS2305. See ../wave05/CACHE_BLOCKER.md. This reservation is released so a worker with those prerequisites can take it.
 
 Final active ownership: leadingInteger, findTailwindPackageRoot and CompareBreakpoints, all tested and pushed. FindEntryPoint and DesignSystemForProgram are withdrawn. No further helper is claimed.
+
+## Parking continuation on current main
+
+Rule branch is parked, rebased and independently green at 54cbb04b25d8d5553f5df56f8b976b9e48370acc on main f8013f0b, with missing shared registration/context/Diagnostic integration named in its owned PARKING_REPORT.md. Helper branch a71683ad4 is green on the same main. No main or area branch is pushed.
+
+4. Reclaim github.com/system-inc/cohere/internal/lint/rules/tailwind.DesignSystemForProgram.
+   Intended file: tailwind_design_system_for_program.a. Six remaining consumers, zero final blockers alone. All 532 origin refs and all 17 distinct helper claim blobs were inspected. The previous slot-05 reservation was explicitly released; no other exact symbol claim exists. loadDesignSystemForProgram is separately owned and is not this symbol. Delivered comment helpers are excluded. This released six-consumer helper ranks above the remaining unclaimed four-consumer control-flow helpers. Claim pushed before retrying code or prerequisites on current main.
+
+The exact Go contract remains identity-keyed, synchronized build-once caching of successful and failed load results, with nil-program rejection and recorded filesystem reads. The older probe failed on missing Mutex; current-main support must be measured again before shipping code. Do not substitute a serial/path-keyed cache or mark consumers ready without that contract. The six consumers are enforce-canonical-classes, enforce-consistent-class-order, enforce-consistent-variant-order, enforce-shorthand-classes, no-conflicting-classes and no-unknown-classes under better-tailwindcss.
