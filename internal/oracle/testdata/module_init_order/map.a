@@ -1,0 +1,3 @@
+import './enum.a';
+export const emptyMap: ReadonlyMap<never, never> = new Map<never, never>();
+console.log('map');

@@ -1,0 +1,9 @@
+--- FAIL: TestModuleInitOrder (0.27s)
+    --- FAIL: TestModuleInitOrder/map-before-enum (0.27s)
+        module_init_order_test.go:42: /workspace/adamic/stage3/drivers/parser/native-enum-map.a:3:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.291s
+FAIL

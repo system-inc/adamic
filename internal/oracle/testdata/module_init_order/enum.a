@@ -1,0 +1,4 @@
+import './map.a';
+export enum Pending { Zero }
+console.log('enum');
+console.log(Pending.Zero === 0 ? '0' : 'wrong');

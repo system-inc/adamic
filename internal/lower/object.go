@@ -1353,6 +1353,15 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
 	}
+	// An empty Map<never, never> has no occupied slots. Choose storage only
+	// for this zero-argument construction; operations still require representable
+	// key/value types, so this does not invent a runtime value of type never.
+	if created.Arguments == nil || len(created.Arguments.Nodes) == 0 {
+		types := l.typeArguments(l.checker.GetTypeAtLocation(node))
+		if len(types) == 2 && types[0].Flags()&checker.TypeFlagsNever != 0 && types[1].Flags()&checker.TypeFlagsNever != 0 {
+			return ir.MapNew{Key: ir.String, Value: ir.Object}, nil
+		}
+	}
 	key, value, err := l.mapTypes(node)
 	if err != nil {
 		return nil, err

@@ -1,0 +1,19 @@
+=== RUN   TestModuleInitOrder
+=== RUN   TestModuleInitOrder/map-before-enum
+    module_init_order_test.go:75: Node stdout="0\n" stderr="" exit=0; native stdout="0\n" stderr="" exit=0
+=== RUN   TestModuleInitOrder/cycle
+    module_init_order_test.go:75: Node stdout="map\nenum\n0\n" stderr="" exit=0; native stdout="map\nenum\n0\n" stderr="" exit=0
+=== RUN   TestModuleInitOrder/early-read
+    module_init_order_test.go:75: Node stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'Zero')\n" exit=70; native stdout="" stderr="adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n" exit=70
+=== RUN   TestModuleInitOrder/construction-reads-enum
+    module_init_order_test.go:75: Node stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'Zero')\n" exit=70; native stdout="" stderr="adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n" exit=70
+--- PASS: TestModuleInitOrder (1.96s)
+    --- PASS: TestModuleInitOrder/map-before-enum (0.68s)
+    --- PASS: TestModuleInitOrder/cycle (0.41s)
+    --- PASS: TestModuleInitOrder/early-read (0.43s)
+    --- PASS: TestModuleInitOrder/construction-reads-enum (0.44s)
+PASS
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.976s
