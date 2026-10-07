@@ -1,0 +1,26 @@
+package main
+import (
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ "github.com/system-inc/cohere/internal/lint/rule"
+ rules "github.com/system-inc/cohere/internal/lint/rules/next"
+)
+func main() {
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil {panic(err)};index:=0
+ for _,href:=range strings.Split(string(data),"\n") {
+  if href=="" {continue}
+  source:="export const Font = <link href=\""+href+"\" />;"
+  file:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:"/Font.tsx",Path:tspath.Path("/Font.tsx")},source,core.ScriptKindTSX)
+  if len(file.Diagnostics())!=0 {panic("Go fixture parse failed")}
+  id,message:="",""
+  ctx:=rule.Context{SourceFile:file,FileCache:rule.NewFileCache(),Report:func(d rule.Diagnostic){if id!="" {panic("multiple findings")};id=d.Message.Id;message=d.Message.Description}}
+  listeners:=rules.GoogleFontDisplay.Run(ctx,nil)
+  var walk func(*ast.Node);walk=func(n *ast.Node){if visit:=listeners[n.Kind];visit!=nil {visit(n)};n.ForEachChild(func(child *ast.Node)bool{walk(child);return false})};walk(file.AsNode())
+  fmt.Printf("%d\t%s\t%s\n",index,id,message);index++
+ }
+}
