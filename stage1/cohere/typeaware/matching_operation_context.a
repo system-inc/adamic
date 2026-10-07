@@ -1,0 +1,63 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { TypeArguments } from './type_arguments.a';
+import { CheckerFacts } from './checker_facts.ts';
+import { DecoratorScope } from './decorator_scope.a';
+import { unionFlag } from './flags.ts';
+
+export class MatchingOperationContext {
+    readonly rules: Rules;
+    readonly scope: DecoratorScope;
+    constructor(scope: DecoratorScope) { this.rules = scope.rules; this.scope = scope; }
+    unwrap(index: number, id: number): number {
+        let current = id;
+        for(let depth = 0; depth < 64; depth++) {
+            const args = new TypeArguments(this.rules, index, current);
+            if(args.symbol === 'Promise' && args.arguments.length > 0) {
+                current = args.arguments[0] ?? current; continue;
+            }
+            if(args.alias === 'Readonly' && args.aliases.length > 0) {
+                current = args.aliases[0] ?? current; continue;
+            }
+            const graph = types(this.rules.ask(index, `reference-shape\n${current}`), 'reference-shape');
+            const type = graph.root();
+            if((type.flags & unionFlag) !== 0) {
+                const remaining = type.parts.filter((part) => (graph.type(part).flags & (4 | 8)) === 0);
+                if(remaining.length === 1) { current = remaining[0] ?? current; continue; }
+            }
+            if(['Array', 'ReadonlyArray'].includes(args.symbol) && args.arguments.length > 0) {
+                current = args.arguments[0] ?? current; continue;
+            }
+            return current;
+        }
+        return current;
+    }
+    visit(index: number): void {
+        if(this.scope.callName(index) !== 'InjectGraphQlOperationContext') { return; }
+        const parameter = this.rules.parents[index] ?? -1;
+        if(parameter < 0 || this.rules.parser.node(parameter).kind !== 'Parameter') { return; }
+        let method = this.rules.parents[parameter] ?? -1;
+        while(method >= 0 && this.rules.parser.node(method).kind !== 'MethodDeclaration') { method = this.rules.parents[method] ?? -1; }
+        if(method < 0 || !this.scope.has(method, ['GraphQlQuery', 'GraphQlMutation', 'GraphQlFieldResolver'])) { return; }
+        const parameterType = types(this.rules.ask(parameter, 'raw-shape'), 'raw-shape').root();
+        const args = new TypeArguments(this.rules, parameter, parameterType.id);
+        if(args.symbol !== 'GraphQlOperationContext') {
+            this.scope.add('correctness-require-matching-operation-context', 'wrongBaseType', `Parameter decorated with @InjectGraphQlOperationContext must be typed as GraphQlOperationContext<...>, got '${this.rules.name(parameterType, parameter)}'`, parameter); return;
+        }
+        if(args.arguments.length === 0) { return; }
+        const returns = types(this.rules.ask(method, 'call-returns'), 'call-returns');
+        if(returns.roots.length === 0) { return; }
+        const generic = this.unwrap(parameter, args.arguments[0] ?? 0);
+        const result = this.unwrap(method, returns.roots[0] ?? 0);
+        const checker = new CheckerFacts(this.rules);
+        if(checker.compare(parameter, generic, result) && checker.compare(parameter, result, generic)) { return; }
+        const left = types(this.rules.ask(parameter, `reference-shape\n${generic}`), 'reference-shape').root();
+        const right = types(this.rules.ask(method, `reference-shape\n${result}`), 'reference-shape').root();
+        this.scope.add('correctness-require-matching-operation-context', 'mismatch', `@InjectGraphQlOperationContext parameter is GraphQlOperationContext<${this.rules.name(left, parameter)}> but the method returns '${this.rules.name(right, method)}'`, parameter);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 && this.rules.parser.node(index).kind === 'Decorator') { this.visit(index); }
+        }
+    }
+}

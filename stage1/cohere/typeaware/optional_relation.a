@@ -1,0 +1,23 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { DecoratorScope } from './decorator_scope.a';
+
+export class OptionalRelation {
+    readonly rules: Rules;
+    readonly scope: DecoratorScope;
+    constructor(scope: DecoratorScope) { this.rules = scope.rules; this.scope = scope; }
+    visit(index: number): void {
+        if(!this.scope.has(index, ['OrmManyToOne', 'OrmOneToMany', 'OrmOneToOne'])) { return; }
+        const name = this.scope.name(index);
+        if(name < 0 || this.rules.parser.node(name).kind !== 'Identifier') { return; }
+        const graph = types(this.rules.ask(name, 'raw-shape'), 'raw-shape');
+        const type = graph.root();
+        if(graph.has(type, 1 | 2 | 4)) { return; }
+        this.scope.add('correctness-require-optional-relation', 'mustBeOptional', `Relation property must be optional ('${this.rules.parser.node(name).text}?: ${this.rules.name(type, name)}') because TypeORM relations are undefined when not loaded`, name);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 && this.rules.parser.node(index).kind === 'PropertyDeclaration') { this.visit(index); }
+        }
+    }
+}

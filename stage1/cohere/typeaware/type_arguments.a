@@ -1,0 +1,23 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+
+export class TypeArguments {
+    readonly symbol: string;
+    readonly alias: string;
+    readonly arguments: readonly number[];
+    readonly aliases: readonly number[];
+    readonly graph: Types;
+    constructor(rules: Rules, index: number, id: number) {
+        const frames = new Frames(rules.ask(index, `type-arguments\n${id}`));
+        header(frames, 'type-arguments');
+        this.symbol = frames.field();
+        this.alias = frames.field();
+        this.arguments = frames.ids();
+        this.aliases = frames.ids();
+        this.graph = types(`1\n114\ntype-arguments${frames.text.slice(frames.cursor)}`, 'type-arguments');
+        for(const argument of this.arguments) { this.graph.type(argument); }
+        for(const argument of this.aliases) { this.graph.type(argument); }
+    }
+}

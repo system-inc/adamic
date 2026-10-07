@@ -1,0 +1,38 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { CheckerFacts } from './checker_facts.ts';
+import { DecoratorScope } from './decorator_scope.a';
+
+export class MatchingProviderReturn {
+    readonly rules: Rules;
+    readonly scope: DecoratorScope;
+    constructor(scope: DecoratorScope) { this.rules = scope.rules; this.scope = scope; }
+    decoratorName(index: number): string {
+        let expression = this.scope.expression(index);
+        if(expression < 0) { return '<decorator>'; }
+        if(this.rules.parser.node(expression).kind === 'CallExpression') { expression = this.scope.expression(expression); }
+        if(expression < 0) { return '<decorator>'; }
+        let node = this.rules.parser.node(expression);
+        if(node.kind === 'PropertyAccessExpression') { node = this.rules.parser.node(node.children[node.children.length - 1] ?? -1); }
+        return node.kind === 'Identifier' ? node.text : '<decorator>';
+    }
+    visit(index: number): void {
+        const method = this.rules.parents[index] ?? -1;
+        if(method < 0 || this.rules.parser.node(method).kind !== 'MethodDeclaration') { return; }
+        const expression = this.scope.expression(index);
+        if(expression < 0) { return; }
+        const decorator = types(this.rules.ask(expression, 'raw-shape'), 'raw-shape').root();
+        const expected = types(this.rules.ask(expression, `property-shape\n${decorator.id}\n__expectedReturnType`), 'property-shape');
+        if(!expected.present || expected.roots.length === 0 || (expected.root().flags & 3) !== 0) { return; }
+        const returns = types(this.rules.ask(method, 'call-returns'), 'call-returns');
+        if(returns.roots.length === 0) { return; }
+        const result = returns.root();
+        if(new CheckerFacts(this.rules).compare(method, result.id, expected.root().id)) { return; }
+        this.scope.add('correctness-require-matching-provider-return', 'mismatch', `@${this.decoratorName(index)} expects a return type assignable to \`${this.rules.name(expected.root(), expression)}\`, and this method returns \`${this.rules.name(result, method)}\`. The decorator's token is the contract every caller resolves through, so a method that does not satisfy it is registered under a promise it cannot keep.`, method);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 && this.rules.parser.node(index).kind === 'Decorator') { this.visit(index); }
+        }
+    }
+}

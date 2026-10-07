@@ -1,0 +1,24 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+export class DecoratorScope {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    expression(index: number): number { return this.rules.parser.node(index).children[0] ?? -1; }
+    callName(index: number): string {
+        const expression = this.expression(index);
+        if(expression < 0 || this.rules.parser.node(expression).kind !== 'CallExpression') { return ''; }
+        const callee = this.expression(expression);
+        return callee >= 0 && this.rules.parser.node(callee).kind === 'Identifier' ? this.rules.parser.node(callee).text : '';
+    }
+    has(index: number, names: readonly string[]): boolean {
+        return this.rules.parser.node(index).children.some((child) => this.rules.parser.node(child).kind === 'Decorator' && names.includes(this.callName(child)));
+    }
+    name(index: number): number {
+        return this.rules.parser.node(index).children.find((child) => ['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(this.rules.parser.node(child).kind)) ?? -1;
+    }
+    add(rule: string, id: string, message: string, index: number): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), 'base/'));
+    }
+}
