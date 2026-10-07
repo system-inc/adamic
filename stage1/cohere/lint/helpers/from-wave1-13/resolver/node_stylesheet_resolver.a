@@ -1,0 +1,29 @@
+function cleanPosix(path: string): string {
+    const rooted = path.startsWith('/');
+    const parts: string[] = [];
+    for(const part of path.split('/')) {
+        if(part === '' || part === '.') continue;
+        if(part === '..') {
+            const last = parts[parts.length - 1];
+            if(last !== undefined && last !== '..') parts.pop();
+            else if(!rooted) parts.push(part);
+        } else parts.push(part);
+    }
+    const text = parts.join('/');
+    return rooted ? '/' + text : text === '' ? '.' : text;
+}
+function joinPosix(first: string, second: string): string {
+    if(first === '' && second === '') return '';
+    return cleanPosix(first === '' ? second : second === '' ? first : first + '/' + second);
+}
+// The Go resolver always returns a nil error, so the observable result is its path.
+export function nodeStylesheetResolver(tailwindPackageRoot: string): (specifier: string, base: string) => string {
+    return (specifier: string, base: string): string => {
+        let path = '';
+        if(specifier === 'tailwindcss') path = joinPosix(tailwindPackageRoot, 'index.css');
+        else if(specifier.startsWith('tailwindcss/')) path = joinPosix(tailwindPackageRoot, specifier.slice(12));
+        else path = joinPosix(base, specifier);
+        if(!path.endsWith('.css')) path += '.css';
+        return path;
+    };
+}

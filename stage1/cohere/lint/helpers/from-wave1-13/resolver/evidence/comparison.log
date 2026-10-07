@@ -1,0 +1,9 @@
+=== RUN   TestNodeStylesheetResolver
+    helper_test.go:37: captured 2179 Go source literals from all 6 consumer rule test families; map[enforce_canonical_classes:204 enforce_consistent_class_order:316 enforce_consistent_variant_order:52 enforce_shorthand_classes:178 no_conflicting_classes:195 no_unknown_classes:184]
+    helper_test.go:82: baseline compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 650763 Go bytes
+    helper_test.go:82: extension-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 650763 Go bytes
+    helper_test.go:82: package-prefix-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 650763 Go bytes
+    helper_test.go:82: root-capture-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 650763 Go bytes
+--- PASS: TestNodeStylesheetResolver (5.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13/resolver	5.615s

@@ -1,0 +1,24 @@
+import { nodeStylesheetResolver } from './node_stylesheet_resolver.a';
+import { OptionsJson } from '../../options_json.ts';
+import { panic, programArguments, readTextFile } from 'adamic';
+function units(text: string): string {
+    const codes: string[] = [];
+    for(let i = 0; i < text.length; i++) codes.push(text.charCodeAt(i).toString());
+    return codes.join(',');
+}
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('corpus path'));
+if(file.kind === 'Error') panic(file.message);
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0 || json.node(root).kind !== 'array') panic('invalid corpus');
+for(const row of json.node(root).children) {
+    const text = json.node(json.field(row, 'source')).text;
+    const base = json.node(json.field(row, 'base')).text;
+    const packageRoot = json.node(json.field(row, 'root')).text;
+    const first = nodeStylesheetResolver(packageRoot);
+    const second = nodeStylesheetResolver('/other-package');
+    console.log(units(first(text, base)));
+    console.log(units(second(text, base)));
+    console.log(units(first(text, base)));
+}
