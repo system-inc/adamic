@@ -159,7 +159,7 @@ func TestCountsAreRecorded(t *testing.T) {
 				t.Parallel()
 				row := counted(t, fixture.path, false, nil, false, false)
 				lock.Lock()
-				rows[len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+index] = row
+				rows[len(fixtures)+len(inputFixtures)+index] = row
 				lock.Unlock()
 			})
 		}
