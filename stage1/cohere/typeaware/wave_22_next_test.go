@@ -148,6 +148,52 @@ func wave22NextSources(h *harness) []string {
 	return result
 }
 
+func wave22NextSourceMutant(h *harness, stage0, archive, name, file, from, to string) string {
+	directory := filepath.Join(h.directory, name+"-source")
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		h.t.Fatal(err)
+	}
+	// The mutation bundle uses .a for every Adamic source, including unchanged
+	// copies of older .ts helpers. External imports still name existing files.
+	var paths []string
+	for _, extension := range []string{"*.ts", "*.a"} {
+		matches, err := filepath.Glob(filepath.Join(h.repository, "stage1/cohere/typeaware", extension))
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		paths = append(paths, matches...)
+	}
+	for _, path := range paths {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		source := string(data)
+		if filepath.Base(path) == file {
+			if strings.Count(source, from) != 1 {
+				h.t.Fatalf("nonunique %s mutation", name)
+			}
+			source = strings.Replace(source, from, to, 1)
+		}
+		for _, dependency := range paths {
+			base := filepath.Base(dependency)
+			if strings.HasSuffix(base, ".ts") {
+				source = strings.ReplaceAll(source, "./"+base, "./"+strings.TrimSuffix(base, ".ts")+".a")
+			}
+		}
+		source = strings.ReplaceAll(source, "../../typescript/", filepath.Join(h.repository, "stage1/typescript")+"/")
+		source = strings.ReplaceAll(source, "../lint/", filepath.Join(h.repository, "stage1/cohere/lint")+"/")
+		base := filepath.Base(path)
+		if strings.HasSuffix(base, ".ts") {
+			base = strings.TrimSuffix(base, ".ts") + ".a"
+		}
+		if err := os.WriteFile(filepath.Join(directory, base), []byte(source), 0600); err != nil {
+			h.t.Fatal(err)
+		}
+	}
+	return h.build(stage0, name, filepath.Join(directory, "wave_22_next_suite.a"), archive, false)
+}
+
 // Not parallel: native builds, sanitizers and timing share the worker.
 func TestWave22NextAgreement(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
@@ -189,6 +235,35 @@ func TestWave22NextAgreement(t *testing.T) {
 	asanArchive := h.archive("checker-asan", "", true)
 	asan := h.build(stage0, "wave-22-next-asan", filepath.Join(repository, "stage1/cohere/typeaware/wave_22_next_suite.a"), asanArchive, true)
 	h.compare("controls-asan", oracle, asan, config, manifest)
+	for _, change := range []struct{ name, file, from, to string }{
+		{"promise-condition", "no_misused_promises.a", "this.report(index, 'conditional',", "this.report(index, 'conditionalMutant',"},
+		{"spread-await-edit", "no_misused_spread.a", "new Repair(end, end, ')')", "new Repair(end + 1, end + 1, ')')"},
+		{"lost-write-span", "concurrency_no_lost_update.a", "rules.byte(node.end), 'nexus/'", "rules.byte(node.end) + 1, 'nexus/'"},
+	} {
+		mutant := wave22NextSourceMutant(h, stage0, archive, change.name, change.file, change.from, change.to)
+		got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
+		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+			t.Fatalf("%s survived", change.name)
+		}
+		t.Logf("%s: exit 0, empty stderr, byte oracle catches byte %d", change.name, firstDifference(got.stdout, truth.stdout))
+	}
+	for _, question := range []string{"binding-state", "type-operations\nraw\n0"} {
+		probe := h.write("released-probe.a", "x;\n")
+		source := h.write("released-next.a", "import {programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';\nconst args=programArguments();const file=args[1]??'';const program=tsgoProgram(args[0]??'',[file]);tsgoRelease(program);console.log(tsgoInspect(program,file,0,1,'Identifier',"+strconv.Quote(question)+"));\n")
+		stale := h.build(stage0, "released-next", source, archive, false)
+		got := h.run("released-next-run", exec.Command(stale, config, probe))
+		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(got.stderr) != "adamic: panic: invalid or released checker handle\n" {
+			t.Fatalf("released handle escaped: %v %s", got.err, got.stderr)
+		}
+		if question == "binding-state" {
+			overlay := h.overlay("next-released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released handle.")
+			mutantArchive := h.archive("next-released-registry", overlay, false)
+			mutant := h.build(stage0, "released-next-mutant", source, mutantArchive, false)
+			h.must("released-next-mutant-run", exec.Command(mutant, config, probe))
+		}
+		t.Logf("%q released handle: panic 70; registry retention checked separately", question)
+	}
+
 	for _, corpus := range []struct{ name, root, config string }{{"repository", repository, filepath.Join(repository, "tsconfig.json")}, {"compiler", os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), ""}} {
 		if corpus.root == "" {
 			t.Log("compiler omitted: ADAMIC_TYPESCRIPT_SOURCE unset")
