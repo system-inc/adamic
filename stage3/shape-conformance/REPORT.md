@@ -1,3 +1,13 @@
+Built: finite callback allocation flow through aliases, parameters, returns and joined implementation identities.
+Commits: diagnostic handoff b8316acd; current main merged through 030119b4 (origin/main ce0750f2); feature commit is recorded in branch history.
+Commands: lower/IR packages, IR target-reader guard, vet, native/Node fixtures, 43 unchanged graph counts and census audits pass.
+Mutants: six callback guards, six census guards, host/body forgeries and native wrong-shape/readiness erasures caught.
+Limits: no tsc cast proven free; opaque callback protocols, dynamic keys, constructors, whole-array contracts and one-lookup-per-cast emission remain unproven.
+
+Current report: [CALLBACK-SHARE-REPORT.md](CALLBACK-SHARE-REPORT.md).
+
+Previous checkpoints follow.
+
 Built: grouped all 315 diagnostics by code and file, with per-cast dependency and unblock counts.
 Commits: measured input e7f420293e94746095c2f1e2d14124484e1afb63; this report checkpoint is recorded in branch history.
 Commands: diagnostic-actions.py inventory/provenance assertions pass; 315 diagnostics in 79 groups cover 2004 diagnosed sites.

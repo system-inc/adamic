@@ -237,6 +237,7 @@ func (f *cycleFinder) graphFlows() {
 // allocationFlowGraph is the shared may-flow graph used by graph regions and
 // shape certification. It never changes ownership when queried.
 type allocationFlowGraph struct {
+	callbacks         *shapeCallbackFlow
 	projection        *allocationProjection
 	projectionReads   map[int]ir.AllocationSet
 	projectionBusy    map[int]bool

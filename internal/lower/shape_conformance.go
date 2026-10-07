@@ -58,6 +58,7 @@ func eraseProvenViewChecks(program *ir.Program) {
 	}
 	assignAllocationSites(program)
 	flow := newAllocationFlowGraph(program)
+	flow.prepareShapeCallbacks()
 	allocations := map[int]ir.ObjectLiteral{}
 	mutable := false
 	collect := func(node any) bool {
@@ -66,7 +67,10 @@ func eraseProvenViewChecks(program *ir.Program) {
 			if len(value.GraphTypes) > 0 {
 				allocations[value.GraphTypes[len(value.GraphTypes)-1]] = value
 			}
-		case ir.SetProperty, ir.SetIndex, ir.ObjectCall, ir.CallClosure:
+		case ir.CallClosure:
+			targets := flow.shapeClosureTargets(value)
+			mutable = mutable || targets.Unknown || len(targets.Functions) == 0
+		case ir.SetProperty, ir.SetIndex, ir.ObjectCall:
 			// Until effects through aliases and opaque callbacks are certified, any
 			// such operation blocks this deliberately narrow eraser for the program.
 			mutable = true

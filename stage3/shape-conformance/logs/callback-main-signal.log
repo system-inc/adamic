@@ -1,0 +1,33 @@
+=== RUN   TestASignalLeavesWhatWasPrinted
+=== PAUSE TestASignalLeavesWhatWasPrinted
+=== CONT  TestASignalLeavesWhatWasPrinted
+=== RUN   TestASignalLeavesWhatWasPrinted/terminated
+=== PAUSE TestASignalLeavesWhatWasPrinted/terminated
+=== RUN   TestASignalLeavesWhatWasPrinted/interrupt
+=== PAUSE TestASignalLeavesWhatWasPrinted/interrupt
+=== RUN   TestASignalLeavesWhatWasPrinted/hangup
+=== PAUSE TestASignalLeavesWhatWasPrinted/hangup
+=== RUN   TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+=== PAUSE TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+=== RUN   TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+=== PAUSE TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+=== RUN   TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+=== PAUSE TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+=== CONT  TestASignalLeavesWhatWasPrinted/terminated
+=== CONT  TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored
+=== CONT  TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored
+=== CONT  TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored
+=== CONT  TestASignalLeavesWhatWasPrinted/interrupt
+=== CONT  TestASignalLeavesWhatWasPrinted/hangup
+--- PASS: TestASignalLeavesWhatWasPrinted (0.00s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored (6.47s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored (6.47s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/terminated (6.48s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/interrupt (6.48s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored (6.48s)
+    --- PASS: TestASignalLeavesWhatWasPrinted/hangup (6.34s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=6
+ok  	github.com/system-inc/adamic/internal/oracle	12.827s

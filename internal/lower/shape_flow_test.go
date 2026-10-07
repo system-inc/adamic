@@ -115,3 +115,62 @@ func TestShapeProjectionConstantElements(t *testing.T) {
 		t.Fatal("mutable element certified")
 	}
 }
+
+func TestShapeCallbackAliasesParametersAndJoins(t *testing.T) {
+	program := &ir.Program{Locals: make([]ir.Local, 5), Functions: []ir.Function{
+		{Parameters: []int{1}, Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.Read{Local: 1, Of: ir.Object}}}},
+		{Parameters: []int{2, 3}, Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.CallClosure{Closure: ir.Read{Local: 2, Of: ir.Closure}, Arguments: []ir.Expression{ir.Read{Local: 3, Of: ir.Object}}, Returns: ir.Object}}}},
+		{Parameters: []int{4}, Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.ObjectLiteral{GraphTypes: []int{-2}}}}},
+	}, Main: []ir.Statement{
+		ir.Declare{Local: 0, Value: ir.Conditional{WhenTrue: ir.MakeClosure{Function: 0}, WhenNot: ir.MakeClosure{Function: 2}, Of: ir.Closure}},
+		ir.Evaluate{Value: ir.Call{Function: 1, Arguments: []ir.Expression{ir.Read{Local: 0, Of: ir.Closure}, ir.ObjectLiteral{GraphTypes: []int{-1}}}, Returns: ir.Object}},
+	}}
+	graph := newAllocationFlowGraph(program)
+	got := graph.ReachingAllocations(ir.Call{Function: 1, Returns: ir.Object})
+	if got.Unknown || !reflect.DeepEqual(got.Sites, []int{-2, -1}) {
+		t.Fatalf("callback lost a possible target or argument: %+v", got)
+	}
+	if !graph.unknownParameters[2] || len(graph.sources[2]) != 0 {
+		t.Fatal("shape query modified graph-region callback behavior")
+	}
+	// Sibling dispatch calls Direct's code, using Closure only as its environment.
+	direct := graph.ReachingAllocations(ir.CallClosure{Direct: 3, Closure: ir.MakeClosure{Function: 0}, Returns: ir.Object})
+	if direct.Unknown || !reflect.DeepEqual(direct.Sites, []int{-2}) {
+		t.Fatalf("sibling callback code target was ignored: %+v", direct)
+	}
+	// An opaque callable arm must retain both known allocations and Unknown.
+	program.Locals = append(program.Locals, ir.Local{Type: ir.Closure})
+	declaration := program.Main[0].(ir.Declare)
+	declaration.Value = ir.Conditional{WhenTrue: ir.MakeClosure{Function: 0}, WhenNot: ir.Read{Local: 5, Of: ir.Closure}, Of: ir.Closure}
+	program.Main[0] = declaration
+	got = newAllocationFlowGraph(program).ReachingAllocations(ir.Call{Function: 1, Returns: ir.Object})
+	if !got.Unknown || !reflect.DeepEqual(got.Sites, []int{-1}) {
+		t.Fatalf("opaque callback arm was dropped: %+v", got)
+	}
+}
+
+func TestShapeCallbackEscapesOmissionsAndReturnedFactories(t *testing.T) {
+	for _, mode := range []string{"opaque", "omitted", "returned"} {
+		program := &ir.Program{Locals: make([]ir.Local, 2), Functions: []ir.Function{
+			{Parameters: []int{1}, Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.Read{Local: 1, Of: ir.Object}}}},
+			{Returns: ir.Closure, Body: []ir.Statement{ir.Return{Value: ir.MakeClosure{Function: 0}}}},
+		}, Main: []ir.Statement{
+			ir.Declare{Local: 0, Value: ir.MakeClosure{Function: 0}},
+			ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}, Arguments: []ir.Expression{ir.ObjectLiteral{GraphTypes: []int{-1}}}, Returns: ir.Object}},
+		}}
+		var extra ir.Expression
+		switch mode {
+		case "opaque":
+			extra = ir.CallClosure{Closure: ir.Property{Object: ir.ObjectLiteral{GraphTypes: []int{-2}}, Name: "host", Of: ir.Closure}, Arguments: []ir.Expression{ir.Read{Local: 0, Of: ir.Closure}}}
+		case "omitted":
+			extra = ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}, Returns: ir.Object}
+		case "returned":
+			extra = ir.MakeClosure{Function: 1}
+		}
+		program.Main = append(program.Main, ir.Evaluate{Value: extra})
+		got := newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 1, Of: ir.Object})
+		if !got.Unknown || !reflect.DeepEqual(got.Sites, []int{-1}) {
+			t.Fatalf("%s callback boundary disappeared: %+v", mode, got)
+		}
+	}
+}

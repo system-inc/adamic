@@ -9,7 +9,7 @@ import (
 )
 
 func TestShapeErasureFixtures(t *testing.T) {
-	for _, name := range []string{"proven", "proven-property", "nonconforming", "nonconforming-property", "uninitialized", "host"} {
+	for _, name := range []string{"proven", "proven-property", "proven-callback", "nonconforming", "nonconforming-property", "nonconforming-callback", "uninitialized", "host"} {
 		t.Run(name, func(t *testing.T) {
 			checked, err := load.Load([]string{"../../stage3/interface-downcasts/lane3/" + name + ".a"})
 			if err != nil {
@@ -41,10 +41,10 @@ func TestShapeErasureFixtures(t *testing.T) {
 				walk(function.Body, inspect)
 			}
 			t.Logf("remaining casts=%d checked reads=%d", casts, reads)
-			if (name == "proven" || name == "proven-property") && (casts != 0 || reads != 0) {
+			if (name == "proven" || name == "proven-property" || name == "proven-callback") && (casts != 0 || reads != 0) {
 				t.Fatal("proven factory retained runtime checks")
 			}
-			if name != "proven" && name != "proven-property" && reads == 0 {
+			if name != "proven" && name != "proven-property" && name != "proven-callback" && reads == 0 {
 				t.Fatal("unsafe erasure removed field checks")
 			}
 		})

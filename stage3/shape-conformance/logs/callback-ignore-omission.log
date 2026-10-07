@@ -1,0 +1,8 @@
+=== RUN   TestShapeCallbackAliasesParametersAndJoins
+--- PASS: TestShapeCallbackAliasesParametersAndJoins (0.00s)
+=== RUN   TestShapeCallbackEscapesOmissionsAndReturnedFactories
+    shape_flow_test.go:173: omitted callback boundary disappeared: {Sites:[-1] Unknown:false Reasons:[]}
+--- FAIL: TestShapeCallbackEscapesOmissionsAndReturnedFactories (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.011s
+FAIL

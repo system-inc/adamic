@@ -38,3 +38,24 @@ function hostThroughField():Ready {const holder={hostChild:JSON.parse('{}')};con
 
 interface Augmented extends Array<Ready> {readonly stamp:number;}
 function augmentedArray():Augmented {const values=[make()];return values as Augmented;}
+
+function closedCallback(node:Base):Ready {return node as Ready;}
+function closedInvoke(callback:(node:Base)=>Ready,node:Base):Ready {return callback(node);}
+const closedAlias=closedCallback;
+closedInvoke(closedAlias,make());
+function returnedCallback(node:Base):Ready {return node as Ready;}
+function callbackFactory():(node:Base)=>Ready {return returnedCallback;}
+closedInvoke(callbackFactory(),make());
+function mixedCallback(node:Base):Ready {return node as Ready;}
+function mixedInvoke(callback:(node:Base)=>Ready,node:Base):Ready {return callback(node);}
+const mixedWrong={kind:'ok' as const,ready:0};
+mixedInvoke(mixedCallback,mixedWrong);
+function hostCallback(node:Base):Ready {return node as Ready;}
+const hostSink=JSON.parse('null') as (callback:(node:Base)=>Ready)=>void;
+hostSink(hostCallback);
+function genericCallback(node:Base):Ready {return node as Ready;}
+function genericSink<T>(callback:(node:Base)=>Ready):void {}
+genericSink(genericCallback);
+function diagnosedCallback(node:Base):Ready {return node as Ready;}
+function diagnosedSink(callback:(node:Base)=>Ready):void {const error:number='bad';}
+diagnosedSink(diagnosedCallback);

@@ -1,0 +1,2794 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "note": "Distinct sites per pattern; patterns overlap. Indirect/callback/intrinsic is a mixed boundary, not proof that every such site uses a callback.",
+  "before_patterns": {
+    "indirect/callback/intrinsic result boundary": {
+      "untagged": 39,
+      "tagged": 188
+    },
+    "function-value escape callback boundary": {
+      "untagged": 56,
+      "tagged": 376
+    },
+    "constructors": {
+      "untagged": 39
+    },
+    "dynamic keys": {
+      "untagged": 28,
+      "tagged": 25
+    },
+    "whole-array contracts": {
+      "untagged": 5
+    }
+  },
+  "after_patterns": {
+    "function-value escape callback boundary": {
+      "untagged": 36,
+      "tagged": 88
+    },
+    "constructors": {
+      "untagged": 36
+    },
+    "unbounded callback identity": {
+      "untagged": 19,
+      "tagged": 5
+    },
+    "dynamic keys": {
+      "untagged": 29,
+      "tagged": 44
+    },
+    "whole-array contracts": {
+      "untagged": 5
+    }
+  },
+  "transitions": [
+    {
+      "before": "diagnosed body",
+      "after": "diagnosed body",
+      "kind": "tagged",
+      "sites": 1153
+    },
+    {
+      "before": "diagnosed body",
+      "after": "diagnosed body",
+      "kind": "untagged",
+      "sites": 851
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "diagnosed body",
+      "kind": "tagged",
+      "sites": 292
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "diagnosed body",
+      "kind": "untagged",
+      "sites": 43
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "flow the graph can't see",
+      "kind": "tagged",
+      "sites": 313
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "flow the graph can't see",
+      "kind": "untagged",
+      "sites": 281
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "host metadata",
+      "kind": "untagged",
+      "sites": 2
+    },
+    {
+      "before": "host metadata",
+      "after": "host metadata",
+      "kind": "untagged",
+      "sites": 1
+    }
+  ],
+  "changed_sites": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 356,
+      "column": 37,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1039,
+      "column": 12,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1730,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9676,
+      "column": 48,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6023,
+      "column": 122,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6829,
+      "column": 29,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7496,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7541,
+      "column": 87,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 11798,
+      "column": 65,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13121,
+      "column": 38,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15527,
+      "column": 66,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15958,
+      "column": 173,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19264,
+      "column": 65,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19644,
+      "column": 58,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20285,
+      "column": 19,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20286,
+      "column": 66,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20286,
+      "column": 95,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20286,
+      "column": 124,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20288,
+      "column": 18,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20290,
+      "column": 21,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20909,
+      "column": 57,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25626,
+      "column": 60,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25725,
+      "column": 31,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25780,
+      "column": 58,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25781,
+      "column": 58,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25782,
+      "column": 70,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 30458,
+      "column": 19,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 30464,
+      "column": 19,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 31859,
+      "column": 65,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 31859,
+      "column": 133,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 31864,
+      "column": 64,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32387,
+      "column": 48,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 40334,
+      "column": 65,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46680,
+      "column": 70,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47612,
+      "column": 126,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47621,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47623,
+      "column": 34,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 2644,
+      "column": 41,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 2673,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 2675,
+      "column": 59,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 2677,
+      "column": 58,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 545,
+      "column": 57,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 547,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 549,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 551,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 578,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 630,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 133,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 135,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 137,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 139,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 141,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 143,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 145,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 147,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 804,
+      "column": 41,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 812,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 536,
+      "column": 57,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 538,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 540,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 542,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 276,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 278,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 280,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 282,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 284,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 286,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 288,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 290,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 292,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 294,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 305,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 309,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 314,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 318,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 325,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 332,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 339,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 346,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 353,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 360,
+      "column": 21,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 365,
+      "column": 39,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 367,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 369,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 371,
+      "column": 54,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 378,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 1394,
+      "column": 41,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 1402,
+      "column": 59,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 1404,
+      "column": 58,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 1406,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "line": 35,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 64,
+      "column": 64,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 77,
+      "column": 22,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 78,
+      "column": 65,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 82,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "line": 43,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 628,
+      "column": 38,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 713,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 716,
+      "column": 61,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 719,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 722,
+      "column": 54,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 737,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 740,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 743,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 746,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 749,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 752,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 755,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 758,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 761,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 764,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 767,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 770,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 773,
+      "column": 39,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 776,
+      "column": 40,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 779,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 782,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 785,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 788,
+      "column": 35,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 804,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 806,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 808,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 810,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 820,
+      "column": 61,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 830,
+      "column": 57,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2291,
+      "column": 41,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2329,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2331,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2333,
+      "column": 59,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2335,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 732,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 735,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 738,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 741,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1234,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1237,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1240,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1243,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1246,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1249,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1252,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1255,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1258,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1261,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1264,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1267,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1270,
+      "column": 39,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1273,
+      "column": 40,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1276,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1279,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1282,
+      "column": 41,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1285,
+      "column": 35,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1564,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1566,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1568,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1570,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1583,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1812,
+      "column": 41,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1829,
+      "column": 62,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1882,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1884,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1886,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1578,
+      "column": 40,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1582,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1586,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1591,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1593,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1597,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1599,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1601,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1605,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1607,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1609,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1611,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1613,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1615,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1618,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1620,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1622,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1624,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1628,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1630,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1632,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1634,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1636,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1638,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1640,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1642,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1644,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1647,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1649,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1651,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1653,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1655,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1657,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1661,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1663,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1665,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1667,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1669,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1671,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1673,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1675,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1679,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1681,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1683,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1687,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1693,
+      "column": 38,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1695,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1699,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1701,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1703,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1705,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1707,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1709,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1711,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1713,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1715,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1717,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1719,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1721,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1723,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1725,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1727,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1729,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1733,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1735,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1737,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1739,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1741,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1743,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1745,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1747,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1749,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1751,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1753,
+      "column": 59,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1755,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1757,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1759,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1761,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1763,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1765,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1767,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1769,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1771,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1773,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1775,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1777,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1779,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1785,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1789,
+      "column": 40,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1792,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1795,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1797,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1799,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1801,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1803,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1805,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1809,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1811,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1813,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1815,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1819,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1821,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1823,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1827,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1831,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1837,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1839,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1845,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1847,
+      "column": 53,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1849,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1851,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1854,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1858,
+      "column": 38,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1860,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1862,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1866,
+      "column": 47,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1869,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1880,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1882,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1886,
+      "column": 53,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1893,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1895,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1897,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1899,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1901,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1927,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1932,
+      "column": 40,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1936,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1938,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1942,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1944,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1946,
+      "column": 57,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1948,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1950,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1952,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1954,
+      "column": 57,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1956,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1958,
+      "column": 56,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1960,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1962,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1964,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1966,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1968,
+      "column": 47,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1970,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1972,
+      "column": 54,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1974,
+      "column": 55,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1976,
+      "column": 49,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1978,
+      "column": 54,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1980,
+      "column": 51,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1982,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1984,
+      "column": 46,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1986,
+      "column": 48,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1990,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1992,
+      "column": 50,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1994,
+      "column": 60,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1996,
+      "column": 52,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1998,
+      "column": 45,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2006,
+      "column": 43,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2008,
+      "column": 54,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2010,
+      "column": 44,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2020,
+      "column": 59,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2022,
+      "column": 42,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2050,
+      "column": 58,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2830,
+      "column": 62,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2830,
+      "column": 134,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2831,
+      "column": 66,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2831,
+      "column": 139,
+      "kind": "tagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 156,
+      "column": 51,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1618,
+      "column": 23,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "host metadata"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1619,
+      "column": 43,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "host metadata"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4594,
+      "column": 46,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 772,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 833,
+      "column": 23,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1372,
+      "column": 15,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1387,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    }
+  ],
+  "unchanged_diagnostics": 315,
+  "conforms_if": []
+}

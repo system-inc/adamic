@@ -1,0 +1,401 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "diagnosed_sites": 2339,
+  "scope_totals": {
+    "own function": {
+      "tagged": 9,
+      "untagged": 35
+    },
+    "dependency": {
+      "tagged": 1436,
+      "untagged": 859
+    }
+  },
+  "diagnostic_codes_overlap": [
+    {
+      "code": "TS2304",
+      "message_examples": [
+        "Cannot find name '__dirname'.",
+        "Cannot find name '__filename'.",
+        "Cannot find name 'global'."
+      ],
+      "dependency": {
+        "tagged": 128,
+        "untagged": 2
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS2307",
+      "message_examples": [
+        "Cannot find module 'source-map-support' or its corresponding type declarations."
+      ],
+      "dependency": {
+        "tagged": 128,
+        "untagged": 2
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS2322",
+      "message_examples": [
+        "Type '(Symbol | undefined)[] | undefined' is not assignable to type 'Symbol[] | undefined'.",
+        "Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.",
+        "Type '(Type | undefined)[]' is not assignable to type 'Type[]'.",
+        "Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.",
+        "Type '(call: CallLikeExpression, editingArgument: Node) => (Signature | undefined)[]' is not assignable to type '(call: CallLikeExpression, editingArgument: Node) => Signature[]'.",
+        "Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.",
+        "Type '(string | undefined)[]' is not assignable to type 'string[]'.",
+        "Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.",
+        "Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.",
+        "Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.",
+        "Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.",
+        "Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
+        "Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.",
+        "Type 'Set<__String | undefined>' is not assignable to type 'Set<__String>'.",
+        "Type 'Set<number | undefined>' is not assignable to type 'Set<number>'.",
+        "Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.",
+        "Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.",
+        "Type 'Symbol | undefined' is not assignable to type 'Symbol'.",
+        "Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.",
+        "Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.",
+        "Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'."
+      ],
+      "dependency": {
+        "tagged": 1118,
+        "untagged": 826
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 7
+      }
+    },
+    {
+      "code": "TS2339",
+      "message_examples": [
+        "Property 'expression' does not exist on type 'CaseOrDefaultClause'."
+      ],
+      "dependency": {
+        "tagged": 1107,
+        "untagged": 812
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS2345",
+      "message_examples": [
+        "Argument of type '(ExportSpecifier | undefined)[]' is not assignable to parameter of type 'readonly ExportSpecifier[]'.",
+        "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.",
+        "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.",
+        "Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.",
+        "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.",
+        "Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'.",
+        "Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.",
+        "Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.",
+        "Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.",
+        "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.",
+        "Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.",
+        "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.",
+        "Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.",
+        "Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.",
+        "Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.",
+        "Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.",
+        "Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.",
+        "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.",
+        "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.",
+        "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
+        "Argument of type 'Set<string | undefined>' is not assignable to parameter of type 'Set<string>'.",
+        "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.",
+        "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.",
+        "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.",
+        "Argument of type 'T | undefined' is not assignable to parameter of type 'T'.",
+        "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.",
+        "Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.",
+        "Argument of type '__String | undefined' is not assignable to parameter of type '__String'.",
+        "Argument of type 'number | undefined' is not assignable to parameter of type 'number'.",
+        "Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.",
+        "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.",
+        "Argument of type 'unknown' is not assignable to parameter of type 'string'.",
+        "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.",
+        "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.",
+        "Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'."
+      ],
+      "dependency": {
+        "tagged": 1144,
+        "untagged": 838
+      },
+      "own function": {
+        "tagged": 7,
+        "untagged": 25
+      }
+    },
+    {
+      "code": "TS2375",
+      "message_examples": [
+        "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ accessibility: SymbolAccessibility.NotAccessible; errorSymbolName: string; errorModuleName: string | undefined; }' is not assignable to type 'SymbolAccessibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+      ],
+      "dependency": {
+        "tagged": 1112,
+        "untagged": 824
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 7
+      }
+    },
+    {
+      "code": "TS2379",
+      "message_examples": [
+        "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ reportTruncationError?: () => void; reportNonlocalAugmentation?: (containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void; ... 10 more ...; moduleResolverHost: (ModuleSpecifierResolutionHost & ...) | undefined; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+        "Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+      ],
+      "dependency": {
+        "tagged": 1092,
+        "untagged": 818
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 8
+      }
+    },
+    {
+      "code": "TS2412",
+      "message_examples": [
+        "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'JSDocTypeExpression | undefined' is not assignable to type 'T[\"typeExpression\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "Type 'undefined' is not assignable to type 'T[\"localSymbol\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+      ],
+      "dependency": {
+        "tagged": 1373,
+        "untagged": 829
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 10
+      }
+    },
+    {
+      "code": "TS2488",
+      "message_examples": [
+        "Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "Type '[string, Map<string, ImportSpecifier>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+      ],
+      "dependency": {
+        "tagged": 1091,
+        "untagged": 816
+      },
+      "own function": {
+        "tagged": 1,
+        "untagged": 6
+      }
+    },
+    {
+      "code": "TS2532",
+      "message_examples": [
+        "Object is possibly 'undefined'."
+      ],
+      "dependency": {
+        "tagged": 1128,
+        "untagged": 825
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 8
+      }
+    },
+    {
+      "code": "TS2538",
+      "message_examples": [
+        "Type 'undefined' cannot be used as an index type."
+      ],
+      "dependency": {
+        "tagged": 1108,
+        "untagged": 812
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS2556",
+      "message_examples": [
+        "A spread argument must either have a tuple type or be passed to a rest parameter."
+      ],
+      "dependency": {
+        "tagged": 1091,
+        "untagged": 816
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 6
+      }
+    },
+    {
+      "code": "TS2591",
+      "message_examples": [
+        "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "Cannot find name 'crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "Cannot find name 'path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      ],
+      "dependency": {
+        "tagged": 558,
+        "untagged": 379
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS2722",
+      "message_examples": [
+        "Cannot invoke an object which is possibly 'undefined'."
+      ],
+      "dependency": {
+        "tagged": 1091,
+        "untagged": 816
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 6
+      }
+    },
+    {
+      "code": "TS2769",
+      "message_examples": [
+        "No overload matches this call."
+      ],
+      "dependency": {
+        "tagged": 1092,
+        "untagged": 822
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 9
+      }
+    },
+    {
+      "code": "TS7006",
+      "message_examples": [
+        "Parameter 'err' implicitly has an 'any' type."
+      ],
+      "dependency": {
+        "tagged": 128,
+        "untagged": 2
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS7031",
+      "message_examples": [
+        "Binding element 'profile' implicitly has an 'any' type."
+      ],
+      "dependency": {
+        "tagged": 128,
+        "untagged": 2
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS18046",
+      "message_examples": [
+        "'e' is of type 'unknown'.",
+        "'s' is of type 'unknown'."
+      ],
+      "dependency": {
+        "tagged": 1091,
+        "untagged": 806
+      },
+      "own function": {
+        "tagged": 0,
+        "untagged": 0
+      }
+    },
+    {
+      "code": "TS18048",
+      "message_examples": [
+        "'catchClauseUnshadowedNames' is possibly 'undefined'.",
+        "'clause' is possibly 'undefined'.",
+        "'data' is possibly 'undefined'.",
+        "'dirPath' is possibly 'undefined'.",
+        "'file' is possibly 'undefined'.",
+        "'m' is possibly 'undefined'.",
+        "'merged' is possibly 'undefined'.",
+        "'n' is possibly 'undefined'.",
+        "'originalParameter' is possibly 'undefined'.",
+        "'outerParameter' is possibly 'undefined'.",
+        "'parameter' is possibly 'undefined'.",
+        "'prop' is possibly 'undefined'.",
+        "'s' is possibly 'undefined'.",
+        "'superStatementIndex' is possibly 'undefined'.",
+        "'variable' is possibly 'undefined'.",
+        "'withBlock' is possibly 'undefined'."
+      ],
+      "dependency": {
+        "tagged": 1129,
+        "untagged": 825
+      },
+      "own function": {
+        "tagged": 1,
+        "untagged": 6
+      }
+    }
+  ],
+  "missing_provenance": [],
+  "note": "Each code is counted once per site/scope. A site may depend on several diagnosed bodies or codes, so diagnostic-code rows overlap."
+}

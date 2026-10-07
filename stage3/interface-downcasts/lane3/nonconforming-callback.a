@@ -1,0 +1,9 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
+const good = {kind: 'identifier' as const, ready: true};
+const wrong = {kind: 'identifier' as const, ready: 0};
+function read(value: Base): boolean { return (value as Identifier).ready; }
+function invoke(callback: (value: Base) => boolean, value: Base): boolean { return callback(value); }
+const alias = read;
+console.log(`${invoke(alias, good)}`);
+console.log(`${invoke(alias, wrong)}`);

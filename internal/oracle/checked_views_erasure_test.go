@@ -11,6 +11,8 @@ func TestCheckedViewShapeErasure(t *testing.T) {
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"proven", "hello\n", ""},
 		{"proven-property", "hello\n", ""},
+		{"proven-callback", "hello\n", ""},
+		{"nonconforming-callback", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"nonconforming-property", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"nonconforming", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"uninitialized", "", "field read failed: (held as Identifier).ready is not initialized; expected boolean, found uninitialized"},
@@ -91,6 +93,12 @@ func eraseShapeChecksMutant(program *ir.Program) {
 
 func TestShapeErasureCountRows(t *testing.T) {
 	for _, name := range []string{"proven", "nonconforming", "uninitialized", "host"} {
+		t.Log(counted(t, "stage3/interface-downcasts/lane3/"+name+".a", false, nil, false, false))
+	}
+}
+
+func TestShapeCallbackCountRows(t *testing.T) {
+	for _, name := range []string{"proven-callback", "nonconforming-callback"} {
 		t.Log(counted(t, "stage3/interface-downcasts/lane3/"+name+".a", false, nil, false, false))
 	}
 }

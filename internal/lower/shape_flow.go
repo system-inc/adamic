@@ -12,6 +12,7 @@ import (
 // Unknown frontiers retain checks. Joined assignments, returns and arguments use
 // the same edges as the graph-regions analysis.
 func (graph *allocationFlowGraph) ReachingAllocations(expression ir.Expression) ir.AllocationSet {
+	graph.prepareShapeCallbacks()
 	return graph.reachingAllocations(expression, true, 0)
 }
 
@@ -72,16 +73,16 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 				return
 			}
 		}
-		graph.follow(value, func(site int) { sites[site] = true }, demand, unknown)
+		graph.shapeFollow(value, func(site int) { sites[site] = true }, demand, unknown)
 	}
 	follow(expression, depth)
 	for len(queue) != 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if graph.unknownParameters[node] {
+		if graph.callbacks.unknownParameters[node] {
 			unknown("parameter may receive untracked or omitted arguments")
 		}
-		sources := graph.sources[node]
+		sources := graph.callbacks.sources[node]
 		if len(sources) == 0 {
 			unknown("local or result has no tracked producer")
 		}
@@ -171,7 +172,10 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 			stores = append(stores, value)
 		case ir.SetIndex, ir.ArrayPush, ir.ArraySplice, ir.ArrayPop:
 			index.arrayMutation = true
-		case ir.CallClosure, ir.ObjectCall:
+		case ir.CallClosure:
+			targets := graph.shapeClosureTargets(value)
+			index.opaqueCalls = index.opaqueCalls || targets.Unknown || len(targets.Functions) == 0
+		case ir.ObjectCall:
 			index.opaqueCalls = true
 		}
 		return true
@@ -262,4 +266,287 @@ func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, dep
 		sources = append(sources, index.stores[site][name]...)
 	}
 	return sources, reasons, true
+}
+
+// shapeCallbackFlow adds closed function-value call edges only for proof queries.
+// Graph-region ownership keeps its original sources and callback frontiers.
+type shapeCallbackFlow struct {
+	sources           map[int][]ir.Expression
+	unknownParameters map[int]bool
+	facts             map[int]ir.FunctionTargets
+	frontiers         map[int][]ir.Expression
+}
+
+func (graph *allocationFlowGraph) prepareShapeCallbacks() *shapeCallbackFlow {
+	if graph.callbacks != nil {
+		return graph.callbacks
+	}
+	flow := &shapeCallbackFlow{sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}, facts: map[int]ir.FunctionTargets{}, frontiers: map[int][]ir.Expression{}}
+	graph.callbacks = flow
+	for node, sources := range graph.sources {
+		flow.sources[node] = append([]ir.Expression{}, sources...)
+	}
+	calls := []ir.CallClosure{}
+	escapes := []ir.Expression{}
+	// Unknown operations may retain a function value or invoke it outside this graph.
+	escapeChildren := func(node any) {
+		walk(node, func(child any) bool {
+			if value, ok := child.(ir.Expression); ok {
+				escapes = append(escapes, value)
+			}
+			return true
+		})
+	}
+	collect := func(node any) bool {
+		switch value := node.(type) {
+		case ir.CallClosure:
+			calls = append(calls, value)
+		case ir.Call:
+			for _, target := range graph.program.CallTargets(value) {
+				for i, param := range graph.program.Functions[target].Parameters {
+					if i >= len(value.Arguments) {
+						flow.unknownParameters[param+1] = true
+					}
+				}
+				for _, argument := range value.Arguments[min(len(value.Arguments), len(graph.program.Functions[target].Parameters)):] {
+					escapes = append(escapes, argument)
+				}
+			}
+		case ir.Evaluate:
+			switch value.Value.(type) {
+			case ir.Call, ir.CallClosure:
+			default:
+				escapes = append(escapes, value.Value)
+			}
+		case ir.SetProperty:
+			escapes = append(escapes, value.Value)
+		case ir.SetIndex:
+			escapes = append(escapes, value.Value)
+		default:
+			if expression, ok := node.(ir.Expression); ok {
+				switch expression.(type) {
+				case ir.Read, ir.MakeClosure, ir.Call, ir.CallClosure, ir.Conditional, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast:
+				default:
+					escapeChildren(expression)
+				}
+			}
+		}
+		return true
+	}
+	walk(graph.program.Main, collect)
+	for _, function := range graph.program.Functions {
+		walk(function.Body, collect)
+	}
+	merge := func(node int, incoming ir.FunctionTargets) bool {
+		current := flow.facts[node]
+		seen := map[int]bool{}
+		for _, function := range current.Functions {
+			seen[function] = true
+		}
+		changed := incoming.Unknown && !current.Unknown
+		current.Unknown = current.Unknown || incoming.Unknown
+		for _, function := range incoming.Functions {
+			if !seen[function] {
+				seen[function] = true
+				current.Functions = append(current.Functions, function)
+				changed = true
+			}
+		}
+		sort.Ints(current.Functions)
+		flow.facts[node] = current
+		return changed
+	}
+	edges := map[[3]int]bool{}
+	// Target identities and argument edges grow monotonically. Empty recursive
+	// cycles become Unknown after saturation; they never certify an empty target set.
+	solve := func() bool {
+		changed := false
+		for node, sources := range flow.sources {
+			for _, source := range sources {
+				changed = merge(node, graph.shapeFunctionTargets(source)) || changed
+			}
+		}
+		for i, call := range calls {
+			targets := graph.shapeClosureTargets(call)
+			for _, target := range targets.Functions {
+				for j, param := range graph.program.Functions[target].Parameters {
+					if j >= len(call.Arguments) {
+						flow.unknownParameters[param+1] = true
+						changed = merge(param+1, ir.FunctionTargets{Unknown: true}) || changed
+						continue
+					}
+					key := [3]int{i, target, j}
+					if !edges[key] {
+						edges[key] = true
+						flow.sources[param+1] = append(flow.sources[param+1], call.Arguments[j])
+						changed = true
+					}
+				}
+			}
+		}
+		return changed
+	}
+	exhausted := true
+	for step := 0; step < 1024; step++ {
+		if !solve() {
+			exhausted = false
+			break
+		}
+	}
+	// Empty identities and omitted inputs are real unknown frontiers. Propagate
+	// them before testing escapes, including an opaque arm joined to a literal.
+	for node := 1; node <= len(graph.program.Locals)+len(graph.program.Functions); node++ {
+		if len(flow.facts[node].Functions) == 0 || flow.unknownParameters[node] {
+			merge(node, ir.FunctionTargets{Unknown: true})
+		}
+	}
+	escaped := map[int]bool{}
+	escapingCalls := map[int]bool{}
+	for step := 0; step < 1024; step++ {
+		changed := solve()
+		for i, call := range calls {
+			targets := graph.shapeClosureTargets(call)
+			if !escapingCalls[i] && (targets.Unknown || len(targets.Functions) == 0) {
+				escapingCalls[i] = true
+				escapes = append(escapes, call.Arguments...)
+				pending := []int{}
+				for _, argument := range call.Arguments {
+					pending = append(pending, graph.shapeFunctionTargets(argument).Functions...)
+				}
+				noted := map[int]bool{}
+				for len(pending) > 0 {
+					target := pending[len(pending)-1]
+					pending = pending[:len(pending)-1]
+					if noted[target] {
+						continue
+					}
+					noted[target] = true
+					for _, param := range graph.program.Functions[target].Parameters {
+						flow.frontiers[param+1] = append(flow.frontiers[param+1], ir.ClosureValue(call))
+					}
+					pending = append(pending, flow.facts[graph.resultNode(target)].Functions...)
+				}
+
+			}
+		}
+		pending := []int{}
+		for _, value := range escapes {
+			pending = append(pending, graph.shapeFunctionTargets(value).Functions...)
+		}
+		for len(pending) > 0 {
+			target := pending[len(pending)-1]
+			pending = pending[:len(pending)-1]
+			if !escaped[target] {
+				escaped[target] = true
+				for _, param := range graph.program.Functions[target].Parameters {
+					if !flow.unknownParameters[param+1] {
+						flow.unknownParameters[param+1] = true
+						changed = true
+					}
+					changed = merge(param+1, ir.FunctionTargets{Unknown: true}) || changed
+				}
+			}
+			// Escaped factories can return another callable to an opaque caller.
+			for _, returned := range flow.facts[graph.resultNode(target)].Functions {
+				if !escaped[returned] {
+					pending = append(pending, returned)
+				}
+			}
+			// A factory returning itself must also terminate.
+		}
+		if !changed {
+			break
+		}
+		if step == 1023 {
+			exhausted = true
+		}
+	}
+	if exhausted {
+		for _, function := range graph.program.Functions {
+			for _, param := range function.Parameters {
+				flow.unknownParameters[param+1] = true
+			}
+		}
+		for node, fact := range flow.facts {
+			fact.Unknown = true
+			flow.facts[node] = fact
+		}
+	}
+	return flow
+}
+
+// shapeFunctionTargets resolves identities, never signatures asserted by a view.
+// Only closure literals, collected aliases/parameters/returns and joins supply IDs.
+func (graph *allocationFlowGraph) shapeFunctionTargets(expression ir.Expression) ir.FunctionTargets {
+	flow := graph.callbacks
+	union := func(values ...ir.FunctionTargets) ir.FunctionTargets {
+		result := ir.FunctionTargets{}
+		seen := map[int]bool{}
+		for _, value := range values {
+			result.Unknown = result.Unknown || value.Unknown
+			for _, function := range value.Functions {
+				if !seen[function] {
+					seen[function] = true
+					result.Functions = append(result.Functions, function)
+				}
+			}
+		}
+		sort.Ints(result.Functions)
+		return result
+	}
+	switch value := expression.(type) {
+	case ir.MakeClosure:
+		if value.Function < 0 || value.Function >= len(graph.program.Functions) {
+			return ir.FunctionTargets{Unknown: true}
+		}
+		return ir.FunctionTargets{Functions: []int{value.Function}}
+	case ir.Read:
+		if value.Local < 0 || value.Local >= len(graph.program.Locals) {
+			return ir.FunctionTargets{Unknown: true}
+		}
+		return flow.facts[value.Local+1]
+	case ir.Call:
+		result := ir.FunctionTargets{}
+		for _, target := range graph.program.CallTargets(value) {
+			result = union(result, flow.facts[graph.resultNode(target)])
+		}
+		return result
+	case ir.CallClosure:
+		targets := graph.shapeClosureTargets(value)
+		result := ir.FunctionTargets{Unknown: targets.Unknown}
+		for _, target := range targets.Functions {
+			result = union(result, flow.facts[graph.resultNode(target)])
+		}
+		return result
+	case ir.Conditional:
+		return union(graph.shapeFunctionTargets(value.WhenTrue), graph.shapeFunctionTargets(value.WhenNot))
+	case ir.Box:
+		return graph.shapeFunctionTargets(value.Value)
+	case ir.Narrow:
+		return graph.shapeFunctionTargets(value.Value)
+	case ir.Unwrap:
+		return graph.shapeFunctionTargets(value.Value)
+	case ir.CheckedCast:
+		return graph.shapeFunctionTargets(value.Value)
+	default:
+		return ir.FunctionTargets{Unknown: true}
+	}
+}
+
+func (graph *allocationFlowGraph) shapeFollow(expression ir.Expression, allocation func(int), demand func(int), unknown func(string)) {
+	if call, ok := expression.(ir.CallClosure); ok {
+		targets := graph.shapeClosureTargets(call)
+		if targets.Unknown || len(targets.Functions) == 0 {
+			unknown("callback target identity is unknown")
+		}
+		for _, target := range targets.Functions {
+			demand(graph.resultNode(target))
+		}
+		return
+	}
+	graph.follow(expression, allocation, demand, unknown)
+}
+
+func (graph *allocationFlowGraph) shapeClosureTargets(call ir.CallClosure) ir.FunctionTargets {
+	return graph.program.ClosureTargetsWithFlow(call, graph.shapeFunctionTargets)
 }

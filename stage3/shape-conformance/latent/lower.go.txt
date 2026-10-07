@@ -204,7 +204,9 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return m.materialize(node, ir.BooleanConstant{})
 	case ast.KindIdentifier:
-		value := ir.Read{Local: m.local(node), Of: ir.Object}
+		of := ir.Object
+		if len(m.Checker.GetSignaturesOfType(m.Checker.GetTypeAtLocation(node), checker.SignatureKindCall)) > 0 { of = ir.Closure }
+		value := ir.Read{Local: m.local(node), Of: of}
 		m.Memo[node] = value
 		return value
 	case ast.KindParenthesizedExpression:
@@ -265,7 +267,12 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 		literal.GraphTypes = []int{m.NextAllocation}
 		m.Allocations[m.NextAllocation] = latentShapeAllocation{Node: node, Kind: "array", Properties: map[string]*ast.Node{}}
 		return m.materialize(node, literal)
-	case ast.KindNewExpression:
+	case ast.KindArrowFunction, ast.KindFunctionExpression:
+        function := m.Functions[node]
+        if function.Skipped { return m.unknown(node, "diagnosed body", "callback body skipped", m.text(node), node) }
+        if len(node.TypeParameters()) != 0 { return m.unknown(node, "flow the graph can't see", "generic callback substitution not modeled", m.text(node)) }
+        return m.materialize(node, ir.MakeClosure{Function:function.Index})
+    case ast.KindNewExpression:
 		return m.unknown(node, "flow the graph can't see", "constructor allocation and initialization body not modeled", m.text(node))
 	case ast.KindCallExpression:
 		call := node.AsCallExpression()
@@ -277,13 +284,13 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 			for _, declaration := range symbol.Declarations {
 				if function, exists := m.Functions[declaration]; exists {
 					if declaration.Kind != ast.KindFunctionDeclaration {
-						return m.unknown(node, "flow the graph can't see", "method/closure dispatch not certified", m.text(call.Expression))
+						return m.opaqueCallbackCall(node, "flow the graph can't see", "method/closure dispatch not certified", m.text(call.Expression))
 					}
 					if function.Skipped {
-						return m.unknown(node, "diagnosed body", "callee body skipped", m.text(call.Expression), function.Node)
+						return m.opaqueCallbackCall(node, "diagnosed body", "callee body skipped", m.text(call.Expression), function.Node)
 					}
 					if len(declaration.TypeParameters()) != 0 {
-						return m.unknown(node, "flow the graph can't see", "generic call substitution not modeled", m.text(call.Expression))
+						return m.opaqueCallbackCall(node, "flow the graph can't see", "generic call substitution not modeled", m.text(call.Expression))
 					}
 					arguments := []ir.Expression{}
 					for _, argument := range call.Arguments.Nodes {
@@ -293,11 +300,15 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 				}
 			}
 		}
-		text := m.text(call.Expression)
-		if m.hostOrigin(node) {
-			return m.unknown(node, "host metadata", "opaque host result requires runtime semantic metadata", text)
-		}
-		return m.unknown(node, "flow the graph can't see", "indirect, callback or intrinsic result not modeled", text)
+        arguments := []ir.Expression{}
+        for _, argument := range call.Arguments.Nodes { arguments = append(arguments, m.expression(argument)) }
+        text := m.text(call.Expression)
+        if m.hostOrigin(node) {
+            boundary := m.unknown(node, "host metadata", "opaque host result requires runtime semantic metadata", text)
+            m.append(ir.Evaluate{Value:ir.CallClosure{Closure:boundary, Arguments:arguments, Returns:ir.Object}})
+            return boundary
+        }
+        return m.materialize(node, ir.CallClosure{Closure:m.expression(call.Expression), Arguments:arguments, Returns:ir.Object})
 	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
 		text := m.text(node)
 		if m.hostOrigin(node) {
@@ -405,14 +416,15 @@ func (m *latentShapeMeter) frontier(graph *allocationFlowGraph, expression ir.Ex
 			return
 		}
 		locals[node] = true
-		if graph.unknownParameters[node] {
+		if graph.callbacks.unknownParameters[node] {
 			add(latentShapeUnknown{Category: "flow the graph can't see", Reason: "untracked or omitted parameter arguments"})
 		}
-		sources := graph.sources[node]
+		sources := graph.callbacks.sources[node]
 		if len(sources) == 0 {
 			add(latentShapeUnknown{Category: "flow the graph can't see", Reason: "no tracked producer"})
 		}
 		pending = append(pending, sources...)
+		pending = append(pending, graph.callbacks.frontiers[node]...)
 	}
 	for steps := 0; len(pending) > 0; steps++ {
 		if steps >= 100000 {
@@ -422,10 +434,14 @@ func (m *latentShapeMeter) frontier(graph *allocationFlowGraph, expression ir.Ex
 		value := pending[len(pending)-1]
 		pending = pending[:len(pending)-1]
 		switch source := value.(type) {
-		case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
+		case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant, ir.MakeClosure:
 			continue
 		case latentShapeUnknown:
 			add(source)
+			continue
+		case ir.CallClosure:
+			pending = append(pending, ir.ClosureValue(source))
+			graph.shapeFollow(value, func(int) {}, demand, func(reason string) { add(latentShapeUnknown{Category:"flow the graph can't see", Reason:reason}) })
 			continue
 		case ir.Conditional:
 			pending = append(pending, source.WhenTrue, source.WhenNot)
@@ -470,7 +486,7 @@ func (m *latentShapeMeter) frontier(graph *allocationFlowGraph, expression ir.Ex
 			pending = append(pending, graph.projectionIndex().opaqueSources[name]...)
 			continue
 		}
-		graph.follow(value, func(int) {}, demand, func(reason string) { add(latentShapeUnknown{Category: "flow the graph can't see", Reason: reason}) })
+		graph.shapeFollow(value, func(int) {}, demand, func(reason string) { add(latentShapeUnknown{Category: "flow the graph can't see", Reason: reason}) })
 	}
 	return result
 }
@@ -512,6 +528,12 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 				for _, parameter := range node.Parameters() {
 					m.IR.Functions[index].Parameters = append(m.IR.Functions[index].Parameters, m.local(parameter.Name()))
 				}
+                if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil {
+                    var identity ir.Expression = ir.MakeClosure{Function:index}
+                    if skipped { identity = latentShapeUnknown{Category:"diagnosed body", Reason:"callback implementation skipped at "+program.Where(node), Diagnostics:m.diagnosticCauses(node)} }
+                    if !skipped && len(node.TypeParameters()) != 0 { identity = latentShapeUnknown{Category:"flow the graph can't see", Reason:"generic callback implementation not instantiated at "+program.Where(node)} }
+                    m.IR.Main = append(m.IR.Main, ir.Declare{Local:m.local(node.Name()), Value:identity})
+                }
 				if skipped {
 					var note ast.Visitor
 					note = func(child *ast.Node) bool {
@@ -559,7 +581,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 						m.append(ir.Assign{Local: m.IR.Functions[function.Index].Parameters[i], Value: latentShapeUnknown{Category: "host metadata", Reason: "host parameter requires boundary metadata at " + program.Where(parameter), Value: m.text(parameter.Name()) + ": " + m.Checker.TypeToString(m.Checker.GetTypeAtLocation(parameter.Name()))}})
 					}
 				}
-				m.body(node.Body())
+				if node.Body().Kind == ast.KindBlock { m.body(node.Body()) } else { m.append(ir.Return{Value:m.expression(node.Body())}) }
 				m.Current = -1
 			}
 			node.ForEachChild(visit)
@@ -602,9 +624,8 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 						if !ok {
 							continue
 						}
-						direct := node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
-						definition := declaration.Name() == node
-						if !definition && (!direct || m.Diagnosed[node]) {
+												definition := declaration.Name() == node
+						if !definition && (m.Diagnosed[node] || !m.closedCallbackReference(node)) {
 							category, reason := "flow the graph can't see", "function value may receive untracked callback arguments"
 							if m.Diagnosed[node] {
 								category, reason = "diagnosed body", "incoming arguments from a skipped diagnosed body"
@@ -688,6 +709,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		schemas = append(schemas, map[string]any{"measurement": latentShapeLabel, "site": id, "where": program.Where(allocation.Node), "kind": allocation.Kind, "fields": fields})
 	}
 	for i := range sites {
+		if i > 0 { normalizeLatentShapeSite(&sites[i-1]) }
 		site := &sites[i]
 		site.Measurement = latentShapeLabel
 		site.Outcome = "unknown"
@@ -862,16 +884,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 	// Repeated graph paths do not create distinct diagnostic obligations.
 	hostInventory = map[string]int{}
 	for i := range sites {
-		seen := map[string]bool{}
-		causes := []latentShapeDiagnosticCause{}
-		for _, cause := range sites[i].DiagnosticCauses {
-			key := cause.Scope + "\x00" + strings.Join(cause.Diagnostics, "\x00")
-			if !seen[key] {
-				seen[key] = true
-				causes = append(causes, cause)
-			}
-		}
-		sites[i].DiagnosticCauses = causes
+		normalizeLatentShapeSite(&sites[i])
 		hostSeen := map[string]bool{}
 		hostValues := []string{}
 		for _, value := range sites[i].HostValues {
@@ -897,5 +910,60 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		hosts = append(hosts, name)
 	}
 	sort.Strings(hosts)
-	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Callback, generic, constructor, dynamic-index and whole-array contracts remain unknown. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
+	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Opaque callback protocols, generic, constructor, dynamic-index and whole-array contracts remain unknown. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
+}
+
+// Only syntax represented by this source adapter closes a callback reference.
+func (m *latentShapeMeter) closedCallbackReference(node *ast.Node) bool {
+    parent := node.Parent
+    if parent == nil { return false }
+    switch parent.Kind {
+    case ast.KindVariableDeclaration:
+        return parent.AsVariableDeclaration().Initializer == node && ast.IsIdentifier(parent.Name())
+    case ast.KindBinaryExpression:
+        binary := parent.AsBinaryExpression()
+        return binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && ast.IsIdentifier(binary.Left)
+    case ast.KindReturnStatement:
+        return parent.AsReturnStatement().Expression == node
+    case ast.KindCallExpression:
+        call := parent.AsCallExpression()
+        if call.Expression == node { return true }
+        symbol := m.Checker.GetSymbolAtLocation(call.Expression)
+        if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 { symbol=m.Checker.GetAliasedSymbol(symbol) }
+        if symbol != nil { for _, declaration := range symbol.Declarations {
+            if function,ok:=m.Functions[declaration];ok && declaration.Kind==ast.KindFunctionDeclaration && !function.Skipped && len(declaration.TypeParameters())==0 {
+                for _, parameter := range declaration.Parameters() { if parameter.AsParameterDeclaration().DotDotDotToken != nil { return false } }
+                return true
+            }
+        } }
+    }
+    return false
+}
+
+// A rejected, generic or opaque implementation can retain/invoke callable arguments.
+func (m *latentShapeMeter) opaqueCallbackCall(node *ast.Node, category, reason, value string, origin ...*ast.Node) ir.Expression {
+    boundary := m.unknown(node, category, reason, value, origin...)
+    arguments := []ir.Expression{}
+    for _, argument := range node.AsCallExpression().Arguments.Nodes { arguments=append(arguments,m.expression(argument)) }
+    m.append(ir.Evaluate{Value:ir.CallClosure{Closure:boundary, Arguments:arguments, Returns:ir.Object}})
+    return boundary
+}
+
+// Compact each finished row before measuring the next graph query.
+func normalizeLatentShapeSite(site *LatentShapeSite) {
+		seen := map[string]bool{}
+		causes := []latentShapeDiagnosticCause{}
+		for _, cause := range site.DiagnosticCauses {
+			key := cause.Scope + "\x00" + strings.Join(cause.Diagnostics, "\x00")
+			if !seen[key] {
+				seen[key] = true
+				causes = append(causes, cause)
+			}
+		}
+		site.DiagnosticCauses = causes
+        details := []string{}
+        detailSeen := map[string]bool{}
+        for _, detail := range site.Detail { if !detailSeen[detail] { detailSeen[detail]=true;details=append(details,detail) } }
+        site.Detail = details
+
 }

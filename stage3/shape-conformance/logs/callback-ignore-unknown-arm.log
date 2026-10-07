@@ -1,0 +1,8 @@
+=== RUN   TestShapeCallbackAliasesParametersAndJoins
+    shape_flow_test.go:148: opaque callback arm was dropped: {Sites:[-1] Unknown:false Reasons:[]}
+--- FAIL: TestShapeCallbackAliasesParametersAndJoins (0.00s)
+=== RUN   TestShapeCallbackEscapesOmissionsAndReturnedFactories
+--- PASS: TestShapeCallbackEscapesOmissionsAndReturnedFactories (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.008s
+FAIL

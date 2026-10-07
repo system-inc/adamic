@@ -1,0 +1,7 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
+function create(): Identifier { return {kind: 'identifier', name: 'hello'}; }
+function read(value: Base): string { return (value as Identifier).name; }
+function invoke(callback: (value: Base) => string, value: Base): string { return callback(value); }
+const alias = read;
+console.log(invoke(alias, create()));
