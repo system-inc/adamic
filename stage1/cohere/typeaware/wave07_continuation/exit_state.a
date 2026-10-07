@@ -1,0 +1,29 @@
+export class ExitState {
+    readonly chains: readonly string[];
+    constructor(chains: readonly string[]) {
+        this.chains = chains;
+    }
+    holds(outer: string, inner: string): boolean {
+        return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`));
+    }
+    with(chain: string): ExitState {
+        const next: string[] = [];
+        for(const held of this.chains) {
+            if(this.holds(chain, held)) {
+                return new ExitState(this.chains.slice());
+            }
+            if(!this.holds(held, chain)) {
+                next.push(held);
+            }
+        }
+        next.push(chain);
+        next.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+        return new ExitState(next);
+    }
+    entering(index: number): ExitState {
+        return new ExitState(this.chains.filter((held) => !held.includes(`,${index},`)));
+    }
+    key(): string {
+        return this.chains.join('|');
+    }
+}

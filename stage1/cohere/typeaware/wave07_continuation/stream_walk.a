@@ -1,0 +1,8 @@
+export class StreamWalk {
+    readonly exits: number[];
+    readonly started: number[];
+    constructor(exits: number[], started: number[]) {
+        this.exits = exits;
+        this.started = started;
+    }
+}

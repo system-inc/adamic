@@ -1,0 +1,88 @@
+import { panic } from 'adamic';
+import type { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+import { ModuleSource } from './module_source.a';
+
+const emptyPaths: string[] = [];
+
+export class ProgramModules {
+    readonly files = new Map<string, ModuleSource>();
+    readonly edges = new Map<string, string[]>();
+    readonly imported = new Set<string>();
+    readonly canBlock = new Set<string>();
+    constructor(bindings: Bindings, root: number) {
+        const frames = new Frames(bindings.rules.ask(root, 'wave07-program-modules'));
+        header(frames, 'wave07-program-modules');
+        const count = frames.natural();
+        const sources: ModuleSource[] = [];
+        for(let at = 0; at < count; at++) {
+            const source = new ModuleSource(frames);
+            if(this.files.has(source.file)) {
+                panic('duplicate checker module');
+            }
+            this.files.set(source.file, source);
+            sources.push(source);
+        }
+        frames.end();
+        const seeds: string[] = [];
+        for(const source of sources) {
+            if(
+                ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) =>
+                    source.file.endsWith(suffix),
+                )
+            ) {
+                seeds.push(source.file);
+            }
+            if(source.declaration) {
+                continue;
+            }
+            const targets: string[] = [];
+            for(const module of source.imports) {
+                if(module.typeOnly) {
+                    continue;
+                }
+                if(module.dynamic || module.require) {
+                    if(!source.text.includes('import(') && !source.text.includes('require(')) {
+                        continue;
+                    }
+                    if(!module.literal) {
+                        seeds.push(source.file);
+                        continue;
+                    }
+                }
+                if(module.target !== '' && module.target !== source.file && this.files.has(module.target)) {
+                    targets.push(module.target);
+                    this.imported.add(module.target);
+                }
+            }
+            this.edges.set(source.file, targets);
+        }
+        const importers = new Map<string, string[]>();
+        for(const source of sources) {
+            for(const target of this.edges.get(source.file) ?? emptyPaths) {
+                if(!importers.has(target)) {
+                    const incoming: string[] = [];
+                    importers.set(target, incoming);
+                }
+                const incoming = importers.get(target);
+                if(incoming !== undefined) {
+                    incoming.push(source.file);
+                }
+            }
+        }
+        const queue = seeds.slice();
+        for(const seed of seeds) {
+            this.canBlock.add(seed);
+        }
+        let cursor = -1;
+        while(cursor + 1 < queue.length) {
+            cursor++;
+            for(const importer of importers.get(queue[cursor] ?? '') ?? emptyPaths) {
+                if(!this.canBlock.has(importer)) {
+                    this.canBlock.add(importer);
+                    queue.push(importer);
+                }
+            }
+        }
+    }
+}

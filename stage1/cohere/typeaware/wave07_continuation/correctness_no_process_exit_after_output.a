@@ -1,0 +1,131 @@
+import type { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import type { ProcessSymbols } from './process_symbols.a';
+import { ControlFlow } from './wave07_control_flow.a';
+import { ExitState } from './exit_state.a';
+
+const emptyNumbers: number[] = [];
+
+export class NoProcessExitAfterOutput {
+    readonly symbols: ProcessSymbols;
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings, symbols: ProcessSymbols) {
+        this.bindings = bindings;
+        this.symbols = symbols;
+    }
+    analyze(root: number, exits: readonly number[]): number[] {
+        const graph = new ControlFlow(this.bindings, root);
+        const recorded: number[] = [];
+        for(const block of graph.blocks) {
+            for(const index of block.events) {
+                if(
+                    this.symbols.node(index).kind === 'CallExpression' &&
+                    !this.symbols.catchBinding(index, root) &&
+                    this.symbols.exit(index)
+                ) {
+                    recorded.push(index);
+                }
+            }
+        }
+        if(exits.some((index) => !recorded.includes(index))) {
+            return [];
+        }
+        const blocks = [0];
+        const states = [new ExitState([])];
+        const visited = new Set<string>(['0:']);
+        const reported: number[] = [];
+        for(let position = 0; position < blocks.length; position++) {
+            const block = graph.blocks[blocks[position] ?? -1];
+            if(block === undefined) {
+                continue;
+            }
+            let state = states[position] ?? new ExitState([]);
+            let exited = false;
+            for(const index of block.events) {
+                const node = this.symbols.node(index);
+                if(node.kind === 'CallExpression' && !this.symbols.catchBinding(index, root)) {
+                    if(this.symbols.exit(index)) {
+                        if(state.chains.length > 0 && !reported.includes(index)) {
+                            reported.push(index);
+                        }
+                        exited = true;
+                    }
+                    else if(this.symbols.writes(index) && !this.symbols.holdsExit(index)) {
+                        state = state.with(this.symbols.chain(index, root));
+                    }
+                }
+                else if(node.kind === 'Block') {
+                    const parent = this.bindings.parent(index);
+                    if(this.symbols.node(parent).kind === 'CatchClause') {
+                        state = state.entering(this.bindings.parent(parent));
+                    }
+                }
+                if(exited) {
+                    break;
+                }
+            }
+            if(exited) {
+                continue;
+            }
+            for(const next of block.successors) {
+                const key = `${next}:${state.key()}`;
+                if((graph.blocks[next]?.reachable ?? false) && !visited.has(key)) {
+                    visited.add(key);
+                    blocks.push(next);
+                    states.push(state);
+                }
+            }
+        }
+        return exits.filter((index) => reported.includes(index));
+    }
+    run(): void {
+        const roots: number[] = [];
+        const candidates = new Map<number, number[]>();
+        for(let index = 0; index < this.bindings.rules.parser.nodes.length; index++) {
+            if(this.symbols.node(index).kind === 'CallExpression' && this.symbols.exit(index)) {
+                const root = this.symbols.root(index);
+                if(root < 0) {
+                    continue;
+                }
+                if(!roots.includes(root)) {
+                    roots.push(root);
+                    const rootExits: number[] = [];
+                    candidates.set(root, rootExits);
+                }
+                const rootExits = candidates.get(root);
+                if(rootExits !== undefined) {
+                    rootExits.push(index);
+                }
+            }
+        }
+        for(const root of roots) {
+            let writes = false;
+            for(let index = 0; index < this.bindings.rules.parser.nodes.length; index++) {
+                if(
+                    this.symbols.node(index).kind === 'CallExpression' &&
+                    this.symbols.root(index) === root &&
+                    this.symbols.writes(index)
+                ) {
+                    writes = true;
+                    break;
+                }
+            }
+            if(!writes) {
+                continue;
+            }
+            for(const index of this.analyze(root, candidates.get(root) ?? emptyNumbers)) {
+                const node = this.symbols.node(index);
+                this.bindings.rules.findings.push(
+                    new Diagnostic(
+                        'nexus/correctness-no-process-exit-after-output',
+                        'exitAfterOutput',
+                        'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.',
+                        this.bindings.rules.byte(this.bindings.rules.start(node)),
+                        this.bindings.rules.byte(node.end),
+                        '',
+                    ),
+                );
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+export class ModuleImport {
+    readonly kind: string;
+    readonly typeOnly: boolean;
+    readonly dynamic: boolean;
+    readonly require: boolean;
+    readonly literal: boolean;
+    readonly target: string;
+    constructor(kind: string, typeOnly: boolean, dynamic: boolean, require: boolean, literal: boolean, target: string) {
+        this.kind = kind;
+        this.typeOnly = typeOnly;
+        this.dynamic = dynamic;
+        this.require = require;
+        this.literal = literal;
+        this.target = target;
+    }
+}

@@ -1,0 +1,41 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+import { ContextDeclaration } from './context_declaration.a';
+
+export class SymbolContext {
+    readonly identity: number;
+    readonly value: number;
+    readonly alias: number;
+    readonly flags: number;
+    readonly declarations: ContextDeclaration[] = [];
+    readonly aliasFlags: number;
+    readonly aliases: ContextDeclaration[] = [];
+    readonly signature: boolean;
+    returnFlags = 0;
+    readonly selected: ContextDeclaration[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'wave07-symbol-context'));
+        header(frames, 'wave07-symbol-context');
+        this.identity = frames.natural();
+        this.value = frames.natural();
+        this.alias = frames.natural();
+        this.flags = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.declarations.push(new ContextDeclaration(frames));
+        }
+        this.aliasFlags = frames.natural();
+        const aliases = frames.natural();
+        for(let at = 0; at < aliases; at++) {
+            this.aliases.push(new ContextDeclaration(frames));
+        }
+        this.signature = frames.yes();
+        if(this.signature) {
+            this.returnFlags = frames.natural();
+            if(frames.yes()) {
+                this.selected.push(new ContextDeclaration(frames));
+            }
+        }
+        frames.end();
+    }
+}

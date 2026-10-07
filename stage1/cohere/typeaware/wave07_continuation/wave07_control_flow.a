@@ -1,0 +1,35 @@
+import { panic } from 'adamic';
+import type { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+import { FlowBlock } from './flow_block.a';
+
+export class ControlFlow {
+    readonly blocks: FlowBlock[] = [];
+    constructor(bindings: Bindings, root: number) {
+        const frames = new Frames(bindings.rules.ask(root, 'wave07-control-flow'));
+        header(frames, 'wave07-control-flow');
+        const count = frames.natural();
+        if(count === 0) {
+            panic('empty structural control flow');
+        }
+        for(let at = 0; at < count; at++) {
+            const reachable = frames.yes();
+            const successors = frames.ids();
+            if(successors.some((index) => index >= count)) {
+                panic('invalid structural control-flow edge');
+            }
+            const events: number[] = [];
+            const size = frames.natural();
+            for(let event = 0; event < size; event++) {
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                events.push(
+                    bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('structural event absent from native tree'),
+                );
+            }
+            this.blocks.push(new FlowBlock(reachable, successors, events));
+        }
+        frames.end();
+    }
+}

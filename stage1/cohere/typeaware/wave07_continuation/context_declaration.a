@@ -1,0 +1,51 @@
+import type { Frames } from '../frames.ts';
+
+export class ContextDeclaration {
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly declarationFile: boolean;
+    readonly library: boolean;
+    readonly module: boolean;
+    readonly name: string;
+    readonly flags: number;
+    readonly functionFlags: number;
+    readonly body: boolean;
+    bodyStart = 0;
+    bodyEnd = 0;
+    bodyKind = '';
+    bodyText = '';
+    readonly kinds: string[] = [];
+    readonly names: string[] = [];
+    readonly nameKinds: string[] = [];
+    readonly ancestorFlags: number[] = [];
+    readonly global: boolean[] = [];
+    constructor(frames: Frames) {
+        this.file = frames.field();
+        this.kind = frames.field();
+        this.start = frames.natural();
+        this.end = frames.natural();
+        this.declarationFile = frames.yes();
+        this.library = frames.yes();
+        this.module = frames.yes();
+        this.name = frames.field();
+        this.flags = frames.natural();
+        this.functionFlags = frames.natural();
+        this.body = frames.yes();
+        if(this.body) {
+            this.bodyStart = frames.natural();
+            this.bodyEnd = frames.natural();
+            this.bodyKind = frames.field();
+            this.bodyText = frames.field();
+        }
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.kinds.push(frames.field());
+            this.names.push(frames.field());
+            this.nameKinds.push(frames.field());
+            this.ancestorFlags.push(frames.natural());
+            this.global.push(frames.yes());
+        }
+    }
+}

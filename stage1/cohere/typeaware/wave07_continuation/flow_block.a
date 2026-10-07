@@ -1,0 +1,10 @@
+export class FlowBlock {
+    readonly reachable: boolean;
+    readonly successors: number[];
+    readonly events: number[];
+    constructor(reachable: boolean, successors: number[], events: number[]) {
+        this.reachable = reachable;
+        this.successors = successors;
+        this.events = events;
+    }
+}

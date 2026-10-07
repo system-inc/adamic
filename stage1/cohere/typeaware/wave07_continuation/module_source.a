@@ -1,0 +1,27 @@
+import type { Frames } from '../frames.ts';
+import { ModuleImport } from './module_import.a';
+
+export class ModuleSource {
+    readonly file: string;
+    readonly declaration: boolean;
+    readonly text: string;
+    readonly imports: ModuleImport[] = [];
+    constructor(frames: Frames) {
+        this.file = frames.field();
+        this.declaration = frames.yes();
+        this.text = frames.field();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.imports.push(
+                new ModuleImport(
+                    frames.field(),
+                    frames.yes(),
+                    frames.yes(),
+                    frames.yes(),
+                    frames.yes(),
+                    frames.field(),
+                ),
+            );
+        }
+    }
+}

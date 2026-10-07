@@ -1,0 +1,256 @@
+import { panic } from 'adamic';
+import type { ContextDeclaration } from './context_declaration.a';
+import { ProcessSymbols } from './process_symbols.a';
+import type { ProgramModules } from './wave07_program_modules.a';
+import { loadSource } from './load_source.a';
+
+const emptyPaths: string[] = [];
+
+export class BlockingCalls {
+    readonly symbols: ProcessSymbols;
+    readonly modules: ProgramModules;
+    readonly sources = new Map<string, ProcessSymbols>();
+    readonly memo = new Map<string, number>();
+    constructor(symbols: ProcessSymbols, modules: ProgramModules) {
+        this.symbols = symbols;
+        this.modules = modules;
+        this.sources.set(symbols.bindings.rules.path, symbols);
+    }
+    source(file: string): ProcessSymbols {
+        const cached = this.sources.get(file);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const bindings = loadSource(this.symbols.bindings.rules.program, file);
+        const symbols = new ProcessSymbols(bindings);
+        this.sources.set(file, symbols);
+        return symbols;
+    }
+    callLike(symbols: ProcessSymbols, index: number): boolean {
+        return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(symbols.node(index).kind);
+    }
+    args(symbols: ProcessSymbols, index: number): number[] {
+        const node = symbols.node(index);
+        return ['CallExpression', 'NewExpression'].includes(node.kind) && node.list > 0
+            ? node.children.slice(node.children.length - node.list)
+            : [];
+    }
+    functionBody(symbols: ProcessSymbols, index: number): boolean {
+        const node = symbols.node(index);
+        const last = node.children[node.children.length - 1] ?? -1;
+        return (
+            symbols.bindings.functionKind(node.kind) &&
+            (node.kind === 'ArrowFunction' || symbols.node(last).kind === 'Block')
+        );
+    }
+    local(symbols: ProcessSymbols, expression: number): number {
+        const index = symbols.skip(expression);
+        const node = symbols.node(index);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) {
+            return index;
+        }
+        if(node.kind !== 'Identifier') {
+            return -1;
+        }
+        for(const declaration of symbols.context(index).declarations) {
+            if(declaration.file !== symbols.bindings.rules.path) {
+                continue;
+            }
+            const local =
+                symbols.bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ??
+                panic('local declaration absent');
+            if(declaration.kind === 'FunctionDeclaration' && declaration.body) {
+                return local;
+            }
+            if(declaration.kind === 'VariableDeclaration') {
+                const list = symbols.node(symbols.bindings.parent(local));
+                const initialized = symbols.bindings.shape.initializer(local);
+                if(list.kind === 'VariableDeclarationList' && ['2', '6'].includes(list.semantic) && initialized >= 0) {
+                    const value = symbols.skip(initialized);
+                    if(['FunctionExpression', 'ArrowFunction'].includes(symbols.node(value).kind)) {
+                        return value;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    generator(symbols: ProcessSymbols, index: number): boolean {
+        return symbols.node(index).children.some((child) => symbols.node(child).kind === 'AsteriskToken');
+    }
+    mayBlock(symbols: ProcessSymbols, index: number): boolean {
+        const key = `${symbols.bindings.rules.path}:${index}`;
+        const held = this.memo.get(key) ?? 0;
+        if(held > 0) {
+            return held === 1;
+        }
+        this.memo.set(key, 3);
+        const pending = symbols.node(index).children.slice();
+        let result = false;
+        let at = -1;
+        while(at + 1 < pending.length) {
+            at++;
+            const current = pending[at] ?? -1;
+            if(this.callLike(symbols, current) && this.callMayBlock(symbols, current)) {
+                result = true;
+                break;
+            }
+            for(const child of symbols.node(current).children) {
+                pending.push(child);
+            }
+        }
+        this.memo.set(key, result ? 1 : 2);
+        return result;
+    }
+    declaration(declaration: ContextDeclaration, name: string): boolean {
+        if(!this.modules.canBlock.has(declaration.file)) {
+            return declaration.declarationFile && name === 'require';
+        }
+        if(
+            declaration.declarationFile ||
+            (declaration.kind === 'FunctionDeclaration' &&
+                declaration.name === 'blockStandardStreams' &&
+                ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) =>
+                    declaration.file.endsWith(suffix),
+                ))
+        ) {
+            return true;
+        }
+        const symbols = this.source(declaration.file);
+        const local =
+            symbols.bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ??
+            panic('blocking declaration absent');
+        if(
+            ['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(
+                declaration.kind,
+            )
+        ) {
+            if(!declaration.body) {
+                return declaration.kind !== 'FunctionDeclaration' || (declaration.flags & 8388608) !== 0;
+            }
+            return this.mayBlock(symbols, local);
+        }
+        if(declaration.kind === 'VariableDeclaration') {
+            const initializer = symbols.bindings.shape.initializer(local);
+            const value = symbols.skip(initializer);
+            if(['FunctionExpression', 'ArrowFunction'].includes(symbols.node(value).kind)) {
+                return this.mayBlock(symbols, value);
+            }
+        }
+        if(['ClassDeclaration', 'ClassExpression'].includes(declaration.kind)) {
+            return this.mayBlock(symbols, local);
+        }
+        return true;
+    }
+    symbolMayBlock(symbols: ProcessSymbols, name: number): boolean {
+        const context = symbols.context(name);
+        return (
+            context.aliases.length === 0 ||
+            context.aliases.some((declaration) => this.declaration(declaration, symbols.node(name).text))
+        );
+    }
+    handsOn(symbols: ProcessSymbols, index: number): boolean {
+        const current = symbols.skip(index);
+        const node = symbols.node(current);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) {
+            return this.mayBlock(symbols, current);
+        }
+        if(node.kind !== 'Identifier') {
+            return false;
+        }
+        const context = symbols.context(current);
+        return (context.aliasFlags & 16) !== 0 && this.symbolMayBlock(symbols, current);
+    }
+    callMayBlock(symbols: ProcessSymbols, index: number): boolean {
+        const node = symbols.node(index);
+        if(node.kind === 'CallExpression' && symbols.node(node.children[0] ?? -1).kind === 'ImportKeyword') {
+            return true;
+        }
+        if(this.args(symbols, index).some((argument) => this.handsOn(symbols, argument))) {
+            return true;
+        }
+        const callee = symbols.skip(node.children[0] ?? -1);
+        const target = symbols.node(callee);
+        if(['FunctionExpression', 'ArrowFunction'].includes(target.kind)) {
+            return this.mayBlock(symbols, callee);
+        }
+        const name =
+            target.kind === 'PropertyAccessExpression' ? (target.children[target.children.length - 1] ?? -1) : callee;
+        return ['Identifier', 'PropertyAccessExpression'].includes(target.kind)
+            ? this.symbolMayBlock(symbols, name)
+            : true;
+    }
+    topLevel(symbols: ProcessSymbols, root: number): boolean {
+        const pending = symbols.node(root).children.slice();
+        let at = -1;
+        while(at + 1 < pending.length) {
+            at++;
+            const index = pending[at] ?? -1;
+            if(this.functionBody(symbols, index)) {
+                continue;
+            }
+            if(this.callLike(symbols, index) && this.callMayBlock(symbols, index)) {
+                return true;
+            }
+            for(const child of symbols.node(index).children) {
+                pending.push(child);
+            }
+        }
+        return false;
+    }
+    importsBlock(entry: string): boolean {
+        const visited = new Set<string>([entry]);
+        const queue = [entry];
+        let at = -1;
+        while(at + 1 < queue.length) {
+            at++;
+            for(const next of this.modules.edges.get(queue[at] ?? '') ?? emptyPaths) {
+                if(visited.has(next)) {
+                    continue;
+                }
+                visited.add(next);
+                queue.push(next);
+                if(!this.modules.canBlock.has(next)) {
+                    continue;
+                }
+                const file = this.modules.files.get(next);
+                if(file === undefined || file.declaration) {
+                    return true;
+                }
+                const symbols = this.source(next);
+                let root = -1;
+                for(let index = 0; index < symbols.bindings.rules.parser.nodes.length; index++) {
+                    if(symbols.node(index).kind === 'SourceFile') {
+                        root = index;
+                        break;
+                    }
+                }
+                if(this.topLevel(symbols, root)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    argumentsBlock(symbols: ProcessSymbols, index: number): boolean {
+        const pending = this.args(symbols, index);
+        let at = -1;
+        while(at + 1 < pending.length) {
+            at++;
+            const current = pending[at] ?? -1;
+            if(this.functionBody(symbols, current)) {
+                continue;
+            }
+            if(
+                symbols.node(current).kind === 'AwaitExpression' ||
+                (this.callLike(symbols, current) && this.callMayBlock(symbols, current))
+            ) {
+                return true;
+            }
+            for(const child of symbols.node(current).children) {
+                pending.push(child);
+            }
+        }
+        return false;
+    }
+}

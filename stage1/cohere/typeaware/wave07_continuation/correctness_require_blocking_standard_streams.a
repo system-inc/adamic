@@ -1,0 +1,214 @@
+import type { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import type { ProcessSymbols } from './process_symbols.a';
+import type { ProgramModules } from './wave07_program_modules.a';
+import type { BlockingCalls } from './blocking_calls.a';
+import { ControlFlow } from './wave07_control_flow.a';
+import { ExitState } from './exit_state.a';
+import { StreamWalk } from './stream_walk.a';
+
+export class RequireBlockingStandardStreams {
+    readonly bindings: Bindings;
+    readonly symbols: ProcessSymbols;
+    readonly modules: ProgramModules;
+    readonly calls: BlockingCalls;
+    readonly ordered: boolean;
+    constructor(bindings: Bindings, symbols: ProcessSymbols, modules: ProgramModules, calls: BlockingCalls) {
+        this.bindings = bindings;
+        this.symbols = symbols;
+        this.modules = modules;
+        this.calls = calls;
+        this.ordered = modules.canBlock.has(bindings.rules.path);
+    }
+    inRun(index: number, root: number): boolean {
+        let current = this.bindings.parent(index);
+        while(current >= 0 && current !== root) {
+            if(this.calls.functionBody(this.symbols, current)) {
+                return false;
+            }
+            current = this.bindings.parent(current);
+        }
+        return current === root;
+    }
+    analyze(root: number): StreamWalk {
+        const result = new StreamWalk([], []);
+        const graph = new ControlFlow(this.bindings, root);
+        const recorded = new Set<number>();
+        for(const block of graph.blocks) {
+            for(const index of block.events) {
+                const node = this.symbols.node(index);
+                if(this.symbols.catchBinding(index, root)) {
+                    continue;
+                }
+                if(node.kind === 'AwaitExpression' && this.ordered) {
+                    recorded.add(index);
+                }
+                if(this.calls.callLike(this.symbols, index)) {
+                    if(
+                        (node.kind === 'CallExpression' && this.symbols.exit(index)) ||
+                        (this.ordered && this.calls.callMayBlock(this.symbols, index))
+                    ) {
+                        recorded.add(index);
+                    }
+                }
+            }
+        }
+        for(let index = 0; index < this.bindings.rules.parser.nodes.length; index++) {
+            const node = this.symbols.node(index);
+            if(
+                node.kind === 'CallExpression' &&
+                this.symbols.root(index) === root &&
+                this.symbols.exit(index) &&
+                !recorded.has(index)
+            ) {
+                return result;
+            }
+            if(
+                this.ordered &&
+                !recorded.has(index) &&
+                this.inRun(index, root) &&
+                (node.kind === 'AwaitExpression' ||
+                    (this.calls.callLike(this.symbols, index) && this.calls.callMayBlock(this.symbols, index)))
+            ) {
+                return result;
+            }
+        }
+        const blocks = [0];
+        const states = [new ExitState([])];
+        const visited = new Set<string>(['0:']);
+        for(let at = 0; at < blocks.length; at++) {
+            const block = graph.blocks[blocks[at] ?? -1];
+            if(block === undefined) {
+                continue;
+            }
+            let state = states[at] ?? new ExitState([]);
+            let ended = false;
+            for(const index of block.events) {
+                const node = this.symbols.node(index);
+                if(this.symbols.catchBinding(index, root)) {
+                    continue;
+                }
+                if(node.kind === 'AwaitExpression' && this.ordered) {
+                    ended = true;
+                }
+                else if(this.calls.callLike(this.symbols, index)) {
+                    if(node.kind === 'CallExpression' && this.symbols.exit(index)) {
+                        if(state.chains.length > 0 && !result.exits.includes(index)) {
+                            result.exits.push(index);
+                        }
+                        ended = true;
+                    }
+                    else {
+                        if(
+                            node.kind === 'CallExpression' &&
+                            this.symbols.write(index) &&
+                            !this.symbols.holdsExit(index)
+                        ) {
+                            state = state.with(this.symbols.chain(index, root));
+                        }
+                        const callee = node.kind === 'NewExpression' ? -1 : (node.children[0] ?? -1);
+                        const runs = this.calls.local(this.symbols, callee);
+                        const generator = runs >= 0 && this.calls.generator(this.symbols, runs);
+                        if(
+                            runs >= 0 &&
+                            !generator &&
+                            !(this.ordered && this.calls.argumentsBlock(this.symbols, index)) &&
+                            !result.started.includes(runs)
+                        ) {
+                            result.started.push(runs);
+                        }
+                        if(!this.ordered) {
+                            if(generator && !result.started.includes(runs)) {
+                                result.started.push(runs);
+                            }
+                            for(const argument of this.calls.args(this.symbols, index)) {
+                                const handed = this.calls.local(this.symbols, argument);
+                                if(handed >= 0 && !result.started.includes(handed)) {
+                                    result.started.push(handed);
+                                }
+                            }
+                        }
+                        if(this.ordered && this.calls.callMayBlock(this.symbols, index)) {
+                            ended = true;
+                        }
+                    }
+                }
+                else if(node.kind === 'Block') {
+                    const parent = this.bindings.parent(index);
+                    if(this.symbols.node(parent).kind === 'CatchClause') {
+                        state = state.entering(this.bindings.parent(parent));
+                    }
+                }
+                else if(
+                    this.ordered &&
+                    ((node.kind === 'ForOfStatement' &&
+                        node.children.some((child) => this.symbols.node(child).kind === 'AwaitKeyword')) ||
+                        (node.kind === 'VariableStatement' &&
+                            this.symbols.node(node.children[node.children.length - 1] ?? -1).semantic === '6'))
+                ) {
+                    ended = true;
+                }
+                if(ended) {
+                    break;
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            for(const next of block.successors) {
+                const key = `${next}:${state.key()}`;
+                if((graph.blocks[next]?.reachable ?? false) && !visited.has(key)) {
+                    visited.add(key);
+                    blocks.push(next);
+                    states.push(state);
+                }
+            }
+        }
+        return result;
+    }
+    run(root: number): void {
+        const shebang = this.bindings.rules.scanner.text.startsWith('#!');
+        if(!shebang && this.modules.imported.has(this.bindings.rules.path)) {
+            return;
+        }
+        if(this.ordered && this.calls.importsBlock(this.bindings.rules.path)) {
+            return;
+        }
+        const reported: number[] = [];
+        const queued = new Set<number>([root]);
+        const roots = [root];
+        let at = -1;
+        while(at + 1 < roots.length) {
+            at++;
+            const result = this.analyze(roots[at] ?? -1);
+            for(const exit of result.exits) {
+                if(!reported.includes(exit)) {
+                    reported.push(exit);
+                }
+            }
+            for(const next of result.started) {
+                if(!queued.has(next)) {
+                    queued.add(next);
+                    roots.push(next);
+                }
+            }
+        }
+        if(reported.length === 0) {
+            return;
+        }
+        reported.sort((left, right) => this.symbols.node(left).pos - this.symbols.node(right).pos);
+        const node = this.symbols.node(reported[0] ?? -1);
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = reported.length > 1 ? `, the first of ${reported.length} such exits in this file` : '';
+        this.bindings.rules.findings.push(
+            new Diagnostic(
+                'nexus/correctness-require-blocking-standard-streams',
+                'exitBeforeBlockingStandardStreams',
+                `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`,
+                this.bindings.rules.byte(this.bindings.rules.start(node)),
+                this.bindings.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+}

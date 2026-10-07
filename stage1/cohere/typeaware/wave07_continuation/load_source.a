@@ -1,0 +1,26 @@
+import { panic, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+
+export function loadSource(program: number, path: string): Bindings {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+    const rules = new Rules(program, path, parser, scanner, offsets, unary);
+    const root = parser.file();
+    let slots = parser.nodes.length;
+    while(slots > 0) {
+        rules.parents.push(-1);
+        slots--;
+    }
+    rules.links(root, -1);
+    return new Bindings(rules);
+}

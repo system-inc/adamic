@@ -1,0 +1,255 @@
+import { panic } from 'adamic';
+import type { Bindings } from '../bindings.ts';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import { waveNode } from '../wave_node.a';
+import { SymbolContext } from './wave07_symbol_context.a';
+import { loadSource } from './load_source.a';
+
+export class ProcessSymbols {
+    readonly bindings: Bindings;
+    readonly contexts = new Map<number, SymbolContext>();
+    readonly sources = new Map<string, Bindings>();
+    readonly writers = new Map<string, boolean>();
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+        this.sources.set(bindings.rules.path, bindings);
+    }
+    node(index: number): ParseNode {
+        return waveNode(this.bindings.rules.parser, index);
+    }
+    context(index: number): SymbolContext {
+        const cached = this.contexts.get(index);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const result = new SymbolContext(this.bindings.rules, index);
+        this.contexts.set(index, result);
+        return result;
+    }
+    skip(index: number): number {
+        return index < 0 ? index : this.bindings.rules.skip(index);
+    }
+    rootKind(index: number): boolean {
+        const kind = this.node(index).kind;
+        return (
+            ['SourceFile', 'ClassStaticBlockDeclaration'].includes(kind) ||
+            this.bindings.functionKind(kind) ||
+            (kind === 'PropertyDeclaration' && this.bindings.shape.initializer(index) >= 0)
+        );
+    }
+    root(index: number): number {
+        let previous = index;
+        let decorator = -1;
+        let current = this.bindings.parent(index);
+        while(current >= 0) {
+            const node = this.node(current);
+            if(node.kind === 'Decorator') {
+                decorator = current;
+            }
+            if(node.kind === 'SourceFile') {
+                return current;
+            }
+            if(this.rootKind(current)) {
+                if(node.kind === 'PropertyDeclaration') {
+                    if(this.bindings.shape.initializer(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(
+                    this.bindings.shape.name(current) !== previous &&
+                    !(decorator >= 0 && [current, previous].includes(this.bindings.parent(decorator)))
+                ) {
+                    return current;
+                }
+            }
+            previous = current;
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    member(index: number): number {
+        const node = this.node(index);
+        if(node.kind === 'Identifier') {
+            return index;
+        }
+        const last = node.children[node.children.length - 1] ?? -1;
+        return node.kind === 'PropertyAccessExpression' && this.node(last).kind === 'Identifier' ? last : -1;
+    }
+    processMember(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const context = this.context(index);
+        return (
+            context.aliases.length > 0 &&
+            context.aliases.every(
+                (declaration) =>
+                    declaration.declarationFile &&
+                    ['MethodSignature', 'PropertySignature'].includes(declaration.kind) &&
+                    declaration.kinds[0] === 'InterfaceDeclaration' &&
+                    declaration.names[0] === 'Process' &&
+                    declaration.kinds[1] === 'ModuleBlock' &&
+                    declaration.kinds[2] === 'ModuleDeclaration' &&
+                    declaration.names[2] === 'NodeJS' &&
+                    declaration.nameKinds[2] === 'Identifier',
+            )
+        );
+    }
+    exit(index: number): boolean {
+        const name = this.member(this.skip(this.node(index).children[0] ?? -1));
+        return name >= 0 && this.node(name).text === 'exit' && this.processMember(name);
+    }
+    write(index: number): boolean {
+        const callee = this.skip(this.node(index).children[0] ?? -1);
+        const access = this.node(callee);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(access.kind)) {
+            return false;
+        }
+        const last = this.node(access.children[access.children.length - 1] ?? -1);
+        const name = ['Identifier', 'StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(
+            last.kind,
+        )
+            ? last.text
+            : '';
+        const receiver = this.skip(access.children[0] ?? -1);
+        if(
+            ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(name) &&
+            this.node(receiver).kind === 'Identifier' &&
+            this.node(receiver).text === 'console'
+        ) {
+            const context = this.context(receiver);
+            return (
+                context.declarations.length > 0 &&
+                context.declarations.every(
+                    (declaration) =>
+                        declaration.declarationFile &&
+                        declaration.kind === 'VariableDeclaration' &&
+                        declaration.kinds[0] === 'VariableDeclarationList' &&
+                        declaration.kinds[1] === 'VariableStatement' &&
+                        ((declaration.kinds[2] === 'SourceFile' && !declaration.module) ||
+                            (declaration.kinds[2] === 'ModuleBlock' && declaration.global[3] === true)),
+                )
+            );
+        }
+        const stream = this.member(receiver);
+        return (
+            name === 'write' &&
+            stream >= 0 &&
+            ['stdout', 'stderr'].includes(this.node(stream).text) &&
+            this.processMember(stream)
+        );
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.node(index).children) {
+            if(this.rootKind(child)) {
+                continue;
+            }
+            if((this.node(child).kind === 'CallExpression' && this.exit(child)) || this.holdsExit(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        let previous = index;
+        let current = this.bindings.parent(index);
+        while(current >= 0 && current !== root) {
+            if(
+                this.node(current).kind === 'CatchClause' &&
+                this.node(current).children[0] === previous &&
+                this.node(previous).kind === 'VariableDeclaration'
+            ) {
+                return true;
+            }
+            previous = current;
+            current = this.bindings.parent(current);
+        }
+        return false;
+    }
+    chain(index: number, root: number): string {
+        const ids: number[] = [];
+        let previous = index;
+        let current = this.bindings.parent(index);
+        while(current >= 0 && current !== root) {
+            const node = this.node(current);
+            if(
+                node.kind === 'TryStatement' &&
+                node.children[0] === previous &&
+                node.children.some((child) => this.node(child).kind === 'CatchClause')
+            ) {
+                ids.push(current);
+            }
+            previous = current;
+            current = this.bindings.parent(current);
+        }
+        ids.sort((left, right) => left - right);
+        return `,${ids.length > 0 ? `${ids.join(',')},` : ''}`;
+    }
+    bodyWrites(index: number): boolean {
+        const context = this.context(index);
+        const declaration = context.selected[0];
+        if(
+            declaration === undefined ||
+            !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(
+                declaration.kind,
+            ) ||
+            !declaration.body ||
+            (declaration.file !== this.bindings.rules.path && !declaration.module) ||
+            (declaration.functionFlags & 1) !== 0 ||
+            (context.returnFlags & 131072) !== 0
+        ) {
+            return false;
+        }
+        let outer = index;
+        while(this.node(this.bindings.parent(outer)).kind === 'ParenthesizedExpression') {
+            outer = this.bindings.parent(outer);
+        }
+        if((declaration.functionFlags & 2) !== 0 && this.node(this.bindings.parent(outer)).kind !== 'AwaitExpression') {
+            return false;
+        }
+        const key = `${declaration.file}:${declaration.start}:${declaration.end}`;
+        const cached = this.writers.get(key);
+        if(cached !== undefined) {
+            return cached;
+        }
+        let bindings = this.sources.get(declaration.file);
+        if(bindings === undefined) {
+            bindings = loadSource(this.bindings.rules.program, declaration.file);
+            this.sources.set(declaration.file, bindings);
+        }
+        const body =
+            bindings.spans.get(`${declaration.bodyKind}:${declaration.bodyStart}:${declaration.bodyEnd}`) ??
+            panic('resolved body absent from native tree');
+        const symbols = new ProcessSymbols(bindings);
+        let wrote = false;
+        let exited = false;
+        const pending = symbols.node(body).kind === 'Block' ? symbols.node(body).children.slice() : [body];
+        let cursor = 0;
+        while(cursor < pending.length) {
+            const current = pending[cursor] ?? -1;
+            cursor++;
+            if(symbols.rootKind(current)) {
+                continue;
+            }
+            const node = symbols.node(current);
+            if(node.kind === 'CallExpression') {
+                if(symbols.exit(current)) {
+                    exited = true;
+                    break;
+                }
+                if(symbols.write(current)) {
+                    wrote = true;
+                }
+            }
+            for(const child of node.children) {
+                pending.push(child);
+            }
+        }
+        const result = wrote && !exited;
+        this.writers.set(key, result);
+        return result;
+    }
+    writes(index: number): boolean {
+        return this.write(index) || this.bodyWrites(index);
+    }
+}
