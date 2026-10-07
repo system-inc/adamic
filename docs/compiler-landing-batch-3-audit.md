@@ -218,3 +218,5 @@ Combined the incoming unsafe-declaration and class-merge pass with every existin
 The unknown-narrowing counts merge had placed weak rows at filesystem indices. Corrected the weak offset and regenerated on Linux; all six weak rows and all filesystem rows survive. Restoring the offset collision failed TestCountsAreRecorded (60.295s). Final generation passed 29.032s before the gate.
 
 Checkpoint 12: uncached oracle 350.222s, lower 121.680s, native 272.100s and stage3 50.471s passed. Flow failed only because its positive-program glob included the new deliberately refused arrow_block_structural.a; that probe remains covered by TestArrowBlockStructuralViewRefused and is excluded from graph tracing. Full flow is being rerun. No production output disagreement. Logs: /tmp/landing-batch-3-checkpoint-12.log and /tmp/landing-batch-3-12-*.log.
+
+Checkpoint 12 repaired flow passed uncached in 125.565s; flow vet passed. All five required packages are green on the unchanged compiler tree. The restored counts mutant source matches its tested baseline; no record Node evidence changed.

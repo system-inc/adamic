@@ -43,8 +43,10 @@ func programs(t *testing.T) []string {
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
 	// and operator shapes here, and the oracle still runs the full sweep.
+	// The structural block-arrow probe is deliberately refused and held by
+	// TestArrowBlockStructuralViewRefused, so it has no lowered graph to trace.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
+		return filepath.Base(path) == "arrow_block_structural.a" || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
