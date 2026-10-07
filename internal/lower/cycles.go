@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -56,6 +58,13 @@ type cycleFinder struct {
 	writes []fresh.Write
 
 	libraryIterators []libraryIteratorCapture
+
+	// Outgoing edges are fixed after lowering and type collection. A node reached from many
+	// slots must not rescan all program shapes and closures for every holder.
+	edges                map[cycleNode][]cycleEdge
+	shapeRepresentatives map[*checker.Type]*checker.Type
+	shapeSignatures      map[string]*checker.Type
+	shapeRelations       map[[2]*checker.Type]bool
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -351,23 +360,65 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 	visited := map[cycleNode]bool{}
 	queue := []cycleNode{{proven: from}}
+	// Tracing records the same breadth-first search, including structural matches.
+	// It does not change which edges are followed or which slots are refused.
+	tracing := os.Getenv("ADAMIC_TRACE_CYCLES") == "1"
+	type step struct {
+		parent cycleNode
+		edge   string
+	}
+	var parents map[cycleNode]step
+	root := cycleNode{proven: from}
+	if tracing {
+		parents = map[cycleNode]step{root: {}}
+	}
+	var current cycleNode
+	enqueue := func(next cycleNode, edge string) {
+		if tracing {
+			if _, found := parents[next]; !found {
+				parents[next] = step{current, edge}
+			}
+		}
+		queue = append(queue, next)
+	}
+	trace := func(last cycleNode, edge string) {
+		if !tracing {
+			return
+		}
+		path := []cycleNode{last}
+		for path[len(path)-1] != root {
+			path = append(path, parents[path[len(path)-1]].parent)
+		}
+		fmt.Fprintf(os.Stderr, "cycle reach: %s -- slot contents --> %s\n", f.cycleNodeName(target), f.cycleNodeName(root))
+		for index := len(path) - 1; index > 0; index-- {
+			next := path[index-1]
+			fmt.Fprintf(os.Stderr, "  %s -- %s --> %s\n", f.cycleNodeName(path[index]), parents[next].edge, f.cycleNodeName(next))
+		}
+		fmt.Fprintf(os.Stderr, "  %s -- %s --> %s\n", f.cycleNodeName(last), edge, f.cycleNodeName(target))
+	}
 	for len(queue) > 0 {
 		node := queue[0]
+		current = node
 		queue = queue[1:]
-		if visited[node] {
+		identity := node
+		if !tracing && node.proven != nil {
+			// Identical plain literals have identical member types and shape relations.
+			// Their only different outgoing edge is the omitted self-shape edge,
+			// which cannot add reachability. Visit that equivalence class once.
+			// Tracing keeps original nodes to preserve the exact breadth-first path.
+			identity.proven = f.shapeRepresentative(node.proven)
+		}
+		if visited[identity] {
 			continue
 		}
-		visited[node] = true
+		visited[identity] = true
 		if node.cell != 0 {
 			if node == target {
+				trace(node, "same captured cell")
 				return true
 			}
-			if proven := f.l.localTypes[node.cell-1]; proven != nil {
-				queue = append(queue, cycleNode{proven: proven})
-			}
-			// A this shared by every instantiation of a class held the same way is each of them.
-			for _, proven := range f.l.localAlso[node.cell-1] {
-				queue = append(queue, cycleNode{proven: proven})
+			for _, edge := range f.outgoing(node, tracing) {
+				enqueue(edge.next, edge.name)
 			}
 			continue
 		}
@@ -379,7 +430,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 			for _, member := range proven.Types() {
-				queue = append(queue, cycleNode{proven: member})
+				enqueue(cycleNode{proven: member}, "union or intersection member")
 			}
 			continue
 		}
@@ -387,18 +438,54 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			continue
 		}
 		if target.proven != nil && f.related(proven, target.proven) {
+			trace(node, "related holder types")
 			return true
 		}
+		for _, edge := range f.outgoing(node, tracing) {
+			enqueue(edge.next, edge.name)
+		}
+	}
+	return false
+}
+
+// cycleEdge retains the traversal order and the trace label of an outgoing edge.
+type cycleEdge struct {
+	next cycleNode
+	name string
+}
+
+// outgoing memoizes only target-independent edges, never a reach decision. In particular,
+// related holder types are still checked at the same point in each breadth-first search.
+func (f *cycleFinder) outgoing(node cycleNode, tracing bool) []cycleEdge {
+	if edges, found := f.edges[node]; found {
+		return edges
+	}
+	var edges []cycleEdge
+	appendEdge := func(next cycleNode, name string) {
+		edges = append(edges, cycleEdge{next, name})
+	}
+	if node.cell != 0 {
+		if proven := f.l.localTypes[node.cell-1]; proven != nil {
+			appendEdge(cycleNode{proven: proven}, "captured cell contents")
+		}
+		// A this shared by every instantiation has all the original cell-content edges.
+		for _, proven := range f.l.localAlso[node.cell-1] {
+			appendEdge(cycleNode{proven: proven}, "captured cell contents")
+		}
+	} else {
+		proven := node.proven
 		switch {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
-			queue = append(queue, f.libraryIteratorCaptures(proven)...)
+			for _, capture := range f.libraryIteratorCaptures(proven) {
+				appendEdge(capture, "library iterator capture")
+			}
 		case f.isFunction(proven):
 			// Construct signatures can hide constructor objects behind an interface.
 			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 				for symbol := range f.l.statics {
 					actual := f.l.checker.GetTypeOfSymbol(symbol)
 					if f.l.checker.IsTypeAssignableTo(actual, proven) {
-						queue = append(queue, cycleNode{proven: actual})
+						appendEdge(cycleNode{proven: actual}, "assignable constructor")
 					}
 				}
 			}
@@ -409,39 +496,125 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					continue
 				}
 				for _, local := range f.l.result.Functions[closure.function].Environment {
-					queue = append(queue, cycleNode{cell: local + 1})
+					edge := "closure capture"
+					if tracing {
+						edge += " at " + fmt.Sprint(f.l.program.Where(closure.node))
+					}
+					appendEdge(cycleNode{cell: local + 1}, edge)
 				}
 			}
 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
-				queue = append(queue, cycleNode{proven: argument})
+				appendEdge(cycleNode{proven: argument}, "collection type argument")
 			}
 		default:
 			if f.l.isStaticType(proven) {
 				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
-					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+					appendEdge(cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))}, "static base")
 				}
 			}
 			for _, accessor := range f.l.accessorCaptures {
 				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
 					for _, local := range f.l.result.Functions[accessor.function].Environment {
-						queue = append(queue, cycleNode{cell: local + 1})
+						appendEdge(cycleNode{cell: local + 1}, "accessor capture")
 					}
 				}
 			}
 			for _, field := range f.fields(proven) {
-				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+				appendEdge(cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)}, "field "+field.Name)
 			}
 			// A value seen as this type may be any object type the program has that can be seen as
 			// it, with fields this type doesn't show.
 			for _, shape := range f.shapes {
-				if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
-					queue = append(queue, cycleNode{proven: shape})
+				if shape != proven && f.shapeAssignable(shape, proven) {
+					appendEdge(cycleNode{proven: shape}, "assignable program shape")
 				}
 			}
 		}
 	}
-	return false
+	if f.edges == nil {
+		f.edges = map[cycleNode][]cycleEdge{}
+	}
+	f.edges[node] = edges
+	return edges
+}
+
+// shapeAssignable reuses checker decisions for identical plain object literals. It
+// still emits each original shape edge: representatives never replace graph nodes.
+func (f *cycleFinder) shapeAssignable(from, to *checker.Type) bool {
+	key := [2]*checker.Type{f.shapeRepresentative(from), f.shapeRepresentative(to)}
+	if result, found := f.shapeRelations[key]; found {
+		return result
+	}
+	result := f.l.checker.IsTypeAssignableTo(from, to)
+	if f.shapeRelations == nil {
+		f.shapeRelations = map[[2]*checker.Type]bool{}
+	}
+	f.shapeRelations[key] = result
+	return result
+}
+
+// shapeRepresentative interns only plain literal records whose members are declared
+// directly in that literal. Equal keys retain freshness, member order, flags, readonly
+// status and exact member types. The checker additionally confirms type identity.
+// Classes, references, signatures, indexes, methods, accessors and spread members
+// keep their original identities, including any nominal or declaration-dependent rules.
+func (f *cycleFinder) shapeRepresentative(proven *checker.Type) *checker.Type {
+	if representative, found := f.shapeRepresentatives[proven]; found {
+		return representative
+	}
+	representative := proven
+	literal := proven.Symbol()
+	if literal != nil && len(literal.Declarations) == 1 && literal.Declarations[0].Kind == ast.KindObjectLiteralExpression &&
+		proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsObjectLiteral != 0 &&
+		proven.ObjectFlags()&checker.ObjectFlagsReference == 0 &&
+		len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 &&
+		len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0 &&
+		len(f.l.checker.GetIndexInfosOfType(proven)) == 0 {
+		var signature strings.Builder
+		fmt.Fprintf(&signature, "%d/%d;", proven.Flags(), proven.ObjectFlags())
+		plain := true
+		for _, property := range f.l.checker.GetPropertiesOfType(proven) {
+			if len(property.Declarations) != 1 {
+				plain = false
+				break
+			}
+			declaration := property.Declarations[0]
+			if (declaration.Kind != ast.KindPropertyAssignment && declaration.Kind != ast.KindShorthandPropertyAssignment) ||
+				declaration.Parent != literal.Declarations[0] {
+				plain = false
+				break
+			}
+			fmt.Fprintf(&signature, "%q/%d/%d/%t/%p;", property.Name, property.Flags, property.CheckFlags,
+				f.l.checker.IsReadonlySymbol(property), f.l.checker.GetTypeOfSymbol(property))
+		}
+		if plain {
+			key := signature.String()
+			if earlier := f.shapeSignatures[key]; earlier != nil {
+				if checker.Checker_isTypeIdenticalTo(f.l.checker, proven, earlier) {
+					representative = earlier
+				}
+			} else {
+				if f.shapeSignatures == nil {
+					f.shapeSignatures = map[string]*checker.Type{}
+				}
+				f.shapeSignatures[key] = proven
+			}
+		}
+	}
+	if f.shapeRepresentatives == nil {
+		f.shapeRepresentatives = map[*checker.Type]*checker.Type{}
+	}
+	f.shapeRepresentatives[proven] = representative
+	return representative
+}
+
+// cycleNodeName identifies both type holders and captured variable holders in a debug path.
+func (f *cycleFinder) cycleNodeName(node cycleNode) string {
+	if node.cell != 0 {
+		return "cell " + f.l.result.Locals[node.cell-1].Name
+	}
+	return f.l.checker.TypeToString(node.proven)
 }
 
 // present is a type as written without undefined, as Weak<Target> wants its Target.
