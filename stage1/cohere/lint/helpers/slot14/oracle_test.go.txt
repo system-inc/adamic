@@ -1,0 +1,29 @@
+package tailwind
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"strings"
+	"testing"
+)
+
+func TestSlot14LeadingInteger(t *testing.T) {
+	data, err := os.ReadFile(os.Getenv("SLOT14_INPUT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var inputs []string
+	if err := json.Unmarshal(data, &inputs); err != nil {
+		t.Fatal(err)
+	}
+	var output strings.Builder
+	for _, input := range inputs {
+		value, valid := leadingInteger(input)
+		bits := uint64(value)
+		fmt.Fprintf(&output, "%t\t%d\t%d,%d,%d,%d\n", valid, value, bits&65535, (bits>>16)&65535, (bits>>32)&65535, (bits>>48)&65535)
+	}
+	if err := os.WriteFile(os.Getenv("SLOT14_OUTPUT"), []byte(output.String()), 0644); err != nil {
+		t.Fatal(err)
+	}
+}

@@ -1,0 +1,25 @@
+export interface StaticDeclaration {
+    readonly property: string;
+    readonly value: string;
+    readonly valuePresent: boolean;
+    readonly important: boolean;
+}
+// Only declaration fields are meaningful for this node kind in Go's CSS AST.
+export class DeclarationNode {
+    readonly kind = 'declaration';
+    readonly property: string;
+    readonly value: string;
+    readonly valuePresent: boolean;
+    readonly important: boolean;
+    constructor(declaration: StaticDeclaration) {
+        this.property = declaration.property;
+        this.value = declaration.value;
+        this.valuePresent = declaration.valuePresent;
+        this.important = declaration.important;
+    }
+}
+export function nodesFromStaticDeclarations(declarations: readonly StaticDeclaration[]): DeclarationNode[] {
+    const nodes: DeclarationNode[] = [];
+    for(const declaration of declarations) { nodes.push(new DeclarationNode(declaration)); }
+    return nodes;
+}

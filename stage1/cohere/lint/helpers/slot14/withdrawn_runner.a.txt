@@ -1,0 +1,12 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { leadingInteger } from './leading_integer.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing input'));
+if(file.kind === 'Error') { panic(file.message); }
+const inputs = new OptionsJson(file.text);
+const root = inputs.parse();
+if(root < 0 || inputs.error !== '') { panic(inputs.error); }
+for(const index of inputs.node(root).children) {
+    const result = leadingInteger(inputs.node(index).text);
+    console.log(String(result.valid) + '\t' + result.decimal + '\t' + result.limbs.join(','));
+}

@@ -1,0 +1,15 @@
+scratch=/tmp/adamic-gate/helper14-508ffmm6
+enforce-canonical-classes: upstream exit=1, actual leadingInteger calls=0, consumer source controls=185
+enforce-consistent-class-order: upstream exit=0, actual leadingInteger calls=0, consumer source controls=178
+enforce-consistent-variant-order: upstream exit=0, actual leadingInteger calls=0, consumer source controls=30
+enforce-shorthand-classes: upstream exit=0, actual leadingInteger calls=0, consumer source controls=85
+no-conflicting-classes: upstream exit=0, actual leadingInteger calls=0, consumer source controls=126
+no-unknown-classes: upstream exit=1, actual leadingInteger calls=0, consumer source controls=134
+Node: exact 4761 inputs, 160778 bytes
+native: exact 4761 inputs, 160778 bytes
+emitted JavaScript: exact 4761 inputs, 160778 bytes
+Node: compiling exit-zero clean-stderr sign mutant caught only by Go comparison
+native: compiling exit-zero clean-stderr sign mutant caught only by Go comparison
+emitted JavaScript: compiling exit-zero clean-stderr sign mutant caught only by Go comparison
+PASS bounded helper four-way comparison and semantic mutant
+Unpassed upstream/live consumer coverage: ['enforce-canonical-classes', 'enforce-consistent-class-order', 'enforce-consistent-variant-order', 'enforce-shorthand-classes', 'no-conflicting-classes', 'no-unknown-classes']

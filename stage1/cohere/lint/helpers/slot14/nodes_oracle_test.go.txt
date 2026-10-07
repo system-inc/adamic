@@ -1,0 +1,75 @@
+package tailwind
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"sort"
+	"strconv"
+	"strings"
+	"testing"
+	"unicode/utf16"
+)
+
+func slot14Units(s string) string {
+	var parts []string
+	for _, v := range utf16.Encode([]rune(s)) {
+		parts = append(parts, strconv.Itoa(int(v)))
+	}
+	return strings.Join(parts, ",")
+}
+func TestSlot14Nodes(t *testing.T) {
+	var cases [][]StaticDeclaration
+	var keys []string
+	for key := range FrameworkStaticDeclarations {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		cases = append(cases, FrameworkStaticDeclarations[key])
+	}
+	cases = append(cases, nil, []StaticDeclaration{})
+	for _, property := range []string{"", "display", "--tw-sort", "😀", "é", "\x00\t\n"} {
+		for _, value := range []string{"", "flex", "initial", "😀", "\x00\t\n"} {
+			for _, present := range []bool{false, true} {
+				for _, important := range []bool{false, true} {
+					d := StaticDeclaration{Property: property, Value: value, ValuePresent: present, Important: important}
+					cases = append(cases, []StaticDeclaration{d, d})
+				}
+			}
+		}
+	}
+	// Empty Go slices and nil both map to an empty Adamic array. Nodes preserve order.
+	for i, ds := range cases {
+		if ds == nil {
+			cases[i] = []StaticDeclaration{}
+		}
+	}
+	data, e := json.Marshal(cases)
+	if e != nil {
+		t.Fatal(e)
+	}
+	if e = os.WriteFile(os.Getenv("SLOT14_CASES"), data, 0644); e != nil {
+		t.Fatal(e)
+	}
+	var output strings.Builder
+	for _, ds := range cases {
+		nodes := nodesFromStaticDeclarations(ds)
+		again := nodesFromStaticDeclarations(ds)
+		shared := false
+		if len(nodes) > 0 {
+			shared = &nodes[0] == &again[0]
+		}
+		fmt.Fprintf(&output, "%d\n%t\n", len(nodes), shared)
+		for i, node := range nodes {
+			fmt.Fprintf(&output, "%t\n%s\t%s\t%s\t%t\t%t\n", node == again[i], node.Kind, slot14Units(node.Property), slot14Units(node.Value), node.ValuePresent, node.Important)
+			if node.Context != nil || node.Nodes != nil {
+				t.Fatal("unexpected container state")
+			}
+		}
+	}
+	if e = os.WriteFile(os.Getenv("SLOT14_OUTPUT"), []byte(output.String()), 0644); e != nil {
+		t.Fatal(e)
+	}
+	t.Logf("framework statics=%d cases=%d", len(keys), len(cases))
+}

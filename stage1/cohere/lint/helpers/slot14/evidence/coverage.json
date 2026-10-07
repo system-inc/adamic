@@ -1,0 +1,38 @@
+{
+  "enforce-canonical-classes": {
+    "upstream_exit": 1,
+    "live_calls": 0,
+    "source_controls": 185,
+    "source": "cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go"
+  },
+  "enforce-consistent-class-order": {
+    "upstream_exit": 0,
+    "live_calls": 0,
+    "source_controls": 178,
+    "source": "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go"
+  },
+  "enforce-consistent-variant-order": {
+    "upstream_exit": 0,
+    "live_calls": 0,
+    "source_controls": 30,
+    "source": "cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go"
+  },
+  "enforce-shorthand-classes": {
+    "upstream_exit": 0,
+    "live_calls": 0,
+    "source_controls": 85,
+    "source": "cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go"
+  },
+  "no-conflicting-classes": {
+    "upstream_exit": 0,
+    "live_calls": 0,
+    "source_controls": 126,
+    "source": "cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go"
+  },
+  "no-unknown-classes": {
+    "upstream_exit": 1,
+    "live_calls": 0,
+    "source_controls": 134,
+    "source": "cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go"
+  }
+}

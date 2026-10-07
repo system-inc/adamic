@@ -39,3 +39,19 @@ Tailwind rules above, zero final blockers alone. This ties the highest unclaimed
 concrete-symbol count. Preserve sequence, every property/value/presence/important
 field, empty input, fresh output list and fresh declaration allocation. Real Go
 framework declarations and independent controls decide behavior. Push before code.
+
+## Second race and final outcome
+
+Withdraw nodesFromStaticDeclarations: slot 09 claim 4d352341 at 02:35:21 UTC
+precedes our 71e76328 at 02:36:10 UTC. Final refresh inspected 416 origin refs
+and 17 distinct helper claim blobs. Both duplicates are excluded from executable
+delivery and counted as zero prerequisite removals. Sources are archived as
+.a.txt witnesses solely to reproduce their external comparisons. No active
+helper reservation remains. No other helper is claimed.
+
+Stop on the observed fixture blocker: all six original consumer suites recorded
+zero live calls. Canonical/unknown guards fail because the pinned Go fixtures
+require a missing Tailwind installation and Kirk-local theme.css under
+/Users/kirkouimet/Projects/ahra/app/_theme/styles. Four suites exit zero through
+skips, which is not a live consumer parity pass. Reproduction, independent
+Go/helper evidence, mutants and exact limits are in ../slot14/REPORT.md.

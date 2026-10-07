@@ -1,0 +1,30 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { nodesFromStaticDeclarations, type StaticDeclaration } from './nodes_from_static_declarations.a';
+function units(text: string): string {
+    const codes: number[] = [];
+    for(let i = 0; i < text.length; i++) { codes.push(text.charCodeAt(i)); }
+    return codes.join(',');
+}
+const file = readTextFile(programArguments()[0] ?? panic('missing input'));
+if(file.kind === 'Error') { panic(file.message); }
+const input = new OptionsJson(file.text); const root = input.parse();
+if(root < 0 || input.error !== '') { panic(input.error); }
+for(const item of input.node(root).children) {
+    const declarations: StaticDeclaration[] = [];
+    for(const declaration of input.node(item).children) {
+        declarations.push({property: input.node(input.field(declaration, 'Property')).text,
+            value: input.node(input.field(declaration, 'Value')).text,
+            valuePresent: input.node(input.field(declaration, 'ValuePresent')).text === 'true',
+            important: input.node(input.field(declaration, 'Important')).text === 'true'});
+    }
+    const nodes = nodesFromStaticDeclarations(declarations);
+    const again = nodesFromStaticDeclarations(declarations);
+    console.log(String(nodes.length));
+    console.log(String(nodes === again));
+    for(let i = 0; i < nodes.length; i++) {
+        const node = nodes[i] ?? panic('missing node');
+        console.log(String(node === again[i]));
+        console.log(node.kind + '\t' + units(node.property) + '\t' + units(node.value) + '\t' + String(node.valuePresent) + '\t' + String(node.important));
+    }
+}

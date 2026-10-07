@@ -1,0 +1,28 @@
+package tailwind
+
+import (
+	"encoding/json"
+	"os"
+	"sync"
+)
+
+var slot14Lock sync.Mutex
+
+func slot14Capture(value string) {
+	path := os.Getenv("SLOT14_CAPTURE")
+	if path == "" {
+		return
+	}
+	slot14Lock.Lock()
+	defer slot14Lock.Unlock()
+	f, e := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	if e != nil {
+		panic(e)
+	}
+	if e = json.NewEncoder(f).Encode(value); e != nil {
+		panic(e)
+	}
+	if e = f.Close(); e != nil {
+		panic(e)
+	}
+}

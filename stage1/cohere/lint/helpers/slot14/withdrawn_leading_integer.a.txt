@@ -1,0 +1,62 @@
+import { panic } from 'adamic';
+// Go int64 arithmetic, represented by four exact unsigned base-65536 limbs.
+// Consumers retain this exact result instead of rounding it to a JS number.
+export class LeadingInteger {
+    readonly valid: boolean;
+    readonly limbs: readonly number[];
+    readonly decimal: string;
+    constructor(valid: boolean, limbs: number[], decimal: string) {
+        this.valid = valid; this.limbs = limbs; this.decimal = decimal;
+    }
+}
+export function leadingInteger(value: string): LeadingInteger {
+    let index = 0;
+    while(index < value.length && (value[index] === ' ' || value[index] === '\t' || value[index] === '\n' || value[index] === '\r')) { index++; }
+    let negative = false;
+    if(index < value.length && (value[index] === '+' || value[index] === '-')) {
+        negative = value[index] === '-'; index++;
+    }
+    const start = index;
+    const limbs = [0, 0, 0, 0];
+    while(index < value.length && (value[index] ?? '') >= '0' && (value[index] ?? '') <= '9') {
+        let carry = value.charCodeAt(index) - 48;
+        for(let part = 0; part < 4; part++) {
+            const multiplied = (limbs[part] ?? panic('missing limb')) * 10 + carry;
+            limbs[part] = multiplied % 65536;
+            carry = Math.floor(multiplied / 65536);
+        }
+        index++;
+    }
+    if(index === start) { return new LeadingInteger(false, limbs, '0'); }
+    if(negative) {
+        let carry = 1;
+        for(let part = 0; part < 4; part++) {
+            const complemented = 65535 - (limbs[part] ?? panic('missing limb')) + carry;
+            limbs[part] = complemented % 65536;
+            carry = Math.floor(complemented / 65536);
+        }
+    }
+    const signed = (limbs[3] ?? panic('missing limb')) >= 32768;
+    const magnitude = limbs.slice();
+    if(signed) {
+        let carry = 1;
+        for(let part = 0; part < 4; part++) {
+            const complemented = 65535 - (magnitude[part] ?? panic('missing limb')) + carry;
+            magnitude[part] = complemented % 65536;
+            carry = Math.floor(complemented / 65536);
+        }
+    }
+    let decimal = '';
+    while(magnitude[0] !== 0 || magnitude[1] !== 0 || magnitude[2] !== 0 || magnitude[3] !== 0) {
+        let remainder = 0;
+        for(let part = 3; part >= 0; part--) {
+            const divided = remainder * 65536 + (magnitude[part] ?? panic('missing limb'));
+            magnitude[part] = Math.floor(divided / 10);
+            remainder = divided % 10;
+        }
+        decimal = String(remainder) + decimal;
+    }
+    if(decimal === '') { decimal = '0'; }
+    else if(signed) { decimal = '-' + decimal; }
+    return new LeadingInteger(true, limbs, decimal);
+}
