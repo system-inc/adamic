@@ -1,0 +1,281 @@
+[
+  {
+    "name": "stage0-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 1.6619892819999222
+  },
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "-C",
+      "/workspace/adamic/cohere",
+      "build",
+      "-overlay",
+      "/workspace/wave18-react-partial-validation-formatted/overlay.json",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/oracle",
+      "/workspace/adamic/cohere/adamic_wave18reactoracle.go"
+    ],
+    "exit": 0,
+    "seconds": 2.3997346090000065
+  },
+  {
+    "name": "go-controls",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/oracle",
+      "/workspace/wave18-react-partial-validation-formatted/tsconfig.json",
+      "/workspace/wave18-react-partial-validation-formatted/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.048804651998580084
+  },
+  {
+    "name": "reporting-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/reporting_probe.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/reporting"
+    ],
+    "exit": 0,
+    "seconds": 1.9368829430004553
+  },
+  {
+    "name": "reporting-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/reporting"
+    ],
+    "exit": 0,
+    "seconds": 0.0013144770000508288
+  },
+  {
+    "name": "asan-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/reporting_probe.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/reporting-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 3.299569433000215
+  },
+  {
+    "name": "asan-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/reporting-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.008343942001374671
+  },
+  {
+    "name": "set_state_in_effect-mutant-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-report.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-mutant"
+    ],
+    "exit": 0,
+    "seconds": 2.0578633160002937
+  },
+  {
+    "name": "set_state_in_effect-mutant-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.0012173300001450116
+  },
+  {
+    "name": "set_state_in_effect-refusal-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-refusal.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-refusal"
+    ],
+    "exit": 0,
+    "seconds": 1.9818455370004813
+  },
+  {
+    "name": "set_state_in_effect-refusal-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-refusal"
+    ],
+    "exit": 70,
+    "seconds": 0.0009750629997142823
+  },
+  {
+    "name": "set_state_in_effect-no-refusal-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-no-refusal-probe.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 1.9813756820003618
+  },
+  {
+    "name": "set_state_in_effect-no-refusal-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_effect-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.0009398799993505236
+  },
+  {
+    "name": "set_state_in_render-mutant-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-report.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-mutant"
+    ],
+    "exit": 0,
+    "seconds": 2.0736318409999512
+  },
+  {
+    "name": "set_state_in_render-mutant-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.0013286789999256143
+  },
+  {
+    "name": "set_state_in_render-refusal-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-refusal.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-refusal"
+    ],
+    "exit": 0,
+    "seconds": 1.9956486280007084
+  },
+  {
+    "name": "set_state_in_render-refusal-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-refusal"
+    ],
+    "exit": 70,
+    "seconds": 0.0010635880007612286
+  },
+  {
+    "name": "set_state_in_render-no-refusal-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-no-refusal-probe.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 2.0008159240005625
+  },
+  {
+    "name": "set_state_in_render-no-refusal-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/set_state_in_render-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.0009854799991444452
+  },
+  {
+    "name": "static_components-mutant-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/static_components-report.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/static_components-mutant"
+    ],
+    "exit": 0,
+    "seconds": 1.9545701730003202
+  },
+  {
+    "name": "static_components-mutant-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/static_components-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.0011441700007708278
+  },
+  {
+    "name": "static_components-refusal-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/static_components-refusal.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/static_components-refusal"
+    ],
+    "exit": 0,
+    "seconds": 1.9967404439994425
+  },
+  {
+    "name": "static_components-refusal-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/static_components-refusal"
+    ],
+    "exit": 70,
+    "seconds": 0.0010895670002355473
+  },
+  {
+    "name": "static_components-no-refusal-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/wave18-react-partial-validation-formatted/static_components-no-refusal-probe.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/static_components-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 2.0926900659997045
+  },
+  {
+    "name": "static_components-no-refusal-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/static_components-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.0009304169998358702
+  },
+  {
+    "name": "parser-build",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_18_react_partial/parser_probe.a",
+      "-o",
+      "/workspace/wave18-react-partial-validation-formatted/parser-probe"
+    ],
+    "exit": 0,
+    "seconds": 4.21856208600002
+  },
+  {
+    "name": "parser-run",
+    "command": [
+      "/workspace/wave18-react-partial-validation-formatted/parser-probe"
+    ],
+    "exit": 70,
+    "seconds": 0.0013722950006922474
+  }
+]

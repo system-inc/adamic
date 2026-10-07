@@ -107,3 +107,8 @@ Fifth-batch status: all three remain unported and reserved.
 WAVE_18_REACT_BLOCKER_REPORT.md records the missing native React HIR/SSA and
 control-dominance dependency. Existing Go oracle tests pass; native agreement,
 mutants, sanitizers and timings are not claimed. No further rules were claimed.
+
+Fifth-batch continuation: native reporting portions are implemented in 57614fd8.
+wave_18_react_partial/REPORT.md records four byte-identical production diagnostics,
+sanitizers and six reporting/refusal mutants. All three source-analysis ports
+remain unfinished behind native HIR/SSA and JSX dependencies. No new claims.

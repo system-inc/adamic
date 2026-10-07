@@ -1,0 +1,6 @@
+reporting only: four production Go findings match 2443 bytes; ranges supplied by Go, no native source analysis
+set_state_in_effect: rendering mutant caught by Go bytes; removed refusal caught by required exit 70
+set_state_in_render: rendering mutant caught by Go bytes; removed refusal caught by required exit 70
+static_components: rendering mutant caught by Go bytes; removed refusal caught by required exit 70
+base JSX parser refuses; exact stderr saved
+PARTIAL PASS: reporting, sanitizer and refusal only. All three source-analysis ports remain blocked.

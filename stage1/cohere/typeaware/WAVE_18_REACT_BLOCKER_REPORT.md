@@ -59,3 +59,11 @@ No native findings/fixes/suggestions comparison, mutant, sanitizer, released-han
 check or Go/native timing was run for these unported rules. Prior preference
 coverage is unchanged and recorded in WAVE_18_PREFERENCE_REPORT.md. No full gate
 was run for this documentation-only blocker report.
+
+## Reporting-only continuation
+
+Commit 57614fd8 adds native diagnostic rendering with explicit source-analysis
+refusal in owned directories. See wave_18_react_partial/REPORT.md for byte
+comparisons, sanitizers and reporting/refusal mutants. The earlier absence of
+native validation described above applies to the initial blocker-only commit;
+source analysis and the full corpus/timing requirements remain unfulfilled.
