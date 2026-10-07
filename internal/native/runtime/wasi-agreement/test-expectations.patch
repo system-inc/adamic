@@ -1,0 +1,50 @@
+--- a/internal/native/wasm_test.go
++++ b/internal/native/wasm_test.go
+@@ -108,8 +108,10 @@
+ 		"internal/oracle/testdata/library_object_keys.a", "internal/oracle/testdata/library_array_flat.a",
+ 		"internal/oracle/testdata/read_files.a", "internal/native/wasm/io.a",
+ 		"internal/oracle/testdata/closures_throw.a",
+-	}
+-	passed, unsupported, hostStack := 0, 0, 0
++		"internal/oracle/testdata/write_stdout_order.a",
++		"internal/oracle/testdata/write_stderr_order.a",
++	}
++	passed := 0
+ 	for _, fixture := range fixtures {
+ 		t.Run(fixture, func(t *testing.T) {
+ 			scratch := t.TempDir()
+@@ -130,33 +132,13 @@
+ 			}
+ 			node := observeWASI(t, working, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), filepath.Join(repository, fixture))
+ 			wasm := observeWASI(t, working, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "internal/native/wasm/run.mjs"), module)
+-			if strings.HasSuffix(fixture, "stack_forever.a") || strings.HasSuffix(fixture, "stack_tail_call.a") {
+-				// No linear-memory frame is required for these functions. The engine call stack
+-				// reaches its own limit before the linear-stack boundary can detect it.
+-				if node.exit != 70 || wasm.exit != 1 || !bytes.Contains(wasm.stderr, []byte("RangeError: Maximum call stack size exceeded")) || len(wasm.stdout) != 0 {
+-					t.Fatalf("unexpected engine stack observation: Node exit=%d stdout=%q stderr=%q; WASI exit=%d stdout=%q stderr=%q", node.exit, node.stdout, node.stderr, wasm.exit, wasm.stdout, wasm.stderr)
+-				}
+-				hostStack++
+-				t.Log("NON_EQUIVALENT: engine call-stack trap precedes linear-memory check; buffered stdout is lost, exit 1")
+-				return
+-			}
+-			if strings.HasSuffix(fixture, "closures_throw.a") {
+-				// This is a documented unsupported class, never reported as Node equivalence.
+-				if wasm.exit != 70 || string(wasm.stderr) != "adamic: panic: wasm32: throwing sort comparators are not supported\n" ||
+-					!bytes.HasPrefix(node.stdout, wasm.stdout) || bytes.Equal(node.stdout, wasm.stdout) {
+-					t.Fatalf("unsupported sort must panic after the matching prefix: Node exit=%d stdout=%q stderr=%q; WASI exit=%d stdout=%q stderr=%q", node.exit, node.stdout, node.stderr, wasm.exit, wasm.stdout, wasm.stderr)
+-				}
+-				unsupported++
+-				t.Log("UNSUPPORTED: throwing sort comparator; explicit panic instead of setjmp/longjmp")
+-				return
+-			}
+ 			if !bytes.Equal(node.stdout, wasm.stdout) || !bytes.Equal(node.stderr, wasm.stderr) || node.exit != wasm.exit {
+ 				t.Fatalf("Node exit=%d stdout=%q stderr=%q; WASI exit=%d stdout=%q stderr=%q", node.exit, node.stdout, node.stderr, wasm.exit, wasm.stdout, wasm.stderr)
+ 			}
+ 			passed++
+ 		})
+ 	}
+-	t.Logf("WASI oracle: %d/%d equivalent, %d explicitly unsupported, %d engine stack mismatches", passed, len(fixtures), unsupported, hostStack)
++	t.Logf("WASI oracle: %d/%d equivalent", passed, len(fixtures))
+ 	t.Run("requests", func(t *testing.T) {
+ 		// Counters are for the memory probe only; oracle command stderr stays untouched.
+ 		for _, file := range files {

@@ -11,7 +11,8 @@ import (
 // take an element out of any array. The array stays alive because a names it for the whole function,
 // and the element stays in it, so the array's count is the variable's.
 
-// planElementBorrows finds the declarations whose variables borrow, keyed by statement, and marks
+// planElementBorrows finds element and strong-field borrowing declarations and loop bindings that
+// borrow, keyed by statement, and marks
 // each variable Borrowed, as a borrowed parameter is: reuse in place and moves into consumed
 // parameters refuse those, since the count they'd take is the array's.
 //
@@ -33,10 +34,18 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 		var statements func([]ir.Statement)
 		statements = func(list []ir.Statement) {
 			for position := range list {
-				if declare, ok := list[position].(ir.Declare); ok && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:]) {
+				declare, declaration := list[position].(ir.Declare)
+				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
+				chain := declaration && borrowableChain(program, index, declare, assigned)
+				if element || chain {
 					borrows[&list[position]] = true
 					program.Locals[declare.Local].Borrowed = true
 					lending[borrowedArray(declare)] = true
+				}
+				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
+					borrows[&list[position]] = true
+					program.Locals[loop.Local].Borrowed = true
+					lending[loop.Iterable.(ir.Read).Local] = true
 				}
 				walkStatement(list[position], func(ir.Expression) {}, statements)
 			}
@@ -46,12 +55,16 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 	return borrows, lending
 }
 
-// borrowedArray is the variable naming the array a borrowing declaration's element comes from, the
-// shape borrowable accepted.
+// borrowedArray is the root holder a borrowing declaration relies on, an array
+// for an element borrow or the first object in a strong field chain.
 func borrowedArray(declare ir.Declare) int {
 	value := declare.Value
 	if coalesce, ok := value.(ir.Coalesce); ok {
 		value = coalesce.Value
+	}
+	if _, ok := value.(ir.Property); ok {
+		root, _ := chainRoot(value, map[string]bool{})
+		return root
 	}
 	return value.(ir.ArrayIndex).Array.(ir.Read).Local
 }
@@ -178,6 +191,15 @@ func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expres
 // when the element was there), and the scope lets go of the owner.
 func (e *emitter) borrowElement(declare ir.Declare) {
 	local := e.program.Locals[declare.Local]
+	if _, chain := declare.Value.(ir.Property); chain {
+		outer := e.lendAt
+		e.lendAt = e.depth + 1
+		value := e.value(declare.Value)
+		e.lendAt = outer
+		e.line("%s %s = %s;", cType(local.Type), e.localName(declare.Local), value)
+		e.end()
+		return
+	}
 	value := declare.Value
 	coalesce, hasFallback := value.(ir.Coalesce)
 	if hasFallback {
@@ -220,4 +242,39 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 		e.hold(owner)
 	}
 	e.end()
+}
+
+// loopBorrowable uses the same local and lending facts as indexed element declarations.
+// Together with the body's changes check, this also proves the iterator needs no array count:
+// an unassigned, uncaptured local or parameter keeps the array alive until the loop exits.
+// Lending prevents moves into consumed parameters from taking that owner away. A throw or early
+// exit ends the iterator before the enclosing variable's scope or the caller's hold ends.
+func loopBorrowable(program *ir.Program, function int, loop ir.ForOf, assigned map[int]bool) bool {
+	if loop.Iterable.Type() != ir.Array || loop.MapPart != "" || loop.RegexIterator || loop.Pattern != nil || loop.Element != program.Locals[loop.Local].Type {
+		return false
+	}
+	return borrowable(program, function, ir.Declare{Local: loop.Local, Value: ir.ArrayIndex{Array: loop.Iterable, Element: loop.Element}}, assigned)
+}
+
+// borrowableChain lends a strong field to an uncaptured, unassigned local. The
+// whole function is checked, including enclosing blocks after this block ends,
+// so a later iteration or finally cannot invalidate the holder underneath it.
+func borrowableChain(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
+	if _, ok := declare.Value.(ir.Property); !ok {
+		return false
+	}
+	local := program.Locals[declare.Local]
+	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+		return false
+	}
+	names := map[string]bool{}
+	root, ok := chainRoot(declare.Value, names)
+	if !ok {
+		return false
+	}
+	held := program.Locals[root]
+	if held.Global || held.Captured || held.Function != function || assigned[root] {
+		return false
+	}
+	return chainUnchanged(program, program.Functions[function].Body, names)
 }

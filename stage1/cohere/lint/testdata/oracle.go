@@ -3,7 +3,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
@@ -12,11 +11,6 @@ import (
 	"github.com/system-inc/cohere/internal/edit"
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
-	adamic "github.com/system-inc/cohere/internal/lint/rules/adamic"
-	base "github.com/system-inc/cohere/internal/lint/rules/base"
-	rules "github.com/system-inc/cohere/internal/lint/rules/core"
-	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
-	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"os"
 	"sort"
 	"strings"
@@ -77,9 +71,6 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		fmt.Fprint(out, display[:footer])
 		repair, replacement, suggestion := "", "", ""
 		if len(d.Fixes) > 0 {
-			if len(d.Fixes) != 1 {
-				panic("unexpected fix shape")
-			}
 			repair = "fix"
 			replacement = d.Fixes[0].Text
 		}
@@ -111,6 +102,13 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 			editEnd = d.Suggestions[0].Fixes[0].Range.End()
 		}
 		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\t%d %d\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion), editStart, editEnd)
+		// A finding with several automatic edits: cohere's edit engine proposes each one on its own
+		// (edit.ProposalsFrom), so the first rides the range line and the rest follow, in order.
+		if len(d.Fixes) > 1 {
+			for _, fix := range d.Fixes[1:] {
+				fmt.Fprintf(out, "fix-edit\t%d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+			}
+		}
 		if repair == "suggestions" {
 			for _, suggestion := range d.Suggestions {
 				fmt.Fprintf(out, "suggestion\t%s\t%s\t%d\n", written(suggestion.Message.Id), written(suggestion.Message.Description), len(suggestion.Fixes))
@@ -127,11 +125,16 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
 		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
 	}, 10)
-	if err != nil || !result.Converged {
+	if err != nil {
 		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
 	}
 	for _, rejection := range result.Rejected {
 		fmt.Fprintf(out, "rejected %s %d %d %s %s\n", rejection.Proposal.RuleName, rejection.Proposal.Fix.Range.Pos(), rejection.Proposal.Fix.Range.End(), rejection.ConflictsWith, rejection.Reason)
+	}
+	// A run that exhausts the pass budget is cohere's answer too, not a harness failure: the file is left
+	// as found, with a fix-engine rejection, and the rules still proposing are named.
+	if !result.Converged {
+		fmt.Fprintf(out, "unconverged\t%s\n", strings.Join(result.UnconvergedRules, ","))
 	}
 	fixed := result.Text
 	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
@@ -157,124 +160,23 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
-	registered := registeredRules()
-	for _, item := range registered {
-		found := false
-		for index, subject := range selected {
-			if subject.Name == item.subject.Name {
-				selected[index] = item.subject
-				found = true
-			}
-		}
-		if !found {
-			selected = append(selected, item.subject)
-		}
-	}
+	// The registry's order is the listener order: the five first rules by their pinned order, then the rest
+	// by public name. The port dispatches each node in the same order, so ties at one position agree.
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
-	for _, subject := range selected {
+	for _, item := range registeredRules() {
+		subject := item.subject
 		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
 			continue
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
-		var options any
-		if fields[5] != "" {
-			switch subject.Name {
-			case "@typescript-eslint/method-signature-style":
-				var decoded typescript.MethodSignatureStyleOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			case "@typescript-eslint/prefer-literal-enum-member":
-				var decoded typescript.PreferLiteralEnumMemberOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			case "no-return-assign":
-				if fields[5][0] != '"' {
-					break
-				}
-				var decoded rules.NoReturnAssignOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			}
-		}
-		if subject.Name == "no-plusplus" && fields[5] != "" {
-			var decoded rules.NoPlusplusOptions
-			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-				panic(err)
-			}
-			options = decoded
-		}
-		if subject.Name == "eqeqeq" {
-			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
-		}
-		if subject.Name == "no-bitwise" {
-			var decoded rules.NoBitwiseOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-labels" {
-			var decoded rules.NoLabelsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-sequences" {
-			var decoded rules.NoSequencesOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "unicode-bom" {
-			var decoded rules.UnicodeBomOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-unneeded-ternary" {
-			var decoded rules.NoUnneededTernaryOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-warning-comments" {
-			var decoded rules.NoWarningCommentsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-empty" {
-			options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
-		}
-		for _, item := range registered {
-			if subject.Name == item.subject.Name {
-				options = item.options(fields)
-			}
+		options := item.options(fields)
+		// A row that selects this rule and carries options must reach an adapter that decodes them. An
+		// adapter returning nil there would run the rule on its defaults and still agree with any port that
+		// reads no options either. An "all" row's options are one bag for every rule, so a rule with none of
+		// its own ignores them there.
+		if options == nil && fields[1] == subject.Name && fields[5] != "" && fields[5] != "null" {
+			panic(fmt.Sprintf("%s: options %s reached an adapter that decodes none", subject.Name, fields[5]))
 		}
 		listeners = append(listeners, subject.Run(ctx, options))
 	}

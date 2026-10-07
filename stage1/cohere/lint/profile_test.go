@@ -161,7 +161,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	}
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	var recovery []string
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -188,8 +188,10 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	path := manifest(t, rows)
 	oracle := goOracle(t)
+	// Classify recovery rows as TestRulesAgree does, so a captured case Go parses with a diagnostic (an
+	// octal escape in strict mode, say) is compared in recovery mode rather than panicking the oracle.
+	path := manifest(t, recoveryRows(t, oracle, rows))
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, directory := range filepath.SplitList(asked) {
 		// Match the ordinary suite's explicit recovery boundary in both snapshots.
@@ -238,7 +240,7 @@ func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;")
+	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
 	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string

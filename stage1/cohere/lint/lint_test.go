@@ -6,11 +6,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+	"github.com/system-inc/adamic/stage1/cohere/lint/shards"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"testing"
@@ -267,7 +269,18 @@ func generated(t *testing.T) []string {
 			rows = append(rows, path+"\t"+options)
 		}
 	}
-	return rows
+	// One source exercising the ten rules that came from the frequency-ranked slice (VOLUME.md), by default
+	// and under the options each takes.
+	path := filepath.Join(t.TempDir(), "options.ts")
+	if err := os.WriteFile(path, []byte("interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return append(rows, path,
+		path+"\tno-plusplus\t\t\t\t{\"AllowForLoopAfterthoughts\":true}",
+		path+"\t@typescript-eslint/method-signature-style\t\t\t\t{\"Style\":\"method\"}",
+		path+"\t@typescript-eslint/prefer-literal-enum-member\t\t\t\t{\"AllowBitwiseExpressions\":true}",
+		path+"\tno-return-assign\t\t\t\t\"always\"",
+	)
 }
 
 // Capture every Run, including tests that assert repair fields directly. The overlay changes no rule.
@@ -301,9 +314,6 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	}
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
 	for _, d := range prepareRegistry(t, sourceRoot) {
@@ -335,7 +345,7 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !discovered[row.Rule] && !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
+			if !discovered[row.Rule] {
 				continue
 			}
 			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
@@ -350,15 +360,20 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		name := filepath.Base(strings.ReplaceAll(row.File, "\\", "/"))
-		if name == "." || name == "" {
+		// The case keeps its file name's directories, not only its base name: a rule that judges a
+		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
+		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
+		if name == "." || name == "" || strings.HasPrefix(name, "..") {
+			name = filepath.Base(name)
+		}
+		if name == "." || name == "" || name == ".." {
 			name = "source.ts"
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		if err := os.MkdirAll(caseDirectory, 0755); err != nil {
+		path := filepath.Join(caseDirectory, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 			t.Fatal(err)
 		}
-		path := filepath.Join(caseDirectory, name)
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
@@ -420,7 +435,7 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
@@ -430,6 +445,46 @@ func TestRulesAgree(t *testing.T) {
 		}
 	}
 	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
+}
+
+// Recovery is a parser dependency, not successful lint parity. Keep the exact
+// upstream malformed cases and prove that both ports refuse instead of silently
+// returning the oracle's recovered findings.
+func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
+	t.Helper()
+	recovered := manifest(t, []string{strings.TrimSuffix(row, "unsupported-recovery") + "recovery"})
+	answer := execute(t, "", oracle, "--manifest", recovered)
+	t.Logf("Go recovered output: %s", answer.output)
+	path := manifest(t, []string{row})
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, side := range []struct {
+		name string
+		args []string
+	}{
+		{binary, []string{"--manifest", path}},
+		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
+	} {
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+		command := exec.CommandContext(ctx, side.name, side.args...)
+		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		command.Stdout = output
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		err = command.Run()
+		timedOut := ctx.Err() == context.DeadlineExceeded
+		cancel()
+		output.Close()
+		if err == nil || (!timedOut && !strings.Contains(stderr.String(), "adamic: panic:")) {
+			t.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
+		}
+		t.Logf("explicit unsupported recovery: %s: timeout=%t: %v: %s", side.name, timedOut, err, stderr.String())
+	}
 }
 
 // Not parallel: the large sanitized corpus runs before timing samples.
@@ -534,19 +589,6 @@ func TestLegacyMutants(t *testing.T) {
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
-		{"control statement omitted", "node.kind === 'ContinueStatement' && this.enabled('no-continue')", "node.kind === 'BreakStatement' && this.enabled('no-continue')"},
-		{"destructuring hole reported", "!this.assignmentTarget(index) &&", ""},
-		{"nested generator owns outer yield", "].includes(this.node(child).kind)", "].includes('no boundary')"},
-		{"await crosses function boundary", "this.functionLike(parent) ||", " "},
-		{"option ignored", "this.settings.read('int32hint', 'false') === 'true'", "this.settings.read('int32hint', 'false') === 'false'"},
-		{"regex fix eats extra byte", "finding.editEnd = start + 2;", "finding.editEnd = start + 3;"},
-		{"boolean inverse changed", "? '!='", "? '!=='"},
-		{"comment self directive exemption removed", "if(selfDirective(value))", "if(selfDirective(value) && value === '')"},
-		{"bom removes two marks", "finding.editEnd = 1;", "finding.editEnd = this.source.startsWith('\\ufeff\\ufeff') ? 2 : 1;"},
-		{"label option widened", "this.settings.read('allowloop', 'false') === 'true'", "this.settings.read('allowloop', 'false') !== 'true'"},
-		{"directive prefix ignored", "let prefix = !staticBlock;", "let prefix = false;"},
-		{"comma chain reports inner", "!this.comma(parent)", "this.comma(parent)"},
-		{"empty placeholder reported", "node.text.indexOf('}', body) > body", "node.text.indexOf('}', body) >= body"},
 		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
 	} {
 		t.Run(change.name, func(t *testing.T) {
@@ -692,6 +734,90 @@ func TestThroughput(t *testing.T) {
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
 }
 
+// TestNodeTableIsLinkOnly requires the same output with a copy of every row appended to the node table,
+// attached to nothing. Stage 1 reads the table only by following links from the root, and the flat copy
+// of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
+// harness pass that walks the table by row reports on the copies and fails here.
+func TestNodeTableIsLinkOnly(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	rows := generated(t)
+	for _, row := range upstream(t) {
+		if !strings.HasSuffix(row, "\tunsupported-recovery") {
+			rows = append(rows, row)
+		}
+	}
+	path := manifest(t, recoveryRows(t, oracle, rows))
+	binary := buildPort(t, directory, false)
+	plain := execute(t, "", binary, "--manifest", path)
+	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
+	if diff := difference(junk.output, plain.output); diff != "" {
+		t.Fatalf("output changed with unattached rows in the node table: %s", diff)
+	}
+	t.Logf("%d rows: identical with and without unattached node rows, %d bytes", len(rows), len(plain.output))
+}
+
+// TestShardsAgree requires the driver's output to be byte-identical however many processes share the
+// manifest (#tj6d455): one, two, and the machine's cores. Equal counts cannot see a reordered or repeated
+// case, so the whole output is compared, and the count mode too.
+func TestShardsAgree(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	rows := generated(t)
+	for _, row := range upstream(t) {
+		if !strings.HasSuffix(row, "\tunsupported-recovery") {
+			rows = append(rows, row)
+		}
+	}
+	// The compiler files are the corpus with large files, where shards differ most in what they hold, so
+	// the test refuses to run without them rather than passing on a smaller corpus.
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("set ADAMIC_TYPESCRIPT_SOURCE to the pinned TypeScript checkout: TestShardsAgree needs its compiler files")
+	}
+	matches, err := filepath.Glob(filepath.Join(source, "src/compiler/*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(matches) == 0 {
+		t.Fatalf("no compiler files under %s", source)
+	}
+	rows = append(rows, matches...)
+	path := manifest(t, recoveryRows(t, oracle, rows))
+	binary := buildPort(t, directory, false)
+	want := execute(t, "", binary, "--manifest", path)
+	wantCount := execute(t, "", binary, "--manifest", path, "--count")
+	for _, count := range []int{1, 2, runtime.NumCPU()} {
+		got, err := shards.Run(binary, path, count, false)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if diff := difference(got, want.output); diff != "" {
+			t.Fatalf("%d shards: %s", count, diff)
+		}
+		gotCount, err := shards.Run(binary, path, count, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(gotCount) != string(wantCount.output) {
+			t.Fatalf("%d shards count %q, want %q", count, gotCount, wantCount.output)
+		}
+	}
+	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", len(rows), runtime.NumCPU(), len(want.output))
+}
+
+// mutantBuilds bounds how many of TestMutants' sanitized native builds run at once. The subtests run in
+// parallel, since each works in its own copy of the port and the cost is one build per rule, which grows
+// with every port batch. A sanitized clang build of the whole port is the memory-heavy step, so only a few
+// run together, whatever the machine's core count.
+var mutantBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
+
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	for _, descriptor := range prepareRegistry(t, ".") {
@@ -704,22 +830,39 @@ func TestMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Run(change.Name, func(t *testing.T) {
-			rows := generated(t)
-			var witnesses []string
-			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
-				witnesses = append(witnesses, source+"\t"+descriptor.Name)
+			t.Parallel()
+			// A mutant can change only its own rule's output, so it runs on the rows that select that rule:
+			// its witnesses, and the generated rows selecting it or all rules. Rows naming another rule
+			// cannot show it. An "all" row stays as it is, since its options are every rule's bag.
+			var rows []string
+			for _, row := range generated(t) {
+				// A bare path selects all rules, as main.ts reads it.
+				selected := "all"
+				if fields := strings.Split(row, "\t"); len(fields) > 1 && fields[1] != "" {
+					selected = fields[1]
+				}
+				if selected == "all" || selected == descriptor.Name {
+					rows = append(rows, row)
+				}
 			}
-			rows = append(rows, recoveryRows(t, oracle, witnesses)...)
+			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			// The slot is released by defer: buildPort fails with t.Fatal, which ends this goroutine, and a
+			// slot held by a failed build would leave every other subtest waiting until the package timed out.
+			binary := func() string {
+				mutantBuilds <- struct{}{}
+				defer func() { <-mutantBuilds }()
+				return buildPort(t, directory, true)
+			}()
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}

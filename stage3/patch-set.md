@@ -15,4 +15,6 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 40-explicit-any | 16 | 100 | 100 |
 | 45-regex-captures | 5 | 12 | 10 |
 | 46-fix-pragma-empty-argument | 1 | 1 | 1 |
-| **Total** | 77 | 4937 | 4935 |
+| 47-host-errors | 3 | 16 | 5 |
+| 70-readonly-views | 7 | 22 | 22 |
+| **Total** | 78 | 4975 | 4962 |
