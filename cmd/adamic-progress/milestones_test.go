@@ -167,19 +167,19 @@ func TestBacklogMustFallEveryElapsedHour(t *testing.T) {
 	r, write, git := fixture(t)
 	start := time.Date(2026, 10, 7, 6, 0, 0, 0, mdt)
 	now := start.Add(2 * time.Hour)
-	write("documentation/velocity/backlog.csv", "timestamp,count\n2026-10-07T06:00:00-06:00,20\n2026-10-07T07:00:00-06:00,18\n2026-10-07T08:00:00-06:00,17\n")
+	write("documentation/velocity/patch-backlog.csv", "timestamp,count\n2026-10-07T06:00:00-06:00,20\n2026-10-07T07:00:00-06:00,18\n2026-10-07T08:00:00-06:00,17\n")
 	r = snapshotPaths(t, r, git)
 	observed, e := checkBacklog(r, start, now)
 	if e != nil || !observed.OnTrack || observed.Done {
 		t.Fatal("ongoing hourly backlog", observed, e)
 	}
-	write("documentation/velocity/backlog.csv", "timestamp,count\n2026-10-07T06:00:00-06:00,20\n2026-10-07T07:00:00-06:00,20\n2026-10-07T08:00:00-06:00,17\n")
+	write("documentation/velocity/patch-backlog.csv", "timestamp,count\n2026-10-07T06:00:00-06:00,20\n2026-10-07T07:00:00-06:00,20\n2026-10-07T08:00:00-06:00,17\n")
 	r = snapshotPaths(t, r, git)
 	observed, e = checkBacklog(r, start, now)
 	if e != nil || observed.OnTrack || !observed.Known {
 		t.Fatal("flat backlog hidden", observed, e)
 	}
-	write("documentation/velocity/backlog.csv", "timestamp,count\n2026-10-07T06:00:00-06:00,20\n2026-10-07T08:00:00-06:00,17\n")
+	write("documentation/velocity/patch-backlog.csv", "timestamp,count\n2026-10-07T06:00:00-06:00,20\n2026-10-07T08:00:00-06:00,17\n")
 	r = snapshotPaths(t, r, git)
 	observed, e = checkBacklog(r, start, now)
 	if e != nil || observed.Known || !strings.Contains(observed.Note, "missing backlog hour") {

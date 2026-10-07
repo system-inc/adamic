@@ -416,7 +416,7 @@
     "track": "Velocity",
     "claim": "From Oct 7 06:00, the backlog falls every hour.",
     "deadline": "2026-10-07T06:00:00-06:00",
-    "measurement": "Main documentation/velocity/backlog.csv timestamp/count records at every elapsed hour from this start; each successive backlog count must be strictly lower. Current remote refs cannot reconstruct past remote ref states. Missing hourly records: not measurable yet.",
+    "measurement": "Main documentation/velocity/patch-backlog.csv timestamp/count records at every elapsed hour from this start; each successive distinct patch backlog count must be strictly lower (stable patch IDs, deduplicated across branches and excluding main). Current remote refs cannot reconstruct past remote ref states. Missing hourly records: not measurable yet.",
     "conditions": [
       {
         "kind": "backlog_hourly"

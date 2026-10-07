@@ -375,9 +375,9 @@ func checkBacklog(r repository, start, now time.Time) (conditionResult, error) {
 	if now.Before(start) {
 		return conditionResult{Known: true, OnTrack: true, Note: "hourly obligation starts at deadline"}, nil
 	}
-	b, ok, e := r.blob("documentation/velocity/backlog.csv")
+	b, ok, e := r.blob("documentation/velocity/patch-backlog.csv")
 	if e != nil || !ok {
-		return conditionResult{Note: "not measurable yet: no archived hourly remote backlog"}, e
+		return conditionResult{Note: "not measurable yet: no archived hourly patch backlog"}, e
 	}
 	rows, e := csv.NewReader(strings.NewReader(string(b))).ReadAll()
 	if e != nil {

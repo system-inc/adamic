@@ -99,12 +99,18 @@ Sources and accounting:
     overall lower bound, with lateness explicitly unknown and remaining percent.
   Velocity: git rev-list main total; committer timestamps in last 24h/hour,
     distinct commit hashes reachable from fetched origin refs excluding main/HEAD
-    and commits already on main (no per-branch double counting).
+    and commits already on main (identity count, retained for comparison).
+    Patch backlog: git log --no-merges -p | git patch-id --stable; deduplicate
+    patch IDs across origin branches, then exclude every patch ID on main.
+    Rebases/cherry-picks with identical patches count once. Merge/empty commits
+    have no standalone patch; whitespace is ignored. Squashes or conflict edits
+    may change patch identity. Both labelled counts remain visible.
     documentation/velocity/landings.csv: timestamp or timestamp_utc column,
     optional landings count (default 1), summed into UTC hour buckets.
     Absence explicitly reported. Velocity has no goal percentage.
     Historical remote backlog cannot be reconstructed from current refs:
-    documentation/velocity/backlog.csv (timestamp,count) supplies observations;
+    documentation/velocity/backlog.csv (timestamp,count) records commit counts;
+    documentation/velocity/patch-backlog.csv (timestamp,count) records patch counts;
     without it past backlog is unknown. The hourly-falling checkpoint requires
     an observation each elapsed hour and a strictly decreasing count.
 Malformed recorded data is an error, never silently converted to zero.
@@ -149,13 +155,15 @@ type track struct {
 	ETAScope      string     `json:"eta_scope"`
 }
 type velocity struct {
-	Measures []metric       `json:"measures"`
-	Total    int            `json:"commits_on_main"`
-	Day      int            `json:"landed_24h"`
-	Hour     int            `json:"landed_1h"`
-	Backlog  int            `json:"distinct_backlog"`
-	Landings map[string]int `json:"landings_per_hour"`
-	Note     string         `json:"note,omitempty"`
+	Pending      []string       `json:"-"`
+	Measures     []metric       `json:"measures"`
+	Total        int            `json:"commits_on_main"`
+	Day          int            `json:"landed_24h"`
+	Hour         int            `json:"landed_1h"`
+	Backlog      int            `json:"distinct_backlog"`
+	PatchBacklog int            `json:"distinct_patch_backlog"`
+	Landings     map[string]int `json:"landings_per_hour"`
+	Note         string         `json:"note,omitempty"`
 }
 type dashboard struct {
 	Milestones []milestoneResult `json:"milestones"`
@@ -463,7 +471,11 @@ func stage1(r repository, lines func(string, string) (*stage1progress.Report, er
 	if e != nil {
 		return t, e
 	}
-	t.Measures = append(t.Measures, measured("ported Go lines", float64(report.Ported), float64(report.Total), "adamic-stage1-progress shared inventory at "+r.ref))
+	if report == nil {
+		t.Measures = append(t.Measures, unknown("ported Go lines", 0, "adamic-stage1-progress shared inventory at "+r.ref, "historical inventory unavailable: slice GAPS.md not recorded yet"))
+	} else {
+		t.Measures = append(t.Measures, measured("ported Go lines", float64(report.Ported), float64(report.Total), "adamic-stage1-progress shared inventory at "+r.ref))
+	}
 	rules, e := lint(r)
 	if e != nil {
 		return t, e
@@ -596,7 +608,8 @@ func readLandings(b []byte, now time.Time) (map[string]int, error) {
 	}
 	return result, nil
 }
-func speed(r repository, now time.Time) (velocity, error) {
+func speed(r repository, now time.Time) (velocity, error) { return measureVelocity(r, now, true) }
+func measureVelocity(r repository, now time.Time, patches bool) (velocity, error) {
 	var v velocity
 	count, e := r.git("rev-list", "--count", r.ref)
 	if e != nil {
@@ -644,6 +657,13 @@ func speed(r repository, now time.Time) (velocity, error) {
 			return v, e
 		}
 		v.Backlog, e = strconv.Atoi(strings.TrimSpace(string(b)))
+		if e != nil {
+			return v, e
+		}
+	}
+	v.Pending = pending
+	if patches {
+		v.PatchBacklog, e = r.patchBacklog(pending)
 		if e != nil {
 			return v, e
 		}
@@ -724,13 +744,35 @@ func collect(r repository, now time.Time, lines func(string, string) (*stage1pro
 			return d, e
 		}
 	}
-	d.Velocity, e = speed(r, now)
+	d.Velocity, e = measureVelocity(r, now, false)
 	if e != nil {
 		return d, e
 	}
+	type patchResult struct {
+		count int
+		err   error
+	}
+	patches := make(chan patchResult, 1)
+	patchRepo := r
+	patchRepo.cache = nil // No shared mutable read cache across these computations.
+	pending := append([]string{}, d.Velocity.Pending...)
+	go func() {
+		count, err := patchRepo.patchBacklog(pending)
+		patches <- patchResult{count, err}
+	}()
 	if e = reconstruct(r, &d, lines); e != nil {
 		return d, e
 	}
+	patch := <-patches
+	if patch.err != nil {
+		return d, patch.err
+	}
+	d.Velocity.PatchBacklog = patch.count
+	m := &d.Velocity.Measures[4]
+	m.Done = float64(patch.count)
+	points := m.Progress.Timeline
+	points[24] = point(*m, now, d.Main)
+	m.Progress = calculate(points, time.Time{}, now)
 	d.Milestones, e = milestones(r, d)
 	if e != nil {
 		return d, e
@@ -793,7 +835,7 @@ func renderReport(w io.Writer, d dashboard, history bool) {
 		fmt.Fprintf(w, "  ETA: %s; %s\n", eta, t.ETAScope)
 	}
 	v := d.Velocity
-	fmt.Fprintf(w, "\nVelocity | %d commits on main | %d landed/24h | %d landed/1h | %d distinct commits waiting\n", v.Total, v.Day, v.Hour, v.Backlog)
+	fmt.Fprintf(w, "\nVelocity | %d commits on main | %d landed/24h | %d landed/1h | %d distinct commits waiting (identity count) | %d distinct patches waiting (patch-id count)\n", v.Total, v.Day, v.Hour, v.Backlog, v.PatchBacklog)
 	if v.Note != "" {
 		fmt.Fprintln(w, "Landings/hour:", v.Note)
 	} else {

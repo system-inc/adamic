@@ -43,3 +43,34 @@ macOS GUI execution, unrecorded historical branch refs, and actual remote push
 times (Git records commit timestamps). Missing sources are explicit unknowns.
 No successful main meter run or area/library checkpoint was available in this
 checkout; the command does not invent those results.
+
+## Patch backlog correction
+
+Both counts remain displayed: commit identities (legacy comparison) and stable
+patch IDs. Main candidates are safely narrowed by changed-path sets, with ASCII
+whitespace normalized as patch-id does. Patch hashing and hourly reconstruction
+run concurrently with isolated caches. Merge and empty commits have no standalone
+patch. Squashes and conflict edits may change patch identity.
+
+`go test -race ./cmd/adamic-progress -count=1` passed in 1.414s;
+`go vet ./...` and `git diff --check` passed. Real-repo JSON took 7.280s;
+history output took 7.875s before the final parallel candidate-scan optimization.
+The fetched refs contained 1,702 commit identities versus 1,545 pending patches.
+Fixture histories independently use git cherry to establish rebased equivalence,
+then assert four commit IDs represent one patch, falling to zero patches after
+that change lands with a new ID. Commit and patch archives remain separate.
+Old main slices missing their required GAPS.md recording remain unknown.
+
+| Correction mutant | Check that caught it |
+| --- | --- |
+| patch-ignore-main | `TestPatchBacklogRebasedAndSharedChanges` |
+| patch-use-commit-identity | `TestPatchBacklogRebasedAndSharedChanges` |
+| patch-skip-main-candidates | `TestPatchBacklogRebasedAndSharedChanges` |
+| patch-credit-commit-archive | `TestHistoricalBacklogUnitsStaySeparate` |
+| patch-invent-old-inventory | `TestHistoricalMissingInventoryIsUnknown` |
+
+Logs: `/tmp/progress-patches-tests.log`, `/tmp/progress-patches-vet.log`,
+`/tmp/progress-patch-mutants.log` and `/tmp/progress-mutants/patch-*-final.log`.
+No compiler code changed; the full compiler gate was not rerun for this correction.
+Past patch counts require `documentation/velocity/patch-backlog.csv`; historical
+commit counts never supply the patch backlog or its falling-hourly milestone.

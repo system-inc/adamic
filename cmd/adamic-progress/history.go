@@ -159,7 +159,26 @@ func snapshot(r repository, commit string, moment time.Time, lines func(string, 
 	if e != nil {
 		return nil, e
 	}
-	s1, e := stage1(r, lines)
+	historicalLines := func(root, ref string) (*stage1progress.Report, error) {
+		report, err := lines(root, ref)
+		if err != nil && strings.Contains(err.Error(), "needs GAPS.md:") {
+			parts := strings.Fields(err.Error())
+			if len(parts) > 3 && parts[0] == "slice" {
+				missing := parts[1] + "/GAPS.md"
+				present := false
+				for _, path := range r.paths {
+					if path == missing {
+						present = true
+					}
+				}
+				if !present && r.ctx.Err() == nil {
+					return nil, nil
+				}
+			}
+		}
+		return report, err
+	}
+	s1, e := stage1(r, historicalLines)
 	if e != nil {
 		return nil, e
 	}
@@ -365,12 +384,13 @@ func renderHistory(w io.Writer, d dashboard) {
 }
 
 func velocityMetrics(v velocity, moment time.Time) []metric {
-	result := []metric{measured("commits on main", float64(v.Total), 0, "git rev-list main"), measured("commits landed in last 24h", float64(v.Day), 0, "main commit timestamps"), measured("commits landed in last hour", float64(v.Hour), 0, "main commit timestamps"), measured("distinct remote backlog", float64(v.Backlog), 0, "fetched origin commit union minus main")}
+	result := []metric{measured("commits on main", float64(v.Total), 0, "git rev-list main"), measured("commits landed in last 24h", float64(v.Day), 0, "main commit timestamps"), measured("commits landed in last hour", float64(v.Hour), 0, "main commit timestamps"), measured("distinct commits waiting (identity count)", float64(v.Backlog), 0, "fetched origin commit union minus main")}
 	landings := unknown("recorded landings in current UTC hour", 0, "documentation/velocity/landings.csv", "no landings.csv on main yet")
 	if v.Landings != nil {
 		key := moment.UTC().Truncate(time.Hour).Format(time.RFC3339)
 		landings = measured(landings.Name, float64(v.Landings[key]), 0, landings.Source)
 	}
+	result = append(result, measured("distinct patches waiting (patch-id count)", float64(v.PatchBacklog), 0, "stable patch IDs of fetched origin changes minus main patches"))
 	return append(result, landings)
 }
 func historicalVelocity(r repository, moment time.Time) ([]metric, error) {
@@ -414,32 +434,39 @@ func historicalVelocity(r repository, moment time.Time) ([]metric, error) {
 		}
 	}
 	metrics := velocityMetrics(v, moment)
-	metrics[3] = unknown("distinct remote backlog", 0, "documentation/velocity/backlog.csv", "past remote refs not recorded; not measurable yet")
-	b, ok, e := r.blob("documentation/velocity/backlog.csv")
-	if e != nil {
-		return nil, e
-	}
-	if ok {
-		rows, e := csv.NewReader(strings.NewReader(string(b))).ReadAll()
+	for _, entry := range []struct {
+		index int
+		file  string
+	}{{3, "backlog.csv"}, {4, "patch-backlog.csv"}} {
+		file := "documentation/velocity/" + entry.file
+		name := metrics[entry.index].Name
+		metrics[entry.index] = unknown(name, 0, file, "past remote refs not recorded; not measurable yet")
+		b, ok, e := r.blob(file)
 		if e != nil {
 			return nil, e
 		}
-		if len(rows) == 0 || len(rows[0]) != 2 || rows[0][0] != "timestamp" || rows[0][1] != "count" {
-			return nil, errors.New("backlog.csv requires timestamp,count")
-		}
-		var latest time.Time
-		for _, row := range rows[1:] {
-			stamp, e := time.Parse(time.RFC3339, row[0])
+		if ok {
+			rows, e := csv.NewReader(strings.NewReader(string(b))).ReadAll()
 			if e != nil {
 				return nil, e
 			}
-			n, e := strconv.Atoi(row[1])
-			if e != nil || n < 0 {
-				return nil, errors.New("invalid backlog count")
+			if len(rows) == 0 || len(rows[0]) != 2 || rows[0][0] != "timestamp" || rows[0][1] != "count" {
+				return nil, errors.New("backlog.csv requires timestamp,count")
 			}
-			if !stamp.After(moment) && stamp.After(latest) {
-				latest = stamp
-				metrics[3] = measured("distinct remote backlog", float64(n), 0, "documentation/velocity/backlog.csv")
+			var latest time.Time
+			for _, row := range rows[1:] {
+				stamp, e := time.Parse(time.RFC3339, row[0])
+				if e != nil {
+					return nil, e
+				}
+				n, e := strconv.Atoi(row[1])
+				if e != nil || n < 0 {
+					return nil, errors.New("invalid backlog count")
+				}
+				if !stamp.After(moment) && stamp.After(latest) {
+					latest = stamp
+					metrics[entry.index] = measured(name, float64(n), 0, file)
+				}
 			}
 		}
 	}

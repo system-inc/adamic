@@ -31,10 +31,17 @@ existing syntax-lint speed record is displayed separately. Apple example presenc
 measures delivery; detailed app claims require recorded evidence. Malformed data
 fails instead of silently becoming zero.
 
-Velocity deduplicates fetched remote commit hashes against main. Commit counts
+Velocity shows both distinct commit identities and stable patch IDs. Patch IDs
+are computed with `git patch-id --stable`, deduplicated across branches and exclude patches already on main, including
+rebased copies. Merge/empty commits have no patch; whitespace is ignored.
+Squashes or conflict resolutions can produce different patch IDs. Changed-path
+sets narrow main candidates before hashing; patch hashing overlaps hourly
+history with isolated caches. The patched real-repo JSON run took 7.28s.
+Historical slices predating their required GAPS.md records stay unknown. Commit counts
 use committer dates. `documentation/velocity/landings.csv` holds integration's
 actual timestamps (optional `landings` count). Historical remote refs are not
-recoverable from today's refs: past backlog requires `backlog.csv` with
+recoverable from today's refs: past commit backlog requires `backlog.csv`; patch backlog requires
+`patch-backlog.csv` with
 `timestamp,count`. Its absence is shown explicitly, and the hourly-falling claim
 requires a strictly falling observation every elapsed hour.
 
