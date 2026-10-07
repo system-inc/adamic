@@ -1,3 +1,72 @@
+Built both perf_hooks require spellings on library host 94df56b, including tsc's guarded Partial destructuring.
+Commit: this feature branch's performance host merge (see git log); no main or area branch was pushed.
+Checks: adapted performanceCore.ts has zero diagnostics; loader/lower, focused Node oracle, counts and vet results below.
+Mutants: nonliteral require acceptance, omitted projection support, and absent runtime performance projection all failed their intended tests.
+Limits: incoming host fixtures block full flow/freshness; newer library tip remains pending.
+
+Both literal spellings reuse nodeProcessValue and its existing ProcessCall runtime. Plain const
+namespace bindings have the same IR as namespace imports. Immediate performance destructuring
+can use Partial<typeof import(...)> because the module view does not escape. The selected property
+must keep the module's declared type, optionally undefined. Escaping and changed-member views
+remain refused or NotYet. No checker options or upstream source were changed.
+
+The Node source runner supplies Node's Error, process and performance globals to its CommonJS
+context. Otherwise errors thrown by the required Node module belong to a different realm than
+that context's Error, incorrectly making the source's instanceof Error false. The initial oracle
+caught this harness mismatch; both backends agree with Node after correcting the source context.
+
+Stage 3 verification used a detached worktree at 7ad8666 and:
+
+```sh
+bash /workspace/require-stage3/stage3/apply.sh /workspace/require-adapted > /tmp/require-perf-apply.log 2>&1
+go run ./cmd/adamic types /workspace/require-adapted/src/compiler/performanceCore.ts > /tmp/require-perf-performanceCore-final.log 2>&1
+```
+
+apply.sh exited 0. The stage-0 types command exits 1 because other transitive compiler files
+still have diagnostics. Filtering the complete diagnostic log by /performanceCore.ts: finds
+**0 diagnostics**, including 0 TS2591 and 0 TS2375. The tree still has its literal require
+and adaptation 20's truthful optional declarations. The pinned Node package was made available
+through a scratch /workspace/stage3/api/node_modules symlink to this branch's installed package.
+
+Setup: Go 0s, clang 0s, Node 0s, submodules 0s, cache 152s, total 152s. nproc: 5.
+The environment file is /workspace/adamic-tools/env.sh.
+
+Validation logs (every test run was redirected, never piped):
+
+- /tmp/require-perf-packages.log: load passed 8.219s, lower passed 89.369s;
+  flow failed 156.828s and fresh failed 86.567s on incoming node_process fixtures.
+  node_process_cwd_error.a and node_process_errors.a use refused in syntax.
+  node_process_environment_mutation.a gets TS2542 from the readonly base process declaration;
+  node_process_directory_mutation.a gets TS2339 for argv/cwd/chdir without a node import.
+  These host probes need the newer library landing before a full green gate is possible.
+- /tmp/require-perf-restored.log: all require, CommonJS refusal and local-name lowering tests pass 3.652s.
+- /tmp/require-perf-counts-final.log: TestRequire and TestCountsAreRecorded with -update-counts pass 20.165s.
+  Both require performance fixtures run their source on Node, native under ASan/UBSan/leaks,
+  and the JS backend, observing hooks true false, monotonic clock checks and the missing-mark error.
+- /tmp/require-perf-vet.log: go vet ./... exits 0, no diagnostics.
+
+The new fixture rows each record 14 allocations, 14 frees, 39 retains, 47 releases, peak 6,
+regions 0, identical to the library's namespace-import performanceCore fixture. The entire ledger
+was regenerated. Existing node_fs_directory_system counts also moved to 2208/2208/3753/3289/1179/0;
+that fixture scans the repository. This is an observation, not a claim that require lowering causes
+those changes by itself. Other added rows come from the incoming host branch.
+
+Mutants were each applied to real lowering code and restored:
+
+- /tmp/require-perf-mutant-nonliteral.log: accepting a nonliteral as fs fails TestCommonJSRefusals,
+  including the binding that incorrectly lowers successfully under the mutant (exit 1).
+- /tmp/require-perf-mutant-projection.log: omit the immediate projection allowance;
+  TestRequirePerformanceAndImportHaveTheSameIR fails on the real guarded Partial binding (exit 1).
+- /tmp/require-perf-mutant-runtime.log: supply undefined for the performance module projection;
+  TestRequirePerformanceAgreesWithNode fails for both spellings and both backends (exit 1).
+  The mutated programs compile and run, but choose the global fallback and print hooks true true
+  instead of Node's hooks true false. No clang warning or unrelated refusal catches this mutant.
+
+The full gate was not rerun after its flow/freshness package blockers were established.
+The newer library tip will be merged when supplied, followed by renewed validation.
+
+Previous fs/path report follows for its historical evidence.
+
 Built: literal fs and path require use the existing library hosts and the pinned Node declarations on codex/require-builtins-2.
 Commits: d46ab6a dependency base; ff093cd cherry-pick of c880985; 36abd5f merge of the existing directory/path host.
 Checks: focused loader/lower, required Node oracles, complete counts regeneration and vet pass; final load/lower/flow/fresh, focused Node oracle, counts and vet pass; the full gate passed every compiler package before its unrelated long-running checks were stopped.

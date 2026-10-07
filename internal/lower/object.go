@@ -469,7 +469,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 				}
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
-				if comparedWithUndefined(node) {
+				if l.acceptsUndefined(node) {
 					return read, nil
 				}
 				return ir.Unwrap{Value: read}, nil
@@ -579,6 +579,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if value, known, err := l.nodeFSDirectoryCall(node); known {
 		return value, known, err
+	}
+	if value, known, err := l.processValue(node); known {
+		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
@@ -1453,6 +1456,9 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)
@@ -1625,7 +1631,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil
+		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil
 	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
 	if optional {

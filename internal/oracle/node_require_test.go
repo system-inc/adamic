@@ -16,7 +16,7 @@ func requireOnNode(t *testing.T, how inputRun, path string) run {
 const { stripTypeScriptTypes } = require('node:module');
 const vm = require('node:vm');
 const source = stripTypeScriptTypes(fs.readFileSync(process.argv[1], 'utf8'));
-vm.runInNewContext(source, { require, console }, { filename: process.argv[1] });`, path)
+vm.runInNewContext(source, { require, console, Error, performance, process }, { filename: process.argv[1] });`, path)
 }
 
 func TestRequireFSAgreesWithNode(t *testing.T) {
@@ -39,7 +39,7 @@ func TestRequireFSAgreesWithNode(t *testing.T) {
 	got, binary := inputNatively(t, how, program, shared)
 	for name, observation := range map[string]run{"native": got, "javascript": backend} {
 		if difference := disagreement(truth, observation); difference != "" {
-			t.Errorf("%s: %s", name, difference)
+			t.Errorf("%s: %s (Node %q, backend %q)", name, difference, truth.stdout, observation.stdout)
 		}
 	}
 	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
@@ -71,7 +71,42 @@ func TestRequirePathAgreesWithNode(t *testing.T) {
 			got, binary := inputNatively(t, how, program, shared)
 			for name, observation := range map[string]run{"native": got, "javascript": backend} {
 				if difference := disagreement(truth, observation); difference != "" {
-					t.Errorf("%s: %s", name, difference)
+					t.Errorf("%s: %s (Node %q, backend %q)", name, difference, truth.stdout, observation.stdout)
+				}
+			}
+			if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+				t.Errorf("leaks: %s", leaked)
+			}
+		})
+	}
+}
+
+var requirePerformanceFixtures = []string{"internal/oracle/testdata/require_perf_hooks.a", "internal/oracle/testdata/require_node_perf_hooks.a"}
+
+func TestRequirePerformanceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	for _, name := range requirePerformanceFixtures {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			shared := sharedDirectory(t)
+			how := inputRun{directory: shared}
+			truth := requireOnNode(t, how, path)
+			if truth.exitCode != 0 || len(truth.stderr) != 0 {
+				t.Fatalf("Node source: %+v", truth)
+			}
+			backend := inputBackend(t, how, program, shared)
+			got, binary := inputNatively(t, how, program, shared)
+			for name, observation := range map[string]run{"native": got, "javascript": backend} {
+				if difference := disagreement(truth, observation); difference != "" {
+					t.Errorf("%s: %s (Node %q, backend %q)", name, difference, truth.stdout, observation.stdout)
 				}
 			}
 			if leaked := inputLeaks(t, how, program, binary); leaked != "" {

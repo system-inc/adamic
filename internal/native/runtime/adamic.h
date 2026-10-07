@@ -297,7 +297,7 @@ typedef struct adamic_map {
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
 // to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
-// holds the map, and letting go of it ends the iteration.
+// holds the map; exhaustion or letting go ends the iteration exactly once.
 typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
@@ -321,6 +321,7 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 adamic_map *adamic_map_new_booleans(bool reference_values);
 bool adamic_map_maybe_key_equal(double left, double right);
 uint64_t adamic_map_maybe_key_hash(double key);
+uint64_t adamic_map_number_hash(double number);
 
 // adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
@@ -814,7 +815,16 @@ _Noreturn void adamic_unreachable(void);
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
 
+adamic_maybe_number adamic_process_exit_code(void);
+void adamic_process_set_exit_code(adamic_maybe_number code);
+void adamic_process_exit(adamic_maybe_number code);
+_Noreturn void adamic_process_exit_now(int code);
+int adamic_process_status(void);
+adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
+adamic_string *adamic_process_environment(const adamic_string *name);
+
 #endif
 
 #include "node_path.h"
 #include "node_fs_directory.h"
+#include "node_process.h"

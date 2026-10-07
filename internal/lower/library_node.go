@@ -74,6 +74,22 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 		return nil
 	}
 	name := l.nodeLibraryMember(node)
+	if ast.IsIdentifier(node) && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		node = node.Parent
+	}
+	if strings.HasPrefix(name, "node:globals.Dict.") {
+		if node.Kind == ast.KindElementAccessExpression && l.processPath(node.AsElementAccessExpression().Expression) == "process.env" {
+			return nil
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && l.processPath(node.AsPropertyAccessExpression().Expression) == "process.env" {
+			return nil
+		}
+	}
+	if (name == "node:stream.Writable.write" || name == "node:net.Socket.write") && l.processPath(ast.SkipParentheses(node)) != "process.stdout.write" {
+		if node.Kind != ast.KindCallExpression || l.processPath(node.AsCallExpression().Expression) != "process.stdout.write" {
+			return l.notYet(node, name)
+		}
+	}
 	if name != "" && !implementedNodeMembers[name] {
 		return l.notYet(node, name)
 	}

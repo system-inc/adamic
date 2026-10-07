@@ -1,0 +1,1 @@
+const entries = new Map<string, number>(); const [key, value] = entries.entries().next().value;

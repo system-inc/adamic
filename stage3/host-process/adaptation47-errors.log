@@ -1,0 +1,18 @@
+=== RUN   TestNodeProcessErrorNarrowingBlocker
+    node_process_errors_test.go:40: /workspace/adamic/internal/oracle/testdata/node_process_errors.a:5:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
+--- PASS: TestNodeProcessErrorNarrowingBlocker (0.26s)
+=== RUN   TestNodeProcessErrorsRuntime
+=== PAUSE TestNodeProcessErrorsRuntime
+=== RUN   TestNodeProcessCwdErrorRuntime
+=== PAUSE TestNodeProcessCwdErrorRuntime
+=== CONT  TestNodeProcessErrorsRuntime
+=== CONT  TestNodeProcessCwdErrorRuntime
+=== NAME  TestNodeProcessErrorsRuntime
+    node_process_errors_test.go:161: clean ERR_OUT_OF_RANGE mutant caught by Node stdout comparison
+    node_process_errors_test.go:163: own string code/message agree for real directory failures, Linux ENOMEM/EIO fault injection, and exit/exitCode numeric validation
+--- PASS: TestNodeProcessErrorsRuntime (4.91s)
+=== NAME  TestNodeProcessCwdErrorRuntime
+    node_process_errors_test.go:232: removed cwd own code/message match Node; clean code mutant caught by Node stdout
+--- PASS: TestNodeProcessCwdErrorRuntime (4.97s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	5.234s

@@ -47,7 +47,7 @@ func (l *lowering) nodeRequireBinding(declaration *ast.Node) bool {
 		return false
 	}
 	module, call := l.nodeRequireCall(declaration.AsVariableDeclaration().Initializer)
-	return call && (module == "node:fs" || module == "node:path") && declaration.Parent.Flags&ast.NodeFlagsConst != 0
+	return call && (module == "node:fs" || module == "node:path" || module == "node:perf_hooks") && declaration.Parent.Flags&ast.NodeFlagsConst != 0
 }
 
 func (l *lowering) refuseNodeRequire(node *ast.Node) error {
@@ -61,12 +61,15 @@ func (l *lowering) refuseNodeRequire(node *ast.Node) error {
 		if module == "" {
 			return &Refused{Where: l.program.Where(node), What: "require() without one string literal naming a Node builtin", Fix: "use an import"}
 		}
-		if module != "node:fs" && module != "node:path" {
+		if module != "node:fs" && module != "node:path" && module != "node:perf_hooks" {
 			return l.notYet(node, "require("+module+"): the builtin host module")
 		}
 		outer := node
-		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		for outer.Parent != nil && (outer.Parent.Kind == ast.KindParenthesizedExpression || (module == "node:perf_hooks" && outer.Parent.Kind == ast.KindAsExpression)) {
 			outer = outer.Parent
+		}
+		if module == "node:perf_hooks" && outer.Parent != nil && outer.Parent.Kind == ast.KindVariableDeclaration && outer.Parent.Name().Kind == ast.KindObjectBindingPattern {
+			return nil
 		}
 		if outer.Parent == nil || !l.nodeRequireBinding(outer.Parent) {
 			return l.notYet(node, "require("+module+") outside a plain const namespace binding; use an import")
@@ -94,4 +97,39 @@ func (l *lowering) refuseNodeRequire(node *ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// Immediate performance destructuring cannot retain or write the module view.
+// Only the unchanged declared member type, optionally absent, may be projected.
+func (l *lowering) nodeRequirePerformanceProjection(node *ast.Node) bool {
+	if node.Kind != ast.KindAsExpression {
+		return false
+	}
+	module, call := l.nodeRequireCall(node.AsAsExpression().Expression)
+	if !call || module != "node:perf_hooks" {
+		return false
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	declaration := outer.Parent
+	if declaration == nil || declaration.Kind != ast.KindVariableDeclaration || declaration.Name().Kind != ast.KindObjectBindingPattern {
+		return false
+	}
+	for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
+		element := binding.AsBindingElement()
+		name := binding.Name().Text()
+		if element.PropertyName != nil {
+			name = element.PropertyName.Text()
+		}
+		if name != "performance" || !ast.IsIdentifier(binding.Name()) || element.Initializer != nil || element.DotDotDotToken != nil {
+			return false
+		}
+	}
+	source := l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)
+	target := l.checker.GetTypeAtLocation(node)
+	original := l.checker.GetPropertyOfType(source, "performance")
+	viewed := l.checker.GetPropertyOfType(target, "performance")
+	return original != nil && viewed != nil && l.withoutUndefined(l.checker.GetTypeOfSymbol(viewed)) == l.checker.GetTypeOfSymbol(original)
 }

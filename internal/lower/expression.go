@@ -152,6 +152,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.nodeBufferUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -379,6 +382,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -428,7 +434,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 				read = ir.Unwrap{Value: read}
 			}
 		}
@@ -719,7 +725,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
 // written "undefined", as JavaScript writes it.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
-	if value.Type() != ir.String || !l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
 	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
@@ -777,6 +783,15 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	whenNot, err := l.expression(conditional.WhenFalse)
 	if err != nil {
 		return nil, err
+	}
+	if whenTrue.Type() != whenNot.Type() && l.acceptsUndefined(node) {
+		// A stale narrowing in either branch may still hold undefined. Keep that representation
+		// when the whole conditional is observed or written into a slot that accepts it.
+		if pair := whenTrue.Type(); pair.IsMaybe() && whenNot.Type() == pair.Present() {
+			whenNot = fit(whenNot, pair)
+		} else if pair := whenNot.Type(); pair.IsMaybe() && whenTrue.Type() == pair.Present() {
+			whenTrue = fit(whenTrue, pair)
+		}
 	}
 	if whenTrue.Type() != whenNot.Type() {
 		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
@@ -1033,7 +1048,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
