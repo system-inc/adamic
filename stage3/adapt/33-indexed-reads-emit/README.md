@@ -77,3 +77,12 @@ property accesses and `[]` for the third. The guard passes, the payload is
 undefined, and existing code produces `[null]` when that content is serialized.
 An assertion would therefore claim an invariant this API does not guarantee;
 caching would change observable getter calls. The original reads remain intact.
+
+### transformers/declarations.ts: one remaining diagnostic
+
+All-code census **2 -> 1**. The expando Value-export producer proves `props[0]!`
+is present. The mapped `clause.types[0]` remains declined: actual stock Node
+accepts two extends clauses with lengths `[1, 0]` and crashes on the second.
+JavaScript equality and idempotence pass; the required-read mutant is caught
+twice. Default oracle: **106367 passing**, empty baseline diff,
+213.824s. See [proof and counterexample](proof/whole-files/declarations/README.md).

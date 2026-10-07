@@ -763,9 +763,9 @@
     "expression": "props[0]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "The property-symbol list producer must prove a nonempty namespace list before selecting its parent; that invariant remains unreviewed."
+    "invariant": "isExpandoFunctionDeclaration requires an expando Value export on this parse-tree function symbol; getPropertiesOfContainerFunction resolves that same symbol export table through getNamedMembers, retaining the user-named Value property, so the populated props array has a first element and is not mutated before this read."
   },
   {
     "file": "transformers/declarations.ts",
@@ -777,7 +777,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-endpoint",
-    "invariant": "The extends clause type-list producer must prove nonemptiness for synthetic and malformed input; that invariant remains unreviewed."
+    "invariant": "Decline: getEffectiveBaseTypeNode proves only the first extends clause is populated; the parser also accepts export class C extends f() extends {} with a second empty clause. That mapped read can be undefined, as an actual stock Node declaration-emitter crash demonstrates."
   },
   {
     "file": "transformers/es2015.ts",
