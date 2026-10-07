@@ -20,6 +20,9 @@ import (
 //go:embed utf8.mjs
 var utf8Runtime string
 
+//go:embed json_decode.mjs
+var jsonDecodeRuntime string
+
 //go:embed runtime.mjs
 var workerRuntime string
 
@@ -160,9 +163,15 @@ func Build(entry, output string) error {
 	handler := javascript.JavaScriptWith(lowered, javascript.Options{ModuleExports: true, RuntimeImport: "./adamic.mjs"})
 	name := strings.TrimSuffix(filepath.Base(entry), filepath.Ext(entry))
 	configuration := fmt.Sprintf("name = %s\nmain = \"worker.mjs\"\ncompatibility_date = \"2026-10-07\"\n", strconv.Quote(name))
+	runtime := strings.Replace(workerRuntime, "/* UTF8_RUNTIME */", strings.Replace(utf8Runtime, "export function createUtf8", "function createUtf8", 1), 1)
+	const decoderStub = "export function decodeJson() { panic('decodeJson: not yet available on Workers'); }"
+	if strings.Count(runtime, decoderStub) != 1 {
+		return fmt.Errorf("worker: decodeJson runtime assembly marker missing")
+	}
+	runtime = strings.Replace(runtime, decoderStub, jsonDecodeRuntime, 1)
 	files := []struct{ name, text string }{
 		{"handler.mjs", handler},
-		{"adamic.mjs", strings.Replace(workerRuntime, "/* UTF8_RUNTIME */", strings.Replace(utf8Runtime, "export function createUtf8", "function createUtf8", 1), 1)},
+		{"adamic.mjs", runtime},
 		{"worker.mjs", Bridge("./handler.mjs")},
 		{"wrangler.toml", configuration},
 	}

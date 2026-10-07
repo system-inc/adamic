@@ -1,0 +1,5 @@
+{"url":"https://worker.test/decode","method":"POST","body":"{\"name\":\"old\",\"name\":\"new\",\"count\":2,\"extra\":true}"}
+{"url":"https://worker.test/decode","method":"POST","body":"{\"name\":\"one\",\"count\":-0,\"note\":\"hello\"}"}
+{"url":"https://worker.test/decode","method":"POST","body":"{\"name\":\"one\"}"}
+{"url":"https://worker.test/decode","method":"POST","body":"{\"name\":1,\"count\":2}"}
+{"url":"https://worker.test/decode","method":"POST","body":"{\"name\":\"one\",}"}
