@@ -1,6 +1,7 @@
 package native
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"strings"
 
@@ -15,11 +16,13 @@ func (e *emitter) writeFieldSlot(object, name string, class int) string {
 	if !cName.MatchString(object) {
 		object = e.snapshotObjectForStore(object)
 	}
+	condition := object + " == NULL"
 	if !strings.HasPrefix(name, "#") {
-		e.line("if (%s->frozen) {", object)
-		e.line("\tadamic_object_check_write(%s, %s);", object, cString(name))
-		e.line("}")
+		condition += " || " + object + "->frozen"
 	}
+	e.line("if (%s) {", condition)
+	e.line("\t%s(%s);", e.coldFieldFailure(name), object)
+	e.line("}")
 	field := e.fieldSlot(object, name, class)
 	for _, metadata := range e.program.Classes {
 		if metadata.Static {
@@ -50,7 +53,7 @@ func (e *emitter) primitiveArrayStore(element ir.Type, array, index, value strin
 	e.line("if (%s != NULL) {", slot)
 	e.line("\t*%s = (adamic_value){.%s = %s};", slot, member(element), slotted(element, value))
 	e.line("} else {")
-	e.line("\tadamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(element), slotted(element, value))
+	e.line("\tadamic_array_write_failure(%s, %s);", array, index)
 	e.line("}")
 	return true
 }
@@ -77,4 +80,39 @@ func (e *emitter) booleanLiteralEquality(binary ir.Binary) (string, bool) {
 		equal = "(!" + equal + ")"
 	}
 	return equal, true
+}
+
+// coldHelper uses content names only for these new internal helpers. It leaves
+// user symbols and temporary/cache counter allocation unchanged.
+func (e *emitter) coldHelper(kind, key, parameters, body string) string {
+	name := fmt.Sprintf("adamic_cold_%s_%x", kind, sha256.Sum256([]byte(key)))
+	declaration := fmt.Sprintf("static ADAMIC_COLD _Noreturn void %s(%s) {\n%s\n}\n", name, parameters, body)
+	prefix := "static ADAMIC_COLD _Noreturn void " + name + "("
+	for _, existing := range e.declarations {
+		if strings.HasPrefix(existing, prefix) {
+			if existing != declaration {
+				panic("native: compiler bug: cold helper name collision")
+			}
+			return name
+		}
+	}
+	e.declarations = append(e.declarations, declaration)
+	return name
+}
+
+// coldStop shares a constant-message failure body, including its argument setup,
+// instead of repeating that setup in each generated caller.
+func (e *emitter) coldStop(message string) string {
+	body := fmt.Sprintf("\tstatic const char message[] = %s;\n\tadamic_panic(message, sizeof message - 1);", cString(message))
+	return e.coldHelper("stop", message, "void", body)
+}
+
+func (e *emitter) coldFieldFailure(name string) string {
+	message := "TypeError: Cannot set properties of undefined (setting '" + name + "')"
+	body := fmt.Sprintf("\tif (object == NULL) {\n\t\tstatic const char message[] = %s;\n\t\tadamic_panic(message, sizeof message - 1);\n\t}\n", cString(message))
+	if !strings.HasPrefix(name, "#") {
+		body += fmt.Sprintf("\tadamic_object_check_write(object, %s);\n", cString(name))
+	}
+	body += "\tadamic_unreachable();"
+	return e.coldHelper("field", name, "const adamic_object *object", body)
 }

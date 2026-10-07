@@ -148,10 +148,6 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
-		e.line("if (%s == NULL) {", object)
-		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
-		e.line("}")
 		slot := e.writeFieldSlot(object, statement.Name, statement.Class)
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.

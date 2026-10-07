@@ -113,15 +113,13 @@ static chunk *new_chunk(size_t class) {
 			chunk_capacity = chunk_capacity == 0 ? 64 : chunk_capacity * 2;
 			chunk **grown = realloc(chunks, chunk_capacity * sizeof *grown);
 			if (grown == NULL || chunk_count >= UINT32_MAX) {
-				static const char message[] = "out of memory";
-				adamic_panic(message, sizeof message - 1);
+				adamic_out_of_memory();
 			}
 			chunks = grown;
 		}
 		each = malloc(CHUNK);
 		if (each == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 		each->number = (uint32_t)chunk_count;
 		chunks[chunk_count++] = each;
@@ -195,8 +193,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	} else {
 		heap = malloc(size);
 		if (heap == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 	}
 	heap->references = 1;

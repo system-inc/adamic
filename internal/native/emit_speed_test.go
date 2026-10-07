@@ -176,3 +176,27 @@ console.log(strings.join(','));
 		}
 	}
 }
+
+func TestColdAllocationFailure(t *testing.T) {
+	t.Parallel()
+	// Fail a real allocation after output has been buffered. The cold path must
+	// flush that output and preserve the runtime's message and exit code.
+	const source = `#include "adamic.h"
+#include <stdlib.h>
+void *malloc(size_t size) { (void)size; return NULL; }
+int main(void) {
+    static adamic_string before = ADAMIC_STRING("before");
+    adamic_write_line(adamic_stdout, &before);
+    (void)adamic_allocate(300, adamic_kind_object);
+    return 0;
+}
+`
+	binary := filepath.Join(t.TempDir(), "allocation-failure")
+	if err := Build(source, binary, Options{}); err != nil {
+		t.Fatal(err)
+	}
+	got := outcome(t, binary)
+	if got.stdout != "before\n" || got.stderr != "adamic: panic: out of memory\n" || got.exitCode != 70 {
+		t.Fatalf("allocation failure: %+v", got)
+	}
+}

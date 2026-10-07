@@ -45,8 +45,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		// The other visits skip an index the callback took away, as JavaScript's do; find and
 		// findIndex call it with undefined there, which the element's type can't hold. A panic, the
 		// same in both backends.
-		e.line("\tstatic const char message[] = \"%s: the array shrank while it was being searched\";", visit.Method)
-		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("\t%s();", e.coldStop(visit.Method+": the array shrank while it was being searched"))
 	} else {
 		e.line("\tcontinue;")
 	}

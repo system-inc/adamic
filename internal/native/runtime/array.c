@@ -18,8 +18,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	if (capacity > 0) {
 		array->elements = malloc(capacity * sizeof *array->elements);
 		if (array->elements == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 	}
 	return array;
@@ -30,8 +29,7 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
 		size_t capacity = array->capacity == 0 ? 4 : array->capacity * 2;
 		adamic_value *grown = realloc(array->elements, capacity * sizeof *grown);
 		if (grown == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 		array->elements = grown;
 		array->capacity = capacity;
@@ -44,8 +42,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 	size_t length = 0, capacity = 64;
 	char *buffer = malloc(capacity);
 	if (buffer == NULL) {
-		static const char message[] = "out of memory";
-		adamic_panic(message, sizeof message - 1);
+		adamic_out_of_memory();
 	}
 	for (size_t index = 0; index < array->length; index++) {
 		char number[ADAMIC_NUMBER_FORMAT_MAX];
@@ -86,8 +83,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 			}
 			char *grown = realloc(buffer, capacity);
 			if (grown == NULL) {
-				static const char message[] = "out of memory";
-				adamic_panic(message, sizeof message - 1);
+				adamic_out_of_memory();
 			}
 			buffer = grown;
 		}
@@ -142,8 +138,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 	}
 	adamic_value *work = malloc(length * sizeof *work);
 	if (work == NULL) {
-		static const char message[] = "out of memory";
-		adamic_panic(message, sizeof message - 1);
+		adamic_out_of_memory();
 	}
 	bool references = array->references;
 	for (size_t index = 0; index < length; index++) {
@@ -159,8 +154,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 	if (references) {
 		taken = malloc(length * sizeof *taken);
 		if (taken == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 		memcpy(taken, work, length * sizeof *taken);
 	}
@@ -316,16 +310,14 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	if (removed == NULL && array->references && removed_count > 0) {
 		dropped = malloc(removed_count * sizeof *dropped);
 		if (dropped == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 		memcpy(dropped, array->elements + from, removed_count * sizeof *dropped);
 	}
 	if (new_length > array->capacity) {
 		adamic_value *grown = realloc(array->elements, new_length * sizeof *grown);
 		if (grown == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
+			adamic_out_of_memory();
 		}
 		array->elements = grown;
 		array->capacity = new_length;
@@ -393,11 +385,7 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 	// a hole is something 0.1 can't hold. push is how to append.
 	adamic_value *slot = adamic_array_at(array, index);
 	if (slot == NULL) {
-		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
-		size_t number_size = adamic_number_format(index, number);
-		size_t length_size = adamic_number_format((double)array->length, length);
-		int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
-		adamic_panic(message, (size_t)written);
+		adamic_array_write_failure(array, index);
 	}
 	if (array->references) {
 		void *old = slot->reference;
@@ -406,4 +394,12 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 		return;
 	}
 	*slot = value;
+}
+
+_Noreturn void adamic_array_write_failure(const adamic_array *array, double index) {
+	char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
+	size_t number_size = adamic_number_format(index, number);
+	size_t length_size = adamic_number_format((double)array->length, length);
+	int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
+	adamic_panic(message, (size_t)written);
 }

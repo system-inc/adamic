@@ -9,6 +9,13 @@
 
 #include <math.h>
 
+// Failure helpers stay out of the hot instruction stream on supported compilers.
+#if defined(__GNUC__) || defined(__clang__)
+#define ADAMIC_COLD __attribute__((cold, noinline))
+#else
+#define ADAMIC_COLD
+#endif
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
@@ -415,6 +422,7 @@ static inline adamic_value *adamic_array_at(const adamic_array *array, double in
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
 // doesn't have.
 void adamic_array_set(adamic_array *array, double index, adamic_value value);
+ADAMIC_COLD _Noreturn void adamic_array_write_failure(const adamic_array *array, double index);
 
 // adamic_array_at_relative is array.at(index): the element's slot, or NULL (undefined).
 adamic_value *adamic_array_at_relative(const adamic_array *array, double index);
@@ -813,14 +821,15 @@ adamic_object *adamic_file_status(const adamic_string *path);
 adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
-_Noreturn void adamic_panic(const char *message, size_t length);
+ADAMIC_COLD _Noreturn void adamic_panic(const char *message, size_t length);
+ADAMIC_COLD _Noreturn void adamic_out_of_memory(void);
 
 // ADAMIC_CHECK_STACK starts every function the compiler emits: past adamic_stack_limit, the stack is
 // nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
 // stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even
 // when the address sanitizer keeps locals elsewhere.
 extern uintptr_t adamic_stack_limit;
-_Noreturn void adamic_stack_overflow(void);
+ADAMIC_COLD _Noreturn void adamic_stack_overflow(void);
 #define ADAMIC_CHECK_STACK() \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
@@ -830,7 +839,7 @@ _Noreturn void adamic_stack_overflow(void);
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.
-_Noreturn void adamic_unreachable(void);
+ADAMIC_COLD _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
