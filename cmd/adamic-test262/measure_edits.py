@@ -7,6 +7,9 @@ import os
 from pathlib import Path
 import shlex
 import subprocess
+import sys
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[2] / "internal" / "boundedrun"))
+from python import run as bounded_run
 import time
 
 parser = argparse.ArgumentParser()
@@ -25,7 +28,7 @@ records = []
 references = {}
 
 def capture(command, cwd=None):
-    return subprocess.check_output(command, cwd=cwd, text=True).strip()
+    return bounded_run(command, cwd=cwd, stdout=subprocess.PIPE, text=True, check=True).stdout.strip()
 
 identity = {'nproc': capture(['nproc']), 'cpu.max': Path('/sys/fs/cgroup/cpu.max').read_text().strip(),
             'go': capture(['go', 'version']), 'clang': capture(['clang', '--version']).splitlines()[0],
@@ -49,7 +52,7 @@ def build(variant, env, label):
     binary = output / ('runner-' + variant)
     command = ['go', 'build', '-o', str(binary), './cmd/adamic-test262']
     with (output / (label + '-build.log')).open('w') as log:
-        subprocess.run(command, cwd=roots[variant], env=env, stdout=log, stderr=log, check=True)
+        bounded_run(command, cwd=roots[variant], env=env, stdout=log, stderr=log, check=True)
     return binary, instrument(command, env)
 
 def summarize(profile):
@@ -87,7 +90,7 @@ def run(variant, label, directory, kind, round_number, env, binary, build_comman
     load_before = load_before or Path('/proc/loadavg').read_text().strip()
     start = time.monotonic()
     with (output / (label + '.json')).open('w') as stdout, (output / (label + '.log')).open('w') as stderr:
-        result = subprocess.run(command, cwd=roots[variant], env=env, stdout=stdout, stderr=stderr)
+        result = bounded_run(command, cwd=roots[variant], env=env, stdout=stdout, stderr=stderr)
     elapsed = time.monotonic() - start
     if result.returncode:
         raise RuntimeError(label + ' failed; see scratch log')

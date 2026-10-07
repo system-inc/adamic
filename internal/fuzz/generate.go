@@ -30,36 +30,38 @@ func Generate(seed uint64) *Program {
 // Features are the parts of the language the generator can leave out by name, so it can stay inside
 // what an older stage 0 lowered: fuzzing an old commit, a program that's all not-yets tests nothing.
 var Features = []string{
-	"field-updates",     // +=, ++ and the rest on a field (holder.value += 1), not plain =
-	"number-tostring",   // (1.5).toString()
-	"number-functions",  // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
-	"string-index",      // text[index] and text.at(index)
-	"string-search",     // lastIndexOf, replaceAll, trimStart, trimEnd
-	"array-index",       // list[index] and list.at(index), read
-	"array-write",       // list[index] = value
-	"array-spread",      // [...list, value]
-	"array-search",      // indexOf and includes on an array
-	"array-methods",     // reverse, concat, reduce, filter, find, findIndex, some, every
-	"sort-callback",     // sort with an arrow function as the comparator
-	"map-iteration",     // for...of over a Map
-	"closures-deep",     // closures pushed to a global array from anywhere, capturing cells, and called later
-	"map-mutation",      // for...of over a Map, its keys or its values, while the body sets and deletes
-	"splice",            // list.splice(start, count, ...items)
-	"sort-mutating",     // sort with a comparator that writes, to the array it's sorting too
-	"surrogates",        // strings with a surrogate pair's halves, apart and rejoined
-	"case-mapping",      // toUpperCase and toLowerCase
-	"defaults",          // default parameters, which may call functions, left out by some calls
-	"optional-chains",   // ?. and ?? through a linked list that may end anywhere
-	"number-formats",    // toExponential and toPrecision
-	"array-from",        // Array.from({ length }, callback)
-	"inheritance",       // a subclass, an override, a super call, and a base-typed virtual call
-	"map-keys",          // a number Map and a number Set, including NaN and -0
-	"regex",             // regular expression literals: exec, replace, replaceAll and split
-	"bitwise",           // &, |, ^, ~, <<, >> and >>>
-	"undefined-numbers", // number | undefined and optional numbers across every kind of call (undefined_numbers.go)
-	"shared-slices",     // long strings, slices that share their owner's bytes, and += on those slices
-	"ownership",         // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
-	"overrides",         // static read-only signatures with implementations that mutate or escape arguments
+	"field-updates",        // +=, ++ and the rest on a field (holder.value += 1), not plain =
+	"number-tostring",      // (1.5).toString()
+	"number-functions",     // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
+	"string-index",         // text[index] and text.at(index)
+	"string-search",        // lastIndexOf, replaceAll, trimStart, trimEnd
+	"array-index",          // list[index] and list.at(index), read
+	"array-write",          // list[index] = value
+	"array-spread",         // [...list, value]
+	"array-search",         // indexOf and includes on an array
+	"array-methods",        // reverse, concat, reduce, filter, find, findIndex, some, every
+	"sort-callback",        // sort with an arrow function as the comparator
+	"map-iteration",        // for...of over a Map
+	"closures-deep",        // closures pushed to a global array from anywhere, capturing cells, and called later
+	"map-mutation",         // for...of over a Map, its keys or its values, while the body sets and deletes
+	"splice",               // list.splice(start, count, ...items)
+	"sort-mutating",        // sort with a comparator that writes, to the array it's sorting too
+	"surrogates",           // strings with a surrogate pair's halves, apart and rejoined
+	"case-mapping",         // toUpperCase and toLowerCase
+	"defaults",             // default parameters, which may call functions, left out by some calls
+	"optional-chains",      // ?. and ?? through a linked list that may end anywhere
+	"number-formats",       // toExponential and toPrecision
+	"array-from",           // Array.from({ length }, callback)
+	"inheritance",          // a subclass, an override, a super call, and a base-typed virtual call
+	"map-keys",             // a number Map and a number Set, including NaN and -0
+	"regex",                // regular expression literals: exec, replace, replaceAll and split
+	"bitwise",              // &, |, ^, ~, <<, >> and >>>
+	"undefined-numbers",    // number | undefined and optional numbers across every kind of call (undefined_numbers.go)
+	"shared-slices",        // long strings, slices that share their owner's bytes, and += on those slices
+	"ownership",            // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
+	"overrides",            // static read-only signatures with implementations that mutate or escape arguments
+	"liveness",             // locals assigned from calls that may throw, read in catch, finally, after and in loops (liveness.go)
+	"field-representation", // number | undefined fields narrowed then cleared, and literals with undefined fields (field_representation.go)
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -262,6 +264,16 @@ func (g *generator) program() *Program {
 	}
 	if g.with[operatorsScene] {
 		for _, part := range g.operatorsProgram() {
+			add(part)
+		}
+	}
+	if g.allowed("liveness") {
+		for _, part := range g.livenessProgram() {
+			add(part)
+		}
+	}
+	if g.allowed("field-representation") {
+		for _, part := range g.fieldRepresentationProgram() {
 			add(part)
 		}
 	}

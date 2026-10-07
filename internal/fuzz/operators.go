@@ -1,6 +1,9 @@
 package fuzz
 
-import "strings"
+import (
+	"math/rand/v2"
+	"strings"
+)
 
 // The operators scene applies every operator to every value representation stage 0 has, and prints
 // what each one gives. typeof null printed "undefined" natively where Node prints "object", and no
@@ -26,6 +29,11 @@ import "strings"
 // The scene is an opt-in, -with operators: main still prints "undefined" for typeof null, so every
 // program it writes is a finding there and would drown every other scene's. It turns default-on when
 // typeof null is fixed on main. The opt-ins below refine it, and do nothing without it.
+//
+// The scene draws from a random stream of its own, so turning it on changes nothing else a seed writes.
+
+// operatorStream is the scene's random stream, beside the generator's own.
+const operatorStream = 0x6f70657261746f72
 
 // operatorsScene is the opt-in that writes the scene at all.
 const operatorsScene = "operators"
@@ -398,8 +406,19 @@ func (g *generator) operatorProbe(scene *operatorScene, representations []operat
 	))}
 }
 
-// operatorsProgram is the scene: its declarations and peers, the roll call, and the probes.
+// operatorsProgram is the scene, made by a generator on the scene's own stream, with the opt-ins
+// asked for. What it wrote is noted on this generator too, for the scene's test.
 func (g *generator) operatorsProgram() []*Statement {
+	scene := &generator{random: rand.New(rand.NewPCG(g.seed, operatorStream)), seed: g.seed, with: g.with, without: g.without}
+	parts := scene.operatorsScene()
+	for what := range scene.operators {
+		g.operatorSeen(what)
+	}
+	return parts
+}
+
+// operatorsScene is the scene: its declarations and peers, the roll call, and the probes.
+func (g *generator) operatorsScene() []*Statement {
 	parts := []*Statement{
 		statement("interface OpsPoint {\n\tx: number;\n}"),
 		statement("class OpsThing @b", maybeBlock(statement("count = 1;"))),

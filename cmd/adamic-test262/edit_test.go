@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
+
 	"path/filepath"
 	"testing"
 	"testing/fstest"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
 func TestEditCacheSeparation(t *testing.T) {
@@ -170,9 +172,10 @@ func TestRunnerLocationIdentity(t *testing.T) {
 	}
 	var before []byte
 	for _, path := range []string{executable, relocated} {
-		command := exec.Command(path, "-test.run=^TestRunnerLocationHelper$")
+		command, release := boundedrun.Command(boundedrun.Build, path, "-test.run=^TestRunnerLocationHelper$")
 		command.Env = append(os.Environ(), "ADAMIC_TEST262_CONTEXT_HELPER=1")
 		output, err := command.CombinedOutput()
+		release()
 		if err != nil {
 			t.Fatalf("helper: %v: %s", err, output)
 		}
@@ -180,5 +183,19 @@ func TestRunnerLocationIdentity(t *testing.T) {
 			t.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)
 		}
 		before = output
+	}
+}
+
+func TestNodeHelperIdentityCache(t *testing.T) {
+	t.Parallel()
+	sources := fstest.MapFS{"run.go": {Data: []byte("unchanged runner")}}
+	cache := &resultCache{directory: t.TempDir()}
+	for _, helper := range []string{"old execution helper", "changed execution helper"} {
+		context := nodeHarnessWithHelperIdentity(sources, helper)
+		key := nodeResultKey("unchanged program", "unchanged Node", "same adaptation", "same command", context)
+		observed := cache.reuse(key, func() (execution, bool) { return execution{Stdout: helper}, true })
+		if observed.Stdout != helper {
+			t.Fatal("changed child execution helper reused Node observation")
+		}
 	}
 }
