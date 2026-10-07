@@ -263,3 +263,19 @@ including the competing wave-11 claim, no unclaimed rule remains among the
 remains based on current main c01907a7 and has its previously reported green
 landing checks. Shared model ab70f38d4 is still not on main. No main, area,
 shared harness, parser or generator file was changed or pushed.
+
+
+## Landing after the withdrawal and main advance
+
+Main advanced during withdrawal verification to b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
+All 31 own commits rebased cleanly, rebased source tip e6d4109b3c6656dddfaa26e05725671db4801c64.
+All eight selected lint suites passed again in 888.958s, with the existing Go
+byte comparisons, sanitizers, rule/raw-question mutants and released handles.
+The extra shared-regex literal mutant is caught at byte 1134. Checker, numeric
+listeners, full vet, formatting and filtered uncached Node checks are green.
+The new main inherited-static-field fixture agrees with Node too. No protected
+or shared file was edited by this worker. The duplicate sixth reservation
+remains withdrawn, its prototypes are outside the branch, and no rule remains
+unclaimed in the recorded all-origin audit. WAVE_17_LANDING4_REPORT.md contains
+the current-base timings, limitations and exact command evidence. This branch
+is pushed only to codex/typeaware-wave-17 with an exact lease against 72ce121c.

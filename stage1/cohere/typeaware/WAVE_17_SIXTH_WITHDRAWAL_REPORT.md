@@ -22,7 +22,8 @@ compiler/repository totals with lexical ties from VOLUME_REPORT.md's preserved
 counts. The complete refs, claims and exclusions are in selection.json.gz.
 There is no new claim after this correction.
 
-Current main remains c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Existing wave-17
+At the initial withdrawal audit, main was c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06.
+It subsequently advanced; WAVE_17_LANDING4_REPORT.md records the fresh landing. Existing wave-17
 sources are unchanged from the previously validated landing: all eight
 selected suites PASS 909.575s and the changed fifth-batch module PASS 171.661s.
 See WAVE_17_LANDING3_REPORT.md. Shared model ab70f38d4 is visible on
@@ -84,8 +85,9 @@ valid mutants.
 Sources and the dedicated test were removed from the working tree after being
 saved as /workspace/wave-17-sixth/withdrawn-implementation.patch and under
 /workspace/wave-17-sixth/withdrawn-sources. The patch SHA-256 and exact file list
-are in status.json. Raw command stdout/stderr, fixture inputs and binaries are
-also retained in that scratch directory. The committed evidence contains the
+are in status.json. Raw command stdout/stderr and fixture inputs remain in that scratch directory.
+Identified generated ELF binaries and ar archives were later removed for landing
+validation disk space; the exact removal list is in validation-wave-17-landing4/cleanup.json. The committed evidence contains the
 run logs and audit, not a competing production implementation.
 
 Commands run, with test output redirected directly to log files:

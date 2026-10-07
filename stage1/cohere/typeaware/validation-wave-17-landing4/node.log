@@ -1,0 +1,57 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_element.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_element.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_region.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_region.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_reuse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_reuse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_closure.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_closure.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_element.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_closures.a
+--- PASS: TestTheOracleCatchesOneByte (1.25s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_closure.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_reuse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_region.a
+--- PASS: TestNativeAgreesWithNode (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_closures.a (1.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (2.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_element.a (2.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (2.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize.a (2.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a (1.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (2.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (1.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_closure.a (2.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_reuse.a (1.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_region.a (1.62s)
+PASS
+gate cache: native hits=0 misses=34
+gate cache: node hits=0 misses=23
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.949s
