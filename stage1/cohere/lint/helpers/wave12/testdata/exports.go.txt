@@ -7,3 +7,17 @@ func AdamicNormalizeArgument(argument string) string {
 func AdamicSegment(input string, separator byte) []string {
     return segment(input, separator)
 }
+
+// Only the oracle can seed the counter. Production state and behavior stay intact.
+func AdamicCounterSequence(start int, count int) []int {
+    builds.Lock()
+    saved := builds.count
+    builds.count = start
+    builds.Unlock()
+    result := make([]int, count)
+    for index := range result { result[index] = nextBuildCount() }
+    builds.Lock()
+    builds.count = saved
+    builds.Unlock()
+    return result
+}

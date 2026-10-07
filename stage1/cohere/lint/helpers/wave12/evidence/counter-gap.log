@@ -1,0 +1,18 @@
+=== RUN   TestCounterExactPrimitiveGap
+    counter_gap_test.go:21: actual Go and exact Node support probe match nine counter observations:
+        1
+        2
+        3
+        9007199254740992
+        9007199254740993
+        9007199254740994
+        9223372036854775807
+        -9223372036854775808
+        -9223372036854775807
+    counter_gap_test.go:33: exact native/emitted-IR support blocked before backend emission: /workspace/adamic/stage1/cohere/lint/helpers/wave12/gaps/atomic-counter.a:4:10: stage 0 can't lower a function returning bigint yet
+    counter_gap_test.go:39: backend 0 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+    counter_gap_test.go:39: backend 1 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+    counter_gap_test.go:39: backend 2 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+--- PASS: TestCounterExactPrimitiveGap (2.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	2.102s

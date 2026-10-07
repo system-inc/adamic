@@ -1,0 +1,8 @@
+package main
+import("fmt";"strconv";collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse")
+func main(){
+ if strconv.IntSize != 64 {panic("counter fixture requires Go int64 host")}
+ for _,start:=range []int{0,9007199254740991,9223372036854775806}{
+  for _,value:=range collapse.AdamicCounterSequence(start,3){fmt.Println(value)}
+ }
+}

@@ -1,0 +1,10 @@
+// Compiling approximation mutant. The Go comparison must catch lost increments.
+let builds = 0;
+function nextBuildCount(): number {
+    builds++;
+    return builds;
+}
+for(const start of [0, 9007199254740991, 9223372036854775806]) {
+    builds = start;
+    for(let index = 0; index < 3; index++) { console.log(`${nextBuildCount()}`); }
+}
