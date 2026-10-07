@@ -1,0 +1,6 @@
+{
+  "name": "class_token_source_check_lost",
+  "file": "tokens.a",
+  "from": "source.slice(opening, closing) !== value",
+  "to": "false"
+}

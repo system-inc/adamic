@@ -1,0 +1,47 @@
+import { utf8Length } from 'adamic';
+export class Token {
+    readonly text: string;
+    readonly start: number;
+    readonly end: number;
+    readonly separator: boolean;
+    constructor(text: string, start: number, end: number, separator: boolean) {
+        this.text = text; this.start = start; this.end = end; this.separator = separator;
+    }
+}
+export function isSpace(text: string): boolean {
+    return text === ' ' || text === '\t' || text === '\n' || text === '\r' || text === '\v' || text === '\f';
+}
+// Source positions use Go's UTF-8 byte offsets even though traversal uses UTF-16.
+export function tokensOf(value: string, start: number): Token[] {
+    const tokens: Token[] = [];
+    let index = 0;
+    let offset = start;
+    while(index < value.length) {
+        const opening = index;
+        const separator = isSpace(value.slice(index, index + 1));
+        while(index < value.length && isSpace(value.slice(index, index + 1)) === separator) { index++; }
+        const text = value.slice(opening, index);
+        const end = offset + utf8Length(text);
+        tokens.push(new Token(text, offset, end, separator));
+        offset = end;
+    }
+    return tokens;
+}
+export function tokensIn(source: string, start: number, end: number, value: string): Token[] | undefined {
+    if(start < 0 || end > utf8Length(source) || start > end) { return undefined; }
+    // Check boundaries as well as text: an offset inside a UTF-8 rune is invalid.
+    let opening = -1;
+    let closing = -1;
+    let bytes = 0;
+    for(let index = 0; index <= source.length; index++) {
+        if(bytes === start) { opening = index; }
+        if(bytes === end) { closing = index; }
+        if(index === source.length) { break; }
+        const code = source.charCodeAt(index);
+        const width = code >= 55296 && code <= 56319 ? 2 : 1;
+        bytes += utf8Length(source.slice(index, index + width));
+        index += width - 1;
+    }
+    if(opening < 0 || closing < 0 || source.slice(opening, closing) !== value) { return undefined; }
+    return tokensOf(value, start);
+}

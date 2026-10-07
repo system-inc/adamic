@@ -23,9 +23,10 @@ func written(s string) string {
 }
 
 type Slot struct {Text string;Start,End int}
-type Row struct {Mode string; Logical bool; Candidates []rules.AdamicCandidate;Classes []string;Order string;Slots []Slot}
+type Row struct {Mode string; Logical bool; Candidates []rules.AdamicCandidate;Classes []string;Order string;Slots []Slot;Source,Value string;Start,End int}
 func main(){data,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)};var rows []Row;if err=json.Unmarshal(data,&rows);err!=nil{panic(err)}
  for i,row:=range rows{fmt.Printf("case %d\n",i)
+  if row.Mode=="tokens" {text,starts,ends,separators,valid:=rules.AdamicTokens(row.Source,row.Start,row.End,row.Value);fmt.Printf("valid\t%t\n",valid);for i,t:=range text {fmt.Printf("token\t%d %d\t%t\t%s\n",starts[i],ends[i],separators[i],written(t))};continue}
   if row.Mode=="collapse"{inputs,output,message:=rules.AdamicCanonical(row.Candidates,row.Logical);fmt.Println("inputs\t"+written(strings.Join(inputs,"|")));fmt.Println("output\t"+written(output));fmt.Println("message\t"+written(message.Description));continue}
   ordered:=rules.AdamicLexical(row.Classes,row.Order);fmt.Println("order\t"+written(strings.Join(ordered,"|")));message:=rules.AdamicOrderMessage(strings.Join(ordered," "));fmt.Println("message\t"+written(message.Description))
   text:=[]string{};starts:=[]int{};ends:=[]int{};for _,slot:=range row.Slots{text=append(text,slot.Text);starts=append(starts,slot.Start);ends=append(ends,slot.End)}

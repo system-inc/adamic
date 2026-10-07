@@ -21,3 +21,10 @@ func AdamicSlots(text []string, starts, ends []int, ordered []string) []rule.Fix
  return slotFixes(slots,ordered)
 }
 func AdamicOrderMessage(ordered string) rule.Message { return messageInconsistentClassOrder(ordered) }
+
+func AdamicTokens(source string, start, end int, value string) ([]string,[]int,[]int,[]bool,bool) {
+ tokens,valid:=classTokensIn(source,core.NewTextRange(start,end),value)
+ var text []string; var starts,ends []int;var separators []bool
+ for _,token:=range tokens {text=append(text,token.Text);starts=append(starts,token.Range.Pos());ends=append(ends,token.Range.End());separators=append(separators,token.Separator)}
+ return text,starts,ends,separators,valid
+}

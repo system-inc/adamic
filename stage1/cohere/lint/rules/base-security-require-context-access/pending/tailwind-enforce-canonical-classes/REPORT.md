@@ -1,6 +1,6 @@
 Built: portable canonical collapse components in .a: all 45 framework collapse families, merge-key checks, logical filtering, source-preserving rebuilds and message text. This is not a registered full rule.
 Commits: components 3fed4da1; claim d316a491 was pushed before implementation.
-Commands and outputs: components_validate.py PASS, 336 mixed component cases and 69,771 identical bytes on Node, emitted JavaScript and ASan/UBSan native.
+Commands and outputs: components_validate.py PASS, 378 mixed component cases and 71,242 identical bytes on Node, emitted JavaScript and ASan/UBSan native.
 Mutants: canonical_merge_value_check_lost builds and runs with zero exits and empty stderr, then fails only byte comparison on all three backends. This is component credit, not full-rule mutant credit.
 Not covered: full-rule findings/fixes parity over compiler, stage1 or upstream fixtures; full-rule throughput is unavailable. project CSS loading, ParseCandidate/splitCandidateIn, class-literal surfaces, ignore patterns, options and the repeated report loop.
 
@@ -13,3 +13,11 @@ The unmodified upstream control tests fail, rather than reporting skipped tests 
 The Go scratch overlay exposes actual private component functions. Canonical tests supply explicit candidate facts to mergeKey/collapseOutputFor/rebuildClass; they do not validate candidate parsing or CSS loading. Ordering tests exercise actual orderClasses in asc/desc mode without a design system and actual slotFixes. The mixed corpus covers every family in both directions, logical on/off, mismatched values/variants/importance, writable source values, Unicode ordering and slot ranges. Source Node, emitted JavaScript and sanitized native run the same owned components. The full rule entry points are neither registered nor claimed complete.
 
 Reproduce using the script in ../tailwind-enforce-canonical-classes/components_validate.py with --scratch /tmp/wave11-tailwind-components-final, redirecting its output to a log. The components are retained separately under this owned unit's pending directory until their provider and listener contracts can be implemented.
+
+## Source token follow-up
+
+The follow-up ports Go classTokensOf and classTokensIn into tokens.a. It preserves the six ASCII separators, treats Unicode whitespace as class text, emits UTF-8 byte ranges, and declines fixes for out-of-bounds, reversed, non-rune-boundary or decoded/source-mismatched ranges. Forty-two added cases include actual control whitespace, NEL, NBSP, BOM, astral text and invalid ranges. The aggregate 378 cases produce 71,242 identical bytes across Go, source Node, emitted JavaScript and ASan/UBSan native. class_token_source_check_lost removes only the source/value equality check; all three mutant builds run successfully with empty stderr and differ only under the byte comparison. The two earlier component mutants were rerun successfully as well. These are component observations, not full rule parity.
+
+The latest shared harness inspected was origin/codex/lint-harness-dot-a at f4d98cab. RuleContext still supplies neither Program nor a project CSS/design-system provider. Its testdata/oracle.go still rejects diagnostics with more than one fix. No shared files were edited or merged. Full canonical and ordering rule entry points remain blocked; remaining local options, surfaces and ranking behavior are not claimed complete.
+
+Reproduction: source /workspace/adamic-tools/env.sh, then run components_validate.py --scratch /tmp/wave11-tailwind-tokens-real with stdout and stderr redirected to a log. Registry validation: go test ./stage1/cohere/lint/registry -count=1, PASS. An initial attempt named the nonexistent ./internal/lintregistry package and failed before running tests; the corrected command passed. Full gate and full-rule throughput were not run.

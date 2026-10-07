@@ -7182,18 +7182,18 @@
   {
     "mode": "order",
     "classes": [
-      "\ue000",
-      "\ud800\udc00"
+      "",
+      "𐀀"
     ],
     "order": "asc",
     "slots": [
       {
-        "text": "\ue000",
+        "text": "",
         "start": 5,
         "end": 8
       },
       {
-        "text": "\ud800\udc00",
+        "text": "𐀀",
         "start": 11,
         "end": 15
       }
@@ -7202,18 +7202,18 @@
   {
     "mode": "order",
     "classes": [
-      "\ue000",
-      "\ud800\udc00"
+      "",
+      "𐀀"
     ],
     "order": "desc",
     "slots": [
       {
-        "text": "\ue000",
+        "text": "",
         "start": 5,
         "end": 8
       },
       {
-        "text": "\ud800\udc00",
+        "text": "𐀀",
         "start": 11,
         "end": 15
       }
@@ -7222,19 +7222,19 @@
   {
     "mode": "order",
     "classes": [
-      "\ud83d\ude80",
-      "\uffff",
+      "🚀",
+      "￿",
       "a"
     ],
     "order": "asc",
     "slots": [
       {
-        "text": "\ud83d\ude80",
+        "text": "🚀",
         "start": 5,
         "end": 9
       },
       {
-        "text": "\uffff",
+        "text": "￿",
         "start": 12,
         "end": 15
       },
@@ -7248,19 +7248,19 @@
   {
     "mode": "order",
     "classes": [
-      "\ud83d\ude80",
-      "\uffff",
+      "🚀",
+      "￿",
       "a"
     ],
     "order": "desc",
     "slots": [
       {
-        "text": "\ud83d\ude80",
+        "text": "🚀",
         "start": 5,
         "end": 9
       },
       {
-        "text": "\uffff",
+        "text": "￿",
         "start": 12,
         "end": 15
       },
@@ -7402,5 +7402,299 @@
         "end": 14
       }
     ]
+  },
+  {
+    "mode": "tokens",
+    "source": "😀::end",
+    "value": "",
+    "start": 5,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀::end",
+    "value": "x",
+    "start": 5,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀::end",
+    "value": "",
+    "start": -1,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀::end",
+    "value": "",
+    "start": 5,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀::end",
+    "value": "",
+    "start": 1,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀::end",
+    "value": "",
+    "start": 5,
+    "end": 10
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a b:end",
+    "value": "a b",
+    "start": 5,
+    "end": 8
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a b:end",
+    "value": "a bx",
+    "start": 5,
+    "end": 8
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a b:end",
+    "value": "a b",
+    "start": -1,
+    "end": 8
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a b:end",
+    "value": "a b",
+    "start": 8,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a b:end",
+    "value": "a b",
+    "start": 1,
+    "end": 8
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a b:end",
+    "value": "a b",
+    "start": 5,
+    "end": 13
+  },
+  {
+    "mode": "tokens",
+    "source": "😀: a  b :end",
+    "value": " a  b ",
+    "start": 5,
+    "end": 11
+  },
+  {
+    "mode": "tokens",
+    "source": "😀: a  b :end",
+    "value": " a  b x",
+    "start": 5,
+    "end": 11
+  },
+  {
+    "mode": "tokens",
+    "source": "😀: a  b :end",
+    "value": " a  b ",
+    "start": -1,
+    "end": 11
+  },
+  {
+    "mode": "tokens",
+    "source": "😀: a  b :end",
+    "value": " a  b ",
+    "start": 11,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀: a  b :end",
+    "value": " a  b ",
+    "start": 1,
+    "end": 11
+  },
+  {
+    "mode": "tokens",
+    "source": "😀: a  b :end",
+    "value": " a  b ",
+    "start": 5,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a\tb\nc\rd\u000be\ff:end",
+    "value": "a\tb\nc\rd\u000be\ff",
+    "start": 5,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a\tb\nc\rd\u000be\ff:end",
+    "value": "a\tb\nc\rd\u000be\ffx",
+    "start": 5,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a\tb\nc\rd\u000be\ff:end",
+    "value": "a\tb\nc\rd\u000be\ff",
+    "start": -1,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a\tb\nc\rd\u000be\ff:end",
+    "value": "a\tb\nc\rd\u000be\ff",
+    "start": 16,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a\tb\nc\rd\u000be\ff:end",
+    "value": "a\tb\nc\rd\u000be\ff",
+    "start": 1,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:a\tb\nc\rd\u000be\ff:end",
+    "value": "a\tb\nc\rd\u000be\ff",
+    "start": 5,
+    "end": 21
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:é 😀 z:end",
+    "value": "é 😀 z",
+    "start": 5,
+    "end": 14
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:é 😀 z:end",
+    "value": "é 😀 zx",
+    "start": 5,
+    "end": 14
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:é 😀 z:end",
+    "value": "é 😀 z",
+    "start": -1,
+    "end": 14
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:é 😀 z:end",
+    "value": "é 😀 z",
+    "start": 14,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:é 😀 z:end",
+    "value": "é 😀 z",
+    "start": 1,
+    "end": 14
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:é 😀 z:end",
+    "value": "é 😀 z",
+    "start": 5,
+    "end": 19
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:ab c﻿d:end",
+    "value": "ab c﻿d",
+    "start": 5,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:ab c﻿d:end",
+    "value": "ab c﻿dx",
+    "start": 5,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:ab c﻿d:end",
+    "value": "ab c﻿d",
+    "start": -1,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:ab c﻿d:end",
+    "value": "ab c﻿d",
+    "start": 16,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:ab c﻿d:end",
+    "value": "ab c﻿d",
+    "start": 1,
+    "end": 16
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:ab c﻿d:end",
+    "value": "ab c﻿d",
+    "start": 5,
+    "end": 21
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:${hole} bg-red-500:end",
+    "value": "${hole} bg-red-500",
+    "start": 5,
+    "end": 23
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:${hole} bg-red-500:end",
+    "value": "${hole} bg-red-500x",
+    "start": 5,
+    "end": 23
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:${hole} bg-red-500:end",
+    "value": "${hole} bg-red-500",
+    "start": -1,
+    "end": 23
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:${hole} bg-red-500:end",
+    "value": "${hole} bg-red-500",
+    "start": 23,
+    "end": 5
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:${hole} bg-red-500:end",
+    "value": "${hole} bg-red-500",
+    "start": 1,
+    "end": 23
+  },
+  {
+    "mode": "tokens",
+    "source": "😀:${hole} bg-red-500:end",
+    "value": "${hole} bg-red-500",
+    "start": 5,
+    "end": 28
   }
 ]
