@@ -106,7 +106,6 @@ func TestAdamicOptionsAreOn(t *testing.T) {
 	}{
 		{"noUncheckedIndexedAccess", "const items: number[] = [1];\nconst first: number = items[0];\n", "TS2322"},
 		{"exactOptionalPropertyTypes", "const point: { x?: number } = { x: undefined };\n", "TS2375"},
-		{"erasableSyntaxOnly", "enum Color {\n\tRed,\n}\n", "TS1294"},
 		{"lib is es2024, not the DOM", "const element = document.body;\n", "TS2584"},
 	} {
 		t.Run(probe.option, func(t *testing.T) {

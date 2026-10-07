@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a
+    oracle_test.go:592: gate cache node miss
+    oracle_test.go:592: gate cache node miss
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:474: gate cache native miss
+    oracle_test.go:613: exit codes differ
+        node:   exit 0, stdout "16\n1049104\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'flags')\n"
+    oracle_test.go:619: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "16\n1049104\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'flags')\n"
+    oracle_test.go:488: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a (0.52s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.527s
+FAIL

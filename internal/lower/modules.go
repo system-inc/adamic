@@ -91,6 +91,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					l.result.Locals[local].Global = true
 				}
 			}
+		case ast.KindEnumDeclaration:
+			if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+				local, err := l.enumLocal(statement)
+				if err != nil {
+					return err
+				}
+				l.result.Locals[local].Global = true
+			}
 		case ast.KindClassDeclaration:
 			if l.classes == nil {
 				l.classes = map[*ast.Symbol]*ast.Node{}

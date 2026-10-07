@@ -34,10 +34,15 @@ func switchBodyLeaves(body []ir.Statement) bool {
 // fallthroughSwitch first chooses the entry group in source test order, with default only as a
 // fallback. The entered body and every later body then run in one breakable switch, until an abrupt
 // exit leaves it. Bodies are emitted once, so their locals, ownership and flow points are not cloned.
-func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup) []ir.Statement {
+func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, unmatchedCheck ir.Statement) []ir.Statement {
 	entry := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_entry", Type: ir.Number, Function: l.functionIndex})
 	dispatch := ir.Switch{Value: value}
+	if unmatchedCheck != nil {
+		// An open enum can reach a checker-never default only when no case matched.
+		// Falling through from a matched case must still execute the default body.
+		dispatch.Default = []ir.Statement{unmatchedCheck}
+	}
 	bodies := []ir.Statement{}
 	for index, group := range groups {
 		position := ir.NumberConstant{Value: float64(index)}
@@ -47,7 +52,7 @@ func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup) 
 		}
 		if group.isDefault {
 			// Each branch owns its statement addresses, including instrumentation points.
-			dispatch.Default = []ir.Statement{ir.Assign{Local: entry, Value: position}}
+			dispatch.Default = append(dispatch.Default, ir.Assign{Local: entry, Value: position})
 		}
 		if len(group.body) > 0 {
 			bodies = append(bodies, ir.If{

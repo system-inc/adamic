@@ -549,7 +549,7 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 			return false
 		}
 		for index := range from {
-			if l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
+			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}

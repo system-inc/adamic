@@ -100,6 +100,11 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if condition.Type() != ir.Boolean {
+		// An optional object is false exactly when absent. A presence test keeps the
+		// checker's narrowing true and evaluates the source once.
+		if condition.Type() == ir.Object && l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+			return ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: condition}}, nil
+		}
 		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0"}
 	}
 	return condition, nil

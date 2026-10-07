@@ -35,6 +35,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteInheritance(modules)
+	if err := lowering.enumInitialization(modules); err != nil {
+		return nil, err
+	}
 	lowering.noteAccessorNames(modules)
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {

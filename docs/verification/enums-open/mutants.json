@@ -1,0 +1,79 @@
+[
+  {
+    "mutant": "remove-never-check",
+    "test": "^TestNumericEnumNeverPinned$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-remove-never-check.log"
+  },
+  {
+    "mutant": "erase-without-proof",
+    "test": "^TestNumericEnumNeverPinned$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-erase-without-proof.log"
+  },
+  {
+    "mutant": "close-numeric-domain",
+    "test": "^TestNumericEnumsAreOpen/arithmetic$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-close-numeric-domain.log"
+  },
+  {
+    "mutant": "invert-object-presence",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/enums/05",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-invert-object-presence.log"
+  },
+  {
+    "mutant": "permit-enum-object-write",
+    "test": "^TestEnumSlotViews/object_assign$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-permit-enum-object-write.log"
+  },
+  {
+    "mutant": "repeat-switch-effects",
+    "test": "^TestNumericEnumNeverPathsPinned/implicit$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-repeat-switch-effects.log"
+  },
+  {
+    "mutant": "omit-never-increment-check",
+    "test": "^TestNumericEnumNeverPathsPinned/update$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-omit-never-increment-check.log"
+  },
+  {
+    "mutant": "permit-member-number",
+    "test": "^TestNumericEnumLiteralPromises/member_tag$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-permit-member-number.log"
+  },
+  {
+    "mutant": "trust-exclusion-literal",
+    "test": "^TestNumericEnumLiteralPromises/narrowed_member$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-trust-exclusion-literal.log"
+  },
+  {
+    "mutant": "trust-open-object-tag",
+    "test": "^TestNumericEnumLiteralPromises/open_tag$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-trust-open-object-tag.log"
+  },
+  {
+    "mutant": "omit-array-enum-storage",
+    "test": "^TestNumericEnumNeverPathsPinned/index$",
+    "caught": true,
+    "exit": 1,
+    "log": "/tmp/enums-open-mutant-omit-array-enum-storage.log"
+  }
+]
