@@ -1,0 +1,14 @@
+// State: a value a view keeps, which re-renders the view when it's set. Written in Adamic, served
+// as apple/swiftui/state (internal/load/apple.go). The rendering half comes with the SwiftUI host.
+
+export class State<Value> {
+	value: Value;
+
+	constructor(value: Value) {
+		this.value = value;
+	}
+
+	set(value: Value): void {
+		this.value = value;
+	}
+}
