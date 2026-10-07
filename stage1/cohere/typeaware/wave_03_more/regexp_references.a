@@ -1,0 +1,156 @@
+import { ConstantText } from './constant_text.a';
+import type { NextFacts } from '../wave_03_next/next_facts.a';
+import type { NextSyntax } from '../wave_03_next/next_syntax.a';
+import type { SourceAccessContext } from './source_access_context.a';
+import { sourceAccessContext } from './source_access_context.a';
+import { nodeBinding } from '../node_binding.a';
+export class RegexpReferences {
+    readonly facts: NextFacts;
+    readonly syntax: NextSyntax;
+    readonly accesses = new Map<number, SourceAccessContext>();
+    readonly names = new Map<string, number[]>();
+    readonly calls: number[] = [];
+    constructor(facts: NextFacts, syntax: NextSyntax) { this.facts = facts; this.syntax = syntax; }
+    index(node: number): void {
+        const current = this.facts.rules.parser.node(node);
+        if(current.kind === 'Identifier') { const empty: number[] = []; const list = this.names.get(current.text) ?? empty; list.push(node); this.names.set(current.text, list); }
+        for(const child of current.children) { this.index(child); }
+    }
+    access(index: number): SourceAccessContext {
+        const cached = this.accesses.get(index); if(cached !== undefined) { return cached; }
+        const result = sourceAccessContext(this.facts.rules, index); this.accesses.set(index, result); return result;
+    }
+    readSymbol(index: number): number {
+        const parent = this.syntax.parent(index); const kind = this.syntax.kind(parent);
+        if(kind === 'ShorthandPropertyAssignment' && this.syntax.shape.name(parent) === index) { return this.facts.symbol(index).shorthand; }
+        if(kind === 'ExportSpecifier') { return nodeBinding(this.facts.rules, index).exported; }
+        return this.facts.symbol(index).own;
+    }
+    valueReference(index: number): boolean {
+        const parent = this.syntax.parent(index); if(parent < 0) { return false; }
+        const kind = this.syntax.kind(parent); const access = this.access(index);
+        if(access.declaration && kind !== 'ShorthandPropertyAssignment' && kind !== 'ExportSpecifier') { return false; }
+        if(['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'JsxAttribute', 'ImportSpecifier'].includes(kind)) { return false; }
+        if(kind === 'PropertyAccessExpression') { return this.syntax.last(parent) !== index; }
+        if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(kind)) { return !access.intrinsic; }
+        if(kind === 'BindingElement' && this.syntax.shape.name(parent) !== index && this.syntax.shape.initializer(parent) !== index) { return false; }
+        if(kind === 'ExportSpecifier') {
+            for(let ancestor = parent; ancestor >= 0; ancestor = this.syntax.parent(ancestor)) {
+                if(this.syntax.kind(ancestor) === 'ExportDeclaration') { for(const child of this.facts.rules.parser.node(ancestor).children) { if(this.syntax.kind(child) === 'StringLiteral') { return false; } } break; }
+            }
+            const children = this.facts.rules.parser.node(parent).children.filter(child => this.syntax.kind(child) === 'Identifier'); return children.length < 2 || children[0] === index;
+        }
+        return true;
+    }
+    writes(index: number): boolean {
+        let current = index;
+        if(this.syntax.kind(this.syntax.parent(index)) === 'PropertyAccessExpression' && this.syntax.last(this.syntax.parent(index)) === index) { return false; }
+        while(this.syntax.parent(current) >= 0) {
+            const parent = this.syntax.parent(current); const kind = this.syntax.kind(parent);
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(kind)) { current = parent; continue; }
+            if(kind === 'PropertyAssignment') { if(this.syntax.last(parent) !== current) { return false; } current = parent; continue; }
+            return this.access(current).write;
+        }
+        return this.access(current).write;
+    }
+    candidates(name: string): readonly number[] { const empty: number[] = []; return this.names.get(name) ?? empty; }
+    references(name: string, identity: number): readonly number[] {
+        const result: number[] = [];
+        for(const index of this.candidates(name)) { if(this.valueReference(index) && this.readSymbol(index) === identity) { result.push(index); } }
+        return result;
+    }
+    constant(index: number, following: readonly number[], scope = true): ConstantText {
+        if(index < 0) { return new ConstantText('', false, false); }
+         const node = this.facts.rules.parser.node(index); 
+        if(node.kind === 'ParenthesizedExpression') { return this.constant(this.syntax.child(index), following, scope); }
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new ConstantText(node.text, true, true); }
+        if(node.kind === 'NumericLiteral') { return new ConstantText(node.text, false, true); }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return new ConstantText(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null', false, true); }
+        if(node.kind === 'RegularExpressionLiteral' && scope) { return new ConstantText(node.text, true, true); }
+        if(node.kind === 'TemplateExpression') {
+            let text = this.facts.rules.parser.node(this.syntax.child(index)).text;
+            for(const span of node.children.slice(1)) {
+                const value = this.constant(this.syntax.child(span), following, scope); if(!value.known) { return value; }
+                text += value.text + this.facts.rules.parser.node(this.syntax.last(span)).text;
+            }
+            return new ConstantText(text, true, true);
+        }
+        if(node.kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(index, 1)) === 'PlusToken') {
+            const left = this.constant(this.syntax.child(index), following, scope); const right = this.constant(this.syntax.child(index, 2), following, scope);
+            if(left.known && right.known && (left.string || right.string)) { return new ConstantText(left.text + right.text, true, true); }
+        }
+        if(node.kind === 'Identifier' && scope) {
+            const identity = this.readSymbol(index); if(identity === 0 || following.includes(identity)) { return new ConstantText('', false, false); }
+            const declarations = this.facts.symbol(index).ownDeclarations.filter(declaration => declaration.path === this.facts.rules.path);
+            if(declarations.length !== 1) { return new ConstantText('', false, false); }
+            const declaration = declarations[0]; if(declaration === undefined || declaration.declared || declaration.kind() !== 'VariableDeclaration') { return new ConstantText('', false, false); }
+            let local = -1;
+            for(let at = 0; at < this.facts.rules.parser.nodes.length; at++) { const candidate = this.facts.rules.parser.node(at); if(candidate.kind === 'VariableDeclaration' && this.facts.rules.byte(candidate.end) === declaration.end() && this.facts.rules.byte(candidate.pos) === declaration.start()) { local = at; break; } }
+            if(local < 0) { return new ConstantText('', false, false); }
+            if(!declaration.constant()) { const declaredName = this.syntax.shape.name(local); for(const candidate of this.candidates(node.text)) { if(candidate !== declaredName && this.writes(candidate) && this.readSymbol(candidate) === identity) { return new ConstantText('', false, false); } } }
+            const next = following.slice(); next.push(identity); return this.constant(this.syntax.shape.initializer(local), next);
+        }
+        return new ConstantText('', false, false);
+    }
+    memberKey(index: number): string {
+        if(this.syntax.kind(index) === 'PropertyAccessExpression') { return this.facts.rules.parser.node(this.syntax.last(index)).text; }
+        const value = this.constant(this.syntax.last(index), [], false); return value.known ? value.text : '';
+    }
+    patternKey(index: number): string {
+        const kind = this.syntax.kind(index);
+        if(kind === 'ComputedPropertyName') { const value = this.constant(this.syntax.child(index), [], false); return value.known ? value.text : ''; }
+        return ['Identifier', 'StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind) ? this.facts.rules.parser.node(index).text : '';
+    }
+    followTarget(index: number, globalObject: boolean, following: readonly string[]): void {
+        if(index < 0) { return; }
+         const kind = this.syntax.kind(index);
+        if(kind === 'ParenthesizedExpression') { this.followTarget(this.syntax.child(index), globalObject, following); return; }
+        if(kind === 'Identifier') {
+            const identity = this.readSymbol(index); const key = `symbol:${identity}`; if(identity === 0 || following.includes(key)) { return; }
+            const next = following.slice(); next.push(key);
+            for(const reference of this.references(this.facts.rules.parser.node(index).text, identity)) { this.followValue(reference, globalObject, next); }
+            return;
+        }
+        if(kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(index, 1)) === 'EqualsToken') { this.followTarget(this.syntax.child(index), globalObject, following); return; }
+        if(!globalObject) { return; }
+        if(kind === 'ObjectBindingPattern') {
+            for(const element of this.facts.rules.parser.node(index).children) {
+                if(this.syntax.kind(element) !== 'BindingElement') { continue; }
+                if(this.facts.rules.parser.node(element).children.some(child => this.syntax.kind(child) === 'DotDotDotToken')) { continue; }
+                const name = this.syntax.shape.name(element); const initializer = this.syntax.shape.initializer(element);
+                const candidates = this.facts.rules.parser.node(element).children.filter(child => child !== initializer && this.syntax.kind(child) !== 'DotDotDotToken');
+                const property = candidates.length > 1 ? candidates[0] ?? -1 : name;
+                if(this.patternKey(property) === 'RegExp') { this.followTarget(name, false, following); }
+            }
+        }
+        if(kind === 'ObjectLiteralExpression') {
+            for(const property of this.facts.rules.parser.node(index).children) {
+                if(this.syntax.kind(property) === 'PropertyAssignment' && this.patternKey(this.syntax.child(property)) === 'RegExp') { this.followTarget(this.syntax.last(property), false, following); }
+                if(this.syntax.kind(property) === 'ShorthandPropertyAssignment' && this.patternKey(this.syntax.shape.name(property)) === 'RegExp') { this.followTarget(this.syntax.shape.name(property), false, following); }
+            }
+        }
+    }
+    followValue(index: number, globalObject: boolean, following: readonly string[]): void {
+        const parent = this.syntax.parent(index); const kind = this.syntax.kind(parent); if(parent < 0) { return; }
+        if(['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression', 'ExpressionWithTypeArguments'].includes(kind)) { this.followValue(parent, globalObject, following); return; }
+        if(kind === 'ConditionalExpression' && (this.syntax.child(parent, 2) === index || this.syntax.child(parent, 4) === index)) { this.followValue(parent, globalObject, following); return; }
+        if(kind === 'BinaryExpression') {
+            const operator = this.syntax.kind(this.syntax.child(parent, 1));
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator) || (operator === 'CommaToken' && this.syntax.child(parent, 2) === index)) { this.followValue(parent, globalObject, following); return; }
+            if(['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator) && this.syntax.child(parent, 2) === index) { this.followTarget(this.syntax.child(parent), globalObject, following); this.followValue(parent, globalObject, following); }
+            return;
+        }
+        if((kind === 'PropertyAccessExpression' || kind === 'ElementAccessExpression') && this.syntax.child(parent) === index) { if(globalObject && this.memberKey(parent) === 'RegExp') { this.followValue(parent, false, following); } return; }
+        if((kind === 'CallExpression' || kind === 'NewExpression') && this.syntax.child(parent) === index) { if(!globalObject) { this.calls.push(parent); } return; }
+        if(['VariableDeclaration', 'Parameter', 'BindingElement', 'ShorthandPropertyAssignment'].includes(kind) && this.syntax.shape.initializer(parent) === index) { this.followTarget(this.syntax.shape.name(parent), globalObject, following); }
+    }
+    run(): void {
+        this.index(this.facts.sources.root(this.facts.rules.path));
+        for(const name of ['RegExp', 'global', 'globalThis', 'self', 'window']) {
+            const references: number[] = [];
+            for(const index of this.candidates(name)) { if(this.valueReference(index) && this.facts.symbol(index).ownDeclarations.every(declaration => declaration.declared)) { references.push(index); } }
+            if(references.some(index => this.writes(index))) { continue; }
+            for(const index of references) { this.followValue(index, name !== 'RegExp', [`global:${name}`]); }
+        }
+    }
+}

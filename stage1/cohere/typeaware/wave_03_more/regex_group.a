@@ -1,0 +1,7 @@
+export class RegexGroup {
+    readonly name: string;
+    readonly start: number;
+    end = 0;
+    readonly path: readonly number[];
+    constructor(name: string, start: number, path: readonly number[]) { this.name = name; this.start = start; this.path = path; }
+}

@@ -1,0 +1,6 @@
+export class CallbackFrame {
+    usesThis = false;
+    usesSuper = false;
+    usesNewTarget = false;
+    usesArguments = false;
+}

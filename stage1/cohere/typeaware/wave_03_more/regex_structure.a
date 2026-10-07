@@ -1,0 +1,122 @@
+import { RegexNode } from './regex_node.a';
+import { RegexGroup } from './regex_group.a';
+import { RegexReference } from './regex_reference.a';
+export class RegexStructure {
+    readonly pattern: string;
+    readonly unicode: boolean;
+    readonly sets: boolean;
+    readonly nodes: RegexNode[] = [];
+    readonly groups: RegexGroup[] = [];
+    readonly references: RegexReference[] = [];
+    readonly stack: number[] = [];
+    readonly groupStack: number[] = [];
+    constructor(pattern: string, flags: string) { this.pattern = pattern; this.unicode = flags.includes('u') || flags.includes('v'); this.sets = flags.includes('v'); }
+    digit(character: string): boolean { return character >= '0' && character <= '9' && character !== ''; }
+    hex(start: number, count: number): boolean { for(let at = start; at < start + count; at++) { const character = this.pattern[at] ?? ''; if(character === '' || !'0123456789abcdefABCDEF'.includes(character)) { return false; } } return true; }
+    skipEscape(at: number): number {
+         const character = this.pattern[at + 1] ?? ''; if(character === '') { return -1; }
+        if(character === 'x') { return this.hex(at + 2, 2) ? 4 : 2; }
+        if(character === 'u') {
+            if(this.pattern[at + 2] === '{') { if(!this.unicode) { return 2; } const close = this.pattern.indexOf('}', at + 3); return close < 0 ? 2 : close - at + 1; }
+            return this.hex(at + 2, 4) ? 6 : 2;
+        }
+        if(character === 'c') { return at + 2 < this.pattern.length ? 3 : 2; }
+        if(['p', 'P', 'q'].includes(character) && this.unicode && this.pattern[at + 2] === '{') { const close = this.pattern.indexOf('}', at + 3); return close < 0 ? 2 : close - at + 1; }
+        const code = this.pattern.charCodeAt(at + 1); return code >= 55296 && code <= 56319 && at + 2 < this.pattern.length ? 3 : 2;
+    }
+    classEnd(start: number): number {
+        let depth = 1; let at = start + 1; if(this.pattern[at] === '^') { at++; }
+        while(at < this.pattern.length) {
+            const character = this.pattern[at];
+            if(character === '\\') { const step = this.skipEscape(at); if(step < 0) { return -1; } at += step; continue; }
+            if(character === '[' && this.sets) { depth++; }
+            if(character === ']') { depth--; if(depth === 0) { return at + 1; } }
+            at++;
+        }
+        return -1;
+    }
+    push(kind: number, negative: boolean): void { this.nodes.push(new RegexNode(kind, negative)); this.stack.push(this.nodes.length - 1); }
+    openGroup(at: number): number {
+         let kind = 1; let negative = false; let name = ''; let next = at + 1;
+        if(this.pattern[next] === '?') {
+            const suffix = this.pattern[next + 1] ?? '';
+            if(suffix === ':') { kind = 2; next += 2; }
+            else if(suffix === '=' || suffix === '!') { kind = 3; negative = suffix === '!'; next += 2; }
+            else if(suffix === '<' && (this.pattern[next + 2] === '=' || this.pattern[next + 2] === '!')) { kind = 4; negative = this.pattern[next + 2] === '!'; next += 3; }
+            else if(suffix === '<') {
+                const close = this.pattern.indexOf('>', next + 2); if(close < 0) { kind = 2; next += 2; }
+                else { name = this.pattern.slice(next + 2, close); next = close + 1; }
+            }
+            else { kind = 2; next += 2; }
+        }
+        this.push(kind, negative);
+        if(kind === 1) { this.groups.push(new RegexGroup(name, at, this.stack.slice())); this.groupStack.push(this.groups.length - 1); }
+        else { this.groupStack.push(-1); }
+        this.push(0, false); return next;
+    }
+    readEscape(at: number): number {
+         const character = this.pattern[at + 1] ?? '';
+        if(character >= '1' && character <= '9') {
+            let end = at + 1; let value = 0;
+            while(end < this.pattern.length && this.digit(this.pattern[end] ?? '')) { value = value * 10 + this.pattern.charCodeAt(end) - 48; end++; }
+            this.references.push(new RegexReference(value, '', at, end, this.stack.slice())); return end - at;
+        }
+        if(character === 'k' && this.pattern[at + 2] === '<') {
+            const close = this.pattern.indexOf('>', at + 3);
+            if(close >= 0) { this.references.push(new RegexReference(0, this.pattern.slice(at + 3, close), at, close + 1, this.stack.slice())); return close + 1 - at; }
+        }
+        return this.skipEscape(at);
+    }
+    scan(): boolean {
+        this.push(2, false); this.push(0, false); let at = 0;
+        while(at < this.pattern.length) {
+            const character = this.pattern[at];
+            if(character === '\\') { const step = this.readEscape(at); if(step < 0) { return false; } at += step; }
+            else if(character === '[') { at = this.classEnd(at); if(at < 0) { return false; } }
+            else if(character === '(') { at = this.openGroup(at); }
+            else if(character === ')') {
+                if(this.groupStack.length === 0) { return false; } this.stack.pop();
+                const group = this.groupStack.pop() ?? -1; if(group >= 0) { const entry = this.groups[group]; if(entry !== undefined) { entry.end = at + 1; } }
+                this.stack.pop(); at++;
+            }
+            else if(character === '|') { this.stack.pop(); this.push(0, false); at++; }
+            else { at++; }
+        }
+        return this.groupStack.length === 0;
+    }
+    quantifier(at: number): boolean {
+        let cursor = at + 1; let digits = 0;
+        while(cursor < this.pattern.length && this.digit(this.pattern[cursor] ?? '')) { cursor++; digits++; }
+        if(digits === 0) { return false; }
+        if(this.pattern[cursor] === ',') { cursor++; while(cursor < this.pattern.length && this.digit(this.pattern[cursor] ?? '')) { cursor++; } }
+        return this.pattern[cursor] === '}';
+    }
+    wellFormed(): boolean {
+        const hasNamed = this.groups.some(group => group.name !== '');
+        for(const reference of this.references) {
+            if(reference.name !== '') { if(!this.groups.some(group => group.name === reference.name) && (hasNamed || this.unicode)) { return false; } }
+            else if(this.unicode && reference.number > this.groups.length) { return false; }
+        }
+        if(!this.unicode) { return true; }
+        let at = 0;
+        while(at < this.pattern.length) {
+            const character = this.pattern[at];
+            if(character === '\\') { const step = this.skipEscape(at); if(step < 0) { return false; } at += step; }
+            else if(character === '[') { at = this.classEnd(at); if(at < 0) { return false; } }
+            else { if(character === '{' && !this.quantifier(at)) { return false; } at++; }
+        }
+        return true;
+    }
+    classify(reference: RegexReference, group: RegexGroup): string {
+        if(group.start <= reference.start && reference.end <= group.end) { return 'nested'; }
+        let common = 1;
+        while(common < reference.path.length && common < group.path.length && reference.path[common] === group.path[common]) { common++; }
+        const cut = group.path.slice(common); let backwards = false;
+        for(let at = common - 1; at >= 0; at--) { const node = this.nodes[reference.path[at] ?? -1]; if(node !== undefined && (node.kind === 3 || node.kind === 4)) { backwards = node.kind === 4; break; } }
+        const first = this.nodes[cut[0] ?? -1]; if(first !== undefined && first.kind === 0) { return 'disjunctive'; }
+        if(!backwards && reference.end <= group.start) { return 'forward'; }
+        if(backwards && group.end <= reference.start) { return 'backward'; }
+        for(const index of cut) { const node = this.nodes[index]; if(node !== undefined && node.negative && (node.kind === 3 || node.kind === 4)) { return 'intoNegativeLookaround'; } }
+        return '';
+    }
+}

@@ -1,0 +1,2837 @@
+[
+  {
+    "file": "/workspace/wave-03/more-final/more-control-000.ts",
+    "source": "throw new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-001.ts",
+    "source": "throw new Error('error');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-002.ts",
+    "source": "throw Error('error');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-003.ts",
+    "source": "var e = new Error(); throw e;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-004.ts",
+    "source": "function foo(undefined) { throw undefined; }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-005.ts",
+    "source": "try {throw new Error();} catch (e) {throw e;};\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-006.ts",
+    "source": "throw a;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-007.ts",
+    "source": "throw foo();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-008.ts",
+    "source": "throw new foo();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-009.ts",
+    "source": "throw foo.bar;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-010.ts",
+    "source": "throw foo[bar];\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-011.ts",
+    "source": "class C { #field; foo() { throw foo.#field; } }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-012.ts",
+    "source": "throw foo = new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-013.ts",
+    "source": "throw foo.bar ||= 'literal'\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-014.ts",
+    "source": "throw foo[bar] ??= 'literal'\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-015.ts",
+    "source": "throw 1, 2, new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-016.ts",
+    "source": "throw 'literal' && new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-017.ts",
+    "source": "throw new Error() || 'literal';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-018.ts",
+    "source": "throw foo ? new Error() : 'literal';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-019.ts",
+    "source": "throw foo ? 'literal' : new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-020.ts",
+    "source": "throw tag `${foo}`;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-021.ts",
+    "source": "function* foo() { var index = 0; throw yield index++; }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-022.ts",
+    "source": "async function foo() { throw await bar; }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-023.ts",
+    "source": "throw obj?.foo\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-024.ts",
+    "source": "throw obj?.foo()\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-025.ts",
+    "source": "throw 'error';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-026.ts",
+    "source": "throw 0;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-027.ts",
+    "source": "throw false;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-028.ts",
+    "source": "throw null;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-029.ts",
+    "source": "throw {};\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-030.ts",
+    "source": "throw 'a' + 'b';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-031.ts",
+    "source": "var b = new Error(); throw 'a' + b;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-032.ts",
+    "source": "throw foo = 'error';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-033.ts",
+    "source": "throw foo += new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-034.ts",
+    "source": "throw foo &= new Error();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-035.ts",
+    "source": "throw foo &&= 'literal'\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-036.ts",
+    "source": "throw new Error(), 1, 2, 3;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-037.ts",
+    "source": "throw 'literal' && 'not an Error';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-038.ts",
+    "source": "throw foo && 'literal'\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-039.ts",
+    "source": "throw foo ? 'not an Error' : 'literal';\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-040.ts",
+    "source": "throw `${err}`;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-041.ts",
+    "source": "throw undefined;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-042.ts",
+    "source": "foo(function bar() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-043.ts",
+    "source": "foo(function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-044.ts",
+    "source": "foo(function bar() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-045.ts",
+    "source": "foo(function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-046.ts",
+    "source": "foo(nativeCb || function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-047.ts",
+    "source": "foo(bar ? function() {} : function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-048.ts",
+    "source": "foo(function() { (function() { this; }); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-049.ts",
+    "source": "foo(function() { this; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-050.ts",
+    "source": "foo(bar || function() { this; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-051.ts",
+    "source": "foo(function() { (() => this); }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-052.ts",
+    "source": "foo(function bar(a) { a; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-053.ts",
+    "source": "foo(function(a) { a; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-054.ts",
+    "source": "foo(function(arguments) { arguments; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-055.ts",
+    "source": "foo(function() { this; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-056.ts",
+    "source": "foo(function() { (() => this); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-057.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * 2; })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-058.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * bar; }.bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-059.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * this.qux; }.bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-060.ts",
+    "source": "foo(function() {}.bind(this, somethingElse))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-061.ts",
+    "source": "qux(function(foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) { return foo + bar; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-062.ts",
+    "source": "qux(function(baz, baz) { })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-063.ts",
+    "source": "qux(function( /* no params */ ) { })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-064.ts",
+    "source": "qux(function( /* a */ foo /* b */ , /* c */ bar /* d */ , /* e */ baz /* f */ ) { return foo; })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-065.ts",
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return baz; })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-066.ts",
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return this; }.bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-067.ts",
+    "source": "foo(async function /*\n*/ () { return 1; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-068.ts",
+    "source": "foo(async function // c\n () { return 1; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-069.ts",
+    "source": "foo(async function\n () { return 1; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-070.ts",
+    "source": "foo(async function /* c */ () { return 1; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-071.ts",
+    "source": "foo((bar || function() {}).bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-072.ts",
+    "source": "foo(function() {}.bind(this).bind(obj))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-073.ts",
+    "source": "foo?.(function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-074.ts",
+    "source": "foo?.(function() { return this; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-075.ts",
+    "source": "foo(function() { return this; }?.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-076.ts",
+    "source": "foo((function() { return this; }?.bind)(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-077.ts",
+    "source": "\n            test(\n                function ()\n                { }\n            );\n            \nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-078.ts",
+    "source": "\n            test(\n                function (\n                    ...args\n                ) /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n            \nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-079.ts",
+    "source": "foo(function bar() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-080.ts",
+    "source": "foo(function(a:string) {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-081.ts",
+    "source": "foo(function bar() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-082.ts",
+    "source": "foo(function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-083.ts",
+    "source": "foo(nativeCb || function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-084.ts",
+    "source": "foo(bar ? function() {} : function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-085.ts",
+    "source": "foo(function() { (function() { this; }); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-086.ts",
+    "source": "foo(function() { this; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-087.ts",
+    "source": "foo(bar || function() { this; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-088.ts",
+    "source": "foo(function() { (() => this); }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-089.ts",
+    "source": "foo(function bar(a:string) { a; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-090.ts",
+    "source": "foo(function(a:any) { a; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-091.ts",
+    "source": "foo(function(arguments:any) { arguments; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-092.ts",
+    "source": "foo(function(a:string) { this; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-093.ts",
+    "source": "foo(function() { (() => this); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-094.ts",
+    "source": "qux(function(foo:string, bar:number, baz:string) { return foo * 2; })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-095.ts",
+    "source": "qux(function(foo:number, bar:number, baz:number) { return foo * bar; }.bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-096.ts",
+    "source": "qux(function(foo:any, bar:any, baz:any) { return foo * this.qux; }.bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-097.ts",
+    "source": "foo(function() {}.bind(this, somethingElse))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-098.ts",
+    "source": "qux(function(foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) { return foo + bar; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-099.ts",
+    "source": "qux(function(baz:string, baz:string) { })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-100.ts",
+    "source": "qux(function( /* no params */ ) { })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-101.ts",
+    "source": "qux(function( /* a */ foo:string /* b */ , /* c */ bar:string /* d */ , /* e */ baz:string /* f */ ) { return foo; })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-102.ts",
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return baz; })\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-103.ts",
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return this; }.bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-104.ts",
+    "source": "foo((bar || function() {}).bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-105.ts",
+    "source": "foo(function() {}.bind(this).bind(obj))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-106.ts",
+    "source": "foo?.(function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-107.ts",
+    "source": "foo?.(function() { return this; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-108.ts",
+    "source": "foo(function() { return this; }?.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-109.ts",
+    "source": "foo((function() { return this; }?.bind)(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-110.ts",
+    "source": "\n            test(\n                function ()\n                { }\n            );\n            \nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-111.ts",
+    "source": "\n            test(\n                function (\n                    ...args\n                ) /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n            \nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-112.ts",
+    "source": "foo(function():string { return 'foo' });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-113.ts",
+    "source": "test('foo', function (this: any) {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-114.ts",
+    "source": "foo(a => a);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-115.ts",
+    "source": "foo(function*() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-116.ts",
+    "source": "foo(function() { this; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-117.ts",
+    "source": "foo(function bar() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-118.ts",
+    "source": "foo(function() { (() => this); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-119.ts",
+    "source": "foo(function() { this; }.bind(obj));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-120.ts",
+    "source": "foo(function() { this; }.call(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-121.ts",
+    "source": "foo(a => { (function() {}); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-122.ts",
+    "source": "var foo = function foo() {};\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-123.ts",
+    "source": "(function foo() {})();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-124.ts",
+    "source": "foo(function bar() { bar; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-125.ts",
+    "source": "foo(function bar() { arguments; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-126.ts",
+    "source": "foo(function bar() { arguments; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-127.ts",
+    "source": "foo(function bar() { new.target; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-128.ts",
+    "source": "foo(function bar() { new.target; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-129.ts",
+    "source": "foo(function bar() { this; }.bind(this, somethingElse));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-130.ts",
+    "source": "foo((function() {}).bind.bar)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-131.ts",
+    "source": "foo((function() { this.bar(); }).bind(obj).bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-132.ts",
+    "source": "foo(a => a);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-133.ts",
+    "source": "foo((a:string) => a);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-134.ts",
+    "source": "foo(function*() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-135.ts",
+    "source": "foo(function() { this; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-136.ts",
+    "source": "foo(function bar(a:string) {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-137.ts",
+    "source": "foo(function() { (() => this); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-138.ts",
+    "source": "foo(function() { this; }.bind(obj));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-139.ts",
+    "source": "foo(function() { this; }.call(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-140.ts",
+    "source": "foo(a => { (function() {}); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-141.ts",
+    "source": "var foo = function foo() {};\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-142.ts",
+    "source": "(function foo() {})();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-143.ts",
+    "source": "foo(function bar() { bar; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-144.ts",
+    "source": "foo(function bar() { arguments; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-145.ts",
+    "source": "foo(function bar() { arguments; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-146.ts",
+    "source": "foo(function bar() { new.target; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-147.ts",
+    "source": "foo(function bar() { new.target; }.bind(this));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-148.ts",
+    "source": "foo(function bar() { this; }.bind(this, somethingElse));\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-149.ts",
+    "source": "foo((function() {}).bind.bar)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-150.ts",
+    "source": "foo((function() { this.bar(); }).bind(obj).bind(this))\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-151.ts",
+    "source": "test('clean', function (this: any) { this.foo = 'Cleaned!';});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-152.ts",
+    "source": "obj.test('clean', function (foo) { this.foo = 'Cleaned!'; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-153.ts",
+    "source": "foo(function bar() { bar(); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-154.ts",
+    "source": "foo(function bar() { function bar() {} bar(); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-155.ts",
+    "source": "foo(function bar() { const bar = 1; bar; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-156.ts",
+    "source": "foo(function bar() { baz(); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-157.ts",
+    "source": "foo(function() { arguments; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-158.ts",
+    "source": "foo(function() { function inner() { arguments; } });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-159.ts",
+    "source": "foo(function(arguments) { arguments; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-160.ts",
+    "source": "new Foo(function() {});\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-161.ts",
+    "source": "new Foo(function() { this; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-162.ts",
+    "source": "new (function() {})();\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-163.ts",
+    "source": "const x = new Promise(function(resolve) { resolve(); });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-164.ts",
+    "source": "/(b)(\\2a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-165.ts",
+    "source": "/\\k<foo>(?<foo>bar)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-166.ts",
+    "source": "RegExp('(a|bc)|\\\\1')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-167.ts",
+    "source": "new RegExp('(?!(?<foo>\\\\n))\\\\1')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-168.ts",
+    "source": "/(?<!(a)\\1)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-169.ts",
+    "source": "new RegExp('(\\\\1)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-170.ts",
+    "source": "/^(a\\1)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-171.ts",
+    "source": "/^((a)\\1)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-172.ts",
+    "source": "new RegExp('^(a\\\\1b)$')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-173.ts",
+    "source": "RegExp('^((\\\\1))$')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-174.ts",
+    "source": "/((\\2))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-175.ts",
+    "source": "/a(?<foo>(.)b\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-176.ts",
+    "source": "/a(?<foo>\\k<foo>)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-177.ts",
+    "source": "/^(\\1)*$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-178.ts",
+    "source": "/^(?:a)(?:((?:\\1)))*$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-179.ts",
+    "source": "/(?!(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-180.ts",
+    "source": "/a|(b\\1c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-181.ts",
+    "source": "/(a|(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-182.ts",
+    "source": "/(a|(\\2))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-183.ts",
+    "source": "/(?:a|(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-184.ts",
+    "source": "/(a)?(b)*(\\3)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-185.ts",
+    "source": "/(?<=(a\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-186.ts",
+    "source": "/\\1(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-187.ts",
+    "source": "/\\1.(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-188.ts",
+    "source": "/(?:\\1)(?:(a))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-189.ts",
+    "source": "/(?:\\1)(?:((a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-190.ts",
+    "source": "/(?:\\2)(?:((a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-191.ts",
+    "source": "/(?:\\1)(?:((?:a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-192.ts",
+    "source": "/(\\2)(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-193.ts",
+    "source": "RegExp('(a)\\\\2(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-194.ts",
+    "source": "/(?:a)(b)\\2(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-195.ts",
+    "source": "/\\k<foo>(?<foo>a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-196.ts",
+    "source": "/(?:a(b)\\2)(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-197.ts",
+    "source": "new RegExp('(a)(b)\\\\3(c)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-198.ts",
+    "source": "/\\1(?<=(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-199.ts",
+    "source": "/\\1(?<!(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-200.ts",
+    "source": "/(?<=\\1)(?<=(a))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-201.ts",
+    "source": "/(?<!\\1)(?<!(a))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-202.ts",
+    "source": "/(?=\\1(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-203.ts",
+    "source": "/(?!\\1(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-204.ts",
+    "source": "/(?<=(a)\\1)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-205.ts",
+    "source": "/(?<!.(a).\\1.)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-206.ts",
+    "source": "/(.)(?<!(b|c)\\2)d/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-207.ts",
+    "source": "/(?<=(?:(a)\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-208.ts",
+    "source": "/(?<=(?:(a))\\1)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-209.ts",
+    "source": "/(?<=(a)(?:\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-210.ts",
+    "source": "/(?<!(?:(a))(?:\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-211.ts",
+    "source": "/(?<!(?:(a))(?:\\1)|.)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-212.ts",
+    "source": "/.(?!(?<!(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-213.ts",
+    "source": "/.(?=(?<!(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-214.ts",
+    "source": "/.(?!(?<=(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-215.ts",
+    "source": "/.(?=(?<=(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-216.ts",
+    "source": "/(a)|\\1b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-217.ts",
+    "source": "/^(?:(a)|\\1b)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-218.ts",
+    "source": "/^(?:(a)|b(?:c|\\1))$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-219.ts",
+    "source": "/^(?:a|b(?:(c)|\\1))$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-220.ts",
+    "source": "/^(?:(a(?!b))|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-221.ts",
+    "source": "/^(?:(?:(a)(?!b))|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-222.ts",
+    "source": "/^(?:(a(?=a))|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-223.ts",
+    "source": "/^(?:(a)(?=a)|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-224.ts",
+    "source": "/.(?:a|(b)).|(?:(\\1)|c)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-225.ts",
+    "source": "/.(?!(a)|\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-226.ts",
+    "source": "/.(?<=\\1|(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-227.ts",
+    "source": "/a(?!(b)).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-228.ts",
+    "source": "/(?<!(a))b\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-229.ts",
+    "source": "/(?<!(a))(?:\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-230.ts",
+    "source": "/.(?<!a|(b)).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-231.ts",
+    "source": "/.(?!(a)).(?!\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-232.ts",
+    "source": "/.(?<!(a)).(?<!\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-233.ts",
+    "source": "/.(?=(?!(a))\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-234.ts",
+    "source": "/.(?<!\\1(?!(a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-235.ts",
+    "source": "/\\1(a)(b)\\2/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-236.ts",
+    "source": "/\\1(a)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-237.ts",
+    "source": "/\\1(a)\\2(b)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-238.ts",
+    "source": "/\\1.(?<=(a)\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-239.ts",
+    "source": "/(?!\\1(a)).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-240.ts",
+    "source": "/(a)\\2(b)/; RegExp('(\\\\1)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-241.ts",
+    "source": "RegExp('\\\\1(a){', flags);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-242.ts",
+    "source": "new RegExp('\\\\1([[A--B]])', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-243.ts",
+    "source": "/\\k<foo>((?<foo>bar)|(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-244.ts",
+    "source": "/((?<foo>bar)|\\k<foo>(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-245.ts",
+    "source": "/\\k<foo>((?<foo>bar)|(?<foo>baz)|(?<foo>qux))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-246.ts",
+    "source": "/((?<foo>bar)|\\k<foo>(?<foo>baz)|(?<foo>qux))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-247.ts",
+    "source": "/((?<foo>bar)|\\k<foo>|(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-248.ts",
+    "source": "/((?<foo>bar)|\\k<foo>|(?<foo>baz)|(?<foo>qux))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-249.ts",
+    "source": "/((?<foo>bar)|(?<foo>baz\\k<foo>)|(?<foo>qux\\k<foo>))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-250.ts",
+    "source": "/(?<=((?<foo>bar)|(?<foo>baz))\\k<foo>)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-251.ts",
+    "source": "/((?!(?<foo>bar))|(?!(?<foo>baz)))\\k<foo>/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-252.ts",
+    "source": "RegExp.foo('\\\\1(a)', 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-253.ts",
+    "source": "new foo.RegExp('\\\\1(a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-254.ts",
+    "source": "RegExp(p)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-255.ts",
+    "source": "new RegExp(p, 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-256.ts",
+    "source": "RegExp('\\\\1(a)' + suffix)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-257.ts",
+    "source": "new RegExp(`${prefix}\\\\1(a)`)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-258.ts",
+    "source": "/(?:)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-259.ts",
+    "source": "/(?:a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-260.ts",
+    "source": "new RegExp('')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-261.ts",
+    "source": "RegExp('(?:a)|(?:b)*')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-262.ts",
+    "source": "/^ab|[cd].\\n$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-263.ts",
+    "source": "/(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-264.ts",
+    "source": "RegExp('(a)|(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-265.ts",
+    "source": "new RegExp('\\\\n\\\\d(a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-266.ts",
+    "source": "/\\0(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-267.ts",
+    "source": "/\\0(a)/u\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-268.ts",
+    "source": "/(?<=(a))(b)(?=(c))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-269.ts",
+    "source": "/(?<!(a))(b)(?!(c))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-270.ts",
+    "source": "/(?<foo>a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-271.ts",
+    "source": "RegExp('\\1(a)')\nexport {};\n",
+    "parseable": false
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-272.ts",
+    "source": "RegExp('\\\\\\\\1(a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-273.ts",
+    "source": "/\\\\1(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-274.ts",
+    "source": "/\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-275.ts",
+    "source": "/^\\1$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-276.ts",
+    "source": "/\\2(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-277.ts",
+    "source": "/\\1(?:a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-278.ts",
+    "source": "/\\1(?=a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-279.ts",
+    "source": "/\\1(?!a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-280.ts",
+    "source": "/^[\\1](a)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-281.ts",
+    "source": "new RegExp('[\\\\1](a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-282.ts",
+    "source": "/\\11(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-283.ts",
+    "source": "/\\k<foo>(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-284.ts",
+    "source": "/^(a)\\1\\\\2$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-285.ts",
+    "source": "/(a)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-286.ts",
+    "source": "/(a).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-287.ts",
+    "source": "RegExp('(a)\\\\1(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-288.ts",
+    "source": "/(a)(b)\\2(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-289.ts",
+    "source": "/(?<foo>a)\\k<foo>/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-290.ts",
+    "source": "new RegExp('(.)\\\\1')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-291.ts",
+    "source": "RegExp('(a)\\\\1(?:b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-292.ts",
+    "source": "/(a)b\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-293.ts",
+    "source": "/((a)\\2)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-294.ts",
+    "source": "/((a)b\\2c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-295.ts",
+    "source": "/^(?:(a)\\1)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-296.ts",
+    "source": "/^((a)\\2)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-297.ts",
+    "source": "/^(((a)\\3))|b$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-298.ts",
+    "source": "/a(?<foo>(.)b\\2)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-299.ts",
+    "source": "/(a)?(b)*(\\1)(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-300.ts",
+    "source": "/(a)?(b)*(\\2)(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-301.ts",
+    "source": "/(?<=(a))b\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-302.ts",
+    "source": "/(?<=(?=(a)\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-303.ts",
+    "source": "/(?<!\\1(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-304.ts",
+    "source": "/(?<=\\1(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-305.ts",
+    "source": "/(?<!\\1.(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-306.ts",
+    "source": "/(?<=\\1.(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-307.ts",
+    "source": "/(?<=(?:\\1.(a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-308.ts",
+    "source": "/(?<!(?:\\1)((a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-309.ts",
+    "source": "/(?<!(?:\\2)((a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-310.ts",
+    "source": "/(?=(?<=\\1(a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-311.ts",
+    "source": "/(?=(?<!\\1(a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-312.ts",
+    "source": "/(.)(?<=\\2(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-313.ts",
+    "source": "/^(a)\\1|b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-314.ts",
+    "source": "/^a|(b)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-315.ts",
+    "source": "/^a|(b|c)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-316.ts",
+    "source": "/^(a)|(b)\\2/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-317.ts",
+    "source": "/^(?:(a)|(b)\\2)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-318.ts",
+    "source": "/^a|(?:.|(b)\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-319.ts",
+    "source": "/^a|(?:.|(b).(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-320.ts",
+    "source": "/^a|(?:.|(?:(b)).(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-321.ts",
+    "source": "/^a|(?:.|(?:(b)|c).(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-322.ts",
+    "source": "/^a|(?:.|(?:(b)).(\\1|c))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-323.ts",
+    "source": "/^a|(?:.|(?:(b)|c).(\\1|d))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-324.ts",
+    "source": "/.(?=(b))\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-325.ts",
+    "source": "/.(?<=(b))\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-326.ts",
+    "source": "/a(?!(b)\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-327.ts",
+    "source": "/a(?<!\\1(b))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-328.ts",
+    "source": "/a(?!(b)(\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-329.ts",
+    "source": "/a(?!(?:(b)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-330.ts",
+    "source": "/a(?!(?:(b))\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-331.ts",
+    "source": "/a(?<!(?:\\1)(b))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-332.ts",
+    "source": "/a(?<!(?:(?:\\1)(b)))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-333.ts",
+    "source": "/(?<!(a))(b)(?!(c))\\2/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-334.ts",
+    "source": "/a(?!(b|c)\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-335.ts",
+    "source": "RegExp('\\\\1(a)[')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-336.ts",
+    "source": "new RegExp('\\\\1(a){', 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-337.ts",
+    "source": "new RegExp('\\\\1(a)\\\\2', 'ug')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-338.ts",
+    "source": "RegExp('\\\\1(a)\\\\k<foo>', 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-339.ts",
+    "source": "new RegExp('\\\\k<foo>(?<foo>a)\\\\k<bar>')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-340.ts",
+    "source": "new RegExp('([[A--B]])\\\\1', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-341.ts",
+    "source": "new RegExp('[[]\\\\1](a)', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-342.ts",
+    "source": "/((?<foo>bar)\\k<foo>|(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-343.ts",
+    "source": "RegExp('\\\\1(a)', flags);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-344.ts",
+    "source": "let RegExp; new RegExp('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-345.ts",
+    "source": "/\\1(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-346.ts",
+    "source": "/(a|\\1b)/g\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-347.ts",
+    "source": "/\\1(a)\\2(b)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-348.ts",
+    "source": "RegExp('(a)\\\\2(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-349.ts",
+    "source": "new RegExp('\\\\1([[A--B]])', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-350.ts",
+    "source": "foo;\nnew RegExp(\n  '\\\\1(a)'\n)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-351.ts",
+    "source": "RegExp.foo('\\\\1(a)', 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-352.ts",
+    "source": "new foo.RegExp('\\\\1(a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-353.ts",
+    "source": "RegExp(p)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-354.ts",
+    "source": "new RegExp(p, 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-355.ts",
+    "source": "RegExp('\\\\1(a)' + suffix)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-356.ts",
+    "source": "new RegExp(`${prefix}\\\\1(a)`)\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-357.ts",
+    "source": "let RegExp; new RegExp('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-358.ts",
+    "source": "function foo() { var RegExp; RegExp('\\\\1(a)', 'u'); }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-359.ts",
+    "source": "function foo(RegExp) { new RegExp('\\\\1(a)'); }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-360.ts",
+    "source": "if (foo) { const RegExp = bar; RegExp('\\\\1(a)'); }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-361.ts",
+    "source": "/* globals RegExp:off */ new RegExp('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-362.ts",
+    "source": "/(?:)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-363.ts",
+    "source": "/(?:a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-364.ts",
+    "source": "new RegExp('')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-365.ts",
+    "source": "RegExp('(?:a)|(?:b)*')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-366.ts",
+    "source": "/^ab|[cd].\\n$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-367.ts",
+    "source": "/(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-368.ts",
+    "source": "RegExp('(a)|(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-369.ts",
+    "source": "new RegExp('\\\\n\\\\d(a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-370.ts",
+    "source": "/\\0(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-371.ts",
+    "source": "/\\0(a)/u\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-372.ts",
+    "source": "/(?<=(a))(b)(?=(c))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-373.ts",
+    "source": "/(?<!(a))(b)(?!(c))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-374.ts",
+    "source": "/(?<foo>a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-375.ts",
+    "source": "RegExp('\\\\\\\\1(a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-376.ts",
+    "source": "/\\\\1(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-377.ts",
+    "source": "/\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-378.ts",
+    "source": "/^\\1$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-379.ts",
+    "source": "/\\2(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-380.ts",
+    "source": "/\\1(?:a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-381.ts",
+    "source": "/\\1(?=a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-382.ts",
+    "source": "/\\1(?!a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-383.ts",
+    "source": "/^[\\1](a)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-384.ts",
+    "source": "new RegExp('[\\\\1](a)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-385.ts",
+    "source": "/\\11(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-386.ts",
+    "source": "/\\k<foo>(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-387.ts",
+    "source": "/^(a)\\1\\2$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-388.ts",
+    "source": "/(a)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-389.ts",
+    "source": "/(a).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-390.ts",
+    "source": "RegExp('(a)\\\\1(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-391.ts",
+    "source": "/(a)(b)\\2(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-392.ts",
+    "source": "/(?<foo>a)\\k<foo>/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-393.ts",
+    "source": "new RegExp('(.)\\\\1')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-394.ts",
+    "source": "RegExp('(a)\\\\1(?:b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-395.ts",
+    "source": "/(a)b\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-396.ts",
+    "source": "/((a)\\2)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-397.ts",
+    "source": "/((a)b\\2c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-398.ts",
+    "source": "/^(?:(a)\\1)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-399.ts",
+    "source": "/^((a)\\2)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-400.ts",
+    "source": "/^(((a)\\3))|b$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-401.ts",
+    "source": "/a(?<foo>(.)b\\2)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-402.ts",
+    "source": "/(a)?(b)*(\\1)(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-403.ts",
+    "source": "/(a)?(b)*(\\2)(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-404.ts",
+    "source": "/(?<=(a))b\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-405.ts",
+    "source": "/(?<=(?=(a)\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-406.ts",
+    "source": "/(?<!\\1(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-407.ts",
+    "source": "/(?<=\\1(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-408.ts",
+    "source": "/(?<!\\1.(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-409.ts",
+    "source": "/(?<=\\1.(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-410.ts",
+    "source": "/(?<=(?:\\1.(a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-411.ts",
+    "source": "/(?<!(?:\\1)((a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-412.ts",
+    "source": "/(?<!(?:\\2)((a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-413.ts",
+    "source": "/(?=(?<=\\1(a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-414.ts",
+    "source": "/(?=(?<!\\1(a)))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-415.ts",
+    "source": "/(.)(?<=\\2(a))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-416.ts",
+    "source": "/^(a)\\1|b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-417.ts",
+    "source": "/^a|(b)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-418.ts",
+    "source": "/^a|(b|c)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-419.ts",
+    "source": "/^(a)|(b)\\2/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-420.ts",
+    "source": "/^(?:(a)|(b)\\2)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-421.ts",
+    "source": "/^a|(?:.|(b)\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-422.ts",
+    "source": "/^a|(?:.|(b).(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-423.ts",
+    "source": "/^a|(?:.|(?:(b)).(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-424.ts",
+    "source": "/^a|(?:.|(?:(b)|c).(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-425.ts",
+    "source": "/^a|(?:.|(?:(b)).(\\1|c))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-426.ts",
+    "source": "/^a|(?:.|(?:(b)|c).(\\1|d))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-427.ts",
+    "source": "/.(?=(b))\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-428.ts",
+    "source": "/.(?<=(b))\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-429.ts",
+    "source": "/a(?!(b)\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-430.ts",
+    "source": "/a(?<!\\1(b))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-431.ts",
+    "source": "/a(?!(b)(\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-432.ts",
+    "source": "/a(?!(?:(b)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-433.ts",
+    "source": "/a(?!(?:(b))\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-434.ts",
+    "source": "/a(?<!(?:\\1)(b))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-435.ts",
+    "source": "/a(?<!(?:(?:\\1)(b)))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-436.ts",
+    "source": "/(?<!(a))(b)(?!(c))\\2/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-437.ts",
+    "source": "/a(?!(b|c)\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-438.ts",
+    "source": "RegExp('\\\\1(a)[')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-439.ts",
+    "source": "new RegExp('\\\\1(a){', 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-440.ts",
+    "source": "new RegExp('\\\\1(a)\\\\2', 'ug')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-441.ts",
+    "source": "const flags = 'gus'; RegExp('\\\\1(a){', flags);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-442.ts",
+    "source": "RegExp('\\\\1(a)\\\\k<foo>', 'u')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-443.ts",
+    "source": "new RegExp('\\\\k<foo>(?<foo>a)\\\\k<bar>')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-444.ts",
+    "source": "new RegExp('([[A--B]])\\\\1', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-445.ts",
+    "source": "new RegExp('[[]\\\\1](a)', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-446.ts",
+    "source": "/((?<foo>bar)\\k<foo>|(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-447.ts",
+    "source": "/(b)(\\2a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-448.ts",
+    "source": "/\\k<foo>(?<foo>bar)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-449.ts",
+    "source": "RegExp('(a|bc)|\\\\1')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-450.ts",
+    "source": "new RegExp('(?!(?<foo>\\\\n))\\\\1')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-451.ts",
+    "source": "/(?<!(a)\\1)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-452.ts",
+    "source": "new RegExp('(\\\\1)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-453.ts",
+    "source": "/^(a\\1)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-454.ts",
+    "source": "/^((a)\\1)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-455.ts",
+    "source": "new RegExp('^(a\\\\1b)$')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-456.ts",
+    "source": "RegExp('^((\\\\1))$')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-457.ts",
+    "source": "/((\\2))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-458.ts",
+    "source": "/a(?<foo>(.)b\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-459.ts",
+    "source": "/a(?<foo>\\k<foo>)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-460.ts",
+    "source": "/^(\\1)*$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-461.ts",
+    "source": "/^(?:a)(?:((?:\\1)))*$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-462.ts",
+    "source": "/(?!(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-463.ts",
+    "source": "/a|(b\\1c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-464.ts",
+    "source": "/(a|(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-465.ts",
+    "source": "/(a|(\\2))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-466.ts",
+    "source": "/(?:a|(\\1))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-467.ts",
+    "source": "/(a)?(b)*(\\3)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-468.ts",
+    "source": "/(?<=(a\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-469.ts",
+    "source": "/\\1(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-470.ts",
+    "source": "/\\1.(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-471.ts",
+    "source": "/(?:\\1)(?:(a))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-472.ts",
+    "source": "/(?:\\1)(?:((a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-473.ts",
+    "source": "/(?:\\2)(?:((a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-474.ts",
+    "source": "/(?:\\1)(?:((?:a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-475.ts",
+    "source": "/(\\2)(a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-476.ts",
+    "source": "RegExp('(a)\\\\2(b)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-477.ts",
+    "source": "/(?:a)(b)\\2(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-478.ts",
+    "source": "/\\k<foo>(?<foo>a)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-479.ts",
+    "source": "/(?:a(b)\\2)(c)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-480.ts",
+    "source": "new RegExp('(a)(b)\\\\3(c)')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-481.ts",
+    "source": "/\\1(?<=(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-482.ts",
+    "source": "/\\1(?<!(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-483.ts",
+    "source": "/(?<=\\1)(?<=(a))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-484.ts",
+    "source": "/(?<!\\1)(?<!(a))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-485.ts",
+    "source": "/(?=\\1(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-486.ts",
+    "source": "/(?!\\1(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-487.ts",
+    "source": "/(?<=(a)\\1)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-488.ts",
+    "source": "/(?<!.(a).\\1.)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-489.ts",
+    "source": "/(.)(?<!(b|c)\\2)d/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-490.ts",
+    "source": "/(?<=(?:(a)\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-491.ts",
+    "source": "/(?<=(?:(a))\\1)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-492.ts",
+    "source": "/(?<=(a)(?:\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-493.ts",
+    "source": "/(?<!(?:(a))(?:\\1))b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-494.ts",
+    "source": "/(?<!(?:(a))(?:\\1)|.)b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-495.ts",
+    "source": "/.(?!(?<!(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-496.ts",
+    "source": "/.(?=(?<!(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-497.ts",
+    "source": "/.(?!(?<=(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-498.ts",
+    "source": "/.(?=(?<=(a)\\1))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-499.ts",
+    "source": "/(a)|\\1b/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-500.ts",
+    "source": "/^(?:(a)|\\1b)$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-501.ts",
+    "source": "/^(?:(a)|b(?:c|\\1))$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-502.ts",
+    "source": "/^(?:a|b(?:(c)|\\1))$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-503.ts",
+    "source": "/^(?:(a(?!b))|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-504.ts",
+    "source": "/^(?:(?:(a)(?!b))|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-505.ts",
+    "source": "/^(?:(a(?=a))|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-506.ts",
+    "source": "/^(?:(a)(?=a)|\\1b)+$/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-507.ts",
+    "source": "/.(?:a|(b)).|(?:(\\1)|c)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-508.ts",
+    "source": "/.(?!(a)|\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-509.ts",
+    "source": "/.(?<=\\1|(a))./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-510.ts",
+    "source": "/a(?!(b)).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-511.ts",
+    "source": "/(?<!(a))b\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-512.ts",
+    "source": "/(?<!(a))(?:\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-513.ts",
+    "source": "/.(?<!a|(b)).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-514.ts",
+    "source": "/.(?!(a)).(?!\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-515.ts",
+    "source": "/.(?<!(a)).(?<!\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-516.ts",
+    "source": "/.(?=(?!(a))\\1)./\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-517.ts",
+    "source": "/.(?<!\\1(?!(a)))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-518.ts",
+    "source": "/\\1(a)(b)\\2/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-519.ts",
+    "source": "/\\1(a)\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-520.ts",
+    "source": "/\\1(a)\\2(b)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-521.ts",
+    "source": "/\\1.(?<=(a)\\1)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-522.ts",
+    "source": "/(?!\\1(a)).\\1/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-523.ts",
+    "source": "/(a)\\2(b)/; RegExp('(\\\\1)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-524.ts",
+    "source": "RegExp('\\\\1(a){', flags);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-525.ts",
+    "source": "const r = RegExp, p = '\\\\1', s = '(a)'; new r(p + s);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-526.ts",
+    "source": "new RegExp('\\\\1([[A--B]])', 'v')\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-527.ts",
+    "source": "/\\k<foo>((?<foo>bar)|(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-528.ts",
+    "source": "/((?<foo>bar)|\\k<foo>(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-529.ts",
+    "source": "/\\k<foo>((?<foo>bar)|(?<foo>baz)|(?<foo>qux))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-530.ts",
+    "source": "/((?<foo>bar)|\\k<foo>(?<foo>baz)|(?<foo>qux))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-531.ts",
+    "source": "/((?<foo>bar)|\\k<foo>|(?<foo>baz))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-532.ts",
+    "source": "/((?<foo>bar)|\\k<foo>|(?<foo>baz)|(?<foo>qux))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-533.ts",
+    "source": "/((?<foo>bar)|(?<foo>baz\\k<foo>)|(?<foo>qux\\k<foo>))/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-534.ts",
+    "source": "/(?<=((?<foo>bar)|(?<foo>baz))\\k<foo>)/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-535.ts",
+    "source": "/((?!(?<foo>bar))|(?!(?<foo>baz)))\\k<foo>/\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-536.ts",
+    "source": "const r = RegExp, p = '\\\\1', s = '(a)'; new r(p + s);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-537.ts",
+    "source": "const flags = 'gus'; RegExp('\\\\1(a){', flags);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-538.ts",
+    "source": "let f = 'u'; f = ''; RegExp('\\\\1(a){', f);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-539.ts",
+    "source": "let p = '\\\\1(a)'; RegExp(p);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-540.ts",
+    "source": "let p = '\\\\1(a)'; p = '(a)'; RegExp(p);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-541.ts",
+    "source": "const {p} = {p: '\\\\1(a)'}; RegExp(p);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-542.ts",
+    "source": "new RegExp(/\\1(a)/);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-543.ts",
+    "source": "new RegExp(/\\1(a)/, 'u');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-544.ts",
+    "source": "RegExp(`\\\\1(a)`);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-545.ts",
+    "source": "RegExp('\\\\1' + '(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-546.ts",
+    "source": "globalThis.RegExp('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-547.ts",
+    "source": "const R = globalThis.RegExp; new R('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-548.ts",
+    "source": "RegExp(\n  '\\\\1(a)'\n);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-549.ts",
+    "source": "function f(RegExp) { return /\\1(a)/; }\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-550.ts",
+    "source": "const p = '(a)\\\\1'; const q = p + '\\\\2(b)'; RegExp(q);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-551.ts",
+    "source": "RegExp(foo + '\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-552.ts",
+    "source": "RegExp('\\\\1(a)', flags);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-553.ts",
+    "source": "/\\1(a)\\k<x>(?<x>b)/;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-554.ts",
+    "source": "/(?<a>x)|(?<a>y)\\k<a>/;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-555.ts",
+    "source": "RegExp(1);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-556.ts",
+    "source": "throw (new Error());\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-557.ts",
+    "source": "throw undefined;\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-558.ts",
+    "source": "function f(undefined:Error){throw undefined;}\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-559.ts",
+    "source": "RegExp('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-560.ts",
+    "source": "foo(function(){ return this.x; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-561.ts",
+    "source": "foo(function(this:any){ return 1; });\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-562.ts",
+    "source": "const p='\\\\1(a)';const R=globalThis.RegExp;new R(p);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-563.ts",
+    "source": "const R=flag?RegExp:RegExp;R('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-564.ts",
+    "source": "const {RegExp:R}=globalThis;R('\\\\1(a)');\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-565.ts",
+    "source": "let p='\\\\1(a)';p='x';RegExp(p);\nexport {};\n",
+    "parseable": true
+  },
+  {
+    "file": "/workspace/wave-03/more-final/more-control-566.ts",
+    "source": "foo(function(){return '世界🌍';});\nexport {};\n",
+    "parseable": true
+  }
+]

@@ -1,0 +1,6 @@
+export class ConstantText {
+    readonly text: string;
+    readonly string: boolean;
+    readonly known: boolean;
+    constructor(text: string, string: boolean, known: boolean) { this.text = text; this.string = string; this.known = known; }
+}

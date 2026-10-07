@@ -1,0 +1,20 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { NextSources } from '../wave_03_next/next_sources.a';
+import { NextFacts } from '../wave_03_next/next_facts.a';
+import { nextSyntax } from '../wave_03_next/next_syntax.a';
+import { NoThrowLiteral } from './no_throw_literal.a';
+import { PreferArrowCallback } from './prefer_arrow_callback.a';
+import { noUselessBackreference } from './no_useless_backreference.a';
+const args = programArguments(); const config = args[0] ?? panic('usage: main.a config manifest');
+const manifest = readTextFile(args[1] ?? panic('missing manifest')); if(manifest.kind === 'Error') { panic(manifest.message); }
+const paths = manifest.text.split('\n').filter(path => path !== ''); const program = tsgoProgram(config, paths);
+const sources = new NextSources(program); let findings = 0;
+for(const path of paths) {
+    const rules = sources.file(path); const facts = new NextFacts(rules, sources); const syntax = nextSyntax(rules);
+    new NoThrowLiteral(facts, syntax).run(); new PreferArrowCallback(facts, syntax, args.includes('--allow-named'), !args.includes('--no-unbound-this')).run(); noUselessBackreference(facts, syntax).run();
+    for(const finding of rules.findings) { finding.sortKey = finding.written(); }
+    rules.findings.sort((left, right) => left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0); findings += rules.findings.length;
+    if(!args.includes('--count')) { console.log(`file\t${written(path)}`); for(const finding of rules.findings) { console.log(finding.written()); } }
+}
+console.log(`findings ${findings}`); tsgoRelease(program);

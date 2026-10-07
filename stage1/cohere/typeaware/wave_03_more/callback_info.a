@@ -1,0 +1,6 @@
+export class CallbackInfo {
+    callback = false;
+    lexicalThis = false;
+    member = -1;
+    call = -1;
+}

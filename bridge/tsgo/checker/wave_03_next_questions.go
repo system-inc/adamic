@@ -1,8 +1,6 @@
 package checker
 
 import (
-	"fmt"
-
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
@@ -20,6 +18,6 @@ func (p *Program) inspectWave03Next(out *fields, c *checker.Checker, node *ast.N
 	case "program-module-edges":
 		return p.programModuleEdges(out, node, question)
 	default:
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.inspectWave03More(out, c, node, mode, question)
 	}
 }

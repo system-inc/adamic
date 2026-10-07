@@ -1,0 +1,14 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class SourceAccessContext {
+    readonly declaration: boolean;
+    readonly write: boolean;
+    readonly type: boolean;
+    readonly intrinsic: boolean;
+    constructor(declaration: boolean, write: boolean, type: boolean, intrinsic: boolean) { this.declaration = declaration; this.write = write; this.type = type; this.intrinsic = intrinsic; }
+}
+export function sourceAccessContext(rules: Rules, index: number): SourceAccessContext {
+    const frames = new Frames(rules.ask(index, 'source-access-context')); header(frames, 'source-access-context');
+    const declaration = frames.yes(); const write = frames.yes(); const type = frames.yes(); const intrinsic = frames.yes(); frames.end();
+    return new SourceAccessContext(declaration, write, type, intrinsic);
+}

@@ -1,0 +1,5 @@
+export class RegexNode {
+    readonly kind: number;
+    readonly negative: boolean;
+    constructor(kind: number, negative: boolean) { this.kind = kind; this.negative = negative; }
+}

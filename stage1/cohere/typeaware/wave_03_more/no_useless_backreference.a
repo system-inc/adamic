@@ -1,0 +1,59 @@
+import type { NextFacts } from '../wave_03_next/next_facts.a';
+import type { NextSyntax } from '../wave_03_next/next_syntax.a';
+import { nextDiagnostic } from '../wave_03_next/next_diagnostic.a';
+import { RegexStructure } from './regex_structure.a';
+import type { RegexGroup } from './regex_group.a';
+import { RegexpReferences } from './regexp_references.a';
+export class NoUselessBackreference {
+    readonly facts: NextFacts;
+    readonly syntax: NextSyntax;
+    readonly references: RegexpReferences;
+    constructor(facts: NextFacts, syntax: NextSyntax, references: RegexpReferences) { this.facts = facts; this.syntax = syntax; this.references = references; }
+    reason(id: string): string {
+        if(id === 'nested') { return 'encloses the reference and so has captured nothing yet when it is reached'; }
+        if(id === 'disjunctive') { return 'sits in a different branch of the same disjunction, and only one branch ever runs'; }
+        if(id === 'forward') { return 'appears later in the pattern, and matching runs left to right'; }
+        if(id === 'backward') { return 'appears earlier in a lookbehind, which matches right to left'; }
+        return 'sits in a negative lookaround, so it only runs on a path that then fails';
+    }
+    check(index: number, pattern: string, flags: string): void {
+        const structure = new RegexStructure(pattern, flags); if(!structure.scan() || structure.references.length === 0 || !structure.wellFormed()) { return; }
+        for(const reference of structure.references) {
+            const groups: RegexGroup[] = [];
+            if(reference.name !== '') { for(const group of structure.groups) { if(group.name === reference.name) { groups.push(group); } } }
+            else { const group = structure.groups[reference.number - 1]; if(group !== undefined) { groups.push(group); } }
+            if(groups.length === 0) { continue; }
+            let reachable = false; const ids: string[] = []; const selected: RegexGroup[] = []; const sameIds: string[] = []; const sameGroups: RegexGroup[] = [];
+            for(const group of groups) {
+                const id = structure.classify(reference, group); if(id === '') { reachable = true; break; }
+                ids.push(id); selected.push(group); if(id !== 'disjunctive') { sameIds.push(id); sameGroups.push(group); }
+            }
+            if(reachable) { continue; }
+            const group = sameGroups.length > 0 ? sameGroups[0] : selected[0]; const id = (sameIds.length > 0 ? sameIds[0] : ids[0]) ?? ''; if(group === undefined) { continue; }
+            const others = (sameGroups.length > 0 ? sameGroups.length : selected.length) - 1;
+            const also = others === 1 ? ' (and so does one other group of that name)' : others > 1 ? ` (and so do ${others} other groups of that name)` : '';
+            const message = `The backreference ${pattern.slice(reference.start, reference.end)} can never match, because ${pattern.slice(group.start, group.end)} ${this.reason(id)}${also}. It matches the empty string instead of failing, so the pattern quietly matches more than it looks like it does.`;
+            this.facts.rules.findings.push(nextDiagnostic(this.facts.rules, 'no-useless-backreference', id, message, index));
+        }
+    }
+    literals(index: number): void {
+        const node = this.facts.rules.parser.node(index);
+        if(node.kind === 'RegularExpressionLiteral') {
+            const slash = node.text.lastIndexOf('/'); const pattern = node.text.slice(1, slash > 0 ? slash : node.text.length); const flags = slash > 0 ? node.text.slice(slash + 1) : '';
+            if(pattern !== '') { this.check(index, pattern, flags); }
+        }
+        for(const child of node.children) { this.literals(child); }
+    }
+    run(): void {
+        
+        if(this.facts.rules.scanner.text.includes('RegExp')) {
+            this.references.run();
+            for(const call of this.references.calls) {
+                const arguments_ = this.syntax.arguments(call); const pattern = this.references.constant(arguments_[0] ?? -1, []); if(!pattern.known) { continue; }
+                const flags = this.references.constant(arguments_[1] ?? -1, []); this.check(call, pattern.text, flags.known ? flags.text : '');
+            }
+        }
+        this.literals(this.facts.sources.root(this.facts.rules.path));
+    }
+}
+export function noUselessBackreference(facts: NextFacts, syntax: NextSyntax): NoUselessBackreference { const references = new RegexpReferences(facts, syntax); return new NoUselessBackreference(facts, syntax, references); }

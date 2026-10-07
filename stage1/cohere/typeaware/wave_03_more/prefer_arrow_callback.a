@@ -1,0 +1,122 @@
+import { CallbackFrame } from './callback_frame.a';
+import { CallbackInfo } from './callback_info.a';
+import type { NextFacts } from '../wave_03_next/next_facts.a';
+import type { NextSyntax } from '../wave_03_next/next_syntax.a';
+import { nextDiagnostic } from '../wave_03_next/next_diagnostic.a';
+import { Repair } from '../repair.ts';
+export class PreferArrowCallback {
+    readonly facts: NextFacts;
+    readonly syntax: NextSyntax;
+    readonly frames: CallbackFrame[] = [];
+    readonly allowNamed: boolean;
+    readonly allowUnboundThis: boolean;
+    constructor(facts: NextFacts, syntax: NextSyntax, allowNamed = false, allowUnboundThis = true) { this.facts = facts; this.syntax = syntax; this.allowNamed = allowNamed; this.allowUnboundThis = allowUnboundThis; }
+    declarationName(index: number): boolean {
+        const parent = this.syntax.parent(index);
+        return ['VariableDeclaration', 'Parameter', 'FunctionDeclaration', 'FunctionExpression', 'ClassDeclaration', 'BindingElement'].includes(this.syntax.kind(parent)) && this.syntax.shape.name(parent) === index;
+    }
+    walk(index: number, ownerIndex: number): void {
+        const kind = this.syntax.kind(index); const node = this.facts.rules.parser.node(index); const owner = this.frames[ownerIndex];
+        if(owner !== undefined) {
+            if(kind === 'ThisKeyword' && !this.declarationName(index)) { owner.usesThis = true; }
+            if(kind === 'SuperKeyword') { owner.usesSuper = true; }
+            if(kind === 'MetaProperty' && this.facts.rules.text(node).startsWith('new')) { owner.usesNewTarget = true; }
+            if(kind === 'Identifier' && node.text === 'arguments' && !this.declarationName(index) && this.facts.symbol(index).ownDeclarations.length === 0) { owner.usesArguments = true; }
+        }
+        const opens = ['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassStaticBlockDeclaration'].includes(kind);
+        let nextOwner = ownerIndex; if(opens) { nextOwner = this.frames.length; this.frames.push(new CallbackFrame()); }
+        for(const child of node.children) { this.walk(child, nextOwner); }
+        const frame = this.frames[nextOwner]; if(kind === 'FunctionExpression' && frame !== undefined) { this.judge(index, frame); }
+    }
+    referencesName(index: number, name: number, identity: number): boolean {
+        const node = this.facts.rules.parser.node(index);
+        if(index !== name && node.kind === 'Identifier' && node.text === this.facts.rules.parser.node(name).text && this.facts.symbol(index).own === identity) { return true; }
+        for(const child of node.children) { if(this.referencesName(child, name, identity)) { return true; } }
+        return false;
+    }
+    info(index: number): CallbackInfo {
+        const info = new CallbackInfo(); let current = index; let bound = false;
+        while(current >= 0) {
+            const parent = this.syntax.parent(current); const kind = this.syntax.kind(parent);
+            if(kind === 'ConditionalExpression' || kind === 'ParenthesizedExpression') { current = parent; continue; }
+            if(kind === 'BinaryExpression' && ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(this.syntax.kind(this.syntax.child(parent, 1)))) { current = parent; continue; }
+            if(kind === 'PropertyAccessExpression' && this.syntax.child(parent) === current && this.syntax.kind(this.syntax.last(parent)) === 'Identifier' && this.facts.rules.parser.node(this.syntax.last(parent)).text === 'bind') {
+                const callee = this.syntax.outer(parent); const call = this.syntax.parent(callee);
+                if(this.syntax.kind(call) !== 'CallExpression' || this.syntax.child(call) !== callee) { return info; }
+                if(!bound) { bound = true; const arguments_ = this.syntax.arguments(call); info.lexicalThis = arguments_.length === 1 && this.syntax.kind(arguments_[0] ?? -1) === 'ThisKeyword'; info.member = parent; info.call = call; }
+                current = call; continue;
+            }
+            if(kind === 'CallExpression' || kind === 'NewExpression') { info.callback = this.syntax.child(parent) !== current; }
+            return info;
+        }
+        return info;
+    }
+    judge(index: number, frame: CallbackFrame): void {
+         const node = this.facts.rules.parser.node(index); const name = this.syntax.shape.name(index);
+        if(this.allowNamed && name >= 0) { return; }
+        for(const child of node.children) { if(this.syntax.kind(child) === 'AsteriskToken') { return; } }
+        if(name >= 0) { const identity = this.facts.symbol(name).own; if(identity !== 0 && this.referencesName(index, name, identity)) { return; } }
+        if(frame.usesArguments || frame.usesSuper || frame.usesNewTarget) { return; }
+        const info = this.info(index); if(!info.callback || (this.allowUnboundThis && frame.usesThis && !info.lexicalThis)) { return; }
+        const diagnostic = nextDiagnostic(this.facts.rules, 'prefer-arrow-callback', 'preferArrowCallback', 'An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.', index);
+        for(const repair of this.fix(index, frame, info)) { diagnostic.repairs.push(repair); } this.facts.rules.findings.push(diagnostic);
+    }
+    whitespace(character: string): boolean { return [' ', '\t', '\r', '\n'].includes(character); }
+    comment(start: number, end: number): boolean {
+        
+        if(start < 0 || end > this.facts.rules.scanner.text.length || start >= end) { return false; }
+        for(let at = start; at < end - 1; at++) {
+            const character = this.facts.rules.scanner.text[at] ?? '';
+            if(character === "'" || character === '"' || character === '`') {
+                at++; while(at < end && this.facts.rules.scanner.text[at] !== character) { if(this.facts.rules.scanner.text[at] === '\\') { at++; } at++; }
+            }
+            else if(character === '/' && (this.facts.rules.scanner.text[at + 1] === '/' || this.facts.rules.scanner.text[at + 1] === '*')) { return true; }
+        }
+        return false;
+    }
+    parenthesized(index: number): boolean {
+        if(this.syntax.kind(this.syntax.parent(index)) === 'ParenthesizedExpression') { return true; }
+        const node = this.facts.rules.parser.node(index); 
+        let before = node.pos - 1; while(before >= 0 && this.whitespace(this.facts.rules.scanner.text[before] ?? '')) { before--; }
+        let after = node.end; while(after < this.facts.rules.scanner.text.length && this.whitespace(this.facts.rules.scanner.text[after] ?? '')) { after++; }
+        return before >= 0 && after < this.facts.rules.scanner.text.length && this.facts.rules.scanner.text[before] === '(' && this.facts.rules.scanner.text[after] === ')';
+    }
+    repair(start: number, end: number, text: string): Repair {  return new Repair(this.facts.rules.byte(start), this.facts.rules.byte(end), text); }
+    fix(index: number, frame: CallbackFrame, info: CallbackInfo): readonly Repair[] {
+        if(frame.usesThis && !info.lexicalThis) { return []; }
+         const node = this.facts.rules.parser.node(index); 
+        const seen: string[] = []; let first = true;
+        for(const child of node.children) {
+            if(this.syntax.kind(child) !== 'Parameter') { continue; }
+            const name = this.syntax.shape.name(child);
+            if(first && name >= 0 && this.facts.rules.parser.node(name).text === 'this') { return []; } first = false;
+            if(this.syntax.kind(name) !== 'Identifier') { break; }
+            const value = this.facts.rules.parser.node(name).text; if(seen.includes(value)) { return []; } seen.push(value);
+        }
+        let keyword = -1; for(let at = node.pos; at + 8 <= node.end; at++) { if(this.facts.rules.scanner.text.slice(at, at + 8) === 'function') { keyword = at; break; } }
+        const body = this.syntax.body(index); if(keyword < 0 || body < 0) { return []; }
+        const bodyNode = this.facts.rules.parser.node(body); let parameters = -1;
+        for(let at = node.pos; at < bodyNode.pos; at++) { if(this.facts.rules.scanner.text[at] === '(') { parameters = at; break; } }
+        if(parameters < keyword + 8) { return []; }
+        for(const child of node.children) { if(this.syntax.kind(child) === 'AsyncKeyword' && this.facts.rules.scanner.text.slice(keyword + 8, parameters).includes('\n')) { return []; } }
+        const fixes: Repair[] = [];
+        if(info.lexicalThis) {
+            if(info.member < 0 || info.call < 0 || this.syntax.parent(index) !== info.member || this.syntax.parent(info.member) !== info.call) { return []; }
+            const start = node.end; const end = this.facts.rules.parser.node(info.call).end;
+            if(end <= start || this.comment(start, end)) { return []; } fixes.push(this.repair(start, end, ''));
+        }
+        if(this.comment(keyword + 8, parameters)) {
+            fixes.push(this.repair(keyword, keyword + 8, '')); const name = this.syntax.shape.name(index);
+            if(name >= 0) { const nameNode = this.facts.rules.parser.node(name); fixes.push(this.repair(this.facts.rules.start(nameNode), nameNode.end, '')); }
+        }
+        else { fixes.push(this.repair(keyword, parameters, '')); }
+        let insertion = bodyNode.pos; while(insertion > 0 && this.whitespace(this.facts.rules.scanner.text[insertion - 1] ?? '')) { insertion--; }
+        fixes.push(this.repair(insertion, insertion, ' =>'));
+        const replaced = info.lexicalThis ? info.call : index; const parent = this.syntax.parent(replaced);
+        if(parent >= 0 && !['CallExpression', 'NewExpression', 'ConditionalExpression'].includes(this.syntax.kind(parent)) && !this.parenthesized(replaced) && !this.parenthesized(index)) {
+            const replacement = this.facts.rules.parser.node(replaced); fixes.push(this.repair(this.facts.rules.start(replacement), this.facts.rules.start(replacement), '(')); fixes.push(this.repair(replacement.end, replacement.end, ')'));
+        }
+        return fixes;
+    }
+    run(): void { this.walk(this.facts.sources.root(this.facts.rules.path), -1); }
+}

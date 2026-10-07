@@ -1,0 +1,8 @@
+export class RegexReference {
+    readonly number: number;
+    readonly name: string;
+    readonly start: number;
+    readonly end: number;
+    readonly path: readonly number[];
+    constructor(number: number, name: string, start: number, end: number, path: readonly number[]) { this.number = number; this.name = name; this.start = start; this.end = end; this.path = path; }
+}

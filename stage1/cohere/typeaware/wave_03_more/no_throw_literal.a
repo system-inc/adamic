@@ -1,0 +1,32 @@
+import type { NextFacts } from '../wave_03_next/next_facts.a';
+import type { NextSyntax } from '../wave_03_next/next_syntax.a';
+import { nextDiagnostic } from '../wave_03_next/next_diagnostic.a';
+export class NoThrowLiteral {
+    readonly facts: NextFacts;
+    readonly syntax: NextSyntax;
+    constructor(facts: NextFacts, syntax: NextSyntax) { this.facts = facts; this.syntax = syntax; }
+    couldBeError(index: number): boolean {
+        const kind = this.syntax.kind(index);
+        if(['Identifier', 'CallExpression', 'NewExpression', 'PropertyAccessExpression', 'ElementAccessExpression', 'TaggedTemplateExpression', 'YieldExpression', 'AwaitExpression'].includes(kind)) { return true; }
+        if(kind === 'ConditionalExpression') { return this.couldBeError(this.syntax.child(index, 2)) || this.couldBeError(this.syntax.child(index, 4)); }
+        if(kind !== 'BinaryExpression') { return false; }
+        const operator = this.syntax.kind(this.syntax.child(index, 1));
+        const right = this.syntax.child(index, 2);
+        if(['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(operator)) { return this.couldBeError(right); }
+        if(['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) { return this.couldBeError(this.syntax.child(index)) || this.couldBeError(right); }
+        return false;
+    }
+    run(): void {
+        
+        for(let index = 0; index < this.facts.rules.parser.nodes.length; index++) {
+            if(this.syntax.kind(index) !== 'ThrowStatement') { continue; }
+            const argument = this.syntax.child(index); if(argument < 0) { continue; }
+            if(!this.couldBeError(argument)) {
+                this.facts.rules.findings.push(nextDiagnostic(this.facts.rules, 'no-throw-literal', 'object', 'This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.', index));
+            }
+            else if(this.syntax.kind(argument) === 'Identifier' && this.facts.rules.parser.node(argument).text === 'undefined' && this.facts.symbol(argument).ownDeclarations.every(declaration => declaration.declared)) {
+                this.facts.rules.findings.push(nextDiagnostic(this.facts.rules, 'no-throw-literal', 'undef', 'This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.', index));
+            }
+        }
+    }
+}
