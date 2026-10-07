@@ -1,0 +1,19 @@
+{
+  "claimCommit": "350d4776c60ef9a70dc33a81b14c890936cd02d0",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "typescriptGo": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+  "typescriptCorpus": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "sources": {
+    "bridge/tsgo/checker/facts.go": "4070bb261b48480a383e3bda165c45eda4db0f9bbe8fe28905a0832569aa8f9b",
+    "bridge/tsgo/checker/scope_symbols.go": "aed8bf67f5ee6bc6249b0738d569194626afc10e7498b21c93ac9fd0da0f1856",
+    "bridge/tsgo/checker/scope_symbols_test.go": "7835e8772be3e28c752c09285a842c1b0ec1dc8c00b7a424b8e262615f1d3f43",
+    "stage1/cohere/typeaware/scope_symbols.a": "6ddcde66480adb3bf21a1dbecce522191fa8f37aa394eb511f567a12415e6ed3",
+    "stage1/cohere/typeaware/no_label_var.a": "ac8a9fdd6896431b04939f0daefdd5e86e99acfec3ed5292d2a82da8b131b7ab",
+    "stage1/cohere/typeaware/no_invalid_regexp.a": "1a47b09918c6738a338f7f9c27b7b8794b974d6f7a535b8d963bbb9964aa94c2",
+    "stage1/cohere/typeaware/no_misleading_character_class.a": "85afccd641eacdb745c6782f1036ea64591827359265359080872d8416b06245",
+    "stage1/cohere/typeaware/wave_14_third.a": "1b2ab778e5f4d15a581873c86ed55e677ba305de0fb137561460dffe2cdf357a",
+    "stage1/cohere/typeaware/wave_14_third_test.go": "c9fbcff64b6f51dae953c0ba43bede8645ab6865a4ac6ed04432236a0f61b2ce",
+    "stage1/cohere/typeaware/testdata/oracle_wave_14_third.go": "54aa2281a2e603d6cea6f3da3aea76dd2c5e8354d723fd542154ddcc2ed0272d",
+    "stage1/cohere/typeaware/testdata/regexp_printable_wave_14.go": "aeb832cecbb712504d27efb39294d9a3296cd963c76620c93c1414b4a956e2f1"
+  }
+}

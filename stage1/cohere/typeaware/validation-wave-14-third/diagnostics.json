@@ -1,0 +1,137 @@
+{
+  "controls-go": {
+    "bytes": 17789,
+    "sha256": "e503c3b2964201ec29a15cff06b78dd473cba04e6738ec02bc9631a325005d50",
+    "stderrBytes": 55
+  },
+  "controls-native": {
+    "bytes": 17789,
+    "sha256": "e503c3b2964201ec29a15cff06b78dd473cba04e6738ec02bc9631a325005d50",
+    "stderrBytes": 0
+  },
+  "controls-asan-go": {
+    "bytes": 17789,
+    "sha256": "e503c3b2964201ec29a15cff06b78dd473cba04e6738ec02bc9631a325005d50",
+    "stderrBytes": 55
+  },
+  "controls-asan-native": {
+    "bytes": 17789,
+    "sha256": "e503c3b2964201ec29a15cff06b78dd473cba04e6738ec02bc9631a325005d50",
+    "stderrBytes": 0
+  },
+  "compiler-go": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "stderrBytes": 59
+  },
+  "compiler-native": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "stderrBytes": 0
+  },
+  "compiler-asan-go": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "stderrBytes": 59
+  },
+  "compiler-asan-native": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "stderrBytes": 0
+  },
+  "repository-go": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderrBytes": 56
+  },
+  "repository-native": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderrBytes": 0
+  },
+  "repository-asan-go": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderrBytes": 57
+  },
+  "repository-asan-native": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderrBytes": 0
+  },
+  "label-run": {
+    "bytes": 17783,
+    "sha256": "05fd4ddf44485fd60986910142f1665971c128bbea9fb6e986a15a433d547b95",
+    "stderrBytes": 0
+  },
+  "flags-run": {
+    "bytes": 17783,
+    "sha256": "fa5d4f7caebcd1d1d15769244d43a9893c3fc0f3465494ef8b5cf21148536306",
+    "stderrBytes": 0
+  },
+  "unicode-quote-run": {
+    "bytes": 17779,
+    "sha256": "55ab786de25911b907931c79a930474a852293039e785be34b7ff1d75e6fd283",
+    "stderrBytes": 0
+  },
+  "class-run": {
+    "bytes": 16405,
+    "sha256": "c4cbbc363f1677a152f9afbac9617665df4536e2be2a91b80182962f5249612d",
+    "stderrBytes": 0
+  },
+  "scope-meaning-run": {
+    "bytes": 17097,
+    "sha256": "359ca65d0ff3e213b17d658e2604cdbc92f2e733d3af7dff4065dddaa1d2c80b",
+    "stderrBytes": 0
+  },
+  "released-run": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 50
+  },
+  "released-mutant-run": {
+    "bytes": 1118,
+    "sha256": "eebc77c7bf11cdf4d45df8023739b3fa6f4ee1231809f7aeb9a9c767d2f143e9",
+    "stderrBytes": 0
+  },
+  "label-parser-go-positive": {
+    "bytes": 415,
+    "sha256": "74afea06e6ee800608b587830ce80094d6017cdb9a8deff68c57ea758bd3452a",
+    "stderrBytes": 53
+  },
+  "label-parser-native-refusal": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 109
+  },
+  "pattern-go-positive": {
+    "bytes": 185,
+    "sha256": "e96db7241faa4fb61698d645a69119f6dedc4de34fde70bab11ca62cd7128d19",
+    "stderrBytes": 53
+  },
+  "pattern-native-refusal": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 114
+  },
+  "constructor-go-positive": {
+    "bytes": 415,
+    "sha256": "3631c0519ff94a924b8c6583645fcf8627232b5b220ab5b367681ddba8471833",
+    "stderrBytes": 53
+  },
+  "constructor-native-refusal": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 123
+  },
+  "flag-decoding-go-positive": {
+    "bytes": 189,
+    "sha256": "a91bb1a4ccce8d462dcb870b96b1535e156cde70e178abe04b5c6deb32c14387",
+    "stderrBytes": 54
+  },
+  "flag-decoding-native-refusal": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 89
+  }
+}

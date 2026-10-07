@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "scope-symbols":
+		return p.scopeSymbols(out, c, node, question)
 	case "symbol-context":
 		return p.symbolContext(out, c, node, question)
 	case "interface-bases":

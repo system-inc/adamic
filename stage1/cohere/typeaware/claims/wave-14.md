@@ -79,3 +79,13 @@ All three have zero compiler and repository findings. Neither base branch has
 rule-named native files for them. There are 58 remaining unclaimed ranking rows
 before this reservation. This claim is pushed before implementation. New native
 files use .a; shared parser, registration generator and harness remain untouched.
+
+Third-batch status: native scoped-label judgments, constructor selection and
+flag validation, and regex-literal class judgments are implemented. Fifty-one
+supported controls produce 49 complete byte-identical findings under all three
+sanitizers, with a mutant per rule plus scope-meaning and Unicode-quote mutants.
+Both frozen corpora also agree. This remains partial: undefined labels are a
+shared parser gap; string-pattern validation, constructor reference/source
+mapping and lone-surrogate flags are explicit refused dependency paths. These
+are demonstrated by independent Go-positive witnesses. No further batch is
+claimed. See ../WAVE_14_THIRD_REPORT.md.
