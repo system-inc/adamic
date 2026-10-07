@@ -1,0 +1,16 @@
+=== RUN   TestRulesAgree
+    lint_test.go:324: cohere cases: 281 unique source/rule/options combinations
+    lint_test.go:374: /tmp/adamic-gate/TestRulesAgree4078897723/001/oracle [--manifest /tmp/adamic-gate/TestRulesAgree4078897723/015/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestRulesAgree4078897723/010/case-011.ts: [Unterminated regular expression literal.]
+        
+        goroutine 1 [running]:
+        main.collect({0x27a1f16e3c6b, 0x39}, {0x27a1f14a20e0?, 0x1?}, {0x27a1f184d080, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:91 +0xb05
+        main.run({0x27a1f16e3c6b?, 0x27a1f1534980?}, 0x0, 0x27a1f1534980)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x2f7
+--- FAIL: TestRulesAgree (70.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	70.018s
+FAIL

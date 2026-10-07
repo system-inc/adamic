@@ -261,3 +261,13 @@ inventory entries with needs_type_information=false are claimed here:
 This ownership update is pushed before new source or probes. Reserved rule
 directories are next-no-before-interactive-script-outside-document,
 next-no-css-tags and next-no-document-import-in-page.
+
+### Third-batch outcome
+
+Document-import candidate committed as dfab0924. Four-way witnesses, compiler/
+stage1 sources, path cases and a compiling rule mutant pass through the proposed
+scratch overlay. Full original fixture parity fails because the shared Go
+oracle forces TS on JSX and capture drops filenames; the stage1 parser also
+refuses JSX. The other two new rules remain blocked on JSX. No full-parity port
+is claimed. Exact commands, rates and independent proofs are in
+[the third-batch report](wave1-12-batch3-evidence/REPORT.md).

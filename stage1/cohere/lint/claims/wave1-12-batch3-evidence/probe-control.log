@@ -1,0 +1,15 @@
+=== RUN   TestClaimedRulesNeedJSX
+    jsx_gap_test.go:76: unmodified Go rules: @next/next/no-before-interactive-script-outside-document noBeforeInteractiveScriptOutsideDocument 68 96 This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        findings=1 fixes=0 @next/next/no-before-interactive-script-outside-document
+        @next/next/no-css-tags noCssTags 26 69 This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        findings=1 fixes=0 @next/next/no-css-tags
+    jsx_gap_test.go:97: Node expected parser refusal exit 70 and empty stdout: <nil> stdout="mutant skipped parsing\nparsed\n" stderr=""
+    jsx_gap_test.go:97: emitted JavaScript expected parser refusal exit 70 and empty stdout: <nil> stdout="mutant skipped parsing\nparsed\n" stderr=""
+    jsx_gap_test.go:97: sanitized native expected parser refusal exit 70 and empty stdout: <nil> stdout="mutant skipped parsing\nparsed\n" stderr=""
+    jsx_gap_test.go:97: Node expected parser refusal exit 70 and empty stdout: <nil> stdout="mutant skipped parsing\nparsed\n" stderr=""
+    jsx_gap_test.go:97: emitted JavaScript expected parser refusal exit 70 and empty stdout: <nil> stdout="mutant skipped parsing\nparsed\n" stderr=""
+    jsx_gap_test.go:97: sanitized native expected parser refusal exit 70 and empty stdout: <nil> stdout="mutant skipped parsing\nparsed\n" stderr=""
+--- FAIL: TestClaimedRulesNeedJSX (21.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/claims/wave1-12-batch3-evidence	21.380s
+FAIL

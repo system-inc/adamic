@@ -1,0 +1,42 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/next_document_import_path_exemption_ignored
+    lint_test.go:491: next_document_import_path_exemption_ignored caught on Node: case 24 line 522: port "fixed\t// \\ud83d\\udc8e leading trivia\\u000aimport type Document from 'next/document';\\u000aimport * as D from 'next/document';\\u000aimport 'next/document';\\u000aimport { Html } from 'next/document/foo';\\u000aexport { Html } from 'next/document';\\u000a", Go "/tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:2:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:2:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+        
+        range 23 65 noDocumentImportInPage 		
+        /tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:3:1
+    lint_test.go:491: next_document_import_path_exemption_ignored caught on emitted JavaScript: case 24 line 522: port "fixed\t// \\ud83d\\udc8e leading trivia\\u000aimport type Document from 'next/document';\\u000aimport * as D from 'next/document';\\u000aimport 'next/document';\\u000aimport { Html } from 'next/document/foo';\\u000aexport { Html } from 'next/document';\\u000a", Go "/tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:2:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:2:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+        
+        range 23 65 noDocumentImportInPage 		
+        /tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:3:1
+    lint_test.go:491: next_document_import_path_exemption_ignored caught on native: case 24 line 522: port "fixed\t// \\ud83d\\udc8e leading trivia\\u000aimport type Document from 'next/document';\\u000aimport * as D from 'next/document';\\u000aimport 'next/document';\\u000aimport { Html } from 'next/document/foo';\\u000aexport { Html } from 'next/document';\\u000a", Go "/tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:2:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:2:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+        
+        range 23 65 noDocumentImportInPage 		
+        /tmp/adamic-gate/TestMutantsnext_document_import_path_exemption_ignored1500672249/007/next-no-document-import-in-page-0.ts:3:1
+--- PASS: TestMutants (47.54s)
+    --- PASS: TestMutants/next_document_import_path_exemption_ignored (32.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	47.587s
