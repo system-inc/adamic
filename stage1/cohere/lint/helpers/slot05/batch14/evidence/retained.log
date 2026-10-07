@@ -1,0 +1,24 @@
+=== RUN   TestSlot05MakeBreak
+    helper_test.go:81: break: 27648 queries, 803 sources, 864 parsed nodes, 9 label controls
+    helper_test.go:91: consumer coverage: {
+          "consumer_literal_occurrences": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 803,
+          "Nodes": 864,
+          "Labels": 9,
+          "Queries": 27648
+        }
+    helper_test.go:149: make_break.a mutant "if(!state.cur.reachable)" -> "if(false)" caught at output line 1 byte 15: mutant "0|0:false|old:|unreachable:0;", Go "0|0:false|old:|"
+    helper_test.go:149: make_break.a mutant "!target.breakable" -> "false" caught at output line 4610 byte 28: mutant "e|A~a:1:-1:-1:false:true;old:true,|link:0:1:true,;unreachable:0;", Go "e|A~a:1:-1:-1:false:false;old:false,|unreachable:0;"
+    helper_test.go:149: make_break.a mutant "!target.labels.includes(name)" -> "false" caught at output line 4612 byte 28: mutant "e|A~a:1:-1:-1:false:true;old:true,|text:label;link:0:1:true,;unreachable:0;", Go "e|A~a:1:-1:-1:false:false;old:false,|text:label;unreachable:0;"
+    helper_test.go:149: make_break.a mutant "target.broken=true;" -> "target.broken=false;" caught at output line 4618 byte 28: mutant "e|A~a:1:-1:-1:false:false;old:false,|text:A;link:0:1:false,;unreachable:0;", Go "e|A~a:1:-1:-1:false:true;old:true,|text:A;link:0:1:true,;unreachable:0;"
+    helper_test.go:149: make_break.a mutant "makeUnreachable();" -> "if(false) {makeUnreachable();}" caught at output line 2 byte 2: mutant "0|0:true|old:|", Go "0|5:false|old:|unreachable:0;"
+    helper_test.go:149: make_break.a mutant "for(let i=state.jumps.length - 1;i>=0;i-=1)" -> "for(let i=0;i<state.jumps.length;i+=1)" caught at output line 9228 byte 28: mutant "e|A~a:1:-1:-1:false:true;a~未:2:-1:-1:false:false;old:true,false,|text:a;link:0:1:true,false,;unreachable:0;", Go "e|A~a:1:-1:-1:false:false;a~未:2:-1:-1:false:true;old:false,true,|text:a;link:0:2:false,true,;unreachable:0;"
+    helper_test.go:149: make_break.a mutant "target.broken=true;\n  link(state.cur,target.breakTo);" -> "link(state.cur,target.breakTo);\n  target.broken=true;" caught at output line 4618 byte 59: mutant "ue,|text:A;link:0:1:false,;unreachable:0;", Go "ue,|text:A;link:0:1:true,;unreachable:0;"
+--- PASS: TestSlot05MakeBreak (123.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch14	123.847s

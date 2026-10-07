@@ -1,0 +1,23 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeBreak": [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ]
+  },
+  "dependency_occurrences_removed": 4,
+  "unique_consumers": 4,
+  "newly_helper_ready_from_batch_alone": [],
+  "withdrawn": [
+    "pushJump",
+    "popJump"
+  ],
+  "cumulative_slot05": {
+    "helpers": 39,
+    "dependency_occurrences_removed": 251,
+    "unique_consumers": 70,
+    "helper_ready": 50
+  }
+}

@@ -1,0 +1,10 @@
+export interface JumpBlock { readonly id: number; readonly reachable: boolean; }
+export interface JumpTarget<N, B extends JumpBlock> {
+ readonly labels: readonly string[];
+ readonly breakTo: B | undefined;
+ readonly continueTo: B | undefined;
+ readonly loop: N | undefined;
+ readonly breakable: boolean;
+ broken: boolean;
+}
+export interface JumpState<N, B extends JumpBlock> { jumps: JumpTarget<N,B>[]; cur: B; }

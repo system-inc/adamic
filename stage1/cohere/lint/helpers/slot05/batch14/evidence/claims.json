@@ -1,0 +1,32 @@
+{
+  "main": "b8fb957aa839a9e8cb0b54279dd9864fa317bd30",
+  "branches_checked": 20,
+  "claims": {
+    "pushJump": [
+      {
+        "branch": "refs/remotes/origin/codex/lint-helpers-03",
+        "path": "stage1/cohere/lint/helpers/claims/03.md"
+      },
+      {
+        "branch": "refs/remotes/origin/codex/lint-helpers-05",
+        "path": "stage1/cohere/lint/helpers/claims/05.md"
+      }
+    ],
+    "popJump": [
+      {
+        "branch": "refs/remotes/origin/codex/lint-helpers-03",
+        "path": "stage1/cohere/lint/helpers/claims/03.md"
+      },
+      {
+        "branch": "refs/remotes/origin/codex/lint-helpers-05",
+        "path": "stage1/cohere/lint/helpers/claims/05.md"
+      }
+    ],
+    "makeBreak": [
+      {
+        "branch": "refs/remotes/origin/codex/lint-helpers-05",
+        "path": "stage1/cohere/lint/helpers/claims/05.md"
+      }
+    ]
+  }
+}
