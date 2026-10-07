@@ -1,5 +1,12 @@
 # Reconciled census/predicate rerun: all six requested probes remain green
 
+Reported upstream after this run: merged host-blockers a85a9cb1 regresses
+unknown narrowing in library fixtures 05 and 13. This is user-supplied evidence,
+not reproduced locally. The green direct-call isArray probe and six requested
+probes do not cover those cases, so the regression remains outstanding. Wait
+for the supplied compiler/stage3-front-3 SHA and use that combined integration
+in place of individual compiler feature tips; full slice stays held meanwhile.
+
 Tools are available. Merged census-small-families-3 24a2b287 into unpushed scratch
 80aef697, yielding 975e4d0b. This is the reconciled implementation in place of
 separate census-small-families/proven-predicates tips; older commits remain

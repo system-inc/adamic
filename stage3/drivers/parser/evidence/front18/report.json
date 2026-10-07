@@ -41,5 +41,14 @@
   ],
   "full_slice": "held for lane 2; no full slice, all-eleven-probe or parser-reference rerun",
   "last_observed_slice_stop": "core.ts:204:12; not rerun this turn",
-  "limitations": "No complete gate, counts gate, sanitizer or full oracle run. Declaration-admission probes keep their original limited runtime coverage. No cumulative eleven-probe count claimed. Compiler changes remain scratch-only, never pushed."
+  "limitations": "No complete gate, counts gate, sanitizer or full oracle run. Declaration-admission probes keep their original limited runtime coverage. No cumulative eleven-probe count claimed. Compiler changes remain scratch-only, never pushed.",
+  "reported_upstream_regression": {
+    "branch": "codex/host-blockers",
+    "sha": "a85a9cb1",
+    "affected": "library fixtures 05 and 13: unknown narrowing",
+    "source": "user heads-up after this rerun",
+    "locally_reproduced": false,
+    "scope": "Merged in scratch; direct row-8 calls and the six requested probes do not verify these library narrowing cases. Their regressions remain outstanding."
+  },
+  "next_integration": "Wait for supplied compiler/stage3-front-3 tip; use the combined branch in place of separate compiler feature tips."
 }
