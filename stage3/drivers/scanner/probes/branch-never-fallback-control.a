@@ -1,0 +1,8 @@
+function fail(): never { throw new Error("missing"); }
+function read(text: string, index: number): string {
+    const value = text[index];
+    if (value === undefined) fail();
+    return value;
+}
+console.log(read("x", 0));
+try { read("x", 1); } catch { console.log("missing"); }

@@ -1,0 +1,3 @@
+function read(text: string, index: number): string { return text[index] ?? "missing"; }
+console.log(read("x", 0));
+console.log(read("x", 1));

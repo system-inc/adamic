@@ -1,5 +1,48 @@
 # Scanner blockers
 
+## October 7: adaptation 89 validated; never fallback in ?? is next
+
+Latest integrated scratch includes frontend 391b3e9, proven-predicates 746af2f,
+and every requested tip. The Array constructor first passed with 0140eed;
+subsequent fetch/merge used newest tip ceec0ca1 (including e669f94). Exact pins
+and the unpushed scratch SHA are in evidence/latest-native-retry.json.
+
+Adaptation 89 was planned/pushed first in 9347c1d. Its two numeric type arguments
+and six erased non-null markers preserve JavaScript bytes. Numeric write mutant
+fails that identity check. A numeric array write/read control prints `3` natively
+and on Node, and its one-byte native-output mutant is caught. Full baseline:
+106,366 passing, zero pending, one sanctioned API difference, reconstructed
+exactly with the reference tree's matching 0b484f8f API-owner proof; all 60,930
+other references unchanged. Newer proof tools expect newer adaptation 32 source
+forms and fail against this intentionally retained source snapshot; that attempt
+and the successful pinned proof are both recorded. No baseline was accepted.
+
+Expanded Node slice remains byte-identical to the established full-tree dump:
+1,369,432 tokens, 466 errors, SHA-256
+`41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc`.
+Token-end mutation is caught. Both split modes stop at core.ts:128:43:
+
+```text
+stage 0 can't lower ?? whose sides have different types yet
+```
+
+Expression: `(s1[i - 1] ?? Debug.fail("stage3: missing dense element"))!` in
+levenshteinWithMax, from upstream core.ts:2220. The checked read is adaptation
+52; Debug.fail returns never. Census reason: this representation-specific NotYet
+is not separately named in REPORT.md. Required compiler feature: a never-returning
+fallback in nullish coalescing, preserving lazy execution and throwing behavior.
+The present string determines the expression's value representation; the never
+call has no result to store. No replacement of Debug.fail or its error behavior
+is made as a source adaptation.
+
+Minimal probe coalesce-never-fallback.a reproduces at 4:12. Node prints `x` then
+`missing`; native refuses before C emission. Literal-fallback and explicit-branch
+controls both build and match those two Node lines. A one-byte change to each
+native control is caught. Focused lowering tests and uncached optional-function,
+append-overload and Array scanner differential fixtures pass after scratch-only
+merge resolutions. C size, clang timings, scanner binary size, native user time
+and native scanner byte mutant remain unavailable because no C was produced.
+
 ## October 7: newest tips close Array construction; numeric scratch storage is next
 
 Library-array-holes 0140eed builds the unchanged length-constructor probe,

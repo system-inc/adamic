@@ -1,0 +1,8 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:2199-2205 and 2242
+// Adaptation 89: erased numeric typing and a proven initialized read.
+function allocate(s2: string): void {
+    let previous = new Array<number>(s2.length + 1);
+    for (let i = 0; i <= s2.length; i++) { previous[i] = i; }
+    console.log(`${previous[s2.length]!}`);
+}
+allocate("abc");

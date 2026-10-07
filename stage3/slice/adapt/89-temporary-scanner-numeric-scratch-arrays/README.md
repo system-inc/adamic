@@ -18,3 +18,16 @@ stage 3 baseline with only the already sanctioned API differences. A changed
 numeric write must fail the JavaScript identity check. No compiler edits land
 on this branch. The pinned corpus and reference tree are retained as the same
 inputs used for the established expanded dump.
+
+Implemented: two constructors and six numeric reads. Emitted JavaScript is
+byte-identical (1,872 bytes); changing a numeric write fails that identity
+check. Numeric-storage native control prints `3`, matching Node; its one-byte
+mutant is caught. Expanded slice Node output matches 1,369,432 tokens and
+466 errors. Full baseline: 106,366 passing, zero pending, one API mismatch
+exactly reconstructed by the pinned source tree's sanctioned owner proof;
+all 60,930 other reference baselines remain identical. Current proof tools
+expect newer full-tree adaptations, so this pinned reference tree uses its
+matching 0b484f8f proof tools. No API reference was accepted or edited.
+
+The next native blocker in both split modes is core.ts:128:43, a checked string
+read coalescing to Debug.fail's never result. Evidence: scanner latest-native-retry.json.

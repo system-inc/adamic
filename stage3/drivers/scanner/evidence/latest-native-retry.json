@@ -1,0 +1,149 @@
+{
+  "result": "red: nullish coalescing with a never-returning fallback call",
+  "scratch_commit": "8491357a6fd315c92233e9d1f581b379cb0eae4b",
+  "compiler_pins": {
+    "origin/area/stage3": "03ccf222dfeedef4bfe5cc3e219e4586d14a5c13",
+    "origin/compiler/stage3-front-2": "391b3e9c378c0f5aea5ec34aec89a22eb3b59e73",
+    "origin/codex/library-array-holes": "ceec0ca1f42aac22ca8978d8fe4423f078205215",
+    "origin/codex/proven-predicates": "746af2f2df96c044b62f7ee939f1ca4fa00fcd71",
+    "origin/codex/census-small-families": "33a90f4b0763d797d33ed41eb9db79ef12ff6609",
+    "origin/codex/module-init-order": "28e366fa9ffa8ad5a44e2ee8a0d97a38faf2c916",
+    "origin/codex/phantom-brands": "d2d3c77e308cc26d4af196dedeba92d7d38c4cda",
+    "origin/codex/require-builtins-2": "6439f4cf6a7f2d1d9de86bfc8f941d6f2d9087b3",
+    "origin/codex/non-null-check": "a02613eff851e07f567ab9934adfc8a2dc98eeca",
+    "origin/library/qualified-as-const": "8280fd0873a3d5c425f8a1a342b44af20cf883d9"
+  },
+  "assumption": "Use the unchanged pinned reference tree and fixed corpus for direct comparison with the established extended golden. API proof tools are pinned to 0b484f8f, matching that reference tree; the current tools expect different newer source adaptations.",
+  "array_initial_probe": {
+    "tip": "0140eed",
+    "native_build_exit": 0,
+    "stdout": "4\n"
+  },
+  "array_final_tip": "ceec0ca1f42aac22ca8978d8fe4423f078205215",
+  "adaptation_89": {
+    "constructors": 2,
+    "initialized_reads": 6,
+    "javascript": {
+      "equal": true,
+      "bytes": 1872,
+      "sha256": "918966d4a5dc9f7caea0b972cf1e167f94b9ac07149047b5318452973de7247f",
+      "numeric_write_mutant_caught": true
+    },
+    "full_baseline": {
+      "tree": "/workspace/scratch/scanner-fallback-baseline-tree",
+      "nproc": 5,
+      "workers": 4,
+      "runners": "all",
+      "tests": null,
+      "node": "v24.19.0",
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "seconds": 3.466
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "seconds": 6.262
+        },
+        "tests": {
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--workers=4",
+            "--lint=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 270.077
+        }
+      },
+      "status": "fail",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ],
+      "wall_seconds": 279.897
+    },
+    "sanctioned_API_proof": {
+      "status": "pass",
+      "snapshot_declarations": 189,
+      "readonly_declarations": 1,
+      "api_line_delta": 40,
+      "other_reference_baselines_identical": 60930,
+      "accepted": false
+    },
+    "proof_tool_pin": "0b484f8fbce3ce5bfd5757afacc0fdc073e29373",
+    "current_API_tool_attempt": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(ts.isMethodSignature(member[0]))\n\n    at /workspace/adamic/stage3/adapt/70-readonly-views/check-api.cjs:161:106\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/32-indexed-reads-program/public-api.cjs:100:74)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n",
+    "numeric_native_control_stdout": "3\n",
+    "numeric_native_control_diff_exit": 0,
+    "numeric_native_control_one_byte_mutant_diff_exit": 1
+  },
+  "expanded_node_reference": {
+    "tokens": 1369432,
+    "errors": 466,
+    "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+    "bytes": 108019935,
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "blocked at compilation",
+    "build_exit": 1
+  },
+  "unsplit_diagnostic": "adamic: /workspace/scratch/scanner-latest-numeric-off-run/adapted/src/compiler/core.ts:128:43: stage 0 can't lower ?? whose sides have different types yet\n",
+  "split_diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/core.ts:128:43: stage 0 can't lower ?? whose sides have different types yet\n",
+  "C_emission_diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/core.ts:128:43: stage 0 can't lower ?? whose sides have different types yet\n",
+  "minimal_probe": {
+    "file": "probes/coalesce-never-fallback.a",
+    "native_build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/coalesce-never-fallback.a:4:12: stage 0 can't lower ?? whose sides have different types yet\n",
+    "node_stdout": "x\nmissing\n"
+  },
+  "controls": [
+    {
+      "file": "probes/coalesce-string-fallback-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "x\nmissing\n",
+      "node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    },
+    {
+      "file": "probes/branch-never-fallback-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "x\nmissing\n",
+      "node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    }
+  ],
+  "focused_lower_tests": "ok  \tgithub.com/system-inc/adamic/internal/lower\t1.074s\n",
+  "focused_uncached_oracle": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t16.732s\n",
+  "metrics": {
+    "nproc": 5,
+    "C_size": null,
+    "clang_unsplit_wall": null,
+    "clang_split_cold_wall": null,
+    "clang_split_warm_wall": null,
+    "binary_size": null,
+    "native_user_time": null,
+    "reason": "No scanner C or executable produced; both modes stop during lowering."
+  },
+  "scanner_native_output_mutant": "not run: no native scanner output",
+  "scratch_merge_conflicts": "Lowering, flow, loading, emission and runtime overlap resolved in scratch; original records/enums/namespaces/readiness retained. Predicate admission and checked-field runtime merged. Array and UTF16 cache semantics retained from Array branch. Latest Array tip had only count/stage1 adapter conflicts. Mixed inputLeaks factory/static helper reconciled for focused uncached tests. No authored compiler edits committed on the scanner proof branch."
+}
