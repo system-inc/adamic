@@ -1,0 +1,12 @@
+o2 full AST Go byte parity PASS {"bytes": 29704698, "sha256": "a5fef2d09ed576e425da6c047beb3169573de15af6ea07914d88c6c194b1a150"}
+thin full AST Go byte parity PASS {"bytes": 29704698, "sha256": "a5fef2d09ed576e425da6c047beb3169573de15af6ea07914d88c6c194b1a150"}
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/reports/release-pgo/validate.py", line 32, in <module>
+    ast_build(mode,s/'ast.c',binary)
+  File "/workspace/adamic/cloud/reports/release-pgo/validate.py", line 23, in ast_build
+    run([compiler,*flags,'-I',s/'runtime','-o',binary,source,'-Xlinker','--whole-archive',s/mode/'runtime.a','-Xlinker','--no-whole-archive','-lm'],mode+'-'+binary.name+'-build')
+  File "/workspace/adamic/cloud/reports/release-pgo/validate.py", line 19, in run
+    subprocess.run(list(map(str,args)),stdout=out,stderr=err,check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/workspace/adamic-tools/llvm/bin/clang', '-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic', '-Wno-unused-variable', '-Wno-unused-but-set-variable', '-Wno-unused-function', '-Wno-unused-parameter', '-Wno-self-assign', '-ffp-contract=off', '-fno-optimize-sibling-calls', '-O2', '-flto=thin', '-fprofile-use=/workspace/scratch/release-pgo/training.profdata', '-Wno-profile-instr-out-of-date', '-fuse-ld=lld', '-I', '/workspace/scratch/release-pgo/runtime', '-o', '/workspace/scratch/release-pgo/pgo/ast', '/workspace/scratch/release-pgo/ast.c', '-Xlinker', '--whole-archive', '/workspace/scratch/release-pgo/pgo/runtime.a', '-Xlinker', '--no-whole-archive', '-lm']' returned non-zero exit status 1.

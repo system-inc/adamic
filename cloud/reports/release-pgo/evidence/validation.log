@@ -1,0 +1,5 @@
+o2 full AST Go byte parity PASS {"bytes": 29704698, "sha256": "a5fef2d09ed576e425da6c047beb3169573de15af6ea07914d88c6c194b1a150"}
+thin full AST Go byte parity PASS {"bytes": 29704698, "sha256": "a5fef2d09ed576e425da6c047beb3169573de15af6ea07914d88c6c194b1a150"}
+pgo full AST Go byte parity PASS {"bytes": 29704698, "sha256": "a5fef2d09ed576e425da6c047beb3169573de15af6ea07914d88c6c194b1a150"}
+split full AST Go byte parity PASS {"bytes": 29704698, "sha256": "a5fef2d09ed576e425da6c047beb3169573de15af6ea07914d88c6c194b1a150"}
+compiled AST output mutant caught at byte 14

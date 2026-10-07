@@ -1,0 +1,3 @@
+['/workspace/adamic-tools/llvm/bin/llvm-profdata', 'merge', '/workspace/scratch/release-pgo/profile-api.profraw', '-o', '/workspace/scratch/release-pgo/profile-api.profdata']
+['/workspace/adamic-tools/llvm/bin/clang', '-O2', '-flto=thin', '-fuse-ld=lld', '-fprofile-use=/workspace/scratch/release-pgo/profile-api.profdata', '-Werror', '-Wno-profile-instr-out-of-date', '-fsplit-machine-functions', '/workspace/scratch/release-pgo/profile-api.c', '-o', '/workspace/scratch/release-pgo/profile-api-use']
+Requested profile generate/use plus machine splitting flags accepted

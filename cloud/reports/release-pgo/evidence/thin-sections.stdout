@@ -1,0 +1,32 @@
+/workspace/scratch/release-pgo/thin/parse  :
+section                size      addr
+.interp                  28       680
+.note.ABI-tag            32       708
+.dynsym                 912       744
+.gnu.version             76      1656
+.gnu.version_r          112      1732
+.gnu.hash                28      1848
+.dynstr                 412      1876
+.rela.dyn             39192      2288
+.rela.plt               792     41480
+.rodata               30284     42272
+.eh_frame_hdr          3292     72556
+.eh_frame             17264     75848
+.text               1010128     97216
+.init                    23   1107344
+.fini                     9   1107368
+.plt                    544   1107392
+.fini_array               8   1112032
+.init_array              16   1112040
+.data.rel.ro           6112   1112064
+.dynamic                432   1118176
+.got                     40   1118608
+.relro_padding         3656   1118648
+.data                 32328   1122744
+.tm_clone_table           0   1155072
+.got.plt                288   1155072
+.bss                  96536   1155360
+.comment                232         0
+Total               1242776
+
+
