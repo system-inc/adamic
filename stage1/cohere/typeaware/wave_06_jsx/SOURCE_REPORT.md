@@ -1,3 +1,5 @@
+Latest landing validation and remaining blockers: [HARNESS_LANDING_REPORT.md](HARNESS_LANDING_REPORT.md). The historical parser blocker below is superseded.
+
 Built: source handlers for react/jsx-fragments, react/jsx-no-undef and react/no-adjacent-inline-elements, named listeners and isolated raw JSX binding facts; rebased onto main 39638d9e.
 Commits: c00ff1ee4f316f77414245fe39bcf7c38318005a adds source handlers; a9f551fc98f51c79d419d9efae07b0c2ce24494f fixes quoted imports. The following evidence commit is pushed on the worker branch.
 Checks: 91 actual source controls, 68 findings and 32,195 canonical bytes agree with Go/native/ASan/UBSan; both frozen corpora match. 73 prior native rebuilds and 165 oracle replays pass.
