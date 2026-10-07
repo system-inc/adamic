@@ -46,7 +46,7 @@ func prepareJSONTypes() (string, error) {
 	binary := filepath.Join(directory, "json_types")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", "build", "-trimpath", "-buildvcs=false", "-o", binary, "./oracle/json_types.go")
+	command := exec.CommandContext(ctx, "go", "build", "-o", binary, "./oracle/json_types.go")
 	command.Dir = repository
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
