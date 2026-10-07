@@ -44,7 +44,7 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	} else {
 		hold(value, visit.Value, "adamic_retain")
 	}
-	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}})", callback, callback, first, key, collection)
+	call := fmt.Sprintf("%s->code(%s, 3, (adamic_value[]){%s, %s, {.reference = %s}})", callback, callback, first, key, collection)
 	// A throw lets go of the key and value held across the call, and the iterator.
 	holds := []string{}
 	if !visit.Set && visit.Value.IsReference() {
