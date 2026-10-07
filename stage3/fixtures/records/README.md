@@ -85,25 +85,55 @@ The ordinary byte-comparison runner must be extended with the established loud
 check convention before comparing these intentional safety differences. That
 shared harness is outside this unit's territory and was not edited.
 
-## Inherited-key provenance: scoped result, not the requested global count
+## Complete inherited-key census
 
-inherited-key-ledger.json preserves all 68 census rows and adds classifications
-and evidence. Locations distinguish accesses on the same line by column.
-There are 22 assignment/delete-only sites, one literal dot-key read, and
-**45 dynamic reads**: **11 fixed-set keys excluding prototype names, 24 keys
-from user input, and 10 unknown**. Compound ??= and ||= count as reads.
-Own-key guards are kept distinct from key provenance: user keys can themselves
-name prototype members while being present own properties, which is safe under
-the ruling. Pattern-only keys, dot-prefixed exports and #-prefixed imports have
-additional exclusion evidence in the ledger. Fixed-set reasoning assumes the
-unmodified pinned internal option tables and no external prototype mutation.
+[INHERITED_KEYS.md](INHERITED_KEYS.md) contains the compiler-wide result and
+locations. The complete pass covers every original compiler file, unrestricted
+and any receivers, finite mapped shapes, all helper calls, all actual for-in
+bodies, and every non-literal in test. It matches all 68 original census spans.
+The initial inherited-key-ledger.json is retained as a historical scoped snapshot;
+inherited-key-global.json and inherited-key-provenance.json supersede its counts
+and provisional classifications.
 
-This is not every dynamic-key read in src/compiler. The census explicitly covers
-receivers with string index types; it omits any receivers, some generic object
-operations, numeric accesses and finite mapped shapes. A complete independent
-AST/type traversal plus caller provenance review was not completed here. The
-45 subtotal must not be published as @system_adamic's requested global count,
-and the 34 user/unknown subtotal is not a count of unguarded inherited misses.
+Global requested-operation union: **1,041 sites**, consisting of **962 fixed
+key sets/domains excluding prototype names, 36 user input, and 43 unknown**.
+Of those, **145** have string-capable keys: **66 fixed, 36 user input, 43 unknown**.
+The remaining **896** have non-string key domains. All helper calls are included,
+including 15 literal-key hasProperty calls; omitting those gives 1,026 fully
+dynamic-key sites overall and 130 with string-capable keys. There are 36
+hasProperty calls on 32 lines, zero getProperty calls, 27 actual for-in loops
+with 57 overlapping body sites, and zero non-literal in tests. The 10 literal
+in tests are retained as excluded audit rows. Direct hasOwnProperty.call guards
+in the helper definitions and loop bodies are included too (12 sites).
+
+User input has disjoint sources: 11 tsconfig only, 13 package.json only,
+3 command line only, 5 tsconfig or command line, 2 tsconfig or package.json
+(typesVersions paths), and 2 source module specifiers. This sums to 36. Input origins are recorded per location;
+own-property guards do not change a user key into a fixed key.
+
+Reproduce in a scratch checkout of TypeScript v6.0.3 at the pinned commit:
+install typescript@6.0.3, @types/node@25.3.3 and
+@types/source-map-support@0.5.10 in a scratch node_modules reachable from that
+checkout. Generate diagnosticInformationMap.generated.ts with upstream's
+scripts/processDiagnosticMessages.mjs, then run from Adamic's root:
+
+```sh
+export CENSUS_TYPESCRIPT=/tmp/records-census-api/node_modules/typescript/lib/typescript.js
+node stage3/fixtures/records/count-inherited-keys.cjs /tmp/records-typescript /tmp/records-global-count > /tmp/records-global-enumerate.log 2>&1
+python3 stage3/fixtures/records/summarize-inherited-keys.py /tmp/records-global-count/raw.json > /tmp/records-global-summary.log 2>&1
+node stage3/fixtures/records/audit-inherited-keys.cjs /tmp/records-typescript > /tmp/records-global-audit.log 2>&1
+```
+
+Stock tsc reports zero diagnostics with these declarations. The audit separately
+parses every original source file and uses TypeScript's assignment-target API
+for read/write roles, rather than the census scanner's role function. It checks
+pinned source hashes against the original census, every source operation, exact
+census span identity, loop contexts reconstructed from parent pointers, global
+class totals, and source origins. Seven ledger mutants are caught: omitted
+element read, omitted helper call, omitted for-in context, omitted in enumeration,
+assignment target counted as a read, invented fixed classification, and erased
+user-input origin. These are count/audit mutants, not runtime compiler mutants.
+Logs are committed in logs/global-*.log.
 
 ## Limits
 
