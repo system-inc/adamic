@@ -132,3 +132,21 @@ lowering/verdict shortcut or empty native finding implementation was added here.
 The completed fifteen ports were rebased onto main f8013f0ba and re-greened
 before push 2bd4efb74: oracle 425.666s, bridge 66.168s. Main is still f8013f0ba.
 This status update changes no native implementation or harness.
+
+## Seventh set, after parking the analysis-dependent React claims
+
+Prior landing-ready work and the parked status are pushed at 58ecbd990.
+Fresh all-head selection on current main f8013f0ba found 18 unclaimed candidates
+among 197 ranked checker-dependent rules, after excluding integration-head ports
+and names claimed in 33 unique Markdown documents across 528 origin heads.
+The first three are:
+
+- react/jsx-fragments
+- react/jsx-no-constructed-context-values
+- react/jsx-no-undef
+
+Each has compiler 0 and repository 0. Their production Go files use syntax,
+parent/scope relationships and checker name resolution, with no dependency on
+native high-level IR, single-assignment construction or capture analysis. Whole
+production sources are read before implementation. The claim-selection evidence
+is wave-16-seventh-selection.json.gz. This update is pushed before rule code.
