@@ -2,6 +2,7 @@
 
 #include "adamic.h"
 #include "count.h"
+#include "slab_quarantine.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -212,7 +213,18 @@ static void deallocate(adamic_heap *heap) {
 		free(heap);
 		return;
 	}
+#if ADAMIC_SLAB_QUARANTINE
+	// Sanitized with slabs, a freed slot waits poisoned before it can be taken again, so a stale
+	// pointer can't read the next value made in it as its own; the slot it evicts is given back.
+	void *slot = heap;
+	uint32_t number = heap->slab - 1;
+	if (!adamic_slab_quarantine(&slot, &number, (chunks[number]->class + 1) * GRANULE)) {
+		return;
+	}
+	give(slot, number);
+#else
 	give(heap, heap->slab - 1);
+#endif
 }
 
 void *adamic_retain(void *value) {
