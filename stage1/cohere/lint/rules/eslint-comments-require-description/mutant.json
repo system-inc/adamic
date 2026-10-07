@@ -1,0 +1,5 @@
+{
+  "name": "undescribed directives ignored",
+  "from": "if(kind === '' || ignored.includes(kind)",
+  "to": "if(kind !== '' || ignored.includes(kind)"
+}
