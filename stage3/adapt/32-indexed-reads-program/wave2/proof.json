@@ -35,34 +35,10 @@
       "after_sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
       "before_CRLF": 3916,
       "after_CRLF": 3916
-    },
-    "program.ts": {
-      "before_sha256": "f7e3ff3d4c6e7b094832fd807a29022cb08b41d5cff0d498861435060b188e51",
-      "after_sha256": "b59b83b5e012d794fa83736bb4c77e06592a2a275b4d994f7b6040bbf7fcf5fd",
-      "before_CRLF": 5201,
-      "after_CRLF": 5201
-    },
-    "commandLineParser.ts": {
-      "before_sha256": "7d2bed352bb9351c15901144e2c87f3ef352e2428c84213976b9ccad1bc54e8e",
-      "after_sha256": "d9d4ab1667fa2d19584ccc67a38b2e7baf5553728b4b441f2cb34a774357785b",
-      "before_CRLF": 4300,
-      "after_CRLF": 4300
     }
   },
-  "verification": "PASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "verification": "PASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
   "idempotence": [
-    {
-      "file": "program.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 25
-    },
-    {
-      "file": "commandLineParser.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 56
-    },
     {
       "file": "binder.ts",
       "assertions": 0,
@@ -100,59 +76,8 @@
       "declined": 0
     }
   ],
-  "census_before": 120,
-  "census_after": 24,
+  "census_before": 45,
+  "census_after": 10,
   "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n",
-  "wave2_incremental_before": 14,
-  "wave3_incremental_before": 85,
-  "oracle": {
-    "tree": "/tmp/adapt32-after",
-    "nproc": 5,
-    "workers": 4,
-    "runners": "all",
-    "tests": null,
-    "node": "v24.19.0",
-    "phases": {
-      "install": {
-        "command": [
-          "npm",
-          "ci",
-          "--no-audit",
-          "--no-fund"
-        ],
-        "exit": 0,
-        "seconds": 4.981
-      },
-      "build": {
-        "command": [
-          "npm",
-          "run",
-          "build"
-        ],
-        "exit": 0,
-        "seconds": 19.321
-      },
-      "tests": {
-        "command": [
-          "npm",
-          "test",
-          "--",
-          "--workers=4",
-          "--lint=false",
-          "--no-colors"
-        ],
-        "exit": 0,
-        "seconds": 449.445
-      }
-    },
-    "status": "pass",
-    "counts": {
-      "passing": 106367,
-      "failing": 0,
-      "pending": 0
-    },
-    "baseline_diffs": [],
-    "wall_seconds": 473.805
-  },
-  "baseline_diff_bytes": 0
+  "wave2_incremental_before": 14
 }

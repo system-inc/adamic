@@ -3,7 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
-const files = ["binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
+const files = ["program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
@@ -35,7 +35,10 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
             ts.isParenthesizedExpression(parent.parent);
         const label = `${file}:${site.line}:${site.column}`;
         if (site.action === "decline") {
-            if (asserted || coalesced) throw new Error(`declined site changed: ${label}`);
+            if (site.existingDefault !== undefined) {
+                if (asserted || !coalesced || parent.right.getText(source) !== site.existingDefault) throw new Error(`existing default changed: ${label}`);
+            }
+            else if (asserted || coalesced) throw new Error(`declined site changed: ${label}`);
             declined++;
         }
         else if (site.action === "assert") {
