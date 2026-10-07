@@ -22,15 +22,18 @@ These fields apply to the source observations behind every prediction below.
 | 8 | 2,034.970 | 33.92 |
 | 10 | 1,656.950 | 27.62 |
 | 12 | 1,404.950 | 23.42 |
+| 13 | 1,308.010 | 21.80 |
 | 14 | 1,224.940 | 20.42 |
 | 15 | 1,152.940 | 19.22 |
 | 16 | 1,089.910 | 18.17 |
 
-Fifteen is the first passing tested count; sixteen has more margin. Instrument:
+Fifteen is the smallest passing count; sixteen has more margin. Counts up to twelve
+cannot fit the 15,120.390 seconds of known unit work into twenty minutes per shard,
+even before parent setup; thirteen and fourteen also fail in the actual plans. Instrument:
 `adamic-gate plan -count N`, using the regenerated timings and the current source.
 These are sums of recorded elapsed work plus repeated parent setup, not measured
 fleet wall times. Missing timings, compilation, discovery, vet and contention
-are not included. New integration and gate-tool tests have unknown weights;
+are not included. Ten new integration and gate-tool units have unknown weights;
 no production shards or new 58-minute plain reference were run on this box.
 The full per-shard predictions, including each shard's largest unit, are in
 `cmd/adamic-gate/evidence/replan-provisioned.json`.
