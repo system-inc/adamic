@@ -1,0 +1,4 @@
+import type { VariantSystemView } from './variant_view.a';
+export function HasVariant(system: VariantSystemView, root: string): boolean {
+    return system.variants.has(root);
+}

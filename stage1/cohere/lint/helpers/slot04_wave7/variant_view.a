@@ -1,0 +1,3 @@
+// Membership and kind are the only registration fields these three Go methods read.
+export type VariantSystemView = { readonly variants: ReadonlyMap<string,string> };
+export type ChildVariantView = { kind: string; root: readonly number[] };

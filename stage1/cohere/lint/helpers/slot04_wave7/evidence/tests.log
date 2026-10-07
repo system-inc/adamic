@@ -1,0 +1,46 @@
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 6828 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 3492 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 372 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 789516 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (9.06s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (0.85s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.59s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.68s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (5.14s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/has_variant.asystem.variants.has(root)
+    helpers_test.go:186: Node source compiling mutant caught at line 1: got "has false", Go "has true"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 1: got "has false", Go "has true"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 1: got "has false", Go "has true"
+=== RUN   TestStringsCompilingMutants/variant_kind.a??_'static'
+    helpers_test.go:186: Node source compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+=== RUN   TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static';
+    helpers_test.go:186: Node source compiling mutant caught at line 2: got "kind static", Go "kind "
+    helpers_test.go:186: sanitized native compiling mutant caught at line 2: got "kind static", Go "kind "
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 2: got "kind static", Go "kind "
+=== RUN   TestStringsCompilingMutants/variant_compounds_with.a===_'compound'
+    helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+=== RUN   TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent)
+    helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+--- PASS: TestStringsCompilingMutants (11.13s)
+    --- PASS: TestStringsCompilingMutants/has_variant.asystem.variants.has(root) (1.94s)
+    --- PASS: TestStringsCompilingMutants/variant_kind.a??_'static' (1.99s)
+    --- PASS: TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static'; (2.14s)
+    --- PASS: TestStringsCompilingMutants/variant_compounds_with.a===_'compound' (2.34s)
+    --- PASS: TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent) (1.93s)
+=== RUN   TestStringsConsumerCoverage
+    helpers_test.go:254: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave7	20.203s

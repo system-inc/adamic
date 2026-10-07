@@ -1,0 +1,4 @@
+import type { VariantSystemView } from './variant_view.a';
+export function VariantKind(system: VariantSystemView, root: string): string {
+    return system.variants.get(root) ?? 'static';
+}

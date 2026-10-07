@@ -1,0 +1,5 @@
+import type { VariantSystemView, ChildVariantView } from './variant_view.a';
+// Go intentionally ignores the child. Preserve its documented approximation.
+export function VariantCompoundsWith(system: VariantSystemView, parent: string, _child: ChildVariantView): boolean {
+    return system.variants.get(parent) === 'compound';
+}
