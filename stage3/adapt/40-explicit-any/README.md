@@ -1,6 +1,6 @@
 # Explicit any owner adaptation (partial)
 
-Current progress: 68 tokens removed, 142 left. See [PROGRESS.md](PROGRESS.md)
+Current progress: 69 tokens removed, 141 left. The 36 phantom brand sites now use void and isArray takes unknown under the October 7 ruling; see [BRANDS-VOID.md](BRANDS-VOID.md). See [PROGRESS.md](PROGRESS.md)
 for the combined 10+30+40 proof and reproduction. The section below records
 the original three-owner proof and its historical commands.
 

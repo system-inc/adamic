@@ -1,6 +1,8 @@
 # Type-only class applications
 
-Brands: 36 owner types changed from any to undefined, preserving marker keys
+The original brand proof below is historical. October 7 revises its 36 replacements to void under #bw3xg7c; see [BRANDS-VOID.md](BRANDS-VOID.md) for current composition, searches, build mutant and lane evidence.
+
+Historical brands: 36 owner types changed from any to undefined, preserving marker keys
 and optionality. Required markers remain required; the optional qualified-name
 marker remains optional. Branded primitives and AST construction use nominal
 assertions or staged constructors already present in upstream, rather than
@@ -125,3 +127,13 @@ contracts have not yet received the owner, consumer and oracle proof. In
 particular, timers need handle/argument generics propagated across owners;
 constructor/copy/callback classes need correlation and variance work. This is
 unfinished proof work, not a claim that those type-only edits are impossible.
+
+
+## Internal array predicate input, October 7
+
+Site 58, already classified as Generic array predicate input, now uses unknown
+in `isArray(value: unknown): value is readonly unknown[]`. The body is unchanged;
+all compiler callers are checked by the stock compiler. This follows the
+host-blockers a85a9cb1 proof and removes one more any token: 69 of 210 removed,
+141 remaining. The function is @internal and contributes no public API line.
+Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
