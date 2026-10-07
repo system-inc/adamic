@@ -1,0 +1,6 @@
+{
+  "name": "guard-for-in-semantic-mutant",
+  "file": "rule.a",
+  "from": "if(!this.guarded(body))",
+  "to": "if(this.guarded(body))"
+}
