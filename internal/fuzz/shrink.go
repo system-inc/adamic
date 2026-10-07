@@ -9,16 +9,17 @@ import (
 )
 
 // Shrink makes a failing program as small as it can while it still fails the same way (the same
-// Key), by delta debugging: whole runs of statements removed, a compound statement replaced by what
+// verdict and the same Key, so a Crash stays that crash and never drifts to a plain difference), by
+// delta debugging: whole runs of statements removed, a compound statement replaced by what
 // its blocks hold, and an expression replaced by a literal of its type or by one of its own children
 // of the same type. It repeats until nothing more goes, or its budget of tries is spent.
 //
 // Every candidate is a whole program run three ways, so a candidate the checker refuses, or one
 // that now fails some other way, is simply not kept. try runs one candidate at a time.
-func Shrink(program *Program, key string, try func(*Program) Outcome) *Program {
+func Shrink(program *Program, verdict Verdict, key string, try func(*Program) Outcome) *Program {
 	reduced := reduce(&programTree{program: program.Clone()}, func(candidate Reducible) bool {
 		outcome := try(candidate.(*programTree).program)
-		return outcome.Verdict == Finding && outcome.Key == key
+		return outcome.Verdict == verdict && outcome.Key == key
 	}, 1, 3000)
 	return reduced.(*programTree).program
 }
