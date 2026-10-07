@@ -161,3 +161,12 @@ Skipped the three apparent colon-delimited entries already reserved by wave 01:
 nexus/correctness-no-implicit-return, @typescript-eslint/no-deprecated and
 no-else-return. Full selection evidence is in the owned constructed-context
 validation/remaining-selection.json.gz. Shared typed registration remains blocked.
+
+Current-main landing: clean rebase onto origin/area/stage1-lint b84a9d931,
+including main c7991b900. Validated source 3dcf3c918db0695bd00551d7a130024245877b16.
+All twelve source analyses green again: 1,132 controls/870 findings, both corpora,
+sanitisers, all mutants and released handles. Shared typed registration remains
+blocked; older HIR claims remain parked. The full gate and its seventeen mandatory
+external-input checks were not run or claimed green. Fresh 637-ref audit finds
+no unclaimed rule; no new claims. See the owned constructed-context
+LANDING_C7991B900_REPORT.md and validation/landing-c7991b900 evidence.
