@@ -1,0 +1,90 @@
+=== RUN   TestSlot01Wave11Node
+    slot01_wave11_test.go:173: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 node tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:173: 783668 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:173: source-only collapse_clone_node.a mutant caught at output line 43: got "true:false:true", Go "true:true:true"; not native mutant credit
+    slot01_wave11_test.go:173: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Node (4.09s)
+=== RUN   TestSlot01Wave11Context
+    slot01_wave11_test.go:178: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 node tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:178: 783668 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:178: source-only collapse_clone_node.a mutant caught at output line 143: got "3", Go "2"; not native mutant credit
+    slot01_wave11_test.go:178: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Context (3.94s)
+=== RUN   TestSlot01Wave11Children
+    slot01_wave11_test.go:183: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 node tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:183: 783668 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:183: source-only collapse_clone_node.a mutant caught at output line 33: got "1", Go "-2"; not native mutant credit
+    slot01_wave11_test.go:183: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Children (3.71s)
+=== RUN   TestSlot01Wave11List
+    slot01_wave11_test.go:188: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 list tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:188: 1159052 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:188: source-only collapse_clone_nodes.a mutant caught at output line 10: got "0", Go "-2"; not native mutant credit
+    slot01_wave11_test.go:188: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11List (4.70s)
+=== RUN   TestSlot01Wave11ListNil
+    slot01_wave11_test.go:193: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 list tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:193: 1159052 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:193: source-only collapse_clone_nodes.a mutant caught at output line 1: got "false:0:0", Go "true:0:0"; not native mutant credit
+    slot01_wave11_test.go:193: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11ListNil (5.50s)
+=== RUN   TestSlot01Wave11Remove
+    slot01_wave11_test.go:198: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 remove tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:198: 566371 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:198: source-only collapse_remove_nodes.a mutant caught at output line 719: got "false:0:2", Go "false:2:2"; not native mutant credit
+    slot01_wave11_test.go:198: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Remove (2.90s)
+=== RUN   TestSlot01Wave11RemoveIdentity
+    slot01_wave11_test.go:203: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 remove tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:203: 566371 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:203: source-only collapse_remove_nodes.a mutant caught at output line 1: got "false:0:0", Go "true:0:0"; not native mutant credit
+    slot01_wave11_test.go:203: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11RemoveIdentity (2.99s)
+=== RUN   TestSlot01Wave11RemoveEmpty
+    slot01_wave11_test.go:208: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 remove tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:208: 566371 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:208: source-only collapse_remove_nodes.a mutant caught at output line 453: got "false:0:2", Go "false:2:2"; not native mutant credit
+    slot01_wave11_test.go:208: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11RemoveEmpty (3.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	30.905s

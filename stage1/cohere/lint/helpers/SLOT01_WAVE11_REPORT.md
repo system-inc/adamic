@@ -233,3 +233,9 @@ A four-line captured allocator plus nested number-array reproducer was refused b
 Rebased without conflicts onto the user-requested lint area tip 7076b4ebe16a296129d17f04fe0e14029d793e92. Incoming shard execution and required-input guards are retained without shared edits. `go test ./stage1/cohere/lint/helpers -run '^TestSlot01Wave11' -count=1 -v -timeout=20m` finished in 33.154s: eight source-only mutant catches after Go/Node parity, then eight explicit native ownership-blocked skips. Package vet passed. Logs: evidence/slot01-wave11/7076-{oracle,vet}.log.
 
 The four-line captured allocator reproducer was already provided inline to Ahra, with its exact adamic/cycle-capable refusal. It still blocks cloneNode allocation and therefore cloneNodes and the shared removeNodes driver. Native tree parity, compiled tree mutants, shard checks and required-input gate remain unverified; no green gate, new claim or readiness credit is asserted.
+
+## Runtime and ports area refresh on db2ecc00
+
+Rebased without conflicts onto origin/area/stage1-lint db2ecc00447f9ebe8adecb190f71ac222e5db860. Incoming runtime, developer-tool and rule-port changes are retained without shared edits. The inherited compiler, helper and cohere fixture inputs compare unchanged to 4e0bfda5, whose full helper evidence remains 4e-oracle.log (612.473s, 76 passes and eight blocked skips).
+
+`go test ./stage1/cohere/lint/helpers -run '^TestSlot01Wave11' -count=1 -v -timeout=20m` finished in 30.905s: all eight source-only mutants caught after Go/Node parity, then eight explicit ownership-blocked skips. Package vet passed. Logs: evidence/slot01-wave11/db2-{oracle,vet}.log. The captured allocator refusal already reproduced inline persists; native tree parity and compiled mutants remain unverified. No full or required-input gate is asserted green, no check was relaxed, and no claim or readiness credit was added.
