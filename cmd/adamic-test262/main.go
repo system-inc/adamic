@@ -46,6 +46,7 @@ func run(arguments []string) int {
 	test262 := flags.String("test262", "", "test262 checkout (a clone at a pinned commit, not part of this repo)")
 	root := flags.String("root", ".", "Adamic checkout whose cmd/adamic and runtime are under test")
 	work := flags.String("work", "", "scratch directory (default: a directory under the system temp)")
+	profilePath := flags.String("profile", "", "write phase durations, cache hits and worker timeline to this JSON file")
 	asJSON := flags.Bool("json", false, "write the report as JSON on stdout; the table goes to stderr")
 	classifyOnly := flags.Bool("classify-only", false, "classify every test and do not compile or run")
 	adapt := flags.Bool("adapt", false, "rewrite test262 style in memory (var to let, callback params, strict equality, Test262Error) and count each rewrite")
@@ -77,10 +78,19 @@ func run(arguments []string) int {
 			return 1
 		}
 	}
+	var profile *runProfile
+	if *profilePath != "" {
+		profile = newRunProfile()
+		defer func() {
+			if err := profile.write(*profilePath); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
+		}()
+	}
 	var prepared *engine
 	var err error
 	if !*classifyOnly {
-		prepared, err = prepare(*root, *test262, workDirectory)
+		prepared, err = prepareProfile(*root, *test262, workDirectory, profile)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			return 1

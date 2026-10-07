@@ -38,9 +38,16 @@ type engine struct {
 	compiler         *compilerWorker
 	inProcess        bool
 	compilerIdentity string
+	profile          *runProfile
+	worker           int
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
+	return prepareProfile(root, test262, work, nil)
+}
+
+func prepareProfile(root string, test262 string, work string, profile *runProfile) (*engine, error) {
+	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
 		return nil, err
 	}
@@ -50,6 +57,8 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	if output, err := build.CombinedOutput(); err != nil {
 		return nil, fmt.Errorf("building adamic: %w\n%s", err, output)
 	}
+	done()
+	done = profile.preparing("runtime-library")
 	include := filepath.Join(root, "internal", "native", "runtime")
 	// Sanitizers, as the oracle compiles: a native memory bug is a crash, not a pass. Leaks are not
 	// compared to Node (the process exits either way), so leak detection stays off at run time.
@@ -58,6 +67,8 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	if err != nil {
 		return nil, err
 	}
+	done()
+	done = profile.preparing("cache-context")
 	compilerBytes, err := os.ReadFile(adamic)
 	if err != nil {
 		return nil, err
@@ -66,7 +77,9 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	if err != nil {
 		return nil, err
 	}
+	done()
 	return &engine{
+		profile:          profile,
 		test262:          test262,
 		work:             work,
 		adamic:           adamic,
@@ -136,6 +149,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	locals := make([]engine, jobs)
 	for worker := 0; worker < jobs; worker++ {
 		local := *e
+		local.worker = worker
 		// Preserve the serial artifact path when there is just one worker.
 		if jobs > 1 {
 			local.work = filepath.Join(e.work, fmt.Sprintf("worker-%d", worker))
@@ -191,6 +205,8 @@ func (e *engine) programDirectory(test classified) string {
 }
 
 func (e *engine) attempt(test classified) result {
+	profile := e.profile.begin(test.Path, e.worker)
+	defer profile.finish()
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
 	directory := e.programDirectory(test)
 	if err := os.MkdirAll(directory, 0700); err != nil {
@@ -238,7 +254,7 @@ func (e *engine) attempt(test classified) result {
 		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m", "16MiB")
 	}
 	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, compilerCommand, e.context)
-	lowered := cache.observe(compilerKey, func() (execution, bool) {
+	lowered := profile.observation("compile", cache, compilerKey, func() (execution, bool) {
 		var result execution
 		if e.compiler != nil {
 			result = e.compiler.compile(typescript)
@@ -277,14 +293,14 @@ func (e *engine) attempt(test classified) result {
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
 	// graph is keyed, all their observations run fresh.
-	nativeRun := cache.observe(key, func() (execution, bool) {
-		linked := runCommand(2*time.Minute, nil, "clang", arguments...)
+	nativeRun := profile.observation("native-observation", cache, key, func() (execution, bool) {
+		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, "clang", arguments...) })
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
 			return linked, false
 		}
 		defer os.Remove(binary)
-		return runCommand(15*time.Second, nativeEnvironment, binary), true
+		return profile.command("native", func() execution { return runCommand(15*time.Second, nativeEnvironment, binary) }), true
 	})
 	// A link failure is a compiler crash rather than a native execution verdict.
 	// Only successful links publish observations, so a hit always holds a real execution.
@@ -296,7 +312,7 @@ func (e *engine) attempt(test classified) result {
 	}
 	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s", fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.context)
-	nodeRun := cache.observe(nodeKey, func() (execution, bool) {
+	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
 		return runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
