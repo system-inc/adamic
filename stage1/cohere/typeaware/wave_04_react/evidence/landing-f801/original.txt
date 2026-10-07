@@ -1,0 +1,14 @@
+=== RUN   TestWave04AgreementAndMutants
+    wave_04_test.go:122: controls: 17166 identical finding bytes; findings 39
+    wave_04_test.go:130: controls-asan: 17166 identical finding bytes; findings 39
+    wave_04_test.go:141: casing mutant: exit 0, empty stderr, Go byte oracle catches byte 5768
+    wave_04_test.go:141: matching mutant: exit 0, empty stderr, Go byte oracle catches byte 123
+    wave_04_test.go:141: void mutant: exit 0, empty stderr, Go byte oracle catches byte 1592
+    wave_04_test.go:151: repository: 23598 identical finding bytes; findings 14
+    wave_04_test.go:152: repository-asan: 23598 identical finding bytes; findings 14
+    wave_04_test.go:151: compiler: 77043 identical finding bytes; findings 200
+    wave_04_test.go:152: compiler-asan: 77043 identical finding bytes; findings 200
+    wave_04_test.go:169: released handle: panic 70; registry mutant: exit 0, caught by required panic
+--- PASS: TestWave04AgreementAndMutants (219.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	219.209s

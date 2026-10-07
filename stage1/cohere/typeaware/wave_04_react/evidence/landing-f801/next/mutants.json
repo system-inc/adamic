@@ -1,0 +1,20 @@
+[
+  {
+    "rule": "no-uncleared-race-timeout",
+    "first_differing_byte": 81,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "no-process-exit-after-output",
+    "first_differing_byte": 79,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "rule": "require-blocking-standard-streams",
+    "first_differing_byte": 9245,
+    "exit": 0,
+    "stderr_bytes": 0
+  }
+]

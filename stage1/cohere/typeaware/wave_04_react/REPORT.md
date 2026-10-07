@@ -424,3 +424,46 @@ HIR module still explicitly identifies itself as validator input requiring a
 separate source adapter. Numeric node-local execution also remains blocked by
 the shared parser API. None of these manifests claims full source lint parity
 or a dispatch speedup. No further rules were claimed.
+
+## Landing on main f8013f0b
+
+Rebased all 23 wave-04 patches onto `f8013f0b` without conflicts. Range-diff
+records every owned patch unchanged. Tested code tip is `072cd83b`; this
+report/evidence commit follows. Only wave-04 is published, with an exact lease
+on old remote `ade4ce49`. No main or area branch is written.
+
+Fresh stage 0: `/workspace/typeaware-wave-04-landing-f801/adamic`.
+`TestWave04AgreementAndMutants`, with both frozen manifests and TypeScript
+source configured, PASS in 219.209 s. Controls: 39 findings / 17,166 bytes;
+repository: 14 / 23,598; compiler: 200 / 77,043. All native and sanitizer bytes
+match Go. Casing end+1, matching message and void end+1 mutants compiled,
+exited zero with empty stderr, and were caught only by comparison at bytes
+5768, 123 and 1592. Released handles panic 70; registry-retention mutant exits
+zero and fails the required panic assertion.
+
+Continuation `validate.py`, pointed at the fresh compiler with the same two
+corpora and extracted process/blocking controls: PASS normal and sanitizer,
+full findings/fixes/suggestions protocol, three mutants and released handles.
+Timer end+1, process end+1 and blocking end+1 mutants compile and exit zero,
+caught only at bytes 81, 79 and 9245. Registry-retention mutant is caught by
+the missing required panic. Native compiler 2.130260 s / Go 0.387003 s;
+repository native 0.318505 s / Go 0.127645 s. These single-run timings include
+concurrent validation work; native remains slower.
+
+All partial validators also ran with fresh `--adamic`: reporting PASS (six
+report/refusal mutants); refs kernel PASS 1,297 records / 55,984 bytes (nine
+comparison mutants); environment PASS 451 / 9,943 (six); predicates PASS
+180 / 3,136 (four); listeners PASS 426 bytes (nine numeric metadata mutants).
+Kernel and reporting runs include Go/native/sanitizer/source Node/emitted JS.
+Whole listener-module JS emission retains the documented checker-link blocker.
+`validate_rule_json.py` PASS nine manifests and nine in-memory +1 mutants.
+Checker package tests, filtered `TestTheOracleCatchesOneByte`, and scoped vet
+all PASS. Logs, backend streams and exact rebase provenance are retained under
+`evidence/landing-f801`; reproduction commands are the existing validators
+with that output prefix and fresh compiler path.
+
+No full repository gate was run. No new claims. Purity, refs and manual
+memoization still refuse source analysis: source-to-HIR/SSA/capture/reactive
+pipelines remain incomplete. Numeric manifests are present, but the shared
+parser still exposes string kinds and node-local dispatch remains pending.
+This landing does not claim complete React corpus parity or a speedup.

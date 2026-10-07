@@ -1,0 +1,122 @@
+[
+  {
+    "label": "go",
+    "exit": 0,
+    "stdout_bytes": 152,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-normal",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-normal",
+    "exit": 0,
+    "stdout_bytes": 9943,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-asan",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-asan",
+    "exit": 0,
+    "stdout_bytes": 9943,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "node",
+    "exit": 0,
+    "stdout_bytes": 9943,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emit",
+    "exit": 0,
+    "stdout_bytes": 61611,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "js",
+    "exit": 0,
+    "stdout_bytes": 9943,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "alias-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "alias-run",
+    "exit": 0,
+    "stdout_bytes": 9773,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "declaration-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "declaration-run",
+    "exit": 0,
+    "stdout_bytes": 9842,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "changed-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "changed-run",
+    "exit": 0,
+    "stdout_bytes": 9952,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "initial-none-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "initial-none-run",
+    "exit": 0,
+    "stdout_bytes": 9942,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "widen-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "widen-run",
+    "exit": 0,
+    "stdout_bytes": 9858,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "access-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "access-run",
+    "exit": 0,
+    "stdout_bytes": 9965,
+    "stderr_bytes": 0
+  }
+]
