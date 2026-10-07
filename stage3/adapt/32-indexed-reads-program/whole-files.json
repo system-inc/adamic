@@ -1,6 +1,37 @@
 {
   "roots": 78,
   "counts_before": {
+    "programDiagnostics.ts": {
+      "TS2345": 4,
+      "TS2322": 2,
+      "TS2412": 1
+    },
+    "semver.ts": {
+      "TS2345": 12,
+      "TS18048": 3
+    },
+    "symbolWalker.ts": {},
+    "tracing.ts": {
+      "TS2322": 1,
+      "TS2532": 2,
+      "TS1294": 2,
+      "TS2379": 2,
+      "TS2339": 5,
+      "TS18048": 15,
+      "TS2345": 2,
+      "TS2591": 4,
+      "TS18046": 1
+    },
+    "binder.ts": {
+      "TS2412": 4,
+      "TS7029": 7,
+      "TS2322": 1,
+      "TS2532": 1,
+      "TS18048": 1,
+      "TS7030": 5,
+      "TS1294": 2,
+      "TS2345": 1
+    },
     "program.ts": {
       "TS18048": 13,
       "TS2339": 6,
@@ -30,19 +61,47 @@
       "TS2379": 1,
       "TS7029": 1
     },
-    "binder.ts": {
-      "TS2412": 4,
-      "TS7029": 7,
+    "moduleNameResolver.ts": {
+      "TS2375": 5,
+      "TS7030": 21,
+      "TS1294": 2,
+      "TS2412": 3,
+      "TS2322": 4,
+      "TS2345": 3
+    },
+    "moduleSpecifiers.ts": {
+      "TS1294": 2,
       "TS7030": 5,
-      "TS1294": 2
+      "TS2345": 1,
+      "TS2375": 1,
+      "TS2322": 1,
+      "TS2488": 1,
+      "TS2532": 1
+    },
+    "sys.ts": {
+      "TS7029": 1,
+      "TS2375": 1,
+      "TS18046": 2,
+      "TS2591": 44,
+      "TS2304": 6,
+      "TS2345": 1,
+      "TS2307": 1,
+      "TS2322": 1,
+      "TS7006": 1,
+      "TS7031": 1,
+      "TS1294": 3
+    },
+    "performance.ts": {}
+  },
+  "counts_after": {
+    "programDiagnostics.ts": {
+      "TS2412": 1
     },
     "semver.ts": {
       "TS2345": 9,
       "TS18048": 1
     },
-    "programDiagnostics.ts": {
-      "TS2412": 1
-    },
+    "symbolWalker.ts": {},
     "tracing.ts": {
       "TS2412": 1,
       "TS1294": 2,
@@ -50,10 +109,12 @@
       "TS2591": 4,
       "TS18046": 1
     },
-    "symbolWalker.ts": {},
-    "performance.ts": {}
-  },
-  "counts_after": {
+    "binder.ts": {
+      "TS2412": 4,
+      "TS7029": 7,
+      "TS7030": 5,
+      "TS1294": 2
+    },
     "program.ts": {
       "TS2375": 10,
       "TS1294": 2,
@@ -75,47 +136,60 @@
       "TS2379": 1,
       "TS7029": 1
     },
-    "binder.ts": {
-      "TS2412": 4,
-      "TS7029": 7,
-      "TS7030": 5,
-      "TS1294": 2
-    },
-    "semver.ts": {
-      "TS2345": 9,
-      "TS18048": 1
-    },
-    "programDiagnostics.ts": {
-      "TS2412": 1
-    },
-    "tracing.ts": {
-      "TS2412": 1,
+    "moduleNameResolver.ts": {
+      "TS2375": 5,
+      "TS7030": 21,
       "TS1294": 2,
-      "TS2379": 2,
-      "TS2591": 4,
-      "TS18046": 1
+      "TS2412": 3,
+      "TS2322": 4,
+      "TS2345": 3
     },
-    "symbolWalker.ts": {},
+    "moduleSpecifiers.ts": {
+      "TS1294": 2,
+      "TS7030": 5,
+      "TS2345": 1,
+      "TS2375": 1,
+      "TS2322": 1,
+      "TS2488": 1
+    },
+    "sys.ts": {
+      "TS7029": 1,
+      "TS2375": 1,
+      "TS18046": 2,
+      "TS2591": 44,
+      "TS2304": 6,
+      "TS2345": 1,
+      "TS2322": 1,
+      "TS7006": 1,
+      "TS7031": 1,
+      "TS1294": 3
+    },
     "performance.ts": {}
   },
   "total_before": {
+    "programDiagnostics.ts": 7,
+    "semver.ts": 15,
+    "symbolWalker.ts": 0,
+    "tracing.ts": 34,
+    "binder.ts": 22,
     "program.ts": 90,
     "commandLineParser.ts": 40,
-    "binder.ts": 18,
-    "semver.ts": 10,
-    "programDiagnostics.ts": 1,
-    "tracing.ts": 10,
-    "symbolWalker.ts": 0,
+    "moduleNameResolver.ts": 38,
+    "moduleSpecifiers.ts": 12,
+    "sys.ts": 62,
     "performance.ts": 0
   },
   "total_after": {
+    "programDiagnostics.ts": 1,
+    "semver.ts": 10,
+    "symbolWalker.ts": 0,
+    "tracing.ts": 10,
+    "binder.ts": 18,
     "program.ts": 38,
     "commandLineParser.ts": 25,
-    "binder.ts": 18,
-    "semver.ts": 10,
-    "programDiagnostics.ts": 1,
-    "tracing.ts": 10,
-    "symbolWalker.ts": 0,
+    "moduleNameResolver.ts": 38,
+    "moduleSpecifiers.ts": 11,
+    "sys.ts": 61,
     "performance.ts": 0
   },
   "zero_files": [

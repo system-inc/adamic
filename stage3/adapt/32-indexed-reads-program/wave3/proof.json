@@ -47,46 +47,10 @@
       "after_sha256": "d9d4ab1667fa2d19584ccc67a38b2e7baf5553728b4b441f2cb34a774357785b",
       "before_CRLF": 4300,
       "after_CRLF": 4300
-    },
-    "moduleNameResolver.ts": {
-      "before_sha256": "d6d4858b027710e59bb40d91c82214e0d3054174ee46acafd546f25e2124dd1e",
-      "after_sha256": "d6d4858b027710e59bb40d91c82214e0d3054174ee46acafd546f25e2124dd1e",
-      "before_CRLF": 3428,
-      "after_CRLF": 3428
-    },
-    "moduleSpecifiers.ts": {
-      "before_sha256": "2895fc7c0249251b646fe380bbe567d700d07873372023be1dba035398760e83",
-      "after_sha256": "45e82ed9aaecbd285d408e3cff980963bd8ea4753ba18eee1447534b590c7567",
-      "before_CRLF": 1470,
-      "after_CRLF": 1470
-    },
-    "sys.ts": {
-      "before_sha256": "66fffbf6c81870ede587c45e24b5e2ff0d76213a500ad30859cc01df88084e60",
-      "after_sha256": "fff26242d3adbdc6107230f0e61f555b4394104e3d1db05c5ef89a6ca2ebce26",
-      "before_CRLF": 1981,
-      "after_CRLF": 1981
     }
   },
-  "verification": "PASS moduleNameResolver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleSpecifiers.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sys.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "verification": "PASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
   "idempotence": [
-    {
-      "file": "moduleNameResolver.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 17
-    },
-    {
-      "file": "moduleSpecifiers.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 11
-    },
-    {
-      "file": "sys.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 27
-    },
     {
       "file": "program.ts",
       "assertions": 0,
@@ -136,12 +100,11 @@
       "declined": 0
     }
   ],
-  "census_before": 132,
-  "census_after": 35,
+  "census_before": 120,
+  "census_after": 24,
   "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n",
   "wave2_incremental_before": 14,
   "wave3_incremental_before": 85,
-  "wave4_incremental_before": 36,
   "oracle": {
     "tree": "/tmp/adapt32-after",
     "nproc": 5,
@@ -158,7 +121,7 @@
           "--no-fund"
         ],
         "exit": 0,
-        "seconds": 3.686
+        "seconds": 4.981
       },
       "build": {
         "command": [
@@ -167,7 +130,7 @@
           "build"
         ],
         "exit": 0,
-        "seconds": 7.822
+        "seconds": 19.321
       },
       "tests": {
         "command": [
@@ -179,7 +142,7 @@
           "--no-colors"
         ],
         "exit": 0,
-        "seconds": 334.644
+        "seconds": 449.445
       }
     },
     "status": "pass",
@@ -189,7 +152,7 @@
       "pending": 0
     },
     "baseline_diffs": [],
-    "wall_seconds": 346.217
+    "wall_seconds": 473.805
   },
   "baseline_diff_bytes": 0
 }

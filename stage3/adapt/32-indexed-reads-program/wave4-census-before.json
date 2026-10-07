@@ -18,7 +18,7 @@
     "moduleSpecifiers.ts": {
       "TS2345": 1,
       "TS18048": 0,
-      "TS2532": 0,
+      "TS2532": 1,
       "TS2322": 1,
       "TS2538": 0
     },
@@ -86,7 +86,7 @@
       "TS2538": 0
     }
   },
-  "total": 35,
+  "total": 36,
   "diagnostics": [
     "src/compiler/commandLineParser.ts:1874:96: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
     "src/compiler/commandLineParser.ts:2077:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
@@ -105,6 +105,7 @@
     "src/compiler/moduleNameResolver.ts:648:5: error TS2322: Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
     "src/compiler/moduleSpecifiers.ts:1411:38: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'never'.",
     "src/compiler/moduleSpecifiers.ts:349:5: error TS2322: Type '[\"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, readonly string[] | undefined, SourceFile, readonly ModulePath[] | undefined, ModuleSpecifierCache | undefined]' is not assignable to type 'readonly [kind?: \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, specifiers?: readonly string[], moduleFile?: SourceFile, modulePaths?: readonly ModulePath[], cache?: ModuleSpecifierCache]'.\n  Type at position 1 in source is not compatible with type at position 1 in target.\n    Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]'.\n      Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "src/compiler/moduleSpecifiers.ts:928:35: error TS2532: Object is possibly 'undefined'.",
     "src/compiler/program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
     "src/compiler/program.ts:4158:160: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | number'.\n  Type 'undefined' is not assignable to type 'string | number'.",
     "src/compiler/program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
