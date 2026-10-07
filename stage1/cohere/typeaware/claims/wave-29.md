@@ -162,3 +162,12 @@ with main 39638d9e2 an ancestor. All available owned profiles, kernels,
 mutants, sanitizers, bridge and focused inherited runtime checks re-green.
 Remaining checker/source, React analysis and configured regex blockers persist.
 No new claim. See [area report](../wave-29-fourth/AREA_LANDING_REPORT.md).
+
+## Registry-only integration landing
+
+All owned commits rebased onto b46914832, containing main c7991b900.
+Available owned profiles, options, kernels, mutants and sanitizer streams re-green.
+Shared decoded-options mutant test also passes with the guard unchanged.
+All origin heads fetched explicitly; no unclaimed candidate remains among 197
+ranked rules. Existing source/checker, analysis and regex gaps remain.
+See [landing report](../wave-29-fourth/B469_LANDING_REPORT.md).
