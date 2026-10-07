@@ -1,0 +1,41 @@
+{
+  "branches": {
+    "origin/codex/lint-helpers": "95100eb440b47f3f18e960c6f5b49cadf0dc1d9d",
+    "origin/codex/lint-helpers-01": "bb5130172b64dc1c4aa039a618d6277e12720ced",
+    "origin/codex/lint-helpers-02": "cc54b05517821c1c898b3cee34b8537ae24d7cab",
+    "origin/codex/lint-helpers-03": "e4b23dd4bf2819b38d7d1249a35b75ad26a888f3",
+    "origin/codex/lint-helpers-04": "67ba09421792cbf26da9af6850cfdcbdc39f06d1",
+    "origin/codex/lint-helpers-05": "2aa008767df4f6ff6b8c2eba54a795bd03c76d7b",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-03": "5bfbd34e23f21854b3bbb2e2997d743a47d1d583",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-14": "7d7a1dcc7f43d1c4a3e0af096f7d599486abfe12",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-02": "dfa82309880a8da955a494b11121e37bc5c8e1aa",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-04": "e3d73ccd88c8db1dd75ea0168f81467259bbe8c2",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-06": "6f2aff526107895a267896fdcbf182cd67c3c7a6",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-09": "b5cfa1246f1093cd3e55eeaa8870e7913b0ea782",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-10": "4528670c71c1d807076c33482869bec90c38a049",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-11": "ae46c745090c3065fe32c9a1bae48aca70bd8e96",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-15": "739c5677fc3fc686f451bfb2974066fcc93e6837",
+    "origin/codex/lint-helpers-from-lint-wave1-01": "a3e8d8b9e0cf1a9b8c3a51201abcb526d6b86050",
+    "origin/codex/lint-helpers-from-lint-wave1-05": "fcea688aac8326d98ca8567e3ffcc6b0dcf0b46a",
+    "origin/codex/lint-helpers-from-lint-wave1-08": "a055d8d1c6a8589edf7af8cac0420beff4b5a24b",
+    "origin/codex/lint-helpers-from-lint-wave1-12": "876616bf89a7019967b817bf135cafb66cd08a86",
+    "origin/codex/lint-helpers-from-lint-wave1-13": "c88a20178b1501acf6f971ce0377c10c8d32588e"
+  },
+  "references": {
+    "pushJump": [
+      "origin/codex/lint-helpers-03:stage1/cohere/lint/helpers/claims/03.md",
+      "origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md"
+    ],
+    "popJump": [
+      "origin/codex/lint-helpers-03:stage1/cohere/lint/helpers/claims/03.md",
+      "origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md"
+    ],
+    "makeUnreachable": [
+      "origin/codex/lint-helpers-03:stage1/cohere/lint/helpers/claims/03.md"
+    ]
+  },
+  "earliest_owner": "03",
+  "original_claim": "e4b23dd4 at 06:00:46 UTC",
+  "later_duplicate": "85af6690 at 06:02:56 UTC",
+  "slot05_duplicate_withdrawn": true
+}
