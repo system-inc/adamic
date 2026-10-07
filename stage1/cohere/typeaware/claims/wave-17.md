@@ -215,3 +215,26 @@ matcher now uses shared regex row react/boolean_prop_naming.go:621; the final
 fifth-batch oracle passes in 171.661s and a literal mutant is caught at byte
 1134. No new claim; parked scopes remain explicit.
 Evidence: [third landing report](../WAVE_17_LANDING3_REPORT.md).
+
+## Sixth batch claim
+
+The existing work and parked scopes are pushed at fdbab035, on current main
+c01907a7. A fresh origin fetch confirms both tips unchanged. The remaining
+React candidates are evaluated individually rather than categorically excluded:
+these production implementations need AST/component/binding helpers, not the
+native high-level IR, single-assignment or capture-analysis modules parked by
+#dnv6f2c. The earlier non-React-only stopping interpretation was too broad.
+
+The next three unported/unclaimed entries are:
+
+- `react/no-danger-with-children` (global rank 185, 0 findings)
+- `react/no-multi-comp` (global rank 186, 0 findings)
+- `react/no-namespace` (global rank 187, 0 findings)
+
+The refreshed all-origin Markdown claim scan and source scan on main and
+codex/tsgo-c-library have no claim or source hit for these three. This claim is
+pushed before implementation. New handlers take their handed numeric-kind node
+and declare numeric kinds in rule.json. Shared harness ab70f38d4 is visible on
+origin/lint-rules/harness but is not yet on main; any production-integration gap
+will be named separately from native decision validation. No shared registration,
+parser, harness or compiler file will be edited for this batch.
