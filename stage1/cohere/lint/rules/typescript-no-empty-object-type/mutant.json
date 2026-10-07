@@ -1,0 +1,5 @@
+{
+  "name": "empty interfaces permitted by default",
+  "from": "read('allowinterfaces', 'never')",
+  "to": "read('allowinterfaces', 'always')"
+}
