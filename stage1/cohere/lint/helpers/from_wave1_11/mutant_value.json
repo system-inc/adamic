@@ -1,0 +1,6 @@
+{
+  "name": "function_closing_parenthesis_omitted",
+  "file": "tailwind_value_to_css.a",
+  "from": "valueToCss(node.nodes) + ')'",
+  "to": "valueToCss(node.nodes) + ''"
+}

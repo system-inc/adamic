@@ -1,0 +1,15 @@
+package tailwind
+import("os";"path/filepath";"testing";rule_testing "github.com/system-inc/cohere/internal/lint/testing")
+func TestWave11CanonicalValueProbe(t *testing.T){
+ result:=runCanonicalFixture(t,"Component.tsx",`const element = <div className="px-[calc(1px+2px)] py-[calc(1px+2px)]" />;`)
+ rule_testing.ExpectFindings(t,result,"canonicalCollapse")
+}
+func TestWave11ShorthandValueProbe(t *testing.T){
+ packageRoot:=classOrderFixturePackageRoot();if packageRoot==""{t.Fatal("missing Tailwind package")}
+ result:=rule_testing.RunTypedFilesWithSetup(t,EnforceShorthandClasses,map[string]string{
+ "Component.tsx":`const element = <div className="ps-[calc(1px+2px)] pe-[calc(1px+2px)]" />;`,
+ classOrderFixtureStylesheetPath:classOrderFixtureStylesheet},"Component.tsx",func(root string){
+ modules:=filepath.Join(root,"node_modules");if err:=os.MkdirAll(modules,0755);err!=nil{t.Fatal(err)};if err:=os.Symlink(packageRoot,filepath.Join(modules,"tailwindcss"));err!=nil{t.Fatal(err)}
+ })
+ rule_testing.ExpectFindings(t,result,"shorthandClasses")
+}

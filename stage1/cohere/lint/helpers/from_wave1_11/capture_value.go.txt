@@ -1,0 +1,10 @@
+package tailwind
+import("encoding/json";"os";"sync")
+var wave11ValueCaptureLock sync.Mutex
+func ValueToCss(nodes []ValueNode)string{
+ result:=wave11OriginalValueToCss(nodes)
+ row:=struct{Nodes []ValueNode `json:"nodes"`;Result string `json:"result"`}{nodes,result}
+ wave11ValueCaptureLock.Lock();defer wave11ValueCaptureLock.Unlock()
+ file,err:=os.OpenFile(os.Getenv("WAVE11_VALUE_CAPTURE"),os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil{panic(err)};defer file.Close();if err=json.NewEncoder(file).Encode(row);err!=nil{panic(err)}
+ return result
+}

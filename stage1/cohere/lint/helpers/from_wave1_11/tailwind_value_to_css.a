@@ -1,0 +1,16 @@
+export class CssValueNode {
+    readonly kind: string;
+    readonly value: string;
+    readonly nodes: readonly CssValueNode[];
+    constructor(kind: string, value: string, nodes: readonly CssValueNode[]) {
+        this.kind = kind; this.value = value; this.nodes = nodes;
+    }
+}
+export function valueToCss(nodes: readonly CssValueNode[]): string {
+    let result = '';
+    for(const node of nodes) {
+        if(node.kind === 'word' || node.kind === 'separator') { result += node.value; }
+        else if(node.kind === 'function') { result += node.value + '(' + valueToCss(node.nodes) + ')'; }
+    }
+    return result;
+}
