@@ -1,0 +1,20 @@
+package property
+import (
+ "testing"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+)
+func TestWave15AccessedControls(t *testing.T) {
+ sources:=[]string{"a.b;","a['b'];","a[''];","a[`b`];","a[0x10];","a[1e1];","a[variable];","a[((variable))];","a[(('b'))];","a[((0))];","a.#private;","a[#private];","a['😀'];","a['a\\u0062'];","a['a\\n'];","a[true];","a[1n];","a[variable + 'x'];","a?.b;","a?.['b'];","(a.b);","a();","a[`${x}`];"}
+ for accept:=0;accept<256;accept++ {
+  AccessedName(nil,Kinds(accept))
+  for _,source:=range sources {
+   file:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:"/repository/source/controls.ts",Path:tspath.Path("/repository/source/controls.ts")},source,core.ScriptKindTS)
+   var walk func(*ast.Node)bool
+   walk=func(node *ast.Node)bool {if node==nil{return false};AccessedName(node,Kinds(accept));node.ForEachChild(walk);return false}
+   file.AsNode().ForEachChild(walk)
+  }
+ }
+}
