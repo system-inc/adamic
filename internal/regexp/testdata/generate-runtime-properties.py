@@ -66,7 +66,8 @@ for alias, variable in rows:
                   variable + "," + str(len(sequences)) + ",true};")
     assert alias not in aliases
     aliases[alias] = name
-output.append("static const struct { const char *name; const adamic_regex_compile_property *property; } regex_compile_aliases[] = {")
+output.append("typedef struct { const char *name; const adamic_regex_compile_property *property; } regex_compile_alias;")
+output.append("static const regex_compile_alias regex_compile_aliases[] = {")
 output.extend("{" + json.dumps(alias) + ",&" + name + "}," for alias, name in sorted(aliases.items()))
 output.extend(["};", "#endif", ""])
 parser = argparse.ArgumentParser()

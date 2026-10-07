@@ -40217,7 +40217,8 @@ static const adamic_regex_compile_text regex_compile_sequences_RGI_Emoji[] = {
 {regex_compile_sequences_RGI_Emoji_3952,2},
 };
 static const adamic_regex_compile_property regex_compile_property_sequences_RGI_Emoji = {NULL,0,regex_compile_sequences_RGI_Emoji,3953,true};
-static const struct { const char *name; const adamic_regex_compile_property *property; } regex_compile_aliases[] = {
+typedef struct { const char *name; const adamic_regex_compile_property *property; } regex_compile_alias;
+static const regex_compile_alias regex_compile_aliases[] = {
 {"AHex",&regex_compile_property_1},
 {"ASCII",&regex_compile_property_0},
 {"ASCII_Hex_Digit",&regex_compile_property_1},

@@ -351,3 +351,13 @@ Observed exit 0, package 44.498s. This includes signal behavior under native san
 Setup rerun: Go 1.27.1 ready 0s, clang 20.1.8 ready 0s, Node 24.19.0 ready 0s, submodules ready 0s; nproc 5. It failed during test-cache warming because integrated `internal/native/map_hash_test.go:90` uses `Options{slabs: ...}` while the field is now `Slabs`. The old missing-target-API failure is resolved by integration. Rather than editing another unit's test, the commands above run the runtime proof/guard Go files directly; they compile and exercise the actual integrated C runtime. The complete native package and repository gate remain blocked by that unrelated merged test build error.
 
 Final signal/exit, two new mutants, scanner and coverage checks passed together in 59.332s (`/tmp/runtime-statics-followup-final.log`). The two new mutants each produced three explicit TSan race summaries. The integrated 11-fixture proof was run after the signal-loop/exit-lock implementation; the final additional code change retries an interrupted handler pipe write and was covered by this final signal run.
+
+## Runtime regex compiler
+
+Unicode property ranges, strings and alias entries are immutable static const data initialized by C declarations. They have no constructor, registration, cache or lazy initialization. Parser state and its allocation list belong to each parse result; parallel calls share no mutable storage. Compiler-only sources are guarded by ADAMIC_REGEXP_RUNTIME_COMPILER and have no module-start entry point. Reachability and release size checks remain required before lowering lands.
+
+- `runtime-file:regexp_compile.h`
+- `runtime-file:regexp_compile_properties.c`
+- `runtime-file:regexp_compile_tables.h`
+- `runtime-file:regexp_compile_parser.h`
+- `runtime-file:regexp_compile_parser.c`

@@ -1,0 +1,17 @@
+=== RUN   TestRegExpRuntimePropertiesGenerated
+--- PASS: TestRegExpRuntimePropertiesGenerated (0.12s)
+=== RUN   TestRegExpRuntimePropertyIdentity
+    regexp_compile_test.go:193: entry identity: 1722 aliases, 448 unique properties, 23045 ranges, 7906 strings
+--- PASS: TestRegExpRuntimePropertyIdentity (1.78s)
+=== RUN   TestRegExpRuntimePropertiesWASI
+    regexp_compile_test.go:220: entry identity: 1722 aliases, 448 unique properties, 23045 ranges, 7906 strings
+--- PASS: TestRegExpRuntimePropertiesWASI (0.63s)
+=== RUN   TestRegExpRuntimeCompilerNotLinked
+    regexp_compile_test.go:257: nm: no regex_compile_ symbols in a program without dynamic RegExp
+--- PASS: TestRegExpRuntimeCompilerNotLinked (5.24s)
+=== RUN   TestRuntimeStaticsAreListed
+=== PAUSE TestRuntimeStaticsAreListed
+=== CONT  TestRuntimeStaticsAreListed
+--- PASS: TestRuntimeStaticsAreListed (0.39s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.172s

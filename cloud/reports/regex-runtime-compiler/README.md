@@ -93,3 +93,13 @@ There is no callable group messaging tool for `#adamic_runtime_platforms`; the u
 was asked to relay the platform requirement. No platform-group coordination is claimed.
 
 The package, platform, setup and mutant logs are retained beside this report as `.txt` files.
+
+October 7 integration: merged origin/codex/runtime-statics e2422008 in
+606b066. The unchanged generated aliases now use a named const struct type so
+the storage scanner recognizes their immutability. TestRuntimeStaticsAreListed
+passes directly. The merged package has an unrelated map_hash_test.go Options
+field spelling error (slabs versus Slabs); a temporary Go test overlay corrects
+only that test spelling. With this overlay, regeneration, sanitizer-backed entry
+identity, WASI entry identity, unused-symbol proof and the statics guard pass in
+8.172s. Full output is properties-statics-merged.txt. No shared compiler or test
+file was edited for this workaround. Parser work is not yet certified.
