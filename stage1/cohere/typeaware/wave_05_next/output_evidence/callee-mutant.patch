@@ -1,0 +1,11 @@
+--- /workspace/adamic/bridge/tsgo/checker/output_callee.go
++++ wave-05-output-callee-guard-mutant.go
+@@ -9,7 +9,7 @@
+ 
+ // outputCallee exports the resolved signature declaration, never a lint verdict.
+ func (p *Program) outputCallee(c *checker.Checker, node *ast.Node, question string) (string, error) {
+-	if question != "output-callee" || node.Kind != ast.KindCallExpression {
++	if false {
+ 		return "", fmt.Errorf("output-callee requires an unsuffixed call")
+ 	}
+ 	out := &fields{}

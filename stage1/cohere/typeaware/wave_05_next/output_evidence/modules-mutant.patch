@@ -1,0 +1,11 @@
+--- /workspace/adamic/bridge/tsgo/checker/runtime_modules.go
++++ wave-05-output-modules-guard-mutant.go
+@@ -9,7 +9,7 @@
+ // runtimeModules emits the program's runtime import edges and computed loads.
+ // Reachability to any named module and lint policy remain native judgments.
+ func (p *Program) runtimeModules(node *ast.Node, question string) (string, error) {
+-	if question != "runtime-modules" || node.Kind != ast.KindSourceFile {
++	if false {
+ 		return "", fmt.Errorf("runtime-modules requires an unsuffixed source")
+ 	}
+ 	out := &fields{}

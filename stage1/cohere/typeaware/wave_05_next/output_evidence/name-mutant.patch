@@ -1,0 +1,11 @@
+--- /workspace/adamic/bridge/tsgo/checker/output_symbol.go
++++ wave-05-output-name-mutant.go
+@@ -47,7 +47,7 @@
+ 				out.text(strings.TrimPrefix(parent.Kind.String(), "Kind"))
+ 				name := ""
+ 				if n := parent.Name(); n != nil {
+-					switch n.Kind {
++					switch ast.KindIdentifier {
+ 					case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral:
+ 						name = n.Text()
+ 					}

@@ -1,8 +1,8 @@
-Built: no-uncleared-race-timeout and raw symbol-ancestry facts; two new claims remain blocked and unported.
+Built: all three continuation claims complete; the prior output-rule blocker was resolved in 948dd987.
 Commits: prior three complete at c5403d46; continuation claim d8b312d9; implementation d4320843.
 Commands and outputs: local Python verifier PASS; bridge checker go test PASS 0.103s; touched bridge vet clean.
 Mutants: timer verdict exits 0 and fails Go byte comparison; alias and suffix mutants fail direct checker assertions.
-Not covered: process-exit and blocking-stream ports, full repository gate, emitted JavaScript, and the complete upstream matrix.
+Not covered: full repository gate, emitted JavaScript, and the complete upstream matrix; completed output ports are in OUTPUT_REPORT.md.
 
 # Wave 05 continuation 1
 
@@ -52,7 +52,9 @@ The manifests are the same frozen inputs as the original wave. Cohere `715ba94f3
 
 The local verifier checks released-handle refusal and preserves its direct logs. The original wave's bridge lifecycle and sanitizer mutants were already validated; they were not rerun wholesale in this continuation.
 
-## Exact blocker and stop
+## Historical blocker, now resolved
+
+This section records the earlier stopped attempt. Both output rules are now ported, tested and pushed; see [OUTPUT_REPORT.md](OUTPUT_REPORT.md). A wave-owned CFG with bindings passed in from outside its constructor compiles without shared repairs.
 
 The other two claimed rules require forward traversal of a control-flow graph with expression/statement hooks. Reusing this branch's native CFG builder through a derived class failed before native generation. The minimal [cfg_probe.a](gaps/cfg_probe.a), containing no new rule judgments, is checked by the local verifier and produces:
 
@@ -68,7 +70,7 @@ adamic: /workspace/adamic/stage1/cohere/typeaware/bindings.ts:49:33: Adamic 0.1 
 # exit 1; refusal above, no native executable
 ```
 
-This is the observed blocker for the attempted CFG integration, not proof that every alternative implementation is impossible. The process-exit and blocking-stream rules are **unported**. Their positive controls, corpus equivalence, rule mutants and timings are therefore **not claimed**. Under Ahra's instruction to stop on other blockers instead of editing shared files, no shared bindings, compiler, generator or test harness was changed to repair it. The reservations are marked blocked in the claim file.
+This is the observed blocker for the attempted CFG integration, not proof that every alternative implementation is impossible. At that earlier stop, the process-exit and blocking-stream rules were **unported**. Those checks were **not claimed** at that earlier stop; they have since passed and are recorded in OUTPUT_REPORT.md. Under Ahra's instruction to stop on other blockers instead of editing shared files, no shared bindings, compiler, generator or test harness was changed to repair it. The reservations are marked blocked in the claim file.
 
 ## Timing and limits
 

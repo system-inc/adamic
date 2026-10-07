@@ -1,0 +1,11 @@
+--- /workspace/adamic/bridge/tsgo/checker/output_symbol.go
++++ wave-05-output-symbol-guard-mutant.go
+@@ -10,7 +10,7 @@
+ 
+ // outputSymbol returns binder facts only. Native rules decide platform identity.
+ func (p *Program) outputSymbol(c *checker.Checker, node *ast.Node, question string) (string, error) {
+-	if question != "output-symbol" && question != "output-symbol\nown" {
++	if false {
+ 		return "", fmt.Errorf("unexpected output-symbol suffix")
+ 	}
+ 	s := c.GetSymbolAtLocation(node)
