@@ -195,3 +195,14 @@ blocked by the native checker binding, which RuleContext does not expose. The
 three React HIR/SSA/capture reservations remain parked. No new rules are claimed:
 all remaining ranked entries are already ported or claimed on the fetched 601
 origin refs. See rules/wave-22-seventh/LANDING_REPORT.md and its owned evidence.
+
+## Main c7991b900 landing refresh
+
+Rebased onto origin/area/stage1-lint b84a9d931, including main c7991b900. All
+eighteen existing implementations passed their byte oracles, mutants, handles
+and sanitized frozen corpora again with the freshly rebuilt compiler. The
+older twelve-rule gate passed in 1002.893s. No rule or checker source changed.
+Dynamic native RegExp and whole-rule JavaScript/shared checker binding remain
+blocked; the three React analysis claims remain parked. The refreshed 632-ref
+claim inventory has no available ranked rule, so no new reservation is made.
+See rules/wave-22-seventh/LANDING_MAIN_C7991B900.md for complete fresh evidence.
