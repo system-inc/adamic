@@ -1,0 +1,158 @@
+{
+  "base": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "old_tip": "039220d52af717149905a08c69b22f41b516a776",
+  "rebased_tip": "c798652a224713d093c9234df985571207563fb6",
+  "note": "Standard rebase flattened the inherited inventory merge; its constituent changes were replayed.",
+  "commits": [
+    {
+      "old": "78adebc3d2c69150aabeff307c23e185c8890971",
+      "rebased": "7bf5a0970477adc699b99a7af78f3f4c713b24ca",
+      "subject": "Inventory cohere lint rules and plan helper-first porting"
+    },
+    {
+      "old": "73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf",
+      "rebased": "dfb895a96131662bbf185a22bbd21337808f870d",
+      "subject": "Preserve inventory validation and mutation evidence"
+    },
+    {
+      "old": "acb5e0f405a642d0a2bfb7b780630caf1c74a154",
+      "rebased": "c4e06c0ee33a6035da8c0d4bcfabc8b04b541a2a",
+      "subject": "Claim shared lint option and message helpers"
+    },
+    {
+      "old": "5d13f5baaecaf11d4ea62de693426f69a1f41bba",
+      "rebased": "2a631ba4d037dec2bbb652e343d2dca51b0b2b50",
+      "subject": "Build shared lint option validation and policy helpers"
+    },
+    {
+      "old": "29990b47913aa77d542045194b512484af995d29",
+      "rebased": "e703566df936c207d112524220b6823d556de6b7",
+      "subject": "Claim parser anchored comment helpers"
+    },
+    {
+      "old": "6015e83eec1c23ebfaed839dd0a9b3b697ce579f",
+      "rebased": "783107823ed491ad342a946d4f19d2e10d485378",
+      "subject": "Claim the React identifier helper for slot 02"
+    },
+    {
+      "old": "b25d3cd1ad97b28705295360c78949f202a60016",
+      "rebased": "02503f8eef32a53883e108d8185301d97fe52135",
+      "subject": "Resolve identifier claim race and claim JSX attribute names"
+    },
+    {
+      "old": "369c87904c34c410405854f45253170539d4fb49",
+      "rebased": "a1711eeedef98e0f1a68c89539c849f397d128b0",
+      "subject": "Port JSX attribute names with Go oracle and semantic mutant"
+    },
+    {
+      "old": "0806aaca98ebebdc523c7282582e374af29dfe33",
+      "rebased": "9a1dae9796eb74411ba51ebb7c0123ca936a91fb",
+      "subject": "Claim property name helper after refreshing all wave branches"
+    },
+    {
+      "old": "a202730b288f12406ab0a5519e9d2fd5c2bda597",
+      "rebased": "9d0783d515e575363ef0df61ac48089bd68710cb",
+      "subject": "Port static property names with all accept masks and semantic mutant"
+    },
+    {
+      "old": "316019969c6c52016b336a9417cd46adc934e85c",
+      "rebased": "83a81e212304b9a57052a7f2833be8425e30f27d",
+      "subject": "Claim Tailwind whitespace predicate as the third slot 02 helper"
+    },
+    {
+      "old": "4a377bb32c14b4350afe61ecd43f1a30bbec741c",
+      "rebased": "1e708c1e9543c58f2b0dbb84e6edd38fb458f84c",
+      "subject": "Withdraw colliding whitespace claim and reserve the file reader cache"
+    },
+    {
+      "old": "c85c62f5507738a7b9f18b820ef927ef6801e2dc",
+      "rebased": "e5fbf1e2378d69248193121cde70b21f4ef80c09",
+      "subject": "Port the Tailwind file reader cache and capture consumer fixtures"
+    },
+    {
+      "old": "8fe9c4412be703fb051b085a06777181aa3dc6e9",
+      "rebased": "2c882e7c0f2c4d5bf731b27a6e6251053c3dad48",
+      "subject": "Record slot 02 parity evidence and dependency handoff"
+    },
+    {
+      "old": "a90f5e95de74d1dc5b7adeb772db5948d3b82340",
+      "rebased": "6bd6531de682a9134949760050c94718e24af50e",
+      "subject": "Claim three highest-count remaining helpers for slot 02"
+    },
+    {
+      "old": "9221c9bc89a59c2eed4a6b58402621ec9a41dbe5",
+      "rebased": "803c5dd542bfd952a0002c274d723551db141180",
+      "subject": "Port class literal access, class splitting and React member matching"
+    },
+    {
+      "old": "597a5eef8e1d2044b243fe3de124d8ef2559b955",
+      "rebased": "9513f6936ae4bbc7ebda6c1fafa3a295cad00476",
+      "subject": "Record second helper batch parity, mutants and remaining blockers"
+    },
+    {
+      "old": "1c5e72804438e0e6be6228240511d9ee2a8b4918",
+      "rebased": "7257ed490ca09e347ab3c679a78e3666b45af3ff",
+      "subject": "Preserve raw failure logs in compressed evidence archives"
+    },
+    {
+      "old": "972f103cb7ead6a5f1d4b5f92201b8c48c993bac",
+      "rebased": "cdaa25ac436f7404a9d477f15c091b0f3347cc63",
+      "subject": "Claim JSX string values and ES5 React factory helpers"
+    },
+    {
+      "old": "c5f5f9eb2524b57ad32201e32acbbf3b9e412125",
+      "rebased": "aa180285b710c46cec7eaffaa8f291309c463000",
+      "subject": "Yield JSX string value claim and reserve math function names"
+    },
+    {
+      "old": "d55633773f4ed09d3e262e35d27735ced184bde5",
+      "rebased": "9355d222bfc797b17c3961409483ca0011b90ac6",
+      "subject": "Port ES5 React factories and exact math function membership"
+    },
+    {
+      "old": "ad1df33a733dbbb58549b06976dd906d441832a5",
+      "rebased": "adb12bc402d7f754d7237b5d57b3468c0c14fe35",
+      "subject": "Record third helper batch parity, claim ownership and residual blockers"
+    },
+    {
+      "old": "c332c147ec41fd4895f624321ed8a4c7660af9ca",
+      "rebased": "d152b037cf25bd3f4aef144fe14c7d7bf075ef71",
+      "subject": "Claim Collapse theme prefix, variant namespace and underscore helpers"
+    },
+    {
+      "old": "12018bdb7b6517a846ebf1b1a64fe98902ee91d9",
+      "rebased": "15b54e9c8711b49cc15c160e10f51f355aeed85c",
+      "subject": "Port three Tailwind theme and underscore helpers"
+    },
+    {
+      "old": "9aff573c0722897c7c75a6e160e63d3042956cbf",
+      "rebased": "8e2f29e03aef8b31553f55fae375d22e0aeade19",
+      "subject": "Record fourth helper batch parity and remaining rule blockers"
+    },
+    {
+      "old": "3552136875970a3979a21aff571cd6135ad55c86",
+      "rebased": "cd8b14e9617358f2ed1755041c2f44f8ea40ecb2",
+      "subject": "Claim design system utility and variant queries"
+    },
+    {
+      "old": "cb39cbd97f8a510c741d531dc416b0a5d9eae3a0",
+      "rebased": "e09716531431356c6ca633b1ec975ab590932a7b",
+      "subject": "Yield earlier variant query claims and reserve root and sort helpers"
+    },
+    {
+      "old": "562790b6b2701f40f0b5aa19ade788eb05ed7872",
+      "rebased": "4ced01db1141b08a7888781a191b63078f59af62",
+      "subject": "Port design system utility lookup, root splits and public property sort"
+    },
+    {
+      "old": "522b2c461def90bf3d129539d812ad6fd72f458b",
+      "rebased": "3ef75d1f2a4072ecf50efe4f60ffae80f0f9c07e",
+      "subject": "Preserve copied property sort slice length and capacity"
+    },
+    {
+      "old": "039220d52af717149905a08c69b22f41b516a776",
+      "rebased": "c798652a224713d093c9234df985571207563fb6",
+      "subject": "Report fifth helper batch parity, mutants and residual blockers"
+    }
+  ]
+}

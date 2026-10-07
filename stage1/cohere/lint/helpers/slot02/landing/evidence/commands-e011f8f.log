@@ -1,0 +1,11 @@
+git fetch origin
+Rebased codex/lint-helpers-02 onto origin/main e011f8f60899586d6373a5ccb07335ad82cfbf3c. All 30 source commits replayed without conflict; the inherited inventory merge was flattened.
+bash cloud/setup.sh > stage1/cohere/lint/helpers/slot02/landing/evidence/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc > stage1/cohere/lint/helpers/slot02/landing/evidence/nproc.log
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/landing/evidence/helpers.log 2>&1
+go vet ./stage1/cohere/lint/helpers ./stage1/cohere/lint/inventory > stage1/cohere/lint/helpers/slot02/landing/evidence/vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v > stage1/cohere/lint/helpers/slot02/landing/evidence/oracle.log 2>&1
+go test ./stage1/cohere/lint/inventory -count=1 -v > stage1/cohere/lint/helpers/slot02/landing/evidence/inventory.log 2>&1
+git diff --check origin/main
+No helper claimed. No helper implementation or shared harness/compiler file edited. Removed one extra EOF blank line in slot02/RULES.md; archived the raw first-batch final-claims.log byte for byte as gzip and updated its report reference.

@@ -63,4 +63,3 @@ The frozen 198-rule ledger had 46 helper-ready rules at this branch base. These 
 - `better-tailwindcss/no-duplicate-classes`
 - `better-tailwindcss/no-unknown-classes`
 - `better-tailwindcss/no-unnecessary-whitespace`
-

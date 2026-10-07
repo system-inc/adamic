@@ -1,0 +1,15 @@
+git fetch origin
+Rebased codex/lint-helpers-02 onto origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965. All 30 source commits replayed without conflict; the inherited inventory merge was flattened.
+bash cloud/setup.sh > stage1/cohere/lint/helpers/slot02/landing/evidence/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc > stage1/cohere/lint/helpers/slot02/landing/evidence/nproc.log
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/landing/evidence/helpers.log 2>&1
+go vet ./stage1/cohere/lint/helpers ./stage1/cohere/lint/inventory > stage1/cohere/lint/helpers/slot02/landing/evidence/vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v > stage1/cohere/lint/helpers/slot02/landing/evidence/oracle.log 2>&1
+go test ./stage1/cohere/lint/inventory -count=1 -v > stage1/cohere/lint/helpers/slot02/landing/evidence/inventory.log 2>&1
+git diff --check origin/main
+No helper claimed. No helper implementation or shared harness/compiler file edited. Removed one extra EOF blank line in slot02/RULES.md; archived the raw first-batch final-claims.log byte for byte as gzip and updated its report reference.
+
+First-base logs are archived with -e011f8f suffix; first-base helper PASS 290.381s and 35 mutants caught. Main advanced and all final-base checks were run again.
+Final current-main re-fetch still e8ba3d5d81de4d3773c723914fccd4c76248b965.
+git push --force-with-lease=refs/heads/codex/lint-helpers-02:039220d52af717149905a08c69b22f41b516a776 origin HEAD:refs/heads/codex/lint-helpers-02
