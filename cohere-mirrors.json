@@ -1,0 +1,150 @@
+[
+  {
+    "path": "internal/flow/effects.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/effects.go",
+    "decision": "c",
+    "reason": "Adamic has a typed native IR and cohere has an ECMAScript analysis IR; their effect vocabulary is shared under the approved plan.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/flow/flow.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/high_level_intermediate_representation.go",
+    "decision": "c",
+    "reason": "Adamic has a typed native IR and cohere has an ECMAScript analysis IR; their effect vocabulary is shared under the approved plan.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/flow/graph.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/graph.go",
+    "decision": "a",
+    "reason": "cohere owns the shared analysis; Adamic will consume its module by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/flow/ranges.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ranges.go",
+    "decision": "a",
+    "reason": "cohere owns the shared analysis; Adamic will consume its module by reference. Option: retain an Adamic adapter for native lifetime and arena facts.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/flow/ssa.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ssa.go",
+    "decision": "a",
+    "reason": "cohere owns the shared analysis; Adamic will consume its module by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/flow/ssa_eliminate.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ssa_eliminate.go",
+    "decision": "a",
+    "reason": "cohere owns the shared analysis; Adamic will consume its module by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/flow/ssa_verify.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ssa_verify.go",
+    "decision": "a",
+    "reason": "cohere owns the shared analysis; Adamic will consume its module by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/invariance.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/generic.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/class_generic_calls.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/cast.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-unchecked-cast",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Ruling 22715 requires unsupported checked downcasts to use an Adamic-only id; blocked until cohere exposes its checked-downcast judgment by reference. Keep the eventual id choice separate from codex/checked-downcasts.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-type-predicate",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_type_predicate.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/object.go",
+    "kind": "rule",
+    "rule_id": "adamic/single-spread",
+    "counterpart": "cohere/internal/lint/rules/adamic/single_spread.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Ruling 22715 requires literal-spread lowering limits to use an Adamic-only id; blocked until cohere exposes its literal-spread judgment by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-definite-assignment",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_definite_assignment.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. The refusal currently has no rule id; evidence pins its diagnostic wording.",
+    "retiring_task": "xjdce2d",
+    "evidence": "a definite assignment assertion !"
+  },
+  {
+    "path": "internal/lower/invariance.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Pending on codex/no-optional-widening: main has no optional-widening diagnostic. The existing relation walker is the landing site, not evidence of an implemented check.",
+    "retiring_task": "xjdce2d",
+    "pending_function": "widened"
+  }
+]
