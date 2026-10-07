@@ -1,0 +1,114 @@
+=== RUN   TestCoverageAgreementAndMutants
+    coverage_test.go:121: controls: 24994 identical finding bytes; findings 53
+    coverage_test.go:129: controls-asan: 24994 identical finding bytes; findings 53
+=== RUN   TestCoverageAgreementAndMutants/before
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 83; findings 52
+=== RUN   TestCoverageAgreementAndMutants/cast
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1664; findings 53
+=== RUN   TestCoverageAgreementAndMutants/methods
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2392; findings 46
+=== RUN   TestCoverageAgreementAndMutants/coercion
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1243; findings 53
+=== RUN   TestCoverageAgreementAndMutants/caller
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10626; findings 54
+=== RUN   TestCoverageAgreementAndMutants/parameter
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 395; findings 50
+=== RUN   TestCoverageAgreementAndMutants/invariant
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 13272; findings 48
+=== RUN   TestCoverageAgreementAndMutants/optional
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 16143; findings 53
+=== RUN   TestCoverageAgreementAndMutants/alias
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 16673; findings 53
+=== RUN   TestCoverageAgreementAndMutants/unused
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 17571; findings 56
+=== NAME  TestCoverageAgreementAndMutants
+    coverage_test.go:182: released program queried using a new question: panic 70, invalid or released checker handle
+    coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestCoverageAgreementAndMutants (144.00s)
+    --- PASS: TestCoverageAgreementAndMutants/before (9.04s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (8.59s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (9.18s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (9.10s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (8.44s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (8.76s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (8.89s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (8.64s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (9.41s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (8.99s)
+=== RUN   TestTypeAwareAgreementAndMutants
+    typeaware_test.go:232: generated: 9796 identical finding bytes; findings 36 queries 61
+    typeaware_test.go:241: generated coverage: 53 files
+    typeaware_test.go:284: wrong-node type mutant: cohere byte oracle catches byte 486; findings 0 queries 61
+    typeaware_test.go:293: released program queried: native panic 70 with invalid or released checker handle
+    typeaware_test.go:301: released registry deletion mutant: stale-query expectation catches exit 0 instead of 70
+    typeaware_test.go:317: empty-frame mutant: panic 70, checker returned no type parts
+    typeaware_test.go:317: missing-header mutant: panic 70, invalid checker type frame
+    typeaware_test.go:317: bad-length mutant: panic 70, invalid checker type length or flags
+    typeaware_test.go:340: exact kind guard mutant: mismatch-refusal expectation catches exit 0
+    typeaware_test.go:354: query cost round 1 native: tsgo: load_ns=12727069 query_ns=34325240 queries=10000 first_query_ns=133410 run_ns=35611355; direct Go: querycost: load_ns=6219263 query_ns=21138252 queries=10000 first_query_ns=66680; same output=90000
+    typeaware_test.go:359: compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE
+--- PASS: TestTypeAwareAgreementAndMutants (96.11s)
+=== RUN   TestPinnedTypeFlags
+=== PAUSE TestPinnedTypeFlags
+=== RUN   TestVolumeAgreementAndMutants
+    volume_test.go:118: controls: 26054 identical finding bytes; findings 73
+    volume_test.go:126: controls-asan: 26054 identical finding bytes; findings 73
+=== RUN   TestVolumeAgreementAndMutants/assignable-types
+    volume_test.go:162: assignable-types mutant: byte oracle catches byte 81; findings 67
+=== RUN   TestVolumeAgreementAndMutants/widened-shape
+    volume_test.go:162: widened-shape mutant: byte oracle catches byte 562; findings 74
+=== RUN   TestVolumeAgreementAndMutants/enum-types
+    volume_test.go:162: enum-types mutant: byte oracle catches byte 6039; findings 74
+=== RUN   TestVolumeAgreementAndMutants/type-symbol
+    volume_test.go:162: type-symbol mutant: byte oracle catches byte 21217; findings 73
+=== RUN   TestVolumeAgreementAndMutants/scope-locals
+    volume_test.go:162: scope-locals mutant: byte oracle catches byte 8652; findings 71
+=== RUN   TestVolumeAgreementAndMutants/call-returns
+    volume_test.go:162: call-returns mutant: byte oracle catches byte 13238; findings 77
+=== RUN   TestVolumeAgreementAndMutants/property-shape
+    volume_test.go:162: property-shape mutant: byte oracle catches byte 7557; findings 72
+=== RUN   TestVolumeAgreementAndMutants/contextual-shape
+    volume_test.go:162: contextual-shape mutant: byte oracle catches byte 8118; findings 72
+=== RUN   TestVolumeAgreementAndMutants/symbol-origin
+    volume_test.go:162: symbol-origin mutant: byte oracle catches byte 26042; findings 74
+=== RUN   TestVolumeAgreementAndMutants/type-origin
+    volume_test.go:162: type-origin mutant: byte oracle catches byte 25376; findings 75
+=== RUN   TestVolumeAgreementAndMutants/property-info
+    volume_test.go:162: property-info mutant: byte oracle catches byte 21519; findings 63
+=== RUN   TestVolumeAgreementAndMutants/call-count
+    volume_test.go:162: call-count mutant: byte oracle catches byte 16475; findings 75
+=== RUN   TestVolumeAgreementAndMutants/call-parameters
+    volume_test.go:162: call-parameters mutant: byte oracle catches byte 16475; findings 75
+=== RUN   TestVolumeAgreementAndMutants/apparent-shape
+    volume_test.go:162: apparent-shape mutant: byte oracle catches byte 16475; findings 75
+=== RUN   TestVolumeAgreementAndMutants/base-shapes
+    volume_test.go:162: base-shapes mutant: byte oracle catches byte 25376; findings 74
+=== NAME  TestVolumeAgreementAndMutants
+    volume_test.go:180: released program queried with new question: panic 70, invalid or released checker handle
+    volume_test.go:185: released registry mutant: exit 0 caught by required panic 70
+--- PASS: TestVolumeAgreementAndMutants (279.92s)
+    --- PASS: TestVolumeAgreementAndMutants/assignable-types (15.39s)
+    --- PASS: TestVolumeAgreementAndMutants/widened-shape (15.50s)
+    --- PASS: TestVolumeAgreementAndMutants/enum-types (15.39s)
+    --- PASS: TestVolumeAgreementAndMutants/type-symbol (15.34s)
+    --- PASS: TestVolumeAgreementAndMutants/scope-locals (15.35s)
+    --- PASS: TestVolumeAgreementAndMutants/call-returns (15.78s)
+    --- PASS: TestVolumeAgreementAndMutants/property-shape (16.17s)
+    --- PASS: TestVolumeAgreementAndMutants/contextual-shape (15.35s)
+    --- PASS: TestVolumeAgreementAndMutants/symbol-origin (15.64s)
+    --- PASS: TestVolumeAgreementAndMutants/type-origin (15.63s)
+    --- PASS: TestVolumeAgreementAndMutants/property-info (15.34s)
+    --- PASS: TestVolumeAgreementAndMutants/call-count (15.43s)
+    --- PASS: TestVolumeAgreementAndMutants/call-parameters (15.53s)
+    --- PASS: TestVolumeAgreementAndMutants/apparent-shape (16.03s)
+    --- PASS: TestVolumeAgreementAndMutants/base-shapes (15.61s)
+=== RUN   TestVolumeConfigGuardAndMutant
+    volume_test.go:260: strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70
+    volume_test.go:266: implicit-this mutant also differs from independent Go at byte 134
+    volume_test.go:270: strict-this-control: 407 identical finding bytes; findings 3
+    volume_test.go:277: edge-controls-asan: 26350 identical finding bytes; findings 73
+--- PASS: TestVolumeConfigGuardAndMutant (59.66s)
+=== CONT  TestPinnedTypeFlags
+--- PASS: TestPinnedTypeFlags (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	579.690s

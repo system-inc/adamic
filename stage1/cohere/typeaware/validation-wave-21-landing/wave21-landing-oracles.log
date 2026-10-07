@@ -1,0 +1,131 @@
+=== RUN   TestWave21CoreRules
+    wave_21_core_fixtures_test.go:102: no_obj_calls: 11 extracted upstream fixture rows
+    wave_21_core_fixtures_test.go:102: no_obj_calls_corpus: 163 extracted upstream fixture rows
+    wave_21_core_fixtures_test.go:102: no_object_constructor: 59 extracted upstream fixture rows
+    wave_21_core_fixtures_test.go:102: no_promise_executor_return: 183 extracted upstream fixture rows
+    wave_21_core_test.go:52: controls: 122296 identical finding/fix/suggestion bytes; findings 242
+    wave_21_core_test.go:53: allow-void: 34207 identical finding/fix/suggestion bytes; findings 48
+    wave_21_core_test.go:56: controls-asan: 122296 identical finding/fix/suggestion bytes; findings 242
+    wave_21_core_test.go:57: allow-void-asan: 34207 identical finding/fix/suggestion bytes; findings 48
+    wave_21_core_test.go:94: obj-calls judgment/edit mutant: exit 0; byte comparison catches byte 552
+    wave_21_core_test.go:94: object-constructor judgment/edit mutant: exit 0; byte comparison catches byte 48057
+    wave_21_core_test.go:94: promise-return judgment/edit mutant: exit 0; byte comparison catches byte 80630
+    wave_21_core_test.go:107: reference-node: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_core_test.go:116: shared parser gap 0: Go findings 1; native exit status 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 5 in /tmp/adamic-gate/TestWave21CoreRules2269812717/001/no_object_constructor-016.tsx
+    wave_21_core_test.go:116: shared parser gap 1: Go findings 1; native exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 7 in /tmp/adamic-gate/TestWave21CoreRules2269812717/001/no_object_constructor-017.tsx
+    wave_21_core_test.go:116: shared parser gap 2: Go findings 1; native exit status 70: adamic: panic: parser slice expected semicolon at 37 in /tmp/adamic-gate/TestWave21CoreRules2269812717/001/no_object_constructor-046.a
+    wave_21_core_test.go:123: reference suffix mutant compiles; malformed-question assertion catches it
+    wave_21_core_test.go:126: compiler: 5087 identical finding bytes; findings 0
+    wave_21_core_test.go:127: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_core_test.go:133: compiler quiet timing native 3.139418s Go 0.354631s
+    wave_21_core_test.go:126: repository: 18485 identical finding bytes; findings 0
+    wave_21_core_test.go:127: repository-asan: 18485 identical finding bytes; findings 0
+    wave_21_core_test.go:133: repository quiet timing native 0.425405s Go 0.128589s
+--- PASS: TestWave21CoreRules (154.64s)
+=== RUN   TestWave21NextAgreement
+    wave_21_next_test.go:178: correctness_no_collection_misuse: 6 upstream fixture sources
+    wave_21_next_test.go:178: correctness_no_discarded_outcome: 30 upstream fixture sources
+    wave_21_next_test.go:178: correctness_no_discarded_pure_result: 22 upstream fixture sources
+    wave_21_next_test.go:225: controls: 36216 identical finding bytes; findings 71
+    wave_21_next_test.go:233: controls-asan: 36216 identical finding bytes; findings 71
+    wave_21_next_test.go:272: collection mutant: exit 0, comparison catches byte 1501
+    wave_21_next_test.go:272: outcome mutant: exit 0, comparison catches byte 7963
+    wave_21_next_test.go:272: pure mutant: exit 0, comparison catches byte 18824
+    wave_21_next_test.go:299: awaited-shape: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_next_test.go:299: type-declaration-ancestors: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_next_test.go:306: compiler: 5087 identical finding bytes; findings 0
+    wave_21_next_test.go:307: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_next_test.go:313: compiler quiet timing native 2.617588s Go 0.764111s
+    wave_21_next_test.go:306: repository: 18485 identical finding bytes; findings 0
+    wave_21_next_test.go:307: repository-asan: 18485 identical finding bytes; findings 0
+    wave_21_next_test.go:313: repository quiet timing native 0.343483s Go 0.154500s
+--- PASS: TestWave21NextAgreement (75.47s)
+=== RUN   TestWave21ProcessRules
+    wave_21_process_test.go:37: correctness_no_uncleared_race_timeout: 18 upstream fixture sources
+    wave_21_process_test.go:38: correctness_no_process_exit_after_output: 50 upstream fixture sources
+    wave_21_blocking_fixtures_test.go:134: blocking streams: 54 upstream programs, 151 source files
+    wave_21_process_test.go:57: controls: 121956 identical finding bytes; findings 174
+    wave_21_process_test.go:63: controls-asan: 121956 identical finding bytes; findings 174
+    wave_21_process_test.go:121: timer judgment mutant: exit 0, comparison catches byte 102
+    wave_21_process_test.go:121: process-exit judgment mutant: exit 0, comparison catches byte 6479
+    wave_21_process_test.go:121: blocking judgment mutant: exit 0, comparison catches byte 15965
+    wave_21_process_test.go:136: node-symbol-context: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:136: node-symbol-context/follow-alias: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:136: program-modules: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:136: resolved-declaration: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:143: compiler: 5087 identical finding bytes; findings 0
+    wave_21_process_test.go:144: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_process_test.go:150: compiler quiet timing native 3.104731s Go 0.318935s
+    wave_21_process_test.go:143: repository: 18485 identical finding bytes; findings 0
+    wave_21_process_test.go:144: repository-asan: 18485 identical finding bytes; findings 0
+    wave_21_process_test.go:150: repository quiet timing native 0.364910s Go 0.117028s
+--- PASS: TestWave21ProcessRules (89.07s)
+=== RUN   TestWave21ReactCores
+    wave_21_react_cores_test.go:105: 91/100 valid production-fixture and independent controls
+    wave_21_react_cores_test.go:122: batch-00: 4369 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:124: batch-00-asan: 4369 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:122: batch-01: 1105 identical finding bytes; findings 1
+    wave_21_react_cores_test.go:124: batch-01-asan: 1105 identical finding bytes; findings 1
+    wave_21_react_cores_test.go:122: batch-02: 3190 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:124: batch-02-asan: 3190 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:122: batch-03: 4909 identical finding bytes; findings 6
+    wave_21_react_cores_test.go:124: batch-03-asan: 4909 identical finding bytes; findings 6
+    wave_21_react_cores_test.go:122: batch-04: 4190 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:124: batch-04-asan: 4190 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:122: batch-05: 2033 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:124: batch-05-asan: 2033 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:122: batch-06: 5628 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:124: batch-06-asan: 5628 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:122: batch-07: 3471 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:124: batch-07-asan: 3471 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:122: batch-08: 2033 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:124: batch-08-asan: 2033 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:122: batch-09: 3772 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:124: batch-09-asan: 3772 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:122: batch-10: 2226 identical finding bytes; findings 3
+    wave_21_react_cores_test.go:124: batch-10-asan: 2226 identical finding bytes; findings 3
+    wave_21_react_cores_test.go:122: batch-11: 1668 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:124: batch-11-asan: 1668 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:176: render-unconditional: exit 0, empty stderr; independent complete-byte comparison catches byte 584
+    wave_21_react_cores_test.go:176: effect-setter: exit 0, empty stderr; independent complete-byte comparison catches byte 1668
+    wave_21_react_cores_test.go:176: static-creator: exit 0, empty stderr; independent complete-byte comparison catches byte 73
+    wave_21_react_cores_test.go:179: 91 controls: prepared-input native wall 0.017485s; full Go wall 0.255472s; Go fixture preparation 0.277096s. Different input pipelines, not an end-to-end native speed comparison
+    wave_21_react_cores_test.go:218: adjacency-row alias mutant: exit 0, empty stderr; byte comparison catches byte 3251
+    wave_21_react_cores_test.go:224: compiler-prepared: 5087 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:226: compiler-prepared-asan: 5087 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:224: repository-prepared: 18485 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:226: repository-prepared-asan: 18485 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:257: released handle exits 70; retained registry mutant exits 0 and is caught
+    wave_21_react_cores_test.go:263: react-type-names suffix mutant compiles; strict-request assertion catches it
+--- PASS: TestWave21ReactCores (465.47s)
+=== RUN   TestWave21ReactPrerequisites
+    wave_21_react_prerequisites_test.go:71: effect-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: effect-captures production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: render-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: render-captures production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: static-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:79: static-direct normal parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 76 in /tmp/adamic-gate/TestWave21ReactPrerequisites1111823356/001/static-direct.tsx
+    wave_21_react_prerequisites_test.go:79: static-direct asan parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 76 in /tmp/adamic-gate/TestWave21ReactPrerequisites1111823356/001/static-direct.tsx
+    wave_21_react_prerequisites_test.go:71: static-phi production Go: findings 1
+    wave_21_react_prerequisites_test.go:79: static-phi normal parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 133 in /tmp/adamic-gate/TestWave21ReactPrerequisites1111823356/001/static-phi.tsx
+    wave_21_react_prerequisites_test.go:79: static-phi asan parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 133 in /tmp/adamic-gate/TestWave21ReactPrerequisites1111823356/001/static-phi.tsx
+    wave_21_react_prerequisites_test.go:114: effect-positive prerequisite guard mutant: exit 0; required Go message disappeared
+    wave_21_react_prerequisites_test.go:114: render-positive prerequisite guard mutant: exit 0; required Go message disappeared
+    wave_21_react_prerequisites_test.go:114: static-positive prerequisite guard mutant: exit 0; required Go message disappeared
+    wave_21_react_prerequisites_test.go:129: parser guard mutant: exit 0; required JSX refusal disappeared
+    wave_21_react_prerequisites_test.go:133: compiler Go baseline only: findings 0; 5087 canonical bytes
+    wave_21_react_prerequisites_test.go:133: repository Go baseline only: findings 0; 18485 canonical bytes
+--- PASS: TestWave21ReactPrerequisites (46.43s)
+=== RUN   TestWave21Enums
+    wave_21_test.go:57: controls: 4486 identical finding bytes; findings 9
+    wave_21_test.go:63: controls-asan: 4486 identical finding bytes; findings 9
+    wave_21_test.go:89: enum mutant: exit 0, byte oracle catches byte 66
+    wave_21_test.go:98: released enum query: panic 70, invalid or released checker handle
+    wave_21_test.go:103: released registry mutant: exit 0 caught by required panic 70
+    wave_21_test.go:110: compiler: 5087 identical finding bytes; findings 0
+    wave_21_test.go:111: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_test.go:110: repository: 18485 identical finding bytes; findings 0
+    wave_21_test.go:111: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave21Enums (49.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	880.182s
