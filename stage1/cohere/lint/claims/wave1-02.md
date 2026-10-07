@@ -101,3 +101,19 @@ public names including trailing sentence punctuation. All three have false
 needs_type_information and binding_only inventory flags. No name appears in
 main port source or any fetched origin claim. This claim is pushed before code.
 Shared-harness gaps will be stated, with independent rule logic still ported.
+
+## Fifth reservation, October 7
+
+Earlier rule implementations, comparisons, mutants and explicit shared gaps
+through 6de3b402 are pushed. All origin heads were fetched; selection examined
+350 origin refs and 53 claim Markdown files. Main remains ef3d907e.
+The original 46 helper-ready rules are exhausted. The next three syntax-only
+inventory entries, neither ported on main nor named in origin claims, are:
+
+1. dot-notation
+2. grouped-accessor-pairs
+3. id-length
+
+Both needs_type_information and binding_only are false for each entry.
+This reservation is pushed before implementation. Existing shared CFG, JSX,
+parser and reporting limitations remain documented in owned rule reports.
