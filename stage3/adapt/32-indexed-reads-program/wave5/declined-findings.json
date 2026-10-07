@@ -176,14 +176,6 @@
     "reason": "The concatenated arrayFrom map-value results inherit iterator-overload inference; no indexed expression is involved."
   },
   {
-    "file": "executeCommandLine.ts",
-    "line": 1180,
-    "column": 105,
-    "code": 18048,
-    "diagnostic": "src/compiler/executeCommandLine.ts:1180:105: error TS18048: 'count' is possibly 'undefined'.",
-    "reason": "The reduceLeftIterator callback receives a possibly undefined numeric value from its iterator-helper overload; this is a callback parameter contract, not an indexed read."
-  },
-  {
     "file": "moduleNameResolver.ts",
     "line": 2772,
     "column": 21,

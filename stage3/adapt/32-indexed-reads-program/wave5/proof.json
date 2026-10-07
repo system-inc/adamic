@@ -125,34 +125,10 @@
       "after_sha256": "9bec9404174a0457321d305a5962c6f7e9e992eec689e704bc77cbd444ba9112",
       "before_CRLF": 2493,
       "after_CRLF": 2493
-    },
-    "expressionToTypeNode.ts": {
-      "before_sha256": "bfda3cb14288a29c81efb212f08bd161faf765b1f1610f33f27ca20eae7bc3c2",
-      "after_sha256": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b",
-      "before_CRLF": 1330,
-      "after_CRLF": 1330
-    },
-    "executeCommandLine.ts": {
-      "before_sha256": "da6c5ada538237de89b9ecd9374fb28a828479a2a434110d8beaaa5ac1b070e3",
-      "after_sha256": "b4c1de0eb74fd47c82b3f9df55315bced6c669fb5faa7295ea527101f91df728",
-      "before_CRLF": 1309,
-      "after_CRLF": 1309
     }
   },
-  "verification": "PASS expressionToTypeNode.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS executeCommandLine.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderState.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderStatePublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watch.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watchPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watchUtilities.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS resolutionCache.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tsbuild.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tsbuildPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleNameResolver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleSpecifiers.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sys.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "verification": "PASS builder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderState.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderStatePublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watch.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watchPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watchUtilities.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS resolutionCache.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tsbuild.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tsbuildPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleNameResolver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleSpecifiers.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sys.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
   "idempotence": [
-    {
-      "file": "expressionToTypeNode.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 2
-    },
-    {
-      "file": "executeCommandLine.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 2
-    },
     {
       "file": "builder.ts",
       "assertions": 0,
@@ -280,8 +256,8 @@
       "declined": 0
     }
   ],
-  "census_before": 217,
-  "census_after": 63,
+  "census_before": 212,
+  "census_after": 62,
   "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n",
   "wave2_incremental_before": 14,
   "wave3_incremental_before": 85,
@@ -290,15 +266,6 @@
   "inventory_mutant": {
     "mutant": "one unledgered indexed expression added",
     "caught": "indexed inventory drift: builder.ts: 36 != 35"
-  },
-  "wave6_incremental_before": 67,
-  "planning_mutant": {
-    "mutant": "unexpected indexed expression in the last planned file",
-    "file": "performance.ts",
-    "exit": 1,
-    "error": "indexed inventory drift: performance.ts: 1 != 0",
-    "files_verified_unchanged": 23,
-    "changed_files": []
   },
   "oracle": {
     "tree": "/tmp/adapt32-after",
@@ -316,7 +283,7 @@
           "--no-fund"
         ],
         "exit": 0,
-        "seconds": 3.428
+        "seconds": 4.456
       },
       "build": {
         "command": [
@@ -325,7 +292,7 @@
           "build"
         ],
         "exit": 0,
-        "seconds": 7.557
+        "seconds": 15.181
       },
       "tests": {
         "command": [
@@ -337,7 +304,7 @@
           "--no-colors"
         ],
         "exit": 0,
-        "seconds": 330.41
+        "seconds": 413.644
       }
     },
     "status": "pass",
@@ -347,7 +314,7 @@
       "pending": 0
     },
     "baseline_diffs": [],
-    "wall_seconds": 341.459
+    "wall_seconds": 433.359
   },
   "baseline_diff_bytes": 0
 }

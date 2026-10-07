@@ -3,7 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
-const files = ["builder.ts", "builderPublic.ts", "builderState.ts", "builderStatePublic.ts", "watch.ts", "watchPublic.ts", "watchUtilities.ts", "resolutionCache.ts", "tsbuild.ts", "tsbuildPublic.ts", "moduleNameResolver.ts", "moduleSpecifiers.ts", "sys.ts", "program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
+const files = ["expressionToTypeNode.ts", "executeCommandLine.ts", "builder.ts", "builderPublic.ts", "builderState.ts", "builderStatePublic.ts", "watch.ts", "watchPublic.ts", "watchUtilities.ts", "resolutionCache.ts", "tsbuild.ts", "tsbuildPublic.ts", "moduleNameResolver.ts", "moduleSpecifiers.ts", "sys.ts", "program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
