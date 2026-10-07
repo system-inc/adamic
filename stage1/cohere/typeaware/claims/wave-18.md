@@ -51,3 +51,18 @@ implementation. No shared harness or registration generator will be edited.
 Continuation implementation: the three core visitors are complete in 1cba7ee7.
 WAVE_18_CORE_REPORT.md records byte agreement, enabled relational options,
 mutants, sanitizers, released handles, corpus coverage and observed timings.
+
+## Third batch after pushed core completion
+
+Previous ports and evidence are pushed through c78d9bf9. The next three
+rules reserved here, before any implementation, are:
+
+1. no-new-func
+2. no-new-native-nonconstructor
+3. no-new-wrappers
+
+Selection checks 341 fetched origin refs, 33 distinct claim
+Markdown blobs, 117 claimed rules, and 25 ranked ports on
+origin/main (ef3d907e) and origin/codex/tsgo-c-library
+(5afbdb83). These are the first remaining names
+in the combined by-volume ranking; all three have zero corpus findings.
