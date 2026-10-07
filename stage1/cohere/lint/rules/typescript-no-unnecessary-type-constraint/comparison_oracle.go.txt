@@ -57,7 +57,7 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		}
 		fmt.Fprint(out, display[:footer])
 		repair, replacement, suggestion := "", "", ""
-		rich := d.RuleName == "@typescript-eslint/no-unnecessary-type-constraint" || d.RuleName == "@typescript-eslint/prefer-as-const" || d.RuleName == "@typescript-eslint/prefer-enum-initializers"
+		rich := d.RuleName == "no-useless-computed-key" || d.RuleName == "@typescript-eslint/no-unnecessary-type-constraint" || d.RuleName == "@typescript-eslint/prefer-as-const" || d.RuleName == "@typescript-eslint/prefer-enum-initializers"
 		if !rich && len(d.Fixes) > 0 {
 			if len(d.Fixes) != 1 || d.Fixes[0].Range != d.Range {
 				panic("unexpected fix shape")
