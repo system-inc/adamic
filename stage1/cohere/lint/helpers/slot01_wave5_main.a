@@ -1,6 +1,7 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
 import { collapseIsValidNamedValue } from './collapse_valid_named_value.a';
+import { collapseBreakpointBucket } from './collapse_breakpoint_bucket.a';
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
 if (file.kind === 'Error') { panic(file.message); }
@@ -10,5 +11,10 @@ for (const line of file.text.split('\n')) {
     const root = json.parse();
     if (root < 0) { panic(json.error); }
     const value = json.node(root).text;
-    console.log(`${collapseIsValidNamedValue(value)}`);
+    if (args[1] === 'bucket') {
+        const bucket = collapseBreakpointBucket(value);
+        let units = `${bucket.length}:`;
+        for (let index = 0; index < bucket.length; index++) { units += `${bucket.charCodeAt(index)},`; }
+        console.log(units);
+    } else { console.log(`${collapseIsValidNamedValue(value)}`); }
 }

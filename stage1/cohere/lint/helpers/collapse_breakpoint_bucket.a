@@ -1,0 +1,11 @@
+export function collapseBreakpointBucket(value: string): string {
+    const opening = value.indexOf('(');
+    if (opening >= 0) { return value.slice(0, opening); }
+    let bucket = '';
+    for (let index = 0; index < value.length; index++) {
+        const character = value.charCodeAt(index);
+        if ((character >= 48 && character <= 57) || character === 46) { continue; }
+        bucket += value.slice(index, index + 1);
+    }
+    return bucket;
+}
