@@ -1,16 +1,6 @@
 {
   "roots": 78,
   "counts_before": {
-    "corePublic.ts": {
-      "TS1294": 1
-    },
-    "performanceCore.ts": {
-      "TS2591": 2,
-      "TS2375": 1
-    },
-    "types.ts": {
-      "TS1294": 73
-    },
     "expressionToTypeNode.ts": {
       "TS2412": 3,
       "TS7030": 5,
@@ -183,16 +173,6 @@
     "performance.ts": {}
   },
   "counts_after": {
-    "corePublic.ts": {
-      "TS1294": 1
-    },
-    "performanceCore.ts": {
-      "TS2591": 2,
-      "TS2375": 1
-    },
-    "types.ts": {
-      "TS1294": 73
-    },
     "expressionToTypeNode.ts": {
       "TS2412": 3,
       "TS7030": 5
@@ -335,9 +315,6 @@
     "performance.ts": {}
   },
   "total_before": {
-    "corePublic.ts": 1,
-    "performanceCore.ts": 3,
-    "types.ts": 73,
     "expressionToTypeNode.ts": 9,
     "executeCommandLine.ts": 11,
     "builder.ts": 73,
@@ -363,9 +340,6 @@
     "performance.ts": 0
   },
   "total_after": {
-    "corePublic.ts": 1,
-    "performanceCore.ts": 3,
-    "types.ts": 73,
     "expressionToTypeNode.ts": 8,
     "executeCommandLine.ts": 8,
     "builder.ts": 50,

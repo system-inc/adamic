@@ -1,16 +1,5 @@
 [
   {
-    "file": "types.ts",
-    "line": 7321,
-    "column": 18,
-    "expression": "DiagnosticCategory[d.category]",
-    "occurrence": 1,
-    "total": 1,
-    "action": "assert",
-    "class": "U-typed",
-    "invariant": "DiagnosticCategory has a reverse name for every member of the category enum accepted by diagnosticCategoryName."
-  },
-  {
     "file": "programDiagnostics.ts",
     "line": 192,
     "column": 30,

@@ -1,50 +1,6 @@
 # Required indexed reads in the program partition
 
-## Current coverage after final wave 7
-
-All 26 assigned compiler files are reviewed. This wave reviews corePublic.ts,
-performanceCore.ts and types.ts in full and adds one U-typed required-read
-assertion to DiagnosticCategory[d.category], at its original evaluation point.
-The reverse mapping exists for every member of DiagnosticCategory. The two
-smaller files have zero element-access expressions. The 43 IndexedAccessType
-nodes in types.ts are type-level lookups, have no runtime evaluation point, and
-are declined as not indexed reads. The cumulative ledger has 301 entries:
-96 assertions and 205 declines; fifteen source files change. No U-zero site is selected.
-
-| File | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| corePublic.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 1 / 1 |
-| performanceCore.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 3 / 3 |
-| types.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 73 / 73 |
-
-Cumulative five-code census remains **217 to 63**; incremental census remains
-**63 to 63**. All 78 roots and Adamic checker options are unchanged. Every
-remaining diagnostic has a reason in declined-findings.json or other-findings.json.
-The [per-file path to zero](zero-readiness.md) covers all 63 target-code findings
-and all 441 full-checker findings in this partition.
-
-**New full-checker zero files: none.** The four already-zero files remain
-builderPublic.ts, builderStatePublic.ts, symbolWalker.ts and performance.ts.
-corePublic.ts retains its Comparison enum finding; performanceCore.ts retains
-two missing Node host type bindings and one exact optional contract; types.ts
-retains 73 enum syntax findings. The source adapter does not change those contracts.
-
-Stock emitted JavaScript is byte-identical for all 26 files; the second adapter
-CLI run makes zero edits and preserves CRLF. The DiagnosticCategory[d.category]!
-to ?? 0 mutant is caught by the independent stock emitter and site contract,
-both exiting 1, as recorded in wave7-mutant-proof.json. An unexpected indexed
-read in the final planned file fails before writing any of the 26 files; proof.json
-records this planning mutant. Final default oracle: **106,367 passing, zero failing,
-zero pending**, with an empty baseline diff. Install 3.799s, build 7.59s,
-tests 347.24s, total 358.707s.
-
-Only adaptations 00, 10, 30 and 32 are applied; adaptation 20 is excluded.
-Earlier evidence is archived under wave1/ through wave6/. Logs are
-/tmp/adapt32-wave7-*.log and /tmp/adapt32-wave7-oracle/.
-sourcemap.ts, transformer.ts and visitorPublic.ts belong to 33; debug.ts and
-path.ts belong to 30. No files in those partitions are edited.
-
-## Historical coverage after wave 6
+## Current coverage after wave 6
 
 This wave reviews all eight indexed expressions in expressionToTypeNode.ts
 and executeCommandLine.ts. It adds four required-read assertions for a guarded
@@ -67,7 +23,7 @@ This wave five-code census is 5 to 1; cumulative census is 217 to 63, and increm
 
 Stock emitted JavaScript is byte-identical for all 23 files. The second adapter CLI run makes zero edits, with identical CRLF counts. The fn.parameters[0]! to ?? 0 mutant is caught by the independent stock emitter and site contract, both exiting 1; wave6-mutant-proof.json records both failures. Final default oracle: **106,367 passing, zero failing, zero pending**, with an empty baseline diff. Install 3.428s, build 7.557s, tests 330.41s, total 341.459s. Only adaptations 00, 10, 30 and 32 are applied; adaptation 20 is excluded. Logs are /tmp/adapt32-wave6-*.log and /tmp/adapt32-wave6-oracle/. Earlier proof snapshots are archived under wave1/ through wave5/.
 
-The final ownership ruling assigns corePublic.ts, performanceCore.ts and types.ts to 32; sourcemap.ts, transformer.ts and visitorPublic.ts belong to 33 and are excluded.
+Partition 32 remains partial for the catch-all remainder: ownership of corePublic.ts, performanceCore.ts, sourcemap.ts, transformer.ts, types.ts and visitorPublic.ts was requested and is not yet confirmed. Those files remain untouched to avoid crossing another worker territory. checker.ts, emitter.ts, transformers/, and all adaptation-30-owned files remain untouched.
 
 ## Historical coverage after wave 5
 
@@ -213,7 +169,7 @@ phase logs under `/tmp/adapt32-wave3-oracle-final/`. Final raw census is under
 
 ## Historical waves 1 and 2
 
-Waves 1 and 2 were a **partial partition 32**, on TypeScript 6.0.3 at
+This is a **partial partition 32**, on TypeScript 6.0.3 at
 `050880ce59e30b356b686bd3144efe24f875ebc8`. It adds **19 required-read `!`
 checks** in `binder.ts`, `semver.ts`, `programDiagnostics.ts`, and `tracing.ts`. It also
 reviews `symbolWalker.ts` and `performance.ts` without changing them. The
@@ -368,7 +324,10 @@ oracle phase logs are under `/tmp/adapt32-wave1-oracle/` and
 
 ## Remaining partition work
 
-All 26 assigned compiler files are reviewed. The remaining 63 five-code findings and every full-checker blocker are accounted for in [zero-readiness.md](zero-readiness.md). Other partitions, including adaptation 30 and emit partition 33, remain excluded.
+Waves 4 through 6 now cover the explicitly assigned module resolution, system,
+builder, watch, resolution-cache, tsbuild, expression and command-line files.
+The catch-all remainder awaits the ownership clarification listed above.
+No unchecked invariant or blanket assertion is inferred for those files.
 This unit does not establish the critical-path target of 40 complete compiler
 files past the checker. The whole Adamic
 repository gate, native tsc build, browser integration, and ESLint-rule tests
@@ -378,7 +337,6 @@ are not run for this source-adaptation-only wave.
 
 | Site | Read | Class | Action | Invariant or decline reason |
 | --- | --- | --- | --- | --- |
-| types.ts:7321:18 | `DiagnosticCategory[d.category]` | U-typed | assert | Every DiagnosticCategory member has an enum reverse name. |
 | programDiagnostics.ts:192:30 | `file.libReferenceDirectives[reason.index]` | U-position | assert | The lib-reference reason index comes from this source file directive list. |
 | programDiagnostics.ts:253:94 | `fileIncludeReasons[0]` | U-endpoint | assert | Processing an extra reason pushes its diagnostic before this cache merge reads the first element. |
 | programDiagnostics.ts:256:123 | `fileIncludeReasons[0]` | U-endpoint | assert | Processing an extra reason pushes its diagnostic before this cache merge reads the first element. |
