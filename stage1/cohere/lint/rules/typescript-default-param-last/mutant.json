@@ -1,0 +1,6 @@
+{
+  "name": "typescript-default-param-last-wrong-answer",
+  "file": "rule.a",
+  "from": "if(optional || initialized) return 1;",
+  "to": "if(initialized) return 1;"
+}

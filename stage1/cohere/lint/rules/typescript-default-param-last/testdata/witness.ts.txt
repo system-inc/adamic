@@ -1,0 +1,7 @@
+function foo(a = 1, b: number) {}
+function bar(a?: number, b: number) {}
+declare function ambient(a = 1, b: number): void;
+class Shape { constructor(public a = 1, b: number) {} set value(a = 1, b: number) {} }
+function comments(a /* = ignored */: number, b = 1) {}
+function defaults({ a } = {}, [b] = [], c: number) {}
+const arrow = (a = 1, b: number) => a;
