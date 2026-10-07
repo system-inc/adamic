@@ -119,7 +119,8 @@ export interface PhiOperandInterface<P> {
  * every read and write of one goes through here.
  */
 export interface GraphInterface<F, B, P> {
-    // entry is the block control begins at.
+    // entry is the block control begins at. No edge enters it, so it has no predecessors: construct's
+    // lookup ends there, refuses a function whose entry breaks this, and verifySingleAssignment reports one.
     readonly entry: (fn: F) => BlockIdType;
     // blockBound is one past the largest block id the function has handed out or holds.
     readonly blockBound: (fn: F) => number;
