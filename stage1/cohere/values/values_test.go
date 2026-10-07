@@ -160,7 +160,7 @@ var mutants = []mutant{
 	{
 		name: "an operator's sourceIndex its index",
 		file: "parser.ts",
-		from: "new Position(token.startLine, token.startColumn)), token.endLine);",
+		from: "new Position(token.startLine, token.startColumn),\n            ),\n            token.endLine,\n        );",
 		to:   "new Position(token.startLine, token.startColumn)), token.index);",
 	},
 	// A space before a comma is compared with ',', which no token's kind is; comparing with 'comma'
@@ -182,14 +182,14 @@ var mutants = []mutant{
 	{
 		name: "DEL written unescaped",
 		file: "main.ts",
-		from: "if (unit < 0x20 || unit === 0x7f) {",
+		from: "if(unit < 0x20 || unit === 0x7f) {",
 		to:   "if (unit < 0x20) {",
 	},
 	// The driver writes U+001F as itself, the last control character, where Go cohere's side escapes it.
 	{
 		name: "U+001F written unescaped",
 		file: "main.ts",
-		from: "if (unit < 0x20 || unit === 0x7f) {",
+		from: "if(unit < 0x20 || unit === 0x7f) {",
 		to:   "if (unit < 0x1f || unit === 0x7f) {",
 	},
 	// Reviewer R's round six: a `#` before a 9 tokenized alone, so #999 is `#` and the number 999.
@@ -203,7 +203,7 @@ var mutants = []mutant{
 	{
 		name: "isColor's digits stopping at 8",
 		file: "parser.ts",
-		from: "if (!((unit >= 0x30 && unit <= 0x39) || (unit >= 0x61 && unit <= 0x66) || (unit >= 0x41 && unit <= 0x46))) {",
+		from: "if(!((unit >= 0x30 && unit <= 0x39) || (unit >= 0x61 && unit <= 0x66) || (unit >= 0x41 && unit <= 0x46))) {",
 		to:   "if (!((unit >= 0x30 && unit <= 0x38) || (unit >= 0x61 && unit <= 0x66) || (unit >= 0x41 && unit <= 0x46))) {",
 	},
 	// Reviewer R's round six: #z1 split into `#` and z1.
@@ -231,7 +231,7 @@ var mutants = []mutant{
 	{
 		name: "a word ending at =",
 		file: "tokenize.ts",
-		from: "function wordEnd(css: string, index: number): boolean {\n\tswitch (css.charCodeAt(index)) {\n",
+		from: "function wordEnd(css: string, index: number): boolean {\n    switch(css.charCodeAt(index)) {\n",
 		to:   "function wordEnd(css: string, index: number): boolean {\n\tswitch (css.charCodeAt(index)) {\n\t\tcase 0x3d:\n",
 	},
 	// Reviewer R's round six: CALC(1 -2) parsed, where upstream refuses it.
@@ -245,7 +245,7 @@ var mutants = []mutant{
 	{
 		name: "the url argument check ignoring case",
 		file: "parser.ts",
-		from: "\t\t\tthis.#current.value === 'url' &&",
+		from: "            this.#current.value === 'url' &&",
 		to:   "\t\t\tthis.#current.value.toLowerCase() === 'url' &&",
 	},
 	// Reviewer R's round six: Url(//x) in loose mode parsed, where upstream reads // as a comment and refuses it.
@@ -259,14 +259,14 @@ var mutants = []mutant{
 	{
 		name: "unicodeRange's digits stopping at 8",
 		file: "tokenize.ts",
-		from: "return (code >= 0x61 && code <= 0x66) || (code >= 0x41 && code <= 0x46) || (code >= 0x30 && code <= 0x39) || code === 0x3f || code === minus;",
+		from: "return (\n        (code >= 0x61 && code <= 0x66) ||\n        (code >= 0x41 && code <= 0x46) ||\n        (code >= 0x30 && code <= 0x39) ||\n        code === 0x3f ||\n        code === minus\n    );",
 		to:   "return (code >= 0x61 && code <= 0x66) || (code >= 0x41 && code <= 0x46) || (code >= 0x30 && code <= 0x38) || code === 0x3f || code === minus;",
 	},
 	// Reviewer R's round six: -- alone an operator, where upstream makes it a word.
 	{
 		name: "-- a word only before more text",
 		file: "tokenize.ts",
-		from: "if (code === minus && nextChar === minus) {",
+		from: "if(code === minus && nextChar === minus) {",
 		to:   "if (code === minus && nextChar === minus && pos + 2 < length) {",
 	},
 	// '?' is no longer part of a unicode range.
