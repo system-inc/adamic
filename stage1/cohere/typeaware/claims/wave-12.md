@@ -78,3 +78,21 @@ Audit: 389 origin refs, 142 claimed ranking names, 25 checker ports on
 main/the bridge branch, 30 remaining entries. Exact matching module filenames
 across origin refs found no competing ports. This claim is pushed before code.
 Shared harness and generator files remain untouched.
+
+## Parked React HIR batch
+
+Status: PARKED under Ahra's explicit continuation instruction.
+- react-hooks/set-state-in-effect: missing native source HIR Lower/Construct/SSA, captures, memo erasure/inlining and control dependence.
+- react-hooks/set-state-in-render: missing native source HIR Lower/Construct/SSA, captures and compilation-unit/memo scope preparation.
+- react-hooks/static-components: missing native source HIR/SSA and JSX lowering.
+
+These are not completed source ports. Existing evidence is in wave12_fifth/REPORT.md. The parked claims count as finished only for the landing-first cap. Analysis modules are being ported on #dnv6f2c; JSX support is landing on area/stage1-lint. This worker does not push those integration branches.
+
+## Sixth batch after parking the HIR claims
+
+Fresh all-origin audit: 529 refs and 33 distinct Markdown claim blobs. Ranking comes from both VOLUME_REPORT linked count files. Base ports were checked by registry names in native source, because suite implementation filenames differ from rule names. Eighteen candidates remained; exact native module filename checks on all origin refs found no existing modules for them. The first three which do not consume the parked HIR analysis are:
+- react/jsx-fragments
+- react/jsx-no-constructed-context-values
+- react/jsx-no-undef
+
+All have zero compiler/repository volume. Production implementations use AST, scope and checker declarations, not React HIR Lower/Construct/SSA. This reservation is pushed before implementation. Native JSX and numeric supplied-node integration are dependencies to verify against the shared landing; rule.json will declare numeric kinds. No new shared files will be edited.
