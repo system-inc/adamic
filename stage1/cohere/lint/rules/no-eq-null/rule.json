@@ -1,0 +1,12 @@
+{
+  "name": "no-eq-null",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoEqNull",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoEqNull"
+}

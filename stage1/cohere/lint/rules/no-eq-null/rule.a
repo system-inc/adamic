@@ -1,0 +1,23 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    nullOperand(index: number): boolean {
+        return this.context.node(this.context.unwrap(index)).kind === 'NullKeyword';
+    }
+    visit(index: number): void {
+        const context = this.context; const node = context.node(index);
+        if(node.kind !== 'BinaryExpression') return;
+        const operator = context.node(node.children[1] ?? panic('comparison without operator')).kind;
+        if(operator !== 'EqualsEqualsToken' && operator !== 'ExclamationEqualsToken') return;
+        const left = node.children[0] ?? panic('comparison without left operand');
+        const right = node.children[2] ?? panic('comparison without right operand');
+        if(this.nullOperand(left) || this.nullOperand(right)) {
+            context.report(index, 'no-eq-null', 'unexpected', message, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
