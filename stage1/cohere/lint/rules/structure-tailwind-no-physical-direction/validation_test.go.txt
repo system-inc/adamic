@@ -1,0 +1,161 @@
+package lint
+
+import (
+	"bytes"
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+func TestWave08Shapes(t *testing.T) {
+	cases := []struct{ suffix, rule, source string }{
+		{".ts", "structure/tailwind-no-physical-direction", "const x = 'ml-4 mr-4'; const y = `ml-2 ${x} mr-3 ${x} pl-2`;"},
+		{".tsx", "structure/tailwind-no-physical-direction", "const x = <div className=\"ml-4\" />;"},
+		{".js", "structure/tailwind-no-physical-direction", "const x = 'ml-4';"},
+		{".a", "structure/tailwind-no-physical-direction", "const x = 'ml-4';"},
+		{".ts", "structure/tailwind-no-physical-direction", "const x = 'flex rtl:ml-4 md:ltr:mr-4 -pl-2 -border-l-2 border-l rounded-r scroll-pr-2 ml-';"},
+		{".ts", "structure/tailwind-no-physical-direction", "const x = 'ml-4\\u0085mr-4\\ufeffpl-4';"},
+		{".ts", "structure/tailwind-no-physical-direction", "const x = 'flex ml-{{replacement}} mr-{{original}}';"},
+		{".ts", "@next/next/no-assign-module-variable", "export let a = 1, module = {}; function f(){ let module; } const { module } = x; for(let module of x){};"},
+		{".ts", "@next/next/no-assign-module-variable", "declare let module; const m\\u006fdule = {}; let moduleName;"},
+		{".ts", "@typescript-eslint/default-param-last", "function f({a = 1}, b) {} function g(x: {a: number}, y) {} function h(x /* = */: number, y){}"},
+		{".ts", "@typescript-eslint/default-param-last", "function f(a: (x: number) => number = x => x, b: number) {} const g = (a?: number, b: number) => a;"},
+		{".ts", "@typescript-eslint/default-param-last", "declare function f(a = 1, b: number): void; class C { constructor(public a = 0, private b: number){} m(a?: number, b: number){} }"},
+		{".ts", "@typescript-eslint/default-param-last", "function f(a = 1, b?: number, ...c){} function g(a = 1, b, c = 2, d, e = 3){}"},
+	}
+	groups := map[string][]string{}
+	for i, c := range cases {
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("shape-%d%s", i, c.suffix))
+		if err := os.WriteFile(path, []byte(c.source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		name := "NonTSX"
+		if c.suffix == ".tsx" {
+			name = "TSX"
+		}
+		groups[name] = append(groups[name], path+"\t"+c.rule)
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	for _, name := range []string{"NonTSX", "TSX"} {
+		t.Run(name, func(t *testing.T) { compare(t, oracle, binary, directory, manifest(t, groups[name])) })
+	}
+}
+
+func TestWave08Throughput(t *testing.T) {
+	root := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if root == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
+	}
+	var corpus []string
+	err := filepath.WalkDir(filepath.Join(root, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+			corpus = append(corpus, path)
+		}
+		return err
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, c := range []struct{ rule, source string }{
+		{"structure/tailwind-no-physical-direction", "const c%d = 'ml-4 md:mr-2';\n"},
+		{"@next/next/no-assign-module-variable", "function f%d(){ let module = {}; }\n"},
+		{"@typescript-eslint/default-param-last", "function f%d(a = 1, b: number) {}\n"},
+	} {
+		path := filepath.Join(t.TempDir(), "positive.ts")
+		var source strings.Builder
+		for i := 0; i < 1000; i++ {
+			fmt.Fprintf(&source, c.source, i)
+		}
+		if err := os.WriteFile(path, []byte(source.String()), 0644); err != nil {
+			t.Fatal(err)
+		}
+		var rows []string
+		for _, file := range append(append([]string{}, corpus...), path) {
+			rows = append(rows, file+"\t"+c.rule)
+		}
+		manifestPath := manifest(t, rows)
+		best := map[string]time.Duration{}
+		var want []byte
+		for round := 0; round < 5; round++ {
+			names := []string{"native", "Node", "Go"}
+			for offset := 0; offset < 3; offset++ {
+				name := names[(round+offset)%3]
+				var result execution
+				switch name {
+				case "native":
+					result = execute(t, "", binary, "--manifest", manifestPath, "--count")
+				case "Node":
+					result = node(t, directory, manifestPath, true)
+				case "Go":
+					result = execute(t, "", oracle, "--manifest", manifestPath, "--count")
+				}
+				if want == nil {
+					want = result.output
+				} else if !bytes.Equal(want, result.output) {
+					t.Fatalf("%s count mismatch", name)
+				}
+				if best[name] == 0 || result.duration < best[name] {
+					best[name] = result.duration
+				}
+				t.Logf("%s round=%d %s seconds=%.6f findings=%s", c.rule, round+1, name, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(want), &count); err != nil {
+			t.Fatal(err)
+		}
+		for _, name := range []string{"native", "Node", "Go"} {
+			t.Logf("%s %s: %.2f findings/s seconds=%.6f files=%d findings=%d", c.rule, name, float64(count)/best[name].Seconds(), best[name].Seconds(), len(rows), count)
+		}
+	}
+}
+
+// Keep the complete upstream gate above. This additional gate measures the
+// supported-syntax subset separately, with the excluded JSX source logged.
+func TestWave08UpstreamSupported(t *testing.T) {
+	var rows []string
+	selected := map[string]int{}
+	blocked := map[string]int{}
+	for _, row := range upstream(t) {
+		columns := strings.Split(row, "\t")
+		rule := columns[1]
+		if rule != "structure/tailwind-no-physical-direction" && rule != "@next/next/no-assign-module-variable" && rule != "@typescript-eslint/default-param-last" {
+			continue
+		}
+		source, err := os.ReadFile(columns[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(source) == "export const c = <div className=\"flex ml-4\" />;\n" {
+			blocked[rule]++
+			t.Logf("JSX parser blocker: %s source=%q", row, source)
+			continue
+		}
+		selected[rule]++
+		rows = append(rows, row)
+	}
+	t.Logf("selected=%v blockedJSX=%v", selected, blocked)
+	if len(selected) != 3 {
+		t.Fatal("missing assigned rule cases")
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}

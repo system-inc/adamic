@@ -1,0 +1,113 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { description } from './messages.a';
+
+interface Mapping {
+    readonly prefix: string;
+    readonly replacement: string;
+    readonly exact: boolean;
+    readonly negatable: boolean;
+}
+
+const mappings: readonly Mapping[] = [
+    { prefix: 'ml-', replacement: 'ms-', exact: false, negatable: true },
+    { prefix: 'mr-', replacement: 'me-', exact: false, negatable: true },
+    { prefix: 'pl-', replacement: 'ps-', exact: false, negatable: true },
+    { prefix: 'pr-', replacement: 'pe-', exact: false, negatable: true },
+    { prefix: 'text-left', replacement: 'text-start', exact: true, negatable: false },
+    { prefix: 'text-right', replacement: 'text-end', exact: true, negatable: false },
+    { prefix: 'left-', replacement: 'start-', exact: false, negatable: true },
+    { prefix: 'right-', replacement: 'end-', exact: false, negatable: true },
+    { prefix: 'border-l', replacement: 'border-s', exact: true, negatable: false },
+    { prefix: 'border-l-', replacement: 'border-s-', exact: false, negatable: false },
+    { prefix: 'border-r', replacement: 'border-e', exact: true, negatable: false },
+    { prefix: 'border-r-', replacement: 'border-e-', exact: false, negatable: false },
+    { prefix: 'rounded-l', replacement: 'rounded-s', exact: true, negatable: false },
+    { prefix: 'rounded-l-', replacement: 'rounded-s-', exact: false, negatable: false },
+    { prefix: 'rounded-r', replacement: 'rounded-e', exact: true, negatable: false },
+    { prefix: 'rounded-r-', replacement: 'rounded-e-', exact: false, negatable: false },
+    { prefix: 'scroll-ml-', replacement: 'scroll-ms-', exact: false, negatable: false },
+    { prefix: 'scroll-mr-', replacement: 'scroll-me-', exact: false, negatable: false },
+    { prefix: 'scroll-pl-', replacement: 'scroll-ps-', exact: false, negatable: false },
+    { prefix: 'scroll-pr-', replacement: 'scroll-pe-', exact: false, negatable: false },
+];
+
+// strings.Fields uses Unicode White_Space, which differs from JavaScript's \s.
+function space(code: number): boolean {
+    return (code >= 9 && code <= 13) || code === 32 || code === 133 || code === 160 || code === 5760 ||
+        (code >= 8192 && code <= 8202) || code === 8232 || code === 8233 || code === 8239 || code === 8287 || code === 12288;
+}
+
+function fields(text: string): string[] {
+    const result: string[] = [];
+    let start = -1;
+    for(let index = 0; index <= text.length; index++) {
+        if(index === text.length || space(text.charCodeAt(index))) {
+            if(start >= 0) {
+                result.push(text.slice(start, index));
+                start = -1;
+            }
+        }
+        else if(start < 0) {
+            start = index;
+        }
+    }
+    return result;
+}
+
+const shape = /^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$/;
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    replacement(base: string): string {
+        const negative = base.startsWith('-') ? '-' : '';
+        const body = negative === '' ? base : base.slice(1);
+        for(const mapping of mappings) {
+            if(mapping.exact) {
+                if(negative === '' && body === mapping.prefix) {
+                    return mapping.replacement;
+                }
+            }
+            else if(body.startsWith(mapping.prefix) && (negative === '' || mapping.negatable)) {
+                const value = body.slice(mapping.prefix.length);
+                if(value !== '') {
+                    return negative + mapping.replacement + value;
+                }
+            }
+        }
+        return '';
+    }
+    visit(index: number): void {
+        const path = this.context.parser.path;
+        if(!path.endsWith('.ts') && !path.endsWith('.tsx')) {
+            return;
+        }
+        const tokens = fields(this.context.node(index).text);
+        if(!tokens.some(token => shape.test(token))) {
+            return;
+        }
+        for(const token of tokens) {
+            const parts = token.split(':');
+            const base = parts.pop() ?? panic('empty variant split');
+            const directionAware = parts.includes('rtl') || parts.includes('ltr');
+            if(directionAware) {
+                continue;
+            }
+            let replacement = this.replacement(base);
+            if(replacement === '') {
+                continue;
+            }
+            if(parts.length > 0) {
+                replacement = parts.join(':') + ':' + replacement;
+            }
+            this.context.report(index, 'structure/tailwind-no-physical-direction', 'useLogicalClass', description(token, replacement), '', '', '');
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

@@ -1,0 +1,6 @@
+usage:
+  adamic types <file.a|file.ts>...
+  adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
+  adamic build <file.a|file.ts> -o <out> [--count]
+exit status 2

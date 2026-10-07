@@ -1,0 +1,72 @@
+=== RUN   TestRulesAgree
+    lint_test.go:324: cohere cases: 402 unique source/rule/options combinations
+    lint_test.go:374: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestRulesAgree1782857191/015/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestRulesAgree1782857191/010/case-388.tsx
+--- FAIL: TestRulesAgree (75.12s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 214 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 12630367 bytes
+--- PASS: TestCompilerAndStage1Agree (42.43s)
+=== RUN   TestWave08Shapes
+    wave08_overlay_test.go:37: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestWave08Shapes2304410233/017/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 15 in /tmp/adamic-gate/TestWave08Shapes2304410233/002/shape-1.tsx
+--- FAIL: TestWave08Shapes (21.82s)
+=== RUN   TestWave08Throughput
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=1 native seconds=1.517956 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=1 Node seconds=1.172023 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=1 Go seconds=0.266770 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=2 Node seconds=1.183207 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=2 Go seconds=0.250797 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=2 native seconds=1.580773 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=3 Go seconds=0.251376 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=3 native seconds=1.607559 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=3 Node seconds=1.739241 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=4 native seconds=1.951494 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=4 Node seconds=1.715423 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=4 Go seconds=0.349171 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=5 Node seconds=1.896159 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=5 Go seconds=0.341790 findings=2000
+    wave08_overlay_test.go:74: structure/tailwind-no-physical-direction round=5 native seconds=1.601930 findings=2000
+    wave08_overlay_test.go:79: structure/tailwind-no-physical-direction native: 1317.56 findings/s seconds=1.517956 files=78 findings=2000
+    wave08_overlay_test.go:79: structure/tailwind-no-physical-direction Node: 1706.45 findings/s seconds=1.172023 files=78 findings=2000
+    wave08_overlay_test.go:79: structure/tailwind-no-physical-direction Go: 7974.57 findings/s seconds=0.250797 files=78 findings=2000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=1 native seconds=1.535019 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=1 Node seconds=1.867952 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=1 Go seconds=0.250193 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=2 Node seconds=1.122312 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=2 Go seconds=0.254238 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=2 native seconds=1.535515 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=3 Go seconds=0.254451 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=3 native seconds=1.602723 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=3 Node seconds=1.153598 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=4 native seconds=1.646218 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=4 Node seconds=1.201640 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=4 Go seconds=0.244303 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=5 Node seconds=1.138747 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=5 Go seconds=0.288013 findings=1000
+    wave08_overlay_test.go:74: @next/next/no-assign-module-variable round=5 native seconds=1.600636 findings=1000
+    wave08_overlay_test.go:79: @next/next/no-assign-module-variable native: 651.46 findings/s seconds=1.535019 files=78 findings=1000
+    wave08_overlay_test.go:79: @next/next/no-assign-module-variable Node: 891.02 findings/s seconds=1.122312 files=78 findings=1000
+    wave08_overlay_test.go:79: @next/next/no-assign-module-variable Go: 4093.28 findings/s seconds=0.244303 files=78 findings=1000
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=1 native seconds=1.606074 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=1 Node seconds=1.147186 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=1 Go seconds=0.242835 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=2 Node seconds=1.161590 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=2 Go seconds=0.257191 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=2 native seconds=1.619742 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=3 Go seconds=0.367609 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=3 native seconds=1.893647 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=3 Node seconds=2.891542 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=4 native seconds=1.483873 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=4 Node seconds=0.999568 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=4 Go seconds=0.304849 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=5 Node seconds=1.282100 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=5 Go seconds=0.282816 findings=1024
+    wave08_overlay_test.go:74: @typescript-eslint/default-param-last round=5 native seconds=2.005564 findings=1024
+    wave08_overlay_test.go:79: @typescript-eslint/default-param-last native: 690.09 findings/s seconds=1.483873 files=78 findings=1024
+    wave08_overlay_test.go:79: @typescript-eslint/default-param-last Node: 1024.44 findings/s seconds=0.999568 files=78 findings=1024
+    wave08_overlay_test.go:79: @typescript-eslint/default-param-last Go: 4216.86 findings/s seconds=0.242835 files=78 findings=1024
+--- PASS: TestWave08Throughput (58.40s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	197.775s
+FAIL

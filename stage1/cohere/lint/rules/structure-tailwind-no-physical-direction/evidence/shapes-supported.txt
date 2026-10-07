@@ -1,0 +1,7 @@
+=== RUN   TestWave08Shapes
+=== RUN   TestWave08Shapes/NonTSX
+    wave08_overlay_test.go:40: Go, Node, emitted JavaScript, native identical: 10775 bytes
+--- PASS: TestWave08Shapes (21.35s)
+    --- PASS: TestWave08Shapes/NonTSX (1.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	21.364s

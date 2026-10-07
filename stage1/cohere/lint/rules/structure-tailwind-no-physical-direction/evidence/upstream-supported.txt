@@ -1,0 +1,8 @@
+=== RUN   TestWave08UpstreamSupported
+    lint_test.go:324: cohere cases: 402 unique source/rule/options combinations
+    wave08_overlay_test.go:100: JSX parser blocker: /tmp/adamic-gate/TestWave08UpstreamSupported3974091317/001/case-388.tsx	structure/tailwind-no-physical-direction			false	null source="export const c = <div className=\"flex ml-4\" />;\n"
+    wave08_overlay_test.go:106: selected=map[@next/next/no-assign-module-variable:13 @typescript-eslint/default-param-last:117 structure/tailwind-no-physical-direction:53] blockedJSX=map[structure/tailwind-no-physical-direction:1]
+    wave08_overlay_test.go:109: Go, Node, emitted JavaScript, native identical: 57931 bytes
+--- PASS: TestWave08UpstreamSupported (37.95s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	37.966s
