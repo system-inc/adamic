@@ -1,0 +1,162 @@
+=== RUN   TestFifthWitnesses
+    lint_test.go:1024: Go, Node, emitted JavaScript, native identical: 11192 bytes
+--- PASS: TestFifthWitnesses (18.82s)
+=== RUN   TestFifthUpstream
+    lint_test.go:326: cohere cases: 1459 unique source/rule/options combinations
+    lint_test.go:1042: explicit runtime regex exclusion: dot-notation options={"allowKeywords":true,"allowPattern":"^[a-z]+(_[a-z]+)+$"} source="a['SHOUT_CASE'];"
+    lint_test.go:1042: explicit runtime regex exclusion: dot-notation options={"allowKeywords":true,"allowPattern":"^[a-z]+(_[a-z]+)+$"} source="a['_dangle'];"
+    lint_test.go:1042: explicit runtime regex exclusion: dot-notation options={"allowKeywords":true,"allowPattern":"^[a-z]+(_[a-z]+)+$"} source="a['lots_of_snake_case'];"
+    lint_test.go:1042: explicit runtime regex exclusion: dot-notation options={"allowKeywords":true,"allowPattern":"^[a-z]+(_[a-z]+)+$"} source="a['snake_case'];"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["[x-z]"]} source="var x = 1 ;"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["^A","^BEFORE_","^Z"]} source="function BEFORE_send() {};"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["^BEFORE_","^A","^Z"]} source="function BEFORE_send() {};"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["^BEFORE_","send$"]} source="function BEFORE_send() {};"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["^BEFORE_"]} source="function BEFORE_send() {};"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["^BEFORE_"]} source="function N() {};"
+    lint_test.go:1042: explicit runtime regex exclusion: id-length options={"Minimum":3,"Maximum":5,"HasMaximum":true,"CheckProperties":true,"Exceptions":null,"ExceptionPatterns":["^BEFORE_"]} source="function NOTMATCHED_send() {};"
+    lint_test.go:1046: fifth upstream cases: 418, per rule map[dot-notation:63 grouped-accessor-pairs:160 id-length:195]
+    lint_test.go:1058: explicit shared-parser exclusion: dot-notation Error: parser slice expected semicolon at 4 in /tmp/adamic-gate/TestFifthUpstream1887375973/001/case-774/repository/source/DotNotation.ts source="let.if()"
+    lint_test.go:1058: explicit shared-parser exclusion: dot-notation Error: parser slice expected semicolon at 5 in /tmp/adamic-gate/TestFifthUpstream1887375973/001/case-775/repository/source/DotNotation.ts source="let?.true"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="let.if()"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="let?.true"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="01234567['prop']"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="018['prop']"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="01['prop']"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="08['prop']"
+    lint_test.go:1060: explicit parse/fix-engine exclusion: dot-notation source="090['prop']"
+    lint_test.go:1061: accepted 411 upstream cases, excluded 7 Go or Adamic parse refusals
+    lint_test.go:1062: Go, Node, emitted JavaScript, native identical: 83896 bytes
+--- PASS: TestFifthUpstream (26.76s)
+=== RUN   TestFifthCompiler
+    lint_test.go:1081: compiler/stage1 228 files, 684 rule/file pairs; no Go semantic metadata supplied
+    lint_test.go:1084: Go, Node, emitted JavaScript, native identical: 37507892 bytes
+--- PASS: TestFifthCompiler (76.07s)
+=== RUN   TestFifthMutants
+=== RUN   TestFifthMutants/dot-notation
+    lint_test.go:1100: insert an extra numeric receiver separator caught only by output comparison on Node: case 0 line 6: port "fix 16 24\t  .prop", Go "fix 16 24\t .prop"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsdot-notation2399255977/001/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot
+        fix 16 24	 .prop
+        /tmp/adamic-gate/TestFifthMutantsdot-notation2399255977/001/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot
+    lint_test.go:1100: insert an extra numeric receiver separator caught only by output comparison on emitted JavaScript: case 0 line 6: port "fix 16 24\t  .prop", Go "fix 16 24\t .prop"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsdot-notation2399255977/001/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot
+        fix 16 24	 .prop
+        /tmp/adamic-gate/TestFifthMutantsdot-notation2399255977/001/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot
+    lint_test.go:1100: insert an extra numeric receiver separator caught only by output comparison on sanitized native: case 0 line 6: port "fix 16 24\t  .prop", Go "fix 16 24\t .prop"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsdot-notation2399255977/001/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot
+        fix 16 24	 .prop
+        /tmp/adamic-gate/TestFifthMutantsdot-notation2399255977/001/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot
+=== RUN   TestFifthMutants/grouped-accessor-pairs
+    lint_test.go:1100: ignore duplicate getter exemption caught only by output comparison on Node: case 0 line 6: port "/tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped
+        /tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+    lint_test.go:1100: ignore duplicate getter exemption caught only by output comparison on emitted JavaScript: case 0 line 6: port "/tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped
+        /tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+    lint_test.go:1100: ignore duplicate getter exemption caught only by output comparison on sanitized native: case 0 line 6: port "/tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped
+        /tmp/adamic-gate/TestFifthMutantsgrouped-accessor-pairs254796891/001/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+=== RUN   TestFifthMutants/id-length
+    lint_test.go:1100: count private identifier hash caught only by output comparison on Node: case 0 line 6: port "/tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:3:12", Go "/tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:2:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:1:5
+          id-length  Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 4 5 tooShort
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:2:15
+          id-length  Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 25 27 tooShortPrivate
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:3:12
+    lint_test.go:1100: count private identifier hash caught only by output comparison on emitted JavaScript: case 0 line 6: port "/tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:3:12", Go "/tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:2:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:1:5
+          id-length  Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 4 5 tooShort
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:2:15
+          id-length  Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 25 27 tooShortPrivate
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:3:12
+    lint_test.go:1100: count private identifier hash caught only by output comparison on sanitized native: case 0 line 6: port "/tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:3:12", Go "/tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:2:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:1:5
+          id-length  Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 4 5 tooShort
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:2:15
+          id-length  Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 25 27 tooShortPrivate
+        /tmp/adamic-gate/TestFifthMutantsid-length915402123/001/id-length-0.ts:3:12
+--- PASS: TestFifthMutants (56.86s)
+    --- PASS: TestFifthMutants/dot-notation (18.45s)
+    --- PASS: TestFifthMutants/grouped-accessor-pairs (18.18s)
+    --- PASS: TestFifthMutants/id-length (18.34s)
+=== RUN   TestFifthRegexRefusal
+    lint_test.go:1162: dot-notation Node: configured runtime regex refuses explicitly, exit 70
+    lint_test.go:1162: dot-notation emitted JavaScript: configured runtime regex refuses explicitly, exit 70
+    lint_test.go:1162: dot-notation sanitized native: configured runtime regex refuses explicitly, exit 70
+    lint_test.go:1162: id-length Node: configured runtime regex refuses explicitly, exit 70
+    lint_test.go:1162: id-length emitted JavaScript: configured runtime regex refuses explicitly, exit 70
+    lint_test.go:1162: id-length sanitized native: configured runtime regex refuses explicitly, exit 70
+--- PASS: TestFifthRegexRefusal (17.26s)
+=== RUN   TestFifthRawOptions
+    lint_test.go:1183: Go, Node, emitted JavaScript, native identical: 4448 bytes
+--- PASS: TestFifthRawOptions (20.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	215.904s

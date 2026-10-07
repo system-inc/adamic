@@ -1,0 +1,24 @@
+=== RUN   TestFifthThroughput
+    lint_test.go:1116: dot-notation Go: 4000 findings, 27.414854ms, 145906.30 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: dot-notation native: 4000 findings, 56.627082ms, 70637.58 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: dot-notation Node: 4000 findings, 168.67626ms, 23714.07 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: grouped-accessor-pairs Go: 2000 findings, 32.053714ms, 62395.27 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: grouped-accessor-pairs native: 2000 findings, 100.348808ms, 19930.48 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: grouped-accessor-pairs Node: 2000 findings, 176.699548ms, 11318.65 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: id-length Go: 5000 findings, 24.734049ms, 202150.48 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: id-length native: 5000 findings, 61.787645ms, 80922.33 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+    lint_test.go:1116: id-length Node: 5000 findings, 169.872821ms, 29433.78 findings/s (1000 owned witnesses; no Go semantic metadata supplied)
+--- PASS: TestFifthThroughput (7.55s)
+=== RUN   TestFifthSourceThroughput
+    lint_test.go:1135: dot-notation Go: 0 findings, 203.100286ms, 0.00 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: dot-notation native: 0 findings, 2.228902676s, 0.00 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: dot-notation Node: 0 findings, 1.271017725s, 0.00 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: grouped-accessor-pairs Go: 0 findings, 222.172538ms, 0.00 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: grouped-accessor-pairs native: 0 findings, 1.30598849s, 0.00 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: grouped-accessor-pairs Node: 0 findings, 889.703429ms, 0.00 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: id-length Go: 1686 findings, 390.453327ms, 4318.06 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: id-length native: 1686 findings, 2.425978889s, 694.98 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+    lint_test.go:1135: id-length Node: 1686 findings, 1.650944295s, 1021.23 findings/s (228 compiler/stage1 files; no Go semantic metadata supplied)
+--- PASS: TestFifthSourceThroughput (17.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	25.042s
