@@ -1,0 +1,22 @@
+import { programArguments, readTextFile, tsgoProgram, tsgoRelease, tsgoInspect, panic } from 'adamic';
+const args = programArguments();
+const path = args[1] ?? panic('path absent');
+const source = readTextFile(path);
+if(source.kind === 'Error') {
+    panic(source.message);
+}
+const program = tsgoProgram(args[0] ?? '', [path]);
+if(args[2] === 'released' || args.includes('--release')) {
+    tsgoRelease(program);
+}
+console.log(
+    tsgoInspect(
+        program,
+        path,
+        0,
+        source.text.length,
+        'SourceFile',
+        args[2] === 'released' ? 'node-symbol-details' : (args[2] ?? ''),
+    ),
+);
+tsgoRelease(program);

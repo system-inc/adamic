@@ -1,0 +1,47 @@
+import { numericKind } from './syntax_kinds.a';
+import type { Rules } from '../rules.ts';
+// Temporary owned adapter: the parser exposes strings. Convert once before dispatch,
+// cache the complete node, and never fetch a parser node from a listener.
+export class NumericNode {
+    readonly index: number;
+    readonly bridgeKind: string;
+    readonly charPos: number;
+    readonly charStart: number;
+    readonly charEnd: number;
+    readonly operator: number;
+    readonly optional: boolean;
+    present = false;
+    flags = 0;
+    modifiers = 0;
+    generator = false;
+    functionFlags = 0;
+    typePresent = false;
+    name = -1;
+    initializer = -1;
+    body = -1;
+    symbol = 0;
+    readonly kind: number;
+    readonly pos: number;
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    readonly list: number;
+    readonly children: number[];
+    constructor(rules: Rules, index: number) {
+        const node = rules.parser.nodes[index];
+        this.index = index;
+        this.kind = numericKind(node?.kind ?? '');
+        this.bridgeKind = node?.kind ?? '';
+        this.charPos = node?.pos ?? 0;
+        this.charStart = node === undefined ? 0 : rules.start(node);
+        this.charEnd = node?.end ?? 0;
+        this.optional = node?.optional ?? false;
+        this.operator = numericKind(node?.operator ?? '');
+        this.pos = rules.byte(node?.pos ?? 0);
+        this.start = rules.byte(node === undefined ? 0 : rules.start(node));
+        this.end = rules.byte(node?.end ?? 0);
+        this.text = node?.text ?? '';
+        this.list = node?.list ?? -1;
+        this.children = node?.children ?? [];
+    }
+}

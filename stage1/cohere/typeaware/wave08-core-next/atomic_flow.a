@@ -1,0 +1,65 @@
+export class AtomicEvent {
+    readonly kind: number;
+    readonly symbol: number;
+    readonly target: number;
+    readonly assignment: number;
+    readonly property: boolean;
+    constructor(kind: number, symbol = 0, target = -1, assignment = -1, property = false) {
+        this.kind = kind; this.symbol = symbol; this.target = target; this.assignment = assignment; this.property = property;
+    }
+}
+export class AtomicBlock {
+    events: AtomicEvent[] = [];
+    readonly successors: number[] = [];
+    reachable = true;
+}
+export class AtomicGraph {
+    readonly blocks: AtomicBlock[] = [];
+    unrecordable = false;
+}
+export class AtomicState {
+    readonly fresh = new Set<number>();
+    readonly outdated = new Set<number>();
+    merge(other: AtomicState): void {
+        for(const symbol of other.fresh) { this.fresh.add(symbol); }
+        for(const symbol of other.outdated) { this.outdated.add(symbol); }
+    }
+    clone(): AtomicState { const state = new AtomicState(); state.merge(this); return state; }
+    key(): string {
+        const fresh: number[] = [], outdated: number[] = [];
+        for(const symbol of this.fresh) { fresh.push(symbol); }
+        for(const symbol of this.outdated) { outdated.push(symbol); }
+        fresh.sort((a,b) => a-b); outdated.sort((a,b) => a-b);
+        return `${fresh.join(',')};${outdated.join(',')}`;
+    }
+    apply(event: AtomicEvent): void {
+        if(event.kind === 0) { this.fresh.add(event.symbol); this.outdated.delete(event.symbol); }
+        else if(event.kind === 1) {
+            for(const symbol of this.fresh) { this.outdated.add(symbol); }
+            this.fresh.clear();
+        }
+    }
+}
+export function solve(graph: AtomicGraph): AtomicState[] {
+    const incoming: AtomicState[] = [], outgoing: AtomicState[] = [];
+    for(const block of graph.blocks) { incoming.push(new AtomicState()); outgoing.push(new AtomicState()); }
+    let changed = true;
+    while(changed) {
+        changed = false;
+        for(let index = 0; index < graph.blocks.length; index++) {
+            const block = graph.blocks[index];
+            if(block === undefined || !block.reachable) { continue; }
+            const state = new AtomicState();
+            for(let before = 0; before < graph.blocks.length; before++) {
+                const predecessor = graph.blocks[before];
+                if(predecessor !== undefined && predecessor.reachable && predecessor.successors.includes(index)) {
+                    const previous = outgoing[before]; if(previous !== undefined) { state.merge(previous); }
+                }
+            }
+            incoming[index] = state.clone();
+            for(const event of block.events) { state.apply(event); }
+            if(state.key() !== outgoing[index]?.key()) { outgoing[index] = state; changed = true; }
+        }
+    }
+    return incoming;
+}

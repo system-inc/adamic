@@ -1,0 +1,79 @@
+import { tsgoInspect, panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+export class RawDeclaration {
+    readonly path: string;
+    readonly kind: number;
+    readonly pos: number;
+    readonly end: number;
+    constructor(frames: Frames) {
+        this.path = frames.field(); this.kind = frames.natural(); this.pos = frames.natural(); this.end = frames.natural();
+    }
+}
+export class RawSymbol {
+    readonly id: number;
+    readonly name: string;
+    readonly declarations: RawDeclaration[] = [];
+    constructor(frames: Frames) {
+        this.id = frames.natural(); this.name = frames.field();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) { this.declarations.push(new RawDeclaration(frames)); }
+    }
+}
+export class SyntaxSnapshot {
+    readonly nodes: readonly NumericNode[];
+    readonly rules: Rules;
+    readonly spans = new Map<string, number>();
+    readonly symbols = new Map<number, RawSymbol>();
+    constructor(rules: Rules, nodes: readonly NumericNode[]) {
+        this.rules = rules; this.nodes = nodes;
+        for(const node of nodes) {
+            this.spans.set(`${node.kind}:${node.pos}:${node.end}`, node.index);
+        }
+        const frames = new Frames(tsgoInspect(rules.program, rules.path, 0, rules.byte(rules.scanner.text.length), 'SourceFile', 'wave08-syntax-snapshot'));
+        header(frames, 'wave08-syntax-snapshot');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const kind = frames.natural(), pos = frames.natural(), end = frames.natural();
+            const node = nodes[this.spans.get(`${kind}:${pos}:${end}`) ?? -1];
+            const namePos = frames.number(), nameEnd = frames.number();
+            const initialPos = frames.number(), initialEnd = frames.number();
+            const bodyPos = frames.number(), bodyEnd = frames.number();
+            const flags = frames.natural(), modifiers = frames.natural(), functionFlags = frames.natural();
+            const typePresent = frames.yes(), symbol = frames.natural();
+            if(node !== undefined) {
+                node.present = true; node.flags = flags; node.modifiers = modifiers; node.functionFlags = functionFlags;
+                node.generator = (functionFlags & 1) !== 0; node.typePresent = typePresent; node.symbol = symbol;
+                node.name = this.childSpan(node, namePos, nameEnd);
+                node.initializer = this.childSpan(node, initialPos, initialEnd);
+                node.body = this.childSpan(node, bodyPos, bodyEnd);
+            }
+        }
+        for(const node of nodes) {
+            if(this.functionKind(node.kind) && (rules.parents[node.index] ?? -1) >= 0 && !node.present) {
+                panic('function missing from checker syntax snapshot');
+            }
+        }
+        const symbolCount = frames.natural();
+        for(let at = 0; at < symbolCount; at++) { const symbol = new RawSymbol(frames); this.symbols.set(symbol.id, symbol); }
+        frames.end();
+    }
+    childSpan(node: NumericNode, pos: number, end: number): number {
+        if(pos < 0) { return -1; }
+        for(const child of node.children) {
+            const candidate = this.nodes[child];
+            if(candidate?.pos === pos && candidate.end === end) { return child; }
+        }
+        return -1;
+    }
+    node(index: number): NumericNode { return this.nodes[index] ?? panic('missing cached syntax node'); }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    name(index: number): number { return this.nodes[index]?.name ?? -1; }
+    initializer(index: number): number { return this.nodes[index]?.initializer ?? -1; }
+    functionKind(kind: number): boolean { return [263,219,220,175,178,179,177].includes(kind); }
+    skip(index: number): number {
+        while(this.nodes[index]?.kind === 218) { const node = this.nodes[index]; index = node === undefined ? -1 : (node.children[0] ?? -1); }
+        return index;
+    }
+}

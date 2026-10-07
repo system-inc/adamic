@@ -1,0 +1,147 @@
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+import { SyntaxSnapshot } from './syntax_snapshot.a';
+import { AtomicBuilder } from './atomic_builder.a';
+import { AtomicEvent, solve } from './atomic_flow.a';
+import { Diagnostic } from '../diagnostic.ts';
+export const listenerKinds: readonly number[] = [307];
+const variableMessage = 'This reassignment is not atomic. The value it is computed from was read before an await or a yield, and the function is suspended in between, so anything else that runs during the suspension can write the variable and have its write overwritten by this line. The read and the write look adjacent in the source and are not adjacent in time. Read the variable after the suspension, or keep the whole update on one side of it.';
+const propertyMessage = 'This property assignment is computed from an object that was read before an await or a yield, so the object may have been replaced or mutated while the function was suspended and this write lands on a stale view of it. The read and the write look adjacent in the source and are not adjacent in time. Re-read the object after the suspension, or keep the whole update on one side of it.';
+class Deferred {
+    readonly within: number;
+    readonly floor: number;
+    readonly event: AtomicEvent;
+    constructor(within: number, floor: number, event: AtomicEvent) { this.within = within; this.floor = floor; this.event = event; }
+}
+export class RequireAtomicUpdates {
+    readonly allowProperties: boolean;
+    constructor(allowProperties = false) { this.allowProperties = allowProperties; }
+    visit(rules: Rules, nodes: readonly NumericNode[], source: NumericNode, syntax: SyntaxSnapshot): void {
+        for(const root of nodes) {
+            if([263,219,220,175,178,179].includes(root.kind) && ((root.modifiers & 1024) !== 0 || root.generator)) {
+                this.analyze(rules, nodes, syntax, root);
+            }
+        }
+    }
+    isRoot(syntax: SyntaxSnapshot, index: number): boolean {
+        const node = syntax.nodes[index];
+        return node !== undefined && (syntax.functionKind(node.kind) || node.kind === 307 || node.kind === 176 || (node.kind === 173 && node.initializer >= 0));
+    }
+    rootOf(syntax: SyntaxSnapshot, index: number): number {
+        while(index >= 0 && !this.isRoot(syntax, index)) { index = syntax.parent(index); }
+        return index;
+    }
+    nonReference(syntax: SyntaxSnapshot, node: NumericNode): boolean {
+        const parent = syntax.nodes[syntax.parent(node.index)];
+        return parent !== undefined && [212,303,167,175,173,172,174,178,179,306,277,273,274,169,184,292].includes(parent.kind) && parent.name === node.index;
+    }
+    escapes(syntax: SyntaxSnapshot, symbolId: number, root: number, member: boolean, memo: Map<number, boolean>): boolean {
+        const symbol = syntax.symbols.get(symbolId);
+        if(symbol === undefined || symbol.declarations.length === 0) { return false; }
+        if(member && symbol.declarations.some((declaration) => declaration.kind === 170)) { return true; }
+        const cached = memo.get(symbolId);
+        if(cached !== undefined) { return cached; }
+        const inside = symbol.declarations.some((declaration) => declaration.path === syntax.rules.path && this.rootOf(syntax, syntax.spans.get(`${declaration.kind}:${declaration.pos}:${declaration.end}`) ?? -1) === root);
+        let captured = false;
+        if(inside && symbol.name !== '') {
+            const container = syntax.node(root);
+            for(const node of syntax.nodes) {
+                if(node.kind === 79 && node.text === symbol.name && node.symbol === symbolId && node.pos >= container.pos && node.end <= container.end && !this.nonReference(syntax, node) && this.rootOf(syntax, node.index) !== root) {
+                    captured = true; break;
+                }
+            }
+        }
+        const result = !inside || captured;
+        memo.set(symbolId, result); return result;
+    }
+    assignment(syntax: SyntaxSnapshot, index: number, memberOnly = false): number {
+        let member = false;
+        while(index >= 0) {
+            const parent = syntax.nodes[syntax.parent(index)];
+            if(parent === undefined) { return -1; }
+            if([212,213].includes(parent.kind) && parent.children[0] === index) {
+                member = true; index = parent.index; continue;
+            }
+            if(parent.kind === 227 && parent.children[0] === index) {
+                const operator = syntax.nodes[parent.children[1] ?? -1]?.kind ?? 0;
+                return operator >= 63 && operator <= 78 && (!memberOnly || member) ? parent.index : -1;
+            }
+            return -1;
+        }
+        return -1;
+    }
+    analyze(rules: Rules, nodes: readonly NumericNode[], syntax: SyntaxSnapshot, root: NumericNode): void {
+        const expressions = new Map<number, AtomicEvent[]>(), statements = new Map<number, AtomicEvent[]>();
+        const reads = new Map<number, AtomicEvent[]>(), writes = new Map<number, AtomicEvent[]>(), memo = new Map<number, boolean>();
+        for(const node of nodes) {
+            if(node.kind === 224 || node.kind === 230) { expressions.set(node.index, [new AtomicEvent(1, 0, node.index)]); }
+            if(node.kind !== 79 || node.symbol === 0) { continue; }
+            const parent = nodes[syntax.parent(node.index)];
+            const declaration = parent !== undefined && [261,209,170].includes(parent.kind) && parent.name === node.index;
+            const assignment = this.assignment(syntax, node.index);
+            const assigned = nodes[assignment];
+            const plain = assigned !== undefined && nodes[assigned.children[1] ?? -1]?.kind === 63;
+            if(!declaration && !plain) { reads.set(node.index, [new AtomicEvent(0, node.symbol, node.index)]); }
+            else if(!declaration && this.assignment(syntax, node.index, true) >= 0) { reads.set(node.index, [new AtomicEvent(3, node.symbol, node.index)]); }
+            if(parent?.kind === 227 && parent.children[0] === node.index && assignment >= 0 && this.escapes(syntax, node.symbol, root.index, false, memo)) {
+                writes.set(node.index, [new AtomicEvent(2, node.symbol, node.index, assignment)]);
+            }
+        }
+        const graph = new AtomicBuilder(rules, expressions, statements, syntax, reads, writes).build(root.index);
+        for(const block of graph.blocks) {
+            const kept: AtomicEvent[] = [], suspensions: Deferred[] = [], stores: Deferred[] = [];
+            for(const event of block.events) {
+                if(event.kind === 1 && event.target >= 0) { suspensions.push(new Deferred(event.target, kept.length, event)); }
+                else if(event.kind === 0 || event.kind === 3) {
+                    if(event.kind === 0) { kept.push(event); }
+                    const assignment = this.assignment(syntax, event.target, true);
+                    if(assignment >= 0 && this.escapes(syntax, event.symbol, root.index, true, memo)) {
+                        stores.push(new Deferred(assignment, 0, new AtomicEvent(2, event.symbol, event.target, assignment, true)));
+                    }
+                }
+                else { kept.push(event); }
+            }
+            block.events = this.place(syntax, this.place(syntax, kept, suspensions), stores);
+        }
+        const incoming = solve(graph), reported = new Set<number>();
+        for(let at = 0; at < graph.blocks.length; at++) {
+            const block = graph.blocks[at], entry = incoming[at];
+            const state = entry === undefined ? undefined : entry.clone();
+            if(block === undefined || !block.reachable || state === undefined) { continue; }
+            for(const event of block.events) {
+                if(event.kind === 2 && state.outdated.has(event.symbol) && !(event.property && this.allowProperties)) {
+                    const assignment = nodes[event.assignment];
+                    if(assignment !== undefined && !reported.has(assignment.pos)) {
+                        reported.add(assignment.pos);
+                        const name = syntax.symbols.get(event.symbol)?.name ?? '';
+                        const left = nodes[assignment.children[0] ?? -1];
+                        const target = left === undefined ? '' : rules.scanner.text.slice(left.charStart, left.charEnd);
+                        const message = event.property ? `${propertyMessage} Here the assignment writes ${target} and the object ${name} was read before the suspension.` : `${variableMessage} Here the variable is ${name}.`;
+                        rules.findings.push(new Diagnostic('require-atomic-updates', event.property ? 'nonAtomicObjectUpdate' : 'nonAtomicUpdate', message, assignment.start, assignment.end, ''));
+                    }
+                }
+                state.apply(event);
+            }
+        }
+    }
+    place(syntax: SyntaxSnapshot, kept: AtomicEvent[], deferred: Deferred[]): AtomicEvent[] {
+        const slots = new Map<number, AtomicEvent[]>();
+        for(const item of deferred) {
+            let slot = item.floor;
+            const within = syntax.node(item.within);
+            for(let at = slot; at < kept.length; at++) {
+                const target = syntax.nodes[kept[at]?.target ?? -1];
+                if(target !== undefined && target.pos >= within.pos && target.end <= within.end) { slot = at + 1; }
+            }
+            const empty: AtomicEvent[] = [], events = slots.get(slot) ?? empty;
+            events.push(item.event); slots.set(slot, events);
+        }
+        const rebuilt: AtomicEvent[] = [];
+        for(let at = 0; at <= kept.length; at++) {
+            const placed = slots.get(at);
+            if(placed !== undefined) { for(const event of placed) { rebuilt.push(event); } }
+            const event = kept[at]; if(event !== undefined) { rebuilt.push(event); }
+        }
+        return rebuilt;
+    }
+}

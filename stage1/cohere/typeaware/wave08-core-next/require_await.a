@@ -1,0 +1,96 @@
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+import type { SyntaxSnapshot } from './syntax_snapshot.a';
+import { AwaitContract } from './await_contract.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+export const listenerKinds: readonly number[] = [263,219,220,175,178,179,177];
+const suggestionMessage = "Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.";
+export class RequireAwait {
+    readonly contract = new AwaitContract();
+    visit(rules: Rules, nodes: readonly NumericNode[], node: NumericNode, syntax: SyntaxSnapshot): void {
+        if((node.modifiers & 1024) === 0 || node.generator) { return; }
+        const body = nodes[node.body];
+        if(body === undefined || (body.kind === 242 && body.children.length === 0) || this.contains(nodes, body)) { return; }
+        if(this.contract.satisfied(rules, node, syntax)) { return; }
+        const parent = nodes[syntax.parent(node.index)];
+        let start = node.start, end = start;
+        if(parent !== undefined && [303,173].includes(parent.kind)) {
+            start = parent.start; end = this.parametersStart(rules, node, parent.charStart);
+        }
+        else if(node.kind === 220) {
+            const arrow = nodes[node.children.find((index) => nodes[index]?.kind === 38) ?? -1];
+            if(arrow !== undefined) { start = arrow.start; end = arrow.end; }
+        }
+        else {
+            let charStart = node.charStart;
+            for(const child of node.children) {
+                const modifier = nodes[child];
+                if(modifier === undefined || ![94,89,137].includes(modifier.kind)) { break; }
+                charStart = modifier.charEnd;
+            }
+            charStart = this.spaces(rules.scanner.text, charStart);
+            start = rules.byte(charStart);
+            end = nodes[node.name]?.end ?? this.parametersStart(rules, node, charStart);
+            if(end <= start) { end = start + 5; }
+        }
+        const description = this.describe(nodes, node, parent);
+        const message = `${description} has no \`await\` expression. The \`async\` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove \`async\`, or await what this was waiting for.`;
+        const finding = new Diagnostic('require-await', 'missingAwait', message, start, end, '');
+        const keyword = nodes[node.children.find((index) => nodes[index]?.kind === 133) ?? -1];
+        if(keyword !== undefined) {
+            const after = this.spaces(rules.scanner.text, keyword.charEnd);
+            const fixes: Repair[] = [new Repair(keyword.start, rules.byte(after), this.needsSemicolon(rules, nodes, node, syntax, after) ? ';' : '')];
+            finding.suggestions.push(new Suggestion('removeAsync', suggestionMessage, fixes));
+        }
+        rules.findings.push(finding);
+    }
+    contains(nodes: readonly NumericNode[], node: NumericNode): boolean {
+        if(node.kind === 224) { return true; }
+        if(node.kind === 251 && node.children.some((index) => nodes[index]?.kind === 134)) { return true; }
+        if(node.kind === 262 && (node.flags & 7) === 6) { return true; }
+        if([263,219,220,175,178,179,177,264,232].includes(node.kind)) { return false; }
+        for(const child of node.children) { const next = nodes[child]; if(next !== undefined && this.contains(nodes, next)) { return true; } }
+        return false;
+    }
+    describe(nodes: readonly NumericNode[], node: NumericNode, parent: NumericNode | undefined): string {
+        if(node.kind === 220) { return 'Async arrow function'; }
+        if(node.kind === 177) { return "Async method 'constructor'"; }
+        let kind = [175,178,179].includes(node.kind) ? 'method' : 'function';
+        let name = nodes[node.name];
+        if(parent?.kind === 303 && parent.initializer === node.index) { kind = 'method'; name = nodes[parent.name]; }
+        return name !== undefined && [79,80,10,14,8].includes(name.kind) ? `Async ${kind} '${name.text}'` : `Async ${kind}`;
+    }
+    parametersStart(rules: Rules, node: NumericNode, start: number): number {
+        for(let at = start; at < node.charEnd; at++) { if(rules.scanner.text.slice(at, at+1) === '(') { return rules.byte(at); } }
+        return rules.byte(start);
+    }
+    spaces(text: string, start: number): number {
+        while(start < text.length && [' ','\t','\n','\r'].includes(text.slice(start,start+1))) { start++; }
+        return start;
+    }
+    identifier(code: number): boolean { return (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57) || code === 95 || code === 36; }
+    needsSemicolon(rules: Rules, nodes: readonly NumericNode[], node: NumericNode, syntax: SyntaxSnapshot, after: number): boolean {
+        const text = rules.scanner.text, token = text.slice(after,after+1);
+        let continues = token === '[' || token === '(';
+        for(const keyword of ['instanceof','in']) {
+            if(text.slice(after).startsWith(keyword) && !this.identifier(text.charCodeAt(after+keyword.length))) { continues = true; }
+        }
+        if(!continues) { return false; }
+        let subject = node.index;
+        while(subject >= 0) {
+            const parent = nodes[syntax.parent(subject)];
+            if(parent === undefined) { return false; }
+            if([264,232,242,307].includes(parent.kind)) {
+                const position = parent.children.indexOf(subject), previous = nodes[parent.children[position-1] ?? -1];
+                if(previous === undefined || !(previous.kind === 244 || previous.kind === 245 || (previous.kind === 173 && previous.initializer >= 0))) { return false; }
+                let end = previous.charEnd;
+                while(end > 0 && [' ','\t','\n','\r'].includes(text.slice(end-1,end))) { end--; }
+                return end === 0 || text.slice(end-1,end) !== ';';
+            }
+            subject = parent.index;
+        }
+        return false;
+    }
+}

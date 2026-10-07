@@ -1,0 +1,25 @@
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+import { SymbolOrigins } from './symbol_origins.a';
+import { Diagnostic } from '../diagnostic.ts';
+export const listenerKinds: readonly number[] = [214];
+const message = 'This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.';
+export class SymbolDescription {
+    visit(rules: Rules, nodes: readonly NumericNode[], node: NumericNode): void {
+        if(node.list > 0) {
+            return;
+        }
+        let callee = nodes[node.children[0] ?? -1];
+        while(callee?.kind === 218) {
+            callee = nodes[callee.children[0] ?? -1];
+        }
+        if(callee === undefined || callee.kind !== 79 || callee.text !== 'Symbol') {
+            return;
+        }
+        const origins = new SymbolOrigins(rules, callee);
+        if(!(origins.declarationFiles[0] ?? false)) {
+            return;
+        }
+        rules.findings.push(new Diagnostic('symbol-description', 'expected', message, node.start, node.end, ''));
+    }
+}

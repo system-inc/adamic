@@ -1,0 +1,16 @@
+import { tsgoInspect } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+export class SymbolOrigins {
+    readonly declarationFiles: boolean[] = [];
+    constructor(rules: Rules, node: NumericNode) {
+        const frames = new Frames(tsgoInspect(rules.program, rules.path, node.pos, node.end, 'Identifier', 'wave08-symbol-origins'));
+        header(frames, 'wave08-symbol-origins');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.declarationFiles.push(frames.yes());
+        }
+        frames.end();
+    }
+}

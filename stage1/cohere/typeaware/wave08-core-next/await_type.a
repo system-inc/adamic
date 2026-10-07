@@ -1,0 +1,97 @@
+import { tsgoInspect, panic } from 'adamic';
+import { unionFlag } from '../flags.ts';
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+export class RawSignature {
+    readonly returns: number;
+    readonly parameters: number[] = [];
+    readonly rests: boolean[] = [];
+    constructor(frames: Frames) {
+        this.returns = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) { this.parameters.push(frames.natural()); this.rests.push(frames.yes()); }
+    }
+}
+export class AwaitType {
+    readonly id: number;
+    readonly flags: number;
+    readonly parts: number[];
+    readonly apparent: number;
+    readonly tuple: boolean;
+    readonly elements: number[];
+    readonly numberIndex: number;
+    readonly stringIndex: number;
+    readonly signatures: RawSignature[] = [];
+    readonly thenType: number;
+    readonly propertyType: number;
+    constructor(id: number, frames: Frames) {
+        this.id = id; this.flags = frames.natural(); this.parts = frames.ids();
+        this.apparent = frames.natural(); this.tuple = frames.yes(); this.elements = frames.ids();
+        this.numberIndex = frames.natural(); this.stringIndex = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) { this.signatures.push(new RawSignature(frames)); }
+        this.thenType = frames.natural(); this.propertyType = frames.natural(); frames.end();
+    }
+}
+export class AwaitTypes {
+    readonly rules: Rules;
+    readonly node: NumericNode;
+    readonly records = new Map<string, AwaitType>();
+    constructor(rules: Rules, node: NumericNode) { this.rules = rules; this.node = node; }
+    type(id: number, property = ''): AwaitType {
+        if(id === 0) { panic('missing await type'); }
+        const key = `${id}:${property}`, cached = this.records.get(key);
+        if(cached !== undefined) { return cached; }
+        const frames = new Frames(tsgoInspect(this.rules.program, this.rules.path, this.node.pos, this.node.end, this.node.bridgeKind, `wave08-await-type\n${id}\n${property}`));
+        header(frames, 'wave08-await-type');
+        const record = new AwaitType(id, frames); this.records.set(key, record); return record;
+    }
+    parts(id: number): number[] {
+        if(id === 0) { const empty: number[] = []; return empty; }
+        const type = this.type(id);
+        return (type.flags & unionFlag) !== 0 ? type.parts : [id];
+    }
+    expand(types: readonly number[], substitutions: Map<number, number[]>): number[] {
+        const expanded: number[] = [];
+        for(const id of types) {
+            for(const part of this.parts(id)) {
+                const standIns = substitutions.get(part);
+                if(standIns !== undefined && standIns.length > 0) {
+                    for(const standIn of standIns) { for(const branch of this.parts(standIn)) { expanded.push(branch); } }
+                }
+                else { expanded.push(part); }
+            }
+        }
+        return expanded;
+    }
+    thenable(id: number): boolean {
+        const apparent = this.type(id).apparent;
+        for(const part of this.parts(apparent)) {
+            for(const thenPart of this.parts(this.type(part).thenType)) {
+                for(const signature of this.type(thenPart).signatures) {
+                    let parameter = signature.parameters[0] ?? 0;
+                    if(parameter === 0) { continue; }
+                    const apparentParameter = this.type(parameter).apparent;
+                    parameter = signature.rests[0] === true ? this.type(apparentParameter).numberIndex : apparentParameter;
+                    for(const callbackPart of this.parts(parameter)) {
+                        if(this.type(callbackPart).signatures.length > 0) { return true; }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    demands(types: readonly number[], substitutions: Map<number, number[]>): boolean {
+        let saw = false;
+        for(const part of this.expand(types, substitutions)) {
+            for(const signature of this.type(part).signatures) {
+                saw = true;
+                for(const returns of this.expand([signature.returns], substitutions)) {
+                    if(!this.thenable(returns)) { return false; }
+                }
+            }
+        }
+        return saw;
+    }
+}

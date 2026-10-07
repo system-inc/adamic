@@ -1,0 +1,75 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease, tsgoInspect } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+
+import { SymbolDescription, listenerKinds } from './symbol_description.a';
+import { RequireAwait, listenerKinds as awaitKinds } from './require_await.a';
+import { RequireAtomicUpdates } from './require_atomic_updates.a';
+import { SyntaxSnapshot } from './syntax_snapshot.a';
+import { NumericNode } from './numeric_node.a';
+
+const args = programArguments();
+const config = args[0] ?? panic('usage: coverage_suite.ts tsconfig manifest [--count]');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+let findings = 0;
+
+const symbol = new SymbolDescription();
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+    const linter = new Rules(program, path, parser, scanner, offsets, unary);
+    const root = parser.file();
+    for(let at = 0; at < parser.nodes.length; at++) { linter.parents.push(-1); }
+    linter.links(root, -1);
+    const nodes: NumericNode[] = [];
+    const subscriptions = new Map<number, NumericNode[]>();
+    for(let at = 0; at < parser.nodes.length; at++) {
+        const node = new NumericNode(linter, at);
+        nodes.push(node);
+        if(((linter.parents[at] ?? -1) >= 0 || at === root) && (listenerKinds.includes(node.kind) || awaitKinds.includes(node.kind) || node.kind === 307)) {
+            const empty: NumericNode[] = [];
+            const bucket = subscriptions.get(node.kind) ?? empty;
+            bucket.push(node);
+            subscriptions.set(node.kind, bucket);
+        }
+    }
+    if(args.includes('--atomic') || args.includes('--await')) {
+        const syntax = new SyntaxSnapshot(linter, nodes);
+        if(args.includes('--atomic')) { new RequireAtomicUpdates(args.includes('--allow-properties')).visit(linter, nodes, nodes[root] ?? panic('root absent'), syntax); }
+        if(args.includes('--await')) {
+            const rule = new RequireAwait();
+            for(const kind of awaitKinds) {
+                const bucket = subscriptions.get(kind);
+                if(bucket !== undefined) { for(const node of bucket) { rule.visit(linter, nodes, node, syntax); } }
+            }
+        }
+    }
+    for(const kind of listenerKinds) {
+        const bucket = subscriptions.get(kind);
+        if(bucket !== undefined && !args.includes('--atomic') && !args.includes('--await')) {
+            for(const node of bucket) { symbol.visit(linter, nodes, node); }
+        }
+    }
+    for(const finding of linter.findings) { finding.sortKey = finding.written(); }
+    linter.findings.sort((left, right) => left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0);
+    findings += linter.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of linter.findings) { console.log(finding.written()); }
+    }
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);

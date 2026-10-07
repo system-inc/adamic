@@ -1,0 +1,1161 @@
+import { NumericNode } from './numeric_node.a';
+import { numericKind } from './syntax_kinds.a';
+import type { SyntaxSnapshot } from './syntax_snapshot.a';
+// Control-flow shape ported from cohere's pinned control_flow_graph builders.
+// Owned numeric CFG port with expression, read and post-evaluation write hooks.
+import type { Rules } from '../rules.ts';
+
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { AtomicGraph, AtomicBlock, AtomicEvent } from './atomic_flow.a';
+import { panic } from 'adamic';
+class TryFrame {
+    position = 0;
+    catchEntry = -1;
+    finallyEntry = -1;
+    forked = false;
+    thrown = false;
+    returned = false;
+    readonly implicit: number[] = [];
+}
+class Jump {
+    readonly labels: string[];
+    readonly breakTo: number;
+    readonly continueTo: number;
+    readonly breakable: boolean;
+    constructor(labels: string[], breakTo: number, continueTo: number, breakable = true) {
+        this.labels = labels;
+        this.breakTo = breakTo;
+        this.continueTo = continueTo;
+        this.breakable = breakable;
+    }
+}
+export class AtomicBuilder {
+    readonly rules: Rules;
+    readonly syntax: SyntaxSnapshot;
+    readonly reads: Map<number, AtomicEvent[]>;
+    readonly writes: Map<number, AtomicEvent[]>;
+    readonly graph = new AtomicGraph();
+    readonly incoming: boolean[] = [];
+    readonly tries: TryFrame[] = [];
+    readonly jumps: Jump[] = [];
+    readonly chainJoins: number[] = [];
+    readonly expressions: Map<number, AtomicEvent[]>;
+    readonly statements: Map<number, AtomicEvent[]>;
+    readonly recorded = new Set<number>();
+    current = 0;
+    constructor(
+        rules: Rules,
+        expressions: Map<number, AtomicEvent[]>,
+        statements: Map<number, AtomicEvent[]>,
+        syntax: SyntaxSnapshot,
+        reads: Map<number, AtomicEvent[]>,
+        writes: Map<number, AtomicEvent[]>,
+    ) {
+        this.rules = rules;
+        this.syntax = syntax; this.reads = reads; this.writes = writes;
+        this.expressions = expressions;
+        this.statements = statements;
+        this.fresh();
+        this.incoming[0] = true;
+        this.block(0).reachable = true;
+    }
+    block(index: number): AtomicBlock {
+        return this.graph.blocks[index] ?? panic('graph block absent');
+    }
+    node(index: number): NumericNode {
+        return index < 0 ? new NumericNode(this.rules, -1) : this.syntax.node(index);
+    }
+    child(index: number, at: number): number {
+        return this.node(index).children[at] ?? -1;
+    }
+    last(index: number): number {
+        const children = this.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    fresh(): number {
+        const block = new AtomicBlock();
+        block.reachable = false;
+        this.graph.blocks.push(block);
+        this.incoming.push(false);
+        return this.graph.blocks.length - 1;
+    }
+    link(from: number, to: number): void {
+        if(from < 0 || to < 0) {
+            return;
+        }
+        this.block(from).successors.push(to);
+        if(this.block(from).reachable) {
+            this.incoming[to] = true;
+        }
+    }
+    enter(index: number): void {
+        this.current = index;
+        this.block(index).reachable = this.incoming[index] ?? false;
+    }
+    disconnected(index: number): void {
+        this.incoming[index] = (this.incoming[index] ?? false) || this.block(this.current).reachable;
+        this.enter(index);
+    }
+    unreachable(): void {
+        const next = this.fresh();
+        this.block(this.current).successors.push(next);
+        this.current = next;
+    }
+    emit(index: number, events: Map<number, AtomicEvent[]>): void {
+        const found = events.get(index);
+        if(found === undefined) {
+            return;
+        }
+        for(const event of found) {
+            this.block(this.current).events.push(event);
+            this.recorded.add(index);
+        }
+    }
+    isRoot(index: number): boolean {
+        return (
+            this.syntax.functionKind(this.node(index).kind) ||
+            this.node(index).kind === 307 ||
+            this.node(index).kind === 176 ||
+            (this.node(index).kind === 173 && this.syntax.initializer(index) >= 0)
+        );
+    }
+    body(index: number): number {
+        const last = this.last(index);
+        return this.node(last).kind === 242 || this.node(index).kind === 220 ? last : -1;
+    }
+    build(root: number): AtomicGraph {
+        const kind = this.node(root).kind;
+        if(kind === 307) {
+            for(const child of this.node(root).children) {
+                this.statement(child);
+            }
+        }
+        else if(kind === 176) {
+            this.statement(this.last(root));
+        }
+        else if(kind === 173) {
+            this.expr(this.syntax.initializer(root));
+        }
+        else {
+            for(const child of this.node(root).children) {
+                if(this.node(child).kind === 170) {
+                    const initializer = this.syntax.initializer(child);
+                    for(const part of this.node(child).children) {
+                        if(part !== initializer && part !== this.syntax.name(child)) {
+                            this.expr(part);
+                        }
+                    }
+                    this.bindDefault(this.syntax.name(child), initializer);
+                }
+            }
+            const body = this.body(root);
+            if(this.node(body).kind === 242) {
+                this.statement(body);
+            }
+            else {
+                this.expr(body);
+            }
+        }
+        return this.graph;
+    }
+    throwFrame(): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) {
+            const frame = this.tries[at];
+            if(frame !== undefined && (frame.position === 0 || frame.finallyEntry >= 0)) {
+                return at;
+            }
+        }
+        return -1;
+    }
+    returnFrame(): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) {
+            if((this.tries[at]?.finallyEntry ?? -1) >= 0) {
+                return at;
+            }
+        }
+        return -1;
+    }
+    throwTarget(frame: TryFrame): number {
+        return frame.position === 0 && frame.catchEntry >= 0 ? frame.catchEntry : frame.finallyEntry;
+    }
+    throwable(): void {
+        if(!this.block(this.current).reachable) {
+            return;
+        }
+        const frame = this.tries[this.throwFrame()];
+        if(frame === undefined || frame.forked) {
+            return;
+        }
+        frame.forked = true;
+        frame.thrown = true;
+        this.link(this.current, this.throwTarget(frame));
+        const next = this.fresh();
+        this.link(this.current, next);
+        this.enter(next);
+    }
+    abrupt(returning: boolean): void {
+        if(!this.block(this.current).reachable) {
+            return;
+        }
+        const frame = this.tries[returning ? this.returnFrame() : this.throwFrame()];
+        if(frame !== undefined) {
+            if(returning) {
+                frame.returned = true;
+                this.link(this.current, frame.finallyEntry);
+            }
+            else {
+                frame.thrown = true;
+                this.link(this.current, this.throwTarget(frame));
+            }
+        }
+        this.unreachable();
+    }
+    throwableIdentifier(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.node(parent).kind;
+        if(
+            [
+                257,
+                253,
+                252,
+                208,
+                277,
+                282,
+                274,
+                275,
+                281,
+                292,
+                296,
+                300,
+            ].includes(kind)
+        ) {
+            return false;
+        }
+        if(kind === 209) {
+            if(
+                this.node(parent).children.some((part) => this.node(part).kind === 25) ||
+                (this.child(parent, 0) === index && this.syntax.name(parent) !== index)
+            ) {
+                return false;
+            }
+            return this.node(this.parent(parent)).kind === 207;
+        }
+        if(
+            [
+                263,
+                219,
+                220,
+                264,
+                232,
+                261,
+                303,
+                173,
+                175,
+                178,
+                179,
+                267,
+                268,
+                265,
+                266,
+            ].includes(kind)
+        ) {
+            return this.syntax.name(parent) !== index;
+        }
+        return ![287, 288, 286].includes(kind);
+    }
+    expr(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        this.emit(index, this.expressions);
+        const node = this.node(index);
+        const kind = node.kind;
+        if(kind === 79) {
+            this.emit(index, this.reads);
+            if(this.throwableIdentifier(index)) {
+                this.throwable();
+            }
+            return;
+        }
+        if(kind === 218) {
+            this.expr(this.child(index, 0));
+            return;
+        }
+        if(kind === 227) {
+            const left = this.child(index, 0);
+            const operator = this.node(this.child(index, 1)).kind;
+            const right = this.last(index);
+            if(
+                [
+                    55,
+                    56,
+                    60,
+                    76,
+                    75,
+                    77,
+                ].includes(operator)
+            ) {
+                if(isAssignment(operator)) {
+                    this.patternReads(left);
+                }
+                else {
+                    this.expr(left);
+                }
+                const join = this.fresh();
+                this.link(this.current, join);
+                const branch = this.fresh();
+                this.link(this.current, branch);
+                this.enter(branch);
+                this.expr(right);
+                if(isAssignment(operator)) { this.patternWrites(left); }
+                this.link(this.current, join);
+                this.enter(join);
+                return;
+            }
+            if(
+                operator === 63 &&
+                [211, 210].includes(this.node(this.syntax.skip(left)).kind)
+            ) {
+                this.expr(right);
+                this.patternBind(left);
+                return;
+            }
+            if(
+                operator === 63 ||
+                (isAssignment(operator) &&
+                    ![
+                        34,
+                        36,
+                        35,
+                        37,
+                        32,
+                        33,
+                    ].includes(operator))
+            ) {
+                this.patternReads(left);
+                this.expr(right);
+                this.patternWrites(left);
+                return;
+            }
+            this.expr(left);
+            this.expr(right);
+            return;
+        }
+        if(kind === 228) {
+            this.expr(this.child(index, 0));
+            const test = this.current;
+            const join = this.fresh();
+            const yes = this.fresh();
+            this.link(test, yes);
+            this.enter(yes);
+            this.expr(this.child(index, 2));
+            this.link(this.current, join);
+            const no = this.fresh();
+            this.link(test, no);
+            this.enter(no);
+            this.expr(this.child(index, 4));
+            this.link(this.current, join);
+            this.enter(join);
+            return;
+        }
+        if(kind === 225 || kind === 226) {
+            if([45, 46].includes(node.operator)) {
+                this.patternReads(this.child(index, 0));
+                this.patternWrites(this.child(index, 0));
+            }
+            else {
+                this.expr(this.child(index, 0));
+            }
+            return;
+        }
+        if(
+            [
+                212,
+                213,
+                214,
+                215,
+                216,
+            ].includes(kind)
+        ) {
+            this.access(index);
+            return;
+        }
+        if(kind === 230) {
+            for(const child of node.children) {
+                this.expr(child);
+            }
+            if(this.block(this.current).reachable) {
+                const returned = this.tries[this.returnFrame()];
+                if(returned !== undefined) {
+                    returned.returned = true;
+                    this.link(this.current, returned.finallyEntry);
+                }
+                const thrown = this.tries[this.throwFrame()];
+                if(thrown !== undefined) {
+                    thrown.thrown = true;
+                    this.link(this.current, this.throwTarget(thrown));
+                }
+                const next = this.fresh();
+                this.link(this.current, next);
+                this.enter(next);
+            }
+            return;
+        }
+        if(kind === 232) {
+            this.classLike(index);
+            return;
+        }
+        if(this.isRoot(index)) {
+            this.memberHeader(index);
+            return;
+        }
+        for(const child of node.children) {
+            this.unknown(child);
+        }
+    }
+    condition(index: number, yes: number, no: number): void {
+        if(index < 0) {
+            this.link(this.current, yes);
+            this.link(this.current, no);
+            return;
+        }
+        const node = this.node(index);
+        if(node.kind === 218) {
+            this.emit(index, this.expressions);
+            this.condition(this.child(index, 0), yes, no);
+            return;
+        }
+        if(node.kind === 225 && node.operator === 53) {
+            this.emit(index, this.expressions);
+            this.condition(this.child(index, 0), no, yes);
+            return;
+        }
+        const operator = this.node(this.child(index, 1)).kind;
+        if(
+            node.kind === 227 &&
+            [55, 56, 60].includes(operator)
+        ) {
+            this.emit(index, this.expressions);
+            const right = this.fresh();
+            if(operator === 55) {
+                this.condition(this.child(index, 0), right, no);
+            }
+            else if(operator === 56) {
+                this.condition(this.child(index, 0), yes, right);
+            }
+            else {
+                this.expr(this.child(index, 0));
+                this.link(this.current, yes);
+                this.link(this.current, no);
+                this.link(this.current, right);
+            }
+            this.enter(right);
+            this.condition(this.last(index), yes, no);
+            return;
+        }
+        if(node.kind === 228) {
+            this.emit(index, this.expressions);
+            const whenTrue = this.fresh();
+            const whenFalse = this.fresh();
+            this.condition(this.child(index, 0), whenTrue, whenFalse);
+            this.enter(whenTrue);
+            this.condition(this.child(index, 2), yes, no);
+            this.enter(whenFalse);
+            this.condition(this.child(index, 4), yes, no);
+            return;
+        }
+        this.expr(index);
+        this.link(this.current, yes);
+        this.link(this.current, no);
+    }
+    access(index: number): void {
+        const node = this.node(index);
+        const parent = this.node(this.parent(index));
+        const outer =
+            node.optional &&
+            (!parent.optional ||
+                ![212, 213, 214].includes(parent.kind) ||
+                parent.children[0] !== index);
+        if(outer) {
+            this.chainJoins.push(this.fresh());
+        }
+        this.expr(this.child(index, 0));
+        if(node.children.some((part) => this.node(part).kind === 28) && this.chainJoins.length > 0) {
+            this.link(this.current, this.chainJoins[this.chainJoins.length - 1] ?? -1);
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+        }
+        if(node.kind === 213) {
+            this.expr(this.last(index));
+        }
+        if([214, 215, 216].includes(node.kind)) {
+            for(const child of node.children.slice(1)) {
+                if(this.node(child).kind !== 28) {
+                    this.expr(child);
+                }
+            }
+        }
+        this.throwable();
+        if(outer) {
+            const join = this.chainJoins.pop() ?? -1;
+            this.link(this.current, join);
+            this.enter(join);
+        }
+    }
+    memberHeader(index: number): void {
+        for(const child of this.node(index).children) {
+            if(this.node(child).kind === 171 || this.node(child).kind === 168) {
+                this.expr(child);
+            }
+            if(this.node(child).kind === 170) {
+                for(const part of this.node(child).children) {
+                    if(this.node(part).kind === 171) {
+                        this.expr(part);
+                    }
+                }
+            }
+        }
+        if(this.node(index).kind === 173) {
+            const name = this.syntax.name(index);
+            const initialized = this.syntax.initializer(index);
+            for(const child of this.node(index).children) {
+                if(child !== name && child !== initialized && !(this.node(child).kind >= 82 && this.node(child).kind <= 166)) {
+                    this.expr(child);
+                }
+            }
+        }
+    }
+    classLike(index: number): void {
+        for(const child of this.node(index).children) {
+            const kind = this.node(child).kind;
+            if([171, 169, 299].includes(kind)) {
+                this.expr(child);
+            }
+            else if(
+                [
+                    173,
+                    175,
+                    178,
+                    179,
+                    177,
+                    182,
+                    176,
+                ].includes(kind)
+            ) {
+                this.memberHeader(child);
+            }
+        }
+    }
+    unknown(index: number): void {
+        const kind = this.node(index).kind;
+        if(
+            (kind >= 242 && kind <= 260) ||
+            [
+                242,
+                244,
+                264,
+                263,
+                273,
+                272,
+                278,
+                279,
+                265,
+                266,
+                267,
+                268,
+            ].includes(kind)
+        ) {
+            this.statement(index);
+        }
+        else {
+            this.expr(index);
+        }
+    }
+    patternReads(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const kind = this.node(index).kind;
+        if(kind === 79) {
+            this.emit(index, this.reads);
+            if(this.throwableIdentifier(index)) {
+                this.throwable();
+            }
+            return;
+        }
+        if([218, 236, 235, 239].includes(kind)) {
+            this.patternReads(this.child(index, 0));
+            return;
+        }
+        if(kind === 217) {
+            this.patternReads(this.last(index));
+            return;
+        }
+        this.expr(index);
+    }
+    bindDefault(target: number, fallback: number): void {
+        if(fallback >= 0) {
+            const join = this.fresh();
+            this.link(this.current, join);
+            const branch = this.fresh();
+            this.link(this.current, branch);
+            this.enter(branch);
+            this.expr(fallback);
+            this.link(this.current, join);
+            this.enter(join);
+        }
+        this.patternBind(target);
+    }
+    patternWrites(index: number): void {
+        const kind = this.node(index).kind;
+        if(kind === 79) { this.emit(index, this.writes); }
+        else if([218,236,235,239].includes(kind)) { this.patternWrites(this.child(index, 0)); }
+        else if(kind === 217) { this.patternWrites(this.last(index)); }
+    }
+    patternBind(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const node = this.node(index);
+        const kind = node.kind;
+        if(kind === 79) {
+            this.emit(index, this.reads);
+            if(this.throwableIdentifier(index)) {
+                this.throwable();
+            }
+            this.emit(index, this.writes);
+            return;
+        }
+        if(kind === 233) {
+            return;
+        }
+        if(
+            [
+                218,
+                236,
+                235,
+                239,
+                231,
+                305,
+            ].includes(kind)
+        ) {
+            this.patternBind(this.child(index, 0));
+            return;
+        }
+        if(kind === 217) {
+            this.patternBind(this.last(index));
+            return;
+        }
+        if([207, 208].includes(kind)) {
+            for(const element of node.children) {
+                if(this.node(element).kind !== 209) {
+                    continue;
+                }
+                for(const part of this.node(element).children) {
+                    if(this.node(part).kind === 168) {
+                        this.expr(this.child(part, 0));
+                    }
+                }
+                this.bindDefault(this.syntax.name(element), this.syntax.initializer(element));
+            }
+            return;
+        }
+        if(kind === 211) {
+            for(const property of node.children) {
+                const propertyKind = this.node(property).kind;
+                if(propertyKind === 303) {
+                    if(this.node(this.child(property, 0)).kind === 168) {
+                        this.expr(this.child(this.child(property, 0), 0));
+                    }
+                    this.patternBind(this.last(property));
+                }
+                else if(propertyKind === 304) {
+                    const children = this.node(property).children;
+                    this.bindDefault(this.child(property, 0), children.length > 1 ? this.last(property) : -1);
+                }
+                else if(propertyKind === 305) {
+                    this.patternBind(this.child(property, 0));
+                }
+            }
+            return;
+        }
+        if(kind === 210) {
+            for(const child of node.children) {
+                this.patternBind(child);
+            }
+            return;
+        }
+        if(kind === 227 && this.node(this.child(index, 1)).kind === 63) {
+            this.bindDefault(this.child(index, 0), this.last(index));
+            return;
+        }
+        this.expr(index);
+    }
+    variable(index: number): void {
+        if(this.node(index).kind === 262) {
+            for(const child of this.node(index).children) {
+                if(this.node(child).kind === 261) {
+                    this.variable(child);
+                }
+            }
+            return;
+        }
+        const name = this.syntax.name(index);
+        const initializer = this.syntax.initializer(index);
+        for(const child of this.node(index).children) {
+            if(child !== name && child !== initializer) {
+                this.expr(child);
+            }
+        }
+        if([207, 208].includes(this.node(name).kind)) {
+            this.expr(initializer);
+            this.patternBind(name);
+        }
+        else {
+            this.patternReads(name);
+            this.expr(initializer);
+            if(initializer >= 0) { this.patternWrites(name); }
+        }
+    }
+    statement(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        this.emit(index, this.statements);
+        const node = this.node(index);
+        const kind = node.kind;
+        if(kind === 242 || kind === 307) {
+            for(const child of node.children) {
+                this.statement(child);
+            }
+            return;
+        }
+        if(kind === 244) {
+            for(const child of node.children) {
+                if(this.node(child).kind === 262) {
+                    this.variable(child);
+                }
+            }
+            return;
+        }
+        if(kind === 245) {
+            this.expr(this.child(index, 0));
+            return;
+        }
+        if(kind === 246) {
+            const after = this.fresh();
+            const yes = this.fresh();
+            const elseNode = this.child(index, 2);
+            const no = elseNode >= 0 ? this.fresh() : after;
+            this.condition(this.child(index, 0), yes, no);
+            this.enter(yes);
+            this.statement(this.child(index, 1));
+            this.link(this.current, after);
+            if(elseNode >= 0) {
+                this.enter(no);
+                this.statement(elseNode);
+                this.link(this.current, after);
+            }
+            this.enter(after);
+            return;
+        }
+        if([248, 247, 249, 250, 251].includes(kind)) {
+            this.loop(index);
+            return;
+        }
+        if(kind === 256) {
+            this.switchStatement(index);
+            return;
+        }
+        if(kind === 259) {
+            this.tryStatement(index);
+            return;
+        }
+        if(kind === 257) {
+            const body = this.last(index);
+            if(this.breakable(body)) {
+                this.statement(body);
+                return;
+            }
+            const after = this.fresh();
+            this.jumps.push(new Jump([this.node(this.child(index, 0)).text], after, -1, false));
+            this.statement(body);
+            this.jumps.pop();
+            this.link(this.current, after);
+            this.enter(after);
+            return;
+        }
+        if(kind === 254 || kind === 258) {
+            this.expr(this.child(index, 0));
+            this.abrupt(kind === 254);
+            return;
+        }
+        if(kind === 253 || kind === 252) {
+            if(!this.block(this.current).reachable) {
+                return;
+            }
+            const label = this.node(this.child(index, 0)).text;
+            for(let at = this.jumps.length - 1; at >= 0; at--) {
+                const jump = this.jumps[at];
+                if(jump === undefined) {
+                    continue;
+                }
+                const target = kind === 252 ? jump.continueTo : jump.breakTo;
+                if(
+                    target < 0 ||
+                    (label !== '' && !jump.labels.includes(label)) ||
+                    (label === '' && kind === 253 && !jump.breakable)
+                ) {
+                    continue;
+                }
+                this.link(this.current, target);
+                break;
+            }
+            this.unreachable();
+            return;
+        }
+        if(kind === 255) {
+            this.expr(this.child(index, 0));
+            this.statement(this.child(index, 1));
+            return;
+        }
+        if(
+            [
+                243,
+                260,
+                273,
+                272,
+                263,
+                279,
+                1,
+            ].includes(kind)
+        ) {
+            return;
+        }
+        if(kind === 264) {
+            this.classLike(index);
+            return;
+        }
+        if(kind === 278) {
+            this.expr(this.last(index));
+            return;
+        }
+        for(const child of node.children) {
+            this.unknown(child);
+        }
+    }
+    breakable(index: number): boolean {
+        return [
+            256,
+            248,
+            247,
+            249,
+            250,
+            251,
+        ].includes(this.node(index).kind);
+    }
+    pushJump(index: number, after: number, continued: number): void {
+        const labels: string[] = [];
+        let previous = index;
+        let parent = this.parent(index);
+        while(this.node(parent).kind === 257 && this.last(parent) === previous) {
+            labels.push(this.node(this.child(parent, 0)).text);
+            previous = parent;
+            parent = this.parent(parent);
+        }
+        this.jumps.push(new Jump(labels, after, continued));
+    }
+    truthy(index: number): boolean {
+        const node = this.node(this.syntax.skip(index));
+        if([111, 13].includes(node.kind)) {
+            return true;
+        }
+        if(node.kind === 8) {
+            const text = node.text.replaceAll('_', '');
+            if(text.startsWith('0x') || text.startsWith('0X')) {
+                return parseInt(text.slice(2), 16) !== 0;
+            }
+            if(text.startsWith('0b') || text.startsWith('0B')) {
+                return parseInt(text.slice(2), 2) !== 0;
+            }
+            if(text.startsWith('0o') || text.startsWith('0O')) {
+                return parseInt(text.slice(2), 8) !== 0;
+            }
+            return parseFloat(text) !== 0;
+        }
+        if(node.kind === 10) {
+            return node.text !== '';
+        }
+        if(node.kind === 9) {
+            let text = node.text.slice(0, -1).replaceAll('_', '');
+            if(
+                text.startsWith('0x') ||
+                text.startsWith('0X') ||
+                text.startsWith('0b') ||
+                text.startsWith('0B') ||
+                text.startsWith('0o') ||
+                text.startsWith('0O')
+            ) {
+                text = text.slice(2);
+            }
+            return text.split('').some((part) => part !== '0');
+        }
+        return false;
+    }
+    forParts(index: number): number[] {
+        const node = this.node(index);
+        const scanner = new Scanner(this.rules.scanner.text);
+        scanner.pos = node.charPos;
+        let depth = 0;
+        let braces = 0;
+        let brackets = 0;
+        const semicolons: number[] = [];
+        while(true) {
+            const kind = numericKind(scanner.scan());
+            if(kind === 1) {
+                break;
+            }
+            if(kind === 20) {
+                depth++;
+            }
+            if(kind === 21) {
+                depth--;
+                if(depth === 0) {
+                    break;
+                }
+            }
+            if(kind === 18) {
+                braces++;
+            }
+            if(kind === 19) {
+                braces--;
+            }
+            if(kind === 22) {
+                brackets++;
+            }
+            if(kind === 23) {
+                brackets--;
+            }
+            if(kind === 26 && depth === 1 && braces === 0 && brackets === 0) {
+                semicolons.push(this.rules.byte(scanner.fullStart));
+            }
+        }
+        const parts = [-1, -1, -1];
+        for(const child of node.children.slice(0, -1)) {
+            const value = this.node(child);
+            const first = semicolons[0] ?? -1;
+            const second = semicolons[1] ?? -1;
+            const slot = value.end <= first ? 0 : value.end <= second ? 1 : 2;
+            parts[slot] = child;
+        }
+        return parts;
+    }
+    loop(index: number): void {
+        const kind = this.node(index).kind;
+        const bodyNode = this.last(index);
+        if(kind === 247) {
+            const body = this.fresh();
+            this.link(this.current, body);
+            const test = this.fresh();
+            const after = this.fresh();
+            this.pushJump(index, after, test);
+            this.enter(body);
+            this.statement(this.child(index, 0));
+            this.link(this.current, test);
+            this.jumps.pop();
+            this.enter(test);
+            this.expr(this.child(index, 1));
+            this.link(this.current, body);
+            if(!this.truthy(this.child(index, 1))) {
+                this.link(this.current, after);
+            }
+            this.enter(after);
+            return;
+        }
+        if(kind === 250 || kind === 251) {
+            const children = this.node(index).children.filter((child) => this.node(child).kind !== 134);
+            this.expr(children[1] ?? -1);
+            const head = this.fresh();
+            this.link(this.current, head);
+            this.enter(head);
+            const after = this.fresh();
+            this.link(head, after);
+            const body = this.fresh();
+            this.link(head, body);
+            this.pushJump(index, after, head);
+            this.enter(body);
+            const initialized = children[0] ?? -1;
+            if(this.node(initialized).kind === 262) {
+                for(const decl of this.node(initialized).children) {
+                    if(this.node(decl).kind === 261) {
+                        this.patternBind(this.syntax.name(decl));
+                    }
+                }
+            }
+            else {
+                this.patternBind(initialized);
+            }
+            this.statement(bodyNode);
+            this.link(this.current, head);
+            this.jumps.pop();
+            this.enter(after);
+            return;
+        }
+        let condition = this.child(index, 0);
+        let increment = -1;
+        if(kind === 249) {
+            const parts = this.forParts(index);
+            const initialized = parts[0] ?? -1;
+            if(this.node(initialized).kind === 262) {
+                this.variable(initialized);
+            }
+            else {
+                this.expr(initialized);
+            }
+            condition = parts[1] ?? -1;
+            increment = parts[2] ?? -1;
+        }
+        const test = this.fresh();
+        this.link(this.current, test);
+        this.enter(test);
+        const after = this.fresh();
+        const body = this.fresh();
+        this.condition(condition, body, condition < 0 || this.truthy(condition) ? -1 : after);
+        let update = test;
+        if(increment >= 0) {
+            update = this.fresh();
+            this.disconnected(update);
+            this.expr(increment);
+            this.link(this.current, test);
+        }
+        this.pushJump(index, after, update);
+        this.enter(body);
+        this.statement(bodyNode);
+        this.link(this.current, update);
+        this.jumps.pop();
+        this.enter(after);
+    }
+    switchStatement(index: number): void {
+        this.expr(this.child(index, 0));
+        const after = this.fresh();
+        const clauses = this.node(this.child(index, 1)).children;
+        const bodies = clauses.map(() => this.fresh());
+        let defaultIndex = -1;
+        let test = this.current;
+        for(let at = 0; at < clauses.length; at++) {
+            const clause = clauses[at] ?? -1;
+            if(this.node(clause).kind === 298) {
+                defaultIndex = at;
+                continue;
+            }
+            this.current = test;
+            this.expr(this.child(clause, 0));
+            this.link(this.current, bodies[at] ?? -1);
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+            test = this.current;
+        }
+        this.link(test, defaultIndex >= 0 ? (bodies[defaultIndex] ?? -1) : after);
+        this.pushJump(index, after, -1);
+        let previous = -1;
+        for(let at = 0; at < clauses.length; at++) {
+            this.link(previous, bodies[at] ?? -1);
+            this.enter(bodies[at] ?? -1);
+            const clause = clauses[at] ?? -1;
+            const offset = this.node(clause).kind === 297 ? 1 : 0;
+            for(const statement of this.node(clause).children.slice(offset)) {
+                this.statement(statement);
+            }
+            previous = this.current;
+        }
+        this.link(previous, after);
+        this.jumps.pop();
+        this.enter(after);
+    }
+    tryStatement(index: number): void {
+        const children = this.node(index).children;
+        const catchNode = children.find((child) => this.node(child).kind === 300) ?? -1;
+        const finallyNode =
+            children.length > 1 && this.node(children[children.length - 1] ?? -1).kind === 242
+                ? (children[children.length - 1] ?? -1)
+                : -1;
+        const frame = new TryFrame();
+        if(catchNode >= 0) {
+            frame.catchEntry = this.fresh();
+        }
+        if(finallyNode >= 0) {
+            frame.finallyEntry = this.fresh();
+        }
+        this.tries.push(frame);
+        this.statement(this.child(index, 0));
+        const ends: number[] = [];
+        if(catchNode >= 0) {
+            this.link(this.current, frame.catchEntry);
+            ends.push(this.current);
+            frame.position = 1;
+            frame.forked = false;
+            this.enter(frame.catchEntry);
+            for(const child of this.node(catchNode).children) {
+                if(this.node(child).kind === 261) {
+                    this.patternBind(this.syntax.name(child));
+                }
+            }
+            this.statement(this.last(catchNode));
+        }
+        ends.push(this.current);
+        this.tries.pop();
+        const after = this.fresh();
+        if(finallyNode < 0) {
+            for(const end of ends) {
+                this.link(end, after);
+            }
+            this.enter(after);
+            return;
+        }
+        const snapshot = this.tries.map((held) => held.forked);
+        const normal = this.fresh();
+        for(const end of ends) {
+            this.link(end, normal);
+        }
+        for(const end of frame.implicit) {
+            this.link(end, normal);
+        }
+        this.enter(normal);
+        this.statement(finallyNode);
+        this.link(this.current, after);
+        if(this.incoming[frame.finallyEntry] ?? false) {
+            for(let at = 0; at < snapshot.length; at++) {
+                const held = this.tries[at];
+                if(held !== undefined) {
+                    held.forked = snapshot[at] ?? false;
+                }
+            }
+            this.enter(frame.finallyEntry);
+            this.statement(finallyNode);
+            if(this.block(this.current).reachable) {
+                if(frame.returned) {
+                    const outer = this.tries[this.returnFrame()];
+                    if(outer !== undefined) {
+                        outer.returned = true;
+                        this.link(this.current, outer.finallyEntry);
+                    }
+                }
+                if(frame.thrown) {
+                    const outer = this.tries[this.throwFrame()];
+                    if(outer !== undefined) {
+                        outer.thrown = true;
+                        this.link(this.current, this.throwTarget(outer));
+                    }
+                }
+            }
+        }
+        this.enter(after);
+    }
+}
+
+function isAssignment(kind: number): boolean { return kind >= 63 && kind <= 78; }

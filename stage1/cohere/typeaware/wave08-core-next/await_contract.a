@@ -1,0 +1,150 @@
+import { tsgoInspect } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import type { NumericNode } from './numeric_node.a';
+import type { SyntaxSnapshot } from './syntax_snapshot.a';
+import { AwaitTypes } from './await_type.a';
+class Step {
+    readonly kind: number;
+    readonly name: string;
+    readonly index: number;
+    constructor(kind: number, name = '', index = 0) { this.kind = kind; this.name = name; this.index = index; }
+}
+class ContractInput {
+    readonly contextual: number;
+    readonly heritage: number[];
+    call = -1;
+    readonly parameters: number[] = [];
+    readonly declared: number[] = [];
+    readonly resolved: number[] = [];
+    rest = false;
+    restElement = 0;
+    returns = 0;
+    callContext = 0;
+    constructor(rules: Rules, node: NumericNode, syntax: SyntaxSnapshot) {
+        const frames = new Frames(tsgoInspect(rules.program, rules.path, node.pos, node.end, node.bridgeKind, 'wave08-await-contract'));
+        header(frames, 'wave08-await-contract');
+        this.contextual = frames.natural(); this.heritage = frames.ids();
+        if(frames.yes()) {
+            const kind = frames.natural(), pos = frames.natural(), end = frames.natural();
+            this.call = syntax.spans.get(`${kind}:${pos}:${end}`) ?? -1;
+            if(frames.yes()) {
+                for(const id of frames.ids()) { this.parameters.push(id); }
+                for(const id of frames.ids()) { this.declared.push(id); }
+                this.rest = frames.yes(); this.restElement = frames.natural(); this.returns = frames.natural();
+                for(const id of frames.ids()) { this.resolved.push(id); }
+                this.callContext = frames.natural();
+            }
+        }
+        frames.end();
+    }
+}
+export class AwaitContract {
+    name(syntax: SyntaxSnapshot, index: number): string | undefined {
+        const name = syntax.nodes[index];
+        return name !== undefined && [79,80,10,14,8].includes(name.kind) ? name.text : undefined;
+    }
+    takesReturn(node: NumericNode): boolean { return [219,220].includes(node.kind) && !node.typePresent && node.functionFlags === 0; }
+    satisfied(rules: Rules, node: NumericNode, syntax: SyntaxSnapshot): boolean {
+        const input = new ContractInput(rules, node, syntax), types = new AwaitTypes(rules, node);
+        const substitutions = new Map<number, number[]>(), steps: Step[] = [];
+        let current = node.index, usable = true, argument = -1;
+        if(node.kind === 175) {
+            const object = syntax.nodes[syntax.parent(current)], name = this.name(syntax, node.name);
+            if(object?.kind !== 211 || name === undefined) { usable = false; }
+            else { steps.push(new Step(0, name)); current = object.index; }
+        }
+        while(usable) {
+            const parent = syntax.nodes[syntax.parent(current)];
+            if(parent === undefined) { usable = false; break; }
+            let next = parent.index;
+            if(parent.kind === 218) { }
+            else if(parent.kind === 228) {
+                if(parent.children[2] !== current && parent.children[4] !== current) { usable = false; }
+            }
+            else if(parent.kind === 227) {
+                const operator = syntax.nodes[parent.children[1] ?? -1]?.kind ?? 0;
+                if(operator !== 56 && operator !== 60) { usable = false; }
+            }
+            else if(parent.kind === 303) {
+                const name = this.name(syntax, parent.name);
+                if(parent.initializer !== current || name === undefined) { usable = false; }
+                else { steps.push(new Step(0, name)); next = syntax.parent(parent.index); }
+            }
+            else if(parent.kind === 210) {
+                let position = -1;
+                for(let at = 0; at < parent.children.length; at++) {
+                    const child = parent.children[at] ?? -1;
+                    if(child === current) { position = at; break; }
+                    if(syntax.nodes[child]?.kind === 231) { break; }
+                }
+                if(position < 0) { usable = false; }
+                else { steps.push(new Step(1, '', position)); }
+            }
+            else if(parent.kind === 254) {
+                let containing = syntax.parent(parent.index);
+                while(containing >= 0 && !syntax.functionKind(syntax.nodes[containing]?.kind ?? 0)) { containing = syntax.parent(containing); }
+                const fn = syntax.nodes[containing];
+                if(fn === undefined || !this.takesReturn(fn)) { usable = false; }
+                else { steps.push(new Step(2)); next = containing; }
+            }
+            else if(parent.kind === 220) {
+                if(parent.body !== current || !this.takesReturn(parent)) { usable = false; }
+                else { steps.push(new Step(2)); }
+            }
+            else if(parent.kind === 214 || parent.kind === 215) { argument = current; break; }
+            else { usable = false; }
+            current = next;
+        }
+        const call = syntax.nodes[input.call];
+        let argumentIndex = -1;
+        if(usable && call !== undefined && input.parameters.length > 0) {
+            const count = call.list > 0 ? call.list : 0;
+            const args = call.children.slice(call.children.length - count);
+            const explicit = call.children.slice(1, call.children.length - count).some((index) => syntax.nodes[index]?.kind !== 28);
+            if(!explicit) {
+                for(let at = 0; at < args.length; at++) {
+                    const candidate = args[at] ?? -1;
+                    if(candidate === argument) { argumentIndex = at; break; }
+                    if(syntax.nodes[candidate]?.kind === 231) { break; }
+                }
+            }
+            const parameter = input.rest && argumentIndex >= input.declared.length - 1 ? input.restElement : (input.declared[argumentIndex] ?? 0);
+            if(argumentIndex >= 0 && parameter !== 0) {
+                for(let at = 0; at < args.length; at++) {
+                    if(at === argumentIndex || at >= input.declared.length || at >= input.resolved.length || (input.rest && at >= input.declared.length - 1)) { continue; }
+                    const declared = input.declared[at] ?? 0;
+                    if(input.parameters.includes(declared)) {
+                        const empty: number[] = [], standIns = substitutions.get(declared) ?? empty;
+                        standIns.push(input.resolved[at] ?? 0); substitutions.set(declared, standIns);
+                    }
+                }
+                if(input.parameters.includes(input.returns) && input.callContext !== 0) {
+                    const empty: number[] = [], standIns = substitutions.get(input.returns) ?? empty;
+                    standIns.push(input.callContext); substitutions.set(input.returns, standIns);
+                }
+                let demand: number[] = [parameter];
+                for(let at = steps.length - 1; at >= 0; at--) {
+                    const step = steps[at], next: number[] = [];
+                    if(step === undefined) { continue; }
+                    for(const part of types.expand(demand, substitutions)) {
+                        const type = types.type(part, step.kind === 0 ? step.name : '');
+                        if(step.kind === 0) { const member = type.propertyType !== 0 ? type.propertyType : type.stringIndex; if(member !== 0) { next.push(member); } }
+                        else if(step.kind === 1) {
+                            const element = type.tuple ? (type.elements[step.index] ?? 0) : type.numberIndex;
+                            if(element !== 0) { next.push(element); }
+                        }
+                        else { for(const signature of type.signatures) { next.push(signature.returns); } }
+                    }
+                    demand = next;
+                }
+                return types.demands(demand, substitutions);
+            }
+        }
+        let contextual = input.contextual;
+        if(contextual === 0 && node.kind === 175 && (node.modifiers & 256) === 0 && syntax.nodes[node.name]?.kind === 79 && [264,232].includes(syntax.nodes[syntax.parent(node.index)]?.kind ?? 0)) {
+            contextual = input.heritage[0] ?? 0;
+        }
+        return contextual !== 0 && types.demands([contextual], substitutions);
+    }
+}

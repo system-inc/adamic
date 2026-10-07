@@ -1,0 +1,6 @@
+import { listenerKinds as atomic } from '../require_atomic_updates.a';
+import { listenerKinds as awaitKinds } from '../require_await.a';
+import { listenerKinds as symbol } from '../symbol_description.a';
+console.log(`require-atomic-updates\t${atomic.join(',')}`);
+console.log(`require-await\t${awaitKinds.join(',')}`);
+console.log(`symbol-description\t${symbol.join(',')}`);
