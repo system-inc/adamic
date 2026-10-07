@@ -1,236 +1,205 @@
-# Adamic's WASI runtime
+Corrected the WASI shim oracle to use the JavaScript backend for checked fixtures, with a wrong-source control.
+Commits: prior report 01deb14f8ae47edae318ac0e5a66919dec717dd1; witness correction 6f8090e5790bbd219fba07ccf140c94045977f5f.
+Observed: corrected strict suite passes in 104.388s, with 305 three-way agreements and 3 file-access skips; package vet passes.
+Controls: writes_past_end.a source exits 0 while backend/shim exit 70; all three iovec, exit, and preopen mutants remain caught.
+Not covered: actual browser/Workers/Deno deployment, filesystem support, clocks/randomness, or another complete repository gate.
 
-The runtime builds for `wasm32-wasi` (WASI Preview 1), using clang and a WASI
-sysroot. Every runtime difference uses `ADAMIC_TARGET_WASI`, set with
-`-DADAMIC_TARGET_WASI=1`. The compiler's target and driver are a separate unit;
-this branch changes neither `native.go` nor the driver. Executable programs
-still enter through `main`.
+# W2 report
 
-`wasm32-unknown-unknown` alone is insufficient: the runtime needs allocation,
-libm, byte/string functions, output and process exit. WASI libc supplies those,
-and translates the existing POSIX-shaped file operations to WASI imports.
-A libc-free build would need replacements for those services, not just another
-clang target flag.
+## Corrected strict rerun
 
-## Portability inventory
+The user clarified the expected witness: fixtures with `checked=true` must use
+`onJavaScriptBackend`, exactly as `internal/oracle/wasi_test.go` does. Ordinary
+fixtures continue to use source Node. The strict test still compares stdout,
+stderr and exit code byte for byte under the shim, Node WASI, and that expected
+witness. It now records actual agreements separately from fixtures run.
 
-| Area | WASI behavior |
-| --- | --- |
-| `adamic.c` signals | SIGPIPE handling and SIGTERM/SIGINT/SIGHUP flushing are compiled out. WASI has no process signals; there is no public runtime signal API to reach. Ordinary output, flush, explicit panics and exit 70 remain. |
-| Atomics | The only runtime atomics here are `atomic_signal_fence` in the output buffer. They compile unchanged; these are compiler fences, not shared-memory synchronization. |
-| Threads, pool, `_Thread_local`, `parallel.c` | None exists in the base checkout (`ef3d907`). No threading API was stubbed and no sequential `parallelMap` fallback was implemented. The compiler unit must emit a sequential loop, like the Node witness, when that operation arrives. |
-| `stack.c` | No `getrlimit`. The constructor uses wasm-ld's `__stack_low` plus a 16 KiB panic margin. Generated `ADAMIC_CHECK_STACK` checks linear-memory frames. The tests reserve a 128 KiB stack and independently protect its bottom 32 bytes with a canary. |
-| Engine call stack | Functions without linear-memory frames can exhaust the engine's separate call stack first. Two oracle fixtures demonstrate this limitation below. A balanced call-depth guard in compiler output, or a tested host strategy preserving buffered output and panic semantics, is still needed. |
-| `input.c` | `open`, `read`, `write`, `close` and `fstat` go through WASI libc. Empty read/write paths are normalized to ENOENT; `fstat` identifies a directory before `fd_read`, whose EBADF otherwise differs from Node's EISDIR. UTF-8 decoding is unchanged. |
-| `directory.c` | `opendir`, `readdir`, `lstat` and `stat` go through WASI libc. Directory listing and file status work inside preopened directories. No host filesystem is granted implicitly. |
-| `sort.c` | Ordinary TimSort is unchanged. WASI SDK's `setjmp`/`longjmp` requires experimental wasm exception handling. That path is compiled out; a comparator that throws panics with `wasm32: throwing sort comparators are not supported`, exit 70. Ordinary emitted throw/catch cleanup paths and region cleanup still work. |
-| `weak.c` | Pointer hashing widens a wasm32 pointer to `uint64_t` before shifting by 33. Weak lifetime, reuse and ownership behavior are unchanged. |
-| Sanitizer-only paths | `heap.c` detects AddressSanitizer and includes its poisoning interface only in native sanitized builds. The normal WASI build does not enter these paths. Native ASan/UBSan flags are not supported by this WASI toolchain and are not used for wasm. Counted wasm builds supply the independent lifetime probes. |
-| `tsgo.c` | The external native Go-checker bridge remains disabled unless `ADAMIC_TSGO` is explicitly selected. A native Go archive cannot be linked into this WASI module. |
-
-All 48 runtime translation units compile with `-std=c11 -Wall -Wextra -Werror
--pedantic`, without the generated-C unused-variable/function exemptions. The
-five changed runtime files produce byte-identical native objects to the base
-with native clang `-O2`; the native package gate and full native oracle pass.
-
-## Running the opt-in test
-
-Run `bash cloud/setup.sh`, then source the environment file it prints. Install
-[WASI SDK 27](https://github.com/WebAssembly/wasi-sdk/releases/tag/wasi-sdk-27)
-or supply an equivalent clang, linker, compiler builtins and WASI sysroot.
-Node 24 supplies the command runtime and the independent source oracle.
+The corrected strict suite was run against witness-correction commit
+`6f8090e5790bbd219fba07ccf140c94045977f5f`:
 
 ```sh
 source /workspace/adamic-tools/env.sh
-export PATH=/workspace/adamic-tools/wasi-sdk-27.0-x86_64-linux/bin:$PATH
-export WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk-27.0-x86_64-linux/share/wasi-sysroot
-ADAMIC_TEST_WASI=1 ADAMIC_WASI_ARTIFACT=/tmp/adamic-request.wasm \
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASIShim' \
+  -count=1 -v -timeout 30m > /tmp/wasm-shim-corrected-oracle.log 2>&1
+# exit 0, ok internal/oracle 104.388s
+# SHIM COUNTS run=305 agreed=305 skipped=3
+
+go vet ./internal/oracle > /tmp/wasm-shim-corrected-vet.log 2>&1
+# exit 0, no diagnostics
+
+git diff --check
+# exit 0, no diagnostics
+```
+
+All 305 eligible fixtures agree three ways: 295 use source Node and 10 use the
+checked backend. The three skipped file fixtures remain `write_stdout_order.a`,
+`write_stderr_order.a`, and `prompt_then_read.a`; their exact imports and the
+unchanged skip rule appear below.
+
+`TestWASIShimCheckedWitnessControl` passed in 0.24s. It verifies the existing
+`writes_past_end.a` entry is still checked, requires backend/shim agreement, and
+requires a source/shim comparison to report `exit codes differ`, with source exit
+0 and shim exit 70. This keeps the wrong-source witness detectable.
+`TestWASIShimContractsAndMutants` passed in 0.20s, catching each of the three
+requested mutants at its named assertion. `TestWASIShimRequest` passed in 0.27s.
+
+The original measurements below are retained as history. The source-only
+limitation is resolved by the clarified witness; there is no remaining red
+shim gate. No new toolchain setup or full native/repository gate was needed for
+this witness-only change. The original full oracle and existing WASI suite
+results are recorded below, and the complete shim suite was rerun uncached.
+
+Branch: `codex/wasm-shim`, starting from `origin/wasm/integrate` at
+`6f7dce3dc1eace606fe081c8f4ab12034ae11bb4`. The first pushed commit contained
+only `cloud/reports/wasm-shim/claim.md`. No main or area branch was pushed.
+
+`git fetch origin` initially fetched only main because this clone's fetch
+refspec is narrow. An explicit fetch of
+`refs/heads/wasm/integrate:refs/remotes/origin/wasm/integrate` established the
+required base. `git fetch origin && git merge origin/main` subsequently said
+`Already up to date.` A separate `git ls-remote --heads origin main` confirmed
+main remained `e8ba3d5d81de4d3773c723914fccd4c76248b965`, already an ancestor.
+No rebase or history rewrite occurred.
+
+## Setup and scope
+
+Read CLAUDE.md, README.md, docs/0.1.md, docs/memory.md, docs/wasm.md, and the
+existing WASI oracle and runner before editing. Changes are confined to the
+claimed files; docs/wasm.md only gains its appended Imports section.
+
+`bash cloud/setup.sh --wasi-sdk > /tmp/wasm-shim-setup.log 2>&1` exited 0.
+Its timing lines were:
+
+```text
+setup: go ready (0s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+setup: node ready (1s)
+setup: wasi sdk ready (/workspace/adamic-tools/wasi-sdk) (4s)
+setup: submodules ready (4s)
+setup: build cache warm (123s)
+setup: done in 123s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+```
+
+`nproc` = 5. Go 1.27.1, Node 24.19.0, native clang 20.1.8, WASI SDK 27.
+Every build/test shell sourced `/workspace/adamic-tools/env.sh`, which exports
+`WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot`.
+The first existing native `TestWASI` invocation skipped: native clang on PATH
+could not open its WASI `libclang_rt.builtins.a`. Rerunning with SDK bin first on
+PATH passed. `native.Build` itself selects SDK clang beside the sysroot.
+
+## Initial commands and observed output
+
+All test output went directly to log files, without a pipeline.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_ORACLE_WASI=1 ADAMIC_SHIM_INVENTORY_ONLY=1 go test ./internal/oracle \
+  -run '^TestWASIShimAgreesWithNode$' -count=1 -v -timeout 30m \
+  > /tmp/wasm-shim-inventory.log 2>&1
+# exit 0, ok internal/oracle 95.157s; run=305 skipped=3 (inventory only)
+
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASIShim' \
+  -count=1 -v -timeout 30m > /tmp/wasm-shim-oracle.log 2>&1
+# exit 1, 118.188s; 305 Node WASI comparisons agree, 10 source assertions fail
+
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASIShimRequest$' \
+  -count=1 -v -timeout 15m > /tmp/wasm-shim-request-parity.log 2>&1
+# exit 0, ok internal/oracle 0.290s
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m \
+  > /tmp/wasm-shim-native-oracle.log 2>&1
+# exit 0, ok internal/oracle 95.139s; WASI opt-in tests skip in this run
+
+go vet ./... > /tmp/wasm-shim-vet.log 2>&1
+# exit 0, no diagnostics
+
+gofmt -l cmd internal > /tmp/wasm-shim-format.log
+# exit 0, empty output
+
+git diff --check
+# exit 0, empty output
+```
+
+The existing runtime test was run with SDK clang first:
+
+```sh
+source /workspace/adamic-tools/env.sh
+export PATH=/workspace/adamic-tools/wasi-sdk/bin:$PATH
+ADAMIC_TEST_WASI=1 ADAMIC_WASI_ARTIFACT=/tmp/wasm-shim-request.wasm \
   go test ./internal/native -run '^TestWASI$' -count=1 -v -timeout 15m \
-  > /tmp/wasm-test.log 2>&1
+  > /tmp/wasm-shim-request.log 2>&1
+# exit 0, 48 strict runtime translation units; requests passes; total 54.699s
 ```
 
-Paths are examples; use your installation. Without opt-in, Node 24 or a usable
-WASI toolchain, the test skips with the missing requirement. Once the minimal
-toolchain probe succeeds, runtime compilation failures are failures, never
-skips. The test invokes `adamic c <fixture>` from the existing compiler, compiles
-all runtime C itself, and links each fixture with:
+Contract and mutant controls passed in 0.25s. The first reactor lifetime control
+incorrectly expected zero live values after each request; both hosts retained
+the module's two initialized globals. The corrected check records the initialized
+baseline and requires every request to return to it. Six varied requests then
+matched both hosts and the source, with no additional live values.
+
+## Initial source-only run, superseded by the clarified brief
+
+The 10 initially failing fixtures all have `checked=true` in the existing oracle.
+For each, source Node exits 0 while the compiled command exits 70 with its
+inserted panic. Node WASI and the shim agree exactly, including that panic.
+The existing `wasi_test.go` deliberately compares these fixtures to the
+JavaScript backend, which carries the same checks. The initial brief instead
+required Node running source for every file-free fixture. The initial test stayed
+red and reported those mismatches. The user subsequently clarified that checked
+fixtures must use the JavaScript backend, matching the existing oracle.
+
+- `internal/oracle/testdata/writes_past_end.a`
+- `internal/oracle/testdata/cast_fails.a`
+- `internal/oracle/testdata/map_shrinks.a`
+- `internal/oracle/testdata/find_shrinks.a`
+- `internal/oracle/testdata/find_index_shrinks.a`
+- `internal/oracle/testdata/narrowed_numbers.a`
+- `internal/oracle/testdata/write_after_shrink.a`
+- `internal/oracle/testdata/e4eec87_f1_field_narrowed.a`
+- `internal/oracle/testdata/e4eec87_f1_class_narrowed.a`
+- `internal/oracle/testdata/e4eec87_f1_alias_narrowed.a`
+
+Initial strict outcomes: 305 commands run, 3 skipped, 295 full three-way passes,
+10 source mismatches, zero shim vs Node WASI mismatches. Request reactor parity
+passes separately. There are no extra behavior-based skips. The file rule is
+conservative: any `path_*`, `fd_read`, `fd_readdir`, or `fd_filestat_get` import.
+The skipped names are `write_stdout_order.a`, `write_stderr_order.a`, and
+`prompt_then_read.a`, each under `internal/oracle/testdata/`. Their exact imports
+are recorded below. File access cannot be honestly provided by this host.
+
+The complete repository test gate was not run. The full touched oracle package,
+existing WASI suite, and focused runtime request test are the chosen gate scope.
+The original source-only run was not green. The corrected witness policy and
+its rerun are documented in the follow-up results.
+
+## Earlier established WASI gate
+
+After the `origin/main` merge check, the existing oracle convention and all
+shim contracts/request checks passed:
 
 ```sh
-clang --target=wasm32-wasi --sysroot="$WASI_SYSROOT" \
-  -DADAMIC_TARGET_WASI=1 -std=c11 -Wall -Wextra -Werror -pedantic \
-  -O2 -ffp-contract=off -fno-optimize-sibling-calls \
-  -Wl,-z,stack-size=131072 -Wl,--export=__stack_low \
-  -I runtime-directory main.c runtime-objects/*.o -lm -o main.wasm
-node --disable-warning=ExperimentalWarning internal/native/wasm/run.mjs main.wasm
+source /workspace/adamic-tools/env.sh
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle \
+  -run '^TestWASI(AgreesWithNode|OracleCatchesMutants|RunnerCatchesMutants|Emission|ShimContractsAndMutants|ShimRequest)$' \
+  -count=1 -v -timeout 30m > /tmp/wasm-shim-existing-wasi-gate.log 2>&1
+# exit 0, ok internal/oracle 165.886s
 ```
 
-Generated C has the same unused-code warning exemptions as native builds.
-`run.mjs` preopens only its working directory and checks the reserved-stack
-canary after `main` returns or exits through WASI. Oracle command objects are
-uncounted; the reactor's objects are rebuilt counted for lifetime measurements.
-`ADAMIC_WASI_RUNTIME` selects a scratch runtime directory for isolated mutants.
+This suite uses the repository's existing JavaScript-backend witness for the
+10 checked fixtures. This earlier suite did not include
+`TestWASIShimAgreesWithNode`, which still used the initial source-only brief
+at that time. Its log includes
+passing `TestWASIShimRequest` and all four contract subtests, with all three
+requested mutants caught by their named AssertionErrors. The earlier
+`/tmp/wasm-shim-contracts.log` also preserves the corrected request-baseline
+control failure, and is not claimed as a complete-suite pass.
 
-The test lists 33 fixtures: 30 agree exactly in stdout, stderr and exit status.
-They cover all ten 0.1 examples, strings, numbers, bitwise operations, functions,
-regions and region exceptions, Weak and reuse, normalization, maps, JSON,
-RegExp collections, Object keys, array flattening, file reads and a file/directory
-round trip. `read_files.a` runs in its own fixture directory, including malformed
-UTF-8, BOMs, NULs, missing files, a directory and an empty path.
+## Import inventory and per-import policy
 
-The other three are explicitly classified and checked, not counted as equivalent:
+The following table and policies are the same appended Imports section saved
+in docs/wasm.md. These measurements precede shim implementation.
 
-| Fixture | Observation |
-| --- | --- |
-| `closures_throw.a` | Output agrees until the first throwing sort comparator; WASI then gives the explicit unsupported panic and exits 70. Node catches the comparator's error and continues. |
-| `stack_forever.a` | Node prints `start`, then the Adamic stack-overflow panic and exit 70. WASI's engine raises RangeError, loses buffered stdout, and exits 1. |
-| `stack_tail_call.a` | Node prints `0`, then the same panic and exit 70. WASI has the same engine-stack mismatch as above. |
-
-The opt-in test passes only if the equivalent fixtures agree and these three
-known limitations produce their specifically checked observations. Unknown
-differences fail. `stack_overflow.a`, which allocates linear stack frames,
-agrees with Node and preserves the canary. This is not full wasm oracle coverage.
-Permission probes, paths outside preopens, symlink escape behavior, special files,
-empty directory/status paths, very large allocations and every library fixture
-are not covered here.
-
-## Request ABI and host
-
-The exported application entry is:
-
-```c
-adamic_string *adamic_request(const unsigned char *bytes, size_t length);
-```
-
-On wasm32 this is `(i32, i32) -> i32`: a borrowed pointer and byte length of UTF-8
-request data, returning one owned Adamic string pointer. The function decodes
-the request using `adamic_decode_utf8`, calls the handler, releases the decoded
-request and returns the response. Invalid UTF-8 uses the existing WHATWG
-replacement rules. The host copies the result before releasing it. Adamic
-response bytes are WTF-8; the host's TextDecoder replaces lone surrogates.
-
-The supporting exports are `memory`, `malloc`, `free`, `adamic_release`,
-`adamic_response_bytes(const adamic_string *) -> const char *` and
-`adamic_response_length(const adamic_string *) -> size_t`. All pointer/length
-results are wasm32 i32 values. `adamic_live()` and `adamic_regions()` are counted
-prototype probes, not required application ABI. Input buffers are host-owned;
-responses must be released exactly once. Reacquire memory views after a wasm
-call, since allocation can grow memory.
-
-`internal/native/wasm/request.a` is the source witness. Its handler builds and
-counts a 63-object tree inside a declaration's statement region and returns
-`hello <request>: 63`. The tree dies when that statement ends; the response is
-an ordinary owned heap string and survives the region. No current-region global
-and no garbage collector is added.
-
-`request-abi.c` is a temporary adapter around today's executable C output,
-selecting the emitted handler by name. Only this test adapter renames its
-included fixture `main` and links with `-mexec-model=reactor`; ordinary programs
-keep `main`. The compiler unit can replace the adapter by emitting the export
-and module initialization directly. Node calls `_initialize` exactly once before
-serving requests. This fixture has no module initialization to replay beyond
-runtime constructors; a general module will need its top-level initialization.
-
-`request-host.mjs` implements a Worker-shaped async `fetch(Request)` returning
-`Response`. The synchronous handler runs after the body is read, with no
-filesystem preopens. The test verifies a fetch call, warms up with varied ASCII,
-Unicode, 1 KiB and NUL-containing requests, then checks 100,000 responses. Between
-every request it requires zero live counted values and no linear-memory growth;
-it also requires exactly 6,300,000 objects ended through regions. Linear memory
-is reusable capacity and cannot shrink; flat capacity alone would not prove
-correct release.
-
-The host also imports the very same `.a` source with Node's type stripping and
-measures its plain TypeScript handler. Rates include response assertions; wasm
-also includes UTF-8 copies, ownership calls and memory/lifetime probes. They are
-synchronous handler rates, not HTTP throughput or a Cloudflare performance claim.
-The observed numbers and mutants are recorded below.
-
-## Compiler and Worker integration
-
-The compiler target needs the WASI sysroot, `ADAMIC_TARGET_WASI=1`, wasm-compatible
-archive tools if it builds an archive, libm, the existing C11 flags, and a linker
-stack larger than the 16 KiB panic margin. Preserve sibling-call prevention and
-floating-point contraction settings. Initialize constructors before invoking
-exports. Keep the existing ownership and statement-region conventions; a response
-or other escaping value must never point into an ended request region. Compile
-`parallelMap` sequentially when it is introduced, and refuse or clearly panic
-for unsupported sort exceptions. The separate engine-stack limit needs a guard
-that also works when a function needs no linear-memory frame.
-
-The stripped request artifact imports exactly `fd_close`, `fd_prestat_get`,
-`fd_prestat_dir_name`, `fd_seek`, `fd_write` and `proc_exit` from
-`wasi_snapshot_preview1`. Its other runtime work uses linear memory and wasm
-instructions. A command or a handler using filesystem input will import more.
-
-A real Worker would add an ES-module wasm binding/bundling configuration,
-instantiation once per isolate, and a tested WASI Preview 1 import adapter for
-allocation startup, output and `proc_exit`. Workers do not supply Node's
-`node:wasi`; this host is a local stand-in, not a deployment. Give filesystem
-imports explicit behavior with no preopens, route output to host logging, and
-translate a panic into a request failure without trying to reuse an instance
-whose WASI execution has terminated. Do not share an instance across simultaneous
-wasm execution or native threads; runtime counters, caches and pending exceptions
-are single-threaded. Fetch bodies may await before the synchronous wasm call.
-Measure deployed module size, cold startup, isolate reuse and request throughput
-on the actual Worker. No Cloudflare account or deployment was used here.
-
-## Measurements and mutants
-
-Observed on the shared cloud machine with Node 24.19.0 and WASI SDK 27. The
-prototype is 272,389 bytes, or 48,940 bytes after `llvm-strip`. Stripping preserves
-all exports and the full 100,000-request assertions. The counted prototype's
-linear memory remains exactly 393,216 bytes (six 64 KiB pages), with zero live
-counted values between requests and 6,300,000 objects ended through regions.
-
-One complete run measured 202,734 wasm requests/s against 904,284 plain Node
-requests/s, with 1.86 ms for read/compile and 2.03 ms for instantiate/initialize.
-A later run while native tests were also running measured 143,098 against
-771,085, with 7.45 and 5.19 ms startup stages. The stripped module measured
-138,543 against 429,829 under concurrent load. These are observations on a
-shared CPU, not a controlled performance comparison. The wasm boundary and
-counted probes are slower for this handler; no speedup is claimed.
-
-Every mutant below compiled and was caught by executing the named check:
-
-| Mutant | Check that caught it |
-| --- | --- |
-| Console newline replaced by `!` | `01_hello.ts`: exact stdout comparison. |
-| Panic prefix replaced | `panic.a`: exact stderr comparison. |
-| Panic `_exit(70)` changed to `_exit(0)` | `panic.a`: exit status comparison. |
-| Empty-path normalization disabled | `read_files.a`: empty-read message; `wasm/io.a`: empty-write message. |
-| Directory-read detection disabled | `read_files.a`: EISDIR message becomes generic failure. |
-| A live Weak target always reads absent | `weak_parent.a`: exact stdout comparison. |
-| Throwing sort comparator continues sorting | `closures_throw.a`: required explicit unsupported panic is missing, and sort output changes. |
-| Linear stack limit set to zero | `stack_overflow.a`: reserved-stack canary is overwritten. Initially stdout/stderr/exit alone missed this mutant; that observation led to the independent canary. |
-| Region block `free` omitted | Request loop: linear memory grows after warmup, despite zero logical live counts. |
-| `adamic_release` never lets go | Request loop: live allocation assertion fails on dynamically allocated request/response data. |
-| Region live count decremented without recording region objects | Request loop: memory and live checks pass, but region count is 0 instead of 6,300,000. |
-
-An initial sort mutant also changed the out-of-memory branch and was stopped by
-clang; it was corrected to alter only the comparator's throw path, and only the
-runtime failure is counted above. An initial subtest filter selected no fixtures;
-those green runs were discarded and all listed witnesses rerun with full paths.
-
-Native verification used the native clang PATH, separately from WASI SDK:
-
-```sh
-go test ./internal/native/... -count=1 -timeout 15m > /tmp/wasm-native-final.log 2>&1
-go test ./internal/oracle -count=1 -timeout 30m > /tmp/wasm-oracle-full-final.log 2>&1
-go vet ./... > /tmp/wasm-vet-all.log 2>&1
-gofmt -l cmd internal > /tmp/wasm-format.log
-```
-
-The native package run passed in 87.711 s and the complete oracle package in
-69.672 s; vet and format checks produced no output. Both new `.a` fixtures were also built with `--sanitize` and compared
-to Node: exit 0, identical stdout, empty stderr. The complete repository test
-gate was not run; native and oracle packages were the test scope.
-
-Setup printed `go ready`, `clang ready`, `node ready` and `submodules ready` at
-0 s, `build cache warm` at 106 s, and `done in 106s on 5 processors` (`nproc` = 5,
-cgroup quota four CPUs, 17.6 GB reported memory). Go was 1.27.1 and native clang
-20.1.8. The setup environment was `/workspace/adamic-tools/env.sh`.
-
-## Imports
+### Imports
 
 W2 inventory, October 7, 2026, on `wasm/integrate` at
 `6f7dce3dc1eace606fe081c8f4ab12034ae11bb4`, WASI SDK 27 and Node 24.19.0.
