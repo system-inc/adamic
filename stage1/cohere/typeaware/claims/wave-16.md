@@ -36,3 +36,23 @@ origin head are:
 Each has compiler 0 and repository 0. The scan covered all 197 count-table rules
 and 32 Markdown claim files across origin heads; 79 candidates remained.
 This update is pushed before implementation begins.
+
+## Third set, after the follow-up validation push
+
+The previously claimed follow-up implementations and final overlay validation
+were pushed in 828d4a57. Shared dispatch integration remains documented, with
+its patch supplied rather than editing shared source.
+
+A fresh all-head fetch selected the first three remaining candidates:
+
+- nexus/security-no-interpolated-shell-command
+- nexus/security-no-interpolated-sql-string
+- no-alert
+
+All three have compiler 0 / repository 0. Selection covered 197 ranked rules,
+33 Markdown claim documents on all origin heads, and ports on main
+(ef3d907ecdc4c771b016f7d9c52372def057a340) and the bridge branch
+(5afbdb83da2ed7ad9815657cd3f6ececd5294bf6). 70 candidates remained after
+exclusions. Additional searches of both heads' entire stage1/cohere trees found
+only inventory/count mentions for these three, not ports. No rules were skipped.
+This claim update is pushed before implementation.
