@@ -75,22 +75,45 @@ def prepare(repository, tools):
                 return 'skipped (validated manifests and downloaded module cache)'
         except (OSError, ValueError, KeyError):
             pass
+    # Shim manifests rely on workspace-local modules at v0.0.0. Use private
+    # modfiles with those same local resolutions, rather than modifying sources
+    # or letting an inherited workspace hide the current manifest's graph.
+    download_environment = dict(os.environ, GOWORK='off')
+    local_modules = {}
+    for module in modules:
+        metadata = json.loads(subprocess.check_output(['go', 'mod', 'edit', '-json'],
+                              cwd=module, env=download_environment))
+        local_modules[metadata['Module']['Path']] = module
     paths = set()
     for module in modules:
         print('setup: downloading module dependencies in ' + str(module), flush=True)
-        result = subprocess.run(['go', 'mod', 'download', '-json'], cwd=module, stdout=subprocess.PIPE)
-        answer = result.stdout.decode()
-        for record in records(answer):
-            if record.get('Error'):
-                raise RuntimeError(record['Error'])
-            for field in ['Dir', 'Zip', 'GoMod', 'Info']:
-                if record.get(field):
-                    paths.add(record[field])
-            if record.get('Zip'):
-                paths.add(record['Zip'] + 'hash')
-        result.check_returncode()
-        # Download checks go.sum/sumdb; verify also rejects modified extracted bytes.
-        subprocess.run(['go', 'mod', 'verify'], cwd=module, check=True)
+        with tempfile.TemporaryDirectory(prefix='setup-module-') as temporary:
+            modfile = Path(temporary) / 'download.mod'
+            modfile.write_bytes((module / 'go.mod').read_bytes())
+            if (module / 'go.sum').exists():
+                modfile.with_suffix('.sum').write_bytes((module / 'go.sum').read_bytes())
+            metadata = json.loads(subprocess.check_output(['go', 'mod', 'edit', '-json'],
+                                  cwd=module, env=download_environment))
+            replaced = {item['Old']['Path'] for item in metadata.get('Replace', [])}
+            replacements = ['-replace=' + name + '=' + str(directory)
+                            for name, directory in sorted(local_modules.items()) if name not in replaced]
+            subprocess.run(['go', 'mod', 'edit', '-modfile=' + str(modfile), *replacements],
+                           cwd=module, env=download_environment, check=True)
+            result = subprocess.run(['go', 'mod', 'download', '-modfile=' + str(modfile), '-json', 'all'],
+                                    cwd=module, env=download_environment, stdout=subprocess.PIPE)
+            answer = result.stdout.decode()
+            for record in records(answer):
+                if record.get('Error'):
+                    raise RuntimeError(record['Error'])
+                for field in ['Dir', 'Zip', 'GoMod', 'Info']:
+                    if record.get(field):
+                        paths.add(record[field])
+                if record.get('Zip'):
+                    paths.add(record['Zip'] + 'hash')
+            result.check_returncode()
+            # Download checks the copied go.sum/sumdb; verify rejects edited bytes.
+            subprocess.run(['go', 'mod', 'verify', '-modfile=' + str(modfile)],
+                           cwd=module, env=download_environment, check=True)
     completed_modules, completed_inputs = manifests(repository)
     # Go may complete sum files; changes to module/workspace definitions require a retry.
     definitions = lambda values: [item for item in values if not item[0].endswith('.sum')]

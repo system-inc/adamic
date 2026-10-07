@@ -18,6 +18,8 @@ for name in ['st_mode', 'st_size', 'st_mtime_ns', 'st_ctime_ns', 'st_ino']:
     mutants[name] = source.replace(', info.' + name, '', 1)
 mutants['artifact-path'] = source.replace('[str(file), info.st_mode', '[info.st_mode', 1)
 mutants['changed-definition'] = source.replace('if modules != completed_modules or definitions(inputs) != definitions(completed_inputs):', 'if False:')
+mutants['workspace-hides-manifest'] = source.replace("GOWORK='off'", "GOWORK='auto'")
+mutants['omit-all-requirements'] = source.replace("'-json', 'all'", "'-json'")
 logs = Path(tempfile.mkdtemp(prefix='setup-modules-mutants-'))
 print('mutant logs:', logs, flush=True)
 for name, mutant in mutants.items():
