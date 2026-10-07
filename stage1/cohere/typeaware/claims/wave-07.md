@@ -78,3 +78,18 @@ private overlay pending one shared dispatcher case. Full byte streams including
 nonempty regex suggestions, per-rule mutants, a raw-fact mutant, released-handle
 checks and ASan/UBSan/LSan gates pass. See ../wave07_next/REPORT.md and evidence.
 No additional claims are taken after this trio.
+
+## Third continuation claim
+
+Prior claimed ports and evidence are pushed through 87ebb321. The fresh all-head
+fetch inspected 389 origin refs and 33 distinct Markdown claim blobs, naming
+142 ranked rules. Using the combined 197-row ranking and the original oracle
+port inventory, excluding ports on origin/main and origin/codex/tsgo-c-library
+and claims on every origin head, the first three eligible rules are:
+
+1. react-hooks/set-state-in-effect (0 compiler, 0 repository).
+2. react-hooks/set-state-in-render (0 compiler, 0 repository).
+3. react-hooks/static-components (0 compiler, 0 repository).
+
+This claim is pushed before implementation. New Adamic files will be .a and
+shared harness, dispatcher and generator files remain untouched.
