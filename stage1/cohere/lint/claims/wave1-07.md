@@ -73,3 +73,16 @@ No further rules were claimed before pushing this completion. Earlier blocker en
 ## Fresh next-queue audit after completion push
 
 Completion was pushed through f2ef276d before a fresh all-head fetch. Inspected 341 origin refs and 16 distinct claims trees, with main at ef3d907e. No helper-ready rule is unclaimed. The fourteen unclaimed inventory ready-syntax entries already have executable ports on origin/codex/stage1-lint-batch2 or origin/codex/stage1-lint-batch8, so they are skipped under the original instruction. No further claim is added. See wave1-07-next-audit.json and wave1-07-completion-report.md; the separate helper-blocked syntax queue is not reported exhausted.
+
+
+## Corrected syntax-only continuation
+
+The prior ready-queue-only stopping statement was too narrow. The existing October 7 claim explicitly defines syntax-only as neither needs_type_information nor binding_only, including entries waiting on helpers. That original definition is restored; the earlier audit above is historical and does not exhaust the syntax-only queue.
+
+After pushing all existing work and refreshing every origin head, inspected 346 origin refs and 16 distinct claim trees. Main is still ef3d907ecdc4c771b016f7d9c52372def057a340. All 46 original helper-ready entries are claimed. The first remaining inventory syntax-only rules, in inventory order and with no main implementation or origin claim, are:
+
+1. `consistent-return`
+2. `constructor-super`
+3. `default-case`
+
+A fresh executable-source scan also found no origin implementation for these names. These three reservations are pushed before any new rule code. Existing reservations are unchanged. Shared helper prerequisites will be checked before implementation; no shared file is owned by this unit.
