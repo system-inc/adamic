@@ -1,0 +1,9 @@
+// Exact Go string bytes, including rejection of malformed UTF-8.
+function equals(bytes: readonly number[], name: string): boolean {
+    if (bytes.length !== name.length) { return false; }
+    for (let i = 0; i < bytes.length; i++) { if (bytes[i] !== name.charCodeAt(i)) { return false; } }
+    return true;
+}
+export function isReactComponentBaseName(bytes: readonly number[]): boolean {
+    return equals(bytes, 'Component') || equals(bytes, 'PureComponent');
+}

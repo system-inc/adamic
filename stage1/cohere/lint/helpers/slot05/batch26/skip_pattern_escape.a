@@ -1,0 +1,38 @@
+import { isHexDigit } from '../batch24/is_hex_digit.a';
+import { allHexDigits } from '../batch24/all_hex_digits.a';
+import { regexFlagsUV } from '../batch25/regex_flags_uv.a';
+import type { RegexFlags } from '../batch25/flags.a';
+export interface ScanResult { value: number; ok: boolean; }
+// Go byte offsets; decodeWidth supplies utf8.DecodeRuneInString's width at an offset.
+export function skipPatternEscape(bytes: readonly number[], index: number, flags: RegexFlags, decodeWidth: (index: number) => number): ScanResult {
+    if (index + 1 >= bytes.length) { return { value: 0, ok: false }; }
+    const next = bytes[index + 1];
+    if (next === 120) {
+        if (index + 3 < bytes.length && isHexDigit(bytes[index + 2] ?? 0) && isHexDigit(bytes[index + 3] ?? 0)) { return { value: 4, ok: true }; }
+        return { value: 2, ok: true };
+    }
+    if (next === 117) {
+        if (index + 2 < bytes.length && bytes[index + 2] === 123) {
+            if (!regexFlagsUV(flags)) { return { value: 2, ok: true }; }
+            const close = bytes.indexOf(125, index + 3);
+            if (close < 0) { return { value: 2, ok: true }; }
+            return { value: close - index + 1, ok: true };
+        }
+        if (index + 5 < bytes.length && allHexDigits(bytes.slice(index + 2, index + 6))) { return { value: 6, ok: true }; }
+        return { value: 2, ok: true };
+    }
+    if (next === 99) {
+        if (index + 2 < bytes.length) { return { value: 3, ok: true }; }
+        return { value: 2, ok: true };
+    }
+    if (next === 112 || next === 80 || next === 113) {
+        if (regexFlagsUV(flags) && index + 2 < bytes.length && bytes[index + 2] === 123) {
+            const close = bytes.indexOf(125, index + 3);
+            if (close >= 0) { return { value: close - index + 1, ok: true }; }
+        }
+        return { value: 2, ok: true };
+    }
+    const width = decodeWidth(index + 1);
+    if (width === 0) { return { value: 2, ok: true }; }
+    return { value: 1 + width, ok: true };
+}

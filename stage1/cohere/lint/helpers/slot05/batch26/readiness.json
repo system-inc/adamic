@@ -1,0 +1,28 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.SkipPatternEscape": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ClassEnd": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ],
+    "github.com/system-inc/cohere/internal/lint/rules/react.isReactComponentBaseName": [
+      "react/no-access-state-in-setstate",
+      "react/no-set-state",
+      "react/no-unused-state"
+    ]
+  },
+  "dependency_occurrences_removed": 9,
+  "unique_consumers": 6,
+  "newly_helper_ready_from_batch_alone": [],
+  "cumulative_slot05": {
+    "helpers": 74,
+    "dependency_occurrences_removed": 383,
+    "unique_consumers": 76,
+    "helper_ready": 51
+  }
+}

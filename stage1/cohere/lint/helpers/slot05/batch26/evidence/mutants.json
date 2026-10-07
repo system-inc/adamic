@@ -1,0 +1,18 @@
+{
+  "witnesses": [
+    "    helper_test.go:107: skip_pattern_escape.a mutant \"value: 4, ok: true\" -> \"value: 3, ok: true\" caught at output line 153: mutant \"3|true\", Go \"4|true\"",
+    "    helper_test.go:107: skip_pattern_escape.a mutant \"!regexFlagsUV(flags)\" -> \"false\" caught at output line 253: mutant \"6|true\", Go \"2|true\"",
+    "    helper_test.go:107: skip_pattern_escape.a mutant \"value: 6, ok: true\" -> \"value: 5, ok: true\" caught at output line 157: mutant \"5|true\", Go \"6|true\"",
+    "    helper_test.go:107: skip_pattern_escape.a mutant \"value: 3, ok: true\" -> \"value: 2, ok: true\" caught at output line 1201: mutant \"2|true\", Go \"3|true\"",
+    "    helper_test.go:107: skip_pattern_escape.a mutant \"next === 112 || next === 80 || next === 113\" -> \"next === 112 || next === 80\" caught at output line 6222: mutant \"2|true\", Go \"7|true\"",
+    "    helper_test.go:107: skip_pattern_escape.a mutant \"value: 1 + width\" -> \"value: 2\" caught at output line 5985: mutant \"2|true\", Go \"3|true\"",
+    "    helper_test.go:107: class_end.a mutant \"byte === 91 && flags.unicodeSets\" -> \"byte === 91\" caught at output line 3729: mutant \"10|true\", Go \"9|true\"",
+    "    helper_test.go:107: class_end.a mutant \"byte === 91 && flags.unicodeSets\" -> \"byte === 91 && false\" caught at output line 3731: mutant \"9|true\", Go \"10|true\"",
+    "    helper_test.go:107: class_end.a mutant \"depth--; index++;\" -> \"depth = 0; index++;\" caught at output line 3731: mutant \"9|true\", Go \"10|true\"",
+    "    helper_test.go:107: class_end.a mutant \"value: index, ok: true\" -> \"value: index - 1, ok: true\" caught at output line 149: mutant \"26|true\", Go \"27|true\"",
+    "    helper_test.go:107: is_react_component_base_name.a mutant \"'Component'\" -> \"'component'\" caught at output line 579: mutant \"false\", Go \"true\"",
+    "    helper_test.go:107: is_react_component_base_name.a mutant \"'PureComponent'\" -> \"'pureComponent'\" caught at output line 885: mutant \"false\", Go \"true\"",
+    "    helper_test.go:107: is_react_component_base_name.a mutant \" || equals(bytes, 'PureComponent')\" -> \" && equals(bytes, 'PureComponent')\" caught at output line 579: mutant \"false\", Go \"true\""
+  ],
+  "log_sha256": "f0dc774005a52e2720aeb2965486d6f7ed8ae4f803fd50e79db7d18e8b3129ba"
+}

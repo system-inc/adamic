@@ -1,0 +1,23 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { skipPatternEscape } from './skip_pattern_escape.a';
+import { classEnd } from './class_end.a';
+import { isReactComponentBaseName } from './is_react_component_base_name.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function numbers(index: number, name: string): number[] { const out: number[] = []; for (const value of json.node(json.field(index, name)).children) { out.push(Number(json.node(value).text)); } return out; }
+const mode = text(root, 'mode'); let widths: number[] = [];
+function decodeWidth(index: number): number { return widths[index] ?? 0; }
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const bytes = numbers(row, 'bytes'); widths = numbers(row, 'widths');
+    if (mode === 'react') { console.log(`${isReactComponentBaseName(bytes)}`); continue; }
+    for (const start of numbers(row, 'positions')) {
+        for (let bits = 0; bits < 4; bits++) {
+            const flags = {unicode: bits % 2 === 1, unicodeSets: bits >= 2};
+            const result = mode === 'escape' ? skipPatternEscape(bytes, start, flags, decodeWidth) : classEnd(bytes, start, flags, decodeWidth);
+            console.log(`${result.value}|${result.ok}`);
+        }
+    }
+}
