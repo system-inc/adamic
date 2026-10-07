@@ -1,0 +1,151 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Reassign } from './reassign.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { ambientName } from './wave16_facts.a';
+
+export class NoImportAssign {
+    readonly bindings: Bindings;
+    readonly rules: Rules;
+    readonly anchors = new Map<number, boolean>();
+    readonly names: string[] = [];
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+        this.rules = bindings.rules;
+    }
+    mutation(index: number): boolean {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) {
+            return false;
+        }
+        const call = this.rules.parser.node(parent);
+        if(
+            call.kind !== 'CallExpression' ||
+            call.list === 0 ||
+            call.children[call.children.length - call.list] !== index
+        ) {
+            return false;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') {
+            return false;
+        }
+        const objectIndex = callee.children[0] ?? -1;
+        const object = this.rules.parser.node(objectIndex);
+        const key = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+        if(object.kind !== 'Identifier' || key.kind !== 'Identifier') {
+            return false;
+        }
+        let methods: string[] = [];
+        if(object.text === 'Object') {
+            methods = ['assign', 'defineProperty', 'defineProperties', 'freeze', 'setPrototypeOf'];
+        }
+        if(object.text === 'Reflect') {
+            methods = ['defineProperty', 'deleteProperty', 'set', 'setPrototypeOf'];
+        }
+        return methods.includes(key.text) && ambientName(this.rules, objectIndex, false, false);
+    }
+    member(index: number): number {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) {
+            return -1;
+        }
+        const node = this.rules.parser.node(parent);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) || node.children[0] !== index) {
+            return -1;
+        }
+        return this.writeTarget(parent) ? parent : -1;
+    }
+    writeTarget(index: number): boolean {
+        let child = index;
+        let parentIndex = this.bindings.parent(index);
+        const reassign = new Reassign(this.rules);
+        while(parentIndex >= 0) {
+            const parent = this.rules.parser.node(parentIndex);
+            if(parent.kind === 'BinaryExpression') {
+                return (
+                    reassign.assignment(this.rules.parser.node(parent.children[1] ?? -1).kind) &&
+                    this.rules.skip(parent.children[0] ?? -1) === child
+                );
+            }
+            if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(parent.kind)) {
+                return (
+                    ['PlusPlusToken', 'MinusMinusToken'].includes(parent.operator) &&
+                    this.rules.skip(parent.children[0] ?? -1) === child
+                );
+            }
+            if(parent.kind === 'DeleteExpression') {
+                return this.rules.skip(parent.children[0] ?? -1) === child;
+            }
+            if(['ForInStatement', 'ForOfStatement'].includes(parent.kind)) {
+                return parent.children[0] === child;
+            }
+            if(parent.kind === 'PropertyAssignment') {
+                if(parent.children[parent.children.length - 1] !== child) {
+                    return false;
+                }
+            }
+            else if(
+                ![
+                    'ParenthesizedExpression',
+                    'ArrayLiteralExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'ObjectLiteralExpression',
+                ].includes(parent.kind)
+            ) {
+                return false;
+            }
+            child = this.rules.skip(parentIndex);
+            parentIndex = this.bindings.parent(parentIndex);
+        }
+        return false;
+    }
+    run(): void {
+        const parser = this.rules.parser;
+        for(let index = 0; index < parser.nodes.length; index++) {
+            const node = parser.node(index);
+            if(!['ImportClause', 'ImportSpecifier', 'NamespaceImport'].includes(node.kind)) {
+                continue;
+            }
+            const names = node.children.filter((child) => parser.node(child).kind === 'Identifier');
+            const name = names[names.length - 1] ?? -1;
+            if(name < 0) {
+                continue;
+            }
+            for(const declaration of this.bindings.list(name, 'binding-declarations', false)) {
+                this.anchors.set(declaration, node.kind === 'NamespaceImport');
+                this.names.push(parser.node(name).text);
+            }
+        }
+        const reassign = new Reassign(this.rules);
+        for(let index = 0; index < parser.nodes.length; index++) {
+            const node = parser.node(index);
+            if(node.kind !== 'Identifier' || !this.names.includes(node.text)) {
+                continue;
+            }
+            const direct = reassign.writes(index);
+            const member = direct ? -1 : this.member(index);
+            const blame = direct ? index : member >= 0 ? member : this.mutation(index) ? index : -1;
+            if(blame < 0) {
+                continue;
+            }
+            const declarations = this.bindings.list(index, 'binding-declarations', false);
+            const declaration = declarations[0] ?? -1;
+            if(!this.anchors.has(declaration) || (!direct && !(this.anchors.get(declaration) ?? false))) {
+                continue;
+            }
+            const target = parser.node(blame);
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-import-assign',
+                    'noImportAssign',
+                    "This writes to a binding an import declaration introduced. An imported binding is an immutable view of the exporting module's own variable, so the assignment throws a TypeError at runtime rather than rebinding anything, and a module is always strict so there is no mode in which it fails quietly. A namespace object is sealed the same way, so writing to one of its properties, deleting one, or handing it to Object.assign fails for the same reason. Change the value in the module that exports it, or copy it into a local variable and write to that.",
+                    this.rules.byte(this.rules.start(target)),
+                    this.rules.byte(target.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

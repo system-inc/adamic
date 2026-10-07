@@ -1,0 +1,97 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { ambientName } from './wave16_facts.a';
+
+export class UseIsnan {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    reference(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ParenthesizedExpression') {
+            return this.reference(node.children[0] ?? -1);
+        }
+        if(node.kind === 'BinaryExpression') {
+            return (
+                this.rules.parser.node(node.children[1] ?? -1).kind === 'CommaToken' &&
+                this.reference(node.children[2] ?? -1)
+            );
+        }
+        if(node.kind === 'Identifier') {
+            return node.text === 'NaN' && ambientName(this.rules, index, true, true);
+        }
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            return false;
+        }
+        const receiver = node.children[0] ?? -1;
+        const object = this.rules.parser.node(receiver);
+        const key = this.rules.parser.node(this.rules.skip(node.children[node.children.length - 1] ?? -1));
+        return (
+            object.kind === 'Identifier' &&
+            object.text === 'Number' &&
+            key.text === 'NaN' &&
+            (node.kind === 'PropertyAccessExpression' ||
+                ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind)) &&
+            ambientName(this.rules, receiver, true, true)
+        );
+    }
+    report(index: number, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(
+                'use-isnan',
+                id,
+                message,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(
+                node.kind === 'BinaryExpression' &&
+                [
+                    'LessThanToken',
+                    'LessThanEqualsToken',
+                    'GreaterThanToken',
+                    'GreaterThanEqualsToken',
+                    'EqualsEqualsToken',
+                    'EqualsEqualsEqualsToken',
+                    'ExclamationEqualsToken',
+                    'ExclamationEqualsEqualsToken',
+                ].includes(this.rules.parser.node(node.children[1] ?? -1).kind) &&
+                (this.reference(node.children[0] ?? -1) || this.reference(node.children[2] ?? -1))
+            ) {
+                this.report(
+                    index,
+                    'comparisonWithNaN',
+                    "Comparing against NaN is always false, including `NaN === NaN`, because NaN is the one value in the language that is not equal to itself. So this comparison does not test what it reads as testing: it is a check for NaN that can never succeed, and the branch behind it is dead. Use Number.isNaN(value) instead, which is the only reliable test. Note the Number. prefix: the global isNaN coerces its argument first, so isNaN('hello') is true.",
+                );
+            }
+            if(node.kind === 'SwitchStatement' && this.reference(node.children[0] ?? -1)) {
+                this.report(
+                    index,
+                    'switchOnNaN',
+                    'This switch tests NaN against each case, and NaN equals nothing including itself, so every case is dead and only the default runs. Whatever this switch was written to dispatch on, it dispatches on nothing.',
+                );
+            }
+            if(node.kind === 'CaseClause' && this.reference(node.children[0] ?? -1)) {
+                this.report(
+                    index,
+                    'caseWithNaN',
+                    'This `case NaN:` can never match. A switch compares with strict equality, and NaN is not equal to itself, so the branch is dead exactly as `value === NaN` would be. Test for it before the switch with Number.isNaN(value), since there is no case label that can catch it.',
+                );
+            }
+        }
+    }
+}

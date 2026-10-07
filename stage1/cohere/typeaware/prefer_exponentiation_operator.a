@@ -1,0 +1,295 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+import { Reassign } from './reassign.ts';
+import { ambientName } from './wave16_facts.a';
+import { precedence } from '../../typescript/parser/grammar.ts';
+
+export class PreferExponentiationOperator {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    staticString(index: number): string | undefined {
+        const node = this.rules.parser.node(this.rules.skip(index));
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return node.text;
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'PlusToken') {
+            const left = this.staticString(node.children[0] ?? -1);
+            const right = this.staticString(node.children[2] ?? -1);
+            return left === undefined || right === undefined ? undefined : left + right;
+        }
+        if(node.kind === 'TemplateExpression') {
+            let value = this.rules.parser.node(node.children[0] ?? -1).text;
+            for(const child of node.children.slice(1)) {
+                const span = this.rules.parser.node(child);
+                const inner = this.staticString(span.children[0] ?? -1);
+                if(inner === undefined) {
+                    return undefined;
+                }
+                value += inner + this.rules.parser.node(span.children[1] ?? -1).text;
+            }
+            return value;
+        }
+        return undefined;
+    }
+    key(index: number): string {
+        const node = this.rules.parser.node(index);
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(node.kind === 'PropertyAccessExpression') {
+            return this.rules.parser.node(key).kind === 'PrivateIdentifier' ? '' : this.rules.parser.node(key).text;
+        }
+        return node.kind === 'ElementAccessExpression' ? (this.staticString(key) ?? '') : '';
+    }
+    mathPow(index: number): boolean {
+        const call = this.rules.parser.node(index);
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        const calleeIndex = this.rules.skip(call.children[0] ?? -1);
+        if(this.key(calleeIndex) !== 'pow') {
+            return false;
+        }
+        const receiver = this.rules.skip(callee.children[0] ?? -1);
+        const object = this.rules.parser.node(receiver);
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(object.kind)) {
+            const inner = this.rules.skip(object.children[0] ?? -1);
+            return (
+                this.key(receiver) === 'Math' &&
+                this.rules.parser.node(inner).kind === 'Identifier' &&
+                ambientName(this.rules, inner, false, true)
+            );
+        }
+        return object.kind === 'Identifier' && object.text === 'Math' && ambientName(this.rules, receiver, false, true);
+    }
+    rank(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            return operator === 'CommaToken'
+                ? 0
+                : new Reassign(this.rules).assignment(operator)
+                  ? 1
+                  : precedence(operator);
+        }
+        if(['ArrowFunction', 'YieldExpression'].includes(node.kind)) {
+            return 1;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return 3;
+        }
+        if(node.kind === 'PrefixUnaryExpression') {
+            return ['PlusPlusToken', 'MinusMinusToken'].includes(node.operator) ? 17 : 16;
+        }
+        if(['TypeOfExpression', 'VoidExpression', 'DeleteExpression', 'AwaitExpression'].includes(node.kind)) {
+            return 16;
+        }
+        if(node.kind === 'PostfixUnaryExpression') {
+            return 17;
+        }
+        if(['CallExpression', 'TaggedTemplateExpression'].includes(node.kind)) {
+            return 18;
+        }
+        if(node.kind === 'NewExpression') {
+            return 19;
+        }
+        if(['AsExpression', 'SatisfiesExpression'].includes(node.kind)) {
+            return 2;
+        }
+        return 20;
+    }
+    baseParens(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        return (
+            this.rank(index) <= 15 ||
+            ['AwaitExpression', 'TypeOfExpression', 'VoidExpression', 'DeleteExpression'].includes(node.kind) ||
+            (node.kind === 'PrefixUnaryExpression' && !['PlusPlusToken', 'MinusMinusToken'].includes(node.operator))
+        );
+    }
+    expression(kind: string): boolean {
+        return [
+            'BinaryExpression',
+            'PrefixUnaryExpression',
+            'PostfixUnaryExpression',
+            'ConditionalExpression',
+            'PropertyAccessExpression',
+            'ElementAccessExpression',
+            'TaggedTemplateExpression',
+            'TypeOfExpression',
+            'VoidExpression',
+            'DeleteExpression',
+            'AwaitExpression',
+            'YieldExpression',
+            'SpreadElement',
+            'AsExpression',
+            'SatisfiesExpression',
+            'NonNullExpression',
+        ].includes(kind);
+    }
+    outer(index: number): boolean {
+        const parentIndex = this.rules.parents[index] ?? -1;
+        if(parentIndex < 0) {
+            return false;
+        }
+        const parent = this.rules.parser.node(parentIndex);
+        if(['CallExpression', 'NewExpression'].includes(parent.kind)) {
+            return parent.children[0] === index;
+        }
+        if(parent.kind === 'ArrayLiteralExpression') {
+            return false;
+        }
+        if(parent.kind === 'ElementAccessExpression' && parent.children[1] === index) {
+            return false;
+        }
+        if(
+            parent.kind === 'BinaryExpression' &&
+            this.rules.parser.node(parent.children[1] ?? -1).kind === 'AsteriskAsteriskToken' &&
+            parent.children[2] === index
+        ) {
+            return false;
+        }
+        if(
+            [
+                'ClassDeclaration',
+                'ClassExpression',
+                'ExpressionWithTypeArguments',
+                'HeritageClause',
+                'AsExpression',
+                'SatisfiesExpression',
+            ].includes(parent.kind)
+        ) {
+            return true;
+        }
+        return this.expression(parent.kind) && (this.rank(parentIndex) < 0 || this.rank(parentIndex) >= 15);
+    }
+    startsStatement(index: number): boolean {
+        const start = this.rules.start(this.rules.parser.node(index));
+        let current = index;
+        while((this.rules.parents[current] ?? -1) >= 0) {
+            const parent = this.rules.parents[current] ?? -1;
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'ExpressionStatement') {
+                return this.rules.start(node) === start;
+            }
+            if(!this.expression(node.kind) && node.kind !== 'ParenthesizedExpression') {
+                return false;
+            }
+            current = parent;
+        }
+        return false;
+    }
+    identifier(code: number): boolean {
+        return (
+            (code >= 65 && code <= 90) ||
+            (code >= 97 && code <= 122) ||
+            (code >= 48 && code <= 57) ||
+            code === 95 ||
+            code === 36
+        );
+    }
+    merge(before: number, after: number): boolean {
+        return (
+            (this.identifier(before) && this.identifier(after)) ||
+            ((before === 43 || before === 45) && before === after)
+        );
+    }
+    comments(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        // Parser leaf tokens delimit strings, regexps and template segments. Only
+        // the gaps between those tokens can hold comments to be discarded.
+        const ranges: number[] = [];
+        for(const leaf of this.rules.parser.nodes) {
+            if(leaf.children.length === 0 && leaf.pos >= node.pos && leaf.end <= node.end) {
+                const start = this.rules.start(leaf);
+                if(start < leaf.end) {
+                    ranges.push(start);
+                    ranges.push(leaf.end);
+                }
+            }
+        }
+        for(let at = this.rules.start(node); at < node.end - 1; at++) {
+            if(
+                this.rules.scanner.text.charCodeAt(at) !== 47 ||
+                ![47, 42].includes(this.rules.scanner.text.charCodeAt(at + 1))
+            ) {
+                continue;
+            }
+            let token = false;
+            for(let part = 0; part < ranges.length; part += 2) {
+                if(at >= (ranges[part] ?? -1) && at < (ranges[part + 1] ?? -1)) {
+                    token = true;
+                    break;
+                }
+            }
+            if(!token) {
+                return true;
+            }
+        }
+        return false;
+    }
+    fix(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        // Call type arguments are separate children, not ordinary arguments.
+        const args = node.children.slice(node.children.length - node.list);
+        if(
+            args.length !== 2 ||
+            args.some((child) => this.rules.parser.node(child).kind === 'SpreadElement') ||
+            this.comments(index)
+        ) {
+            return undefined;
+        }
+        const base = this.rules.skip(args[0] ?? -1);
+        const exponent = this.rules.skip(args[1] ?? -1);
+        const baseText = this.rules.text(this.rules.parser.node(base));
+        const exponentText = this.rules.text(this.rules.parser.node(exponent));
+        const baseParens = this.baseParens(base);
+        let replacement = `${baseParens ? `(${baseText})` : baseText}**${this.rank(exponent) < 15 ? `(${exponentText})` : exponentText}`;
+        const starts = this.startsStatement(index);
+        const ambiguous =
+            baseText.startsWith('{') ||
+            ['function', 'class'].some(
+                (word) => baseText.startsWith(word) && !this.identifier(baseText.charCodeAt(word.length)),
+            );
+        if(this.outer(index) || (!baseParens && starts && ambiguous)) {
+            replacement = `(${replacement})`;
+        }
+        const start = this.rules.start(node);
+        const text = this.rules.scanner.text;
+        if(start > 0 && this.merge(text.charCodeAt(start - 1), replacement.charCodeAt(0))) {
+            replacement = ` ${replacement}`;
+        }
+        else if(starts && ['(', '[', '/', '`'].includes(replacement.slice(0, 1))) {
+            const preceding = text.slice(0, start).trim();
+            if(preceding !== '' && ![';', '}', '{'].includes(preceding.slice(-1))) {
+                replacement = `;${replacement}`;
+            }
+        }
+        if(
+            node.end < text.length &&
+            this.merge(replacement.charCodeAt(replacement.length - 1), text.charCodeAt(node.end))
+        ) {
+            replacement += ' ';
+        }
+        return replacement;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || node.kind !== 'CallExpression' || !this.mathPow(index)) {
+                continue;
+            }
+            const finding = new Diagnostic(
+                'prefer-exponentiation-operator',
+                'useExponentiation',
+                "This calls `Math.pow` where the `**` operator says the same thing. The operator is the language's own spelling for exponentiation, so it reads as arithmetic rather than as a function call, and it composes with the surrounding expression under the ordinary precedence rules instead of hiding behind a call.",
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '',
+            );
+            const replacement = this.fix(index);
+            if(replacement !== undefined) {
+                finding.repairs.push(new Repair(finding.start, finding.end, replacement));
+            }
+            this.rules.findings.push(finding);
+        }
+    }
+}
