@@ -192,3 +192,9 @@ HIR/SSA/capture analysis; both use syntax and declaration facts. No named
 port exists on an origin branch. Main remains c01907a70 and this branch
 is landing-ready at a37d18a51. There is no third unclaimed ranked rule.
 New rule.json kinds use ast.Kind names as required by the registry.
+
+Final pair complete at 5e8c9523e4969be8796e645523a63cf98d4aa546. Both rules match complete Go records over
+73 controls, six option configurations and both corpora, normally and under
+sanitizers. Per-rule byte-only mutants and new-question released-handle checks
+pass. See wave_18_component_props/REPORT.md. No unclaimed ranked rule remains;
+the four previously parked analysis claims retain their named blockers.
