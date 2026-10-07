@@ -1,0 +1,70 @@
+=== RUN   TestWave06Candidates
+    lint_test.go:323: cohere cases: 302 unique source/rule/options combinations
+    wave06_candidate_test.go:76: filename-preserving upstream cases: 89
+    wave06_candidate_test.go:83: Go, Node, native identical: 30176 bytes
+    wave06_candidate_test.go:86: all four outputs identical: 30176 bytes
+--- PASS: TestWave06Candidates (27.76s)
+=== RUN   TestWave06Mutants
+=== RUN   TestWave06Mutants/no-unsafe-function-type
+    wave06_candidate_test.go:111: wrong-global-type-name caught on Node: case 0 line 2: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type3347430506/001/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type3347430506/001/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 		
+        fixed	export let handler: Function;\u000a
+    wave06_candidate_test.go:111: wrong-global-type-name caught on emitted JavaScript: case 0 line 2: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type3347430506/001/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type3347430506/001/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 		
+        fixed	export let handler: Function;\u000a
+    wave06_candidate_test.go:111: wrong-global-type-name caught on sanitized native: case 0 line 2: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type3347430506/001/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type3347430506/001/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 		
+        fixed	export let handler: Function;\u000a
+=== RUN   TestWave06Mutants/no-useless-empty-export
+    wave06_candidate_test.go:111: keep-useless-empty-export caught on Node: case 0 line 2: port "fixed\texport const value = 1;\\u000aexport {};\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export380974571/001/no-useless-empty-export-0.ts:2:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export380974571/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix		
+        fixed	export const value = 1;\u000a\u000a
+    wave06_candidate_test.go:111: keep-useless-empty-export caught on emitted JavaScript: case 0 line 2: port "fixed\texport const value = 1;\\u000aexport {};\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export380974571/001/no-useless-empty-export-0.ts:2:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export380974571/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix		
+        fixed	export const value = 1;\u000a\u000a
+    wave06_candidate_test.go:111: keep-useless-empty-export caught on sanitized native: case 0 line 2: port "fixed\texport const value = 1;\\u000aexport {};\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export380974571/001/no-useless-empty-export-0.ts:2:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export380974571/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix		
+        fixed	export const value = 1;\u000a\u000a
+--- PASS: TestWave06Mutants (41.42s)
+    --- PASS: TestWave06Mutants/no-unsafe-function-type (19.64s)
+    --- PASS: TestWave06Mutants/no-useless-empty-export (18.00s)
+=== RUN   TestWave06Throughput
+    wave06_candidate_test.go:167: @typescript-eslint/no-unsafe-function-type Go: 500 findings / 0.021291s = 23483.65 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:167: @typescript-eslint/no-unsafe-function-type native: 500 findings / 0.015006s = 33320.01 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:167: @typescript-eslint/no-unsafe-function-type Node: 500 findings / 0.239408s = 2088.48 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:167: @typescript-eslint/no-useless-empty-export Go: 500 findings / 0.021360s = 23408.22 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:167: @typescript-eslint/no-useless-empty-export native: 500 findings / 0.025003s = 19997.98 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:167: @typescript-eslint/no-useless-empty-export Node: 500 findings / 0.246348s = 2029.65 findings/s, 500 repeated witness rows
+--- PASS: TestWave06Throughput (17.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	86.841s

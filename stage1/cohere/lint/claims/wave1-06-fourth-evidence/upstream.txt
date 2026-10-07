@@ -1,0 +1,662 @@
+=== RUN   TestNoUnnecessaryTypeConstraintFires
+=== PAUSE TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== RUN   TestNoUnsafeFunctionTypeFires
+=== PAUSE TestNoUnsafeFunctionTypeFires
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent
+=== RUN   TestNoUselessEmptyExportFires
+=== PAUSE TestNoUselessEmptyExportFires
+=== RUN   TestNoUselessEmptyExportStaysSilent
+=== PAUSE TestNoUselessEmptyExportStaysSilent
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits
+=== RUN   TestNoUselessEmptyExportReportsEachEmptyExportSeparately
+=== PAUSE TestNoUselessEmptyExportReportsEachEmptyExportSeparately
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim
+=== RUN   TestNoUselessEmptyExportPointsAtTheEmptyExport
+=== PAUSE TestNoUselessEmptyExportPointsAtTheEmptyExport
+=== RUN   TestNoUselessEmptyExportReportsTheMessageItClaims
+=== PAUSE TestNoUselessEmptyExportReportsTheMessageItClaims
+=== RUN   TestNoUselessEmptyExportExemptsDeclarationFiles
+=== PAUSE TestNoUselessEmptyExportExemptsDeclarationFiles
+=== CONT  TestNoUnnecessaryTypeConstraintFires
+=== CONT  TestNoUselessEmptyExportReportsEachEmptyExportSeparately
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+--- PASS: TestNoUselessEmptyExportReportsEachEmptyExportSeparately (0.00s)
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_type_alias,_against_the_bare_interface_above
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/an_explicit_signature
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_type_alias,_against_the_bare_interface_above
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_declare_const,_against_the_ambient_const_above
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_declare_const,_against_the_ambient_const_above
+=== CONT  TestNoUselessEmptyExportFires
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_namespace,_against_the_bare_namespace_above
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_namespace,_against_the_bare_namespace_above
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/an_explicit_signature
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_parameterised_signature
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_interface
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_parameterised_signature
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_name_that_merely_contains_it
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_name_that_merely_contains_it
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_property_named_function-ish
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_property_named_function-ish
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_string_containing_the_word
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_string_containing_the_word
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_call_to_the_constructor
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_call_to_the_constructor
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_static_method_call
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_static_method_call
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/an_instanceof_check
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/an_instanceof_check
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_qualified_name_ending_in_Function
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_qualified_name_ending_in_Function
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_namespaced_import_member
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_namespaced_import_member
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_interface
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_interface
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_type_alias
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_type_alias
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_class
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_class
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_enum
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_enum
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_block-scoped_type_alias
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_block-scoped_type_alias
+=== RUN   TestNoUnsafeFunctionTypeStaysSilent/a_generic_signature
+=== PAUSE TestNoUnsafeFunctionTypeStaysSilent/a_generic_signature
+=== RUN   TestNoUselessEmptyExportFires/an_export_modifier_before_the_empty_export
+=== PAUSE TestNoUselessEmptyExportFires/an_export_modifier_before_the_empty_export
+=== RUN   TestNoUselessEmptyExportFires/a_star_re-export_before_the_empty_export
+=== PAUSE TestNoUselessEmptyExportFires/a_star_re-export_before_the_empty_export
+=== RUN   TestNoUselessEmptyExportFires/a_star_re-export_after_the_empty_export
+=== PAUSE TestNoUselessEmptyExportFires/a_star_re-export_after_the_empty_export
+=== RUN   TestNoUselessEmptyExportFires/a_default_export_before_the_empty_export
+=== PAUSE TestNoUselessEmptyExportFires/a_default_export_before_the_empty_export
+=== RUN   TestNoUselessEmptyExportFires/a_default_export_after_the_empty_export
+=== PAUSE TestNoUselessEmptyExportFires/a_default_export_after_the_empty_export
+=== RUN   TestNoUselessEmptyExportFires/a_named_export_clause_with_specifiers
+=== PAUSE TestNoUselessEmptyExportFires/a_named_export_clause_with_specifiers
+=== RUN   TestNoUselessEmptyExportFires/an_empty_import_clause
+=== PAUSE TestNoUselessEmptyExportFires/an_empty_import_clause
+=== RUN   TestNoUselessEmptyExportFires/a_default_import
+=== PAUSE TestNoUselessEmptyExportFires/a_default_import
+=== RUN   TestNoUselessEmptyExportFires/a_bare_side-effect_import
+=== PAUSE TestNoUselessEmptyExportFires/a_bare_side-effect_import
+=== RUN   TestNoUselessEmptyExportFires/a_namespace_import
+=== PAUSE TestNoUselessEmptyExportFires/a_namespace_import
+=== RUN   TestNoUselessEmptyExportFires/an_external_import-equals
+=== PAUSE TestNoUselessEmptyExportFires/an_external_import-equals
+=== CONT  TestNoUnsafeFunctionTypeFires
+=== RUN   TestNoUnsafeFunctionTypeFires/a_variable_annotation
+=== PAUSE TestNoUnsafeFunctionTypeFires/a_variable_annotation
+=== RUN   TestNoUnsafeFunctionTypeFires/a_parameter_annotation
+=== PAUSE TestNoUnsafeFunctionTypeFires/a_parameter_annotation
+=== RUN   TestNoUnsafeFunctionTypeFires/a_return_annotation
+=== PAUSE TestNoUnsafeFunctionTypeFires/a_return_annotation
+=== RUN   TestNoUnsafeFunctionTypeFires/a_property_annotation
+=== PAUSE TestNoUnsafeFunctionTypeFires/a_property_annotation
+=== RUN   TestNoUnsafeFunctionTypeFires/an_interface_extending_it
+=== PAUSE TestNoUnsafeFunctionTypeFires/an_interface_extending_it
+=== RUN   TestNoUnsafeFunctionTypeFires/a_class_implementing_it
+=== PAUSE TestNoUnsafeFunctionTypeFires/a_class_implementing_it
+=== RUN   TestNoUnsafeFunctionTypeFires/inside_an_array_type
+=== PAUSE TestNoUnsafeFunctionTypeFires/inside_an_array_type
+=== RUN   TestNoUnsafeFunctionTypeFires/inside_a_union
+=== PAUSE TestNoUnsafeFunctionTypeFires/inside_a_union
+=== RUN   TestNoUnsafeFunctionTypeFires/as_a_type_argument
+=== PAUSE TestNoUnsafeFunctionTypeFires/as_a_type_argument
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_interface
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_class
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_class
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_enum
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_enum
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_import
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_import
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_star_export_with_a_namespace_binding
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_star_export_with_a_namespace_binding
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_empty_export,_which_is_still_empty
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_empty_export,_which_is_still_empty
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_import_beside_an_export_assignment,_which_the_corpus_case_cannot_show
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_import_beside_an_export_assignment,_which_the_corpus_case_cannot_show
+=== RUN   TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_internal_import-equals_beside_a_real_export
+=== PAUSE TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_internal_import-equals_beside_a_real_export
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoUselessEmptyExportReportsTheMessageItClaims
+--- PASS: TestNoUselessEmptyExportReportsTheMessageItClaims (0.00s)
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/an_explicit_signature
+=== CONT  TestNoUselessEmptyExportExemptsDeclarationFiles
+=== RUN   TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_type_alias
+=== PAUSE TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_type_alias
+=== RUN   TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_declare_const
+=== PAUSE TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_declare_const
+=== RUN   TestNoUselessEmptyExportExemptsDeclarationFiles/a_type-only_import
+=== PAUSE TestNoUselessEmptyExportExemptsDeclarationFiles/a_type-only_import
+=== RUN   TestNoUselessEmptyExportExemptsDeclarationFiles/a_named_import
+=== PAUSE TestNoUselessEmptyExportExemptsDeclarationFiles/a_named_import
+=== CONT  TestNoUselessEmptyExportStaysSilent
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_ambient_module_declaration_alone
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_ambient_module_declaration_alone
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_empty_import_clause_alone
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_empty_import_clause_alone
+=== RUN   TestNoUselessEmptyExportStaysSilent/a_namespace_import_alone
+=== PAUSE TestNoUselessEmptyExportStaysSilent/a_namespace_import_alone
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_an_object
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_an_object
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_a_number
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_a_number
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_export_modifier_alone
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_export_modifier_alone
+=== RUN   TestNoUselessEmptyExportStaysSilent/a_default_export_alone
+=== PAUSE TestNoUselessEmptyExportStaysSilent/a_default_export_alone
+=== RUN   TestNoUselessEmptyExportStaysSilent/a_star_re-export_beside_an_export_assignment
+=== PAUSE TestNoUselessEmptyExportStaysSilent/a_star_re-export_beside_an_export_assignment
+=== RUN   TestNoUselessEmptyExportStaysSilent/the_empty_export_alone,_which_is_the_whole_point_of_the_form
+=== PAUSE TestNoUselessEmptyExportStaysSilent/the_empty_export_alone,_which_is_the_whole_point_of_the_form
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_internal_import-equals
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_internal_import-equals
+=== RUN   TestNoUselessEmptyExportStaysSilent/a_nested_import-equals_inside_a_namespace
+=== PAUSE TestNoUselessEmptyExportStaysSilent/a_nested_import-equals_inside_a_namespace
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_ambient_const_declaration
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_ambient_const_declaration
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_ambient_global_augmentation
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_ambient_global_augmentation
+=== RUN   TestNoUselessEmptyExportStaysSilent/a_bare_interface_declaration
+=== PAUSE TestNoUselessEmptyExportStaysSilent/a_bare_interface_declaration
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_ambient_module_with_a_body
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_ambient_module_with_a_body
+=== RUN   TestNoUselessEmptyExportStaysSilent/a_non-exported_namespace
+=== PAUSE TestNoUselessEmptyExportStaysSilent/a_non-exported_namespace
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_export_assignment_beside_the_empty_export
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_export_assignment_beside_the_empty_export
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_empty_re-export_carrying_a_module_specifier
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_empty_re-export_carrying_a_module_specifier
+=== RUN   TestNoUselessEmptyExportStaysSilent/an_external_import-equals_nested_inside_a_namespace
+=== PAUSE TestNoUselessEmptyExportStaysSilent/an_external_import-equals_nested_inside_a_namespace
+=== RUN   TestNoUselessEmptyExportStaysSilent/two_empty_exports_and_nothing_else
+=== PAUSE TestNoUselessEmptyExportStaysSilent/two_empty_exports_and_nothing_else
+=== CONT  TestNoUselessEmptyExportPointsAtTheEmptyExport
+=== RUN   TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_second
+=== PAUSE TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_second
+=== RUN   TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_first
+=== PAUSE TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_first
+=== RUN   TestNoUselessEmptyExportPointsAtTheEmptyExport/a_type-only_empty_export
+=== PAUSE TestNoUselessEmptyExportPointsAtTheEmptyExport/a_type-only_empty_export
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_export_modifier_before_it
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_export_modifier_before_it
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_before_it
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_before_it
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_after_it
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_after_it
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_before_it
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_before_it
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_after_it
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_after_it
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_named_export_clause_before_it
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_named_export_clause_before_it
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_empty_import_clause_across_lines
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_empty_import_clause_across_lines
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_import
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_import
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_bare_side-effect_import
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_bare_side-effect_import
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_namespace_import
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_namespace_import
+=== RUN   TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_external_import-equals_across_lines
+=== PAUSE TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_external_import-equals_across_lines
+=== CONT  TestNoUselessEmptyExportFires/an_export_modifier_before_the_empty_export
+=== CONT  TestNoUnsafeFunctionTypeFires/a_variable_annotation
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_generic_signature
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_interface
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_namespaced_import_member
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_qualified_name_ending_in_Function
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/an_instanceof_check
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_static_method_call
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_call_to_the_constructor
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_string_containing_the_word
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_property_named_function-ish
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_name_that_merely_contains_it
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_parameterised_signature
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_block-scoped_type_alias
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_enum
+=== CONT  TestNoUselessEmptyExportFires/a_namespace_import
+=== CONT  TestNoUselessEmptyExportFires/a_bare_side-effect_import
+=== CONT  TestNoUselessEmptyExportFires/a_default_import
+=== CONT  TestNoUselessEmptyExportFires/an_empty_import_clause
+=== CONT  TestNoUselessEmptyExportFires/a_named_export_clause_with_specifiers
+=== CONT  TestNoUselessEmptyExportFires/a_default_export_after_the_empty_export
+=== CONT  TestNoUselessEmptyExportFires/a_default_export_before_the_empty_export
+=== CONT  TestNoUselessEmptyExportFires/a_star_re-export_after_the_empty_export
+=== CONT  TestNoUselessEmptyExportFires/a_star_re-export_before_the_empty_export
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_class
+=== CONT  TestNoUnsafeFunctionTypeFires/as_a_type_argument
+=== CONT  TestNoUnsafeFunctionTypeFires/inside_a_union
+=== CONT  TestNoUnsafeFunctionTypeFires/inside_an_array_type
+=== CONT  TestNoUnsafeFunctionTypeFires/a_class_implementing_it
+=== CONT  TestNoUnsafeFunctionTypeFires/an_interface_extending_it
+=== CONT  TestNoUnsafeFunctionTypeFires/a_property_annotation
+=== CONT  TestNoUnsafeFunctionTypeFires/a_return_annotation
+=== CONT  TestNoUnsafeFunctionTypeFires/a_parameter_annotation
+--- PASS: TestNoUnsafeFunctionTypeFires (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/a_variable_annotation (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/as_a_type_argument (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/inside_a_union (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/inside_an_array_type (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/a_class_implementing_it (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/an_interface_extending_it (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/a_property_annotation (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/a_return_annotation (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeFires/a_parameter_annotation (0.00s)
+=== CONT  TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_type_alias
+--- PASS: TestNoUnsafeFunctionTypeStaysSilent (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/an_explicit_signature (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_generic_signature (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_interface (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_namespaced_import_member (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_qualified_name_ending_in_Function (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/an_instanceof_check (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_static_method_call (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_call_to_the_constructor (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_string_containing_the_word (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_property_named_function-ish (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_name_that_merely_contains_it (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_parameterised_signature (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_block-scoped_type_alias (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_enum (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_class (0.00s)
+    --- PASS: TestNoUnsafeFunctionTypeStaysSilent/a_locally_declared_type_alias (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== CONT  TestNoUselessEmptyExportFires/an_external_import-equals
+--- PASS: TestNoUselessEmptyExportFires (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/an_export_modifier_before_the_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_namespace_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_bare_side-effect_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_default_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/an_empty_import_clause (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_named_export_clause_with_specifiers (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_default_export_after_the_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_default_export_before_the_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_star_re-export_after_the_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/a_star_re-export_before_the_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportFires/an_external_import-equals (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_type_alias,_against_the_bare_interface_above
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_type_alias
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+--- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{} (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+--- PASS: TestNoUnnecessaryTypeConstraintFires (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01 (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{} (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_ambient_module_declaration_alone
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_second
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_import_beside_an_export_assignment,_which_the_corpus_case_cannot_show
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_internal_import-equals_beside_a_real_export
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_star_export_with_a_namespace_binding
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_import
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_class
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_empty_export,_which_is_still_empty
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_interface
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_declare_const,_against_the_ambient_const_above
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_namespace,_against_the_bare_namespace_above
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_export_modifier_before_it
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== CONT  TestNoUselessEmptyExportExemptsDeclarationFiles/a_named_import
+--- PASS: TestNoUnnecessaryTypeConstraintStaysSilent (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{} (0.00s)
+=== CONT  TestNoUselessEmptyExportExemptsDeclarationFiles/a_type-only_import
+=== CONT  TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_declare_const
+=== CONT  TestNoUselessEmptyExportStaysSilent/two_empty_exports_and_nothing_else
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_external_import-equals_nested_inside_a_namespace
+--- PASS: TestNoUselessEmptyExportExemptsDeclarationFiles (0.00s)
+    --- PASS: TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_type_alias (0.00s)
+    --- PASS: TestNoUselessEmptyExportExemptsDeclarationFiles/a_type-only_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportExemptsDeclarationFiles/a_named_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportExemptsDeclarationFiles/an_exported_declare_const (0.00s)
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_empty_re-export_carrying_a_module_specifier
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_export_assignment_beside_the_empty_export
+=== CONT  TestNoUselessEmptyExportStaysSilent/a_non-exported_namespace
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_ambient_module_with_a_body
+=== CONT  TestNoUselessEmptyExportStaysSilent/a_bare_interface_declaration
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_ambient_global_augmentation
+--- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+=== CONT  TestNoUselessEmptyExportStaysSilent/a_nested_import-equals_inside_a_namespace
+=== CONT  TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_enum
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_internal_import-equals
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_ambient_const_declaration
+=== CONT  TestNoUselessEmptyExportStaysSilent/the_empty_export_alone,_which_is_the_whole_point_of_the_form
+=== CONT  TestNoUselessEmptyExportStaysSilent/a_star_re-export_beside_an_export_assignment
+=== CONT  TestNoUselessEmptyExportStaysSilent/a_default_export_alone
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_export_modifier_alone
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_a_number
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_an_object
+=== CONT  TestNoUselessEmptyExportStaysSilent/a_namespace_import_alone
+=== CONT  TestNoUselessEmptyExportStaysSilent/an_empty_import_clause_alone
+=== CONT  TestNoUselessEmptyExportPointsAtTheEmptyExport/a_type-only_empty_export
+=== CONT  TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_first
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_external_import-equals_across_lines
+--- PASS: TestNoUselessEmptyExportPointsAtTheEmptyExport (0.00s)
+    --- PASS: TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_second (0.00s)
+    --- PASS: TestNoUselessEmptyExportPointsAtTheEmptyExport/a_type-only_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportPointsAtTheEmptyExport/the_empty_export_first (0.00s)
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_namespace_import
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_bare_side-effect_import
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_import
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_empty_import_clause_across_lines
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_after_it
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_named_export_clause_before_it
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_before_it
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_after_it
+=== CONT  TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_before_it
+--- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_export_modifier_before_it (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_external_import-equals_across_lines (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_bare_side-effect_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_namespace_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/an_empty_import_clause_across_lines (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_after_it (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_named_export_clause_before_it (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_after_it (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_default_export_before_it (0.00s)
+    --- PASS: TestNoUselessEmptyExportFixesWriteWhatTheyClaim/a_star_re-export_before_it (0.00s)
+--- PASS: TestNoUselessEmptyExportStaysSilent (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_ambient_module_declaration_alone (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/two_empty_exports_and_nothing_else (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_empty_re-export_carrying_a_module_specifier (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_external_import-equals_nested_inside_a_namespace (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_export_assignment_beside_the_empty_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_ambient_module_with_a_body (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/a_bare_interface_declaration (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/a_non-exported_namespace (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/a_nested_import-equals_inside_a_namespace (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_internal_import-equals (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_ambient_const_declaration (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/the_empty_export_alone,_which_is_the_whole_point_of_the_form (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_ambient_global_augmentation (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_export_modifier_alone (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_a_number (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_export_assignment_of_an_object (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/a_star_re-export_beside_an_export_assignment (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/a_namespace_import_alone (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/an_empty_import_clause_alone (0.00s)
+    --- PASS: TestNoUselessEmptyExportStaysSilent/a_default_export_alone (0.00s)
+--- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_type_alias,_against_the_bare_interface_above (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_import_beside_an_export_assignment,_which_the_corpus_case_cannot_show (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_star_export_with_a_namespace_binding (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_class (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_empty_export,_which_is_still_empty (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_interface (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_declare_const,_against_the_ambient_const_above (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_namespace,_against_the_bare_namespace_above (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_internal_import-equals_beside_a_real_export (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/a_type-only_import (0.00s)
+    --- PASS: TestNoUselessEmptyExportFiresOnFormsTheCorpusOmits/an_exported_enum (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.030s

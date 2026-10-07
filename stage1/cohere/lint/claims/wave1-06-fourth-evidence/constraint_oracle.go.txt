@@ -1,0 +1,42 @@
+package main
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+)
+
+func main() {
+	const source = "function data<T extends any>() {}"
+	const path = "/repository/source/constraint.ts"
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
+	var diagnostics []rule.Diagnostic
+	ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { diagnostics = append(diagnostics, d) }}
+	listeners := rules.NoUnnecessaryTypeConstraint.Run(ctx, nil)
+	var walk func(*ast.Node)
+	walk = func(node *ast.Node) {
+		if visit := listeners[node.Kind]; visit != nil {
+			visit(node)
+		}
+		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+	}
+	walk(file.AsNode())
+	if len(diagnostics) != 1 {
+		panic("expected exactly one diagnostic")
+	}
+	d := diagnostics[0]
+	if len(d.Fixes) != 0 || len(d.Suggestions) != 1 || len(d.Suggestions[0].Fixes) != 1 {
+		panic("unexpected repair shape")
+	}
+	fix := d.Suggestions[0].Fixes[0]
+	fmt.Printf("finding %d %d %q\n", d.Range.Pos(), d.Range.End(), source[d.Range.Pos():d.Range.End()])
+	fmt.Printf("suggestion %d %d %q -> %q\n", fix.Range.Pos(), fix.Range.End(), source[fix.Range.Pos():fix.Range.End()], fix.Text)
+	if fix.Range == d.Range {
+		panic("separate edit-range witness no longer separates")
+	}
+	fmt.Println("PASS: Go suggestion edits a different range from its finding")
+}

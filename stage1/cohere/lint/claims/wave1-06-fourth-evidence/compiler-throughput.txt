@@ -1,0 +1,10 @@
+=== RUN   TestWave06CompilerThroughput
+    wave06_candidate_test.go:199: @typescript-eslint/no-unsafe-function-type Go: 0 findings / 0.277938s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:199: @typescript-eslint/no-unsafe-function-type native: 0 findings / 1.639600s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:199: @typescript-eslint/no-unsafe-function-type Node: 0 findings / 1.206134s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:199: @typescript-eslint/no-useless-empty-export Go: 0 findings / 0.253846s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:199: @typescript-eslint/no-useless-empty-export native: 0 findings / 1.539124s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:199: @typescript-eslint/no-useless-empty-export Node: 0 findings / 1.204082s = 0.00 findings/s, 77 compiler files
+--- PASS: TestWave06CompilerThroughput (13.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	13.448s

@@ -1,0 +1,30 @@
+=== RUN   TestWave06Mutants
+=== RUN   TestWave06Mutants/no-useless-empty-export
+    wave06_candidate_test.go:162: omit-empty-export-fix caught on Node: case 0 line 5: port "range 24 34 uselessEmptyExport \t\t", Go "range 24 34 uselessEmptyExport fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export3313621621/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix		
+        fixed	export const value = 1;\u000a\u000a
+    wave06_candidate_test.go:162: omit-empty-export-fix caught on emitted JavaScript: case 0 line 5: port "range 24 34 uselessEmptyExport \t\t", Go "range 24 34 uselessEmptyExport fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export3313621621/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix		
+        fixed	export const value = 1;\u000a\u000a
+    wave06_candidate_test.go:162: omit-empty-export-fix caught on sanitized native: case 0 line 5: port "range 24 34 uselessEmptyExport \t\t", Go "range 24 34 uselessEmptyExport fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export3313621621/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix		
+        fixed	export const value = 1;\u000a\u000a
+--- PASS: TestWave06Mutants (23.58s)
+    --- PASS: TestWave06Mutants/no-useless-empty-export (20.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	23.589s

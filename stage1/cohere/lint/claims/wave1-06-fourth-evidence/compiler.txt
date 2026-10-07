@@ -1,0 +1,6 @@
+=== RUN   TestWave06Compiler
+    wave06_candidate_test.go:139: compiler plus stage1: 398 file/rule rows
+    wave06_candidate_test.go:141: Go, Node, native identical: 24387652 bytes
+--- PASS: TestWave06Compiler (76.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	76.308s
