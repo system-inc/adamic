@@ -57,3 +57,11 @@ Setup took 118 seconds: Go 0s, clang 1s, Node 1s, submodules 1s, build cache 118
 `nproc` reported 5, with a four-CPU cgroup quota. Cached `go run` with hourly
 reconstruction took about two seconds. First-time Go toolchain installation and
 compilation occur before the command's eight-second read budget.
+
+The runtime parse milestones (#93z4yv7) compare instructions for parse alone on
+batch 8's 77 compiler files: native/Go <=1.5 by Oct 8 12:00 MDT, <=1 by Oct 9
+12:00 MDT. Record `stage1/progress.json` `parse_batch8` with `driver: "batch8"`,
+`files: 77`, `unit: "instructions"`, `native_scope: "parse_alone"`,
+`go_scope: "parse_alone"`, positive integer `native_instructions` and
+`go_parse_instructions`. The reported 8.97G native versus 2.96G Go whole run is
+context in the plan; it does not establish either parse-only claim.

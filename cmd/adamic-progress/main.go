@@ -85,6 +85,10 @@ Sources and accounting:
     requires its adaptation20*/adapt.cjs file on main.
     stage1/progress.json: readonly_walk.{driver,retains_per_node},
     lint_release.{release,flags}, refused_rules with explicit nonempty reasons.
+    parse_batch8.{driver,files,unit,native_scope,go_scope,native_instructions,
+    go_parse_instructions}: batch8, 77 files, instructions, both parse_alone.
+    Native/Go parse-only instruction ratio <=1.5 by Oct 8 noon and <=1 by Oct 9
+    noon (runtime, #93z4yv7). Go whole-run counts never certify these goals.
     Apple progress.json: generated_bindings.{appkit,foundation,rename_table},
     real_app.{list,state,typed_fetch,async,crossing_cost_table_with_swift}.
   Host: stage3/fixtures/host/status.json recorded results for all 25 .a fixtures

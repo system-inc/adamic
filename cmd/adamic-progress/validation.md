@@ -74,3 +74,25 @@ Logs: `/tmp/progress-patches-tests.log`, `/tmp/progress-patches-vet.log`,
 No compiler code changed; the full compiler gate was not rerun for this correction.
 Past patch counts require `documentation/velocity/patch-backlog.csv`; historical
 commit counts never supply the patch backlog or its falling-hourly milestone.
+
+## Batch 8 parse instruction milestones
+
+`go test ./cmd/adamic-progress -count=1` passed in 0.448s;
+`go vet ./cmd/adamic-progress` and `git diff --check` passed.
+`TestBatch8ParseInstructionMilestones` verifies the shipped plan's exact MDT
+noon deadlines, runtime owner, source #93z4yv7, both inclusive thresholds,
+complete batch, parse-only scope, integer counts and zero-denominator rejection.
+All five source mutants compiled, then failed that test:
+
+| Mutant | Check that caught it |
+| --- | --- |
+| parse-reverse-ratio | `TestBatch8ParseInstructionMilestones` |
+| parse-credit-whole-run | `TestBatch8ParseInstructionMilestones` |
+| parse-credit-short-batch | `TestBatch8ParseInstructionMilestones` |
+| parse-reject-equality | `TestBatch8ParseInstructionMilestones` |
+| parse-ignore-zero-count | `TestBatch8ParseInstructionMilestones` |
+
+Logs: `/tmp/progress-parse-tests.log`, `/tmp/progress-parse-vet.log`,
+`/tmp/progress-parse-mutants.log`, individual `/tmp/progress-mutants/parse-*-final.log`.
+No parse benchmark or full compiler gate was run. Reported whole-run Go counts
+are retained only as contextual observations, never credited as parse alone.

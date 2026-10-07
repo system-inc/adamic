@@ -28,12 +28,15 @@ type condition struct {
 	Suffix   string `json:"suffix,omitempty"`
 }
 type milestone struct {
-	ID          string      `json:"id"`
-	Track       string      `json:"track"`
-	Claim       string      `json:"claim"`
-	Deadline    time.Time   `json:"deadline"`
-	Measurement string      `json:"measurement"`
-	Conditions  []condition `json:"conditions"`
+	Owner       string         `json:"owner,omitempty"`
+	Source      string         `json:"source,omitempty"`
+	Observation map[string]any `json:"observation,omitempty"`
+	ID          string         `json:"id"`
+	Track       string         `json:"track"`
+	Claim       string         `json:"claim"`
+	Deadline    time.Time      `json:"deadline"`
+	Measurement string         `json:"measurement"`
+	Conditions  []condition    `json:"conditions"`
 }
 type conditionResult struct {
 	Known   bool   `json:"known"`
@@ -366,6 +369,8 @@ func checkCondition(r repository, d dashboard, goal milestone, c condition) (con
 			}
 		}
 		return conditionResult{Known: true, Done: done, OnTrack: done, Note: "hook ancestry in all four named host branches"}, nil
+	case "parse_instructions":
+		return checkParseInstructions(r, c)
 	case "backlog_hourly":
 		return checkBacklog(r, goal.Deadline, d.Time)
 	}
@@ -494,4 +499,40 @@ func renderMilestones(w io.Writer, goals []milestoneResult) {
 
 func completeBackend(o *backendObservation) bool {
 	return o != nil && o.Stdout != nil && o.Stderr != nil && o.Exit != nil
+}
+
+// Parse-only instruction counts must cover the same complete batch on both sides.
+func checkParseInstructions(r repository, c condition) (conditionResult, error) {
+	absent := conditionResult{Note: "not measurable yet: batch8's 77 files require parse-only instruction counts on both sides"}
+	var record struct {
+		Parse *struct {
+			Driver      string   `json:"driver"`
+			Files       int      `json:"files"`
+			Unit        string   `json:"unit"`
+			NativeScope string   `json:"native_scope"`
+			GoScope     string   `json:"go_scope"`
+			Native      *float64 `json:"native_instructions"`
+			Go          *float64 `json:"go_parse_instructions"`
+		} `json:"parse_batch8"`
+	}
+	ok, err := r.decode("stage1/progress.json", &record)
+	if err != nil || !ok {
+		return absent, err
+	}
+	p := record.Parse
+	if p == nil || p.Driver != "batch8" || p.Files != 77 || p.Unit != "instructions" || p.NativeScope != "parse_alone" || p.GoScope != "parse_alone" || p.Native == nil || p.Go == nil {
+		return absent, nil
+	}
+	for _, count := range []float64{*p.Native, *p.Go} {
+		if count <= 0 || math.IsInf(count, 0) || math.IsNaN(count) || math.Trunc(count) != count {
+			return absent, errors.New("parse instruction counts must be positive integers")
+		}
+	}
+	limit, ok := c.Value.(float64)
+	if !ok || limit <= 0 || math.IsInf(limit, 0) || math.IsNaN(limit) {
+		return absent, errors.New("invalid parse instruction ratio target")
+	}
+	ratio := *p.Native / *p.Go
+	done := ratio <= limit
+	return conditionResult{Known: true, Done: done, OnTrack: done, Note: fmt.Sprintf("batch8 77 files: native %.0f / Go parse-alone %.0f instructions = %.3fx; need <=%gx", *p.Native, *p.Go, ratio, limit)}, nil
 }

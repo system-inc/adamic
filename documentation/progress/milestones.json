@@ -259,6 +259,50 @@
     ]
   },
   {
+    "id": "batch8-parse-1-5x",
+    "track": "Stage 1",
+    "owner": "runtime",
+    "source": "#93z4yv7",
+    "claim": "Native parse of batch 8's 77 compiler files within 1.5x of Go's parse alone, in instructions.",
+    "deadline": "2026-10-08T12:00:00-06:00",
+    "measurement": "Main stage1/progress.json parse_batch8: driver=batch8, files=77, unit=instructions, native_scope=parse_alone, go_scope=parse_alone, positive native_instructions and go_parse_instructions. Compute native_instructions/go_parse_instructions <= 1.5. Missing parse-only counts: not measurable yet. The reported 8.97G native versus 2.96G Go whole-run observation (#93z4yv7) is context, not a parse-only comparison.",
+    "observation": {
+      "date": "2026-10-07",
+      "native_instructions": 8970000000,
+      "go_whole_run_instructions": 2960000000,
+      "source": "#93z4yv7",
+      "note": "Reported observation; Go whole-run count is not Go parse alone and cannot certify either milestone."
+    },
+    "conditions": [
+      {
+        "kind": "parse_instructions",
+        "value": 1.5
+      }
+    ]
+  },
+  {
+    "id": "batch8-parse-go",
+    "track": "Stage 1",
+    "owner": "runtime",
+    "source": "#93z4yv7",
+    "claim": "Native parse of batch 8's 77 compiler files at or under Go's parse alone, in instructions.",
+    "deadline": "2026-10-09T12:00:00-06:00",
+    "measurement": "Main stage1/progress.json parse_batch8: driver=batch8, files=77, unit=instructions, native_scope=parse_alone, go_scope=parse_alone, positive native_instructions and go_parse_instructions. Compute native_instructions/go_parse_instructions <= 1. Missing parse-only counts: not measurable yet. The reported 8.97G native versus 2.96G Go whole-run observation (#93z4yv7) is context, not a parse-only comparison.",
+    "observation": {
+      "date": "2026-10-07",
+      "native_instructions": 8970000000,
+      "go_whole_run_instructions": 2960000000,
+      "source": "#93z4yv7",
+      "note": "Reported observation; Go whole-run count is not Go parse alone and cannot certify either milestone."
+    },
+    "conditions": [
+      {
+        "kind": "parse_instructions",
+        "value": 1
+      }
+    ]
+  },
+  {
     "id": "readonly-retains",
     "track": "Stage 1",
     "claim": "Read-only walks under 0.1 retains per node visited on batch 8's driver (runtime and compiler).",

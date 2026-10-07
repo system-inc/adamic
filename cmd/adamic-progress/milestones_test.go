@@ -205,3 +205,66 @@ func TestRefusedInventoryRequiresReasons(t *testing.T) {
 		t.Fatal("empty refusal reason counted")
 	}
 }
+
+func TestBatch8ParseInstructionMilestones(t *testing.T) {
+	t.Parallel()
+	r, write, git := fixture(t)
+	condition := condition{Kind: "parse_instructions", Value: 1.5}
+	observe := func(native, goCount float64, scope string, files int) conditionResult {
+		t.Helper()
+		write("stage1/progress.json", string(mustJSON(t, map[string]any{"parse_batch8": map[string]any{"driver": "batch8", "files": files, "unit": "instructions", "native_scope": "parse_alone", "go_scope": scope, "native_instructions": native, "go_parse_instructions": goCount}})))
+		r = snapshotPaths(t, r, git)
+		result, err := checkParseInstructions(r, condition)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return result
+	}
+	if result := observe(8970000000, 2960000000, "whole_run", 77); result.Known || result.Done {
+		t.Fatal("whole Go run credited", result)
+	}
+	if result := observe(150, 100, "parse_alone", 77); !result.Done {
+		t.Fatal("inclusive 1.5x boundary", result)
+	}
+	if result := observe(151, 100, "parse_alone", 77); result.Done || !result.Known {
+		t.Fatal("over 1.5x credited", result)
+	}
+	if result := observe(100, 100, "parse_alone", 76); result.Known {
+		t.Fatal("incomplete batch credited", result)
+	}
+	condition.Value = float64(1)
+	if result := observe(100, 100, "parse_alone", 77); !result.Done {
+		t.Fatal("Go equality rejected", result)
+	}
+	if result := observe(101, 100, "parse_alone", 77); result.Done {
+		t.Fatal("slower than Go credited", result)
+	}
+	write("stage1/progress.json", `{"parse_batch8":{"driver":"batch8","files":77,"unit":"instructions","native_scope":"parse_alone","go_scope":"parse_alone","native_instructions":100,"go_parse_instructions":0}}`)
+	r = snapshotPaths(t, r, git)
+	if _, err := checkParseInstructions(r, condition); err == nil {
+		t.Fatal("zero denominator accepted")
+	}
+	observe(100, 100, "parse_alone", 77)
+	// The shipped plan carries the owner, source, context, and exact MDT deadlines.
+	goals, err := milestones(r, dashboard{Time: time.Date(2026, 10, 7, 12, 0, 0, 0, time.UTC)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := 0
+	for _, goal := range goals {
+		if !strings.HasPrefix(goal.ID, "batch8-parse-") {
+			continue
+		}
+		found++
+		want := "2026-10-08T12:00:00-06:00"
+		if goal.ID == "batch8-parse-go" {
+			want = "2026-10-09T12:00:00-06:00"
+		}
+		if goal.Owner != "runtime" || goal.Source != "#93z4yv7" || goal.Deadline.Format(time.RFC3339) != want || goal.Observation["go_whole_run_instructions"] != float64(2960000000) {
+			t.Fatal("plan metadata lost", goal)
+		}
+	}
+	if found != 2 {
+		t.Fatal("missing parse milestones", found)
+	}
+}
