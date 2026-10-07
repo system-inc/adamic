@@ -13,9 +13,9 @@ func (a *analysis) objectCall(call ir.ObjectCall) value {
 		}
 	}
 	switch call.Method {
-	case "freeze", "assign", "seal", "preventExtensions":
+	case "freeze", "assign":
 		return target
-	case "keys", "getOwnPropertyNames", "values", "entries":
+	case "keys", "values", "entries":
 		return a.fresh(elementKey, value{})
 	}
 	return value{}

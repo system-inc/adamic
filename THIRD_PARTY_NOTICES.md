@@ -13,10 +13,6 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
-  - Object primitive own-name reflection (`runtime/object_names.c`, after
-    src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
-  - Object sealing and extensibility (`runtime/object_integrity.c`, after
-    src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after

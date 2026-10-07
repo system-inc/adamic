@@ -22,12 +22,6 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	case "groupBy":
 		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
 	}
-	if value, handled, err := l.objectNamesCall(node, name); handled {
-		return value, handled, err
-	}
-	if value, handled, err := l.objectIntegrityCall(node, name); handled {
-		return value, handled, err
-	}
 	count := 1
 	if name == "is" || name == "hasOwn" {
 		count = 2
@@ -50,24 +44,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
 	switch name {
 	case "is":
-		null := [2]bool{}
-		for index, argument := range written {
-			proven := l.checker.GetTypeAtLocation(argument)
-			null[index] = proven.Flags()&checker.TypeFlagsNull != 0
-			if !null[index] && l.objectTypeIncludesNull(proven) {
-				return nil, true, l.notYet(argument, "Object.is with a nullable union (null and undefined need distinct runtime tags)")
-			}
+		for _, argument := range written {
 			value, err := l.expression(argument)
 			if err != nil {
 				return nil, true, err
 			}
 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
-		}
-		if null[0] || null[1] {
-			// Exact null types prove SameValue without a null tag. Both operands still evaluate
-			// once, in order, through the condition; both arms have the proven result.
-			result := ir.BooleanConstant{Value: null[0] && null[1]}
-			return ir.Conditional{Condition: call, WhenTrue: result, WhenNot: result}, true, nil
 		}
 	case "isFrozen":
 		value, err := l.expression(written[0])
@@ -165,8 +147,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 }
 
 // exactObject proves there are no hidden fields and no synthetic absent slots. An explicit type
-// annotation, spread or call would need a separate proof and is deliberately not guessed.
-// A let binding is also exact when no assignment anywhere in its module can replace its object.
+// annotation, alias, spread or call would need a separate proof and is deliberately not guessed.
 func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 	if depth > 16 {
 		return false
@@ -198,7 +179,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	variable := declaration.AsVariableDeclaration()
-	if variable.Type != nil || variable.Initializer == nil || (declaration.Parent.Flags&ast.NodeFlagsConst == 0 && l.objectBindingAssigned(declaration, symbol)) {
+	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
 	return l.exactObject(variable.Initializer, depth+1)
