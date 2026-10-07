@@ -11,7 +11,7 @@ import (
 
 func TestGraphRegionsCompiledMillion(t *testing.T) {
 	// Not parallel: measure the two large resident sets sequentially.
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/graph_regions_million.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/graph_regions/million.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

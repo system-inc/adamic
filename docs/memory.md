@@ -865,7 +865,7 @@ The complete counts table gains Graph regions and Graph merges columns. The
 original fixtures' six numeric columns are unchanged. New rows include every
 source regression and all 43 former refusal probes.
 
-**Compiled million-node evidence.** `graph_regions_million.a` is the same
+**Compiled million-node evidence.** `graph_regions/million.a` is the same
 million-node forward/parent/cross-edge workload, including an overwritten incoming
 edge every twentieth node, compiled from Adamic. At the last boundary release:
 
@@ -942,6 +942,18 @@ symlinked submodule's VCS status and was superseded by that overlay.
 The attempted cohere named-file format and type commands reported no files to
 check for `.a`; they are not claimed as validation. The oracle loader type-checks
 each source through the pinned checker before lowering it.
+
+**Full-gate integration check.** The full command was
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...`, logged to
+`/tmp/graph-regions-full-unit2.log`. Its completed compiler/runtime/oracle
+packages passed on the final implementation: lower 75.810s, native 514.080s,
+fresh 156.296s and oracle 442.509s. The first flow package run failed three
+five-minute trace timeouts because its flat fixture glob picked up the
+million-node benchmark. That benchmark now lives in the dedicated
+`internal/oracle/testdata/graph_regions/million.a` directory; its explicit
+oracle registration and memory/counts checks remain enabled. No flow test was
+changed or weakened. The corrected flow and benchmark checks are recorded
+below when complete.
 
 Threads, cross-thread atomic counts and long-lived services are not built. The
 shared-region merge rejection remains a tested runtime guard. Program-version

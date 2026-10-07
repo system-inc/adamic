@@ -38,7 +38,7 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"internal/oracle/testdata/graph_regions_entries.a", true, false},
-	{"internal/oracle/testdata/graph_regions_million.a", true, false},
+	{"internal/oracle/testdata/graph_regions/million.a", true, false},
 	{"internal/oracle/testdata/graph_regions_accessor.a", true, false},
 	{"internal/oracle/testdata/graph_regions_literal_method.a", true, false},
 	{"internal/oracle/testdata/graph_regions_regression_01.a", true, false},
