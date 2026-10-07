@@ -146,3 +146,26 @@ ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /tmp/interface-down
 Setup timing: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 95s, done 95s on 5 processors; CPU quota 4. Tools: Go 1.27.1, clang 20.1.8, Node 24.19.0. Targeted proof tests pass 0.418s; lower/load pass 8.390s/0.607s; uncached interface oracle passes 1.882s; scalar-tag oracle passes 4.098s; counted table update passes 14.723s. gofmt, full vet and final lower/oracle vet produced no output. The counted rows use a child compiler process to keep the opt-in flag isolated from parallel ordinary fixtures: visitor 21 allocations/21 frees/33 retains/41 releases/13 peak/0 regions; wrong-kind 2/0/2/1/2/0, with panic intentionally terminating cleanup.
 
 Full-gate result: interrupted deliberately after more than 15 minutes of unrelated adapter execution (process exit 143), not claimed as a complete pass. No package failure was observed before stopping. The log records passes for bridge/tsgo (466.991s), internal/lower (37.807s), internal/load (1.688s), internal/native (219.322s), internal/oracle (204.623s), flow, fresh, fuzz, regexp, unicodeproperties (775.528s), and several upstream adapters. The pending lint/markdown and subsequent adapters are not covered by a completed full gate. The packages touched and the filtered uncached oracle had already passed independently; the additional numeric/boolean omission mutants passed their separately rerun scalar test. Final targeted vet of lower/oracle and formatting/diff checks also pass. All logs are retained in [logs](logs).
+
+## Exact primitive verification commands
+
+All test output was redirected to files. The standalone filters below avoid mixing
+root tests and fixture subtest paths. They confirm the earlier combined run, rather
+than relying on it for fixture coverage.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/ir ./internal/javascript ./internal/native ./internal/lower -count=1 -timeout 30m > stage3/interface-downcasts/logs/primitive-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestRequiredViewField -count=1 -v -timeout 30m > stage3/interface-downcasts/logs/primitive-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(non_null|library_object|borrow_element|call_targets|devirtualize|class_as_interface)' -count=1 -v -timeout 30m > stage3/interface-downcasts/logs/primitive-source-node.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > stage3/interface-downcasts/logs/primitive-counts.log 2>&1
+go vet ./internal/ir ./internal/javascript ./internal/native ./internal/lower ./internal/oracle > stage3/interface-downcasts/logs/primitive-vet.log 2>&1
+python3 stage3/interface-downcasts/primitive-mutants.py > stage3/interface-downcasts/logs/primitive-mutants.log 2>&1
+```
+
+Standalone source Node oracle: PASS, 9.020s, native 0 hits/88 misses, Node 0 hits/66
+misses. Standalone full counts: PASS, 22.220s, no additional row changes. Primitive
+oracle: PASS, 2.879s. Package suites: IR 26.434s, native 87.094s, lower 24.318s;
+JavaScript has no package-local tests and is exercised by the independent oracle.
+Vet: exit 0. Source mutants: all four caught by the named semantic assertions.
+The full repository gate was not rerun for this progress commit.
