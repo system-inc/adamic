@@ -73,3 +73,25 @@ The four consumers and eight prerequisite entries above are unchanged; zero
 complete rule blocker sets are removed. No full repository gate, full native
 regexp integration or new throughput measurement is claimed. No shared harness
 file was edited. The remote main/area tips were verified before pushing.
+
+## Registry migration refresh at b46914832
+
+Rebased onto area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53,
+containing unchanged main c7991b900362796aefd111474e65eb5398e91953. The ledger
+is unchanged. Both validate_hex.py and validate_unicode.py were executed again,
+with all output saved under evidence/hex* and evidence/unicode*. Both PASS:
+68,844 fixed-hex records / 2,149,768 identical bytes; 12,935 Unicode records /
+834,966 identical bytes. Actual Go private helpers, source Node, emitted
+JavaScript and ASan/UBSan native agree. Both compiling, exit-zero, clean-stderr
+width mutants are caught only by Go byte comparison on all three backends.
+All four original consumer suites and targeted actual leaf calls PASS again.
+
+The filtered inherited-static-field compiler fixture and one-byte oracle control
+PASS (0.200s, gate-cache hits); go vet ./... PASS. The rule branch's fresh
+415-file corpus PASSes with 20,751,296 identical bytes on all four sides. Its
+modified-destructured constructor parser failure remains, so no new helper is
+claimed. No shared harness file was edited. Eight prerequisites for the same
+four consumers still remove zero complete blocker sets. No full repository gate,
+new throughput measurement or full regexp integration is claimed. Setup evidence
+remains the preceding unchanged-toolchain run: 149s total, nproc 5, quota 4.
+Remote bases were checked before pushing.
