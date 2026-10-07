@@ -46,3 +46,10 @@
     mutants_test.go:122: Node mutant must finish normally: exit 70 stderr adamic: panic: parser slice unsupported primary EqualsToken at 30 in statements.ts
 --- FAIL: TestMutants/declaration_loses_its_function_keyword (89.91s)
 
+== github.com/system-inc/adamic/stage1/cohere/tsprinter TestMutants/program_loses_its_statement_separator
+=== RUN   TestMutants/program_loses_its_statement_separator
+=== PAUSE TestMutants/program_loses_its_statement_separator
+=== CONT  TestMutants/program_loses_its_statement_separator
+    mutants_test.go:122: Node mutant must finish normally: exit 70 stderr adamic: panic: parser slice unsupported primary EqualsToken at 30 in statements.ts
+--- FAIL: TestMutants/program_loses_its_statement_separator (78.03s)
+
