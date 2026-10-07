@@ -31,7 +31,8 @@ const optionalFieldWrite = "optional-field-write"
 var OptIn = []string{
 	interfaceOmittedOptional, // carrier.pick() through an interface, with the optional argument left out
 	optionalFieldWrite,       // record.slot = value on a record made as {}, then read
-	nullableSlots,            // string | null and boolean | null, and null carried in them (operators.go)
+	operatorsScene,           // every operator over every value representation (operators.go), until main has typeof null
+	nullableSlots,            // with operators: string | null and boolean | null, and null carried in them
 	objectStrings,            // String(value) and `${value}` of objects, and `${undefined}` and `${null}`
 	unaryCoercion,            // unary - and ~ on a string or a boolean
 	nullScalarComparison,     // null === value where value is a number, a boolean or a number | undefined

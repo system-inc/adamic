@@ -22,6 +22,13 @@ import "strings"
 // written after it was made, an array element read by for...of or by index, a parameter, a call's
 // return, and a closure's, so the value changes representation on the way. Each comparison runs
 // against every peer of its type, in an array the scene declares, so every pair meets.
+//
+// The scene is an opt-in, -with operators: main still prints "undefined" for typeof null, so every
+// program it writes is a finding there and would drown every other scene's. It turns default-on when
+// typeof null is fixed on main. The opt-ins below refine it, and do nothing without it.
+
+// operatorsScene is the opt-in that writes the scene at all.
+const operatorsScene = "operators"
 
 // nullableSlots is the opt-in for string | null and boolean | null, which also carries null through a
 // variable, a field, an element, a parameter and a return. Main lowers no union with null yet ("a

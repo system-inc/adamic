@@ -42,15 +42,15 @@ var operatorsOptedIn = map[string][]string{
 	nullScalarComparison: {"applied === null number|undefined", "compared null opsNumbers", "compared null opsBooleans", "compared null opsMaybeNumbers"},
 }
 
-// Within forty seeds the scene applies every operator to every kind that takes it, carries every
-// representation by every route in every slot main lowers, and every program it makes checks and
-// lowers. What main doesn't lower yet stays out until its opt-in asks for it.
+// Within forty seeds, asked for with -with operators, the scene applies every operator to every kind
+// that takes it, carries every representation by every route in every slot main lowers, and every
+// program it makes checks and lowers. What main doesn't lower yet stays out until its opt-in asks.
 func TestOperatorsShapes(t *testing.T) {
 	t.Parallel()
 	seen := map[string]bool{}
 	directory := t.TempDir()
 	for seed := uint64(1); seed <= 40; seed++ {
-		generator := newGenerator(seed, nil, nil)
+		generator := newGenerator(seed, nil, []string{operatorsScene})
 		source := generator.program().Source()
 		for what := range generator.operators {
 			seen[what] = true
@@ -121,7 +121,7 @@ func TestOperatorsShapes(t *testing.T) {
 	for optIn, shapes := range operatorsOptedIn {
 		opted := map[string]bool{}
 		for seed := uint64(1); seed <= 40; seed++ {
-			generator := newGenerator(seed, nil, []string{optIn})
+			generator := newGenerator(seed, nil, []string{operatorsScene, optIn})
 			generator.program()
 			for what := range generator.operators {
 				opted[what] = true
@@ -135,12 +135,15 @@ func TestOperatorsShapes(t *testing.T) {
 	}
 	var literal bool
 	for seed := uint64(1); seed <= 40 && !literal; seed++ {
-		literal = stringLiteralTypeof.MatchString(GenerateFeatures(seed, nil, []string{typeofStringLiteral}).Source())
+		literal = stringLiteralTypeof.MatchString(GenerateFeatures(seed, nil, []string{operatorsScene, typeofStringLiteral}).Source())
 	}
 	if !literal {
 		t.Errorf("with %s, 40 seeds never took typeof of a string written out", typeofStringLiteral)
 	}
-	if strings.Contains(GenerateWithout(1, []string{"operators"}).Source(), "OpsBox") {
-		t.Error("leaving operators out still wrote the scene")
+	if strings.Contains(Generate(1).Source(), "OpsBox") {
+		t.Error("without -with operators, the scene was written")
+	}
+	if !strings.Contains(GenerateFeatures(1, nil, []string{operatorsScene}).Source(), "OpsBox") {
+		t.Error("with -with operators, the scene wasn't written")
 	}
 }

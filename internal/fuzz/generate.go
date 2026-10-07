@@ -60,7 +60,6 @@ var Features = []string{
 	"shared-slices",     // long strings, slices that share their owner's bytes, and += on those slices
 	"ownership",         // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
 	"overrides",         // static read-only signatures with implementations that mutate or escape arguments
-	"operators",         // every operator over every value representation, directly and carried (operators.go)
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -261,7 +260,7 @@ func (g *generator) program() *Program {
 			add(part)
 		}
 	}
-	if g.allowed("operators") {
+	if g.with[operatorsScene] {
 		for _, part := range g.operatorsProgram() {
 			add(part)
 		}
