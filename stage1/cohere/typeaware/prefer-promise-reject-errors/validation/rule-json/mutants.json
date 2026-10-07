@@ -1,0 +1,62 @@
+[
+  {
+    "rule": "floating",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "eval",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "void",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "output",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "timer",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "blocking",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "promise",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "regex",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "rest",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "effect",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "render",
+    "mutation": "first kind plus one",
+    "caught": true
+  },
+  {
+    "rule": "static",
+    "mutation": "first kind plus one",
+    "caught": true
+  }
+]
