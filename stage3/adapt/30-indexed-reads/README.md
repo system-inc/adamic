@@ -942,3 +942,57 @@ are `whole-scanner-{mutant-contract,mutant-node,cached-mutant-node}.log`.
 The exact-options debug before/after controls are additionally retained as
 `whole-debug-{before,after}-exact.json`: debug still **1 -> 0**. Both files
 are completed closures. No native execution or global meter total is claimed.
+
+
+## Whole-file review: parser.ts, one owner handoff remains
+
+The all-code census is **3 -> 1**. Two local diagnostics are repaired; parser
+is **not counted at zero**. SyntaxCursor.currentNode now truthfully returns
+Node | undefined. Its implementation clears current on an unsuccessful search
+and returns it, and callers already handle the missing-node path. The parser's
+reuse test calls nodeIsMissing, whose undefined case returns true without
+property reads. To expose that fact to the checker, the adaptation caches the
+**existing helper call once, at the same evaluation point** in missingNode and
+adds a redundant `node === undefined` disjunct after it. The helper is still
+called for an absent node; its true result short-circuits every later predicate
+as before. The additional test reads only the immutable local node binding.
+No getter or intervening write differs. There are no assignments to the helper
+in the pinned compiler/services source.
+
+The local getNamedPragmaArguments return dictionary and argMap dictionary now
+both admit string | undefined. Optional argument definitions already allow a
+missing args[i] and explicitly store it. These two declaration edits are erased;
+the original read and store remain unchanged, and the site's existing decline
+is retained. Neither this dictionary nor SyntaxCursor appears in the public
+API snapshot; the mechanical **217-line** allowed API proof still passes.
+
+`parser-proof.cjs` extracts the real parser guard and real nodeIsMissing helper.
+Across **164 Node cases**, including undefined, missing/ordinary nodes, EOF,
+negative positions, NaN, and both later predicate outcomes, it compares results,
+helper-call traces and Proxy property-read traces. Every observation is equal.
+The stock emitter comparison permits only the exact helper-result const and
+redundant undefined test; every other emitted byte stays identical. The existing
+scanner proof and all 17 idempotence checks also pass.
+
+**Handoff to partition 32:** parser.ts's remaining TS2322 at adapted line
+10657 (original line 10656) belongs to **types.ts:4280 AmdDependency.name**.
+The parser always constructs an own name property; unnamed AMD dependencies
+legitimately store undefined. The truthful owner is `name?: string | undefined`.
+Do not assert that the optional name exists, omit its property, or default it.
+That owner is outside partition 30 and is a public API line outside the current
+189+28 exception set. It needs the owning partition's repair and corresponding
+mechanical API proof/exception. No outside file is edited here.
+
+The removed cursor union mutant must restore the original TS2322, and a skipped
+nodeIsMissing call mutant must fail the Node trace proof. Their outcomes and the
+default oracle result are recorded below after the run completes.
+
+
+The parser default oracle **passes: 106,367 passing, zero failing and pending,
+empty baseline diff**, recorded in `whole-parser-oracle.json`. All 17 contracts
+and idempotence checks pass. Cursor and local-map union removal mutants each
+raise the file census from 1 to 2 and fail the contract, exit 1. Skipping the
+existing nodeIsMissing call fails the independent Node call/read-trace proof,
+exit 1. `whole-parser-proof.json`, mutant census JSON and logs retain these
+observations. **Parser remains at one**, awaiting the partition 32 owner repair;
+the parser slice audit remains on hold as separately instructed.

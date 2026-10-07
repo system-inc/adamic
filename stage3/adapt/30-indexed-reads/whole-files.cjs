@@ -3,6 +3,23 @@ const entries = require("./whole-sites.json");
 function planWhole(ts, file, text, check = false) {
     if (!entries.some(entry => entry.file === file)) return { text, edits: 0 };
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    if (file === "parser.ts") {
+        const repairs = [
+            ["currentNode(position: number): Node;", "currentNode(position: number): Node | undefined;"],
+            ['function getNamedPragmaArguments(pragma: PragmaDefinition, text: string | undefined): { [index: string]: string; } | "fail"', 'function getNamedPragmaArguments(pragma: PragmaDefinition, text: string | undefined): { [index: string]: string | undefined; } | "fail"'],
+            ["const argMap: { [index: string]: string; } = {};", "const argMap: { [index: string]: string | undefined; } = {};"],
+            ["if (nodeIsMissing(node) || intersectsIncrementalChange(node) || containsParseError(node)) {", "const missingNode = nodeIsMissing(node);" + (text.includes("\r\n") ? "\r\n" : "\n") + "        if (missingNode || node === undefined || intersectsIncrementalChange(node) || containsParseError(node)) {"],
+        ];
+        let edits = 0;
+        for (const [before, after] of repairs) {
+            const original = text.split(before).length - 1, adapted = text.split(after).length - 1;
+            if (adapted === 1 && original === 0) continue;
+            if (original !== 1 || adapted !== 0) throw new Error("parser closure owner drift: " + before);
+            if (check) throw new Error("truthful parser declaration or narrowing missing: " + before);
+            text = text.replace(before, after); edits++;
+        }
+        return { text, edits };
+    }
     if (file === "scanner.ts") {
         const fn = source.statements.find(node => ts.isFunctionDeclaration(node) && node.name.text === "computePositionOfLineAndCharacter");
         if (!fn || fn.parameters.map(node => node.name.getText(source)).join(",") !== "lineStarts,line,character,debugText,allowEdits") throw new Error("line clamp owner drift");

@@ -7,6 +7,7 @@ const { createHash } = require("node:crypto");
 const { plan, files } = require("./adapt.cjs");
 const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
 const { normalizeClampJS, compareClamps } = require("./scanner-proof.cjs");
+const { normalizeMissingJS, compareMissingGuards } = require("./parser-proof.cjs");
 if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
 if (process.argv.length !== 4) throw new Error("usage: node verify.cjs <before-tree> <after-tree>");
 const options = { target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext };
@@ -18,13 +19,14 @@ for (const file of files) {
     const zeroOnly = plan(ts, file, before, false, true).text;
     const expected = ts.transpileModule(zeroOnly, { fileName: file, compilerOptions: options });
     const actual = ts.transpileModule(after, { fileName: file, compilerOptions: options });
-    const normalize = file === "scanner.ts" ? normalizeClampJS : text => text;
+    const normalize = file === "scanner.ts" ? normalizeClampJS : file === "parser.ts" ? normalizeMissingJS : text => text;
     if (normalize(actual.outputText) !== normalize(expected.outputText)) {
         const hash = text => createHash("sha256").update(text).digest("hex");
         throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);
     }
     if (file === "scanner.ts") console.log(JSON.stringify(compareClamps(ts, before, after)));
+    if (file === "parser.ts") console.log(JSON.stringify(compareMissingGuards(ts, before, after, fs.readFileSync(path.join(process.argv[3], "src/compiler/utilities.ts"), "utf8"))));
     plan(ts, file, after, true);
     assert.equal(plan(ts, file, after).text, after, `not idempotent: ${file}`);
-    console.log(`PASS ${file}: ${file === "scanner.ts" ? "only independently proven clamp restructuring" : "stock emitted JavaScript bytes"}, site contract, idempotence`);
+    console.log(`PASS ${file}: ${file === "scanner.ts" || file === "parser.ts" ? "only independently proven narrowing restructuring" : "stock emitted JavaScript bytes"}, site contract, idempotence`);
 }

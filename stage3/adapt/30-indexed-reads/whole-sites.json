@@ -21,5 +21,38 @@
       "TS2322 at scanner.ts:491:45"
     ],
     "proof": "Undefined next-line starts make the original numeric comparison false. The new guard does the same for number | undefined. The first read is evaluated once where the comparison used it, with only a pure read of const res reordered; the conditional second read remains. Both production callers pass getLineStarts, whose computeLineStarts result is a dense plain array; no write occurs between the guard and second read."
+  },
+  {
+    "file": "parser.ts",
+    "owner": "IncrementalParser.SyntaxCursor.currentNode",
+    "line": 10446,
+    "class": "truthful return declaration and preserved-call narrowing",
+    "action": "declare Node | undefined; hold the existing nodeIsMissing call result before a redundant explicit undefined test",
+    "diagnostics": [
+      "TS2322 at parser.ts:10458:13"
+    ],
+    "proof": "The cursor returns current after unsuccessful search explicitly clears it; parser already treats missing nodes as unusable. nodeIsMissing(undefined) returns true without property reads. The helper call is preserved once at the same point and its cached true result short-circuits all later tests; the extra undefined test reads only local const node."
+  },
+  {
+    "file": "parser.ts",
+    "owner": "getNamedPragmaArguments return and argMap",
+    "line": 10781,
+    "class": "truthful index-value declaration",
+    "action": "admit string | undefined in both local dictionary value declarations",
+    "diagnostics": [
+      "TS2322 at parser.ts:10794:9"
+    ],
+    "proof": "Optional pragma arguments deliberately permit a missing args[i] and store that value. Both the local map and its returned index value must admit undefined; every read and store remains unchanged."
+  },
+  {
+    "file": "parser.ts",
+    "owner": "AmdDependency.name in types.ts, partition 32",
+    "line": 10656,
+    "class": "truthful optional owner outside partition",
+    "action": "decline and hand off to 32",
+    "diagnostics": [
+      "TS2322 at parser.ts:10656:17"
+    ],
+    "proof": "Unnamed AMD dependencies legitimately produce an own name property whose value is undefined. Adding ! would falsely require a name; omitting the property changes runtime shape. The truthful owning declaration is public types.ts:4280 name?: string | undefined, outside partition 30 and outside the current 217 sanctioned API lines."
   }
 ]
