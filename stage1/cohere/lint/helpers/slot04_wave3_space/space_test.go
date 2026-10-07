@@ -1,9 +1,10 @@
-package wave2
+package spaces
 
 import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -52,28 +53,12 @@ func oracle(t *testing.T) string {
 	root, _ := filepath.Abs("../../../../../cohere")
 	source, _ := filepath.Abs("testdata/oracle.go")
 	exports, _ := filepath.Abs("testdata/exports.go")
-	virtual := filepath.Join(root, "adamic_slot04_wave2_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot04_wave2_exports.go"): exports}})
+	virtual := filepath.Join(root, "adamic_slot04_wave3_space_oracle.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot04_wave3_space_exports.go"): exports}})
 	path := filepath.Join(t.TempDir(), "overlay.json")
 	write(t, path, overlay)
 	binary := filepath.Join(t.TempDir(), "go-oracle")
 	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
-}
-func build(t *testing.T, directory string) string { return buildEntry(t, directory, "main.a") }
-func buildEntry(t *testing.T, directory, entry string) string {
-	program, err := load.Load([]string{filepath.Join(directory, entry)})
-	if err != nil {
-		t.Fatal(err)
-	}
-	ir, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "native")
-	if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	return binary
 }
 func compare(t *testing.T, got, want []byte) {
@@ -89,50 +74,96 @@ func compare(t *testing.T, got, want []byte) {
 	}
 	t.Fatalf("output size %d != %d", len(got), len(want))
 }
-func TestWave2GoNodeNative(t *testing.T) {
+
+type artifacts struct{ native, script string }
+
+func build(t *testing.T, directory string) artifacts {
+	t.Helper()
+	program, err := load.Load([]string{filepath.Join(directory, "main.a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ir, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "native")
+	if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	script := filepath.Join(t.TempDir(), "emitted.mjs")
+	write(t, script, []byte(javascript.JavaScript(ir)))
+	return artifacts{binary, script}
+}
+func observations(t *testing.T, directory, path string) []struct {
+	name   string
+	output []byte
+} {
+	t.Helper()
+	built := build(t, directory)
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	return []struct {
+		name   string
+		output []byte
+	}{
+		{"Node source", run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.a"), path)},
+		{"sanitized native", run(t, "", built.native, path)},
+		{"emitted JavaScript", run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, built.script, path)},
+	}
+}
+
+func TestSpaceGoNodeNativeJavaScript(t *testing.T) {
 	goOracle := oracle(t)
-	binary := build(t, ".")
+	built := build(t, ".")
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("main.a")
-	for _, fixture := range []string{"witnesses.json", "consumers.json"} {
+	for _, fixture := range []string{"witnesses.json", "consumers.json", "--full"} {
 		t.Run(fixture, func(t *testing.T) {
-			path, _ := filepath.Abs("testdata/" + fixture)
+			path := fixture
+			var adapted string
+			if fixture == "--full" {
+				adapted = "--full"
+			} else {
+				path, _ = filepath.Abs("testdata/" + fixture)
+				adapted = filepath.Join(t.TempDir(), "cases.json")
+				write(t, adapted, run(t, "", goOracle, "--cases", path))
+			}
 			want := run(t, "", goOracle, path)
-			adapted := filepath.Join(t.TempDir(), "ast.json")
-			write(t, adapted, run(t, "", goOracle, "--ast", path))
 			compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, adapted), want)
-			compare(t, run(t, "", binary, adapted), want)
-			t.Logf("Go, Node source and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
+			compare(t, run(t, "", built.native, adapted), want)
+			compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, built.script, adapted), want)
+			t.Logf("Go, source Node, sanitized native and emitted JavaScript match %d output lines", bytes.Count(want, []byte("\n")))
 		})
 	}
 }
-func TestWave2CompilingMutants(t *testing.T) {
+func TestSpaceCompilingMutants(t *testing.T) {
 	goOracle := oracle(t)
 	path, _ := filepath.Abs("testdata/witnesses.json")
 	want := run(t, "", goOracle, path)
-	adapted := filepath.Join(t.TempDir(), "ast.json")
-	write(t, adapted, run(t, "", goOracle, "--ast", path))
-	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	adapted := filepath.Join(t.TempDir(), "cases.json")
+	write(t, adapted, run(t, "", goOracle, "--cases", path))
 	mutations := []struct{ file, old, new string }{
-		{"class_values_under.a", "leading: false, trailing: false", "leading: true, trailing: false"},
-		{"collect_class_values.a", "collectClassValues(arena, item.whenFalse, origin, edges, values, dependencies);", ""},
-		{"collect_class_values.a", "collectClassValues(arena, item.right, origin, edges, values, dependencies);", "collectClassValues(arena, item.left, origin, edges, values, dependencies);"},
+		{"javascript_space.a", "case 0xfeff:", "case 0x85:"},
+		{"blank.a", "return true;", "return value.length > 0;"},
+		{"blank.a", "index++", "index = value.length"},
+		{"value_separator.a", "case 58: ", ""},
+		{"value_separator.a", "case 60: case 10:", "case 13: case 60: case 10:"},
 	}
 	for _, mutation := range mutations {
 		t.Run(mutation.file+mutation.old, func(t *testing.T) {
 			root := t.TempDir()
-			directory := filepath.Join(root, "slot04_wave2")
+			directory := filepath.Join(root, "slot04_wave3_space")
 			if err := os.Mkdir(directory, 0755); err != nil {
 				t.Fatal(err)
 			}
-			for _, name := range []string{"model.a", "main.a", "class_values_under.a", "collect_class_values.a"} {
+			for _, name := range []string{"main.a", "javascript_space.a", "blank.a", "value_separator.a"} {
 				data, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
 				}
 				if name == mutation.file {
-					if !strings.Contains(string(data), mutation.old) {
-						t.Fatal("mutant anchor missing")
+					if strings.Count(string(data), mutation.old) != 1 {
+						t.Fatal("mutant anchor changed")
 					}
 					data = []byte(strings.Replace(string(data), mutation.old, mutation.new, 1))
 				}
@@ -143,19 +174,14 @@ func TestWave2CompilingMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			write(t, filepath.Join(root, "options_json.ts"), options)
-			binary := build(t, directory)
-			outputs := []struct {
-				name string
-				data []byte
-			}{{"sanitized native", run(t, "", binary, adapted)}, {"Node source", run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.a"), adapted)}}
-			for _, output := range outputs {
-				if bytes.Equal(output.data, want) {
-					t.Fatalf("%s compiling mutant survived", output.name)
+			for _, observation := range observations(t, directory, adapted) {
+				if bytes.Equal(observation.output, want) {
+					t.Fatalf("%s compiling mutant survived", observation.name)
 				}
-				a, b := strings.Split(string(output.data), "\n"), strings.Split(string(want), "\n")
+				a, b := strings.Split(string(observation.output), "\n"), strings.Split(string(want), "\n")
 				for i := 0; i < len(a) && i < len(b); i++ {
 					if a[i] != b[i] {
-						t.Logf("%s compiling mutant caught at line %d: got %q, Go %q", output.name, i+1, a[i], b[i])
+						t.Logf("%s compiling mutant caught at line %d: got %q, Go %q", observation.name, i+1, a[i], b[i])
 						break
 					}
 				}
@@ -190,7 +216,7 @@ func missingConsumers(t *testing.T, data []byte) []string {
 	missing := []string{}
 	for _, r := range d.Remaining {
 		for _, h := range r.Helpers {
-			if strings.HasSuffix(h, ".attributeValues") || strings.HasSuffix(h, ".classValuesUnder") || strings.HasSuffix(h, ".collectClassValues") {
+			if strings.HasSuffix(h, ".isJavaScriptSpace") || strings.HasSuffix(h, ".isBlank") || strings.HasSuffix(h, ".isValueSeparator") {
 				if !present[r.Rule] {
 					missing = append(missing, r.Rule)
 				}
@@ -200,27 +226,28 @@ func missingConsumers(t *testing.T, data []byte) []string {
 	}
 	return missing
 }
-func TestWave2ConsumerCoverage(t *testing.T) {
+func TestSpaceConsumerCoverage(t *testing.T) {
 	data, err := os.ReadFile("testdata/consumers.json")
 	if err != nil {
 		t.Fatal(err)
 	}
 	if missing := missingConsumers(t, data); len(missing) > 0 {
-		t.Fatalf("missing consumers %v", missing)
+		t.Fatalf("missing %v", missing)
 	}
 	var rows []struct{ Name, Source string }
 	if err = json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
 	}
-	filtered := rows[:0]
+	omittedConsumer, _, _ := strings.Cut(rows[0].Name, ":")
+	filtered := []struct{ Name, Source string }{}
 	for _, row := range rows {
-		if !strings.HasPrefix(row.Name, "better-tailwindcss/enforce-canonical-classes:") {
+		if !strings.HasPrefix(row.Name, omittedConsumer+":") {
 			filtered = append(filtered, row)
 		}
 	}
 	omitted, _ := json.Marshal(filtered)
 	if len(missingConsumers(t, omitted)) == 0 {
-		t.Fatal("omission mutant survived")
+		t.Fatal("consumer omission survived")
 	}
-	t.Log("all 11 consumers covered; canonical-class consumer omission caught")
+	t.Logf("all six consumers covered; omission caught: %s", omittedConsumer)
 }

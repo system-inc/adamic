@@ -1,12 +1,12 @@
-Built: classValuesUnder, collectClassValues and UnescapeStringLiteralText, one helper per .a file.
+Built: classValuesUnder and collectClassValues. UnescapeStringLiteralText is withdrawn to slot 03.
 Implementation: 7904fda; claims 0582ef8 and replacement 502d072 were pushed before code.
 Checks: isolated helper package PASS 23.272s; uncached input oracle PASS 1.430s; vet/format clean; prior setup 165s, nproc 5.
 Mutants: false outer edge changed, false branch dropped, && side swapped, decoder failure ignored, scan advanced too far; all compiled and were caught on Node and sanitized native; two consumer omissions caught.
-Limits: push blocked by GitHub credentials; no shared harness/registration edits, full repository gate, emitted-JavaScript comparison, direct AST integration or external dependency ports.
+Limits: prior push failure is resolved; no shared harness/registration edits, full repository gate, emitted-JavaScript comparison, direct AST integration or external dependency ports.
 
 ## Readiness and consumers
 
-This continuation removes 31 dependency edges across 20 distinct consumers: 11 each for the two Tailwind helpers and nine for text unescaping. Zero rules lose their final helper blocker from this continuation alone. Across both slot 04 batches, the frozen original baseline remains 46 -> 47 ready, solely adding @next/next/no-img-element. Existing ready entries in the frozen ledger are excluded from the new-ready count. Other workers' deliveries are deliberately not assumed integrated here. The original readiness.json is unchanged; this directory's readiness.json records every residual dependency.
+The retained continuation removes 22 dependency edges across 11 distinct consumers: 11 each for the two Tailwind helpers. The following text-unescape section is withdrawn historical evidence. Zero rules lose their final helper blocker from this continuation alone. Across both slot 04 batches, the frozen original baseline remains 46 -> 47 ready, solely adding @next/next/no-img-element. Existing ready entries in the frozen ledger are excluded from the new-ready count. Other workers' deliveries are deliberately not assumed integrated here. The original readiness.json is unchanged; this directory's readiness.json records every residual dependency.
 
 ### rules/tailwind.classValuesUnder
 
@@ -40,7 +40,7 @@ This continuation removes 31 dependency edges across 20 distinct consumers: 11 e
 - `better-tailwindcss/no-unknown-classes`
 - `better-tailwindcss/no-unnecessary-whitespace`
 
-### ecmascript/text.UnescapeStringLiteralText
+### Withdrawn: ecmascript/text.UnescapeStringLiteralText
 
 9 dependency removals; zero final blockers removed alone.
 
@@ -117,3 +117,7 @@ setup: submodules ready (2s)
 setup: build cache warm (165s)
 setup: done in 165s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ```
+
+## Superseding ownership correction
+
+Authentication recovered and 7904fda/535bd31 were pushed. The next successful full refresh revealed slot 03 c584145 at 01:03:44 UTC precedes our UnescapeStringLiteralText claim 502d072 at 01:03:48 UTC. Its duplicate code, fixtures and tests have now been removed from the final tree and are not delivered or counted here. This batch retains only classValuesUnder and collectClassValues: 22 dependency removals across 11 consumers, zero final blockers. Historical unescape observations above and in evidence/tests.log remain historical, not ownership claims. Readiness now excludes that symbol. The previous patch fallback is unnecessary.

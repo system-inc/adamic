@@ -1,44 +1,46 @@
 {
   "base_helper_ready": 46,
-  "slot04_cumulative_helper_ready": 47,
-  "wave2_removed_dependency_edges": 22,
-  "wave2_distinct_consumers": 11,
-  "wave2_new_ready": [],
-  "slot04_cumulative_new_ready": [
+  "new_ready": [],
+  "cumulative_new_ready": [
     "@next/next/no-img-element"
   ],
+  "cumulative_helper_ready": 47,
+  "removed_dependency_edges": 18,
+  "distinct_consumers": 6,
   "helpers": [
     {
-      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classValuesUnder",
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
       "consumers": [
         "better-tailwindcss/enforce-canonical-classes",
         "better-tailwindcss/enforce-consistent-class-order",
-        "better-tailwindcss/enforce-consistent-important-position",
-        "better-tailwindcss/enforce-consistent-variable-syntax",
         "better-tailwindcss/enforce-consistent-variant-order",
         "better-tailwindcss/enforce-shorthand-classes",
         "better-tailwindcss/no-conflicting-classes",
-        "better-tailwindcss/no-deprecated-classes",
-        "better-tailwindcss/no-duplicate-classes",
-        "better-tailwindcss/no-unknown-classes",
-        "better-tailwindcss/no-unnecessary-whitespace"
+        "better-tailwindcss/no-unknown-classes"
       ],
       "alone_final_blockers_removed": []
     },
     {
-      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.collectClassValues",
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
       "consumers": [
         "better-tailwindcss/enforce-canonical-classes",
         "better-tailwindcss/enforce-consistent-class-order",
-        "better-tailwindcss/enforce-consistent-important-position",
-        "better-tailwindcss/enforce-consistent-variable-syntax",
         "better-tailwindcss/enforce-consistent-variant-order",
         "better-tailwindcss/enforce-shorthand-classes",
         "better-tailwindcss/no-conflicting-classes",
-        "better-tailwindcss/no-deprecated-classes",
-        "better-tailwindcss/no-duplicate-classes",
-        "better-tailwindcss/no-unknown-classes",
-        "better-tailwindcss/no-unnecessary-whitespace"
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "alone_final_blockers_removed": []
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
+      "consumers": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
       ],
       "alone_final_blockers_removed": []
     }
@@ -74,9 +76,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.IsIntrinsicElementNamed",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchIgnoringCase",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -88,9 +90,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.IsIntrinsicElementNamed",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchIgnoringCase",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -112,9 +114,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.IsIntrinsicElementNamed",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchIgnoringCase",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -125,9 +127,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.AttributeName",
         "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsDocumentPage",
         "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsInApplicationDirectory",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -139,9 +141,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.IsIntrinsicElementNamed",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchExactly",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -226,9 +228,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordCharacters",
         "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordClassAtoms",
         "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.writeClass",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -259,9 +261,9 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsDocumentFile",
         "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.lastSeparator",
         "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitPath",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue"
       ],
       "helper_ready": false
     },
@@ -309,10 +311,10 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.AttributeName",
         "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.IsIntrinsicElementNamed",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/rules/next.urlQueryValue",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/rules/next.urlQueryValue"
       ],
       "helper_ready": false
     },
@@ -744,17 +746,14 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.convertUnderscoresToWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.decodeArbitraryValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.findRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFollowedByWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMathFunctionName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidArbitrary",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidNamedValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.namespaceForVariantRoot",
@@ -967,7 +966,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAngle",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundPosition",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundSize",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBracketed",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
@@ -979,7 +977,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isImage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLineWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLoneVar",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMathFunctionName",
@@ -997,7 +994,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidOpacityValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
@@ -1185,17 +1181,14 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.convertUnderscoresToWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.decodeArbitraryValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.findRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFollowedByWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMathFunctionName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidArbitrary",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidNamedValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.namespaceForVariantRoot",
@@ -1355,7 +1348,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAngle",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundPosition",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundSize",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBracketed",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
@@ -1367,7 +1359,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isImage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLineWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMathFunctionName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMultipleOf",
@@ -1383,7 +1374,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidOpacityValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
@@ -1601,7 +1591,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAngle",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundPosition",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundSize",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBracketed",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
@@ -1612,7 +1601,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isImage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLineWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMathFunctionName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMultipleOf",
@@ -1625,7 +1613,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidNamedValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
@@ -1856,7 +1843,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAngle",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundPosition",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundSize",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBracketed",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
@@ -1868,7 +1854,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isImage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLineWidth",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMathFunctionName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMultipleOf",
@@ -1884,7 +1869,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidOpacityValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
@@ -3407,10 +3391,10 @@
       "option_helper_ready": false,
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsExportedByName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
         "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
-        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText"
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor"
       ],
       "helper_ready": false
     },

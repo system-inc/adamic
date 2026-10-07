@@ -1,0 +1,32 @@
+import { panic, programArguments, readTextFile, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isJavaScriptSpace } from './javascript_space.a';
+import { isBlank } from './blank.a';
+import { isValueSeparator } from './value_separator.a';
+const argument = programArguments()[0] ?? panic('path or --full');
+if(argument === '--full') {
+    for(let rune = 0; rune <= 0x10ffff; rune++) {
+        console.log(`rune ${rune} ${isJavaScriptSpace(rune)} ${isBlank(String.fromCodePoint(rune))}`);
+    }
+    for(const rune of [-2147483648, -1, 0x110000, 2147483647]) { console.log(`outside ${rune} ${isJavaScriptSpace(rune)}`); }
+    for(let byte = 0; byte <= 255; byte++) { console.log(`byte ${byte} ${isValueSeparator(byte)}`); }
+} else {
+    const input = readTextFile(argument);
+    if(input.kind === 'Error') { panic(input.message); }
+    const corpus = new OptionsJson(input.text);
+    const root = corpus.parse();
+    if(root < 0) { panic(corpus.error); }
+    for(const row of corpus.node(root).children) {
+        const value = corpus.node(row).text;
+        console.log(`blank ${isBlank(value)}`);
+        for(let index = 0; index < value.length;) {
+            const rune = value.codePointAt(index) ?? panic('missing code point');
+            console.log(`rune ${rune} ${isJavaScriptSpace(rune)}`);
+            index += rune > 0xffff ? 2 : 1;
+        }
+        for(let index = 0; index < utf8Length(value); index++) {
+            const byte = utf8At(value,index);
+            console.log(`byte ${byte} ${isValueSeparator(byte)}`);
+        }
+    }
+}

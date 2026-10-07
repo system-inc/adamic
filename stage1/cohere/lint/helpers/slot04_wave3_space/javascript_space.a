@@ -1,0 +1,10 @@
+// Input is a Go rune value: a signed integer, not an encoded byte.
+export function isJavaScriptSpace(value: number): boolean {
+    switch(value) {
+        case 32: case 9: case 10: case 11: case 12: case 13:
+        case 0x00a0: case 0x1680: case 0x2028: case 0x2029:
+        case 0x202f: case 0x205f: case 0x3000: case 0xfeff:
+            return true;
+    }
+    return value >= 0x2000 && value <= 0x200a;
+}

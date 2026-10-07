@@ -1,0 +1,9 @@
+// Input is one byte, an integer in 0..255; slash and CR are not separators.
+export function isValueSeparator(value: number): boolean {
+    switch(value) {
+        case 58: case 44: case 61: case 62:
+        case 60: case 10: case 32: case 9:
+            return true;
+    }
+    return false;
+}

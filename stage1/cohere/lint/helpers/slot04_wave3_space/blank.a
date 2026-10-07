@@ -1,0 +1,9 @@
+import { isJavaScriptSpace } from './javascript_space.a';
+export function isBlank(value: string): boolean {
+    for(let index = 0; index < value.length; index++) {
+        // Every accepted rune is in the BMP. A surrogate unit is never whitespace,
+        // so UTF-16 unit traversal and Go rune traversal give the same blank verdict.
+        if(!isJavaScriptSpace(value.charCodeAt(index))) { return false; }
+    }
+    return true;
+}
