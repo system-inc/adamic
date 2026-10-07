@@ -1,0 +1,4 @@
+function run(ready: boolean) {
+    if(!ready) return void stop();
+    return void save();
+}
