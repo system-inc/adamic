@@ -1,0 +1,78 @@
+[
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "cases": 200,
+    "source": "// eslint-disable-next-line foo -- ",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.011298501999590371,
+          0.01137363899988486,
+          0.014883740000186663
+        ],
+        "findingsPerSecond": 17584.521541612554
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.16423695000003136,
+          0.15970635200028482,
+          0.15799538700002813
+        ],
+        "findingsPerSecond": 1252.2983431469484
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.09024667499988936,
+          0.08560728600014045,
+          0.12786997200009864
+        ],
+        "findingsPerSecond": 2216.1481295598446
+      }
+    ]
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "cases": 200,
+    "source": "export const c = 'flex ml-4';\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.008619364999958634,
+          0.00985798200008503,
+          0.013269101999867416
+        ],
+        "findingsPerSecond": 20288.127935136712
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.14249449599992658,
+          0.11878223499979867,
+          0.1349175360001027
+        ],
+        "findingsPerSecond": 1482.386989337307
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.09047202600004312,
+          0.10160098500000458,
+          0.06779837600015526
+        ],
+        "findingsPerSecond": 2210.6280675079024
+      }
+    ]
+  }
+]

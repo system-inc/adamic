@@ -1,0 +1,48 @@
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:12:10: function read: (path: string) => string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:12:15: parameter path: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:12:45: variable value: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:14:10: function escaped: (text: string) => string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:14:18: parameter text: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:15:11: variable chunks: string[]
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:16:13: variable start: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:19:10: function compare: (left: Finding, right: Finding) => number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:19:18: parameter left: Finding
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:19:33: parameter right: Finding
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:20:7: variable args: readonly string[]
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:21:7: variable corpus: OptionsJson
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:22:7: variable root: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:23:7: variable countOnly: boolean
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:24:7: variable independent: boolean
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:25:10: function field: (index: number, name: string) => string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:25:16: parameter index: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:25:31: parameter name: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:25:61: variable id: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:26:5: variable caseNumber: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:27:5: variable count: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:28:11: variable row: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:29:11: variable source: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:30:11: variable name: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:31:11: variable selected: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:32:11: variable parser: Parser
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:33:9: variable tree: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:39:15: variable adapted: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:41:19: variable raw: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:42:19: variable children: number[]
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:43:23: variable child: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:44:19: variable node: ParseNode
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:50:11: variable parents: number[]
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:51:13: variable index: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:51:74: variable child: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:52:11: variable settings: Settings
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:54:11: variable context: RuleContext
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:55:11: variable a: Rule
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:56:11: variable b: Rule
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:57:11: variable c: Rule
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:58:11: variable stack: number[]
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:60:15: variable index: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:61:15: variable kind: string
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:65:15: variable children: number[]
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:66:17: variable child: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:72:19: variable finding: Finding
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:74:19: variable start: number
+stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.a:75:19: variable end: number

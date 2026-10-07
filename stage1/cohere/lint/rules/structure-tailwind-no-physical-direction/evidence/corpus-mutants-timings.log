@@ -1,0 +1,15 @@
+compiler files 77
+compiler processed 4
+compiler processed 44
+stage1 files 136
+stage1 processed 4
+stage1 processed 44
+stage1 processed 84
+stage1 processed 124
+mutant physical_direction_exemption_lost caught by all three comparisons
+mutant description_ignored caught by all three comparisons
+mutant fallback_display_ignored caught by all three comparisons
+benchmark {'rule': 'structure/tailwind-no-physical-direction', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.00966487400000915, 0.011546247000296717, 0.009297842999785644], 'findingsPerSecond': 20693.49274494532}, {'backend': 'Node', 'findings': 200, 'seconds': [0.12544288899971434, 0.13378802799979894, 0.13728631200001473], 'findingsPerSecond': 1494.9020700140716}, {'backend': 'native', 'findings': 200, 'seconds': [0.22345606199996837, 0.22146794700029204, 0.22118401699981405], 'findingsPerSecond': 903.0652187322451}]}
+benchmark {'rule': '@eslint-community/eslint-comments/require-description', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.010707924000143976, 0.011652904000129638, 0.010993888000029983], 'findingsPerSecond': 18191.926277532984}, {'backend': 'Node', 'findings': 200, 'seconds': [0.13521610999987388, 0.13473506499985888, 0.12437338400013687], 'findingsPerSecond': 1484.394578354265}, {'backend': 'native', 'findings': 200, 'seconds': [0.12780054400036533, 0.12870789099997637, 0.12075653700003386], 'findingsPerSecond': 1564.9385655152475}]}
+benchmark {'rule': '@next/next/google-font-display', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.010263619999932416, 0.010477084999820363, 0.01105829799962521], 'findingsPerSecond': 19089.279127107315}, {'backend': 'Node', 'findings': 200, 'seconds': [0.16084529699992345, 0.14133259700020062, 0.1379865100002462], 'findingsPerSecond': 1415.101712167053}, {'backend': 'native', 'findings': 200, 'seconds': [0.40086249600017254, 0.40189758900032757, 0.39738128099997994], 'findingsPerSecond': 498.92419968345934}]}
+post validation complete

@@ -1,0 +1,28 @@
+{
+  "cases": 161,
+  "rules": {
+    "structure/tailwind-no-physical-direction": 53,
+    "@eslint-community/eslint-comments/require-description": 108
+  },
+  "JSXExcluded": 18,
+  "backends": [
+    {
+      "exit": 0,
+      "stderrBytes": 0,
+      "name": "Node",
+      "equal": true
+    },
+    {
+      "exit": 0,
+      "stderrBytes": 0,
+      "name": "emitted",
+      "equal": true
+    },
+    {
+      "exit": 0,
+      "stderrBytes": 0,
+      "name": "native",
+      "equal": true
+    }
+  ]
+}
