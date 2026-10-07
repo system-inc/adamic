@@ -72,3 +72,17 @@ Rule parking evidence and its exact legacy-contract boundaries live on
 codex/lint-wave1-04 under the optional-chain rule's PARKING.md. No shared harness
 handoff SHA has been named; that handoff requires rebasing parked work before
 claiming anything further.
+
+## Landing refresh on c01907a7
+
+Main advanced to c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06 before the next
+helper reservation. The branch was rebased cleanly. Production compiler packages,
+stage1, cohere and module pins are unchanged from f8013f0; the only oracle
+change is a dormant stage3 hook test. No new helper was claimed.
+
+bash cloud/setup.sh PASS: cache warm and total 40s, nproc 5, cgroup four cores;
+Go 0s, clang/Node/submodules 1s. Complete owned helper package PASS 21.963s,
+all three real Go comparisons and all seven compiling mutants on source Node,
+emitted JavaScript and sanitized native. The filtered uncached input oracle also
+passes. Logs are retained as evidence/c019-*.log. This refresh supersedes the
+original report's main base and is pushed before any further helper claim.
