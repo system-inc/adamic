@@ -1,0 +1,14 @@
+==45438== Callgrind, a call-graph generating cache profiler
+==45438== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==45438== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==45438== Command: /workspace/scratch/parse-speed/unit-cache-parse --manifest /workspace/scratch/parse-speed/compiler.txt --count
+==45438== 
+==45438== For interactive control, run 'callgrind_control -h'.
+==45438== brk segment overflow in thread #1: can't grow to 0x4838000
+==45438== (see section Limitations in user manual)
+==45438== NOTE: further instances of this message will not be shown
+==45438== 
+==45438== Events    : Ir
+==45438== Collected : 6504806296
+==45438== 
+==45438== I   refs:      6,504,806,296

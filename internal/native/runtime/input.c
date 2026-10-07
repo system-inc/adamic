@@ -99,13 +99,16 @@ static size_t encoded_size(unsigned point) {
 // decode makes a string of bytes decoded as WHATWG UTF-8, which the caller owns. What it makes is
 // always valid UTF-8, so no lone surrogate can come in from outside.
 static adamic_string *decode(const unsigned char *bytes, size_t length) {
-	size_t size = 0;
+	size_t size = 0, units = 0;
 	unsigned point;
 	for (size_t offset = 0; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
 		size += encoded_size(point);
+		units += point > 0xffff ? 2 : 1;
 	}
 	adamic_string *string = new_string(size);
+	// The decoder already visited every point: preserve its UTF-16 count and ASCII flag.
+	string->units = units + 1;
 	unsigned char *cursor = (unsigned char *)string->bytes;
 	for (size_t offset = 0; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
