@@ -82,3 +82,37 @@ The parser is outside this wave's allowed directories; under Ahra's instruction
 to stop on other blockers, no shared frontend repair or further claim is made.
 Exact reproduction and limitations are in `../wave_05_react/REPORT.md`.
 All six earlier reservations remain complete, tested and pushed.
+
+## React parking and continuation 3
+
+Under Ahra's new parking instruction, continuation 2 is PARKED and counts as
+finished for landing-first; it is not represented as implemented:
+
+- react-hooks/globals: native JSX parsing and React compilation-root detection
+  depend on the JSX work landing through area/stage1-lint.
+- react-hooks/immutability: native React high-level IR, single-assignment and
+  capture/frozen-value analysis are absent; dependency is #dnv6f2c, plus JSX.
+- react-hooks/no-deriving-state-in-effects: native React high-level IR,
+  single-assignment and capture/taint analysis are absent; dependency is
+  #dnv6f2c, plus JSX.
+
+Existing probes and production Go controls are pushed in wave_05_react.
+No partial rule verdict implementation or React parity is claimed.
+
+All six implemented ports are green and pushed on current main f8013f0b
+through abcef242d. After fetching 529 origin refs, scanning 31 unique claim
+blobs and the combined 197-rule ranking, the next three eligible rules are:
+
+- require-await (0 compiler, 0 repository)
+- symbol-description (0 compiler, 0 repository)
+- valid-typeof (0 compiler, 0 repository)
+
+The remaining React names are parked pending JSX/analysis.
+require-atomic-updates is skipped because its production implementation
+depends on ecmascript/control_flow_graph and captured-binding analysis.
+The selected rules do not import high-level IR, SSA or capture-analysis modules.
+They have no implementation on the main/bridge baselines or matching origin
+claim. Selection evidence is wave_05_core/selection.json. These reservations
+are pushed before native implementation. New rule modules use .a, each with
+rule.json numeric kinds and callbacks taking the supplied node. Shared files
+remain untouched.
