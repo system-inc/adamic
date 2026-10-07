@@ -8,9 +8,11 @@ The private oracle overlays dependency call names in the actual pinned Go method
 
 Go cohere is pinned to 715ba94f3608a6500086b1076ce5cb7e51b836db. All four consumers' test-file string literals are read, including configuration and expected-text literals, parsed by the real parser, and used to derive label/node controls. This is bounded helper behavior, not a claim that these rules are ported. The Go method's assumptions require a present current block and a contiguous private jump stack. Arbitrary callback effects, missing array slots, aliasing the same mutable jump object into multiple stack slots, invalid UTF-8 and lone surrogate labels are not covered.
 
-pushJump and popJump were withdrawn after a concurrent ownership refresh proved slot 03's earlier claim. Their preliminary checks are not delivered or counted. One helper is retained in this directory; two replacement slots await the branch's full landing gate and publication.
+pushJump and popJump were withdrawn after a concurrent ownership refresh proved slot 03's earlier claim. Their preliminary checks are not delivered or counted. One helper is retained in this directory. The statements and makeContinue replacements in ../batch15 complete the three-helper batch after the full current-main landing gate and publication.
 
 ```
 source /workspace/adamic-tools/env.sh
 ADAMIC_SLOT05_BATCH14_EVIDENCE="$PWD/stage1/cohere/lint/helpers/slot05/batch14/evidence" go test ./stage1/cohere/lint/helpers/slot05/batch14 -count=1 -v -timeout=20m > /tmp/lint05-batch14-retained.log 2>&1
 ```
+
+Upstream provenance and MIT attribution: [NOTICE.md](NOTICE.md).

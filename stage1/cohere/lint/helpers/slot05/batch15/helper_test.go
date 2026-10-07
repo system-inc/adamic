@@ -1,4 +1,4 @@
-package batch14
+package batch15
 
 import (
 	"bytes"
@@ -20,8 +20,14 @@ import (
 
 type mutation struct{ old, replacement string }
 
-func TestSlot05MakeBreak(t *testing.T) {
-	verify(t, "break", "make_break.a", mutation{"if(!state.cur.reachable)", "if(false)"}, mutation{"!target.breakable", "false"}, mutation{"!target.labels.includes(name)", "false"}, mutation{"target.broken=true;", "target.broken=false;"}, mutation{"makeUnreachable();", "if(false) {makeUnreachable();}"}, mutation{"for(let i=state.jumps.length - 1;i>=0;i-=1)", "for(let i=0;i<state.jumps.length;i+=1)"}, mutation{"target.broken=true;\n  link(state.cur,target.breakTo);", "link(state.cur,target.breakTo);\n  target.broken=true;"})
+func TestSlot05Statements(t *testing.T) {
+	verify(t, "statements", "statements.a", mutation{"for(const node of nodes)", "for(const node of nodes.slice(1))"}, mutation{"for(const node of nodes)", "for(const node of nodes.slice(0,-1))"}, mutation{"statement(node);", "statement(node);statement(node);"})
+}
+func TestSlot05StatementOrder(t *testing.T) {
+	verify(t, "statements", "statements.a", mutation{"for(const node of nodes)", "for(const node of nodes.slice().reverse())"})
+}
+func TestSlot05MakeContinue(t *testing.T) {
+	verify(t, "continue", "make_continue.a", mutation{"if(!state.cur.reachable)", "if(false)"}, mutation{"target.continueTo === undefined", "false"}, mutation{"name === '' || target.labels.includes(name)", "true"}, mutation{"loop(target.loop);", "if(false) {loop(target.loop);}"}, mutation{"makeUnreachable();", "if(false) {makeUnreachable();}"}, mutation{"for(let i=state.jumps.length - 1;i>=0;i-=1)", "for(let i=0;i<state.jumps.length;i+=1)"}, mutation{"loop(target.loop);\n   link(state.cur,target.continueTo);", "link(state.cur,target.continueTo);\n   loop(target.loop);"}, mutation{"loop(target.loop);", "target.broken=true;loop(target.loop);"}, mutation{"link(state.cur,target.continueTo);", "link(state.cur,target.breakTo);"})
 }
 
 // Not parallel: large generated corpora and multiple sanitized compiler builds share the memory budget.
@@ -34,10 +40,10 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	}
 
 	scratch := t.TempDir()
-	virtual := filepath.Join(cohere, "adamic_slot05_batch14.go")
+	virtual := filepath.Join(cohere, "adamic_slot05_batch15.go")
 	replacements := map[string]string{virtual: filepath.Join(dir, "testdata", "oracle.go")}
 
-	replacements[filepath.Join(cohere, "internal/lint/ecmascript/control_flow_graph/adamic_slot05_batch14.go")] = filepath.Join(dir, "testdata", "cfg_export.go")
+	replacements[filepath.Join(cohere, "internal/lint/ecmascript/control_flow_graph/adamic_slot05_batch15.go")] = filepath.Join(dir, "testdata", "cfg_export.go")
 	original := filepath.Join(cohere, "internal/lint/ecmascript/control_flow_graph/statements.go")
 	source, err := os.ReadFile(original)
 	if err != nil {
@@ -48,8 +54,8 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 		signature string
 		calls     [][2]string
 	}{
-		{"func (b *Builder[E]) pushJump(", [][2]string{{"labelsOf(node)", "adamicLabelsOf(node)"}}},
-		{"func (b *Builder[E]) makeBreak(", [][2]string{{"label.Text()", "adamicLabelText(label)"}, {"b.link(b.cur, target.breakTo)", "b.adamicLink(b.cur, target.breakTo)"}, {"b.makeUnreachable()", "b.adamicUnreachable()"}}},
+		{"func (b *Builder[E]) statements(", [][2]string{{"b.statement(stmt)", "b.adamicStatement(stmt)"}}},
+		{"func (b *Builder[E]) makeContinue(", [][2]string{{"label.Text()", "adamicLabelText(label)"}, {"b.loop(target.loop)", "b.adamicLoop(target.loop)"}, {"b.link(b.cur, target.continueTo)", "b.adamicLink(b.cur, target.continueTo)"}, {"b.makeUnreachable()", "b.adamicUnreachable()"}}},
 	} {
 		start := strings.Index(text, item.signature)
 		if start < 0 {
@@ -65,6 +71,7 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 		}
 		text = text[:start] + body + text[end:]
 	}
+
 	modified := filepath.Join(scratch, "statements.go")
 	if e := os.WriteFile(modified, []byte(text), 0644); e != nil {
 		t.Fatal(e)
@@ -89,7 +96,7 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 		t.Fatal(e)
 	}
 	t.Logf("consumer coverage: %s", coverage)
-	if evidence := os.Getenv("ADAMIC_SLOT05_BATCH14_EVIDENCE"); evidence != "" {
+	if evidence := os.Getenv("ADAMIC_SLOT05_BATCH15_EVIDENCE"); evidence != "" {
 		if e = os.WriteFile(filepath.Join(evidence, mode+"-coverage.json"), coverage, 0644); e != nil {
 			t.Fatal(e)
 		}
@@ -129,6 +136,8 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 				data = []byte(strings.Replace(string(data), old, replacement, 1))
 			}
 			data = []byte(strings.ReplaceAll(string(data), "'../../options_json.ts'", strconvQuote(filepath.Join(root, "stage1/cohere/lint/helpers/options_json.ts"))))
+
+			data = []byte(strings.ReplaceAll(string(data), "'../batch14/types.a'", strconvQuote(filepath.Join(root, "stage1/cohere/lint/helpers/slot05/batch14/types.a"))))
 
 			if e = os.WriteFile(filepath.Join(mutant, name), data, 0644); e != nil {
 				t.Fatal(e)

@@ -1,0 +1,16 @@
+import {panic} from 'adamic';
+import type {JumpBlock,JumpState} from '../batch14/types.a';
+export function makeContinue<N,B extends JumpBlock>(state: JumpState<N,B>,label: N | undefined,textOf: (node: N) => string,loop: (node: N | undefined) => void,link: (from: B,to: B | undefined) => void,makeUnreachable: () => void): void {
+ if(!state.cur.reachable) {return;}
+ let name='';if(label !== undefined) {name=textOf(label);}
+ for(let i=state.jumps.length - 1;i>=0;i-=1) {
+  const target=state.jumps[i] ?? panic('missing jump target');
+  if(target.continueTo === undefined) {continue;}
+  if(name === '' || target.labels.includes(name)) {
+   loop(target.loop);
+   link(state.cur,target.continueTo);
+   break;
+  }
+ }
+ makeUnreachable();
+}

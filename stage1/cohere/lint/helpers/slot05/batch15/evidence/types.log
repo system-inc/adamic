@@ -1,0 +1,44 @@
+stage1/cohere/lint/helpers/slot05/batch15/main.a:6:11: interface Node: Node
+stage1/cohere/lint/helpers/slot05/batch15/main.a:6:26: property id: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:6:45: property text: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch15/main.a:9:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch15/main.a:9:46: variable root: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:10:10: function field: (index: number, name: string) => number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:10:16: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:10:29: parameter name: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:11:10: function number: (index: number) => number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:11:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:12:10: function bool: (index: number) => boolean
+stage1/cohere/lint/helpers/slot05/batch15/main.a:12:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:13:10: function strings: (index: number) => string[]
+stage1/cohere/lint/helpers/slot05/batch15/main.a:13:18: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:13:47: variable out: string[]
+stage1/cohere/lint/helpers/slot05/batch15/main.a:13:73: variable child: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:14:7: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:16:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:18:9: variable nodes: number[]
+stage1/cohere/lint/helpers/slot05/batch15/main.a:18:37: variable n: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:19:7: variable calls: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:19:19: variable trace: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:19:87: parameter node: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:22:8: variable blocks: JumpBlock[]
+stage1/cohere/lint/helpers/slot05/batch15/main.a:22:38: variable i: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:23:8: variable node: Node
+stage1/cohere/lint/helpers/slot05/batch15/main.a:24:8: variable block: (id: number) => JumpBlock | undefined
+stage1/cohere/lint/helpers/slot05/batch15/main.a:24:15: parameter id: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:25:8: variable old: JumpTarget<Node, JumpBlock>[]
+stage1/cohere/lint/helpers/slot05/batch15/main.a:26:12: variable j: number
+stage1/cohere/lint/helpers/slot05/batch15/main.a:27:8: variable state: JumpState<Node, JumpBlock>
+stage1/cohere/lint/helpers/slot05/batch15/main.a:28:8: variable labels: string[]
+stage1/cohere/lint/helpers/slot05/batch15/main.a:28:48: variable trace: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:30:9: variable label: Node | undefined
+stage1/cohere/lint/helpers/slot05/batch15/main.a:31:29: parameter n: Node
+stage1/cohere/lint/helpers/slot05/batch15/main.a:31:137: parameter n: Node | undefined
+stage1/cohere/lint/helpers/slot05/batch15/main.a:31:213: parameter from: JumpBlock
+stage1/cohere/lint/helpers/slot05/batch15/main.a:31:228: parameter to: JumpBlock | undefined
+stage1/cohere/lint/helpers/slot05/batch15/main.a:31:265: variable broken: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:31:285: variable j: JumpTarget<Node, JumpBlock>
+stage1/cohere/lint/helpers/slot05/batch15/main.a:33:6: variable output: string
+stage1/cohere/lint/helpers/slot05/batch15/main.a:34:12: variable j: JumpTarget<Node, JumpBlock>
+stage1/cohere/lint/helpers/slot05/batch15/main.a:36:27: variable j: JumpTarget<Node, JumpBlock>

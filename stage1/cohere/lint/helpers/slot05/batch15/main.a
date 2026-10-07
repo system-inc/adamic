@@ -1,0 +1,38 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {makeContinue} from './make_continue.a';
+import {statements} from './statements.a';
+import type {JumpTarget,JumpState,JumpBlock} from '../batch14/types.a';
+interface Node {readonly id:number;readonly text:string;}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') {panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root < 0){panic(json.error);}
+function field(index:number,name:string):number{return json.field(index,name);}
+function number(index:number):number{return Number(json.node(index).text);}
+function bool(index:number):boolean{return json.node(index).text === 'true';}
+function strings(index:number):string[]{const out:string[]=[];for(const child of json.node(index).children){out.push(json.node(child).text);}return out;}
+const mode=json.node(field(root,'mode')).text;
+
+for(const row of json.node(field(root,'rows')).children) {
+ if(mode === 'statements') {
+  const nodes:number[]=[];for(const n of json.node(field(row,'nodes')).children){nodes.push(number(n));}
+  let calls=0;let trace='';statements(bool(field(row,'hasList')) ? nodes : undefined,(node:number):void=>{calls+=1;trace+=`stmt:${node};`;});console.log(`${calls}|${trace}`);
+  continue;
+ }
+ const blocks:JumpBlock[]=[];for(let i=0;i<5;i+=1){blocks.push({id:i,reachable:i === 0 && bool(field(row,'reachable'))});}
+ const node:Node={id:1,text:''};
+ const block=(id:number):JumpBlock | undefined => {if(id < 0){return undefined;}return blocks[id] ?? panic('missing block');};
+ const old:JumpTarget<Node,JumpBlock>[]=[];
+ for(const j of json.node(field(row,'jumps')).children){old.push({labels:strings(field(j,'labels')),breakTo:block(number(field(j,'break'))),continueTo:block(number(field(j,'continue'))),loop:number(field(j,'loop')) < 0 ? undefined : node,breakable:bool(field(j,'breakable')),broken:bool(field(j,'broken'))});}
+ const state:JumpState<Node,JumpBlock>={jumps:old,cur:blocks[0] ?? panic('missing current')};
+ const labels=strings(field(row,'labels'));let trace='';
+ {
+  const label:Node | undefined=bool(field(row,'hasLabel')) ? {id:2,text:json.node(field(row,'text')).text} : undefined;
+  makeContinue(state,label,(n:Node):string=>{if(n !== label){panic('label identity changed');}trace+=`text:${n.text};`;return n.text;},(n:Node | undefined):void=>{trace+=`loop:${n === undefined ? -1 : n.id};`;},(from:JumpBlock,to:JumpBlock | undefined):void=>{let broken='';for(const j of state.jumps){broken+=`${j.broken},`;}trace+=`link:${from.id}:${to === undefined ? -1 : to.id}:${broken};`;},():void=>{trace+=`unreachable:${state.cur.id};`;state.cur={id:number(field(row,'afterCur')),reachable:bool(field(row,'afterReachable'))};});
+ }
+ let output=`${state.jumps.length}|${state.cur.id}:${state.cur.reachable}|`;
+ for(const j of state.jumps){output+=`${j.labels.join('~')}:${j.breakTo === undefined ? -1 : j.breakTo.id}:${j.continueTo === undefined ? -1 : j.continueTo.id}:${j.loop === undefined ? -1 : j.loop.id}:${j.breakable}:${j.broken};`;}
+
+ output+='old:';for(const j of old){output+=`${j.broken},`;}
+ console.log(output+'|'+trace);
+}

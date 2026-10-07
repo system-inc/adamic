@@ -1,0 +1,4 @@
+export function statements<N>(nodes: readonly N[] | undefined,statement: (node: N) => void): void {
+ if(nodes === undefined) {return;}
+ for(const node of nodes) {statement(node);}
+}
