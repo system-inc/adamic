@@ -126,6 +126,9 @@ func TestMeasureClangUnits(t *testing.T) {
 					options.Split = true
 					options.Jobs = jobs
 					run(program, mode.name+"-full", round, options, source, false)
+					before := mode.options
+					before.Jobs = jobs
+					run(program, mode.name+"-whole-one-line", round, before, changed, false)
 					run(program, mode.name+"-one-line", round, options, changed, false)
 					run(program, mode.name+"-warm", round, options, changed, false)
 				}
