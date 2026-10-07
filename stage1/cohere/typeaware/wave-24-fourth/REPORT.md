@@ -31,3 +31,22 @@ Toolchain setup: Go 1.27.1 ready 0s; clang 20.1.8 ready 1s; Node 24.19.0 ready 1
 A subsequent fetch found 417 origin refs and four distinct versions of `stage1/typescript/parser/parser.ts`. One remote version now contains JSX support: `origin/codex/stage1-jsx-lint`, tip `a8a62d62ca49db7415e14c3887dd305022b17309`. The implementation commit is `e715ef4a2f898230af63c40195dea6586a557899`; it modifies shared parser, lookahead and scanner files and adds `jsx.ts`. Main remains `e011f8f60899586d6373a5ccb07335ad82cfbf3c`, and this worker's branch still uses the parser that refuses the valid JSX positive control with exit 70.
 
 The earlier inference is now narrower: JSX support exists on another worker's branch, but is not integrated into this branch. The user requires changes to remain in the owned rule directories and says to stop on other blockers rather than editing shared files. Therefore this worker did not cherry-pick the shared parser/scanner implementation or claim more rules. Integration of that dependency would remove the measured parser blocker; it does not by itself establish HIR or rule parity. No additional port, per-rule mutant, corpus, sanitizer or performance result is claimed by this resume audit.
+
+## Landing gate on current main
+
+Rebased all ten branch-only commits cleanly onto `origin/main` at `e011f8f60899586d6373a5ccb07335ad82cfbf3c`. The resulting tested source tip was `d5228c97906eb85949b9c142648da432dddfae4c`. No new rules were claimed. The only subsequent change records these results and logs; the source implementations are identical to the tested tip.
+
+Setup failed during cache warming, after Go/clang/Node and submodules succeeded (timings 0s/1s/1s/1s, nproc 5). The exact shared lint test errors were `lint_test.go:312:31: undefined: volumeGenerated` and `lint_test.go:316:4: undefined: checkRecoveryRefusal`. No shared files were edited. Building `./cmd/adamic` succeeded, so the unaffected owned oracles could run to completion.
+
+After sourcing `/workspace/adamic-tools/env.sh`, ran:
+
+- `go build -o /tmp/wave-24-landing-adamic ./cmd/adamic`: pass.
+- `go test ./stage1/cohere/typeaware -run '^TestWave24AgreementAndMutants$' -count=1 -timeout 30m -v`, with the same frozen 287 repository and 77 compiler roots and `ADAMIC_WAVE24_*` manifest/artifact environment variables: pass in 170.048s.
+- `wave-24-next/validate.py` and `wave-24-third/validate.py`, each with the rebuilt `--stage0` and `--compiler /workspace/wave-24-corpus`: both PASS, including both frozen corpora and ASan/UBSan controls/corpora.
+- `wave-24-fourth/validate.py` with the rebuilt compiler: PASS for the Go finding, native JSX refusal and measurement mutant; this does not port the three claimed React rules.
+- `go test ./bridge/tsgo/... -count=1 -timeout 10m`: pass, bridge 110.253s and checker 0.423s.
+- `go vet ./bridge/tsgo/...` and `git diff --check`: pass.
+
+All nine rule mutants, eight checker-question mutants, the released-registry mutant and the blocker measurement mutant were caught again. Ordinary controls matched full Go diagnostics/fixes/suggestions: original batch 43 findings, next 65, third 295. Frozen corpora matched full bytes under ordinary and sanitizer binaries: 18,485 repository bytes and 5,010 compiler bytes per batch, zero findings. All three batches' released-handle checks produced the exact required panic 70. Native versus Go whole-process timings for the original batch were 248.357ms versus 90.650ms on the repository and 1.899463s versus 346.189ms on the compiler; these single observations were made while other validation work ran concurrently.
+
+Logs are in `evidence/landing/`. The complete repository gate remains unrun and the shared setup harness remains broken. The nine completed ports are validated on current main; the three fourth-batch claims still require the separately implemented JSX parser dependency to be integrated. No additional claims or PR were opened.
