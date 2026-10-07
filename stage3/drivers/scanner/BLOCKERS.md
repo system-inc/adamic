@@ -1,5 +1,14 @@
 # Scanner blockers
 
+## October 7: adaptation 83 gives four zero branches flag provenance
+
+Four private EscapeSequenceScanningFlags ternaries use String & ReportErrors
+for zero. Disjoint bits prove zero; enum and all other expressions unchanged.
+Census reason enum-flags; zero inference still missing at flag-enums tip.
+Next exact refusal scanner:1864:22, tokenFlags = 0. Complete combined suite:
+106,367 pass, zero differences/failures/pending, 230.719s. Node tokens match.
+Evidence native83-next-blocker.log and native59-83-baseline-*.
+
 ## October 7: adaptation 82 forwards generic scanner callbacks
 
 Three Scanner object properties have explicit generic forwarding arrows.
