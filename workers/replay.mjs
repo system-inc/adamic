@@ -14,7 +14,7 @@ registerHooks({
 		if (url.endsWith('.ts') || url.endsWith('.a')) {
 			let source = readFileSync(fileURLToPath(url), 'utf8');
 			// The landing branch's oracle supplies descriptors from types, never lowered code.
-			if (/\bdecodeJson\s*(?:<|\()/.test(source)) {
+			if (/\b(?:decodeJson|encodeJson)\s*(?:<|\()/.test(source)) {
 				const sources = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: root, encoding: 'utf8' }));
 				source = sources[fileURLToPath(url)];
 			}

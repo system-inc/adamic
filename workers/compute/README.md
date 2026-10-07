@@ -94,3 +94,44 @@ The same command on a scratch copy with `const broken: number = 'wrong type'` re
 One earlier verification run was killed (exit 137) while Node formatted an 8 MB buffer inequality for the randomness mutant. The final assertion uses Buffer.compare, retaining exact-byte comparison without constructing that diagnostic dump; the final gate completed successfully. The first typecheck invocation needed `--ignoreConfig` (TS5112); the explicit final command above passed.
 
 Not covered: workerd, the phase-two handler, decodeJson descriptor loading against a landed base, generated production bridges, native compilation or the full compiler Go gate. All implementation changes are under workers; no compiler package changed. The source-only .a adapter was exercised without decodeJson. Phase two supplies the actual cross-language parity proof after that prerequisite lands.
+
+## Adamic handler
+
+`handler.a` exports the synchronous `handle(HttpRequest): HttpResponse`. It uses
+`decodeJson` for the three POST schemas, applies endpoint constraints after decoding,
+and uses `encodeJson` with declared response field order. Stats retains the literal
+arithmetic order above; array reads use a checked helper because non-null assertions
+are refused. The sieve uses a number array supported by Stage 0. ASCII token scanning
+implements the twin's maximal letter/digit runs without changing Unicode boundaries.
+
+Build from the repository root with the configured toolchain:
+
+```sh
+go build -o /tmp/compute-a-adamic ./cmd/adamic
+ADAMIC=/tmp/compute-a-adamic workers/compute/build.sh /tmp/compute-a-worker
+node --disable-warning=ExperimentalWarning workers/replay.mjs /tmp/compute-a-worker/worker.mjs workers/compute/corpus/requests.jsonl --compare workers/compute/corpus/responses.jsonl > /tmp/compute-a-generated.log 2>&1
+node --disable-warning=ExperimentalWarning workers/replay-all.mjs > /tmp/compute-a-replay-all.log 2>&1
+node --disable-warning=ExperimentalWarning workers/compute/verify-handler.mjs /tmp/compute-a-adamic > /tmp/compute-a-verify.log 2>&1
+```
+
+`verify-handler.mjs` builds the generated Worker and a native driver, then checks
+all 600 recorded responses. Generated and stripped-source paths compare status,
+ordered headers and UTF-8 body bytes through replay. For native execution, Node's
+Request/URL APIs normalize the recorded requests into an HttpRequest corpus;
+`native-driver.a` reads that corpus with decodeJson, calls the compiled handler on
+every request, and prints status/body observations. Native observations compare
+status and exact UTF-8 body bytes. HTTP boundary normalization remains outside the
+pure native handler, as it does for the generated Worker.
+
+The gate mutates only scratch copies of handler.a. Each mutant must compile, run,
+and disagree with the immutable recording through all three paths. Observed
+mismatch indexes (zero-based): p95 rank 38, uncapped FLAT500 69, swapped StatsBody
+field declarations 35, exposed decodeJson error message 59. The field-order mutant
+changes only the type declaration, proving encodeJson follows declared order.
+All three production paths matched 600 requests. Replay-all also matched both the
+TypeScript twin and Adamic source. No recorded corpus or twin source was changed.
+
+Toolchain setup for this unit: Go, clang and Node ready at 0s; submodules at 1s;
+build cache warm and setup complete at 86s. `nproc` reported 5, with a four-CPU
+cgroup quota. The automated platform witness is Node 24.19.0; real workerd and the
+full repository gate were not run for this handler.
