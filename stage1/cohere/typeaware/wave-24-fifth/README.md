@@ -46,3 +46,9 @@ python3 stage1/cohere/typeaware/wave-24-fifth/timing.py /workspace/wave24-fifth-
 All nine earlier ports pass after this rebase: original controls 43 findings and six byte mutants plus released-registry mutation; next controls 65 findings and six byte mutants; third controls 295 findings and five byte mutants. Every suite compares both complete corpora in normal and sanitized modes and checks released handles. Nine existing listener declarations match production and their native/JSON mutants fail. No new eligible non-React/non-capture-analysis rule was selected. Main was verified unchanged at c01907a70 after these tests.
 
 The first timing-runner attempt wrongly required empty Go stderr and failed on the expected phase-timing line; the corrected runner permits only that numeric line. The failed attempt is retained as timing-initial-failure.log. It did not affect diagnostic validation.
+
+## Post-push selection audit
+
+The tested implementation and landing report were pushed as 8f07c6af94ed4b41d2bcb97f3a988f2cb099fb43. A normal force-with-lease attempt refused because the default origin refspec fetches only main and the worker tracking ref was stale. An explicit lease on the independently verified, previously pushed claim tip e21595a114b30168da537ff0fbd46772ce674377 succeeded; no concurrent worker changes were overwritten. Both attempts are retained.
+
+After that push, explicitly refreshed all origin heads and scanned 569 origin refs and 33 distinct claim blobs. The conservative mention-based audit counts 164 claimed rules. Eight unclaimed candidates remain, all React rules under the user's parking instruction. No eligible non-React rule remains, so no new claim is made. The complete audit is evidence/wave24-fifth-post-push-audit.json. Main remains c01907a70 and the working tree is clean.
