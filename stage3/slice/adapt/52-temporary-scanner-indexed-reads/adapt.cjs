@@ -26,7 +26,8 @@ for (const [name, functions] of targets) {
             }
         }
         if (active && ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.BarEqualsToken
-            && ts.isElementAccessExpression(node.left) && active.has(node.left.expression.getText(source))) {
+            && ts.isElementAccessExpression(ts.isNonNullExpression(node.left) ? node.left.expression : node.left)
+            && active.has((ts.isNonNullExpression(node.left) ? node.left.expression : node.left).expression.getText(source))) {
             const left = node.left.getText(source), right = node.right.getText(source);
             edits.push({start: node.getStart(source), end: node.end, text: `${left} = (${left} ?? Debug.fail("stage3: missing dense element")) | ${right}`});
             return;

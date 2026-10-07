@@ -69,5 +69,73 @@ the proposed 86. Those legacy plans and results remain historical evidence.
 unknown parameter still cannot lower. The latest compiler tips and scratch
 integration SHA are recorded in evidence/native-live-feature-refs.json.
 
-The current native attempt stops at reading Error as a value in Debug.fail's
-V8 captureStackTrace check. No native token diff or ownership pass is claimed.
+The latest front-2 860a0d5 plus records-lowering/runtime-records attempt admits
+MapLike's type-only index signature: its unchanged probe prints ok natively.
+The scanner now stops at Debug.fail's Error-as-any cast, debug.ts:14:14.
+Node's 509,014 tokens still match the full tree. See BLOCKERS.md and
+evidence/records-run.json. No native scanner diff or ownership pass is claimed.
+
+## Native comparison and measurement
+
+`--oracle FULL_TREE_NODE_STDOUT` requires the slice Node stream to match the
+full-tree stream before attempting native compilation. A successful native
+comparison then plants exactly one changed byte in a copy of native stdout;
+`diff -u` must return 1. The mutant is output-only and does not change the slice.
+
+After a green native run, `python3 stage3/drivers/scanner/measure.py OUTPUT`
+runs the native binary and the same Node driver three times each on the exact
+files.json corpus, retaining every stdout, stderr, and diff. User CPU time is
+the sequential RUSAGE_CHILDREN delta; report.json records all three values and
+the best. Process startup, Node transpilation, and token printing are included.
+The script records native binary bytes and attempts `perf stat -e instructions`
+when perf is installed, retaining access failures rather than inventing counts.
+Compilation failure produces no native timing, binary size, or native-output
+mutant claim.
+
+## Split compilation
+
+The integration requires area/developer-tools. Run the scanner proof with
+`ADAMIC_NATIVE_SPLIT=0`, and separately with
+`ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=$(nproc)`. Both binaries must match
+Node byte for byte. Source emission and build timing happen only after the
+checker/lowering gates pass; failed emission has no generated-C size.
+
+To measure the emitted C without including TypeScript checking/lowering, run
+`adamic c OUTPUT/main.a > scanner.c 2> emission.log` using the integrated
+compiler. From that compiler checkout, run:
+
+```sh
+go run stage3/drivers/scanner/build-metrics.go scanner.c NEW_METRICS_DIRECTORY 5 > build-metrics.log 2>&1
+```
+
+Pass nproc instead of 5 on another box. The helper is ignored by ordinary Go
+package builds and needs the integrated native.Options Split/Jobs API. It
+records C bytes/lines, release flags, binary sizes, and wall time for unsplit,
+cold-object-cache split and warm-object-cache split builds. Runtime preparation
+is measured separately and excluded from those build times; split preprocessing,
+cache checks and linking remain included. Run and compare all three measured
+binaries on the same files.json corpus before using their timings as a proof.
+
+The coverage dump scans every corpus file twice, first with `skipTrivia: true`,
+then with `skipTrivia: false`. Every token includes `getTokenValue()` serialized
+with JSON.stringify, alongside kind, full start, start, end, flags and raw text.
+The value is exactly the scanner's current value, including stale values on
+punctuation. Inline error rows include code, category, the callback's scanner
+position (the error start), length, message text and substitution argument.
+Pass headers identify the pass and input file. Absent cooked values and substitution arguments are represented as JSON `null`.
+
+This dump does not drive rescans: regular expressions, template continuation,
+JSX, and greater-than tokens. The parser slice exercises those once its
+JSDoc-complete dump lands. `coverage-mutants.py` changes one escape branch,
+omits exactly one error callback, and changes the single-line comment kind in
+scratch copies. Each Node execution must succeed and its complete dump must
+compare unequal; the escape mutation must change cooked values alone.
+
+Observed full-tree/slice reference: **1,369,432 tokens**, **466 errors**, 81 input
+files in each pass, 108,019,935 bytes. SHA-256:
+`41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc`.
+The skipped-trivia pass has 509,014 tokens; the retained-trivia pass has 860,418.
+All three source mutants exit zero on Node and produce unequal dumps. The
+error mutant removes exactly one row. Native execution remains blocked by the
+previously recorded typed captureStackTrace marker refusal; this expanded
+coverage result is a Node reference proof, not a native proof.
