@@ -5049,3 +5049,4 @@
 {"Time":"2026-10-07T22:31:49.195003073Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestPortMatchesGoCohere","Output":"        --- PASS: TestAdamicJSONAudit (61.05s)\n"}
 {"Time":"2026-10-07T22:31:49.195006778Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestPortMatchesGoCohere","Output":"        PASS\n"}
 {"Time":"2026-10-07T22:31:49.195010224Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestPortMatchesGoCohere","Output":"        ok  \tgithub.com/system-inc/cohere/internal/format/javascript\t61.152s\n"}
+{"Time":"2026-10-07T22:31:58.242426271Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixRuleAgreementAndMutants","Output":"    suite_test.go:302: facts-length: panic 70, invalid checker facts length\n"}
