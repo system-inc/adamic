@@ -220,3 +220,18 @@ rule left, including released reservations now claimed elsewhere. No more
 reservations were taken. Native JSX/live checker adaptation and the complete
 repository test gate remain uncovered; this is landing-ready partial source
 work with explicitly identified shared dependencies.
+
+
+## Final integration-area landing
+
+Rebased onto area `d3a37422c`, including current main `b6b1538b0` and its
+native typeof correction. All seven earlier wave-21 suites PASS 1047.698 s;
+JSX package PASS 1187.016 s; style package PASS 166.135 s. Independent Go bytes,
+all seventeen rule mutants, sanitizers, lifetimes, source/emitted Node, named
+listener metadata and focused main typeof/Node checks pass. JSX syntax is now
+supported; the keyword-label input and production project/checker context remain
+shared gaps. HIR/SSA/capture reservations remain parked. Required pinned-input
+checks report 16 PASS, one ABSENT, zero SKIP: TestSplitTSGoAgrees has not landed
+on main or this area. No full repository or green 17-check gate is claimed.
+No new reservations are taken. Exact logs, mutants, commands, timings and scope
+limits are in [validation/landing-area/REPORT.md](validation/landing-area/REPORT.md).
