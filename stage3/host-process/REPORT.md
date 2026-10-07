@@ -1,3 +1,58 @@
+Built env string writes/deletion, chdir cache invalidation and catchable directory errors with code/message; performance.measure failures still panic and cannot be caught.
+Commits: fixtures merge 5728bc7, runtime/harness 6272a910c986ae5945067f70cef0c31573c43f54 on codex/host-process; earlier implementation ad56ba3 and declaration correction cb90701 retained.
+Commands: assigned-fixture harness reports 8 Checker/Checker; filtered process oracle PASS 6.642s, lower PASS 8.344s, affected-package vet PASS; exact logs retained.
+Mutants: all 8 acceptance source mutants caught on Node; 4 additional clean native runtime mutants caught by Node stdout; earlier 20-mutant proof remains historical pending shared types.
+Not covered: shared @types/node 25.3.3 integration, accepted native/JS fixture execution, timers, scheduled nextTick, Date-valued System.now and full native tsc proof.
+
+## Assigned acceptance fixtures, October 7
+
+Merged origin/codex/stage3-fixtures-host at 1037217. The merge also brings newer main code; the two conflicts were resolved by preserving both process/user-method dispatch hooks and both sets of count rows. Acceptance source, README, check.py and status.json were not changed.
+
+| Fixture | Native stage | JavaScript stage | Recorded Node |
+| --- | --- | --- | --- |
+| 14_getCurrentDirectory | Checker | Checker | Agrees |
+| 15_getExecutingFilePath | Checker | Checker | Agrees |
+| 16_getEnvironmentVariable | Checker | Checker | Agrees |
+| 17_write | Checker | Checker | Agrees |
+| 18_exit_0 | Checker | Checker | Agrees, exit 0 |
+| 19_exit_1 | Checker | Checker | Agrees, exit 1 |
+| 20_exit_2 | Checker | Checker | Agrees, exit 2 |
+| 23_newLine | Checker | Checker | Agrees |
+
+No assigned acceptance fixture is green yet. All eight stop at missing node: module declarations, before lowering. Their unchanged sources agree byte-for-byte with status.json stdout/stderr/exit. Each of the eight mutations copied from check.py changes the recorded Node observation. Exact native and JavaScript compiler diagnostics and stages.json are in acceptance/.
+
+The shared pinned Node hook remains an external dependency. The public fs_file tip inspected was 080789f, which still uses private node_fs_file.d.ts declarations, not the corrected @types/node 25.3.3 hook. It was not merged, and no replacement hook or private declaration was built. A request for the corrected hook SHA is pending. These fixtures also depend on shared scratch-scaffolding members mkdtempSync, mkdirSync, rmSync, tmpdir, and path helpers. Integration and trusted declaration identity for static node: imports must be adapted when the hook arrives. Broader declaration members must then be held to named NotYet refusals.
+
+Confirmed language blockers, reported immediately:
+
+- Fixture 14 contains callback = undefined!, which Adamic 0.1 refuses. Reproducer: `let callback = (): string => ""; callback = undefined!;` prints Refused for the non-null assertion.
+- Fixtures 18, 19 and 20 use an optional parameter in an object method/function value. Reproducer: `const nodeSystem = { exit(code?: number): void { process.exit(code); } }; nodeSystem.exit(0);` prints NotYet for a function value with an optional parameter.
+
+These reproducer outcomes are separate from the fixtures' current Checker stages. No language-wide assertion exemption or optional-parameter calling convention change was introduced.
+
+## Independent implementation progress
+
+String env assignment preserves the assigned value, converts native environment text to NUL-terminated UTF-8, and deletion returns true. Only recognized external process.env deletion bypasses the fixed-object-shape refusal; ordinary delete remains Refused. Non-string assignment/key forms remain unsupported. Source lowering is pending declaration integration.
+
+Successful process.chdir releases and invalidates the native cwd cache, while separately held memoized cwd strings stay alive. cwd and chdir now use the existing pending-exception word and native cleanup paths; functions/closures propagate their throws. Directory Error objects expose name, message and code. ENOENT, ENOTDIR, EACCES, ELOOP, ENAMETOOLONG, ENOMEM and EIO are mapped; unknown errno deliberately panics. Only successful directory changes and ENOENT chdir messages were held to Node in the new runtime proof. Other mapped messages and macOS execution remain unverified. errno/syscall/path fields are not built. Missing-mark performance errors remain panic-based and catches remain NotYet.
+
+Two explicit-IR runtime/backend tests bypass declaration loading and compare native plus generated JavaScript to the corresponding unchanged Node operations. They do not prove source checker/lowering acceptance. Environment tests cover empty, zero-string, Unicode and deletion. Directory tests cover cwd invalidation after two chdir calls, independent memoized strings, and caught ENOENT code/message. The Node code observation in the directory source is its ENOENT message prefix; the native typed-IR test reads the code field directly. ASan/UBSan and leak checks pass. Four mutants disable setenv, disable unsetenv, omit cwd invalidation, and change ENOENT code; each compiles/runs cleanly and fails only the Node stdout comparison. New source-fixture count registration remains pending the shared declarations.
+
+Commands run with output redirected to files:
+
+- `go build -o /tmp/host-process-adamic ./cmd/adamic`: PASS.
+- `python3 stage3/host-process/check_acceptance.py --compiler /tmp/host-process-adamic --logs stage3/host-process/acceptance`: exit 1 intentionally reports unmet acceptance, all 8 Checker on both backends; Node and 8 mutant comparisons pass.
+- `go test -count=1 -timeout 10m ./internal/oracle -run '^TestProcess|^TestNodeProcess(Environment|Directory)Runtime$' -v`: PASS, 6.642s.
+- `go test -count=1 -timeout 10m ./internal/lower`: PASS, 8.344s.
+- `go vet ./internal/lower ./internal/native ./internal/javascript ./internal/oracle`: PASS, empty log.
+- `git diff --check`: PASS.
+
+No full gate pass is claimed: Node fixture declaration checks remain blocked. Deadlines received are Oct 7 06:00 MDT for the shared loader and Oct 8 01:00 MDT for acceptance green. Runtime progress was pushed immediately; no acceptance-green SHA can be supplied yet.
+
+## Historical report at 3555c7f
+
+The following records the earlier census-only implementation and tests. Its cwd panic/refusal statements are superseded by the catchable-directory work above; its environment read-only boundary is superseded by string mutation support. Its private declarations remain removed.
+
 Catchable host errors are missing: the runtime Error shape has name/message but no code, and cwd/measure failures have no pending-exception CFG integration; synchronous host coverage is implemented.
 Commits: ad56ba382e1e3124807758766c6aa852bf6e9c49, correction cb907016760b2badf006fac6fe98e1a2adb42f4e; branch codex/host-process extends dd4b67e7bdedd27f31d2e3900e7caf1fd5575374.
 Validation before declaration correction: Node v24.19.0 on both backends, sanitizers/leaks and 20 clean mutants; final declaration integration awaits the shared hook.
