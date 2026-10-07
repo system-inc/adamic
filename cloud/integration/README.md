@@ -13,7 +13,8 @@ workers' branches ──> area/<area> ──> speculative prefixes ──> main
 ## Areas
 
 `areas.tsv` lists every area, its owner and its outside oracle. Today: compiler, runtime, library,
-stage1-lint, stage1-format, stage3, apple and developer-tools.
+stage1-lint, stage1-format, stage3, platforms (Apple, WebAssembly and Cloudflare Workers) and
+developer-tools.
 
 The owner merges its workers' branches into `area/<area>` with `area-merge.sh`, resolves its own
 conflicts, and keeps the area green on its fast tests. A branch that passes against an outside oracle

@@ -5,8 +5,8 @@
 compiler	system_adamic_compiler	none
 runtime	system_adamic_runtime	none
 library	system_adamic_library	test262
-stage1-lint	system_adamic	cohere
-stage1-format	system_adamic	cohere
+stage1-lint	system_cohere_lint	cohere
+stage1-format	system_cohere_format	cohere
 stage3	system_adamic_typescript	none
-apple	system_adamic_platforms_apple	none
+platforms	system_adamic_platforms	none
 developer-tools	system_adamic_developer_tools	none
