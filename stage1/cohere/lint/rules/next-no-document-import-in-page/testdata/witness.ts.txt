@@ -1,0 +1,6 @@
+// 💎 leading trivia
+import type Document from 'next/document';
+import * as D from 'next/document';
+import 'next/document';
+import { Html } from 'next/document/foo';
+export { Html } from 'next/document';

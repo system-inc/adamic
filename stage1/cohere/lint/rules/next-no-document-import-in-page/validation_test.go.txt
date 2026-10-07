@@ -1,0 +1,94 @@
+package lint
+
+import (
+	"bytes"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+// Not parallel: generated registries and corpus environment are shared.
+func TestDocumentPaths(t *testing.T) {
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ root:=t.TempDir()
+ var rows []string
+ text:="// 💎 trivia\nimport Document from 'next/document';\nimport type D from 'next/document';\nimport * as E from 'next/document';\nimport { Html } from 'next/document';\nimport 'next/document';\nimport Q from 'next/documents';\nimport R from 'next/document/foo';\nexport { Html } from 'next/document';\nconst dynamic = import('next/document');\nconst common = require('next/document');\n"
+ for _,name:=range []string{"components/Thing.ts.txt","pages/About.ts.txt","pages/_document.ts.txt","pages/_documentation.ts.txt","pages/_document/index.ts.txt","src/pages/user/_document.ts.txt","pagesapp/src/pages/_document.ts.txt","mypages/_document.ts.txt","pages/pages/_document.ts.txt","pages/_document/pages/X.ts.txt"} {
+ path:=filepath.Join(root,name);if err:=os.MkdirAll(filepath.Dir(path),0755);err!=nil{t.Fatal(err)}
+ if err:=os.WriteFile(path,[]byte(text),0644);err!=nil{t.Fatal(err)}
+ rows=append(rows,path+"\t@next/next/no-document-import-in-page")
+ }
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
+func TestDocumentThroughput(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if corpus == "" {
+		t.Fatal("missing pinned TypeScript source")
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, subject := range []struct{ name, source string }{
+		{"@next/next/no-document-import-in-page", "import 'next/document'; // %d\n"},
+	} {
+		var compilerRows []string
+		err := filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+			if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+				compilerRows = append(compilerRows, path+"\t"+subject.name)
+			}
+			return err
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		compiler := execute(t, "", oracle, "--manifest", manifest(t, compilerRows), "--count")
+		t.Logf("%s: compiler alone %d files findings=%s", subject.name, len(compilerRows), strings.TrimSpace(string(compiler.output)))
+		var text strings.Builder
+		for i := 0; i < 1000; i++ {
+			fmt.Fprintf(&text, subject.source, i)
+		}
+		stress := filepath.Join(t.TempDir(), "throughput.ts")
+		if err := os.WriteFile(stress, []byte(text.String()), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows := append(compilerRows, stress+"\t"+subject.name)
+		path := manifest(t, rows)
+		best := map[string]time.Duration{}
+		var want []byte
+		for round := 0; round < 5; round++ {
+			for _, side := range []string{"Go", "native", "Node"} {
+				var result execution
+				if side == "Go" {
+					result = execute(t, "", oracle, "--manifest", path, "--count")
+				} else if side == "native" {
+					result = execute(t, "", binary, "--manifest", path, "--count")
+				} else {
+					result = node(t, directory, path, true)
+				}
+				if want == nil {
+					want = result.output
+				}
+				if !bytes.Equal(want, result.output) {
+					t.Fatalf("%s count differs on %s", subject.name, side)
+				}
+				if best[side] == 0 || result.duration < best[side] {
+					best[side] = result.duration
+				}
+				t.Logf("%s round %d %s %.6fs findings=%s", subject.name, round+1, side, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(want), &count); err != nil || count == 0 {
+			t.Fatalf("invalid benchmark count %q", want)
+		}
+		for _, side := range []string{"Go", "native", "Node"} {
+			t.Logf("%s best of 5 %s %.6fs %.2f findings/s (%d files, %d findings)", subject.name, side, best[side].Seconds(), float64(count)/best[side].Seconds(), len(rows), count)
+		}
+	}
+}

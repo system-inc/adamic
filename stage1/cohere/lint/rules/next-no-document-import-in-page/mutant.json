@@ -1,0 +1,6 @@
+{
+  "name": "next_document_import_path_exemption_ignored",
+  "file": "rule.a",
+  "from": "if(this.document) { return; }",
+  "to": "if(!this.document) { return; }"
+}
