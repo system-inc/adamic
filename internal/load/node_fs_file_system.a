@@ -1,4 +1,5 @@
-import { openSync, writeSync, closeSync, statSync, mkdirSync, unlinkSync, utimesSync } from 'node:fs';
+import { panic } from 'adamic';
+import { readFileSync, openSync, writeSync, closeSync, statSync, mkdirSync, unlinkSync, utimesSync } from 'node:fs';
 
 export function writeFile(path: string, data: string, writeByteOrderMark?: boolean): void {
     let fd: number | undefined = undefined;
@@ -33,7 +34,24 @@ export function createDirectory(path: string): void {
         if (stat !== undefined && stat.isDirectory()) { return; }
     } catch { /* getNodeSystem's directoryExists treats every failure as missing. */ }
     try { mkdirSync(path); }
-    catch (error) { if (error instanceof Error) { if (error.code !== 'EEXIST') { throw error; } } }
+    catch (error) { if (error instanceof Error) { const errno: NodeJS.ErrnoException = error; if (errno.code !== 'EEXIST') { throw error; } } }
 }
-// readFile needs the Buffer unit: sys.ts distinguishes UTF-16BE/LE and UTF-8 BOMs
-// from raw bytes. It must not be replaced with an incorrectly decoded UTF-8 read.
+
+export function readFile(fileName: string, _encoding?: string): string | undefined {
+    let buffer: Buffer;
+    try { buffer = readFileSync(fileName); }
+    catch { return undefined; }
+    let len = buffer.length;
+    if (len >= 2 && buffer[0] === 0xFE && buffer[1] === 0xFF) {
+        len &= ~1;
+        for (let i = 0; i < len; i += 2) {
+            const temp = (buffer[i] ?? panic('BOM byte missing'));
+            buffer[i] = (buffer[i + 1] ?? panic('BOM pair missing'));
+            buffer[i + 1] = temp;
+        }
+        return buffer.toString('utf16le', 2);
+    }
+    if (len >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE) { return buffer.toString('utf16le', 2); }
+    if (len >= 3 && buffer[0] === 0xEF && buffer[1] === 0xBB && buffer[2] === 0xBF) { return buffer.toString('utf8', 3); }
+    return buffer.toString('utf8');
+}

@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system"}
+var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer"}
 
 func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	t.Helper()
@@ -30,6 +30,7 @@ func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	}
 	for name, data := range map[string][]byte{
 		"file": []byte("abc"), "utf8": []byte("héllo 🌍"), "bom": []byte("\xef\xbb\xbfhello"), "bad": {0xe2, 0x82, 0xff, 0xed, 0xa0, 0x80},
+		"utf16le": {0xff, 0xfe, 0x61, 0, 0x3d, 0xd8, 0, 0xde}, "utf16be": {0xfe, 0xff, 0, 0x61, 0xd8, 0x3d, 0xde, 0}, "utf16be-odd": {0xfe, 0xff, 0, 0x61, 0x62}, "empty": {},
 		"locked/file": []byte("locked"), "closed/file": []byte("closed"),
 	} {
 		if err := os.WriteFile(filepath.Join(root, name), data, 0644); err != nil {
@@ -146,6 +147,11 @@ func TestNodeFSFileAgreesWithNode(t *testing.T) {
 func TestNodeFSFileMutants(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, fixture, operation, helper string }{
+		{"writeFileSync Buffer bytes", "write_buffer", "write_buffer", `static double fs_file_mutant(const adamic_string *path,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {static adamic_string truncate=ADAMIC_STRING("w");if(flag->length==1&&flag->bytes[0]=='a')flag=&truncate;return adamic_fs_file_write_buffer(path,data,flag,mode,flush);}`},
+		{"writeFileSync Buffer fd", "write_buffer", "write_buffer_fd", `static double fs_file_mutant(double fd,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {(void)fd;(void)data;(void)flag;(void)mode;(void)flush;return 0;}`},
+		{"readSync byte count", "read_sync", "read_sync", `static double fs_file_mutant(double fd,adamic_array *buffer,double offset,double length,double position) {return adamic_fs_file_read_sync(fd,buffer,offset,length,position)+1;}`},
+		{"readFileSync raw bytes", "buffer", "read_buffer", `static adamic_array *fs_file_mutant(const adamic_string *path,const adamic_string *flag) {adamic_array *value=adamic_fs_file_read_buffer(path,flag);if(value!=NULL && value->length>0)value->elements[0].number=fmod(value->elements[0].number+1,256);return value;}`},
+		{"readFileSync raw fd", "buffer", "read_buffer_fd", `static adamic_array *fs_file_mutant(double fd,const adamic_string *flag) {adamic_array *value=adamic_fs_file_read_buffer_fd(fd,flag);if(value!=NULL && value->length>0)value->elements[0].number=fmod(value->elements[0].number+1,256);return value;}`},
 		{"readFileSync UTF8", "read", "read_file", `static adamic_string *fs_file_mutant(const adamic_string *path,const adamic_string *flag) { adamic_string *value=adamic_fs_file_read_file(path,flag); if(value==NULL)return NULL; static adamic_string suffix=ADAMIC_STRING("!"); adamic_string *result=adamic_string_concat(2,(adamic_string *const[]){value,&suffix});adamic_release(value);return result; }`},
 		{"readFileSync fd", "read", "read_fd", `static adamic_string *fs_file_mutant(double fd,const adamic_string *flag) { adamic_string *value=adamic_fs_file_read_fd(fd,flag); if(value==NULL)return NULL; static adamic_string suffix=ADAMIC_STRING("!"); adamic_string *result=adamic_string_concat(2,(adamic_string *const[]){value,&suffix});adamic_release(value);return result; }`},
 		{"openSync truncation", "open", "open", `static double fs_file_mutant(const adamic_string *path,const adamic_string *flag,double mode) { static adamic_string append=ADAMIC_STRING("a"); if(flag->length==1 && flag->bytes[0]=='w')flag=&append;return adamic_fs_file_open(path,flag,mode); }`},
@@ -156,6 +162,7 @@ func TestNodeFSFileMutants(t *testing.T) {
 		{"statSync missing option", "stat", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) { (void)throws;return adamic_fs_file_stat(path,false); }`},
 		{"Stats size", "stat", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) { adamic_object *result=adamic_fs_file_stat(path,throws);if(result!=NULL)result->slots[0].number+=1;return result; }`},
 		{"Stats mtimeMs", "stat", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) { adamic_object *result=adamic_fs_file_stat(path,throws);if(result!=NULL)result->slots[1].number+=1;return result; }`},
+		{"Stats atime", "utimes", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) {adamic_object *result=adamic_fs_file_stat(path,throws);if(result!=NULL){adamic_object *date=result->slots[4].reference;date->slots[0].number+=1;}return result;}`},
 		{"Stats mtime", "stat", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) { adamic_object *result=adamic_fs_file_stat(path,throws);if(result!=NULL){adamic_object *date=result->slots[2].reference;date->slots[0].number+=1;}return result; }`},
 		{"Stats isFile", "stat", "is_file", `static bool fs_file_mutant(const adamic_object *value) { return !adamic_fs_file_is_file(value); }`},
 		{"Stats isDirectory", "stat", "is_directory", `static bool fs_file_mutant(const adamic_object *value) { return !adamic_fs_file_is_directory(value); }`},

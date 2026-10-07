@@ -140,6 +140,20 @@ static bool integer(double value, double maximum, const char *argument) {
     return false;
 }
 
+static void read_range(const char *argument, const char *range, double value) {
+    adamic_string *shown = adamic_string_from_number(value);
+    char message[300];
+    snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be %s. Received %.*s", argument, range, (int)shown->length, shown->bytes);
+    adamic_release(shown);
+    raise_error("RangeError", "ERR_OUT_OF_RANGE", message);
+}
+static bool file_descriptor(double value) {
+    if (isfinite(value) && (value < 0 || value > INT_MAX)) {
+        read_range("fd", ">= 0 && <= 2147483647", value); return false;
+    }
+    return integer(value, INT_MAX, "fd");
+}
+
 static int flags(const adamic_string *flag) {
     char *name = bytes(flag);
     int value = -1;
@@ -228,20 +242,73 @@ adamic_string *adamic_fs_file_read_file(const adamic_string *path, const adamic_
 adamic_string *adamic_fs_file_read_fd(double descriptor, const adamic_string *flag) {
     adamic_output_flush();
     (void)flag; // Node ignores the flag for an already-open descriptor.
-    if (!integer(descriptor, INT_MAX, "fd")) { return NULL; }
+    if (!file_descriptor(descriptor)) { return NULL; }
     return read_file((int)descriptor, false);
+}
+
+static adamic_array *read_buffer(int descriptor, bool owned) {
+    unsigned char *bytes = NULL;
+    size_t length = 0;
+    int error = adamic_fs_file_read_bytes(descriptor, &bytes, &length);
+    if (owned) { close(descriptor); }
+    if (error != 0) { system_error(error, "read", NULL); return NULL; }
+    adamic_array *result = adamic_array_new(length, false);
+    for (size_t i = 0; i < length; i++) {
+        adamic_value byte = {0};
+        byte.number = bytes[i];
+        adamic_array_push(result, byte);
+    }
+    free(bytes);
+    return result;
+}
+adamic_array *adamic_fs_file_read_buffer(const adamic_string *path, const adamic_string *flag) {
+    adamic_output_flush();
+    int descriptor = open_file(path, flag, 0666);
+    return descriptor < 0 ? NULL : read_buffer(descriptor, true);
+}
+adamic_array *adamic_fs_file_read_buffer_fd(double descriptor, const adamic_string *flag) {
+    adamic_output_flush();
+    (void)flag;
+    if (!file_descriptor(descriptor)) { return NULL; }
+    return read_buffer((int)descriptor, false);
 }
 
 double adamic_fs_file_close(double descriptor) {
     adamic_output_flush();
-    if (!integer(descriptor, INT_MAX, "fd")) { return 0; }
+    if (!file_descriptor(descriptor)) { return 0; }
     if (close((int)descriptor) != 0 && errno != EINTR) { system_error(errno, "close", NULL); }
     return 0;
 }
 
+double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double offset, double length, double position) {
+    adamic_output_flush();
+    if (!integer(offset, 9007199254740991., "offset")) { return 0; }
+    length = adamic_bitwise_or(length, 0);
+    if (!isfinite(position) || position != trunc(position)) { read_range("position", "an integer", position); return 0; }
+    if (position < -1 || position > 9007199254740991.) { read_range("position", ">= -1 && <= 9007199254740991", position); return 0; }
+    if (length == 0) { return 0; }
+    if (buffer->length == 0) {
+        raise_error("TypeError", "ERR_INVALID_ARG_VALUE", "The argument 'buffer' is empty and cannot be written. Received <Buffer >"); return 0;
+    }
+    if (length < 0) { read_range("length", ">= 0", length); return 0; }
+    if (offset + length > (double)buffer->length) {
+        char range[80]; snprintf(range, sizeof range, "<= %.0f", (double)buffer->length - offset);
+        read_range("length", range, length); return 0;
+    }
+    if (!file_descriptor(descriptor)) { return 0; }
+    unsigned char *bytes = malloc((size_t)length);
+    if (bytes == NULL) { adamic_panic("out of memory", 13); }
+    ssize_t count;
+    do { count = position < 0 ? read((int)descriptor, bytes, (size_t)length) : pread((int)descriptor, bytes, (size_t)length, (off_t)position); } while (count < 0 && errno == EINTR);
+    if (count < 0) { free(bytes); system_error(errno, "read", NULL); return 0; }
+    for (size_t i = 0; i < (size_t)count; i++) { buffer->elements[(size_t)offset + i].number = bytes[i]; }
+    free(bytes);
+    return (double)count;
+}
+
 double adamic_fs_file_write(double descriptor, const adamic_string *string, double position) {
     adamic_output_flush();
-    if (!integer(descriptor, INT_MAX, "fd")) { return 0; }
+    if (!file_descriptor(descriptor)) { return 0; }
     char *buffer = bytes(string);
     ssize_t count;
     // libuv treats a negative offset as the descriptor's current position.
@@ -255,18 +322,16 @@ double adamic_fs_file_write(double descriptor, const adamic_string *string, doub
     return (double)count;
 }
 
-static double write_file(int descriptor, const adamic_string *string, bool owned, bool flush) {
-    char *buffer = bytes(string);
+static double write_data(int descriptor, const char *buffer, size_t length, bool owned, bool flush) {
     size_t used = 0;
     int error = 0;
-    while (used < string->length) {
-        ssize_t count = write(descriptor, buffer + used, string->length - used);
+    while (used < length) {
+        ssize_t count = write(descriptor, buffer + used, length - used);
         if (count < 0 && errno == EINTR) { continue; }
         if (count < 0) { error = errno; break; }
         if (count == 0) { error = EIO; break; }
         used += (size_t)count;
     }
-    free(buffer);
     if (error != 0) { system_error(error, "write", NULL); }
     else if (flush && fsync(descriptor) < 0) { system_error(errno, "fsync", NULL); }
     // finally closes an internally opened fd, even after write/fsync failed.
@@ -278,6 +343,32 @@ static double write_file(int descriptor, const adamic_string *string, bool owned
     return 0;
 }
 
+static double write_file(int descriptor, const adamic_string *string, bool owned, bool flush) {
+    char *buffer = bytes(string);
+    double result = write_data(descriptor, buffer, string->length, owned, flush);
+    free(buffer);
+    return result;
+}
+static double write_buffer(int descriptor, const adamic_array *buffer, bool owned, bool flush) {
+    char *data = malloc(buffer->length == 0 ? 1 : buffer->length);
+    if (data == NULL) { adamic_panic("out of memory", 13); }
+    for (size_t i = 0; i < buffer->length; i++) { data[i] = (char)(unsigned char)buffer->elements[i].number; }
+    double result = write_data(descriptor, data, buffer->length, owned, flush);
+    free(data);
+    return result;
+}
+double adamic_fs_file_write_buffer(const adamic_string *path, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
+    adamic_output_flush();
+    int descriptor = open_file(path, flag, mode);
+    return descriptor < 0 ? 0 : write_buffer(descriptor, buffer, true, flush);
+}
+double adamic_fs_file_write_buffer_fd(double descriptor, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
+    adamic_output_flush();
+    (void)flag; (void)mode;
+    if (!file_descriptor(descriptor)) { return 0; }
+    return write_buffer((int)descriptor, buffer, false, flush);
+}
+
 double adamic_fs_file_write_file(const adamic_string *path, const adamic_string *string, const adamic_string *flag, double mode, bool flush) {
     adamic_output_flush();
     int descriptor = open_file(path, flag, mode);
@@ -287,7 +378,7 @@ double adamic_fs_file_write_file(const adamic_string *path, const adamic_string 
 double adamic_fs_file_write_fd(double descriptor, const adamic_string *string, const adamic_string *flag, double mode, bool flush) {
     adamic_output_flush();
     (void)flag; (void)mode;
-    if (!integer(descriptor, INT_MAX, "fd")) { return 0; }
+    if (!file_descriptor(descriptor)) { return 0; }
     return write_file((int)descriptor, string, false, flush);
 }
 
@@ -316,9 +407,9 @@ double adamic_fs_file_date_time(const adamic_object *date) {
     return adamic_object_field(date, "_fsFileTime", &cache)->number;
 }
 
-static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode"};
-static const bool stat_refs[] = {false, false, true, false};
-static const adamic_shape stat_shape = {4, stat_fields, stat_refs, NULL};
+static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
+static const bool stat_refs[] = {false, false, true, false, true};
+static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL};
 
 adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_missing) {
     adamic_output_flush();
@@ -333,8 +424,10 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     }
     free(name);
 #ifdef __APPLE__
+    double atime = (double)information.st_atimespec.tv_sec * 1000 + (double)information.st_atimespec.tv_nsec / 1000000;
     double mtime = (double)information.st_mtimespec.tv_sec * 1000 + (double)information.st_mtimespec.tv_nsec / 1000000;
 #else
+    double atime = (double)information.st_atim.tv_sec * 1000 + (double)information.st_atim.tv_nsec / 1000000;
     double mtime = (double)information.st_mtim.tv_sec * 1000 + (double)information.st_mtim.tv_nsec / 1000000;
 #endif
     adamic_object *result = adamic_object_new(&stat_shape);
@@ -342,6 +435,7 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     result->slots[1].number = mtime;
     result->slots[2].reference = adamic_fs_file_date_new(floor(mtime + 0.5));
     result->slots[3].number = (double)information.st_mode;
+    result->slots[4].reference = adamic_fs_file_date_new(floor(atime + 0.5));
     return result;
 }
 
