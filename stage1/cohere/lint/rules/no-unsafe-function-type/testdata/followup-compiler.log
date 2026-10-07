@@ -1,0 +1,6 @@
+=== RUN   TestWave06Compiler
+    wave06_candidate_test.go:217: compiler plus stage1: 3213 file/rule rows
+    wave06_candidate_test.go:231: compiler/stage1 exact output: 119493276 bytes across Go, original Node driver, owned driver Node, emitted JavaScript, sanitized native
+--- PASS: TestWave06Compiler (420.26s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	420.329s

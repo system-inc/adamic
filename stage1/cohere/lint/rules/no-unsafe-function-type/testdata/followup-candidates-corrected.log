@@ -1,0 +1,22 @@
+=== RUN   TestWave06Candidates
+    lint_test.go:345: cohere cases: 1907 unique source/rule/options combinations
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @eslint-community/eslint-comments/require-description /repository/source/RequireDescription.tsx
+    wave06_candidate_test.go:114: BLOCKED recovery fixture: @eslint-community/eslint-comments/require-description /repository/source/RequireDescription.tsx unterminated block comment
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page components/test.js
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/_document.js
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/_document.js
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/_document.page.tsx
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/_document.tsx
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/_document/index.js
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/_document/index.tsx
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pages/test.js
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page pagesapp/src/pages/_document.js
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page src/pages/user/_document.tsx
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: @next/next/no-document-import-in-page src/pages/user/test.tsx
+    wave06_candidate_test.go:114: BLOCKED JSX fixture: structure/tailwind-no-physical-direction /repository/source/components/Thing.tsx
+    wave06_candidate_test.go:114: filename-preserving upstream cases: 568
+    wave06_candidate_test.go:125: Go, Node, emitted JavaScript, native identical: 179492 bytes
+    wave06_candidate_test.go:130: all four outputs identical: 179492 bytes
+--- PASS: TestWave06Candidates (80.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	80.764s

@@ -1,0 +1,124 @@
+=== RUN   TestWave06Projected
+    lint_test.go:345: cohere cases: 1907 unique source/rule/options combinations
+    wave06_candidate_test.go:383: JSX projection cohort backend 0: 33 findings / 0.225684s = 146.22 findings/s (includes startup; native sanitized)
+    wave06_candidate_test.go:383: JSX projection cohort backend 1: 33 findings / 0.132355s = 249.33 findings/s (includes startup; native sanitized)
+    wave06_candidate_test.go:383: JSX projection cohort backend 2: 33 findings / 0.408407s = 80.80 findings/s (includes startup; native sanitized)
+    wave06_candidate_test.go:386: JSX projection cohort Go: 33 findings / 0.021235s = 1554.01 findings/s
+    wave06_candidate_test.go:387: Go AST projection: 79 filename-preserving JSX fixtures, 38169 identical bytes, Node/emitted/sanitized native; independent-parser integration remains BLOCKED
+=== RUN   TestWave06Projected/google-font-display
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 0: case 2 line 9: port "range 26 75 googleFontDisplayNotRecommended \t\t\t26 75", Go "range 26 75 googleFontDisplayMissing \t\t\t26 75"
+        Go context:
+        fixed	export const Test = () => <link href="https://example.com/css?family=Krona+One" />;
+        case 2
+        /tmp/adamic-gate/TestWave06Projected2197357755/011/case2/Component.tsx:1:27
+          @next/next/google-font-display  This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+        
+        range 26 75 googleFontDisplayMissing 			26 75
+        fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2" />;
+        case 3
+        /tmp/adamic-gate/TestWave06Projected2197357755/012/case3/Component.tsx:1:27
+          @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 1: case 2 line 9: port "range 26 75 googleFontDisplayNotRecommended \t\t\t26 75", Go "range 26 75 googleFontDisplayMissing \t\t\t26 75"
+        Go context:
+        fixed	export const Test = () => <link href="https://example.com/css?family=Krona+One" />;
+        case 2
+        /tmp/adamic-gate/TestWave06Projected2197357755/011/case2/Component.tsx:1:27
+          @next/next/google-font-display  This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+        
+        range 26 75 googleFontDisplayMissing 			26 75
+        fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2" />;
+        case 3
+        /tmp/adamic-gate/TestWave06Projected2197357755/012/case3/Component.tsx:1:27
+          @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 2: case 2 line 9: port "range 26 75 googleFontDisplayNotRecommended \t\t\t26 75", Go "range 26 75 googleFontDisplayMissing \t\t\t26 75"
+        Go context:
+        fixed	export const Test = () => <link href="https://example.com/css?family=Krona+One" />;
+        case 2
+        /tmp/adamic-gate/TestWave06Projected2197357755/011/case2/Component.tsx:1:27
+          @next/next/google-font-display  This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+        
+        range 26 75 googleFontDisplayMissing 			26 75
+        fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2" />;
+        case 3
+        /tmp/adamic-gate/TestWave06Projected2197357755/012/case3/Component.tsx:1:27
+          @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+=== RUN   TestWave06Projected/no-css-tags
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 0: case 65 line 243: port "range 28 89 wrongCssTags \t\t\t28 89", Go "range 28 89 noCssTags \t\t\t28 89"
+        Go context:
+        fixed	export const C = () => <div><h1>Hello title</h1></div>;
+        case 65
+        /tmp/adamic-gate/TestWave06Projected2197357755/074/case65/Component.tsx:1:29
+          @next/next/no-css-tags  This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        
+        range 28 89 noCssTags 			28 89
+        fixed	export const C = () => <div><link href="/_next/static/css/styles.css" rel="stylesheet" /></div>;
+        case 66
+        fixed	export const C = () => <link href="http://example.com/a.css" rel="stylesheet" />;
+        case 67
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 1: case 65 line 243: port "range 28 89 wrongCssTags \t\t\t28 89", Go "range 28 89 noCssTags \t\t\t28 89"
+        Go context:
+        fixed	export const C = () => <div><h1>Hello title</h1></div>;
+        case 65
+        /tmp/adamic-gate/TestWave06Projected2197357755/074/case65/Component.tsx:1:29
+          @next/next/no-css-tags  This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        
+        range 28 89 noCssTags 			28 89
+        fixed	export const C = () => <div><link href="/_next/static/css/styles.css" rel="stylesheet" /></div>;
+        case 66
+        fixed	export const C = () => <link href="http://example.com/a.css" rel="stylesheet" />;
+        case 67
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 2: case 65 line 243: port "range 28 89 wrongCssTags \t\t\t28 89", Go "range 28 89 noCssTags \t\t\t28 89"
+        Go context:
+        fixed	export const C = () => <div><h1>Hello title</h1></div>;
+        case 65
+        /tmp/adamic-gate/TestWave06Projected2197357755/074/case65/Component.tsx:1:29
+          @next/next/no-css-tags  This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        
+        range 28 89 noCssTags 			28 89
+        fixed	export const C = () => <div><link href="/_next/static/css/styles.css" rel="stylesheet" /></div>;
+        case 66
+        fixed	export const C = () => <link href="http://example.com/a.css" rel="stylesheet" />;
+        case 67
+=== RUN   TestWave06Projected/no-before-interactive-script-outside-document
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 0: case 17 line 67: port "range 419 447 wrongStrategy \t\t\t419 447", Go "range 419 447 noBeforeInteractiveScriptOutsideDocument \t\t\t419 447"
+        Go context:
+        fixed	import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 17
+        /tmp/adamic-gate/TestWave06Projected2197357755/026/case17/Users/user_name/projects/project-name/pages/layout.tsx:9:27
+          @next/next/no-before-interactive-script-outside-document  This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        
+        range 419 447 noBeforeInteractiveScriptOutsideDocument 			419 447
+        fixed	 import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 18
+        fixed	import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 19
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 1: case 17 line 67: port "range 419 447 wrongStrategy \t\t\t419 447", Go "range 419 447 noBeforeInteractiveScriptOutsideDocument \t\t\t419 447"
+        Go context:
+        fixed	import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 17
+        /tmp/adamic-gate/TestWave06Projected2197357755/026/case17/Users/user_name/projects/project-name/pages/layout.tsx:9:27
+          @next/next/no-before-interactive-script-outside-document  This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        
+        range 419 447 noBeforeInteractiveScriptOutsideDocument 			419 447
+        fixed	 import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 18
+        fixed	import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 19
+    wave06_candidate_test.go:394: wrong-diagnostic-id caught by output comparison on backend 2: case 17 line 67: port "range 419 447 wrongStrategy \t\t\t419 447", Go "range 419 447 noBeforeInteractiveScriptOutsideDocument \t\t\t419 447"
+        Go context:
+        fixed	import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 17
+        /tmp/adamic-gate/TestWave06Projected2197357755/026/case17/Users/user_name/projects/project-name/pages/layout.tsx:9:27
+          @next/next/no-before-interactive-script-outside-document  This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        
+        range 419 447 noBeforeInteractiveScriptOutsideDocument 			419 447
+        fixed	 import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 18
+        fixed	import Script from "next/script";\u000a\u000a                  export default function Index() {\u000a                    return (\u000a                      <html lang="en">\u000a                        <body className={inter.className}>{children}</body>\u000a                        <Script\u000a                          src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive"\u000a                          strategy='beforeInteractive'\u000a                        />\u000a                      </html>\u000a                    );\u000a                  }\u000a\u0009\u0009\u0009
+        case 19
+--- PASS: TestWave06Projected (113.05s)
+    --- PASS: TestWave06Projected/google-font-display (22.77s)
+    --- PASS: TestWave06Projected/no-css-tags (25.74s)
+    --- PASS: TestWave06Projected/no-before-interactive-script-outside-document (17.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	113.074s

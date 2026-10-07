@@ -1,0 +1,284 @@
+=== RUN   TestWave06Mutants
+=== RUN   TestWave06Mutants/require-description
+    wave06_candidate_test.go:170: accept-empty-description caught on Node: case 0 line 2: port "fixed\t// eslint-disable-next-line foo -- \\u000avalue();\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsrequire-description3990630035/001/require-description-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsrequire-description3990630035/001/require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 35 missingDescription 			0 35
+        fixed	// eslint-disable-next-line foo -- \u000avalue();\u000a
+    wave06_candidate_test.go:170: accept-empty-description caught on emitted JavaScript: case 0 line 2: port "fixed\t// eslint-disable-next-line foo -- \\u000avalue();\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsrequire-description3990630035/001/require-description-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsrequire-description3990630035/001/require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 35 missingDescription 			0 35
+        fixed	// eslint-disable-next-line foo -- \u000avalue();\u000a
+    wave06_candidate_test.go:170: accept-empty-description caught on sanitized native: case 0 line 2: port "fixed\t// eslint-disable-next-line foo -- \\u000avalue();\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsrequire-description3990630035/001/require-description-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsrequire-description3990630035/001/require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 35 missingDescription 			0 35
+        fixed	// eslint-disable-next-line foo -- \u000avalue();\u000a
+=== RUN   TestWave06Mutants/no-document-import-in-page
+    wave06_candidate_test.go:170: wrong-module-specifier caught on Node: case 0 line 2: port "fixed\timport Document from \"next/document\";\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-document-import-in-page804631273/001/no-document-import-in-page-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-document-import-in-page804631273/001/no-document-import-in-page-0.ts:1:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+        
+        range 0 37 noDocumentImportInPage 			0 37
+        fixed	import Document from "next/document";\u000a
+    wave06_candidate_test.go:170: wrong-module-specifier caught on emitted JavaScript: case 0 line 2: port "fixed\timport Document from \"next/document\";\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-document-import-in-page804631273/001/no-document-import-in-page-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-document-import-in-page804631273/001/no-document-import-in-page-0.ts:1:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+        
+        range 0 37 noDocumentImportInPage 			0 37
+        fixed	import Document from "next/document";\u000a
+    wave06_candidate_test.go:170: wrong-module-specifier caught on sanitized native: case 0 line 2: port "fixed\timport Document from \"next/document\";\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-document-import-in-page804631273/001/no-document-import-in-page-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-document-import-in-page804631273/001/no-document-import-in-page-0.ts:1:1
+          @next/next/no-document-import-in-page  This file imports `next/document` and is not the custom document. The pieces that module exports only mean anything while the document shell is being rendered, so anywhere else they either render nothing or break the page they are on. Move the code that needs them into `pages/_document`, and use `next/head` for the ordinary case of a page contributing to the head.
+        
+        range 0 37 noDocumentImportInPage 			0 37
+        fixed	import Document from "next/document";\u000a
+=== RUN   TestWave06Mutants/no-unnecessary-type-constraint
+    wave06_candidate_test.go:170: delete-parameter-name caught on Node: case 0 line 5: port "range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t21:38:\tRemove the constraint that does nothing.\t21 22", Go "range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t22:38:\tRemove the constraint that does nothing.\t21 22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unnecessary-type-constraint667935750/001/no-unnecessary-type-constraint-0.ts:1:22
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	22:38:	Remove the constraint that does nothing.	21 22
+        fixed	export function data<T extends unknown>() {}\u000a
+    wave06_candidate_test.go:170: delete-parameter-name caught on emitted JavaScript: case 0 line 5: port "range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t21:38:\tRemove the constraint that does nothing.\t21 22", Go "range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t22:38:\tRemove the constraint that does nothing.\t21 22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unnecessary-type-constraint667935750/001/no-unnecessary-type-constraint-0.ts:1:22
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	22:38:	Remove the constraint that does nothing.	21 22
+        fixed	export function data<T extends unknown>() {}\u000a
+    wave06_candidate_test.go:170: delete-parameter-name caught on sanitized native: case 0 line 5: port "range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t21:38:\tRemove the constraint that does nothing.\t21 22", Go "range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t22:38:\tRemove the constraint that does nothing.\t21 22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unnecessary-type-constraint667935750/001/no-unnecessary-type-constraint-0.ts:1:22
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 21 22 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	22:38:	Remove the constraint that does nothing.	21 22
+        fixed	export function data<T extends unknown>() {}\u000a
+=== RUN   TestWave06Mutants/no-unsafe-function-type
+    wave06_candidate_test.go:170: wrong-global-type-name caught on Node: case 0 line 2: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type14221937/001/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type14221937/001/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 			20 28
+        fixed	export let handler: Function;\u000a
+    wave06_candidate_test.go:170: wrong-global-type-name caught on emitted JavaScript: case 0 line 2: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type14221937/001/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type14221937/001/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 			20 28
+        fixed	export let handler: Function;\u000a
+    wave06_candidate_test.go:170: wrong-global-type-name caught on sanitized native: case 0 line 2: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type14221937/001/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-unsafe-function-type14221937/001/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 			20 28
+        fixed	export let handler: Function;\u000a
+=== RUN   TestWave06Mutants/no-useless-empty-export
+    wave06_candidate_test.go:170: omit-empty-export-fix caught on Node: case 0 line 5: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export2283313757/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix			24 34
+        fixed	export const value = 1;\u000a\u000a
+    wave06_candidate_test.go:170: omit-empty-export-fix caught on emitted JavaScript: case 0 line 5: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export2283313757/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix			24 34
+        fixed	export const value = 1;\u000a\u000a
+    wave06_candidate_test.go:170: omit-empty-export-fix caught on sanitized native: case 0 line 5: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-useless-empty-export2283313757/001/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix			24 34
+        fixed	export const value = 1;\u000a\u000a
+=== RUN   TestWave06Mutants/no-inner-declarations
+    wave06_candidate_test.go:170: wrong-enclosing-scope caught on Node: case 0 line 3: port "  no-inner-declarations  Move function declaration to function body root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.", Go "  no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-inner-declarations452731819/001/no-inner-declarations-0.ts:1:13
+          no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.
+        
+        range 12 32 moveDeclToRoot 			12 32
+        fixed	if (test) { function nested() {} }\u000a
+    wave06_candidate_test.go:170: wrong-enclosing-scope caught on emitted JavaScript: case 0 line 3: port "  no-inner-declarations  Move function declaration to function body root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.", Go "  no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-inner-declarations452731819/001/no-inner-declarations-0.ts:1:13
+          no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.
+        
+        range 12 32 moveDeclToRoot 			12 32
+        fixed	if (test) { function nested() {} }\u000a
+    wave06_candidate_test.go:170: wrong-enclosing-scope caught on sanitized native: case 0 line 3: port "  no-inner-declarations  Move function declaration to function body root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.", Go "  no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-inner-declarations452731819/001/no-inner-declarations-0.ts:1:13
+          no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.
+        
+        range 12 32 moveDeclToRoot 			12 32
+        fixed	if (test) { function nested() {} }\u000a
+=== RUN   TestWave06Mutants/no-restricted-properties
+    wave06_candidate_test.go:170: invent-unconfigured-restriction caught on Node: case 0 line 2: port "/tmp/adamic-gate/TestWave06Mutantsno-restricted-properties458221321/001/no-restricted-properties-0.ts:1:1", Go "fixed\tfoo.bar;\\u000a"
+        Go context:
+        case 0
+        fixed	foo.bar;\u000a
+    wave06_candidate_test.go:170: invent-unconfigured-restriction caught on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave06Mutantsno-restricted-properties458221321/001/no-restricted-properties-0.ts:1:1", Go "fixed\tfoo.bar;\\u000a"
+        Go context:
+        case 0
+        fixed	foo.bar;\u000a
+    wave06_candidate_test.go:170: invent-unconfigured-restriction caught on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestWave06Mutantsno-restricted-properties458221321/001/no-restricted-properties-0.ts:1:1", Go "fixed\tfoo.bar;\\u000a"
+        Go context:
+        case 0
+        fixed	foo.bar;\u000a
+=== RUN   TestWave06Mutants/no-self-assign
+    wave06_candidate_test.go:170: report-left-reference caught on Node: case 0 line 2: port "/tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:1", Go "/tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:9"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:9
+          no-self-assign  This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is.
+        
+        range 8 13 selfAssignment 			8 13
+        fixed	value = value;\u000a
+    wave06_candidate_test.go:170: report-left-reference caught on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:1", Go "/tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:9"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:9
+          no-self-assign  This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is.
+        
+        range 8 13 selfAssignment 			8 13
+        fixed	value = value;\u000a
+    wave06_candidate_test.go:170: report-left-reference caught on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:1", Go "/tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:9"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantsno-self-assign479265067/001/no-self-assign-0.ts:1:9
+          no-self-assign  This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is.
+        
+        range 8 13 selfAssignment 			8 13
+        fixed	value = value;\u000a
+=== RUN   TestWave06Mutants/tailwind-no-physical-direction
+    wave06_candidate_test.go:170: wrong-logical-margin caught on Node: case 0 line 3: port "  structure/tailwind-no-physical-direction  The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantstailwind-no-physical-direction1848550000/001/tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 29 useLogicalClass 			23 29
+        fixed	export const classes = "ml-4";\u000a
+    wave06_candidate_test.go:170: wrong-logical-margin caught on emitted JavaScript: case 0 line 3: port "  structure/tailwind-no-physical-direction  The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantstailwind-no-physical-direction1848550000/001/tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 29 useLogicalClass 			23 29
+        fixed	export const classes = "ml-4";\u000a
+    wave06_candidate_test.go:170: wrong-logical-margin caught on sanitized native: case 0 line 3: port "  structure/tailwind-no-physical-direction  The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave06Mutantstailwind-no-physical-direction1848550000/001/tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 29 useLogicalClass 			23 29
+        fixed	export const classes = "ml-4";\u000a
+--- PASS: TestWave06Mutants (367.61s)
+    --- PASS: TestWave06Mutants/require-description (38.36s)
+    --- PASS: TestWave06Mutants/no-document-import-in-page (35.41s)
+    --- PASS: TestWave06Mutants/no-unnecessary-type-constraint (38.04s)
+    --- PASS: TestWave06Mutants/no-unsafe-function-type (39.68s)
+    --- PASS: TestWave06Mutants/no-useless-empty-export (43.13s)
+    --- PASS: TestWave06Mutants/no-inner-declarations (32.63s)
+    --- PASS: TestWave06Mutants/no-restricted-properties (43.91s)
+    --- PASS: TestWave06Mutants/no-self-assign (43.79s)
+    --- PASS: TestWave06Mutants/tailwind-no-physical-direction (47.29s)
+=== RUN   TestWave06Throughput
+    wave06_candidate_test.go:257: @eslint-community/eslint-comments/require-description Go: 500 findings / 0.037919s = 13186.03 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @eslint-community/eslint-comments/require-description native: 500 findings / 0.026718s = 18714.23 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @eslint-community/eslint-comments/require-description Node: 500 findings / 0.285226s = 1753.00 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @next/next/no-document-import-in-page Go: 500 findings / 0.025940s = 19275.35 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @next/next/no-document-import-in-page native: 500 findings / 0.016044s = 31164.18 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @next/next/no-document-import-in-page Node: 500 findings / 0.255685s = 1955.53 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-unnecessary-type-constraint Go: 500 findings / 0.031203s = 16023.91 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-unnecessary-type-constraint native: 500 findings / 0.022683s = 22042.83 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-unnecessary-type-constraint Node: 500 findings / 0.254592s = 1963.92 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-unsafe-function-type Go: 500 findings / 0.027496s = 18184.49 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-unsafe-function-type native: 500 findings / 0.017538s = 28509.06 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-unsafe-function-type Node: 500 findings / 0.261186s = 1914.35 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-useless-empty-export Go: 500 findings / 0.027770s = 18004.93 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-useless-empty-export native: 500 findings / 0.022575s = 22148.26 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: @typescript-eslint/no-useless-empty-export Node: 500 findings / 0.275697s = 1813.58 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-inner-declarations Go: 500 findings / 0.026004s = 19228.07 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-inner-declarations native: 500 findings / 0.020056s = 24930.44 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-inner-declarations Node: 500 findings / 0.305296s = 1637.76 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-restricted-properties Go: 0 findings / 0.063427s = 0.00 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-restricted-properties native: 0 findings / 0.035694s = 0.00 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-restricted-properties Node: 0 findings / 0.280838s = 0.00 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-self-assign Go: 500 findings / 0.037216s = 13434.93 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-self-assign native: 500 findings / 0.033496s = 14927.06 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: no-self-assign Node: 500 findings / 0.368086s = 1358.38 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: structure/tailwind-no-physical-direction Go: 500 findings / 0.036919s = 13543.22 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: structure/tailwind-no-physical-direction native: 500 findings / 0.024001s = 20832.29 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:257: structure/tailwind-no-physical-direction Node: 500 findings / 0.255745s = 1955.07 findings/s, 500 repeated witness rows
+--- PASS: TestWave06Throughput (21.24s)
+=== RUN   TestWave06CompilerThroughput
+    wave06_candidate_test.go:310: @eslint-community/eslint-comments/require-description Go: 125 findings / 0.510601s = 244.81 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @eslint-community/eslint-comments/require-description native: 125 findings / 13.757649s = 9.09 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @eslint-community/eslint-comments/require-description Node: 125 findings / 9.132848s = 13.69 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @next/next/no-document-import-in-page Go: 0 findings / 0.413018s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @next/next/no-document-import-in-page native: 0 findings / 2.279117s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @next/next/no-document-import-in-page Node: 0 findings / 2.516705s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-unnecessary-type-constraint Go: 0 findings / 0.449536s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-unnecessary-type-constraint native: 0 findings / 2.810978s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-unnecessary-type-constraint Node: 0 findings / 1.582672s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-unsafe-function-type Go: 0 findings / 0.319994s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-unsafe-function-type native: 0 findings / 3.124459s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-unsafe-function-type Node: 0 findings / 1.578738s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-useless-empty-export Go: 0 findings / 0.340340s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-useless-empty-export native: 0 findings / 2.139707s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: @typescript-eslint/no-useless-empty-export Node: 0 findings / 1.667083s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-inner-declarations Go: 0 findings / 0.350947s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-inner-declarations native: 0 findings / 2.428294s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-inner-declarations Node: 0 findings / 1.532866s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-restricted-properties Go: 0 findings / 0.292261s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-restricted-properties native: 0 findings / 2.277867s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-restricted-properties Node: 0 findings / 1.579366s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-self-assign Go: 0 findings / 0.356916s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-self-assign native: 0 findings / 3.076190s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: no-self-assign Node: 0 findings / 1.725712s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: structure/tailwind-no-physical-direction Go: 0 findings / 0.343381s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: structure/tailwind-no-physical-direction native: 0 findings / 2.728229s = 0.00 findings/s, 77 compiler files
+    wave06_candidate_test.go:310: structure/tailwind-no-physical-direction Node: 0 findings / 1.653681s = 0.00 findings/s, 77 compiler files
+--- PASS: TestWave06CompilerThroughput (75.37s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	464.234s

@@ -1,0 +1,22 @@
+=== RUN   TestWave06Projected
+    lint_test.go:345: cohere cases: 1907 unique source/rule/options combinations
+    wave06_candidate_test.go:400: JSX projection cohort backend 0: 33 findings / 0.187162s = 176.32 findings/s (includes startup; native sanitized)
+    wave06_candidate_test.go:400: JSX projection cohort backend 1: 33 findings / 0.130555s = 252.77 findings/s (includes startup; native sanitized)
+    wave06_candidate_test.go:400: JSX projection cohort backend 2: 33 findings / 0.375621s = 87.85 findings/s (includes startup; native sanitized)
+    wave06_candidate_test.go:403: JSX projection cohort Go: 33 findings / 0.037113s = 889.17 findings/s
+    wave06_candidate_test.go:404: Go AST projection: 79 filename-preserving JSX fixtures, 38136 identical bytes, Node/emitted/sanitized native; independent-parser integration remains BLOCKED
+    wave06_candidate_test.go:416: @next/next/google-font-display Go: 7 findings / 0.016172s = 432.84 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/google-font-display Node: 7 findings / 0.215906s = 32.42 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/google-font-display emitted JavaScript: 7 findings / 0.066286s = 105.60 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/google-font-display sanitized native: 7 findings / 0.076527s = 91.47 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:416: @next/next/no-css-tags Go: 6 findings / 0.014557s = 412.18 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/no-css-tags Node: 6 findings / 0.164533s = 36.47 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/no-css-tags emitted JavaScript: 6 findings / 0.078370s = 76.56 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/no-css-tags sanitized native: 6 findings / 0.071394s = 84.04 findings/s, 16 projected upstream cases
+    wave06_candidate_test.go:416: @next/next/no-before-interactive-script-outside-document Go: 20 findings / 0.021911s = 912.78 findings/s, 47 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/no-before-interactive-script-outside-document Node: 20 findings / 0.199617s = 100.19 findings/s, 47 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/no-before-interactive-script-outside-document emitted JavaScript: 20 findings / 0.090451s = 221.11 findings/s, 47 projected upstream cases
+    wave06_candidate_test.go:423: @next/next/no-before-interactive-script-outside-document sanitized native: 20 findings / 0.281382s = 71.08 findings/s, 47 projected upstream cases
+--- PASS: TestWave06Projected (80.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	80.055s

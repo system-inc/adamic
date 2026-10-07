@@ -1,0 +1,13 @@
+=== RUN   TestWave06Refusals
+    wave06_candidate_test.go:492: @next/next/google-font-display Node explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/google-font-display emitted JavaScript explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/google-font-display sanitized native explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/no-css-tags Node explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/no-css-tags emitted JavaScript explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/no-css-tags sanitized native explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/no-before-interactive-script-outside-document Node explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/no-before-interactive-script-outside-document emitted JavaScript explicitly refused a silently reinterpreted JSX tree with exit 70
+    wave06_candidate_test.go:492: @next/next/no-before-interactive-script-outside-document sanitized native explicitly refused a silently reinterpreted JSX tree with exit 70
+--- PASS: TestWave06Refusals (42.19s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	42.210s

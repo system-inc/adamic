@@ -1,0 +1,31 @@
+=== RUN   TestWave06Throughput
+    wave06_candidate_test.go:274: @eslint-community/eslint-comments/require-description Go: 500 findings / 0.070757s = 7066.47 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @eslint-community/eslint-comments/require-description native: 500 findings / 0.038747s = 12904.24 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @eslint-community/eslint-comments/require-description Node: 500 findings / 0.367415s = 1360.86 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @next/next/no-document-import-in-page Go: 500 findings / 0.050412s = 9918.27 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @next/next/no-document-import-in-page native: 500 findings / 0.030672s = 16301.52 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @next/next/no-document-import-in-page Node: 500 findings / 0.359496s = 1390.84 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-unnecessary-type-constraint Go: 500 findings / 0.037954s = 13174.00 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-unnecessary-type-constraint native: 500 findings / 0.021607s = 23140.75 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-unnecessary-type-constraint Node: 500 findings / 0.344472s = 1451.50 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-unsafe-function-type Go: 500 findings / 0.036145s = 13833.10 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-unsafe-function-type native: 500 findings / 0.034174s = 14631.06 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-unsafe-function-type Node: 500 findings / 0.429818s = 1163.28 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-useless-empty-export Go: 500 findings / 0.037627s = 13288.27 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-useless-empty-export native: 500 findings / 0.035737s = 13991.27 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: @typescript-eslint/no-useless-empty-export Node: 500 findings / 0.336989s = 1483.73 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-inner-declarations Go: 500 findings / 0.039879s = 12537.97 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-inner-declarations native: 500 findings / 0.030422s = 16435.58 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-inner-declarations Node: 500 findings / 0.332109s = 1505.53 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-restricted-properties Go: 500 findings / 0.036912s = 13545.67 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-restricted-properties native: 500 findings / 0.053456s = 9353.56 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-restricted-properties Node: 500 findings / 0.304212s = 1643.59 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-self-assign Go: 500 findings / 0.034545s = 14473.72 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-self-assign native: 500 findings / 0.023076s = 21667.61 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: no-self-assign Node: 500 findings / 0.284082s = 1760.06 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: structure/tailwind-no-physical-direction Go: 500 findings / 0.029592s = 16896.18 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: structure/tailwind-no-physical-direction native: 500 findings / 0.022511s = 22211.68 findings/s, 500 repeated witness rows
+    wave06_candidate_test.go:274: structure/tailwind-no-physical-direction Node: 500 findings / 0.243598s = 2052.56 findings/s, 500 repeated witness rows
+--- PASS: TestWave06Throughput (20.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	20.018s
