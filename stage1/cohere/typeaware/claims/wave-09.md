@@ -99,3 +99,21 @@ parser/listener build still times out at 120 seconds in the shared freshness
 analysis, with captured stacks. The native pattern compiler and constructor
 reference/constant/source-map adapters remain unfinished. No further rules are
 claimed. See ../wave09_core/RESUME_REPORT.md for precise scopes and evidence.
+
+## Current regex requirement, supersedes historical component status
+
+The no-hand-rolled-matchers instruction is now the implementation constraint.
+The earlier class scanner and regex rewrite helpers are historical isolated
+component evidence, not the completion path for these rules. No further custom
+matching, pattern parsing or rewriting is being added. Existing flag diagnostics,
+scope checks, source mapping and constant-resolution work remain available.
+
+Both regex rules remain incomplete. The requested dynamic JS RegExp constructor
+path is blocked by native lowering's explicit "RegExp with a nonconstant
+pattern" refusal, reproduced with dynamic_regexp_gap.a and a clean-running
+sanitized static-pattern mutant. The named origin/codex/lint-regex shared table
+was absent from all fetched origin heads at this check. The string-only parser
+and absent numeric handed-node listener contract remain separate shared gaps.
+No React analysis exception applies; these claims are not counted as finished
+or parked under that exception. No new batch is claimed. See
+../wave09_core/REGEX_POLICY_REPORT.md for current scope and retained evidence.

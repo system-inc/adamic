@@ -1,0 +1,5 @@
+// Requested dynamic RegExp path; retained until shared lowering supports it.
+function accepts(pattern:string):boolean {
+    return new RegExp('a','u').test('a');
+}
+console.log(`${accepts('a')}`);
