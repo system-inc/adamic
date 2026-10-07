@@ -95,7 +95,7 @@ func TestShrinkKeepsOnlyWhatFails(t *testing.T) {
 		}
 	}
 	tries := 0
-	shrunk := Shrink(program, "deletes", func(candidate *Program) Outcome {
+	shrunk := Shrink(program, Finding, "deletes", func(candidate *Program) Outcome {
 		tries++
 		if strings.Contains(candidate.Source(), "table.delete(") {
 			return Outcome{Verdict: Finding, Key: "deletes"}
@@ -111,6 +111,30 @@ func TestShrinkKeepsOnlyWhatFails(t *testing.T) {
 	}
 	if program.Source() == source {
 		t.Error("shrinking changed the original program instead of a copy")
+	}
+}
+
+// Shrinking a crash keeps the crash. Here every smaller candidate fails with the same words but only
+// as a plain difference, so nothing smaller is the same failure and the program stays whole: a
+// shrinker that let the verdict go would drift from a segfault to an output difference.
+func TestShrinkKeepsTheCrash(t *testing.T) {
+	t.Parallel()
+	program := Generate(1)
+	original := program.Source()
+	key := "native signal: segmentation fault"
+	tries := 0
+	shrunk := Shrink(program, Crash, key, func(candidate *Program) Outcome {
+		tries++
+		if candidate.Source() == original {
+			return Outcome{Verdict: Crash, Key: key}
+		}
+		return Outcome{Verdict: Finding, Key: key}
+	})
+	if tries == 0 {
+		t.Fatal("no candidate was tried")
+	}
+	if shrunk.Source() != original {
+		t.Errorf("a crash shrank to a program that only differs in output, after %d tries:\n%s", tries, shrunk.Source())
 	}
 }
 

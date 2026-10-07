@@ -120,7 +120,7 @@ import json, os, re, sys
 output, seed, count, parallel, generator_exit, generator_seconds, fixtures_exit, fixtures_seconds, commit = sys.argv[1:10]
 log = open(os.path.join(output, "generator", "run.log")).read()
 verdicts = {}
-for verdict in ("agreed", "finding", "checked", "not yet", "invalid", "unfit"):
+for verdict in ("crash", "agreed", "finding", "checked", "not yet", "invalid", "unfit"):
     match = re.search(r"^  " + verdict + r" +(\d+)$", log, re.M)
     if match:
         verdicts[verdict] = int(match.group(1))

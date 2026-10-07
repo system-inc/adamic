@@ -158,3 +158,44 @@ func TestReduceKeepsClangsError(t *testing.T) {
 		t.Errorf("the reduced program fails as %q, not as %s", again.Lines["cc"], signature)
 	}
 }
+
+// A crash's signature is the crash, the program's own: the crash kind, its whole line. A candidate is
+// kept only when it crashes the same way, never when it has drifted to a plain output difference or
+// to another crash. compiler-panic, the compiler's own panic, is a different kind that a crash never
+// matches.
+func TestReduceKeepsTheCrash(t *testing.T) {
+	t.Parallel()
+	original := Observation{Verdict: Crash, Lines: map[string]string{"crash": "native AddressSanitizer: SEGV"}}
+	signature, err := Derive(original)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if signature.Kind != "crash" || signature.Text != "native AddressSanitizer: SEGV" || !signature.Exact {
+		t.Fatalf("derived %s, want the exact crash", signature)
+	}
+	for _, test := range []struct {
+		name      string
+		candidate Observation
+		want      bool
+	}{
+		{"the same crash", Observation{Verdict: Crash, Lines: map[string]string{"crash": "native AddressSanitizer: SEGV"}}, true},
+		{"a plain output difference instead", Observation{Verdict: Finding, Lines: map[string]string{"mismatch": "native exit: node 0, native 1"}}, false},
+		{"the crash's words as a finding", Observation{Verdict: Finding, Lines: map[string]string{"crash": "native AddressSanitizer: SEGV"}}, false},
+		{"another crash", Observation{Verdict: Crash, Lines: map[string]string{"crash": "native signal: segmentation fault"}}, false},
+		{"no failure", Observation{Verdict: Agreed, Lines: map[string]string{}}, false},
+	} {
+		if got := keeps(signature, original, test.candidate); got != test.want {
+			t.Errorf("%s: kept %v, want %v", test.name, got, test.want)
+		}
+	}
+	for written, has := range map[string]bool{"crash:SEGV": true, "crash:AddressSanitizer": true, "compiler-panic:SEGV": false, "mismatch:SEGV": false} {
+		parsed, err := ParseSignature(written)
+		if err != nil || original.Has(parsed) != has {
+			t.Errorf("%s matches the crash: %v, want %v (%v)", written, !has, has, err)
+		}
+	}
+	compiler := Observation{Verdict: Finding, Lines: map[string]string{"compiler-panic": "panic: runtime error: index out of range [3] with length 2"}}
+	if derived, err := Derive(compiler); err != nil || derived.Kind != "compiler-panic" {
+		t.Errorf("the compiler's panic derived %s (%v), want compiler-panic", derived, err)
+	}
+}
