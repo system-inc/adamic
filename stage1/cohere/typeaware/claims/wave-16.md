@@ -56,3 +56,18 @@ All three have compiler 0 / repository 0. Selection covered 197 ranked rules,
 exclusions. Additional searches of both heads' entire stage1/cohere trees found
 only inventory/count mentions for these three, not ports. No rules were skipped.
 This claim update is pushed before implementation.
+
+## Fourth set
+
+All prior ports and validation are pushed at b5c30a08. A fresh all-head fetch
+on October 7, 2026 found 55 remaining candidates among 197 ranked rules after
+excluding ports on main and the bridge branch and 117 names claimed in 33
+Markdown documents across all origin heads. The first three are:
+
+- no-new-func
+- no-new-native-nonconstructor
+- no-new-wrappers
+
+Each has compiler 0 and repository 0. Searches of both integration heads found
+only inventory and count mentions, with no implementation. This claim is pushed
+before any implementation of these rules.
