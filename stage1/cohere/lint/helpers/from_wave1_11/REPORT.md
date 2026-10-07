@@ -2,7 +2,7 @@ Built: tailwind.FindEntryPoint and collapse.ValueToCss, one .a file each; each r
 Commits: FindEntryPoint claim 48292211 and implementation 2bf8e499; ValueToCss claim 8e5bc04d pushed before implementation; this report accompanies its implementation commit.
 Commands and outputs: all six original Go consumer suites plus two targeted finding probes PASS; 922 entry-point cases/130,833 bytes and 233 value-tree cases/13,040 bytes match Go on source Node, emitted JavaScript and sanitized native; owned package test PASS (6.505s), vet PASS.
 Mutants: entry_point_priority_reversed and function_closing_parenthesis_omitted compile and run with zero exits/empty stderr, then only byte comparison catches each on all three backends.
-Not covered: Windows paths, arbitrary unbounded tree depth, full Tailwind integration/rule findings parity, or the full repository gate; old rule Program/CSS, multiple-fix and compiler/config-base gaps remain explicit.
+Not covered: Windows paths, arbitrary unbounded tree depth, full Tailwind integration/rule findings parity, or the full repository gate; the next loader is blocked by missing shared Program/recording-filesystem and Tailwind providers (BLOCKED.md); old rule Program/CSS, multiple-fix and compiler/config-base gaps remain explicit.
 
 ## Consumers
 
@@ -30,3 +30,7 @@ Freshly fetched all 417 origin refs and audited 17 distinct claim contents befor
 Observed helper calls by consumer: canonical 3, class order 2, variant order 1, shorthand 1, conflicts 12, unknown classes 59; total 78. These captures carry the actual Go ValueNode trees, not findings or expected serialization. Source Node and compiled runtimes construct their own trees from that input. The additional 155 controls cover empty/nil sequences, empty strings, separator preservation, Unicode/control characters, ignored unknown kinds, nested functions and depths 1 through 64. The replay explicitly checks the Go helper again. The missing-parenthesis mutant is compiled independently and survives execution before the comparator rejects its bytes. Full outputs, original live Go test logs and summaries are retained under evidence/value. There are no authored changes to shared tests, registration, compiler or upstream sources.
 
 Reproduce live serializer capture with validate_value.py --scratch <scratch> --package-root <scratch npm prefix>; hermetic replay is included in the owned Go package test. This is helper parity over the captured cases, not six complete rule ports or arbitrary-depth proof.
+
+## Continuation status
+
+See BLOCKED.md for the refreshed 423-ref claim audit and the next six-consumer helper’s concrete shared-provider gap. Other unclaimed helpers remain. No additional symbol was reserved while blocked.
