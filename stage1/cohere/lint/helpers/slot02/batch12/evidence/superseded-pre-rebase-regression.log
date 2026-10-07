@@ -1,0 +1,108 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (27.48s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (52.33s)
+    --- PASS: TestHelperMutants/options_json.ts (10.09s)
+    --- PASS: TestHelperMutants/option_schema.ts (9.78s)
+    --- PASS: TestHelperMutants/policy_message.ts (12.56s)
+    --- PASS: TestHelperMutants/strict_options.ts (8.44s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (11.82s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (1.91s)
+=== RUN   TestSlot02Batch10
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].read: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].write: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].loop: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:125: 2119 captures; 2077 parsed sources; 3282 graph roots; 10661 hook method entries; 15 unique call shapes; 6 representative node kinds; 456 total replay cases
+    slot02_batch10_test.go:154: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch10/read_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 1: got "calls:1:hook:0:0:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/read_nil_node_forwarding
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 621: got "calls:0:"; Go "calls:1:hook:0:-1:1;"
+=== RUN   TestSlot02Batch10/read_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 21: got "calls:2:hook:0:0:1;hook:0:0:2;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/read_builder_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 26: got "calls:1:hook:0:0:1;"; Go "calls:1:hook:1:0:1;"
+=== RUN   TestSlot02Batch10/write_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 41: got "calls:1:hook:0:0:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/write_nil_node_forwarding
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 1181: got "calls:0:"; Go "calls:1:hook:0:-1:1;"
+=== RUN   TestSlot02Batch10/write_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 61: got "calls:2:hook:0:0:1;hook:0:0:2;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/write_node_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 61: got "calls:1:hook:0:-1:1;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/loop_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 161: got "calls:1:hook:0:1:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/loop_nil_node_guard
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 501: got "calls:1:hook:0:-1:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/loop_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 181: got "calls:2:hook:0:1:1;hook:0:1:2;"; Go "calls:1:hook:0:1:1;"
+=== RUN   TestSlot02Batch10/loop_builder_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 186: got "calls:1:hook:0:1:1;"; Go "calls:1:hook:1:1:1;"
+--- PASS: TestSlot02Batch10 (19.35s)
+    --- PASS: TestSlot02Batch10/read_hook_presence (0.99s)
+    --- PASS: TestSlot02Batch10/read_nil_node_forwarding (1.01s)
+    --- PASS: TestSlot02Batch10/read_exactly_once (1.14s)
+    --- PASS: TestSlot02Batch10/read_builder_identity (1.35s)
+    --- PASS: TestSlot02Batch10/write_hook_presence (1.18s)
+    --- PASS: TestSlot02Batch10/write_nil_node_forwarding (1.41s)
+    --- PASS: TestSlot02Batch10/write_exactly_once (1.72s)
+    --- PASS: TestSlot02Batch10/write_node_identity (1.37s)
+    --- PASS: TestSlot02Batch10/loop_hook_presence (1.83s)
+    --- PASS: TestSlot02Batch10/loop_nil_node_guard (2.11s)
+    --- PASS: TestSlot02Batch10/loop_exactly_once (1.69s)
+    --- PASS: TestSlot02Batch10/loop_builder_identity (1.35s)
+=== RUN   TestSlot02Batch11
+    slot02_batch11_test.go:75: tailwind/collapse.*stylesheetCollector.ingest: 6 consumers captured
+    slot02_batch11_test.go:75: control_flow_graph.*Builder[E].nestedFunction: 4 consumers captured
+    slot02_batch11_test.go:75: control_flow_graph.*Builder[E].variableDeclarationList: 4 consumers captured
+    slot02_batch11_test.go:154: 2276 captured inputs, 7833 CSS replays, 3612 CFG replays, 901 actual CFG helper entries
+    slot02_batch11_test.go:183: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch11/import_resolved_path
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 1436: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:/fixture/é😀.css;custom:1:;"; Go "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"
+=== RUN   TestSlot02Batch11/resolve_error_propagation
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 1437: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"; Go "result:7:resolve:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/theme_error_propagation
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 1395: got "result:-1:theme:0:/fixture/é😀.css;"; Go "result:7:theme:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/load_error_propagation
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 1438: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"; Go "result:7:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";"
+=== RUN   TestSlot02Batch11/utility_error_propagation
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 2536: got "result:-1:utility:0:/fixture/é😀.css;"; Go "result:7:utility:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/utility_dispatch
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 2535: got "result:-1:theme:0:/fixture/é😀.css;"; Go "result:-1:utility:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/custom_variant_dispatch
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 1436: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:0:;"; Go "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"
+=== RUN   TestSlot02Batch11/skipped_path
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 646: got "skip:@config::"; Go "skip:@config::/fixture/é😀.css"
+=== RUN   TestSlot02Batch11/unknown_at-rule_recursion
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 7827: got "result:-1:"; Go "result:-1:theme:4:/fixture/é😀.css;utility:6:/fixture/é😀.css;resolve:8:/fixture/é😀.css;load:-1:resolved:\"x\";custom:9:;"
+=== RUN   TestSlot02Batch11/non-at-rule_recursion
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 7827: got "result:-1:"; Go "result:-1:theme:4:/fixture/é😀.css;utility:6:/fixture/é😀.css;resolve:8:/fixture/é😀.css;load:-1:resolved:\"x\";custom:9:;"
+=== RUN   TestSlot02Batch11/nil_list_guard
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 25898: got "calls:1:decl:0:-1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch11/nil_declarations_guard
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 25858: got "calls:1:decl:0:1261;"; Go "calls:0:"
+=== RUN   TestSlot02Batch11/nested_forwarding_identity
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 10898: got "calls:1:header:0:-1;"; Go "calls:1:header:0:304;"
+=== RUN   TestSlot02Batch11/nested_builder_identity
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 10908: got "calls:1:header:0:304;"; Go "calls:1:header:1:304;"
+=== RUN   TestSlot02Batch11/nested_exactly_once
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 10898: got "calls:2:header:0:304;header:0:304;"; Go "calls:1:header:0:304;"
+=== RUN   TestSlot02Batch11/declaration_order
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 25798: got "calls:3:decl:0:1254;decl:0:1253;decl:0:1252;"; Go "calls:3:decl:0:1252;decl:0:1253;decl:0:1254;"
+=== RUN   TestSlot02Batch11/declaration_identity
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 7858: got "calls:1:decl:0:-1;"; Go "calls:1:decl:0:1;"
+=== RUN   TestSlot02Batch11/declaration_builder_identity
+    slot02_batch11_test.go:242: compiled semantic mutant caught at line 7868: got "calls:1:decl:0:1;"; Go "calls:1:decl:1:1;"
+=== RUN   TestSlot02Batch11/declaration_exactly_once

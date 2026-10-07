@@ -1,0 +1,23 @@
+=== RUN   TestSlot02Batch12
+    slot02_batch12_test.go:75: tailwind/collapse.*Theme.Resolve: 4 consumers captured
+    slot02_batch12_test.go:75: control_flow_graph.*Builder[E].variableDeclaration: 4 consumers captured
+    slot02_batch12_test.go:75: tailwind.declineListeners: 4 consumers captured
+    slot02_batch12_test.go:139: 2276 captured inputs, 44288 theme replays, 1448 CFG replays, 361 actual CFG helper entries
+    slot02_batch12_test.go:168: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch12/theme_miss_guard
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 9: got "theme:key:0:encoding/json:true:true;--color,--spacing,reference:0:;:false:"; Go "theme:key:0:encoding/json:true:true;--color,--spacing,:false:"
+=== RUN   TestSlot02Batch12/theme_caller_inline
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 1435: got "theme:key:0:red:true:true;--color,--spacing,reference:0:--color-red;:true:var(--color-red)"; Go "theme:key:0:red:true:true;--color,--spacing,:true:red"
+=== RUN   TestSlot02Batch12/theme_entry_inline
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 1: got "theme:key:0:encoding/json:false:true;--color,--spacing,reference:0:--spacing;:true:var(--spacing)"; Go "theme:key:0:encoding/json:false:true;--color,--spacing,:true:8px"
+=== RUN   TestSlot02Batch12/theme_literal_empty_presence
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 1465: got "theme:key:0:blue:true:true;--color,--spacing,:false:"; Go "theme:key:0:blue:true:true;--color,--spacing,:true:"
+=== RUN   TestSlot02Batch12/theme_key_identity
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 1433: got "theme:key:0:red:true:true;--color,--spacing,reference:0:red;:true:var(--color-red)"; Go "theme:key:0:red:true:true;--color,--spacing,reference:0:--color-red;:true:var(--color-red)"
+=== RUN   TestSlot02Batch12/theme_identity
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 2: got "theme:key:0:encoding/json:false:true;--color,--spacing,:true:8px"; Go "theme:key:1:encoding/json:false:true;--color,--spacing,:true:8px"
+=== RUN   TestSlot02Batch12/theme_candidate_presence
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 1: got "theme:key:0:encoding/json:true:true;--color,--spacing,:true:8px"; Go "theme:key:0:encoding/json:false:true;--color,--spacing,:true:8px"
+=== RUN   TestSlot02Batch12/theme_key_slice_identity
+    slot02_batch12_test.go:230: compiled semantic mutant caught at line 1: got "theme:key:0:encoding/json:false:false;--color,--spacing,:true:8px"; Go "theme:key:0:encoding/json:false:true;--color,--spacing,:true:8px"
+=== RUN   TestSlot02Batch12/declaration_nil_guard
