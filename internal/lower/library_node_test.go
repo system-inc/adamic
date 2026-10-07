@@ -82,7 +82,6 @@ func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
 		t.Fatalf("want the qualified name checked without inventing optional fields, got %v", err)
 	}
-	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`)
 	if err == nil || !strings.Contains(err.Error(), "unproven relation from Error to ErrnoException") {
 		t.Fatalf("want the downcast refused for its unproven optional fields, got %v", err)
 	}

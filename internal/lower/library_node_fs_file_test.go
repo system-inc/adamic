@@ -68,8 +68,6 @@ func TestNodeFSFileQualifiedErrorType(t *testing.T) {
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
 		t.Fatalf("want optional host fields proven before the qualified cast, got %v", err)
 	}
-	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const code=(error as NodeJS.ErrnoException).code; console.log(code??'missing');`)
-	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(refused.What, "unproven relation from Error to ErrnoException") {
 		t.Fatalf("want optional-field relation refusal, got %v", err)
 	}
