@@ -190,3 +190,12 @@ Required compiler expression and whole-AST comparisons pass with a real
 checkout at the prescribed pin. Complete pattern validation and both regex
 completions remain outstanding; no new claims. See
 ../wave09_core/HANDED_FLAGS_REPORT.md.
+
+## Current main and lint area landing
+
+Rebased onto area b84a9d931, including main c7991b900. Original rule controls
+and both frozen corpora, all nineteen owned verifiers, mutants/sanitizers,
+bridge/checker, registry, filtered Node, pinned compiler-expression and
+whole-AST checks, and vet pass again. Dynamic RegExp remains refused; both
+regex claims remain incomplete and no new claims were taken. See
+../wave09_core/LANDING_C799_REPORT.md.

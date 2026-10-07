@@ -1,0 +1,27 @@
+go-build 0 0.164999
+valid 0 0.164194
+normal-build 0 1.117746
+sanitized-build 0 3.947527
+js-build 0 0.371199
+default-go 0 0.214788
+default-normal 0 0.031808
+default normal identical bytes 128783
+default-sanitized 0 0.164111
+default sanitized identical bytes 128783
+default-source 0 0.214247
+default source identical bytes 128783
+default-emitted 0 0.114163
+default emitted identical bytes 128783
+allow-go 0 0.166275
+allow-normal 0 0.015788
+allow normal identical bytes 111014
+allow-sanitized 0 0.164107
+allow sanitized identical bytes 111014
+allow-source 0 0.21435
+allow source identical bytes 111014
+allow-emitted 0 0.114042
+allow emitted identical bytes 111014
+mutant-build 0 1.067247
+mutant 0 0.015714
+mutant-go 0 0.164409
+PASS resolved constructor argument judgments, full Go bytes, source/emitted Node, sanitizers and span mutant; native reference/constant resolution is not exercised

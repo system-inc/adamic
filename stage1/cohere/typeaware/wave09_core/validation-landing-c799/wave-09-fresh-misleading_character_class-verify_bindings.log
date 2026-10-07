@@ -1,0 +1,15 @@
+go-build 0 0.115507
+go 0 0.064081
+normal-build 0 7.29972
+normal 0 0.064163
+normal identical bytes 2227
+sanitized-build 0 18.159063
+sanitized 0 0.114143
+sanitized identical bytes 2227
+write-mutant-build 0 7.132852
+write-mutant 0 0.064041
+write-mutant caught at byte 240
+cycle-mutant-build 0 7.12935
+cycle-mutant 0 0.063984
+cycle-mutant caught at byte 883
+PASS native scoped constant strings and regexp identity, independent Go bytes, sanitizers and eligibility mutants

@@ -1,0 +1,21 @@
+=== RUN   TestWave09PinnedTypeParameterFlag
+=== PAUSE TestWave09PinnedTypeParameterFlag
+=== RUN   TestWave09AgreementAndMutants
+    wave_09_test.go:97: controls: 14852 identical finding bytes; findings 44
+    wave_09_test.go:105: controls-asan: 14852 identical finding bytes; findings 44
+    wave_09_test.go:117: prefer-const mutant: exit 0, Go byte oracle catches byte 63
+    wave_09_test.go:117: radix mutant: exit 0, Go byte oracle catches byte 10007
+    wave_09_test.go:117: type-parameter-flag mutant: exit 0, Go byte oracle catches byte 12900
+    wave_09_test.go:117: non-nullable mutant: exit 0, Go byte oracle catches byte 12301
+    wave_09_test.go:130: repository: 19865 identical finding bytes; findings 4
+    wave_09_test.go:131: repository-asan: 19865 identical finding bytes; findings 4
+    wave_09_test.go:137: repository complete output: native 366.464956ms, Go 196.368307ms, findings 4
+    wave_09_test.go:130: compiler: 12783 identical finding bytes; findings 14
+    wave_09_test.go:131: compiler-asan: 12783 identical finding bytes; findings 14
+    wave_09_test.go:137: compiler complete output: native 2.383842902s, Go 605.300224ms, findings 14
+    wave_09_test.go:153: released-registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave09AgreementAndMutants (102.39s)
+=== CONT  TestWave09PinnedTypeParameterFlag
+--- PASS: TestWave09PinnedTypeParameterFlag (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	102.390s

@@ -1,0 +1,97 @@
+[
+  {
+    "check": "verify_helpers.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-verify_helpers.log"
+  },
+  {
+    "check": "label_var/verify.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-label_var-verify.log"
+  },
+  {
+    "check": "label_var/verify_handed.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-label_var-verify_handed.log"
+  },
+  {
+    "check": "invalid_regexp/verify_frontend.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_frontend.log"
+  },
+  {
+    "check": "invalid_regexp/verify_handed.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_handed.log"
+  },
+  {
+    "check": "invalid_regexp/verify_quotes.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_quotes.log"
+  },
+  {
+    "check": "invalid_regexp/verify_format.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_format.log"
+  },
+  {
+    "check": "invalid_regexp/verify_case.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_case.log"
+  },
+  {
+    "check": "invalid_regexp/verify_equivalence.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_equivalence.log"
+  },
+  {
+    "check": "invalid_regexp/verify_class.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_class.log"
+  },
+  {
+    "check": "invalid_regexp/verify_dynamic_gap.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-invalid_regexp-verify_dynamic_gap.log"
+  },
+  {
+    "check": "misleading_character_class/verify_patterns.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_patterns.log"
+  },
+  {
+    "check": "misleading_character_class/verify_literals.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_literals.log"
+  },
+  {
+    "check": "misleading_character_class/verify_literal_tokens.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_literal_tokens.log"
+  },
+  {
+    "check": "misleading_character_class/verify_offsets.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_offsets.log"
+  },
+  {
+    "check": "misleading_character_class/verify_constructors.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_constructors.log"
+  },
+  {
+    "check": "misleading_character_class/verify_constants.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_constants.log"
+  },
+  {
+    "check": "misleading_character_class/verify_bindings.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-misleading_character_class-verify_bindings.log"
+  },
+  {
+    "check": "listeners/verify.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-fresh-listeners-verify.log"
+  }
+]
