@@ -1,2 +1,2 @@
-// Registration metadata only; the source analysis is blocked on shared JSX nodes.
-export const syntaxKinds: readonly number[] = [285, 286, 289];
+// Registration metadata only; the shared registry wiring remains pending.
+export const syntaxKinds: readonly string[] = ["JsxElement", "JsxFragment", "JsxSelfClosingElement"];

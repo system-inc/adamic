@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Numeric declarations compared with independently parsed Go production listeners."""
+"""Named declarations compared with independently parsed Go production listeners."""
 import argparse
 import json
 import pathlib
@@ -57,7 +57,7 @@ mutants = []
 for label, path in imports:
     original = (entry.parent / path).resolve()
     source = original.read_text()
-    source, count = re.subn(r'(export const syntaxKinds: readonly number\[\] = \[)(\d+)', lambda match: match[1] + str(int(match[2]) + 1), source, count=1)
+    source, count = re.subn(r'(export const syntaxKinds: readonly string\[\] = \[)("[^"]+")', lambda match: match[1] + '"Identifier"', source, count=1)
     assert count == 1
     source = re.sub(r"from '([^']+)'", lambda match: "from '" + str((original.parent / match[1]).resolve()) + "'" if match[1].startswith('.') else match[0], source)
     mutation = out / (label + '-mutant.a')
@@ -80,14 +80,14 @@ records = []
 rows = [('react/jsx-fragments', 'react-jsx-fragments'), ('react/jsx-no-constructed-context-values', 'react-jsx-no-constructed-context-values'), ('react/jsx-no-undef', 'react-jsx-no-undef')]
 for name, directory in rows:
     obj = json.loads((base / directory / 'rule.json').read_text())
-    assert set(obj) == {'kinds'} and all(type(kind) is int for kind in obj['kinds'])
+    assert set(obj) == {'kinds'} and all(type(kind) is str for kind in obj['kinds'])
     records.append((name, obj['kinds']))
 def serialize(records):
-    return ''.join(name + ' ' + ','.join(map(str, kinds)) + '\n' for name, kinds in records).encode()
+    return ''.join(name + ' ' + ','.join(sorted(kinds)) + '\n' for name, kinds in records).encode()
 assert serialize(records) == truth
 for index, (name, kinds) in enumerate(records):
     mutation = [(label, values[:]) for label, values in records]
-    mutation[index][1][0] += 1
+    mutation[index][1][0] = 'Identifier'
     assert serialize(mutation) != truth
-    print('KILLED manifest', name, 'first kind plus one', flush=True)
+    print('KILLED manifest', name, 'first kind replaced with Identifier', flush=True)
 print('PASS three JSON manifests matched production registrations', flush=True)

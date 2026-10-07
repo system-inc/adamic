@@ -69,3 +69,19 @@ and optional handed-node visitor are present. ParseNode.kind and the registry
 still use string kinds; the numeric shared interface remains pending. Source
 analyses remain unfinished (HIR/SSA claims remain parked). See
 ../react-jsx-fragments/HARNESS_REBASE_REPORT.md for fresh gates and limits.
+
+## Kind-name correction and current landing
+
+The latest instruction explicitly uses registry `ast.Kind` names, not numeric
+values. The rule.json and listeners.a declarations now use those names.
+Independent Go production registrations, native output and sanitizer output
+agree; replacing a declared kind with Identifier is caught after compilation.
+The old numeric-interface blocker above is superseded. JSX parsing is available
+on this branch through the named shared harness dependency.
+
+Shared registration still needs a checker program/lease, configuration and root
+manifest in RuleContext, which the shared API does not expose. No shared driver
+or context file was changed. The JSX fragment and constructed-context source
+analyses remain unfinished; jsx-no-undef has a tested private native analysis.
+These syntax/checker rules are not parked HIR/SSA rules. No further claims were
+made. The current landing report records revalidation against main b8fb957aa.

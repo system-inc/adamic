@@ -121,3 +121,9 @@ in its own directory (661963afd): 53 controls/29 findings, both corpora, sanitiz
 semantic mutant and released query PASS. Shared registration/checker context and
 Node fact transport remain unfinished. The other two JSX analyses are not yet
 implemented; the batch is not complete and no further rules are claimed.
+
+Landing update: rebased onto origin/main b8fb957aa; preserved ab70f38d4.
+The three current JSX rule.json declarations use named ast.Kind values.
+Numeric-kind blockers in earlier reports are superseded by the user correction.
+Shared checker-context registration and the other two JSX analyses remain unfinished.
+No additional claims. See react-jsx-fragments/LANDING_B8FB957AA_REPORT.md.

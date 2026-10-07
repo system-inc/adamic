@@ -9,14 +9,10 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strconv"
 	"strings"
-
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
 )
 
 func main() {
-	kinds := map[string]int{"KindJsxElement": int(ast.KindJsxElement), "KindJsxFragment": int(ast.KindJsxFragment), "KindJsxOpeningElement": int(ast.KindJsxOpeningElement), "KindJsxSelfClosingElement": int(ast.KindJsxSelfClosingElement)}
 	subjects := []struct{ label, source string }{
 		{"react/jsx-fragments", "react/jsx_fragments.go"},
 		{"react/jsx-no-constructed-context-values", "react/jsx_no_constructed_context_values.go"},
@@ -27,7 +23,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		values := []int{}
+		values := []string{}
 		goast.Inspect(file, func(node goast.Node) bool {
 			literal, ok := node.(*goast.CompositeLit)
 			if !ok {
@@ -46,21 +42,17 @@ func main() {
 				if !ok {
 					panic("production listener kind is not a selector")
 				}
-				value, ok := kinds[key.Sel.Name]
-				if !ok {
-					panic("unknown production listener kind " + key.Sel.Name)
-				}
-				values = append(values, value)
+				values = append(values, strings.TrimPrefix(key.Sel.Name, "Kind"))
 			}
 			return false
 		})
 		if len(values) == 0 {
 			panic("missing production listeners")
 		}
-		sort.Ints(values)
+		sort.Strings(values)
 		text := []string{}
 		for _, value := range values {
-			text = append(text, strconv.Itoa(value))
+			text = append(text, value)
 		}
 		fmt.Printf("%s %s\n", subject.label, strings.Join(text, ","))
 	}
