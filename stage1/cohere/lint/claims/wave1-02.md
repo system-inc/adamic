@@ -54,3 +54,13 @@ The original no-restricted-types reservation remains in place.
 docs/parallel-work.md was found and read on origin/codex/no-shared-lists.
 The existing .a registration limitation remains; any compatibility work used
 for validation will stay in scratch overlays, not shared production files.
+
+## Continuation result
+
+Tailwind and require-description now have owned `.a` candidates and real-Go
+comparison/mutant evidence. They require shared `.a` registration support.
+Two upstream findings-plus-fixes cases remain excluded explicitly. Google
+font display is blocked on shared JSX parsing and has a three-runtime refusal
+probe under gaps/, not a registered placeholder. All three reservations remain
+with slot 02; this is not a claim that three complete ports are certified.
+See wave1-02-continuation-report.md for commits, commands, outputs and limits.
