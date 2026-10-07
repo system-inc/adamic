@@ -1,0 +1,158 @@
+package lint
+
+import (
+	"bytes"
+ "encoding/json"
+ "os/exec"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+// Not parallel: registry generation shares the module graph.
+func TestWave15Shapes(t *testing.T) {
+ directory, err := filepath.Abs(".")
+ if err != nil { t.Fatal(err) }
+ var rows []string
+ for _, subject := range []struct{name, source string}{
+  {"@next/next/no-assign-module-variable", "// 💎\nlet module, moduleName; for (let module of values) {} const {module} = object; let other, module = {};"},
+  {"@typescript-eslint/default-param-last", "function f(a: Map<string, number> = new Map(), b: number) {} class X { constructor(public a /* = comment */ : number, private b?: number, c: number) {} } declare function ambient(a = 1, b: number): void; const f2 = (a = 1, b: number) => b;"},
+  {"structure/tailwind-no-physical-direction", "const classes = 'ml-4\\u0085mr-4 md:hover:pl-2 rtl:mr-3 -border-l-2 flex ml-4;'; const template = `flex ml-2 ${other} mr-2 ${third} text-left`; const bare = 'ml-4;'; const dollars = 'flex ml-$& mr-$` pl-$$ pr-$1'; const placeholders = 'flex ml-{{replacement}}';"},
+ } {
+  path := filepath.Join(t.TempDir(), "shapes.ts")
+  if err := os.WriteFile(path, []byte(subject.source), 0644); err != nil { t.Fatal(err) }
+  rows = append(rows, path+"\t"+subject.name, path+"\tall")
+ }
+ compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+func TestWave15Throughput(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if corpus == "" {
+		t.Fatal("missing pinned TypeScript source")
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, subject := range []struct{ name, source string }{
+		{"@next/next/no-assign-module-variable", "{ let module = %d; }\n"},
+		{"@typescript-eslint/default-param-last", "function f%d(a = 1, b: number) {}\n"},
+ {"structure/tailwind-no-physical-direction", "const c%d = 'ml-4 mr-4 rtl:ml-4';\n"},
+	} {
+		var compilerRows []string
+		err := filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+			if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+				compilerRows = append(compilerRows, path+"\t"+subject.name)
+			}
+			return err
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		compiler := execute(t, "", oracle, "--manifest", manifest(t, compilerRows), "--count")
+		t.Logf("%s: compiler alone %d files findings=%s", subject.name, len(compilerRows), strings.TrimSpace(string(compiler.output)))
+		var text strings.Builder
+		for i := 0; i < 1000; i++ {
+			fmt.Fprintf(&text, subject.source, i)
+		}
+		stress := filepath.Join(t.TempDir(), "throughput.ts")
+		if err := os.WriteFile(stress, []byte(text.String()), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows := append(compilerRows, stress+"\t"+subject.name)
+		path := manifest(t, rows)
+		best := map[string]time.Duration{}
+		var want []byte
+		for round := 0; round < 5; round++ {
+			for _, side := range []string{"Go", "native", "Node"} {
+				var result execution
+				if side == "Go" {
+					result = execute(t, "", oracle, "--manifest", path, "--count")
+				} else if side == "native" {
+					result = execute(t, "", binary, "--manifest", path, "--count")
+				} else {
+					result = node(t, directory, path, true)
+				}
+				if want == nil {
+					want = result.output
+				}
+				if !bytes.Equal(want, result.output) {
+					t.Fatalf("%s count differs on %s", subject.name, side)
+				}
+				if best[side] == 0 || result.duration < best[side] {
+					best[side] = result.duration
+				}
+				t.Logf("%s round %d %s %.6fs findings=%s", subject.name, round+1, side, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(want), &count); err != nil || count == 0 {
+			t.Fatalf("invalid benchmark count %q", want)
+		}
+		for _, side := range []string{"Go", "native", "Node"} {
+			t.Logf("%s best of 5 %s %.6fs %.2f findings/s (%d files, %d findings)", subject.name, side, best[side].Seconds(), float64(count)/best[side].Seconds(), len(rows), count)
+		}
+	}
+}
+
+// Not parallel: uses generated registration and compiler toolchain.
+func TestWave15JsxGap(t *testing.T) {
+ directory, _ := filepath.Abs(".")
+ path := filepath.Join(t.TempDir(), "gap.tsx")
+ source := "export const c = <div className=\"flex ml-4\" />;\n"
+ if err := os.WriteFile(path, []byte(source), 0644); err != nil { t.Fatal(err) }
+ root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
+ probe, _ := filepath.Abs("rules/structure-tailwind-no-physical-direction/jsx-oracle.go.txt")
+ virtual := filepath.Join(root, "wave15_jsx_probe.go")
+ overlay, _ := json.Marshal(map[string]any{"Replace":map[string]string{virtual:probe}})
+ overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+ os.WriteFile(overlayPath, overlay, 0644)
+ oracle := filepath.Join(t.TempDir(), "jsx-oracle")
+ execute(t, root, "go", "build", "-overlay="+overlayPath, "-o", oracle, virtual)
+ want := execute(t, "", oracle, path)
+ if string(want.output) != "useLogicalClass\n" { t.Fatalf("missing independent JSX finding: %q",want.output) }
+ t.Log("Go parses JSX and reports useLogicalClass")
+ runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+ row := manifest(t, []string{path+"\tstructure/tailwind-no-physical-direction"})
+ binary := buildPort(t, directory, true)
+ for _, command := range [][]string{
+  {"node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory,"main.ts"), "--manifest",row},
+  {binary,"--manifest",row},
+ } {
+  cmd := exec.Command(command[0],command[1:]...)
+  stdout, _ := os.CreateTemp(t.TempDir(),"gap-stdout")
+  stderr, _ := os.CreateTemp(t.TempDir(),"gap-stderr")
+  cmd.Stdout = stdout; cmd.Stderr = stderr
+  err := cmd.Run(); stdout.Close(); stderr.Close()
+  report, _ := os.ReadFile(stderr.Name())
+  if err == nil || !strings.Contains(string(report), "parser slice") { t.Fatalf("unexpected JSX gap result: %v %s",err, report) }
+  t.Logf("explicit JSX parser refusal on %s: %s",command[0],strings.TrimSpace(string(report)))
+ }
+}
+
+// Not parallel: copies and mutates the discovered module tree in scratch.
+func TestWave15MessageMutant(t *testing.T) {
+ path := filepath.Join(t.TempDir(), "message.ts")
+ if err := os.WriteFile(path, []byte("const classes = 'flex ml-$&';\n"), 0644); err != nil { t.Fatal(err) }
+ rows := manifest(t, []string{path+"\tstructure/tailwind-no-physical-direction"})
+ oracle := goOracle(t)
+ want := execute(t, "", oracle, "--manifest",rows)
+ directory := mutant(t,
+  `.split("{{original}}").join(original).split("{{replacement}}").join(replacement)`,
+  `.replaceAll("{{original}}", original).replaceAll("{{replacement}}", replacement)`,
+  "rules/structure-tailwind-no-physical-direction/messages.a")
+ for _, side := range []struct{name string; run execution}{
+  {"Node",node(t,directory,rows,false)},
+  {"emitted JavaScript",emitted(t,directory,rows)},
+  {"native",execute(t,"",buildPort(t,directory,true),"--manifest",rows)},
+ } {
+  if bytes.Equal(side.run.output,want.output) { t.Fatalf("message interpolation mutant survived on %s",side.name) }
+  t.Logf("literal interpolation mutant caught on %s: %s",side.name,difference(side.run.output,want.output))
+ }
+}

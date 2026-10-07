@@ -1,0 +1,23 @@
+package main
+
+import (
+ "fmt"
+ "os"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ "github.com/system-inc/cohere/internal/lint/rule"
+ "github.com/system-inc/cohere/internal/lint/rules/tailwind"
+)
+func main() {
+ source, err := os.ReadFile(os.Args[1]); if err != nil { panic(err) }
+ file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: os.Args[1], Path:tspath.Path(os.Args[1])}, string(source), core.ScriptKindTSX)
+ if len(file.Diagnostics()) != 0 { panic(file.Diagnostics()) }
+ count := 0
+ listeners := tailwind.NoPhysicalDirection.Run(rule.Context{SourceFile:file, FileCache:rule.NewFileCache(), Report:func(d rule.Diagnostic) { count++; fmt.Println(d.Message.Id) }},nil)
+ var walk func(*ast.Node)
+ walk = func(n *ast.Node) { if f := listeners[n.Kind]; f != nil { f(n) }; n.ForEachChild(func(c *ast.Node) bool { walk(c); return false }) }
+ walk(file.AsNode())
+ if count != 1 { panic("missing JSX oracle finding") }
+}
