@@ -167,6 +167,20 @@ adamic_string *adamic_apple_string_from(id string) {
 	if (length == 0) {
 		return adamic_string_from_char_codes(0, NULL);
 	}
+	// ASCII: its units are its bytes, copied straight in, and the string says so (units is the UTF-16
+	// length plus one, adamic.h), so nothing translates it again. Asking with no buffer counts the
+	// characters that convert, tagged-pointer strings included, without writing.
+	CFRange whole = CFRangeMake(0, (CFIndex)length);
+	if (CFStringGetBytes((CFStringRef)string, whole, kCFStringEncodingASCII, 0, false, NULL, 0, NULL) == (CFIndex)length) {
+		adamic_string *text = adamic_string_allocate(length);
+		CFIndex written = 0;
+		CFStringGetBytes((CFStringRef)string, whole, kCFStringEncodingASCII, 0, false, (UInt8 *)text->bytes, (CFIndex)length, &written);
+		if (written == (CFIndex)length) {
+			text->units = length + 1;
+			return text;
+		}
+		adamic_release(text);
+	}
 	uint16_t *characters = malloc(length * sizeof *characters);
 	double *codes = malloc(length * sizeof *codes);
 	if (characters == NULL || codes == NULL) {

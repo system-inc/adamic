@@ -12,3 +12,5 @@ internal/native/wasm_exports.go, internal/native/runtime/wasm_exports.c,
 internal/native/wasm/exports/types.a,
 internal/native/wasm/exports/oracle.mjs,
 cloud/reports/wasm-exports/report.md.
+
+User-authorized follow-up: cmd/adamic/main.go, minimal prefix --reactor parsing hook.

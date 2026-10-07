@@ -29,7 +29,7 @@ const usage = `usage:
   adamic c <file.a|file.ts>
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts>
-  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
@@ -72,6 +72,8 @@ func run(arguments []string) int {
 		}
 		fmt.Print(javascript.JavaScript(lowered))
 		return 0
+	case len(arguments) >= 7 && arguments[0] == "build" && arguments[1] == "--target" && arguments[3] == "--reactor" && arguments[5] == "-o":
+		return build(arguments[4], arguments[6], append([]string{"--target", arguments[2], "--reactor"}, arguments[7:]...))
 	case len(arguments) >= 6 && arguments[0] == "build" && arguments[1] == "--target" && arguments[4] == "-o":
 		return build(arguments[3], arguments[5], append([]string{"--target", arguments[2]}, arguments[6:]...))
 	case len(arguments) >= 4 && arguments[0] == "build" && arguments[2] == "-o":
