@@ -79,3 +79,10 @@ The permanent `jsdoc-mutants.py`, invoked by `run.sh`, requires the real parser'
 no-tags return-site mutation to change the extended dump. It also mutates one
 actual JSDoc diagnostic code on the directed JS corpus, requiring precisely one
 diagnostic row to change. Both mutants must execute successfully and fail cmp.
+
+The extended dump's rerun omission/end evidence is in
+`evidence/jsdoc-final/report.json`. Removing the entire reached
+`Parser.initializeState` declaration makes Node fail with a ReferenceError and
+the partial dump fail comparison. The end mutant finishes and changes exactly
+one record. Future native runs must match `reference.json`'s extended dump;
+the legacy SHA cannot pass the current acceptance check.

@@ -1,3 +1,22 @@
+# Extended dump acceptance checks: fourth checkpoint
+
+The full adapted compiler and unchanged validated slice were compared again:
+cmp exits 0, empty stderr, 36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+The same real slice-omission mutant removes Parser.initializeState as a complete
+function declaration in a scratch copy. With PARSER_TRACE_ERRORS=1, Node exits 1
+with ReferenceError: initializeState is not defined; the partial dump also fails
+cmp (exit 1). This is a caught omission, not a completed mutant parse.
+The successful control's planted Identifier.end +1 changes exactly one record
+at line 166, end 3145 to 3146, and cmp exits 1. The permanent dropped-tags and
+JSDoc-only diagnostic mutants were rerun and both fail comparison too.
+Evidence: evidence/jsdoc-final/report.json and logs. No mutated compiler source
+is committed. Native-proof.py now requires this extended reference, not the old
+35,456,964-byte dump. Native comparison awaits compiler's module-init-order fix.
+Until then: **syntax tree and parse diagnostics identical on Node, JSDoc unverified**.
+
+---
+
 # Permanent JSDoc mutants: third checkpoint
 
 The permanent jsdoc-mutants.py runs from run.sh. Dropping tags at the parser's
