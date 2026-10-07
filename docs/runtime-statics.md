@@ -439,3 +439,23 @@ parallel host calls; this unit does not change their semantics.
 | `process.c:prefix:1` | 17 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
 | `process.c:range_name:1` | 18 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
 | `process.c:range_code:1` | 21 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+
+Files reviewed with the scanner inventory above. Buffer, crypto and path units
+and the headers contain no mutable static storage; the filesystem and process
+units have the explicit keys above. These markers certify inventory coverage,
+not the safety of the rows explicitly marked unsafe.
+
+- `runtime-file:node_buffer.c`
+- `runtime-file:node_buffer.h`
+- `runtime-file:node_crypto.c`
+- `runtime-file:node_crypto.h`
+- `runtime-file:node_fs_directory.c`
+- `runtime-file:node_fs_directory.h`
+- `runtime-file:node_fs_file.c`
+- `runtime-file:node_fs_file.h`
+- `runtime-file:node_fs_wasi.h`
+- `runtime-file:node_path.c`
+- `runtime-file:node_path.h`
+- `runtime-file:node_process.c`
+- `runtime-file:node_process.h`
+- `runtime-file:process.c`
