@@ -73,3 +73,11 @@ File: wave15/regexp_flags/parse_flags.a. Four frozen consumers: @next/next/no-ht
 ## Flag parser outcome and selection correction
 
 parseFlags is delivered and validated over 1,197,583 four-way queries and its compiling duplicate mutant. All four upstream consumer families pass. See wave15/regexp_flags/REPORT.md. The initial highest-count assertion above was incorrect: the scan counted the withdrawn DesignSystemForProgram mention as a reservation. Slot 05 explicitly released that six-consumer cache, and there is no other active claim. Continue with the released higher-count helper after pushing this implementation.
+
+## Next helper: released design-system cache
+
+parseFlags is tested and pushed at e9665116f. Refetched every origin branch again; main remains f8013f0b. The only full-symbol occurrence for this helper is slot 05's explicit withdrawal/release. Reclaim before any implementation or support probe:
+
+- github.com/system-inc/cohere/internal/lint/rules/tailwind.DesignSystemForProgram
+
+Six consumers: better-tailwindcss/enforce-canonical-classes, enforce-consistent-class-order, enforce-consistent-variant-order, enforce-shorthand-classes, no-conflicting-classes and no-unknown-classes. Preserve nil-program errors, immutable program identity as the cache key, successful and failed result reuse, recorded read sets and mutex-protected build-once behavior for parallel callers. Slot 05's earlier blocker identifies missing Program/RecordingFS/loaded-result/mutex APIs; recheck on current main before delivering any implementation. Do not weaken the contract or edit shared harness/compiler files. Proposed owned location: wave15/design_system_cache/. Claim precedes code.
