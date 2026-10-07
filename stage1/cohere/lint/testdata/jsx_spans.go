@@ -33,7 +33,11 @@ func main() {
 	case ".js":
 		kind = core.ScriptKindJS
 	}
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, string(data), kind)
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		panic(err)
+	}
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(absolute)}, string(data), kind)
 	jsx := false
 	texts := 0
 	var walk func(*ast.Node)
