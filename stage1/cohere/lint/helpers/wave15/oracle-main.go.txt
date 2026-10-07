@@ -1,0 +1,126 @@
+package main
+
+import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+	rules "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
+	"go/ast"
+	"go/parser"
+	"go/token"
+	"os"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+	"unicode/utf16"
+)
+
+func encode(value string) string {
+	var b strings.Builder
+	for _, c := range utf16.Encode([]rune(value)) {
+		fmt.Fprintf(&b, "%04x", c)
+	}
+	return b.String()
+}
+func decode(value string) string {
+	units := []uint16{}
+	for len(value) > 0 {
+		v, e := strconv.ParseUint(value[:4], 16, 16)
+		if e != nil {
+			panic(e)
+		}
+		units = append(units, uint16(v))
+		value = value[4:]
+	}
+	return string(utf16.Decode(units))
+}
+func main() {
+	if os.Args[1] == "generate" {
+		output, e := os.Create(os.Args[2])
+		if e != nil {
+			panic(e)
+		}
+		defer output.Close()
+		coverage := map[string]int{}
+		stems := []string{"enforce_canonical_classes", "enforce_consistent_class_order", "enforce_consistent_variant_order", "enforce_shorthand_classes", "no_conflicting_classes", "no_unknown_classes"}
+		for _, stem := range stems {
+			paths, e := filepath.Glob(filepath.Join(os.Args[3], stem+"*_test.go"))
+			if e != nil {
+				panic(e)
+			}
+			set := map[string]bool{}
+			for _, path := range paths {
+				f, e := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+				if e != nil {
+					panic(e)
+				}
+				ast.Inspect(f, func(n ast.Node) bool {
+					lit, ok := n.(*ast.BasicLit)
+					if ok && lit.Kind == token.STRING {
+						value, e := strconv.Unquote(lit.Value)
+						if e != nil {
+							panic(e)
+						}
+						set[value] = true
+					}
+					return true
+				})
+			}
+			keys := []string{}
+			for k := range set {
+				keys = append(keys, k)
+			}
+			sort.Strings(keys)
+			coverage[stem] = len(keys)
+			for _, root := range keys {
+				fmt.Fprintf(output, "query\t%s\n", encode(root))
+				for _, kind := range []string{"static", "functional", "compound", "arbitrary", "", "unknown", "🌍"} {
+					fmt.Fprintf(output, "set\t%s\t%s\nquery\t%s\n", encode(root), encode(kind), encode(root))
+				}
+				fmt.Fprintf(output, "delete\t%s\nquery\t%s\n", encode(root), encode(root))
+			}
+		}
+		for _, root := range []string{"", "nul\x00name", "é", "🌍", "a\tb\nc", "static", "missing"} {
+			fmt.Fprintf(output, "set\t%s\t\nquery\t%s\nset\t%s\t%s\nquery\t%s\ndelete\t%s\nquery\t%s\n", encode(root), encode(root), encode(root), encode("compound"), encode(root), encode(root), encode(root))
+		}
+		data, e := json.MarshalIndent(coverage, "", "  ")
+		if e != nil {
+			panic(e)
+		}
+		if e = os.WriteFile(os.Args[2]+".coverage.json", data, 0644); e != nil {
+			panic(e)
+		}
+		return
+	}
+	file, e := os.Open(os.Args[1])
+	if e != nil {
+		panic(e)
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Buffer(make([]byte, 4096), 16*1024*1024)
+	registrations := map[string]string{}
+	queries := 0
+	for scanner.Scan() {
+		fields := strings.Split(scanner.Text(), "\t")
+		if len(fields) < 2 {
+			panic("bad command")
+		}
+		root := decode(fields[1])
+		switch fields[0] {
+		case "set":
+			registrations[root] = decode(fields[2])
+		case "delete":
+			delete(registrations, root)
+		case "query":
+			fmt.Printf("%d\t%s\n", queries, encode(rules.Wave15VariantKind(registrations, root)))
+			queries++
+		default:
+			panic("bad command")
+		}
+	}
+	if e = scanner.Err(); e != nil {
+		panic(e)
+	}
+}

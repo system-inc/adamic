@@ -1,0 +1,29 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { variantKind } from './variant_kind.a';
+function decode(text: string): string {
+    let value = '';
+    for(let position = 0; position < text.length; position += 4) {
+        value += String.fromCharCode(parseInt(text.slice(position, position + 4), 16));
+    }
+    return value;
+}
+function encode(text: string): string {
+    let value = '';
+    for(let position = 0; position < text.length; position++) {
+        value += text.charCodeAt(position).toString(16).padStart(4, '0');
+    }
+    return value;
+}
+const input = readTextFile(programArguments()[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+const registrations = new Map<string, string>();
+let queries = 0;
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const root = decode(fields[1] ?? '');
+    if(fields[0] === 'set') { registrations.set(root, decode(fields[2] ?? '')); }
+    else if(fields[0] === 'delete') { registrations.delete(root); }
+    else if(fields[0] === 'query') { console.log(`${queries}\t${encode(variantKind(registrations, root))}`); queries++; }
+    else { panic('unknown command'); }
+}

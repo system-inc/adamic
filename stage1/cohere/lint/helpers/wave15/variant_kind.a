@@ -1,0 +1,5 @@
+// LoadedDesignSystem.VariantKind over the live registration-kind lookup.
+// The caller owns registry construction; an empty registered kind is present.
+export function variantKind(registrations: ReadonlyMap<string, string>, root: string): string {
+    return registrations.get(root) ?? 'static';
+}
