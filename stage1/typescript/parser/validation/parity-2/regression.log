@@ -1,0 +1,849 @@
+=== RUN   TestStrongAstParentGap
+--- PASS: TestStrongAstParentGap (0.16s)
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (0.13s)
+=== RUN   TestTypeImportCycleGap
+--- PASS: TestTypeImportCycleGap (0.13s)
+=== RUN   TestClassMethodInterfaceAgreesWithNode
+--- PASS: TestClassMethodInterfaceAgreesWithNode (0.36s)
+=== RUN   TestOptionalFunctionValueGap
+--- PASS: TestOptionalFunctionValueGap (0.13s)
+=== RUN   TestConditionalEmptyArrayGap
+--- PASS: TestConditionalEmptyArrayGap (0.12s)
+=== RUN   TestGeneratedExpressionsAgree
+    generated_test.go:131: 1676 generated inputs, seed 720, 1432520 identical tree bytes
+--- PASS: TestGeneratedExpressionsAgree (19.43s)
+=== RUN   TestExpressionsAgree
+    parser_test.go:212: 58 inputs, 17463 identical canonical bytes
+    parser_test.go:221: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:221: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:231: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:231: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:242: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+    parser_test.go:242: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+--- PASS: TestExpressionsAgree (73.71s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:295: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (37.16s)
+=== RUN   TestPerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestPerformance (0.00s)
+=== RUN   TestWholePerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestWholePerformance (0.00s)
+=== RUN   TestNodeCountCheckCatchesMutant
+    performance_test.go:182: native count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+    performance_test.go:182: Node count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+--- PASS: TestNodeCountCheckCatchesMutant (37.71s)
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:115: 299 focused recovery cases: Go, Node and sanitized native identical
+--- PASS: TestMethodRecoveryAgrees (70.35s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/stranded-export
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:220: Node:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+    recovery_test.go:220: native:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:212: Node: nonterminating mutant caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:212: native: nonterminating mutant caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+=== RUN   TestRecoveryMutants/corpus-eof-loop
+    recovery_test.go:212: Node: nonterminating mutant caught by 30s deadline; input /tmp/adamic-parser-recovery-mutants/corpus-eof-loop.ts
+    recovery_test.go:212: native: nonterminating mutant caught by 30s deadline; input /tmp/adamic-parser-recovery-mutants/corpus-eof-loop.ts
+=== RUN   TestRecoveryMutants/speculative-roots
+    recovery_test.go:220: Node:  line 3: port "expression", Go ""
+        Go context:
+        expression
+        0 NumericLiteral 15 17 0 0 -1 0 0		1	
+    recovery_test.go:220: native:  line 3: port "expression", Go ""
+        Go context:
+        expression
+        0 NumericLiteral 15 17 0 0 -1 0 0		1	
+=== RUN   TestRecoveryMutants/function-expression-name
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 33 1 1\t'(' expected.", Go "diagnostic 1005 24 8 1\t'(' expected."
+        Go context:
+        diagnostic 1005 24 8 1	'(' expected.
+        diagnostic 1005 33 1 1	':' expected.
+        diagnostic 1005 37 1 1	',' expected.
+        diagnostic 1128 40 1 1	Declaration or statement expected.
+        file
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 33 1 1\t'(' expected.", Go "diagnostic 1005 24 8 1\t'(' expected."
+        Go context:
+        diagnostic 1005 24 8 1	'(' expected.
+        diagnostic 1005 33 1 1	':' expected.
+        diagnostic 1005 37 1 1	',' expected.
+        diagnostic 1128 40 1 1	Declaration or statement expected.
+        file
+=== RUN   TestRecoveryMutants/missing-type-qualifier
+    recovery_test.go:220: Node:  line 4: port "1 TypeAliasDeclaration 0 8 0 0 -1 0 0\t\t\t\t", Go "1 TypeAliasDeclaration 0 16 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        diagnostic 1110 9 1 1	Type expected.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 16 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+        2 UnionType 8 15 0 0 -1 0 0				
+        3 TypeReference 8 11 0 0 -1 0 0				
+        4 QualifiedName 8 11 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 4: port "1 TypeAliasDeclaration 0 8 0 0 -1 0 0\t\t\t\t", Go "1 TypeAliasDeclaration 0 16 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        diagnostic 1110 9 1 1	Type expected.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 16 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+        2 UnionType 8 15 0 0 -1 0 0				
+        3 TypeReference 8 11 0 0 -1 0 0				
+        4 QualifiedName 8 11 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/decorated-expression
+    recovery_test.go:220: Node:  line 10: port "3 Identifier 3 6 0 0 -1 0 0\t\t\t\t", Go "3 MissingDeclaration 3 6 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        0 SourceFile 0 12 0 0 -1 0 0				
+        1 ExpressionStatement 0 12 0 0 -1 0 0				
+        2 CallExpression 0 11 0 0 3 0 0				
+        3 Identifier 0 1 0 0 -1 0 0		f		
+        3 Identifier 2 3 0 0 -1 0 0		a		
+        3 MissingDeclaration 3 6 0 0 -1 0 0				
+        4 Decorator 3 6 0 0 -1 0 0				
+        5 Identifier 5 6 0 0 -1 0 0		x		
+        3 ObjectLiteralExpression 6 10 0 0 1 0 0				
+        4 ShorthandPropertyAssignment 8 9 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 10: port "3 Identifier 3 6 0 0 -1 0 0\t\t\t\t", Go "3 MissingDeclaration 3 6 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        0 SourceFile 0 12 0 0 -1 0 0				
+        1 ExpressionStatement 0 12 0 0 -1 0 0				
+        2 CallExpression 0 11 0 0 3 0 0				
+        3 Identifier 0 1 0 0 -1 0 0		f		
+        3 Identifier 2 3 0 0 -1 0 0		a		
+        3 MissingDeclaration 3 6 0 0 -1 0 0				
+        4 Decorator 3 6 0 0 -1 0 0				
+        5 Identifier 5 6 0 0 -1 0 0		x		
+        3 ObjectLiteralExpression 6 10 0 0 1 0 0				
+        4 ShorthandPropertyAssignment 8 9 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/arrow-head-rejection
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 5 1 1\t',' expected.", Go "diagnostic 1005 5 1 1\t')' expected."
+        Go context:
+        diagnostic 1005 5 1 1	')' expected.
+        diagnostic 1005 8 2 1	';' expected.
+        diagnostic 1128 19 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 21 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 5 1 1\t',' expected.", Go "diagnostic 1005 5 1 1\t')' expected."
+        Go context:
+        diagnostic 1005 5 1 1	')' expected.
+        diagnostic 1005 8 2 1	';' expected.
+        diagnostic 1128 19 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 21 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/tuple-recovery
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 12 1 1\t']' expected.", Go "diagnostic 1005 12 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 12 1 1	',' expected.
+        file
+        0 SourceFile 0 15 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 15 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 12 1 1\t']' expected.", Go "diagnostic 1005 12 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 12 1 1	',' expected.
+        file
+        0 SourceFile 0 15 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 15 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/type-query-diagnostic
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1110 15 0 1\tType expected.", Go "diagnostic 1003 15 0 1\tIdentifier expected."
+        Go context:
+        diagnostic 1003 15 0 1	Identifier expected.
+        file
+        0 SourceFile 0 15 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 15 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1110 15 0 1\tType expected.", Go "diagnostic 1003 15 0 1\tIdentifier expected."
+        Go context:
+        diagnostic 1003 15 0 1	Identifier expected.
+        file
+        0 SourceFile 0 15 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 15 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/signature-return-token
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 18 2 1\t';' expected.", Go "diagnostic 1005 18 2 1\t':' expected."
+        Go context:
+        diagnostic 1005 18 2 1	':' expected.
+        file
+        0 SourceFile 0 25 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 25 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 18 2 1\t';' expected.", Go "diagnostic 1005 18 2 1\t':' expected."
+        Go context:
+        diagnostic 1005 18 2 1	':' expected.
+        file
+        0 SourceFile 0 25 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 25 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/import-qualifier
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1003 22 0 1\tIdentifier expected.", Go "diagnostic 1110 22 0 1\tType expected."
+        Go context:
+        diagnostic 1110 22 0 1	Type expected.
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 22 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1003 22 0 1\tIdentifier expected.", Go "diagnostic 1110 22 0 1\tType expected."
+        Go context:
+        diagnostic 1110 22 0 1	Type expected.
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 TypeAliasDeclaration 0 22 0 0 -1 0 0				
+        2 Identifier 4 6 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/class-missing-name
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1003 14 0 1\tDeclaration expected.", Go "diagnostic 1146 14 0 1\tDeclaration expected."
+        Go context:
+        diagnostic 1146 14 0 1	Declaration expected.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 ClassDeclaration 0 16 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1003 14 0 1\tDeclaration expected.", Go "diagnostic 1146 14 0 1\tDeclaration expected."
+        Go context:
+        diagnostic 1146 14 0 1	Declaration expected.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 ClassDeclaration 0 16 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+=== RUN   TestRecoveryMutants/property-semicolon
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 12 1 1\t';' expected.", Go "diagnostic 1434 10 1 1\tUnexpected keyword or identifier."
+        Go context:
+        diagnostic 1434 10 1 1	Unexpected keyword or identifier.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 ClassDeclaration 0 16 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 12 1 1\t';' expected.", Go "diagnostic 1434 10 1 1\tUnexpected keyword or identifier."
+        Go context:
+        diagnostic 1434 10 1 1	Unexpected keyword or identifier.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 ClassDeclaration 0 16 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+=== RUN   TestRecoveryMutants/contextual-literal
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1434 0 5 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 ExpressionStatement 0 8 0 0 -1 0 0				
+        2 YieldExpression 0 7 0 0 -1 0 0				
+        3 NumericLiteral 5 7 0 0 -1 0 0		1		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1434 0 5 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 ExpressionStatement 0 8 0 0 -1 0 0				
+        2 YieldExpression 0 7 0 0 -1 0 0				
+        3 NumericLiteral 5 7 0 0 -1 0 0		1		
+=== RUN   TestRecoveryMutants/static-await
+    recovery_test.go:220: Node:  line 8: port "5 CallExpression 18 28 0 0 1 0 0\t\t\t\t", Go "5 AwaitExpression 18 28 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        1 ClassDeclaration 0 33 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 ClassStaticBlockDeclaration 9 31 0 0 -1 0 0				
+        3 Block 16 31 0 0 -1 0 0				
+        4 ExpressionStatement 18 29 0 0 -1 0 0				
+        5 AwaitExpression 18 28 0 0 -1 0 0				
+        6 ParenthesizedExpression 24 28 0 0 -1 0 0				
+        7 NumericLiteral 26 27 0 0 -1 0 0		1		
+        1 EndOfFile 33 33 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 8: port "5 CallExpression 18 28 0 0 1 0 0\t\t\t\t", Go "5 AwaitExpression 18 28 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        1 ClassDeclaration 0 33 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 ClassStaticBlockDeclaration 9 31 0 0 -1 0 0				
+        3 Block 16 31 0 0 -1 0 0				
+        4 ExpressionStatement 18 29 0 0 -1 0 0				
+        5 AwaitExpression 18 28 0 0 -1 0 0				
+        6 ParenthesizedExpression 24 28 0 0 -1 0 0				
+        7 NumericLiteral 26 27 0 0 -1 0 0		1		
+        1 EndOfFile 33 33 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/static-yield
+    recovery_test.go:220: Node:  line 12: port "7 YieldExpression 33 43 0 0 -1 0 0\t\t\t\t", Go "7 CallExpression 33 43 0 0 1 0 0\t\t\t\t"
+        Go context:
+        3 ClassDeclaration 14 48 0 0 -1 0 0				
+        4 Identifier 20 22 0 0 -1 0 0		C		
+        4 ClassStaticBlockDeclaration 24 46 0 0 -1 0 0				
+        5 Block 31 46 0 0 -1 0 0				
+        6 ExpressionStatement 33 44 0 0 -1 0 0				
+        7 CallExpression 33 43 0 0 1 0 0				
+        8 Identifier 33 39 0 0 -1 0 0		yield		
+        8 NumericLiteral 41 42 0 0 -1 0 0		1		
+        1 EndOfFile 50 50 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 12: port "7 YieldExpression 33 43 0 0 -1 0 0\t\t\t\t", Go "7 CallExpression 33 43 0 0 1 0 0\t\t\t\t"
+        Go context:
+        3 ClassDeclaration 14 48 0 0 -1 0 0				
+        4 Identifier 20 22 0 0 -1 0 0		C		
+        4 ClassStaticBlockDeclaration 24 46 0 0 -1 0 0				
+        5 Block 31 46 0 0 -1 0 0				
+        6 ExpressionStatement 33 44 0 0 -1 0 0				
+        7 CallExpression 33 43 0 0 1 0 0				
+        8 Identifier 33 39 0 0 -1 0 0		yield		
+        8 NumericLiteral 41 42 0 0 -1 0 0		1		
+        1 EndOfFile 50 50 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/class-modifiers
+    recovery_test.go:220: Node:  line 7: port "3 Identifier 16 25 0 0 -1 0 0\t\treadonly\t\t", Go "3 StaticKeyword 9 16 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 25 0 0 -1 0 0				
+        1 ClassDeclaration 0 25 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 PropertyDeclaration 9 25 0 0 -1 0 0				
+        3 StaticKeyword 9 16 0 0 -1 0 0				
+        3 Identifier 16 25 0 0 -1 0 0		readonly		
+        1 EndOfFile 25 25 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 7: port "3 Identifier 16 25 0 0 -1 0 0\t\treadonly\t\t", Go "3 StaticKeyword 9 16 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 25 0 0 -1 0 0				
+        1 ClassDeclaration 0 25 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 PropertyDeclaration 9 25 0 0 -1 0 0				
+        3 StaticKeyword 9 16 0 0 -1 0 0				
+        3 Identifier 16 25 0 0 -1 0 0		readonly		
+        1 EndOfFile 25 25 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/static-block-modifier
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1146 16 0 1\tDeclaration expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 21 0 0 -1 0 0				
+        1 ClassDeclaration 0 21 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 ClassStaticBlockDeclaration 9 19 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1146 16 0 1\tDeclaration expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 21 0 0 -1 0 0				
+        1 ClassDeclaration 0 21 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 ClassStaticBlockDeclaration 9 19 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/block-equals-diagnostic
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1128 3 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.", Go "diagnostic 2809 3 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 3 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 7 0 0 -1 0 0				
+        1 Block 0 2 0 0 -1 0 0				
+        1 ExpressionStatement 4 7 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1128 3 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.", Go "diagnostic 2809 3 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 3 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 7 0 0 -1 0 0				
+        1 Block 0 2 0 0 -1 0 0				
+        1 ExpressionStatement 4 7 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/class-missing-brace
+    recovery_test.go:220: Node:  line 2: port "diagnostic 1005 10 0 1\t'}' expected.", Go "file"
+        Go context:
+        diagnostic 1005 8 1 1	'{' expected.
+        file
+        0 SourceFile 0 10 0 0 -1 0 0				
+        1 ClassDeclaration 0 7 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        1 ExpressionStatement 7 10 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 2: port "diagnostic 1005 10 0 1\t'}' expected.", Go "file"
+        Go context:
+        diagnostic 1005 8 1 1	'{' expected.
+        file
+        0 SourceFile 0 10 0 0 -1 0 0				
+        1 ClassDeclaration 0 7 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        1 ExpressionStatement 7 10 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/class-recovery
+    recovery_test.go:212: Node: nonterminating mutant caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/class-recovery.ts
+    recovery_test.go:212: native: nonterminating mutant caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/class-recovery.ts
+=== RUN   TestRecoveryMutants/empty-heritage
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1109 16 1 1\tExpression expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 18 0 0 -1 0 0				
+        1 ClassDeclaration 0 18 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 HeritageClause 7 15 0 0 -1 0 0	ExtendsKeyword			
+    recovery_test.go:220: native:  line 1: port "diagnostic 1109 16 1 1\tExpression expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 18 0 0 -1 0 0				
+        1 ClassDeclaration 0 18 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 HeritageClause 7 15 0 0 -1 0 0	ExtendsKeyword			
+=== RUN   TestRecoveryMutants/stranded-catch
+    recovery_test.go:212: Node: nonterminating mutant caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/stranded-catch.ts
+    recovery_test.go:212: native: nonterminating mutant caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/stranded-catch.ts
+=== RUN   TestRecoveryMutants/arrow-missing-block
+    recovery_test.go:220: Node:  line 2: port "diagnostic 1128 15 1 1\tDeclaration or statement expected.", Go "file"
+        Go context:
+        diagnostic 1005 5 6 1	'{' expected.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 ExpressionStatement 0 16 0 0 -1 0 0				
+        2 ArrowFunction 0 16 0 0 -1 0 0				
+        3 Parameter 0 1 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 2: port "diagnostic 1128 15 1 1\tDeclaration or statement expected.", Go "file"
+        Go context:
+        diagnostic 1005 5 6 1	'{' expected.
+        file
+        0 SourceFile 0 16 0 0 -1 0 0				
+        1 ExpressionStatement 0 16 0 0 -1 0 0				
+        2 ArrowFunction 0 16 0 0 -1 0 0				
+        3 Parameter 0 1 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-arrow-name
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1003 14 1 1\tIdentifier expected.", Go "diagnostic 1005 17 2 1\t';' expected."
+        Go context:
+        diagnostic 1005 17 2 1	';' expected.
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 VariableStatement 0 16 0 0 -1 0 0				
+        2 VariableDeclarationList 0 16 0 0 -1 0 0				2
+    recovery_test.go:220: native:  line 1: port "diagnostic 1003 14 1 1\tIdentifier expected.", Go "diagnostic 1005 17 2 1\t';' expected."
+        Go context:
+        diagnostic 1005 17 2 1	';' expected.
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 VariableStatement 0 16 0 0 -1 0 0				
+        2 VariableDeclarationList 0 16 0 0 -1 0 0				2
+=== RUN   TestRecoveryMutants/generic-arrow-block
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 16 1 1\t',' expected.", Go "diagnostic 1005 20 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 20 1 1	'=>' expected.
+        file
+        0 SourceFile 0 33 0 0 -1 0 0				
+        1 VariableStatement 0 33 0 0 -1 0 0				
+        2 VariableDeclarationList 0 33 0 0 -1 0 0				2
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 16 1 1\t',' expected.", Go "diagnostic 1005 20 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 20 1 1	'=>' expected.
+        file
+        0 SourceFile 0 33 0 0 -1 0 0				
+        1 VariableStatement 0 33 0 0 -1 0 0				
+        2 VariableDeclarationList 0 33 0 0 -1 0 0				2
+=== RUN   TestRecoveryMutants/generic-arrow-parameters
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 16 2 1\t',' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 VariableStatement 0 22 0 0 -1 0 0				
+        2 VariableDeclarationList 0 21 0 0 -1 0 0				2
+        3 VariableDeclaration 5 21 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 16 2 1\t',' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 VariableStatement 0 22 0 0 -1 0 0				
+        2 VariableDeclarationList 0 21 0 0 -1 0 0				2
+        3 VariableDeclaration 5 21 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-arrow-return
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1110 18 2 1\tType expected.", Go "diagnostic 1005 16 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 16 1 1	',' expected.
+        diagnostic 1005 18 2 1	';' expected.
+        file
+        0 SourceFile 0 23 0 0 -1 0 0				
+        1 VariableStatement 0 17 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1110 18 2 1\tType expected.", Go "diagnostic 1005 16 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 16 1 1	',' expected.
+        diagnostic 1005 18 2 1	';' expected.
+        file
+        0 SourceFile 0 23 0 0 -1 0 0				
+        1 VariableStatement 0 17 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-arrow-speculation
+    recovery_test.go:220: Node:  line 15: port "3 ArrowFunction 2 29 0 0 -1 0 0\t\t\t\t", Go "3 TypeAssertionExpression 2 29 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 47 0 0 -1 0 0				
+        1 ExpressionStatement 0 31 0 0 -1 0 0				
+        2 CallExpression 0 29 0 0 1 0 0				
+        3 Identifier 0 1 0 0 -1 0 0		f		
+        3 TypeAssertionExpression 2 29 0 0 -1 0 0				
+        4 ConditionalType 3 29 0 0 -1 0 0				
+        5 TypeReference 3 4 0 0 -1 0 0				
+        6 Identifier 3 4 0 0 -1 0 0		T		
+        5 TypeLiteral 12 29 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 15: port "3 ArrowFunction 2 29 0 0 -1 0 0\t\t\t\t", Go "3 TypeAssertionExpression 2 29 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 47 0 0 -1 0 0				
+        1 ExpressionStatement 0 31 0 0 -1 0 0				
+        2 CallExpression 0 29 0 0 1 0 0				
+        3 Identifier 0 1 0 0 -1 0 0		f		
+        3 TypeAssertionExpression 2 29 0 0 -1 0 0				
+        4 ConditionalType 3 29 0 0 -1 0 0				
+        5 TypeReference 3 4 0 0 -1 0 0				
+        6 Identifier 3 4 0 0 -1 0 0		T		
+        5 TypeLiteral 12 29 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/type-argument-speculation
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 17 1 1\t'>' expected.", Go "diagnostic 1005 17 1 1\t';' expected."
+        Go context:
+        diagnostic 1005 17 1 1	';' expected.
+        diagnostic 1005 29 1 1	';' expected.
+        diagnostic 1011 31 0 1	An element access expression should take an argument.
+        diagnostic 1109 47 1 1	Expression expected.
+        file
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 17 1 1\t'>' expected.", Go "diagnostic 1005 17 1 1\t';' expected."
+        Go context:
+        diagnostic 1005 17 1 1	';' expected.
+        diagnostic 1005 29 1 1	';' expected.
+        diagnostic 1011 31 0 1	An element access expression should take an argument.
+        diagnostic 1109 47 1 1	Expression expected.
+        file
+=== RUN   TestRecoveryMutants/type-member-modifiers
+    recovery_test.go:220: Node:  line 6: port "3 Identifier 21 29 0 0 -1 0 0\t\tboolean\t\t", Go "3 PrivateKeyword 13 21 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 32 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 32 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 PropertySignature 13 30 0 0 -1 0 0				
+        3 PrivateKeyword 13 21 0 0 -1 0 0				
+        3 Identifier 21 29 0 0 -1 0 0		boolean		
+        1 EndOfFile 32 32 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 6: port "3 Identifier 21 29 0 0 -1 0 0\t\tboolean\t\t", Go "3 PrivateKeyword 13 21 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 32 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 32 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 PropertySignature 13 30 0 0 -1 0 0				
+        3 PrivateKeyword 13 21 0 0 -1 0 0				
+        3 Identifier 21 29 0 0 -1 0 0		boolean		
+        1 EndOfFile 32 32 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/accessor-parameters
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 19 0 1\t'}' expected.", Go "diagnostic 1005 19 0 1\t'(' expected."
+        Go context:
+        diagnostic 1005 19 0 1	'(' expected.
+        file
+        0 SourceFile 0 19 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 19 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 19 0 1\t'}' expected.", Go "diagnostic 1005 19 0 1\t'(' expected."
+        Go context:
+        diagnostic 1005 19 0 1	'(' expected.
+        file
+        0 SourceFile 0 19 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 19 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/construct-recognition
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 17 0 1\t'(' expected.", Go "diagnostic 1005 17 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 17 0 1	'}' expected.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 17 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 17 0 1\t'(' expected.", Go "diagnostic 1005 17 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 17 0 1	'}' expected.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 17 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/accessor-follow
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1003 17 0 1\tIdentifier expected.", Go "diagnostic 1005 17 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 17 0 1	'}' expected.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 17 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:220: native:  line 1: port "diagnostic 1003 17 0 1\tIdentifier expected.", Go "diagnostic 1005 17 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 17 0 1	'}' expected.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 17 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/arrow-block
+    recovery_test.go:220: Node:  line 1: port "diagnostic 1005 4 1 1\t';' expected.", Go "diagnostic 1005 4 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 4 1 1	'=>' expected.
+        file
+        0 SourceFile 0 12 0 0 -1 0 0				
+        1 ExpressionStatement 0 12 0 0 -1 0 0				
+        2 ArrowFunction 0 12 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "diagnostic 1005 4 1 1\t';' expected.", Go "diagnostic 1005 4 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 4 1 1	'=>' expected.
+        file
+        0 SourceFile 0 12 0 0 -1 0 0				
+        1 ExpressionStatement 0 12 0 0 -1 0 0				
+        2 ArrowFunction 0 12 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/heritage-kind
+    recovery_test.go:220: Node:  line 6: port "3 ExpressionWithTypeArguments 18 22 0 0 -1 0 0\t\t\t\t", Go "3 TypeReference 18 22 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 25 0 0 -1 0 0				
+        1 ClassDeclaration 0 25 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 HeritageClause 7 22 0 0 -1 0 0	ImplementsKeyword			
+        3 TypeReference 18 22 0 0 -1 0 0				
+        4 QualifiedName 18 22 0 0 -1 0 0				
+        5 Identifier 18 20 0 0 -1 0 0		A		
+        5 Identifier 21 22 0 0 -1 0 0		B		
+        1 EndOfFile 25 25 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 6: port "3 ExpressionWithTypeArguments 18 22 0 0 -1 0 0\t\t\t\t", Go "3 TypeReference 18 22 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        file
+        0 SourceFile 0 25 0 0 -1 0 0				
+        1 ClassDeclaration 0 25 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+        2 HeritageClause 7 22 0 0 -1 0 0	ImplementsKeyword			
+        3 TypeReference 18 22 0 0 -1 0 0				
+        4 QualifiedName 18 22 0 0 -1 0 0				
+        5 Identifier 18 20 0 0 -1 0 0		A		
+        5 Identifier 21 22 0 0 -1 0 0		B		
+        1 EndOfFile 25 25 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/assignment-left
+    recovery_test.go:220: Node:  line 1: port "file", Go "diagnostic 1005 6 1 1\t';' expected."
+        Go context:
+        diagnostic 1005 6 1 1	';' expected.
+        file
+        0 SourceFile 0 10 0 0 -1 0 0				
+        1 ExpressionStatement 0 5 0 0 -1 0 0				
+        2 BinaryExpression 0 5 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 1: port "file", Go "diagnostic 1005 6 1 1\t';' expected."
+        Go context:
+        diagnostic 1005 6 1 1	';' expected.
+        file
+        0 SourceFile 0 10 0 0 -1 0 0				
+        1 ExpressionStatement 0 5 0 0 -1 0 0				
+        2 BinaryExpression 0 5 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/object-modifiers
+    recovery_test.go:220: Node:  line 8: port "5 Identifier 11 16 0 0 -1 0 0\t\tsize\t\t", Go "5 ReadonlyKeyword 2 11 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        0 SourceFile 0 28 0 0 -1 0 0				
+        1 ExpressionStatement 0 28 0 0 -1 0 0				
+        2 ParenthesizedExpression 0 28 0 0 -1 0 0				
+        3 ObjectLiteralExpression 1 27 0 0 1 1 0				
+        4 PropertyAssignment 2 24 0 0 -1 0 0				
+        5 ReadonlyKeyword 2 11 0 0 -1 0 0				
+        5 Identifier 11 16 0 0 -1 0 0		size		
+        5 Identifier 17 24 0 0 -1 0 0		number		
+        1 EndOfFile 28 28 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 8: port "5 Identifier 11 16 0 0 -1 0 0\t\tsize\t\t", Go "5 ReadonlyKeyword 2 11 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        0 SourceFile 0 28 0 0 -1 0 0				
+        1 ExpressionStatement 0 28 0 0 -1 0 0				
+        2 ParenthesizedExpression 0 28 0 0 -1 0 0				
+        3 ObjectLiteralExpression 1 27 0 0 1 1 0				
+        4 PropertyAssignment 2 24 0 0 -1 0 0				
+        5 ReadonlyKeyword 2 11 0 0 -1 0 0				
+        5 Identifier 11 16 0 0 -1 0 0		size		
+        5 Identifier 17 24 0 0 -1 0 0		number		
+        1 EndOfFile 28 28 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/index-parameters
+    recovery_test.go:220: Node:  line 11: port "3 TypeReference 26 28 0 0 -1 0 0\t\t\t\t", Go "3 Parameter 19 24 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        2 IndexSignature 13 29 0 0 -1 0 0				
+        3 Parameter 15 19 0 0 -1 0 0				
+        4 Identifier 15 16 0 0 -1 0 0		x		
+        4 TypeReference 17 19 0 0 -1 0 0				
+        5 Identifier 17 19 0 0 -1 0 0		T		
+        3 Parameter 19 24 0 0 -1 0 0				
+        4 Identifier 19 21 0 0 -1 0 0		y		
+        4 TypeReference 22 24 0 0 -1 0 0				
+        5 Identifier 22 24 0 0 -1 0 0		U		
+        3 TypeReference 26 28 0 0 -1 0 0				
+    recovery_test.go:220: native:  line 11: port "3 TypeReference 26 28 0 0 -1 0 0\t\t\t\t", Go "3 Parameter 19 24 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        2 IndexSignature 13 29 0 0 -1 0 0				
+        3 Parameter 15 19 0 0 -1 0 0				
+        4 Identifier 15 16 0 0 -1 0 0		x		
+        4 TypeReference 17 19 0 0 -1 0 0				
+        5 Identifier 17 19 0 0 -1 0 0		T		
+        3 Parameter 19 24 0 0 -1 0 0				
+        4 Identifier 19 21 0 0 -1 0 0		y		
+        4 TypeReference 22 24 0 0 -1 0 0				
+        5 Identifier 22 24 0 0 -1 0 0		U		
+        3 TypeReference 26 28 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/heritage-comma
+    recovery_test.go:220: Node:  line 1: port "file", Go "diagnostic 1005 18 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 18 1 1	',' expected.
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 ClassDeclaration 0 22 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+    recovery_test.go:220: native:  line 1: port "file", Go "diagnostic 1005 18 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 18 1 1	',' expected.
+        file
+        0 SourceFile 0 22 0 0 -1 0 0				
+        1 ClassDeclaration 0 22 0 0 -1 0 0				
+        2 Identifier 5 7 0 0 -1 0 0		C		
+--- PASS: TestRecoveryMutants (832.53s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (18.47s)
+    --- PASS: TestRecoveryMutants/stranded-export (17.86s)
+    --- PASS: TestRecoveryMutants/generic-child (20.66s)
+    --- PASS: TestRecoveryMutants/eof-loop (22.78s)
+    --- PASS: TestRecoveryMutants/corpus-eof-loop (78.00s)
+    --- PASS: TestRecoveryMutants/speculative-roots (17.60s)
+    --- PASS: TestRecoveryMutants/function-expression-name (17.66s)
+    --- PASS: TestRecoveryMutants/missing-type-qualifier (17.85s)
+    --- PASS: TestRecoveryMutants/decorated-expression (23.34s)
+    --- PASS: TestRecoveryMutants/arrow-head-rejection (17.27s)
+    --- PASS: TestRecoveryMutants/tuple-recovery (18.87s)
+    --- PASS: TestRecoveryMutants/type-query-diagnostic (18.67s)
+    --- PASS: TestRecoveryMutants/signature-return-token (17.60s)
+    --- PASS: TestRecoveryMutants/import-qualifier (17.75s)
+    --- PASS: TestRecoveryMutants/class-missing-name (17.32s)
+    --- PASS: TestRecoveryMutants/property-semicolon (17.89s)
+    --- PASS: TestRecoveryMutants/contextual-literal (15.72s)
+    --- PASS: TestRecoveryMutants/static-await (16.37s)
+    --- PASS: TestRecoveryMutants/static-yield (17.17s)
+    --- PASS: TestRecoveryMutants/class-modifiers (17.95s)
+    --- PASS: TestRecoveryMutants/static-block-modifier (17.09s)
+    --- PASS: TestRecoveryMutants/block-equals-diagnostic (16.60s)
+    --- PASS: TestRecoveryMutants/class-missing-brace (16.05s)
+    --- PASS: TestRecoveryMutants/class-recovery (20.56s)
+    --- PASS: TestRecoveryMutants/empty-heritage (17.58s)
+    --- PASS: TestRecoveryMutants/stranded-catch (23.11s)
+    --- PASS: TestRecoveryMutants/arrow-missing-block (17.82s)
+    --- PASS: TestRecoveryMutants/generic-arrow-name (17.23s)
+    --- PASS: TestRecoveryMutants/generic-arrow-block (17.53s)
+    --- PASS: TestRecoveryMutants/generic-arrow-parameters (16.87s)
+    --- PASS: TestRecoveryMutants/generic-arrow-return (21.42s)
+    --- PASS: TestRecoveryMutants/generic-arrow-speculation (17.63s)
+    --- PASS: TestRecoveryMutants/type-argument-speculation (17.56s)
+    --- PASS: TestRecoveryMutants/type-member-modifiers (17.13s)
+    --- PASS: TestRecoveryMutants/accessor-parameters (16.39s)
+    --- PASS: TestRecoveryMutants/construct-recognition (15.46s)
+    --- PASS: TestRecoveryMutants/accessor-follow (17.15s)
+    --- PASS: TestRecoveryMutants/arrow-block (16.86s)
+    --- PASS: TestRecoveryMutants/heritage-kind (16.80s)
+    --- PASS: TestRecoveryMutants/assignment-left (16.80s)
+    --- PASS: TestRecoveryMutants/object-modifiers (16.89s)
+    --- PASS: TestRecoveryMutants/index-parameters (17.60s)
+    --- PASS: TestRecoveryMutants/heritage-comma (16.84s)
+=== RUN   TestRecoveredLintCasesAgree
+    recovery_test.go:292: all eight original source/style combinations match real cohere findings and proposed repairs
+--- PASS: TestRecoveredLintCasesAgree (35.93s)
+=== RUN   TestEveryTypeNodeKindAgrees
+    type_kinds_test.go:45: Go IsTypeNodeKind inventory: 42 kinds, each covered; 250 identical doc-type bytes
+--- PASS: TestEveryTypeNodeKindAgrees (19.13s)
+=== RUN   TestWholeGeneratedAgrees
+    whole_generated_test.go:71: 68 generated whole files, 93323 identical bytes
+--- PASS: TestWholeGeneratedAgrees (17.91s)
+=== RUN   TestObsoleteImportAttributesAgrees
+    whole_generated_test.go:90: obsolete assert forms: Go required to emit only diagnostic 2880; 1021 identical tree bytes
+--- PASS: TestObsoleteImportAttributesAgrees (18.22s)
+=== RUN   TestWholeMutants

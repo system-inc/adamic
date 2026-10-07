@@ -1,0 +1,8 @@
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/corpus-eof-loop
+    recovery_test.go:212: Node: nonterminating mutant caught by 30s deadline; input /tmp/adamic-parser-recovery-mutants/corpus-eof-loop.ts
+    recovery_test.go:212: native: nonterminating mutant caught by 30s deadline; input /tmp/adamic-parser-recovery-mutants/corpus-eof-loop.ts
+--- PASS: TestRecoveryMutants (82.43s)
+    --- PASS: TestRecoveryMutants/corpus-eof-loop (81.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	82.470s
