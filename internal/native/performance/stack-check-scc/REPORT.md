@@ -14,6 +14,13 @@ Ir and 6.08% I1 misses with only 0.31% .text growth. Neither establishes a timin
 speedup or changes the incomplete production status. The follow-up uses the
 retained c01907a binaries, independently of the newer main merged for delivery.
 
+## Sibling-call follow-on
+
+The [sibling-call comparison](tail-calls/REPORT.md) replaces only the global
+flag in scratch: instructions increase 0.118%, best-of-ten user time increases
+0.816%, and modeled L1 instruction misses decrease 0.628%. It fails the 2%
+gate, so the follow-on stops at measurement with no production flag changes.
+
 ## Measurement first
 
 Reconstructed the exact SPLIT.md parse-only driver from batch 8 commit
