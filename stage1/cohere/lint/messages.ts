@@ -1,11 +1,5 @@
 // Descriptions copied from the pinned cohere rules.
 
-export const messageContinue =
-    'This loop uses `continue`, which jumps to the next iteration from the middle of the body. A reader tracing what happens on one pass has to hold every `continue` above their position in mind, because any of them may have skipped the code they are looking at, and in a `for` loop the update expression still runs while the rest of the body does not. Inverting the condition and wrapping the remainder in an `if` says the same thing with the skip visible in the shape of the code rather than in a jump.';
-
-export const messageWith =
-    "A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.";
-
 export const messageNew =
     "This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.";
 

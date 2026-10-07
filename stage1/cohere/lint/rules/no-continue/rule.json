@@ -1,0 +1,12 @@
+{
+  "name": "no-continue",
+  "kinds": [
+    "ContinueStatement"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoContinue",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoContinue",
+  "factory": "create",
+  "class": "Rule"
+}

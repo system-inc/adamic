@@ -1,0 +1,12 @@
+{
+  "name": "no-with",
+  "kinds": [
+    "WithStatement"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoWith",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoWith",
+  "factory": "create",
+  "class": "Rule"
+}

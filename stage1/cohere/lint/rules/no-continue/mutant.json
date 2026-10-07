@@ -1,0 +1,5 @@
+{
+  "name": "control statement omitted",
+  "from": "node.kind === 'ContinueStatement'",
+  "to": "node.kind === 'BreakStatement'"
+}
