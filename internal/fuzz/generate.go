@@ -58,6 +58,7 @@ var Features = []string{
 	"bitwise",          // &, |, ^, ~, <<, >> and >>>
 	"shared-slices",    // long strings, slices that share their owner's bytes, and += on those slices
 	"ownership",        // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
+	"overrides",        // static read-only signatures with implementations that mutate or escape arguments
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -238,6 +239,11 @@ func (g *generator) program() *Program {
 	var shareDeclaration, shareCall *Statement
 	if g.allowed("shared-slices") {
 		shareDeclaration, shareCall = g.sharedSliceProbe()
+	}
+	if g.allowed("overrides") {
+		for _, part := range g.overridesProgram() {
+			add(part)
+		}
 	}
 	if g.allowed("ownership") {
 		for _, part := range g.ownershipProgram() {
