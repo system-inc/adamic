@@ -1501,6 +1501,54 @@ UBSan, and LeakSanitizer for this fixture. The whole repository gate was not
 run. Closure-body binding optimization, destructuring, and write-only global
 effect summaries remain uncovered, as they were before this fixture.
 
+### Strong field borrow chains
+
+A strong field read can borrow transitively from a stable root (`borrow.go`,
+`element_borrow.go`). For example, `node.parent`, `node.parent.kind`, and
+`node.children` can be read without taking a count; an uncaptured, unassigned
+local initialized by such a read can borrow for its scope too. Existing borrowed
+parameters carry `Local.Borrowed`; an unassigned ordinary local already holds its
+own count. A captured or global root does not qualify.
+
+The proof checks the whole function, including enclosing blocks, loops, catches
+and finallies. No assignment can replace the root. No statement or reachable
+callee can replace any field on the chain. Named calls use every `CallTargets`
+implementation, recursive bodies included; callback calls use `ClosureTargets`,
+with `Unknown` refusing the borrow. Field names conservatively match every holder,
+not just related types, since the native IR does not carry that relation. Unknown
+operations and object spreads refuse. Emission also refuses a root that reuse
+consumes, moves or takes over. Borrowing declarations mark their variables
+`Borrowed` and their root as lending before reuse is planned.
+
+A borrowed chain is snapshotted at its source read. A store or an owned return
+still takes a count through the existing ownership helpers. A captured declaration
+still creates an owning capture cell. An argument to an existing borrowed
+parameter needs no temporary retain when the chain survives the function's calls;
+a consumed argument still takes the count its convention requires.
+
+This proof follows strong property loads and `Defined` only. It does not infer an
+owner through a weak target read, a call result, an optional chain or an indexed
+load. Weak targets need a separate strong owner; accessor results need the
+compiler's borrowed-return provenance. The pass does not change parameter
+conventions, for-of emission, accessor returns or devirtualization.
+
+The nine `borrow_chain_*.a` fixtures run against source on Node, native with
+sanitizers, and the JavaScript backend. The tree-walk fixture loses nine pairs;
+the chained-argument fixture goes from one retain to zero. Refusals keep the count
+that protects the saved parent, override argument or capture. Mutants borrowing
+across a field write, a reassigned root, a writing override or an Unknown callback,
+and a generated capture cell with its retain removed, each fail under ASan.
+Disabling declaration borrowing fails the positive planner control; changing a
+recorded retain fails the counts gate.
+
+The current-main 321-fixture comparison removes 514 retains and 509 releases, with no
+rises or changes to allocation, free, peak or region counts. Five extra removed
+retains are absent optional string reads in `literal_optional_shapes.a`: their
+NULL values were passed on by `??` without a corresponding temporary release.
+Batch8 removes 15,334,163 pairs on the 77-file compiler corpus, while its best
+release time moves only 2.4 percent. Full evidence, commands and remaining
+accessor/iterator work are in [the borrow-chains report](../internal/native/performance/borrow-chains/REPORT.md).
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.

@@ -1,0 +1,9 @@
+interface Leaf { readonly kind: string; }
+interface Node { parent: Leaf; }
+function make(n: number): Node { return { parent: { kind: `unknown${n}` } }; }
+function visit(node: Node, callback: (node: Node) => void): void {
+ const parent = node.parent;
+ callback(node);
+ console.log(parent.kind);
+}
+visit(make(1), (node: Node): void => { node.parent = { kind: `new${2}` }; });
