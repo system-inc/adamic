@@ -36,7 +36,7 @@ ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -tim
 go test ./internal/native -run TestPrimitiveArrayStoresMatchNode -count=1
   literal-control.log: PASS 2.823s.
 go test -overlay scratch/emitter-speed/sieve/mutant-overlay.json ./internal/native -run TestPrimitiveArrayStoresMatchNode -count=1
-  type-mutant.log: executable exit 1, LeakSanitizer 73-byte leak.
+  type-mutant.log.gz: executable exit 1, LeakSanitizer 73-byte leak.
 go test -overlay scratch/emitter-speed/sieve/tag-mutant-overlay.json ./internal/native -run TestPrimitiveArrayStoresMatchNode -count=1
   tag-mutant.log: executable stdout differs from Node for missing === false.
 go vet ./...
@@ -70,3 +70,5 @@ Supplied-corpus load before/after: 5.75 3.53 2.39 2/211 62507 / 4.40 3.36 2.36 1
 Million-case load before/after: 4.40 3.36 2.36 2/211 62666 / 1.07 2.09 2.05 2/206 62934
 
 Mutant replacement sources are archived as type-mutant.go.txt and tag-mutant.go.txt. To repeat, create a Go overlay mapping the absolute internal/native/emit_speed.go path to the absolute replacement source path, then run the focused command above. The type mutant was re-run against the final compiler/test (FAIL 0.410s, same 73-byte LeakSanitizer failure). gofmt -l cmd internal produced no output.
+
+Raw Valgrind stderr and the LeakSanitizer mutant log are gzip-compressed to preserve their original whitespace.
