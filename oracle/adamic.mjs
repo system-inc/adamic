@@ -6,6 +6,7 @@
 // that throw, where natively a panic ends the program on the spot; so from the panic on, everything
 // the program writes is dropped and the exit is 70 whatever it does, which makes what it does after
 // unseen, as it is natively (docs/memory.md, "Exceptions").
+export { encodeJson } from './json_encode.mjs';
 export { decodeJson } from './json_decode.mjs';
 
 import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';

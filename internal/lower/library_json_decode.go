@@ -271,7 +271,7 @@ func DecodeJsonSources(ctx context.Context, program *load.Program) (map[string]s
 			if found != nil {
 				return true
 			}
-			if node.Kind == ast.KindCallExpression && l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") {
+			if node.Kind == ast.KindCallExpression && (l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") || l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson")) {
 				descriptor, err := l.decodeJsonType(node)
 				if err != nil {
 					found = err
