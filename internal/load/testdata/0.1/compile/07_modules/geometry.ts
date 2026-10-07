@@ -9,7 +9,7 @@ export function distance(from: Point, to: Point): number {
 
 export function pathLength(points: readonly Point[]): number {
     let length = 0;
-    let previous: Point | undefined = undefined;
+    let previous: Point | undefined;
     for(const point of points) {
         if(previous !== undefined) {
             length += distance(previous, point);

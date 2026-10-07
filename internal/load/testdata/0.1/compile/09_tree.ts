@@ -29,7 +29,7 @@ function height(tree: Tree | undefined): number {
     return tree === undefined ? 0 : 1 + Math.max(height(tree.left), height(tree.right));
 }
 
-let tree: Tree | undefined = undefined;
+let tree: Tree | undefined;
 for(const value of [50, 30, 70, 20, 40, 60, 80, 30, 65]) {
     tree = insert(tree, value);
 }
