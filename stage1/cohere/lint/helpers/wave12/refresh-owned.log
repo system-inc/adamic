@@ -1,0 +1,64 @@
+=== RUN   TestCounterExactPrimitiveGap
+    counter_gap_test.go:21: actual Go and exact Node support probe match nine counter observations:
+        1
+        2
+        3
+        9007199254740992
+        9007199254740993
+        9007199254740994
+        9223372036854775807
+        -9223372036854775808
+        -9223372036854775807
+    counter_gap_test.go:33: exact native/emitted-IR support blocked before backend emission: /workspace/adamic/stage1/cohere/lint/helpers/wave12/gaps/atomic-counter.a:4:10: stage 0 can't lower a function returning bigint yet
+    counter_gap_test.go:39: backend 0 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+    counter_gap_test.go:39: backend 1 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+    counter_gap_test.go:39: backend 2 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+--- PASS: TestCounterExactPrimitiveGap (8.33s)
+=== RUN   TestNormalizationMatchesGo
+    normalization_test.go:100: 9364 cases and 309422 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestNormalizationMatchesGo (7.09s)
+=== RUN   TestNormalizationMutants
+=== RUN   TestNormalizationMutants/namespace-suffix
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 8
+=== RUN   TestNormalizationMutants/newline-crossing
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 168
+=== RUN   TestNormalizationMutants/nested-key-join
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 12
+--- PASS: TestNormalizationMutants (28.85s)
+    --- PASS: TestNormalizationMutants/namespace-suffix (8.99s)
+    --- PASS: TestNormalizationMutants/newline-crossing (7.48s)
+    --- PASS: TestNormalizationMutants/nested-key-join (11.15s)
+=== RUN   TestSegmentMatchesGo
+    segment_test.go:24: 30857 cases and 855507 bytes match actual Go, Node, sanitized native and emitted JavaScript
+--- PASS: TestSegmentMatchesGo (17.26s)
+=== RUN   TestSegmentMutants
+=== RUN   TestSegmentMutants/drop-final-empty
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 1
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 1
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 1
+=== RUN   TestSegmentMutants/pop-unmatched-closer
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 4259
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 4259
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 4259
+=== RUN   TestSegmentMutants/escape-disabled
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 913
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 913
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 913
+--- PASS: TestSegmentMutants (19.67s)
+    --- PASS: TestSegmentMutants/drop-final-empty (9.14s)
+    --- PASS: TestSegmentMutants/pop-unmatched-closer (4.26s)
+    --- PASS: TestSegmentMutants/escape-disabled (4.17s)
+=== RUN   TestSegmentSeparatorRefusals
+    segment_test.go:93: four unsupported separator inputs refuse identically on all three backends
+    segment_test.go:119: backend 0 compiled separator-guard mutant finishes, caught only by refusal comparison
+    segment_test.go:119: backend 1 compiled separator-guard mutant finishes, caught only by refusal comparison
+    segment_test.go:119: backend 2 compiled separator-guard mutant finishes, caught only by refusal comparison
+--- PASS: TestSegmentSeparatorRefusals (2.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	83.390s
