@@ -1,0 +1,70 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { HelperNode } from '../../slot02_ast.a';
+import { isNamespacedMember } from './namespaced_member.a';
+import { splitClasses } from './split_classes.a';
+import { classLiteralsIn, type ClassValues } from './class_literals_in.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('corpus path'));
+if (file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+const nodes: HelperNode[] = [];
+for (const index of json.node(json.field(root, 'Nodes')).children) {
+    nodes.push({kind: text(index, 'Kind'), text: text(index, 'Text'), expression: number(index, 'Expression'), name: number(index, 'Name')});
+}
+let calls = 0;
+let seen = '';
+let mode = 0;
+function matches(name: string): boolean {
+    calls++;
+    seen = name;
+    return mode === 0 || (mode === 1 && name.startsWith('use'));
+}
+for (let id = -1; id < nodes.length; id++) {
+    for (mode = 0; mode < 3; mode++) {
+        calls = 0;
+        seen = '';
+        const answer = isNamespacedMember(nodes, id, matches);
+        console.log(`${answer}:${calls}:${seen}`);
+    }
+}
+for (const index of json.node(json.field(root, 'Texts')).children) {
+    const fields = splitClasses(json.node(index).text);
+    console.log(`split:${fields.length}`);
+    for (const field of fields) { console.log(field); }
+}
+// Compact exhaustive separator probe. Every scalar candidate is tested, including
+// surrogate integers mapped through Go's replacement-rune conversion.
+let splitCount = 0;
+for (let code = 0; code <= 1114111; code++) {
+    const rune = code >= 55296 && code <= 57343 ? 65533 : code;
+    if (splitClasses('a' + String.fromCodePoint(rune) + 'b').length === 2) {
+        console.log(`space:${code}`);
+        splitCount++;
+    }
+}
+console.log(`spaces:${splitCount}`);
+const readings: ClassValues<string, string>[] = [];
+for (const index of json.node(json.field(root, 'Readings')).children) {
+    const literals: string[] = [];
+    const templates: string[] = [];
+    for (const child of json.node(json.field(index, 'Literals')).children) { literals.push(json.node(child).text); }
+    for (const child of json.node(json.field(index, 'Templates')).children) { templates.push(json.node(child).text); }
+    readings.push({literals, templates});
+}
+let reads = 0;
+function classValuesIn(node: number): ClassValues<string, string> {
+    reads++;
+    return readings[node] ?? panic('reading index');
+}
+for (let id = 0; id < readings.length; id++) {
+    reads = 0;
+    const expected = readings[id] ?? panic('reading');
+    const literals = classLiteralsIn(id, classValuesIn);
+    console.log(`literals:${reads}:${literals === expected.literals}:${literals.length}`);
+    for (const literal of literals) { console.log(literal); }
+}

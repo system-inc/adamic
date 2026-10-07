@@ -1,0 +1,19 @@
+// Exactly unicode.IsSpace as used by Go strings.Fields, not ECMAScript trim.
+function fieldSpace(code: number): boolean {
+    return (code >= 9 && code <= 13) || code === 32 || code === 133 || code === 160 ||
+        code === 5760 || (code >= 8192 && code <= 8202) || code === 8232 ||
+        code === 8233 || code === 8239 || code === 8287 || code === 12288;
+}
+export function splitClasses(text: string): string[] {
+    const classes: string[] = [];
+    let start = 0;
+    for (let index = 0; index <= text.length; index++) {
+        if (index !== text.length && !fieldSpace(text.charCodeAt(index))) { continue; }
+        if (index > start) {
+            const field = text.slice(start, index);
+            if (!field.includes('${')) { classes.push(field); }
+        }
+        start = index + 1;
+    }
+    return classes;
+}

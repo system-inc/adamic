@@ -1,0 +1,24 @@
+import { panic } from 'adamic';
+import type { HelperNode } from '../../slot02_ast.a';
+
+export function isNamespacedMember(nodes: readonly HelperNode[], node: number,
+    matches: (name: string) => boolean): boolean {
+    if (node === -1) { return false; }
+    const access = nodes[node] ?? panic('missing member node');
+    if (access.kind !== 'PropertyAccessExpression') { return false; }
+    let receiver = access.expression;
+    let steps = 0;
+    while (receiver !== -1) {
+        const current = nodes[receiver] ?? panic('missing receiver node');
+        if (current.kind !== 'ParenthesizedExpression') { break; }
+        receiver = current.expression;
+        steps++;
+        if (steps > nodes.length) { panic('cyclic receiver projection'); }
+    }
+    if (receiver === -1) { panic('missing property receiver'); }
+    const base = nodes[receiver] ?? panic('missing receiver');
+    if (base.kind !== 'Identifier' || base.text !== 'React') { return false; }
+    if (access.name === -1) { return false; }
+    const name = nodes[access.name] ?? panic('missing member name');
+    return name.kind === 'Identifier' && matches(name.text);
+}

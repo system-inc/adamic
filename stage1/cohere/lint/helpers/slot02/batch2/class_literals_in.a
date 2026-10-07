@@ -1,0 +1,9 @@
+// The externally owned classValuesIn supplies Go's shared, read-only slices.
+export interface ClassValues<Literal, Template> {
+    readonly literals: readonly Literal[];
+    readonly templates: readonly Template[];
+}
+export function classLiteralsIn<Literal, Template>(node: number,
+    classValuesIn: (node: number) => ClassValues<Literal, Template>): readonly Literal[] {
+    return classValuesIn(node).literals;
+}
