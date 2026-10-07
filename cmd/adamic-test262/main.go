@@ -21,7 +21,8 @@
 // != where both sides already have the same type, and throw new Test262Error to throw new Error
 // when nothing observes the constructor. The checkout is not modified.
 //
-// Tests run one at a time. The runtime is built with the address and undefined-behavior sanitizers.
+// Tests run one at a time by default; --jobs uses private worker artifacts and ordered results.
+// The runtime is built with the address and undefined-behavior sanitizers.
 package main
 
 import (
@@ -30,6 +31,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -46,6 +48,8 @@ func run(arguments []string) int {
 	classifyOnly := flags.Bool("classify-only", false, "classify every test and do not compile or run")
 	adapt := flags.Bool("adapt", false, "rewrite test262 style in memory (var to let, callback params, strict equality, Test262Error) and count each rewrite")
 	limit := flags.Int("limit", 0, "run at most this many attempted tests per filter (0 is all)")
+	jobs := flags.Int("jobs", 1, "independent test workers, with ordered results and private program artifacts")
+	executionTimeout := flags.Duration("timeout", 15*time.Second, "wall limit for each native or Node execution")
 	flags.Usage = func() {
 		fmt.Fprintf(os.Stderr, "usage: adamic-test262 [flags] <filter>...\n\n")
 		fmt.Fprintf(os.Stderr, "  filter is a directory under test262's test/, like built-ins/String/prototype/padStart\n\n")
@@ -82,6 +86,16 @@ func run(arguments []string) int {
 		defer prepared.oracle.close()
 	}
 	prepared.adapt = *adapt
+	if *jobs < 1 {
+		fmt.Fprintln(os.Stderr, "jobs must be positive")
+		return 2
+	}
+	prepared.jobs = *jobs
+	if *executionTimeout <= 0 {
+		fmt.Fprintln(os.Stderr, "timeout must be positive")
+		return 2
+	}
+	prepared.timeout = *executionTimeout
 	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
 		report, err := prepared.runFilter(filter, *limit, *classifyOnly)

@@ -1,0 +1,24 @@
+// Every evaluation of a literal allocates a fresh object, including loop sites.
+for (let iteration = 0; iteration < 3; iteration++) {
+ const re = /a/g;
+ const match = re.exec('aa');
+ if (match !== null) console.log(`${iteration}:${match.index}:${re.lastIndex}:${match[0]}`);
+ else console.log('global missed');
+}
+function callLiteral(): RegExp {
+ const re = /x/g;
+ console.log(`start:${re.lastIndex}`);
+ const match = re.exec('xx');
+ if (match !== null) console.log(`call:${match.index}:${re.lastIndex}:${match[0]}`);
+ else console.log('call missed');
+ return re;
+}
+const first = callLiteral();
+const second = callLiteral();
+console.log(`same:${first === second}:${first.lastIndex}:${second.lastIndex}`);
+for (let iteration = 0; iteration < 3; iteration++) {
+ const re = /a/y;
+ const match = re.exec('aa');
+ if (match !== null) console.log(`sticky:${iteration}:${match.index}:${re.lastIndex}:${match[0]}`);
+ else console.log('sticky missed');
+}

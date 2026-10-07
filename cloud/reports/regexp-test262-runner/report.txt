@@ -1,0 +1,283 @@
+RegExp runner: 53 -> 914 passes out of 1,879 test files.
+Zero disagreements and crashes; 449 refused, 516 skipped.
+Every pass agrees with adapted Node and untouched upstream Node.
+Go and C: all 127,369 extracted executions and 10,000 randomized cases agree in all three configurations.
+Fourteen new mutants caught. Branch: codex/regex-matcher.
+
+Source commit: 14e94dadbfa7b0eb8107d5c51fcd88c37c8e8227
+Main merged: 5d4c801 via 0a7dfbaed88621774543cadf321794402b1b2455.
+Test262 commit: 7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd.
+Node v24.19.0, Go 1.27.1, clang 20.1.8.
+No PR opened; no protected lowering/emitter/native/oracle file edited by this unit.
+
+Measurement
+           Pass Fail Refused Crashed Skipped Total
+Before       53    0     424      73    1329  1879
+After       914    0     449       0     516  1879
+All 53 baseline passes retained; 861 additional passing files.
+All 574 formerly skipped sole-regExpUtils files pass: 441 generated property
+tests, 114 generated Unicode-set tests, 12 character-class tests and 7 generated
+string-property tests. Exact cohort paths are in harness-cohort.json.
+The historical zero-pass main survey is not this measured baseline. Before is the
+existing regex-matcher branch after merging current main and before these changes.
+Tests are counted once per file in the runner's existing strict-module mode.
+This is not a claim to run every upstream strict/non-strict variant.
+Each file can contain many assertions or code-point checks. The separate 127,369
+figure counts extracted matcher executions, not full test files.
+
+Directory | Total | Pass before -> after | Refused before -> after | Crashed before -> after | Skipped before -> after
+(root) | 488 | 39 -> 222 | 283 -> 252 | 73 -> 0 | 93 -> 14
+CharacterClassEscapes | 12 | 0 -> 12 | 0 -> 0 | 0 -> 0 | 12 -> 0
+Symbol.species | 4 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 4 -> 4
+dotall | 4 | 2 -> 4 | 0 -> 0 | 0 -> 0 | 2 -> 0
+escape | 20 | 0 -> 0 | 0 -> 15 | 0 -> 0 | 20 -> 5
+lookBehind | 17 | 0 -> 17 | 0 -> 0 | 0 -> 0 | 17 -> 0
+match-indices | 14 | 0 -> 0 | 0 -> 7 | 0 -> 0 | 14 -> 7
+named-groups | 36 | 0 -> 5 | 0 -> 27 | 0 -> 0 | 36 -> 4
+property-escapes | 144 | 0 -> 2 | 0 -> 0 | 0 -> 0 | 144 -> 142
+property-escapes/generated | 441 | 0 -> 441 | 0 -> 0 | 0 -> 0 | 441 -> 0
+property-escapes/generated/strings | 28 | 0 -> 7 | 0 -> 0 | 0 -> 0 | 28 -> 21
+prototype | 10 | 0 -> 0 | 8 -> 8 | 0 -> 0 | 2 -> 2
+prototype/Symbol.match | 53 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 53 -> 53
+prototype/Symbol.matchAll | 26 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 26 -> 26
+prototype/Symbol.replace | 70 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 70 -> 70
+prototype/Symbol.search | 23 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 23 -> 23
+prototype/Symbol.split | 44 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 44 -> 44
+prototype/dotAll | 8 | 0 -> 1 | 0 -> 2 | 0 -> 0 | 8 -> 5
+prototype/exec | 79 | 3 -> 6 | 70 -> 70 | 0 -> 0 | 6 -> 3
+prototype/flags | 16 | 0 -> 2 | 1 -> 1 | 0 -> 0 | 15 -> 13
+prototype/global | 10 | 0 -> 0 | 5 -> 5 | 0 -> 0 | 5 -> 5
+prototype/hasIndices | 8 | 0 -> 1 | 0 -> 2 | 0 -> 0 | 8 -> 5
+prototype/ignoreCase | 10 | 0 -> 0 | 5 -> 5 | 0 -> 0 | 5 -> 5
+prototype/multiline | 10 | 0 -> 0 | 5 -> 5 | 0 -> 0 | 5 -> 5
+prototype/source | 12 | 0 -> 0 | 2 -> 2 | 0 -> 0 | 10 -> 10
+prototype/sticky | 8 | 1 -> 1 | 3 -> 3 | 0 -> 0 | 4 -> 4
+prototype/test | 45 | 7 -> 7 | 35 -> 35 | 0 -> 0 | 3 -> 3
+prototype/toString | 9 | 0 -> 0 | 4 -> 4 | 0 -> 0 | 5 -> 5
+prototype/unicode | 8 | 1 -> 1 | 3 -> 3 | 0 -> 0 | 4 -> 4
+prototype/unicodeSets | 38 | 0 -> 1 | 0 -> 3 | 0 -> 0 | 38 -> 34
+regexp-modifiers | 62 | 0 -> 62 | 0 -> 0 | 0 -> 0 | 62 -> 0
+regexp-modifiers/syntax/valid | 8 | 0 -> 8 | 0 -> 0 | 0 -> 0 | 8 -> 0
+unicodeSets/generated | 114 | 0 -> 114 | 0 -> 0 | 0 -> 0 | 114 -> 0
+All per-directory Fail counts are zero both before and after. CSV includes every status.
+
+Built
+- Typed regExpUtils.js prelude: inclusive code-point range generation (10,000-point
+  chunks), code-point diagnostic formatting, property/string-set checks with the
+  original whole-input fast path and per-symbol/per-string fallback, and match
+  validators checking every capture plus index and input. Missing optional fields
+  become explicit undefined only for a fresh private helper argument.
+- Nullable capture arrays can reach generic comparison helpers; undefined captures
+  stay undefined. Checked unwraps retain a runtime null/undefined check. No casts
+  assert that a match exists. Expected metadata arrays become private records only
+  after ruling out aliases, escapes and unsupported writes.
+- Constant string constructors accept unwritten let bindings. Writes in closures,
+  assignments and loops prevent freezing a value. Known RegExp objects can be
+  cloned with source/flags and lastIndex reset; RegExp(re) preserves identity.
+  Omitted/intrinsic undefined patterns use the empty pattern. Evaluated arguments
+  remain evaluated, and a flow-narrowed mutable undefined is never treated as a
+  compile-time value. Undefined string concatenation is refused rather than
+  incorrectly folded as an empty string.
+- Discarded literals and new RegExp constructions lower as evaluations. Literal
+  patterns rejected only by the older TypeScript regex validator are rewritten
+  to equivalent constant constructors under an unmodified intrinsic RegExp;
+  Adamic's current parser remains authoritative for the pattern grammar.
+- Removed blanket regex-feature skips. Unsupported reflection/Symbol semantics
+  still skip; invalid constructors that need runtime SyntaxError now loudly refuse
+  rather than appear as compiler crashes.
+- Independent original Node execution with real sta.js/assert.js/includes is a
+  prerequisite for each RegExp pass. Adapted native and adapted Node are also
+  compared, including exit status and stdout/stderr. Constructor-identity
+  assert.throws tests refuse: the existing shared harness only checks ancestry,
+  and independent Node success cannot establish a missing native assertion.
+- Optional --jobs workers have private artifacts and ordered results. Serial,
+  parallel, and attempted-test limits agree. Per-file results.jsonl records every
+  outcome, reason and adaptation; --timeout bounds each native/Node execution.
+
+Commands and evidence (all test output redirected to logs, never piped)
+source /workspace/adamic-tools/env.sh
+bash cloud/setup.sh > /tmp/regex-runner-setup-final.log 2>&1
+setup: go ready (0s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+setup: node ready (0s)
+setup: submodules ready (0s)
+setup: build cache warm (151s)
+setup: done in 151s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+nproc: 5.
+The first setup ran while main was being merged and failed warming its cache:
+undefined cacheProbe/identity/cacheKey/inputIdentity/nativeResultKey/recordedRun/
+record/cachedResult/nativeResults, undefined native.RuntimeLibrary, and a sort
+import resolution error. Exact output is setup-first-attempt.log. Rerunning after
+merge succeeded; no toolchain component failed installation. A mixed-tree build
+during that overlap is the inferred cause of the transient cache-warm failure.
+
+go run ./cmd/adamic-test262 --adapt --test262 /tmp/test262-regexp --root /workspace/adamic --work /tmp/regex-runner-before --json built-ins/RegExp > /tmp/regex-runner-before.json 2>/tmp/regex-runner-before.log
+Result: before.json and before.log totals above.
+go build -o /tmp/regex-runner-verified-bin ./cmd/adamic-test262
+/tmp/regex-runner-verified-bin --adapt --jobs 3 --timeout 60s --test262 /tmp/test262-regexp --root /workspace/adamic --work /tmp/regex-runner-verified --json built-ins/RegExp > /tmp/regex-runner-verified.json 2>/tmp/regex-runner-verified.log
+Result: after.json, after.log and results.jsonl; zero disagreements and crashes.
+Development surveys were stopped to fix lowering/harness issues; only the
+completed baseline and final survey are counted in these tables.
+
+go test ./cmd/adamic-test262 ./internal/load ./internal/lower -count=1 > /tmp/regex-runner-post-mutants-packages.log 2>&1
+PASS; final sources restored after every mutant. Timings in packages.log.
+go test ./internal/native -run '^TestRegExp' -count=1 -v > /tmp/regex-runner-native-regression.log 2>&1
+PASS 260.279s: 127,369 extracted and 10,000 fixed-seed randomized executions,
+zero disagreements separately for budgeted VM, forced regular engine with VM
+recovery (eligible cases; otherwise VM), and unlimited VM. Native logs include
+eligibility totals and search/lint/UTF-16 probes. No regex engine code changed.
+go test ./internal/regexp -run 'TestMatcherRandomNode|TestMatcherTest262Executions' -count=1 -v > /tmp/regex-runner-matcher-regression.log 2>&1
+PASS 10.324s: same 127,369 and 10,000 in all three configurations. See matcher-regression.log.
+go test ./internal/regexp -count=1 -v > /tmp/regex-runner-regexp-all.log 2>&1
+PASS 11.962s including the existing matcher semantic mutants; matcher-all.log.
+go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/(regexp|sweeps/regexp)' -count=1 -v > /tmp/regex-runner-post-mutants-oracle.log 2>&1
+go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp' -count=1 -v >> /tmp/regex-runner-post-mutants-oracle.log 2>&1
+PASS all 11 existing regex oracle fixtures; oracle.log. The first filter selected
+the ten direct fixtures; the separate filter selected the nested method sweep.
+No new oracle/count rows.
+go test ./... -p 1 -parallel 1 -timeout 30m -count=1 > /tmp/regex-runner-full-gate-serial.log 2>&1
+PASS all 30 repository packages; full-gate.log, command exit 0.
+The broader gate began before the last bounded undefined/code-point/collector
+fixes; final affected-package and regex oracle checks above use the exact final
+sources. Ordinary worker cache policy used; not an uncached integration gate.
+An earlier unrestricted-concurrency gate was intentionally stopped to relieve
+CPU contention; it is not counted as a successful full gate.
+go vet ./... > /tmp/regex-runner-post-mutants-vet.log 2>&1
+PASS, empty output. gofmt -l and git diff --check: empty output.
+
+Mutants
+python3 cmd/adamic-test262/testdata/regexp/run-mutants.py > /tmp/regex-runner-mutants-all.log 2>&1
+range-end-exclusive | actual generated string excludes inclusive endpoint | caught (exit 1)
+negative-string-condition-inverted | negative-string rejection flag must be true | caught (exit 1)
+capture-check-omitted | incorrect capture must set rejection flag | caught (exit 1)
+index-check-omitted | incorrect match index must set rejection flag | caught (exit 1)
+input-check-omitted | incorrect match input must set rejection flag | caught (exit 1)
+original-node-guard-bypassed | weakened adapted assertion must fail untouched Node guard | caught (exit 1)
+written-let-frozen | written/closure-written pattern must be NotYet | caught (exit 1)
+clone-flags-lost | clone flags must equal gy, not empty string | caught (exit 1)
+constructor-identity-guard-bypassed | wrong native Error constructor must not count as pass | caught (exit 1)
+omitted-pattern-overloads-removed | checker must permit omitted pattern | caught (exit 1)
+literal-flags-lost | literal gy flags and lastIndex behavior must be retained | caught (exit 1)
+code-point-value-changed | code-point hexadecimal value must be 61 | caught (exit 1)
+non-string-collector-annotated | non-string collector must remain unadapted | caught (exit 1)
+flow-undefined-frozen | closure-mutated flow-narrowed flags must be NotYet | caught (exit 1)
+
+All 14 caught and source restored in finally. Exact witnesses in mutants.log and
+individual logs in mutants/. Range endpoint exclusion, negative-string branch
+inversion, capture/index/input check deletion, clone flag loss, literal flag loss,
+and altered code-point values each compile and fail at execution (Fail=1,
+Refused=0, Crashed=0), not merely at checker or clang warnings.
+Original-Node bypass accepts a deliberately weakened assertion and is caught by
+its false-pass probe. Constructor guard bypass accepts the wrong Error constructor
+and is caught by that probe. Freezing written let or flow-undefined bindings is
+caught by the actual lowering NotYet checks. Removing constructor overloads is
+caught by the checker test requiring no-argument construction. Annotating a
+non-string collector is caught by the conservative adaptation guard test.
+A developmental if(false) negative-string mutation was rejected as invalid proof:
+the checker stopped it with TS18048. It is not counted; the branch-inversion mutant
+above reaches execution and demonstrates the actual negative-string assertion.
+
+Remaining coverage
+Not every ECMAScript RegExp host-object operation fits stage 0. Exact exception
+constructors, runtime invalid-pattern SyntaxError, dynamic patterns/flags,
+prototype mutation, custom exec/Symbol dispatch, descriptors, getters, species,
+reflection, cross-realm tests, RegExp.escape, and richer match-indices/named-group
+object assertions remain refused or skipped. Parser/VM differential coverage is
+broader than what the typed stage-0 source runner can compile. No expectation was
+removed or changed to make a native result count as a pass.
+
+Final refusal reasons
+47: error TS2345: Argument of type '…' is not assignable to parameter of type '…'.
+36: error TS2551: Property '…' does not exist on type '…'. Did you mean '…'?
+31: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 3
+25: error TS2339: Property '…' does not exist on type '…'.
+24: error TS2769: No overload matches this call.
+24: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid group at byte 2
+23: error TS2532: Object is possibly '…'.
+22: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 4
+17: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 4
+15: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 6
+14: error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later.
+11: not yet: RegExp with nonconstant flags
+10: error TS2531: Object is possibly '…'.
+8: error TS18048: '…' is possibly '…'.
+8: not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 0
+8: refuses var
+6: error TS18047: '…' is possibly '…'.
+6: error TS2704: The operand of a '…' operator cannot be a read-only property.
+6: not yet: a BinaryExpression with a value and a string
+5: error TS2322: Type '…' is not assignable to type '…'.
+5: not yet: RegExp with a nonconstant pattern
+5: refuses a method read as a value (exec would lose its object, and this with it)
+5: refuses a method read as a value (test would lose its object, and this with it)
+4: error TS7006: Parameter '…' implicitly has an '…' type.
+4: not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 2
+4: not yet: an array of never
+4: refuses a method read as a value (toString would lose its object, and this with it)
+4: refuses inherited library member prototype read as an own field
+3: error TS2351: This expression is not constructable.
+3: error TS2554: Expected 1 arguments, but got 0.
+3: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 10
+3: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 7
+3: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid flag at byte 0
+3: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 5
+3: refuses a number as a condition
+2: error TS2300: Duplicate identifier '…'.
+2: error TS2349: This expression is not callable.
+2: error TS2416: Property '…' in type '…' is not assignable to the same property in base type '…'.
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid capture name at byte 3
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 5
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid hex escape at byte 0
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 6
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 3
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 5
+2: not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 6
+2: not yet: hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)
+2: not yet: instanceof against a value that isn't a declared class
+2: refuses Object.defineProperty
+2: refuses isPrototypeOf
+2: refuses the void operator
+1: error TS2304: Cannot find name '…'.
+1: error TS2683: '…' implicitly has type '…' because it does not have a type annotation.
+1: error TS7034: Variable '…' implicitly has type '…' in some locations where its type cannot be determined.
+1: not yet: RegExp.isPrototypeOf
+1: not yet: a PrefixUnaryExpression on a value
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: duplicate capture name x at byte 0
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: incomplete quantifier at byte 1
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid decimal escape at byte 0
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid or duplicate flag at byte 1
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: invalid or duplicate flag at byte 3
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 4
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: quantifier range out of order at byte 1
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: trailing escape at byte 1
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: u and v flags are mutually exclusive at byte 0
+1: not yet: a RegExp constructor that throws SyntaxError: regexp: unterminated group at byte 1
+1: not yet: a value of type any
+1: not yet: reading RegExp
+
+Final skip reasons
+192: negative parse or early error
+67: harness include propertyHelper.js
+63: feature Symbol.replace
+51: feature Symbol.match
+20: features Symbol.species, Symbol.split
+19: feature Symbol.split
+18: feature Symbol.search
+17: feature Symbol
+12: harness include isConstructor.js
+10: feature cross-realm
+8: feature Symbol.matchAll
+8: harness include compareIterator.js
+7: eval
+6: features Symbol, Symbol.match
+5: features Symbol.matchAll, Symbol.species
+2: features Symbol.match, Symbol.matchAll
+2: getters
+2: harness includes deepEqual.js, propertyHelper.js
+1: feature Symbol.species
+1: features Reflect, cross-realm
+1: features Symbol, Symbol.search
+1: features Symbol.iterator, Symbol.replace
+1: features Symbol.replace, Symbol.toPrimitive
+1: features Symbol.species, Symbol.split, cross-realm
+1: noStrict (sloppy mode only; Adamic modules are always strict)

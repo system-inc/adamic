@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -21,6 +22,7 @@ var typescriptHelper string
 // One stock TypeScript process shares parsed libraries across requests. Results are
 // cached by the exact adapted source bytes for this process's fixed options and prelude.
 type typescriptOracle struct {
+	mutex   sync.Mutex
 	command *exec.Cmd
 	input   io.WriteCloser
 	output  *bufio.Reader
@@ -82,6 +84,8 @@ func startTypescript(root, work string) (*typescriptOracle, error) {
 }
 func (o *typescriptOracle) close() { o.input.Close(); o.command.Process.Kill(); o.command.Wait() }
 func (o *typescriptOracle) check(source string) ([]string, error) {
+	o.mutex.Lock()
+	defer o.mutex.Unlock()
 	hash := sha256.Sum256([]byte(source))
 	if codes, ok := o.cache[hash]; ok {
 		o.stats.Hits++
