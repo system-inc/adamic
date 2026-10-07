@@ -96,3 +96,26 @@ constructor rule remains blocked on two JSX inputs and one keyword-label input
 in the shared parser; its rule and suggestion logic are complete. See
 ../WAVE_21_CORE_REPORT.md and ../validation-wave-21-core/ for exact refusals.
 These reservations are retained, not released. No subsequent batch was claimed.
+
+
+## Fifth batch claim
+
+Previous native rule implementations and validation are pushed through 6af00212.
+The three object-constructor inputs blocked by the shared parser are explicitly
+recorded in WAVE_21_CORE_REPORT.md; all remaining rule logic is ported.
+Fetched all 389 origin refs and inspected 33 Markdown claim documents and
+native source ports on main e011f8f6 and bridge 5afbdb83. Explicit releases
+were inspected: exhaustive-deps has active wave-12 and wave-27 claims;
+core prefer-promise-reject-errors has active continuation claims;
+promises, spread and lost-update have active wave-22 claims.
+The first three available entries in the combined descending-volume ranking,
+with lexical ties, are reserved here before writing code:
+
+| Full ranking position | Rule | Combined findings |
+| --- | --- | ---: |
+| 168 | react-hooks/set-state-in-effect | 0 |
+| 169 | react-hooks/set-state-in-render | 0 |
+| 170 | react-hooks/static-components | 0 |
+
+None is ported on either base branch or named in any fetched origin claim.
+This claim update is pushed before implementation.
