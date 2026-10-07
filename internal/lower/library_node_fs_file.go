@@ -56,8 +56,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if err != nil {
 			return nil, true, err
 		}
-		operation = map[string]string{"isFile": "is_file", "isDirectory": "is_directory", "isSymbolicLink": "is_symbolic_link"}[symbol.Name]
-		return ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{receiver}, Of: ir.Boolean}, true, nil
+		// StatsBase and Dirent share methods, including through a union.
+		// The runtime receiver chooses its layout, not the declaration order.
+		return ir.NodeHostCall{Module: "node:fs", Member: symbol.Name, Arguments: []ir.Expression{receiver}, Returns: ir.Boolean}, true, nil
 	case "readFileSync":
 		operation, of = "read_file", ir.String
 	case "mkdtempSync":

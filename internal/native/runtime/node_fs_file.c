@@ -466,6 +466,8 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     return result;
 }
 
+bool adamic_fs_file_is_stats(const adamic_object *information) { return information->shape == &stat_shape; }
+
 static mode_t stat_mode(const adamic_object *information) {
     static adamic_slot_cache cache;
     return (mode_t)adamic_object_field(information, "_fsFileMode", &cache)->number;

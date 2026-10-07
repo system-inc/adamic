@@ -23,6 +23,7 @@ double adamic_fs_file_utimes(const adamic_string *, double, double);
 double adamic_fs_file_utimes_dates(const adamic_string *, const adamic_object *, const adamic_object *);
 double adamic_fs_file_utimes_atime_date(const adamic_string *, const adamic_object *, double);
 double adamic_fs_file_utimes_mtime_date(const adamic_string *, double, const adamic_object *);
+bool adamic_fs_file_is_stats(const adamic_object *);
 bool adamic_fs_file_is_file(const adamic_object *);
 bool adamic_fs_file_is_directory(const adamic_object *);
 bool adamic_fs_file_is_symbolic_link(const adamic_object *);

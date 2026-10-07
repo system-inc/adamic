@@ -220,6 +220,13 @@ static unsigned kind(mode_t mode) {
 }
 bool adamic_node_fs_dirent_is(const adamic_object *entry_value,
 							  const char *method) {
+	// Shape identity is the host value's runtime kind. Union declarations
+	// can begin with either StatsBase or Dirent.
+	if (adamic_fs_file_is_stats(entry_value)) {
+		return strcmp(method, "isFile") == 0 ? adamic_fs_file_is_file(entry_value)
+			: strcmp(method, "isDirectory") == 0 ? adamic_fs_file_is_directory(entry_value)
+			: adamic_fs_file_is_symbolic_link(entry_value);
+	}
 	unsigned wanted = strcmp(method, "isFile") == 0		   ? 1
 					  : strcmp(method, "isDirectory") == 0 ? 2
 														   : 3;
