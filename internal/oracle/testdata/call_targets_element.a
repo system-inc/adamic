@@ -1,0 +1,59 @@
+interface Item {
+    readonly label: string;
+}
+class Reader {
+    read(items: Item[]): number {
+        return items.length;
+    }
+}
+class Writer extends Reader {
+    override read(items: Item[]): number {
+        items[0] = { label: `changed${items.length}` };
+        return items.length;
+    }
+}
+function virtualRead(reader: Reader): void {
+    const items: Item[] = [{ label: `original${1}` }];
+    const first = items[0] ?? { label: `fallback${items.length}` };
+    reader.read(items);
+    console.log(first.label);
+    console.log(`${items[0]?.label}`);
+}
+function closureRead(change: boolean): void {
+    const items: Item[] = [{ label: `closure${2}` }];
+    const first = items[0] ?? { label: `fallback${items.length}` };
+    let action = (values: Item[]): number => values.length;
+    if (change) {
+        action = (values: Item[]): number => {
+            values[0] = { label: `written${values.length}` };
+            return values.length;
+        };
+    }
+    action(items);
+    console.log(first.label);
+    console.log(`${items[0]?.label}`);
+}
+virtualRead(new Reader());
+virtualRead(new Writer());
+closureRead(false);
+closureRead(true);
+function boundRead(): void {
+    const items: Item[] = [{ label: `bound${4}` }];
+    const first = items[0] ?? { label: `fallback${items.length}` };
+    const action = (values: Item[]): number => values.length;
+    action(items);
+    console.log(first.label);
+}
+function boundWrite(): void {
+    const items: Item[] = [{ label: `bound${5}` }];
+    const first = items[0] ?? { label: `fallback${items.length}` };
+    const action = (values: Item[]): number => {
+        values[0] = { label: `written${values.length}` };
+        return values.length;
+    };
+    action(items);
+    console.log(first.label);
+    console.log(`${items[0]?.label}`);
+}
+boundRead();
+boundWrite();
