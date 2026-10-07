@@ -122,3 +122,13 @@ source analysis remains unported. See `../prefer-promise-reject-errors/LISTENER_
 PARKED: native HIR/SSA/capture analysis is pending on #dnv6f2c, with JSX
 landing on area/stage1-lint. This counts as finished for landing-first only;
 it does not assert a complete rule port or new oracle coverage.
+
+## Named harness dependency incorporated
+
+The branch now includes ab70f38d4 and current main c01907a7. Fresh native and
+Go probes both accept the previously failing valid JSX, exit 0 with matching
+bytes. JSX parsing is no longer the blocker here. The shared finding model
+and optional handed-node visitor are present. ParseNode.kind and the registry
+still use string kinds; the numeric shared interface remains pending. Source
+analyses remain unfinished (HIR/SSA claims remain parked). See
+../react-jsx-fragments/HARNESS_REBASE_REPORT.md for fresh gates and limits.

@@ -59,3 +59,13 @@ the full repository gate were not repeated for metadata. No new lint timings
 are available because these new analyses cannot run on source. This worker
 publishes only codex/typeaware-wave-20, never main or area/. No further rules
 were claimed after this blocked batch.
+
+## Named harness dependency incorporated
+
+The branch now includes ab70f38d4 and current main c01907a7. Fresh native and
+Go probes both accept the previously failing valid JSX, exit 0 with matching
+bytes. JSX parsing is no longer the blocker here. The shared finding model
+and optional handed-node visitor are present. ParseNode.kind and the registry
+still use string kinds; the numeric shared interface remains pending. Source
+analyses remain unfinished (HIR/SSA claims remain parked). See
+../react-jsx-fragments/HARNESS_REBASE_REPORT.md for fresh gates and limits.

@@ -109,3 +109,9 @@ productions and numeric handed-node interfaces are not integrated on current
 main or area/stage1-lint. Go controls and numeric declaration checks pass;
 valid JSX panics before native dispatch. See each new rule's BLOCKED.md.
 The three metadata declarations are not a source-analysis completion claim.
+
+The named ab70f38d4 harness is now incorporated with current main c01907a7.
+Fresh native parsing closes the JSX failure; handed-node and shared finding
+support are present. Numeric ParseNode kinds remain unavailable. Fifth-batch
+source analyses are still unfinished; fourth-batch HIR claims remain parked.
+See react-jsx-fragments/HARNESS_REBASE_REPORT.md. No additional claims.
