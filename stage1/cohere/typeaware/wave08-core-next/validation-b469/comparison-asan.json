@@ -1,0 +1,4496 @@
+[
+  {
+    "name": "000034e981d9ef2b8e0bda5c70045646791d3c14a779b22c18669ed98a56441b",
+    "description": "TestRequireAwaitExemptsAPromiseContract",
+    "config": "/workspace/wave08-core/upstream/cases/000034e981d9ef2b8e0bda5c70045646791d3c14a779b22c18669ed98a56441b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/000034e981d9ef2b8e0bda5c70045646791d3c14a779b22c18669ed98a56441b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0738442549991305,
+    "native_seconds": 0.15878315800000564,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "0190640cf1773c199e2c82fa445c2024304dfafaee2e6f8e46e8f23eb18e8ffa",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/0190640cf1773c199e2c82fa445c2024304dfafaee2e6f8e46e8f23eb18e8ffa/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0190640cf1773c199e2c82fa445c2024304dfafaee2e6f8e46e8f23eb18e8ffa/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.04760611099845846,
+    "native_seconds": 0.1806858009986172,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "01995c6254b7bd4a527a131b0b4ae89b6136e20f9b2943a6f67bbf6a7cda0f6f",
+    "description": "TestRequireAwaitReadsAGenericReturnFromItsTypedPosition",
+    "config": "/workspace/wave08-core/upstream/cases/01995c6254b7bd4a527a131b0b4ae89b6136e20f9b2943a6f67bbf6a7cda0f6f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/01995c6254b7bd4a527a131b0b4ae89b6136e20f9b2943a6f67bbf6a7cda0f6f/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07069714699900942,
+    "native_seconds": 0.15026463700269233,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "01fc80346e320ce9d4c530a3eaaec2ef8ae3ab4fbf705c09bf3a269fc20abbbc",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_private_static_async_foo(a)_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/01fc80346e320ce9d4c530a3eaaec2ef8ae3ab4fbf705c09bf3a269fc20abbbc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/01fc80346e320ce9d4c530a3eaaec2ef8ae3ab4fbf705c09bf3a269fc20abbbc/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11223099500057288,
+    "native_seconds": 0.12273965200074599,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "02a60cd996d67a71c34ffdb1c7d2739b5f604511ed3843c72685333ed9c772bb",
+    "description": "TestRequireAwaitNamesTheFunction/const_obj_=_{_async:_async_function_foo()_{_bar();_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/02a60cd996d67a71c34ffdb1c7d2739b5f604511ed3843c72685333ed9c772bb/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/02a60cd996d67a71c34ffdb1c7d2739b5f604511ed3843c72685333ed9c772bb/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07389049099947442,
+    "native_seconds": 0.10371165800097515,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "03b6364722c2d781a50d5035d80c352283ec4dc0f3b16729e7f578a4fc5f2c0e",
+    "description": "TestRequireAwaitKeepsAGenericContractThatDemandsAPromise",
+    "config": "/workspace/wave08-core/upstream/cases/03b6364722c2d781a50d5035d80c352283ec4dc0f3b16729e7f578a4fc5f2c0e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/03b6364722c2d781a50d5035d80c352283ec4dc0f3b16729e7f578a4fc5f2c0e/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11601838099886663,
+    "native_seconds": 0.10946805800267612,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "05a15c9286265ad636e49c2d132be1f9636a52e4b94eb5e9d35dda4d763a5a92",
+    "description": "TestRequireAwaitFires/async_function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/05a15c9286265ad636e49c2d132be1f9636a52e4b94eb5e9d35dda4d763a5a92/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/05a15c9286265ad636e49c2d132be1f9636a52e4b94eb5e9d35dda4d763a5a92/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10147231600058149,
+    "native_seconds": 0.11572778299887432,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "05c34849842b5684345710434ac25f55cd714cdbddbd97d3a11998c5c4fe1321",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_async_foo(a)_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/05c34849842b5684345710434ac25f55cd714cdbddbd97d3a11998c5c4fe1321/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/05c34849842b5684345710434ac25f55cd714cdbddbd97d3a11998c5c4fe1321/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1312595909985248,
+    "native_seconds": 0.1362087409979722,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "0605e185d71a5d4c46b03ef2e20acc09bcde24571ee570f7d64469a032f5a4ea",
+    "description": "TestRequireAwaitFindsAsyncPastOtherModifiers/class_A_{_private_static_async_foo()_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/0605e185d71a5d4c46b03ef2e20acc09bcde24571ee570f7d64469a032f5a4ea/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0605e185d71a5d4c46b03ef2e20acc09bcde24571ee570f7d64469a032f5a4ea/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1010342400004447,
+    "native_seconds": 0.1256915839985595,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "0668cba6f20e528585895a71fedcd7a8d72e3ede5580bac49828157619cc3b89",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/foo_________________async_()_=>_{_return_0;_}_____________",
+    "config": "/workspace/wave08-core/upstream/cases/0668cba6f20e528585895a71fedcd7a8d72e3ede5580bac49828157619cc3b89/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0668cba6f20e528585895a71fedcd7a8d72e3ede5580bac49828157619cc3b89/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10860245499861776,
+    "native_seconds": 0.13623002799795358,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "06744e6d55f7827d37823918a78e076680082c8efed8598932a3cc54bdd6417f",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_spread_argument",
+    "config": "/workspace/wave08-core/upstream/cases/06744e6d55f7827d37823918a78e076680082c8efed8598932a3cc54bdd6417f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/06744e6d55f7827d37823918a78e076680082c8efed8598932a3cc54bdd6417f/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0871663729994907,
+    "native_seconds": 0.11201361900020856,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "068f792003012a7bf20aa49e6cb1518123cf0e7059af67680cef4f63821f663b",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async____/*_test_*/_function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/068f792003012a7bf20aa49e6cb1518123cf0e7059af67680cef4f63821f663b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/068f792003012a7bf20aa49e6cb1518123cf0e7059af67680cef4f63821f663b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11111266000079922,
+    "native_seconds": 0.10119506000046385,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "06c39d185296442143583f0f51a40443c66f90e717875aec1d7b5e3d4cbac365",
+    "description": "TestRequireAtomicUpdatesRestoreInFinallyIsJudged/with_no_read_before_the_suspension_there_is_nothing_stale",
+    "config": "/workspace/wave08-core/upstream/cases/06c39d185296442143583f0f51a40443c66f90e717875aec1d7b5e3d4cbac365/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/06c39d185296442143583f0f51a40443c66f90e717875aec1d7b5e3d4cbac365/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09982441799729713,
+    "native_seconds": 0.1228941749977821,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "086570271dcd95b7900b314b6f856a7b2e5ec5923f6e71bdf85c70876c398bf2",
+    "description": "TestRequireAtomicUpdatesFinallyReportsOnce/a_guard_flag_reset_in_finally_reports_once,_not_once_per_layout",
+    "config": "/workspace/wave08-core/upstream/cases/086570271dcd95b7900b314b6f856a7b2e5ec5923f6e71bdf85c70876c398bf2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/086570271dcd95b7900b314b6f856a7b2e5ec5923f6e71bdf85c70876c398bf2/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07390196100095636,
+    "native_seconds": 0.14501282400306081,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "09244330f43ce5756bb1165a18a2e05a99f53477795f4228318205e434e5e89e",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/const_obj_=_{_async:_async_function_foo()_{_bar();_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/09244330f43ce5756bb1165a18a2e05a99f53477795f4228318205e434e5e89e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/09244330f43ce5756bb1165a18a2e05a99f53477795f4228318205e434e5e89e/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05600195900115068,
+    "native_seconds": 0.10868524599936791,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "09e69a9d8b423f023b6ac74237b7559cee56b1600327ff69827081e05d3ed1d8",
+    "description": "TestRequireAtomicUpdatesResolutionDivergence/a_resolvable_binding_is_judged",
+    "config": "/workspace/wave08-core/upstream/cases/09e69a9d8b423f023b6ac74237b7559cee56b1600327ff69827081e05d3ed1d8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/09e69a9d8b423f023b6ac74237b7559cee56b1600327ff69827081e05d3ed1d8/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0807089019981504,
+    "native_seconds": 0.10374490899994271,
+    "go_findings": "findings 2",
+    "native_findings": "findings 2",
+    "native_error": ""
+  },
+  {
+    "name": "09e7fc2c1891d26592a8869c2c058e1cd207a54e324af873d9a4af285f00f997",
+    "description": "TestRequireAwaitStaysSilent/const_foo_=_async_function_*(){}",
+    "config": "/workspace/wave08-core/upstream/cases/09e7fc2c1891d26592a8869c2c058e1cd207a54e324af873d9a4af285f00f997/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/09e7fc2c1891d26592a8869c2c058e1cd207a54e324af873d9a4af285f00f997/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0972568359975412,
+    "native_seconds": 0.10711887599973124,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "0a26d249c06ec1410e20fbdd52104c4b8cf27da3b9e68e6fe8f33112847df88c",
+    "description": "TestRequireAtomicUpdatesOptionsDecode/nil_options_bypass_the_decoder_and_keep_both_arms",
+    "config": "/workspace/wave08-core/upstream/cases/0a26d249c06ec1410e20fbdd52104c4b8cf27da3b9e68e6fe8f33112847df88c/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0a26d249c06ec1410e20fbdd52104c4b8cf27da3b9e68e6fe8f33112847df88c/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10460637800133554,
+    "native_seconds": 0.1125301110005239,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "0a307a5ae75cf0921f07523ae1c9ff534ecd0891262b5650f657bf2c7054c527",
+    "description": "TestRequireAwaitStaysSilent/await_foo()",
+    "config": "/workspace/wave08-core/upstream/cases/0a307a5ae75cf0921f07523ae1c9ff534ecd0891262b5650f657bf2c7054c527/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0a307a5ae75cf0921f07523ae1c9ff534ecd0891262b5650f657bf2c7054c527/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07626065200020093,
+    "native_seconds": 0.12909448400023393,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "0ae0bd001ad83596e5bb36ff890af4453fefa53be1da50a5737ce8740d357eb5",
+    "description": "TestRequireAwaitFires/async____/*_test_*/_function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/0ae0bd001ad83596e5bb36ff890af4453fefa53be1da50a5737ce8740d357eb5/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0ae0bd001ad83596e5bb36ff890af4453fefa53be1da50a5737ce8740d357eb5/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10812952000196674,
+    "native_seconds": 0.11466503200063016,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "0f2c1918b070f10b4ad5279af46468edd099961566ba4608275a8728cc32f7e9",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/0f2c1918b070f10b4ad5279af46468edd099961566ba4608275a8728cc32f7e9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0f2c1918b070f10b4ad5279af46468edd099961566ba4608275a8728cc32f7e9/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08913427700099419,
+    "native_seconds": 0.15044340800159262,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "0f5a1185a0b5787066df94dc52f2b1ea1371495a27c7146ec4bff5d016a42d3d",
+    "description": "TestRequireAwaitFires/class_A_{_________________a_=_0_________________async_in(){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/0f5a1185a0b5787066df94dc52f2b1ea1371495a27c7146ec4bff5d016a42d3d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/0f5a1185a0b5787066df94dc52f2b1ea1371495a27c7146ec4bff5d016a42d3d/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11938087000089581,
+    "native_seconds": 0.1160643910006911,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1080a91cc469fedd1c3dee083a9bf7e08a4830415afca056cfd88c6e17deb4ec",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/1080a91cc469fedd1c3dee083a9bf7e08a4830415afca056cfd88c6e17deb4ec/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1080a91cc469fedd1c3dee083a9bf7e08a4830415afca056cfd88c6e17deb4ec/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11639674899925012,
+    "native_seconds": 0.14069724599903566,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "14842d2b78e345043d9c0866a6965b0e92510b9edbb33911626db3d7e0536a2b",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/String",
+    "config": "/workspace/wave08-core/upstream/cases/14842d2b78e345043d9c0866a6965b0e92510b9edbb33911626db3d7e0536a2b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/14842d2b78e345043d9c0866a6965b0e92510b9edbb33911626db3d7e0536a2b/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08688395899662282,
+    "native_seconds": 0.0933994420011004,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "1501462280d87295f6694e16bd24b9e08d6e70cdfab4a121c21f326e2c0429c2",
+    "description": "TestRequireAwaitFires/const_obj_=_{_________________foo,_________________async_in(){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/1501462280d87295f6694e16bd24b9e08d6e70cdfab4a121c21f326e2c0429c2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1501462280d87295f6694e16bd24b9e08d6e70cdfab4a121c21f326e2c0429c2/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05275005500152474,
+    "native_seconds": 0.1105104210000718,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "15e4693c1f8bb1b77b46042769a7cf14d6eda05fd9053b65dc9ac5551cc7386b",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_o_=_{_async_run(a)_{_return_1;_}_};",
+    "config": "/workspace/wave08-core/upstream/cases/15e4693c1f8bb1b77b46042769a7cf14d6eda05fd9053b65dc9ac5551cc7386b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/15e4693c1f8bb1b77b46042769a7cf14d6eda05fd9053b65dc9ac5551cc7386b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06485976800104254,
+    "native_seconds": 0.161457768001128,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "15edc5de794d0e23929dbf22ffd3106ac9910d0142fe0fb6aaa9457e4606f86e",
+    "description": "TestRequireAwaitNamesTheFunction/class_A_{_________________foo()_{}_________________async_[bar]_()_{_baz;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/15edc5de794d0e23929dbf22ffd3106ac9910d0142fe0fb6aaa9457e4606f86e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/15edc5de794d0e23929dbf22ffd3106ac9910d0142fe0fb6aaa9457e4606f86e/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11963419300082023,
+    "native_seconds": 0.1751892329994007,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "162aa7ebd40fcd01c420ac4267bf173bc0eb6e6dcc4cce224878db10b7a27056",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/162aa7ebd40fcd01c420ac4267bf173bc0eb6e6dcc4cce224878db10b7a27056/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/162aa7ebd40fcd01c420ac4267bf173bc0eb6e6dcc4cce224878db10b7a27056/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09928199999922072,
+    "native_seconds": 0.111493734002579,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "16cd13f4e906548f9907a94aae7704e8485daa7753ef59a60a33ec82a484f50d",
+    "description": "TestSymbolDescriptionSpansTheCall/a_call_as_an_initializer",
+    "config": "/workspace/wave08-core/upstream/cases/16cd13f4e906548f9907a94aae7704e8485daa7753ef59a60a33ec82a484f50d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/16cd13f4e906548f9907a94aae7704e8485daa7753ef59a60a33ec82a484f50d/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06489635999969323,
+    "native_seconds": 0.10122650700213853,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1905e498d88fb4bd75e4fd6f272dfcc101b9943f919d8139334359371b8974fc",
+    "description": "TestSymbolDescriptionFires/a_bare_call",
+    "config": "/workspace/wave08-core/upstream/cases/1905e498d88fb4bd75e4fd6f272dfcc101b9943f919d8139334359371b8974fc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1905e498d88fb4bd75e4fd6f272dfcc101b9943f919d8139334359371b8974fc/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10564013199837063,
+    "native_seconds": 0.13380713800142985,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1acc929fb1748853ab890501ae16ffd07c88efbf7dc596cf5496a2382c0cb049",
+    "description": "TestRequireAwaitFires/const_obj_=_{_async:_async_function_foo()_{_bar();_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/1acc929fb1748853ab890501ae16ffd07c88efbf7dc596cf5496a2382c0cb049/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1acc929fb1748853ab890501ae16ffd07c88efbf7dc596cf5496a2382c0cb049/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11411248900185456,
+    "native_seconds": 0.14130578499680269,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1b3260145f13d37289662c8f1d5e138b543870a7a820c02f6c9e5a086a8ef53d",
+    "description": "TestRequireAwaitReportsWhenTheContractAcceptsEither",
+    "config": "/workspace/wave08-core/upstream/cases/1b3260145f13d37289662c8f1d5e138b543870a7a820c02f6c9e5a086a8ef53d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1b3260145f13d37289662c8f1d5e138b543870a7a820c02f6c9e5a086a8ef53d/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08438374100296642,
+    "native_seconds": 0.1255047509985161,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1b87895aa2563c60cb4d052a11be051e01cc58b6c3fb5bfeb214f3ee96542e34",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async_function_foo()_{_await_(async_()_=>_{_doSomething()_})_}",
+    "config": "/workspace/wave08-core/upstream/cases/1b87895aa2563c60cb4d052a11be051e01cc58b6c3fb5bfeb214f3ee96542e34/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1b87895aa2563c60cb4d052a11be051e01cc58b6c3fb5bfeb214f3ee96542e34/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08998858100312646,
+    "native_seconds": 0.10220768100043642,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1bb5a25963e3f5e3029603d2c73db27e390f3750da65945dbe98e7f762892cce",
+    "description": "TestRequireAwaitFires/async_()_=>_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/1bb5a25963e3f5e3029603d2c73db27e390f3750da65945dbe98e7f762892cce/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1bb5a25963e3f5e3029603d2c73db27e390f3750da65945dbe98e7f762892cce/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13568841899905237,
+    "native_seconds": 0.11384373900000355,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1c02d9336b4ef94aab7d2f985e9b83ff0052e85f3a80d79053d59e374ad707d9",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_f_=_async_(a)_=>_{_return_1;_};",
+    "config": "/workspace/wave08-core/upstream/cases/1c02d9336b4ef94aab7d2f985e9b83ff0052e85f3a80d79053d59e374ad707d9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1c02d9336b4ef94aab7d2f985e9b83ff0052e85f3a80d79053d59e374ad707d9/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08643397400010144,
+    "native_seconds": 0.08494385800076998,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1de95a50d33e0e1212f7dea4cd566bb5e03b3117b3e9e8bfa0d22dc7c62164fe",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__a_=_0__async_in(){_return_0;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/1de95a50d33e0e1212f7dea4cd566bb5e03b3117b3e9e8bfa0d22dc7c62164fe/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1de95a50d33e0e1212f7dea4cd566bb5e03b3117b3e9e8bfa0d22dc7c62164fe/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09694532199864625,
+    "native_seconds": 0.1906581439980073,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "1ec5ab388672689ccb2c90c80b8a2afd66d91084edf902260e3ec41f00c165ef",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/1ec5ab388672689ccb2c90c80b8a2afd66d91084edf902260e3ec41f00c165ef/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1ec5ab388672689ccb2c90c80b8a2afd66d91084edf902260e3ec41f00c165ef/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09464707699953578,
+    "native_seconds": 0.08088248800049769,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "1fd7916a0f0d7cb0c989c5165c3c8ca2a28faf077bb53ac06de832bf951cdd0c",
+    "description": "TestRequireAtomicUpdatesMessageText/property_arm_names_the_target_text_and_the_object",
+    "config": "/workspace/wave08-core/upstream/cases/1fd7916a0f0d7cb0c989c5165c3c8ca2a28faf077bb53ac06de832bf951cdd0c/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/1fd7916a0f0d7cb0c989c5165c3c8ca2a28faf077bb53ac06de832bf951cdd0c/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08027065100031905,
+    "native_seconds": 0.17090775600081543,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "20a1458f0239125b17a737805f728326807d313177ed12d64786966728ac546d",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__foo()_{}__async_[bar]_()_{_baz;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/20a1458f0239125b17a737805f728326807d313177ed12d64786966728ac546d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/20a1458f0239125b17a737805f728326807d313177ed12d64786966728ac546d/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11980686400056584,
+    "native_seconds": 0.11934992999886163,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "20b1147f04d5207aa392fa8a829cfe31e41c8bd2d83aed3cad93ec1dc87c50c7",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/isNaN",
+    "config": "/workspace/wave08-core/upstream/cases/20b1147f04d5207aa392fa8a829cfe31e41c8bd2d83aed3cad93ec1dc87c50c7/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/20b1147f04d5207aa392fa8a829cfe31e41c8bd2d83aed3cad93ec1dc87c50c7/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11819248800020432,
+    "native_seconds": 0.10418382699936046,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "20d0997606c14144f013ce5d296acebe36a8c3b0d8528e1f5fe22f27aa72177f",
+    "description": "TestSymbolDescriptionStaysSilent/a_local_function_shadowing_the_name",
+    "config": "/workspace/wave08-core/upstream/cases/20d0997606c14144f013ce5d296acebe36a8c3b0d8528e1f5fe22f27aa72177f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/20d0997606c14144f013ce5d296acebe36a8c3b0d8528e1f5fe22f27aa72177f/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08868189900022116,
+    "native_seconds": 0.12339434100067592,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "21920f6237c113cf1bdeb1f71d57c1187525523db0752d0e7b7437de01e7e874",
+    "description": "TestRequireAwaitStaysSilent/async_function_run()_{_await_using_resource_=_getResource();_}",
+    "config": "/workspace/wave08-core/upstream/cases/21920f6237c113cf1bdeb1f71d57c1187525523db0752d0e7b7437de01e7e874/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/21920f6237c113cf1bdeb1f71d57c1187525523db0752d0e7b7437de01e7e874/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08157747899895185,
+    "native_seconds": 0.08873498100001598,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "21a75ce3aa50be90f7f665eb66dbc4c20b4e565e2810f3e33617545d1e58a87c",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/21a75ce3aa50be90f7f665eb66dbc4c20b4e565e2810f3e33617545d1e58a87c/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/21a75ce3aa50be90f7f665eb66dbc4c20b4e565e2810f3e33617545d1e58a87c/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09933015999922645,
+    "native_seconds": 0.12650052900062292,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "21caf83634dbae1855e0452b37406652856d99b7aa8fb594e9093963c5c39c83",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/21caf83634dbae1855e0452b37406652856d99b7aa8fb594e9093963c5c39c83/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/21caf83634dbae1855e0452b37406652856d99b7aa8fb594e9093963c5c39c83/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08756051099771867,
+    "native_seconds": 0.1633692430004885,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "22a68fd30067a33e13eb96be2b9c5430bda81950752e653192e93f14af788d9a",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_static_foo_=_async_function(a)_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/22a68fd30067a33e13eb96be2b9c5430bda81950752e653192e93f14af788d9a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/22a68fd30067a33e13eb96be2b9c5430bda81950752e653192e93f14af788d9a/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0906472679998842,
+    "native_seconds": 0.13826110399895697,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "24e9e3832a73c5f02acec6673fb85124ed0db790a95335458dd6f8e2b0151b07",
+    "description": "TestRequireAwaitStaysSilent/class_A_{_async_foo()_{_await_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/24e9e3832a73c5f02acec6673fb85124ed0db790a95335458dd6f8e2b0151b07/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/24e9e3832a73c5f02acec6673fb85124ed0db790a95335458dd6f8e2b0151b07/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.047453926999878604,
+    "native_seconds": 0.10885109299852047,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "257136469429a68048dd83a0d828be6ada140edfb8d3a5f1474e59247975f628",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/class_A_{_________________a_=_0_________________async_in(){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/257136469429a68048dd83a0d828be6ada140edfb8d3a5f1474e59247975f628/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/257136469429a68048dd83a0d828be6ada140edfb8d3a5f1474e59247975f628/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08341851700242842,
+    "native_seconds": 0.1555087970009481,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "26dcdd542a9e4d807ea55d971a469652a4d46a454a3b489acc8685cb9a09386b",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/26dcdd542a9e4d807ea55d971a469652a4d46a454a3b489acc8685cb9a09386b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/26dcdd542a9e4d807ea55d971a469652a4d46a454a3b489acc8685cb9a09386b/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12168215199926635,
+    "native_seconds": 0.11220047599999816,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "2897de25a3f2cdbf85995cb81df228142ac1a6b928918f0af650e22fc4639669",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/2897de25a3f2cdbf85995cb81df228142ac1a6b928918f0af650e22fc4639669/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2897de25a3f2cdbf85995cb81df228142ac1a6b928918f0af650e22fc4639669/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08322944500105223,
+    "native_seconds": 0.09731243100031861,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "293d33691f6eb883c8414ab684cc3e59e3700b64da5817b35aad9ff4c8f30fb0",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__a_=_0__async_m(){_return_0;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/293d33691f6eb883c8414ab684cc3e59e3700b64da5817b35aad9ff4c8f30fb0/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/293d33691f6eb883c8414ab684cc3e59e3700b64da5817b35aad9ff4c8f30fb0/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0916560190016753,
+    "native_seconds": 0.1594548709981609,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "29ae4874b25eeb36cb67965450aa4ab40534b4fb02efbece50947ab1e4b7b676",
+    "description": "TestRequireAtomicUpdatesFinallyReportsOnce/without_the_finally_write_there_is_nothing_to_report",
+    "config": "/workspace/wave08-core/upstream/cases/29ae4874b25eeb36cb67965450aa4ab40534b4fb02efbece50947ab1e4b7b676/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/29ae4874b25eeb36cb67965450aa4ab40534b4fb02efbece50947ab1e4b7b676/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08625000300162355,
+    "native_seconds": 0.10899584399885498,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "2a56dc548718ed5d2cdb87c4c184dfe6cf7a1563ed2c4bdb5992674be6bb6414",
+    "description": "TestRequireAwaitFires/async_()_=>_doSomething()",
+    "config": "/workspace/wave08-core/upstream/cases/2a56dc548718ed5d2cdb87c4c184dfe6cf7a1563ed2c4bdb5992674be6bb6414/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2a56dc548718ed5d2cdb87c4c184dfe6cf7a1563ed2c4bdb5992674be6bb6414/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07988936200126773,
+    "native_seconds": 0.141172366002138,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2a7e95916df2a6addab002833f8abeab44554ce8276bbe4ce82398c4f7cd6846",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/2a7e95916df2a6addab002833f8abeab44554ce8276bbe4ce82398c4f7cd6846/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2a7e95916df2a6addab002833f8abeab44554ce8276bbe4ce82398c4f7cd6846/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11131697699966026,
+    "native_seconds": 0.1039701209992927,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "2aa32bbb956671b8261000488366b2cfd562cd947e3675d1a15b0bd13e58f8ed",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/2aa32bbb956671b8261000488366b2cfd562cd947e3675d1a15b0bd13e58f8ed/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2aa32bbb956671b8261000488366b2cfd562cd947e3675d1a15b0bd13e58f8ed/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08983913100018981,
+    "native_seconds": 0.12782726300065406,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2b35075c8a275be538730cef79c43ef7c2d985160da7cca7f37e4988359b7b0e",
+    "description": "TestRequireAwaitFires/async_function_foo()_{_async_()_=>_{_await_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/2b35075c8a275be538730cef79c43ef7c2d985160da7cca7f37e4988359b7b0e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2b35075c8a275be538730cef79c43ef7c2d985160da7cca7f37e4988359b7b0e/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08880848600165336,
+    "native_seconds": 0.11198730600153795,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2b84fe0fbaad6847a86587706cf1c948ddbd83882cb5452267d5f14a91146845",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_foo_=_async_(a)_=>_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/2b84fe0fbaad6847a86587706cf1c948ddbd83882cb5452267d5f14a91146845/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2b84fe0fbaad6847a86587706cf1c948ddbd83882cb5452267d5f14a91146845/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09507419399960781,
+    "native_seconds": 0.12074902200038196,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2cc4c80e7528706702c52e5cd277fc7614fd70fb022bbb252577756de63953a7",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/parseInt",
+    "config": "/workspace/wave08-core/upstream/cases/2cc4c80e7528706702c52e5cd277fc7614fd70fb022bbb252577756de63953a7/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2cc4c80e7528706702c52e5cd277fc7614fd70fb022bbb252577756de63953a7/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0916711280005984,
+    "native_seconds": 0.10444562900011078,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "2d5045835fdffd628f0983efec848a6f879179dae48bca6b673cd7a9455a12f6",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async_function_run()_{_using_resource_=_getResource();_}",
+    "config": "/workspace/wave08-core/upstream/cases/2d5045835fdffd628f0983efec848a6f879179dae48bca6b673cd7a9455a12f6/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2d5045835fdffd628f0983efec848a6f879179dae48bca6b673cd7a9455a12f6/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06434715100112953,
+    "native_seconds": 0.097649620998709,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2e61cc802c94e3a01703af2999caf4a83449a0cca8245b317cfe3f9a4cd21ad8",
+    "description": "TestRequireAtomicUpdatesOptionsDecode/allowProperties_false_keeps_both_arms",
+    "config": "/workspace/wave08-core/upstream/cases/2e61cc802c94e3a01703af2999caf4a83449a0cca8245b317cfe3f9a4cd21ad8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2e61cc802c94e3a01703af2999caf4a83449a0cca8245b317cfe3f9a4cd21ad8/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08761935200163862,
+    "native_seconds": 0.12929150100171682,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2ef42e047afb37125e9d88cbf788502d9a65bd0def553a377778bbfe11a9d417",
+    "description": "TestRequireAwaitNamesTheFunction/async_function_run()_{_using_resource_=_getResource();_}",
+    "config": "/workspace/wave08-core/upstream/cases/2ef42e047afb37125e9d88cbf788502d9a65bd0def553a377778bbfe11a9d417/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2ef42e047afb37125e9d88cbf788502d9a65bd0def553a377778bbfe11a9d417/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10813763099940843,
+    "native_seconds": 0.1342513310009963,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "2f094fa3fd553b0fad84996065a4319d8c03ec0fc17dcb6b8f8bb1c6362d241d",
+    "description": "TestRequireAtomicUpdatesEscapeTable/a_local_object_is_local_for_the_property_arm",
+    "config": "/workspace/wave08-core/upstream/cases/2f094fa3fd553b0fad84996065a4319d8c03ec0fc17dcb6b8f8bb1c6362d241d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2f094fa3fd553b0fad84996065a4319d8c03ec0fc17dcb6b8f8bb1c6362d241d/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10158710600080667,
+    "native_seconds": 0.15230842000164557,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "2f7aed233137f3ade80fbd14403722354d25280a2469527bc811b05fc4b9efb4",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/2f7aed233137f3ade80fbd14403722354d25280a2469527bc811b05fc4b9efb4/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/2f7aed233137f3ade80fbd14403722354d25280a2469527bc811b05fc4b9efb4/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0774950280028861,
+    "native_seconds": 0.12418954700115137,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "307816925074dc4d3945d8bce6bc8fef59cf3d557c092ed187662aae73746dfa",
+    "description": "TestRequireAwaitNamesTheFunction/const_obj_=_{_________________foo,_________________async_in(){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/307816925074dc4d3945d8bce6bc8fef59cf3d557c092ed187662aae73746dfa/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/307816925074dc4d3945d8bce6bc8fef59cf3d557c092ed187662aae73746dfa/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09514415900048334,
+    "native_seconds": 0.1471584629980498,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "30d83aed707651f2e091ca1fbfe321afce259619ce7c070f7e487ff0771c1a94",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_call_to_a_method_named_call",
+    "config": "/workspace/wave08-core/upstream/cases/30d83aed707651f2e091ca1fbfe321afce259619ce7c070f7e487ff0771c1a94/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/30d83aed707651f2e091ca1fbfe321afce259619ce7c070f7e487ff0771c1a94/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10219868000058341,
+    "native_seconds": 0.11122693400102435,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "3142324a8637693e0e52c74ab74b02b591d3ce83e1798291fe2e1735525a5729",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/3142324a8637693e0e52c74ab74b02b591d3ce83e1798291fe2e1735525a5729/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3142324a8637693e0e52c74ab74b02b591d3ce83e1798291fe2e1735525a5729/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09820576800120762,
+    "native_seconds": 0.1325131159974262,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "31ad2c2a41c52616fdeb5b4dfc31deb2db2624a4f45fc7b74a2abdce9657c93a",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/31ad2c2a41c52616fdeb5b4dfc31deb2db2624a4f45fc7b74a2abdce9657c93a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/31ad2c2a41c52616fdeb5b4dfc31deb2db2624a4f45fc7b74a2abdce9657c93a/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1120404109969968,
+    "native_seconds": 0.13571620800212258,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "33929fda30e4ca2c088c0e3228682d90eff994ddea59ac4f6b8505167d683c86",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async_()_=>_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/33929fda30e4ca2c088c0e3228682d90eff994ddea59ac4f6b8505167d683c86/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/33929fda30e4ca2c088c0e3228682d90eff994ddea59ac4f6b8505167d683c86/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09128530599991791,
+    "native_seconds": 0.13269693500114954,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "362e61abe86f5d28329dbb424753e70853b1a898df5f1178eee68b7f74cf5550",
+    "description": "TestRequireAtomicUpdatesOptionsDecode/allowProperties_true_suppresses_only_the_property_arm",
+    "config": "/workspace/wave08-core/upstream/cases/362e61abe86f5d28329dbb424753e70853b1a898df5f1178eee68b7f74cf5550/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/362e61abe86f5d28329dbb424753e70853b1a898df5f1178eee68b7f74cf5550/roots.manifest",
+    "flags": [
+      "--atomic",
+      "--allow-properties"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09561803599717678,
+    "native_seconds": 0.09731815599661786,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "369bebb28a66fa223386a592d7bf24f9c4ff2aba7c751ba63f0d8c60ff0ff29a",
+    "description": "TestRequireAtomicUpdatesEscapeTable/a_non-suspending_function_is_never_judged",
+    "config": "/workspace/wave08-core/upstream/cases/369bebb28a66fa223386a592d7bf24f9c4ff2aba7c751ba63f0d8c60ff0ff29a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/369bebb28a66fa223386a592d7bf24f9c4ff2aba7c751ba63f0d8c60ff0ff29a/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10043691200189642,
+    "native_seconds": 0.14526210899930447,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "3bb3437ec7e4602220dda3a48fd88ce0fb463994e085a5344cd786561257e087",
+    "description": "TestRequireAwaitStaysSilent/async_function*_run()_{_________________await_new_Promise(resolve_=>_setTimeout(resolve,_100));_________________yield_'Hello';_________________console.log('World');_____________}_____________",
+    "config": "/workspace/wave08-core/upstream/cases/3bb3437ec7e4602220dda3a48fd88ce0fb463994e085a5344cd786561257e087/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3bb3437ec7e4602220dda3a48fd88ce0fb463994e085a5344cd786561257e087/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.14191808000032324,
+    "native_seconds": 0.11135418499907246,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "3cf52906770d40a4ce788b4111100acdcf9fff040dcc60dbd9ae46a143bc1166",
+    "description": "TestRequireAwaitStaysSilent/async_()_=>_await_doSomething()",
+    "config": "/workspace/wave08-core/upstream/cases/3cf52906770d40a4ce788b4111100acdcf9fff040dcc60dbd9ae46a143bc1166/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3cf52906770d40a4ce788b4111100acdcf9fff040dcc60dbd9ae46a143bc1166/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09687376899819355,
+    "native_seconds": 0.12112326699934783,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "3e709cc3f1b0d83171d1b7e95cb69370ed92e6062b56fd631d98f857c6560bc2",
+    "description": "TestRequireAwaitFindsAsyncPastOtherModifiers/class_A_{_static_async_foo()_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/3e709cc3f1b0d83171d1b7e95cb69370ed92e6062b56fd631d98f857c6560bc2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3e709cc3f1b0d83171d1b7e95cb69370ed92e6062b56fd631d98f857c6560bc2/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06821899900023709,
+    "native_seconds": 0.10029773700080113,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "3f0a0284a61774bb49e234541486325a7e0a0a8e5450a9a00c2518f77be27708",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/class_A_{_async_foo()_{_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/3f0a0284a61774bb49e234541486325a7e0a0a8e5450a9a00c2518f77be27708/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3f0a0284a61774bb49e234541486325a7e0a0a8e5450a9a00c2518f77be27708/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07892183599687996,
+    "native_seconds": 0.10105466700042598,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "3f41042777c5afcc3867de1cc08f899e74873e504f8a89d5b143ae4da5ce5ce7",
+    "description": "TestRequireAwaitNamesTheFunction/class_A_{_________________a_=_0_________________async_in(){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/3f41042777c5afcc3867de1cc08f899e74873e504f8a89d5b143ae4da5ce5ce7/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3f41042777c5afcc3867de1cc08f899e74873e504f8a89d5b143ae4da5ce5ce7/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09521093100192957,
+    "native_seconds": 0.11691826399692218,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "3fa38d6e90ce00c0290f5457cad8dad581f7ba70bf476c0764088e6ea3513dd7",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/3fa38d6e90ce00c0290f5457cad8dad581f7ba70bf476c0764088e6ea3513dd7/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/3fa38d6e90ce00c0290f5457cad8dad581f7ba70bf476c0764088e6ea3513dd7/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09860925499742734,
+    "native_seconds": 0.14638229999764008,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "4054af15fe3d82ecaf13a76762f679d8d659384e8e3b3dc73679a761cf26ae0f",
+    "description": "TestRequireAtomicUpdatesSpan/plain_assignment_reading_itself_before_the_suspension",
+    "config": "/workspace/wave08-core/upstream/cases/4054af15fe3d82ecaf13a76762f679d8d659384e8e3b3dc73679a761cf26ae0f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/4054af15fe3d82ecaf13a76762f679d8d659384e8e3b3dc73679a761cf26ae0f/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08656331400197814,
+    "native_seconds": 0.11278343599769869,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "4345279ae3c34f39e0b56f239287fc7b14bdf16b2cdc06d75d760eea47baffb2",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/Object",
+    "config": "/workspace/wave08-core/upstream/cases/4345279ae3c34f39e0b56f239287fc7b14bdf16b2cdc06d75d760eea47baffb2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/4345279ae3c34f39e0b56f239287fc7b14bdf16b2cdc06d75d760eea47baffb2/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08430025400230079,
+    "native_seconds": 0.10962407199986046,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "44952d12c9952ad1e59693c9ba82288a25d8a0ed1fedb447a4220c97619b6793",
+    "description": "TestRequireAtomicUpdatesSuspensionOrder",
+    "config": "/workspace/wave08-core/upstream/cases/44952d12c9952ad1e59693c9ba82288a25d8a0ed1fedb447a4220c97619b6793/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/44952d12c9952ad1e59693c9ba82288a25d8a0ed1fedb447a4220c97619b6793/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08213131699812948,
+    "native_seconds": 0.0975987969977723,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "456d72471ad515ef0143776d616c3058fd9c022288b54b19013bd311d66ab183",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/456d72471ad515ef0143776d616c3058fd9c022288b54b19013bd311d66ab183/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/456d72471ad515ef0143776d616c3058fd9c022288b54b19013bd311d66ab183/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10149743600049987,
+    "native_seconds": 0.09615152700280305,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "4a9f967e9d9a329f47c6876bc2a7240ecaa02385026821084cacf7e78f34cd38",
+    "description": "TestSymbolDescriptionMessage",
+    "config": "/workspace/wave08-core/upstream/cases/4a9f967e9d9a329f47c6876bc2a7240ecaa02385026821084cacf7e78f34cd38/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/4a9f967e9d9a329f47c6876bc2a7240ecaa02385026821084cacf7e78f34cd38/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08436022800015053,
+    "native_seconds": 0.1071859929979837,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "4cb568e6e4cff82798b6fd82477f67c5aff16fa1918e3cb49638ae8495689c70",
+    "description": "TestRequireAwaitFires/async_function_foo()_{_await_(async_()_=>_{_doSomething()_})_}",
+    "config": "/workspace/wave08-core/upstream/cases/4cb568e6e4cff82798b6fd82477f67c5aff16fa1918e3cb49638ae8495689c70/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/4cb568e6e4cff82798b6fd82477f67c5aff16fa1918e3cb49638ae8495689c70/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1077231839990418,
+    "native_seconds": 0.13211099600084708,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "4eeab4cf4251c702618cf384d0211b5db7ca8dbbab91f3a4a221d22bf7c97be2",
+    "description": "TestRequireAtomicUpdatesFinallyReportsOnce/without_the_guard_read_there_is_nothing_stale",
+    "config": "/workspace/wave08-core/upstream/cases/4eeab4cf4251c702618cf384d0211b5db7ca8dbbab91f3a4a221d22bf7c97be2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/4eeab4cf4251c702618cf384d0211b5db7ca8dbbab91f3a4a221d22bf7c97be2/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10899654000240844,
+    "native_seconds": 0.1339139290030289,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "4f5ca192145eb3e816fdb85f4adf6484e7650cd759f9cbe4d227e77f72748b00",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/4f5ca192145eb3e816fdb85f4adf6484e7650cd759f9cbe4d227e77f72748b00/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/4f5ca192145eb3e816fdb85f4adf6484e7650cd759f9cbe4d227e77f72748b00/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08699656699900515,
+    "native_seconds": 0.1063277229986852,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "51ede2a751168325d255f2aea3fd1320db85cad148c03c1cf29f4af300cb4195",
+    "description": "TestRequireAwaitNamesTheFunction/class_A_{_________________a_________________async_[b](){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/51ede2a751168325d255f2aea3fd1320db85cad148c03c1cf29f4af300cb4195/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/51ede2a751168325d255f2aea3fd1320db85cad148c03c1cf29f4af300cb4195/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08702368299782393,
+    "native_seconds": 0.09751703399888356,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "51f55d3f63129a67287e228d21326f2762b756fca6be5c5a864e97819b8e0e5a",
+    "description": "TestRequireAwaitStaysSilent/async_function_foo()_{_await_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/51f55d3f63129a67287e228d21326f2762b756fca6be5c5a864e97819b8e0e5a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/51f55d3f63129a67287e228d21326f2762b756fca6be5c5a864e97819b8e0e5a/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09554169100010768,
+    "native_seconds": 0.11400088200025493,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "55302462994f98e7d423f34b4e6d4162757508e9518767a164b16a958de78a65",
+    "description": "TestRequireAwaitStaysSilent/async_function*_run()_{_console.log(\"bar\")_}",
+    "config": "/workspace/wave08-core/upstream/cases/55302462994f98e7d423f34b4e6d4162757508e9518767a164b16a958de78a65/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/55302462994f98e7d423f34b4e6d4162757508e9518767a164b16a958de78a65/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08243496200157097,
+    "native_seconds": 0.09362604999842006,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "5890ac694c472b0a492e0b34748fd0ec601b72ad81946c506ea545f82cd0c130",
+    "description": "TestRequireAtomicUpdatesEscapeTable/a_parameter_is_local_for_the_variable_arm",
+    "config": "/workspace/wave08-core/upstream/cases/5890ac694c472b0a492e0b34748fd0ec601b72ad81946c506ea545f82cd0c130/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/5890ac694c472b0a492e0b34748fd0ec601b72ad81946c506ea545f82cd0c130/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1166604539976106,
+    "native_seconds": 0.11548245000085444,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "5ea071268f461109c406fa29a3047ae968d1a7d33bb3564e2a31adff422597d1",
+    "description": "TestRequireAwaitFires/foo_________________async_()_=>_{_return_0;_}_____________",
+    "config": "/workspace/wave08-core/upstream/cases/5ea071268f461109c406fa29a3047ae968d1a7d33bb3564e2a31adff422597d1/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/5ea071268f461109c406fa29a3047ae968d1a7d33bb3564e2a31adff422597d1/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0836074130020279,
+    "native_seconds": 0.14292908900097245,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "5eb542a708d874924d8a47b7d4734fdfbdc42212c66692859956fcb4b5093c8c",
+    "description": "TestSymbolDescriptionStaysSilent/a_parameter_shadowing_the_name",
+    "config": "/workspace/wave08-core/upstream/cases/5eb542a708d874924d8a47b7d4734fdfbdc42212c66692859956fcb4b5093c8c/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/5eb542a708d874924d8a47b7d4734fdfbdc42212c66692859956fcb4b5093c8c/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10866368799906923,
+    "native_seconds": 0.09963861500000348,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "5f2c5481a9d81bc09900f6df704cb7ff3df04e822a4226ab95754f5eba2142e9",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/5f2c5481a9d81bc09900f6df704cb7ff3df04e822a4226ab95754f5eba2142e9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/5f2c5481a9d81bc09900f6df704cb7ff3df04e822a4226ab95754f5eba2142e9/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07572394200178678,
+    "native_seconds": 0.11226901699774317,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "5fc3220dc6c9ccb26f185c5bdeec1b16edaa370a057a9ff520e6514656e56897",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/5fc3220dc6c9ccb26f185c5bdeec1b16edaa370a057a9ff520e6514656e56897/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/5fc3220dc6c9ccb26f185c5bdeec1b16edaa370a057a9ff520e6514656e56897/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09458327700122027,
+    "native_seconds": 0.10813084999972489,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "60024729f47ad2c881701ebfb876e2808f9177ad1a5e21364df744ddffb224ba",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/60024729f47ad2c881701ebfb876e2808f9177ad1a5e21364df744ddffb224ba/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/60024729f47ad2c881701ebfb876e2808f9177ad1a5e21364df744ddffb224ba/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07428248499854817,
+    "native_seconds": 0.10968759200113709,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "6022a80a7d90916857462bbdd228ce89f27d708206dc4bf168b342809b569079",
+    "description": "TestSymbolDescriptionFiresOnCasesBeyondTheCorpus/a_bare_call_as_an_initializer",
+    "config": "/workspace/wave08-core/upstream/cases/6022a80a7d90916857462bbdd228ce89f27d708206dc4bf168b342809b569079/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6022a80a7d90916857462bbdd228ce89f27d708206dc4bf168b342809b569079/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09727662000295823,
+    "native_seconds": 0.10702284699800657,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "602a08335ea85868be7cd50110ac7a4085773e63204f26be6e7c619edbd553f8",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/602a08335ea85868be7cd50110ac7a4085773e63204f26be6e7c619edbd553f8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/602a08335ea85868be7cd50110ac7a4085773e63204f26be6e7c619edbd553f8/roots.manifest",
+    "flags": [
+      "--atomic",
+      "--allow-properties"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11641953100115643,
+    "native_seconds": 0.13537388300028397,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "60df28b5989f5572bd083c936a65017b7972a9a55061c034decfaf6b7cd2a6da",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__a__async_[b](){_return_0;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/60df28b5989f5572bd083c936a65017b7972a9a55061c034decfaf6b7cd2a6da/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/60df28b5989f5572bd083c936a65017b7972a9a55061c034decfaf6b7cd2a6da/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07741420399906929,
+    "native_seconds": 0.1001004629979434,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "61545dfce4b464af55f8a8773e43e41185cfd67ca57fbe2884045c0402002328",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/61545dfce4b464af55f8a8773e43e41185cfd67ca57fbe2884045c0402002328/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/61545dfce4b464af55f8a8773e43e41185cfd67ca57fbe2884045c0402002328/roots.manifest",
+    "flags": [
+      "--atomic",
+      "--allow-properties"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10556970499965246,
+    "native_seconds": 0.12477154199950746,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "620b609cc8ee9baab15e4e924954fe109620f4fd072f35277c331b4687f0bc34",
+    "description": "TestRequireAwaitReportsAMethodWithNoInterface",
+    "config": "/workspace/wave08-core/upstream/cases/620b609cc8ee9baab15e4e924954fe109620f4fd072f35277c331b4687f0bc34/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/620b609cc8ee9baab15e4e924954fe109620f4fd072f35277c331b4687f0bc34/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1307187080019503,
+    "native_seconds": 0.11093203300333698,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "6226fb052ce52b01aa50727af0400b81063c624166fe56e64527387a4bb78923",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/6226fb052ce52b01aa50727af0400b81063c624166fe56e64527387a4bb78923/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6226fb052ce52b01aa50727af0400b81063c624166fe56e64527387a4bb78923/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05391139700077474,
+    "native_seconds": 0.11924780000117607,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "648c64024456aa075aec0166e1877c3f88078528861104ab93ca4c30b4c0707f",
+    "description": "TestRequireAwaitNamesTheFunction/class_A_{_async_foo()_{_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/648c64024456aa075aec0166e1877c3f88078528861104ab93ca4c30b4c0707f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/648c64024456aa075aec0166e1877c3f88078528861104ab93ca4c30b4c0707f/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09662875100184465,
+    "native_seconds": 0.14483669799665222,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "64c6d105375c453cc999e529e8f68f22c5d4dbc929e15bb08a7a64c14bde01d5",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async_function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/64c6d105375c453cc999e529e8f68f22c5d4dbc929e15bb08a7a64c14bde01d5/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/64c6d105375c453cc999e529e8f68f22c5d4dbc929e15bb08a7a64c14bde01d5/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08046022100097616,
+    "native_seconds": 0.14520977400025004,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "6645fca65fd9153f861ae9014c6b7f298dedd26cd2cf850e860a0ff7bdf618b3",
+    "description": "TestRequireAwaitStaysSilent/(class_{_async_foo()_{_await_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/6645fca65fd9153f861ae9014c6b7f298dedd26cd2cf850e860a0ff7bdf618b3/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6645fca65fd9153f861ae9014c6b7f298dedd26cd2cf850e860a0ff7bdf618b3/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07144703499943716,
+    "native_seconds": 0.11373541499779094,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "66f96ae08a4e6266f45ea3c3b8a4205e2e898b9df1e65586b4ba7927f9bf99ad",
+    "description": "TestRequireAtomicUpdatesCatchDoesNotInheritTryRefresh/both_linters_report_when_the_try_block_ends_at_the_await",
+    "config": "/workspace/wave08-core/upstream/cases/66f96ae08a4e6266f45ea3c3b8a4205e2e898b9df1e65586b4ba7927f9bf99ad/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/66f96ae08a4e6266f45ea3c3b8a4205e2e898b9df1e65586b4ba7927f9bf99ad/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06483506900258362,
+    "native_seconds": 0.10003463999964879,
+    "go_findings": "findings 2",
+    "native_findings": "findings 2",
+    "native_error": ""
+  },
+  {
+    "name": "67364cdef22da3c95a67f597a06aba03ad9961c3ffdb9dcf0ea1b98e54fb8d41",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_reference_through_globalThis",
+    "config": "/workspace/wave08-core/upstream/cases/67364cdef22da3c95a67f597a06aba03ad9961c3ffdb9dcf0ea1b98e54fb8d41/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/67364cdef22da3c95a67f597a06aba03ad9961c3ffdb9dcf0ea1b98e54fb8d41/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09427704100016854,
+    "native_seconds": 0.11638527700051782,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "682819dc8c9e33e682eb776fcdfe7eac755018be1eef14664bb25911e98c5abf",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/682819dc8c9e33e682eb776fcdfe7eac755018be1eef14664bb25911e98c5abf/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/682819dc8c9e33e682eb776fcdfe7eac755018be1eef14664bb25911e98c5abf/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08085733999905642,
+    "native_seconds": 0.07090290600172011,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "69acb3151ae7cc91d8d81ff1dc7e4abcfc4ebc1b218930aadbe8279c0b9f7dd9",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/69acb3151ae7cc91d8d81ff1dc7e4abcfc4ebc1b218930aadbe8279c0b9f7dd9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/69acb3151ae7cc91d8d81ff1dc7e4abcfc4ebc1b218930aadbe8279c0b9f7dd9/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08862643799875514,
+    "native_seconds": 0.13017606799985515,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "69b2b5ce53489ea57c3bdf8daa6c176b3139b0ddd57e30f9f6eac4c40e981ace",
+    "description": "TestRequireAwaitKeepsAGenericContractThatDemandsAPromise",
+    "config": "/workspace/wave08-core/upstream/cases/69b2b5ce53489ea57c3bdf8daa6c176b3139b0ddd57e30f9f6eac4c40e981ace/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/69b2b5ce53489ea57c3bdf8daa6c176b3139b0ddd57e30f9f6eac4c40e981ace/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08654814700275892,
+    "native_seconds": 0.11704058299801545,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "6a328268d6c6d0dad5253551d36cac8d5c364d36a0c175c9f917d438fac704e6",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/6a328268d6c6d0dad5253551d36cac8d5c364d36a0c175c9f917d438fac704e6/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6a328268d6c6d0dad5253551d36cac8d5c364d36a0c175c9f917d438fac704e6/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1004965190004441,
+    "native_seconds": 0.1433295359965996,
+    "go_findings": "findings 2",
+    "native_findings": "findings 2",
+    "native_error": ""
+  },
+  {
+    "name": "6ad45b6b440869bc52f6789df8d51a2faf8bc0a414ec68b9cb232dd0000063f1",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_o_=_{_run:_bar(async_(a)_=>_{_return_1;_})_};",
+    "config": "/workspace/wave08-core/upstream/cases/6ad45b6b440869bc52f6789df8d51a2faf8bc0a414ec68b9cb232dd0000063f1/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6ad45b6b440869bc52f6789df8d51a2faf8bc0a414ec68b9cb232dd0000063f1/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0780147740006214,
+    "native_seconds": 0.12359905500125024,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "6b131e31e98d119d524222e9d6ae933c29aa2211d68bbcc145dd6adcb5764bf4",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/6b131e31e98d119d524222e9d6ae933c29aa2211d68bbcc145dd6adcb5764bf4/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6b131e31e98d119d524222e9d6ae933c29aa2211d68bbcc145dd6adcb5764bf4/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10141933299746597,
+    "native_seconds": 0.08931982300055097,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "6bd7fb9f3682ceaef6c538d8e409e7ad8757f96f71e4ae3e996299bc4aecf8f8",
+    "description": "TestRequireAwaitExemptsAnInterfaceMethod",
+    "config": "/workspace/wave08-core/upstream/cases/6bd7fb9f3682ceaef6c538d8e409e7ad8757f96f71e4ae3e996299bc4aecf8f8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6bd7fb9f3682ceaef6c538d8e409e7ad8757f96f71e4ae3e996299bc4aecf8f8/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08643791500071529,
+    "native_seconds": 0.1282930120032688,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "6c8e9b75eb9255e659cb775482576921622571a5a44f2e769e252b5216db65ae",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/6c8e9b75eb9255e659cb775482576921622571a5a44f2e769e252b5216db65ae/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6c8e9b75eb9255e659cb775482576921622571a5a44f2e769e252b5216db65ae/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.057808479003142565,
+    "native_seconds": 0.11271174500143388,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "6da6742b466bd6f156c80ce33b4211d2953ec14431d2b7521ea9c6588d3cd1ad",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async_()_=>_doSomething()",
+    "config": "/workspace/wave08-core/upstream/cases/6da6742b466bd6f156c80ce33b4211d2953ec14431d2b7521ea9c6588d3cd1ad/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6da6742b466bd6f156c80ce33b4211d2953ec14431d2b7521ea9c6588d3cd1ad/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09731884199936758,
+    "native_seconds": 0.07333171699792729,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "6fab8dfefc151588a27d8e7e825ba269022e85e40f9cef74887303923d8aba44",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/6fab8dfefc151588a27d8e7e825ba269022e85e40f9cef74887303923d8aba44/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/6fab8dfefc151588a27d8e7e825ba269022e85e40f9cef74887303923d8aba44/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09871659200143768,
+    "native_seconds": 0.12905831500029308,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "70541422d2f5af080b22dd0f1b31309dafa36bb59ef5a212630dd0f5a1080438",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__a_=_0__async_instanceof(){_return_0;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/70541422d2f5af080b22dd0f1b31309dafa36bb59ef5a212630dd0f5a1080438/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/70541422d2f5af080b22dd0f1b31309dafa36bb59ef5a212630dd0f5a1080438/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12686110000140616,
+    "native_seconds": 0.13806870899861678,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "713fc4f5320c71a9e5bb1c6c7101078a24370a595b85f05002e442e7cbebebf9",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/713fc4f5320c71a9e5bb1c6c7101078a24370a595b85f05002e442e7cbebebf9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/713fc4f5320c71a9e5bb1c6c7101078a24370a595b85f05002e442e7cbebebf9/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08119401300064055,
+    "native_seconds": 0.19884575399919413,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7190b1fe30867a9cd332a3da5dfc480909f676ee799d609ba394c7b931dea785",
+    "description": "TestRequireAwaitFires/class_A_{_________________foo()_{}_________________async_[bar]_()_{_baz;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/7190b1fe30867a9cd332a3da5dfc480909f676ee799d609ba394c7b931dea785/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7190b1fe30867a9cd332a3da5dfc480909f676ee799d609ba394c7b931dea785/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08058416200219654,
+    "native_seconds": 0.16338868999810074,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "72ae8a7e9c18c57d59292a586c049939712c82a206f74f4fb6e99579cee33e92",
+    "description": "TestSymbolDescriptionFiresOnCasesBeyondTheCorpus/a_block-scoped_shadow_that_does_not_reach_the_call",
+    "config": "/workspace/wave08-core/upstream/cases/72ae8a7e9c18c57d59292a586c049939712c82a206f74f4fb6e99579cee33e92/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/72ae8a7e9c18c57d59292a586c049939712c82a206f74f4fb6e99579cee33e92/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.15016667700183461,
+    "native_seconds": 0.12677142800021102,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "734add5d3cbf9c6b6d5499efed913ef209357174c3a889134187445a1e28e4ea",
+    "description": "TestRequireAtomicUpdatesCatchDoesNotInheritTryRefresh/a_guard_read_is_still_what_makes_the_object_outdated",
+    "config": "/workspace/wave08-core/upstream/cases/734add5d3cbf9c6b6d5499efed913ef209357174c3a889134187445a1e28e4ea/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/734add5d3cbf9c6b6d5499efed913ef209357174c3a889134187445a1e28e4ea/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12489086099958513,
+    "native_seconds": 0.1071428460018069,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "743095ab9e35843ae009ee74c2a6f480aa9d7c515627f18053cdf2173d610a96",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/Date",
+    "config": "/workspace/wave08-core/upstream/cases/743095ab9e35843ae009ee74c2a6f480aa9d7c515627f18053cdf2173d610a96/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/743095ab9e35843ae009ee74c2a6f480aa9d7c515627f18053cdf2173d610a96/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05210528899988276,
+    "native_seconds": 0.12814298400189728,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "74e6ea722d07a64c8d9f5a96c3309dcbfad806496712ac4a421287e8193254ff",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/async_function_foo(a)_{_return_1;_}",
+    "config": "/workspace/wave08-core/upstream/cases/74e6ea722d07a64c8d9f5a96c3309dcbfad806496712ac4a421287e8193254ff/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/74e6ea722d07a64c8d9f5a96c3309dcbfad806496712ac4a421287e8193254ff/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12105991499993252,
+    "native_seconds": 0.10394704500140506,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "751ec64787fcaa00cde0bd95938f8168023025323fd801615e6c706b78514158",
+    "description": "TestRequireAwaitFindsAsyncPastOtherModifiers/export_async_function_foo()_{_return_1;_}",
+    "config": "/workspace/wave08-core/upstream/cases/751ec64787fcaa00cde0bd95938f8168023025323fd801615e6c706b78514158/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/751ec64787fcaa00cde0bd95938f8168023025323fd801615e6c706b78514158/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09615116499844589,
+    "native_seconds": 0.12517536399900564,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "77a6b4f3573d913e57161fcdaba59a835d70a6c3b53d699bf522489075375688",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/77a6b4f3573d913e57161fcdaba59a835d70a6c3b53d699bf522489075375688/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/77a6b4f3573d913e57161fcdaba59a835d70a6c3b53d699bf522489075375688/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13132797100115567,
+    "native_seconds": 0.13833705900105997,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "79d7d42995ba9780ce60784ec266293c1ea90e92c907c7adc1734d2a305fe514",
+    "description": "TestRequireAwaitFires/(async_function()_{_doSomething()_})",
+    "config": "/workspace/wave08-core/upstream/cases/79d7d42995ba9780ce60784ec266293c1ea90e92c907c7adc1734d2a305fe514/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/79d7d42995ba9780ce60784ec266293c1ea90e92c907c7adc1734d2a305fe514/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11377503299809177,
+    "native_seconds": 0.10492094399887719,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7b2c9ae96ce3a0e1ee39c568d2822dd19f00c492ff05e3283d51ad701edd72c8",
+    "description": "TestRequireAwaitFires/class_A_{_________________a_________________async_[b](){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/7b2c9ae96ce3a0e1ee39c568d2822dd19f00c492ff05e3283d51ad701edd72c8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7b2c9ae96ce3a0e1ee39c568d2822dd19f00c492ff05e3283d51ad701edd72c8/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0961276630005159,
+    "native_seconds": 0.10885849999976926,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7b3f8f370efac59be397b688ab4f9c1efe58dd83ff8e26edef293a84ca0614f9",
+    "description": "TestRequireAwaitNamesTheFunction/(async_function()_{_doSomething()_})",
+    "config": "/workspace/wave08-core/upstream/cases/7b3f8f370efac59be397b688ab4f9c1efe58dd83ff8e26edef293a84ca0614f9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7b3f8f370efac59be397b688ab4f9c1efe58dd83ff8e26edef293a84ca0614f9/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06589132400040398,
+    "native_seconds": 0.1436835210006393,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7b69595ccb8cf042406a42680ee4c5c50ebb265fa07be4ff0af0919afde1b19b",
+    "description": "TestRequireAwaitFires/class_A_{_________________a_=_0_________________async_[b](){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/7b69595ccb8cf042406a42680ee4c5c50ebb265fa07be4ff0af0919afde1b19b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7b69595ccb8cf042406a42680ee4c5c50ebb265fa07be4ff0af0919afde1b19b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05891395800063037,
+    "native_seconds": 0.27231290999770863,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7bb4a6ef607fe0c5a2a10e5edc4be261770a79e4878fb3223a7ce3d5eaf8e167",
+    "description": "TestSymbolDescriptionStaysSilent/a_call_with_a_literal_description",
+    "config": "/workspace/wave08-core/upstream/cases/7bb4a6ef607fe0c5a2a10e5edc4be261770a79e4878fb3223a7ce3d5eaf8e167/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7bb4a6ef607fe0c5a2a10e5edc4be261770a79e4878fb3223a7ce3d5eaf8e167/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10242171799836797,
+    "native_seconds": 0.11980220999976154,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "7bea0d6a5793bfc82d07cbb2b9240f517ede9217e3b47dfb4704fcc1b56c99dc",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/export_default_async_function_foo(a)_{_return_1;_}",
+    "config": "/workspace/wave08-core/upstream/cases/7bea0d6a5793bfc82d07cbb2b9240f517ede9217e3b47dfb4704fcc1b56c99dc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7bea0d6a5793bfc82d07cbb2b9240f517ede9217e3b47dfb4704fcc1b56c99dc/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.3062447090014757,
+    "native_seconds": 0.15555822999886004,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7cfa708d75ea04673b7f655298087fdfaca5457a5a4e3a6482f258823afd3f3b",
+    "description": "TestRequireAwaitKeepsAGenericContractThatDemandsAPromise",
+    "config": "/workspace/wave08-core/upstream/cases/7cfa708d75ea04673b7f655298087fdfaca5457a5a4e3a6482f258823afd3f3b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7cfa708d75ea04673b7f655298087fdfaca5457a5a4e3a6482f258823afd3f3b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06499719600105891,
+    "native_seconds": 0.13400089599963394,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "7d1e4abe7903da7cd6c3f58f269b20dcc1eb9cea1b8ca6d90ca96b19d3e25076",
+    "description": "TestRequireAtomicUpdatesEscapeTable/a_parameter_escapes_for_the_property_arm",
+    "config": "/workspace/wave08-core/upstream/cases/7d1e4abe7903da7cd6c3f58f269b20dcc1eb9cea1b8ca6d90ca96b19d3e25076/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7d1e4abe7903da7cd6c3f58f269b20dcc1eb9cea1b8ca6d90ca96b19d3e25076/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06549794199963799,
+    "native_seconds": 0.1638783410016913,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "7f02d59a06bae91e5c04a76f0f80216e75db407ea0b2b39aa033c4df69fe2523",
+    "description": "TestRequireAtomicUpdatesFinallyReportsOnce/the_same_shape_without_a_try_still_reports_once",
+    "config": "/workspace/wave08-core/upstream/cases/7f02d59a06bae91e5c04a76f0f80216e75db407ea0b2b39aa033c4df69fe2523/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/7f02d59a06bae91e5c04a76f0f80216e75db407ea0b2b39aa033c4df69fe2523/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12657413900160464,
+    "native_seconds": 0.28809787000136566,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "81f56366d36134e6c3fcdd1aea2d58540b372884b2c870cfc4fd758c10e35994",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/81f56366d36134e6c3fcdd1aea2d58540b372884b2c870cfc4fd758c10e35994/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/81f56366d36134e6c3fcdd1aea2d58540b372884b2c870cfc4fd758c10e35994/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0850937420000264,
+    "native_seconds": 0.08171710100214113,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "8248a1a0876f2abd46394ca63577ede9f042649591351ae2b1a4eaf8f89c540e",
+    "description": "TestRequireAtomicUpdatesCatchDoesNotInheritTryRefresh/a_read_at_the_end_of_the_try_does_not_refresh_the_catch",
+    "config": "/workspace/wave08-core/upstream/cases/8248a1a0876f2abd46394ca63577ede9f042649591351ae2b1a4eaf8f89c540e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8248a1a0876f2abd46394ca63577ede9f042649591351ae2b1a4eaf8f89c540e/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1487500139992335,
+    "native_seconds": 0.1606294360026368,
+    "go_findings": "findings 2",
+    "native_findings": "findings 2",
+    "native_error": ""
+  },
+  {
+    "name": "828e5dba242ec9884771604e229f3ca6a435b45dfc4c0cc90a4aa0725ea6b0f8",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/828e5dba242ec9884771604e229f3ca6a435b45dfc4c0cc90a4aa0725ea6b0f8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/828e5dba242ec9884771604e229f3ca6a435b45dfc4c0cc90a4aa0725ea6b0f8/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08375705500293407,
+    "native_seconds": 0.14662423499976285,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "834f6dedcf3ec2f090d12189db1ffb9203f1bf7605c6a7e87dff90244ed99af3",
+    "description": "TestRequireAwaitReadsAGenericReturnFromItsTypedPosition",
+    "config": "/workspace/wave08-core/upstream/cases/834f6dedcf3ec2f090d12189db1ffb9203f1bf7605c6a7e87dff90244ed99af3/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/834f6dedcf3ec2f090d12189db1ffb9203f1bf7605c6a7e87dff90244ed99af3/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12972520399853238,
+    "native_seconds": 0.10604057199816452,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "835e10ec86751a6440020ba42e3af7797600ebbfefc91341712cb9250bfffb52",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/async_function_foo()_{_async_()_=>_{_await_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/835e10ec86751a6440020ba42e3af7797600ebbfefc91341712cb9250bfffb52/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/835e10ec86751a6440020ba42e3af7797600ebbfefc91341712cb9250bfffb52/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10717528600071091,
+    "native_seconds": 0.1463427620001312,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "85072c87f79f278bdfe9f76bba0c13511a46ffc438be2176e434f30b12eda7d3",
+    "description": "TestSymbolDescriptionRequiresTheTypedHarness",
+    "config": "/workspace/wave08-core/upstream/cases/85072c87f79f278bdfe9f76bba0c13511a46ffc438be2176e434f30b12eda7d3/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/85072c87f79f278bdfe9f76bba0c13511a46ffc438be2176e434f30b12eda7d3/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0961757189979835,
+    "native_seconds": 0.1417612690020178,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8661db37fbc21cfbd2597f604f015dc7b775bb6c8e46461fe2f0d540614ca548",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_foo_=_bar(async_function(a)_{_return_1;_})_}",
+    "config": "/workspace/wave08-core/upstream/cases/8661db37fbc21cfbd2597f604f015dc7b775bb6c8e46461fe2f0d540614ca548/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8661db37fbc21cfbd2597f604f015dc7b775bb6c8e46461fe2f0d540614ca548/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1078263240015076,
+    "native_seconds": 0.11663874000078067,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "866d17faf01363df7b097d4517a2d51bc2127c442f2feaf85ba2f8e5fbd03df2",
+    "description": "TestRequireAwaitFires/(class_{_async_''()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/866d17faf01363df7b097d4517a2d51bc2127c442f2feaf85ba2f8e5fbd03df2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/866d17faf01363df7b097d4517a2d51bc2127c442f2feaf85ba2f8e5fbd03df2/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09283334000065224,
+    "native_seconds": 0.09969002900106716,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8818c4ab69a752e19624c3a3866c7db5ca4b6568b124b375eb9bcd7c6a2d29c8",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/Boolean",
+    "config": "/workspace/wave08-core/upstream/cases/8818c4ab69a752e19624c3a3866c7db5ca4b6568b124b375eb9bcd7c6a2d29c8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8818c4ab69a752e19624c3a3866c7db5ca4b6568b124b375eb9bcd7c6a2d29c8/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09782245099995635,
+    "native_seconds": 0.0718363390005834,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "885d32c334c9ba1eb93c30264283ae123955c3021898ad49d090d0287bd28c45",
+    "description": "TestSymbolDescriptionSpansTheCall/a_bare_call",
+    "config": "/workspace/wave08-core/upstream/cases/885d32c334c9ba1eb93c30264283ae123955c3021898ad49d090d0287bd28c45/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/885d32c334c9ba1eb93c30264283ae123955c3021898ad49d090d0287bd28c45/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05037848000210943,
+    "native_seconds": 0.13529254700188176,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8a7453036db0cf29191c9a532145bea949db62af225385da17fa4d3e29ed574d",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_public_async_foo(a)_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/8a7453036db0cf29191c9a532145bea949db62af225385da17fa4d3e29ed574d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8a7453036db0cf29191c9a532145bea949db62af225385da17fa4d3e29ed574d/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10693031899791094,
+    "native_seconds": 0.11757022399979178,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8a8b1184b0a9ab722b8383601ab291c8a41ad942270bc697d3d91daa2b279655",
+    "description": "TestRequireAtomicUpdatesOptionsDecode/allowProperties_true_suppresses_only_the_property_arm",
+    "config": "/workspace/wave08-core/upstream/cases/8a8b1184b0a9ab722b8383601ab291c8a41ad942270bc697d3d91daa2b279655/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8a8b1184b0a9ab722b8383601ab291c8a41ad942270bc697d3d91daa2b279655/roots.manifest",
+    "flags": [
+      "--atomic",
+      "--allow-properties"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07730817300034687,
+    "native_seconds": 0.10268916000131867,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8ab9a727a202aa31285489123cf0ffd11d090a5187e52696797fec034fd2a2fc",
+    "description": "TestRequireAwaitNamesTheFunction/async_function_foo()_{_async_()_=>_{_await_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/8ab9a727a202aa31285489123cf0ffd11d090a5187e52696797fec034fd2a2fc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8ab9a727a202aa31285489123cf0ffd11d090a5187e52696797fec034fd2a2fc/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.058535436000966,
+    "native_seconds": 0.12191020799946273,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8b60a597e8b418203be5c2ffa64c69326875c6320c12988edcf25353ac7586ab",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__a_=_0__async_foo(){_return_0;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/8b60a597e8b418203be5c2ffa64c69326875c6320c12988edcf25353ac7586ab/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8b60a597e8b418203be5c2ffa64c69326875c6320c12988edcf25353ac7586ab/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05799826399743324,
+    "native_seconds": 0.09963319300004514,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8b91a30623c9f137fd9923464e415596905470bf1afe6e916e359e40c7379fb8",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/8b91a30623c9f137fd9923464e415596905470bf1afe6e916e359e40c7379fb8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8b91a30623c9f137fd9923464e415596905470bf1afe6e916e359e40c7379fb8/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11273115699805203,
+    "native_seconds": 0.10916051799722482,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "8d19803bb2e8f6d433c497d5c38a4c68745c712f313355655edf0fae8b416145",
+    "description": "TestRequireAwaitStillReportsWithoutAContract",
+    "config": "/workspace/wave08-core/upstream/cases/8d19803bb2e8f6d433c497d5c38a4c68745c712f313355655edf0fae8b416145/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8d19803bb2e8f6d433c497d5c38a4c68745c712f313355655edf0fae8b416145/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10869655800343025,
+    "native_seconds": 0.12216285300019081,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8e0f45e91e4e6cd67f1a636f4d129c9c7e248771982561d0d9d61fd29b5a507b",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_property_access_rather_than_a_call",
+    "config": "/workspace/wave08-core/upstream/cases/8e0f45e91e4e6cd67f1a636f4d129c9c7e248771982561d0d9d61fd29b5a507b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8e0f45e91e4e6cd67f1a636f4d129c9c7e248771982561d0d9d61fd29b5a507b/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08576234999782173,
+    "native_seconds": 0.06611601400072686,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "8f7853637c726f37f92a9483c414caa057c75a4ddb3fe5c6a0a776937d896d8a",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/class_A_{_________________a_________________async_[b](){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/8f7853637c726f37f92a9483c414caa057c75a4ddb3fe5c6a0a776937d896d8a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8f7853637c726f37f92a9483c414caa057c75a4ddb3fe5c6a0a776937d896d8a/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09759782699984498,
+    "native_seconds": 0.1689193530000921,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "8fdea04581ce67a635931fd0b35199f71ec711d36c22a87e5919cf0c0550cea3",
+    "description": "TestRequireAwaitReadsAGenericReturnFromItsTypedPosition",
+    "config": "/workspace/wave08-core/upstream/cases/8fdea04581ce67a635931fd0b35199f71ec711d36c22a87e5919cf0c0550cea3/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/8fdea04581ce67a635931fd0b35199f71ec711d36c22a87e5919cf0c0550cea3/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08298944399939501,
+    "native_seconds": 0.17675971599965123,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "9168f1bf8582ae60cb2f9f84f8847f327ee364e33acacf71a2b9c60371b69b36",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/9168f1bf8582ae60cb2f9f84f8847f327ee364e33acacf71a2b9c60371b69b36/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/9168f1bf8582ae60cb2f9f84f8847f327ee364e33acacf71a2b9c60371b69b36/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13856974600275862,
+    "native_seconds": 0.12165314199955901,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "91c4c91c49f222594c9d4d269de4236188e972218949ed845649301fdc06a8c9",
+    "description": "TestRequireAtomicUpdatesEscapeTable/a_closure_that_does_not_name_the_binding_is_not_a_capture",
+    "config": "/workspace/wave08-core/upstream/cases/91c4c91c49f222594c9d4d269de4236188e972218949ed845649301fdc06a8c9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/91c4c91c49f222594c9d4d269de4236188e972218949ed845649301fdc06a8c9/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05000454599939985,
+    "native_seconds": 0.10215459700339125,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "91f42c2fea7eabc7eb1f1f798a5b50ac3faedbf0cc4ec9dfbb72784d0ee03e9a",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_new_expression",
+    "config": "/workspace/wave08-core/upstream/cases/91f42c2fea7eabc7eb1f1f798a5b50ac3faedbf0cc4ec9dfbb72784d0ee03e9a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/91f42c2fea7eabc7eb1f1f798a5b50ac3faedbf0cc4ec9dfbb72784d0ee03e9a/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09346522800115054,
+    "native_seconds": 0.09856983699864941,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "944a118d405ded1af797831c395dd6527c9173c67022c268b63e8faed5f41c36",
+    "description": "TestRequireAtomicUpdatesMessageText/variable_arm_names_the_binding",
+    "config": "/workspace/wave08-core/upstream/cases/944a118d405ded1af797831c395dd6527c9173c67022c268b63e8faed5f41c36/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/944a118d405ded1af797831c395dd6527c9173c67022c268b63e8faed5f41c36/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0647192320029717,
+    "native_seconds": 0.10943068400229095,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "951122d2b50ac83e4f9a0def4da166851de6daffc875d6a5b3692c4a528ca96b",
+    "description": "TestSymbolDescriptionFiresOnCasesBeyondTheCorpus/two_bare_calls_report_twice",
+    "config": "/workspace/wave08-core/upstream/cases/951122d2b50ac83e4f9a0def4da166851de6daffc875d6a5b3692c4a528ca96b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/951122d2b50ac83e4f9a0def4da166851de6daffc875d6a5b3692c4a528ca96b/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09931084900017595,
+    "native_seconds": 0.07557882199762389,
+    "go_findings": "findings 2",
+    "native_findings": "findings 2",
+    "native_error": ""
+  },
+  {
+    "name": "974d57bf5ef977422c87dcff256336da8be47a47d46ba2765557040ca05e00e2",
+    "description": "TestRequireAtomicUpdatesEscapeTable/declared_outside_the_function_escapes",
+    "config": "/workspace/wave08-core/upstream/cases/974d57bf5ef977422c87dcff256336da8be47a47d46ba2765557040ca05e00e2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/974d57bf5ef977422c87dcff256336da8be47a47d46ba2765557040ca05e00e2/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07790095900054439,
+    "native_seconds": 0.12186844700045185,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "993ba82ebbba034324e430e515a3ab28dc150118f35fd07f80d4c64404eba589",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/993ba82ebbba034324e430e515a3ab28dc150118f35fd07f80d4c64404eba589/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/993ba82ebbba034324e430e515a3ab28dc150118f35fd07f80d4c64404eba589/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08479704500132357,
+    "native_seconds": 0.09542944200074999,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "9bce8ec1fa486ac198c0b9969cfe07ab63b63d36f0ddf4961d06d9f1cd32d70a",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/9bce8ec1fa486ac198c0b9969cfe07ab63b63d36f0ddf4961d06d9f1cd32d70a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/9bce8ec1fa486ac198c0b9969cfe07ab63b63d36f0ddf4961d06d9f1cd32d70a/roots.manifest",
+    "flags": [
+      "--atomic",
+      "--allow-properties"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09124869299921556,
+    "native_seconds": 0.13779534499917645,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "9ceb372d94919d746af15ba0984d3b5b84e8207bbb4596f4f956315251e023b4",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/({_async_foo()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/9ceb372d94919d746af15ba0984d3b5b84e8207bbb4596f4f956315251e023b4/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/9ceb372d94919d746af15ba0984d3b5b84e8207bbb4596f4f956315251e023b4/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09133083099732175,
+    "native_seconds": 0.11091287800081773,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "9d700016bb404c1345aab889bf7c4247195e89d01420cdcb3e5042d5a88f37d1",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_o_=_{_run:_async_function(a)_{_return_1;_}_};",
+    "config": "/workspace/wave08-core/upstream/cases/9d700016bb404c1345aab889bf7c4247195e89d01420cdcb3e5042d5a88f37d1/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/9d700016bb404c1345aab889bf7c4247195e89d01420cdcb3e5042d5a88f37d1/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10941123800148489,
+    "native_seconds": 0.1076302619985654,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "9ef28f9e6b6eab2a267e26d8e52f55fa5de2d2b6fee3ecda898f96a92171c85c",
+    "description": "TestRequireAwaitSemicolonNeedsBothHalves/class_A_{__a_=_0__async_[b](){_return_0;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/9ef28f9e6b6eab2a267e26d8e52f55fa5de2d2b6fee3ecda898f96a92171c85c/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/9ef28f9e6b6eab2a267e26d8e52f55fa5de2d2b6fee3ecda898f96a92171c85c/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09689490200253204,
+    "native_seconds": 0.18186300600063987,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "a354135d83309d1acf8d33aa4af1ae652a152e8692bb8797323e865775deb6ae",
+    "description": "TestRequireAwaitDoesNotLetAGenericInferItsOwnContract/Array.map",
+    "config": "/workspace/wave08-core/upstream/cases/a354135d83309d1acf8d33aa4af1ae652a152e8692bb8797323e865775deb6ae/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a354135d83309d1acf8d33aa4af1ae652a152e8692bb8797323e865775deb6ae/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.15237049799907254,
+    "native_seconds": 0.12185297399992123,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "a3570aeca237ca72b367855ce422802beeb6d857b893a82f97071ff2971a4825",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/a3570aeca237ca72b367855ce422802beeb6d857b893a82f97071ff2971a4825/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a3570aeca237ca72b367855ce422802beeb6d857b893a82f97071ff2971a4825/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13352314500298235,
+    "native_seconds": 0.10979036000207998,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "a36f1d639f7e36389a372b97af7fbc21c253c89a0cb65b9b766368ffcd5f5475",
+    "description": "TestSymbolDescriptionStaysSilent/a_shadow_inside_a_function",
+    "config": "/workspace/wave08-core/upstream/cases/a36f1d639f7e36389a372b97af7fbc21c253c89a0cb65b9b766368ffcd5f5475/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a36f1d639f7e36389a372b97af7fbc21c253c89a0cb65b9b766368ffcd5f5475/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09606149899991578,
+    "native_seconds": 0.11537165199843002,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "a49e39ccadb742aa830c5346429f733d6ea1776af8d49673420f23d56c69ee50",
+    "description": "TestRequireAwaitStaysSilent/({_async_foo()_{_await_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/a49e39ccadb742aa830c5346429f733d6ea1776af8d49673420f23d56c69ee50/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a49e39ccadb742aa830c5346429f733d6ea1776af8d49673420f23d56c69ee50/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08394106399646262,
+    "native_seconds": 0.11314292899987777,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "a647a216a860105af8ee2ab0e5a29cee1f4978fd46a535e55297678592175d21",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_o_=_{_run:_[async_function(a)_{_return_1;_}]_};",
+    "config": "/workspace/wave08-core/upstream/cases/a647a216a860105af8ee2ab0e5a29cee1f4978fd46a535e55297678592175d21/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a647a216a860105af8ee2ab0e5a29cee1f4978fd46a535e55297678592175d21/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09283631400103332,
+    "native_seconds": 0.13883634499870823,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "a77308bc38e0c9ef3e09bb73a4287953a0536be9bc96599d8d4f5be6c3693828",
+    "description": "TestRequireAwaitStaysSilent/async_function_foo()_{_await_(async_()_=>_{_await_doSomething()_})_}",
+    "config": "/workspace/wave08-core/upstream/cases/a77308bc38e0c9ef3e09bb73a4287953a0536be9bc96599d8d4f5be6c3693828/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a77308bc38e0c9ef3e09bb73a4287953a0536be9bc96599d8d4f5be6c3693828/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10002896500009228,
+    "native_seconds": 0.07977553700038698,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "a7eedd8019702a46222abb8b117ee63edab02d82f82e590a66523c3ef6e2e915",
+    "description": "TestRequireAwaitNamesTheFunction/class_A_{_________________a_=_0_________________async_[b](){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/a7eedd8019702a46222abb8b117ee63edab02d82f82e590a66523c3ef6e2e915/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a7eedd8019702a46222abb8b117ee63edab02d82f82e590a66523c3ef6e2e915/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0868082550005056,
+    "native_seconds": 0.09368029400138767,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "a9afa8bc911c2b73604e32af16e24eed52304bc7e750ff8259c7b6c7407d92f3",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/class_A_{_________________a_=_0_________________async_[b](){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/a9afa8bc911c2b73604e32af16e24eed52304bc7e750ff8259c7b6c7407d92f3/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/a9afa8bc911c2b73604e32af16e24eed52304bc7e750ff8259c7b6c7407d92f3/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12820027700217906,
+    "native_seconds": 0.10652535100234672,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "aa4e6305492c92665341e19045c5070260fb9f970869a7a1445dcbc0d25faa0f",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/aa4e6305492c92665341e19045c5070260fb9f970869a7a1445dcbc0d25faa0f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/aa4e6305492c92665341e19045c5070260fb9f970869a7a1445dcbc0d25faa0f/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08737044599911314,
+    "native_seconds": 0.11478099599844427,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "aadcf06b18ef5477c6b0b0504733d6d1c39005c65f46cd9ebb3e20a3bf8d6745",
+    "description": "TestSymbolDescriptionStaysSilent/a_local_shadow_declared_after_the_call",
+    "config": "/workspace/wave08-core/upstream/cases/aadcf06b18ef5477c6b0b0504733d6d1c39005c65f46cd9ebb3e20a3bf8d6745/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/aadcf06b18ef5477c6b0b0504733d6d1c39005c65f46cd9ebb3e20a3bf8d6745/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08055707099993015,
+    "native_seconds": 0.09838325600139797,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "ab65045879b4e664220c565c63b0b15aba4946ce9f82005673934d7ed2ad680a",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/ab65045879b4e664220c565c63b0b15aba4946ce9f82005673934d7ed2ad680a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ab65045879b4e664220c565c63b0b15aba4946ce9f82005673934d7ed2ad680a/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08992570400005206,
+    "native_seconds": 0.1061266609976883,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "adf087a6741251baa8a2ddeaacebdf152588eda32590f7fcaaead3fe859e949d",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/adf087a6741251baa8a2ddeaacebdf152588eda32590f7fcaaead3fe859e949d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/adf087a6741251baa8a2ddeaacebdf152588eda32590f7fcaaead3fe859e949d/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10479565399873536,
+    "native_seconds": 0.12584929399963585,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "af63165200c1fd08657fde2b9ebe75c5296512b00af9219dab7ec5c8d0beffb6",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_o_=_{_run:_async_(a)_=>_{_return_1;_}_};",
+    "config": "/workspace/wave08-core/upstream/cases/af63165200c1fd08657fde2b9ebe75c5296512b00af9219dab7ec5c8d0beffb6/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/af63165200c1fd08657fde2b9ebe75c5296512b00af9219dab7ec5c8d0beffb6/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1126503750019765,
+    "native_seconds": 0.1256600740016438,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "b0559bb989f0da47df51f55de609961164befb004f0fd67084361a4d41f0e3ce",
+    "description": "TestRequireAwaitStaysSilent/(async_function()_{_await_doSomething()_})",
+    "config": "/workspace/wave08-core/upstream/cases/b0559bb989f0da47df51f55de609961164befb004f0fd67084361a4d41f0e3ce/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b0559bb989f0da47df51f55de609961164befb004f0fd67084361a4d41f0e3ce/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07217585599937593,
+    "native_seconds": 0.11477606100015691,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "b15a2e6a81e44132ec9d4a1271513dbd76adaa65882653cefe4d9956fbcbb202",
+    "description": "TestRequireAtomicUpdatesSpan/computed_member_in_the_middle_of_the_chain",
+    "config": "/workspace/wave08-core/upstream/cases/b15a2e6a81e44132ec9d4a1271513dbd76adaa65882653cefe4d9956fbcbb202/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b15a2e6a81e44132ec9d4a1271513dbd76adaa65882653cefe4d9956fbcbb202/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06804426799862995,
+    "native_seconds": 0.12037116200008313,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "b16954001cfa573cfda9c346e0f369ef20f3555996560517112fc3803993bcc2",
+    "description": "TestSymbolDescriptionFiresOnCasesBeyondTheCorpus/a_parenthesized_callee",
+    "config": "/workspace/wave08-core/upstream/cases/b16954001cfa573cfda9c346e0f369ef20f3555996560517112fc3803993bcc2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b16954001cfa573cfda9c346e0f369ef20f3555996560517112fc3803993bcc2/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.05100825399858877,
+    "native_seconds": 0.13663782400180935,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "b1ba2f46b6895307319286db88ea48c92d6214cdda585dad83774c7556525d02",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/b1ba2f46b6895307319286db88ea48c92d6214cdda585dad83774c7556525d02/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b1ba2f46b6895307319286db88ea48c92d6214cdda585dad83774c7556525d02/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0837264280016825,
+    "native_seconds": 0.13125121800112538,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "b28808884c0653286cbeaf424e1997fa4c4d70b46e664016ba88239381ac808b",
+    "description": "TestRequireAwaitStaysSilent/async_()_=>_{}",
+    "config": "/workspace/wave08-core/upstream/cases/b28808884c0653286cbeaf424e1997fa4c4d70b46e664016ba88239381ac808b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b28808884c0653286cbeaf424e1997fa4c4d70b46e664016ba88239381ac808b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08867279900005087,
+    "native_seconds": 0.1285870689971489,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "b64271292bf0f60b4eceafb9527f015500fb69f92fdc1e35bc3cf35e6cad867c",
+    "description": "TestRequireAwaitNamesTheFunction/async_()_=>_doSomething()",
+    "config": "/workspace/wave08-core/upstream/cases/b64271292bf0f60b4eceafb9527f015500fb69f92fdc1e35bc3cf35e6cad867c/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b64271292bf0f60b4eceafb9527f015500fb69f92fdc1e35bc3cf35e6cad867c/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08874959600143484,
+    "native_seconds": 0.09808613600034732,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "b8127b8d8e03f51f1c6e98431150fe2a8e80993db02df0be9ca14e926e79d104",
+    "description": "TestRequireAwaitStaysSilent/async_function*_run()_{_yield_*_anotherAsyncGenerator()_}",
+    "config": "/workspace/wave08-core/upstream/cases/b8127b8d8e03f51f1c6e98431150fe2a8e80993db02df0be9ca14e926e79d104/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b8127b8d8e03f51f1c6e98431150fe2a8e80993db02df0be9ca14e926e79d104/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09990663999997196,
+    "native_seconds": 0.13316685600148048,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "b821b9f7b371f143ff3b1899135901627e784c10d64b18e9e7fdcd04637081e5",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/b821b9f7b371f143ff3b1899135901627e784c10d64b18e9e7fdcd04637081e5/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b821b9f7b371f143ff3b1899135901627e784c10d64b18e9e7fdcd04637081e5/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09894257300038589,
+    "native_seconds": 0.10511846900044475,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "b9a5ad120d2f35341123e4a75132db2acf602d09a9b2c4af23e5b02d8491caa0",
+    "description": "TestRequireAwaitStaysSilent/async_()_=>_{_await_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/b9a5ad120d2f35341123e4a75132db2acf602d09a9b2c4af23e5b02d8491caa0/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/b9a5ad120d2f35341123e4a75132db2acf602d09a9b2c4af23e5b02d8491caa0/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07707539300099597,
+    "native_seconds": 0.08440329799850588,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "ba24673ee46b54368774e9f5548177367b753fad4ef948c1a6c4f01c3cacfd4f",
+    "description": "TestRequireAtomicUpdatesSpan/compound_assignment_to_an_outer_variable",
+    "config": "/workspace/wave08-core/upstream/cases/ba24673ee46b54368774e9f5548177367b753fad4ef948c1a6c4f01c3cacfd4f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ba24673ee46b54368774e9f5548177367b753fad4ef948c1a6c4f01c3cacfd4f/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09178569499999867,
+    "native_seconds": 0.17012408599839546,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "bd204c556adcd30bc584db8a50142d90e6e727e34a86831c79bbcf171e3694d1",
+    "description": "TestRequireAtomicUpdatesProcessCaseWithDeclaration",
+    "config": "/workspace/wave08-core/upstream/cases/bd204c556adcd30bc584db8a50142d90e6e727e34a86831c79bbcf171e3694d1/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/bd204c556adcd30bc584db8a50142d90e6e727e34a86831c79bbcf171e3694d1/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08647768800074118,
+    "native_seconds": 0.11816922199795954,
+    "go_findings": "findings 2",
+    "native_findings": "findings 2",
+    "native_error": ""
+  },
+  {
+    "name": "bd84b5e9d9c3e85ad1e2a20d0299f8478e45f901f642912ec86a4a4f887ba799",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_static_async_foo(a)_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/bd84b5e9d9c3e85ad1e2a20d0299f8478e45f901f642912ec86a4a4f887ba799/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/bd84b5e9d9c3e85ad1e2a20d0299f8478e45f901f642912ec86a4a4f887ba799/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09033103500041761,
+    "native_seconds": 0.11171341700173798,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "be6bc7fe0cd77a50901ea0a437b13f204ca42e1c8a2ae883b5ea2aeac34bd2e1",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/be6bc7fe0cd77a50901ea0a437b13f204ca42e1c8a2ae883b5ea2aeac34bd2e1/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/be6bc7fe0cd77a50901ea0a437b13f204ca42e1c8a2ae883b5ea2aeac34bd2e1/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09576158400159329,
+    "native_seconds": 0.11037960300018312,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "c00466a7eb35c658ad80a3e2241132cd838dea8deba20c9c2aba89a063ac7d89",
+    "description": "TestRequireAwaitDoesNotLetAGenericInferItsOwnContract/useCallback",
+    "config": "/workspace/wave08-core/upstream/cases/c00466a7eb35c658ad80a3e2241132cd838dea8deba20c9c2aba89a063ac7d89/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c00466a7eb35c658ad80a3e2241132cd838dea8deba20c9c2aba89a063ac7d89/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.118971079999028,
+    "native_seconds": 0.18657887599692913,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c144c0d040a1a2e9db190ab683139821787970630e3beed899f4239029563c12",
+    "description": "TestRequireAwaitNamesTheFunction/async____/*_test_*/_function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/c144c0d040a1a2e9db190ab683139821787970630e3beed899f4239029563c12/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c144c0d040a1a2e9db190ab683139821787970630e3beed899f4239029563c12/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07406601700131432,
+    "native_seconds": 0.10336088300027768,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c277f629190c5b90268f85b3f6783aef796c2f6b0619ff5ec018fd0e02984dc5",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/c277f629190c5b90268f85b3f6783aef796c2f6b0619ff5ec018fd0e02984dc5/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c277f629190c5b90268f85b3f6783aef796c2f6b0619ff5ec018fd0e02984dc5/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06195946899970295,
+    "native_seconds": 0.10847296499923686,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "c29e1d8d37ec4b0a9bc017c8b98b1031019c8232cb6049c7c87a9fa9f7a80e97",
+    "description": "TestRequireAwaitNamesTheFunction/({_async_foo()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/c29e1d8d37ec4b0a9bc017c8b98b1031019c8232cb6049c7c87a9fa9f7a80e97/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c29e1d8d37ec4b0a9bc017c8b98b1031019c8232cb6049c7c87a9fa9f7a80e97/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11297206199742504,
+    "native_seconds": 0.1382884600025136,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c2df44f981926e1519ab3ba11161cba225e0934206243cdebf8857235e6f8ed8",
+    "description": "TestRequireAtomicUpdatesSuspensionOrder",
+    "config": "/workspace/wave08-core/upstream/cases/c2df44f981926e1519ab3ba11161cba225e0934206243cdebf8857235e6f8ed8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c2df44f981926e1519ab3ba11161cba225e0934206243cdebf8857235e6f8ed8/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.15768097800173564,
+    "native_seconds": 0.09640949000095134,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c2ec09a7c2f8639167cbb593c8ab576394a5d6fcefda95511c8f6a6ffa5ecd5d",
+    "description": "TestRequireAtomicUpdatesRestoreInFinallyIsJudged/restoring_a_local_object's_property_is_judged",
+    "config": "/workspace/wave08-core/upstream/cases/c2ec09a7c2f8639167cbb593c8ab576394a5d6fcefda95511c8f6a6ffa5ecd5d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c2ec09a7c2f8639167cbb593c8ab576394a5d6fcefda95511c8f6a6ffa5ecd5d/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.20249335699918447,
+    "native_seconds": 0.0909075000017765,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c6189c791d052244c5895eadcd134b150837a999c7364d5f092327a3d47660d7",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/export_async_function_foo(a)_{_return_1;_}",
+    "config": "/workspace/wave08-core/upstream/cases/c6189c791d052244c5895eadcd134b150837a999c7364d5f092327a3d47660d7/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c6189c791d052244c5895eadcd134b150837a999c7364d5f092327a3d47660d7/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.131675020998955,
+    "native_seconds": 0.13188660300147603,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c662fc1f2b010b41ce0db2fd92cc3bc24f307cf9dd7df5d79f71b7b7dd6520cc",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/c662fc1f2b010b41ce0db2fd92cc3bc24f307cf9dd7df5d79f71b7b7dd6520cc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c662fc1f2b010b41ce0db2fd92cc3bc24f307cf9dd7df5d79f71b7b7dd6520cc/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09191963799821679,
+    "native_seconds": 0.1528013959978125,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c6f795713ce229fa8866fd5a0d359d7402f9662ca49b362f67b4efaa2a9cf039",
+    "description": "TestSymbolDescriptionFiresOnCasesBeyondTheCorpus/a_bare_call_as_an_argument",
+    "config": "/workspace/wave08-core/upstream/cases/c6f795713ce229fa8866fd5a0d359d7402f9662ca49b362f67b4efaa2a9cf039/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c6f795713ce229fa8866fd5a0d359d7402f9662ca49b362f67b4efaa2a9cf039/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08314193499973044,
+    "native_seconds": 0.08164152199969976,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "c75bc73290501e3dc5921f6525ee8b246e82f9cd96dbf0edfb41283676a3a029",
+    "description": "TestRequireAwaitNamesTheFunction/foo_________________async_()_=>_{_return_0;_}_____________",
+    "config": "/workspace/wave08-core/upstream/cases/c75bc73290501e3dc5921f6525ee8b246e82f9cd96dbf0edfb41283676a3a029/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/c75bc73290501e3dc5921f6525ee8b246e82f9cd96dbf0edfb41283676a3a029/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.037242762999085244,
+    "native_seconds": 0.0733349090005504,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "cfa5a49e27209bd9b3cb94e18ba738749e62684841231356d7f3180a1d0e7245",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_foo_=_[async_function(a)_{_return_1;_}]_}",
+    "config": "/workspace/wave08-core/upstream/cases/cfa5a49e27209bd9b3cb94e18ba738749e62684841231356d7f3180a1d0e7245/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/cfa5a49e27209bd9b3cb94e18ba738749e62684841231356d7f3180a1d0e7245/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09675308000078076,
+    "native_seconds": 0.12605508900014684,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d0667906cf75f31f5dda58f77a8f1153ca345368e0d0bd5ade403f04f4b6de2a",
+    "description": "TestSymbolDescriptionStaysSilent/a_call_with_a_variable_description",
+    "config": "/workspace/wave08-core/upstream/cases/d0667906cf75f31f5dda58f77a8f1153ca345368e0d0bd5ade403f04f4b6de2a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d0667906cf75f31f5dda58f77a8f1153ca345368e0d0bd5ade403f04f4b6de2a/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13654458900055033,
+    "native_seconds": 0.10653745499803335,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "d098f417019ebfcda32d9ae5819c9f72ebb2cd8e0bf3adbd800cc0cf8bffb9eb",
+    "description": "TestRequireAtomicUpdatesEscapeTable/declared_inside_but_captured_by_a_closure_escapes",
+    "config": "/workspace/wave08-core/upstream/cases/d098f417019ebfcda32d9ae5819c9f72ebb2cd8e0bf3adbd800cc0cf8bffb9eb/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d098f417019ebfcda32d9ae5819c9f72ebb2cd8e0bf3adbd800cc0cf8bffb9eb/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10188645699963672,
+    "native_seconds": 0.11925869900005637,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d107bb959e68684da87a3c34ff974df21d9432570e7af418a9bb1173bf3b3890",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/d107bb959e68684da87a3c34ff974df21d9432570e7af418a9bb1173bf3b3890/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d107bb959e68684da87a3c34ff974df21d9432570e7af418a9bb1173bf3b3890/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08463960800145287,
+    "native_seconds": 0.11054760399929364,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d23df36d563efd3108d04ca1b1aafe9d7cdf9b8ec2f74899225fe2bc0cba0863",
+    "description": "TestRequireAwaitStaysSilent/async_function*_run()_{_}",
+    "config": "/workspace/wave08-core/upstream/cases/d23df36d563efd3108d04ca1b1aafe9d7cdf9b8ec2f74899225fe2bc0cba0863/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d23df36d563efd3108d04ca1b1aafe9d7cdf9b8ec2f74899225fe2bc0cba0863/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0820242510017124,
+    "native_seconds": 0.05807372700292035,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "d261fb233656abb1d933bf49e5176d0cecc6e3db2d5d3e62f65bd9420bcc37c2",
+    "description": "TestSymbolDescriptionFires/a_bare_call_before_an_assignment_to_the_name",
+    "config": "/workspace/wave08-core/upstream/cases/d261fb233656abb1d933bf49e5176d0cecc6e3db2d5d3e62f65bd9420bcc37c2/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d261fb233656abb1d933bf49e5176d0cecc6e3db2d5d3e62f65bd9420bcc37c2/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08691001899933326,
+    "native_seconds": 0.10736858200107235,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d37afd87c670846a94de40ea48087bb4661613a402a73830aec415d3c7976d8b",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/class_A_{_foo_=_async_function(a)_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/d37afd87c670846a94de40ea48087bb4661613a402a73830aec415d3c7976d8b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d37afd87c670846a94de40ea48087bb4661613a402a73830aec415d3c7976d8b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08670067300045048,
+    "native_seconds": 0.0906337899978098,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d552a81644054e9230b3652f27370d5f54c0f7ce2f3d768a39ac88236544d60b",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/export_default_async_function(a)_{_return_1;_}",
+    "config": "/workspace/wave08-core/upstream/cases/d552a81644054e9230b3652f27370d5f54c0f7ce2f3d768a39ac88236544d60b/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d552a81644054e9230b3652f27370d5f54c0f7ce2f3d768a39ac88236544d60b/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10482342599789263,
+    "native_seconds": 0.17391515800045454,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d560e93fba5a489c4e6b1cb100a8a7bb260abded33e03d0c7e65899542a29315",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/d560e93fba5a489c4e6b1cb100a8a7bb260abded33e03d0c7e65899542a29315/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d560e93fba5a489c4e6b1cb100a8a7bb260abded33e03d0c7e65899542a29315/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08115731599900755,
+    "native_seconds": 0.11366749700027867,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d64f2e9b04d2d45bfcd68acbfc1e8d49f82c0b5d29bbf01fd5635eecca5b9c28",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_member_call_on_the_namespace",
+    "config": "/workspace/wave08-core/upstream/cases/d64f2e9b04d2d45bfcd68acbfc1e8d49f82c0b5d29bbf01fd5635eecca5b9c28/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d64f2e9b04d2d45bfcd68acbfc1e8d49f82c0b5d29bbf01fd5635eecca5b9c28/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10040423399914289,
+    "native_seconds": 0.09866541800147388,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "d6fc9ddc40bbd03adffd9ab2de8b1069ee3e6fe17c507b54146f0fb378db5ad8",
+    "description": "TestRequireAwaitStaysSilent/_________________for_await_(let_num_of_asyncIterable)_{_____________________console.log(num);_________________}_____________",
+    "config": "/workspace/wave08-core/upstream/cases/d6fc9ddc40bbd03adffd9ab2de8b1069ee3e6fe17c507b54146f0fb378db5ad8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d6fc9ddc40bbd03adffd9ab2de8b1069ee3e6fe17c507b54146f0fb378db5ad8/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09687230700001237,
+    "native_seconds": 0.099685794000834,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "d751361068852cea7e10ba59f01d2b419c7ffbe9c3677879976eb238aba93112",
+    "description": "TestRequireAtomicUpdatesRestoreInFinallyIsJudged/restoring_through_an_ambient_declaration_is_judged_the_same_way",
+    "config": "/workspace/wave08-core/upstream/cases/d751361068852cea7e10ba59f01d2b419c7ffbe9c3677879976eb238aba93112/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d751361068852cea7e10ba59f01d2b419c7ffbe9c3677879976eb238aba93112/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07316045600236976,
+    "native_seconds": 0.10620357300285832,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d7c7b16ed4c8f183ffc726bbe29684e64b27525c6c9cd81d17ebbf6175ab8620",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_f_=_async_function_named(a)_{_return_1;_};",
+    "config": "/workspace/wave08-core/upstream/cases/d7c7b16ed4c8f183ffc726bbe29684e64b27525c6c9cd81d17ebbf6175ab8620/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d7c7b16ed4c8f183ffc726bbe29684e64b27525c6c9cd81d17ebbf6175ab8620/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08966551199773676,
+    "native_seconds": 0.1440413249983976,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "d97aef57574742c7350a7a49e46fabd3934723f7e6c6032e1b22a8b4e2f512fb",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/(class_{_async_''()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/d97aef57574742c7350a7a49e46fabd3934723f7e6c6032e1b22a8b4e2f512fb/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/d97aef57574742c7350a7a49e46fabd3934723f7e6c6032e1b22a8b4e2f512fb/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0427562430013495,
+    "native_seconds": 0.08164091900107451,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "da36339bb8542ed1959f73b8f210731e719415d01b264c0ff29682681188f8b4",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/an_explicit_undefined_argument",
+    "config": "/workspace/wave08-core/upstream/cases/da36339bb8542ed1959f73b8f210731e719415d01b264c0ff29682681188f8b4/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/da36339bb8542ed1959f73b8f210731e719415d01b264c0ff29682681188f8b4/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10760477100120625,
+    "native_seconds": 0.1050466159977077,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "dbd2a1a61e6ead08c08784a64d40307b6c60628f9322490f8ef9c4eb5e898dec",
+    "description": "TestRequireAwaitFires/({_async_foo()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/dbd2a1a61e6ead08c08784a64d40307b6c60628f9322490f8ef9c4eb5e898dec/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/dbd2a1a61e6ead08c08784a64d40307b6c60628f9322490f8ef9c4eb5e898dec/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08051339099984034,
+    "native_seconds": 0.12348877899785293,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "de17a7994cc21c4b53fa7b1b813aa46229a962eb87d46cca8196c0ba54da355e",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/de17a7994cc21c4b53fa7b1b813aa46229a962eb87d46cca8196c0ba54da355e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/de17a7994cc21c4b53fa7b1b813aa46229a962eb87d46cca8196c0ba54da355e/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12937816699923133,
+    "native_seconds": 0.09995557000002009,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "df9b232bcb105f50bf7458cf1855e99838c1e3a2aa0395177910f930fbb2924e",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/df9b232bcb105f50bf7458cf1855e99838c1e3a2aa0395177910f930fbb2924e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/df9b232bcb105f50bf7458cf1855e99838c1e3a2aa0395177910f930fbb2924e/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08244680699863238,
+    "native_seconds": 0.10776569099834887,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e0282624e3e96e8ad502f1861be9f9abde72051f5f22d2f978274bbb2de993a8",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/const_obj_=_{_________________foo,_________________async_in(){_return_0;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/e0282624e3e96e8ad502f1861be9f9abde72051f5f22d2f978274bbb2de993a8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e0282624e3e96e8ad502f1861be9f9abde72051f5f22d2f978274bbb2de993a8/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09209951500088209,
+    "native_seconds": 0.13281377100065583,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e07eef9d281932acf5c24df0a4c92bb0690d463ff0548f61fdc152dca00b5c20",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/e07eef9d281932acf5c24df0a4c92bb0690d463ff0548f61fdc152dca00b5c20/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e07eef9d281932acf5c24df0a4c92bb0690d463ff0548f61fdc152dca00b5c20/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08720734600137803,
+    "native_seconds": 0.13863504899927648,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e12e6c8d957e15b83153b74bbb19086d5c9bd30ddfa5f4edeca4ca87114e1e9a",
+    "description": "TestRequireAtomicUpdatesEscapeTable/declared_inside_and_never_captured_is_local",
+    "config": "/workspace/wave08-core/upstream/cases/e12e6c8d957e15b83153b74bbb19086d5c9bd30ddfa5f4edeca4ca87114e1e9a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e12e6c8d957e15b83153b74bbb19086d5c9bd30ddfa5f4edeca4ca87114e1e9a/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06714746099896729,
+    "native_seconds": 0.11673617600172292,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "e20b866e2b6465ef8ecd08243c009a740b407566550440c45543ff3cfad5d0dc",
+    "description": "TestRequireAwaitFires/class_A_{_async_foo()_{_doSomething()_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/e20b866e2b6465ef8ecd08243c009a740b407566550440c45543ff3cfad5d0dc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e20b866e2b6465ef8ecd08243c009a740b407566550440c45543ff3cfad5d0dc/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.14902717599761672,
+    "native_seconds": 0.1172950430009223,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e22f3f8e012285ddb796b75ab97a371a9aedd1237cda4145984b58ebb1f21913",
+    "description": "TestRequireAtomicUpdatesMessageSkipsLeadingComments",
+    "config": "/workspace/wave08-core/upstream/cases/e22f3f8e012285ddb796b75ab97a371a9aedd1237cda4145984b58ebb1f21913/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e22f3f8e012285ddb796b75ab97a371a9aedd1237cda4145984b58ebb1f21913/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10721669099802966,
+    "native_seconds": 0.12889043599716388,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e25913ba7daf1bf13edd9c88cf578acacfbd9ba5ee3b7875303b111fd73817f9",
+    "description": "TestSymbolDescriptionStaysSilentOnCasesBeyondTheCorpus/a_class_shadowing_the_name",
+    "config": "/workspace/wave08-core/upstream/cases/e25913ba7daf1bf13edd9c88cf578acacfbd9ba5ee3b7875303b111fd73817f9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e25913ba7daf1bf13edd9c88cf578acacfbd9ba5ee3b7875303b111fd73817f9/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08753621799769462,
+    "native_seconds": 0.142193720999785,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "e2de558d7d0879e15e9c7370290add15f6569540b494c78c0563bd0451c947cc",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/e2de558d7d0879e15e9c7370290add15f6569540b494c78c0563bd0451c947cc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e2de558d7d0879e15e9c7370290add15f6569540b494c78c0563bd0451c947cc/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1111280529985379,
+    "native_seconds": 0.12028589100009413,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "e3fe5f35b100f6353e05292aec0c02ec166d517bdfd1221a6c950179539a93dc",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/(class_{_async_foo()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/e3fe5f35b100f6353e05292aec0c02ec166d517bdfd1221a6c950179539a93dc/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e3fe5f35b100f6353e05292aec0c02ec166d517bdfd1221a6c950179539a93dc/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09179472499818075,
+    "native_seconds": 0.1378097489978245,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e406daf76402e1968c067c27c7408b8be061a066793d4f6e00e1fd4eab075001",
+    "description": "TestRequireAwaitNamesTheFunction/(class_{_async_''()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/e406daf76402e1968c067c27c7408b8be061a066793d4f6e00e1fd4eab075001/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e406daf76402e1968c067c27c7408b8be061a066793d4f6e00e1fd4eab075001/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09252576599828899,
+    "native_seconds": 0.2046870489975845,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e5c01a2517f8a3c8a984c0d4bf77406b4dd52348dc5a6592bf5cb97fb4a1cd38",
+    "description": "TestRequireAwaitNamesTheFunction/async_()_=>_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/e5c01a2517f8a3c8a984c0d4bf77406b4dd52348dc5a6592bf5cb97fb4a1cd38/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e5c01a2517f8a3c8a984c0d4bf77406b4dd52348dc5a6592bf5cb97fb4a1cd38/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09653977199923247,
+    "native_seconds": 0.250085711999418,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e6175991fdb5f654dc546051c2f20842d5cff80770ad029ba5fab88629e30725",
+    "description": "TestRequireAwaitFires/(class_{_async_foo()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/e6175991fdb5f654dc546051c2f20842d5cff80770ad029ba5fab88629e30725/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e6175991fdb5f654dc546051c2f20842d5cff80770ad029ba5fab88629e30725/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.10702897499868413,
+    "native_seconds": 0.14468023200242897,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e69fe1a270333344285268ce58ea5d79b77ae16be3163abf6a58e91470869442",
+    "description": "TestRequireAwaitDoesNotLetAGenericInferItsOwnContract/useMemo_over_an_object_literal",
+    "config": "/workspace/wave08-core/upstream/cases/e69fe1a270333344285268ce58ea5d79b77ae16be3163abf6a58e91470869442/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e69fe1a270333344285268ce58ea5d79b77ae16be3163abf6a58e91470869442/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1318716800014954,
+    "native_seconds": 0.08997303299838677,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e6f8fb3d7b7599379b1554e0ded32922027f5b4ade614b0c795e2c6d0c3d50c9",
+    "description": "TestRequireAwaitDoesNotLetAGenericInferItsOwnContract/identity",
+    "config": "/workspace/wave08-core/upstream/cases/e6f8fb3d7b7599379b1554e0ded32922027f5b4ade614b0c795e2c6d0c3d50c9/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e6f8fb3d7b7599379b1554e0ded32922027f5b4ade614b0c795e2c6d0c3d50c9/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12376810600108001,
+    "native_seconds": 0.14919309499964584,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e71f583e48cfa0efe064039d79c64e137ba7be5e7a0654a68166e3c679ef06c1",
+    "description": "TestRequireAtomicUpdatesResolutionDivergence/an_unresolvable_name_is_skipped",
+    "config": "/workspace/wave08-core/upstream/cases/e71f583e48cfa0efe064039d79c64e137ba7be5e7a0654a68166e3c679ef06c1/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e71f583e48cfa0efe064039d79c64e137ba7be5e7a0654a68166e3c679ef06c1/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09086545900208876,
+    "native_seconds": 0.14814640700205928,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "e77fc150634a93bfbd1ceead82236c5eb2b5445b315428113b1cd39da060fa49",
+    "description": "TestRequireAwaitStaysSilent/function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/e77fc150634a93bfbd1ceead82236c5eb2b5445b315428113b1cd39da060fa49/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e77fc150634a93bfbd1ceead82236c5eb2b5445b315428113b1cd39da060fa49/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13566842900036136,
+    "native_seconds": 0.13702175000071293,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "e85325c9517825441fcec75f2e104494e0650f1aa9aee18d687a25a706cd96bf",
+    "description": "TestRequireAwaitNamesTheFunction/(class_{_async_foo()_{_doSomething()_}_})",
+    "config": "/workspace/wave08-core/upstream/cases/e85325c9517825441fcec75f2e104494e0650f1aa9aee18d687a25a706cd96bf/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e85325c9517825441fcec75f2e104494e0650f1aa9aee18d687a25a706cd96bf/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12094979099856573,
+    "native_seconds": 0.12499465200016857,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "e9b74bf8901de9c60f7144bb24cbfea284d68e3057d59578c09188545654ed55",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/e9b74bf8901de9c60f7144bb24cbfea284d68e3057d59578c09188545654ed55/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/e9b74bf8901de9c60f7144bb24cbfea284d68e3057d59578c09188545654ed55/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08728721399893402,
+    "native_seconds": 0.21750512799917487,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "ea019bdc22a2f5bfa4e463eb7be418d200ebb51b4b1513011c48e02819331d99",
+    "description": "TestRequireAwaitFindsAsyncPastOtherModifiers/class_A_{_public_async_foo()_{_return_1;_}_}",
+    "config": "/workspace/wave08-core/upstream/cases/ea019bdc22a2f5bfa4e463eb7be418d200ebb51b4b1513011c48e02819331d99/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ea019bdc22a2f5bfa4e463eb7be418d200ebb51b4b1513011c48e02819331d99/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.12191556200195919,
+    "native_seconds": 0.15705104500011657,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "ea5f06b80cc65400567f1d7b1ef7ac655502bd814bfe3268cdf381353e16e270",
+    "description": "TestRequireAwaitStaysSilent/async_function_foo()_{_for_await_(x_of_xs);_}",
+    "config": "/workspace/wave08-core/upstream/cases/ea5f06b80cc65400567f1d7b1ef7ac655502bd814bfe3268cdf381353e16e270/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ea5f06b80cc65400567f1d7b1ef7ac655502bd814bfe3268cdf381353e16e270/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11594511600196711,
+    "native_seconds": 0.10777771400171332,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "ec04a0c3eb979704a73ebd3e21b1fce5d257632de4f3fb20f8b5e6bc53ee94ec",
+    "description": "TestRequireAwaitFires/async_function_run()_{_using_resource_=_getResource();_}",
+    "config": "/workspace/wave08-core/upstream/cases/ec04a0c3eb979704a73ebd3e21b1fce5d257632de4f3fb20f8b5e6bc53ee94ec/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ec04a0c3eb979704a73ebd3e21b1fce5d257632de4f3fb20f8b5e6bc53ee94ec/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09974276900175028,
+    "native_seconds": 0.10792057000071509,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "ecb247b3788d80855679387b282e6e6d3fef366af1a50a7b91644ffdf1a7b13a",
+    "description": "TestRequireAwaitStaysSilent/async_function_foo()_{}",
+    "config": "/workspace/wave08-core/upstream/cases/ecb247b3788d80855679387b282e6e6d3fef366af1a50a7b91644ffdf1a7b13a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ecb247b3788d80855679387b282e6e6d3fef366af1a50a7b91644ffdf1a7b13a/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06318366100094863,
+    "native_seconds": 0.10678744500182802,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "ee329f097c2bed61473a2250dc2638af82a1eb18d6890367ad64af64609a4f3e",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/Number",
+    "config": "/workspace/wave08-core/upstream/cases/ee329f097c2bed61473a2250dc2638af82a1eb18d6890367ad64af64609a4f3e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ee329f097c2bed61473a2250dc2638af82a1eb18d6890367ad64af64609a4f3e/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09642043699932401,
+    "native_seconds": 0.16296847500052536,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "efe392f537bfcaca3ac9d521182245d753f70cb9faf8315c0a1cc41dd7f5680e",
+    "description": "TestRequireAwaitNamesTheFunction/async_function_foo()_{_doSomething()_}",
+    "config": "/workspace/wave08-core/upstream/cases/efe392f537bfcaca3ac9d521182245d753f70cb9faf8315c0a1cc41dd7f5680e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/efe392f537bfcaca3ac9d521182245d753f70cb9faf8315c0a1cc41dd7f5680e/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.06250075899879448,
+    "native_seconds": 0.19054442499691504,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "f08e147012c7ef0ee70feb8ff33440b99e844fca389f7dfe576d2f965b6bc31a",
+    "description": "TestRequireAtomicUpdatesSpan/property_store_on_a_const_object",
+    "config": "/workspace/wave08-core/upstream/cases/f08e147012c7ef0ee70feb8ff33440b99e844fca389f7dfe576d2f965b6bc31a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f08e147012c7ef0ee70feb8ff33440b99e844fca389f7dfe576d2f965b6bc31a/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.055259943001146894,
+    "native_seconds": 0.1526612190027663,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "f09dc9e7b4dc5fba9b8194faaa41e2365283b587d6a606c50883877a38bcdbaf",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/f09dc9e7b4dc5fba9b8194faaa41e2365283b587d6a606c50883877a38bcdbaf/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f09dc9e7b4dc5fba9b8194faaa41e2365283b587d6a606c50883877a38bcdbaf/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11952864300110377,
+    "native_seconds": 0.1722108730027685,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "f368ee93dbdae324f8eff77535e6926f005e11076a5968ef7bb6a3261c39ea71",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/f368ee93dbdae324f8eff77535e6926f005e11076a5968ef7bb6a3261c39ea71/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f368ee93dbdae324f8eff77535e6926f005e11076a5968ef7bb6a3261c39ea71/roots.manifest",
+    "flags": [
+      "--atomic",
+      "--allow-properties"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0887421750012436,
+    "native_seconds": 0.10591949499939801,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "f5476fd67e42b4deac492df3e8dd09f302147b0ac05f522671f17c4fe3a868dd",
+    "description": "TestRequireAwaitStaysSilent/await_using_resource_=_getResource();",
+    "config": "/workspace/wave08-core/upstream/cases/f5476fd67e42b4deac492df3e8dd09f302147b0ac05f522671f17c4fe3a868dd/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f5476fd67e42b4deac492df3e8dd09f302147b0ac05f522671f17c4fe3a868dd/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08986261899917736,
+    "native_seconds": 0.13623478099907516,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "f5e9093b7a8ec551d2aab3b189ce50854dc3e1c1379d42b4a5f63b9bb15ae9c4",
+    "description": "TestRequireAwaitStaysSilent/const_foo_=_async_function_*(){_console.log(\"bar\")_}",
+    "config": "/workspace/wave08-core/upstream/cases/f5e9093b7a8ec551d2aab3b189ce50854dc3e1c1379d42b4a5f63b9bb15ae9c4/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f5e9093b7a8ec551d2aab3b189ce50854dc3e1c1379d42b4a5f63b9bb15ae9c4/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07685783800116042,
+    "native_seconds": 0.10842969299847027,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "f5eb632429fe7a3d73461f059b0d81a93fb80e13913718abccec84dde0e20fba",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/(async_function()_{_doSomething()_})",
+    "config": "/workspace/wave08-core/upstream/cases/f5eb632429fe7a3d73461f059b0d81a93fb80e13913718abccec84dde0e20fba/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f5eb632429fe7a3d73461f059b0d81a93fb80e13913718abccec84dde0e20fba/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09515533900048467,
+    "native_seconds": 0.1498788839999179,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "f62b080c71e82433df0c7d025e074b890c62a8600e4f20de2dc5008efe09ad6f",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/f62b080c71e82433df0c7d025e074b890c62a8600e4f20de2dc5008efe09ad6f/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f62b080c71e82433df0c7d025e074b890c62a8600e4f20de2dc5008efe09ad6f/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09050790999754099,
+    "native_seconds": 0.13308130800214713,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "f6d3b50d9c00d3433508a2066b5765249375ed3a0760a0232390e07ad0819571",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/f6d3b50d9c00d3433508a2066b5765249375ed3a0760a0232390e07ad0819571/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f6d3b50d9c00d3433508a2066b5765249375ed3a0760a0232390e07ad0819571/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.08338324199939962,
+    "native_seconds": 0.13190570499864407,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "f6eb2d6c1506fa5fca4a576e982a6a14275bfc992b06fb281c85fa874228e5f8",
+    "description": "TestSymbolDescriptionStaysSilentOnOtherGlobals/Array",
+    "config": "/workspace/wave08-core/upstream/cases/f6eb2d6c1506fa5fca4a576e982a6a14275bfc992b06fb281c85fa874228e5f8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f6eb2d6c1506fa5fca4a576e982a6a14275bfc992b06fb281c85fa874228e5f8/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07454229699942516,
+    "native_seconds": 0.08200347700039856,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "f81288d25720f46386b43fc64dad11d1a06cfe13c9af872ecc880b208740d955",
+    "description": "TestRequireAwaitSuggestsRemovingAsync/class_A_{_________________foo()_{}_________________async_[bar]_()_{_baz;_}_____________}",
+    "config": "/workspace/wave08-core/upstream/cases/f81288d25720f46386b43fc64dad11d1a06cfe13c9af872ecc880b208740d955/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f81288d25720f46386b43fc64dad11d1a06cfe13c9af872ecc880b208740d955/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09375094200004241,
+    "native_seconds": 0.15350330200089957,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "f86b605b284f7c7869e7e418dd96b78fb652c6aa5b20dca196edb80c2315933d",
+    "description": "TestRequireAwaitNamesTheFunction/async_function_foo()_{_await_(async_()_=>_{_doSomething()_})_}",
+    "config": "/workspace/wave08-core/upstream/cases/f86b605b284f7c7869e7e418dd96b78fb652c6aa5b20dca196edb80c2315933d/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f86b605b284f7c7869e7e418dd96b78fb652c6aa5b20dca196edb80c2315933d/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09072521000052802,
+    "native_seconds": 0.12031778899836354,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "f8a813b8e6185c56228dd5ddede2732b7a3067cf759e49c01416072fc6afc849",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/f8a813b8e6185c56228dd5ddede2732b7a3067cf759e49c01416072fc6afc849/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/f8a813b8e6185c56228dd5ddede2732b7a3067cf759e49c01416072fc6afc849/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.07528812999953516,
+    "native_seconds": 0.192775609997625,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "faa7f1fd80d39336b76b918aa5c89a07e76fa147ab4e06ebce26fcaea74d9de8",
+    "description": "TestRequireAwaitReportsOnTheFunctionHead/const_f_=_async_function(a)_{_return_1;_};",
+    "config": "/workspace/wave08-core/upstream/cases/faa7f1fd80d39336b76b918aa5c89a07e76fa147ab4e06ebce26fcaea74d9de8/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/faa7f1fd80d39336b76b918aa5c89a07e76fa147ab4e06ebce26fcaea74d9de8/roots.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1040476749985828,
+    "native_seconds": 0.14542105100190383,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "fcafb2339ae136cc81cbdb915096b8be68dcbc22b9a8f93611c435b20617569e",
+    "description": "TestRequireAtomicUpdatesFires",
+    "config": "/workspace/wave08-core/upstream/cases/fcafb2339ae136cc81cbdb915096b8be68dcbc22b9a8f93611c435b20617569e/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/fcafb2339ae136cc81cbdb915096b8be68dcbc22b9a8f93611c435b20617569e/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.09954327499872306,
+    "native_seconds": 0.10761329299930367,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "fd24685cde567ce5a66af77c6bf0f4467e3afc8c1e5062a2990dab00f49a3f9a",
+    "description": "TestRequireAtomicUpdatesStaysSilent",
+    "config": "/workspace/wave08-core/upstream/cases/fd24685cde567ce5a66af77c6bf0f4467e3afc8c1e5062a2990dab00f49a3f9a/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/fd24685cde567ce5a66af77c6bf0f4467e3afc8c1e5062a2990dab00f49a3f9a/roots.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.11525996300042607,
+    "native_seconds": 0.13154322499758564,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "ff2d20d2953e8ba5a9a61679f078bc1ef95e3713e093ff54e8d5ff01bd4dda10",
+    "description": "TestSymbolDescriptionSpansTheCall/a_parenthesized_callee",
+    "config": "/workspace/wave08-core/upstream/cases/ff2d20d2953e8ba5a9a61679f078bc1ef95e3713e093ff54e8d5ff01bd4dda10/tsconfig.json",
+    "manifest": "/workspace/wave08-core/upstream/cases/ff2d20d2953e8ba5a9a61679f078bc1ef95e3713e093ff54e8d5ff01bd4dda10/roots.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1001687200005108,
+    "native_seconds": 0.19268995099992026,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "contract-name-0-optional",
+    "description": "extra contract-name witness",
+    "config": "/workspace/wave08-b469/compare-asan/extra-tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/contract-name-0-optional.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.13156429700029548,
+    "native_seconds": 0.15475219600193668,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "contract-name-0",
+    "description": "extra contract-name witness",
+    "config": "/workspace/wave08-b469/compare-asan/extra-tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/contract-name-0.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1471923599965521,
+    "native_seconds": 0.115391556002578,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "contract-name-1-optional",
+    "description": "extra contract-name witness",
+    "config": "/workspace/wave08-b469/compare-asan/extra-tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/contract-name-1-optional.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.1481969759988715,
+    "native_seconds": 0.1809962519982946,
+    "go_findings": "findings 1",
+    "native_findings": "findings 1",
+    "native_error": ""
+  },
+  {
+    "name": "contract-name-1",
+    "description": "extra contract-name witness",
+    "config": "/workspace/wave08-b469/compare-asan/extra-tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/contract-name-1.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.0964612429997942,
+    "native_seconds": 0.1987979190016631,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "compiler--atomic",
+    "description": "compiler",
+    "config": "/workspace/typescript-wave08-corpus/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/compiler.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 1.4243268339996575,
+    "native_seconds": 67.92620821199671,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "compiler--await",
+    "description": "compiler",
+    "config": "/workspace/typescript-wave08-corpus/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/compiler.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 1.488389296002424,
+    "native_seconds": 66.78423234900038,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "compiler--symbol",
+    "description": "compiler",
+    "config": "/workspace/typescript-wave08-corpus/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/compiler.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 1.1565162739971129,
+    "native_seconds": 36.40949230499973,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "repository--atomic",
+    "description": "repository",
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/repository.manifest",
+    "flags": [
+      "--atomic"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.5329468569980236,
+    "native_seconds": 9.618350961998658,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "repository--await",
+    "description": "repository",
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/repository.manifest",
+    "flags": [
+      "--await"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 0.7700392510014353,
+    "native_seconds": 12.064676743997552,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  },
+  {
+    "name": "repository--symbol",
+    "description": "repository",
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave08-b469/compare-asan/repository.manifest",
+    "flags": [
+      "--symbol"
+    ],
+    "go_status": 0,
+    "native_status": 0,
+    "match": true,
+    "go_seconds": 1.1196524820006744,
+    "native_seconds": 6.518888891001552,
+    "go_findings": "findings 0",
+    "native_findings": "findings 0",
+    "native_error": ""
+  }
+]
