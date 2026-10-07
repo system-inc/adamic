@@ -17,6 +17,9 @@ type Program struct {
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
+	// FieldWrites is the lowering-time inventory used by ownership proofs.
+	FieldWrites map[string]FieldWrites
+
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 

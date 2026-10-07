@@ -196,6 +196,9 @@ type emitter struct {
 	// fieldOffsets proves uniform named slots across the program (fields.go).
 	fieldOffsets map[string]int
 
+	// immortalFields caches whole-program field proofs for this emission only.
+	immortalFields map[string]bool
+
 	// initialized is every global main declares, in the order their declarations run: modules in
 	// ECMAScript's order, and each module's from the top.
 	initialized []int

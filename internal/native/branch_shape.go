@@ -67,3 +67,37 @@ func (e *emitter) numericSwitch(statement ir.Switch, value string) bool {
 	e.line("}")
 	return true
 }
+
+// immortalField requires every write, across nominal and structural views, to
+// yield an immortal constant. One unknown writer keeps the old-value release.
+func (e *emitter) immortalField(name string) bool {
+	if e.immortalFields == nil {
+		e.immortalFields = make(map[string]bool)
+		for field, writes := range e.program.FieldWrites {
+			proven := writes.Complete && len(writes.Expressions) != 0
+			for _, value := range writes.Expressions {
+				if !immortalExpression(value) {
+					proven = false
+					break
+				}
+			}
+			e.immortalFields[field] = proven
+		}
+	}
+	return e.immortalFields[name]
+}
+
+func immortalExpression(value ir.Expression) bool {
+	switch value := value.(type) {
+	case ir.StringConstant, ir.Undefined, ir.Null, ir.BooleanToString:
+		return true
+	case ir.Box:
+		if _, boolean := value.Value.(ir.BooleanConstant); boolean {
+			return true
+		}
+		return value.Value.Type().IsReference() && immortalExpression(value.Value)
+	case ir.Conditional:
+		return immortalExpression(value.WhenTrue) && immortalExpression(value.WhenNot)
+	}
+	return false
+}

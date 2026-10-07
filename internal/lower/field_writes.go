@@ -7,10 +7,7 @@ import "github.com/system-inc/adamic/internal/ir"
 // an allocation identity proof, distinguishing those views would miss writes.
 // Complete is false when a writer cannot be represented by an IR expression.
 // Consumers must require Complete and prove their property for every Expression.
-type FieldWrites struct {
-	Expressions []ir.Expression
-	Complete    bool
-}
+type FieldWrites = ir.FieldWrites
 
 // CollectFieldWrites exposes the common write inventory to backend properties.
 // It does not mutate the program or assume that any particular value is constant.

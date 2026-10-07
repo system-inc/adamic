@@ -102,3 +102,14 @@ func TestFieldWriteInventoryIncludesRuntimeLayouts(t *testing.T) {
 		}
 	}
 }
+
+func TestImmortalFieldProof(t *testing.T) {
+	t.Parallel()
+	e := &emitter{program: immortalFieldsProgram(t)}
+	if !e.immortalField("spelling") {
+		t.Fatal("literal-only writes not proven")
+	}
+	if e.immortalField("heapLabel") {
+		t.Fatal("heap write accepted as immortal")
+	}
+}

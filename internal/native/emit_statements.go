@@ -166,7 +166,10 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
-		if statement.Value.Type().IsReference() {
+		if statement.Value.Type().IsReference() && e.immortalField(statement.Name) {
+			// The complete write inventory proves the old slot is immortal too.
+			e.line("%s->reference = %s;", slot, e.keptIn(object, value))
+		} else if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
