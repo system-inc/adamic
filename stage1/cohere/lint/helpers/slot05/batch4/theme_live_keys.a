@@ -1,0 +1,22 @@
+import { panic } from 'adamic';
+export interface ThemeValue {
+    readonly value: string;
+    readonly options: number;
+}
+export interface ThemeState {
+    readonly keyOrder: readonly string[];
+    readonly values: ReadonlyMap<string, ThemeValue>;
+}
+// Capture the range list and its length as Go does, but read the current map for every slot.
+// The visitor's first false return stops immediately; empty/deleted slots never call it.
+export function liveKeys(theme: ThemeState, visit: (key: string, value: ThemeValue) => boolean): void {
+    const order = theme.keyOrder;
+    const count = order.length;
+    for(let index = 0; index < count; index++) {
+        const key = order[index] ?? panic('theme order shortened during traversal');
+        if(key === '') { continue; }
+        const value = theme.values.get(key);
+        if(value === undefined) { continue; }
+        if(!visit(key, value)) { return; }
+    }
+}

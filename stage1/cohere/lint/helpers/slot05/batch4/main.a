@@ -1,0 +1,73 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { liveKeys } from './theme_live_keys.a';
+import type { ThemeValue } from './theme_live_keys.a';
+import { keysInNamespaces } from './theme_keys_in_namespaces.a';
+import { themeEntries } from './theme_entries.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+for(const row of json.node(root).children) {
+    if(text(row, 'mode') === 'live') {
+        const keyOrder = json.node(json.field(json.field(row, 'state'), 'order')).children.map(c => json.node(c).text);
+        const values = new Map<string, ThemeValue>();
+        for(const entry of json.node(json.field(json.field(row, 'state'), 'entries')).children) {
+            values.set(text(entry, 'key'), {value: text(entry, 'value'), options: number(entry, 'options')});
+        }
+        const theme = {keyOrder, values};
+        const trace: string[] = [];
+        const mutation = text(row, 'mutation');
+        const stop = number(row, 'stop');
+        liveKeys(theme, (key, value) => {
+            trace.push(key); trace.push(value.value); trace.push(`${value.options}`);
+            if(trace.length === 3) {
+                if(mutation === 'deleteNext') { theme.values.delete('--seed-c'); }
+                if(mutation === 'overwriteNext') { theme.values.set('--seed-c', {value: 'changed', options: 17}); }
+                if(mutation === 'append') { theme.keyOrder.push('--late'); theme.values.set('--late', {value: 'late', options: 16}); }
+                if(mutation === 'replaceOrder') { theme.keyOrder = ['--late']; theme.values.set('--late', {value: 'late', options: 16}); }
+                if(mutation === 'replaceValues') { theme.values = new Map<string, ThemeValue>(); theme.values.set('--seed-c', {value: 'replacement', options: 31}); }
+                if(mutation === 'changeNextSlot' && theme.keyOrder.length > 1) { theme.keyOrder[1] = '--seed-b'; }
+            }
+            return stop < 0 || trace.length / 3 < stop;
+        });
+        console.log(`${trace.length / 3}`);
+        for(const part of trace) { console.log(part); }
+    } else if(text(row, 'mode') === 'entries') {
+        const keyOrder = json.node(json.field(json.field(row, 'state'), 'order')).children.map(c => json.node(c).text);
+        const values = new Map<string, ThemeValue>();
+        for(const entry of json.node(json.field(json.field(row, 'state'), 'entries')).children) {
+            values.set(text(entry, 'key'), {value: text(entry, 'value'), options: number(entry, 'options')});
+        }
+        const theme = {keyOrder, values};
+        const prefixes = new Map<string, string>();
+        for(const item of json.node(json.field(row, 'prefixes')).children) { prefixes.set(text(item, 'key'), text(item, 'value')); }
+        const first = themeEntries(theme, key => prefixes.get(key) ?? panic('missing Go prefix result'));
+        console.log(`${first.length}`);
+        for(const entry of first) { console.log(entry.key); console.log(entry.value); console.log(`${entry.options}`); }
+        if(first.length > 0) { first[0] = {key: 'tampered', value: 'tampered', options: 999}; }
+        while(first.length > 0) { first.pop(); }
+        const second = themeEntries(theme, key => prefixes.get(key) ?? panic('missing Go prefix result'));
+        console.log(`${second.length}`);
+        for(const entry of second) { console.log(entry.key); console.log(entry.value); console.log(`${entry.options}`); }
+    } else if(text(row, 'mode') === 'namespaces') {
+        const keyOrder = json.node(json.field(json.field(row, 'state'), 'order')).children.map(c => json.node(c).text);
+        const values = new Map<string, ThemeValue>();
+        for(const entry of json.node(json.field(json.field(row, 'state'), 'entries')).children) {
+            values.set(text(entry, 'key'), {value: text(entry, 'value'), options: number(entry, 'options')});
+        }
+        const namespaces = json.node(json.field(row, 'namespaces')).children.map(c => json.node(c).text);
+        const predictions = json.node(json.field(row, 'ignored')).children.map(c => ({key: text(c, 'key'), namespace: text(c, 'namespace'), ignored: text(c, 'ignored') === 'true'}));
+        const result = keysInNamespaces({keyOrder, values}, namespaces, (key, namespace) => {
+            for(const prediction of predictions) {
+                if(prediction.key === key && prediction.namespace === namespace) { return prediction.ignored; }
+            }
+            return panic('missing Go ignored-key result');
+        });
+        console.log(`${result.length}`);
+        for(const key of result) { console.log(key); }
+    } else { panic('unsupported helper mode'); }
+}

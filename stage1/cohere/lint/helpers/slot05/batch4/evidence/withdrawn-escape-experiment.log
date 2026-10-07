@@ -1,0 +1,14 @@
+=== RUN   TestSlot05EscapeTerminator
+    helper_test.go:42: 6 consumers, 639 distinct test-file literals, 83 observed UTF-8 byte values, 256 Go verdicts
+    helper_test.go:52: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:101: css_escape_terminator.a mutant caught at verdict 12: mutant true, Go false
+--- PASS: TestSlot05EscapeTerminator (3.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch4	3.127s

@@ -1,0 +1,16 @@
+import { liveKeys } from './theme_live_keys.a';
+import type { ThemeState } from './theme_live_keys.a';
+export interface ThemeEntry {
+    readonly key: string;
+    readonly value: string;
+    readonly options: number;
+}
+// PrefixKey is explicitly owned elsewhere. Every call creates fresh output records/list.
+export function themeEntries(theme: ThemeState, prefixKey: (key: string) => string): ThemeEntry[] {
+    const entries: ThemeEntry[] = [];
+    liveKeys(theme, (key, value) => {
+        entries.push({key: prefixKey(key), value: value.value, options: value.options});
+        return true;
+    });
+    return entries;
+}

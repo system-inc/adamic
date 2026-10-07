@@ -1,0 +1,27 @@
+import { panic, utf8Length, utf8At } from 'adamic';
+import { liveKeys } from './theme_live_keys.a';
+import type { ThemeState } from './theme_live_keys.a';
+
+// isIgnoredThemeKey is a separately owned, pure callback. Returned keys remain unprefixed.
+export function keysInNamespaces(theme: ThemeState, namespaces: readonly string[], isIgnoredThemeKey: (key: string, namespace: string) => boolean): string[] {
+    const keys: string[] = [];
+    for(const namespace of namespaces) {
+        const prefix = namespace + '-';
+        liveKeys(theme, (key, value) => {
+            if(!key.startsWith(prefix)) { return true; }
+            const size = utf8Length(key);
+            if(size < 2) { panic('theme key shorter than two UTF-8 bytes'); }
+            let nested = false;
+            for(let byte = 2; byte + 1 < size; byte++) {
+                if(utf8At(key, byte) === 45 && utf8At(key, byte + 1) === 45) { nested = true; break; }
+            }
+            if(nested) { return true; }
+            if(isIgnoredThemeKey(key, namespace)) { return true; }
+            // The matched prefix ends at a complete character, so UTF-16 slicing cuts the
+            // same suffix as Go's byte-length slice, even for Unicode namespace strings.
+            keys.push(key.slice(prefix.length));
+            return true;
+        });
+    }
+    return keys;
+}

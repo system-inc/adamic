@@ -1,0 +1,47 @@
+stage1/cohere/lint/helpers/slot05/batch4/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch4/main.a:9:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch4/main.a:10:7: variable root: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:12:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:12:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:12:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:13:10: function number: (index: number, field: string) => number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:13:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:13:32: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:14:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:16:15: variable keyOrder: string[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:16:96: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:17:15: variable values: Map<string, ThemeValue>
+stage1/cohere/lint/helpers/slot05/batch4/main.a:18:19: variable entry: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:21:15: variable theme: { keyOrder: string[]; values: Map<string, ThemeValue>; }
+stage1/cohere/lint/helpers/slot05/batch4/main.a:22:15: variable trace: string[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:23:15: variable mutation: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:24:15: variable stop: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:25:26: parameter key: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:25:31: parameter value: ThemeValue
+stage1/cohere/lint/helpers/slot05/batch4/main.a:38:19: variable part: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:40:15: variable keyOrder: string[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:40:96: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:41:15: variable values: Map<string, ThemeValue>
+stage1/cohere/lint/helpers/slot05/batch4/main.a:42:19: variable entry: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:45:15: variable theme: { keyOrder: string[]; values: Map<string, ThemeValue>; }
+stage1/cohere/lint/helpers/slot05/batch4/main.a:46:15: variable prefixes: Map<string, string>
+stage1/cohere/lint/helpers/slot05/batch4/main.a:47:19: variable item: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:48:15: variable first: ThemeEntry[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:48:43: parameter key: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:50:19: variable entry: ThemeEntry
+stage1/cohere/lint/helpers/slot05/batch4/main.a:53:15: variable second: ThemeEntry[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:53:44: parameter key: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:55:19: variable entry: ThemeEntry
+stage1/cohere/lint/helpers/slot05/batch4/main.a:57:15: variable keyOrder: string[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:57:96: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:58:15: variable values: Map<string, ThemeValue>
+stage1/cohere/lint/helpers/slot05/batch4/main.a:59:19: variable entry: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:62:15: variable namespaces: string[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:62:82: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:63:15: variable predictions: { key: string; namespace: string; ignored: boolean; }[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:63:80: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch4/main.a:64:15: variable result: string[]
+stage1/cohere/lint/helpers/slot05/batch4/main.a:64:74: parameter key: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:64:79: parameter namespace: string
+stage1/cohere/lint/helpers/slot05/batch4/main.a:65:23: variable prediction: { key: string; namespace: string; ignored: boolean; }
+stage1/cohere/lint/helpers/slot05/batch4/main.a:71:19: variable key: string
