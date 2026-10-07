@@ -1,0 +1,6 @@
+{
+  "name": "omit blocking font display",
+  "file": "rule.ts",
+  "from": "['auto','block','fallback']",
+  "to": "['auto','fallback']"
+}
