@@ -1,0 +1,52 @@
+import type { PreferenceStructure } from './preference_structure.a';
+export class PreferenceAccess {
+    readonly tree: PreferenceStructure;
+    constructor(tree: PreferenceStructure) { this.tree = tree; }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    object(id: number): number {
+        if(id === 0) { return 0; }
+        const node = this.tree.node(id);
+        return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) ? node.role(0) : 0;
+    }
+    name(id: number): string {
+        if(id === 0) { return ''; }
+        const node = this.tree.node(id);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) { return ''; }
+        const name = this.tree.node(this.tree.skip(node.role(1)));
+        if(node.kind === 'PropertyAccessExpression' && name.kind === 'Identifier') { return name.text; }
+        return ['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind) ? name.text : '';
+    }
+    accessKind(id: number): number {
+        const node = this.tree.node(id);
+        if(node.parent === 0) { return 0; }
+        const parent = this.tree.node(node.parent);
+        if(parent.kind === 'ParenthesizedExpression' || parent.kind === 'ArrayLiteralExpression') { return this.accessKind(node.parent); }
+        if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(parent.kind)) { return ['PlusPlusToken', 'MinusMinusToken'].includes(parent.operator) ? 2 : 0; }
+        if(parent.kind === 'BinaryExpression') { return parent.role(4) === id && this.assignment(parent.operator) ? (parent.operator === 'EqualsToken' ? 1 : 2) : 0; }
+        if(parent.kind === 'PropertyAccessExpression') { return parent.role(1) === id ? this.accessKind(node.parent) : 0; }
+        if(parent.kind === 'PropertyAssignment') {
+            const access = parent.parent === 0 ? 0 : this.accessKind(parent.parent);
+            return parent.role(1) === id ? (access === 2 ? 2 : 1 - access) : access;
+        }
+        if(parent.kind === 'ShorthandPropertyAssignment') { return parent.role(0) === id || parent.parent === 0 ? 0 : this.accessKind(parent.parent); }
+        if(['ForInStatement', 'ForOfStatement'].includes(parent.kind)) { return parent.role(0) === id ? 1 : 0; }
+        return 0;
+    }
+    writes(id: number): boolean {
+        const node = this.tree.node(id);
+        if(node.parent !== 0 && this.tree.node(node.parent).kind === 'PropertyAccessExpression' && this.tree.node(node.parent).role(1) === id) { return false; }
+        let current = id;
+        while(this.tree.node(current).parent !== 0) {
+            const parentId = this.tree.node(current).parent; const parent = this.tree.node(parentId);
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(parent.kind)) { current = parentId; continue; }
+            if(parent.kind === 'PropertyAssignment') {
+                if(parent.role(0) !== current) { return false; }
+                current = parentId; continue;
+            }
+            return this.accessKind(current) !== 0;
+        }
+        return this.accessKind(current) !== 0;
+    }
+}

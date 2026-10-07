@@ -1,0 +1,16 @@
+import { panic, tsgoInspect } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { PreferenceStructure } from './preference_structure.a';
+export class SourceComment {
+    readonly start: number; readonly end: number;
+    constructor(frames: Frames, length: number) { this.start = frames.natural(); this.end = frames.natural(); if(this.start >= this.end || this.end > length) { panic('invalid comment extent'); } }
+}
+export class SourceComments {
+    readonly comments: readonly SourceComment[];
+    constructor(tree: PreferenceStructure, length: number) {
+        const frames = new Frames(tsgoInspect(tree.program, tree.path, 0, length, 'SourceFile', 'source-comments')); header(frames, 'source-comments');
+        const count = frames.natural(); const comments: SourceComment[] = [];
+        for(let i = 0; i < count; i++) { comments.push(new SourceComment(frames, length)); }
+        this.comments = comments; frames.end();
+    }
+}

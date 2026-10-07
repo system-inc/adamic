@@ -1,0 +1,16 @@
+import type { PreferenceStructure } from './preference_structure.a';
+import { PreferenceBinding } from './preference_binding.a';
+export class PreferRestParams {
+    readonly tree: PreferenceStructure;
+    constructor(tree: PreferenceStructure) { this.tree = tree; }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(node.kind !== 'Identifier' || node.text !== 'arguments') { continue; }
+            const binding = new PreferenceBinding(this.tree, id);
+            if(binding.symbol === 0 || binding.count !== 0) { continue; }
+            if(node.parent !== 0 && this.tree.node(node.parent).kind === 'PropertyAccessExpression' && this.tree.node(node.parent).role(0) === id) { continue; }
+            this.tree.add(id, 'prefer-rest-params', 'preferRestParams', 'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.');
+        }
+    }
+}

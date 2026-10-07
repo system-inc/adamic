@@ -1,0 +1,115 @@
+import type { PreferenceStructure } from './preference_structure.a';
+import { PreferenceAccess } from './preference_access.a';
+import { PreferenceBinding } from './preference_binding.a';
+export class ConstantText {
+    readonly value: string; readonly string: boolean; readonly constant: boolean;
+    constructor(value: string, string = false, constant = false) { this.value = value; this.string = string; this.constant = constant; }
+}
+export class RegexReference {
+    readonly tree: PreferenceStructure; readonly access: PreferenceAccess;
+    readonly bindings = new Map<number, PreferenceBinding>(); readonly following: string[] = []; readonly found: number[] = [];
+    constructor(access: PreferenceAccess) { this.tree = access.tree; this.access = access; }
+    binding(id: number): PreferenceBinding {
+        const cached = this.bindings.get(id); if(cached !== undefined) { return cached; }
+        const result = new PreferenceBinding(this.tree, id); this.bindings.set(id, result); return result;
+    }
+    reference(id: number): boolean {
+        const node = this.tree.node(id); if(node.parent === 0) { return false; } const parent = this.tree.node(node.parent);
+        if(node.declarationName && !['ShorthandPropertyAssignment', 'ExportSpecifier'].includes(parent.kind)) { return false; }
+        if(['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'JsxAttribute', 'ImportSpecifier'].includes(parent.kind)) { return false; }
+        if(parent.kind === 'PropertyAccessExpression') { return parent.role(1) !== id; }
+        if(parent.kind === 'BindingElement') { return parent.role(2) !== id; }
+        if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(parent.kind)) { return !('abcdefghijklmnopqrstuvwxyz'.includes(node.text[0] ?? '') || node.text.includes('-')); }
+        if(parent.kind === 'ExportSpecifier') {
+            let ancestor = parent.parent;
+            while(ancestor !== 0) { const current = this.tree.node(ancestor); if(current.kind === 'ExportDeclaration') { if(current.role(0) !== 0) { return false; } break; } ancestor = current.parent; }
+            return parent.role(2) === 0 || parent.role(2) === id;
+        }
+        return true;
+    }
+    constant(id: number): ConstantText {
+        const inner = this.tree.skip(id); if(inner === 0) { return new ConstantText(''); } const node = this.tree.node(inner);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new ConstantText(node.text, true, true); }
+        if(node.kind === 'NumericLiteral') { return new ConstantText(node.text, false, true); }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return new ConstantText(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null', false, true); }
+        if(node.kind === 'TemplateExpression') {
+            let value = this.tree.node(node.role(1)).text;
+            for(const child of node.children) {
+                const span = this.tree.node(child); if(span.kind !== 'TemplateSpan') { continue; }
+                const part = this.constant(span.role(0)); if(!part.constant) { return new ConstantText(''); }
+                value += part.value + this.tree.node(span.role(1)).text;
+            }
+            return new ConstantText(value, true, true);
+        }
+        if(node.kind === 'BinaryExpression' && node.operator === 'PlusToken') {
+            const left = this.constant(node.role(4)); const right = this.constant(node.role(5));
+            if(left.constant && right.constant && (left.string || right.string)) { return new ConstantText(left.value + right.value, true, true); }
+        }
+        return new ConstantText('');
+    }
+    key(id: number): string {
+        if(id === 0) { return ''; } const node = this.tree.node(id);
+        if(node.kind === 'Identifier' || node.kind === 'PrivateIdentifier' || node.kind === 'StringLiteral' || node.kind === 'NumericLiteral') { return node.text; }
+        if(node.kind === 'ComputedPropertyName') { const value = this.constant(node.role(0)); return value.constant ? value.value : ''; }
+        return '';
+    }
+    member(id: number): string {
+        const node = this.tree.node(id);
+        if(node.kind === 'PropertyAccessExpression') { return this.tree.node(node.role(1)).text; }
+        const value = this.constant(node.role(1)); return value.constant ? value.value : '';
+    }
+    pass(id: number): boolean {
+        const node = this.tree.node(id); if(node.parent === 0) { return false; } const parent = this.tree.node(node.parent);
+        if(['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression', 'ExpressionWithTypeArguments'].includes(parent.kind)) { return true; }
+        if(parent.kind === 'ConditionalExpression') { return parent.role(6) === id || parent.role(7) === id; }
+        return parent.kind === 'BinaryExpression' && (['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(parent.operator) || parent.operator === 'CommaToken' && parent.role(5) === id);
+    }
+    reads(name: string, symbol: number): readonly number[] {
+        const references: number[] = [];
+        for(let id = 1; id <= this.tree.nodes.length; id++) { const node = this.tree.node(id); if(node.kind === 'Identifier' && node.text === name && this.reference(id) && this.binding(id).readSymbol === symbol) { references.push(id); } }
+        return references;
+    }
+    followReads(key: string, references: readonly number[], traced: boolean): void {
+        if(this.following.includes(key)) { return; } this.following.push(key);
+        for(const id of references) { this.value(id, traced); } this.following.pop();
+    }
+    global(name: string, traced: boolean): void {
+        const references: number[] = [];
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(node.kind !== 'Identifier' || node.text !== name || !this.reference(id) || this.binding(id).readSource) { continue; }
+            if(this.access.writes(id)) { return; } references.push(id);
+        }
+        this.followReads(`global:${name}`, references, traced);
+    }
+    target(id: number, traced: boolean): void {
+        const inner = this.tree.skip(id); if(inner === 0) { return; } const node = this.tree.node(inner);
+        if(node.kind === 'Identifier') {
+            const binding = this.binding(inner);
+            if(binding.readSymbol !== 0) { this.followReads(`symbol:${binding.readSymbol}`, this.reads(node.text, binding.readSymbol), traced); }
+        }
+        if(node.kind === 'ObjectBindingPattern') {
+            for(const child of node.children) { const element = this.tree.node(child); if(element.kind === 'BindingElement' && !element.spread && !traced && this.key(element.role(2) === 0 ? element.role(1) : element.role(2)) === 'RegExp') { this.target(element.role(1), true); } }
+        }
+        if(node.kind === 'ObjectLiteralExpression') {
+            for(const child of node.children) {
+                const element = this.tree.node(child);
+                if(!traced && ['PropertyAssignment', 'ShorthandPropertyAssignment'].includes(element.kind) && this.key(element.role(1)) === 'RegExp') { this.target(element.kind === 'PropertyAssignment' ? element.role(0) : element.role(1), true); }
+            }
+        }
+        if(node.kind === 'BinaryExpression' && node.operator === 'EqualsToken') { this.target(node.role(4), traced); }
+    }
+    value(id: number, traced: boolean): void {
+        let current = id; while(this.pass(current)) { current = this.tree.node(current).parent; }
+        const parentId = this.tree.node(current).parent; if(parentId === 0) { return; } const parent = this.tree.node(parentId);
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(parent.kind) && parent.role(0) === current && !traced && this.member(parentId) === 'RegExp') { this.value(parentId, true); }
+        if(['CallExpression', 'NewExpression'].includes(parent.kind) && parent.role(0) === current && traced) { this.found.push(parentId); }
+        if(parent.kind === 'BinaryExpression' && parent.role(5) === current && ['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(parent.operator)) { this.target(parent.role(4), traced); this.value(parentId, traced); }
+        if(['VariableDeclaration', 'Parameter', 'BindingElement', 'ShorthandPropertyAssignment'].includes(parent.kind) && parent.role(0) === current) { this.target(parent.role(1), traced); }
+    }
+    run(): readonly number[] {
+        this.global('RegExp', true);
+        for(const name of ['global', 'globalThis', 'self', 'window']) { this.global(name, false); }
+        return this.found;
+    }
+}

@@ -1,0 +1,16 @@
+import { Frames, header } from './frames.ts';
+import type { PreferenceStructure } from './preference_structure.a';
+export class PreferenceBinding {
+    readonly symbol: number; readonly count: number; readonly allAmbient: boolean; readonly firstAmbient: boolean;
+    readonly readSymbol: number; readonly readSource: boolean;
+    constructor(tree: PreferenceStructure, id: number) {
+        const frames = new Frames(tree.ask(id, 'preference-binding')); header(frames, 'preference-binding');
+        this.symbol = frames.natural(); this.count = frames.natural(); let all = true; let first = false;
+        for(let i = 0; i < this.count; i++) { const ambient = frames.yes(); if(i === 0) { first = ambient; } if(!ambient) { all = false; } }
+        this.allAmbient = all; this.firstAmbient = first;
+        this.readSymbol = frames.natural(); const count = frames.natural(); let source = false;
+        for(let i = 0; i < count; i++) { if(!frames.yes()) { source = true; } }
+        this.readSource = source; frames.end();
+    }
+    global(): boolean { return this.symbol !== 0 && this.count > 0 && this.allAmbient; }
+}

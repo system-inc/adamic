@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { PreferenceStructure } from './preference_structure.a';
+export class RegexCharacter {
+    readonly start: number; readonly end: number; readonly written: string;
+    constructor(frames: Frames, pattern: string) {
+        this.start = frames.natural(); this.end = frames.natural(); this.written = frames.field();
+        if(this.start >= this.end || this.end > pattern.length || pattern.slice(this.start, this.end) !== this.written) { panic('invalid regex character extent'); }
+    }
+}
+export class RegexPattern {
+    readonly parsed: boolean; readonly characters: readonly RegexCharacter[];
+    readonly escapes = new Map<number, number>(); readonly classes = new Map<number, number>();
+    constructor(tree: PreferenceStructure, id: number, pattern: string, flags: string) {
+        const frames = new Frames(tree.ask(id, `regex-pattern\n${flags}\n${pattern}`)); header(frames, 'regex-pattern');
+        this.parsed = frames.yes(); const count = frames.natural(); const characters: RegexCharacter[] = [];
+        for(let i = 0; i < count; i++) { characters.push(new RegexCharacter(frames, pattern)); }
+        this.characters = characters;
+        for(const group of [this.escapes, this.classes]) {
+            const total = frames.natural();
+            for(let i = 0; i < total; i++) {
+                const start = frames.natural(); const end = frames.natural(); const ok = frames.yes();
+                if(start > pattern.length || end > pattern.length || end < start || ok && end === start) { panic('invalid regex syntax extent'); }
+                group.set(start, ok ? end : -1);
+            }
+        }
+        frames.end();
+    }
+}

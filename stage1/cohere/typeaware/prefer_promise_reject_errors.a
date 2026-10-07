@@ -1,0 +1,70 @@
+import type { PreferenceStructure } from './preference_structure.a';
+import { PreferenceAccess } from './preference_access.a';
+import { PreferenceBinding } from './preference_binding.a';
+export class PreferPromiseRejectErrors {
+    readonly tree: PreferenceStructure; readonly access: PreferenceAccess;
+    constructor(access: PreferenceAccess) { this.tree = access.tree; this.access = access; }
+    unwrap(id: number): number {
+        let current = id;
+        while(current !== 0 && ['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression'].includes(this.tree.node(current).kind)) { current = this.tree.node(current).role(0); }
+        return current;
+    }
+    globalPromise(id: number): boolean {
+        if(id === 0 || this.tree.node(id).kind !== 'Identifier' || this.tree.node(id).text !== 'Promise') { return false; }
+        const binding = new PreferenceBinding(this.tree, id); return binding.global();
+    }
+    couldBeError(id: number): boolean {
+        const inner = this.unwrap(id); if(inner === 0) { return false; }
+        const node = this.tree.node(inner);
+        if(['Identifier', 'CallExpression', 'NewExpression', 'PropertyAccessExpression', 'ElementAccessExpression', 'TaggedTemplateExpression', 'YieldExpression', 'AwaitExpression'].includes(node.kind)) { return true; }
+        if(node.kind === 'ConditionalExpression') { return this.couldBeError(node.role(6)) || this.couldBeError(node.role(7)); }
+        if(node.kind === 'BinaryExpression') {
+            if(['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(node.operator)) { return this.couldBeError(node.role(5)); }
+            if(['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(node.operator)) { return this.couldBeError(node.role(4)) || this.couldBeError(node.role(5)); }
+        }
+        return false;
+    }
+    check(id: number): void {
+        const argument = this.tree.node(id).arguments[0] ?? 0;
+        let bad = !this.couldBeError(argument);
+        if(argument !== 0 && this.tree.node(argument).kind === 'Identifier' && this.tree.node(argument).text === 'undefined') {
+            const binding = new PreferenceBinding(this.tree, argument); bad = bad || binding.symbol === 0 || binding.count === 0;
+        }
+        if(bad) { this.tree.add(id, 'prefer-promise-reject-errors', 'rejectAnError', 'Expected the Promise rejection reason to be an Error. A rejection carrying a string or a plain object arrives at the catch with no stack, so the line that failed is lost and the handler cannot tell one failure from another.'); }
+    }
+    visit(id: number, targets: readonly number[]): void {
+        const node = this.tree.node(id);
+        if(node.kind === 'CallExpression') {
+            const callee = this.unwrap(node.role(0));
+            if(callee !== 0 && this.tree.node(callee).kind === 'Identifier') {
+                const binding = new PreferenceBinding(this.tree, callee);
+                if(targets.includes(binding.symbol)) { this.check(id); }
+            }
+        }
+        for(const child of node.children) { this.visit(child, targets); }
+    }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(node.kind === 'CallExpression') {
+                const callee = this.unwrap(node.role(0));
+                if(this.access.name(callee) === 'reject' && this.globalPromise(this.unwrap(this.access.object(callee)))) { this.check(id); }
+            }
+            if(node.kind !== 'NewExpression' || !this.globalPromise(node.role(0))) { continue; }
+            const executor = node.arguments[0] ?? 0;
+            if(executor === 0 || !['ArrowFunction', 'FunctionExpression', 'FunctionDeclaration'].includes(this.tree.node(executor).kind)) { continue; }
+            const parameters = this.tree.node(executor).parameters; const second = parameters[1] ?? 0;
+            if(second === 0 || this.tree.node(second).role(1) === 0) { continue; }
+            const secondName = this.tree.node(this.tree.node(second).role(1));
+            if(secondName.kind !== 'Identifier') { continue; }
+            const targets: number[] = [];
+            for(const parameter of parameters) {
+                const name = this.tree.node(parameter).role(1);
+                if(name === 0 || this.tree.node(name).kind !== 'Identifier' || this.tree.node(name).text !== secondName.text) { continue; }
+                const binding = new PreferenceBinding(this.tree, name);
+                if(binding.symbol !== 0) { targets.push(binding.symbol); }
+            }
+            if(targets.length > 0) { for(const child of this.tree.node(executor).children) { this.visit(child, targets); } }
+        }
+    }
+}

@@ -1,0 +1,130 @@
+import { panic } from 'adamic';
+import type { PreferenceStructure } from './preference_structure.a';
+import { PreferenceAccess } from './preference_access.a';
+import { PreferenceBinding } from './preference_binding.a';
+import { RegexReference, ConstantText } from './regex_reference.a';
+import { RegexPattern } from './regex_pattern.a';
+import type { SourceComments } from './source_comments.a';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+import { Suggestion } from './suggestion.ts';
+export class PreferRegexLiterals {
+    readonly tree: PreferenceStructure; readonly access: PreferenceAccess; readonly references: RegexReference;
+    readonly source: string; readonly offsets: readonly number[]; readonly comments: SourceComments;
+    constructor(access: PreferenceAccess, references: RegexReference, source: string, offsets: readonly number[], comments: SourceComments) { this.tree = access.tree; this.access = access; this.references = references; this.source = source; this.offsets = offsets; this.comments = comments; }
+    unit(byte: number): number {
+        let low = 0; let high = this.offsets.length - 1;
+        while(low < high) { const middle = Math.floor((low + high) / 2); if((this.offsets[middle] ?? panic('missing byte offset')) < byte) { low = middle + 1; } else { high = middle; } }
+        if(this.offsets[low] !== byte) { return panic('inexact UTF-8 boundary'); } return low;
+    }
+    staticString(id: number): ConstantText {
+        const node = this.tree.node(id);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new ConstantText(node.text, true, true); }
+        if(node.kind !== 'TaggedTemplateExpression' || node.role(1) === 0 || this.tree.node(node.role(1)).kind !== 'NoSubstitutionTemplateLiteral') { return new ConstantText(''); }
+        const tag = this.tree.skip(node.role(0)); if(tag === 0) { return new ConstantText(''); }
+        const access = this.tree.node(tag); let receiver = 0;
+        if(access.kind === 'PropertyAccessExpression' && this.tree.node(access.role(1)).text === 'raw') { receiver = access.role(0); }
+        if(access.kind === 'ElementAccessExpression') { const key = this.tree.node(access.role(1)); if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind) && key.text === 'raw') { receiver = access.role(0); } }
+        if(receiver === 0 || this.tree.node(receiver).kind !== 'Identifier' || this.tree.node(receiver).text !== 'String') { return new ConstantText(''); }
+        const binding = new PreferenceBinding(this.tree, receiver); if(!binding.firstAmbient) { return new ConstantText(''); }
+        const template = this.tree.node(node.role(1)); let text = this.source.slice(this.unit(template.token), this.unit(template.end));
+        if(text.startsWith('`')) { text = text.slice(1); } if(text.endsWith('`')) { text = text.slice(0, -1); }
+        return new ConstantText(text, true, true);
+    }
+    word(c: string): boolean { return c !== '' && (c === '_' || c === '$' || c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'); }
+    lineComment(index: number): number {
+        let start = index; while(start >= 0 && this.source[start] !== '\n') { start--; } start++;
+        let state = '';
+        for(let scan = start; scan <= index; scan++) {
+            const c = this.source[scan] ?? ''; if(c === '\\') { scan++; continue; }
+            if(state !== '') { if(c === state) { state = ''; } }
+            else if(c === "'" || c === '"' || c === '`') { state = c; }
+            else if(c === '/' && this.source[scan + 1] === '/') { return scan; }
+        }
+        return -1;
+    }
+    preceding(start: number): boolean {
+        if(start <= 0 || start > this.source.length) { return true; }
+        let index = start - 1;
+        while(index >= 0) {
+            const c = this.source[index] ?? '';
+            if([' ', '\t', '\r', '\n', '\v', '\f'].includes(c)) { index--; continue; }
+            if(index >= 1 && c === '/' && this.source[index - 1] === '*') {
+                let opening = -1;
+                for(let scan = index - 2; scan >= 1; scan--) { if(this.source[scan] === '*' && this.source[scan - 1] === '/') { opening = scan - 1; break; } }
+                if(opening < 0) { return true; } index = opening - 1; continue;
+            }
+            const comment = this.lineComment(index); if(comment >= 0) { index = comment - 1; continue; } break;
+        }
+        if(index < 0) { return true; }
+        if(this.source.startsWith('#!')) { const newline = this.source.indexOf('\n'); if(newline >= 0 && start > newline && this.source.slice(newline + 1, start).trim() === '') { return true; } }
+        const valid = ['(', ';', '[', ',', '=', '+', '*', '-', '?', '~', '%', '**', '!', 'typeof', 'instanceof', '&&', '||', '??', 'return', '...', 'delete', 'void', 'in', '<', '>', '<=', '>=', '==', '===', '!=', '!==', '<<', '>>', '>>>', '&', '|', '^', ':', '{', '=>', '*=', '<<=', '>>=', '>>>=', '^=', '|=', '&=', '??=', '||=', '&&=', '**=', '+=', '-=', '/=', '%=', '/', 'do', 'break', 'continue', 'debugger', 'case', 'throw'];
+        if(this.word(this.source[index] ?? '')) { let begin = index; while(begin > 0 && this.word(this.source[begin - 1] ?? '')) { begin--; } return valid.includes(this.source.slice(begin, index + 1)); }
+        for(let length = 4; length >= 1; length--) { if(index - length + 1 >= 0 && valid.includes(this.source.slice(index - length + 1, index + 1))) { return true; } }
+        return false;
+    }
+    flagsValid(flags: string): boolean {
+        const seen: string[] = [];
+        for(const flag of flags) { if(!'dgimsuvy'.includes(flag) || seen.includes(flag)) { return false; } seen.push(flag); }
+        return !(seen.includes('u') && seen.includes('v'));
+    }
+    brace(pattern: string, start: number): number {
+        let index = start + 1; let digits = 0;
+        while(index < pattern.length && (pattern[index] ?? '') >= '0' && (pattern[index] ?? '') <= '9') { index++; digits++; }
+        if(digits === 0) { return 0; }
+        if(pattern[index] === ',') { index++; while(index < pattern.length && (pattern[index] ?? '') >= '0' && (pattern[index] ?? '') <= '9') { index++; } }
+        return pattern[index] === '}' ? index + 1 : 0;
+    }
+    balance(pattern: string, flags: string, syntax: RegexPattern): boolean {
+        let depth = 0; let repeatable = false;
+        for(let index = 0; index < pattern.length;) {
+            const c = pattern[index] ?? '';
+            if(c === '\\' || c === '[') { const end = (c === '\\' ? syntax.escapes : syntax.classes).get(index) ?? -1; if(end <= index) { return false; } index = end; repeatable = true; continue; }
+            if(c === '(') { depth++; repeatable = false; }
+            else if(c === ')') { depth--; if(depth < 0) { return false; } repeatable = true; }
+            else if(['*', '+', '?'].includes(c)) { if(!repeatable) { return false; } repeatable = false; }
+            else if(c === '{') { const end = this.brace(pattern, index); if(end > 0) { if(!repeatable) { return false; } index = end; repeatable = false; continue; } if(flags.includes('u') || flags.includes('v')) { return false; } repeatable = true; }
+            else { repeatable = c !== '|'; }
+            index++;
+        }
+        return depth === 0;
+    }
+    printable(pattern: string): boolean {
+        const punctuation = "-\\[](){}!@#$%^&*+=/~`.><?,'\"|:;_";
+        for(const c of pattern) { if(!([' ', '\t', '\r', '\n', '\v', '\f'].includes(c) || punctuation.includes(c) || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9')) { return false; } }
+        return true;
+    }
+    rewrite(pattern: string, syntax: RegexPattern): string {
+        let result = ''; let previous = 0;
+        for(const character of syntax.characters) {
+            const text = character.written; let replacement = '';
+            if(text === '/') { replacement = '\\/'; }
+            for(const control of ['\n', '\r', '\t', '\v', '\f']) { if(text === control || text === `\\${control}`) { replacement = control === '\n' ? '\\n' : control === '\r' ? '\\r' : control === '\t' ? '\\t' : control === '\v' ? '\\v' : '\\f'; } }
+            if(replacement !== '' && character.start >= previous) { result += pattern.slice(previous, character.start) + replacement; previous = character.end; }
+        }
+        return result + pattern.slice(previous);
+    }
+    check(id: number): void {
+        const node = this.tree.node(id); const args = node.arguments;
+        if(args.length !== 1 && args.length !== 2) { return; }
+        const first = this.staticString(args[0] ?? panic('missing pattern'));
+        const second = args.length === 2 ? this.staticString(args[1] ?? panic('missing flags')) : new ConstantText('', true, true);
+        if(!first.constant || !second.constant) { return; }
+        const finding = new Diagnostic('prefer-regex-literals', 'unexpectedRegExp', 'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.', node.token, node.end, '');
+        let allowed = this.flagsValid(second.value) && this.printable(first.value) && this.preceding(this.unit(node.token));
+        for(const comment of this.comments.comments) { if(comment.start >= node.token && comment.end <= node.end) { allowed = false; } }
+        if(allowed) {
+            const syntax = new RegexPattern(this.tree, id, first.value, second.value);
+            if(syntax.parsed && this.balance(first.value, second.value, syntax)) {
+                let pattern = this.rewrite(first.value, syntax); if(pattern === '') { pattern = '(?:)'; }
+                let text = `/${pattern}/${second.value}`;
+                if(this.source[this.unit(node.token) - 1] === '/') { text = ` ${text}`; }
+                if(this.word(this.source[this.unit(node.end)] ?? '')) { text += ' '; }
+                const repair = new Repair(node.token, node.end, text);
+                finding.suggestions.push(new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [repair]));
+            }
+        }
+        this.tree.findings.push(finding);
+    }
+    run(): void { if(!this.source.includes('RegExp')) { return; } for(const id of this.references.run()) { this.check(id); } }
+}
