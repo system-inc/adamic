@@ -44781,3 +44781,6 @@
 {"Time":"2026-10-07T22:55:59.529660318Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"    lists_test.go:423: 1267 native table frames\n"}
 {"Time":"2026-10-07T22:55:59.547067393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"    lists_test.go:424: 2990 native quote frames\n"}
 {"Time":"2026-10-07T22:55:59.547122286Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"--- PASS: TestMarkdownListLayout (489.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:57:25.386865238Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Elapsed":489.75}
+{"Time":"2026-10-07T22:57:25.387205943Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie"}
+{"Time":"2026-10-07T22:57:25.38721061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie","Output":"=== RUN   TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie\n","OutputType":"frame"}
