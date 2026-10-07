@@ -1,0 +1,7 @@
+function position(): number { console.log('position'); return 0; }
+function first<T extends string | undefined>(value: T): string {
+ return String.prototype.charAt.call(value, position());
+}
+console.log(first<string>('abc'));
+try { console.log(first<string | undefined>(undefined)); }
+catch (error) { console.log('caught'); }

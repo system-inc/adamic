@@ -85,6 +85,14 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		}
 		substitution[parameterType] = held
 		key += "," + l.genericTypeKey(concrete)
+		// References use the same representation with or without undefined, but the body's
+		// checks and string spelling depend on which members this instantiation admits.
+		if l.includesUndefined(concrete) {
+			key += ",undefined"
+		}
+		if l.includesNull(concrete) {
+			key += ",null"
+		}
 	}
 	if existing, isLowered := l.genericInstances[key]; isLowered {
 		return existing, nil

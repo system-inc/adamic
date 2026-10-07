@@ -71,6 +71,10 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	return l.stringConverted(node, value)
+}
+
+func (l *lowering) stringConverted(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	switch value.Type() {
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil
@@ -117,20 +121,16 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 			if len(written) == 0 {
 				return nil, true, l.notYet(node, "String.prototype."+method+".call without a present receiver")
 			}
-			proven := l.checker.GetTypeAtLocation(written[0])
-			if l.mayBeUndefined(written[0]) || proven.Flags()&checker.TypeFlagsNull != 0 {
-				return nil, true, l.notYet(node, "String prototype call on null or undefined (its TypeError is not catchable natively yet)")
+			proven := l.concrete(l.checker.GetTypeAtLocation(written[0]))
+			if proven.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				return nil, true, l.notYet(node, "String prototype call on a literal null or undefined receiver")
 			}
 			if method == "toString" || method == "valueOf" {
 				if proven.Flags()&checker.TypeFlagsStringLike == 0 {
 					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
 				}
 			}
-			value, err := l.stringConversion(written[0])
-			if err != nil {
-				return nil, true, err
-			}
-			return l.libraryStringMethod(node, value, method, written[1:])
+			return l.stringPrototypeCall(node, written[0], method, written[1:])
 		}
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
@@ -149,11 +149,21 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	return l.libraryStringMethodWith(node, value, name, written, nil)
+}
+
+func (l *lowering) libraryStringMethodWith(node *ast.Node, value ir.Expression, name string, written []*ast.Node, receiver *stringReceiver) (ir.Expression, bool, error) {
+	finish := func(result ir.Expression) (ir.Expression, bool, error) {
+		if receiver != nil {
+			result = receiver.finish(result)
+		}
+		return result, true, nil
+	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, name+" with arguments")
 		}
-		return value, true, nil
+		return finish(value)
 	}
 	if name == "concat" {
 		parts := []ir.Expression{value}
@@ -162,9 +172,12 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 			if err != nil {
 				return nil, true, err
 			}
+			if receiver != nil {
+				part = receiver.argument(part)
+			}
 			parts = append(parts, part)
 		}
-		return ir.Concat{Parts: parts}, true, nil
+		return finish(ir.Concat{Parts: parts})
 	}
 	shape, known := stringMethods[name]
 	if name == "trim" {
@@ -200,19 +213,22 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 		if lowered.Type() != shape.arguments[index] {
 			return nil, true, l.notYet(arg, "a "+typeName(lowered.Type())+" argument to "+name)
 		}
+		if receiver != nil {
+			lowered = receiver.argument(lowered)
+		}
 		arguments = append(arguments, lowered)
 	}
 	switch name {
 	case "trim":
-		return ir.Trim{Value: value}, true, nil
+		return finish(ir.Trim{Value: value})
 	case "charCodeAt":
 		position := ir.Expression(ir.NumberConstant{Value: 0})
 		if len(arguments) > 0 {
 			position = arguments[0]
 		}
-		return ir.CharCodeAt{Value: value, Index: position}, true, nil
+		return finish(ir.CharCodeAt{Value: value, Index: position})
 	case "charAt", "substring":
-		return l.stringIndexMethod(value, name, arguments), true, nil
+		return finish(l.stringIndexMethod(value, name, arguments))
 	case "codePointAt":
 		if len(arguments) == 0 {
 			arguments = append(arguments, ir.NumberConstant{Value: 0})
@@ -226,7 +242,7 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 			arguments = append(arguments, ir.StringConstant{Index: l.constant(" ")})
 		}
 	}
-	return ir.StringCall{Method: name, Value: value, Arguments: arguments}, true, nil
+	return finish(ir.StringCall{Method: name, Value: value, Arguments: arguments})
 }
 
 // Helpers use the ordinary IR so both backends and ownership analyses see every evaluation. Each
