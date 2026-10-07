@@ -10,3 +10,9 @@ Prior rule work is pushed through 8815a3f9; its shared integration blockers rema
 2. github.com/system-inc/cohere/internal/lint/rules/tailwind.FindEntryPoint
    File: tailwind_find_entry_point.a. Six remaining consumers, zero final blockers alone.
    leadingInteger is tested and pushed in c3b9b8af. All origin refs fetched again and all helper claim blobs checked. This search ties the highest unclaimed count at six. Preserve ordered POSIX filepath.Join probes and stop on first existing file; filesystem predicate is an explicit dependency. Actual Go consumer fixtures and all existence-mask/path controls decide behavior. Node, emitted JavaScript and sanitized native, with a compiling priority mutant. Claim pushed before code.
+
+Withdrawn: FindEntryPoint. The all-origin refresh revealed an earlier claim on codex/lint-helpers-from-codex/lint-wave1-11. The selection assertion failed, but the shell continued to the claim commit. No implementation was written; earlier ownership wins.
+
+2. github.com/system-inc/cohere/internal/lint/rules/tailwind.findTailwindPackageRoot
+   File: tailwind_find_package_root.a. Six remaining consumers, zero final blockers alone.
+   All 405 origin refs and 16 distinct claim blobs checked. This upward search remains unclaimed at the highest count, six. Preserve POSIX Join/Dir, exact index.css probes including duplicate cleaned probes, first match and termination at root. Filesystem predicate is explicit. Actual Go over all six consumer fixtures and path/existence controls, source Node, emitted JavaScript and sanitized native, with a compiling semantic mutant. Claim pushed before code.
