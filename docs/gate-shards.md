@@ -1083,3 +1083,117 @@ read as that checkout's authority; dynamic declarations are refused.
 The regression suite rejects a split fixture, split complement, repeated group
 charge, split volume parent, lost parent setup, overwritten merged invocation,
 and repeated layout setup. Deliberate overlay mutants prove those checks fail.
+
+### Affinity measurement and 15-shard table
+
+Source: `47fbaf174d168f14cd50dedcaabfaa09c51cdefd`. Runner: `1e9192b65a41bcd108ff04c09b732864b28a5bbe`, binary SHA-256 `9238514115d652e0cc7d456b8853ae703154d64348dc1b40ef2fc6a61a417601`. Branch base: `0081e98d25a4e9d560da789a2ad389d38dc43a26`.
+
+All fifteen original logs merged green with the original runner: 6,016 pass, 0 fail, 25 skip. Calibration from the merged stream is byte-identical to calibration from the fifteen individual streams. The new plan is preserved in `cmd/adamic-gate/evidence/affinity-47fb-plan.json`.
+
+| Shard | Predicted test seconds | Actual test seconds |
+| --- | ---: | ---: |
+| 0 | 3456.456 | 2421.176 |
+| 1 | 1613.870 | not rerun |
+| 2 | 1613.870 | not rerun |
+| 3 | 1613.870 | not rerun |
+| 4 | 1613.865 | not rerun |
+| 5 | 1613.870 | not rerun |
+| 6 | 1613.870 | not rerun |
+| 7 | 1613.870 | not rerun |
+| 8 | 1613.870 | not rerun |
+| 9 | 1613.870 | not rerun |
+| 10 | 1613.870 | not rerun |
+| 11 | 1613.870 | not rerun |
+| 12 | 1613.870 | not rerun |
+| 13 | 1613.870 | not rerun |
+| 14 | 1731.075 | not rerun |
+
+Actual test seconds are the joint Go package test span. Parent elapsed times overlap and include waits on the shared fixture and layout slots; summing them does not measure box time. Only the heaviest resulting shard was rerun.
+
+The rerun reported 39 pass, 0 fail, 0 skip; checks: {'gofmt': 'pass', 'vet': 'pass'}; errors: None. The 1,200-second target was missed. The span is also above 1,800 seconds. This shard already isolates the layout package, plus two packages without tests.
+
+| Loop or phase | Before (original shard observations) | After (this rerun) | Instrument |
+| --- | ---: | ---: | --- |
+| Layout fixture through original-oracle agreement | 4,742.720 s summed over nine boxes | 448.889 s, one marker | Original JSON logs; new shard command below, `cont` to `lists_test.go:252` |
+| Layout mutant checks | See original per-shard audit | 3736.740 s summed across 30 checks; peak 2 concurrent | New shard command, child `run`/`pass` records |
+| Joint layout test span | Layout tests were spread across nine boxes | 2421.176 s | Go package terminal `Elapsed` |
+| Runner wall | Different original shard allocation | 2527.140 s | Runner `WallSeconds` |
+| Runner preflight, checks, and outside-package overhead | Not isolated in original logs | 104.148 s | Runner wall minus layout invocation wall |
+| Toolchain and gate-input setup | Original shard 2: 601 s | 84.939 s, warm | `bash cloud/setup.sh --gate-inputs` |
+
+The fixture reached its first mutant after 466.611 seconds. The remaining cost is the full-corpus mutation and whitespace-policy work, including native compilation and execution, with the two-slot layout channel limiting concurrency. Grouping removes repeated fixture construction; it does not remove those checks. The logs and measurement JSON show the individual spans.
+
+The original observations came from other boxes with different allocations. This is not a controlled, interleaved before/after speedup experiment. The requested rerun exceeds five minutes and was performed once. No new cache was added. Answer checks ran with `ADAMIC_GATE_UNCACHED=1`; existing Go build and runtime-library caches were warm.
+
+Exact rerun command, from the clean historical worktree after sourcing the setup environment:
+
+```sh
+/workspace/adamic-gate-affinity shard -count 15 -index 0 -concurrency auto -timings /workspace/gate-affinity-evidence/calibration-timings.json -scratch /workspace/gate-affinity-scratch -out /workspace/gate-affinity-evidence/rerun-shard-0
+```
+
+Rerun build-flags line:
+
+```text
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.50 2.15 3.88 2/261 28575" load_after="1.80 1.97 2.06 1/262 31786" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps="/workspace/adamic-tools/markdown-width"
+```
+
+Setup build-flags lines (initial branch setup and warm historical checkout):
+
+```text
+setup: build-flags commit=0081e98d25a4e9d560da789a2ad389d38dc43a26 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true load-before=7.73 3.61 1.36 1/147 2154 load-after=10.10 7.29 3.95 4/189 10007
+setup: build-flags commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true load-before=2.34 7.14 5.82 1/220 19462 load-after=5.25 6.84 5.83 2/256 22093
+```
+
+The source observations carry their own build-flags lines in `timings.json.audit.json` (`Sources`), including commit, nproc, cpu.max, Go, Clang, Node, cache mode, and load before/after.
+
+### Heaviest packing units for the next unit
+
+| Unit | Planning seconds | Measurement basis |
+| --- | ---: | --- |
+| `stage1/cohere/markdownblocks::@layoutOnce` | 3456.456 | joint rerun 2421.176 s |
+| `internal/oracle::@gateOnce` | 1368.845 | conservative estimate from measured shard observations |
+| `stage1/cohere/markdownblocks::@formatterOnce` | 1342.480 | conservative estimate from measured shard observations |
+| `stage1/cohere/lint::TestMutants` | 1069.120 | measured unit on original shard box |
+| `stage1/cohere/markdownblocks::TestMarkdownASTPreprocessing` | 1037.670 | measured unit on original shard box |
+| `stage1/cohere/typeaware::TestVolumeAgreementAndMutants` | 731.755 | reconstructed parent: 15 measured rows plus one median residual |
+| `stage1/cohere/json::TestPortMatchesGoCohere` | 686.000 | measured unit on original shard box |
+| `stage1/cohere/typeaware::TestTypeAwareAgreementAndMutants` | 615.050 | measured unit on original shard box |
+| `stage1/cohere/markdowninline::TestMarkdownInline` | 588.250 | measured unit on original shard box |
+| `internal/unicodeproperties::TestCanonicalizeUnicodeNode` | 571.080 | measured unit on original shard box |
+| `stage1/cohere/lint::TestEmittedJavaScriptMismatch` | 507.020 | measured unit on original shard box |
+| `stage1/cohere/css::TestCSSPrinterAgreesWithGo/default` | 466.250 | measured unit on original shard box |
+
+The volume parent ran twelve times for 4,987.88 seconds across the complete original evidence. Its fifteen measured rows sum to 363.13 seconds; one median residual is 368.625 seconds, giving 731.755 seconds for the whole-unit estimate. The layout members sum to 7,722.53 seconds before the explicit shared-fixture adjustment. Oracle and formatter joint spans have not been rerun.
+
+### Largest changed timing observations
+
+| Unit | Previous timing seconds | Shard-box timing seconds |
+| --- | ---: | ---: |
+| `stage1/cohere/markdownblocks::TestMarkdownWhitespaceLayout` | 762.150 | 1754.000 |
+| `stage1/cohere/lint::TestMutants` | 291.970 | 1069.120 |
+| `stage1/cohere/markdownblocks::TestMarkdownCodeBlockLayout` | 607.970 | 1136.670 |
+| `stage1/cohere/typeaware::TestTypeAwareAgreementAndMutants` | 98.460 | 615.050 |
+| `stage1/cohere/markdownblocks::TestMarkdownStructureLayout` | 444.430 | 897.440 |
+| `stage1/cohere/markdownblocks::TestMarkdownUnicodeWidths` | 157.160 | 565.620 |
+| `stage1/cohere/typeaware::TestVolumeAgreementAndMutants` | 371.760 | 731.755 |
+| `stage1/cohere/lint::TestCountGuardMutant` | 34.330 | 352.480 |
+
+Layout member observations include their own fixture construction; the plan charges the affinity estimate rather than summing those raw member times. These comparisons describe a change in calibration source, not a matched benchmark.
+
+### Validation and deliberate mutants
+
+The full runner race suite and vet passed. The final focused race tests also passed. The following overlay mutants all exited nonzero and named the expected failed regression test. Exact commands, mutated sources, overlays, and outputs are in the evidence archive.
+
+| Mutant | Regression that caught it |
+| --- | --- |
+| `split-affinity` | `TestKnownAffinitiesStayWhole` |
+| `repeat-group-price` | `TestKnownAffinitiesStayWhole` |
+| `split-volume` | `TestVolumeParentStaysWhole` |
+| `drop-parent-setup` | `TestTimingsRetainRepeatedParentSetupOnce` |
+| `overwrite-invocations` | `TestTimingsMergedLogPreservesInvocations` |
+| `repeat-layout-setup` | `TestTimingsPriceLayoutSetupOnce` |
+| `split-complement` | `TestWholePackageAffinityOwnsComplements` |
+| `drop-historical-authority` | `TestHistoricalRequiredInputAuthority` |
+| `unordered-timing-sums` | `TestTimingsReorderingIsByteIdentical` |
+
+Evidence: `cmd/adamic-gate/evidence/affinity-47fb-shard-0.tgz` and `affinity-47fb-measurement.json`. Fourteen new shards and a complete plain/sharded equivalence comparison were not run. The historical merge was validated under its original runner, before the newer skip census.
