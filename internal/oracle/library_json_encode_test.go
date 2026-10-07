@@ -69,7 +69,7 @@ func TestJSONEncodeRefusals(t *testing.T) {
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
 			if test.name == "class" {
-				data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/json_encode_class_notyet.a"))
+				data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/class_notyet.a"))
 				if err != nil {
 					t.Fatal(err)
 				}
