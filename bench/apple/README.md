@@ -43,3 +43,12 @@ Adamic's counts per iteration, from the counted build, are exact. Swift's traffi
 | frame (the supplements list) | 81 | 179 | 190 |
 
 The object loop's allocation is the box made for every object result; one box per object would remove it, and make `===` true for the same object. A frame's 81 allocations are the views made fresh each render (a `Shown` per view, the row objects, the arrays of children) and the strings crossing. Most would go with views built once and changed, which is what SwiftUI's own diffing assumes. A quiet-machine run is still owed for the wall times.
+
+## October 7, 2026, 05:42 MDT: one box per object
+
+An Objective-C object now has one box while Adamic holds it, so `===` holds for the same object. It doesn't remove the object loop's allocation: nothing holds the content view between iterations, so its box goes with each one and the next crossing makes another (1 allocation, 1 retain, 2 releases, unchanged). What it costs is the table: a CFDictionary, the first cut, took the object loop from about 15 ns to 51; the open-addressed table that replaced it puts it back at 16.8 (best of five, load 26 to 71, so roughly). Removing that allocation needs a box that outlives Adamic's last reference to it, which this doesn't try.
+
+| ns per iteration | Adamic | Swift | Objective-C |
+| --- | --- | --- | --- |
+| object, CFDictionary | 50.7 | 1.7 | 8.9 |
+| object, open-addressed table | 16.8 | 8.1 | 5.9 |

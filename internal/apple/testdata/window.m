@@ -66,6 +66,7 @@ int main(void) {
 		[content addSubview:button];
 		window.contentView = content;
 		print([NSString stringWithFormat:@"content view: %@", window.contentView == nil ? @"missing" : @"set"]);
+		print([NSString stringWithFormat:@"same view: %@, same application: %@, other view: %@", window.contentView == content ? @"true" : @"false", NSApplication.sharedApplication == application ? @"true" : @"false", window.contentView == (NSView *)label ? @"true" : @"false"]);
 
 		print([NSString stringWithFormat:@"label: %@", label.stringValue]);
 		[button performClick:nil];

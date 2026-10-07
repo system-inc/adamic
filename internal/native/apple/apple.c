@@ -35,7 +35,91 @@ void adamic_apple_let_go(id object) {
 	objc_release(object);
 }
 
+// boxes is the one box each Objective-C object Adamic holds has, by the object, so two crossings of
+// one object are one value (=== holds) and a crossing of an object already held makes nothing. A box
+// leaves it as its last release lets the object go; until then its reference keeps the object, so
+// no other object can come to have its address. Boxes are made and let go of on the main thread.
+//
+// The table is open addressed, probed linearly, its capacity a power of two at most half full, and
+// an entry removed is a tombstone until the table is next rebuilt: a crossing costs a multiply and a
+// probe or two, where a CFDictionary cost more than the message itself.
+typedef struct box_entry {
+	id object;
+	adamic_object *box;
+} box_entry;
+
+static box_entry *boxes;
+static size_t box_capacity, box_used, box_live;
+static adamic_object tombstone;
+
+static size_t box_slot(id object) {
+	return (size_t)(((uintptr_t)object >> 4) * 0x9E3779B97F4A7C15ULL) & (box_capacity - 1);
+}
+
+static adamic_object *box_find(id object) {
+	if (box_capacity == 0) {
+		return NULL;
+	}
+	for (size_t slot = box_slot(object);; slot = (slot + 1) & (box_capacity - 1)) {
+		if (boxes[slot].box == NULL) {
+			return NULL;
+		}
+		if (boxes[slot].object == object && boxes[slot].box != &tombstone) {
+			return boxes[slot].box;
+		}
+	}
+}
+
+static void box_insert(id object, adamic_object *box) {
+	if (2 * (box_used + 1) > box_capacity) {
+		// Rebuilt at twice the live entries (16 at least), dropping the tombstones.
+		box_entry *old = boxes;
+		size_t old_capacity = box_capacity;
+		box_capacity = 16;
+		while (box_capacity < 4 * (box_live + 1)) {
+			box_capacity *= 2;
+		}
+		boxes = calloc(box_capacity, sizeof *boxes);
+		if (boxes == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		box_used = 0;
+		for (size_t index = 0; index < old_capacity; index++) {
+			if (old[index].box != NULL && old[index].box != &tombstone) {
+				size_t slot = box_slot(old[index].object);
+				while (boxes[slot].box != NULL) {
+					slot = (slot + 1) & (box_capacity - 1);
+				}
+				boxes[slot] = old[index];
+				box_used++;
+			}
+		}
+		free(old);
+	}
+	size_t slot = box_slot(object);
+	while (boxes[slot].box != NULL && boxes[slot].box != &tombstone) {
+		slot = (slot + 1) & (box_capacity - 1);
+	}
+	if (boxes[slot].box == NULL) {
+		box_used++;
+	}
+	boxes[slot] = (box_entry){object, box};
+	box_live++;
+}
+
+static void box_remove(id object) {
+	for (size_t slot = box_slot(object);; slot = (slot + 1) & (box_capacity - 1)) {
+		if (boxes[slot].object == object && boxes[slot].box != &tombstone) {
+			boxes[slot].box = &tombstone;
+			box_live--;
+			return;
+		}
+	}
+}
+
 static void release_object(void *pointer) {
+	box_remove((id)pointer);
 	objc_release((id)pointer);
 }
 
@@ -74,10 +158,19 @@ adamic_object *adamic_apple_box(id object, bool retained) {
 	if (object == nil) {
 		return NULL;
 	}
+	adamic_object *box = box_find(object);
+	if (box != NULL) {
+		if (retained) {
+			objc_release(object);
+		}
+		return adamic_retain(box);
+	}
 	if (!retained) {
 		objc_retain(object);
 	}
-	return adamic_foreign_new((void *)object, &object_kind);
+	box = adamic_foreign_new((void *)object, &object_kind);
+	box_insert(object, box);
+	return box;
 }
 
 id adamic_apple_unbox(const adamic_object *box) {

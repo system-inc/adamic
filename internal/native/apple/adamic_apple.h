@@ -54,8 +54,10 @@ static inline unsigned long adamic_apple_unsigned(double value) {
 void adamic_apple_let_go(id object);
 
 // adamic_apple_box is an Objective-C object as Adamic holds it: one strong reference, let go of when
-// Adamic's last reference goes. retained says the object came with a reference the box takes over
-// (alloc, new, copy); otherwise the box retains it. nil is undefined, a NULL box.
+// Adamic's last reference goes, in the one box the object has while Adamic holds it, so the same
+// object is the same value. retained says the object came with a reference the box takes over
+// (alloc, new, copy), or gives back when the object already has a box; otherwise the box retains it.
+// nil is undefined, a NULL box.
 adamic_object *adamic_apple_box(id object, bool retained);
 
 // adamic_apple_unbox is what a box holds, nil for undefined.
