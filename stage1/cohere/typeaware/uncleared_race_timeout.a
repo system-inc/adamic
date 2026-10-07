@@ -1,0 +1,93 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { SyntaxProjection } from './syntax_projection.a';
+import { ProcessSymbols } from './process_symbol_details.a';
+const timeoutMessage = "This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.";
+export class UnclearedRaceTimeout {
+    readonly rules: Rules; readonly syntax: SyntaxProjection; readonly symbols: ProcessSymbols;
+    constructor(rules: Rules, syntax: SyntaxProjection) { this.rules = rules; this.syntax = syntax; this.symbols = new ProcessSymbols(syntax); }
+    promise(element: number): number {
+        const syntax = this.syntax; let current = syntax.skip(element);
+        if(syntax.node(current).kind === 'Identifier') {
+            const symbol = this.symbols.get(current); if(symbol.declarations.length !== 1) { return 0; }
+            for(const declaration of symbol.declarations) {
+                const local = this.symbols.local(declaration);
+                if(local === 0 || declaration.kind !== 'VariableDeclaration' || declaration.ancestors.length === 0 || declaration.ancestor(0).kind !== 'VariableDeclarationList' || (declaration.ancestor(0).flags & 2) === 0) { return 0; }
+                current = syntax.skip(syntax.node(local).initializer);
+            }
+        }
+        if(current === 0 || syntax.node(current).kind !== 'NewExpression') { return 0; }
+        const constructor = syntax.skip(syntax.node(current).expression); if(constructor === 0 || syntax.node(constructor).kind !== 'Identifier' || syntax.node(constructor).text !== 'Promise' || !this.symbols.get(constructor).declarations.some((declaration) => declaration.library)) { return 0; }
+        return current;
+    }
+    timer(call: number): boolean {
+        const syntax = this.syntax; const callee = syntax.skip(syntax.node(call).expression); let name = callee;
+        if(syntax.node(callee).kind === 'PropertyAccessExpression') {
+            const receiver = syntax.skip(syntax.node(callee).expression); const node = syntax.node(receiver);
+            if(node.kind !== 'Identifier' || !['globalThis', 'window'].includes(node.text)) { return false; } name = syntax.node(callee).name;
+        }
+        const node = syntax.node(name); if(node.kind !== 'Identifier' || node.text !== 'setTimeout') { return false; }
+        const symbol = this.symbols.get(name);
+        return symbol.declarations.length > 0 && symbol.declarations.every((declaration) => {
+            if(!declaration.declarationFile || declaration.ancestors.length === 0) { return false; } const owner = declaration.ancestor(0);
+            if(owner.kind === 'SourceFile') { return !declaration.external; }
+            if(owner.kind === 'ModuleBlock') { return declaration.ancestors.length > 1 && declaration.ancestor(1).globalAugmentation; }
+            return owner.kind === 'InterfaceDeclaration' && owner.name === 'WindowOrWorkerGlobalScope' && declaration.library;
+        });
+    }
+    assignmentTarget(identifier: number): boolean {
+        const syntax = this.syntax; let outer = identifier;
+        while(syntax.node(outer).parent !== 0 && syntax.node(syntax.node(outer).parent).kind === 'ParenthesizedExpression') { outer = syntax.node(outer).parent; }
+        const parent = syntax.node(outer).parent; if(parent === 0) { return false; } const node = syntax.node(parent);
+        return node.kind === 'BinaryExpression' && node.operator === 'EqualsToken' && node.children[0] === outer;
+    }
+    neverRead(identifier: number): boolean {
+        const syntax = this.syntax; const symbol = this.symbols.get(identifier);
+        if(symbol.declarations.length !== 1) { return false; }
+        let declaration = 0;
+        for(const record of symbol.declarations) { if(record.kind !== 'VariableDeclaration') { return false; } declaration = this.symbols.local(record); }
+        if(declaration === 0) { return false; } const declared = syntax.node(declaration).name;
+        for(let at = 1; at <= syntax.nodes.length; at++) {
+            const node = syntax.node(at);
+            if(at !== declared && node.kind === 'Identifier' && node.text === symbol.name && this.symbols.get(at, 'reference').identity === symbol.identity && !this.assignmentTarget(at)) { return false; }
+        }
+        return true;
+    }
+    lost(executor: number, call: number): boolean {
+        const syntax = this.syntax; let outer = call;
+        while(syntax.node(outer).parent !== 0 && syntax.node(syntax.node(outer).parent).kind === 'ParenthesizedExpression') { outer = syntax.node(outer).parent; }
+        const parent = syntax.node(outer).parent; if(parent === 0) { return false; } const node = syntax.node(parent);
+        if(['ExpressionStatement', 'VoidExpression'].includes(node.kind) || parent === executor) { return true; }
+        if(node.kind === 'VariableDeclaration' && node.initializer === outer && node.name !== 0 && syntax.node(node.name).kind === 'Identifier') { return this.neverRead(node.name); }
+        if(node.kind !== 'BinaryExpression' || node.operator !== 'EqualsToken' || node.children[2] !== outer) { return false; }
+        const target = syntax.skip(node.children[0] ?? 0); if(syntax.node(target).kind !== 'Identifier') { return false; }
+        let assignment = parent;
+        while(syntax.node(assignment).parent !== 0 && syntax.node(syntax.node(assignment).parent).kind === 'ParenthesizedExpression') { assignment = syntax.node(assignment).parent; }
+        const owner = syntax.node(assignment).parent;
+        return owner !== 0 && syntax.node(owner).kind === 'ExpressionStatement' && this.neverRead(target);
+    }
+    visit(executor: number, index: number): void {
+        const syntax = this.syntax; const node = syntax.node(index);
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'MethodSignature', 'GetAccessor', 'SetAccessor', 'Constructor', 'CallSignature', 'ConstructSignature', 'IndexSignature', 'JSDocSignature', 'FunctionType', 'ConstructorType', 'ClassDeclaration', 'ClassExpression'].includes(node.kind)) { return; }
+        if(node.kind === 'CallExpression' && this.timer(index) && this.lost(executor, index)) {
+            this.rules.findings.push(new Diagnostic('nexus/correctness-no-uncleared-race-timeout', 'unclearedRaceTimeout', timeoutMessage, node.start, node.end, ''));
+        }
+        for(const child of node.children) { this.visit(executor, child); }
+    }
+    run(): void {
+        const syntax = this.syntax;
+        for(let at = 1; at <= syntax.nodes.length; at++) {
+            const call = syntax.node(at); if(call.kind !== 'CallExpression' || call.arguments.length === 0) { continue; }
+            const callee = syntax.node(syntax.skip(call.expression)); if(callee.kind !== 'PropertyAccessExpression' || callee.name === 0) { continue; }
+            const name = syntax.node(callee.name); if(name.kind !== 'Identifier' || name.text !== 'race') { continue; }
+            const symbol = this.symbols.get(callee.name);
+            if(symbol.declarations.length === 0 || !symbol.declarations.every((declaration) => declaration.library && declaration.ancestors.length > 0 && declaration.ancestor(0).kind === 'InterfaceDeclaration' && declaration.ancestor(0).name === 'PromiseConstructor')) { continue; }
+            const array = syntax.node(syntax.skip(call.arguments[0] ?? 0)); if(array.kind !== 'ArrayLiteralExpression') { continue; }
+            for(const element of array.children) {
+                const promise = this.promise(element); if(promise === 0) { continue; }
+                const executor = syntax.skip(syntax.node(promise).arguments[0] ?? 0); if(executor === 0) { continue; } const node = syntax.node(executor);
+                if(['ArrowFunction', 'FunctionExpression'].includes(node.kind) && node.body !== 0) { this.visit(executor, node.body); }
+            }
+        }
+    }
+}

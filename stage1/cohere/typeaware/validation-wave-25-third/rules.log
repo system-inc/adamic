@@ -1,0 +1,17 @@
+=== RUN   TestWave25ThirdAgreementAndMutants
+    wave_25_third_test.go:229: 108 roots including imported graph fixtures
+    wave_25_third_test.go:255: controls: 64645 identical finding bytes; findings 96
+    wave_25_third_test.go:263: controls-asan: 64645 identical finding bytes; findings 96
+    wave_25_third_test.go:298: exit-state exits 0; only Go byte comparison catches byte 120
+    wave_25_third_test.go:298: race-drop exits 0; only Go byte comparison catches byte 19590
+    wave_25_third_test.go:298: blocking-count exits 0; only Go byte comparison catches byte 26633
+    wave_25_third_test.go:314: repository: 18485 identical finding bytes; findings 0
+    wave_25_third_test.go:315: repository-asan: 18485 identical finding bytes; findings 0
+    wave_25_third_test.go:321: repository native 537.775269ms Go 130.197621ms
+    wave_25_third_test.go:314: compiler: 5010 identical finding bytes; findings 0
+    wave_25_third_test.go:315: compiler-asan: 5010 identical finding bytes; findings 0
+    wave_25_third_test.go:321: compiler native 3.302599307s Go 321.303276ms
+    wave_25_third_test.go:330: released syntax question: panic 70, invalid or released checker handle
+--- PASS: TestWave25ThirdAgreementAndMutants (59.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	59.104s

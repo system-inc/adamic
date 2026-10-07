@@ -1,0 +1,107 @@
+// Process provenance and syntax helpers shared only by these three claimed rules.
+import { panic } from 'adamic';
+import { SyntaxProjection } from './syntax_projection.a';
+import { ProcessSymbols } from './process_symbol_details.a';
+import { ResolvedCallDeclaration } from './resolved_call_declaration.a';
+export class ProcessOutputFacts {
+    readonly syntax: SyntaxProjection; readonly symbols: ProcessSymbols;
+    readonly files = new Map<string, SyntaxProjection>(); readonly fileSymbols = new Map<string, ProcessSymbols>(); readonly bodyCache = new Map<string, boolean>();
+    constructor(syntax: SyntaxProjection) { this.syntax = syntax; this.symbols = new ProcessSymbols(syntax); this.files.set(syntax.path, syntax); this.fileSymbols.set(syntax.path, this.symbols); }
+    file(path: string): SyntaxProjection {
+        const cached = this.files.get(path); if(cached !== undefined) { return cached; } const syntax = new SyntaxProjection(this.syntax.program, path); this.files.set(path, syntax); return syntax;
+    }
+    symbolsOf(syntax: SyntaxProjection): ProcessSymbols {
+        const cached = this.fileSymbols.get(syntax.path); if(cached !== undefined) { return cached; } const symbols = new ProcessSymbols(syntax); this.fileSymbols.set(syntax.path, symbols); return symbols;
+    }
+    member(syntax: SyntaxProjection, expression: number): number {
+        const node = syntax.node(expression);
+        if(node.kind === 'Identifier') { return expression; }
+        return node.kind === 'PropertyAccessExpression' && node.name !== 0 && syntax.node(node.name).kind === 'Identifier' ? node.name : 0;
+    }
+    processMember(syntax: SyntaxProjection, name: number): boolean {
+        const symbol = this.symbolsOf(syntax).get(name, 'alias');
+        return symbol.declarations.length > 0 && symbol.declarations.every((declaration) => declaration.declarationFile && ['MethodSignature', 'PropertySignature'].includes(declaration.kind) && declaration.ancestors.length >= 3 && declaration.ancestor(0).kind === 'InterfaceDeclaration' && declaration.ancestor(0).name === 'Process' && declaration.ancestor(1).kind === 'ModuleBlock' && declaration.ancestor(2).kind === 'ModuleDeclaration' && declaration.ancestor(2).name === 'NodeJS');
+    }
+    exit(syntax: SyntaxProjection, call: number): boolean {
+        const name = this.member(syntax, syntax.skip(syntax.node(call).expression));
+        return name !== 0 && syntax.node(name).text === 'exit' && this.processMember(syntax, name);
+    }
+    write(syntax: SyntaxProjection, call: number): boolean {
+        const callee = syntax.node(syntax.skip(syntax.node(call).expression)); if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) { return false; }
+        const key = callee.kind === 'PropertyAccessExpression' ? callee.name : callee.children[callee.children.length - 1] ?? 0; if(key === 0) { return false; }
+        const name = syntax.node(key); if(callee.kind === 'ElementAccessExpression' && !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind)) { return false; }
+        const receiver = syntax.skip(callee.expression); const owner = syntax.node(receiver);
+        if(['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(name.text) && owner.kind === 'Identifier' && owner.text === 'console') {
+            const symbol = this.symbolsOf(syntax).get(receiver);
+            return symbol.declarations.length > 0 && symbol.declarations.every((declaration) => {
+                if(!declaration.declarationFile || declaration.kind !== 'VariableDeclaration' || declaration.ancestors.length < 3 || declaration.ancestor(0).kind !== 'VariableDeclarationList' || declaration.ancestor(1).kind !== 'VariableStatement') { return false; }
+                const container = declaration.ancestor(2);
+                return container.kind === 'SourceFile' ? !declaration.external : container.kind === 'ModuleBlock' && declaration.ancestors.length > 3 && declaration.ancestor(3).globalAugmentation;
+            });
+        }
+        if(name.text !== 'write') { return false; } const stream = this.member(syntax, receiver);
+        return stream !== 0 && ['stdout', 'stderr'].includes(syntax.node(stream).text) && this.processMember(syntax, stream);
+    }
+    awaited(call: number): boolean {
+        const syntax = this.syntax; let parent = syntax.node(call).parent;
+        while(parent !== 0 && syntax.node(parent).kind === 'ParenthesizedExpression') { parent = syntax.node(parent).parent; }
+        return parent !== 0 && syntax.node(parent).kind === 'AwaitExpression';
+    }
+    bodyWrites(syntax: SyntaxProjection, root: number): boolean {
+        const key = `${syntax.path}:${root}`; const cached = this.bodyCache.get(key); if(cached !== undefined) { return cached; }
+        const body = syntax.node(root).body; let wrote = false; let exits = false;
+        const queue: number[] = body !== 0 && syntax.node(body).kind === 'Block' ? syntax.node(body).children.slice() : [body];
+        for(let at = 0; at < queue.length && !exits; at++) {
+            const index = queue[at] ?? panic('missing body syntax'); if(index === 0) { continue; } const node = syntax.node(index); if(node.isRoot) { continue; }
+            if(node.kind === 'CallExpression') { if(this.exit(syntax, index)) { exits = true; } if(this.write(syntax, index)) { wrote = true; } }
+            for(const child of node.children) { queue.push(child); }
+        }
+        const answer = wrote && !exits; this.bodyCache.set(key, answer); return answer;
+    }
+    writes(call: number): boolean {
+        const syntax = this.syntax; if(this.write(syntax, call)) { return true; }
+        const signature = new ResolvedCallDeclaration(syntax, call);
+        if((signature.returnFlags & 262144) !== 0) { return false; }
+        for(const declaration of signature.declarations) {
+            if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(declaration.kind) || !declaration.body || (declaration.file !== syntax.path && !declaration.external) || (declaration.functionFlags & 1) !== 0 || ((declaration.functionFlags & 2) !== 0 && !this.awaited(call))) { return false; }
+            const file = this.file(declaration.file); return this.bodyWrites(file, file.locate(declaration.kind, declaration.pos, declaration.end));
+        }
+        return false;
+    }
+    holdsExit(index: number): boolean {
+        const syntax = this.syntax; const queue = syntax.node(index).children.slice();
+        for(let at = 0; at < queue.length; at++) {
+            const identity = queue[at] ?? 0; const node = syntax.node(identity); if(node.isRoot) { continue; }
+            if(node.kind === 'CallExpression' && this.exit(syntax, identity)) { return true; }
+            for(const child of node.children) { queue.push(child); }
+        }
+        return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        const syntax = this.syntax; let previous = index;
+        for(let parent = syntax.node(index).parent; parent !== 0 && parent !== root; parent = syntax.node(parent).parent) {
+            const node = syntax.node(parent); if(node.kind === 'CatchClause' && node.children[0] === previous && syntax.node(previous).kind === 'VariableDeclaration') { return true; } previous = parent;
+        }
+        return false;
+    }
+    chain(index: number, root: number): string {
+        const syntax = this.syntax; const ids: number[] = []; let previous = index;
+        for(let parent = syntax.node(index).parent; parent !== 0 && parent !== root; parent = syntax.node(parent).parent) {
+            const node = syntax.node(parent);
+            if(node.kind === 'TryStatement' && node.children[0] === previous && node.children.some((child) => syntax.node(child).kind === 'CatchClause')) { ids.push(parent); }
+            previous = parent;
+        }
+        ids.sort((left, right) => left - right); return `,${ids.map((identity) => `${identity},`).join('')}`;
+    }
+}
+export function chainHolds(outer: string, inner: string): boolean { return inner.split(',').every((part) => part === '' || outer.includes(`,${part},`)); }
+export function withWrite(state: readonly string[], chain: string): readonly string[] {
+    const next: string[] = [];
+    for(const held of state) { if(chainHolds(chain, held)) { return state; } if(!chainHolds(held, chain)) { next.push(held); } }
+    next.push(chain); next.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); return next;
+}
+export function enteringCatch(state: readonly string[], identity: number): readonly string[] { return state.filter((chain) => !chain.includes(`,${identity},`)); }
+export class ProcessPosition {
+    readonly block: number; readonly state: readonly string[];
+    constructor(block: number, state: readonly string[]) { this.block = block; this.state = state; }
+}

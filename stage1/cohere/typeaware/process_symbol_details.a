@@ -1,0 +1,34 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import { SyntaxProjection } from './syntax_projection.a';
+export class ProcessAncestor {
+    readonly kind: string; readonly name: string; readonly flags: number; readonly globalAugmentation: boolean;
+    constructor(frames: Frames) { this.kind = frames.field(); this.name = frames.field(); this.flags = frames.natural(); this.globalAugmentation = frames.yes(); }
+}
+export class ProcessDeclaration {
+    readonly file: string; readonly declarationFile: boolean; readonly external: boolean; readonly library: boolean;
+    readonly kind: string; readonly pos: number; readonly end: number; readonly flags: number; readonly functionFlags: number; readonly body: boolean;
+    readonly ancestors: readonly ProcessAncestor[];
+    constructor(frames: Frames) {
+        this.file = frames.field(); this.declarationFile = frames.yes(); this.external = frames.yes(); this.library = frames.yes();
+        this.kind = frames.field(); this.pos = frames.natural(); this.end = frames.natural(); this.flags = frames.natural(); this.functionFlags = frames.natural(); this.body = frames.yes();
+        const count = frames.natural(); const ancestors: ProcessAncestor[] = []; for(let at = 0; at < count; at++) { ancestors.push(new ProcessAncestor(frames)); } this.ancestors = ancestors;
+    }
+    ancestor(index: number): ProcessAncestor { return this.ancestors[index] ?? panic('missing declaration ancestor'); }
+}
+export class ProcessSymbol {
+    readonly identity: number; readonly flags: number; readonly name: string; readonly declarations: readonly ProcessDeclaration[];
+    constructor(frames: Frames) {
+        this.identity = frames.natural(); this.flags = frames.natural(); this.name = frames.field(); const count = frames.natural(); const declarations: ProcessDeclaration[] = [];
+        for(let at = 0; at < count; at++) { declarations.push(new ProcessDeclaration(frames)); } this.declarations = declarations;
+    }
+}
+export class ProcessSymbols {
+    readonly syntax: SyntaxProjection; readonly cache = new Map<string, ProcessSymbol>();
+    constructor(syntax: SyntaxProjection) { this.syntax = syntax; }
+    get(identity: number, mode = 'own'): ProcessSymbol {
+        const key = `${identity}:${mode}`; const cached = this.cache.get(key); if(cached !== undefined) { return cached; }
+        const frames = new Frames(this.syntax.ask(identity, `process-symbol-details\n${mode}`)); header(frames, 'process-symbol-details'); const symbol = new ProcessSymbol(frames); frames.end(); this.cache.set(key, symbol); return symbol;
+    }
+    local(declaration: ProcessDeclaration): number { return declaration.file === this.syntax.path ? this.syntax.locate(declaration.kind, declaration.pos, declaration.end) : 0; }
+}

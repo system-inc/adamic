@@ -50,4 +50,7 @@ The preceding listener assertion, leaked-number-render and mock-on-module-
 namespace rules are reserved by other origin claims. The baseline branch tips
 remain 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6 and
 ef3d907ecdc4c771b016f7d9c52372def057a340, respectively.
-Implementation waits for this claim update to be pushed successfully.
+Claim commit b22f8858 was pushed successfully before implementation.
+The three native .a ports, independent Go comparisons, mutants, sanitizer and
+released-handle checks are complete in WAVE_25_THIRD_REPORT.md. No further
+rules are claimed in this batch.

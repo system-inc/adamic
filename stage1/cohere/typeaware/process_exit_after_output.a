@@ -1,0 +1,48 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { SyntaxProjection } from './syntax_projection.a';
+import { SyntaxControlFlow } from './syntax_control_flow.a';
+import { ProcessOutputFacts, ProcessPosition, withWrite, enteringCatch } from './process_output_facts.a';
+const exitMessage = "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.";
+export class ProcessExitAfterOutput {
+    readonly rules: Rules; readonly syntax: SyntaxProjection; readonly facts: ProcessOutputFacts;
+    constructor(rules: Rules, syntax: SyntaxProjection, facts: ProcessOutputFacts) { this.rules = rules; this.syntax = syntax; this.facts = facts; }
+    analyze(root: number, exits: readonly number[]): void {
+        const syntax = this.syntax; const facts = this.facts; const graph = new SyntaxControlFlow(syntax, root); const recorded = new Map<number, boolean>();
+        for(const block of graph.blocks) {
+            for(const event of block.events) { if(event.hook === 0 && syntax.node(event.node).kind === 'CallExpression' && !facts.catchBinding(event.node, root) && facts.exit(syntax, event.node)) { recorded.set(event.node, true); } }
+        }
+        if(exits.some((exit) => !recorded.has(exit))) { return; }
+        const reported = new Map<number, boolean>(); const visited = new Map<string, boolean>(); const empty: string[] = []; const queue: ProcessPosition[] = [new ProcessPosition(0, empty)]; visited.set('0:', true);
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? panic('missing process path'); let state = current.state; let ended = false;
+            for(const event of graph.block(current.block).events) {
+                const node = syntax.node(event.node);
+                if(event.hook === 1 && node.kind === 'Block' && node.parent !== 0 && syntax.node(node.parent).kind === 'CatchClause') { state = enteringCatch(state, syntax.node(node.parent).parent); }
+                if(event.hook !== 0 || node.kind !== 'CallExpression' || facts.catchBinding(event.node, root)) { continue; }
+                if(facts.exit(syntax, event.node)) { if(state.length > 0) { reported.set(event.node, true); } ended = true; break; }
+                if(facts.writes(event.node) && !facts.holdsExit(event.node)) { state = withWrite(state, facts.chain(event.node, root)); }
+            }
+            if(ended) { continue; }
+            for(const successor of graph.block(current.block).successors) {
+                const key = `${successor}:${state.join('|')}`; if(!graph.block(successor).reachable || visited.has(key)) { continue; } visited.set(key, true); queue.push(new ProcessPosition(successor, state));
+            }
+        }
+        for(const exit of exits) {
+            if(reported.has(exit)) { const node = syntax.node(exit); this.rules.findings.push(new Diagnostic('nexus/correctness-no-process-exit-after-output', 'exitAfterOutput', exitMessage, node.start, node.end, '')); }
+        }
+    }
+    run(): void {
+        const syntax = this.syntax; const roots = new Map<number, number[]>();
+        for(let at = 1; at <= syntax.nodes.length; at++) {
+            const node = syntax.node(at); if(node.kind !== 'CallExpression' || !this.facts.exit(syntax, at) || node.root === 0) { continue; }
+            let exits = roots.get(node.root); if(exits === undefined) { const fresh: number[] = []; exits = fresh; roots.set(node.root, fresh); } exits.push(at);
+        }
+        for(const root of roots.keys()) {
+            let wrote = false;
+            for(let at = 1; at <= syntax.nodes.length && !wrote; at++) { const node = syntax.node(at); if(node.kind === 'CallExpression' && node.root === root && this.facts.writes(at)) { wrote = true; } }
+            if(wrote) { this.analyze(root, roots.get(root) ?? panic('missing exits')); }
+        }
+    }
+}

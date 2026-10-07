@@ -1,0 +1,33 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { SyntaxProjection } from './syntax_projection.a';
+export class ImportFile {
+    readonly path: string; readonly declarationFile: boolean; readonly source: string; readonly edges: readonly string[]; readonly computed: boolean;
+    constructor(frames: Frames) {
+        this.path = frames.field(); this.declarationFile = frames.yes(); this.source = frames.field(); const count = frames.natural(); const edges: string[] = []; let computed = false;
+        for(let at = 0; at < count; at++) {
+            const kind = frames.field(); const typeOnly = frames.yes(); const literal = frames.yes(); const target = frames.field();
+            if(this.declarationFile || typeOnly || (kind === 'CallExpression' && !this.source.includes('import(') && !this.source.includes('require('))) { continue; }
+            if(kind === 'CallExpression' && !literal) { computed = true; }
+            if(literal && target !== '' && target !== this.path) { edges.push(target); }
+        }
+        this.edges = edges; this.computed = computed;
+    }
+}
+export class ProgramImports {
+    readonly files: readonly ImportFile[]; readonly imported = new Map<string, boolean>(); readonly canBlock = new Map<string, boolean>();
+    constructor(syntax: SyntaxProjection) {
+        const frames = new Frames(syntax.ask(1, 'program-imports')); header(frames, 'program-imports'); const count = frames.natural(); const files: ImportFile[] = [];
+        for(let at = 0; at < count; at++) { files.push(new ImportFile(frames)); } frames.end(); this.files = files;
+        const queue: string[] = [];
+        for(const file of files) {
+            if(file.computed || file.path.endsWith('/source/system/StandardStreams.ts') || file.path.endsWith('/source/system/StandardStreams.d.ts')) { this.canBlock.set(file.path, true); queue.push(file.path); }
+            for(const target of file.edges) { this.imported.set(target, true); }
+        }
+        for(let at = 0; at < queue.length; at++) {
+            const path = queue[at] ?? panic('missing import worklist entry');
+            for(const file of files) { if(file.edges.includes(path) && !this.canBlock.has(file.path)) { this.canBlock.set(file.path, true); queue.push(file.path); } }
+        }
+    }
+    file(path: string): ImportFile { return this.files.find((file) => file.path === path) ?? panic('missing program file'); }
+}

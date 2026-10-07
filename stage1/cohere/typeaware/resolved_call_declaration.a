@@ -1,0 +1,11 @@
+import { Frames, header } from './frames.ts';
+import type { SyntaxProjection } from './syntax_projection.a';
+import { ProcessDeclaration } from './process_symbol_details.a';
+export class ResolvedCallDeclaration {
+    readonly declarations: readonly ProcessDeclaration[]; readonly returnFlags: number;
+    constructor(syntax: SyntaxProjection, identity: number) {
+        const frames = new Frames(syntax.ask(identity, 'resolved-call-declaration')); header(frames, 'resolved-call-declaration'); const declarations: ProcessDeclaration[] = []; let flags = 0;
+        if(frames.yes()) { declarations.push(new ProcessDeclaration(frames)); flags = frames.natural(); }
+        frames.end(); this.declarations = declarations; this.returnFlags = flags;
+    }
+}

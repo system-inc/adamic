@@ -1,0 +1,30 @@
+=== RUN   TestWave25ThirdAgreementAndMutants
+    wave_25_third_test.go:183: 108 roots including imported graph fixtures
+    wave_25_third_test.go:209: controls: 56010 identical finding bytes; findings 81
+    wave_25_third_test.go:217: controls-asan: 56010 identical finding bytes; findings 81
+    wave_25_third_test.go:252: exit-state exits 0; only Go byte comparison catches byte 464
+    wave_25_third_test.go:252: race-drop exits 0; only Go byte comparison catches byte 20230
+    wave_25_third_test.go:252: blocking-count exits 0; only Go byte comparison catches byte 55084
+    wave_25_third_test.go:268: repository: 18485 identical finding bytes; findings 0
+    wave_25_third_test.go:269: repository-asan: 18485 identical finding bytes; findings 0
+    wave_25_third_test.go:275: repository native 645.74449ms Go 138.361826ms
+    wave_25_third_test.go:268: compiler-native: exit status 70
+        file	/workspace/wave-25-corpus/src/compiler/_namespaces/ts.moduleSpecifiers.ts
+        file	/workspace/wave-25-corpus/src/compiler/_namespaces/ts.performance.ts
+        file	/workspace/wave-25-corpus/src/compiler/_namespaces/ts.ts
+        file	/workspace/wave-25-corpus/src/compiler/binder.ts
+        file	/workspace/wave-25-corpus/src/compiler/builder.ts
+        file	/workspace/wave-25-corpus/src/compiler/builderPublic.ts
+        file	/workspace/wave-25-corpus/src/compiler/builderState.ts
+        file	/workspace/wave-25-corpus/src/compiler/builderStatePublic.ts
+        file	/workspace/wave-25-corpus/src/compiler/checker.ts
+        file	/workspace/wave-25-corpus/src/compiler/commandLineParser.ts
+        file	/workspace/wave-25-corpus/src/compiler/core.ts
+        file	/workspace/wave-25-corpus/src/compiler/corePublic.ts
+        file	/workspace/wave-25-corpus/src/compiler/debug.ts
+        
+        adamic: panic: Unhandled case in Node.Text: *ast.BindingPattern
+--- FAIL: TestWave25ThirdAgreementAndMutants (68.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	68.881s
+FAIL

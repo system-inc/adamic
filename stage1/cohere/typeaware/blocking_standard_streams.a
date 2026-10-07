@@ -1,0 +1,179 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { SyntaxProjection } from './syntax_projection.a';
+import { SyntaxControlFlow } from './syntax_control_flow.a';
+import { ProgramImports } from './program_imports.a';
+import { ProcessOutputFacts, ProcessPosition, withWrite, enteringCatch } from './process_output_facts.a';
+const blockingMessage = "This file runs as a process (<<processReason>>), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`<<exitCount>>. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs.";
+export class StartedFunctions {
+    readonly runs: readonly number[]; readonly handsOn: readonly number[];
+    constructor(runs: readonly number[], handsOn: readonly number[]) { this.runs = runs; this.handsOn = handsOn; }
+}
+export class BlockingStandardStreams {
+    readonly rules: Rules; readonly syntax: SyntaxProjection; readonly facts: ProcessOutputFacts; readonly imports: ProgramImports;
+    readonly ordered: boolean; readonly functionCache = new Map<string, number>(); readonly exits: number[] = []; readonly started: number[] = [];
+    constructor(rules: Rules, syntax: SyntaxProjection, facts: ProcessOutputFacts, imports: ProgramImports) {
+        this.rules = rules; this.syntax = syntax; this.facts = facts; this.imports = imports; this.ordered = imports.canBlock.has(syntax.path);
+    }
+    functionBody(syntax: SyntaxProjection, index: number): boolean {
+        const node = syntax.node(index); return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(node.kind) && node.body !== 0;
+    }
+    callLike(syntax: SyntaxProjection, index: number): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(syntax.node(index).kind); }
+    symbolMayBlock(syntax: SyntaxProjection, index: number): boolean {
+        const symbol = this.facts.symbolsOf(syntax).get(index, 'alias'); if(symbol.declarations.length === 0) { return true; }
+        for(const declaration of symbol.declarations) {
+            if(!this.imports.canBlock.has(declaration.file)) { if(declaration.declarationFile && syntax.node(index).text === 'require') { return true; } continue; }
+            if(declaration.declarationFile) { return true; }
+            const file = this.facts.file(declaration.file); const local = file.locate(declaration.kind, declaration.pos, declaration.end); const node = file.node(local);
+            if(declaration.kind === 'FunctionDeclaration' && node.name !== 0 && file.node(node.name).text === 'blockStandardStreams' && (file.path.endsWith('/source/system/StandardStreams.ts') || file.path.endsWith('/source/system/StandardStreams.d.ts'))) { return true; }
+            if(['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(declaration.kind)) {
+                if(!declaration.body) { if(declaration.kind !== 'FunctionDeclaration' || (declaration.flags & 8388608) !== 0) { return true; } continue; }
+                if(this.mayBlockWhenRun(file, local)) { return true; } continue;
+            }
+            if(declaration.kind === 'VariableDeclaration' && node.initializer !== 0) {
+                const initializer = file.skip(node.initializer);
+                if(['FunctionExpression', 'ArrowFunction'].includes(file.node(initializer).kind)) { if(this.mayBlockWhenRun(file, initializer)) { return true; } continue; }
+            }
+            if(['ClassDeclaration', 'ClassExpression'].includes(declaration.kind)) { if(this.mayBlockWhenRun(file, local)) { return true; } continue; }
+            return true;
+        }
+        return false;
+    }
+    handsOnMayBlock(syntax: SyntaxProjection, index: number): boolean {
+        const argument = syntax.skip(index); const node = syntax.node(argument);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) { return this.mayBlockWhenRun(syntax, argument); }
+        return node.kind === 'Identifier' && (this.facts.symbolsOf(syntax).get(argument, 'alias').flags & 16) !== 0 && this.symbolMayBlock(syntax, argument);
+    }
+    callMayBlock(syntax: SyntaxProjection, index: number): boolean {
+        const call = syntax.node(index); if(!this.callLike(syntax, index)) { return false; }
+        const callee = syntax.skip(call.expression);
+        if(call.kind === 'CallExpression' && syntax.node(callee).kind === 'ImportKeyword') { return true; }
+        if(call.arguments.some((argument) => this.handsOnMayBlock(syntax, argument))) { return true; }
+        const node = syntax.node(callee);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) { return this.mayBlockWhenRun(syntax, callee); }
+        const name = node.kind === 'Identifier' ? callee : node.kind === 'PropertyAccessExpression' ? node.name : 0;
+        return name === 0 || this.symbolMayBlock(syntax, name);
+    }
+    mayBlockWhenRun(syntax: SyntaxProjection, index: number): boolean {
+        const key = `${syntax.path}:${index}`; const status = this.functionCache.get(key) ?? 0;
+        if(status !== 0) { return status === 1; } this.functionCache.set(key, 3);
+        const queue = syntax.node(index).children.slice(); let blocks = false;
+        for(let at = 0; at < queue.length && !blocks; at++) {
+            const identity = queue[at] ?? panic('missing function body child');
+            if(this.callLike(syntax, identity) && this.callMayBlock(syntax, identity)) { blocks = true; }
+            for(const child of syntax.node(identity).children) { queue.push(child); }
+        }
+        this.functionCache.set(key, blocks ? 1 : 2); return blocks;
+    }
+    topLevelMayBlock(syntax: SyntaxProjection): boolean {
+        const queue = syntax.node(1).children.slice();
+        for(let at = 0; at < queue.length; at++) {
+            const identity = queue[at] ?? panic('missing module child'); if(this.functionBody(syntax, identity)) { continue; }
+            if(this.callLike(syntax, identity) && this.callMayBlock(syntax, identity)) { return true; }
+            for(const child of syntax.node(identity).children) { queue.push(child); }
+        }
+        return false;
+    }
+    importsBlockAtLoad(): boolean {
+        const queue: string[] = [this.syntax.path]; const seen = new Map<string, boolean>(); seen.set(this.syntax.path, true);
+        for(let at = 0; at < queue.length; at++) {
+            const file = this.imports.file(queue[at] ?? panic('missing import path'));
+            for(const target of file.edges) {
+                if(seen.has(target)) { continue; } seen.set(target, true); queue.push(target);
+                if(this.imports.canBlock.has(target) && (this.imports.file(target).declarationFile || this.topLevelMayBlock(this.facts.file(target)))) { return true; }
+            }
+        }
+        return false;
+    }
+    localFunction(index: number): number {
+        const syntax = this.syntax; const expression = syntax.skip(index); const node = syntax.node(expression);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) { return expression; } if(node.kind !== 'Identifier') { return 0; }
+        const symbol = this.facts.symbols.get(expression);
+        for(const declaration of symbol.declarations) {
+            const local = this.facts.symbols.local(declaration); if(local === 0) { continue; } const source = syntax.node(local);
+            if(declaration.kind === 'FunctionDeclaration' && source.body !== 0) { return local; }
+            if(declaration.kind === 'VariableDeclaration' && source.initializer !== 0 && declaration.ancestors.length > 0 && declaration.ancestor(0).kind === 'VariableDeclarationList' && (declaration.ancestor(0).flags & 2) !== 0) {
+                const initializer = syntax.skip(source.initializer); if(['FunctionExpression', 'ArrowFunction'].includes(syntax.node(initializer).kind)) { return initializer; }
+            }
+        }
+        return 0;
+    }
+    startedFunctions(index: number): StartedFunctions {
+        const syntax = this.syntax; const node = syntax.node(index); const runs: number[] = []; const handsOn: number[] = [];
+        if(node.kind !== 'NewExpression' && node.expression !== 0) {
+            const callee = this.localFunction(node.expression); if(callee !== 0) { if((syntax.node(callee).functionFlags & 1) !== 0) { handsOn.push(callee); } else { runs.push(callee); } }
+        }
+        for(const argument of node.arguments) { const function_ = this.localFunction(argument); if(function_ !== 0) { handsOn.push(function_); } }
+        return new StartedFunctions(runs, handsOn);
+    }
+    argumentsMayBlock(index: number): boolean {
+        const syntax = this.syntax; const node = syntax.node(index); if(!['CallExpression', 'NewExpression'].includes(node.kind)) { return false; } const queue = node.arguments.slice();
+        for(let at = 0; at < queue.length; at++) {
+            const identity = queue[at] ?? panic('missing argument'); if(this.functionBody(syntax, identity)) { continue; }
+            if(syntax.node(identity).kind === 'AwaitExpression' || (this.callLike(syntax, identity) && this.callMayBlock(syntax, identity))) { return true; }
+            for(const child of syntax.node(identity).children) { queue.push(child); }
+        }
+        return false;
+    }
+    inRunOf(index: number, root: number): boolean {
+        for(let parent = this.syntax.node(index).parent; parent !== 0 && parent !== root; parent = this.syntax.node(parent).parent) { if(this.functionBody(this.syntax, parent)) { return false; } }
+        return true;
+    }
+    analyzeRoot(root: number): void {
+        const syntax = this.syntax; const graph = new SyntaxControlFlow(syntax, root); const recorded = new Map<number, boolean>();
+        for(const block of graph.blocks) {
+            for(const event of block.events) {
+                if(event.hook !== 0 || this.facts.catchBinding(event.node, root)) { continue; } const node = syntax.node(event.node);
+                if((node.kind === 'CallExpression' && this.facts.exit(syntax, event.node)) || (this.ordered && (node.kind === 'AwaitExpression' || (this.callLike(syntax, event.node) && this.callMayBlock(syntax, event.node))))) { recorded.set(event.node, true); }
+            }
+        }
+        for(let at = 1; at <= syntax.nodes.length; at++) {
+            const node = syntax.node(at); if(recorded.has(at)) { continue; }
+            if(node.kind === 'CallExpression' && node.root === root && this.facts.exit(syntax, at)) { return; }
+            let inside = false; for(let parent = node.parent; parent !== 0; parent = syntax.node(parent).parent) { if(parent === root) { inside = true; break; } }
+            if(inside && this.ordered && this.inRunOf(at, root) && (node.kind === 'AwaitExpression' || (this.callLike(syntax, at) && this.callMayBlock(syntax, at)))) { return; }
+        }
+        const visited = new Map<string, boolean>(); const empty: string[] = []; const queue: ProcessPosition[] = [new ProcessPosition(0, empty)]; visited.set('0:', true);
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? panic('missing stream path'); let state = current.state; let ended = false;
+            for(const event of graph.block(current.block).events) {
+                const node = syntax.node(event.node);
+                if(event.hook === 1) {
+                    if(node.kind === 'Block' && node.parent !== 0 && syntax.node(node.parent).kind === 'CatchClause') { state = enteringCatch(state, syntax.node(node.parent).parent); }
+                    if(this.ordered && ((node.kind === 'ForOfStatement' && node.children.some((child) => syntax.node(child).kind === 'AwaitKeyword')) || (node.kind === 'VariableStatement' && node.children.some((child) => syntax.node(child).kind === 'VariableDeclarationList' && (syntax.node(child).flags & 6) === 6)))) { ended = true; break; }
+                    continue;
+                }
+                if((!this.callLike(syntax, event.node) && node.kind !== 'AwaitExpression') || this.facts.catchBinding(event.node, root)) { continue; }
+                if(node.kind === 'AwaitExpression') { if(this.ordered) { ended = true; break; } continue; }
+                if(node.kind === 'CallExpression' && this.facts.exit(syntax, event.node)) { if(state.length > 0 && !this.exits.includes(event.node)) { this.exits.push(event.node); } ended = true; break; }
+                if(node.kind === 'CallExpression' && this.facts.write(syntax, event.node) && !this.facts.holdsExit(event.node)) { state = withWrite(state, this.facts.chain(event.node, root)); }
+                const functions = this.startedFunctions(event.node);
+                if(!this.ordered || functions.runs.length === 0 || !this.argumentsMayBlock(event.node)) { for(const function_ of functions.runs) { if(!this.started.includes(function_)) { this.started.push(function_); } } }
+                if(!this.ordered) { for(const function_ of functions.handsOn) { if(!this.started.includes(function_)) { this.started.push(function_); } } }
+                if(this.ordered && this.callMayBlock(syntax, event.node)) { ended = true; break; }
+            }
+            if(ended) { continue; }
+            for(const next of graph.block(current.block).successors) {
+                const key = `${next}:${state.join('|')}`; if(!graph.block(next).reachable || visited.has(key)) { continue; } visited.set(key, true); queue.push(new ProcessPosition(next, state));
+            }
+        }
+    }
+    run(): void {
+        const syntax = this.syntax; const hasExit = new Map<number, boolean>(); const hasWrite = new Map<number, boolean>(); let candidate = false;
+        for(let at = 1; at <= syntax.nodes.length && !candidate; at++) {
+            const node = syntax.node(at); if(node.kind !== 'CallExpression') { continue; }
+            if(this.facts.exit(syntax, at)) { hasExit.set(node.root, true); candidate = hasWrite.has(node.root); }
+            else if(this.facts.write(syntax, at)) { hasWrite.set(node.root, true); candidate = hasExit.has(node.root); }
+        }
+        if(!candidate) { return; }
+        const shebang = syntax.text.startsWith('#!'); if(!shebang && this.imports.imported.has(syntax.path)) { return; }
+        if(this.ordered && this.importsBlockAtLoad()) { return; }
+        this.started.push(1);
+        for(let at = 0; at < this.started.length; at++) { this.analyzeRoot(this.started[at] ?? panic('missing started function')); }
+        if(this.exits.length === 0) { return; } this.exits.sort((left, right) => syntax.node(left).pos - syntax.node(right).pos);
+        const exit = syntax.node(this.exits[0] ?? panic('missing stream exit')); const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it'; const count = this.exits.length > 1 ? `, the first of ${this.exits.length} such exits in this file` : '';
+        const message = blockingMessage.replace('<<processReason>>', reason).replace('<<exitCount>>', count);
+        this.rules.findings.push(new Diagnostic('nexus/correctness-require-blocking-standard-streams', 'exitBeforeBlockingStandardStreams', message, exit.start, exit.end, ''));
+    }
+}

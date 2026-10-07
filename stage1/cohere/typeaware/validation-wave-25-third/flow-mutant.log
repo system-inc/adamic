@@ -1,0 +1,6 @@
+=== RUN   TestProcessQuestionsRawSyntaxAndFlow
+    process_questions_test.go:126: lost reachable branches or events: 0 14
+--- FAIL: TestProcessQuestionsRawSyntaxAndFlow (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.063s
+FAIL

@@ -11,7 +11,7 @@ import (
 
 func (p *Program) typeDeclarationAncestry(c *checker.Checker, node *ast.Node, question string) (string, error) {
 	if strings.Split(question, "\n")[0] != "type-declaration-ancestry" {
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.processQuestions(c, node, question)
 	}
 	split := strings.Split(question, "\n")
 	if len(split) != 2 || (split[1] != "raw" && split[1] != "awaited") {

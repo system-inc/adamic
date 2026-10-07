@@ -1,0 +1,44 @@
+import { panic, readTextFile, tsgoInspect } from 'adamic';
+import { byteOffsets } from './unary_minus.ts';
+import { Frames, header } from './frames.ts';
+export class SyntaxNode {
+    readonly kind: string; readonly pos: number; readonly end: number; readonly start: number; readonly parent: number;
+    readonly text: string; readonly flags: number; readonly functionFlags: number; readonly root: number; readonly isRoot: boolean;
+    readonly globalAugmentation: boolean; readonly name: number; readonly body: number; readonly initializer: number;
+    readonly expression: number; readonly operator: string; readonly children: readonly number[]; readonly arguments: readonly number[];
+    constructor(frames: Frames) {
+        this.kind = frames.field(); this.pos = frames.natural(); this.end = frames.natural(); this.start = frames.natural(); this.parent = frames.natural();
+        this.text = frames.field(); this.flags = frames.natural(); this.functionFlags = frames.natural(); this.root = frames.natural(); this.isRoot = frames.yes(); this.globalAugmentation = frames.yes();
+        this.name = frames.natural(); this.body = frames.natural(); this.initializer = frames.natural(); this.expression = frames.natural(); this.operator = frames.field(); this.children = frames.ids(); this.arguments = frames.ids();
+    }
+}
+export class SyntaxProjection {
+    readonly program: number; readonly path: string; readonly text: string; readonly declarationFile: boolean; readonly external: boolean;
+    readonly nodes: readonly SyntaxNode[];
+    constructor(program: number, path: string) {
+        this.program = program; const source = readTextFile(path); if(source.kind === 'Error') { panic(source.message); }
+        this.text = source.text;
+        const offsets = byteOffsets(source.text); const length = offsets[offsets.length - 1] ?? panic('missing source byte length');
+        const frames = new Frames(tsgoInspect(program, path, 0, length, 'SourceFile', 'syntax-projection')); header(frames, 'syntax-projection');
+        this.path = frames.field(); this.declarationFile = frames.yes(); this.external = frames.yes(); const count = frames.natural(); const nodes: SyntaxNode[] = [];
+        for(let at = 0; at < count; at++) { nodes.push(new SyntaxNode(frames)); }
+        frames.end(); this.nodes = nodes;
+        for(const node of nodes) {
+            for(const identity of [node.parent, node.root, node.name, node.body, node.initializer, node.expression]) { if(identity !== 0) { this.node(identity); } }
+            for(const identity of node.children) { this.node(identity); } for(const identity of node.arguments) { this.node(identity); }
+        }
+    }
+    node(identity: number): SyntaxNode { return this.nodes[identity - 1] ?? panic('missing syntax identity'); }
+    ask(identity: number, question: string): string {
+        const node = this.node(identity); return tsgoInspect(this.program, this.path, node.pos, node.end, node.kind, question);
+    }
+    skip(identity: number): number {
+        let current = identity;
+        while(current !== 0 && this.node(current).kind === 'ParenthesizedExpression') { current = this.node(current).expression; }
+        return current;
+    }
+    locate(kind: string, pos: number, end: number): number {
+        for(let at = 0; at < this.nodes.length; at++) { const node = this.node(at + 1); if(node.kind === kind && node.pos === pos && node.end === end) { return at + 1; } }
+        return panic('declaration missing from syntax projection');
+    }
+}
