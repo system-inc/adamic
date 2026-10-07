@@ -1,0 +1,281 @@
+{
+  "cpu": 3,
+  "samples": {
+    "baseline": [
+      {
+        "wall": 0.8760065239985124,
+        "user": 0.8152039999999999,
+        "system": 0.047233,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.06 1.37 3.98 1/264 345284",
+        "load_after": "0.06 1.37 3.98 1/264 345339"
+      },
+      {
+        "wall": 0.8468646649998846,
+        "user": 0.814669,
+        "system": 0.031372,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.06 1.37 3.98 1/264 345345",
+        "load_after": "0.13 1.37 3.96 1/264 345346"
+      },
+      {
+        "wall": 0.8546561759976612,
+        "user": 0.821399,
+        "system": 0.032226,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345346",
+        "load_after": "0.13 1.37 3.96 1/264 345347"
+      },
+      {
+        "wall": 0.9005781160012702,
+        "user": 0.816827,
+        "system": 0.064764,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345353",
+        "load_after": "0.13 1.37 3.96 1/264 345354"
+      },
+      {
+        "wall": 0.9155519479973009,
+        "user": 0.864721,
+        "system": 0.050073,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345354",
+        "load_after": "0.13 1.37 3.96 1/264 345355"
+      },
+      {
+        "wall": 0.9001797529999749,
+        "user": 0.8560399999999999,
+        "system": 0.043061999999999996,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345361",
+        "load_after": "0.13 1.37 3.96 1/264 345362"
+      },
+      {
+        "wall": 0.9111158179985068,
+        "user": 0.86961,
+        "system": 0.040892,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345362",
+        "load_after": "0.20 1.36 3.95 1/264 345363"
+      },
+      {
+        "wall": 0.9204343140008859,
+        "user": 0.8747229999999999,
+        "system": 0.04486,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345369",
+        "load_after": "0.20 1.36 3.95 1/264 345370"
+      },
+      {
+        "wall": 0.8729274760007684,
+        "user": 0.847985,
+        "system": 0.024007,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345370",
+        "load_after": "0.20 1.36 3.95 1/264 345371"
+      },
+      {
+        "wall": 0.8883030959987082,
+        "user": 0.852702,
+        "system": 0.034867999999999996,
+        "command": [
+          "/workspace/scratch/reference-slots/baseline",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345377",
+        "load_after": "0.20 1.36 3.95 2/264 345378"
+      }
+    ],
+    "Go": [
+      {
+        "wall": 0.18716752899854328,
+        "user": 0.14951,
+        "system": 0.03592,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.06 1.37 3.98 1/264 345339",
+        "load_after": "0.06 1.37 3.98 1/264 345342"
+      },
+      {
+        "wall": 0.18486280599972815,
+        "user": 0.154945,
+        "system": 0.028383,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.06 1.37 3.98 1/264 345342",
+        "load_after": "0.06 1.37 3.98 1/264 345345"
+      },
+      {
+        "wall": 0.1884482039968134,
+        "user": 0.151693,
+        "system": 0.035446,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345347",
+        "load_after": "0.13 1.37 3.96 1/264 345350"
+      },
+      {
+        "wall": 0.18713719199877232,
+        "user": 0.16175499999999998,
+        "system": 0.023618,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345350",
+        "load_after": "0.13 1.37 3.96 1/264 345353"
+      },
+      {
+        "wall": 0.1924826859976747,
+        "user": 0.162703,
+        "system": 0.028468,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345355",
+        "load_after": "0.13 1.37 3.96 1/264 345358"
+      },
+      {
+        "wall": 0.18327689099896816,
+        "user": 0.165729,
+        "system": 0.016167,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.13 1.37 3.96 1/264 345358",
+        "load_after": "0.13 1.37 3.96 1/264 345361"
+      },
+      {
+        "wall": 0.18716022099761176,
+        "user": 0.16897399999999999,
+        "system": 0.016211,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345363",
+        "load_after": "0.20 1.36 3.95 1/264 345366"
+      },
+      {
+        "wall": 0.20083903500199085,
+        "user": 0.15848399999999999,
+        "system": 0.041417999999999996,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345366",
+        "load_after": "0.20 1.36 3.95 1/264 345369"
+      },
+      {
+        "wall": 0.18204580299789086,
+        "user": 0.16135,
+        "system": 0.019899999999999998,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345371",
+        "load_after": "0.20 1.36 3.95 1/264 345374"
+      },
+      {
+        "wall": 0.18559445800201502,
+        "user": 0.15129199999999998,
+        "system": 0.032383999999999996,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.20 1.36 3.95 1/264 345374",
+        "load_after": "0.20 1.36 3.95 1/264 345377"
+      }
+    ]
+  },
+  "best": {
+    "baseline": {
+      "user": 0.814669,
+      "wall": 0.8468646649998846,
+      "system": 0.024007
+    },
+    "Go": {
+      "user": 0.14951,
+      "wall": 0.18204580299789086,
+      "system": 0.016167
+    }
+  }
+}

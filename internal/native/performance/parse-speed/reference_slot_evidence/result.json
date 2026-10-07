@@ -1,0 +1,65 @@
+{
+  "totals": {
+    "Ir": 6254332929,
+    "Dr": 1698629232,
+    "Dw": 731952598,
+    "I1mr": 85749110,
+    "D1mr": 14861025,
+    "D1mw": 5404095,
+    "ILmr": 6930,
+    "DLmr": 58403,
+    "DLmw": 1527956,
+    "Bc": 1078181891,
+    "Bcm": 46321589,
+    "Bi": 18818014,
+    "Bim": 2947441
+  },
+  "header_delta": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "counters": {
+    "scalar_class": 7379764,
+    "scalar_plain": 32300,
+    "reference_class": 6299752,
+    "reference_plain": 50258,
+    "object_class": 1083014,
+    "object_plain": 7274,
+    "node_objects": 889146,
+    "node_scalar": 6224022
+  },
+  "scalar_paths": [
+    {
+      "kind": "class",
+      "visits": 7379764,
+      "instructions_per_visit": 7,
+      "instructions": 51658348,
+      "branch_address": "0x6e7a8",
+      "all_visits": 13679516,
+      "type_branch_mispredictions": 3976020
+    },
+    {
+      "kind": "plain",
+      "visits": 32300,
+      "instructions_per_visit": 6,
+      "instructions": 193800,
+      "branch_address": "0x6e7e1",
+      "all_visits": 82558,
+      "type_branch_mispredictions": 5310
+    }
+  ],
+  "scalar_instructions": 51852148,
+  "scalar_parse_fraction": 0.008290596069737944,
+  "stop_under_two_percent": true
+}
