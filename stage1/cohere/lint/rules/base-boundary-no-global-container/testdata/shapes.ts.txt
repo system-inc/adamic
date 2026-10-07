@@ -1,0 +1,4 @@
+import { getGlobalContainer as resolve } from './container';
+const object = { getGlobalContainer: resolve };
+object.getGlobalContainer;
+function getGlobalContainer() { return 1; }
