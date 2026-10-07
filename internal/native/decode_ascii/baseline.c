@@ -137,4 +137,3 @@ static adamic_string *decode(const unsigned char *bytes, size_t length) {
 adamic_string *baseline_decode_utf8(const unsigned char *bytes, size_t length) {
 	return decode(bytes, length);
 }
-
