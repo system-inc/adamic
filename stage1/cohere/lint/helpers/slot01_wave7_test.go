@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -97,6 +98,30 @@ func slot01Wave7Fixture(t *testing.T, dependency string, consumers int, mode str
 		}
 		overlay, _ = json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave7.go"): bridge, walkPath: traced, designPath: designTraced}})
 	}
+	if mode == "table" {
+		livePath := filepath.Join(root, "internal/lint/rules/tailwind/collapse/descriptor_live.go")
+		data, err := os.ReadFile(livePath)
+		if err != nil {
+			t.Fatal(err)
+		}
+		text := string(data)
+		for _, anchor := range []string{"table.addThemeNamespaces(system.theme)", "table.addRepositoryStatics(system)", "table.addRepositoryFunctionalRoots(system)"} {
+			if strings.Count(text, anchor) != 1 {
+				t.Fatal("table trace anchor drift")
+			}
+			text = strings.Replace(text, anchor, "wave7TableTrace = append(wave7TableTrace, "+strconv.Quote(anchor)+")\n    "+anchor, 1)
+		}
+		anchor := "FrameworkStaticReading(name)"
+		if strings.Count(text, anchor) != 1 {
+			t.Fatal("static factory anchor drift")
+		}
+		text = strings.Replace(text, anchor, "wave7StaticReading(name)", 1)
+		traced := filepath.Join(directory, "descriptor_live.go")
+		if err := os.WriteFile(traced, []byte(text), 0644); err != nil {
+			t.Fatal(err)
+		}
+		overlay, _ = json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave7.go"): bridge, livePath: traced}})
+	}
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -138,7 +163,7 @@ func slot01Wave7Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, sanitized native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave7_main.a", "collapse_ingest_utility_block.a", "collapse_ingest_theme_block.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave7_main.a", "collapse_ingest_utility_block.a", "collapse_ingest_theme_block.a", "collapse_new_table.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -171,7 +196,7 @@ func TestSlot01Wave7UtilityMatchesCohere(t *testing.T) {
 	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "(collector.roots.get(root) ?? 0) | kind", "kind")
 }
 func TestSlot01Wave7UtilityBodyMutant(t *testing.T) {
-	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "collector.statics.set(root, nodes);", "collector.statics.set(root, nodes.slice());")
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "collector.statics.set(root, { values: nodes.values, length: nodes.length, capacity: nodes.capacity });", "collector.statics.set(root, { values: nodes.values.slice(), length: nodes.length, capacity: nodes.capacity });")
 }
 func TestSlot01Wave7UtilityNameMutant(t *testing.T) {
 	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "root.includes('*')", "false")
@@ -196,4 +221,39 @@ func TestSlot01Wave7ThemeErrorStopMutant(t *testing.T) {
 }
 func TestSlot01Wave7ThemeInvalidPrefixMutant(t *testing.T) {
 	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "!dependencies.validPrefix(parsed.prefix)", "false")
+}
+
+// Not parallel: Go global table mutation probes are restored after each observation.
+func TestSlot01Wave7TableMatchesCohere(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "if (!system.bound) { return table; }", "")
+}
+func TestSlot01Wave7TableReadingCopyMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "{ order: { values: reading.order.values, length: reading.order.length, capacity: reading.order.capacity }, count: reading.count }", "reading")
+}
+func TestSlot01Wave7TablePropertyAliasMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "system.bound ? dependencies.propertyOrder : new Map<string, number>()", "system.bound ? new Map<string, number>(dependencies.propertyOrder) : new Map<string, number>()")
+}
+func TestSlot01Wave7TableOrderMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "dependencies.addThemeNamespaces(table);\n    dependencies.addRepositoryStatics(table);", "dependencies.addRepositoryStatics(table);\n    dependencies.addThemeNamespaces(table);")
+}
+
+func TestSlot01Wave7TableDescriptorMapMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "descriptors: new Map<string, number>()", "descriptors: system.bound ? dependencies.baseDescriptors : new Map<string, number>()")
+}
+func TestSlot01Wave7TableFrameworkMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "for (const name of dependencies.frameworkNames)", "for (const name of ([] as readonly string[]))")
+}
+
+func TestSlot01Wave7TableHeaderCopyMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "order: { values: reading.order.values, length: reading.order.length, capacity: reading.order.capacity }", "order: reading.order")
+}
+func TestSlot01Wave7TableBackingShareMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "values: reading.order.values", "values: reading.order.values.slice()")
+}
+
+func TestSlot01Wave7UtilityHeaderMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "collector.statics.set(root, { values: nodes.values, length: nodes.length, capacity: nodes.capacity });", "collector.statics.set(root, nodes);")
+}
+func TestSlot01Wave7UtilityFunctionalHeaderMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "nodes: { values: nodes.values, length: nodes.length, capacity: nodes.capacity }", "nodes")
 }

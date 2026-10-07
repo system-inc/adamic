@@ -95,6 +95,22 @@ func main() {
 	}
 
 	sources = append(sources, "", "foo", "foo-*", "-*", "*", "foo-*-*", "\u00a0foo\u3000", "foo bar", "é𝒜", "foo\u200b", "initial", "not-custom")
+	if os.Args[4] == "table" {
+		metadata := collapse.AdamicWave7TableMetadata()
+		must(encode.Encode(metadata))
+		fmt.Fprintf(os.Stderr, "Go framework metadata: %d descriptor handles, %d static registrations, %d property positions\n", len(metadata[1].([]string)), len(metadata[2].([][]any)), len(metadata[3].([][]any)))
+		for _, source := range sources {
+			for _, bound := range []bool{false, true} {
+				input, actual := collapse.AdamicWave7Table(source, bound)
+				must(encode.Encode(input))
+				for _, line := range actual {
+					fmt.Fprintln(expected, line)
+				}
+			}
+		}
+		fmt.Fprintf(os.Stderr, "%d fixture strings; %d table batches\n", fixtureCount, len(sources)*2)
+		return
+	}
 	for _, source := range sources {
 		input, actual := collapse.AdamicWave7Utility(source)
 		if os.Args[4] == "theme" {

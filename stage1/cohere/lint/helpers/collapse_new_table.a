@@ -1,0 +1,49 @@
+import { panic } from 'adamic';
+// Descriptor and theme numbers are stable handles into externally owned arenas.
+export interface CollapseTableReading {
+    readonly order: { readonly values: readonly number[]; readonly length: number; readonly capacity: number };
+    readonly count: number;
+}
+export interface CollapseLiveTable {
+    readonly bound: boolean;
+    readonly tailwindVersion: string;
+    readonly theme: number;
+    readonly descriptors: Map<string, number>;
+    readonly statics: Map<string, CollapseTableReading>;
+    readonly propertyOrder: Map<string, number>;
+    namespaces: readonly string[];
+    keysByNamespace: Map<string, readonly string[]>;
+}
+export interface CollapseTableDependencies {
+    readonly descriptorNames: readonly string[];
+    readonly baseDescriptors: Map<string, number>;
+    readonly frameworkNames: readonly string[];
+    readonly staticReading: (name: string) => { readonly found: boolean; readonly reading: CollapseTableReading };
+    readonly propertyOrder: Map<string, number>;
+    readonly addThemeNamespaces: (table: CollapseLiveTable) => void;
+    readonly addRepositoryStatics: (table: CollapseLiveTable) => void;
+    readonly addRepositoryFunctionalRoots: (table: CollapseLiveTable) => void;
+}
+export function collapseNewTable(system: { readonly bound: boolean; readonly tailwindVersion: string; readonly theme: number }, dependencies: CollapseTableDependencies): CollapseLiveTable {
+    const table: CollapseLiveTable = {
+        bound: system.bound, tailwindVersion: system.bound ? system.tailwindVersion : '', theme: system.bound ? system.theme : 0,
+        descriptors: new Map<string, number>(), statics: new Map<string, CollapseTableReading>(),
+        propertyOrder: system.bound ? dependencies.propertyOrder : new Map<string, number>(),
+        namespaces: [], keysByNamespace: new Map<string, readonly string[]>()
+    };
+    if (!system.bound) { return table; }
+    for (const root of dependencies.descriptorNames) {
+        table.descriptors.set(root, dependencies.baseDescriptors.get(root) ?? panic('NotYet: base descriptor handle missing'));
+    }
+    for (const name of dependencies.frameworkNames) {
+        const result = dependencies.staticReading(name);
+        if (result.found) {
+            const reading = result.reading;
+            table.statics.set(name, { order: { values: reading.order.values, length: reading.order.length, capacity: reading.order.capacity }, count: reading.count });
+        }
+    }
+    dependencies.addThemeNamespaces(table);
+    dependencies.addRepositoryStatics(table);
+    dependencies.addRepositoryFunctionalRoots(table);
+    return table;
+}

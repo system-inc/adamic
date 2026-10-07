@@ -1,10 +1,11 @@
 // The collector keeps static and functional declarations independently. Bodies retain identity.
+export interface CollapseUtilitySlice { readonly values: readonly number[]; readonly length: number; readonly capacity: number; }
 export interface CollapseUtilityCollector {
     readonly roots: Map<string, number>;
-    readonly definitions: { readonly name: string; readonly nodes: readonly number[] }[];
-    readonly statics: Map<string, readonly number[]>;
+    readonly definitions: { readonly name: string; readonly nodes: CollapseUtilitySlice }[];
+    readonly statics: Map<string, CollapseUtilitySlice>;
 }
-export function collapseIngestUtilityBlock(collector: CollapseUtilityCollector, params: string, nodes: readonly number[], path: string, trimSpace: (value: string) => string): string {
+export function collapseIngestUtilityBlock(collector: CollapseUtilityCollector, params: string, nodes: CollapseUtilitySlice, path: string, trimSpace: (value: string) => string): string {
     const name = trimSpace(params);
     if (name === '') { return `${path}: \`@utility\` with no name`; }
     let kind = 1;
@@ -14,7 +15,7 @@ export function collapseIngestUtilityBlock(collector: CollapseUtilityCollector, 
         return `${path}: \`@utility ${name}\` is not a valid utility name; expected \`name\` or \`name-*\``;
     }
     collector.roots.set(root, (collector.roots.get(root) ?? 0) | kind);
-    if (kind === 2) { collector.definitions.push({ name: root, nodes }); return ''; }
-    collector.statics.set(root, nodes);
+    if (kind === 2) { collector.definitions.push({ name: root, nodes: { values: nodes.values, length: nodes.length, capacity: nodes.capacity } }); return ''; }
+    collector.statics.set(root, { values: nodes.values, length: nodes.length, capacity: nodes.capacity });
     return '';
 }
