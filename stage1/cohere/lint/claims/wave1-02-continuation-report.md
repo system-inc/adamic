@@ -1,7 +1,7 @@
-Built: two `.a` rule candidates and a three-runtime JSX blocker probe; the requested three complete ports are not delivered.  
-Commits: claim `782e031e`, Tailwind `61ebcccb`, descriptions `240626b9`, font blocker `35d5b75c`; branch `codex/lint-wave1-02`.  
-Checks: isolated Go overlay compares 200 compiler/stage1 files (12,542,232 identical bytes), 160/162 upstream cases and owned witnesses on Node, emitted JavaScript and ASan/UBSan native.  
-Mutants: omitted rtl/ltr exemption and accepted empty description compile, run cleanly and fail only output comparison on all three runtimes.  
+Built: two `.a` rule candidates and a three-runtime JSX blocker probe; the requested three complete ports are not delivered.\
+Commits: claim `782e031e`, Tailwind `61ebcccb`, descriptions `240626b9`, font blocker `35d5b75c`; branch `codex/lint-wave1-02`.\
+Checks: isolated Go overlay compares 200 compiler/stage1 files (12,542,232 identical bytes), 160/162 upstream cases and owned witnesses on Node, emitted JavaScript and ASan/UBSan native.\
+Mutants: omitted rtl/ltr exemption and accepted empty description compile, run cleanly and fail only output comparison on all three runtimes.\
 Uncovered: shared `.a` registration, two upstream findings-plus-fixes cases, the JSX font rule and its semantic mutant, malformed option rejection, exhaustive fuzzing and the full repository gate.
 
 Existing work was pushed before fetching all origin heads. Main was `ef3d907e`. The first 45 helper-ready entries appeared in origin claims; the last helper entry was available. The next two candidates came from the syntax-only inventory on `origin/codex/lint-inventory`. The three new reservations were pushed in `782e031e` before implementation: `structure/tailwind-no-physical-direction`, `@eslint-community/eslint-comments/require-description`, and `@next/next/google-font-display`. The earlier no-restricted-types reservation remains explicitly blocked.
