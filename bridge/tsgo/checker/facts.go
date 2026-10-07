@@ -213,6 +213,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		return p.numericLiteral(c, node, question)
 	case "base-constraint-shape":
 		return p.baseConstraintShape(c, node, question)
+	case "symbols-in-scope":
+		return p.symbolsInScope(c, node, question)
 	case "declaration-contract":
 		return p.declarationContract(c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":

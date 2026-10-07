@@ -1,0 +1,118 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { regexpBinding } from './regexp_binding.a';
+export class NoInvalidRegexp {
+    readonly rules: Rules;
+    readonly allowed: string[] = [];
+    constructor(rules: Rules, extra: readonly string[] = []) {
+        this.rules = rules;
+        for(const text of extra) {
+            for(let at = 0; at < text.length; at++) {
+                const point = text.codePointAt(at) ?? 0;
+                const flag = String.fromCodePoint(point);
+                if(!'dgimsuvy'.includes(flag) && !this.allowed.includes(flag)) {
+                    this.allowed.push(flag);
+                }
+                if(point > 65535) {
+                    at++;
+                }
+            }
+        }
+    }
+    quote(flag: string): string {
+        const point = flag.codePointAt(0) ?? 0;
+        const slash = String.fromCharCode(92);
+        if(point > 126) {
+            panic('no-invalid-regexp requires shared Unicode rune quoting for this flag');
+        }
+        if(flag === "'" || point === 92) {
+            return `'${slash}${flag}'`;
+        }
+        const codes = [7, 8, 9, 10, 11, 12, 13];
+        const escapes = ['a', 'b', 't', 'n', 'v', 'f', 'r'];
+        const at = codes.indexOf(point);
+        if(at >= 0) {
+            return `'${slash}${escapes[at] ?? ''}'`;
+        }
+        if(point < 32) {
+            return `'${slash}x${point.toString(16).padStart(2, '0')}'`;
+        }
+        return `'${flag}'`;
+    }
+    flags(flags: string): string {
+        const struck: string[] = [];
+        const remaining: string[] = [];
+        for(let at = 0; at < flags.length; at++) {
+            const point = flags.codePointAt(at) ?? 0;
+            const flag = String.fromCodePoint(point);
+            const known = 'dgimsuvy'.includes(flag) || this.allowed.includes(flag);
+            if(known && !struck.includes(flag)) {
+                struck.push(flag);
+            }
+            else {
+                remaining.push(flag);
+            }
+            if(point > 65535) {
+                at++;
+            }
+        }
+        if(flags.includes('u') && flags.includes('v')) {
+            return `Invalid regular expression flags: ${flags}. The u and v flags cannot both be set`;
+        }
+        for(const flag of remaining) {
+            if('dgimsuvy'.includes(flag) || this.allowed.includes(flag)) {
+                return `Invalid regular expression flags: ${flags}. Duplicate flag ${this.quote(flag)}`;
+            }
+        }
+        return remaining.length > 0
+            ? `Invalid regular expression flags: ${flags}. Unknown flag ${this.quote(remaining[0] ?? '')}`
+            : '';
+    }
+    run(): void {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(!['CallExpression', 'NewExpression'].includes(node.kind) || node.list < 1) {
+                continue;
+            }
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const name = this.rules.parser.node(callee);
+            if(name.kind !== 'Identifier' || name.text !== 'RegExp' || !regexpBinding(this.rules, callee)) {
+                continue;
+            }
+            const arguments_ = node.children.slice(node.children.length - node.list);
+            let flags = '';
+            let known = node.list < 2;
+            if(node.list >= 2) {
+                const second = this.rules.parser.node(arguments_[1] ?? -1);
+                if(second.kind === 'StringLiteral') {
+                    flags = second.text;
+                    known = true;
+                }
+            }
+            if(known) {
+                const message = this.flags(flags);
+                if(message !== '') {
+                    this.rules.findings.push(
+                        new Diagnostic(
+                            'no-invalid-regexp',
+                            'invalidRegexp',
+                            message,
+                            this.rules.byte(this.rules.start(node)),
+                            this.rules.byte(node.end),
+                            '',
+                        ),
+                    );
+                    continue;
+                }
+            }
+            if(this.rules.parser.node(arguments_[0] ?? -1).kind !== 'StringLiteral') {
+                continue;
+            }
+            if(known && flags.includes('v')) {
+                continue;
+            }
+            panic('no-invalid-regexp requires the shared ECMAScript pattern validator');
+        }
+    }
+}

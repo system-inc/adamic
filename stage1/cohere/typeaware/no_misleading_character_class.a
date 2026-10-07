@@ -1,0 +1,205 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+export class MisleadingCharacter {
+    readonly value: number;
+    readonly start: number;
+    readonly end: number;
+    readonly codePointEscape: boolean;
+    readonly escaped: boolean;
+    constructor(value: number, start: number, end: number, codePointEscape = false, escaped = false) {
+        this.value = value;
+        this.start = start;
+        this.end = end;
+        this.codePointEscape = codePointEscape;
+        this.escaped = escaped;
+    }
+}
+export class NoMisleadingCharacterClass {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    combining(value: number): boolean {
+        return (
+            (value >= 0x0300 && value <= 0x036f) ||
+            (value >= 0x1ab0 && value <= 0x1aff) ||
+            (value >= 0x1dc0 && value <= 0x1dff) ||
+            (value >= 0x20d0 && value <= 0x20ff) ||
+            (value >= 0xfe00 && value <= 0xfe0f) ||
+            (value >= 0xfe20 && value <= 0xfe2f) ||
+            (value >= 0xe0100 && value <= 0xe01ef)
+        );
+    }
+    regional(value: number): boolean {
+        return value >= 0x1f1e6 && value <= 0x1f1ff;
+    }
+    modifier(value: number): boolean {
+        return value >= 0x1f3fb && value <= 0x1f3ff;
+    }
+    report(from: MisleadingCharacter, to: MisleadingCharacter, id: string, literalEnd: number, suggest = false): void {
+        let message = '';
+        if(id === 'surrogatePair') {
+            message =
+                'This character class holds a surrogate pair spelled partly as a code point escape, so what looks like one astral character is two independent class members. The class matches either half on its own and never the character the author wrote, which is a match that silently succeeds on the wrong input rather than an error anybody sees.';
+        }
+        if(id === 'surrogatePairWithoutUFlag') {
+            message =
+                'This character class holds an astral character while the pattern has neither the u nor the v flag, so the engine reads it as its two UTF-16 halves and the class matches either half alone. `/[\ud83d\udc4d]/` matches the two lone surrogates that spell it and never the emoji; adding the flag is what makes the class mean the character it looks like.';
+        }
+        if(id === 'combiningClass') {
+            message =
+                'This character class holds a base character followed by a combining mark, which renders as one glyph and is two code points. The class matches the base or the mark separately, so `/[\u00c1]/` accepts a bare `A` and accepts a stray accent, and rejects the accented letter it appears to name.';
+        }
+        if(id === 'emojiModifier') {
+            message =
+                'This character class holds an emoji followed by a skin tone modifier, which is one glyph made of two code points. The class matches the unmodified emoji or the bare modifier, so it accepts inputs nobody meant to accept and rejects the modified emoji itself.';
+        }
+        if(id === 'regionalIndicatorSymbol') {
+            message =
+                'This character class holds a pair of regional indicator symbols, which render as one flag and are two code points. The class matches either letter alone, so a flag class built this way accepts every other flag that shares a letter with it.';
+        }
+        if(id === 'zwj') {
+            message =
+                'This character class holds characters spliced by a zero width joiner, which renders as one glyph and is three or more code points. The class matches each piece on its own, so a family emoji written this way matches the individual people in it and never the family.';
+        }
+        const diagnostic = new Diagnostic('no-misleading-character-class', id, message, from.start, to.end, '');
+        if(suggest && literalEnd >= 0) {
+            diagnostic.suggestions.push(
+                new Suggestion(
+                    'suggestUnicodeFlag',
+                    'Add the u flag so the class matches the character rather than its parts. The flag changes how the whole pattern parses, so this is offered rather than applied.',
+                    [new Repair(literalEnd, literalEnd, 'u')],
+                ),
+            );
+        }
+        this.rules.findings.push(diagnostic);
+    }
+    sequence(sequence: readonly MisleadingCharacter[], literalEnd = -1): void {
+        for(let at = 1; at < sequence.length; at++) {
+            const previous = sequence[at - 1];
+            const current = sequence[at];
+            if(previous === undefined || current === undefined) {
+                panic('missing class member');
+            }
+            if(!current.escaped && this.combining(current.value) && !this.combining(previous.value)) {
+                this.report(previous, current, 'combiningClass', literalEnd);
+            }
+            if(previous.escaped || current.escaped) {
+                continue;
+            }
+            if(this.regional(previous.value) && this.regional(current.value)) {
+                this.report(previous, current, 'regionalIndicatorSymbol', literalEnd);
+            }
+            if(this.modifier(current.value) && !this.modifier(previous.value)) {
+                this.report(previous, current, 'emojiModifier', literalEnd);
+            }
+        }
+        let joinStart = -1;
+        let joinEnd = -1;
+        for(let at = 1; at + 1 < sequence.length; at++) {
+            const before = sequence[at - 1];
+            const join = sequence[at];
+            const after = sequence[at + 1];
+            if(before === undefined || join === undefined || after === undefined) {
+                panic('missing join member');
+            }
+            if(
+                join.value !== 0x200d ||
+                before.escaped ||
+                join.escaped ||
+                after.escaped ||
+                before.value === 0x200d ||
+                after.value === 0x200d
+            ) {
+                continue;
+            }
+            if(joinStart >= 0 && joinEnd === at - 1) {
+                joinEnd = at + 1;
+                continue;
+            }
+            if(joinStart >= 0) {
+                const from = sequence[joinStart];
+                const to = sequence[joinEnd];
+                if(from === undefined || to === undefined) {
+                    panic('missing join endpoint');
+                }
+                this.report(from, to, 'zwj', literalEnd);
+            }
+            joinStart = at - 1;
+            joinEnd = at + 1;
+        }
+        if(joinStart >= 0) {
+            const from = sequence[joinStart];
+            const to = sequence[joinEnd];
+            if(from === undefined || to === undefined) {
+                panic('missing join endpoint');
+            }
+            this.report(from, to, 'zwj', literalEnd);
+        }
+        for(let at = 1; at < sequence.length; at++) {
+            const previous = sequence[at - 1];
+            const current = sequence[at];
+            if(previous === undefined || current === undefined) {
+                panic('missing surrogate member');
+            }
+            if(
+                previous.escaped ||
+                current.escaped ||
+                previous.value < 0xd800 ||
+                previous.value > 0xdbff ||
+                current.value < 0xdc00 ||
+                current.value > 0xdfff
+            ) {
+                continue;
+            }
+            const spelled = previous.codePointEscape || current.codePointEscape;
+            this.report(
+                previous,
+                current,
+                spelled ? 'surrogatePair' : 'surrogatePairWithoutUFlag',
+                literalEnd,
+                !spelled,
+            );
+        }
+    }
+    simpleLiteral(index: number): void {
+        const node = this.rules.parser.node(index);
+        const text = this.rules.text(node);
+        const closing = text.lastIndexOf('/');
+        const flags = text.slice(closing + 1);
+        const pattern = text.slice(1, closing);
+        if(!['', 'u'].includes(flags) || !pattern.startsWith('[') || !pattern.endsWith(']')) {
+            panic('no-misleading-character-class requires shared RegexSyntax for this pattern');
+        }
+        const body = pattern.slice(1, -1);
+        if(body.includes('\\') || body.includes('[') || body.includes(']') || body.includes('-')) {
+            panic('no-misleading-character-class requires shared RegexSyntax class scanning');
+        }
+        const sequence: MisleadingCharacter[] = [];
+        const start = this.rules.start(node) + 2;
+        for(let at = body.startsWith('^') ? 1 : 0; at < body.length; at++) {
+            const value = body.codePointAt(at) ?? 0;
+            const first = this.rules.byte(start + at);
+            const end = this.rules.byte(start + at + (value > 65535 ? 2 : 1));
+            if(flags === '' && value > 65535) {
+                sequence.push(new MisleadingCharacter(0xd800 + ((value - 0x10000) >> 10), first, first));
+                sequence.push(new MisleadingCharacter(0xdc00 + ((value - 0x10000) & 0x3ff), first, end));
+            }
+            else {
+                sequence.push(new MisleadingCharacter(value, first, end));
+            }
+            if(value > 65535) {
+                at++;
+            }
+        }
+        this.sequence(sequence, flags === '' ? this.rules.byte(node.end) : -1);
+    }
+    run(): void {
+        panic(
+            'no-misleading-character-class requires shared RegexSyntax, ReferenceTracker, ConstantStringIn and CookedToRaw helpers',
+        );
+    }
+}
