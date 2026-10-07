@@ -113,3 +113,29 @@ No new rule comparison, mutant, sanitizer or timing result is claimed.
 The previous fifteen completed ports and their evidence remain at 8180b758.
 Selection evidence for this batch is in wave-26-sixth-selection.json alongside
 this claim. Work stopped here under Ahra's instruction to report other blockers.
+
+### Origin recheck, October 7
+
+Fetched all heads again: 417 origin refs, 197 ranked names, 25 baseline/main
+ranked ports, 148 ranked names mentioned in claim files and 24 available names.
+No additional rules were claimed because the sixth batch is unfinished. The
+current audit is saved in wave-26-refresh.json.
+
+Origin wave 06 now contains reporting-only partial implementations of the same
+three rules and independently documents the missing HIR/SSA/capture/memoization
+and control-dominance substrate. Other origin claim files overlap too. Our claim
+e758e57f was committed at 02:30:28 UTC; wave 06 claim 3c3f5f4b at 02:30:37 UTC.
+These overlapping reservations are recorded without asserting exclusive ownership
+or duplicating another worker's partial implementation.
+
+A scratch Go file importing Cohere's internal HIR was compiled using
+`go build -mod=readonly`. It exited 1: the current Adamic module has no module
+providing that package. Exact output is in wave-26-hir-import.log. This probe
+confirms that direct import is unavailable with the current module configuration;
+it does not prove that an isolated raw-graph implementation is impossible.
+`go list` of that scratch file exited 0, which did not validate compilation.
+No module configuration or shared files were changed. nproc remains 5.
+
+No new native source analysis, corpus comparison, sanitizer result, mutant or
+lint timing was obtained. All fifteen previously completed ports remain pushed
+at 8180b758. This recheck leaves the same three claims unfinished.
