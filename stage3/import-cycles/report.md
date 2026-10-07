@@ -1,8 +1,8 @@
-Built: ESM cycle ordering, graph-wide linking, runtime TDZ fallback, and merged all ten tsc cycle fixtures; public-runner integration remains blocked.
-Commits: implementation 56b95a9, original report 650a221, fixture merge a852810 (bucket a4ec90d).
-Checks: prior build/load/lower/oracles passed; latest lowering refused 10/10 fixtures, fresh Node observations matched 10/10 records, ledger audit passed.
-Mutants: prior eight caught; merged ledger audit caught a removed row and a late provider-end event.
-Not covered: real runner/new-pin shims and original tsc lowering; 58 ledger statements and 914 observed reads remain unassessed, not proven safe.
+Built: existing cycle ordering and TDZ checkpoint retained; public runner found at ca939db5 but requested dependency bump fails shim compatibility.
+Commits: prior checkpoint 56b95a9, fixture merge a852810, evidence through 6b17636; failing submodule change remains uncommitted.
+Checks: ca939db5 go build ./... exits 1; full load/lower test command exits 1 at compilation; no runner integration or original-ledger lowering executed.
+Mutants: prior eight compiler mutants and two ledger artifact mutants caught; no new mutants run because the compatibility prerequisite failed.
+Not covered: public-runner integration and original-ledger classification; 58 statements and 914 observed reads remain unassessed, not safe or checked.
 
 The latest instruction supersedes the interim implementation. The working tree still holds that earlier, tested checkpoint; it is not a completed public-runner integration. No cohere source was copied. The replacement adapter is drafted at /tmp/import-cycles-public-adapter.go, with the exact new error return, Finding type, rule name, and a mutex protecting calls across programs. I have not installed an unavailable dependency or claimed it builds.
 
@@ -138,3 +138,18 @@ The original-read zeros mean no compiler classification was obtained, not accept
 `python3 stage3/fixtures/cycles/audit.py > /tmp/import-cycles-ledger-audit.log 2>&1` passed and printed `removed ledger row: caught`, `late provider end: caught`, and `Trace, ledger, ten fixture records and chronology: pass`. The fixture/Node reconciliation asserted ten entries and exact equality for each observation. Detailed results and machine-readable counts are in `ledger-run/results.json` and `ledger-run/summary.json`.
 
 Retried cohere main with `git -C cohere fetch --no-recurse-submodules origin main`: FETCH_HEAD remains e7cfe4d1aceb524bc6f5936564284d54ca63d771 and `git -C cohere ls-tree FETCH_HEAD rule_runner` prints nothing. Thus the requested real-rule replacement is still blocked. No compiler code changed in this follow-up and the full compiler gate was not repeated. No code was copied from cohere.
+
+## ca939db5 compatibility stop, October 7
+
+The public runner is now available. Fetched cohere main and checked out ca939db5cc348dc7dabbf4e6fd89dfc1dd9865f4. Recursive submodule update succeeded and moved its TypeScript dependency to d92d9bfee114c80be2c375d72edae966176e3a4f, from Adamic's verified 8d550c837c90bd1805b047b7eeccc2baac2d5e7a. Read the actual public API and the rule source/documentation. No cohere code was copied.
+
+Compatibility commands, with /workspace/adamic-tools/env.sh sourced:
+
+- `go build ./... > /tmp/import-cycles-new-pin-build.log 2>&1`: exit 1.
+- `go test -count=1 -timeout 30m ./internal/load ./internal/lower > /tmp/import-cycles-new-pin-tests.log 2>&1`: exit 1; both packages fail compilation, so no test bodies execute.
+
+The compiler-host API no longer takes the current-directory argument. Source files and VFS now use typed RootedFilePath/RootedDirectoryPath values. SourceFile.Path, tspath.Path, tspath.ToPath and ComparePathsOptions are absent. NewParsedCommandLine takes five arguments rather than four; the VFS no longer exposes UseCaseSensitiveFileNames. Adamic's sourceFS and regexpLibraryFS implement old string-based methods and no longer implement the VFS interface. The same transition breaks bridge/tsgo/checker and bridge/tsgo/oracle, including config-file parsing and root/source-file lookup. Complete output is retained under runner-pin-failure/.
+
+This is the previously specified stop condition: “Check that the submodule bump doesn't break the shims (go build ./... and the load/lower tests); if it does, stop and tell me what broke.” I did not repair the wider shim migration, change go.mod, replace the interim, update the verified-pin constant, or push an unbuildable dependency bump. The cohere checkout is left at the tested requested pin as an uncommitted submodule change; the report commit retains the previous recorded pin. The TDZ fallback code remains intact.
+
+The original ledger totals remain 58 statements and 914 observed reads unassessed. No classification as refused/checked/proven safe was obtained for these original source sites; the ten reduced-fixture interim refusals are separate evidence. Continuing requires a shim-compatible public-runner pin or a separate authorized migration of the loader and bridge APIs. Only codex/import-cycles is pushed; no main or area/ branch is modified.
