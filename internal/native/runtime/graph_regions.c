@@ -5,38 +5,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct graph_member graph_member;
 typedef struct graph_region {
 	struct graph_region *parent;
+	struct graph_region *next_record;
+	struct graph_region *record_tail;
 	size_t size;
 	size_t references;
-	graph_member *head;
-	graph_member *tail;
+	adamic_heap *head;
+	adamic_heap *tail;
 	bool shared;
 } graph_region;
-
-struct graph_member {
-	// Each singleton's record survives union: no member pointer needs rewriting.
-	graph_region region;
-	graph_member *next;
-	adamic_heap *value;
-	size_t bytes;
-	uint32_t slab;
-#ifdef ADAMIC_COUNT
-	size_t outside;
-	bool marked;
-	graph_member *work;
-#endif
-};
-
-// As for Weak's table, hidden pointers must not make a leaked graph reachable
-// to LeakSanitizer. The table supplies identity, never ownership.
-#define HIDDEN ((uintptr_t)0xa5a5a5a5a5a5a5a0u)
-static uintptr_t *members;
-static size_t capacity;
-static size_t used;
-static size_t live;
-static uint32_t vacant;
 
 static void fail(const char *message, size_t size) {
 	adamic_panic(message, size);
@@ -51,10 +29,9 @@ static adamic_heap *owner(void *value) {
 	return heap;
 }
 
-static graph_member *member(void *value) {
+static adamic_heap *member(void *value) {
 	adamic_heap *heap = owner(value);
-	if (!adamic_graph_is(heap)) { return NULL; }
-	return (graph_member *)(members[heap->slab - 1] ^ HIDDEN);
+	return adamic_graph_is(heap) ? heap : NULL;
 }
 
 static graph_region *find(graph_region *region) {
@@ -70,75 +47,85 @@ static graph_region *find(graph_region *region) {
 
 void *adamic_graph_adopt(void *value, size_t bytes) {
 	adamic_heap *heap = owner(value);
-	if (heap == NULL || heap != value || heap->references != 1) {
+	if (heap == NULL || heap != value || heap->references != 1 || adamic_graph_is(heap)) {
 		FAIL("compiler bug: graph adoption needs a new allocation");
 	}
-	graph_member *each = calloc(1, sizeof *each);
-	if (each == NULL) { FAIL("out of memory"); }
-	each->region = (graph_region){&each->region, 1, 1, each, each, false};
-	each->value = heap;
-	each->bytes = bytes;
-	each->slab = heap->slab;
+	heap = adamic_heap_graph_storage(value, bytes);
+	// Interior cells must point at the environment's final address.
+	if (heap->kind == adamic_kind_environment) {
+		adamic_environment *environment = (adamic_environment *)heap;
+		for (size_t i = 0; i < environment->count; i++) { environment->cells[i].owner = environment; }
+	}
+	return heap;
+}
+
+static graph_region *region_of(adamic_heap *heap) {
+	graph_region *region = adamic_graph_header_of(heap)->region;
+	return region == NULL ? NULL : find(region);
+}
+
+static graph_region *new_region(adamic_heap *heap) {
+	graph_region *region = calloc(1, sizeof *region);
+	if (region == NULL) { FAIL("out of memory"); }
+	*region = (graph_region){.parent = region, .record_tail = region,
+		.size = 1, .references = heap->references, .head = heap, .tail = heap};
+	adamic_graph_header_of(heap)->region = region;
 #ifdef ADAMIC_COUNT
-	each->outside = 1;
 	adamic_counted.graph_regions++;
 #endif
-	uint32_t slot;
-	if (vacant != 0) {
-		slot = vacant - 1;
-		vacant = (uint32_t)members[slot];
-	} else {
-		if (used == UINT32_MAX) { FAIL("too many graph members"); }
-		if (used == capacity) {
-			size_t grown = capacity == 0 ? 64 : capacity * 2;
-			uintptr_t *table = realloc(members, grown * sizeof *table);
-			if (table == NULL) { FAIL("out of memory"); }
-			members = table;
-			capacity = grown;
-		}
-		slot = (uint32_t)used++;
-	}
-	members[slot] = (uintptr_t)each ^ HIDDEN;
-	live++;
-	heap->references = SIZE_MAX;
-	heap->slab = slot + 1;
-	return value;
+	return region;
 }
 
 void adamic_graph_merge(void *left, void *right) {
-	graph_member *one = member(left), *two = member(right);
+	adamic_heap *one = member(left), *two = member(right);
 	if (one == NULL || two == NULL) { FAIL("compiler bug: merging non-graph values"); }
-	graph_region *a = find(&one->region), *b = find(&two->region);
-	if (a == b) { return; }
-	if (a->shared || b->shared) { FAIL("merging shared graph regions is not yet supported"); }
-	if (a->size < b->size) { graph_region *swap = a; a = b; b = swap; }
-	if (SIZE_MAX - a->references < b->references || SIZE_MAX - a->size < b->size) {
-		FAIL("graph region count overflow");
+	graph_region *a = region_of(one), *b = region_of(two);
+	if (one == two || (a != NULL && a == b)) { return; }
+	if ((a != NULL && a->shared) || (b != NULL && b->shared)) {
+		FAIL("merging shared graph regions is not yet supported");
 	}
-	a->references += b->references;
-	a->size += b->size;
-	a->tail->next = b->head;
-	a->tail = b->tail;
-	b->parent = a;
+	if (a == NULL && b != NULL) {
+		adamic_heap *swap = one; one = two; two = swap;
+		a = b; b = NULL;
+	}
+	if (a == NULL) { a = new_region(one); }
+	if (b == NULL) {
+		if (SIZE_MAX - a->references < two->references || a->size == SIZE_MAX) { FAIL("graph region count overflow"); }
+		a->references += two->references;
+		a->size++;
+		adamic_graph_header_of(a->tail)->next = two;
+		a->tail = two;
+		adamic_graph_header_of(two)->region = a;
+	} else {
+		if (a->size < b->size) { graph_region *swap = a; a = b; b = swap; }
+		if (SIZE_MAX - a->references < b->references || SIZE_MAX - a->size < b->size) { FAIL("graph region count overflow"); }
+		a->references += b->references;
+		a->size += b->size;
+		adamic_graph_header_of(a->tail)->next = b->head;
+		a->tail = b->tail;
+		a->record_tail->next_record = b;
+		a->record_tail = b->record_tail;
+		b->parent = a;
+	}
 #ifdef ADAMIC_COUNT
 	adamic_counted.graph_merges++;
 #endif
 }
 
 void adamic_graph_mark_shared(void *value) {
-	graph_member *each = member(value);
-	if (each == NULL) { FAIL("compiler bug: sharing a non-graph value"); }
-	find(&each->region)->shared = true;
+	adamic_heap *heap = member(value);
+	if (heap == NULL) { FAIL("compiler bug: sharing a non-graph value"); }
+	graph_region *root = region_of(heap);
+	if (root == NULL) { root = new_region(heap); }
+	root->shared = true;
 }
 
 void adamic_graph_retain(void *value) {
-	graph_member *each = member(value);
-	graph_region *root = find(&each->region);
-	if (root->references == 0 || root->references == SIZE_MAX) { FAIL("graph region count overflow"); }
-	root->references++;
-#ifdef ADAMIC_COUNT
-	each->outside++;
-#endif
+	adamic_heap *heap = member(value);
+	graph_region *root = region_of(heap);
+	if (heap->references == SIZE_MAX || (root != NULL && root->references == SIZE_MAX)) { FAIL("graph region count overflow"); }
+	heap->references++;
+	if (root != NULL) { root->references++; }
 }
 
 void *adamic_graph_hold(void *holder, void *value) {
@@ -152,9 +139,9 @@ void *adamic_graph_hold(void *holder, void *value) {
 
 void adamic_graph_drop(void *holder, void *value) {
 	if (value == NULL) { return; }
-	graph_member *from = member(holder), *to = member(value);
+	adamic_heap *from = member(holder), *to = member(value);
 	if (from != NULL && to != NULL) {
-		if (find(&from->region) != find(&to->region)) { FAIL("compiler bug: graph edge crosses regions"); }
+		if (from != to && (region_of(from) == NULL || region_of(from) != region_of(to))) { FAIL("compiler bug: graph edge crosses regions"); }
 		return;
 	}
 	adamic_release(value);
@@ -213,110 +200,117 @@ static void children(void *value, void (*visit)(void *)) {
 	}
 }
 
-static size_t bytes(graph_member *each) {
-	size_t total = each->bytes;
-	if (each->value->kind == adamic_kind_array) {
-		total += ((adamic_array *)each->value)->capacity * sizeof(adamic_value);
-	} else if (each->value->kind == adamic_kind_map) {
-		adamic_map *map = (adamic_map *)each->value;
-		total += map->capacity * sizeof(adamic_map_entry) + map->bucket_count * sizeof(size_t);
+static size_t bytes(adamic_heap *heap) {
+	switch (heap->kind) {
+	case adamic_kind_object: return sizeof(adamic_object) + ((adamic_object *)heap)->shape->count * sizeof(adamic_value);
+	case adamic_kind_array: return sizeof(adamic_array) + ((adamic_array *)heap)->capacity * sizeof(adamic_value);
+	case adamic_kind_map: {
+		adamic_map *map = (adamic_map *)heap;
+		return sizeof *map + map->capacity * sizeof(adamic_map_entry) + map->bucket_count * sizeof(size_t);
 	}
-	return total;
+	case adamic_kind_closure: return sizeof(adamic_closure) + ((adamic_closure *)heap)->count * sizeof(adamic_cell *);
+	case adamic_kind_cell: return sizeof(adamic_cell);
+	case adamic_kind_environment: return sizeof(adamic_environment) + ((adamic_environment *)heap)->count * sizeof(adamic_cell);
+	case adamic_kind_map_iterator: return sizeof(adamic_map_iterator);
+	default: FAIL("compiler bug: unsupported graph allocation"); return 0;
+	}
 }
 
-static graph_member *mark_work;
+// The outside count remains in each member's existing header. Its high bit is
+// borrowed as a diagnostic mark only during this pass, then restored.
+#define MARK_BIT ((size_t)1 << (sizeof(size_t) * 8 - 1))
+static adamic_heap **mark_work;
+static size_t mark_count;
 static graph_region *mark_root;
 static void mark(void *value) {
-	graph_member *each = member(value);
-	if (each == NULL) { return; }
-	if (find(&each->region) != mark_root) { FAIL("compiler bug: graph edge crosses regions"); }
-	if (each->marked) { return; }
-	each->marked = true;
-	each->work = mark_work;
-	mark_work = each;
+	adamic_heap *heap = member(value);
+	if (heap == NULL) { return; }
+	if (region_of(heap) != mark_root) { FAIL("compiler bug: graph edge crosses regions"); }
+	if ((heap->references & MARK_BIT) != 0) { return; }
+	heap->references |= MARK_BIT;
+	mark_work[mark_count++] = heap;
 }
 
-static void report(graph_region *root) {
+static void report(graph_region *root, adamic_heap *lone) {
+	size_t count = root == NULL ? 1 : root->size;
 	mark_root = root;
-	mark_work = NULL;
-	for (graph_member *each = root->head; each != NULL; each = each->next) {
-		each->marked = false;
+	mark_count = 0;
+	mark_work = malloc(count * sizeof *mark_work);
+	if (mark_work == NULL) { FAIL("out of memory"); }
+	adamic_heap *head = root == NULL ? lone : root->head;
+	for (adamic_heap *each = head; each != NULL; each = adamic_graph_header_of(each)->next) {
+		if (each->references != 0) { mark(each); }
 	}
-	for (graph_member *each = root->head; each != NULL; each = each->next) {
-		if (each->outside != 0) { mark(each->value); }
-	}
-	while (mark_work != NULL) {
-		graph_member *each = mark_work;
-		mark_work = each->work;
-		children(each->value, mark);
-	}
-	size_t total = 0, reachable = 0, reachable_bytes = 0;
-	for (graph_member *each = root->head; each != NULL; each = each->next) {
+	while (mark_count != 0) { children(mark_work[--mark_count], mark); }
+	size_t total = 0, reachable = 0, reachable_bytes = 0, records = 0;
+	for (adamic_heap *each = head; each != NULL; each = adamic_graph_header_of(each)->next) {
 		size_t size = bytes(each);
 		total += size;
-		if (each->marked) { reachable++; reachable_bytes += size; }
+		if ((each->references & MARK_BIT) != 0) { reachable++; reachable_bytes += size; }
+		each->references &= ~MARK_BIT;
 	}
+	for (graph_region *each = root; each != NULL; each = each->next_record) { records++; }
 	fprintf(stderr, "adamic: graph region: live %zu bytes %zu reachable %zu bytes %zu unreachable %zu bytes %zu metadata %zu\n",
-		root->size, total, reachable, reachable_bytes, root->size - reachable, total - reachable_bytes, root->size * sizeof(graph_member));
+		count, total, reachable, reachable_bytes, count - reachable, total - reachable_bytes,
+		count * sizeof(adamic_graph_header) + records * sizeof(graph_region));
+	free(mark_work);
+	mark_work = NULL;
 	mark_root = NULL;
 }
 #endif
 
 bool adamic_graph_release_last(void *value) {
-	graph_member *each = member(value);
-	graph_region *root = find(&each->region);
-	if (root->references == 0) { FAIL("compiler bug: graph region released without ownership"); }
+	adamic_heap *heap = member(value);
+	graph_region *root = region_of(heap);
+	if (heap->references == 0 || (root != NULL && root->references == 0)) { FAIL("compiler bug: graph released without ownership"); }
 #ifdef ADAMIC_COUNT
-	if (each->outside == 0) { FAIL("compiler bug: graph member released without ownership"); }
-	if (root->references == 1) { report(root); }
-	each->outside--;
+	if ((root == NULL && heap->references == 1) || (root != NULL && root->references == 1)) { report(root, heap); }
 #endif
-	return --root->references == 0;
+	heap->references--;
+	return root == NULL ? heap->references == 0 : --root->references == 0;
 }
 
 static void (*outside_release)(void *);
 static graph_region *freeing_root;
+static adamic_heap *freeing_lone;
 static void release_outside(void *value) {
-	graph_member *each = member(value);
-	if (each != NULL) {
-		if (find(&each->region) != freeing_root) { FAIL("compiler bug: graph edge crosses regions"); }
+	adamic_heap *heap = member(value);
+	if (heap != NULL) {
+		if (heap != freeing_lone && (freeing_root == NULL || region_of(heap) != freeing_root)) { FAIL("compiler bug: graph edge crosses regions"); }
 		return;
 	}
 	outside_release(value);
 }
 
 void adamic_graph_free(void *value, void (*release)(void *)) {
-	graph_region *root = find(&member(value)->region);
-	if (root->references != 0) { FAIL("compiler bug: freeing a graph region still owned outside"); }
+	adamic_heap *heap = member(value);
+	graph_region *root = region_of(heap);
+	if ((root != NULL && root->references != 0) || (root == NULL && heap->references != 0)) { FAIL("compiler bug: freeing a graph still owned outside"); }
 	freeing_root = root;
+	freeing_lone = root == NULL ? heap : NULL;
 	outside_release = release;
-	for (graph_member *each = root->head; each != NULL; each = each->next) {
-		adamic_weak_forget(each->value);
-		if (each->value->kind == adamic_kind_environment) {
-			adamic_environment *environment = (adamic_environment *)each->value;
+	adamic_heap *head = root == NULL ? heap : root->head;
+	for (adamic_heap *each = head; each != NULL; each = adamic_graph_header_of(each)->next) {
+		adamic_weak_forget(each);
+		if (each->kind == adamic_kind_environment) {
+			adamic_environment *environment = (adamic_environment *)each;
 			for (size_t i = 0; i < environment->count; i++) { adamic_weak_forget(&environment->cells[i]); }
 		}
 	}
-	for (graph_member *each = root->head; each != NULL; each = each->next) {
-		adamic_heap_free_children(each->value, release_outside);
+	for (adamic_heap *each = head; each != NULL; each = adamic_graph_header_of(each)->next) {
+		adamic_heap_free_children(each, release_outside);
 	}
-	graph_member *each = root->head;
 	freeing_root = NULL;
+	freeing_lone = NULL;
 	outside_release = NULL;
-	while (each != NULL) {
-		graph_member *next = each->next;
-		uint32_t slot = each->value->slab;
-		adamic_heap_free_storage(each->value, each->slab);
-		members[slot - 1] = vacant;
-		vacant = slot;
-		free(each);
-		live--;
-		each = next;
+	while (head != NULL) {
+		adamic_heap *next = adamic_graph_header_of(head)->next;
+		adamic_heap_free_storage(head, head->slab);
+		head = next;
 	}
-	if (live == 0) {
-		free(members);
-		members = NULL;
-		capacity = used = 0;
-		vacant = 0;
+	while (root != NULL) {
+		graph_region *next = root->next_record;
+		free(root);
+		root = next;
 	}
 }

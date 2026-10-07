@@ -4,15 +4,24 @@
 
 #include "adamic.h"
 
-// Graph values keep the existing header layout. SIZE_MAX marks region ownership;
-// slab then indexes hidden member metadata, which saves the original allocator slab.
+// Only graph allocations carry this two-word prefix. Ordinary layouts are unchanged.
+// The high slab bit marks the prefix; the other bits retain allocator identity.
+#define ADAMIC_GRAPH_FLAG ((uint32_t)0x80000000u)
+typedef struct adamic_graph_header {
+	struct graph_region *region;
+	adamic_heap *next;
+} adamic_graph_header;
 static inline bool adamic_graph_is(const void *value) {
-	return value != NULL && ((const adamic_heap *)value)->references == SIZE_MAX;
+	return value != NULL && (((const adamic_heap *)value)->slab & ADAMIC_GRAPH_FLAG) != 0;
+}
+static inline adamic_graph_header *adamic_graph_header_of(void *value) {
+	return (adamic_graph_header *)value - 1;
 }
 
 // Adoption is only for a new, fully initialized allocation, before any owned
 // reference is stored in it. size is its allocation size, excluding buffers.
 void *adamic_graph_adopt(void *value, size_t size);
+void *adamic_heap_graph_storage(void *value, size_t size);
 void adamic_graph_merge(void *left, void *right);
 void adamic_graph_retain(void *value);
 bool adamic_graph_release_last(void *value);

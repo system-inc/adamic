@@ -28,7 +28,7 @@ static void link(adamic_object *from, size_t index, adamic_object *to) {
  from->slots[index].reference = adamic_graph_hold(from, to);
  adamic_graph_drop(from, old);
 }
-int main(int count, char **arguments) {
+__attribute__((noinline)) static int run(int count, char **arguments) {
  (void)count;
  adamic_object *root = node(), *child = node(), *orphan = node();
  static adamic_string a = ADAMIC_STRING("made ");
@@ -63,6 +63,7 @@ int main(int count, char **arguments) {
  adamic_release(weak);
  return 0;
 }
+int main(int count, char **arguments) { return run(count, arguments); }
 `
 
 func TestGraphRegionsRuntime(t *testing.T) {
@@ -87,7 +88,7 @@ func TestGraphRegionsRuntime(t *testing.T) {
 					if !strings.Contains(text, "live 3 bytes 192 reachable 2 bytes 128 unreachable 1 bytes 64") {
 						t.Fatal(text)
 					}
-					if !strings.Contains(text, "graph counts: regions 3 merges 2") {
+					if !strings.Contains(text, "graph counts: regions 1 merges 2") {
 						t.Fatal(text)
 					}
 					if !strings.Contains(text, "allocations 5 frees 5 retains 0 releases 4 peak 5 regions 0") {
@@ -125,9 +126,9 @@ static adamic_value code(adamic_closure *self, adamic_value *arguments) {
 }
 int main(void) {
  adamic_environment *environment = adamic_environment_new(1);
- adamic_graph_adopt(environment, sizeof *environment + sizeof(adamic_cell));
+ environment = adamic_graph_adopt(environment, sizeof *environment + sizeof(adamic_cell));
  adamic_closure *closure = adamic_closure_new(code, 1);
- adamic_graph_adopt(closure, sizeof *closure + sizeof(adamic_cell *));
+ closure = adamic_graph_adopt(closure, sizeof *closure + sizeof(adamic_cell *));
  adamic_cell *cell = &environment->cells[0];
  cell->references = true; cell->ready = true;
  cell->value.reference = adamic_graph_hold(cell, closure);
@@ -147,7 +148,7 @@ int main(void) {
 	if err != nil {
 		t.Fatalf("%v\n%s", err, output)
 	}
-	if !strings.Contains(string(output), "graph counts: regions 2 merges 1") {
+	if !strings.Contains(string(output), "graph counts: regions 1 merges 1") {
 		t.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "allocations 2 frees 2 retains 1 releases 3 peak 2 regions 0") {
@@ -188,7 +189,7 @@ int main(void) {
  return 0;
 }
 `
-	source := graphHarness[:strings.Index(graphHarness, "int main")] + cmain
+	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + cmain
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "million")
 	if err := Build(source, binary, Options{Count: true}); err != nil {
@@ -198,7 +199,7 @@ int main(void) {
 	if err != nil {
 		t.Fatalf("native: %v\n%s", err, output)
 	}
-	if !strings.Contains(string(output), "live 1000000 bytes 64000000 reachable 950001 bytes 60800064 unreachable 49999 bytes 3199936") {
+	if !strings.Contains(string(output), "live 1000000 bytes 64000000 reachable 950001 bytes 60800064 unreachable 49999 bytes 3199936 metadata 16000064") {
 		t.Fatal(string(output))
 	}
 	t.Logf("native runtime foundation:\n%s", output)
@@ -213,6 +214,7 @@ int main(void) {
 	if strings.Contains(string(releaseOutput), "graph region:") {
 		t.Fatal("diagnostics in release")
 	}
+	t.Logf("native release flags: %s", strings.Join(Flags(Options{}), " "))
 	t.Logf("native release:\n%s", releaseOutput)
 	sanitized := filepath.Join(directory, "million-sanitized")
 	if err := Build(source, sanitized, Options{Count: true, Sanitize: true}); err != nil {
@@ -265,9 +267,9 @@ func TestGraphContainerBoundary(t *testing.T) {
 	const main = `int main(void) {
  adamic_object *root = node(), *child = node();
  adamic_array *array = adamic_array_new(1, true);
- adamic_graph_adopt(array, sizeof *array);
+ array = adamic_graph_adopt(array, sizeof *array);
  adamic_map *cache = adamic_map_new(true, true);
- adamic_graph_adopt(cache, sizeof *cache);
+ cache = adamic_graph_adopt(cache, sizeof *cache);
  static adamic_string a = ADAMIC_STRING("cache ");
  static adamic_string b = ADAMIC_STRING("key");
  adamic_string *key = adamic_string_concat(2, (adamic_string *const[]){&a, &b});
@@ -287,7 +289,7 @@ func TestGraphContainerBoundary(t *testing.T) {
  return 0;
 }
 `
-	source := graphHarness[:strings.Index(graphHarness, "int main")] + main
+	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(t.TempDir(), "containers")
 	if err := Build(source, binary, Options{Count: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
@@ -296,7 +298,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 	if err != nil {
 		t.Fatalf("%v\n%s", err, output)
 	}
-	if !strings.Contains(string(output), "graph counts: regions 4 merges 3") {
+	if !strings.Contains(string(output), "graph counts: regions 1 merges 3") {
 		t.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "live 4 bytes 592 reachable 3 bytes 192 unreachable 1 bytes 400") {
@@ -306,4 +308,42 @@ func TestGraphContainerBoundary(t *testing.T) {
 		t.Fatal(string(output))
 	}
 	t.Logf("container/boundary counts:\n%s", output)
+}
+
+func TestGraphLazyRegions(t *testing.T) {
+	t.Parallel()
+	const main = `int main(void) {
+  if (sizeof(adamic_graph_header) != 16) { return 1; }
+  adamic_object *a = node(), *b = node(), *c = node(), *d = node();
+  if (adamic_graph_header_of(a)->region != NULL) { return 2; }
+  adamic_retain(a); adamic_release(a);
+  if (adamic_graph_header_of(a)->region != NULL || a->heap.references != 1) { return 3; }
+  link(a, 0, b); link(c, 0, d);
+  // Merge two established regions, each with two outside owners.
+  link(b, 0, c); link(d, 0, a);
+  adamic_release(b); adamic_release(c); adamic_release(d);
+  if (((adamic_object *)((adamic_object *)a->slots[0].reference)->slots[0].reference)->shape->count != 3) { return 4; }
+  adamic_release(a);
+  adamic_object *lone = node();
+  if (adamic_graph_header_of(lone)->region != NULL) { return 5; }
+  adamic_release(lone);
+  return 0;
+ }
+`
+	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
+	binary := filepath.Join(t.TempDir(), "lazy")
+	if err := Build(source, binary, Options{Sanitize: true, Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	output, err := exec.Command(binary).CombinedOutput()
+	if err != nil {
+		t.Fatalf("%v\n%s", err, output)
+	}
+	if !strings.Contains(string(output), "graph counts: regions 2 merges 3") || !strings.Contains(string(output), "allocations 5 frees 5") {
+		t.Fatal(string(output))
+	}
+	if !strings.Contains(string(output), "live 1 bytes 64 reachable 1 bytes 64 unreachable 0 bytes 0 metadata 16") {
+		t.Fatal(string(output))
+	}
+	t.Logf("lazy regions:\n%s", output)
 }

@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Small heap values come from size classes, 16 bytes apart up to 256, carved from 64 KB chunks: each
 // chunk holds one class's slots, its freed ones on a list threaded through them, and each class keeps
@@ -113,7 +114,7 @@ static chunk *new_chunk(size_t class) {
 		if (chunk_count == chunk_capacity) {
 			chunk_capacity = chunk_capacity == 0 ? 64 : chunk_capacity * 2;
 			chunk **grown = realloc(chunks, chunk_capacity * sizeof *grown);
-			if (grown == NULL || chunk_count >= UINT32_MAX) {
+			if (grown == NULL || chunk_count >= ADAMIC_GRAPH_FLAG - 1) {
 				static const char message[] = "out of memory";
 				adamic_panic(message, sizeof message - 1);
 			}
@@ -186,7 +187,7 @@ static void give(void *slot, uint32_t number) {
 	}
 }
 
-void *adamic_allocate(size_t size, enum adamic_kind kind) {
+static void *allocate_storage(size_t size, enum adamic_kind kind) {
 	adamic_heap *heap;
 	uint32_t slab = 0;
 	if (SLABS && size <= CLASSES * GRANULE) {
@@ -203,8 +204,12 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	heap->references = 1;
 	heap->kind = kind;
 	heap->slab = slab;
-	ADAMIC_COUNT_ALLOCATION();
 	return heap;
+}
+
+void *adamic_allocate(size_t size, enum adamic_kind kind) {
+	ADAMIC_COUNT_ALLOCATION();
+	return allocate_storage(size, kind);
 }
 
 // deallocate gives a value's memory back: to its chunk, or to free.
@@ -214,6 +219,21 @@ static void deallocate(adamic_heap *heap) {
 		return;
 	}
 	give(heap, heap->slab - 1);
+}
+
+// Move a still-new allocation into storage with its graph-only prefix. This is
+// one logical allocation, and must happen before aliases or owned slots exist.
+void *adamic_heap_graph_storage(void *value, size_t size) {
+	adamic_heap *old = value;
+	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
+	uint32_t slab = storage->slab;
+	adamic_graph_header *prefix = (adamic_graph_header *)storage;
+	adamic_heap *heap = (adamic_heap *)(prefix + 1);
+	memcpy(heap, old, size);
+	heap->slab = slab | ADAMIC_GRAPH_FLAG;
+	*prefix = (adamic_graph_header){NULL, NULL};
+	deallocate(old);
+	return heap;
 }
 
 void *adamic_retain(void *value) {
@@ -332,7 +352,10 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 
 void adamic_heap_free_storage(void *value, uint32_t slab) {
 	adamic_heap *heap = value;
-	heap->slab = slab;
+	if (adamic_graph_is(heap)) {
+		heap = (adamic_heap *)adamic_graph_header_of(heap);
+	}
+	heap->slab = slab & ~ADAMIC_GRAPH_FLAG;
 	deallocate(heap);
 	ADAMIC_COUNT_FREE();
 }

@@ -722,6 +722,70 @@ the counts-table integration, and a million-node fixture compiled from Adamic.
 No inference or refusal relaxation may land until that evidence passes. Threads
 and long-lived services remain design-only/NotYet as specified above.
 
+### Compact lazy regions, October 7
+
+This supersedes the foundation's per-member metadata layout, not its compiler
+checkpoint. Only graph allocations gain a 16-byte prefix: one region pointer
+and one intrusive list link. Ordinary heap layouts are unchanged. A high bit in
+`slab` identifies the prefix while preserving the allocator's chunk number.
+A lone graph object holds its outside count in its existing header and has no
+region record. A store between two lone objects creates one 64-byte record;
+adding another lone object needs none. Union of two established regions keeps
+both records until their combined member list frees, with union by size and
+path compression. Lists and record lists concatenate in constant time.
+
+Adoption returns the allocation's final address and must precede all aliases,
+Weak handles and owned slots. Interior environment cells are repaired to that
+address before publication. Counting diagnostics reuse the existing header's
+outside count and borrow its high bit as a temporary mark; their work stack is
+allocated only during the diagnostic pass. No per-member side table remains.
+
+`TestGraphLazyRegions` proves a lone object has no record through retain/release,
+merges two established regions with outside owners on all four members, reads
+through the remaining anchor and frees all members and both records. It also
+frees an unmerged lone object. The sanitizer and leak checks pass. The intentional
+leaked-anchor control now runs in a separate noinline frame: the initial compact
+run left the anchor in main's live stack and LeakSanitizer did not report it.
+With the workload frame gone, the same missing release is caught. This is a
+harness correction, not leak evidence from the failed initial run.
+
+The million-member fixture at clang 20.1.8 uses release flags `-std=c11 -Wall
+-Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable
+-Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off
+-fno-optimize-sibling-calls -O2`. Counting adds `-DADAMIC_COUNT`; sanitizer
+runs use `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`.
+
+| Measurement | Foundation | Compact lazy regions |
+| --- | ---: | ---: |
+| Member metadata | 104 bytes counted, plus table | 16 bytes, both builds |
+| Metadata for this million-node graph | 104000000 bytes counted, plus table | 16000064 bytes |
+| Region records created | 1000000 | 1 |
+| Native release peak RSS | 165028 KiB | 79028 KiB |
+| Native counted peak RSS | 180616 KiB | 78976 KiB |
+| Node peak RSS | 95104 KiB | 95104 KiB |
+
+Both native builds use `-O2`. RSS is process memory, including slabs and
+allocator overhead, and is not payload bytes. The last-release payload report
+is unchanged: 1000000 live members / 64000000 bytes, 950001 reachable /
+60800064 bytes, 49999 retained unreachable / 3199936 bytes. Native allocates
+and frees all million members, with 999999 merges. Node reports a construction
+heap snapshot of 50918320 bytes, not peak live bytes. These are the same direct
+runtime C and Node model as the foundation, not yet compiled Adamic evidence.
+
+Setup passed in 146s: Go, clang, Node and submodules ready at 0s, build cache warm
+146s, nproc 5, cgroup cpu.max `400000 100000`. The compact runtime check passed:
+`go test ./internal/native -run 'TestGraph' -count=1 -v`, log
+`/tmp/graph-regions-compact-final.log`, 2.761s. All five direct runtime tests,
+including the million-node ASan/UBSan/LeakSanitizer run, passed.
+Six independent compact-source mutants were restored after running: early free,
+missing count sum for a joining lone member, and missing count sum between two
+established regions all produced ASan heap-use-after-free; skipped outside
+release and counted internal stores produced LeakSanitizer reports; omitted
+mark roots failed the unreachable-member assertion. Each test exited 1 and none
+failed compilation. Runner `/tmp/graph-regions-compact-mutants.py`, logs
+`/tmp/graph-regions-compact-mutants.log` and one log per named mutant.
+
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
