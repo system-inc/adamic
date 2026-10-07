@@ -80,16 +80,26 @@ shutil.copyfile(out / 'node.stdout', control)
 assert run(['diff', '-u', str(control), str(out / 'node.stdout')], 'control-diff') == 0
 mutant = out / 'node-end-mutant.stdout'
 with (out / 'node.stdout').open('rb') as source, mutant.open('wb') as target:
-    first = source.readline().split(b'\t')
-    if len(first) != 6:
-        sys.exit('oracle did not produce a six-field token')
+    while True:
+        line = source.readline()
+        if not line:
+            sys.exit('oracle did not produce a token')
+        first = line.split(b'\t')
+        if len(first) == 7 and first[0] != b'error':
+            break
+        target.write(line)
     first[3] = str(int(first[3]) + 1).encode()
     target.write(b'\t'.join(first))
     shutil.copyfileobj(source, target)
 mutation = run(['diff', '-u', str(control), str(mutant)], 'mutant-diff')
 if mutation != 1:
     sys.exit(f'end mutant was not caught by comparison (diff exit {mutation})')
-report = {'input_tree': str(inputs), 'files': len(files), 'node_exit': node, 'comparison_control_exit': 0, 'end_mutant_diff_exit': mutation,
+dump = (out / 'node.stdout').read_bytes()
+import hashlib
+rows = dump.splitlines()
+tokens = sum(len(row.split(b'\t')) == 7 and not row.startswith(b'error\t') for row in rows)
+errors = sum(row.startswith(b'error\t') for row in rows)
+report = {'tokens': tokens, 'errors': errors, 'sha256': hashlib.sha256(dump).hexdigest(), 'bytes': len(dump), 'input_tree': str(inputs), 'files': len(files), 'node_exit': node, 'comparison_control_exit': 0, 'end_mutant_diff_exit': mutation,
           'native': 'not attempted' if args.node_only else 'pending'}
 if not args.node_only:
     command = [str(args.compiler.resolve())] if args.compiler else ['go', 'run', './cmd/adamic']

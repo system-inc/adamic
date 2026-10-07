@@ -115,3 +115,27 @@ cold-object-cache split and warm-object-cache split builds. Runtime preparation
 is measured separately and excluded from those build times; split preprocessing,
 cache checks and linking remain included. Run and compare all three measured
 binaries on the same files.json corpus before using their timings as a proof.
+
+The coverage dump scans every corpus file twice, first with `skipTrivia: true`,
+then with `skipTrivia: false`. Every token includes `getTokenValue()` serialized
+with JSON.stringify, alongside kind, full start, start, end, flags and raw text.
+The value is exactly the scanner's current value, including stale values on
+punctuation. Inline error rows include code, category, the callback's scanner
+position (the error start), length, message text and substitution argument.
+Pass headers identify the pass and input file. Absent cooked values and substitution arguments are represented as JSON `null`.
+
+This dump does not drive rescans: regular expressions, template continuation,
+JSX, and greater-than tokens. The parser slice exercises those once its
+JSDoc-complete dump lands. `coverage-mutants.py` changes one escape branch,
+omits exactly one error callback, and changes the single-line comment kind in
+scratch copies. Each Node execution must succeed and its complete dump must
+compare unequal; the escape mutation must change cooked values alone.
+
+Observed full-tree/slice reference: **1,369,432 tokens**, **466 errors**, 81 input
+files in each pass, 108,019,935 bytes. SHA-256:
+`41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc`.
+The skipped-trivia pass has 509,014 tokens; the retained-trivia pass has 860,418.
+All three source mutants exit zero on Node and produce unequal dumps. The
+error mutant removes exactly one row. Native execution remains blocked by the
+previously recorded typed captureStackTrace marker refusal; this expanded
+coverage result is a Node reference proof, not a native proof.
