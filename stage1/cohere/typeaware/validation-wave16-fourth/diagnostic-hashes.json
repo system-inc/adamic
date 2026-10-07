@@ -1,0 +1,66 @@
+{
+  "005-controls-go.stdout": {
+    "bytes": 12914,
+    "sha256": "4490ea7f6d37b285079a8b8ae1bf6c9f0714ad66efd8e06dd7a28888b31cf76b"
+  },
+  "006-controls-native.stdout": {
+    "bytes": 12914,
+    "sha256": "4490ea7f6d37b285079a8b8ae1bf6c9f0714ad66efd8e06dd7a28888b31cf76b"
+  },
+  "009-controls-asan-go.stdout": {
+    "bytes": 12914,
+    "sha256": "4490ea7f6d37b285079a8b8ae1bf6c9f0714ad66efd8e06dd7a28888b31cf76b"
+  },
+  "010-controls-asan-native.stdout": {
+    "bytes": 12914,
+    "sha256": "4490ea7f6d37b285079a8b8ae1bf6c9f0714ad66efd8e06dd7a28888b31cf76b"
+  },
+  "012-function-range-run.stdout": {
+    "bytes": 12914,
+    "sha256": "66f136019210200ca495d10c05d8a648337748cc5f4cb5c982f5e91dab84d431"
+  },
+  "014-native-range-run.stdout": {
+    "bytes": 12914,
+    "sha256": "49fd0870577f8ccded50a62d7a143a7e2d351456fde7d9ccf41b519391568a52"
+  },
+  "016-wrapper-range-run.stdout": {
+    "bytes": 12914,
+    "sha256": "0924ebd71553b49412f70cecaab66a1cf35274b4efd2d84b7eb35c0c1da34dec"
+  },
+  "017-repository-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "018-repository-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "019-repository-asan-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "020-repository-asan-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "021-compiler-go.stdout": {
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  "022-compiler-native.stdout": {
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  "023-compiler-asan-go.stdout": {
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  "024-compiler-asan-native.stdout": {
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  "029-released-mutant-run.stdout": {
+    "bytes": 29,
+    "sha256": "ef68fca4039907ab3e10ddcbd79b5c08fc134ac65111de51aa19f50f0925793d"
+  }
+}

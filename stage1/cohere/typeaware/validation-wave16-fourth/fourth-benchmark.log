@@ -1,0 +1,4 @@
+compiler native {"load_ns": 0.244409122, "run_ns": 1.152389864, "process": 1.412982208}
+compiler go {"load_ns": 0.218933996, "run_ns": 0.044678583, "process": 0.290773998}
+repository native {"load_ns": 0.060826722, "run_ns": 0.135870315, "process": 0.20118271}
+repository go {"load_ns": 0.058994801, "run_ns": 0.042562716, "process": 0.113163938}

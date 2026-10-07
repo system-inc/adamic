@@ -1,0 +1,22 @@
+=== RUN   TestWave16FourthAgreementAndMutants
+    wave16_fourth_test.go:92: controls: 9881 identical finding bytes; findings 26
+    wave16_fourth_test.go:100: controls-asan: 9881 identical finding bytes; findings 26
+=== RUN   TestWave16FourthAgreementAndMutants/function-range
+    wave16_fourth_test.go:117: function-range: exit 0, Go byte oracle catches byte 118; findings 26
+=== RUN   TestWave16FourthAgreementAndMutants/native-range
+    wave16_fourth_test.go:117: native-range: exit 0, Go byte oracle catches byte 4577; findings 26
+=== RUN   TestWave16FourthAgreementAndMutants/wrapper-range
+    wave16_fourth_test.go:117: wrapper-range: exit 0, Go byte oracle catches byte 5155; findings 26
+=== NAME  TestWave16FourthAgreementAndMutants
+    wave16_fourth_test.go:125: repository: 18485 identical finding bytes; findings 0
+    wave16_fourth_test.go:126: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_fourth_test.go:133: compiler: 5780 identical finding bytes; findings 0
+    wave16_fourth_test.go:134: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_fourth_test.go:146: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_fourth_test.go:151: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16FourthAgreementAndMutants (67.15s)
+    --- PASS: TestWave16FourthAgreementAndMutants/function-range (4.72s)
+    --- PASS: TestWave16FourthAgreementAndMutants/native-range (4.63s)
+    --- PASS: TestWave16FourthAgreementAndMutants/wrapper-range (4.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	67.152s

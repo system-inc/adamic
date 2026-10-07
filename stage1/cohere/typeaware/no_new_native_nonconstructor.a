@@ -1,0 +1,37 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { constructorGlobal } from './constructor_global.a';
+export class NoNewNativeNonconstructor {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(node.kind !== 'NewExpression' || (this.rules.parents[i] ?? -1) < 0) continue;
+            const index = node.children[0] ?? -1;
+            if(index < 0) continue;
+            const callee = this.rules.parser.node(index);
+            const name = callee.text;
+            if(
+                callee.kind !== 'Identifier' ||
+                !['Symbol', 'BigInt'].includes(name) ||
+                !constructorGlobal(this.rules, index)
+            )
+                continue;
+            const message = `This calls \`new ${name}()\`. ${name} is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without \`new\`.`;
+            const anchor = callee;
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-new-native-nonconstructor',
+                    'noNewNativeNonconstructor',
+                    message,
+                    this.rules.byte(this.rules.start(anchor)),
+                    this.rules.byte(anchor.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

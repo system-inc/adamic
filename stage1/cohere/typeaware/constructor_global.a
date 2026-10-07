@@ -1,0 +1,20 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+// Production cohere deliberately tests the first declaration, not every declaration.
+export function constructorGlobal(rules: Rules, index: number): boolean {
+    const frames = new Frames(rules.ask(index, `resolved-name\n${rules.parser.node(index).text}`));
+    header(frames, 'resolved-name');
+    let result = false;
+    if(frames.yes()) {
+        frames.field();
+        const count = frames.natural();
+        for(let i = 0; i < count; i++) {
+            frames.field();
+            const declaration = frames.yes();
+            frames.yes();
+            if(i === 0) result = declaration;
+        }
+    }
+    frames.end();
+    return result;
+}

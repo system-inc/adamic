@@ -1,0 +1,37 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { constructorGlobal } from './constructor_global.a';
+export class NoNewWrappers {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(node.kind !== 'NewExpression' || (this.rules.parents[i] ?? -1) < 0) continue;
+            const index = this.rules.skip(node.children[0] ?? -1);
+            if(index < 0) continue;
+            const callee = this.rules.parser.node(index);
+            const name = callee.text;
+            if(
+                callee.kind !== 'Identifier' ||
+                !['String', 'Number', 'Boolean'].includes(name) ||
+                !constructorGlobal(this.rules, index)
+            )
+                continue;
+            const message = `This calls \`new ${name}()\`. Constructed, ${name} returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by \`===\`, and reports its \`typeof\` as "object". Drop the \`new\` and call ${name} directly.`;
+            const anchor = node;
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-new-wrappers',
+                    'noNewWrappers',
+                    message,
+                    this.rules.byte(this.rules.start(anchor)),
+                    this.rules.byte(anchor.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

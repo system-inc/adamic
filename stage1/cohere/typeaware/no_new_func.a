@@ -1,0 +1,52 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { constructorGlobal } from './constructor_global.a';
+export class NoNewFunc {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(!['CallExpression', 'NewExpression'].includes(node.kind) || (this.rules.parents[i] ?? -1) < 0) continue;
+            const calleeIndex = this.rules.skip(node.children[0] ?? -1);
+            if(calleeIndex < 0) continue;
+            const callee = this.rules.parser.node(calleeIndex);
+            let objectIndex = calleeIndex;
+            if(callee.kind !== 'Identifier') {
+                if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) continue;
+                const keyIndex = this.rules.skip(callee.children[callee.children.length - 1] ?? -1);
+                if(keyIndex < 0) continue;
+                const key = this.rules.parser.node(keyIndex);
+                if(
+                    callee.kind === 'ElementAccessExpression' &&
+                    !['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(key.kind)
+                )
+                    continue;
+                if(!['apply', 'bind', 'call'].includes(key.text)) continue;
+                objectIndex = this.rules.skip(callee.children[0] ?? -1);
+                if(objectIndex < 0) continue;
+            }
+            const object = this.rules.parser.node(objectIndex);
+            if(
+                object.kind !== 'Identifier' ||
+                object.text !== 'Function' ||
+                !constructorGlobal(this.rules, objectIndex)
+            )
+                continue;
+            const message =
+                'This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.';
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-new-func',
+                    'noFunctionConstructor',
+                    message,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+}
