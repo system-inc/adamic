@@ -11,7 +11,12 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/parameter_properties.a", "internal/oracle/testdata/parameter_properties_ownership.a"} {
+	for _, path := range []string{
+		"internal/oracle/testdata/parameter_properties.a",
+		"internal/oracle/testdata/parameter_properties_ownership.a",
+		"internal/oracle/testdata/parameter_properties_levels.a",
+		"internal/oracle/testdata/parameter_properties_kinds.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
