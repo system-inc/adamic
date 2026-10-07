@@ -169,3 +169,11 @@ Rebased the worker branch onto current main b8fb957aa839a9e8cb0b54279dd9864fa317
 Ran `go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m`: PASS 590.238s, 76 top-level passes and eight explicit ownership-blocked skips. The log records all 77 compiled semantic mutant catches, the two expected refusal checks, and all eight source-only tree mutant catches. Native/emitted-JavaScript validation of the tree helpers is still blocked by the same CollapseCopyNode[] adamic/cycle-capable refusal; no readiness credit is added.
 
 `go vet ./stage1/cohere/lint/helpers` exited zero. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 1.052s. Logs are evidence/slot01-wave11/{landing,vet,input}-b8fb.log. No full repository gate was run. No new helper was claimed.
+
+## Landing on the shared harness integration base
+
+At the user's explicit instruction, rebased onto origin/area/stage1-lint d65a8f931c98655936ae04c6899f38f14862b73e, which contains harness 41eb6eab2 and main 39638d9e. Rebase completed without conflicts, skipping five patches already applied upstream. All incoming shared changes are retained; no shared source was edited. Pre-report head: da319ca069c52dbc24ce6150e9ad49c75e265572. Publication is solely to codex/lint-helpers-01 with the exact prior-worker SHA lease.
+
+Setup completed in 96s; Go/clang/Node/submodules were ready at 1s and cache warming completed at 96s. nproc=5. The full helper oracle command `go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 608.885s: 76 top-level passes, eight explicit ownership-blocked skips, 77 compiled semantic mutant catches, two expected refusal checks and eight source-only tree mutant catches. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 6.512s. Logs: evidence/slot01-wave11/area-{oracle,vet,input,setup}.log.
+
+The same CollapseCopyNode[] adamic/cycle-capable ownership refusal remains after integrating the shared harness. No tree native/emitted-JavaScript parity or compiled tree mutant is credited. No further helper is claimed, no readiness credit is added, and no full repository gate was run.
