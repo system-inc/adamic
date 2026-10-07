@@ -1,5 +1,43 @@
 # Scanner blockers
 
+## October 7: final refreshed feature probe and stopping point
+
+Refreshed and merged the four current tips in the **unpushed** scratch branch:
+taste `cabb7f1`, flag enums `246ecc0`, namespaces `39c3eca`, nested functions
+`59fe216`. Fallthrough `5f77d33` and import cycles `6b17636` are also present.
+Scratch conflicts retained already integrated feature implementations where
+branches overlapped; scratch compiler changes are never part of this delivery.
+Feature hashes and scratch head: [member-final-feature-refs.json](evidence/member-final-feature-refs.json).
+The raw slice still has eleven checker diagnostics. The validated adapted
+slice clears the checker and still refuses Debug.fail's `stackCrawlMark || fail`
+function widening at debug.ts:13:67. Exact final logs:
+[member-latest-raw.log](evidence/member-latest-raw.log) and
+[member-latest-revised.log](evidence/member-latest-revised.log).
+
+Candidate branches inspected, not merged: proven-predicates `b4366a7` retains
+the blanket type-predicate syntax refusal; its admission seam is not wired.
+non-null-check `6ae58a0` admits `!` using a nullish panic, which does not close
+the scanner's valid undefined comparisons or omitted initial text with Node's
+semantics. Applying it blindly would create a native/Node disagreement.
+Optional adaptation 20 now has a newer fix at b7e379e; this proof deliberately
+retains the requested 10+50 input and the independently validated slice-only
+private-diag repair, without accepting any API snapshot differences.
+
+I stopped before a native executable. The actual tracked-path blocker is
+function widening in failure-stack capture. Untracked probes reached, in order,
+the assertion predicate, languageVersion non-null assertion, shebang non-null
+assertion, shebang indexed-read checker diagnostic, and textInitial non-null
+assertion. Those probes are not validated adaptations. I did not complete the
+remaining lowering/ownership sequence or a one-feature-only matrix beyond
+main-plus-fallthrough. The Node scanner slice proof and omission mutant are
+complete; the requested native deadline is not yet fulfilled by this branch.
+
+All pushes are to codex/stage3-scanner-proof, without force. No main push,
+rebasing of pushed history, PR, production compiler edit or other worker's
+fixture change occurred. Final syntax, byte-span audit, idempotence and git
+whitespace checks pass. Toolchain is the already prepared Go 1.27.1 / clang
+20.1.8 / Node 24.19.0 environment, nproc 5 (original setup total 96 seconds).
+
 ## October 7: corrected adaptations pass the full baseline
 
 Adaptations 52, 53 and 54 pass the unfiltered stage 3 baseline: **106,367
