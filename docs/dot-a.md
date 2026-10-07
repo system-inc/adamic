@@ -93,7 +93,9 @@ Branches adding new `.ts` Adamic files must rename them at merge with
 Main advanced during verification to `71d7e49`, the pinned stage 3 stack merge.
 This branch merges it with `b06f366`. The current committed
 [dry run](../cloud/dot-a-dry-run.txt) contains **337 files, 1,876 reference rewrites
-in 346 files**. The additional 88 renamed files are stage 1 lint registry code.
+in 346 files**. The additional 88 renamed files are stage 1 lint registry code. The final
+inventory is 314 stage 1 sources, 16 spec fixtures, six benchmarks and one
+fresh-analysis fixture; stage 3 authored sources already use `.a`.
 The exact integration command remains `go run ./cmd/adamic-rename-dot-a --apply .`.
 The merge was conflict-free and retains the shared loader's transform mode.
 The registry's deliberately stale `.ts` ambiguity witness is kept as TypeScript;
@@ -130,11 +132,42 @@ width-table regeneration. Go literal fragments are now parsed as TypeScript,
 with a synthetic import opener for the split identifier-list fragment. The
 emitted import is rewritten and ordinary embedded source strings stay unchanged.
 That adds one edit, giving the final count of 1,876.
-All 20 ordinary Markdown tests are being run individually by two workers,
+All 20 ordinary Markdown tests passed individually with exit 0 using two workers,
 `go test -count=1 -timeout 30m -parallel 2 ./stage1/cohere/markdownblocks -run
 '^<test-name>$'`. Every name and log is retained under
 `/tmp/dot-a-stack-markdown-individual/`; a targeted exhaustive width rerun is
 also logged at `/tmp/dot-a-stack-width-rerun.log`.
+The sweep completed with `markdown_all=0`; `commands.txt` records each command
+and `results.txt` records all 20 exit codes. Its successful results are:
+
+| Test | Duration |
+| --- | --- |
+| `TestFrontMatterStage` | 20.858s |
+| `TestMarkdownASTPreprocessing` | 598.269s |
+| `TestMarkdownCodeBlockLayout` | 571.991s |
+| `TestMarkdownHTMLBlockLayout` | 496.041s |
+| `TestMarkdownLeafComposition` | 493.024s |
+| `TestMarkdownListLayout` | 510.997s |
+| `TestMarkdownParserPrefixes` | 17.077s |
+| `TestMarkdownQuoteLayout` | 514.536s |
+| `TestMarkdownRootLayout` | 472.336s |
+| `TestMarkdownSourceDecoding` | 50.798s |
+| `TestMarkdownStructureLayout` | 468.876s |
+| `TestMarkdownTableLayout` | 461.744s |
+| `TestMarkdownTextSplitting` | 326.084s |
+| `TestMarkdownUnicodeWidths` | 173.958s |
+| `TestMarkdownWhitespaceLayout` | 691.500s |
+| `TestMicromarkInputChunks` | 44.168s |
+| `TestNativeBuildModesAreDistinct` | 0.208s |
+| `TestOptionalStringInitializationWitness` | 0.298s |
+| `TestParserRepresentationProbes` | 0.558s |
+| `TestWholeDocumentOraclePreflight` | 294.864s |
+
+Together with the 19 successful package results and the two corrected lint
+suggestion reruns, this covers every ordinary test in all 21 tested stage 1
+packages. The original broad stage 1 command exited 1; the successful evidence
+is the package results plus the documented reruns, not a second full package
+command. The three generator packages have no test files.
 The complete final command was run literally in a clean main snapshot,
 `/tmp/dot-a-stack-last-inventory`: apply exited 0 and printed
 `TOTAL files=337 references=1876 reference_files=346`; its immediate repeat exited
