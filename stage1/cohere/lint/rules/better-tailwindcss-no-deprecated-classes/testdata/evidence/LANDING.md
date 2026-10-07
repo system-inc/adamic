@@ -31,3 +31,20 @@ Rebased cleanly onto newly fetched origin/main e8ba3d5d. Tested code tip: 3675d5
 Repeated the same exact commands above, with output retained as landing2 logs. Assertions PASS 90.591s; prior three-rule contracts PASS 114.941s; Tailwind cores/listeners/refusals PASS 100.493s. All seven mutants still compile/run and are caught only by comparison on source Node, emitted JavaScript and ASan/UBSan native. Input oracle PASS 3.928s with six probe misses; registry PASS 0.293s. Setup: Go/clang/Node/submodules ready 0s, warm cache and total 134s, nproc=5.
 
 Shared TestRulesAgree FAIL 88.471s, same allowLoop strict-decoder failure after capturing 1,699 cases. This does not establish landing readiness. Previous multiple-edit/live-program/regex/independent-JSX/convergence limits remain. No complete corpus or full repository gate was repeated. No new helper is claimed while the landing-first gate remains red. Helper README reread and the complete readiness JSON parsed (198 frozen cohort, 46 initial helper-ready); selection remains deferred.
+
+## Refresh onto f8013f0ba
+
+Rebased cleanly onto origin/main f8013f0ba; tested code tip 540f11744f62264ea85589750aca364935e7c24d. No lint source differs from the previously pushed 64e1fdf8. No helper claim or implementation is added. Existing limitations remain; the shared harness is still f4d98cab and batch 8 Diagnostic SHA has not been supplied.
+
+Repeated commands, all redirected to retained refresh logs:
+
+    bash cloud/setup.sh
+    source /workspace/adamic-tools/env.sh
+    go test ./stage1/cohere/lint/rules/better-tailwindcss-no-deprecated-classes -run '^TestNumericListeners$|^TestDecisionCores$|^TestListeners$|^TestRefusals$' -count=1 -timeout 10m -v
+    go test ./stage1/cohere/lint/rules/typescript-consistent-type-assertions ./stage1/cohere/lint/rules/structure-tailwind-no-physical-direction -run '^TestAssertions$|^TestRuleContracts$' -count=1 -timeout 10m -v
+    ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -timeout 10m
+    go test ./stage1/cohere/lint/registry -count=1 -timeout 10m
+
+PASS: numeric/Tailwind package 112.066s, assertions 73.704s, original three-rule suite 126.531s, uncached compiler oracle 18.193s, registry 0.239s. Seven subscription and seven rule/core compiling mutants are caught only by comparison on source Node, emitted JavaScript and sanitized native. Assertions compare 44,254 bytes, prior three rules 58,087 projected/52,052 independent bytes, Tailwind core 184,433 bytes and supported listeners 17,695 bytes per side; numeric declarations 329 bytes. Full unknown-class rule remains uncertified.
+
+Setup: Go/clang/Node/submodules ready 0s; cache warm and total 121s; nproc=5. Full shared oracle, corpus and repository gate not repeated. The previously observed shared allowLoop strict-decoder failure remains unresolved in unchanged harness code; do not call the branch fully landing-ready. Handed-node callbacks and numeric runtime kinds are still absent from the shared API. Push only codex/lint-wave1-01 with a lease against its verified old tip. No main or area push.
