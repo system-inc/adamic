@@ -39,3 +39,15 @@ ports. ban-tslint-comment has older origin-branch implementations outside main;
 these are reference material, not a main port or a claim in claims/.
 No new implementation is written before this claim is committed and pushed.
 The original three reservations remain as recorded above.
+
+## Third claim, October 7
+
+All previously claimed rule implementations and their bounded validation are pushed through 68cf11aa. Self-closing-comp remains blocked on independent JSX parsing, with all 79 Go-AST rule-engine cases and its mutant held across Node, emitted JS and sanitized native.
+
+Fetched all origin heads again and checked main ef3d907ecdc4c771b016f7d9c52372def057a340 and every origin branch claims directory. The first three unclaimed, unported helper-ready rules in the measured handoff are:
+
+- arrow-body-style
+- max-lines
+- no-extra-bind
+
+This update is committed and pushed before writing implementation code. No inventory fallback was needed. The shared harness dependency is origin/codex/lint-harness-dot-a at 2650ad595b82220c368631ea13139fad4b306ed6; no shared files are edited here.
