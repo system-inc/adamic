@@ -238,3 +238,16 @@ Only the plan commit 4dbf3b6a from the newly advanced lane 1 branch is needed
 for this checkpoint; no transitive checked-view implementation is claimed.
 The branch remains unready to land because of the native assertions, central
 counts regeneration and outstanding lane 3 implementation.
+
+Explicit allocation-flow dependency check:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestGraphAllocationFlow' -count=1 -v -timeout 15m > /tmp/shape-conformance-graph-flow-final.log 2>&1
+```
+
+Passed classification and return/conditional/mixed/override behavior, source
+Node agreement, ASan/UBSan, shared leak checks and counted teardown; oracle
+2.711s. This explicit selection supersedes the earlier path filter: that
+filter entered TestNativeAgreesWithNode but selected no classification leaf
+fixtures. No leaf-fixture evidence is attributed to the earlier filter. The
+other view/readiness tests in its command did run and pass.
