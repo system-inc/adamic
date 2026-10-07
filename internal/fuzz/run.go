@@ -300,7 +300,7 @@ func difference(expected Run, actual Run) string {
 // mini-fixture compile/Node/native maxima were 77ms/84ms/6ms; generated-program
 // package checks completed in 10.9s, so these limits retain ample margin.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	ctx, cancel := boundedrun.WithTimeout(context.Background(), limit)
 	defer cancel()
 	command := boundedrun.CommandContext(ctx, name, arguments...)
 	defer boundedrun.Kill(command.Cmd)

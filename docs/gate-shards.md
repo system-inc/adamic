@@ -595,3 +595,64 @@ The hook test plants the package source in a temporary tree and proves the unwir
 A source-overlay mutant allowing that bypass fails the test. Existing required WASI skips
 remain red independently. General census-required-input enforcement and classified skip
 listing await the census landing; this branch does not claim those checks are active yet.
+
+
+## Deadline proofs wait for readiness
+
+On a heavily loaded Mac, the 200 ms test deadline could expire before the fake grandchild
+created its heartbeat. That proved startup was bounded, but could not prove that a running
+grandchild was killed. The shared fixture now waits for the first heartbeat, signals parent
+readiness, and only then blocks. Its cleanup records the actual process group, including when
+the fixture runs below an isolated runtime builder.
+
+All affected Go proofs install a nonparallel readiness clock through `boundedrun.WithTimeout`.
+Startup has a separate 30-second bound; the requested short execution deadline is armed only
+after the heartbeat and parent signal exist. The command, process-group cancellation and bounded
+wait implementations remain real. `WithTimeout` defaults to ordinary `context.WithTimeout`;
+production still counts startup against its original 30s/10m/70m limits and environment cap.
+A constructor test verifies that default remains immediate. Cancellation causes preserve the
+execution-deadline classification, including the test262 runner's `TimedOut` result.
+
+The audit covered every shared fixture user: gate probes, shard constructor, JSON-file command,
+fixture discovery, boundedrun's group/pipe/writer waits, fuzz execution/preparation, test262
+execution/runtime builder and persistent compiler worker. The exited-leader test waits for child
+readiness before exiting rather than sleeping for 100 ms. The blocked-writer proof waits until
+its writer is entered before arming its short deadline. The compiler worker waits for its tree
+before starting the first request's own timer. Shutdown observation starts at readiness and
+retains a finite five-second allowance for the bounded reap and scheduler contention.
+
+A deterministic test delays the first grandchild heartbeat by 650 ms, longer than its 200 ms
+execution deadline. It still passes with the two phases, and rejects a child that exits before
+readiness. Mutants restoring the early timer and killing only the parent both fail that test;
+the latter is caught because the grandchild heartbeat keeps changing.
+
+Python's deadline proof delays the real `communicate(timeout=...)` call until readiness. Shell
+proofs still run real GNU timeout: a test shim supplies its bounded startup watchdog and sends
+the execution SIGALRM only after readiness, exercising its actual signal/kill-after path. The
+shim preserves the shell's diagnostic descriptor and records the group for cleanup. Neither
+Python nor shell production limits were changed. These shell tests retain their existing GNU
+timeout dependency. The historical manual `prove.py` benchmark is not a load-proof unit suite
+and was not rerun; its already-recorded results were not rewritten.
+
+Verification sends stdout and stderr to separate files:
+
+- Initial load trial: three parallel `go test -race -count=20` invocations with 40 CPU burners,
+  720 named deadline passes, zero failures.
+- Final code: two parallel invocations with the same burners and count, 560 named passes,
+  zero failures; load average reached 39.55 on this four-core cgroup.
+- The full four-package race suite: 101 pass, zero fail, one measurement skip,
+  `cmd/adamic-test262::TestCompilerStartupMeasurement`.
+- Twenty Python/shell suite repetitions: 120 tests pass. Repetitions overlapped the load trial;
+  the CPU supervisor stopped when the Go trial completed, so later Python repetitions ran idle.
+- Vet passes for all four changed Go packages. Gate tests cross-compile for Darwin arm64;
+  no actual Mac is available on this worker.
+
+The Go load command, launched concurrently under the CPU supervisor, was:
+
+```sh
+go test -race -count=20 -json -run 'Deadline|ExitedLeader|WaitCannot|CompilerWorkerTimeout' ./cmd/adamic-gate ./internal/boundedrun ./internal/fuzz ./cmd/adamic-test262 > load.jsonl 2> load.stderr
+```
+
+`cmd/adamic-gate/evidence/readiness-proofs.tar.gz` preserves the supervisors, raw trial logs,
+source hashes, toolchain/CPU metadata, full suite, Python tests, Darwin build, vet and both mutants.
+This is a scheduling-contention correctness proof, not a whole-gate performance measurement.
