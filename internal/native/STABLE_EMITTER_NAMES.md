@@ -1,5 +1,5 @@
 Built source-qualified stable symbols, function-local temporary/cache counters, and module-local main counters.
-Commits: implementation 36fd309df907a4729e2f0bbf53a15e6dc65adfe9; merged current main 4e0bfda5 in db583013; merged emitter-speed 52f9bae.
+Commits: implementation 36fd309df907a4729e2f0bbf53a15e6dc65adfe9; landing merge 1ae93921 includes main 71d7e491; implementation merge db583013; emitter-speed 52f9bae.
 Verification: native 369.479s, lower 39.845s, oracle 330.665s, split oracle 336.853s PASS; go vet ./... PASS.
 Fifteen independent mutants fail their intended assertions, including the splitter's whole-program-counter mutant.
 Not covered: one-module acceptance for added functions until developer-tools changes grouping and declaration dependencies; the full repository test gate.
@@ -138,3 +138,10 @@ are gzip-compressed with deterministic headers in stable_emitter_evidence.
 
 The full repository go test ./... gate and the complete pinned TypeScript corpus were
 not run. No rebuild-speed claim beyond the measured unit-change counts is made.
+
+Landing note: 71d7e491 was merged as 1ae93921 after the green 4e0bfda5 gate.
+Its changes are confined to stage3. git diff 4e0bfda5 71d7e491 --exit-code --
+internal bridge go.mod go.work cohere stage1 exits 0: compiler dependencies,
+oracle fixtures and measured lint inputs are identical to the green snapshot.
+No repeat of the unchanged tests is claimed. The branch is pushed only to
+codex/stable-emitter-names; no PR was opened.
