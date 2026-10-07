@@ -31,3 +31,5 @@ func slot03Capture(name, file, source string) {
 		panic(err)
 	}
 }
+
+func AdamicSlot03Capture(name, file, source string) { slot03Capture(name, file, source) }

@@ -1,0 +1,5 @@
+// Go tailwind.isSpace recognizes these six ASCII runes, not Unicode White_Space.
+// Call with a decoded code point (a Go rune), not a UTF-8 byte or UTF-16 half.
+export function isTailwindSpace(codePoint: number): boolean {
+    return codePoint === 32 || codePoint === 9 || codePoint === 10 || codePoint === 13 || codePoint === 11 || codePoint === 12;
+}

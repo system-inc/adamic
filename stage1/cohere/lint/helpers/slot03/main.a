@@ -1,5 +1,6 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../options_json.ts';
+import { isTailwindSpace } from './tailwind_space.a';
 import { isComponentBaseName } from './component_base_name.a';
 const argumentsList = programArguments();
 const input = readTextFile(argumentsList[0] ?? panic('missing cases'));
@@ -7,6 +8,11 @@ if(input.kind === 'Error') { panic(input.message); }
 const json = new OptionsJson(input.text);
 const root = json.parse();
 if(root < 0) { panic(json.error); }
-for(const item of json.node(root).children) {
+for(const item of json.node(json.field(root, 'names')).children) {
     console.log(`${isComponentBaseName(json.node(item).text)}`);
 }
+
+for(const item of json.node(json.field(root, 'spaces')).children) {
+    console.log(`${isTailwindSpace(json.node(item).number)}`);
+}
+for(let point = 0; point <= 0x10ffff; point++) { console.log(`${isTailwindSpace(point)}`); }

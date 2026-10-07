@@ -43,7 +43,7 @@ func oracle(t *testing.T) (string, []byte) {
 	root, _ := filepath.Abs("../../../../../cohere")
 	here, _ := filepath.Abs("testdata")
 	virtual := filepath.Join(root, "adamic_slot03_oracle.go")
-	raw, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(here, "oracle.go"), filepath.Join(root, "internal/lint/ecmascript/react/adamic_slot03.go"): filepath.Join(here, "react_export.go")}})
+	raw, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(here, "oracle.go"), filepath.Join(root, "internal/lint/ecmascript/react/adamic_slot03.go"): filepath.Join(here, "react_export.go"), filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot03.go"): filepath.Join(here, "tailwind_export.go")}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -74,7 +74,7 @@ func build(t *testing.T, entry string) string {
 	}
 	return binary
 }
-func TestComponentBaseNameMatchesCohere(t *testing.T) {
+func TestReactHelpersMatchCohere(t *testing.T) {
 	cases, want := oracle(t)
 	entry, _ := filepath.Abs("main.a")
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
@@ -83,7 +83,7 @@ func TestComponentBaseNameMatchesCohere(t *testing.T) {
 			mismatch(t, got, want)
 		}
 	}
-	t.Logf("%d name verdict lines match Go, Node source and sanitized native", bytes.Count(want, []byte{'\n'}))
+	t.Logf("%d name/rune verdict lines match Go, Node source and sanitized native", bytes.Count(want, []byte{'\n'}))
 }
 func mismatch(t *testing.T, got, want []byte) {
 	t.Helper()
@@ -95,40 +95,46 @@ func mismatch(t *testing.T, got, want []byte) {
 	}
 	t.Fatalf("output sizes: got %d Go %d", len(got), len(want))
 }
-func TestComponentBaseNameMutant(t *testing.T) {
+func TestReactHelperMutants(t *testing.T) {
 	cases, want := oracle(t)
-	scratch := t.TempDir()
-	for _, file := range []string{"component_base_name.a", "main.a"} {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		text := string(data)
-		if file == "component_base_name.a" {
-			old := "name === 'Component' || name === 'PureComponent'"
-			if strings.Count(text, old) != 1 {
-				t.Fatal("mutant anchor changed")
+	for _, mutant := range []struct{ file, old, new string }{
+		{"component_base_name.a", "name === 'Component' || name === 'PureComponent'", "name === 'Component'"},
+		{"tailwind_space.a", " || codePoint === 11", ""},
+	} {
+		t.Run(mutant.file, func(t *testing.T) {
+			scratch := t.TempDir()
+			for _, file := range []string{"component_base_name.a", "tailwind_space.a", "main.a"} {
+				data, err := os.ReadFile(file)
+				if err != nil {
+					t.Fatal(err)
+				}
+				text := string(data)
+				if file == mutant.file {
+					if strings.Count(text, mutant.old) != 1 {
+						t.Fatal("mutant anchor changed")
+					}
+					text = strings.Replace(text, mutant.old, mutant.new, 1)
+				}
+				if file == "main.a" {
+					reader, _ := filepath.Abs("../options_json.ts")
+					text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(reader))
+				}
+				if err = os.WriteFile(filepath.Join(scratch, file), []byte(text), 0644); err != nil {
+					t.Fatal(err)
+				}
 			}
-			text = strings.Replace(text, old, "name === 'Component'", 1)
-		}
-		if file == "main.a" {
-			reader, _ := filepath.Abs("../options_json.ts")
-			text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(reader))
-		}
-		if err = os.WriteFile(filepath.Join(scratch, file), []byte(text), 0644); err != nil {
-			t.Fatal(err)
-		}
+			got := command(t, "", build(t, filepath.Join(scratch, "main.a")), cases)
+			if bytes.Equal(got, want) {
+				t.Fatal("compiling semantic mutant survived")
+			}
+			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+			for i := 0; i < len(a) && i < len(b); i++ {
+				if a[i] != b[i] {
+					t.Logf("compiled semantic mutant caught at line %d: got %q Go %q", i+1, a[i], b[i])
+					return
+				}
+			}
+			t.Fatal("mutant must change a semantic output line")
+		})
 	}
-	got := command(t, "", build(t, filepath.Join(scratch, "main.a")), cases)
-	if bytes.Equal(got, want) {
-		t.Fatal("compiling semantic mutant survived")
-	}
-	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-	for i := 0; i < len(a) && i < len(b); i++ {
-		if a[i] != b[i] {
-			t.Logf("PureComponent mutant caught at line %d: got %q Go %q", i+1, a[i], b[i])
-			return
-		}
-	}
-	t.Fatal("mutant must change a semantic output line")
 }

@@ -10,6 +10,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/react"
+	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
 	"os"
 	"sort"
 	"strings"
@@ -25,6 +26,7 @@ func main() {
 	scan := bufio.NewScanner(z)
 	scan.Buffer(make([]byte, 4096), 16<<20)
 	names := map[string]bool{}
+	points := map[int]bool{}
 	for scan.Scan() {
 		var row struct{ File, Source string }
 		must(json.Unmarshal(scan.Bytes(), &row))
@@ -52,6 +54,9 @@ func main() {
 			return false
 		}
 		walk(file.AsNode())
+		for _, point := range row.Source {
+			points[int(point)] = true
+		}
 	}
 	must(scan.Err())
 	for _, name := range []string{"Component", "PureComponent", "component", "pureComponent", "COMPONENT", "Purecomponent", "ComponentX", "XComponent", " Component", "Component ", "Component\x00", "PureComponent\n", "React.Component", "React.PureComponent", "", "ΩComponent", "Ｃomponent", "组件", "😀"} {
@@ -62,11 +67,22 @@ func main() {
 		list = append(list, name)
 	}
 	sort.Strings(list)
-	data, err := json.Marshal(list)
+	values := []int{-2147483648, -1, 0xd800, 0xdfff, 0x110000, 2147483647}
+	for point := range points {
+		values = append(values, point)
+	}
+	sort.Ints(values)
+	data, err := json.Marshal(map[string]any{"names": list, "spaces": values})
 	must(err)
 	must(os.WriteFile(os.Args[2], data, 0644))
 	for _, name := range list {
 		fmt.Println(react.AdamicComponentBaseName(name))
+	}
+	for _, point := range values {
+		fmt.Println(tailwind.AdamicIsSpace(rune(point)))
+	}
+	for point := 0; point <= 0x10ffff; point++ {
+		fmt.Println(tailwind.AdamicIsSpace(rune(point)))
 	}
 }
 func must(err error) {
