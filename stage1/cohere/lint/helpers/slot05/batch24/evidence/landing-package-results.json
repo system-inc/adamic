@@ -1,0 +1,131 @@
+{
+  "actual_packages": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "seconds": 150.402,
+      "mutants": 7
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch10",
+      "seconds": 122.912,
+      "mutants": 12
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch11",
+      "seconds": 40.568,
+      "mutants": 8
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch12",
+      "seconds": 27.799,
+      "mutants": 9
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch13",
+      "seconds": 83.745,
+      "mutants": 12
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch14",
+      "seconds": 108.727,
+      "mutants": 7
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch15",
+      "seconds": 140.308,
+      "mutants": 13
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch16",
+      "seconds": 24.057,
+      "mutants": 15
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch17",
+      "seconds": 22.1,
+      "mutants": 16
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch18",
+      "seconds": 72.689,
+      "mutants": 18
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch19",
+      "seconds": 32.94,
+      "mutants": 18
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch2",
+      "seconds": 105.324,
+      "mutants": 3
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch20",
+      "seconds": 372.862,
+      "mutants": 25
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch21",
+      "seconds": 199.229,
+      "mutants": 15
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch22",
+      "seconds": 49.877,
+      "mutants": 17
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch23",
+      "seconds": 159.85,
+      "mutants": 15
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch24",
+      "seconds": 247.36,
+      "mutants": 21
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch3",
+      "seconds": 18.398,
+      "mutants": 3
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch4",
+      "seconds": 44.652,
+      "mutants": 3
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch5",
+      "seconds": 70.854,
+      "mutants": 13
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch6",
+      "seconds": 154.462,
+      "mutants": 12
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch7",
+      "seconds": 24.583,
+      "mutants": 11
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch8",
+      "seconds": 214.334,
+      "mutants": 9
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch9",
+      "seconds": 51.985,
+      "mutants": 8
+    }
+  ],
+  "sum_package_seconds": 2540.017,
+  "distinct_fresh_semantic_mutants": 290,
+  "failed_packages": 0,
+  "skipped_tests": 0,
+  "helper_log_sha256": "3aa7a24005fbf63faf6807b26ade7e9ce4d8ffb222fe196a39114f1bfa3d277e",
+  "helper_log_artifact": "landing-helpers.log.gz",
+  "lossless_compression": true
+}

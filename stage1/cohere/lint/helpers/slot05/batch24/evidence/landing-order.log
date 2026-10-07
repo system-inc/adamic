@@ -1,0 +1,18 @@
+=== RUN   TestSlot05StatementOrder
+    helper_test.go:88: statements: 806 queries, 803 sources, 864 parsed nodes, 9 label controls
+    helper_test.go:98: consumer coverage: {
+          "consumer_literal_occurrences": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 803,
+          "Nodes": 864,
+          "Labels": 9,
+          "Queries": 806
+        }
+    helper_test.go:158: statements.a mutant "for(const node of nodes)" -> "for(const node of nodes.slice().reverse())" caught at output line 27 byte 7: mutant "2|stmt:2;stmt:1;", Go "2|stmt:1;stmt:2;"
+--- PASS: TestSlot05StatementOrder (3.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch15	3.090s

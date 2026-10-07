@@ -1,0 +1,22 @@
+{
+  "tested_source": "dc66cf97ac36e91d66d097b7614d60944b22e41c",
+  "final_rebased_source": "c8d7f443b7b20ffde5d0543a5e9664d43833d396",
+  "main_update_only_stage3": true,
+  "input_paths": [
+    "cmd",
+    "internal",
+    "oracle",
+    "cohere",
+    "go.mod",
+    "go.sum",
+    "stage1",
+    "tsconfig.json",
+    "CohereSettings.json",
+    "lib",
+    "library"
+  ],
+  "identical_git_objects": true,
+  "entries": 3527,
+  "object_list_sha256": "b53df64c8e3419f42db87c86aedbc6d4fb82de7891c52694b7f62253be216d1c",
+  "fresh_mutants_retained": 290
+}
