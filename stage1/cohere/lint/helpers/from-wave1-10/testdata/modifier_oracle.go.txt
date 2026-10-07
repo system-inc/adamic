@@ -1,0 +1,23 @@
+package main
+
+import (
+    "bufio"
+    "encoding/json"
+    "fmt"
+    "os"
+    regexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp"
+)
+func main() {
+    data, err := os.ReadFile(os.Args[1]); if err != nil { panic(err) }
+    var cases []string
+    if err = json.Unmarshal(data, &cases); err != nil { panic(err) }
+    output := bufio.NewWriter(os.Stdout)
+    for _, source := range cases {
+        for flags := 0; flags < 16; flags++ {
+            next, width, matched := regexp.AdamicModifierGroup(source, flags)
+            yes := 0; if matched { yes = 1 }
+            fmt.Fprintf(output, "%d,%d,%d\n", next, width, yes)
+        }
+    }
+    if err = output.Flush(); err != nil { panic(err) }
+}

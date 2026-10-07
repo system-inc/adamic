@@ -1,0 +1,33 @@
+[
+  {
+    "rule": "@next/next/no-html-link-for-pages",
+    "files": [
+      "next/no_html_link_for_pages_test.go"
+    ],
+    "literals": 386
+  },
+  {
+    "rule": "@typescript-eslint/no-empty-object-type",
+    "files": [
+      "typescript/no_empty_object_type_test.go",
+      "typescript/no_empty_object_type_corpus_test.go",
+      "typescript/no_empty_object_type_corpus_data_test.go"
+    ],
+    "literals": 448
+  },
+  {
+    "rule": "no-restricted-exports",
+    "files": [
+      "core/no_restricted_exports_test.go"
+    ],
+    "literals": 483
+  },
+  {
+    "rule": "no-restricted-imports",
+    "files": [
+      "core/no_restricted_imports_test.go",
+      "core/no_restricted_imports_matcher_test.go"
+    ],
+    "literals": 4438
+  }
+]

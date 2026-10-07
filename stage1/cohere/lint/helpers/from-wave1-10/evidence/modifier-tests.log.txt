@@ -1,0 +1,14 @@
+=== RUN   TestModifierGroup
+    modifier_test.go:98: 66666 sources / 1066656 queries, all four consumer fixture families
+    modifier_test.go:105: runtime 0 matched 6799954 bytes
+    modifier_test.go:105: runtime 1 matched 6799954 bytes
+    modifier_test.go:105: runtime 2 matched 6799954 bytes
+--- PASS: TestModifierGroup (6.53s)
+=== RUN   TestModifierGroupMutant
+    modifier_test.go:109: 66666 sources / 1066656 queries, all four consumer fixture families
+    modifier_test.go:132: runtime 0 duplicate_guard_disabled compiled, exited with empty stderr, caught only by Go byte comparison
+    modifier_test.go:132: runtime 1 duplicate_guard_disabled compiled, exited with empty stderr, caught only by Go byte comparison
+    modifier_test.go:132: runtime 2 duplicate_guard_disabled compiled, exited with empty stderr, caught only by Go byte comparison
+--- PASS: TestModifierGroupMutant (6.88s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	13.416s

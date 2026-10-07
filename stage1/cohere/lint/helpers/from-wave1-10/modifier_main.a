@@ -1,0 +1,16 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { modifierGroup } from './regexp_modifier_group.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('modifier cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const reader = new OptionsJson(input.text);
+const root = reader.parse();
+if(root < 0) { panic(reader.error); }
+for(const child of reader.node(root).children) {
+    const source = reader.node(child).text;
+    for(let flags = 0; flags < 16; flags++) {
+        const result = modifierGroup(source, flags);
+        console.log(`${result.flags},${result.width},${result.matched ? 1 : 0}`);
+    }
+}

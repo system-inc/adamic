@@ -1,0 +1,7 @@
+main module (github.com/system-inc/adamic) does not contain package github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10/testdata/literals.go.txt
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from-wave1-10/testdata/generate_modifier.py", line 15, in <module>
+    subprocess.run(['go','run',str(HERE/'literals.go.txt'),*paths],cwd=ROOT,stdout=out,check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/adamic/stage1/cohere/lint/helpers/from-wave1-10/testdata/literals.go.txt', '/workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go', '/workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go', '/workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_corpus_test.go', '/workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_corpus_data_test.go', '/workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go', '/workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go', '/workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_matcher_test.go']' returned non-zero exit status 1.

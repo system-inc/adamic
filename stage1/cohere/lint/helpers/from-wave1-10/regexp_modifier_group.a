@@ -1,0 +1,36 @@
+// Go rewriteOptions bits: multiline 1, dotAll 2, ignoreCase 4, unicode 8.
+export class ModifierGroup {
+    readonly flags: number;
+    readonly width: number;
+    readonly matched: boolean;
+    constructor(flags: number, width: number, matched: boolean) {
+        this.flags = flags; this.width = width; this.matched = matched;
+    }
+}
+export function modifierGroup(source: string, current: number): ModifierGroup {
+    if(!source.startsWith('(?')) { return new ModifierGroup(current, 0, false); }
+    const end = source.indexOf(':', 2);
+    if(end <= 2) { return new ModifierGroup(current, 0, false); }
+    let inside = current;
+    let named = 0;
+    let enable = true;
+    for(let index = 2; index < end; index++) {
+        const flag = source.charCodeAt(index);
+        if(flag === 45) {
+            if(!enable) { return new ModifierGroup(current, 0, false); }
+            enable = false;
+        } else {
+            let bit = 0;
+            if(flag === 105) { bit = 4; }
+            else if(flag === 109) { bit = 1; }
+            else if(flag === 115) { bit = 2; }
+            else { return new ModifierGroup(current, 0, false); }
+            if((named & bit) !== 0) { return new ModifierGroup(current, 0, false); }
+            named |= bit;
+            if(enable) { inside |= bit; }
+            else { inside &= ~bit; }
+        }
+    }
+    if(named === 0) { return new ModifierGroup(current, 0, false); }
+    return new ModifierGroup(inside, end + 1, true);
+}

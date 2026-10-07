@@ -1,0 +1,11 @@
+package regexp
+
+func AdamicModifierGroup(source string, flags int) (int, int, bool) {
+    inside, width, matched := modifierGroup(source, rewriteOptions{multiline: flags&1 != 0, dotAll: flags&2 != 0, ignoreCase: flags&4 != 0, unicode: flags&8 != 0})
+    result := 0
+    if inside.multiline { result |= 1 }
+    if inside.dotAll { result |= 2 }
+    if inside.ignoreCase { result |= 4 }
+    if inside.unicode { result |= 8 }
+    return result, width, matched
+}
