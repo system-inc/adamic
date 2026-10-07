@@ -68,3 +68,7 @@ in evidence/rule-landing-rebase.log. Aborted without resolving or committing
 those files. Rule branch remains 9d2c673b and is not landing-ready. No new
 helper or rule is claimed, and no main/area branch is pushed. The finding
 model landing SHA has not been supplied.
+
+## Recheck after stage3 landing
+
+Rebased onto current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Bounded withdrawn leadingInteger and nodesFromStaticDeclarations comparisons pass again on source Node, emitted JavaScript and sanitized native: 4,761 inputs / 160,778 bytes and 1,012 cases / 139,208 bytes. Both compiling semantic mutants are again caught only by Go comparison on all three paths. They remain non-executable archived witnesses, not delivered helpers; the six missing live Tailwind consumer paths remain explicitly unpassed. No active helper reservation has been added before this rebase and push.
