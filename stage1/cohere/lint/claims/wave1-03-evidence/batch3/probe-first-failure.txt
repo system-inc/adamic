@@ -1,0 +1,8 @@
+exit=0 log=/tmp/lint-wave1-03-batch3/legacy-build.log
+exit=0 log=/tmp/lint-wave1-03-batch3/full-build.log
+exit=2 log=/tmp/lint-wave1-03-batch3/typescript-no-unnecessary-type-constraint/legacy.txt
+exit=0 log=/tmp/lint-wave1-03-batch3/typescript-no-unnecessary-type-constraint/full.txt
+exit=0 log=/tmp/lint-wave1-03-batch3/typescript-no-unnecessary-type-constraint/upstream.txt
+exit=2 log=/tmp/lint-wave1-03-batch3/typescript-prefer-as-const/legacy.txt
+exit=0 log=/tmp/lint-wave1-03-batch3/typescript-prefer-as-const/full.txt
+unexpected independently observed repair shape for PreferAsConst

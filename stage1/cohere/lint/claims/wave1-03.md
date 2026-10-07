@@ -90,3 +90,13 @@ the claims directory, across all fetched origin refs. These three are reserved
 here before any implementation. Same branch and .a source requirement apply.
 The existing shared .a registration limitation is still recorded; no approval
 for shared edits is inferred from this continuation instruction.
+
+### Batch 3 outcome
+
+All three remain reserved and unported. Each needs a complete repair shape that
+the shared Finding/RuleContext and Go oracle cannot represent. Minimal valid
+witnesses reproduce two unexpected suggestion shape refusals and one unexpected
+fix shape refusal. The independent full-shape probe succeeds; all 16 selected
+upstream test functions pass. No semantic port mutant or cross-backend parity
+is claimed. Evidence and setup timing are in
+wave1-03-evidence/batch3/REPORT.md. No shared ownership exception was inferred.

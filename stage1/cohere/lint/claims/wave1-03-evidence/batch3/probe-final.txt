@@ -1,0 +1,12 @@
+exit=0 log=/tmp/lint-wave1-03-batch3-published/legacy-build.log
+exit=0 log=/tmp/lint-wave1-03-batch3-published/full-build.log
+exit=2 log=/tmp/lint-wave1-03-batch3-published/typescript-no-unnecessary-type-constraint/legacy.txt
+exit=0 log=/tmp/lint-wave1-03-batch3-published/typescript-no-unnecessary-type-constraint/full.txt
+exit=0 log=/tmp/lint-wave1-03-batch3-published/typescript-no-unnecessary-type-constraint/upstream.txt
+exit=2 log=/tmp/lint-wave1-03-batch3-published/typescript-prefer-as-const/legacy.txt
+exit=0 log=/tmp/lint-wave1-03-batch3-published/typescript-prefer-as-const/full.txt
+exit=0 log=/tmp/lint-wave1-03-batch3-published/typescript-prefer-as-const/upstream.txt
+exit=2 log=/tmp/lint-wave1-03-batch3-published/typescript-prefer-enum-initializers/legacy.txt
+exit=0 log=/tmp/lint-wave1-03-batch3-published/typescript-prefer-enum-initializers/full.txt
+exit=0 log=/tmp/lint-wave1-03-batch3-published/typescript-prefer-enum-initializers/upstream.txt
+PASS: all three legacy oracle refusals and complete Go repair observations reproduced
