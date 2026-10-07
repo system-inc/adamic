@@ -1,0 +1,21 @@
+import { panic } from 'adamic';
+export interface LabelsNode {
+    present: boolean;
+    kind: number;
+    label: string;
+    statementMatches: boolean;
+    parents: LabelsNode[];
+}
+export function labelsOf(node: LabelsNode): string[] {
+    if(!node.present) { panic('nil input to labelsOf'); }
+    const labels: string[] = [];
+    let current = node;
+    while(current.parents.length > 0) {
+        const parent = current.parents[0] ?? panic('missing parent');
+        if(parent.kind !== 257) { break; }
+        if(!parent.statementMatches) { break; }
+        labels.push(parent.label);
+        current = parent;
+    }
+    return labels;
+}

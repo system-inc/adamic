@@ -1,0 +1,28 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { labelsOf, type LabelsNode } from './control_flow_labels_of.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function nodeOf(item: number): LabelsNode {
+    const parents: LabelsNode[] = [];
+    for(const child of json.node(json.field(item, 'parents')).children) { parents.push(nodeOf(child)); }
+    return {
+        present: json.node(json.field(item, 'present')).text === 'true',
+        kind: json.node(json.field(item, 'kind')).number,
+        label: json.node(json.field(item, 'label')).text,
+        statementMatches: json.node(json.field(item, 'statementMatches')).text === 'true',
+        parents
+    };
+}
+for(const item of json.node(root).children) {
+    const labels = labelsOf(nodeOf(item));
+    let line = `${labels.length}`;
+    for(const label of labels) {
+        line += '|';
+        for(let index = 0; index < label.length; index++) { line += `${label.charCodeAt(index)},`; }
+    }
+    console.log(line);
+}

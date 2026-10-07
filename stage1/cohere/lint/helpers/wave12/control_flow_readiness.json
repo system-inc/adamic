@@ -4,7 +4,8 @@
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
-    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest"
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf"
   ],
   "final_blockers_removed": 0,
   "consumers": [
@@ -14,7 +15,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall",
@@ -77,7 +79,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget"
       ],
       "last_helper_blocker_removed": false
@@ -88,7 +89,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.HasValue",
@@ -164,7 +166,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget",
         "github.com/system-inc/cohere/internal/lint/ecmascript/property.Name"
       ],
@@ -176,7 +177,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].Current",
@@ -241,7 +243,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget",
         "github.com/system-inc/cohere/internal/lint/rules/core.codePathRoots"
       ],
@@ -253,7 +254,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Block[E].Index",
@@ -326,7 +328,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.newCyclePaths",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget"
       ],

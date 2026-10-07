@@ -1,0 +1,27 @@
+=== RUN   TestLabelsOfMatchesGo
+    labels_test.go:58: actual Go numeric labeled-statement kind: 257
+    labels_test.go:66: 30228 consumer AST and nested-label/identity controls, 64096 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestLabelsOfMatchesGo/omit-outer-labels
+    labels_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 29647
+    labels_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 29647
+    labels_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 29647
+=== RUN   TestLabelsOfMatchesGo/ignore-child-identity
+    labels_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 24218
+    labels_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 24218
+    labels_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 24218
+=== RUN   TestLabelsOfMatchesGo/wrong-kind
+    labels_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 24219
+    labels_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 24219
+    labels_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 24219
+--- PASS: TestLabelsOfMatchesGo (50.31s)
+    --- PASS: TestLabelsOfMatchesGo/omit-outer-labels (11.87s)
+    --- PASS: TestLabelsOfMatchesGo/ignore-child-identity (10.59s)
+    --- PASS: TestLabelsOfMatchesGo/wrong-kind (8.67s)
+=== RUN   TestLabelsNilRefused
+    labels_test.go:115: backend 0 rejects nil before any successful observation
+    labels_test.go:115: backend 1 rejects nil before any successful observation
+    labels_test.go:115: backend 2 rejects nil before any successful observation
+    labels_test.go:115: backend 3 rejects nil before any successful observation
+--- PASS: TestLabelsNilRefused (1.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	52.153s
