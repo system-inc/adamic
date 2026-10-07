@@ -1,0 +1,80 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../../typescript/parser/nodes.ts';
+import { RuleContext } from '../../../context.ts';
+import { Settings } from '../../../settings.ts';
+import { Rule as ComplexityRule } from '../rule.ts';
+
+function ancestry(parser: Parser, parents: number[], index: number, parent: number): void {
+    parents[index] = parent;
+    for(const child of parser.node(index).children) { ancestry(parser, parents, child, index); }
+}
+function analyze(source: string, path: string, selected: string, settings: Settings): RuleContext {
+    const parser = new Parser(source, path);
+    const root = parser.file();
+    const parents = parser.nodes.map(() => -1);
+    ancestry(parser, parents, root, -1);
+    const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings);
+    new ComplexityRule(context).visit(root, -1);
+    context.findings.sort((left, right) => left.start - right.start);
+    return context;
+}
+function offsets(source: string): number[] {
+    const result = [0]; let bytes = 0;
+    for(let index = 0; index < source.length; index++) {
+        const code = source.codePointAt(index) ?? 0;
+        if(code > 65535) { result.push(bytes); index++; }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        result.push(bytes);
+    }
+    return result;
+}
+function fixed(context: RuleContext, path: string, settings: Settings): string {
+    let current = context;
+    for(let pass = 0; pass < 10; pass++) {
+        const edits = current.findings.filter(finding => finding.repair === 'range-fix').sort((left, right) => left.editStart - right.editStart);
+        let result = current.source;
+        let previous = result.length;
+        for(let index = edits.length - 1; index >= 0; index--) {
+            const edit = edits[index] ?? panic('missing edit');
+            if(edit.editEnd > previous) { panic('overlapping owned fixes'); }
+            result = result.slice(0, edit.editStart) + edit.replacement + result.slice(edit.editEnd);
+            previous = edit.editStart;
+        }
+        if(result === current.source) { return result; }
+        current = analyze(result, path, context.selected, settings);
+    }
+    panic('owned fixer did not converge');
+}
+const args = programArguments();
+const manifest = readTextFile(args[0] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+const countOnly = args.includes('--count');
+let count = 0;
+let caseNumber = 0;
+for(const row of manifest.text.split('\n')) {
+    if(row === '') { continue; }
+    const fields = row.split('\t');
+    const path = fields[0] ?? panic('missing source');
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const settings = new Settings(); settings.load(fields[2] ?? 'null');
+    const context = analyze(source.text, path, fields[1] ?? panic('missing rule'), settings);
+    count += context.findings.length;
+    if(countOnly) { continue; }
+    console.log(`case ${caseNumber}`); caseNumber++;
+    const bytes = offsets(source.text);
+    for(const finding of context.findings) {
+        const start = bytes[finding.start] ?? panic('range outside source');
+        const end = bytes[finding.end] ?? panic('range end outside source');
+        const lines = source.text.slice(0, finding.start).split(/\r\n|[\n\r\u2028\u2029]/);
+        const column = offsets(lines[lines.length - 1] ?? '').pop() ?? 0;
+        console.log(`${path}:${lines.length}:${column + 1}\n  ${finding.rule}  ${finding.message}\n`);
+        const repair = finding.repair === 'range-fix' ? 'fix' : finding.repair;
+        console.log(`range ${start} ${end} ${finding.id} ${repair}\t${written(finding.replacement)}\t${written(finding.suggestion)}`);
+        if(repair === 'fix') { console.log(`edit ${bytes[finding.editStart] ?? panic('edit outside source')} ${bytes[finding.editEnd] ?? panic('edit end outside source')}`); }
+    }
+    console.log(`fixed\t${written(fixed(context, path, settings))}`);
+}
+if(countOnly) { console.log(`${count}`); }

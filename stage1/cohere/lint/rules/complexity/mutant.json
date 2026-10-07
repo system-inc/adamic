@@ -1,0 +1,6 @@
+{
+  "name": "modified switch counted classically",
+  "file": "rule.ts",
+  "from": "counts = this.modified;",
+  "to": "counts = !this.modified;"
+}
