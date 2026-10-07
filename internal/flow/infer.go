@@ -292,6 +292,30 @@ func (n *inference) value(expression ir.Expression) shape {
 		return shape{}
 	}
 	switch expression := expression.(type) {
+	case ir.TypedArrayNew:
+		n.value(expression.Source)
+		return shape{fresh: true}
+	case ir.TypedArraySubarray:
+		// Views share storage. Conservatively alias the parent for every mutation.
+		array := n.value(expression.Array)
+		for _, argument := range expression.Arguments {
+			n.value(argument)
+		}
+		return array
+	case ir.TypedArrayFill:
+		array := n.value(expression.Array)
+		for _, argument := range expression.Arguments {
+			n.value(argument)
+		}
+		n.store(array, shape{})
+		return array
+	case ir.TypedArraySet:
+		array := n.value(expression.Array)
+		for _, argument := range expression.Arguments {
+			n.value(argument)
+		}
+		n.store(array, shape{})
+		return shape{}
 	case ir.Read:
 		declared := n.function.Program.Locals[expression.Local]
 		if !mutable(expression.Of) {

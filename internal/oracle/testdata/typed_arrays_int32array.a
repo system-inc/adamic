@@ -1,0 +1,15 @@
+const edges: number[] = [300, -1, NaN, 2147483648, -0, Infinity, -Infinity, 4294967295, 4294967296, -4294967297, 255.9, -1.9];
+const converted = new Int32Array(edges);
+const written = new Int32Array(edges.length);
+for (let index = 0; index < edges.length; index += 1) {
+ written[index] = edges[index] ?? 0;
+ console.log(`${index}: ${converted[index]} ${written[index]} inverse ${1 / (written[index] ?? 0)}`);
+}
+console.log(`reads ${converted[99]} ${converted[-1]} ${converted[0.5]} ${converted[NaN]} ${converted[Infinity]} zero ${converted[-0]}`);
+const zero = new Int32Array(3.9);
+console.log(`zero ${zero.length} ${zero[0]} ${zero[2]}`);
+console.log(`lengths ${new Int32Array(NaN).length} ${new Int32Array(-0.5).length} ${new Int32Array(-0).length} ${new Int32Array().length}`);
+const identity = written.fill(300, 1, -1);
+console.log(`fill self ${identity === written} ${written[1]} ${written[written.length - 1]}`);
+written.fill(-1, undefined, undefined);
+console.log(`fill undefined ${written[0]} ${written[written.length - 1]}`);

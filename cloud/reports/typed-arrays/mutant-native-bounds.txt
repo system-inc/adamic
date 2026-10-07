@@ -1,0 +1,9 @@
+--- FAIL: TestTypedArrayWriteStopIsPinned (16.80s)
+    typed_arrays_test.go:37: native: exit codes differ: exit 0 stdout "before 2 7 undefined\nafter 2 7 undefined\n" stderr ""
+    typed_arrays_test.go:37: release: exit codes differ: exit 0 stdout "before 2 7 undefined\nafter 2 7 undefined\n" stderr ""
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.812s
+FAIL

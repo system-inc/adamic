@@ -125,6 +125,11 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Typed arrays hold numbers in one flat buffer of the element width.
+	Uint8Array
+	Int32Array
+	Float64Array
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -157,7 +162,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
