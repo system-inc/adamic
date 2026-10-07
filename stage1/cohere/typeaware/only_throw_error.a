@@ -1,0 +1,53 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { thenable } from './then_callback_parameters.a';
+import { ErrorTypes } from './error_types.a';
+import { types } from './facts.ts';
+const objectMessage = 'This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.';
+const undefMessage = 'This throws `undefined`, which reaches the handler as a value carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.';
+export class OnlyThrowError {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly errors: ErrorTypes;
+    constructor(rules: Rules, bindings: Bindings, errors: ErrorTypes) {
+        this.rules = rules; this.bindings = bindings; this.errors = errors;
+    }
+    rethrown(index: number): boolean {
+        if(this.rules.parser.node(index).kind !== 'Identifier') { return false; }
+        const declarations = this.bindings.list(index, 'binding-declarations', false);
+        if(declarations.length !== 1) { return false; }
+        const declaration = declarations[0] ?? -1;
+        const parent = this.bindings.parent(declaration);
+        if(parent < 0) { return false; }
+        if(this.rules.parser.node(parent).kind === 'CatchClause') { return true; }
+        const parameter = this.rules.parser.node(declaration);
+        if(parameter.kind !== 'Parameter' || this.rules.parser.node(parent).kind !== 'ArrowFunction' ||
+            parameter.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')) { return false; }
+        const parameters = this.rules.parser.node(parent).children.filter((child) => this.rules.parser.node(child).kind === 'Parameter');
+        if(parameters[0] !== declaration) { return false; }
+        const call = this.bindings.parent(parent);
+        if(call < 0 || this.rules.parser.node(call).kind !== 'CallExpression') { return false; }
+        const callee = this.rules.skip(this.rules.parser.node(call).children[0] ?? -1);
+        const name = this.errors.member(callee, true);
+        const args = this.errors.arguments(call);
+        const position = name === 'catch' ? 0 : name === 'then' ? 1 : -1;
+        if(position < 0 || args[position] !== parent || args.slice(0, position + 1).some((arg) => this.rules.parser.node(arg).kind === 'SpreadElement')) { return false; }
+        const receiver = this.rules.parser.node(callee).children[0] ?? -1;
+        return thenable(this.rules, receiver);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'ThrowStatement' || node.children.length === 0) { continue; }
+            const subject = this.rules.skip(node.children[0] ?? -1);
+            if(this.rules.parser.node(subject).pos === this.rules.parser.node(subject).end || this.rethrown(subject)) { continue; }
+            const facts = types(this.rules.ask(subject, 'raw-shape'), 'raw-shape');
+            const type = facts.root();
+            if((type.flags & 4) !== 0) {
+                this.rules.add('only-throw-error', 'undef', undefMessage, subject);
+            } else if((type.flags & 3) === 0 && !this.errors.builtin(subject, facts, type, 'Error')) {
+                this.rules.add('only-throw-error', 'object', objectMessage, subject);
+            }
+        }
+    }
+}

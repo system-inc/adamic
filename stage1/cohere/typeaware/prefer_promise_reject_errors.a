@@ -1,0 +1,57 @@
+import type { Rules } from './rules.ts';
+import type { Bindings } from './bindings.ts';
+import type { ErrorTypes } from './error_types.a';
+import { types } from './facts.ts';
+const message = 'This rejects a promise with something that is not an Error, so whatever catches it gets no stack trace and no message. A rejection is the failure path, and the handler that receives a bare string or object has no record of where the failure came from. Reject with `new Error(...)` instead.';
+export class PreferPromiseRejectErrors {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly errors: ErrorTypes;
+    constructor(rules: Rules, bindings: Bindings, errors: ErrorTypes) { this.rules = rules; this.bindings = bindings; this.errors = errors; }
+    check(index: number): void {
+        const args = this.errors.arguments(index);
+        if(args.length > 0) {
+            const argument = args[0] ?? -1;
+            const facts = types(this.rules.ask(argument, 'raw-shape'), 'raw-shape');
+            if(this.errors.builtin(argument, facts, facts.root(), 'Error') ||
+                this.errors.builtin(argument, facts, facts.root(), 'Error', true)) { return; }
+        }
+        this.rules.add('prefer-promise-reject-errors', 'rejectAnError', message, index);
+    }
+    scan(index: number, target: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'CallExpression') {
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            if(this.rules.parser.node(callee).kind === 'Identifier' && this.bindings.list(callee, 'binding-declarations', false).includes(target)) { this.check(index); }
+        }
+        for(const child of node.children) { this.scan(child, target); }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'CallExpression') {
+                const callee = this.rules.skip(node.children[0] ?? -1);
+                if(this.errors.member(callee) !== 'reject') { continue; }
+                const receiver = this.rules.parser.node(callee).children[0] ?? -1;
+                const facts = types(this.rules.ask(receiver, 'raw-shape'), 'raw-shape');
+                if(this.errors.builtin(receiver, facts, facts.root(), 'PromiseConstructor') || this.errors.builtin(receiver, facts, facts.root(), 'Promise')) { this.check(index); }
+            } else if(node.kind === 'NewExpression') {
+                const callee = this.rules.skip(node.children[0] ?? -1);
+                const facts = types(this.rules.ask(callee, 'raw-shape'), 'raw-shape');
+                if(!this.errors.builtin(callee, facts, facts.root(), 'PromiseConstructor')) { continue; }
+                const args = this.errors.arguments(index);
+                if(args.length === 0) { continue; }
+                const executor = this.rules.skip(args[0] ?? -1);
+                const functionNode = this.rules.parser.node(executor);
+                if(!['ArrowFunction', 'FunctionExpression', 'FunctionDeclaration'].includes(functionNode.kind)) { continue; }
+                const params = functionNode.children.filter((child) => this.rules.parser.node(child).kind === 'Parameter');
+                if(params.length < 2) { continue; }
+                const parameter = params[1] ?? -1;
+                const name = this.bindings.shape.name(parameter);
+                if(name < 0 || this.rules.parser.node(name).kind !== 'Identifier' || this.rules.parser.node(parameter).children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')) { continue; }
+                const declarations = this.bindings.list(name, 'binding-declarations', false);
+                if(declarations.length > 0) { for(const child of functionNode.children) { this.scan(child, declarations[0] ?? -1); } }
+            }
+        }
+    }
+}

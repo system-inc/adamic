@@ -1,0 +1,15 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+export function thenable(rules: Rules, index: number): boolean {
+    const facts = types(rules.ask(index, 'then-callback-parameters'), 'then-callback-parameters');
+    for(const root of facts.roots) {
+        for(const part of facts.parts(facts.type(root))) {
+            const frames = new Frames(rules.ask(index, `call-count\n${part}`));
+            header(frames, 'call-count');
+            const count = frames.natural(); frames.end();
+            if(count > 0) { return true; }
+        }
+    }
+    return false;
+}

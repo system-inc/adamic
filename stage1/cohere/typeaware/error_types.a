@@ -1,0 +1,59 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { typeAliasInfo } from './type_alias_info.a';
+
+export class ErrorTypes {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    builtin(index: number, facts: Types, subject: TypeFact, name: string, readonlyError = false, visited: readonly number[] = []): boolean {
+        if(visited.includes(subject.id)) { return false; }
+        const seen = visited.concat([subject.id]);
+        if((subject.flags & 268435456) !== 0) {
+            return subject.parts.some((id) => this.builtin(index, facts, facts.type(id), name, readonlyError, seen));
+        }
+        if((subject.flags & 134217728) !== 0) {
+            return subject.parts.every((id) => this.builtin(index, facts, facts.type(id), name, readonlyError, seen));
+        }
+        if((subject.flags & 524288) !== 0) {
+            return subject.constraint !== 0 && this.builtin(index, facts, facts.type(subject.constraint), name, readonlyError, seen);
+        }
+        if(readonlyError) {
+            const alias = typeAliasInfo(this.rules, index, subject.id);
+            if(alias.graph.roots.length === 0) { return false; }
+            if(alias.library && alias.name === 'Readonly' &&
+                (this.builtin(index, alias.graph, alias.graph.root(), 'Error') ||
+                 this.builtin(index, alias.graph, alias.graph.root(), 'Error', true, seen))) { return true; }
+        } else {
+            const frames = new Frames(this.rules.ask(index, `type-origin\n${subject.id}`));
+            header(frames, 'type-origin');
+            if(!frames.yes()) { frames.end(); return false; }
+            const symbolName = frames.field(); const count = frames.natural(); let library = false;
+            for(let at = 0; at < count; at++) {
+                frames.field(); const declaration = frames.yes(); const defaultLibrary = frames.yes();
+                library = library || (declaration && defaultLibrary);
+            }
+            frames.end();
+            if(library && symbolName === name) { return true; }
+        }
+        const bases = types(this.rules.ask(index, `base-shapes\n${subject.id}`), 'base-shapes');
+        return bases.roots.some((id) => this.builtin(index, bases, bases.type(id), name, readonlyError, seen));
+    }
+    arguments(index: number): readonly number[] {
+        const node = this.rules.parser.node(index);
+        return node.list > 0 ? node.children.slice(node.children.length - node.list) : [];
+    }
+    member(index: number, privateName = false, parentheses = true, template = true): string {
+        const node = this.rules.parser.node(index);
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(key < 0) { return ''; }
+        const property = this.rules.parser.node(parentheses ? this.rules.skip(key) : key);
+        if(node.kind === 'PropertyAccessExpression' && (property.kind === 'Identifier' || (privateName && property.kind === 'PrivateIdentifier'))) {
+            return privateName ? property.text.replace('#', '') : property.text;
+        }
+        if(node.kind === 'ElementAccessExpression' && (property.kind === 'StringLiteral' || (template && property.kind === 'NoSubstitutionTemplateLiteral'))) { return property.text; }
+        return '';
+    }
+}

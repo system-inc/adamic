@@ -1,0 +1,27 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+import type { Types } from './types.ts';
+export class AliasInfo {
+    readonly name: string;
+    readonly library: boolean;
+    readonly graph: Types;
+    constructor(name: string, library: boolean, graph: Types) {
+        this.name = name; this.library = library; this.graph = graph;
+    }
+}
+export function typeAliasInfo(rules: Rules, index: number, id: number): AliasInfo {
+    const frames = new Frames(rules.ask(index, `type-alias-info\n${id}`));
+    header(frames, 'type-alias-info');
+    let name = ''; let library = false;
+    if(frames.yes()) {
+        name = frames.field();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            frames.field(); const declaration = frames.yes(); const defaultLibrary = frames.yes();
+            library = library || (declaration && defaultLibrary);
+        }
+    }
+    const graph = types(`1\n115\ntype-alias-info${frames.text.slice(frames.cursor)}`, 'type-alias-info');
+    return new AliasInfo(name, library, graph);
+}
