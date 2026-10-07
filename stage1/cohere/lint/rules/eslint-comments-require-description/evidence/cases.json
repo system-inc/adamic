@@ -1,0 +1,913 @@
+[
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/*\n * eslint-disable\n */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/*\n eslint-disable\n */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    },
+    "sourceText": "/* c8 ignore next */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* c8 ignore next */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    },
+    "sourceText": "/* c8 ignore next -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* c8 without options */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    },
+    "sourceText": "/* c8x ignore */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* cohere-disable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* cohere-disable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* cohere-disable -- generated */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-enable"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* cohere-enable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* cohere-enable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* cohere-enable -- generated */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint eqeqeq: \"off\", curly: \"error\" */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint eqeqeq: \"off\", curly: \"error\" -- Here's a description about why this configuration is necessary. */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable */\nfoo();\n// eslint-disable-next-line -- why\nbar();\n/* eslint-enable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable -- \t */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable eqeqeq */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-line\n */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-line */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-line */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-line -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-line eqeqeq */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line\tfoo\t--\treason */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line\n */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line eqeqeq */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line eqeqeq -- */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disable-next-line, foo */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-disabled */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-enable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-enable"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-enable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-enable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-enable -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-enable eqeqeq */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-env */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* eslint-env node */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "exported"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* exported */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* exported */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* exported -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "global"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* global */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* global */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* global -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* global _ */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "globals"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "/* globals */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* globals */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* globals -- description */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* globals _ */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8",
+        "istanbul"
+      ]
+    },
+    "sourceText": "/* istanbul ignore next */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* just eslint in a normal comment */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/* oxlint-enable foo */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/** eslint-disable */"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "/*eslint-disable*/"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// a note about cohere-disable"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// a note about eslint-disable"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    },
+    "sourceText": "// c8 ignore next"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// c8 ignore next"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    },
+    "sourceText": "// c8 ignore next -- covered elsewhere"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "// cohere-disable-next-line foo"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// cohere-disable-next-line foo -- "
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// cohere-disable-next-line foo--bar"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// cohere-disable-next-line no-alert"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// cohere-disable-next-line no-alert -- the kiosk build has no other channel"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// cohere-disabled"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint eqeqeq: 0"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable -- generated"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable eqeqeq"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-line"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-line"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": null,
+    "sourceText": "// eslint-disable-line\n"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-line -- description"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-line eqeqeq"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-line eqeqeq -- description"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line -- description"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line eqeqeq"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line eqeqeq -- description"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo --"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo --\t"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo -- "
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo -- -- "
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo -- --bar"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo -- bar"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo ---  bar"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo--bar"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-disable-next-line foo -- bar"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// eslint-enable"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// global foo"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// oxlint-disable-next-line foo"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "// verify-disable-next-line foo"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "//eslint-disable-line"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "const a = 1;\n    /* eslint-disable */\nconst b = 2;"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "const s = '/* eslint-disable */';"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "x;\n/* eslint-disable"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "x; // cohere-disable-line"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "x; // eslint-disable-line foo"
+  },
+  {
+    "file": "/repository/source/RequireDescription.tsx",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    },
+    "sourceText": "{/* cohere-disable-next-line */}"
+  },
+  {
+    "file": "/source.ts",
+    "options": null,
+    "sourceText": "// eslint-disable-next-line\nconst é = 1;\n/* global x */\n/* cohere-disable -- reason */\n"
+  }
+]
