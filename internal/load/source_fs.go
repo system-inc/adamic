@@ -2,6 +2,7 @@ package load
 
 import (
 	_ "embed"
+	"sort"
 	"strings"
 	"time"
 
@@ -29,7 +30,8 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay map[string]string
+	overlay        map[string]string
+	projectConsole bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -65,6 +67,11 @@ func (s *sourceFS) FileExists(path string) bool {
 
 func (s *sourceFS) ReadFile(path string) (string, bool) {
 	if path == preludePath {
+		if s.projectConsole {
+			start := strings.Index(prelude, "declare const console:")
+			end := strings.Index(prelude[start:], "declare module 'adamic'") + start
+			return prelude[:start] + prelude[end:], true
+		}
 		return prelude, true
 	}
 	if source, exists := s.overlay[path]; exists {
@@ -117,4 +124,18 @@ func (s *sourceFS) Remove(path string) error {
 
 func (s *sourceFS) Chtimes(path string, aTime time.Time, mTime time.Time) error {
 	return errReadOnly
+}
+
+// Expose the same .a aliases to config glob expansion that module resolution already sees.
+func (s *sourceFS) GetAccessibleEntries(path string) vfs.Entries {
+	entries := s.FS.GetAccessibleEntries(path)
+	files := append([]string(nil), entries.Files...)
+	for _, name := range entries.Files {
+		if strings.HasSuffix(name, ".a") && !s.FS.FileExists(path+"/"+name+".ts") {
+			files = append(files, name+".ts")
+		}
+	}
+	sort.Strings(files)
+	entries.Files = files
+	return entries
 }

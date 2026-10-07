@@ -1,5 +1,5 @@
 // Package load turns Adamic source files into a checked program: every file parsed, bound and
-// type-checked by typescript-go in this process, under the one set of options Adamic 0.1 allows.
+// type-checked by typescript-go in this process, under Adamic's required options and project checks.
 //
 // A program either loads clean or Load returns an error naming every diagnostic. There is no
 // half-loaded state, because a compiler that lowers a program the checker rejected is lowering a
@@ -40,7 +40,8 @@ type Program struct {
 	fs       *sourceFS
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
-	files []*ast.SourceFile
+	files   []*ast.SourceFile
+	entries []*ast.SourceFile
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.
@@ -52,8 +53,8 @@ func (e *CheckError) Error() string {
 	return strings.Join(e.Diagnostics, "\n")
 }
 
-// compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
-// rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+// compilerOptions is the baseline for direct file inputs. Project inputs enforce the same
+// contract through projectOptions while retaining additional project options (docs/projects.md).
 func compilerOptions() *core.CompilerOptions {
 	return &core.CompilerOptions{
 		Strict:                     core.TSTrue,
@@ -91,7 +92,11 @@ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
 }
 
 func load(paths []string, overlay map[string]string) (*Program, error) {
-	if len(paths) == 0 {
+	return loadInput(paths, overlay, "")
+}
+
+func loadInput(paths []string, overlay map[string]string, project string) (*Program, error) {
+	if len(paths) == 0 && project == "" {
 		return nil, errors.New("load: no files given")
 	}
 	workingDirectory, err := os.Getwd()
@@ -109,31 +114,53 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		normalizedOverlay[name] = source
 	}
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
-	roots := make([]string, 0, len(paths)+1)
-	for _, path := range paths {
-		root, err := rootFileName(fs, currentDirectory, path)
+	var projectConfig *tsoptions.ParsedCommandLine
+	if project != "" {
+		projectConfig, err = parseProject(project, currentDirectory, fs)
 		if err != nil {
 			return nil, err
 		}
-		roots = append(roots, root)
+		paths = projectConfig.FileNames()
 	}
+	roots := make([]string, 0, len(paths)+1)
+	seenRoots := map[tspath.Path]bool{}
+	for _, path := range paths {
+		root, err := rootFileName(fs, currentDirectory, fs.displayName(path))
+		if err != nil {
+			return nil, err
+		}
+		key := tspath.ToPath(root, currentDirectory, fs.UseCaseSensitiveFileNames())
+		if !seenRoots[key] {
+			roots = append(roots, root)
+			seenRoots[key] = true
+		}
+	}
+	ownedRoots := append([]string(nil), roots...)
 	roots = append(roots, preludePath)
 
-	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
-	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{
-		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(),
+		UseCaseSensitiveFileNames: fs.UseCaseSensitiveFileNames(),
 		CurrentDirectory:          currentDirectory,
 	})
-	host := compiler.NewCachedFSCompilerHost(currentDirectory, fileSystem, bundled.LibPath(), nil, nil, nil)
-	program := compiler.NewProgram(compiler.ProgramOptions{
-		Config:         config,
-		Host:           host,
-		SingleThreaded: core.TSTrue,
-	})
+	if projectConfig != nil {
+		config = projectConfig.WithFileNames(roots)
+	}
+	// Each prelude choice gets a fresh cache; a previous cached prelude must not mask its console.
+	buildProgram := func() *compiler.Program {
+		fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		host := compiler.NewCachedFSCompilerHost(currentDirectory, fileSystem, bundled.LibPath(), nil, nil, nil)
+		return compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+	}
+	program := buildProgram()
 	if program == nil {
 		return nil, errors.New("load: the compiler built no program")
+	}
+	if projectConfig != nil && !hasHostConsole(program.GetSourceFiles()) {
+		fs.projectConsole = false
+		program = buildProgram()
+		if program == nil {
+			return nil, errors.New("load: the compiler built no program")
+		}
 	}
 
 	loaded := &Program{compiler: program, fs: fs}
@@ -146,12 +173,17 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.Path()] = sourceFile
 	}
-	for _, root := range roots[:len(roots)-1] {
-		sourceFile, isLoaded := byPath[tspath.ToPath(root, currentDirectory, fileSystem.UseCaseSensitiveFileNames())]
+	for _, root := range ownedRoots {
+		sourceFile, isLoaded := byPath[tspath.ToPath(root, currentDirectory, fs.UseCaseSensitiveFileNames())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
 		}
-		loaded.files = append(loaded.files, sourceFile)
+		if projectConfig == nil || !sourceFile.IsDeclarationFile {
+			loaded.files = append(loaded.files, sourceFile)
+		}
+	}
+	if projectConfig == nil {
+		loaded.entries = loaded.files
 	}
 	return loaded, nil
 }
@@ -160,6 +192,9 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 func (p *Program) Files() []*ast.SourceFile {
 	return p.files
 }
+
+// Entries returns explicitly selected execution entries. Project checking roots never become entries.
+func (p *Program) Entries() []*ast.SourceFile { return p.entries }
 
 // Checker returns the checker that owns a file, and the function that releases it.
 func (p *Program) Checker(ctx context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
@@ -199,6 +234,9 @@ func rootFileName(fs *sourceFS, currentDirectory string, path string) (string, e
 	}
 	switch filepath.Ext(fileName) {
 	case ".ts":
+		if strings.HasSuffix(fileName, ".a.ts") && fs.FS.FileExists(strings.TrimSuffix(fileName, ".ts")) && fs.FS.FileExists(fileName) {
+			return "", fmt.Errorf("load: %s and %s both exist; rename one", strings.TrimSuffix(fileName, ".ts"), fileName)
+		}
 		if !fs.FS.FileExists(fileName) {
 			return "", fmt.Errorf("load: no file at %s", path)
 		}

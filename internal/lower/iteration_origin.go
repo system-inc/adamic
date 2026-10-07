@@ -62,7 +62,7 @@ func (l *lowering) erasedLiteralMethod(node *ast.Node) error {
 }
 
 func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
-	modules, err := l.moduleOrder(l.program.Files()[0])
+	modules, err := l.moduleOrder(l.program.Entries()[0])
 	if err != nil {
 		return err
 	}

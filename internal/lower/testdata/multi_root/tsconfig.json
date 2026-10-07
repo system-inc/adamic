@@ -1,0 +1,6 @@
+{
+  "extends": "./base.json",
+  "files": ["third.a", "first.a", "second.a"],
+  "include": ["*.a"],
+  "exclude": ["excluded.a", "leaf.a", "shared.a"]
+}
