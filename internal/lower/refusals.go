@@ -22,11 +22,9 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindEnumDeclaration:   {"enum", "use a union of string literals, like 'Circle' | 'Square'"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
@@ -75,7 +73,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
+		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
@@ -84,6 +82,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
+		}
+		if err := l.enumRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		checkedCast := false
+		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
+		// reads through it, and processValue lowers the complete path or refuses it.
+		if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
+			proof, err := l.castProof(node)
+			if err != nil {
+				found = err
+				return true
+			}
+			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {
@@ -128,7 +141,13 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) {
+		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+			if err := l.nodeBufferUnsupportedUse(node); err != nil {
+				found = err
+				return true
+			}
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
@@ -161,9 +180,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
-		if err := l.refuseStringWidening(node); err != nil {
-			found = err
-			return true
+		// A checked cast relates only members selected by its tag, not excluded source members.
+		if !checkedCast {
+			if err := l.refuseStringWidening(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		if err := l.classViewRefusal(node); err != nil {
 			found = err

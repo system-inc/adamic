@@ -21,6 +21,10 @@ type regularProgram struct {
 
 func (p *Program) compileRegular() *regularProgram {
 	for _, i := range p.code {
+		// Unicode boundary assertions can match a pair interior in V8; retain its VM walk.
+		if i.op == opAssert && i.assertion >= WordBoundary && unicodeMode(i.flags) {
+			return nil
+		}
 		if i.op == opReference || i.op == opLook {
 			return nil
 		}
@@ -223,14 +227,17 @@ func (p *Program) regularFind(input []uint16, start int, sticky bool) int {
 		if at == len(input) {
 			return best
 		}
-		c, to, _ := readCharacter(input, at, 1, unicodeMode(p.flags))
+		c, to, readable := readCharacter(input, at, 1, unicodeMode(p.flags))
+		if !readable {
+			to = at + 1
+		}
 		alive := false
 		for pc, origin := range current {
 			if origin < 0 || best >= 0 && origin >= best {
 				continue
 			}
 			n := r.code[pc]
-			if n.op == opSet {
+			if n.op == opSet && readable {
 				i := p.code[n.source]
 				if i.set.contains(canonicalize(c, i.flags)) && (next[n.x] < 0 || origin < next[n.x]) {
 					next[n.x] = origin

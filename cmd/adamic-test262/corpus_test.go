@@ -236,7 +236,7 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 	if report.Pass != 1 {
 		t.Fatalf("large program: %+v", report)
 	}
-	generated, err := os.ReadFile(filepath.Join(engine.work, "program.c"))
+	generated, err := os.ReadFile(filepath.Join(engine.programDirectory(classify("large.js", source, false)), "program.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

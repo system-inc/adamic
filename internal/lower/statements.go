@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
-	"strings"
 )
 
 // statements lowers a list of statements.
@@ -27,11 +26,11 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
-	case ast.KindImportDeclaration:
+	case ast.KindImportDeclaration, ast.KindExportDeclaration:
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
-	case ast.KindExportDeclaration, ast.KindExportAssignment:
+	case ast.KindExportAssignment:
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
@@ -39,6 +38,8 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		// Lowered already, by declareModule.
 		return nil, nil
+	case ast.KindEnumDeclaration:
+		return l.enumDeclaration(node)
 	case ast.KindClassDeclaration:
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")
@@ -68,9 +69,21 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
+	case ast.KindLabeledStatement:
+		statement := node.AsLabeledStatement().Statement
+		for statement.Kind == ast.KindLabeledStatement {
+			statement = statement.AsLabeledStatement().Statement
+		}
+		if statement.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(statement, false) {
+			return nil, l.notYet(node, "a label on a statement other than a loop or switch")
+		}
+		return l.statement(node.AsLabeledStatement().Statement)
 	case ast.KindBreakStatement, ast.KindContinueStatement:
 		if node.Label() != nil {
-			return nil, l.notYet(node, "a labeled "+strings.ToLower(strings.TrimSuffix(strings.TrimPrefix(node.Kind.String(), "Kind"), "Statement")))
+			if node.Kind == ast.KindContinueStatement {
+				return nil, l.notYet(node, "a labeled continue")
+			}
+			return l.labeledBreak(node)
 		}
 		if node.Kind == ast.KindBreakStatement {
 			return []ir.Statement{ir.Break{}}, nil
@@ -88,6 +101,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // ++ and --. A discarded RegExp still evaluates construction and its arguments.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
+	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
@@ -153,15 +172,22 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	}
 	expression := node.AsReturnStatement().Expression
 	if expression == nil {
-		return []ir.Statement{ir.Return{}}, nil
+		returned := ir.Return{}
+		if l.function.Returns != 0 {
+			returned.Value = fit(ir.Undefined{}, l.function.Returns)
+		}
+		return []ir.Statement{returned}, nil
 	}
-	if l.isPanicCall(expression) {
+	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}
 	value, err := l.expression(expression)
 	if err != nil {
 		return nil, err
+	}
+	if l.function.Returns == 0 {
+		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
 }

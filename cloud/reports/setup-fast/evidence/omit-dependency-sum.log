@@ -1,0 +1,13 @@
+F...
+======================================================================
+FAIL: test_collected_manifests_invalidate (__main__.WarmingKey.test_collected_manifests_invalidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 106, in test_collected_manifests_invalidate
+    self.assertNotEqual(previous, current, str(file))
+AssertionError: '3f4ef66800a7d65a6520d283579f038b98bb1f6b8cf1f3d2402cdb6f1a3d2b7a\n' == '3f4ef66800a7d65a6520d283579f038b98bb1f6b8cf1f3d2402cdb6f1a3d2b7a\n' : /tmp/adamic-gate/setup-collected-h77vor70/dependency/go.sum
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (failures=1)

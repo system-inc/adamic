@@ -12,6 +12,14 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
+	case ir.NodeHostCall:
+		return e.nodeHostCall(expression)
+	case ir.ProcessCall:
+		return e.processCall(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)
@@ -495,6 +503,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.ReadDirectory:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
+	case ir.RealPath:
+		return e.own(ir.Object, fmt.Sprintf("adamic_real_path(%s)", e.value(expression.Path)))
 	case ir.FileStatus:
 		return e.own(ir.Object, fmt.Sprintf("adamic_file_status(%s)", e.value(expression.Path)))
 	case ir.WriteTextFile:

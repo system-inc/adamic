@@ -75,13 +75,15 @@ ptrdiff_t adamic_regex_regular_find(const adamic_regex_program *p, const uint16_
 			return best;
 		uint32_t c;
 		ptrdiff_t to;
-		adamic_regex_read(input, length, at, 1, p->flags & 4, &c, &to);
+		bool readable = adamic_regex_read(input, length, at, 1, p->flags & 4, &c, &to);
+		if (!readable)
+			to = at + 1;
 		while ((pc = regular_take(&active, r->words)) >= 0) {
 			ptrdiff_t origin = current[pc];
 			if (origin < 0 || (best >= 0 && origin >= best))
 				continue;
 			const adamic_regex_regular_instruction *n = &r->code[pc];
-			if (n->op == 1) {
+			if (n->op == 1 && readable) {
 				const adamic_regex_instruction *i = &p->code[n->source];
 				if (adamic_regex_contains(i, adamic_regex_canonical(c, i->flags)) &&
 					(next[n->x] < 0 || origin < next[n->x])) {

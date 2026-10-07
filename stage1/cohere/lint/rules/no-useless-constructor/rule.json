@@ -1,0 +1,14 @@
+{
+  "name": "no-useless-constructor",
+  "order": 9,
+  "kinds": [
+    "Constructor",
+    "MethodDeclaration"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoUselessConstructor",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUselessConstructor",
+  "factory": "create",
+  "class": "Rule"
+}

@@ -12,6 +12,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"syscall"
 	"testing"
 	"time"
@@ -37,7 +38,66 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/process_exit_code.a", true, false},
+	{"internal/oracle/testdata/process_exit.a", true, false},
+	{"internal/oracle/testdata/process_exit_default.a", true, false},
+	{"internal/oracle/testdata/process_exit_uncaught.a", true, false},
+	{"internal/oracle/testdata/process_bad_code.a", true, false},
+	{"internal/oracle/testdata/process_observations.a", true, false},
+	{"internal/oracle/testdata/process_shadow.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
+	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
+	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
+	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
+	{"internal/oracle/testdata/route_targets_bound_method.a", true, false},
+	{"internal/oracle/testdata/route_targets_recursive.a", true, false},
+	{"internal/oracle/testdata/route_targets_try_loop.a", true, false},
+	{"internal/oracle/testdata/route_targets_accessor.a", true, false},
+	{"internal/oracle/testdata/route_targets_sort_values.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_keys.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_keys.a", true, false},
+	{"internal/oracle/testdata/map_foreach_keys.a", true, false},
+	{"internal/oracle/testdata/set_foreach_keys.a", true, false},
+	{"internal/oracle/testdata/map_foreach_keep.a", true, false},
+	{"internal/oracle/testdata/set_foreach_keep.a", true, false},
+	{"internal/oracle/testdata/map_foreach_objects.a", true, false},
+	{"internal/oracle/testdata/set_foreach_objects.a", true, false},
+	{"internal/oracle/testdata/map_foreach_closures.a", true, false},
+	{"internal/oracle/testdata/set_foreach_closures.a", true, false},
+	{"internal/oracle/testdata/map_foreach_numbers.a", true, false},
+	{"internal/oracle/testdata/set_foreach_numbers.a", true, false},
+	{"internal/oracle/testdata/map_foreach_arrays.a", true, false},
+	{"internal/oracle/testdata/set_foreach_arrays.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_more.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_more.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_objects.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_objects.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_closures.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_closures.a", true, false},
+	{"internal/oracle/testdata/map_foreach_fnexpr.a", true, false},
+	{"internal/oracle/testdata/set_foreach_fnexpr.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_numbers.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_guards.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_callbacks.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_exclusions.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_spread.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_scope.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_depths.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_values.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_return.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_method.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_finally.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_parents.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_coverage_bounded.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_override.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_unknown.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_argument.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_walk.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_listener.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_write.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_reassigned.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_capture.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_store.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -56,6 +116,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_object_same.a", true, false},
 	{"internal/oracle/testdata/library_object_own.a", true, false},
 	{"dedication/dedication.a", true, false},
+	{"cmd/adamic/testdata/wasi/request.a", true, false},
 	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
 	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
 	{"internal/oracle/testdata/class_oct6_parameters.a", true, false},
@@ -102,6 +163,13 @@ var fixtures = []struct {
 	{"internal/load/testdata/0.1/compile/09_tree.ts", true, false},
 	{"internal/load/testdata/0.1/compile/10_unicode.ts", true, false},
 	{"internal/oracle/testdata/strings.a", true, false},
+	{"internal/oracle/testdata/string_build_caches.a", true, false},
+	{"internal/oracle/testdata/string_build_padding.a", true, false},
+	{"internal/oracle/testdata/string_build_join.a", true, false},
+	{"internal/oracle/testdata/string_build_repeat.a", true, false},
+	{"internal/oracle/testdata/string_build_cached_reads.a", true, false},
+	{"internal/oracle/testdata/string_build_boundaries.a", true, false},
+	{"internal/oracle/testdata/string_build_calls.a", true, false},
 	{"internal/oracle/testdata/numbers.a", true, false},
 	{"internal/oracle/testdata/bitwise_sweep.a", true, false},
 	{"internal/oracle/testdata/loops.a", true, false},
@@ -135,6 +203,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/maybe_numbers.a", true, false},
 	{"internal/oracle/testdata/defaults.a", true, false},
 	{"internal/oracle/testdata/search_halves.a", true, false},
+	{"internal/oracle/testdata/runtime_last_index_of.a", true, false},
+	{"internal/oracle/testdata/lint_runtime_release_chain.a", true, false},
+	{"internal/oracle/testdata/lint_runtime_release_shared.a", true, false},
+	{"internal/oracle/testdata/lint_runtime_search_boundaries.a", true, false},
+	{"internal/oracle/testdata/lint_runtime_search_calls.a", true, false},
+	{"internal/oracle/testdata/lint_runtime_equal_headers.a", true, false},
 	{"internal/oracle/testdata/strings_more.a", true, false},
 	{"internal/oracle/testdata/number_parsing.a", true, false},
 	{"internal/oracle/testdata/library_math_number_math.a", true, false},
@@ -218,6 +292,18 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_positions.a", true, false},
 	{"internal/oracle/testdata/long_literals.a", true, false},
 	{"internal/oracle/testdata/class_layouts.a", true, false},
+	{"internal/oracle/testdata/field_access_paths.a", true, false},
+	{"internal/oracle/testdata/nbody_field_values.a", true, false},
+	{"internal/oracle/testdata/nbody_slot_kinds.a", true, false},
+	{"internal/oracle/testdata/nbody_runtime_fields.a", true, false},
+	{"internal/oracle/testdata/nbody_narrowed_receiver.a", true, false},
+	{"internal/oracle/testdata/nbody_base_writes.a", true, false},
+	{"internal/oracle/testdata/nbody_collection_fields.a", true, false},
+	{"internal/oracle/testdata/nbody_write_read_order.a", true, false},
+	{"internal/oracle/testdata/nbody_static_collision.a", true, false},
+	{"internal/oracle/testdata/nbody_optional_references.a", true, false},
+	{"internal/oracle/testdata/nbody_spread_fields.a", true, false},
+	{"internal/oracle/testdata/field_write_paths.a", true, false},
 	{"internal/oracle/testdata/inherited_static_field_read.a", true, false},
 	{"internal/oracle/testdata/ascii_scan.a", true, false},
 	{"internal/oracle/testdata/size_class_churn.a", true, false},
@@ -255,6 +341,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
+	{"internal/oracle/testdata/borrow_loop.a", true, false},
+	{"internal/oracle/testdata/borrow_loop_calls.a", true, false},
+	{"internal/oracle/testdata/borrow_global_call.a", true, false},
 	{"internal/oracle/testdata/borrow_element_throw.a", true, false},
 	{"internal/oracle/testdata/borrow_element_virtual_store.a", true, false},
 	// A variable borrowed from an array, then the array moved into a consumed parameter of a
@@ -306,6 +395,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/gaps.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_quick.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_repeat.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_stream.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_long.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_cache.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_limit.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},
@@ -521,33 +616,75 @@ func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 // everything. No garbage collector means every reference the compiler hands out has to come back;
 // this is where a missing release shows. Only programs Node finishes with exit 0 are asked.
 //
-// macOS has the leaks tool; Linux has LeakSanitizer, part of ASan there, run on the sanitized binary
-// the comparison already built.
+// macOS has the counted build, and leaks --atExit run on it; Linux has LeakSanitizer, part of ASan
+// there, run on the sanitized binary the comparison already built.
 func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		return leaksTool(t, program)
+		return leaksCounted(t, native.C(program))
 	case "linux":
 		return leakSanitizer(t, sanitized)
 	}
-	t.Fatalf("no leak check for %s: the oracle knows macOS's leaks tool and Linux's LeakSanitizer", runtime.GOOS)
+	t.Fatalf("no leak check for %s: the oracle knows macOS's counted build and Linux's LeakSanitizer", runtime.GOOS)
 	return ""
 }
 
-// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs
-// it under leaks --atExit, and returns its report when anything leaked.
-func leaksTool(t *testing.T, program *ir.Program) string {
+// leaksCounted builds C counted (runtime/count.h) and returns a report of what it never let go of, or
+// "" when it let go of everything. It runs the binary twice: on its own, where its allocations must be
+// its frees and its values in regions, the rule the counts table is read by; then under leaks --atExit.
+//
+// The counts are the check for values. Outside the sanitizers every small value lives in a chunk of
+// the runtime's size-class allocator (heap.c), and every chunk stays reachable from the runtime's own
+// table of them, so to macOS's leaks tool a value the program never let go of still reads as
+// reachable: with an array's elements never let go of, leaks --atExit passed 260 of the 261 fixtures
+// it was asked about, and the counts failed 141. leaks --atExit is the check for what the runtime
+// takes from malloc outside the counts (an array's elements, a map's table, a region's blocks): with
+// a region's blocks never freed, the counts balance and leaks finds the blocks.
+func leaksCounted(t *testing.T, code string) string {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	binary := filepath.Join(t.TempDir(), "counted")
+	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	report := execute(t, "leaks", "--atExit", "--", binary)
+	if report := unbalanced(t, execute(t, binary)); report != "" {
+		return report
+	}
+	return leaksTool(execute(t, "leaks", "--atExit", "--", binary))
+}
+
+// leaksTool reads a run of macOS's leaks --atExit: its report when it found memory nothing reaches,
+// or "".
+func leaksTool(report run) string {
 	if report.exitCode == 0 {
 		return ""
 	}
 	return string(report.stdout)
+}
+
+// unbalanced reads a counted run's counts and returns a report when the program finished holding heap
+// values, or "" when its allocations are its frees and its values in regions.
+func unbalanced(t *testing.T, counted run) string {
+	t.Helper()
+	match := countsLine.FindSubmatch(counted.stderr)
+	if counted.exitCode != 0 || match == nil {
+		return fmt.Sprintf("the counted build didn't finish with its counts: exit %d, stderr %q", counted.exitCode, counted.stderr)
+	}
+	allocations, frees, regions := countOf(t, match[1]), countOf(t, match[2]), countOf(t, match[6])
+	if allocations == frees+regions {
+		return ""
+	}
+	return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d, in regions %d)", allocations-frees-regions, allocations, frees, regions)
+}
+
+// countOf is one number of a counts line, signed, so frees past allocations read as a negative leak.
+func countOf(t *testing.T, digits []byte) int64 {
+	t.Helper()
+	count, err := strconv.ParseInt(string(digits), 10, 64)
+	if err != nil {
+		t.Fatalf("counts: %v", err)
+	}
+	return count
 }
 
 // leakSanitizer runs a sanitized binary again with leak detection on, and returns LeakSanitizer's

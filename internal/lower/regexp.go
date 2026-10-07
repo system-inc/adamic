@@ -209,19 +209,18 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if name == "split" {
 		if len(arguments) == 1 {
-			arguments = append(arguments, ir.NumberConstant{Value: 4294967295})
+			arguments = append(arguments, ir.Undefined{})
 		}
+		undefined := false
 		if len(arguments) == 2 {
-			if _, undefined := arguments[1].(ir.Undefined); undefined {
-				arguments[1] = ir.NumberConstant{Value: 4294967295}
-			}
-			if arguments[1].Type() == ir.MaybeNumber {
-				arguments[1] = ir.Coalesce{Value: arguments[1], Fallback: ir.NumberConstant{Value: 4294967295}, Of: ir.Number}
-			}
+			_, undefined = arguments[1].(ir.Undefined)
 		}
-		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
+		if len(arguments) != 2 || !undefined && arguments[1].Type() != ir.Number && arguments[1].Type() != ir.MaybeNumber {
 			return nil, true, l.notYet(node, "regex split limit other than a number")
 		}
+	}
+	if name == "split" && !l.regexSplitLimitProven(args[0], arguments[1]) {
+		return nil, true, l.notYet(node, "RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion")
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
 		return nil, true, l.notYet(node, "an optional RegExp call")
@@ -292,7 +291,7 @@ func (l *lowering) regexGroups(node *ast.Node) bool {
 	for _, info := range l.checker.GetIndexInfosOfType(proven) {
 		if declaration := info.Declaration(); declaration != nil {
 			file := ast.GetSourceFileOfNode(declaration)
-			if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName(), ".regexp.") {
+			if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName().AsString(), ".regexp.") {
 				return true
 			}
 		}

@@ -54,6 +54,7 @@ func TestRegExpBytecodeTest262(t *testing.T) {
 }
 func runRegexCases(t *testing.T, cases []regexCase) {
 	t.Helper()
+	cases = regexCompatibleCases(t, cases)
 	var source, rows, units, spans strings.Builder
 	source.WriteString("#include \"adamic.h\"\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n")
 	programs := map[string]int{}

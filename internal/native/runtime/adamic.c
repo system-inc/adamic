@@ -7,7 +7,9 @@
 #include "count.h"
 
 #include <errno.h>
+#ifndef ADAMIC_TARGET_WASI
 #include <signal.h>
+#endif
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
@@ -106,6 +108,7 @@ void adamic_output_flush(void) {
 // signal is raised again with its default action, so the program ends the way Node's does, killed by
 // it. write is async-signal-safe. A signal arriving inside flush finds the buffer already emptied, and
 // what that write hadn't finished is lost.
+#ifndef ADAMIC_TARGET_WASI
 static void stopped(int signal_number) {
 	size_t whole = output_whole;
 	if (whole > 0 && !broken[adamic_stdout]) {
@@ -128,6 +131,8 @@ static void stop_with(int signal_number) {
 	sigemptyset(&handler.sa_mask);
 	sigaction(signal_number, &handler, NULL);
 }
+
+#endif
 
 // put writes bytes to stdout's buffer, or straight to stderr.
 static void put(enum adamic_stream stream, const char *bytes, size_t length) {
@@ -155,11 +160,14 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 
 void adamic_start(int count, char **values) {
 	adamic_arguments_save(count, values);
+	adamic_node_process_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
+#ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);
 	stop_with(SIGTERM);
 	stop_with(SIGINT);
 	stop_with(SIGHUP);
+#endif
 }
 
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
@@ -182,6 +190,18 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	}
 }
 
+// sys.write does not add a newline. Share console's encoding, failure and output-order rules.
+bool adamic_write_raw(enum adamic_stream stream, const adamic_string *string) {
+    if (output_mode == 0) {
+        output_mode = isatty(adamic_stdout) ? 2 : 1;
+        atexit(finish);
+    }
+    flush();
+    write_text(stream, string->bytes, string->length);
+    flush();
+    return !broken[stream];
+}
+
 _Noreturn void adamic_panic(const char *message, size_t length) {
 	static const char prefix[] = "adamic: panic: ";
 	// Everything the program printed comes first, as on Node.
@@ -197,4 +217,11 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 _Noreturn void adamic_unreachable(void) {
 	static const char message[] = "compiler bug: a function ended without returning";
 	adamic_panic(message, sizeof message - 1);
+}
+
+// An explicit exit does not unwind JavaScript frames or run their finally clauses.
+_Noreturn void adamic_process_exit_now(int code) {
+	flush();
+	ADAMIC_COUNT_REPORT();
+	_exit(code);
 }

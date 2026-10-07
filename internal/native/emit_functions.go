@@ -82,8 +82,8 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("return (adamic_value){.number = 0};")
 		}
 	} else {
-		// The checker proved every path returns (noImplicitReturns), so this is never reached; C
-		// can't see that, and if it ever is reached it's a compiler bug, said out loud.
+		// Lowering records every permitted implicit return in the IR. C cannot always see
+		// that all paths return; reaching this guard still means an IR exit was lost.
 		e.line("adamic_unreachable();")
 	}
 	e.scopes = e.scopes[:e.functionDepth]
@@ -167,7 +167,9 @@ func (e *emitter) arguments(call ir.Call) []string {
 			continue
 		}
 		value := ""
-		if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
+		if lent, ok := e.lentArgument(call, index); ok {
+			value = lent
+		} else if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
 			// A parameter that flows nowhere: a fresh value handed to it lives in the statement's region.
 			value = e.handRegion(argument, "&"+e.statementRegion)
 		} else {
@@ -228,7 +230,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	call := fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %d, %t)", closure, packed, len(arguments), expression.Returns == 0)
 	if receiver != "" {
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
