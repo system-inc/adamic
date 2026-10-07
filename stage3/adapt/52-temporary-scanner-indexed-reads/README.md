@@ -25,3 +25,23 @@ which visits undefined entries and holes rather than rejecting them, obtains
 the same increasing indices, and observes dynamic array length. The scanner
 arrays are append-built, while the full baseline covers undefined entries.
 The other bounded guards remain separate. Re-run the complete baseline.
+
+## Revised validation
+
+Full unfiltered upstream baseline passes: 106,367 tests, zero failures, zero
+pending, zero baseline differences. Exact slice edits were mapped by recorded
+source spans onto complete upstream declarations for validation only; the
+adaptation scripts themselves still reject full-tree input. Install, build and
+tests all exit 0. Combined wall time 259.105 seconds, nproc 5, four workers.
+Node scanner output matches all 509,014 full-tree tokens. Idempotence passes.
+The earlier rejected implementations are historical probes, not this result.
+See scanner/evidence/member-baseline-revised-report.json and its test log.
+
+Read invariants: Unicode range maps are nonempty even-length static arrays and
+binary-search mid is an even range start; mid+1 is its end. Levenshtein loops
+bound i and j by the respective string lengths. Uint16 segments are zero-filled
+and allocated to hold all input digit bits; nonzero residuals have a following
+allocated segment. forEach uses entries to preserve legitimate undefined
+values and holes. Clearing the reached Unicode table in a scratch mutant is
+caught by the explicit guard (Node exits 1). The token end-offset mutant is
+caught by diff. No generic callback read rejects undefined in this revision.

@@ -10,3 +10,14 @@ the next blocker and revising the plan first.
 Validate stock Node token equality and the full stage 3 baseline before claiming
 completion. Explicitly report that attached-debugger behavior is outside this
 scanner token proof. Each next refusal remains in BLOCKERS.md.
+
+## Revised validation
+
+Full unfiltered upstream baseline passes: 106,367 tests, zero failures, zero
+pending, zero baseline differences. Exact slice edits were mapped by recorded
+source spans onto complete upstream declarations for validation only; the
+adaptation scripts themselves still reject full-tree input. Install, build and
+tests all exit 0. Combined wall time 259.105 seconds, nproc 5, four workers.
+Node scanner output matches all 509,014 full-tree tokens. Idempotence passes.
+The earlier rejected implementations are historical probes, not this result.
+See scanner/evidence/member-baseline-revised-report.json and its test log.

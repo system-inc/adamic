@@ -1,5 +1,32 @@
 # Scanner blockers
 
+## October 7: corrected adaptations pass the full baseline
+
+Adaptations 52, 53 and 54 pass the unfiltered stage 3 baseline: **106,367
+passing, zero failing, zero pending, zero baseline differences**. Install,
+build and tests exit 0; total 259.105 seconds. No changed snapshots accepted.
+The generic undefined-entry regression and public API snapshot changes from
+the earlier attempt are fixed. Node still matches all 509,014 tokens. See
+[member-baseline-revised-report.json](evidence/member-baseline-revised-report.json)
+and [member-baseline-revised-tests.log](evidence/member-baseline-revised-tests.log).
+
+The current tracked slice still stops at Debug.fail function widening
+(method-signature-style). Untracked probes omit V8 stack capture and the
+assertion contract only to discover subsequent diagnostics. After guarding
+both languageVersion comparisons and the shebang regex result, the next is:
+`scanner.ts:483:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case`.
+This is `var text = textInitial!`, where omitted initial text is a supported
+createScanner input. Census reason: `the non-null assertion !`. There is no
+validated native executable. Do not confuse the successful Node slice proof
+with native execution.
+
+Independent verifier passes 91 source spans and rejects the declaration
+omission mutant. Restoring private diag's return annotation is caught by
+TS2375. Clearing the Unicode table is caught by the explicit indexed-read
+guard. Off-by-one token end and declaration omission remain caught by the
+Node comparison/ReferenceError checks. Source closure and full declaration
+ledger are in stage3/slice/evidence/member-scanner-{closure,manifest}.json.
+
 ## October 7: shebang optional read needs an explicit bound
 
 Replacing the regex assertion with optional indexed access in the untracked
@@ -16,7 +43,7 @@ In the untracked probe, replace the two `languageVersion! >= ES2015`
 comparisons with `languageVersion !== undefined && languageVersion >= ES2015`.
 Undefined still selects the older Unicode map. Next exact refusal:
 `scanner.ts:433:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case`.
-This is shebangTriviaRegex.exec(text)![0]. Census reason: non-null assertions.
+This is shebangTriviaRegex.exec(text)![0]. Census reason: `the non-null assertion !`.
 No demonstrated closing feature branch. This probe has not been tracked as
 an adaptation or presented as a native token proof.
 
@@ -48,7 +75,7 @@ In the same untracked diagnostic copy, changing only `asserts expression` to
 `void` leaves the checker clear and reaches:
 `scanner.ts:291:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case`.
 This is `languageVersion! >= ScriptTarget.ES2015`. Census reason:
-non-null assertions. No closing feature branch was demonstrated. Undefined
+`the non-null assertion !`. No closing feature branch was demonstrated. Undefined
 languageVersion is legitimate here: JavaScript's comparison is false and selects
 the older Unicode map. Replacing it with a panic would change that behavior.
 
@@ -65,7 +92,7 @@ An untracked scratch copy removes only the captureStackTrace if-block from
 Debug.fail after removing debugger. Next exact refusal:
 `debug.ts:15:142: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)`.
 This is Debug.assert's `asserts expression` return contract. Census reason:
-adamic/no-type-predicate. No demonstrated closing feature branch. The V8 block
+`a type predicate`. No demonstrated closing feature branch. The V8 block
 omission is a diagnostic probe only; no adaptation drops failure-stack behavior
 on the deliverable branch. No assertion predicate rewrite is authorized by
 adaptation 54's published plan, so it has not been made there.
