@@ -1,0 +1,38 @@
+package main
+import (
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ "github.com/system-inc/cohere/internal/lint/ecmascript/jsx"
+ "github.com/system-inc/cohere/internal/lint/rule"
+ rules "github.com/system-inc/cohere/internal/lint/rules/next"
+)
+func main() {
+ var adapter strings.Builder
+ count:=0
+ for _,path:=range os.Args[2:] {
+  text,err:=os.ReadFile(path);if err!=nil{panic(err)}
+  file:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:path,Path:tspath.Path(path)},string(text),core.ScriptKindTSX)
+  if len(file.Diagnostics())!=0 {panic("Go JSX input diagnostics")}
+  ctx:=rule.Context{SourceFile:file,FileCache:rule.NewFileCache(),Report:func(d rule.Diagnostic){count++;if os.Args[1]!="--count" {fmt.Printf("%s\t%d %d\t%s\t%s\n",path,d.Range.Pos(),d.Range.End(),d.Message.Id,d.Message.Description)}}}
+  listeners:=rules.GoogleFontDisplay.Run(ctx,nil)
+  var walk func(*ast.Node)
+  walk=func(node *ast.Node){
+   if node.Kind==ast.KindJsxOpeningElement || node.Kind==ast.KindJsxSelfClosingElement {
+    tag,attrs:=jsx.ElementParts(node)
+    tagText:="";if jsx.IsIntrinsicElementNamed(tag,"link"){tagText="link"}
+    href,has:=jsx.StringAttributeValue(attrs,"href",jsx.MatchIgnoringCase)
+    if strings.ContainsAny(href,"\t\r\n"){panic("adapter requires single-line attribute values")}
+    span:=rule.TokenRange(file,node)
+    fmt.Fprintf(&adapter,"%s\t%d\t%d\t%s\t%t\t%s\n",path,span.Pos(),span.End(),tagText,has,href)
+   }
+   if visit:=listeners[node.Kind];visit!=nil{visit(node)}
+   node.ForEachChild(func(child *ast.Node)bool{walk(child);return false})
+  };walk(file.AsNode())
+ }
+ if os.Args[1]=="--count"{fmt.Println(count)}else if err:=os.WriteFile(os.Args[1],[]byte(adapter.String()),0644);err!=nil{panic(err)}
+}

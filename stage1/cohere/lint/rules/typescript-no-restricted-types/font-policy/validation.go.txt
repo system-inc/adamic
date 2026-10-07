@@ -1,0 +1,40 @@
+func TestFontPolicyParity(t *testing.T) {
+ owned,err:=filepath.Abs("rules/typescript-no-restricted-types/font-policy");if err!=nil {t.Fatal(err)}
+ cohere,err:=filepath.Abs(filepath.Join(repository,"cohere"));if err!=nil{t.Fatal(err)}
+ virtual:=filepath.Join(cohere,"adamic_font_policy_oracle.go")
+ overlay:=filepath.Join(t.TempDir(),"overlay.json")
+ data,err:=json.Marshal(map[string]any{"Replace":map[string]string{virtual:filepath.Join(owned,"oracle.go.txt")}});if err!=nil {t.Fatal(err)}
+ if err:=os.WriteFile(overlay,data,0644);err!=nil{t.Fatal(err)}
+ oracle:=filepath.Join(t.TempDir(),"oracle")
+ execute(t,cohere,"go","build","-overlay="+overlay,"-o",oracle,virtual)
+ sources,err:=filepath.Glob(filepath.Join(owned,"testdata/*.tsx.txt"));if err!=nil{t.Fatal(err)}
+ if len(sources)!=16 {t.Fatalf("wanted 16 upstream fixtures, got %d",len(sources))}
+ adapter:=filepath.Join(t.TempDir(),"elements.tsv")
+ args:=append([]string{adapter},sources...)
+ want:=execute(t,"",oracle,args...).output
+ runner:=filepath.Join(repository,"oracle/node.mjs")
+ run:=func(directory string,mutated bool) {
+  entry:=filepath.Join(directory,"driver.a")
+  program,err:=load.Load([]string{entry});if err!=nil{t.Fatal(err)}
+  lowered,err:=lower.Lower(context.Background(),program);if err!=nil{t.Fatal(err)}
+  binary:=filepath.Join(t.TempDir(),"font-native")
+  if err:=native.Build(native.C(lowered),binary,native.Options{Sanitize:true});err!=nil{t.Fatal(err)}
+  js:=filepath.Join(t.TempDir(),"font.mjs")
+  if err:=os.WriteFile(js,[]byte(javascript.JavaScript(lowered)),0644);err!=nil{t.Fatal(err)}
+  for _,side:=range []struct{name string;run execution}{
+   {"Node",execute(t,"","node","--disable-warning=ExperimentalWarning",runner,entry,adapter)},
+   {"emitted JavaScript",execute(t,"","node","--disable-warning=ExperimentalWarning",runner,js,adapter)},
+   {"sanitized native",execute(t,"",binary,adapter)},
+  } {
+   diff:=difference(side.run.output,want)
+   if mutated {if diff==""{t.Fatalf("font mutant survived on %s",side.name)};t.Logf("block-display mutant caught only by output comparison on %s: %s",side.name,diff)} else {if diff!=""{t.Fatalf("%s: %s",side.name,diff)};t.Logf("%s identical: %d bytes, 16 real-Go JSX fixture inputs",side.name,len(want))}
+  }
+ }
+ run(owned,false)
+ scratch:=t.TempDir()
+ for _,file:=range []string{"rule.a","messages.a","driver.a"} {
+  data,err:=os.ReadFile(filepath.Join(owned,file));if err!=nil {t.Fatal(err)}
+  if file=="rule.a" {data=[]byte(strings.Replace(string(data),"['auto', 'block', 'fallback']","['auto', 'fallback']",1))}
+  if err:=os.WriteFile(filepath.Join(scratch,file),data,0644);err!=nil {t.Fatal(err)}
+ };run(scratch,true)
+}
