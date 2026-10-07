@@ -230,3 +230,59 @@ Setup on the reference main checkout used GOPROXY=https://proxy.golang.org|direc
 before cloud/setup.sh: Go ready 0.016s, Node 0.017s, markdown 0.060s,
 clang 0.162s, submodules 327.151s, Go build 577.798s, tests deferred 577.910s,
 cache warm 577.912s, total 577.955s; nproc=5, CPU quota=4.
+
+## Fixture 14 memoize follow-up
+
+Merged codex/stage3-adapt-memoize at
+`34ac6b2a6aa653ceba26d91fd9b6d23aa18c45e5` into the newest fetched host
+branch at `7218520aaaf9d471f2bd252b269bd818443a9ad2`, with two-parent
+merge `ac5e16ccc578de24fa0680bd9f2e8feafb7ab12a`, without rebasing.
+Part 1 declined both A and B on its requested compiler base. Its guarded
+adapt.cjs makes no source edit; the adaptation table's new 48 row is zero.
+See [the memoize report](../../adapt/48-memoize/README.md) for exact native
+condition and capture-cycle diagnostics and the completed upstream gates.
+This is a blocked-unit delivery, not a claim that memoize now runs natively.
+
+Generated the merged branch's actual adapted tree with
+`bash stage3/apply.sh /tmp/memoize-host-tree`, exit 0. This includes this
+branch's existing filesystem-stat adaptation as well as the declined 48.
+Re-extracted memoize and audited getCurrentDirectory against that tree using
+canonical declarations. Both source bodies are identical to their previous
+fixture forms. Only fixture 14's same-line source header and its manifest
+source pin changed; no assertion, cast, callback behavior or golden changed.
+The historical host-capable library status in status.json is preserved.
+A second re-extraction exits 0 and both fixture and manifest SHA-256 hashes
+remain identical.
+
+Node v24.19.0 stdout remains `true\ntrue\n`, stderr empty, exit 0. Both
+stdout and stderr compare byte for byte with the pre-extraction observation
+and the recorded golden. The full source audit passes **164 declarations
+and 126 function/method spans**. The fixture caching mutant removes callback
+clearing, recomputes cwd after chdir, and prints `true\nfalse\n`; exact
+stdout comparison catches it. The scoped canonical audit rejects changing
+`undefined!` to `undefined`. The full bucket audit also catches its existing
+reduction-added ErrnoException cast and SHA256-to-SHA1 mutants.
+
+A direct build with this branch's area compiler was actually attempted. It
+exits 1 with four TS2591 diagnostics for node:fs, node:path, node:os and
+node:process. It therefore stops before the historical source-owned `!`
+refusal measured with the README's host-capable library integration. That
+integration was not recreated, and the direct Checker outcome is not
+substituted into a ledger pinned to a different compiler. No native fixture
+output, sanitizer or leak success is claimed. See 14-memoize-proof.json and
+14-memoize-evidence for observations and logs.
+
+Reproduce with the setup environment sourced and stock TypeScript 6.0.3 on
+NODE_PATH; each results directory must be new:
+
+```sh
+bash stage3/apply.sh /tmp/memoize-host-tree > /tmp/memoize-host-apply.log 2>&1
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/fixtures/host/reextract-14.cjs . /tmp/memoize-host-tree ac5e16ccc578de24fa0680bd9f2e8feafb7ab12a > /tmp/memoize-fixture14-extract.log 2>&1
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/fixtures/host/source-audit.cjs /tmp/memoize-host-tree > /tmp/memoize-host-source-audit.log 2>&1
+node stage3/fixtures/host/verify-14.cjs /tmp/memoize-fixture14-proof > /tmp/memoize-fixture14-proof.log 2>&1
+```
+
+Part 1 ran the full default TypeScript oracle and landing lane. This fixture
+refresh did not rerun either suite, the full Adamic gate, all-25 host execution,
+Windows, or native host-library integration. Only fixture 14's Node program
+was rerun; the source audit covers the whole bucket.

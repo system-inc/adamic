@@ -654,7 +654,8 @@
           "tokens": "const getCurrentDirectory = memoize(() => process.cwd());"
         }
       ],
-      "changedDeclarations": []
+      "changedDeclarations": [],
+      "stage3": "ac5e16ccc578de24fa0680bd9f2e8feafb7ab12a"
     },
     {
       "file": "15_getExecutingFilePath.a",
