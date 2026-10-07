@@ -116,3 +116,15 @@ numeric rule. `TestScalarEdges` exercises decimal/subnormal thresholds, base
 limits, range errors and arbitrary precision bigint spelling on all four drivers.
 Five finite numeric/bigint files additionally match the raw original converter
 and the postprocessed original wrapper without any allowed deltas.
+
+## Follow-up JSX observations
+
+The previous blanket JSX refusal is removed by the local parser extension.
+`gaps/jsxEmptyArguments.tsx` is accepted by Go with an empty params array, while
+typescript-estree 8.65.0 and Prettier 3.9.6 both reject it with "Type argument
+list cannot be empty." `gaps/jsxEntities.tsx` proves postprocessed ampersand
+spelling differences: the Go Literal value is `&😀`, the Prettier value is
+`&amp;😀`; Go JSXText decodes `&amp;`, while the Prettier wrapper preserves its
+spelling. Raw conversion agrees for these entities. CRLF retains the existing
+normalization difference. TestJSXOriginalLibraries asserts each exact delta and
+compares the rest of the trees; it does not blanket-allow different JSX trees.

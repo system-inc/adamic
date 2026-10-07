@@ -121,7 +121,6 @@ func TestParserBoundaryRefusals(t *testing.T) {
 	cases := []struct{ name, text, diagnostic string }{
 		{"modifier.ts", "class C { readonly!: number; }", "recovered an identifier"},
 		{"surrogate.ts", "'\\ud800a\\udc00';", "unpaired surrogates"},
-		{"jsx.tsx", "const node = <A/>;", "unported JSX"},
 	}
 	for _, sample := range cases {
 		t.Run(sample.name, func(t *testing.T) {

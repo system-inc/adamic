@@ -148,3 +148,14 @@ file-backed stdout and the verification read. One warm-up and five rotated runs
 per implementation. This measures the implemented ESTree tree driver, not whole
 JavaScript formatting or parsing alone. See `validation/throughput.log` for every
 sample, and `REPORT.md` for commands, commits and the precise limits.
+
+## Follow-up: JSX
+
+The largest baseline cause was the JSX extension refusal. Go also selects TSX
+mode for .js/.mjs/.cjs; matching that dispatch rescues 523 frozen repository files.
+The current source census is 15,222 identical, 338 refused Go answers, 123 accepted
+Go refusals, 92 different, 11,594 both refused. The ESTree-local sourceParser.ts
+copies the parser from main 5d4c801 and adds JSX through jsxParser.ts; shared
+parser files remain unchanged. Conversion preserves fragments, names, attributes,
+spread, comments, HTML entities, ranges and empty type argument lists. This does
+not complete diagnostic parity. See FOLLOWUP.md for current checks and counts.

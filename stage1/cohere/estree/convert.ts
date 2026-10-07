@@ -1,9 +1,10 @@
+import { convertJsx } from './jsxConvert.ts';
 import { keywordTypes, unaryTypes } from './simpleTypes.ts';
 import { validTemplate } from './templateValidation.ts';
 import { literalFields, literalKinds } from './literal.ts';
 // Conversion reads indexed TypeScript nodes. Unrepresented syntax fails before output.
 import { panic } from 'adamic';
-import type { Parser } from '../../typescript/parser/parser.ts';
+import type { Parser } from './sourceParser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { keywords, punctuators } from '../../typescript/scanner/tokens.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
@@ -1138,6 +1139,9 @@ export class Converter {
             parent = this.parents[id] ?? -1;
         }
         const node = this.ts(id);
+        if(node.kind.startsWith('Jsx')) {
+            return convertJsx(this.arena, this.parser.nodes, this.offsets, id, (child) => this.convert(child));
+        }
         const first = this.child(id, 0);
         const second = this.child(id, 1);
         const third = this.child(id, 2);

@@ -20,9 +20,10 @@ export function collectComments(converter: Converter, root: number): number[] {
                 'TemplateMiddle',
                 'TemplateTail',
                 'JsxText',
+                'JsxString',
             ].includes(node.kind)
         ) {
-            starts.set(converter.startUnit(id), node.end);
+            starts.set(node.kind.startsWith('Jsx') ? node.pos : converter.startUnit(id), node.end);
         }
         for(const child of node.children) {
             stack.push(child);

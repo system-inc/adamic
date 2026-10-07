@@ -56,8 +56,10 @@ the implemented boundary without claiming complete JavaScript formatting.
 
 ## Current checkpoint status
 
-The generated 78-file gate is green, but the claim's whole-checkout validation
-contract is not met. The complete source Node audit has 92 output mismatches and
-984 acceptance disagreements; raw input loss and parser recovery stalls have
-minimal proving programs. This branch remains an incomplete ESTree port, not a
-completed format slice. See `stage1/cohere/estree/README.md` and `GAPS.md`.
+The follow-up is porting the largest refusal group first: JSX, including Go's
+TSX dispatch for .js/.mjs/.cjs. The recorded source audit now has 15,222 identical
+files, 92 output mismatches and 461 acceptance disagreements. A local parser
+copy under stage1/cohere/estree extends the main 5d4c801 parser; its shared scanner,
+statements and lookahead remain dependencies. No shared parser/compiler/runtime
+files are edited. The claim remains incomplete. Follow-up evidence lives in
+stage1/cohere/estree/FOLLOWUP.md.

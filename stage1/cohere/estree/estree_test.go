@@ -254,7 +254,10 @@ func checkOriginalLibraries(t *testing.T, cases []string, postprocessedGaps int)
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to the pinned scratch npm installation")
 	}
-	list := manifest(t, cases)
+	checkOriginalManifest(t, manifest(t, cases), cases, postprocessedGaps)
+}
+func checkOriginalManifest(t *testing.T, list string, cases []string, postprocessedGaps int) {
+	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	oracle := goOracle(t)
 	for _, mode := range []string{"raw", "postprocessed"} {
 		flag := "--raw-json"

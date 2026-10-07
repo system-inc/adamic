@@ -1,5 +1,5 @@
 import { panic } from 'adamic';
-import { Parser } from '../../typescript/parser/parser.ts';
+import { Parser } from './sourceParser.ts';
 import { Converter } from './convert.ts';
 import { collectComments } from './comments.ts';
 import { Postprocessor, mergeComments } from './postprocess.ts';
@@ -9,15 +9,20 @@ export function answer(path: string, text: string): string {
         return panic('ESTree cannot recover original UTF-8 bytes from replacement-decoded input');
     }
     const file = path.toLowerCase();
-    if(file.endsWith('.tsx') || file.endsWith('.jsx')) {
-        return panic('ESTree requires the unported JSX parser grammar for this extension');
-    }
-    const babel = file.endsWith('.js') || file.endsWith('.mjs') || file.endsWith('.cjs');
-    if(!babel && !file.endsWith('.ts') && !file.endsWith('.mts') && !file.endsWith('.cts') && !file.endsWith('.a')) {
+    const babel = file.endsWith('.js') || file.endsWith('.mjs') || file.endsWith('.cjs') || file.endsWith('.jsx');
+    if(
+        !babel &&
+        !file.endsWith('.ts') &&
+        !file.endsWith('.mts') &&
+        !file.endsWith('.cts') &&
+        !file.endsWith('.a') &&
+        !file.endsWith('.tsx')
+    ) {
         return panic('unrecognized ESTree source extension');
     }
     const convertedText = text.startsWith('#!') ? `//${text.slice(2)}` : text;
     const parser = new Parser(convertedText, path);
+    parser.jsx = babel || file.endsWith('.tsx');
     const root = parser.file();
     if(parser.scanner.errors.length > 0) {
         return panic('ESTree scanner diagnostic');
