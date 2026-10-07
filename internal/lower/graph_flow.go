@@ -159,43 +159,6 @@ func (f *cycleFinder) graphFlows() {
 			members(value.WhenNot, proven)
 		}
 	}
-	// Function values use the same compatible closure relation as the cycle
-	// finder. A named sibling supplies its direct code target without guessing.
-	var callableType func(ir.Expression) *checker.Type
-	callableType = func(expression ir.Expression) *checker.Type {
-		switch value := expression.(type) {
-		case ir.Read:
-			return f.l.localTypes[value.Local]
-		case ir.MakeClosure:
-			for _, closure := range f.l.closureRecords {
-				if closure.function == value.Function {
-					return closure.proven
-				}
-			}
-		case ir.Unwrap:
-			return callableType(value.Value)
-		case ir.Narrow:
-			return callableType(value.Value)
-		case ir.Box:
-			return callableType(value.Value)
-		}
-		return nil
-	}
-	closureTargets := func(call ir.CallClosure) []int {
-		if call.Direct > 0 {
-			return []int{call.Direct - 1}
-		}
-		proven := callableType(call.Closure)
-		targets := []int{}
-		if proven != nil {
-			for _, closure := range f.l.closureRecords {
-				if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-					targets = append(targets, closure.function)
-				}
-			}
-		}
-		return targets
-	}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
@@ -211,11 +174,7 @@ func (f *cycleFinder) graphFlows() {
 					sources[resultNode(function)] = append(sources[resultNode(function)], value.Value)
 				}
 			case ir.Call:
-				targets := []int{value.Function}
-				if value.Virtual != 0 {
-					targets = append(targets, program.MethodTargets[value.Function]...)
-				}
-				for _, target := range targets {
+				for _, target := range program.CallTargets(value) {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
@@ -226,7 +185,12 @@ func (f *cycleFinder) graphFlows() {
 					}
 				}
 			case ir.CallClosure:
-				for _, target := range closureTargets(value) {
+				targets := program.ClosureTargets(value)
+				if targets.Unknown {
+					// Opaque function values are a documented leak-only frontier.
+					break
+				}
+				for _, target := range targets.Functions {
 					for i, param := range program.Functions[target].Parameters {
 						if i < len(value.Arguments) {
 							sources[param+1] = append(sources[param+1], value.Arguments[i])
@@ -279,14 +243,15 @@ func (f *cycleFinder) graphFlows() {
 		case ir.Read:
 			demand(value.Local + 1)
 		case ir.Call:
-			demand(resultNode(value.Function))
-			if value.Virtual != 0 {
-				for _, target := range program.MethodTargets[value.Function] {
-					demand(resultNode(target))
-				}
+			for _, target := range program.CallTargets(value) {
+				demand(resultNode(target))
 			}
 		case ir.CallClosure:
-			for _, target := range closureTargets(value) {
+			targets := program.ClosureTargets(value)
+			if targets.Unknown {
+				return
+			}
+			for _, target := range targets.Functions {
 				demand(resultNode(target))
 			}
 		case ir.Conditional:

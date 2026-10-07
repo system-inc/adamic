@@ -5,13 +5,14 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
 // The former leaks must match Node and free their graph, independently of
 // merely seeing graph types in the lowered program.
 func TestGraphAllocationFlowIsLeakClean(t *testing.T) {
-	for _, name := range []string{"return", "conditional", "mixed"} {
+	for _, name := range []string{"return", "conditional", "mixed", "override"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/graph_regions/classification_"+name+".a"))
 			if err != nil {
@@ -40,9 +41,18 @@ func TestGraphAllocationFlowIsLeakClean(t *testing.T) {
 			if difference := disagreement(node, normal); difference != "" {
 				t.Fatalf("ASan/UBSan: %s: %d %s", difference, normal.exitCode, normal.stderr)
 			}
-			report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0"}, binary)
-			if difference := disagreement(node, report); difference != "" {
-				t.Fatalf("LeakSanitizer: %s: %d %s", difference, report.exitCode, report.stderr)
+			report, err := leakcheck.Check(leakcheck.Program{
+				C: code, Sanitized: binary,
+				Counted: filepath.Join(t.TempDir(), "counted-leak"),
+				Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+					// Exit-time stack/register words can conservatively hide a
+					// missed allocation. Keep these roots out of this leak probe.
+					environment = append([]string{"UBSAN_OPTIONS=halt_on_error=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0"}, environment...)
+					return leakRun(executeWith(t, environment, name, arguments...))
+				},
+			})
+			if err != nil || report != "" {
+				t.Fatalf("shared leak check: %v %s", err, report)
 			}
 			counted := filepath.Join(t.TempDir(), "counted")
 			if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
@@ -59,7 +69,7 @@ func TestGraphAllocationFlowIsLeakClean(t *testing.T) {
 			if allocations != frees+arenas {
 				t.Fatalf("allocation flow leaked: %s", counts.stderr)
 			}
-			t.Logf("Node, ASan/UBSan and LeakSanitizer output %q; counted: %s", node.stdout, counts.stderr)
+			t.Logf("Node, ASan/UBSan and shared leak check output %q; counted: %s", node.stdout, counts.stderr)
 		})
 	}
 }

@@ -41,6 +41,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/graph_regions/classification_return.a", true, false},
 	{"internal/oracle/testdata/graph_regions/classification_conditional.a", true, false},
 	{"internal/oracle/testdata/graph_regions/classification_mixed.a", true, false},
+	{"internal/oracle/testdata/graph_regions/classification_override.a", true, false},
 	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
 	{"internal/oracle/testdata/string_views_holders.a", true, false},
 	{"internal/oracle/testdata/string_views_throw.a", true, false},
