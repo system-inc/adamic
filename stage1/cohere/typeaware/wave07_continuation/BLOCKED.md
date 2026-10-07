@@ -1,3 +1,5 @@
+Historical blocker diagnosis, superseded by [REPORT.md](REPORT.md). The isolated implementations and validation are now complete; production dispatch registration remains pending.
+
 Built: the original wave-07 trio remains complete and pushed; no continuation rule is ported.
 Commits: original completion 6264bab2; continuation claim 59bdcd34, pushed before implementation.
 Commands and outputs: fetched every origin head, inspected 325 remote refs and the existing checker dispatcher.

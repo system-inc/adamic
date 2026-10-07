@@ -1,0 +1,9 @@
+controls: 6942 identical bytes, findings 11
+controls-dom: 6942 identical bytes, findings 11
+controls-asan: 6942 identical bytes, findings 11
+repository: 18485 identical bytes, findings 0
+repository-asan: 18485 identical bytes, findings 0
+compiler: 5318 identical bytes, findings 0
+compiler-asan: 5318 identical bytes, findings 0
+rule mutant: exit 0, empty stderr; caught only by independent Go bytes
+PASS private-overlay timer gate; normal dispatcher remains unregistered

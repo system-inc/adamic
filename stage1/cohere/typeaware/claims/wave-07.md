@@ -43,3 +43,11 @@ register it; Ahra's correction prohibits shared-file changes and says to stop
 on another blocker. No shared files changed in this continuation, and none of
 the three new rules is represented as complete. See
 ../wave07_continuation/BLOCKED.md. No additional rules are claimed.
+
+## Continuation implementation status
+
+All three continuation rules now have native .a implementations and pass private-overlay
+Go byte comparisons, per-rule mutants, raw-fact mutants, released-handle checks and
+ASan/UBSan/LSan gates. See ../wave07_continuation/REPORT.md. Production dispatcher
+registration remains pending under the shared-file restriction; no further rules
+are claimed. Earlier blocked status above records the initial capability diagnosis.

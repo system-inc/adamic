@@ -1,0 +1,29 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestTypeReferenceGraphFacts
+=== PAUSE TestTypeReferenceGraphFacts
+=== RUN   TestWave07FlowAndModuleFacts
+--- PASS: TestWave07FlowAndModuleFacts (0.04s)
+=== RUN   TestWave07SymbolContext
+--- PASS: TestWave07SymbolContext (0.01s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestTypeReferenceGraphFacts
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+--- PASS: TestShapeAndNameFacts (0.02s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.08s)
+--- PASS: TestTypeReferenceGraphFacts (0.09s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.169s
+?   	github.com/system-inc/adamic/bridge/tsgo/wave07_flow	[no test files]

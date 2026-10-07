@@ -1,0 +1,8 @@
+symbol-value: exit 0, empty stderr; production Go bytes catch offset 5390
+flow-edge: exit 0, empty stderr; production Go bytes catch offset 618
+module-target: exit 0, empty stderr; production Go bytes catch offset 9645
+wave07-symbol-context: live success; released panic 70
+wave07-control-flow: live success; released panic 70
+wave07-program-modules: live success; released panic 70
+release-registry: mutant exits 0, caught by required panic 70
+PASS question mutants and release checks
