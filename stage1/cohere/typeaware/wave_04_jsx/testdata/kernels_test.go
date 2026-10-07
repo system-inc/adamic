@@ -40,13 +40,22 @@ func TestWave04JsxKernels(t *testing.T) {
 		fmt.Fprintf(&expected, "4\t17\t%s\t%s\t%s\t0\t0\n", m.Rule, m.Id, m.Text)
 	}
 	listeners := [][]int{{int(ast.KindJsxElement), int(ast.KindJsxSelfClosingElement), int(ast.KindJsxFragment)}, {int(ast.KindJsxOpeningElement), int(ast.KindJsxSelfClosingElement)}, {int(ast.KindJsxOpeningElement), int(ast.KindJsxSelfClosingElement)}}
+	listenerNames := [][]string{}
+	for _, kinds := range listeners {
+		names := []string{}
+		for _, kind := range kinds {
+			names = append(names, strings.TrimPrefix(ast.Kind(kind).String(), "Kind"))
+		}
+		listenerNames = append(listenerNames, names)
+	}
 	data := struct {
 		Names         []string
 		Kinds         []int
 		FunctionNames []string
 		Listeners     [][]int
+		ListenerNames [][]string
 		Expected      string
-	}{names, ids, []string{"object", "array", "function expression", "function declaration", "class expression", "assignment expression", "JSX fragment", ""}, listeners, expected.String()}
+	}{names, ids, []string{"object", "array", "function expression", "function declaration", "class expression", "assignment expression", "JSX fragment", ""}, listeners, listenerNames, expected.String()}
 	encoded, err := json.Marshal(data)
 	if err != nil {
 		t.Fatal(err)

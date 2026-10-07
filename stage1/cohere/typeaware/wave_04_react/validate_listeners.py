@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare declared numeric listener sets to production Go maps."""
+"""Compare declared named listener sets to production Go maps."""
 from pathlib import Path
 import argparse,json,os,subprocess,hashlib,re
 p=argparse.ArgumentParser();p.add_argument('directory',type=Path);p.add_argument('--adamic',default='/workspace/typeaware-wave-04-landing-current/adamic');a=p.parse_args();own=Path(__file__).resolve().parent;repo=own.parents[3];out=a.directory.resolve();out.mkdir(parents=True,exist_ok=True);runs=[]
@@ -18,17 +18,17 @@ for variant in ['normal','asan']:
  command=[a.adamic,'build',entry,'-o',out/variant,'--tsgo','/workspace/typeaware-wave-04-landing-current/next/checker-'+variant+'.a']
  if variant=='asan':command+=['--sanitize']
  run('build-'+variant,command);actual,error=run('run-'+variant,[out/variant])
- if actual!=truth or error:raise RuntimeError('numeric listeners differ '+variant)
+ if actual!=truth or error:raise RuntimeError('named listeners differ '+variant)
 actual,error=run('node',['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',entry])
 if actual!=truth or error:raise RuntimeError('source Node differs')
 # The js command rejects checker imports and has no --tsgo option.
 for i,row in enumerate(data):
- original=own.parent/row['File'];source=original.read_text();pattern=r'(export const listenerKinds: readonly number\[\] = \[)(\d+)';matches=list(re.finditer(pattern,source))
+ original=own.parent/row['File'];source=original.read_text();pattern=r'(export const listenerKinds: readonly string\[\] = \[)("[^"]+")';matches=list(re.finditer(pattern,source))
  if len(matches)!=1:raise RuntimeError('nonunique listener declaration')
- match=matches[0];changed=source[:match.start(2)]+str(int(match.group(2))+1)+source[match.end(2):]
+ match=matches[0];changed=source[:match.start(2)]+json.dumps('Unknown')+source[match.end(2):]
  changed=re.sub(r"from '([^']+)'",lambda m:"from '"+str((original.parent/m[1]).resolve())+"'" if m[1].startswith('.') else m[0],changed)
  module=out/f'mutant-{i}.a';module.write_text(changed);probe=out/f'mutant-{i}-probe.a';probe.write_text(driver.replace(str(original),str(module)))
  run(f'mutant-{i}-build',[a.adamic,'build',probe,'-o',out/f'mutant-{i}','--tsgo','/workspace/typeaware-wave-04-landing-current/next/checker-normal.a']);actual,error=run(f'mutant-{i}-run',[out/f'mutant-{i}'])
  if actual==truth or error or len(actual.splitlines())!=9:raise RuntimeError('metadata mutant survived or failed outside comparison')
 (out/'runs.json').write_text(json.dumps(runs,indent=2)+'\n');(out/'source-sha256.json').write_text(json.dumps({str(own.parent/x[0]):hashlib.sha256((own.parent/x[0]).read_bytes()).hexdigest() for x in subjects},indent=2)+'\n')
-print(f'PASS numeric listener declarations: nine rules, {len(truth)} bytes; Go/native/sanitized/source Node; emitted JS blocked by unlinked checker imports; nine compiling comparison-only metadata mutants.')
+print(f'PASS named listener declarations: nine rules, {len(truth)} bytes; Go/native/sanitized/source Node; emitted JS blocked by unlinked checker imports; nine compiling comparison-only metadata mutants.')

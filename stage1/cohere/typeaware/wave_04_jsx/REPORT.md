@@ -154,3 +154,7 @@ Current evidence supersedes the earlier JSX parser failure and main revision: JS
 ## Value attribute extraction
 
 Ported and independently compared ordered numeric value-attribute extraction, including invalid-first duplicate semantics. Expanded references pass 302 records and eight comparison-only mutants across five backends. See [ATTRIBUTES.md](ATTRIBUTES.md); full source rules remain incomplete and no new claims were taken.
+
+## Named kind contract correction
+
+The latest user instruction replaces numeric listener metadata with upstream ast.Kind names. All twelve declarations are corrected and independently checked. Actual Descriptor deserialization now succeeds, superseding the earlier numeric registry blocker; source implementation remains unfinished. See [NAMED_KINDS.md](NAMED_KINDS.md). No new claims.

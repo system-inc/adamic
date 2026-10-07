@@ -1,7 +1,7 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
 import type { NumericTag } from '../numeric_tag.a';
-export const listenerKinds: readonly number[] = [285,286,289];
+export const listenerKinds: readonly string[] = ["JsxElement", "JsxSelfClosingElement", "JsxFragment"];
 // The shared driver hands this rule one numeric-kind node; no parser lookup.
 export class FragmentNode {
     readonly kind: number;

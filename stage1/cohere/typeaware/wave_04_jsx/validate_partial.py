@@ -14,8 +14,14 @@ folders=['jsx_fragments','jsx_no_constructed_context_values','jsx_no_undef']
 overlay=out/'overlay.json';overlay.write_text(json.dumps({'Replace':{str(repo/'cohere/internal/lint/rules/react/wave04_jsx_kernels_test.go'):str(own/'testdata/kernels_test.go')}}))
 run('go',['go','test','-overlay',overlay,'./internal/lint/rules/react','-run','^TestWave04JsxKernels$','-count=1','-v'],cwd=repo/'cohere',env=dict(os.environ,WAVE04_JSX_KERNELS=str(out/'controls.json')))
 data=json.loads((out/'controls.json').read_text());truth=data['Expected'].encode();(out/'expected.txt').write_bytes(truth)
-for folder,kinds in zip(folders,data['Listeners']):
- manifest=json.loads((own/folder/'rule.json').read_text());assert manifest['kinds']==sorted(kinds)
+for folder,kinds in zip(folders,data['ListenerNames']):
+ manifest=json.loads((own/folder/'rule.json').read_text());assert sorted(manifest['kinds'])==sorted(kinds)
+ module=own/folder/'rule.a'
+ declaration=re.search(r'export const listenerKinds: readonly string\[\] = (\[[^;]+\]);',module.read_text())
+ assert declaration and sorted(json.loads(declaration[1]))==sorted(kinds),str(module)
+ mutant=dict(manifest,kinds=['Unknown']+manifest['kinds'][1:])
+ assert sorted(mutant['kinds'])!=sorted(kinds),'named metadata mutant survived'
+
 driver=f"import {{ FragmentNode, JsxFragments }} from '{own}/jsx_fragments/rule.a';\nimport {{ JsxNoUndef }} from '{own}/jsx_no_undef/rule.a';\nimport {{ JsxNoConstructedContextValues }} from '{own}/jsx_no_constructed_context_values/rule.a';\nconst undef = new JsxNoUndef(); const context = new JsxNoConstructedContextValues(); const fragments = new JsxFragments();\n"
 for name in data['Names']:driver+='console.log(`name ${undef.componentName('+json.dumps(name,ensure_ascii=False)+')}`);\n'
 for kind in data['Kinds']:driver+=f'console.log(`construction ${{context.constructionKind(new FragmentNode({kind},4,17))}}`);\n'

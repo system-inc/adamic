@@ -16,21 +16,11 @@ import (
 )
 
 func main() {
-	kinds := map[string]tsast.Kind{
-		"KindVariableDeclaration":     tsast.KindVariableDeclaration,
-		"KindReturnStatement":         tsast.KindReturnStatement,
-		"KindSourceFile":              tsast.KindSourceFile,
-		"KindCallExpression":          tsast.KindCallExpression,
-		"KindNewExpression":           tsast.KindNewExpression,
-		"KindArrayLiteralExpression":  tsast.KindArrayLiteralExpression,
-		"KindArrowFunction":           tsast.KindArrowFunction,
-		"KindBinaryExpression":        tsast.KindBinaryExpression,
-		"KindObjectLiteralExpression": tsast.KindObjectLiteralExpression,
-		"KindPropertyDeclaration":     tsast.KindPropertyDeclaration,
-		"KindMethodDeclaration":       tsast.KindMethodDeclaration,
-		"KindGetAccessor":             tsast.KindGetAccessor,
-		"KindJsxAttribute":            tsast.KindJsxAttribute,
+	kinds := map[string]tsast.Kind{}
+	for kind := tsast.Kind(0); kind < tsast.KindCount; kind++ {
+		kinds[kind.String()] = kind
 	}
+
 	var subjects [][2]string
 	data, err := os.ReadFile(os.Args[1])
 	if err != nil {
@@ -42,6 +32,7 @@ func main() {
 	type row struct {
 		File, Name string
 		Kinds      []int
+		KindNames  []string
 	}
 	rows := []row{}
 	for _, subject := range subjects {
@@ -107,6 +98,9 @@ func main() {
 			panic("missing listeners " + subject[1])
 		}
 		sort.Ints(r.Kinds)
+		for _, kind := range r.Kinds {
+			r.KindNames = append(r.KindNames, strings.TrimPrefix(tsast.Kind(kind).String(), "Kind"))
+		}
 		rows = append(rows, r)
 	}
 	encoded, err := json.Marshal(rows)
@@ -119,7 +113,7 @@ func main() {
 	for _, r := range rows {
 		values := []string{}
 		for _, kind := range r.Kinds {
-			values = append(values, strconv.Itoa(kind))
+			values = append(values, strings.TrimPrefix(tsast.Kind(kind).String(), "Kind"))
 		}
 		fmt.Printf("%s\t%s\n", r.Name, strings.Join(values, ","))
 	}

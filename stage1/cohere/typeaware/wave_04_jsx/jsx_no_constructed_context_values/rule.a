@@ -2,7 +2,7 @@ import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
 import type { SyntaxNodeInterface } from '../syntax_node.a';
 import type { NumericTag } from '../numeric_tag.a';
-export const listenerKinds: readonly number[] = [286,287];
+export const listenerKinds: readonly string[] = ["JsxSelfClosingElement", "JsxOpeningElement"];
 export class JsxNoConstructedContextValues {
     createContextCallee(node: NumericTag, tree: readonly NumericTag[]): boolean {
         let callee = node;

@@ -1,5 +1,5 @@
 // Numeric SyntaxKind listeners for the shared kind-indexed driver.
-export const listenerKinds: readonly number[] = [307];
+export const listenerKinds: readonly string[] = ["SourceFile"];
 import { panic } from 'adamic';
 import { Diagnostic } from '../diagnostic.ts';
 import type { ProcessFacts } from './process_facts.a';

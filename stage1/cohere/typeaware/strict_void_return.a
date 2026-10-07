@@ -1,5 +1,5 @@
 // Numeric SyntaxKind listeners for the shared kind-indexed driver.
-export const listenerKinds: readonly number[] = [173, 175, 178, 210, 211, 214, 215, 220, 227, 254, 261, 292];
+export const listenerKinds: readonly string[] = ["PropertyDeclaration", "MethodDeclaration", "GetAccessor", "ArrayLiteralExpression", "ObjectLiteralExpression", "CallExpression", "NewExpression", "ArrowFunction", "BinaryExpression", "ReturnStatement", "VariableDeclaration", "JsxAttribute"];
 import type { Rules } from './rules.ts';
 import { Bindings } from './bindings.ts';
 import { Flow } from './flow.ts';
