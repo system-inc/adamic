@@ -322,7 +322,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
 			}
 			if l.inheritedLibrarySymbol(property) {
-				return nil, l.prototypeRead(binding, field)
+				return nil, l.prototypeRead(binding, field, property)
 			}
 			if property.Flags&ast.SymbolFlagsMethod != 0 {
 				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this (unbound-method)"}

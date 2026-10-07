@@ -67,11 +67,37 @@ func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
 	return true
 }
 
-func (l *lowering) prototypeRead(node *ast.Node, name string) error {
-	if name == "isPrototypeOf" {
-		return &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant (adamic/no-prototype-reflection)"}
+// prototypeRead is why an inherited library member, member, can't be lowered where node reaches it.
+// Only what Adamic never accepts is Refused: the prototype chain made observable (isPrototypeOf,
+// constructor, __proto__), and a method read off its object without a call, which loses its this
+// (unbound-method). A library method called but not built yet, or an inherited data property such as
+// an Error's message, is a feature still to come: NotYet.
+func (l *lowering) prototypeRead(node *ast.Node, name string, member *ast.Symbol) error {
+	if name == "isPrototypeOf" || name == "constructor" || name == "__proto__" {
+		return &Refused{Where: l.program.Where(node), What: name, Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant (adamic/no-prototype-reflection)"}
+	}
+	if isCallee(node) {
+		return l.notYet(node, "the library method "+name)
+	}
+	if !l.libraryMethod(member) {
+		return l.notYet(node, "the inherited library property "+name+" read as an own field")
 	}
 	return &Refused{Where: l.program.Where(node), What: "inherited library member " + name + " read as an own field", Fix: "prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"}
+}
+
+// libraryMethod reports whether a member is declared as a method, not a data property.
+func (l *lowering) libraryMethod(member *ast.Symbol) bool {
+	if member == nil {
+		return false
+	}
+	for _, root := range l.checker.GetRootSymbols(member) {
+		for _, declaration := range root.Declarations {
+			if declaration.Kind == ast.KindMethodSignature || declaration.Kind == ast.KindMethodDeclaration {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {

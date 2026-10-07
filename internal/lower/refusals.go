@@ -167,7 +167,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
-				found = l.prototypeRead(node, "isPrototypeOf")
+				found = l.prototypeRead(node, "isPrototypeOf", nil)
 				return true
 			}
 			// Math.random has its own refusal, called or not.
