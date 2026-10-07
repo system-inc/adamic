@@ -1,0 +1,27 @@
+[
+  {
+    "file": "watch.ts",
+    "function": "createCompilerHostFromProgramHost",
+    "runtimeSha256": "0d2e83f5548065fa12ec131612f5eff4c876724cf78fd8bb2bf464fdfe28e6b2"
+  },
+  {
+    "file": "watch.ts",
+    "function": "createProgramHost",
+    "runtimeSha256": "fe843059012c053fb1884466b53886ecf19eaf76f567188bea79a04f3beef072"
+  },
+  {
+    "file": "core.ts",
+    "function": "maybeBind",
+    "runtimeSha256": "9c12f8e07ac91678789489c9dff1daf201af483110409d06485f3165384608fd"
+  },
+  {
+    "file": "sys.ts",
+    "function": "readFile",
+    "runtimeSha256": "74610c782c9105755eb526be86299e107f4350014cc77bbd648d4cf2e09f9b93"
+  },
+  {
+    "file": "utilities.ts",
+    "function": "directoryProbablyExists",
+    "runtimeSha256": "3d7ee4a1405d1dbfc003492edaab29ca2b1751adcb512d0e1fb0b3315afcca2b"
+  }
+]

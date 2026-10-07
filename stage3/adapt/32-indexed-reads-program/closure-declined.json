@@ -1,51 +1,30 @@
 [
   {
-    "file": "watch.ts",
-    "line": 756,
-    "code": "TS2375",
+    "file": "tracing.ts",
+    "line": 41,
+    "code": "TS2591",
     "action": "decline",
-    "reason": "maybeBind returns undefined for absent optional host methods. CompilerHost.getDefaultLibLocation and other optional methods are public API declarations; asserting their presence is unsound, and truthful method-to-property unions add unsanctioned API lines. Object spreads that omit absent members change the own-property shape."
-  },
-  {
-    "file": "watch.ts",
-    "line": 845,
-    "code": "TS2375",
-    "action": "decline",
-    "reason": "System.createHash is optional; maybeBind deliberately preserves absence. ProgramHost.createHash is a public optional method. Its truthful function-or-undefined declaration changes another public API line outside the exact sanctioned set."
+    "reason": "fs module is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract. Reconfirmed on the merged 79-root input; adaptation 47 fixes the catch, not these host bindings."
   },
   {
     "file": "tracing.ts",
-    "line": 40,
+    "line": 64,
     "code": "TS2591",
     "action": "decline",
-    "reason": "fs module is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
-  },
-  {
-    "file": "tracing.ts",
-    "line": 63,
-    "code": "TS2591",
-    "action": "decline",
-    "reason": "require is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
-  },
-  {
-    "file": "tracing.ts",
-    "line": 82,
-    "code": "TS2591",
-    "action": "decline",
-    "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
+    "reason": "require is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract. Reconfirmed on the merged 79-root input; adaptation 47 fixes the catch, not these host bindings."
   },
   {
     "file": "tracing.ts",
     "line": 83,
     "code": "TS2591",
     "action": "decline",
-    "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
+    "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract. Reconfirmed on the merged 79-root input; adaptation 47 fixes the catch, not these host bindings."
   },
   {
     "file": "tracing.ts",
-    "line": 66,
-    "code": "TS18046",
+    "line": 84,
+    "code": "TS2591",
     "action": "decline",
-    "reason": "The catch variable is unknown. require can throw arbitrary values; surrounding code does not prove an object with a message field. Casting to Error or any is unproved; a runtime guard changes the existing error path and emitted JavaScript."
+    "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract. Reconfirmed on the merged 79-root input; adaptation 47 fixes the catch, not these host bindings."
   }
 ]

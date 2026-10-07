@@ -92,6 +92,7 @@ function main() {
     const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
     if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
     require("./handoffs.cjs").validate(ts, tree);
+    require("./public-host-guards.cjs").validate(ts, tree);
     // Validate all selected files before writing any; retain original bytes and reads.
     const plans = files.map(file => {
         const name = path.join(tree, "src/compiler", file);

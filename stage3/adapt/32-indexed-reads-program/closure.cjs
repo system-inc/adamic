@@ -1,10 +1,33 @@
 "use strict";
-const sites = require("./closure-sites.json");
+const sites = [...require("./closure-sites.json"), ...require("./public-host-sites.json")];
 function plan(ts, file, text, check) {
     const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
     const edits = [];
     for (const site of sites.filter(s => s.file === file)) {
+        if (site.kind === "optional-helper-call") {
+            const found=[];
+            function visit(n) {
+                if(ts.isCallExpression(n)) {
+                    const callee=n.expression;
+                    const base=ts.isParenthesizedExpression(callee)&&ts.isAsExpression(callee.expression)?callee.expression.expression:callee;
+                    let owner=n.parent;
+                    while(owner&&!(ts.isFunctionDeclaration(owner)&&owner.name))owner=owner.parent;
+                    if(base.getText(sf)===site.call&&owner?.name.text===site.function)found.push(n);
+                }
+                ts.forEachChild(n,visit);
+            }
+            visit(sf);
+            if(found.length!==site.total)throw new Error("optional helper call count drift");
+            const n=found[site.occurrence-1],before=site.call,after="("+site.call+" as "+site.type+")";
+            if(JSON.stringify(n.arguments.map(a=>a.getText(sf)))!==JSON.stringify(site.arguments))throw new Error("optional helper call argument drift");
+            if(n.expression.getText(sf)===before) {
+                if(check)throw new Error("optional helper call view missing");
+                edits.push({at:n.expression.getStart(sf),end:n.expression.end,text:after});
+            }
+            else if(n.expression.getText(sf)!==after)throw new Error("optional helper call view drift");
+            continue;
+        }
         if (site.kind === "internal-property") {
             const found = [];
             function visit(n) {
@@ -24,10 +47,10 @@ function plan(ts, file, text, check) {
             else if (n.getText(sf) !== site.after) throw new Error("private optional property type drift");
             continue;
         }
-        if (["internal-method", "call-receiver", "rest-type"].includes(site.kind)) {
+        if (["internal-method", "public-method", "call-receiver", "rest-type"].includes(site.kind)) {
             const found = [];
             function visit(n) {
-                if (site.kind === "internal-method" && (ts.isMethodSignature(n) || ts.isPropertySignature(n)) && n.name.getText(sf) === site.name && ts.isInterfaceDeclaration(n.parent) && n.parent.name.text === site.interface) found.push(n);
+                if (["internal-method", "public-method"].includes(site.kind) && (ts.isMethodSignature(n) || ts.isPropertySignature(n)) && n.name.getText(sf) === site.name && ts.isInterfaceDeclaration(n.parent) && n.parent.name.text === site.interface) found.push(n);
                 if (site.kind === "call-receiver" && ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === "call") {
                     let owner = n.parent;
                     while (owner && !(ts.isFunctionDeclaration(owner) && owner.name)) owner = owner.parent;

@@ -13,6 +13,7 @@ function owners(ts, source, site) {
     }
     visit(source);
     if (matches.length !== 1 || !matches[0].questionToken || !matches[0].type) throw new Error("handoff owner occurrence drift: " + site.interface + "." + site.name);
+    if (!!(ts.getCombinedModifierFlags(matches[0]) & ts.ModifierFlags.Readonly) !== site.readonly) throw new Error("handoff readonly modifier drift: " + site.interface + "." + site.name);
     return matches[0];
 }
 function plan(ts, file, text, check) {
