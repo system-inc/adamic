@@ -2,7 +2,7 @@
 
 Current compiler landing: b6b1538b0; area base d3a37422c. See the final
 compiler-refresh section for rebuilt results. Earlier sections preserve their
-original observations and bases. The branch remains blocked for landing.
+original observations and bases. The two blocked rules are now parked outside this landing tip; see the final split section.
 
 Rebased codex/lint-wave1-14 onto area/stage1-lint
  d65a8f931c98655936ae04c6899f38f14862b73e, containing current main
@@ -338,3 +338,28 @@ shared Go fix-budget contract remain outside owned directories, and their exact
 checked-in reproducers are preserved. No assertion was relaxed, fixture removed
 or check skipped. Remote main/area tips were checked before pushing. No main
 or area branch is pushed, and no new claim is taken under the landing cap.
+
+## Landing split requested by integration
+
+The descriptor directories for `no-lonely-if` and
+`@typescript-eslint/no-unnecessary-parameter-property-assignment` are removed
+from this landing tip. Their complete implementations remain at historical
+commit 2ce7c57035b02996a3e757e4da640a28d636dd15. PARKED_RULES.md names both
+blockers, with exact raw reproducers under parked/. Eight owned rules remain:
+module alias, duplicate enum values, dynamic delete, misused new, extra non-null
+assertion, confusing non-null assertion, lone blocks and loss of precision.
+No shared harness, parser or oracle contract was changed.
+
+On unified area/stage1-lint d3a37422c, lint-registry PASSes, gofmt's adapter list
+is empty and go vet ./... PASSes. The unfiltered TestRulesAgree PASSes (57.04s),
+including the unchanged inherited malformed-input refusal checks. The unfiltered
+TestOwnedWitnesses PASSes (23.47s): 1,512,441 identical bytes on real Go, source
+Node, emitted JavaScript and ASan/UBSan native. Command:
+go test ./stage1/cohere/lint -run '^Test(OwnedWitnesses|RulesAgree)$' -count=1
+-timeout 30m -v. TestMutants is run separately, unfiltered. All output goes to
+evidence/split-*.log; earlier sections are historical observations.
+
+The unfiltered TestMutants gate PASSes (901.463s): all 48 registered mutants
+compile, run with clean stderr and exit zero, and disagree with actual Go on
+Node, emitted JavaScript and ASan/UBSan native. All three requested unified
+gates are green. No full repository gate or new throughput benchmark was run.

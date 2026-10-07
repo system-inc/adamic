@@ -1,6 +1,0 @@
-{
-  "file": "rule.a",
-  "name": "replacement carries an extra space",
-  "from": "separator + this.context.source.slice(start, node.end)",
-  "to": "separator + ' ' + this.context.source.slice(start, node.end)"
-}
