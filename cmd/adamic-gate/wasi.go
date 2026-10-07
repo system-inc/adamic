@@ -51,8 +51,16 @@ func hasSkip(n ast.Node) bool {
 
 // Recognize direct os.Getenv comparisons and local aliases, not arbitrary predicates.
 // Unknown predicates fail closed: their dependence on the environment needs an audit.
-func wasiGates(root string) (map[string]bool, error) {
-	gates := map[string]bool{}
+func environmentGates(root string, required []string) (map[string][]string, error) {
+	gates := map[string][]string{}
+	isRequired := func(value string) bool {
+		for _, name := range required {
+			if name == value {
+				return true
+			}
+		}
+		return wasiEnvironmentName(value)
+	}
 	moduleBytes, err := os.ReadFile(filepath.Join(root, "go.mod"))
 	if err != nil {
 		return nil, err
@@ -79,6 +87,28 @@ func wasiGates(root string) (map[string]bool, error) {
 		if err != nil {
 			return err
 		}
+		constants, err := packageStringConstants(filepath.Dir(path), f.Name.Name)
+		if err != nil {
+			return err
+		}
+		resolve := func(n ast.Node) (string, bool) {
+			e, ok := n.(ast.Expr)
+			if !ok {
+				return "", false
+			}
+			valid := true
+			ast.Inspect(e, func(n ast.Node) bool {
+				if id, ok := n.(*ast.Ident); ok && id.Obj != nil && f.Scope.Objects[id.Name] != id.Obj {
+					valid = false
+				}
+				return true
+			})
+			if !valid {
+				return "", false
+			}
+			return constantString(e, constants, map[string]bool{})
+		}
+		isGate := func(n ast.Node) bool { value, ok := resolve(n); return ok && isRequired(value) }
 		osAlias := ""
 		for _, imp := range f.Imports {
 			if imp.Path.Value == `"os"` {
@@ -107,12 +137,15 @@ func wasiGates(root string) (map[string]bool, error) {
 		// Reject them rather than claiming a complete platform audit.
 		for _, declaration := range f.Decls {
 			fn, isFunction := declaration.(*ast.FuncDecl)
+			if declaration, ok := declaration.(*ast.GenDecl); ok && declaration.Tok == token.CONST {
+				continue
+			}
 			if isFunction && strings.HasPrefix(fn.Name.Name, "Test") {
 				continue
 			}
 			hidden := false
 			ast.Inspect(declaration, func(n ast.Node) bool {
-				if wasiVariableLiteral(n) {
+				if isGate(n) {
 					hidden = true
 				}
 				if getter(n) {
@@ -138,17 +171,20 @@ func wasiGates(root string) (map[string]bool, error) {
 				continue
 			}
 			aliases := map[*ast.Object]bool{}
+			aliasVariables := map[*ast.Object]map[string]bool{}
+			callVariables := map[ast.Node]string{}
 			badAliases := map[*ast.Object]bool{}
 			calls := map[ast.Node]bool{}
+			variables := map[string]bool{}
 			var bad error
 			variableMention := false
 			ast.Inspect(fn.Body, func(n ast.Node) bool {
-				if wasiVariableLiteral(n) {
+				if isGate(n) {
 					variableMention = true
 				}
-				if call, ok := n.(*ast.CallExpr); ok && !getter(n) {
+				if call, ok := n.(*ast.CallExpr); ok && !getter(n) && !skipCall(call) {
 					for _, argument := range call.Args {
-						if wasiVariableLiteral(argument) {
+						if isGate(argument) {
 							bad = fmt.Errorf("unrecognized WASI variable access in %s::%s", path, fn.Name.Name)
 						}
 					}
@@ -163,13 +199,13 @@ func wasiGates(root string) (map[string]bool, error) {
 						bad = fmt.Errorf("unknown environment gate in %s::%s", path, fn.Name.Name)
 						return true
 					}
-					lit, ok := c.Args[0].(*ast.BasicLit)
+					value, ok := resolve(c.Args[0])
 					if !ok {
 						bad = fmt.Errorf("dynamic environment skip gate in %s::%s", path, fn.Name.Name)
 						return true
 					}
-					value, _ := strconv.Unquote(lit.Value)
-					if strings.Contains(value, "WASI") {
+					if isRequired(value) {
+						callVariables[n] = value
 						calls[n] = true
 						if c.Fun.(*ast.SelectorExpr).Sel.Name != "Getenv" {
 							bad = fmt.Errorf("unrecognized WASI LookupEnv skip gate in %s::%s", path, fn.Name.Name)
@@ -193,6 +229,21 @@ func wasiGates(root string) (map[string]bool, error) {
 					return true
 				})
 				return yes
+			}
+			collectVariables := func(n ast.Node) map[string]bool {
+				names := map[string]bool{}
+				ast.Inspect(n, func(n ast.Node) bool {
+					if name := callVariables[n]; name != "" {
+						names[name] = true
+					}
+					if id, ok := n.(*ast.Ident); ok && id.Obj != nil {
+						for name := range aliasVariables[id.Obj] {
+							names[name] = true
+						}
+					}
+					return true
+				})
+				return names
 			}
 			// Propagate aliases before examining predicates; a fixed point handles indirect aliases.
 			for changed := true; changed; {
@@ -220,6 +271,17 @@ func wasiGates(root string) (map[string]bool, error) {
 								if id, ok := a.Lhs[i].(*ast.Ident); ok && id.Obj != nil && invalid && !badAliases[id.Obj] {
 									badAliases[id.Obj] = true
 									changed = true
+								}
+								if id, ok := a.Lhs[i].(*ast.Ident); ok && id.Obj != nil {
+									if aliasVariables[id.Obj] == nil {
+										aliasVariables[id.Obj] = map[string]bool{}
+									}
+									for name := range collectVariables(rhs) {
+										if !aliasVariables[id.Obj][name] {
+											aliasVariables[id.Obj][name] = true
+											changed = true
+										}
+									}
 								}
 								if id, ok := a.Lhs[i].(*ast.Ident); ok && id.Obj != nil && !aliases[id.Obj] {
 									aliases[id.Obj] = true
@@ -267,6 +329,9 @@ func wasiGates(root string) (map[string]bool, error) {
 					bad = fmt.Errorf("unrecognized WASI skip condition in %s::%s", path, fn.Name.Name)
 				} else {
 					gated = true
+					for name := range collectVariables(condition.Cond) {
+						variables[name] = true
+					}
 				}
 				return true
 			})
@@ -287,7 +352,10 @@ func wasiGates(root string) (map[string]bool, error) {
 				if relative != "." {
 					pkg += "/" + filepath.ToSlash(relative)
 				}
-				gates[pkg+"::"+fn.Name.Name] = true
+				for variable := range variables {
+					gates[pkg+"::"+fn.Name.Name] = append(gates[pkg+"::"+fn.Name.Name], variable)
+				}
+				sort.Strings(gates[pkg+"::"+fn.Name.Name])
 			}
 		}
 		return nil
@@ -295,33 +363,98 @@ func wasiGates(root string) (map[string]bool, error) {
 	return gates, err
 }
 
+// Compatibility view used by WASI audit tests. The source audit covers every required gate.
+func wasiGates(root string) (map[string]bool, error) {
+	variables, err := requiredGateVariables(root)
+	if err != nil {
+		return nil, err
+	}
+	found, err := environmentGates(root, variables)
+	gates := map[string]bool{}
+	for key := range found {
+		gates[key] = true
+	}
+	return gates, err
+}
+
 func requireWASI(p *plan) error {
-	gates, err := wasiGates(".")
+	variablesFromCensus, err := requiredGateVariables(".")
 	if err != nil {
 		return err
 	}
+	gates, err := environmentGates(".", variablesFromCensus)
+	if err != nil {
+		return err
+	}
+	p.RequiredVariables = append([]string{}, variablesFromCensus...)
 	if len(gates) == 0 {
 		return nil
 	}
-	requirement := &wasiRequirement{Shard: p.Count - 1, Name: "required WASI", Command: `bash cloud/setup.sh --wasi-sdk && source "${ADAMIC_TOOLS:-/opt/adamic-tools}/env.sh" && ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 adamic-gate shard -index ` + strconv.Itoa(p.Count-1) + " -count " + strconv.Itoa(p.Count) + " -out <dir>"}
+	requirement := &environmentRequirement{Shard: p.Count - 1, Variables: []string{}, Gates: []string{}}
+	wasi := &wasiRequirement{Shard: p.Count - 1, Name: "required WASI"}
 	found := map[string]bool{}
+	variables := map[string]bool{}
 	for i := range p.Units {
 		u := &p.Units[i]
 		parent, _, _ := strings.Cut(u.Test, "/")
 		key := u.Package + "::" + parent
-		if gates[key] {
-			u.WASI = true
+		if names, ok := gates[key]; ok {
+			u.RequiredEnvironment = append([]string{}, names...)
 			found[key] = true
+			for _, name := range names {
+				if name != "WASI_SYSROOT" {
+					known := false
+					for _, required := range p.RequiredVariables {
+						if required == name {
+							known = true
+						}
+					}
+					if !known {
+						return fmt.Errorf("unrecognized required environment variable %s in %s", name, key)
+					}
+					variables[name] = true
+				}
+				if strings.Contains(name, "WASI") {
+					u.WASI = true
+				}
+			}
 		}
 	}
 	for key := range gates {
 		if !found[key] {
-			return fmt.Errorf("WASI gate not enumerated by go test -list: %s", key)
+			return fmt.Errorf("required environment gate not enumerated by go test -list: %s", key)
 		}
 		requirement.Gates = append(requirement.Gates, key)
+		for _, name := range gates[key] {
+			if strings.Contains(name, "WASI") {
+				wasi.Gates = append(wasi.Gates, key)
+				break
+			}
+		}
 	}
+	if len(wasi.Gates) > 0 {
+		variables["ADAMIC_TEST_WASI"] = true
+		variables["ADAMIC_ORACLE_WASI"] = true
+	}
+	for name := range variables {
+		requirement.Variables = append(requirement.Variables, name)
+	}
+	sort.Strings(requirement.Variables)
 	sort.Strings(requirement.Gates)
-	p.WASI = requirement
+	sort.Strings(wasi.Gates)
+	prefix := ""
+	if len(wasi.Gates) > 0 {
+		prefix = `bash cloud/setup.sh --wasi-sdk && source "${ADAMIC_TOOLS:-/opt/adamic-tools}/env.sh" && `
+	}
+	for _, name := range requirement.Variables {
+		prefix += name + "=1 "
+	}
+	requirement.Command = prefix + "adamic-gate shard -index " + strconv.Itoa(p.Count-1) + " -count " + strconv.Itoa(p.Count) + " -out <dir>"
+	p.Environment = requirement
+	if len(wasi.Gates) > 0 {
+		wasi.Command = requirement.Command
+		p.WASI = wasi
+	}
 	return nil
 }
 

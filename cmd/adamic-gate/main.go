@@ -34,25 +34,28 @@ var packageJobs = runtime.GOMAXPROCS(0)
 const timingPath = "cmd/adamic-gate/timings.json"
 
 type unit struct {
-	Package string
-	Test    string
-	Shard   int
-	Seconds float64
-	WASI    bool
+	Package             string
+	Test                string
+	Shard               int
+	Seconds             float64
+	WASI                bool
+	RequiredEnvironment []string
 }
 
 func (u unit) key() string { return u.Package + "::" + u.Test }
 
 type plan struct {
-	Version     int
-	Commit      string
-	Source      string
-	Count       int
-	Units       []unit
-	Digest      string
-	Shards      []prediction
-	Complements []complement
-	WASI        *wasiRequirement
+	Version           int
+	Commit            string
+	Source            string
+	Count             int
+	Units             []unit
+	Digest            string
+	Shards            []prediction
+	Complements       []complement
+	WASI              *wasiRequirement
+	RequiredVariables []string
+	Environment       *environmentRequirement
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -86,7 +89,15 @@ type summary struct {
 	BuildFlags            string
 	DiskBefore, DiskAfter uint64
 	Errors                []string
+	Submodules            []submoduleRecord
+	Concurrency           concurrency
 }
+type shardWallTime struct {
+	Index       int
+	WallSeconds float64
+	BuildFlags  string
+}
+
 type merged struct {
 	Version           int
 	Plan              plan
@@ -95,6 +106,7 @@ type merged struct {
 	TestEvents        int
 	RawTerminalEvents int
 	WallSeconds       []float64
+	ShardWallTimes    []shardWallTime
 	BuildFlags        []string
 	Errors            []string
 	Green             bool
@@ -130,12 +142,18 @@ func run(args []string) error {
 		count := flags.Int("count", 8, "number of shards")
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
-		flags.IntVar(&packageJobs, "jobs", runtime.GOMAXPROCS(0), "concurrent package test processes")
+		jobs := flags.Int("jobs", 0, "legacy package job override; must agree with an explicit concurrency setting")
+		budget := flags.String("concurrency", defaultConcurrency, "auto or JOBSxPARALLEL, for example 4x1 or 2x2")
 		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
 		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
+		configured, err := resolveConcurrency(*budget, *jobs)
+		if err != nil {
+			return err
+		}
+		packageJobs, testParallel, concurrencySetting = configured.Jobs, configured.Parallel, configured.Setting
 		return shard(*index, *count, *out, *scratch, *resume)
 	case "merge":
 		flags := flag.NewFlagSet("merge", flag.ContinueOnError)
@@ -146,7 +164,7 @@ func run(args []string) error {
 		return merge(flags.Args(), *out)
 	case "compare":
 		if len(args) != 3 {
-			return errors.New("compare <merged directory or JSON> <unsharded JSON log>")
+			return errors.New("compare <merged directory or JSON> <unsharded JSON log or git:remote:gate-logs/sha/plain>")
 		}
 		return compare(args[1], args[2])
 	case "timings":
@@ -278,6 +296,10 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if !ok {
 				return true
 			}
+			field, bound := literalRunBinding(f, r)
+			if !bound {
+				return true
+			}
 			literal, ok := r.X.(*ast.CompositeLit)
 			if !ok && len(table) == 1 {
 				if id, yes := r.X.(*ast.Ident); yes && id.Name == table[0] {
@@ -299,11 +321,16 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if !ok {
 				return true
 			}
-			if _, ok := literal.Type.(*ast.ArrayType); !ok {
+			array, ok := literal.Type.(*ast.ArrayType)
+			if !ok {
+				return true
+			}
+			index, ok := literalNameIndex(array, field)
+			if !ok {
 				return true
 			}
 			for _, e := range literal.Elts {
-				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING {
+				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING && field == "" {
 					name, err := strconv.Unquote(label.Value)
 					if err == nil {
 						names = append(names, strings.ReplaceAll(name, " ", "_"))
@@ -311,10 +338,21 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 					continue
 				}
 				row, ok := e.(*ast.CompositeLit)
-				if !ok || len(row.Elts) == 0 {
+				if !ok || len(row.Elts) == 0 || index >= len(row.Elts) {
 					continue
 				}
-				s, ok := row.Elts[0].(*ast.BasicLit)
+				expression := row.Elts[index]
+				if _, keyed := row.Elts[0].(*ast.KeyValueExpr); keyed {
+					expression = nil
+					for _, entry := range row.Elts {
+						if pair, ok := entry.(*ast.KeyValueExpr); ok {
+							if key, ok := pair.Key.(*ast.Ident); ok && key.Name == field {
+								expression = pair.Value
+							}
+						}
+					}
+				}
+				s, ok := expression.(*ast.BasicLit)
 				if !ok || s.Kind != token.STRING {
 					continue
 				}
@@ -358,7 +396,9 @@ func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/stage1/cohere/lint") {
 		switch parent {
 		case "TestMutants":
-			return literalChildren("stage1/cohere/lint/lint_test.go", parent)
+			// Registry-driven mutant.json names are not a literal t.Run table.
+			// Run the whole parent rather than inventing children from backend loops.
+			return nil, nil
 		case "TestVolumeMutants":
 			return literalChildren("stage1/cohere/lint/volume_test.go", parent)
 		}
@@ -480,7 +520,7 @@ func makePlan(count int) (plan, error) {
 		return p, err
 	}
 	ordinaryCount := count
-	if p.WASI != nil && count > 1 {
+	if p.Environment != nil && count > 1 {
 		ordinaryCount--
 	}
 	loads := make([]float64, count)
@@ -502,7 +542,7 @@ func makePlan(count int) (plan, error) {
 			hash := sha256.Sum256([]byte(u.key()))
 			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(ordinaryCount))
 		}
-		if u.WASI {
+		if u.WASI || len(u.RequiredEnvironment) > 0 {
 			u.Shard = count - 1
 		}
 	}
@@ -514,7 +554,7 @@ func makePlan(count int) (plan, error) {
 		return a.Seconds > b.Seconds
 	})
 	for _, i := range known {
-		if p.Units[i].WASI {
+		if p.Units[i].WASI || len(p.Units[i].RequiredEnvironment) > 0 {
 			loads[count-1] += p.Units[i].Seconds
 			continue
 		}
@@ -657,13 +697,21 @@ func buildFlags(commit, before, after string) string {
 		return strings.Split(s, "\n")[0]
 	}
 	quota := cpuQuota()
-	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, processorCount(), quota, get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
+	c := currentConcurrency()
+	return fmt.Sprintf("concurrency=%q package_jobs=%d test_parallel=%d effective_parallel=%d budget=%d commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", c.Setting, c.Jobs, c.Parallel, c.EffectiveParallel, c.Budget, commit, processorCount(), quota, get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
 }
 func shard(index, count int, out, scratch string, resume bool) error {
 	started := time.Now()
 	beforeLoad := loadAverage()
 	if out == "" || index < 0 || index >= count {
 		return errors.New("shard requires -out and 0 <= index < count")
+	}
+	submodules, err := inspectSubmodules(".", "HEAD")
+	if err != nil {
+		return err
+	}
+	if err := requirePinnedSubmodules(submodules); err != nil {
+		return err
 	}
 	root, err := filepath.Abs(scratch)
 	if err != nil {
@@ -701,6 +749,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return err
 	}
 
+	if err := environmentReady(p, index); err != nil {
+		return err
+	}
 	if p.WASI != nil && p.WASI.Shard == index {
 		if err := wasiReady(); err != nil {
 			return err
@@ -713,7 +764,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if packageJobs < 1 {
 		return errors.New("jobs must be positive")
 	}
-	context = schedulingIdentity(context, packageJobs)
+	context = schedulingIdentity(context, packageJobs, testParallel, currentConcurrency().EffectiveParallel)
 	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
 	if _, err := os.Stat(out); err == nil {
 		if !resume {
@@ -743,7 +794,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if err := atomicJSON(filepath.Join(out, "run.json"), state); err != nil {
 		return err
 	}
-	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
+	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk, Submodules: submodules, Concurrency: currentConcurrency()}
 	raw, err := os.Create(filepath.Join(out, "test.jsonl"))
 	if err != nil {
 		return err
@@ -866,7 +917,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		local := summary{}
 		var localErrors []string
 		for _, selection := range selections(p, index, pkg) {
-			args := selectionArgs(pkg, selection)
+			args := concurrencyArgs(selectionArgs(pkg, selection), testParallel)
 			cmd, release := shardCommand("go", args...)
 			cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
 			if strings.HasSuffix(pkg, "/internal/native") && selection.Run == "^TestWASI$" {
@@ -896,7 +947,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := os.Rename(filepath.Join(packageDir, "test.stderr.partial"), filepath.Join(packageDir, "test.stderr")); err != nil {
 			return err
 		}
-		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: local.Invocations}
+		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: local.Invocations, TestParallel: testParallel}
 		if err := atomicJSON(filepath.Join(packageDir, "invocations.json"), checkpoint); err != nil {
 			return err
 		}
@@ -972,6 +1023,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	status, statusErr := output("git", "status", "--porcelain", "--untracked-files=normal")
 	if identityErr != nil || commitErr != nil || statusErr != nil || afterSource != p.Source || afterCommit != p.Commit || status != "" {
 		s.Errors = append(s.Errors, "repository changed during shard execution")
+	}
+	afterSubmodules, submoduleErr := inspectSubmodules(".", p.Commit)
+	if submoduleErr != nil {
+		s.Errors = append(s.Errors, submoduleErr.Error())
+	} else {
+		s.Errors = append(s.Errors, compareSubmodules(submodules, []summary{{Index: index, Submodules: afterSubmodules}})...)
 	}
 
 	s.Results, s.CacheLines, _, err = readLog(filepath.Join(out, "test.jsonl"))
@@ -1134,12 +1191,22 @@ func merge(dirs []string, out string) error {
 		return err
 	}
 	m := merged{Version: 1, Plan: expected}
+	submodules, err := inspectSubmodules(".", expected.Commit)
+	if err != nil {
+		return err
+	}
+	m.Errors = append(m.Errors, compareSubmodules(submodules, summaries)...)
+	_, censusStat := os.Stat(filepath.Join("internal", "skipcensus", "census.go"))
+	censusLanded := !os.IsNotExist(censusStat)
 	seenShard := map[int]bool{}
 	seenTest := map[string]int{}
 	seenRuns := map[string]int{}
 	produced := map[string]bool{}
 	var all []result
 	for i, s := range summaries {
+		if err := validateConcurrency(s.Concurrency); err != nil {
+			m.Errors = append(m.Errors, fmt.Sprintf("shard %d: %s", s.Index, err))
+		}
 		if s.Version != 1 || !samePlan(expected, s.Plan) {
 			m.Errors = append(m.Errors, fmt.Sprintf("shard %d plan differs from repository enumeration", s.Index))
 		}
@@ -1177,7 +1244,10 @@ func merge(dirs []string, out string) error {
 		if err != nil {
 			return err
 		}
-		m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
+		if !censusLanded {
+			m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
+			m.Errors = append(m.Errors, requiredEnvironmentSkips(expected, s.Index, results)...)
+		}
 		m.RawTerminalEvents += raw
 		for _, r := range results {
 			if r.Test != "" && r.Action == "fail" {
@@ -1249,6 +1319,7 @@ func merge(dirs []string, out string) error {
 
 		all = append(all, results...)
 		m.WallSeconds = append(m.WallSeconds, s.WallSeconds)
+		m.ShardWallTimes = append(m.ShardWallTimes, shardWallTime{s.Index, s.WallSeconds, s.BuildFlags})
 		m.BuildFlags = append(m.BuildFlags, s.BuildFlags)
 	}
 	for i := 0; i < expected.Count; i++ {
@@ -1287,10 +1358,15 @@ func merge(dirs []string, out string) error {
 
 	m.Pass, m.Fail, m.Skip = totals(m.Results)
 	m.TestEvents = m.Pass + m.Fail + m.Skip
-	m.SkipCensus, err = checkSkipCensus(".")
+	censusLogs := []string{}
+	for _, directory := range dirs {
+		censusLogs = append(censusLogs, filepath.Join(directory, "test.jsonl"))
+	}
+	m.SkipCensus, err = checkSkipCensus(".", censusLogs...)
 	if err != nil {
 		m.Errors = append(m.Errors, err.Error())
 	}
+	sort.Slice(m.ShardWallTimes, func(i, j int) bool { return m.ShardWallTimes[i].Index < m.ShardWallTimes[j].Index })
 	m.Green = len(m.Errors) == 0 && m.Fail == 0
 	if _, err := os.Stat(out); err == nil {
 		return errors.New("merged output already exists")
@@ -1324,6 +1400,10 @@ func merge(dirs []string, out string) error {
 		verdict = "GREEN"
 	}
 	fmt.Printf("%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n", verdict, m.Pass, m.Fail, m.Skip, m.TestEvents, m.RawTerminalEvents)
+	fmt.Printf("GATE census=%s required_input=%d not_applicable=%q measurement=%q opt_in_lane=%q\n", m.SkipCensus.Status, len(m.SkipCensus.RequiredInput), strings.Join(m.SkipCensus.NotApplicable, ","), strings.Join(m.SkipCensus.Measurement, ","), strings.Join(m.SkipCensus.OptInLane, ","))
+	for _, timing := range m.ShardWallTimes {
+		fmt.Printf("shard %d wall=%.3fs\n%s\n", timing.Index, timing.WallSeconds, timing.BuildFlags)
+	}
 	for _, problem := range m.Errors {
 		fmt.Fprintln(os.Stderr, problem)
 	}
@@ -1339,6 +1419,14 @@ func compare(path, log string) error {
 	var m merged
 	if err := loadJSON(path, &m); err != nil {
 		return err
+	}
+	if strings.HasPrefix(log, "git:") {
+		local, cleanup, err := fetchPlainReference(log, m.Plan.Commit)
+		if err != nil {
+			return err
+		}
+		defer cleanup()
+		log = local
 	}
 	whole, _, raw, err := readLog(log)
 	if err != nil {

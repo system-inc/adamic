@@ -1,0 +1,19 @@
+=== RUN   TestJSONTypesMissingBinary
+=== PAUSE TestJSONTypesMissingBinary
+=== CONT  TestJSONTypesMissingBinary
+=== RUN   TestJSONTypesMissingBinary/unset
+=== PAUSE TestJSONTypesMissingBinary/unset
+=== RUN   TestJSONTypesMissingBinary/missing
+=== PAUSE TestJSONTypesMissingBinary/missing
+=== CONT  TestJSONTypesMissingBinary/unset
+=== CONT  TestJSONTypesMissingBinary/missing
+=== NAME  TestJSONTypesMissingBinary/unset
+    json_types_test.go:106: missing helper must name "missing ADAMIC_ORACLE_JSON_TYPES": exit=70 stdout="" stderr="stat ./oracle/json_types.go: no such file or directory\nadamic: panic: Error: Command failed: go run ./oracle/json_types.go /tmp/adamic-gate/TestJSONTypesMissingBinary2760082814/001/source.a\nstat ./oracle/json_types.go: no such file or directory\n\n"
+=== NAME  TestJSONTypesMissingBinary/missing
+    json_types_test.go:106: missing helper must name "missing or non-executable json_types binary /tmp/adamic-gate/TestJSONTypesMissingBinary2760082814/002/missing-json-types": exit=70 stdout="" stderr="stat ./oracle/json_types.go: no such file or directory\nadamic: panic: Error: Command failed: go run ./oracle/json_types.go /tmp/adamic-gate/TestJSONTypesMissingBinary2760082814/001/source.a\nstat ./oracle/json_types.go: no such file or directory\n\n"
+--- FAIL: TestJSONTypesMissingBinary (0.00s)
+    --- FAIL: TestJSONTypesMissingBinary/unset (0.04s)
+    --- FAIL: TestJSONTypesMissingBinary/missing (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.046s
+FAIL

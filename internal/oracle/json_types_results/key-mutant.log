@@ -1,0 +1,10 @@
+=== RUN   TestJSONTypesObservationKey
+=== PAUSE TestJSONTypesObservationKey
+=== CONT  TestJSONTypesObservationKey
+    json_types_test.go:80: gate cache node miss
+    json_types_test.go:80: gate cache node hit
+    json_types_test.go:82: changed helper served stale observation "old helper", want "changed helper"
+--- FAIL: TestJSONTypesObservationKey (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.010s
+FAIL

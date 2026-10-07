@@ -80,6 +80,11 @@ esac
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
 # installed one is enough; otherwise the newest stable release goes in $tools/go.
 export GOTOOLCHAIN=auto
+# Some cloud boxes reach proxy.golang.org but not storage.googleapis.com, where it redirects module
+# downloads, and answer 403. The default proxy list falls back to direct only on 404 and 410, so a
+# module the box hasn't cached fails setup. The pipe falls back on any error, fetching from the
+# module's own source instead; go.sum still checks every module's hash either way.
+export GOPROXY="https://proxy.golang.org|direct"
 prepareGo() {
 # Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
 realGo() { bounded 30 "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
@@ -222,6 +227,7 @@ fi
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
 export GOTOOLCHAIN=auto
+export GOPROXY="https://proxy.golang.org|direct"
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
@@ -275,6 +281,36 @@ else
 fi
 "$warmTests" || step "test binaries deferred (use --warm-tests)"
 step "build cache warm"
+
+# Go commands in workspace mode (downloads, builds) add sums to go.work.sum. A gate tests the commit
+# exactly, and the shard runner refuses a dirty submodule, so setup leaves every go.work.sum as the
+# commit has it: a tracked one is written back from HEAD, an untracked one setup created is removed.
+# It fails closed: a file is removed only when git lists it as untracked and not ignored, a tracked
+# one is replaced only by a complete copy of HEAD's, and any git failure stops setup. Go adds
+# missing sums again as it needs them.
+restoreWorkSums() {
+	local directory=$1 tracked untracked
+	tracked=$(timeout 30 git -C "$directory" ls-files -- go.work.sum)
+	if [ "$tracked" = go.work.sum ]; then
+		if ! timeout 30 git -C "$directory" diff --quiet -- go.work.sum; then
+			timeout 30 git -C "$directory" show HEAD:go.work.sum > "$directory/go.work.sum.setup"
+			mv "$directory/go.work.sum.setup" "$directory/go.work.sum"
+		fi
+		return 0
+	fi
+	untracked=$(timeout 30 git -C "$directory" ls-files --others --exclude-standard -- go.work.sum)
+	if [ "$untracked" = go.work.sum ]; then
+		rm -f "${directory:?}/go.work.sum"
+	fi
+}
+submodules=$(timeout 60 git -C "$repository" submodule --quiet foreach --recursive 'echo "$displaypath"')
+restoreWorkSums "$repository"
+while IFS= read -r submodule; do
+	if [ -n "$submodule" ]; then
+		restoreWorkSums "$repository/$submodule"
+	fi
+done <<< "$submodules"
+step "workspace sums restored to the commit"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
