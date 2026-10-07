@@ -70,3 +70,17 @@ in the combined by-volume ranking; all three have zero corpus findings.
 Third-batch implementation: all three constructor rules are complete in
 a63e3ffc. WAVE_18_CONSTRUCTOR_REPORT.md records complete byte comparisons,
 no-library and ambient controls, mutants, sanitizers and quiet Go/native timing.
+
+## Fourth batch after pushed constructor completion
+
+Previous ports and evidence are pushed through c6d9d07f. The next rules
+reserved before implementation are:
+
+1. prefer-promise-reject-errors
+2. prefer-regex-literals
+3. prefer-rest-params
+
+The audit checks 356 origin refs, 132 claimed names and
+25 ranked baseline ports. Baselines remain main ef3d907e
+and tsgo-c-library 5afbdb83. These are the first
+remaining names in the combined volume ranking, each with zero corpus findings.
