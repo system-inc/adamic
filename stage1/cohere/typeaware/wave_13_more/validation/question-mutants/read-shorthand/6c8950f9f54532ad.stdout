@@ -1,0 +1,3 @@
+file	/workspace/wave13-more-upstream/controls/6c8950f9f54532ad/input.ts
+8	28	no-obj-calls	unexpectedCall	This calls `Atomics`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+findings 1

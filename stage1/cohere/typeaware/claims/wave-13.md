@@ -51,3 +51,12 @@ on origin; 52 remain. The next three by combined volume and lexical ties are:
 
 This claim update is pushed before any implementation. New native files use .a,
 and shared registration generators and harnesses remain unchanged.
+
+
+Second continuation status: implementation cc7b89d0. no-obj-calls and
+no-promise-executor-return agree on all exported upstream controls;
+no-object-constructor remains partially blocked on three shared-parser refusals.
+Normal and sanitized runs agree on 430/433 controls and both full frozen corpora.
+All three rule mutants, the raw shorthand mutant, question guards and released
+handle checks are recorded in wave_13_more/REPORT.md. No further rules were
+claimed because this claim is not fully complete.

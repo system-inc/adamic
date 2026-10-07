@@ -1,0 +1,4 @@
+file	/workspace/wave13-more-upstream/controls/240ba54d42bdb49f/input.ts
+0	36	no-obj-calls	unexpectedCall	This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+17	34	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+findings 2

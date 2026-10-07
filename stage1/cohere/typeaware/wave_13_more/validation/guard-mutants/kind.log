@@ -1,0 +1,8 @@
+=== RUN   TestReadSymbolQuestion
+=== PAUSE TestReadSymbolQuestion
+=== CONT  TestReadSymbolQuestion
+    read_symbol_test.go:66: accepted wrong kind
+--- FAIL: TestReadSymbolQuestion (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.072s
+FAIL

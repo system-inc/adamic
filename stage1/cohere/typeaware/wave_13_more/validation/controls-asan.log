@@ -1,0 +1,7 @@
+TestNoObjectConstructorFires/<foo_/>_Object() go 0 native 70 difference 0 adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 5 in /workspace/wave13-more-upstream/controls/53d1c0a9ffc2fefa/repository/source/ObjectConstructor.ts
+
+TestNoObjectConstructorFires/<foo></foo>_Object() go 0 native 70 difference 0 adamic: panic: parser slice expected GreaterThanToken, got Identifier at 7 in /workspace/wave13-more-upstream/controls/aff6ced2ca61fe89/repository/source/ObjectConstructor.ts
+
+TestNoObjectConstructorFires/var_yield_=_5;_yield:_while_(foo)_{_if_(bar)_break_yield_new_Object();_} go 0 native 70 difference 0 adamic: panic: parser slice expected semicolon at 37 in /workspace/wave13-more-upstream/controls/defcb4c4ce6a2921/repository/source/ObjectConstructor.ts
+
+cases 433 failures 3

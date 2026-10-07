@@ -1,0 +1,3 @@
+file	/workspace/wave13-more-upstream/controls/495e7d45f223d74b/input.ts
+16	23	no-obj-calls	unexpectedRefCall	This calls `m`, which holds `Math`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `Math` instead.	0	0
+findings 1

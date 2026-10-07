@@ -1,0 +1,1100 @@
+=== RUN   TestNoObjCallsAgreesWithESLint
+=== PAUSE TestNoObjCallsAgreesWithESLint
+=== RUN   TestNoObjCallsFiresAndStaysQuiet
+=== PAUSE TestNoObjCallsFiresAndStaysQuiet
+=== RUN   TestNoObjCallsReportsOnlyTheNamespaceObjects
+=== PAUSE TestNoObjCallsReportsOnlyTheNamespaceObjects
+=== RUN   TestNoObjCallsTakesAnUndeclaredGlobalObjectAsTheGlobal
+=== PAUSE TestNoObjCallsTakesAnUndeclaredGlobalObjectAsTheGlobal
+=== RUN   TestNoObjCallsDoesNotFollowAnArithmeticAssignment
+=== PAUSE TestNoObjCallsDoesNotFollowAnArithmeticAssignment
+=== RUN   TestNoObjCallsNamesTheCalleeAndTheGlobal
+=== PAUSE TestNoObjCallsNamesTheCalleeAndTheGlobal
+=== RUN   TestNoObjCallsRequiresTheTypedHarness
+=== PAUSE TestNoObjCallsRequiresTheTypedHarness
+=== RUN   TestNoObjCallsIsRegistered
+=== PAUSE TestNoObjCallsIsRegistered
+=== RUN   TestNoObjectConstructorFires
+=== PAUSE TestNoObjectConstructorFires
+=== RUN   TestNoObjectConstructorStaysSilent
+=== PAUSE TestNoObjectConstructorStaysSilent
+=== RUN   TestNoObjectConstructorDeclinesAParenthesizedCallee
+=== PAUSE TestNoObjectConstructorDeclinesAParenthesizedCallee
+=== RUN   TestNoObjectConstructorNeedsTheTypedHarness
+=== PAUSE TestNoObjectConstructorNeedsTheTypedHarness
+=== RUN   TestNoObjectConstructorReportsWhyItMatters
+=== PAUSE TestNoObjectConstructorReportsWhyItMatters
+=== RUN   TestNoObjectConstructorDeclinesInsideAWithBlock
+=== PAUSE TestNoObjectConstructorDeclinesInsideAWithBlock
+=== RUN   TestNoObjectConstructorReportsTheWholeCall
+=== PAUSE TestNoObjectConstructorReportsTheWholeCall
+=== RUN   TestNoPromiseExecutorReturnStaysSilent
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent
+=== RUN   TestNoPromiseExecutorReturnFires
+=== PAUSE TestNoPromiseExecutorReturnFires
+=== RUN   TestNoPromiseExecutorReturnSpans
+=== PAUSE TestNoPromiseExecutorReturnSpans
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress
+=== RUN   TestDecodeNoPromiseExecutorReturnOptions
+=== PAUSE TestDecodeNoPromiseExecutorReturnOptions
+=== RUN   TestNoPromiseExecutorReturnWithNilOptionsDefaultsToDisallowingVoid
+=== PAUSE TestNoPromiseExecutorReturnWithNilOptionsDefaultsToDisallowingVoid
+=== RUN   TestNoPromiseExecutorReturnRequiresTheTypedHarness
+=== PAUSE TestNoPromiseExecutorReturnRequiresTheTypedHarness
+=== RUN   TestNoPromiseExecutorReturnMessages
+=== PAUSE TestNoPromiseExecutorReturnMessages
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs
+=== RUN   TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors
+=== PAUSE TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors
+=== CONT  TestNoObjCallsAgreesWithESLint
+=== CONT  TestNoObjectConstructorDeclinesInsideAWithBlock
+=== CONT  TestDecodeNoPromiseExecutorReturnOptions
+=== RUN   TestDecodeNoPromiseExecutorReturnOptions/empty_input_falls_back_to_the_default
+=== PAUSE TestDecodeNoPromiseExecutorReturnOptions/empty_input_falls_back_to_the_default
+=== RUN   TestDecodeNoPromiseExecutorReturnOptions/an_empty_object_falls_back_to_the_default
+=== PAUSE TestDecodeNoPromiseExecutorReturnOptions/an_empty_object_falls_back_to_the_default
+=== RUN   TestDecodeNoPromiseExecutorReturnOptions/an_explicit_false
+=== PAUSE TestDecodeNoPromiseExecutorReturnOptions/an_explicit_false
+=== CONT  TestNoObjCallsIsRegistered
+--- PASS: TestNoObjCallsIsRegistered (0.00s)
+=== CONT  TestNoObjectConstructorNeedsTheTypedHarness
+=== CONT  TestNoObjectConstructorReportsWhyItMatters
+=== RUN   TestDecodeNoPromiseExecutorReturnOptions/an_explicit_true
+=== PAUSE TestDecodeNoPromiseExecutorReturnOptions/an_explicit_true
+=== CONT  TestNoObjectConstructorDeclinesAParenthesizedCallee
+--- PASS: TestNoObjectConstructorDeclinesInsideAWithBlock (0.03s)
+--- PASS: TestNoObjectConstructorDeclinesAParenthesizedCallee (0.03s)
+=== CONT  TestNoObjectConstructorStaysSilent
+--- PASS: TestNoObjectConstructorNeedsTheTypedHarness (0.03s)
+=== CONT  TestNoObjCallsDoesNotFollowAnArithmeticAssignment
+=== RUN   TestNoObjectConstructorStaysSilent/new_Object(x)
+=== PAUSE TestNoObjectConstructorStaysSilent/new_Object(x)
+=== RUN   TestNoObjectConstructorStaysSilent/Object(x)
+=== PAUSE TestNoObjectConstructorStaysSilent/Object(x)
+=== RUN   TestNoObjectConstructorStaysSilent/new_globalThis.Object
+=== PAUSE TestNoObjectConstructorStaysSilent/new_globalThis.Object
+=== RUN   TestNoObjectConstructorStaysSilent/const_createObject_=_Object_=>_new_Object()
+=== PAUSE TestNoObjectConstructorStaysSilent/const_createObject_=_Object_=>_new_Object()
+=== RUN   TestNoObjectConstructorStaysSilent/var_Object;_new_Object;
+=== PAUSE TestNoObjectConstructorStaysSilent/var_Object;_new_Object;
+=== CONT  TestNoObjectConstructorFires
+=== RUN   TestNoObjectConstructorFires/new_Object
+--- PASS: TestNoObjectConstructorReportsWhyItMatters (0.03s)
+=== CONT  TestNoObjCallsNamesTheCalleeAndTheGlobal
+=== PAUSE TestNoObjectConstructorFires/new_Object
+=== RUN   TestNoObjectConstructorFires/Object()
+=== PAUSE TestNoObjectConstructorFires/Object()
+=== RUN   TestNoObjectConstructorFires/const_fn_=_()_=>_Object();
+=== PAUSE TestNoObjectConstructorFires/const_fn_=_()_=>_Object();
+=== RUN   TestNoObjectConstructorFires/Object()_instanceof_Object;
+=== PAUSE TestNoObjectConstructorFires/Object()_instanceof_Object;
+=== RUN   TestNoObjectConstructorFires/const_obj_=_Object?.();
+=== PAUSE TestNoObjectConstructorFires/const_obj_=_Object?.();
+=== RUN   TestNoObjectConstructorFires/(new_Object()_instanceof_Object);
+=== PAUSE TestNoObjectConstructorFires/(new_Object()_instanceof_Object);
+=== RUN   TestNoObjectConstructorFires/foo_Object()
+=== PAUSE TestNoObjectConstructorFires/foo_Object()
+=== RUN   TestNoObjectConstructorFires/foo()_Object()
+=== PAUSE TestNoObjectConstructorFires/foo()_Object()
+=== RUN   TestNoObjectConstructorFires/new_foo_Object()
+=== PAUSE TestNoObjectConstructorFires/new_foo_Object()
+=== RUN   TestNoObjectConstructorFires/(a++)_Object()
+=== PAUSE TestNoObjectConstructorFires/(a++)_Object()
+=== RUN   TestNoObjectConstructorFires/++a_Object()
+=== PAUSE TestNoObjectConstructorFires/++a_Object()
+=== CONT  TestNoObjCallsRequiresTheTypedHarness
+=== RUN   TestNoObjectConstructorFires/const_foo_=_function()_{}_Object()
+=== PAUSE TestNoObjectConstructorFires/const_foo_=_function()_{}_Object()
+=== RUN   TestNoObjectConstructorFires/const_foo_=_class_{}_Object()
+=== PAUSE TestNoObjectConstructorFires/const_foo_=_class_{}_Object()
+=== RUN   TestNoObjectConstructorFires/foo_=_this.return_Object()
+=== PAUSE TestNoObjectConstructorFires/foo_=_this.return_Object()
+=== RUN   TestNoObjectConstructorFires/var_yield_=_bar.yield_Object()
+=== PAUSE TestNoObjectConstructorFires/var_yield_=_bar.yield_Object()
+=== RUN   TestNoObjectConstructorFires/var_foo_=_{_bar:_baz_}_Object()
+=== PAUSE TestNoObjectConstructorFires/var_foo_=_{_bar:_baz_}_Object()
+=== RUN   TestNoObjectConstructorFires/<foo_/>_Object()
+=== PAUSE TestNoObjectConstructorFires/<foo_/>_Object()
+=== RUN   TestNoObjectConstructorFires/<foo></foo>_Object()
+=== PAUSE TestNoObjectConstructorFires/<foo></foo>_Object()
+=== RUN   TestNoObjectConstructorFires/{}_Object()
+=== PAUSE TestNoObjectConstructorFires/{}_Object()
+=== RUN   TestNoObjectConstructorFires/function_foo()_{}_Object()
+=== PAUSE TestNoObjectConstructorFires/function_foo()_{}_Object()
+=== RUN   TestNoObjectConstructorFires/class_Foo_{}_Object()
+=== PAUSE TestNoObjectConstructorFires/class_Foo_{}_Object()
+=== RUN   TestNoObjectConstructorFires/foo:_Object();
+=== PAUSE TestNoObjectConstructorFires/foo:_Object();
+=== RUN   TestNoObjectConstructorFires/foo();Object();
+=== PAUSE TestNoObjectConstructorFires/foo();Object();
+=== RUN   TestNoObjectConstructorFires/{_Object();_}
+=== PAUSE TestNoObjectConstructorFires/{_Object();_}
+=== RUN   TestNoObjectConstructorFires/if_(a)_Object();
+=== PAUSE TestNoObjectConstructorFires/if_(a)_Object();
+=== RUN   TestNoObjectConstructorFires/if_(a);_else_Object();
+=== PAUSE TestNoObjectConstructorFires/if_(a);_else_Object();
+=== RUN   TestNoObjectConstructorFires/while_(a)_Object();
+=== PAUSE TestNoObjectConstructorFires/while_(a)_Object();
+=== RUN   TestNoObjectConstructorFires/do_Object();_while_(a);
+=== PAUSE TestNoObjectConstructorFires/do_Object();_while_(a);
+=== RUN   TestNoObjectConstructorFires/for_(let_i_=_0;_i_<_10;_i++)_Object();
+=== PAUSE TestNoObjectConstructorFires/for_(let_i_=_0;_i_<_10;_i++)_Object();
+=== RUN   TestNoObjectConstructorFires/for_(const_prop_in_obj)_Object();
+=== PAUSE TestNoObjectConstructorFires/for_(const_prop_in_obj)_Object();
+=== RUN   TestNoObjectConstructorFires/for_(const_element_of_iterable)_Object();
+=== PAUSE TestNoObjectConstructorFires/for_(const_element_of_iterable)_Object();
+=== RUN   TestNoObjectConstructorFires/const_foo_=_()_=>_{}_Object()
+=== PAUSE TestNoObjectConstructorFires/const_foo_=_()_=>_{}_Object()
+=== RUN   TestNoObjectConstructorFires/a++_Object()
+=== PAUSE TestNoObjectConstructorFires/a++_Object()
+=== RUN   TestNoObjectConstructorFires/a--_Object()
+=== PAUSE TestNoObjectConstructorFires/a--_Object()
+=== RUN   TestNoObjectConstructorFires/function_foo()_{_return_Object();_}
+=== PAUSE TestNoObjectConstructorFires/function_foo()_{_return_Object();_}
+=== RUN   TestNoObjectConstructorFires/function_*_foo()_{_yield_Object();_}
+=== PAUSE TestNoObjectConstructorFires/function_*_foo()_{_yield_Object();_}
+=== RUN   TestNoObjectConstructorFires/do_{}_while_(a)_Object()
+=== PAUSE TestNoObjectConstructorFires/do_{}_while_(a)_Object()
+=== RUN   TestNoObjectConstructorFires/debugger_Object()
+=== PAUSE TestNoObjectConstructorFires/debugger_Object()
+=== RUN   TestNoObjectConstructorFires/for_(;;)_{_break_Object()_}
+=== PAUSE TestNoObjectConstructorFires/for_(;;)_{_break_Object()_}
+=== RUN   TestNoObjectConstructorFires/for_(;;)_{_continue_Object()_}
+=== PAUSE TestNoObjectConstructorFires/for_(;;)_{_continue_Object()_}
+=== RUN   TestNoObjectConstructorFires/foo:_break_foo_Object()
+=== PAUSE TestNoObjectConstructorFires/foo:_break_foo_Object()
+=== RUN   TestNoObjectConstructorFires/foo:_while_(true)_continue_foo_Object()
+=== PAUSE TestNoObjectConstructorFires/foo:_while_(true)_continue_foo_Object()
+=== RUN   TestNoObjectConstructorFires/const_foo_=_bar_export_{_foo_}_Object()
+=== PAUSE TestNoObjectConstructorFires/const_foo_=_bar_export_{_foo_}_Object()
+=== RUN   TestNoObjectConstructorFires/export_{_foo_}_from_'bar'_Object()
+=== PAUSE TestNoObjectConstructorFires/export_{_foo_}_from_'bar'_Object()
+=== RUN   TestNoObjectConstructorFires/export_*_as_foo_from_'bar'_Object()
+=== PAUSE TestNoObjectConstructorFires/export_*_as_foo_from_'bar'_Object()
+=== RUN   TestNoObjectConstructorFires/import_foo_from_'bar'_Object()
+=== PAUSE TestNoObjectConstructorFires/import_foo_from_'bar'_Object()
+=== RUN   TestNoObjectConstructorFires/var_yield_=_5;_yield:_while_(foo)_{_if_(bar)_break_yield_new_Object();_}
+=== PAUSE TestNoObjectConstructorFires/var_yield_=_5;_yield:_while_(foo)_{_if_(bar)_break_yield_new_Object();_}
+=== RUN   TestNoObjectConstructorFires/var_foo_Object()
+=== PAUSE TestNoObjectConstructorFires/var_foo_Object()
+=== RUN   TestNoObjectConstructorFires/let_bar_Object()
+=== PAUSE TestNoObjectConstructorFires/let_bar_Object()
+=== CONT  TestNoPromiseExecutorReturnFires
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve(1))
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve(1))
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1_?_2_:_3)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1_?_2_:_3)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1_?_2_:_3))
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1_?_2_:_3))
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1))
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1))
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_()_=>_{})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_()_=>_{})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)#01
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)#01
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)#01
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)#01
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})#01
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})#01
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_r_=_resolve)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_r_=_resolve)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return(1)_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return(1)_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>1)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>1)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(r_=>_((1)))
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(r_=>_((1)))
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_foo(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_foo(resolve,_reject)_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_undefined;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_undefined;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_null;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_null;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_false;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_false;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_null)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_null)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_resolve(foo);_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_resolve(foo);_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_reject(foo);_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_reject(foo);_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_x_+_y)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_x_+_y)
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_Promise.resolve(42);_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_Promise.resolve(42);_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return_1;_}_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return_1;_}_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_try_{_return_1;_}_catch(e)_{}_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_try_{_return_1;_}_catch(e)_{}_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_while_(foo){_if_(bar)_break;_else_return_1;_}_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_while_(foo){_if_(bar)_break;_else_return_1;_}_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_void_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_void_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(()_=>_(1))
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(()_=>_(1))
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_({}));
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_({}));
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(()_=>_1)
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(()_=>_1)
+=== RUN   TestNoPromiseExecutorReturnFires/function_foo()_{}_new_Promise(function_()_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnFires/function_foo()_{}_new_Promise(function_()_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnFires/function_foo()_{_return;_}_new_Promise(()_=>_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnFires/function_foo()_{_return;_}_new_Promise(()_=>_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnFires/function_foo()_{_return_1;_}_new_Promise(()_=>_{_return_2;_});
+=== PAUSE TestNoPromiseExecutorReturnFires/function_foo()_{_return_1;_}_new_Promise(()_=>_{_return_2;_});
+=== RUN   TestNoPromiseExecutorReturnFires/function_foo_()_{_return_new_Promise(function_()_{_return_1;_});_}
+=== PAUSE TestNoPromiseExecutorReturnFires/function_foo_()_{_return_new_Promise(function_()_{_return_1;_});_}
+=== RUN   TestNoPromiseExecutorReturnFires/function_foo()_{_return_new_Promise(()_=>_{_bar(()_=>_{_return_1;_});_return_false;_});_}
+=== PAUSE TestNoPromiseExecutorReturnFires/function_foo()_{_return_new_Promise(()_=>_{_bar(()_=>_{_return_1;_});_return_false;_});_}
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_if_(foo)_{_return_0;_}_else_bar(()_=>_{_return_1;_});_})
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_if_(foo)_{_return_0;_}_else_bar(()_=>_{_return_1;_});_})
+=== RUN   TestNoPromiseExecutorReturnFires/function_foo_()_{_return_1;_return_new_Promise(function_()_{_return_2;_});_return_3;}
+=== PAUSE TestNoPromiseExecutorReturnFires/function_foo_()_{_return_1;_return_new_Promise(function_()_{_return_2;_});_return_3;}
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_1;_new_Promise(()_=>_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_1;_new_Promise(()_=>_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_});_function_foo()_{_return_1;_}_
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_});_function_foo()_{_return_1;_}_
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_1);
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_()_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_()_=>_1);
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_async_()_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_async_()_=>_1);
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_()_{});
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_()_{});
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_{});
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_{});
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_foo()_{});
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_foo()_{});
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_Foo_{});
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_Foo_{});
+=== RUN   TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_[]);
+=== PAUSE TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_[]);
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise((Promise)_=>_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise((Promise)_=>_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnFires/new_Promise(function_Promise(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnFires/new_Promise(function_Promise(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise((resolve,_reject)_=>_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise((resolve,_reject)_=>_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress//*_globals_Promise:off_*/_new_Promise(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress//*_globals_Promise:off_*/_new_Promise(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;#01
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;#01
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;_function_foo(){_return_1;_}_return_1;
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;_function_foo(){_return_1;_}_return_1;
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/function_foo(){}_return_1;_var_bar_=_function*(){_return_1;_};_return_1;_var_baz_=_()_=>_{};_return_1;
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/function_foo(){}_return_1;_var_bar_=_function*(){_return_1;_};_return_1;_var_baz_=_()_=>_{};_return_1;
+=== RUN   TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise(function_(resolve,_reject)_{});_return_1;
+=== PAUSE TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise(function_(resolve,_reject)_{});_return_1;
+=== CONT  TestNoPromiseExecutorReturnSpans
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1))
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1))
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_((1)))
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_((1)))
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1_?_2_:_3))
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1_?_2_:_3))
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(()_=>_({}))
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(()_=>_({}))
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_1)
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_1)
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_/*hi*/_~0)
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_/*hi*/_~0)
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(function_(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(function_(resolve,_reject)_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_{_return_0_})
+=== PAUSE TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_{_return_0_})
+=== RUN   TestNoPromiseExecutorReturnSpans/()_=>_new_Promise(()_=>_function_()_{});
+=== PAUSE TestNoPromiseExecutorReturnSpans/()_=>_new_Promise(()_=>_function_()_{});
+=== CONT  TestNoPromiseExecutorReturnMessages
+--- PASS: TestNoObjCallsRequiresTheTypedHarness (0.00s)
+=== CONT  TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors
+=== RUN   TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Array(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Array(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Map(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Map(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Function(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Function(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Set(()_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Set(()_=>_1);
+=== RUN   TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Date(()_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Date(()_=>_1);
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_{_return_1_})/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_{_return_1_})/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces#01
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces#01
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces#01
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces#01
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return_0_})/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return_0_})/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return(1)_})/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return(1)_})/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/prependVoid
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/prependVoid
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve)/wrapBraces
+--- PASS: TestNoObjCallsDoesNotFollowAnArithmeticAssignment (0.01s)
+=== CONT  TestNoPromiseExecutorReturnWithNilOptionsDefaultsToDisallowingVoid
+=== CONT  TestNoPromiseExecutorReturnRequiresTheTypedHarness
+=== RUN   TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_1)
+=== PAUSE TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_1)
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_null)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_null)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_x_+_y)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_x_+_y)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_(1))/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_(1))/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_({}));/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_({}));/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_1)/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_1)/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_1);/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_1);/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_()_=>_1);/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_()_=>_1);/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_async_()_=>_1);/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_async_()_=>_1);/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_function_foo()_{});/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_function_foo()_{});/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_class_Foo_{});/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_class_Foo_{});/wrapBraces
+=== RUN   TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_[]);/wrapBraces
+=== PAUSE TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_[]);/wrapBraces
+--- PASS: TestNoObjCallsNamesTheCalleeAndTheGlobal (0.01s)
+=== CONT  TestNoObjCallsReportsOnlyTheNamespaceObjects
+=== CONT  TestNoObjCallsTakesAnUndeclaredGlobalObjectAsTheGlobal
+--- PASS: TestNoPromiseExecutorReturnMessages (0.01s)
+=== CONT  TestNoObjCallsFiresAndStaysQuiet
+--- PASS: TestNoPromiseExecutorReturnWithNilOptionsDefaultsToDisallowingVoid (0.01s)
+=== CONT  TestNoPromiseExecutorReturnStaysSilent
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/function_foo(resolve,_reject)_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/function_foo(resolve,_reject)_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/function_Promise(resolve,_reject)_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/function_Promise(resolve,_reject)_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/(function_(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/(function_(resolve,_reject)_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/(function_foo(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/(function_foo(resolve,_reject)_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/(function_Promise(resolve,_reject)_{_return_1;_})
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/(function_Promise(resolve,_reject)_{_return_1;_})
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_(resolve,_reject)_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_(resolve,_reject)_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_Promise(resolve,_reject)_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_Promise(resolve,_reject)_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_function_(resolve,_reject)_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_function_(resolve,_reject)_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_1
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_1
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_1
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_1
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_1
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_1
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_bar(resolve,_reject)_{_return_1;_}_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_bar(resolve,_reject)_{_return_1;_}_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_Promise(resolve,_reject)_{_return_1;_}_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_Promise(resolve,_reject)_{_return_1;_}_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_foo(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_foo(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_foo(function_bar(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_foo(function_bar(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_foo(function_Promise(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_foo(function_Promise(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_1);
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_promise(function_foo(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_promise(function_foo(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise.foo(function_foo(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise.foo(function_foo(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_foo.Promise(function_foo(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_foo.Promise(function_foo(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise.Promise(function_foo(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise.Promise(function_foo(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise()(function_foo(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise()(function_foo(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/Promise(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/Promise(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_1);
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_1);
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_1);
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/let_Promise;_new_Promise(function_(resolve,_reject)_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/let_Promise;_new_Promise(function_(resolve,_reject)_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/function_f()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_var_Promise;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/function_f()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_var_Promise;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/function_f(Promise)_{_new_Promise((resolve,_reject)_=>_1);_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/function_f(Promise)_{_new_Promise((resolve,_reject)_=>_1);_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/if_(x)_{_const_Promise_=_foo();_new_Promise(function_(resolve,_reject)_{_return_1;_});_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/if_(x)_{_const_Promise_=_foo();_new_Promise(function_(resolve,_reject)_{_return_1;_});_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/x_=_function_Promise()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/x_=_function_Promise()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_return;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_return;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_reject(new_Error());_return;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_reject(new_Error());_return;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return;_}_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return;_}_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_return;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_return;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_if_(foo)_{_resolve(1);_return;_}_reject(new_Error());_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_if_(foo)_{_resolve(1);_return;_}_reject(new_Error());_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_throw_new_Error();_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_throw_new_Error();_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_throw_new_Error();_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_throw_new_Error();_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_function_foo()_{_return_1;_}_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_function_foo()_{_return_1;_}_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_(function_foo()_{_return_1;_})();_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_(function_foo()_{_return_1;_})();_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_()_=>_{_return_1;_}_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_()_=>_{_return_1;_}_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_()_=>_1_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_()_=>_1_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/function_foo()_{_return_new_Promise(function_(resolve,_reject)_{_resolve(bar);_})_};
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/function_foo()_{_return_new_Promise(function_(resolve,_reject)_{_resolve(bar);_})_};
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/foo_=>_new_Promise((resolve,_reject)_=>_{_bar(foo,_(err,_data)_=>_{_if_(err)_{_reject(err);_return;_}_resolve(data);_})});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/foo_=>_new_Promise((resolve,_reject)_=>_{_bar(foo,_(err,_data)_=>_{_if_(err)_{_reject(err);_return;_}_resolve(data);_})});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_function_foo()_{_return_1;_}
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_function_foo()_{_return_1;_}
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_(function_()_{_return_1;_});
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_(function_()_{_return_1;_});
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_()_=>_{_return_1;_};
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_()_=>_{_return_1;_};
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_()_=>_1;
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_()_=>_1;
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise((r)_=>_void_cbf(r));
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise((r)_=>_void_cbf(r));
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_void_0)
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_void_0)
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_return_void_0_})
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_return_void_0_})
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_void_0_})
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_void_0_})
+=== RUN   TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{0})
+=== PAUSE TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{0})
+=== CONT  TestNoObjectConstructorReportsTheWholeCall
+=== RUN   TestNoObjectConstructorReportsTheWholeCall/new_Object()
+=== PAUSE TestNoObjectConstructorReportsTheWholeCall/new_Object()
+=== RUN   TestNoObjectConstructorReportsTheWholeCall/Object();
+=== PAUSE TestNoObjectConstructorReportsTheWholeCall/Object();
+=== RUN   TestNoObjectConstructorReportsTheWholeCall/new_Object
+=== PAUSE TestNoObjectConstructorReportsTheWholeCall/new_Object
+=== RUN   TestNoObjectConstructorReportsTheWholeCall/const_obj_=_Object?.();
+=== PAUSE TestNoObjectConstructorReportsTheWholeCall/const_obj_=_Object?.();
+=== RUN   TestNoObjectConstructorReportsTheWholeCall/(new_Object()_instanceof_Object);
+=== PAUSE TestNoObjectConstructorReportsTheWholeCall/(new_Object()_instanceof_Object);
+=== CONT  TestDecodeNoPromiseExecutorReturnOptions/empty_input_falls_back_to_the_default
+=== CONT  TestDecodeNoPromiseExecutorReturnOptions/an_explicit_false
+=== CONT  TestDecodeNoPromiseExecutorReturnOptions/an_explicit_true
+=== CONT  TestDecodeNoPromiseExecutorReturnOptions/an_empty_object_falls_back_to_the_default
+=== CONT  TestNoObjectConstructorStaysSilent/new_Object(x)
+=== CONT  TestNoObjectConstructorStaysSilent/const_createObject_=_Object_=>_new_Object()
+--- PASS: TestDecodeNoPromiseExecutorReturnOptions (0.00s)
+    --- PASS: TestDecodeNoPromiseExecutorReturnOptions/empty_input_falls_back_to_the_default (0.00s)
+    --- PASS: TestDecodeNoPromiseExecutorReturnOptions/an_explicit_false (0.00s)
+    --- PASS: TestDecodeNoPromiseExecutorReturnOptions/an_explicit_true (0.00s)
+    --- PASS: TestDecodeNoPromiseExecutorReturnOptions/an_empty_object_falls_back_to_the_default (0.00s)
+--- PASS: TestNoObjCallsFiresAndStaysQuiet (0.01s)
+--- PASS: TestNoObjCallsReportsOnlyTheNamespaceObjects (0.02s)
+=== CONT  TestNoObjectConstructorStaysSilent/var_Object;_new_Object;
+--- PASS: TestNoObjCallsTakesAnUndeclaredGlobalObjectAsTheGlobal (0.02s)
+=== CONT  TestNoObjectConstructorStaysSilent/new_globalThis.Object
+=== CONT  TestNoObjectConstructorStaysSilent/Object(x)
+=== CONT  TestNoObjectConstructorFires/new_Object
+=== CONT  TestNoObjectConstructorFires/if_(a);_else_Object();
+--- PASS: TestNoObjectConstructorStaysSilent (0.00s)
+    --- PASS: TestNoObjectConstructorStaysSilent/new_Object(x) (0.01s)
+    --- PASS: TestNoObjectConstructorStaysSilent/var_Object;_new_Object; (0.01s)
+    --- PASS: TestNoObjectConstructorStaysSilent/new_globalThis.Object (0.01s)
+    --- PASS: TestNoObjectConstructorStaysSilent/Object(x) (0.01s)
+    --- PASS: TestNoObjectConstructorStaysSilent/const_createObject_=_Object_=>_new_Object() (0.02s)
+=== CONT  TestNoObjectConstructorFires/let_bar_Object()
+=== CONT  TestNoObjectConstructorFires/var_foo_Object()
+=== CONT  TestNoObjectConstructorFires/var_yield_=_5;_yield:_while_(foo)_{_if_(bar)_break_yield_new_Object();_}
+=== CONT  TestNoObjectConstructorFires/import_foo_from_'bar'_Object()
+=== CONT  TestNoObjectConstructorFires/export_*_as_foo_from_'bar'_Object()
+=== CONT  TestNoObjectConstructorFires/export_{_foo_}_from_'bar'_Object()
+=== CONT  TestNoObjectConstructorFires/const_foo_=_bar_export_{_foo_}_Object()
+=== CONT  TestNoObjectConstructorFires/foo:_while_(true)_continue_foo_Object()
+=== CONT  TestNoObjectConstructorFires/foo:_break_foo_Object()
+=== CONT  TestNoObjectConstructorFires/for_(;;)_{_continue_Object()_}
+=== CONT  TestNoObjectConstructorFires/for_(;;)_{_break_Object()_}
+=== CONT  TestNoObjectConstructorFires/debugger_Object()
+=== CONT  TestNoObjectConstructorFires/do_{}_while_(a)_Object()
+=== CONT  TestNoObjectConstructorFires/function_*_foo()_{_yield_Object();_}
+=== CONT  TestNoObjectConstructorFires/function_foo()_{_return_Object();_}
+=== CONT  TestNoObjectConstructorFires/a--_Object()
+=== CONT  TestNoObjectConstructorFires/a++_Object()
+=== CONT  TestNoObjectConstructorFires/const_foo_=_()_=>_{}_Object()
+=== CONT  TestNoObjectConstructorFires/for_(const_element_of_iterable)_Object();
+=== CONT  TestNoObjectConstructorFires/for_(const_prop_in_obj)_Object();
+=== CONT  TestNoObjectConstructorFires/for_(let_i_=_0;_i_<_10;_i++)_Object();
+=== CONT  TestNoObjectConstructorFires/do_Object();_while_(a);
+=== CONT  TestNoObjectConstructorFires/while_(a)_Object();
+=== CONT  TestNoObjectConstructorFires/foo_=_this.return_Object()
+=== CONT  TestNoObjectConstructorFires/if_(a)_Object();
+=== CONT  TestNoObjectConstructorFires/{_Object();_}
+=== CONT  TestNoObjectConstructorFires/foo();Object();
+=== CONT  TestNoObjectConstructorFires/foo:_Object();
+=== CONT  TestNoObjectConstructorFires/class_Foo_{}_Object()
+=== CONT  TestNoObjectConstructorFires/function_foo()_{}_Object()
+=== CONT  TestNoObjectConstructorFires/{}_Object()
+=== CONT  TestNoObjectConstructorFires/<foo></foo>_Object()
+=== CONT  TestNoObjectConstructorFires/<foo_/>_Object()
+=== CONT  TestNoObjectConstructorFires/var_foo_=_{_bar:_baz_}_Object()
+=== CONT  TestNoObjectConstructorFires/var_yield_=_bar.yield_Object()
+=== CONT  TestNoObjectConstructorFires/foo()_Object()
+=== CONT  TestNoObjectConstructorFires/const_foo_=_class_{}_Object()
+=== CONT  TestNoObjectConstructorFires/++a_Object()
+=== CONT  TestNoObjectConstructorFires/const_foo_=_function()_{}_Object()
+=== CONT  TestNoObjectConstructorFires/(a++)_Object()
+=== CONT  TestNoObjectConstructorFires/new_foo_Object()
+=== CONT  TestNoObjectConstructorFires/foo_Object()
+=== CONT  TestNoObjectConstructorFires/const_obj_=_Object?.();
+=== CONT  TestNoObjectConstructorFires/(new_Object()_instanceof_Object);
+=== CONT  TestNoObjectConstructorFires/const_fn_=_()_=>_Object();
+=== CONT  TestNoObjectConstructorFires/Object()_instanceof_Object;
+=== CONT  TestNoObjectConstructorFires/Object()
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise((resolve,_reject)_=>_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_Promise(resolve,_reject)_{_return_1;_})
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise((resolve,_reject)_=>_{_return_1;_});
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs a configured-globals surface
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((Promise)_=>_{_return_1;_})
+--- PASS: TestNoObjectConstructorFires (0.00s)
+    --- PASS: TestNoObjectConstructorFires/if_(a);_else_Object(); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/let_bar_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/var_foo_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/var_yield_=_5;_yield:_while_(foo)_{_if_(bar)_break_yield_new_Object();_} (0.00s)
+    --- PASS: TestNoObjectConstructorFires/export_*_as_foo_from_'bar'_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/import_foo_from_'bar'_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/export_{_foo_}_from_'bar'_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/const_foo_=_bar_export_{_foo_}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/new_Object (0.01s)
+    --- PASS: TestNoObjectConstructorFires/foo:_break_foo_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/for_(;;)_{_continue_Object()_} (0.00s)
+    --- PASS: TestNoObjectConstructorFires/for_(;;)_{_break_Object()_} (0.00s)
+    --- PASS: TestNoObjectConstructorFires/do_{}_while_(a)_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/debugger_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/foo:_while_(true)_continue_foo_Object() (0.01s)
+    --- PASS: TestNoObjectConstructorFires/function_*_foo()_{_yield_Object();_} (0.00s)
+    --- PASS: TestNoObjectConstructorFires/a--_Object() (0.01s)
+    --- PASS: TestNoObjectConstructorFires/const_foo_=_()_=>_{}_Object() (0.01s)
+    --- PASS: TestNoObjectConstructorFires/for_(const_element_of_iterable)_Object(); (0.01s)
+    --- PASS: TestNoObjectConstructorFires/function_foo()_{_return_Object();_} (0.01s)
+    --- PASS: TestNoObjectConstructorFires/for_(const_prop_in_obj)_Object(); (0.01s)
+    --- PASS: TestNoObjectConstructorFires/a++_Object() (0.01s)
+    --- PASS: TestNoObjectConstructorFires/for_(let_i_=_0;_i_<_10;_i++)_Object(); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/do_Object();_while_(a); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/foo_=_this.return_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/while_(a)_Object(); (0.01s)
+    --- PASS: TestNoObjectConstructorFires/if_(a)_Object(); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/{_Object();_} (0.00s)
+    --- PASS: TestNoObjectConstructorFires/foo();Object(); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/foo:_Object(); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/class_Foo_{}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/function_foo()_{}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/{}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/<foo></foo>_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/var_foo_=_{_bar:_baz_}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/<foo_/>_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/var_yield_=_bar.yield_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/const_foo_=_class_{}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/foo()_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/++a_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/const_foo_=_function()_{}_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/(a++)_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/new_foo_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/foo_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/(new_Object()_instanceof_Object); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/const_fn_=_()_=>_Object(); (0.00s)
+    --- PASS: TestNoObjectConstructorFires/Object()_instanceof_Object; (0.00s)
+    --- PASS: TestNoObjectConstructorFires/Object() (0.00s)
+    --- PASS: TestNoObjectConstructorFires/const_obj_=_Object?.(); (0.01s)
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_[]);
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_Foo_{});
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_foo()_{});
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_{});
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_()_{});
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_async_()_=>_1);
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_()_=>_1);
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_1);
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_});_function_foo()_{_return_1;_}_
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_1;_new_Promise(()_=>_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnFires/function_foo_()_{_return_1;_return_new_Promise(function_()_{_return_2;_});_return_3;}
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_if_(foo)_{_return_0;_}_else_bar(()_=>_{_return_1;_});_})
+=== CONT  TestNoPromiseExecutorReturnFires/function_foo()_{_return_new_Promise(()_=>_{_bar(()_=>_{_return_1;_});_return_false;_});_}
+=== CONT  TestNoPromiseExecutorReturnFires/function_foo_()_{_return_new_Promise(function_()_{_return_1;_});_}
+=== CONT  TestNoPromiseExecutorReturnFires/function_foo()_{_return_1;_}_new_Promise(()_=>_{_return_2;_});
+=== CONT  TestNoPromiseExecutorReturnFires/function_foo()_{_return;_}_new_Promise(()_=>_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnFires/function_foo()_{}_new_Promise(function_()_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(()_=>_1)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_({}));
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(()_=>_(1))
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_void_1;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_while_(foo){_if_(bar)_break;_else_return_1;_}_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_try_{_return_1;_}_catch(e)_{}_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return_1;_}_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_Promise.resolve(42);_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_x_+_y)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_reject(foo);_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_null)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_resolve(foo);_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_false;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_null;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_undefined;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(function_foo(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>1)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_((1)))
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_r_=_resolve)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return(1)_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})#01
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)#01
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)#01
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_()_=>_{})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1))
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1_?_2_:_3))
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1_?_2_:_3)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1)
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1_})
+=== CONT  TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve(1))
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1))
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise(function_(resolve,_reject)_{});_return_1;
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/function_foo(){}_return_1;_var_bar_=_function*(){_return_1;_};_return_1;_var_baz_=_()_=>_{};_return_1;
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;_function_foo(){_return_1;_}_return_1;
+--- PASS: TestNoPromiseExecutorReturnFires (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((Promise)_=>_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_Promise(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_[]); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_Foo_{}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_foo()_{}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_function_()_{}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_class_{}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_async_()_=>_1); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_()_=>_1); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_1); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_});_function_foo()_{_return_1;_}_ (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_1;_new_Promise(()_=>_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_{_if_(foo)_{_return_0;_}_else_bar(()_=>_{_return_1;_});_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/function_foo_()_{_return_1;_return_new_Promise(function_()_{_return_2;_});_return_3;} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/function_foo()_{_return_1;_}_new_Promise(()_=>_{_return_2;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/function_foo_()_{_return_new_Promise(function_()_{_return_1;_});_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/function_foo()_{_return;_}_new_Promise(()_=>_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(()_=>_1) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/function_foo()_{}_new_Promise(function_()_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/()_=>_new_Promise(()_=>_({})); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnFires/function_foo()_{_return_new_Promise(()_=>_{_bar(()_=>_{_return_1;_});_return_false;_});_} (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_()_{_return_1;_}) (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(()_=>_(1)) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(()_=>_{_return_void_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_while_(foo){_if_(bar)_break;_else_return_1;_}_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return_1;_}_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_try_{_return_1;_}_catch(e)_{}_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_Promise.resolve(42);_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_x_+_y) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_reject(foo);_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_null) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_resolve(foo);_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_false;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_null;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_foo(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(function_(resolve,_reject)_{_return_undefined;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>1) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return(1)_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_r_=_resolve) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_((1))) (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_})#01 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_{_return_0_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_/*hi*/_~0)#01 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null)#01 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_()_=>_{}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_null) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1)) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1_?_2_:_3) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_1) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise(r_=>_(1_?_2_:_3)) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_{_return_1_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnFires/new_Promise((resolve,_reject)_=>_resolve(1)) (0.00s)
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;#01
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise(function_(resolve,_reject)_{});_return_1;
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs commonjs or globalReturn, where a top-level return is legal
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;#01
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs commonjs or globalReturn, where a top-level return is legal
+=== CONT  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress//*_globals_Promise:off_*/_new_Promise(function_(resolve,_reject)_{_return_1;_});
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs commonjs or globalReturn, where a top-level return is legal
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_/*hi*/_~0)
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;_function_foo(){_return_1;_}_return_1;
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs commonjs or globalReturn, where a top-level return is legal
+=== CONT  TestNoPromiseExecutorReturnSpans/()_=>_new_Promise(()_=>_function_()_{});
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/function_foo(){}_return_1;_var_bar_=_function*(){_return_1;_};_return_1;_var_baz_=_()_=>_{};_return_1;
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs commonjs or globalReturn, where a top-level return is legal
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_{_return_0_})
+=== NAME  TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress//*_globals_Promise:off_*/_new_Promise(function_(resolve,_reject)_{_return_1;_});
+    no_promise_executor_return_test.go:299: upstream holds this clean, and reproducing that needs a directive-comment globals surface
+--- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise((resolve,_reject)_=>_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/new_Promise(function_(resolve,_reject)_{});_return_1; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;#01 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/return_1;_function_foo(){_return_1;_}_return_1; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress/function_foo(){}_return_1;_var_bar_=_function*(){_return_1;_};_return_1;_var_baz_=_()_=>_{};_return_1; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnCasesThisHarnessCannotExpress//*_globals_Promise:off_*/_new_Promise(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(function_(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(()_=>_({}))
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_1)
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1_?_2_:_3))
+=== CONT  TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_((1)))
+=== CONT  TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Array(function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Date(()_=>_1);
+=== CONT  TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Set(()_=>_1);
+--- PASS: TestNoPromiseExecutorReturnSpans (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1)) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/()_=>_new_Promise(()_=>_function_()_{}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(function_(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(()_=>_({})) (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_/*hi*/_~0) (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_{_return_0_}) (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_(1_?_2_:_3)) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_((1))) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSpans/new_Promise(r_=>_1) (0.01s)
+=== CONT  TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Function(function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Map(function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/prependVoid
+--- PASS: TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Date(()_=>_1); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Array(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Function(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Map(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilentOnOtherGlobalConstructors/new_Set(()_=>_1); (0.01s)
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_[]);/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_1)
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_class_Foo_{});/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_function_foo()_{});/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_async_()_=>_1);/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_()_=>_1);/wrapBraces
+--- PASS: TestNoPromiseExecutorReturnRequiresTheTypedHarness (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnRequiresTheTypedHarness/new_Promise(()_=>_1) (0.00s)
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_1);/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_1)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_({}));/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_(1))/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_x_+_y)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_null)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return(1)_})/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return_0_})/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces#01
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces#01
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_{_return_1_})/prependVoid
+=== CONT  TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/wrapBraces
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/function_foo(resolve,_reject)_{_return_1;_}
+=== CONT  TestNoObjectConstructorReportsTheWholeCall/new_Object()
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{0})
+--- PASS: TestNoPromiseExecutorReturnSuggestionOutputs (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_[]);/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_function_foo()_{});/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_class_Foo_{});/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_1)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_()_=>_1);/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_async_()_=>_1);/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_1);/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/()_=>_new_Promise(()_=>_({}));/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(()_=>_(1))/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_x_+_y)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_null)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_((1)))/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return(1)_})/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/wrapBraces (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_r_=_resolve)/wrapBraces (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>1)/prependVoid (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_0_})/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces#01 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_{_return_0_})/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_/*hi*/_~0)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(resolve_=>_{_return_(foo_=_resolve(1));_})/prependVoid (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_()_=>_{})/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces#01 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/wrapBraces (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_null)/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1_?_2_:_3)/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1_?_2_:_3))/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_(1))/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_{_return_1_})/prependVoid (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise((resolve,_reject)_=>_resolve(1))/wrapBraces (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnSuggestionOutputs/new_Promise(r_=>_1)/prependVoid (0.00s)
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_void_0_})
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_void_0)
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((r)_=>_void_cbf(r));
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_()_=>_1;
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_()_=>_{_return_1;_};
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_return_void_0_})
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_(function_()_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_function_foo()_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/foo_=>_new_Promise((resolve,_reject)_=>_{_bar(foo,_(err,_data)_=>_{_if_(err)_{_reject(err);_return;_}_resolve(data);_})});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/function_foo()_{_return_new_Promise(function_(resolve,_reject)_{_resolve(bar);_})_};
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_()_=>_1_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_()_=>_{_return_1;_}_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_(function_foo()_{_return_1;_})();_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_function_foo()_{_return_1;_}_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_throw_new_Error();_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_if_(foo)_{_resolve(1);_return;_}_reject(new_Error());_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_throw_new_Error();_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_return;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return;_}_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_foo(function_bar(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_reject(new_Error());_return;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_return;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/x_=_function_Promise()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/if_(x)_{_const_Promise_=_foo();_new_Promise(function_(resolve,_reject)_{_return_1;_});_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/function_f(Promise)_{_new_Promise((resolve,_reject)_=>_1);_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/function_f()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_var_Promise;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/let_Promise;_new_Promise(function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_1);
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_1);
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/Promise(function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_foo(function_(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_Promise(resolve,_reject)_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_bar(resolve,_reject)_{_return_1;_}_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_(resolve,_reject)_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/(function_Promise(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/(function_foo(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/(function_(resolve,_reject)_{_return_1;_})
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/function_Promise(resolve,_reject)_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_Promise(resolve,_reject)_{_return_1;_}_}
+=== CONT  TestNoObjectConstructorReportsTheWholeCall/(new_Object()_instanceof_Object);
+=== CONT  TestNoObjectConstructorReportsTheWholeCall/const_obj_=_Object?.();
+=== CONT  TestNoObjectConstructorReportsTheWholeCall/new_Object
+=== CONT  TestNoObjectConstructorReportsTheWholeCall/Object();
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_1
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_1
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_{_return_1;_}
+--- PASS: TestNoObjectConstructorReportsTheWholeCall (0.00s)
+    --- PASS: TestNoObjectConstructorReportsTheWholeCall/new_Object() (0.00s)
+    --- PASS: TestNoObjectConstructorReportsTheWholeCall/(new_Object()_instanceof_Object); (0.00s)
+    --- PASS: TestNoObjectConstructorReportsTheWholeCall/const_obj_=_Object?.(); (0.00s)
+    --- PASS: TestNoObjectConstructorReportsTheWholeCall/new_Object (0.00s)
+    --- PASS: TestNoObjectConstructorReportsTheWholeCall/Object(); (0.00s)
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_1
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_function_(resolve,_reject)_{_return_1;_}
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_promise(function_foo(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise()(function_foo(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise.Promise(function_foo(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_foo.Promise(function_foo(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_Promise.foo(function_foo(resolve,_reject)_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_{_return_1;_});
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_1);
+=== CONT  TestNoPromiseExecutorReturnStaysSilent/new_foo(function_Promise(resolve,_reject)_{_return_1;_});
+--- PASS: TestNoPromiseExecutorReturnStaysSilent (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/function_foo(resolve,_reject)_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_if_(foo)_{_return_void_0_}_return_void_0_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{0}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_void_0) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_()_=>_{_return_1;_}; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_()_=>_1; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{});_function_foo()_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{});_(function_()_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/foo_=>_new_Promise((resolve,_reject)_=>_{_bar(foo,_(err,_data)_=>_{_if_(err)_{_reject(err);_return;_}_resolve(data);_})}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(r_=>_{_return_void_0_}) (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/function_foo()_{_return_new_Promise(function_(resolve,_reject)_{_resolve(bar);_})_}; (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((r)_=>_void_cbf(r)); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_()_=>_1_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_(function_foo()_{_return_1;_})();_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_()_=>_{_return_1;_}_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_if_(foo)_{_resolve(1);_return;_}_reject(new_Error());_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_throw_new_Error();_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_throw_new_Error();_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise((resolve,_reject)_=>_{_return;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_if_(foo)_{_return;_}_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_foo(function_bar(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_reject(new_Error());_return;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_return;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(function_(resolve,_reject)_{_function_foo()_{_return_1;_}_}); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/x_=_function_Promise()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/function_f()_{_new_Promise((resolve,_reject)_=>_{_return_1;_});_var_Promise;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/function_f(Promise)_{_new_Promise((resolve,_reject)_=>_1);_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/let_Promise;_new_Promise(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_1); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/Promise((resolve,_reject)_=>_1); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise(foo,_(resolve,_reject)_=>_{_return_1;_}); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/Promise(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_foo(function_(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/if_(x)_{_const_Promise_=_foo();_new_Promise(function_(resolve,_reject)_{_return_1;_});_} (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_Promise(resolve,_reject)_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_bar(resolve,_reject)_{_return_1;_}_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/(function_Promise(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_foo_=_function_(resolve,_reject)_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/(function_foo(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_foo_=_{_Promise(resolve,_reject)_{_return_1;_}_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/function_Promise(resolve,_reject)_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/(function_(resolve,_reject)_{_return_1;_}) (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_1 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_1 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_(resolve,_reject)_=>_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_foo_=_(resolve,_reject)_=>_{_return_1;_} (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_1 (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_promise(function_foo(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise.Promise(function_foo(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/var_Promise_=_function_(resolve,_reject)_{_return_1;_} (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise()(function_foo(resolve,_reject)_{_return_1;_}); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/(resolve,_reject)_=>_{_return_1;_} (0.02s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_Promise.foo(function_foo(resolve,_reject)_{_return_1;_}); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_foo.Promise(function_foo(resolve,_reject)_{_return_1;_}); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_{_return_1;_}); (0.01s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_foo(function_Promise(resolve,_reject)_{_return_1;_}); (0.00s)
+    --- PASS: TestNoPromiseExecutorReturnStaysSilent/new_foo((resolve,_reject)_=>_1); (0.00s)
+--- PASS: TestNoObjCallsAgreesWithESLint (0.38s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.398s

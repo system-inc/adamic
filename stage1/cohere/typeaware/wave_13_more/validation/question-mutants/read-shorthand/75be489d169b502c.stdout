@@ -1,0 +1,3 @@
+file	/workspace/wave13-more-upstream/controls/75be489d169b502c/repository/source/ObjectConstructor.ts
+0	8	no-object-constructor	preferLiteral	This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.	0	1	useLiteral	Replace with an object literal.	1	0	8	({})
+findings 1

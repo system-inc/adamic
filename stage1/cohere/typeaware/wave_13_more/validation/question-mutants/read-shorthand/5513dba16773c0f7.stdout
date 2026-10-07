@@ -1,0 +1,3 @@
+file	/workspace/wave13-more-upstream/controls/5513dba16773c0f7/input.ts
+4	24	no-obj-calls	unexpectedCall	This calls `JSON`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.	0	0
+findings 1

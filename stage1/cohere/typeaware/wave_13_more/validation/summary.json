@@ -1,0 +1,49 @@
+{
+  "cases": 433,
+  "equal": 430,
+  "per_rule": {
+    "no-promise-executor-return": 116,
+    "no-obj-calls": 120,
+    "no-object-constructor": 53
+  },
+  "bytes": 162621,
+  "suggestions": 171,
+  "fixes": 0,
+  "blocked": [
+    {
+      "test": "TestNoObjectConstructorFires/<foo_/>_Object()",
+      "case": "53d1c0a9ffc2fefa",
+      "equal": false,
+      "go_exit": 0,
+      "native_exit": 70,
+      "bytes": 699,
+      "findings": "findings 1",
+      "difference": 0,
+      "sha256": "aafe590523f6db63fff24ef77b050c1ed7feb94df800e0cafa802e63817a2f26"
+    },
+    {
+      "test": "TestNoObjectConstructorFires/<foo></foo>_Object()",
+      "case": "aff6ced2ca61fe89",
+      "equal": false,
+      "go_exit": 0,
+      "native_exit": 70,
+      "bytes": 699,
+      "findings": "findings 1",
+      "difference": 0,
+      "sha256": "805d4644982b0e372af8698095b79085d44153ca4499638de543e462a0ab8652"
+    },
+    {
+      "test": "TestNoObjectConstructorFires/var_yield_=_5;_yield:_while_(foo)_{_if_(bar)_break_yield_new_Object();_}",
+      "case": "defcb4c4ce6a2921",
+      "equal": false,
+      "go_exit": 0,
+      "native_exit": 70,
+      "bytes": 611,
+      "findings": "findings 1",
+      "difference": 0,
+      "sha256": "b38b3118789f36b4f3c385825560d35d0522ad1f24d99076725a2e689926fe6c"
+    }
+  ],
+  "normal_and_sanitized_equal": true,
+  "sanitizer_findings": 0
+}

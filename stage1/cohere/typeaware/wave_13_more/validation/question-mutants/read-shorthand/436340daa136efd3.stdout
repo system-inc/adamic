@@ -1,0 +1,3 @@
+file	/workspace/wave13-more-upstream/controls/436340daa136efd3/repository/source/PromiseExecutor.ts
+19	27	no-promise-executor-return	returnsValue	This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.	0	1	prependVoid	Prepend `void` to the expression, saying the value is deliberately discarded.	1	26	26	void 
+findings 1

@@ -1,0 +1,3 @@
+file	/workspace/wave13-more-upstream/controls/3f6aaefa429e0cc7/input.ts
+34	37	no-obj-calls	unexpectedRefCall	This calls `j`, which holds `JSON`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on `JSON` instead.	0	0
+findings 1
