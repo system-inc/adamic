@@ -1,3 +1,4 @@
+import { realpathSync } from 'node:fs';
 import { mkdir, copyFile, writeFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +22,7 @@ fallthrough = true
 `);
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   if (process.argv.length !== 3) throw new Error('Usage: generate.mjs <out-directory>');
   await generate(process.argv[2]);
 }

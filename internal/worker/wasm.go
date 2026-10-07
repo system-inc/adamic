@@ -48,6 +48,9 @@ func generateCrossing(abiPath, outputPath string) error {
 	if output, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("worker: crossing generation: %w\n%s", err, output)
 	}
+	if _, err := os.Stat(outputPath); err != nil {
+		return fmt.Errorf("worker: generate-crossing.mjs did not produce %s: %w", outputPath, err)
+	}
 	return nil
 }
 

@@ -1,3 +1,4 @@
+import { realpathSync } from 'node:fs';
 import { readFile, writeFile, copyFile, mkdir } from 'node:fs/promises';
 import { basename, dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -128,7 +129,7 @@ export async function generateCrossing(abiPath, outputPath) {
   }
   await writeFile(output, source);
 }
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   if (process.argv.length !== 4) throw new Error('Usage: generate-crossing.mjs <abi.json> <out.mjs>');
   await generateCrossing(process.argv[2], process.argv[3]);
 }
