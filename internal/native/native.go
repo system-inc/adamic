@@ -57,6 +57,15 @@ type Options struct {
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
 
+	// Coverage compiles the program and the runtime with clang's source-based coverage
+	// (-fprofile-instr-generate -fcoverage-mapping), so each run writes a .profraw where
+	// LLVM_PROFILE_FILE says. It's on too when ADAMIC_C_COVERAGE=1 is in the environment, which is how
+	// verify/coverage/measure.sh reaches every build the fuzzer and the oracle make without touching
+	// their call sites. The flags are part of the runtime cache's key, so a covered runtime never
+	// mixes with an ordinary one. Nothing else changes: the same optimization level, the same
+	// sanitizers.
+	Coverage bool
+
 	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
@@ -90,10 +99,19 @@ func Flags(options Options) []string {
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
 	}
+	if options.Coverage || CoverageRequested() {
+		flags = append(flags, "-fprofile-instr-generate", "-fcoverage-mapping")
+	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
 	return append(flags, "-O2")
+}
+
+// CoverageRequested says whether the environment asks every build for clang's source-based coverage
+// (Options.Coverage).
+func CoverageRequested() bool {
+	return os.Getenv("ADAMIC_C_COVERAGE") == "1"
 }
 
 // Build compiles C source and the runtime into a native binary at output.
