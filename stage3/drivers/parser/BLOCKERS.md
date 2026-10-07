@@ -1,3 +1,32 @@
+# Error recovery reference: second checkpoint
+
+10,406 pinned single-file compiler/conformance cases are identical on full-tree
+and slice Node runs, for every per-case SHA256: 1,323,111 nodes, 1,996 parse
+ diagnostic rows and 34 JSDoc diagnostic rows. Cases by group: parser 800/245 rows,
+JSX 175/95, salsa 108/0, remaining 9,323/1,656. The manifest cases-reference.json
+records input paths/source hashes, full-tree and slice hashes, counts, and all
+excluded multi-file cases. No dumps committed. Sources verified against pin
+050880ce59e30b356b686bd3144efe24f875ebc8. All zero/one @filename cases included;
+cases with more than one filename directive excluded (2,039). Metadata comments
+retained, BOM decoded as upstream IO does, effective filename selects script kind;
+Latest target, no compiler-option permutations or semantic checking of test inputs.
+
+Driver handles TSX/JSX modes and prints JSX text. Its recursive traversal overflowed
+on an upstream deeply nested tree; iterative preorder now handles it with identical
+81-file bytes/SHA. Strict checker exit 0. The permanent node-end/JSDoc mutants
+still reject wrong dumps. Native-proof.py requires both the 81-file reference and
+cases-reference.json before green; --case-checkout and --full-tree select pinned
+checkout/full runtime separately from the fixed compiler corpus.
+
+After relocating retained own artifacts out of the full /tmp filesystem, phantom
+and require focused tests pass (4.190s). Earlier bare [build failed] reruns were
+at full /tmp; no compiler diagnostic survived. Native non-null refusal remains
+real and unchanged. Native status: syntax tree and parse diagnostics identical on
+Node, JSDoc unverified, error recovery unverified. The diagnostic-dropping mutant
+is the next separately pushed checkpoint. Evidence: evidence/recovery-reference.
+
+---
+
 # Native rerun with module initialization, brands and require: red
 
 Before the error-recovery reference, the unpushed scratch merge adds module-init-order
