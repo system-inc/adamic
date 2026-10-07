@@ -8,6 +8,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	adamicRules "github.com/system-inc/cohere/internal/lint/rules/adamic"
 	coreRules "github.com/system-inc/cohere/internal/lint/rules/core"
 	nextRules "github.com/system-inc/cohere/internal/lint/rules/next"
 	tailwindRules "github.com/system-inc/cohere/internal/lint/rules/tailwind"
@@ -58,6 +59,8 @@ func collect(row Row, file *ast.SourceFile) []rule.Diagnostic {
 	var subject rule.Rule
 	var options any
 	switch row.Rule {
+	case "adamic/no-definite-assignment":
+		subject = adamicRules.NoDefiniteAssignment
 	case "structure/tailwind-no-physical-direction":
 		subject = tailwindRules.NoPhysicalDirection
 	case "@eslint-community/eslint-comments/require-description":

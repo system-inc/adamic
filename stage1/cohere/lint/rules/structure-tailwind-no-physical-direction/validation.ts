@@ -7,6 +7,7 @@ import { Settings } from '../../settings.ts';
 import { RuleContext } from '../../context.ts';
 import { create as physical } from './rule.ts';
 import { create as description } from '../eslint-comments-require-description/rule.ts';
+import { create as definite } from '../adamic-no-definite-assignment/rule.ts';
 import { create as font } from '../next-google-font-display/rule.ts';
 import type { Finding } from '../../finding.ts';
 function read(path: string): string { const value = readTextFile(path); if(value.kind === 'Error') { panic(value.message); } return value.text; }
@@ -55,12 +56,14 @@ for(const row of corpus.node(root).children) {
     const a = physical(context);
     const b = description(context);
     const c = font(context);
+    const d = definite(context);
     const stack = [tree];
     while(stack.length > 0) {
         const index = stack.pop() ?? panic("missing traversal node");
         const kind = parser.node(index).kind;
         if(selected === '@eslint-community/eslint-comments/require-description' && kind === 'SourceFile') { b.visit(index); }
         if(selected === 'structure/tailwind-no-physical-direction' && ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateHead', 'TemplateMiddle', 'TemplateTail'].includes(kind)) { a.visit(index); }
+        if(selected === 'adamic/no-definite-assignment' && (kind === 'PropertyDeclaration' || kind === 'VariableDeclaration')) { d.visit(index); }
         if(selected === '@next/next/google-font-display' && (kind === 'JsxOpeningElement' || kind === 'JsxSelfClosingElement')) { c.visit(index); }
         const children = parser.node(index).children;
         for(let child = children.length - 1; child >= 0; child--) { stack.push(children[child] ?? panic("missing child")); }

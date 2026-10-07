@@ -1,0 +1,297 @@
+{
+  "upstreamCases": 197,
+  "canonicalBytes": 57743,
+  "canonicalSha256": "bc58d956da12a20811f2278b333604a73e2b8b486b6b7ecfc596d70fbe225499",
+  "inputs": {
+    "upstream.json": "52518177f0cd8d65ba2b8ce174e5ecb1325eccd18b19ee1cb38cffd975f90d26",
+    "ast.log": "ada19360bb074e574e2965a5fefa30ea9f01e4a6bc1f24ad745e4763288703bd"
+  },
+  "nonJsxCases": 179,
+  "corpusOutputs": [
+    {
+      "file": "compiler-0-go.log",
+      "bytes": 856938,
+      "sha256": "1ba0e3744f457db53af59e5b1d02c0ce1a716e89eefda63bef6951642df68eec"
+    },
+    {
+      "file": "compiler-1-go.log",
+      "bytes": 674522,
+      "sha256": "8ef4d61c2ba727a6f9dcf69b6850485eed9f7aca47dbd66b033d9676cef35047"
+    },
+    {
+      "file": "compiler-10-go.log",
+      "bytes": 900944,
+      "sha256": "67c3552b3f8faca4fee2723ef03ea0aeba14f89443dbc24ab7769002cc718962"
+    },
+    {
+      "file": "compiler-11-go.log",
+      "bytes": 1766846,
+      "sha256": "4bafda23c273295c7e065c5adb30ea01d0bbc2eb9b0803179fe5f09a384ff629"
+    },
+    {
+      "file": "compiler-12-go.log",
+      "bytes": 548174,
+      "sha256": "48e54d343eee13e5edc4b14f749100af40a629ab47469f72bf9b96e3997fe160"
+    },
+    {
+      "file": "compiler-13-go.log",
+      "bytes": 766402,
+      "sha256": "e5f2cc08b6e48172e9c320d8fdd8ff1862861f180f48a58ebf3fb84d06d70399"
+    },
+    {
+      "file": "compiler-14-go.log",
+      "bytes": 949083,
+      "sha256": "b210a0a8806a5b1afc5e431bf74408a2d41bb8a6d83cb9798cc5af26340a2698"
+    },
+    {
+      "file": "compiler-15-go.log",
+      "bytes": 972622,
+      "sha256": "cab80928790237ec6ab22ff5b085c2a81c08e316cd320735f8fad7f28fe538a6"
+    },
+    {
+      "file": "compiler-16-go.log",
+      "bytes": 815754,
+      "sha256": "0899b3e16b3651be072e7116b2d1e82039790abc016595d63b5ed83235f48c08"
+    },
+    {
+      "file": "compiler-17-go.log",
+      "bytes": 4913822,
+      "sha256": "2e4b3ac9c885fbc1e6a6164e75ad6a8f6054c457412bb613d55d0dfd906e3fad"
+    },
+    {
+      "file": "compiler-18-go.log",
+      "bytes": 1303814,
+      "sha256": "25cea6d18d73bb21f8f70cb9d88294074c9d655b974b473d0261fbb6cd06c06b"
+    },
+    {
+      "file": "compiler-19-go.log",
+      "bytes": 152640,
+      "sha256": "618fec1586da3ffedeff895cd4d0442e923c28d5ea81dcd919b144b36ffd93a7"
+    },
+    {
+      "file": "compiler-2-go.log",
+      "bytes": 14709488,
+      "sha256": "87bf5eaa451d2cd509b95c694e4e2e91a3afa57ecd861215284ce41af89ab70d"
+    },
+    {
+      "file": "compiler-3-go.log",
+      "bytes": 1988870,
+      "sha256": "55dd9932ac599a9e7e3f8c5563c244adf076b8133c03926dad330254fe13d8fe"
+    },
+    {
+      "file": "compiler-4-go.log",
+      "bytes": 379558,
+      "sha256": "de801f909de3080b1c559e5ded0c3265a9d553fe2df6f52523e65923714cc7e4"
+    },
+    {
+      "file": "compiler-5-go.log",
+      "bytes": 1806696,
+      "sha256": "8aa33fa0732f7a798b353330471a14b1de5196787d0fe6b71adf1fd80ef5e76c"
+    },
+    {
+      "file": "compiler-6-go.log",
+      "bytes": 1472564,
+      "sha256": "070545e63b83d1e89aea08d4d41233e3b3af4f7c87c31c1d295b7c43842b9a57"
+    },
+    {
+      "file": "compiler-7-go.log",
+      "bytes": 2572957,
+      "sha256": "d1b0b1e656ed90a0f6f4929b91fc35a1dfefa4c3d3db47d7a75889aa2e0c3383"
+    },
+    {
+      "file": "compiler-8-go.log",
+      "bytes": 2564150,
+      "sha256": "028d86ae3c19b4f74e0918575ea48860d8fffbfa42970ef585dbafed5c00e37c"
+    },
+    {
+      "file": "compiler-9-go.log",
+      "bytes": 638840,
+      "sha256": "fddc45309f9d0b71509293eed5ffbea8b44cdba418437be6f26cafbed4aa3f0e"
+    },
+    {
+      "file": "independent-upstream-go.log",
+      "bytes": 10667,
+      "sha256": "4e9db8319612a8b7168c795747b8d99873a1888499764bb6217f2143b267716a"
+    },
+    {
+      "file": "non-jsx-go.log",
+      "bytes": 52552,
+      "sha256": "c0230069d1de691a8429f7a5557c7f99f82d09470b50095d1e487ef12c428262"
+    },
+    {
+      "file": "stage1-0-go.log",
+      "bytes": 50830,
+      "sha256": "845b6b779e5abf7f054f1f94b8562318169264cf28137cc762c11801bbfc9edd"
+    },
+    {
+      "file": "stage1-1-go.log",
+      "bytes": 134918,
+      "sha256": "14395ac1625c2d820b02ac7a61179cc7b2a4f425d64bc69bb62cbad28a8d9963"
+    },
+    {
+      "file": "stage1-10-go.log",
+      "bytes": 360554,
+      "sha256": "015d49dd0bce79ceacb03fee5be8271d589b36837a50c507471ef759bd8c8bc3"
+    },
+    {
+      "file": "stage1-11-go.log",
+      "bytes": 27358,
+      "sha256": "cc9e8bde7fb9181658b413e7669370b4be239122172b036aec2b1303bf773f3e"
+    },
+    {
+      "file": "stage1-12-go.log",
+      "bytes": 43810,
+      "sha256": "d4761e0a03941c250d35f5b209d3cd961a7cd125c9de4465897ea44b7e4bb98b"
+    },
+    {
+      "file": "stage1-13-go.log",
+      "bytes": 82862,
+      "sha256": "03fe82b10709ebe08c9ef89f52c20982ed0664131d4766f3c1c47fa21b293524"
+    },
+    {
+      "file": "stage1-14-go.log",
+      "bytes": 59950,
+      "sha256": "4d5cfd57fe4f8eb50e340d9a0bedc954e1d0e4239e7a8d809b254b694906cf35"
+    },
+    {
+      "file": "stage1-15-go.log",
+      "bytes": 20550,
+      "sha256": "b5ba10e4821d784251143f6a030cb6acff079f295d59cdfe6b9b27a6ae0202d2"
+    },
+    {
+      "file": "stage1-16-go.log",
+      "bytes": 37910,
+      "sha256": "8e342ddb31c94bd4e73912115a974b54f72048fabe09654514e7e5bc75cfe813"
+    },
+    {
+      "file": "stage1-17-go.log",
+      "bytes": 49710,
+      "sha256": "830b0627048b7a9c47d9bda47c933de501c7b0fc6ed90fce9cecbb219226450b"
+    },
+    {
+      "file": "stage1-18-go.log",
+      "bytes": 14642,
+      "sha256": "00e752d66129f10a571af0d3dc442fc09308c2aa8d4452226a1aaf4bdee86b80"
+    },
+    {
+      "file": "stage1-19-go.log",
+      "bytes": 17902,
+      "sha256": "db3eb355b64790360fc094c88b7068360a491eb8e76909fee35c428c4fe84076"
+    },
+    {
+      "file": "stage1-2-go.log",
+      "bytes": 83922,
+      "sha256": "a0ab8402377d1ac1ada85e40e0c8c1e49e82f1adb73dd9dc1d17143d68d930ea"
+    },
+    {
+      "file": "stage1-20-go.log",
+      "bytes": 51335,
+      "sha256": "e4eb97ca71af156aa3fcf0cd82b1634b9f8cdeed073d2a2fb9389bc0ea63d00a"
+    },
+    {
+      "file": "stage1-21-go.log",
+      "bytes": 5558,
+      "sha256": "4910e449cc0f3a1ee3701c71ad14f5caca09387a635a516d550a7153e787fb4d"
+    },
+    {
+      "file": "stage1-22-go.log",
+      "bytes": 53726,
+      "sha256": "06991c9ed7d97f6ff3e7c128ce6da91cde942a2a324c85420a185f20a982a61e"
+    },
+    {
+      "file": "stage1-23-go.log",
+      "bytes": 105150,
+      "sha256": "b7e5a1ba3f3bbc67487d5b768343f929dfcec0f12e2a81d7b69c23937275fb77"
+    },
+    {
+      "file": "stage1-24-go.log",
+      "bytes": 3398,
+      "sha256": "2c54017e6893b41ce00ccd22e6ef09cb9754f65a85db1d8aa0d231ed18dcffb9"
+    },
+    {
+      "file": "stage1-25-go.log",
+      "bytes": 116778,
+      "sha256": "24b97e86d136f129ce2ea5051aadde59f751e5acb39e013ad1f9d692228dfb48"
+    },
+    {
+      "file": "stage1-26-go.log",
+      "bytes": 85746,
+      "sha256": "4e7d3fa929ebaeae27bfc30df6805be63064ddb55c1c00f2e38cfab6fd01ceb0"
+    },
+    {
+      "file": "stage1-27-go.log",
+      "bytes": 136126,
+      "sha256": "604bbb50aa4258c0a09b3505aa2c0870d4534d2ca43943546875589999fab977"
+    },
+    {
+      "file": "stage1-28-go.log",
+      "bytes": 5934,
+      "sha256": "d4b363b6e2659584bc6db3d667ab6deb678d51e08a64ace101c4dbf12d1adcdb"
+    },
+    {
+      "file": "stage1-29-go.log",
+      "bytes": 281570,
+      "sha256": "7270f8c2a099b3d4de0e9476f0caa60735fb7b8413702bac1fb65a921f90f24f"
+    },
+    {
+      "file": "stage1-3-go.log",
+      "bytes": 4750,
+      "sha256": "2c765e754539a0e419cec4a448ce0d32bb6a9ffe561fb092dbb7017abcfda188"
+    },
+    {
+      "file": "stage1-30-go.log",
+      "bytes": 9754,
+      "sha256": "1fe6919be91f15ba1af8ce529f03d777ad8c129d806c9767ddc3161434fab319"
+    },
+    {
+      "file": "stage1-31-go.log",
+      "bytes": 2646,
+      "sha256": "99064f00138ac70d7f3dff3b63af3eefe16f21d6ce5f718a979ed77ea677c66c"
+    },
+    {
+      "file": "stage1-32-go.log",
+      "bytes": 73046,
+      "sha256": "4a55e68f1589db265f5ef3c82c180b95907df85918bba80d7d1b326501c423f4"
+    },
+    {
+      "file": "stage1-33-go.log",
+      "bytes": 592838,
+      "sha256": "5e7a9812dbdc02e4a3f664e2258734231b24ec387035100ca4ca81ebf006db27"
+    },
+    {
+      "file": "stage1-34-go.log",
+      "bytes": 196994,
+      "sha256": "a8711dd341dd8c329ed56820263242c20e72226392d64016c5da25a080f9095b"
+    },
+    {
+      "file": "stage1-4-go.log",
+      "bytes": 4378,
+      "sha256": "98fd6bdec9e9fed182d38d70c514a3daa397c5caf09f5936acd7ec37901f070d"
+    },
+    {
+      "file": "stage1-5-go.log",
+      "bytes": 270166,
+      "sha256": "a60d6a6fa6bc02bd1ad724445bb335d70a062c76caa4bf48c17a3b8cbda7f5a7"
+    },
+    {
+      "file": "stage1-6-go.log",
+      "bytes": 26570,
+      "sha256": "dccf72c488264f3b5f027ca113e94d558092cf6fcbc5d3b9c612b595eca72101"
+    },
+    {
+      "file": "stage1-7-go.log",
+      "bytes": 430270,
+      "sha256": "aaa4563a75e476eec8ed63ea213ad6ffea28bb56fccb25930d1337ad7f827ca4"
+    },
+    {
+      "file": "stage1-8-go.log",
+      "bytes": 135994,
+      "sha256": "6c27ee1df36e226c4b88994ed12085b145ff82a627de70a03973d21e43008222"
+    },
+    {
+      "file": "stage1-9-go.log",
+      "bytes": 148242,
+      "sha256": "f84092340f680bb4df13fad69039d512457c2ea798f7855cdefd51ba89e5545d"
+    }
+  ]
+}

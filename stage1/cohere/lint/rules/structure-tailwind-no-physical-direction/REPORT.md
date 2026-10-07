@@ -1,3 +1,32 @@
+Built: all four claimed rule implementations now exist; strict description options are complete. Shared JSX and suppression gaps remain explicit.
+Commits: f60c905a adds definite assignment; 7e888bd0 adds strict description options; fresh validation evidence is committed next.
+Commands and outputs: 197 upstream cases and 77 compiler plus 140 stage1 sources match Go on Node, emitted JavaScript and sanitized native; 165 raw-source corpus observations all match.
+Mutants: four rule mutants and one unknown-field options mutant build and run with zero exits and empty stderr, then fail only byte comparisons on all three backends.
+Not covered: independent JSX parsing for 18 upstream cases, shared TSX witnesses, global directive suppression and exact invalid-option error prose; full repository gate not run.
+
+## Fresh validation after Ahra's continuation
+
+The original definite-assignment claim is now ported in its own directory. Its 18 captured upstream cases join the previously claimed three rules. All 197 projected-AST cases match in 57,743 canonical bytes. The independent parser matches all 179 cases whose Go tree contains no JSX. The 18 JSX cases remain tested through a Go AST projection only.
+
+The complete compiler and stage1 raw-source pass has 55 batches and 165 backend observations, all with zero exits, empty stderr and byte equality. Compiler pin is unchanged. No compiler or stage1 source is excluded on diagnostics. Fresh results and input/output hashes are under evidence/finish-claimed. Historical evidence below records earlier snapshots and must not override these fresh observations.
+
+The strict description decoder matches Go acceptance and decoded values on 27 option cases, including malformed shapes, tagged-key casing, duplicate keys, nulls and enum constraints. Invalid-option error prose is not compared; the rule refuses invalid data explicitly. Removing the unknown-field shape check is a separate successful-running byte-only mutant on all three backends.
+
+Shared registry tests PASS 0.034s. The shared owned-witness gate FAILS 6.200s before candidate execution because it writes the positive Google JSX witness as .ts and parses it with ScriptKindTS. No shared file was edited. Global directive suppression belongs to the shared lint pipeline and is absent there; the standalone comparisons invoke the unmodified Go rule API without that pipeline. The shared .a harness branch was absent at the last fetch. Sources use Ahra's explicitly authorized .ts fallback.
+
+Latest startup-inclusive findings per second, median of three 200-positive-case samples:
+
+| Rule | Sanitized native | Node | Go | Pipeline |
+| --- | ---: | ---: | ---: | --- |
+| adamic/no-definite-assignment | 2,866 | 1,460 | 12,206 | Independent raw-source parsing |
+| structure/tailwind-no-physical-direction | 2,823 | 1,348 | 20,813 | Independent raw-source parsing |
+| @eslint-community/eslint-comments/require-description | 3,411 | 1,647 | 18,805 | Independent raw-source parsing |
+| @next/next/google-font-display | 452 | 999 | 18,128 | Adamic loads projected AST; Go parses source |
+
+Rule mutants: definite_assignment_subscription_lost, physical_direction_exemption_lost, description_ignored and fallback_display_ignored. Twelve healthy executions produced twelve byte-only catches. The options mutant adds three more. Native includes ASan and UBSan. These timings are observations on this machine, not a comparative end-to-end speed claim for the projected pipeline.
+
+## Historical snapshots
+
 Built: the same three candidates now use the authorized .ts fallback; no further rules claimed and no shared files edited.
 Commits: prior rule commits 25c8936f, 593b3356, 8d113a23; previous pushed head 87be831e; fallback and blocker evidence committed next.
 Commands and outputs: shared registry discovers all eight rules; registry tests PASS 0.027s; TestOwnedWitnesses FAIL 5.648s when its Go oracle parses the Google font JSX witness as TypeScript.

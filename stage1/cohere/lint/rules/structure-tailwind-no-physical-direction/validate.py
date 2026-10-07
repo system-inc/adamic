@@ -22,9 +22,9 @@ assert src.count(anchor)==1
 patched=S/'capture-harness.go';patched.write_text(src.replace(anchor,'result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result'))
 overlay=S/'capture-overlay.json';overlay.write_text(json.dumps({'Replace':{str(harness):str(patched)}}))
 env=os.environ|{'COHERE_DOCS_CAPTURE':str(S/'capture')}
-for pkg,pattern in [('tailwind','^TestNoPhysicalDirection'),('core','^TestRequireDescription'),('next','^TestGoogleFontDisplay')]:
+for pkg,pattern in [('adamic','^TestNoDefiniteAssignment'),('tailwind','^TestNoPhysicalDirection'),('core','^TestRequireDescription'),('next','^TestGoogleFontDisplay')]:
  if not args.reuse: run('capture-'+pkg,['go','test','-overlay='+str(overlay),'./internal/lint/rules/'+pkg,'-run',pattern,'-count=1','-v','-timeout=10m'],ROOT/'cohere',env)
-names={'structure/tailwind-no-physical-direction','@eslint-community/eslint-comments/require-description','@next/next/google-font-display'}
+names={'adamic/no-definite-assignment','structure/tailwind-no-physical-direction','@eslint-community/eslint-comments/require-description','@next/next/google-font-display'}
 rows={}
 for file in sorted((S/'capture').glob('*.jsonl')):
  for line in file.read_text().split('\n'):

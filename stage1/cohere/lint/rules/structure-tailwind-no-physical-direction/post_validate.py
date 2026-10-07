@@ -44,7 +44,7 @@ summary['independentParser']=compare('independent-upstream',plain,independent=Tr
 (S/'summary.json').write_text(json.dumps(summary,indent=2))
 if a.corpus_only:raise SystemExit(0)
 summary['mutants']=[]
-for directory in [HERE,HERE.parent/'eslint-comments-require-description',HERE.parent/'next-google-font-display']:
+for directory in [HERE,HERE.parent/'eslint-comments-require-description',HERE.parent/'next-google-font-display',HERE.parent/'adamic-no-definite-assignment']:
  change=json.loads((directory/'mutant.json').read_text());scratch=S/('mutant-'+directory.name);shutil.copytree(ROOT/'stage1',scratch/'stage1',dirs_exist_ok=True)
  owned=scratch/'stage1/cohere/lint/rules'/directory.name/change['file'];text=owned.read_text();assert text.count(change['from'])==1;owned.write_text(text.replace(change['from'],change['to'],1))
  driver=scratch/'stage1/cohere/lint/rules'/HERE.name/'validation.ts';binary=scratch/'native';js=scratch/'emitted.mjs'
