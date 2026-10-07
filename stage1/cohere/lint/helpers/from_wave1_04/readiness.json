@@ -1,12 +1,12 @@
 {
-  "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
   "consumer_count": 6,
   "final_blockers_removed": 0,
   "rules": [
     {
       "rule": "better-tailwindcss/enforce-canonical-classes",
       "removed": [
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -34,7 +34,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.findTailwindPackageRoot",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.holeEdges",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.sourceValueAfterRoot",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitCandidateIn",
@@ -138,7 +137,8 @@
     {
       "rule": "better-tailwindcss/enforce-consistent-class-order",
       "removed": [
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -179,7 +179,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isArrayIndexKey",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.jsKeyOrder",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.newStrictVariantLevel",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.parseTailwindVersion",
@@ -409,7 +408,8 @@
     {
       "rule": "better-tailwindcss/enforce-consistent-variant-order",
       "removed": [
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -435,7 +435,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.findTailwindPackageRoot",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.holeEdges",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Theme",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Variants",
@@ -544,7 +543,8 @@
     {
       "rule": "better-tailwindcss/enforce-shorthand-classes",
       "removed": [
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -571,7 +571,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.findTailwindPackageRoot",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.holeEdges",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitVariantPrefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.DeclaresFunctionalUtility",
@@ -752,7 +751,8 @@
     {
       "rule": "better-tailwindcss/no-conflicting-classes",
       "removed": [
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -780,7 +780,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.findTailwindPackageRoot",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.holeEdges",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.repositoryClassFacts",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.resolveClassFactsIn",
@@ -980,7 +979,8 @@
     {
       "rule": "better-tailwindcss/no-unknown-classes",
       "removed": [
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -1011,7 +1011,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.holeEdges",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isIgnored",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.DeclaresFunctionalUtility",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Theme",
@@ -1188,5 +1187,10 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.writeValueCss"
       ]
     }
-  ]
+  ],
+  "helpers": [
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram"
+  ],
+  "dependency_removals": 12
 }

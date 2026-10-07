@@ -1,0 +1,39 @@
+package tailwind
+
+import (
+ "encoding/json"
+ "fmt"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+ "github.com/system-inc/cohere/internal/lint/rule"
+)
+var wave104ObservedLoaded DesignSystemResult
+var wave104LoadTrace []string
+
+type wave104LoadProgram struct {
+ rule.Program
+ config,cwd string
+ present bool
+ filesystem *rule.RecordingFS
+}
+func (p *wave104LoadProgram) Options()*core.CompilerOptions {
+ if !p.present{return nil};return &core.CompilerOptions{ConfigFilePath:p.config}
+}
+func(p *wave104LoadProgram)GetCurrentDirectory()string{return p.cwd}
+func(p *wave104LoadProgram)DesignSystemFS()*rule.RecordingFS {
+ wave104LoadTrace=append(wave104LoadTrace,"filesystem");return p.filesystem
+}
+type Wave104LoadFact struct { System,Table,Error,EntryPoint,LoadedReads,Reads string }
+func wave104Reads(reads []rule.FileRead)string {
+ // Canonical JSON is opaque data here; int64 fields are not converted to JS numbers.
+ if reads==nil{return "null"};data,err:=json.Marshal(reads);if err!=nil{panic(err)};return string(data)
+}
+func Wave104Load(config,cwd string,present bool)(Wave104LoadFact,[]string) {
+ wave104ObservedLoaded=DesignSystemResult{};wave104LoadTrace=nil
+ p:=&wave104LoadProgram{config:config,cwd:cwd,present:present,filesystem:rule.NewRecordingFS(osvfs.FS())}
+ result:=loadDesignSystemForProgram(p)
+ if result.System!=wave104ObservedLoaded.System||result.Table!=wave104ObservedLoaded.Table||result.Err!=wave104ObservedLoaded.Err||result.EntryPoint!=wave104ObservedLoaded.EntryPoint{panic("non-read fields changed")}
+ system,table,errText:="0","0","0"
+ if result.System!=nil{system="1"};if result.Table!=nil{table="1"};if result.Err!=nil{errText="1"+fmt.Sprint(result.Err)}
+ return Wave104LoadFact{system,table,errText,result.EntryPoint,wave104Reads(wave104ObservedLoaded.Reads),wave104Reads(result.Reads)},wave104LoadTrace
+}

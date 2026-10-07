@@ -1,0 +1,50 @@
+package main
+
+import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+	rules "github.com/system-inc/cohere/internal/lint/rules/tailwind"
+	"os"
+	"strings"
+	"unicode/utf16"
+)
+
+type Case struct {
+	Rule, File, Source, Config, Cwd string
+	Present                         bool
+}
+
+func written(value string) string {
+	var b strings.Builder
+	for _, r := range value {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var cases []Case
+	if err = json.Unmarshal(data, &cases); err != nil {
+		panic(err)
+	}
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+	facts:=[]rules.Wave104LoadFact{}
+	for index, c := range cases {
+		result, trace := rules.Wave104Load(c.Config,c.Cwd,c.Present)
+        facts=append(facts,result)
+        fmt.Fprintf(out,"%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",index,written(result.System),written(result.Table),written(result.Error),written(result.EntryPoint),written(result.Reads),written(result.LoadedReads),strings.Join(trace,","))
+	}
+ data,err=json.Marshal(facts);if err!=nil{panic(err)};if err=os.WriteFile(os.Args[2],data,0644);err!=nil{panic(err)}
+}

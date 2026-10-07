@@ -78,23 +78,26 @@ func goOracle(t *testing.T) string {
 	return binary
 }
 func build(t *testing.T, from, to string) (string, string, string) {
+	return buildHelper(t, "project_root.a", "main.a", from, to)
+}
+func buildHelper(t *testing.T, helper, main, from, to string) (string, string, string) {
 	t.Helper()
 	folder := t.TempDir()
 	changed := 0
-	for _, file := range []string{"project_root.a", "main.a"} {
+	for _, file := range []string{helper, main} {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			t.Fatal(err)
 		}
 		text := string(data)
-		if file == "project_root.a" && from != "" {
+		if file == helper && from != "" {
 			if strings.Count(text, from) != 1 {
 				t.Fatal("mutant anchor changed")
 			}
 			text = strings.Replace(text, from, to, 1)
 			changed++
 		}
-		if file == "main.a" {
+		if file == main {
 			options := filepath.Join(repository(t), "stage1/cohere/lint/helpers/options_json.ts")
 			nodes := filepath.Join(repository(t), "stage1/typescript/parser/nodes.ts")
 			text = strings.Replace(text, "../options_json.ts", filepath.ToSlash(options), 1)
@@ -107,7 +110,7 @@ func build(t *testing.T, from, to string) (string, string, string) {
 	if from != "" && changed != 1 {
 		t.Fatal("mutation was not applied")
 	}
-	entry := filepath.Join(folder, "main.a")
+	entry := filepath.Join(folder, main)
 	program, err := load.Load([]string{entry})
 	if err != nil {
 		t.Fatal(err)
