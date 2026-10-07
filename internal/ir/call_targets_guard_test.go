@@ -72,7 +72,10 @@ func TestCallTargetReaders(t *testing.T) {
 		exports[pkg.ImportPath] = pkg.Export
 		// External tests may use declarations from export_test.go. Import their
 		// package's test variant rather than the production-only export file.
-		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && path == pkg.ForTest {
+		// A package that only tests import, and that imports the package under
+		// test (internal/leakcheck imports internal/native), is listed only as
+		// a variant, so the variant is its one export file.
+		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && (path == pkg.ForTest || exports[path] == "") {
 			exports[path] = pkg.Export
 		}
 	}

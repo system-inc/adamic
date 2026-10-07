@@ -41,6 +41,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 			return nil, err
 		}
 	}
+	if lowering.hasAsync(modules) {
+		return lowering.lowerAsync(modules)
+	}
 	for _, module := range modules {
 		if err := lowering.declareModule(module.Statements.Nodes); err != nil {
 			return nil, err

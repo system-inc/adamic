@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -61,6 +62,16 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
+	// Only their runtime-owned protocol edges are exempt. Source types, including a class
+	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
+	if l.result.Async != nil {
+		for _, generated := range l.result.Async.Generated {
+			if !fresh.RuntimeBreaksCycles(generated) {
+				return fmt.Errorf("lower: unaudited generated cycle identity")
+			}
+		}
+	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor

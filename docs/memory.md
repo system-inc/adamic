@@ -302,6 +302,8 @@ The last three were caught only once `mutations.a` existed. Before it, no progra
 
 ## Cycles: found by the compiler, broken by Weak
 
+Compiler-generated async protocol layouts have one narrow exception: the canonical, unexported provenance identities in `internal/ir/async.go`, accepted by `fresh.RuntimeBreaksCycles` and checked at `lowering.findCycles` in `internal/lower/cycles.go`. These are IR/runtime types, not source checker declarations. Their internal frame -> waiting Promise -> reaction -> frame edges are broken by settlement, pending-subscription cancellation and normal-exit registry teardown in `runtime/async.c`; reference counting alone is insufficient. The [async design](concurrency-async.md#promise-representation-counts-and-cycles) specifies the order. Names, structural shape, annotations and user brands never confer this exemption. A user class named exactly `adamic_generated_frame_0`, `adamic_async_promise` or `adamic_async_reaction` still goes through the ordinary slot/write checks; the spoof tests and name-based mutants hold that boundary. User payloads and captures do not inherit it. The first async lowering admits only primitive payloads and bypasses synchronous lifetime proofs across suspension; additional reference payloads need the normal cycle/fresh-write analysis, without asking callers to put Weak on runtime-owned protocol edges.
+
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:
 
 - **Immutable data is acyclic.** A value built from `readonly` parts can only point at values that already existed when it was made, so no `readonly` structure can ever reach itself. Immutable by default is the first answer.
@@ -1563,6 +1565,6 @@ Since a string is immutable, a slice can read its parent's bytes in place, as a 
 
 ## How this is held honest
 
-- Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check (`leaks --atExit` on macOS, LeakSanitizer on Linux) for anything never freed. A mutant that drops releases is caught by the leak check (`2a2e30b`).
+- Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check for anything never freed: LeakSanitizer on Linux; on macOS the counted build, whose allocations must be its frees and its values in regions, and `leaks --atExit` on that binary for what the runtime takes from malloc outside the counts. (`leaks` alone can't see a value: the size-class allocator's chunks stay reachable from its own table.) A mutant that drops releases is caught by the leak check (`2a2e30b`).
 - Every change to counting or reuse is checked by the oracle against Node, byte for byte.
 - Retains and releases per fixture are counted (`adamic build --count`), and every oracle fixture's counts are checked in as `internal/oracle/counts.md`. A change that moves them fails the gate until the table is updated, so its effect shows in review as a diff of numbers, not a feeling.
