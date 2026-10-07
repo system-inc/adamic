@@ -1,0 +1,29 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { collapseNormalizeUtilityDefinition } from './collapse_normalize_utility_definition.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line);
+    const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const fields = json.node(root).children;
+    const bound = json.node(fields[0] ?? panic('bound')).text === 'true';
+    const rows = json.node(fields[1] ?? panic('rows')).children;
+    const values: string[] = [];
+    const whole: string[] = [];
+    for (const row of rows) { const parts = json.node(row).children; values.push(json.node(parts[2] ?? panic('raw')).text); whole.push(json.node(parts[5] ?? panic('whole')).text); }
+    const roots: number[] = [];
+    for (const child of json.node(fields[2] ?? panic('roots')).children) { roots.push(Number(json.node(child).text)); }
+    collapseNormalizeUtilityDefinition({ bound, nodes: roots }, forwarded => {
+        // Actual Go normalization supplies the externally owned dependency's observations.
+        if (forwarded.includes(0)) { for (let index = 0; index < values.length; index++) { values[index] = whole[index] ?? panic('whole missing'); } }
+    });
+    for (const value of values) {
+        let output = `${value.length}:`;
+        for (let index = 0; index < value.length; index++) { output += `${value.charCodeAt(index)},`; }
+        console.log(output);
+    }
+}

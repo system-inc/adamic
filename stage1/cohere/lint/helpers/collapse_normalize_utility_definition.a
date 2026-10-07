@@ -1,0 +1,5 @@
+export interface CollapseUtilityDefinition { readonly bound: boolean; readonly nodes: readonly number[]; }
+export function collapseNormalizeUtilityDefinition(definition: CollapseUtilityDefinition, normalizeArguments: (nodes: readonly number[]) => void): void {
+    if (!definition.bound) { return; }
+    normalizeArguments(definition.nodes);
+}
