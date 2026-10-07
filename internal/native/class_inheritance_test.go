@@ -65,8 +65,9 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 			checkedConvention = true
 			for _, target := range targets {
 				parameter := program.Functions[target].Parameters[1]
-				if !reuse.consumed[parameter] {
-					t.Errorf("%s did not join consumed argument", program.Functions[target].Name)
+				name := program.Functions[target].Name
+				if reuse.consumed[parameter] != (name == "Reader_replace") {
+					t.Errorf("%s lost its own consumed convention", name)
 				}
 			}
 		}
