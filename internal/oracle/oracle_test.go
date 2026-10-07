@@ -462,6 +462,8 @@ var fixtures = []struct {
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
+	// A move handed to a call whose later argument throws (reuse.go, handOver).
+	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
