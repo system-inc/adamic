@@ -1,0 +1,28 @@
+// The static signature only reads, but the override removes the array's last reference to an
+// element. Lending prevents an array move; it cannot prevent this explicit mutation.
+interface Item {
+	readonly label: string;
+}
+
+class Reader {
+	read(items: Item[]): number {
+		return items.length;
+	}
+}
+
+class Replacer extends Reader {
+	read(items: Item[]): number {
+		items[0] = { label: `replacement${items.length}` };
+		return items.length;
+	}
+}
+
+function inspect(reader: Reader): void {
+	const items: Item[] = [{ label: `item${1}` }];
+	const item = items[0] ?? { label: `missing${items.length}` };
+	reader.read(items);
+	console.log(item.label);
+}
+
+inspect(new Reader());
+inspect(new Replacer());

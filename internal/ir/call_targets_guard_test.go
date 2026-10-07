@@ -24,24 +24,15 @@ import (
 type targetReader struct{ owner, reason string }
 
 var targetReaders = map[string]targetReader{
-	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                               {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/flow/infer.go:value:CallClosure.Closure":                                   {"runtime", "evaluates callee operands and applies analysis summaries"},
-	"internal/fresh/fresh.go:directlyCalled:ArraySort.Comparator":                        {"runtime", "builds comparator call graph"},
-	"internal/fresh/fresh.go:value:Call.Function":                                        {"runtime", "evaluates callee operands and applies analysis summaries"},
-	"internal/fresh/fresh.go:value:CallClosure.Closure":                                  {"runtime", "evaluates callee operands and applies analysis summaries"},
-	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                   {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                        {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/native/class_inheritance.go:callCode:Call.Function":                        {"runtime", "emits the call"},
-	"internal/native/class_inheritance_test.go:TestInheritanceMemoryPlans:Call.Function": {"runtime", "asserts memory plans for virtual calls"},
-	"internal/native/element_borrow.go:unchanging:Call.Function":                         {"runtime", "checks callee mutations before element borrowing"},
-	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":                     {"runtime", "emits the call"},
-	"internal/native/emit_expressions.go:evaluate:ArraySort.Comparator":                  {"runtime", "emits the call"},
-	"internal/native/emit_expressions.go:evaluate:Call.Function":                         {"runtime", "emits the call"},
-	"internal/native/emit_expressions.go:evaluate:CallClosure.Closure":                   {"runtime", "emits the call"},
-	"internal/native/emit_functions.go:arguments:Call.Function":                          {"runtime", "emits the call"},
-	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":                  {"runtime", "emits the call"},
-	"internal/native/reuse.go:planReuse:ArraySort.Comparator":                            {"runtime", "plans consumed parameters and argument moves"},
-	"internal/native/reuse.go:planReuse:Call.Function":                                   {"runtime", "plans consumed parameters and argument moves"},
+	"internal/flow/build.go:CanThrow:ArraySort.Comparator":              {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":  {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":       {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/native/class_inheritance.go:callCode:Call.Function":       {"runtime", "names the function to call"},
+	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":    {"runtime", "names the function to call"},
+	"internal/native/emit_expressions.go:evaluate:Call.Function":        {"runtime", "names the function to call"},
+	"internal/native/emit_expressions.go:evaluate:CallClosure.Closure":  {"runtime", "names the function to call"},
+	"internal/native/emit_functions.go:arguments:Call.Function":         {"runtime", "names the function to call"},
+	"internal/native/emit_functions.go:callThrough:CallClosure.Closure": {"runtime", "names the function to call"},
 }
 
 func TestCallTargetReaders(t *testing.T) {
