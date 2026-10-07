@@ -1,7 +1,7 @@
 {
   "name": "@typescript-eslint/prefer-promise-reject-errors",
   "kinds": [
-    214,
-    215
+    "CallExpression",
+    "NewExpression"
   ]
 }

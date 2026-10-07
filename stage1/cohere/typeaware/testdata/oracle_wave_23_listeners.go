@@ -123,7 +123,7 @@ func main() {
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
 			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, nil)
-			if len(args) > 2 && args[2] == "--listener-kinds" {
+			if len(args) > 2 && (args[2] == "--listener-kinds" || args[2] == "--listener-names") {
 				var kinds []int
 				for kind := range listeners {
 					kinds = append(kinds, int(kind))
@@ -131,7 +131,11 @@ func main() {
 				sort.Ints(kinds)
 				var numbers []string
 				for _, kind := range kinds {
-					numbers = append(numbers, fmt.Sprint(kind))
+					if args[2] == "--listener-names" {
+						numbers = append(numbers, strings.TrimPrefix(ast.Kind(kind).String(), "Kind"))
+					} else {
+						numbers = append(numbers, fmt.Sprint(kind))
+					}
 				}
 				fmt.Fprintf(out, "%s\t%s\n", subject.Name, strings.Join(numbers, ","))
 			}
@@ -139,7 +143,7 @@ func main() {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}
 		}
-		if len(args) > 2 && args[2] == "--listener-kinds" {
+		if len(args) > 2 && (args[2] == "--listener-kinds" || args[2] == "--listener-names") {
 			release()
 			return
 		}

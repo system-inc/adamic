@@ -33,11 +33,13 @@ func TestWave23NumericListeners(t *testing.T) {
 	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","noEmit":true,"lib":["ESNext"]},"files":["prelude.d.ts"]}`)
 	manifest := h.write("manifest", control+"\n")
 	truth := h.must("go-listeners", exec.Command(oracle, config, manifest, "--listener-kinds"))
+	named := h.must("go-listener-names", exec.Command(oracle, config, manifest, "--listener-names"))
+	namedRows := strings.Split(strings.TrimSpace(string(named.stdout)), "\n")
 	rows := strings.Split(strings.TrimSpace(string(truth.stdout)), "\n")
 	if len(rows) != 18 {
 		t.Fatalf("expected eighteen production rule registrations, got %d", len(rows))
 	}
-	for _, row := range rows {
+	for _, row := range namedRows {
 		parts := strings.Split(row, "\t")
 		if len(parts) != 2 {
 			t.Fatal("bad Go listener record", row)
@@ -47,8 +49,8 @@ func TestWave23NumericListeners(t *testing.T) {
 			t.Fatal(err)
 		}
 		var declaration struct {
-			Name  string `json:"name"`
-			Kinds []int  `json:"kinds"`
+			Name  string   `json:"name"`
+			Kinds []string `json:"kinds"`
 		}
 		if err := json.Unmarshal(data, &declaration); err != nil {
 			t.Fatal(err)
