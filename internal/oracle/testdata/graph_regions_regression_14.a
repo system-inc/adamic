@@ -1,0 +1,4 @@
+class Link { next: Link | undefined = undefined; }
+class Child extends Link { readonly label = 'child'; }
+const child = new Child();
+child.next = child;

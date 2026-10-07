@@ -129,7 +129,7 @@ void adamic_graph_retain(void *value) {
 }
 
 void *adamic_graph_hold(void *holder, void *value) {
-	if (value == NULL) { return NULL; }
+	if (value == NULL) { return member(holder) == NULL ? adamic_retain(NULL) : NULL; }
 	if (member(holder) != NULL && member(value) != NULL) {
 		adamic_graph_merge(holder, value);
 		return value;
@@ -147,8 +147,8 @@ void adamic_graph_drop(void *holder, void *value) {
 	adamic_release(value);
 }
 
-#ifdef ADAMIC_COUNT
-// This enumerates current strong edges for diagnostics only. It never frees.
+// Enumerate immediate owned slots for initialization and counting diagnostics.
+// This does not follow the graph or decide what is freed.
 static void children(void *value, void (*visit)(void *)) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
@@ -200,6 +200,40 @@ static void children(void *value, void (*visit)(void *)) {
 	}
 }
 
+static adamic_heap *joining;
+static void join_owned(void *value) {
+	if (member(value) != NULL) {
+		adamic_graph_merge(joining, value);
+		adamic_release(value);
+	}
+}
+
+void *adamic_graph_adopt_owned(void *value, size_t bytes) {
+	if (adamic_graph_is(value)) { return value; }
+	joining = adamic_graph_adopt(value, bytes);
+	children(joining, join_owned);
+	void *result = joining;
+	joining = NULL;
+	return result;
+}
+
+void *adamic_graph_escape(void *holder, void *value) {
+	return member(holder) != NULL && member(value) != NULL ? adamic_retain(value) : value;
+}
+
+void *adamic_graph_take(void *holder, void *value) {
+	if (member(holder) != NULL && member(value) != NULL) {
+		adamic_graph_merge(holder, value);
+		adamic_release(value);
+	}
+	return value;
+}
+
+bool adamic_graph_counted(const void *value) {
+	return !adamic_graph_is(value);
+}
+
+#ifdef ADAMIC_COUNT
 static size_t bytes(adamic_heap *heap) {
 	switch (heap->kind) {
 	case adamic_kind_object: return sizeof(adamic_object) + ((adamic_object *)heap)->shape->count * sizeof(adamic_value);

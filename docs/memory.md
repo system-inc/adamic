@@ -786,6 +786,169 @@ failed compilation. Runner `/tmp/graph-regions-compact-mutants.py`, logs
 `/tmp/graph-regions-compact-mutants.log` and one log per named mutant.
 
 
+### Compiler integration, October 7
+
+This completes the compiler work left at the foundation checkpoint. The compact
+runtime remains the allocation model: 16 bytes per graph member, a lazy region
+record, and the existing header count for a lone member.
+
+`findCycles` now delegates at its old refusal exit to `graphTypes`, in one
+localized change in `cycles.go`. The existing fresh-write proof and Weak tests
+still determine the unproven-slot seeds. Tarjan's strongly connected components
+select graph types, including structural allocation views, concrete generic
+instantiations, function captures and indivisible shared closure environments.
+Arrays, tuples, Maps and Sets containing graph members are promoted as graph
+containers, including caches which do not themselves close a cycle.
+
+Two refinements were required by executable evidence. The component follows
+all strong ownership paths around an unproven cycle, including readonly and
+proven-fresh links; using only unproven links would omit an intermediate owner
+and leave a counted cycle. Also, fresh literal type identities are not stable
+across every checker query. Allocation tags include the contextual type and the
+variable's stable widened view. The literal-method regression exposed the latter
+with a real leak before that allocation was selected.
+
+Outside retain and release use the shared heap entrypoints, which dispatch
+actual graph allocations to region retain/release. Structural views and unions
+therefore keep the same boundary convention. Emitted graph-aware slot holds
+merge graph holders and graph values without counting; overwrite drops nothing
+for those internal edges. Counted holders and non-graph children retain their
+ordinary ownership. Weak slots remain Weak. Graph allocations cannot use
+statement arenas or in-place reuse.
+
+Fresh populated runtime results are adopted before publication. Their immediate
+owned slots are converted to internal edges by joining graph children and
+releasing the old boundary holds. This is initialization, not a reachability
+pass, and it never chooses what to free. Collection iterator adapters carry
+their private state, cell, closure and wrapper with the graph collection; generated
+Map-entry tuples carry graph elements too. The three iterator refusal probes
+exposed their old counted back edges through LeakSanitizer. Statement arena
+headers also needed `slab = 0`: otherwise their uninitialized slab field could
+imitate the graph-prefix bit. The virtual-call probe exposed that under ASan.
+
+**Named shared emission changes:**
+
+- `emit_objects.go`: `objectLiteral` adopts selected allocations and uses graph
+  holds/drops for fields and spread replacements.
+- `emit_expressions.go`: `MakeClosure`, array allocation/derived results,
+  Map/Set allocation and stores, array push/pop, and map callback transfers.
+- `emit_statements.go`: `SetIndex`, `SetProperty`, and per-iteration graph cells.
+- `emit_locals.go`: `store`, `makeCell`, and `allocateEnvironment`; a borrowed
+  parameter's capture cell owns its value independently of the borrowed argument.
+- `emit_arrays.go`: `arrayVisit` filter results and `spliceArguments` ownership.
+- `from.go`: `arrayFrom` allocation and owned callback result transfers.
+- `reuse.go`: `reused`, `mapped`, `spreadArray`, and graph uniqueness guards.
+- `region.go`: `returnsFresh` and `freshValue` exclude graph allocations.
+- New `graph_regions.go` holds the named adoption and ownership helpers.
+
+No edits were made to `emit.go`, `lower.go`, `native.go`, or `closure.c` in this
+continuation. Fixture registration is the only change to `oracle_test.go`.
+
+**Source evidence.** The six requested shapes are `graph_regions_parse`,
+`graph_regions_list`, `graph_regions_flow`, `graph_regions_literals`,
+`graph_regions_symbols`, and `graph_regions_cache`. `graph_regions_escape`
+reads through its saved node after dropping the root; `graph_regions_anchor`
+drops a builder's last returned anchor. Additional source regressions cover
+closure environments, generic and inherited classes, static constructor objects,
+accessors, literal methods, and Map entries. Their Node source, JavaScript backend,
+native sanitizer and native release runs agree. A separate LeakSanitizer run must
+be clean. The counted checks require actual region-free reports as well.
+
+Every one of the 43 existing `fresh_refused/*.a` probes now compiles, agrees with
+Node and the JavaScript backend, passes ASan/UBSan and LeakSanitizer, and reports
+region teardown. Its counted run must satisfy allocations = frees + statement
+arena values. All 43 are listed individually with counts in
+`internal/oracle/counts.md`; none is silently accepted. A self-linked lone graph
+object can report a free without allocating a region record.
+
+The complete counts table gains Graph regions and Graph merges columns. The
+original fixtures' six numeric columns are unchanged. New rows include every
+source regression and all 43 former refusal probes.
+
+**Compiled million-node evidence.** `graph_regions_million.a` is the same
+million-node forward/parent/cross-edge workload, including an overwritten incoming
+edge every twentieth node, compiled from Adamic. At the last boundary release:
+
+| Measurement | Compiled Adamic |
+| --- | ---: |
+| Live graph members / payload bytes | 1000000 / 64000000 |
+| Reachable members / payload bytes | 950001 / 60800064 |
+| Retained unreachable members / payload bytes | 49999 / 3199936 |
+| Member metadata / total metadata bytes | 16 / 16000064 |
+| Region records / merges | 1 / 999999 |
+| Total allocations / frees | 1000003 / 1000003 |
+| Native release peak RSS | 78864 KiB |
+| Native counted peak RSS | 79000 KiB |
+| Node source peak RSS through oracle loader | 112540 KiB |
+
+These observed process-memory numbers are from
+`/tmp/graph-regions-compiled-million.log`, `TestGraphRegionsCompiledMillion`.
+Both native modes use the `-O2` release flags listed in the compact section;
+counted adds `-DADAMIC_COUNT`. Node is 24.19.0 with
+`--disable-warning=ExperimentalWarning` and `oracle/node.mjs`, which strips source
+types. Its heapUsed snapshot was 55215648 bytes, not a peak live heap measurement.
+The earlier direct C/JS comparison remains the like-for-like before/after result:
+native release 165028 to 79028 KiB, Node 95104 KiB. The compiled benchmark includes
+the oracle loader overhead on Node and is recorded separately. The source fixture
+also passes the normal sanitizer, release and separate leak oracle.
+
+**Mutants in the continuation.** Each edit was restored. None was killed by a
+compiler error.
+
+| Mutant | Check that failed |
+| --- | --- |
+| Free with an outside count still held, bypassing the defensive free guard | ASan heap-use-after-free |
+| Skip the outside-release pass | LeakSanitizer |
+| Join a lone member without summing counts | ASan heap-use-after-free |
+| Merge two established regions without summing counts | ASan heap-use-after-free |
+| Count an internal graph store in the runtime | LeakSanitizer |
+| Skip diagnostic mark roots | Unreachable-member count assertion |
+| Omit graph allocation adoption in emission | Counts mismatch and missing region-free report |
+| Emit a counted graph-slot hold | Counts mismatch and missing region-free report |
+| Leave a closure environment counted | Counts mismatch |
+| Leave a derived array counted | Former-refusal counted-free assertion and missing region-free report |
+| Omit graph-type seeds | Counts mismatch and missing graph-type assertion |
+
+The first adoption mutant passed the source-only leak oracle: residual live stack
+pointers can hide a leaked counted cycle from LeakSanitizer. It then failed the
+counted-free check. This is why positive acceptance requires both leak checks
+and counted teardown evidence. Logs: `/tmp/graph-regions-compiler-mutants-final.log`
+and `/tmp/graph-regions-runtime-mutants-final.log`, plus one log per named mutant.
+
+**Completed checks in this continuation.** Setup and processor limits are recorded
+in the compact section. Each test command writes its output directly to a log.
+
+```sh
+go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-package-gate-second.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-counts-complete-update.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(.*(cycle|weak|fresh|regions|nested)|weak)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded' -count=1 -v -timeout 30m > /tmp/graph-regions-filtered-final.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-final-format.log 2>&1
+go vet ./... > /tmp/graph-regions-final-vet.log 2>&1
+```
+
+The package gate passed: lower 52.533s, native 155.014s, fresh 69.724s. That
+package run preceded the final literal-method type-identity fix and Map-entry
+conversion; the final filtered oracle exercises both fixes and passed in
+248.762s. Counts regeneration passed in 30.427s; the subsequent complete counts
+check is included in the final filtered run. Format and vet logs are empty.
+Eight existing programs emit byte-identical C against the `d20bcba` compiler:
+`fresh_writes`, `fresh_calls`, `fresh_parser`, `weak_parent`, `weak_narrowed`,
+`nested_mutual`, `regexp_cycle_weak`, and `reuse_weak_during_spread`. Log:
+`/tmp/graph-regions-c-parity.log`. All original numeric counts rows also remain
+unchanged. The comparison compiler used a read-only Go overlay of the baseline
+sources, with `-buildvcs=false`; the detached scratch build could not inspect the
+symlinked submodule's VCS status and was superseded by that overlay.
+
+The attempted cohere named-file format and type commands reported no files to
+check for `.a`; they are not claimed as validation. The oracle loader type-checks
+each source through the pinned checker before lowering it.
+
+Threads, cross-thread atomic counts and long-lived services are not built. The
+shared-region merge rejection remains a tested runtime guard. Program-version
+anchors remain the service design described above; no tsc scanner/parser
+measurement or native tsc compilation is claimed by this unit.
+
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
