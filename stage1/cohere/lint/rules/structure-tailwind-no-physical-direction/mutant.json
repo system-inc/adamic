@@ -1,6 +1,0 @@
-{
-  "name": "physical_direction_exemption_lost",
-  "file": "rule.ts",
-  "from": "parts.includes('rtl') || parts.includes('ltr')",
-  "to": "false && (parts.includes('rtl') || parts.includes('ltr'))"
-}

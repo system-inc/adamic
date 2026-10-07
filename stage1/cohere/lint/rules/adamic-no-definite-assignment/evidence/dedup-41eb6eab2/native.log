@@ -1,0 +1,552 @@
+case 0
+/tmp/wave11-ledger-harness/case-0/Case.ts:1:5
+  adamic/no-definite-assignment  `!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+
+range 4 9 definiteAssignment 			4 9
+fixed	let total!: number; function read(): number { return total; }\u000a
+case 1
+/tmp/wave11-ledger-harness/case-1/Case.ts:1:17
+  adamic/no-definite-assignment  `!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+
+range 16 24 definiteAssignment 			16 24
+fixed	class Account { #balance!: number; read(): number { return this.#balance; } }\u000a
+case 2
+fixed	for (let number = 1; number <= 15; number += 1) {\u000a\u0009if (number % 15 === 0) {\u000a\u0009\u0009console.log('FizzBuzz');\u000a\u0009} else if (number % 3 === 0) {\u000a\u0009\u0009console.log('Fizz');\u000a\u0009} else if (number % 5 === 0) {\u000a\u0009\u0009console.log('Buzz');\u000a\u0009} else {\u000a\u0009\u0009console.log(`${number}`);\u000a\u0009}\u000a}\u000a
+case 3
+/tmp/wave11-ledger-harness/case-3/Case.ts:1:17
+  adamic/no-definite-assignment  `!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+
+range 16 23 definiteAssignment 			16 23
+fixed	class Account { balance!: number; describe(): string { return this.balance.toFixed(2); } }\u000a
+case 4
+fixed	class Account { balance?: number; }\u000a
+case 5
+fixed	declare const ages: Map<string, number>; const age = ages.get('Ahra')!;\u000a
+case 6
+fixed	interface Tree {\u000a\u0009readonly value: number;\u000a\u0009readonly left: Tree | undefined;\u000a\u0009readonly right: Tree | undefined;\u000a}\u000a\u000afunction insert(tree: Tree | undefined, value: number): Tree {\u000a\u0009if (tree === undefined) {\u000a\u0009\u0009return { value, left: undefined, right: undefined };\u000a\u0009}\u000a\u0009if (value < tree.value) {\u000a\u0009\u0009return { ...tree, left: insert(tree.left, value) };\u000a\u0009}\u000a\u0009if (value > tree.value) {\u000a\u0009\u0009return { ...tree, right: insert(tree.right, value) };\u000a\u0009}\u000a\u0009return tree;\u000a}\u000a\u000afunction collect(tree: Tree | undefined, into: number[]): void {\u000a\u0009if (tree !== undefined) {\u000a\u0009\u0009collect(tree.left, into);\u000a\u0009\u0009into.push(tree.value);\u000a\u0009\u0009collect(tree.right, into);\u000a\u0009}\u000a}\u000a\u000afunction height(tree: Tree | undefined): number {\u000a\u0009return tree === undefined ? 0 : 1 + Math.max(height(tree.left), height(tree.right));\u000a}\u000a\u000alet tree: Tree | undefined = undefined;\u000afor (const value of [50, 30, 70, 20, 40, 60, 80, 30, 65]) {\u000a\u0009tree = insert(tree, value);\u000a}\u000aconst before = tree;\u000atree = insert(tree, 10);\u000a\u000aconst values: number[] = [];\u000acollect(tree, values);\u000aconsole.log(values.join(' '));\u000aconsole.log(`height ${height(tree)}, was ${height(before)}`);\u000aconsole.log(`right subtree shared: ${tree.right === before?.right}`);\u000a
+case 7
+fixed	class Account { balance = 0; }\u000a
+case 8
+fixed	type Shape =\u000a\u0009| { readonly kind: 'Circle'; readonly radius: number }\u000a\u0009| { readonly kind: 'Rectangle'; readonly width: number; readonly height: number }\u000a\u0009| { readonly kind: 'Triangle'; readonly base: number; readonly height: number };\u000a\u000afunction area(shape: Shape): number {\u000a\u0009switch (shape.kind) {\u000a\u0009\u0009case 'Circle':\u000a\u0009\u0009\u0009return Math.PI * shape.radius ** 2;\u000a\u0009\u0009case 'Rectangle':\u000a\u0009\u0009\u0009return shape.width * shape.height;\u000a\u0009\u0009case 'Triangle':\u000a\u0009\u0009\u0009return (shape.base * shape.height) / 2;\u000a\u0009}\u000a}\u000a\u000aconst shapes: readonly Shape[] = [\u000a\u0009{ kind: 'Circle', radius: 1.5 },\u000a\u0009{ kind: 'Rectangle', width: 3, height: 4 },\u000a\u0009{ kind: 'Triangle', base: 6, height: 2.5 },\u000a];\u000a\u000alet total = 0;\u000afor (const shape of shapes) {\u000a\u0009const shapeArea = area(shape);\u000a\u0009total += shapeArea;\u000a\u0009console.log(`${shape.kind}: ${shapeArea.toFixed(3)}`);\u000a}\u000aconsole.log(`Total: ${total.toFixed(3)} (${total})`);\u000a
+case 9
+fixed	class Account { balance: number; constructor() { this.balance = 0; } }\u000a
+case 10
+fixed	import { distance, pathLength, type Point } from './geometry.ts';\u000a\u000aconst route: readonly Point[] = [\u000a\u0009{ x: 0, y: 0 },\u000a\u0009{ x: 3, y: 4 },\u000a\u0009{ x: 3, y: 10 },\u000a\u0009{ x: 0, y: 14 },\u000a];\u000aconsole.log(`legs: ${distance({ x: 0, y: 0 }, { x: 3, y: 4 })} first, ${pathLength(route)} total`);\u000aconsole.log(`diagonal: ${distance({ x: 0, y: 0 }, { x: 1, y: 1 })}`);\u000a
+case 11
+fixed	import { panic } from 'adamic';\u000a\u000atype Parsed = { readonly kind: 'Ok'; readonly value: number } | { readonly kind: 'Error'; readonly message: string };\u000a\u000afunction parseAge(input: string): Parsed {\u000a\u0009const trimmed = input.trim();\u000a\u0009if (trimmed.length === 0) {\u000a\u0009\u0009return { kind: 'Error', message: 'empty' };\u000a\u0009}\u000a\u0009let value = 0;\u000a\u0009for (const character of trimmed) {\u000a\u0009\u0009const digit = character.charCodeAt(0) - 48;\u000a\u0009\u0009if (digit < 0 || digit > 9) {\u000a\u0009\u0009\u0009return { kind: 'Error', message: `'${character}' is not a digit` };\u000a\u0009\u0009}\u000a\u0009\u0009value = value * 10 + digit;\u000a\u0009}\u000a\u0009if (value > 150) {\u000a\u0009\u0009return { kind: 'Error', message: `${value} is too old` };\u000a\u0009}\u000a\u0009return { kind: 'Ok', value };\u000a}\u000a\u000afor (const input of ['42', ' 7 ', '', '12a', '200']) {\u000a\u0009const parsed = parseAge(input);\u000a\u0009switch (parsed.kind) {\u000a\u0009\u0009case 'Ok':\u000a\u0009\u0009\u0009console.log(`ok ${parsed.value}`);\u000a\u0009\u0009\u0009break;\u000a\u0009\u0009case 'Error':\u000a\u0009\u0009\u0009console.log(`error: ${parsed.message}`);\u000a\u0009\u0009\u0009break;\u000a\u0009}\u000a}\u000a\u000aconst ages = new Map<string, number>([['Kirk', 42]]);\u000aconst age = ages.get('Ahra') ?? panic('no age on record for Ahra');\u000aconsole.log(`Ahra is ${age}`);\u000a
+case 12
+fixed	export interface Point {\u000a\u0009readonly x: number;\u000a\u0009readonly y: number;\u000a}\u000a\u000aexport function distance(from: Point, to: Point): number {\u000a\u0009return Math.sqrt((to.x - from.x) ** 2 + (to.y - from.y) ** 2);\u000a}\u000a\u000aexport function pathLength(points: readonly Point[]): number {\u000a\u0009let length = 0;\u000a\u0009let previous: Point | undefined = undefined;\u000a\u0009for (const point of points) {\u000a\u0009\u0009if (previous !== undefined) {\u000a\u0009\u0009\u0009length += distance(previous, point);\u000a\u0009\u0009}\u000a\u0009\u0009previous = point;\u000a\u0009}\u000a\u0009return length;\u000a}\u000a
+case 13
+fixed	class Stack<Item> {\u000a\u0009private readonly items: Item[] = [];\u000a\u000a\u0009push(item: Item): void {\u000a\u0009\u0009this.items.push(item);\u000a\u0009}\u000a\u000a\u0009pop(): Item | undefined {\u000a\u0009\u0009return this.items.pop();\u000a\u0009}\u000a\u000a\u0009size(): number {\u000a\u0009\u0009return this.items.length;\u000a\u0009}\u000a}\u000a\u000aconst openers = new Map<string, string>([\u000a\u0009[')', '('],\u000a\u0009[']', '['],\u000a\u0009['}', '{'],\u000a]);\u000a\u000afunction isBalanced(input: string): boolean {\u000a\u0009const stack = new Stack<string>();\u000a\u0009for (const character of input) {\u000a\u0009\u0009if (character === '(' || character === '[' || character === '{') {\u000a\u0009\u0009\u0009stack.push(character);\u000a\u0009\u0009\u0009continue;\u000a\u0009\u0009}\u000a\u0009\u0009const opener = openers.get(character);\u000a\u0009\u0009if (opener !== undefined && stack.pop() !== opener) {\u000a\u0009\u0009\u0009return false;\u000a\u0009\u0009}\u000a\u0009}\u000a\u0009return stack.size() === 0;\u000a}\u000a\u000afor (const input of ['([]{})', '([)]', '((', '', 'f(x[0]) { }']) {\u000a\u0009console.log(`'${input}' ${isBalanced(input) ? 'balanced' : 'unbalanced'}`);\u000a}\u000a
+case 14
+fixed	type Entry = readonly [string, number];\u000a\u000afunction compareEntries(left: Entry, right: Entry): number {\u000a\u0009if (left[1] !== right[1]) {\u000a\u0009\u0009return right[1] - left[1];\u000a\u0009}\u000a\u0009return left[0] < right[0] ? -1 : left[0] > right[0] ? 1 : 0;\u000a}\u000a\u000aconst text = 'the quick brown fox jumps over the lazy dog and the fox naps';\u000aconst counts = new Map<string, number>();\u000afor (const word of text.split(' ')) {\u000a\u0009counts.set(word, (counts.get(word) ?? 0) + 1);\u000a}\u000a\u000aconst entries: Entry[] = [...counts];\u000aentries.sort(compareEntries);\u000afor (const [word, count] of entries.slice(0, 4)) {\u000a\u0009console.log(`${word.padEnd(6, '.')}${count}`);\u000a}\u000aconsole.log(`${counts.size} distinct words`);\u000a
+case 15
+fixed	const greeting = 'h\u00e9llo, \u4e16\u754c \ud83c\udf0d';\u000a\u000aconsole.log(`${greeting.length} UTF-16 code units, ${[...greeting].length} code points`);\u000aconsole.log(greeting.slice(7, 9));\u000aconsole.log(`${greeting.codePointAt(10) ?? -1} ${greeting.charCodeAt(11)}`);\u000aconsole.log(`[${greeting.slice(0, 11)}]`);\u000aconsole.log(`${'b' < '\u00e9'} ${'\u005cuFFFF' < '\ud83c\udf0d'}`);\u000aconsole.log(`${'ab'.padStart(5, '-')}|${'  trim me \u005cn'.trim()}|${'na'.repeat(3)}`);\u000aconsole.log(`${greeting.indexOf('\u4e16')} ${greeting.includes('\ud83c\udf0d')} ${greeting.startsWith('h\u00e9')}`);\u000a
+case 16
+fixed	console.log('In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra');\u000a
+case 17
+fixed	function makeCounter(start: number): () => number {\u000a\u0009let count = start;\u000a\u0009return () => {\u000a\u0009\u0009count += 1;\u000a\u0009\u0009return count;\u000a\u0009};\u000a}\u000a\u000aconst first = makeCounter(0);\u000aconst second = makeCounter(100);\u000afirst();\u000afirst();\u000aconsole.log(`first: ${first()}, second: ${second()}`);\u000a\u000a// Each iteration gets its own binding of `step`, as in JavaScript.\u000aconst adders: ((value: number) => number)[] = [];\u000afor (let step = 1; step <= 3; step += 1) {\u000a\u0009adders.push((value) => value + step);\u000a}\u000aconsole.log(adders.map((add) => add(10)).join(' '));\u000a
+case 18
+fixed	class A { @RequireSessionAccess() constructor(@InjectRequestContext(AccountRequestContextKey) private a: string) {} }
+case 19
+fixed	function m(@InjectRequestContext(AccountRequestContextKey) a: string) {}
+case 20
+/tmp/wave11-ledger-harness/case-21/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 91 missingProtector 			10 91
+fixed	class A { constructor(@InjectRequestContext(AccountRequestContextKey) private a: string) {} }
+case 21
+/tmp/wave11-ledger-harness/case-22/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 22
+/tmp/wave11-ledger-harness/case-23/repository/source/SecurityRequireContextAccess.ts:1:15
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 14 15 missingProtector 			14 15
+fixed	class A { set m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 23
+/tmp/wave11-ledger-harness/case-24/repository/source/SecurityRequireContextAccess.ts:1:18
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 17 18 missingProtector 			17 18
+fixed	class A { static m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 24
+/tmp/wave11-ledger-harness/case-25/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 15 missingProtector 			10 15
+fixed	class A { [key](@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 25
+/tmp/wave11-ledger-harness/case-26/repository/source/SecurityRequireContextAccess.ts:1:19
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 18 19 missingProtector 			18 19
+fixed	const A = class { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} };
+case 26
+/tmp/wave11-ledger-harness/case-27/repository/source/SecurityRequireContextAccess.ts:2:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 62 63 missingProtector 			62 63
+fixed	import { AccountRequestContextKey as AK } from 'x';\u000aclass A { m(@InjectRequestContext(AK) a: string) {} }
+case 27
+/tmp/wave11-ledger-harness/case-28/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(AccountRequestContextKey) b: string) {} }
+case 28
+/tmp/wave11-ledger-harness/case-29/repository/source/SecurityRequireContextAccess.ts:2:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 56 57 missingProtector 			56 57
+fixed	import { AccountRequestContextKey } from 'x';\u000aclass A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 29
+/tmp/wave11-ledger-harness/case-30/repository/source/SecurityRequireContextAccess.ts:1:30
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 29 30 missingProtector 			29 30
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 30
+/tmp/wave11-ledger-harness/case-31/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string = 'x') {} }
+case 31
+/tmp/wave11-ledger-harness/case-32/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+/tmp/wave11-ledger-harness/case-32/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `DeviceIdRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireDeviceId()` or `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 32
+/tmp/wave11-ledger-harness/case-33/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a) {} }
+case 33
+/tmp/wave11-ledger-harness/case-34/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(Keys.AccountRequestContextKey) a: string) {} }
+case 34
+/tmp/wave11-ledger-harness/case-35/repository/source/SecurityRequireContextAccess.ts:1:30
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 29 30 missingProtector 			29 30
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 35
+/tmp/wave11-ledger-harness/case-36/repository/source/SecurityRequireContextAccess.ts:1:30
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 29 30 missingProtector 			29 30
+fixed	@RequireDeviceId() class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 36
+/tmp/wave11-ledger-harness/case-37/repository/source/SecurityRequireContextAccess.ts:1:42
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 41 42 missingProtector 			41 42
+fixed	class A { @Access.RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 37
+/tmp/wave11-ledger-harness/case-38/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AuthenticationRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireAuthenticationSession()` or `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AuthenticationRequestContextKey) a: string) {} }
+case 38
+/tmp/wave11-ledger-harness/case-39/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 20 missingProtector 			10 20
+fixed	class A { [computed](@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 39
+/tmp/wave11-ledger-harness/case-40/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) { a }: { a: string }) {} }
+case 40
+fixed	import { Something as AccountRequestContextKey } from 'x';\u000aclass A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 41
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: any) {} }
+case 42
+/tmp/wave11-ledger-harness/case-43/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) [a]: string[]) {} }
+case 43
+/tmp/wave11-ledger-harness/case-44/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) ...rest: string[]) {} }
+case 44
+/tmp/wave11-ledger-harness/case-45/repository/source/SecurityRequireContextAccess.ts:1:28
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 27 28 missingProtector 			27 28
+fixed	class A { @RequireDeviceId m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 45
+fixed	class A { @RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 46
+fixed	class A { @RequireSessionAccess m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 47
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | undefined = undefined) {} }
+case 48
+fixed	class A { @GraphQlFieldResolver() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 49
+fixed	class A { constructor(@InjectRequestContext(AccountRequestContextKey) private a?: string) {} }
+case 50
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: void) {} }
+case 51
+fixed	class A { m(@InjectRequestContext(Keys['AccountRequestContextKey']) a: string) {} }
+case 52
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: unknown) {} }
+case 53
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | (number | null)) {} }
+case 54
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | null) {} }
+case 55
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | undefined) {} }
+case 56
+fixed	@RequireSessionAccess() class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 57
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a?: string) {} }
+case 58
+fixed	class A { @WithSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 59
+fixed	class A { m(@InjectRequestContext(SomeOtherKey) a: string) {} }
+case 60
+fixed	@RequireSessionAccess class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 61
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(DeviceIdRequestContextKey) a: string) {} }
+case 62
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: undefined) {} }
+case 63
+fixed	@RequireSessionAccess() class A { constructor(@InjectRequestContext(AccountRequestContextKey) private readonly a: string) {} }
+case 64
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 65
+fixed	class A { @RequireAuthenticationSession() m(@InjectRequestContext(AuthenticationRequestContextKey) a: string) {} }
+case 66
+fixed	class A { m(@InjectRequestContext a: string) {} }
+case 67
+fixed	class A { m(@InjectRequestContext() a: string) {} }
+case 68
+fixed	class A { m(@InjectSomethingElse(AccountRequestContextKey) a: string) {} }
+case 69
+fixed	import { AccountRequestContextKey as AK } from 'x';\u000aclass A { @RequireSessionAccess() m(@InjectRequestContext(AK) a: string) {} }
+case 70
+fixed	class A { @RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 71
+fixed	const orderColumns = [];\u000a
+case 72
+fixed	const DATABASE_URL = process.env.DATABASE_URL ?? 'local';\u000a
+case 73
+/tmp/wave11-ledger-harness/case-74/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "STRIPE_WEBHOOK_SECRET" is file-local and should be camelCase ("stripeWebhookSecret"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 27 noScreamingSnakeCaseLocal 			6 27
+fixed	const STRIPE_WEBHOOK_SECRET = readSecret();\u000a
+case 74
+/tmp/wave11-ledger-harness/case-75/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "MAX_RETRY_COUNT" is file-local and should be camelCase ("maxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 21 noScreamingSnakeCaseLocal 			6 21
+fixed	const MAX_RETRY_COUNT = 3;\u000a
+case 75
+fixed	var MAX_RETRY_COUNT = 3;\u000a
+case 76
+fixed	let MAX_RETRY_COUNT = 3;\u000a
+case 77
+fixed	const RED = '#ff0000';\u000a
+case 78
+fixed	export const RED = '#ff0000';\u000a
+case 79
+fixed	const DATABASE_URL = process.env.DATABASE_URL;\u000a
+case 80
+fixed	const max_retry = 3;\u000a
+case 81
+fixed	export const OrderColumns = [];\u000a
+case 82
+/tmp/wave11-ledger-harness/case-83/repository/source/Thing.ts:1:14
+  nexus/consistency-no-screaming-snake-case  Constant "MAX_RETRY_COUNT" is exported and should be PascalCase ("MaxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 13 28 noScreamingSnakeCaseExported 			13 28
+fixed	export const MAX_RETRY_COUNT = 3;\u000a
+case 83
+fixed	export function run() {\u000a    return 1;\u000a}\u000a
+case 84
+fixed	const DATABASE_URL = process.env.DATABASE_URL || 'local';\u000a
+case 85
+fixed	const Max_Retry = 3;\u000a
+case 86
+fixed	const STRIPE_WEBHOOK_SECRET = readSecret();\u000a
+case 87
+/tmp/wave11-ledger-harness/case-88/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "SOME_PLATFORM" is file-local and should be camelCase ("somePlatform"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 19 noScreamingSnakeCaseLocal 			6 19
+fixed	const SOME_PLATFORM = process.platform;\u000a
+case 88
+/tmp/wave11-ledger-harness/case-89/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "STRIPE_WEBHOOK_SECRET_OLD" is file-local and should be camelCase ("stripeWebhookSecretOld"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 31 noScreamingSnakeCaseLocal 			6 31
+fixed	const STRIPE_WEBHOOK_SECRET_OLD = readSecret();\u000a
+case 89
+/tmp/wave11-ledger-harness/case-90/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "SOME_ARGUMENT" is file-local and should be camelCase ("someArgument"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 19 noScreamingSnakeCaseLocal 			6 19
+fixed	const SOME_ARGUMENT = process.argv[2];\u000a
+case 90
+/tmp/wave11-ledger-harness/case-91/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "API_V2_URL" is file-local and should be camelCase ("apiV2Url"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 16 noScreamingSnakeCaseLocal 			6 16
+fixed	const API_V2_URL = 'x';\u000a
+case 91
+/tmp/wave11-ledger-harness/case-92/repository/source/Thing.ts:1:14
+  nexus/consistency-no-screaming-snake-case  Constant "HTTP_TIMEOUT" is exported and should be PascalCase ("HttpTimeout"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 13 25 noScreamingSnakeCaseExported 			13 25
+fixed	export const HTTP_TIMEOUT = 5000;\u000a
+case 92
+/tmp/wave11-ledger-harness/case-93/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "DATABASE_URL" is file-local and should be camelCase ("databaseUrl"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 18 noScreamingSnakeCaseLocal 			6 18
+fixed	const DATABASE_URL = 'postgres://local';\u000a
+case 93
+/tmp/wave11-ledger-harness/case-94/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "ORDER_COLUMNS" is file-local and should be camelCase ("orderColumns"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 19 noScreamingSnakeCaseLocal 			6 19
+fixed	const ORDER_COLUMNS = [];\u000a
+case 94
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 95
+fixed	import { Thing } from './Thing';\u000a
+case 96
+fixed	import { thing } from 'next/link-utilities';\u000a
+case 97
+fixed	import { headers } from 'next/headers';\u000a
+case 98
+fixed	import { motion } from 'motion/react';\u000a
+case 99
+/tmp/wave11-ledger-harness/case-100/repository/source/Thing.tsx:4:23
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 159 171 forbiddenImageImport fix	'@structure/source/components/images/Image'		159 171
+fixed	// Dependencies - Frameworks\u000a// This is the only place this import is valid\u000a// eslint-disable-next-line nexus/import-no-forbidden-source\u000aimport NextImage from '@structure/source/components/images/Image';\u000a
+case 100
+fixed	const module = import(somePath);\u000a
+case 101
+fixed	import NextImage from 'next/image';\u000a
+case 102
+fixed	export const Value = 1;\u000a
+case 103
+/tmp/wave11-ledger-harness/case-104/repository/source/Thing.tsx:1:27
+  nexus/import-no-forbidden-source  Importing from 'next/navigation' is not allowed. Use '@structure/source/router/Navigation', which is the same navigation without binding the file to one framework's router.
+
+range 26 43 forbiddenNavigationImport fix	'@structure/source/router/Navigation'		26 43
+fixed	import { useRouter } from '@structure/source/router/Navigation';\u000a
+case 104
+/tmp/wave11-ledger-harness/case-105/repository/libraries/structure/source/router/hooks/useRouter.ts:1:24
+  nexus/import-no-forbidden-source  Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+
+range 23 38 forbiddenMotionImport fix	'motion/react'		23 38
+fixed	import { motion } from 'motion/react';\u000a
+case 105
+/tmp/wave11-ledger-harness/case-106/repository/libraries/structure/source/components/navigation/NavigationMenu.tsx:1:18
+  nexus/import-no-forbidden-source  Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+
+range 17 28 forbiddenLinkImport fix	'@structure/source/components/navigation/Link'		17 28
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 106
+/tmp/wave11-ledger-harness/case-107/repository/libraries/structure/source/components/images/dialogs/ImageDialog.tsx:1:19
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 18 30 forbiddenImageImport fix	'@structure/source/components/images/Image'		18 30
+fixed	import Image from '@structure/source/components/images/Image';\u000a
+case 107
+fixed	const NextImage = import('next/image');\u000a
+case 108
+fixed	import { useRouter as useNextRouter } from 'next/navigation';\u000a
+case 109
+fixed	import { usePathname } from 'next/navigation';\u000a
+case 110
+fixed	import NextLink from 'next/link';\u000a
+case 111
+/tmp/wave11-ledger-harness/case-112/repository/source/Thing.tsx:1:41
+  nexus/import-no-forbidden-source  Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+
+range 40 55 forbiddenMotionImport fix	'motion/react'		40 55
+fixed	import { motion, AnimatePresence } from 'motion/react';\u000a
+case 112
+/tmp/wave11-ledger-harness/case-113/repository/source/Thing.tsx:1:22
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 21 33 forbiddenImageImport fix	'@structure/source/components/images/Image'		21 33
+fixed	const Image = import('@structure/source/components/images/Image');\u000a
+case 113
+/tmp/wave11-ledger-harness/case-114/repository/source/Thing.tsx:1:22
+  nexus/import-no-forbidden-source  Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+
+range 21 32 forbiddenLinkImport fix	'@structure/source/components/navigation/Link'		21 32
+fixed	const Link = require('@structure/source/components/navigation/Link');\u000a
+case 114
+/tmp/wave11-ledger-harness/case-115/repository/source/Thing.tsx:1:24
+  nexus/import-no-forbidden-source  Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+
+range 23 38 forbiddenMotionImport fix	'motion/react'		23 38
+fixed	import { motion } from 'motion/react';\u000a
+case 115
+/tmp/wave11-ledger-harness/case-116/repository/source/Thing.tsx:1:19
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 18 30 forbiddenImageImport fix	'@structure/source/components/images/Image'		18 30
+fixed	import Image from '@structure/source/components/images/Image';\u000a
+case 116
+/tmp/wave11-ledger-harness/case-117/repository/source/Thing.tsx:1:18
+  nexus/import-no-forbidden-source  Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+
+range 17 28 forbiddenLinkImport fix	'@structure/source/components/navigation/Link'		17 28
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 117
+fixed	import { thing } from 'framer-motion-extras';\u000a
+case 118
+/tmp/wave11-ledger-harness/case-119/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 46 useAlias fix	'@project/source/foundation/Thing'		22 46
+fixed	import { Thing } from '@project/source/foundation/Thing';\u000a
+case 119
+/tmp/wave11-ledger-harness/case-120/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 46 useAlias fix	"@project/source/foundation/Thing"		22 46
+fixed	import { Thing } from "@project/source/foundation/Thing";\u000a
+case 120
+/tmp/wave11-ledger-harness/case-121/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@project/app/shared/Helper'		23 44
+fixed	import { Helper } from '@project/app/shared/Helper';\u000a
+case 121
+/tmp/wave11-ledger-harness/case-122/repository/app/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../../libraries/base/source/Thing' climbs 3 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@base/source/Thing', which reads the same from any file and survives this one moving.
+
+range 22 60 useAlias fix	'@base/source/Thing'		22 60
+fixed	import { Thing } from '@base/source/Thing';\u000a
+case 122
+/tmp/wave11-ledger-harness/case-123/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@project/app/shared/Helper'		23 44
+fixed	import { Helper } from '@project/app/shared/Helper';\u000a
+case 123
+/tmp/wave11-ledger-harness/case-124/repository/libraries/base/deep/nested/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../source/foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@basesource/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 53 useAlias fix	'@basesource/foundation/Thing'		22 53
+fixed	import { Thing } from '@basesource/foundation/Thing';\u000a
+case 124
+fixed	import { Sibling } from './Sibling';\u000a
+case 125
+fixed	const thing = import(somePath);\u000a
+case 126
+fixed	import { Thing } from '../../../other/Thing';\u000a
+case 127
+fixed	import { Detail } from '../../internal/Detail';\u000a
+case 128
+fixed	import * as NodePath from 'node:path';\u000a
+case 129
+fixed	import { Thing } from '@base/source/Thing';\u000a
+case 130
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 131
+fixed	import { Parent } from '../Parent';\u000a
+case 132
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 133
+fixed	import { Thing } from '../../elsewhere/Thing';\u000a
+case 134
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 135
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 136
+/tmp/wave11-ledger-harness/case-137/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@app/shared/Helper'		23 44
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 137
+/tmp/wave11-ledger-harness/case-138/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@app/shared/Helper'		23 44
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 138
+/tmp/wave11-ledger-harness/case-139/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@app/shared/Helper'		23 44
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 139
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 140
+/tmp/wave11-ledger-harness/case-141/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 46 useAlias fix	'@project/source/foundation/Thing'		22 46
+fixed	const thing = require('@project/source/foundation/Thing');\u000a
+case 141
+/tmp/wave11-ledger-harness/case-142/repository/libraries/base/source/deep/Thing.ts:1:23
+  nexus/import-require-path-alias  '../Other' is relative, and everything under 'libraries/base' is imported by alias so one path means one thing in every project that reads it. Import it as '@base/source/Other'.
+
+range 22 32 useAliasInStrictRoot fix	'@base/source/Other'		22 32
+fixed	import { Other } from '@base/source/Other';\u000a
+case 142
+/tmp/wave11-ledger-harness/case-143/repository/libraries/base/source/Thing.ts:1:23
+  nexus/import-require-path-alias  './Other' is relative, and everything under 'libraries/base' is imported by alias so one path means one thing in every project that reads it. Import it as '@base/source/Other'.
+
+range 22 31 useAliasInStrictRoot fix	'@base/source/Other'		22 31
+fixed	import { Other } from '@base/source/Other';\u000a
+case 143
+/tmp/wave11-ledger-harness/case-144/repository/source/features/orders/Thing.ts:1:22
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 21 45 useAlias fix	'@project/source/foundation/Thing'		21 45
+fixed	const thing = import('@project/source/foundation/Thing');\u000a
+case 144
+/tmp/wave11-ledger-harness/case-145/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../../source/foundation/Thing' climbs 3 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 56 useAlias fix	'@project/source/foundation/Thing'		22 56
+fixed	import { Thing } from '@project/source/foundation/Thing';\u000a
+case 145
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 146
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 147
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 148
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 149
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 150
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 151
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a

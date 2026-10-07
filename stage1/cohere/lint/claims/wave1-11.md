@@ -63,3 +63,7 @@ Owned work is pushed at ca2a9d5a. The two Tailwind rules remain explicitly block
 3. `nexus/import-require-path-alias`
 
 This claim update is pushed before writing rule code.
+
+## Dedup handoff, harness 41eb6eab2
+
+The published ledger supersedes our three duplicate reservations: physical-direction and require-description belong to wave1-05; Google-font-display belongs to wave1-01. Our losing copies are removed. Five unique/winning rule ports remain, with owned comparison code and current evidence under ../rules/adamic-no-definite-assignment/DEDUP_REPORT.md. The moved LEGACY reports/evidence preserve the old scope without claiming the retired rules. Shared witness options and one parser refusal remain explicitly parked under #zmh9v36. No new batch rule or helper is claimed.

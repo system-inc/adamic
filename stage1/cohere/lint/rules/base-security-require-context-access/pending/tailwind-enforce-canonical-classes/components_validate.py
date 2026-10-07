@@ -10,7 +10,7 @@ def run(label,cmd,cwd=ROOT):
  return (S/(label+'.log')).read_bytes()
 virtual=ROOT/'cohere/wave11_tailwind_components.go';export=ROOT/'cohere/internal/lint/rules/tailwind/wave11_components.go';overlay=S/'overlay.json';overlay.write_text(json.dumps({'Replace':{str(virtual):str(HERE/'component_oracle.go.txt'),str(export):str(HERE/'component_exports.go.txt')}}))
 run('Go-build',['go','build','-overlay='+str(overlay),'-o',S/'oracle',virtual],ROOT/'cohere');want=run('Go',[S/'oracle',HERE/'component_cases.json'])
-builder=HERE.parents[2]/'structure-tailwind-no-physical-direction/validation_build.go';run('build',['go','run',builder,HERE/'components.a',S/'native',S/'emitted.mjs'])
+builder=HERE.parents[2]/'adamic-no-definite-assignment/validation_build.go';run('build',['go','run',builder,HERE/'components.a',S/'native',S/'emitted.mjs'])
 def check(label,source,native,js,mutant=False):
  for name,cmd in [('Node',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',source,HERE/'component_cases.json']),('emitted',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',js,HERE/'component_cases.json']),('native',[native,HERE/'component_cases.json'])]:
   got=run(label+'-'+name,cmd);assert (got!=want)==mutant,name;print(label,name,'byte-only catch' if mutant else 'equal',flush=True)

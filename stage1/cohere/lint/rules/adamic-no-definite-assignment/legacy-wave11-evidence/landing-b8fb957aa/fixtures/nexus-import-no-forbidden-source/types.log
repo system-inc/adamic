@@ -1,0 +1,49 @@
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:10:10: function read: (path: string) => string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:10:15: parameter path: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:10:45: variable value: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:12:10: function escaped: (text: string) => string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:12:18: parameter text: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:13:11: variable chunks: string[]
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:14:13: variable start: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:17:10: function compare: (left: Finding, right: Finding) => number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:17:18: parameter left: Finding
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:17:33: parameter right: Finding
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:18:7: variable args: readonly string[]
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:19:7: variable corpus: OptionsJson
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:20:7: variable root: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:21:7: variable countOnly: boolean
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:22:7: variable independent: boolean
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:23:10: function field: (index: number, name: string) => string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:23:16: parameter index: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:23:31: parameter name: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:23:61: variable id: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:24:5: variable caseNumber: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:25:5: variable count: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:26:11: variable row: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:27:11: variable source: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:28:11: variable name: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:29:11: variable selected: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:30:11: variable parser: Parser
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:31:9: variable tree: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:37:15: variable adapted: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:39:19: variable raw: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:40:19: variable children: number[]
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:41:23: variable child: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:42:19: variable node: ParseNode
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:48:11: variable parents: number[]
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:49:13: variable index: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:49:74: variable child: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:50:11: variable settings: Settings
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:52:11: variable context: RuleContext
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:53:11: variable rule: Rule
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:54:11: variable stack: number[]
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:56:15: variable index: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:57:15: variable kind: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:59:15: variable children: number[]
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:60:17: variable child: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:66:19: variable finding: Finding
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:68:19: variable start: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:69:19: variable end: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:73:13: variable fixed: string
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:74:17: variable i: number
+stage1/cohere/lint/rules/nexus-import-no-forbidden-source/validation.a:74:71: variable finding: Finding

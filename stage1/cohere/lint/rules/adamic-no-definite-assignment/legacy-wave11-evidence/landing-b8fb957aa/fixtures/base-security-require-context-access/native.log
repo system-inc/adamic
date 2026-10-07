@@ -1,0 +1,132 @@
+case 0
+fixed	class A { @RequireSessionAccess() constructor(@InjectRequestContext(AccountRequestContextKey) private a: string) {} }
+case 1
+fixed	const A = @RequireSessionAccess() class { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} };
+case 2
+fixed	function m(@InjectRequestContext(AccountRequestContextKey) a: string) {}
+case 3
+base/security-require-context-access	missingProtector	10 91	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { constructor(@InjectRequestContext(AccountRequestContextKey) private a: string) {} }
+case 4
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 5
+base/security-require-context-access	missingProtector	14 15	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { set m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 6
+base/security-require-context-access	missingProtector	17 18	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { static m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 7
+base/security-require-context-access	missingProtector	10 15	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { [key](@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 8
+base/security-require-context-access	missingProtector	18 19	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	const A = class { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} };
+case 9
+base/security-require-context-access	missingProtector	62 63	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	import { AccountRequestContextKey as AK } from 'x';\u000aclass A { m(@InjectRequestContext(AK) a: string) {} }
+case 10
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(AccountRequestContextKey) b: string) {} }
+case 11
+base/security-require-context-access	missingProtector	56 57	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	import { AccountRequestContextKey } from 'x';\u000aclass A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 12
+base/security-require-context-access	missingProtector	29 30	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 13
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string = 'x') {} }
+case 14
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+base/security-require-context-access	missingProtector	10 11	This injects `DeviceIdRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireDeviceId()` or `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 15
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a) {} }
+case 16
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(Keys.AccountRequestContextKey) a: string) {} }
+case 17
+base/security-require-context-access	missingProtector	29 30	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 18
+base/security-require-context-access	missingProtector	29 30	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	@RequireDeviceId() class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 19
+base/security-require-context-access	missingProtector	41 42	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { @Access.RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 20
+base/security-require-context-access	missingProtector	10 11	This injects `AuthenticationRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireAuthenticationSession()` or `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AuthenticationRequestContextKey) a: string) {} }
+case 21
+base/security-require-context-access	missingProtector	10 20	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { [computed](@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 22
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) { a }: { a: string }) {} }
+case 23
+fixed	import { Something as AccountRequestContextKey } from 'x';\u000aclass A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 24
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: any) {} }
+case 25
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) [a]: string[]) {} }
+case 26
+base/security-require-context-access	missingProtector	10 11	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) ...rest: string[]) {} }
+case 27
+base/security-require-context-access	missingProtector	27 28	This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+fixed	class A { @RequireDeviceId m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 28
+fixed	class A { @RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 29
+fixed	class A { @RequireSessionAccess m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 30
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | undefined = undefined) {} }
+case 31
+fixed	class A { @GraphQlFieldResolver() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 32
+fixed	class A { constructor(@InjectRequestContext(AccountRequestContextKey) private a?: string) {} }
+case 33
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: void) {} }
+case 34
+fixed	class A { m(@InjectRequestContext(Keys['AccountRequestContextKey']) a: string) {} }
+case 35
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: unknown) {} }
+case 36
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | (number | null)) {} }
+case 37
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | null) {} }
+case 38
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | undefined) {} }
+case 39
+fixed	@RequireSessionAccess() class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 40
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a?: string) {} }
+case 41
+fixed	class A { @WithSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 42
+fixed	class A { m(@InjectRequestContext(SomeOtherKey) a: string) {} }
+case 43
+fixed	@RequireSessionAccess class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 44
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(DeviceIdRequestContextKey) a: string) {} }
+case 45
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: undefined) {} }
+case 46
+fixed	@RequireSessionAccess() class A { constructor(@InjectRequestContext(AccountRequestContextKey) private readonly a: string) {} }
+case 47
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 48
+fixed	class A { @RequireAuthenticationSession() m(@InjectRequestContext(AuthenticationRequestContextKey) a: string) {} }
+case 49
+fixed	class A { m(@InjectRequestContext a: string) {} }
+case 50
+fixed	class A { m(@InjectRequestContext() a: string) {} }
+case 51
+fixed	class A { m(@InjectSomethingElse(AccountRequestContextKey) a: string) {} }
+case 52
+fixed	import { AccountRequestContextKey as AK } from 'x';\u000aclass A { @RequireSessionAccess() m(@InjectRequestContext(AK) a: string) {} }
+case 53
+fixed	class A { @RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }

@@ -1,0 +1,86 @@
+=== RUN   TestNoDefiniteAssignmentFiresOnBothForms
+=== PAUSE TestNoDefiniteAssignmentFiresOnBothForms
+=== RUN   TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed
+=== PAUSE TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms
+=== CONT  TestNoDefiniteAssignmentFiresOnBothForms
+=== RUN   TestNoDefiniteAssignmentFiresOnBothForms/a_variable
+=== PAUSE TestNoDefiniteAssignmentFiresOnBothForms/a_variable
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms
+=== RUN   TestNoDefiniteAssignmentFiresOnBothForms/a_private_field
+=== PAUSE TestNoDefiniteAssignmentFiresOnBothForms/a_private_field
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/02_fizzbuzz.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/02_fizzbuzz.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/04_closures.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/04_closures.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/05_wordcount.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/05_wordcount.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/main.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/main.ts
+=== RUN   TestNoDefiniteAssignmentFiresOnBothForms/a_field
+=== PAUSE TestNoDefiniteAssignmentFiresOnBothForms/a_field
+=== CONT  TestNoDefiniteAssignmentFiresOnBothForms/a_variable
+=== CONT  TestNoDefiniteAssignmentFiresOnBothForms/a_field
+=== CONT  TestNoDefiniteAssignmentFiresOnBothForms/a_private_field
+=== RUN   TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_initializer
+=== PAUSE TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_initializer
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/10_unicode.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/10_unicode.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/01_hello.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/01_hello.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/03_shapes.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/03_shapes.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/06_stack.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/06_stack.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/geometry.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/geometry.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/08_results.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/08_results.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/09_tree.ts
+=== PAUSE TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/09_tree.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/02_fizzbuzz.ts
+=== RUN   TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_optional_field
+=== PAUSE TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_optional_field
+=== RUN   TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/a_constructor
+=== PAUSE TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/a_constructor
+=== RUN   TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/the_expression_form
+=== PAUSE TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/the_expression_form
+=== CONT  TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_initializer
+=== CONT  TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/a_constructor
+=== CONT  TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/the_expression_form
+=== CONT  TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_optional_field
+--- PASS: TestNoDefiniteAssignmentFiresOnBothForms (0.00s)
+    --- PASS: TestNoDefiniteAssignmentFiresOnBothForms/a_variable (0.07s)
+    --- PASS: TestNoDefiniteAssignmentFiresOnBothForms/a_private_field (0.07s)
+    --- PASS: TestNoDefiniteAssignmentFiresOnBothForms/a_field (0.08s)
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/03_shapes.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/09_tree.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/08_results.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/geometry.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/06_stack.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/main.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/01_hello.ts
+--- PASS: TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed (0.01s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_optional_field (0.00s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/the_expression_form (0.01s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/an_initializer (0.08s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanWhereNothingIsClaimed/a_constructor (0.01s)
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/10_unicode.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/05_wordcount.ts
+=== CONT  TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/04_closures.ts
+--- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms (0.00s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/02_fizzbuzz.ts (0.07s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/09_tree.ts (0.00s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/03_shapes.ts (0.01s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/main.ts (0.02s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/08_results.ts (0.03s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/07_modules/geometry.ts (0.03s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/06_stack.ts (0.03s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/10_unicode.ts (0.01s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/05_wordcount.ts (0.00s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/01_hello.ts (0.03s)
+    --- PASS: TestNoDefiniteAssignmentStaysCleanOnAdamicsPrograms/04_closures.ts (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/adamic	0.150s

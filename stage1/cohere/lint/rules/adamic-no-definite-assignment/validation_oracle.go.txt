@@ -1,0 +1,147 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	adamicRules "github.com/system-inc/cohere/internal/lint/rules/adamic"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"unicode/utf16"
+	"unicode/utf8"
+)
+
+type Row struct {
+	Name        string           `json:"name"`
+	Source      string           `json:"source"`
+	Rule        string           `json:"rule"`
+	Options     string           `json:"options"`
+	Ast         []map[string]any `json:"ast,omitempty"`
+	Root        int              `json:"root"`
+	Diagnostics int              `json:"diagnostics"`
+}
+
+func written(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+func sourceFile(row Row) *ast.SourceFile {
+	name := filepath.Join("/", row.Name)
+	kind := core.ScriptKindTS
+	if strings.HasSuffix(row.Name, ".tsx") {
+		kind = core.ScriptKindTSX
+	}
+	if strings.HasSuffix(row.Name, ".js") {
+		kind = core.ScriptKindJS
+	}
+	return parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: name, Path: tspath.Path(name)}, row.Source, kind)
+}
+func collect(row Row, file *ast.SourceFile) []rule.Diagnostic {
+	var subject rule.Rule
+	var options any
+	switch row.Rule {
+	case "adamic/no-definite-assignment":
+		subject = adamicRules.NoDefiniteAssignment
+	default:
+		panic("unknown rule")
+	}
+	var diagnostics []rule.Diagnostic
+	ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
+	listeners := subject.Run(ctx, options)
+	var walk func(*ast.Node)
+	walk = func(node *ast.Node) {
+		if f := listeners[node.Kind]; f != nil {
+			f(node)
+		}
+		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+	}
+	walk(file.AsNode())
+	sort.SliceStable(diagnostics, func(i, j int) bool { return diagnostics[i].Range.Pos() < diagnostics[j].Range.Pos() })
+	return diagnostics
+}
+func main() {
+	var rows []Row
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	if err = json.Unmarshal(data, &rows); err != nil {
+		panic(err)
+	}
+	mode := ""
+	if len(os.Args) > 2 {
+		mode = os.Args[2]
+	}
+	count := 0
+	for index := range rows {
+		row := &rows[index]
+		file := sourceFile(*row)
+		row.Diagnostics = len(file.Diagnostics())
+		if mode == "--ast" {
+			offsets := map[int]int{}
+			unit := 0
+			for position, point := range row.Source {
+				offsets[position] = unit
+				if point > 65535 {
+					unit += 2
+				} else {
+					unit++
+				}
+				offsets[position+utf8.RuneLen(point)] = unit
+			}
+			offsets[len(row.Source)] = unit
+			var nodes []map[string]any
+			var walk func(*ast.Node) int
+			walk = func(node *ast.Node) int {
+				children := []int{}
+				node.ForEachChild(func(child *ast.Node) bool { children = append(children, walk(child)); return false })
+				text := ""
+				switch node.Kind {
+				case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTemplateHead, ast.KindTemplateMiddle, ast.KindTemplateTail:
+					text = node.Text()
+				}
+				nodes = append(nodes, map[string]any{"kind": strings.TrimPrefix(node.Kind.String(), "Kind"), "pos": offsets[node.Pos()], "end": offsets[node.End()], "children": children, "text": text})
+				return len(nodes) - 1
+			}
+			row.Root = walk(file.AsNode())
+			row.Ast = nodes
+			continue
+		}
+		findings := collect(*row, file)
+		count += len(findings)
+		if mode == "--count" {
+			continue
+		}
+		fmt.Printf("case %d\n", index)
+		for _, d := range findings {
+			if len(d.Fixes) != 0 || len(d.Suggestions) != 0 {
+				panic("new repair shape: update owned harness")
+			}
+			fmt.Printf("%s\t%s\t%d %d\t%s\n", d.RuleName, d.Message.Id, d.Range.Pos(), d.Range.End(), written(d.Message.Description))
+		}
+		fmt.Printf("fixed\t%s\n", written(row.Source))
+	}
+	if mode == "--ast" {
+		if err = json.NewEncoder(os.Stdout).Encode(rows); err != nil {
+			panic(err)
+		}
+	} else if mode == "--count" {
+		fmt.Println(count)
+	}
+}

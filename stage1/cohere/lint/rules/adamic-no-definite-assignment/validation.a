@@ -1,0 +1,76 @@
+import { panic, programArguments, readTextFile, utf8Length } from 'adamic';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { ParseNode, written } from '../../../../typescript/parser/nodes.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { Settings } from '../../settings.ts';
+import { RuleContext } from '../../context.ts';
+import { create as definite } from './rule.ts';
+import type { Finding } from '../../finding.ts';
+function read(path: string): string { const value = readTextFile(path); if(value.kind === 'Error') { panic(value.message); } return value.text; }
+// Bound native concatenation work while preserving the exact canonical escape stream.
+function escaped(text: string): string {
+    const chunks: string[] = [];
+    for(let start = 0; start < text.length; start += 1024) { chunks.push(written(text.slice(start, start + 1024))); }
+    return chunks.join('');
+}
+function compare(left: Finding, right: Finding): number { return left.start - right.start; }
+const args = programArguments();
+const corpus = new OptionsJson(read(args[0] ?? panic('corpus path')));
+const root = corpus.parse();
+const countOnly = args.includes('--count');
+const independent = args.includes('--parse');
+function field(index: number, name: string): string { const id = corpus.field(index, name); return id < 0 ? '' : corpus.node(id).text; }
+let caseNumber = 0;
+let count = 0;
+for(const row of corpus.node(root).children) {
+    const source = field(row, 'source');
+    const name = field(row, 'name');
+    const selected = field(row, 'rule');
+    const parser = new Parser(source, name);
+    let tree = -1;
+    if(independent) {
+        if(name.endsWith('.tsx')) { panic('NotYet: stage-1 JSX parser adapter'); }
+        tree = parser.file();
+    }
+    else {
+        const adapted = corpus.field(row, 'ast');
+        if(adapted < 0) { panic('missing independent Go AST projection'); }
+        for(const raw of corpus.node(adapted).children) {
+            const children: number[] = [];
+            for(const child of corpus.node(corpus.field(raw, 'children')).children) { children.push(Number(corpus.node(child).text)); }
+            const node = new ParseNode(field(raw, 'kind'), Number(field(raw, 'pos')), Number(field(raw, 'end')), children);
+            node.text = field(raw, 'text');
+            parser.nodes.push(node);
+        }
+        tree = Number(field(row, 'root'));
+    }
+    const parents = parser.nodes.map(() => -1);
+    for(let index = 0; index < parser.nodes.length; index++) { for(const child of parser.node(index).children) { parents[child] = index; } }
+    const settings = new Settings();
+    settings.load(field(row, 'options'));
+    const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings);
+    const d = definite(context);
+    const stack = [tree];
+    while(stack.length > 0) {
+        const index = stack.pop() ?? panic("missing traversal node");
+        const kind = parser.node(index).kind;
+        if(selected === 'adamic/no-definite-assignment' && (kind === 'PropertyDeclaration' || kind === 'VariableDeclaration')) { d.visit(index); }
+        const children = parser.node(index).children;
+        for(let child = children.length - 1; child >= 0; child--) { stack.push(children[child] ?? panic("missing child")); }
+    }
+    context.findings.sort(compare);
+    count += context.findings.length;
+    if(!countOnly) {
+        console.log(`case ${caseNumber}`);
+        for(const finding of context.findings) {
+            if(finding.repair !== '' || finding.suggestion !== '') { panic('unexpected repair'); }
+            const start = utf8Length(source.slice(0, finding.start));
+            const end = utf8Length(source.slice(0, finding.end));
+            console.log(`${finding.rule}\t${finding.id}\t${start} ${end}\t${written(finding.message)}`);
+        }
+        console.log(`fixed\t${escaped(source)}`);
+    }
+    caseNumber++;
+}
+if(countOnly) { console.log(`${count}`); }

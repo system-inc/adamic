@@ -1,6 +1,0 @@
-{
-  "name": "fallback_display_ignored",
-  "file": "rule.ts",
-  "from": "display === 'auto' || display === 'block' || display === 'fallback'",
-  "to": "display === 'auto' || display === 'block'"
-}

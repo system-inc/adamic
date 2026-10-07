@@ -1,0 +1,7 @@
+[
+  {
+    "manifest": "/tmp/wave11-ledger-harness/case-19/repository/source/SecurityRequireContextAccess.ts\tbase/security-require-context-access\t\t\tfalse\t{\"requirements\":[{\"contextKey\":\"AccountRequestContextKey\",\"requiresAny\":[\"RequireSessionAccess\",\"WithSessionAccess\"]},{\"contextKey\":\"AuthenticationRequestContextKey\",\"requiresAny\":[\"RequireAuthenticationSession\",\"RequireSessionAccess\",\"WithSessionAccess\"]},{\"contextKey\":\"DeviceIdRequestContextKey\",\"requiresAny\":[\"RequireDeviceId\",\"RequireSessionAccess\",\"WithSessionAccess\"]}]}\t",
+    "source": "const A = @RequireSessionAccess() class { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} };",
+    "stderr": "adamic: panic: parser slice unsupported primary AtToken at 10 in /tmp/wave11-ledger-harness/case-19/repository/source/SecurityRequireContextAccess.ts\n"
+  }
+]
