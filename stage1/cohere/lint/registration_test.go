@@ -150,6 +150,17 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 			t.Fatal(err)
 		}
 		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
+		// A witness in a directory under testdata is linted at that relative path, for a rule that judges it.
+		relative, err := filepath.Rel(filepath.Join(directory, "rules", slug, "testdata"), path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if filepath.Dir(relative) != "." {
+			target = filepath.Join(t.TempDir(), strings.TrimSuffix(relative, ".txt"))
+			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+				t.Fatal(err)
+			}
+		}
 		if err := os.WriteFile(target, data, 0644); err != nil {
 			t.Fatal(err)
 		}
