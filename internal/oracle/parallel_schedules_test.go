@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -62,7 +63,12 @@ func TestParallelSchedules(t *testing.T) {
 						t.Run(name, func(t *testing.T) {
 							for repetition := 1; repetition <= repetitions; repetition++ {
 								// A fresh command.Run on the same binary, never a cached observation or a rebuild.
-								observed := executeParallel(t, threads, false, binary)
+								// Match the runtime oracle's bounded TSan allowance under gate load.
+								deadline := time.Minute
+								if build.options.ThreadSanitize {
+									deadline = 5 * time.Minute
+								}
+								observed := executeParallelDeadline(t, threads, false, deadline, binary)
 								completed++
 								executions++
 								t.Logf("execution=%d threads=%s repetition=%d/%d exit=%d", executions, name, repetition, repetitions, observed.exitCode)
