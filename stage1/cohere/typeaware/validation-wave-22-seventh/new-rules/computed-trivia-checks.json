@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "/workspace/wave-22-seventh-work/oracle",
+      "/workspace/wave-22-seventh-work/tsconfig.json",
+      "/workspace/wave-22-seventh-work/computed-trivia.manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/workspace/wave-22-seventh-work/native",
+      "/workspace/wave-22-seventh-work/tsconfig.json",
+      "/workspace/wave-22-seventh-work/computed-trivia.manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/workspace/wave-22-seventh-work/native-asan",
+      "/workspace/wave-22-seventh-work/tsconfig.json",
+      "/workspace/wave-22-seventh-work/computed-trivia.manifest"
+    ],
+    "exit": 0
+  }
+]
