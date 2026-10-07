@@ -1,0 +1,92 @@
+case 0
+fixed	declare const foo: any;\u000adeclare const key: any;\u000aexport const r = foo?.[key!];\u000a
+case 1
+fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+case 2
+finding	42	51	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	50	51	
+fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+case 3
+finding	41	52	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	51	52	
+fixed	declare const foo: any;\u000aexport const r = (foo?.bar)!();\u000a
+case 4
+finding	41	52	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	51	52	
+fixed	declare const foo: any;\u000aexport const r = (foo?.bar)!.baz;\u000a
+case 5
+finding	41	52	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	51	52	
+fixed	declare const foo: any;\u000aexport const r = (foo?.bar)!;\u000a
+case 6
+fixed	declare const foo: any;\u000aexport const r = (foo?.bar);\u000a
+case 7
+fixed	declare const foo: any;\u000aexport const r = foo!!;\u000a
+case 8
+fixed	declare const foo: any;\u000aexport const r = foo!.bar;\u000a
+case 9
+fixed	declare const foo: any;\u000aexport const r = foo!;\u000a
+case 10
+fixed	declare const foo: any;\u000aexport const r = foo!?.bar;\u000a
+case 11
+finding	41	53	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	52	53	
+fixed	declare const foo: any;\u000aexport const r = foo.bar?.()!;\u000a
+case 12
+finding	41	50	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	49	50	
+fixed	declare const foo: any;\u000aexport const r = foo?.[0]!;\u000a
+case 13
+fixed	declare const foo: any;\u000aexport const r = foo?.bar!();\u000a
+case 14
+fixed	declare const foo: any;\u000aexport const r = foo?.bar!.baz.qux;\u000a
+case 15
+fixed	declare const foo: any;\u000aexport const r = foo?.bar!.baz;\u000a
+case 16
+finding	41	50	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	49	50	
+fixed	declare const foo: any;\u000aexport const r = foo?.bar!;\u000a
+case 17
+fixed	declare const foo: any;\u000aexport const r = foo?.bar![0];\u000a
+case 18
+finding	41	52	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	51	52	
+fixed	declare const foo: any;\u000aexport const r = foo?.bar()!;\u000a
+case 19
+finding	41	54	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	53	54	
+fixed	declare const foo: any;\u000aexport const r = foo?.bar.baz!;\u000a
+case 20
+fixed	declare const foo: any;\u000aexport const r = foo?.bar;\u000a
+case 21
+finding	60	72	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	71	72	
+fixed	declare const foo: { bar?: () => string };\u000aexport const a = foo.bar?.()!;\u000a
+case 22
+finding	54	63	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	62	63	
+fixed	declare const foo: { bar?: string };\u000aexport const a = foo?.bar!;\u000a
+case 23
+fixed	export let value!: number;\u000a
+case 24
+finding	0	9	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	8	9	
+finding	11	22	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	21	22	
+finding	24	35	noNonNullOptionalChain	An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+suggestion	suggestRemovingNonNull	Remove the non-null assertion.
+edit	34	35	
+fixed	foo?.bar!; (foo?.bar)!; foo?.bar()!; foo?.bar!.baz; foo?.bar!();\u000a
