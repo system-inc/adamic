@@ -608,6 +608,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.RecordCoalesce:
+		return e.recordCoalesce(expression)
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

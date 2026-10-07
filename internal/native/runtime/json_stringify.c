@@ -125,7 +125,7 @@ static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) 
 			}
 			}
 		}
-	} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array) && value.reference == NULL) {
+	} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array || kind == adamic_json_record) && value.reference == NULL) {
 		kind = adamic_json_undefined;
 	}
 	return (json_scalar){kind, value};
@@ -180,6 +180,25 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 		if (count != 0) { indent(w, depth); }
 		ascii(w, "]");
 		return true;
+	}
+	case adamic_json_record: {
+		const adamic_record *record = value.reference;
+		adamic_array *ordered = adamic_record_keys(record);
+		ascii(w, "{");
+		size_t written = 0;
+		size_t count = w->key_list ? w->key_count : ordered->length;
+		for (size_t index = 0; index < count; index++) {
+			adamic_string *key = w->key_list ? w->keys[index] : ordered->elements[index].reference;
+			const adamic_value *slot = adamic_record_get_own(record, key);
+			if (slot == NULL) { continue; }
+			json_scalar item = scalar(*slot, schema->element->kind);
+			if (item.kind == adamic_json_undefined || item.kind == adamic_json_function) { continue; }
+			if (written++ != 0) { ascii(w, ","); }
+			indent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? ": " : ":");
+			(void)write_value(w, *slot, schema->element, depth + 1);
+		}
+		if (written != 0) { indent(w, depth); }
+		ascii(w, "}"); adamic_release(ordered); return true;
 	}
 	case adamic_json_object: {
 		const adamic_object *object = value.reference;
