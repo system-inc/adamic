@@ -91,3 +91,74 @@ exact HttpRequest conversion, Response construction, split UTF-8 writes,
 partial-line exit flushing, fdstat fields and named unsupported-import rejection.
 No deployed Worker, workerd witness, benchmark, compiler change or Adamic
 HttpRequest decoding glue is claimed by this unit.
+
+## Generated per-export crossings
+
+For the version-1 contract in `docs/wasm-abi.md`, build and generate with:
+
+```sh
+adamic build --target wasm32-wasi entry.a -o compute.wasm --reactor --abi-json compute.json
+node internal/worker/wasm/generate-crossing.mjs compute.json compute.mjs
+```
+
+The generator writes `createCrossing(module, { logger })` and copies `wtf8.mjs`,
+`crossing-runtime.mjs` and `wasi.mjs` beside it. Keep those files with the generated
+module when bundling. Create one crossing object at module scope per isolate.
+Schemas are resolved at generation time: record fields and argument marshalling
+are unrolled; only array elements loop during a call. Scalar arguments go directly
+to Wasm. The independent WTF-8 codec preserves lone UTF-16 surrogates. For a
+single `(string) -> string` export named `stringValue`, the emitted wrapper is:
+
+```js
+["stringValue"]: function crossing0(argument0) {
+if (arguments.length !== 1) throw new TypeError('ABI argument count mismatch');
+return lifecycle.run(context => {
+const api = context.api;
+let input0;
+let handle;
+try {
+const bytes0 = encodeWTF8(argument0);
+input0 = context.invoke('adamic_alloc', bytes0.length) >>> 0;
+new Uint8Array(api.memory.buffer, input0, bytes0.length).set(bytes0);
+const returned = context.invoke("adamic_export_stringValue", input0, bytes0.length);
+handle = returned >>> 0;
+const pointer = context.invoke('adamic_result_bytes', handle) >>> 0;
+const length = context.invoke('adamic_result_length', handle) >>> 0;
+const bytes = new Uint8Array(api.memory.buffer, pointer, length);
+return decodeWTF8(bytes);
+} finally {
+if (context.alive) {
+if (handle !== undefined) context.invoke('adamic_result_release', handle);
+if (input0 !== undefined) context.invoke('adamic_free', input0);
+}
+}
+});
+}
+```
+
+The primitive runtime applies the same initialization, termination and
+reentrancy rules as the request host. Normal calls decode before releasing their
+result and free each input once, including on JS decoding failure. A throwing
+Wasm operation discards the instance without calling cleanup exports; the next
+call creates a fresh one. Schema alignment uses one offset across nested records,
+and padding is zero. Live counts omit result handles and host input allocations.
+
+Run the opt-in crossing checks with output captured:
+
+```sh
+ADAMIC_TEST_WASI=1 go test ./internal/worker/wasm -run TestGeneratedCrossing \
+  -count=1 -v -timeout 15m > /tmp/crossing-test.log 2>&1
+```
+
+Observed: 10,000 calls for each of ten exports match `wrapExports` in
+results and input/result bytes; all UTF-16 single code units round trip; large
+arrays and handler allocations grow memory; 100,000 later calls retain zero
+counted values and constant 35,389,440-byte memory. Six isolated mutants fail
+on nested-record input bytes, lone-surrogate input bytes, result-leak memory
+growth, detached views, duplicate input frees, and unreleased input allocations.
+
+Limits: ABI version 1 only, required readonly records through depth 2, and the
+contract's scalar/string/array types. Inputs must match the ABI; wrappers check
+arity but are not JS type validators. Unknown imports fail loudly. This unit
+neither chooses crossing functions nor wires the JS backend, and claims no
+benchmark or workerd run of these new wrappers.
