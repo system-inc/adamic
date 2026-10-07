@@ -1,0 +1,2348 @@
+{
+  "samples": 96624,
+  "counts": {
+    "startup and I/O: harness": 19,
+    "startup and I/O": 1027,
+    "scanner and parser": 30632,
+    "string work": 16366,
+    "retains and releases": 19758,
+    "allocation and freeing": 7541,
+    "virtual dispatch": 407,
+    "remainder: unclassified": 1770,
+    "tree walk and node access": 11174,
+    "rule entry and selection": 6333,
+    "rule logic: no-unexpected-multiline": 1145,
+    "rule logic: prefer-template": 58,
+    "rule logic: react/no-find-dom-node": 53,
+    "rule logic: react/no-is-mounted": 63,
+    "rule logic: no-useless-constructor": 92,
+    "rule logic: react/forward-ref-uses-ref": 31,
+    "rule logic: react/no-redundant-should-component-update": 138,
+    "rule logic: no-octal-escape": 11,
+    "rule logic: no-unused-private-class-members": 6
+  },
+  "shares": {
+    "startup and I/O: harness": 0.00019663851631064746,
+    "startup and I/O": 0.01062882927637026,
+    "scanner and parser": 0.31702268587514487,
+    "string work": 0.16937820831263453,
+    "retains and releases": 0.20448335817188276,
+    "allocation and freeing": 0.07804479218413644,
+    "virtual dispatch": 0.0042122040072859745,
+    "remainder: unclassified": 0.018318430203676104,
+    "tree walk and node access": 0.1156441463818513,
+    "rule entry and selection": 0.06554272230501738,
+    "rule logic: no-unexpected-multiline": 0.011850057956615334,
+    "rule logic: prefer-template": 0.0006002649445272396,
+    "rule logic: react/no-find-dom-node": 0.0005485179665507535,
+    "rule logic: react/no-is-mounted": 0.0006520119225037258,
+    "rule logic: no-useless-constructor": 0.0009521443947673456,
+    "rule logic: react/forward-ref-uses-ref": 0.0003208312634542143,
+    "rule logic: react/no-redundant-should-component-update": 0.0014282165921510185,
+    "rule logic: no-octal-escape": 0.00011384335154826958,
+    "rule logic: no-unused-private-class-members": 6.209637357178341e-05
+  },
+  "guard_counts": {
+    "string work": 3255,
+    "allocation and freeing": 2272,
+    "rule entry and selection": 6333,
+    "tree walk and node access": 6437,
+    "retains and releases": 7203
+  },
+  "guard_samples": 25500,
+  "guard_share": 0.2639095876800795,
+  "user_fraction_from_best_unprofiled_run": 0.9738790948917765,
+  "unsampled_wall_fraction": 0.026120905108223513,
+  "best_unprofiled_run": {
+    "round": 3,
+    "name": "today",
+    "argv": [
+      "/workspace/lint-cost-baseline/scanner",
+      "--manifest",
+      "/workspace/lint-cost-baseline/compiler.txt",
+      "--count"
+    ],
+    "wall": 2.2475520949992642,
+    "user": 2.1888439999999996,
+    "system": 0.05716499999999991
+  },
+  "seconds_at_2_11": {
+    "startup and I/O: harness": 0.0004040695160023526,
+    "startup and I/O": 0.02184102068075874,
+    "scanner and parser": 0.6514451270623193,
+    "string work": 0.3480527209944475,
+    "retains and releases": 0.4201897630091833,
+    "allocation and freeing": 0.1603730642196706,
+    "virtual dispatch": 0.008655594369103027,
+    "remainder: unclassified": 0.0376422654381139,
+    "tree walk and node access": 0.23763540904264674,
+    "rule entry and selection": 0.13468274972857364,
+    "rule logic: no-unexpected-multiline": 0.02435050504329967,
+    "rule logic: prefer-template": 0.0012334753646387605,
+    "rule logic: react/no-find-dom-node": 0.0011271412814802468,
+    "rule logic: react/no-is-mounted": 0.0013398094477972745,
+    "rule logic: no-useless-constructor": 0.0019565471301166548,
+    "rule logic: react/forward-ref-uses-ref": 0.0006592713155827858,
+    "rule logic: react/no-redundant-should-component-update": 0.002934820695174982,
+    "rule logic: no-octal-escape": 0.00023393498294873045,
+    "rule logic: no-unused-private-class-members": 0.0001276008997902166
+  },
+  "unsampled_seconds_at_2_11": 0.05511510977835161,
+  "per_pid": {
+    "49180": {
+      "startup and I/O: harness": 16
+    },
+    "49181": {
+      "startup and I/O: harness": 1
+    },
+    "49182": {
+      "startup and I/O": 51,
+      "scanner and parser": 1618,
+      "string work": 789,
+      "retains and releases": 909,
+      "allocation and freeing": 388,
+      "virtual dispatch": 22,
+      "remainder: unclassified": 114,
+      "tree walk and node access": 594,
+      "rule entry and selection": 341,
+      "rule logic: no-unexpected-multiline": 59,
+      "rule logic: prefer-template": 5,
+      "rule logic: react/no-find-dom-node": 4,
+      "rule logic: react/no-is-mounted": 3,
+      "rule logic: no-useless-constructor": 5,
+      "rule logic: react/forward-ref-uses-ref": 1,
+      "rule logic: react/no-redundant-should-component-update": 5
+    },
+    "49183": {
+      "startup and I/O": 52,
+      "tree walk and node access": 549,
+      "string work": 724,
+      "scanner and parser": 1463,
+      "virtual dispatch": 23,
+      "allocation and freeing": 359,
+      "remainder: unclassified": 82,
+      "retains and releases": 895,
+      "rule entry and selection": 328,
+      "rule logic: no-unexpected-multiline": 56,
+      "rule logic: react/no-find-dom-node": 4,
+      "rule logic: react/no-redundant-should-component-update": 10,
+      "rule logic: no-useless-constructor": 3,
+      "rule logic: react/no-is-mounted": 2,
+      "rule logic: prefer-template": 3
+    },
+    "49192": {
+      "startup and I/O": 50,
+      "string work": 847,
+      "scanner and parser": 1655,
+      "retains and releases": 1080,
+      "allocation and freeing": 413,
+      "tree walk and node access": 600,
+      "rule entry and selection": 339,
+      "rule logic: no-useless-constructor": 6,
+      "remainder: unclassified": 129,
+      "rule logic: no-unexpected-multiline": 59,
+      "virtual dispatch": 22,
+      "rule logic: prefer-template": 1,
+      "rule logic: react/no-is-mounted": 7,
+      "rule logic: react/no-redundant-should-component-update": 7,
+      "rule logic: react/no-find-dom-node": 5
+    },
+    "49193": {
+      "startup and I/O": 47,
+      "scanner and parser": 1491,
+      "retains and releases": 905,
+      "string work": 750,
+      "remainder: unclassified": 100,
+      "allocation and freeing": 344,
+      "tree walk and node access": 535,
+      "rule entry and selection": 307,
+      "virtual dispatch": 10,
+      "rule logic: no-unexpected-multiline": 56,
+      "rule logic: prefer-template": 4,
+      "rule logic: no-useless-constructor": 5,
+      "rule logic: react/no-redundant-should-component-update": 5,
+      "rule logic: react/no-is-mounted": 4,
+      "rule logic: react/forward-ref-uses-ref": 1,
+      "rule logic: react/no-find-dom-node": 1
+    },
+    "49194": {
+      "startup and I/O": 63,
+      "scanner and parser": 1519,
+      "string work": 982,
+      "virtual dispatch": 28,
+      "retains and releases": 1073,
+      "allocation and freeing": 469,
+      "tree walk and node access": 561,
+      "rule entry and selection": 298,
+      "rule logic: no-unexpected-multiline": 59,
+      "rule logic: no-useless-constructor": 7,
+      "rule logic: react/no-find-dom-node": 3,
+      "rule logic: react/no-redundant-should-component-update": 5,
+      "rule logic: react/no-is-mounted": 5,
+      "rule logic: react/forward-ref-uses-ref": 3,
+      "rule logic: prefer-template": 3,
+      "rule logic: no-octal-escape": 1
+    },
+    "49195": {
+      "startup and I/O: harness": 1,
+      "startup and I/O": 50,
+      "retains and releases": 940,
+      "tree walk and node access": 517,
+      "string work": 752,
+      "scanner and parser": 1432,
+      "virtual dispatch": 17,
+      "allocation and freeing": 323,
+      "rule entry and selection": 282,
+      "rule logic: no-unexpected-multiline": 51,
+      "remainder: unclassified": 89,
+      "rule logic: react/no-redundant-should-component-update": 7,
+      "rule logic: react/no-is-mounted": 1,
+      "rule logic: prefer-template": 4,
+      "rule logic: no-useless-constructor": 8
+    },
+    "49196": {
+      "startup and I/O": 59,
+      "allocation and freeing": 404,
+      "string work": 834,
+      "scanner and parser": 1642,
+      "remainder: unclassified": 126,
+      "retains and releases": 1041,
+      "tree walk and node access": 583,
+      "rule entry and selection": 322,
+      "rule logic: no-unexpected-multiline": 64,
+      "rule logic: no-useless-constructor": 2,
+      "virtual dispatch": 21,
+      "rule logic: prefer-template": 4,
+      "rule logic: react/no-find-dom-node": 2,
+      "rule logic: react/forward-ref-uses-ref": 3,
+      "rule logic: no-octal-escape": 2,
+      "rule logic: react/no-redundant-should-component-update": 3
+    },
+    "49197": {
+      "startup and I/O": 52,
+      "scanner and parser": 1473,
+      "string work": 709,
+      "retains and releases": 865,
+      "allocation and freeing": 355,
+      "virtual dispatch": 16,
+      "remainder: unclassified": 85,
+      "tree walk and node access": 514,
+      "rule entry and selection": 286,
+      "rule logic: no-unexpected-multiline": 53,
+      "rule logic: react/no-is-mounted": 5,
+      "rule logic: no-unused-private-class-members": 1,
+      "rule logic: react/no-redundant-should-component-update": 12,
+      "rule logic: prefer-template": 1,
+      "rule logic: react/forward-ref-uses-ref": 2,
+      "rule logic: no-useless-constructor": 3
+    },
+    "49202": {
+      "startup and I/O": 54,
+      "remainder: unclassified": 108,
+      "string work": 839,
+      "allocation and freeing": 409,
+      "scanner and parser": 1618,
+      "retains and releases": 1095,
+      "tree walk and node access": 637,
+      "rule entry and selection": 322,
+      "rule logic: no-unexpected-multiline": 62,
+      "virtual dispatch": 24,
+      "rule logic: no-useless-constructor": 6,
+      "rule logic: react/no-redundant-should-component-update": 9,
+      "rule logic: react/no-is-mounted": 3,
+      "rule logic: no-octal-escape": 2,
+      "rule logic: react/forward-ref-uses-ref": 4,
+      "rule logic: react/no-find-dom-node": 2,
+      "rule logic: prefer-template": 3
+    },
+    "49203": {
+      "startup and I/O": 48,
+      "scanner and parser": 1437,
+      "string work": 768,
+      "retains and releases": 925,
+      "allocation and freeing": 313,
+      "rule entry and selection": 301,
+      "tree walk and node access": 509,
+      "rule logic: no-unexpected-multiline": 60,
+      "remainder: unclassified": 92,
+      "virtual dispatch": 25,
+      "rule logic: react/no-redundant-should-component-update": 8,
+      "rule logic: prefer-template": 4,
+      "rule logic: react/no-is-mounted": 3,
+      "rule logic: react/no-find-dom-node": 3,
+      "rule logic: no-useless-constructor": 5,
+      "rule logic: react/forward-ref-uses-ref": 1
+    },
+    "49204": {
+      "startup and I/O": 49,
+      "scanner and parser": 1587,
+      "string work": 794,
+      "allocation and freeing": 356,
+      "retains and releases": 992,
+      "remainder: unclassified": 100,
+      "tree walk and node access": 590,
+      "rule entry and selection": 342,
+      "virtual dispatch": 20,
+      "rule logic: no-unexpected-multiline": 63,
+      "rule logic: prefer-template": 2,
+      "rule logic: react/no-is-mounted": 4,
+      "rule logic: no-useless-constructor": 4,
+      "rule logic: react/no-redundant-should-component-update": 2,
+      "rule logic: react/no-find-dom-node": 3,
+      "rule logic: react/forward-ref-uses-ref": 1
+    },
+    "49205": {
+      "startup and I/O": 39,
+      "scanner and parser": 1450,
+      "string work": 776,
+      "retains and releases": 953,
+      "allocation and freeing": 315,
+      "remainder: unclassified": 126,
+      "tree walk and node access": 571,
+      "rule entry and selection": 290,
+      "rule logic: no-unexpected-multiline": 62,
+      "virtual dispatch": 18,
+      "rule logic: no-useless-constructor": 4,
+      "rule logic: react/no-find-dom-node": 4,
+      "rule logic: react/no-redundant-should-component-update": 5,
+      "rule logic: react/no-is-mounted": 2,
+      "rule logic: react/forward-ref-uses-ref": 2,
+      "rule logic: prefer-template": 1
+    },
+    "49214": {
+      "startup and I/O": 50,
+      "remainder: unclassified": 115,
+      "string work": 867,
+      "scanner and parser": 1578,
+      "retains and releases": 1342,
+      "tree walk and node access": 629,
+      "rule entry and selection": 340,
+      "allocation and freeing": 407,
+      "rule logic: no-unexpected-multiline": 58,
+      "virtual dispatch": 20,
+      "rule logic: no-useless-constructor": 4,
+      "rule logic: prefer-template": 4,
+      "rule logic: react/no-redundant-should-component-update": 7,
+      "rule logic: react/no-find-dom-node": 2,
+      "rule logic: react/no-is-mounted": 3,
+      "rule logic: react/forward-ref-uses-ref": 2
+    },
+    "49215": {
+      "startup and I/O": 58,
+      "allocation and freeing": 427,
+      "string work": 916,
+      "scanner and parser": 1537,
+      "retains and releases": 971,
+      "tree walk and node access": 512,
+      "rule entry and selection": 325,
+      "rule logic: no-unexpected-multiline": 68,
+      "virtual dispatch": 21,
+      "rule logic: react/no-redundant-should-component-update": 4,
+      "rule logic: react/no-find-dom-node": 4,
+      "rule logic: no-useless-constructor": 4,
+      "rule logic: no-unused-private-class-members": 1,
+      "remainder: unclassified": 1,
+      "rule logic: react/no-is-mounted": 1,
+      "rule logic: prefer-template": 1
+    },
+    "49216": {
+      "startup and I/O": 45,
+      "scanner and parser": 1356,
+      "allocation and freeing": 388,
+      "string work": 887,
+      "retains and releases": 914,
+      "tree walk and node access": 456,
+      "rule logic: no-unexpected-multiline": 47,
+      "rule entry and selection": 302,
+      "rule logic: react/forward-ref-uses-ref": 3,
+      "virtual dispatch": 18,
+      "rule logic: react/no-redundant-should-component-update": 12,
+      "rule logic: react/no-find-dom-node": 4,
+      "rule logic: no-octal-escape": 1,
+      "rule logic: prefer-template": 3,
+      "rule logic: react/no-is-mounted": 3,
+      "rule logic: no-useless-constructor": 1
+    },
+    "49217": {
+      "startup and I/O": 54,
+      "remainder: unclassified": 117,
+      "string work": 859,
+      "retains and releases": 1015,
+      "scanner and parser": 1615,
+      "allocation and freeing": 384,
+      "tree walk and node access": 597,
+      "rule entry and selection": 335,
+      "virtual dispatch": 23,
+      "rule logic: no-unexpected-multiline": 59,
+      "rule logic: no-useless-constructor": 4,
+      "rule logic: react/no-is-mounted": 2,
+      "rule logic: react/forward-ref-uses-ref": 1,
+      "rule logic: react/no-redundant-should-component-update": 7,
+      "rule logic: no-octal-escape": 1,
+      "rule logic: react/no-find-dom-node": 3
+    },
+    "49218": {
+      "startup and I/O": 54,
+      "scanner and parser": 1580,
+      "string work": 862,
+      "retains and releases": 1092,
+      "allocation and freeing": 385,
+      "tree walk and node access": 623,
+      "rule entry and selection": 318,
+      "rule logic: no-unexpected-multiline": 60,
+      "remainder: unclassified": 139,
+      "virtual dispatch": 17,
+      "rule logic: react/no-redundant-should-component-update": 5,
+      "rule logic: prefer-template": 4,
+      "rule logic: react/no-find-dom-node": 2,
+      "rule logic: react/forward-ref-uses-ref": 4,
+      "rule logic: react/no-is-mounted": 4,
+      "rule logic: no-useless-constructor": 3,
+      "rule logic: no-unused-private-class-members": 1
+    },
+    "49228": {
+      "startup and I/O": 50,
+      "remainder: unclassified": 1,
+      "rule entry and selection": 303,
+      "string work": 848,
+      "scanner and parser": 1465,
+      "retains and releases": 864,
+      "allocation and freeing": 403,
+      "tree walk and node access": 496,
+      "rule logic: no-unexpected-multiline": 53,
+      "virtual dispatch": 16,
+      "rule logic: react/no-redundant-should-component-update": 9,
+      "rule logic: prefer-template": 1,
+      "rule logic: react/no-find-dom-node": 2,
+      "rule logic: no-useless-constructor": 6,
+      "rule logic: no-unused-private-class-members": 1,
+      "rule logic: no-octal-escape": 1
+    },
+    "49229": {
+      "startup and I/O": 58,
+      "scanner and parser": 1643,
+      "retains and releases": 948,
+      "string work": 810,
+      "allocation and freeing": 355,
+      "rule logic: no-useless-constructor": 9,
+      "rule entry and selection": 325,
+      "tree walk and node access": 572,
+      "rule logic: no-unexpected-multiline": 49,
+      "rule logic: react/no-redundant-should-component-update": 8,
+      "rule logic: react/no-is-mounted": 3,
+      "remainder: unclassified": 144,
+      "virtual dispatch": 19,
+      "rule logic: prefer-template": 6,
+      "rule logic: no-unused-private-class-members": 1,
+      "rule logic: no-octal-escape": 2,
+      "rule logic: react/no-find-dom-node": 4,
+      "rule logic: react/forward-ref-uses-ref": 1
+    },
+    "49230": {
+      "startup and I/O: harness": 1,
+      "startup and I/O": 44,
+      "remainder: unclassified": 102,
+      "string work": 753,
+      "retains and releases": 939,
+      "scanner and parser": 1473,
+      "allocation and freeing": 344,
+      "virtual dispatch": 27,
+      "tree walk and node access": 529,
+      "rule entry and selection": 327,
+      "rule logic: react/no-is-mounted": 8,
+      "rule logic: react/no-redundant-should-component-update": 8,
+      "rule logic: no-unexpected-multiline": 47,
+      "rule logic: prefer-template": 4,
+      "rule logic: no-unused-private-class-members": 1,
+      "rule logic: no-useless-constructor": 3,
+      "rule logic: react/no-find-dom-node": 1,
+      "rule logic: no-octal-escape": 1,
+      "rule logic: react/forward-ref-uses-ref": 2
+    }
+  },
+  "guard_boundaries": {
+    "42": [
+      8678,
+      8693
+    ],
+    "194": [
+      22990,
+      22999
+    ],
+    "199": [
+      23483,
+      23503
+    ],
+    "201": [
+      23827,
+      23878
+    ],
+    "215": [
+      24871,
+      24880
+    ],
+    "216": [
+      25044,
+      25059
+    ],
+    "217": [
+      25449,
+      25464
+    ],
+    "218": [
+      25547,
+      25562
+    ],
+    "219": [
+      25657,
+      25672
+    ],
+    "220": [
+      25767,
+      25787
+    ]
+  },
+  "extra_multiline_lines": [
+    23000,
+    23024,
+    23041,
+    23089,
+    23100,
+    23118,
+    23149,
+    23171,
+    23185
+  ],
+  "symbols": [
+    {
+      "bucket": "retains and releases",
+      "symbol": "adamic_retain",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8909
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_equal",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5833
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_75_Parser_node",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5543
+    },
+    {
+      "bucket": "retains and releases",
+      "symbol": "adamic_release",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5200
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_object_check_write",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3549
+    },
+    {
+      "bucket": "retains and releases",
+      "symbol": "release_last",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3510
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_22_Scanner_code",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3361
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_allocate",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2834
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_char_code",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2749
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_33_Scanner_scan",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2331
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_object_write_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2022
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_array_search_from",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2010
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_23_Scanner_advance",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1741
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1741
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_function_22_Scanner_code",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1716
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_130_ParseNode_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1706
+    },
+    {
+      "bucket": "retains and releases",
+      "symbol": "adamic_object_free_children",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1585
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_73_Parser_kind",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1348
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_object_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1266
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_array_push",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1261
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_45_Context_node",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1156
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_array_index_of",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1133
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_48_Context_kind",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1100
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_1_isIdentifierStart",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1081
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_char_code_at",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1072
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "cfree",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1049
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1046
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1046
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_62_Context_mapParents",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1011
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "give",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 939
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "malloc",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 931
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 784
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_28_Scanner_identifier",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 751
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_function_40_lines",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 717
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 685
+    },
+    {
+      "bucket": "string work",
+      "symbol": "decode",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 679
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_75_Parser_node",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 649
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_153_Statements_statement",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 647
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_4_isSpace",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 613
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_array_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 576
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "find",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 573
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_array_at",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 570
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "array_search_equal",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 556
+    },
+    {
+      "bucket": "string work",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 546
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "hash_key",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 518
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_34_Scanner_punctuation",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 517
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_locate",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 473
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_76_Parser_make",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 453
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_array_push",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 417
+    },
+    {
+      "bucket": "virtual dispatch",
+      "symbol": "adamic_object_callee",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 407
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_slice",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 405
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_16_Speculation_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 403
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_2_isIdentifierPart",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 403
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_bmp_view",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 401
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_114_Parser_suffix",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 398
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_length",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 387
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_155_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 386
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_92_Parser_type",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 377
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_11_precedence",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 335
+    },
+    {
+      "bucket": "retains and releases",
+      "symbol": "list",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 326
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_80_Parser_identifier",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 317
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_19_Speculation_restore",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 298
+    },
+    {
+      "bucket": "string work",
+      "symbol": "usable",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 294
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_array_at",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 288
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 285
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_81_Parser_primary",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 269
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_units",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 265
+    },
+    {
+      "bucket": "string work",
+      "symbol": "units_next",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 261
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_function_58_Context_enabled",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 232
+    },
+    {
+      "bucket": "retains and releases",
+      "symbol": "let_go",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 220
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_122_Parser_unary",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 206
+    },
+    {
+      "bucket": "string work",
+      "symbol": "bcmp@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 203
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_123_Parser_binary",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 200
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_weak_forget",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 199
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_function_64_Context_memberName",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 199
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_function_193_after",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 184
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_74_Parser_next",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 183
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "splice_into",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 180
+    },
+    {
+      "bucket": "string work",
+      "symbol": "trunc@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 179
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_object_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 179
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_124_Parser_assignment",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 167
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_110_Parser_peek",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 161
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_function_44_Context_line",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 155
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "samples": 146
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_function_209_string",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 143
+    },
+    {
+      "bucket": "rule logic: react/no-redundant-should-component-update",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 138
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_function_222_collect",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 137
+    },
+    {
+      "bucket": "string work",
+      "symbol": "width",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 126
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "realloc",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 126
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_49_Context_children",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 116
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_share",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 114
+    },
+    {
+      "bucket": "rule entry and selection",
+      "symbol": "adamic_function_199_noUnusedPrivateClassMembers",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 114
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "free@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 103
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_array_push",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 102
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "list_chunk",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 100
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_function_33_Scanner_scan",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 98
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_14_arrowAhead",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 97
+    },
+    {
+      "bucket": "rule logic: no-useless-constructor",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 92
+    },
+    {
+      "bucket": "string work",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "samples": 91
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_12_kind",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 91
+    },
+    {
+      "bucket": "string work",
+      "symbol": "halves_pairs",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 76
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "malloc@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 72
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_137_Statements_variableList",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 70
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_113_Parser_arguments",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 69
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_function_40_lines",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 68
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_46_Context_child",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 66
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_29_Scanner_string",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 65
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_35_Scanner_rescanGreater",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 63
+    },
+    {
+      "bucket": "string work",
+      "symbol": "allocate",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 61
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_159_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 59
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_135_Statements_block",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 58
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_string_free_index",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 56
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_148_Statements_functionDeclaration",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 54
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_17_Speculation_prepare",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 53
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_cell_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 52
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_77_Parser_token",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 50
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_map_get",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 48
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_156_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 48
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_127_Parser_expression",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 45
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_125_Parser_allowInAssignment",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 43
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_function_186_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 42
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_97_Parser_parameters",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 42
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_79_Parser_literal",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 41
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "samples": 40
+    },
+    {
+      "bucket": "string work",
+      "symbol": "clamp_index",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 39
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_157_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 38
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_ends_with",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 37
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_78_Parser_expect",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 37
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_133_Statements_make",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 36
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 33
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_151_Statements_switchStatement",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 33
+    },
+    {
+      "bucket": "rule logic: react/forward-ref-uses-ref",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 31
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_101_Parser_rootExpression",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 30
+    },
+    {
+      "bucket": "rule logic: react/no-is-mounted",
+      "symbol": "adamic_array_search_from",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 29
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "memset@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 28
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_split",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 27
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_allocate",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 27
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 27
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_18_Speculation_next",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 27
+    },
+    {
+      "bucket": "rule logic: react/no-find-dom-node",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 25
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_function_50_Context_scanAt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 23
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_signed_bits",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 23
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "floor@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 22
+    },
+    {
+      "bucket": "tree walk and node access",
+      "symbol": "adamic_array_set",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 22
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_to_uint32",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 22
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_90_Parser_entityName",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 22
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_121_Parser_object",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 21
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_136_Statements_semicolon",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 20
+    },
+    {
+      "bucket": "string work",
+      "symbol": "memcpy@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 20
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_25_Scanner_fragment",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 20
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_32_Scanner_number",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 19
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_array_remove",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 18
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_141_Statements_specifiers",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 18
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_150_Statements_forStatement",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 17
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_number_format",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 17
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_join_halves",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 17
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_98_Parser_bindingName",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 17
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_111_Parser_optionalChain",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 16
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_function_225_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 15
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_concat",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 15
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_138_Statements_lookahead",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 14
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_array_search_from",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 14
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_119_Parser_propertyName",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 14
+    },
+    {
+      "bucket": "rule logic: react/no-is-mounted",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 13
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_30_Scanner_template",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 13
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "adamic_array_search_from",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 13
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_170_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 12
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_89_Parser_typeParameters",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 12
+    },
+    {
+      "bucket": "rule logic: react/no-is-mounted",
+      "symbol": "adamic_array_index_of",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 12
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_85_Parser_rewind",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 12
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_100_Parser_rootAssignment",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 11
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_118_Parser_array",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 11
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_closure_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 11
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_array_slice",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 10
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_103_Parser_returnType",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 10
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_169_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 9
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_67_Context_property",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 9
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "strtod",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 9
+    },
+    {
+      "bucket": "string work",
+      "symbol": "convert",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 9
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_append",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 9
+    },
+    {
+      "bucket": "rule logic: react/no-find-dom-node",
+      "symbol": "adamic_array_search_from",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 9
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_182_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 9
+    },
+    {
+      "bucket": "retains and releases",
+      "symbol": "release_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "string work",
+      "symbol": "units_start",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "rule logic: react/no-find-dom-node",
+      "symbol": "adamic_function_56_Context_unwrap",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_161_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "realloc@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "samples": 8
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_84_Parser_mark",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_184_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_from_char_codes",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 8
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_96_Parser_typeLiteral",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 7
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_31_Scanner_bigint",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 7
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_put",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 7
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_7_numberValue",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 7
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_171_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 6
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_158_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 6
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_183_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 6
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_126_Parser_allowInExpression",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 6
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_to_uint16",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 6
+    },
+    {
+      "bucket": "rule logic: no-unused-private-class-members",
+      "symbol": "adamic_function_199_noUnusedPrivateClassMembers",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 6
+    },
+    {
+      "bucket": "rule logic: react/no-find-dom-node",
+      "symbol": "adamic_array_push",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_166_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 5
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_function_51_Context_scanStart",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_object_write_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "memcpy@plt",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 5
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_68_Context_questionDot",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5
+    },
+    {
+      "bucket": "rule logic: react/no-is-mounted",
+      "symbol": "adamic_array_push",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 5
+    },
+    {
+      "bucket": "string work",
+      "symbol": "fmod",
+      "dso": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "samples": 4
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "[unknown]",
+      "dso": "/usr/bin/bash",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_134_Statements_type",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_102_Parser_arrow",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_array_at",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_168_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_117_Parser_template",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "rule logic: react/no-find-dom-node",
+      "symbol": "adamic_array_index_of",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_3_isLineBreak",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_180_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "trunc@plt",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_105_Parser_statements",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "rule logic: react/no-is-mounted",
+      "symbol": "array_search_equal",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "rule logic: no-octal-escape",
+      "symbol": "adamic_function_221_visit",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 4
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "samples": 3
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "brk",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 3
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_function_214_build",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_181_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_88_Parser_typeArguments",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_165_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "[unknown]",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_number_parse_float",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "string work",
+      "symbol": "grown",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "hash_search",
+      "dso": "/usr/bin/bash",
+      "samples": 3
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_array_push",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "rule logic: no-octal-escape",
+      "symbol": "adamic_function_54_Context_start",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "rule logic: no-octal-escape",
+      "symbol": "adamic_function_55_Context_raw",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_167_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_144_Statements_importDeclaration",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_115_Parser_templatePart",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 3
+    },
+    {
+      "bucket": "rule logic: react/no-find-dom-node",
+      "symbol": "array_search_equal",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_bitwise_and",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_function_29_Scanner_string",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_starts_with",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_object_write_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "rule logic: no-unexpected-multiline",
+      "symbol": "adamic_object_check_write",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_from_number",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_array_index_of",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "string work",
+      "symbol": "codes_point",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_93_Parser_mappedAhead",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "make_child",
+      "dso": "/usr/bin/bash",
+      "samples": 2
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_object_check_write",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_163_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_147_Statements_exportedClauseAhead",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_173_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 2
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_function_56_Context_unwrap",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "__close",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_function_205_tokenStart",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_37_Scanner_rescanSlash",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "unquoted_glob_pattern_p",
+      "dso": "/usr/bin/bash",
+      "samples": 1
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_trim_sides",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_read_text_file",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_162_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "find_procsub_child",
+      "dso": "/usr/bin/bash",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_object_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "string work",
+      "symbol": "encoded_size",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_timsort",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: no-octal-escape",
+      "symbol": "adamic_object_check_write",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_object_write_field",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "_setjmp",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "coproc_pidchk",
+      "dso": "/usr/bin/bash",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "strvec_from_word_list",
+      "dso": "/usr/bin/bash",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_function_210_contains",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "flush",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_map_set",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_object_find",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "cosf32",
+      "dso": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_array_index_of",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_function_208_concatenation",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "adamic_function_224_run",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "read",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "to_int32",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_21_Scanner_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "__default_morecore",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "main",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_149_Statements_classDeclaration",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "open64",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "do_redirections",
+      "dso": "/usr/bin/bash",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "strnlen",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_36_Scanner_rescanTemplate",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "__sbrk",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_132_Statements_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "allocation and freeing",
+      "symbol": "adamic_map_new",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "strlen",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "string work",
+      "symbol": "bignum_shift_left",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_112_Parser_spread",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "rule logic: prefer-template",
+      "symbol": "adamic_object_check_write",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_string_to_lower",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_27_Scanner_escape",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "unset_bash_input",
+      "dso": "/usr/bin/bash",
+      "samples": 1
+    },
+    {
+      "bucket": "remainder: unclassified",
+      "symbol": "__mempcpy_chk",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_array_join",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "scanner and parser",
+      "symbol": "adamic_function_179_closure",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "string work",
+      "symbol": "adamic_function_30_Scanner_template",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O",
+      "symbol": "sorted_or_stopped",
+      "dso": "/workspace/lint-cost-baseline/scanner",
+      "samples": 1
+    },
+    {
+      "bucket": "startup and I/O: harness",
+      "symbol": "cfree",
+      "dso": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "samples": 1
+    }
+  ]
+}

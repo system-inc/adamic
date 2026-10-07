@@ -1,0 +1,131 @@
+diff --git a/stage1/cohere/lint/batch8/registry.ts b/stage1/cohere/lint/batch8/registry.ts
+index 82511cd..00cf3ca 100644
+--- a/stage1/cohere/lint/batch8/registry.ts
++++ b/stage1/cohere/lint/batch8/registry.ts
+@@ -9,18 +9,75 @@ import { jsxNoCommentTextnodes } from './jsx_no_comment_textnodes.ts';
+ import { noFindDomNode } from './no_find_dom_node.ts';
+ import { noIsMounted } from './no_is_mounted.ts';
+ import { noRedundantShouldComponentUpdate } from './no_redundant_should_component_update.ts';
++import { numericKind } from '../../../typescript/parser/numeric_kind.a';
++const noListeners: readonly number[] = [];
++const listeners: number[][] = [];
++function register(kind: string, rule: number): void {
++    const id = numericKind(kind);
++    const empty: number[] = [];
++    while(listeners.length <= id) {
++        const slot: number[] = [];
++        listeners.push(slot);
++    }
++    const group = listeners[id] ?? empty;
++    group.push(rule);
++    listeners[id] = group;
++}
++register('StringLiteral', 0);
++register('CallExpression', 1);
++register('ElementAccessExpression', 1);
++register('TaggedTemplateExpression', 1);
++register('BinaryExpression', 1);
++register('ClassDeclaration', 2);
++register('ClassExpression', 2);
++register('Constructor', 3);
++register('MethodDeclaration', 3);
++register('StringLiteral', 4);
++register('NoSubstitutionTemplateLiteral', 4);
++register('TemplateExpression', 4);
++register('CallExpression', 5);
++register('JsxText', 6);
++register('CallExpression', 7);
++register('CallExpression', 8);
++register('ClassDeclaration', 9);
++register('ClassExpression', 9);
+ export function visit(context: Context, index: number): void {
+-    noOctalEscape(context, index);
+-    noUnexpectedMultiline(context, index);
+-    noUnusedPrivateClassMembers(context, index);
+-    noUselessConstructor(context, index);
+-    preferTemplate(context, index);
+-    forwardRefUsesRef(context, index);
+-    jsxNoCommentTextnodes(context, index);
+-    noFindDomNode(context, index);
+-    noIsMounted(context, index);
+-    noRedundantShouldComponentUpdate(context, index);
+-    for(const child of context.node(index).children) {
++    const node = context.node(index);
++    for(const listener of listeners[node.numericKind] ?? noListeners) {
++        switch(listener) {
++            case 0:
++                noOctalEscape(context, index);
++                break;
++            case 1:
++                noUnexpectedMultiline(context, index);
++                break;
++            case 2:
++                noUnusedPrivateClassMembers(context, index);
++                break;
++            case 3:
++                noUselessConstructor(context, index);
++                break;
++            case 4:
++                preferTemplate(context, index);
++                break;
++            case 5:
++                forwardRefUsesRef(context, index);
++                break;
++            case 6:
++                jsxNoCommentTextnodes(context, index);
++                break;
++            case 7:
++                noFindDomNode(context, index);
++                break;
++            case 8:
++                noIsMounted(context, index);
++                break;
++            case 9:
++                noRedundantShouldComponentUpdate(context, index);
++                break;
++        }
++    }
++    for(const child of node.children) {
+         visit(context, child);
+     }
+ }
+diff --git a/stage1/typescript/parser/nodes.ts b/stage1/typescript/parser/nodes.ts
+index 1e964ea..7a175c4 100644
+--- a/stage1/typescript/parser/nodes.ts
++++ b/stage1/typescript/parser/nodes.ts
+@@ -1,8 +1,10 @@
+ // Node links are table indexes. No parent or child link owns another node.
+ import { panic } from 'adamic';
++import { numericKind } from './numeric_kind.a';
+ 
+ export class ParseNode {
+     readonly kind: string;
++    readonly numericKind: number;
+     readonly pos: number;
+     end: number;
+     readonly children: number[];
+@@ -17,6 +19,7 @@ export class ParseNode {
+     multiLine = false;
+     constructor(kind: string, pos: number, end: number, children: number[]) {
+         this.kind = kind;
++        this.numericKind = numericKind(kind);
+         this.pos = pos;
+         this.end = end;
+         this.children = children;
+diff --git astage1/typescript/parser/numeric_kind.a bstage1/typescript/parser/numeric_kind.a
+new file mode 100644
+index 0000000..5a457f5
+--- /dev/null
++++ bstage1/typescript/parser/numeric_kind.a
+@@ -0,0 +1,11 @@
++// Scratch prototype: cache a numeric kind once when each immutable parse node is built.
++const numericKinds = new Map<string, number>();
++export function numericKind(kind: string): number {
++    const known = numericKinds.get(kind);
++    if(known !== undefined) {
++        return known;
++    }
++    const value = numericKinds.size;
++    numericKinds.set(kind, value);
++    return value;
++}

@@ -1,0 +1,41 @@
+{
+  "positive_counts": {
+    "octal": 1,
+    "multiline_call": 1,
+    "multiline_element": 1,
+    "multiline_tagged": 1,
+    "multiline_division": 1,
+    "private_class": 1,
+    "private_expression": 1,
+    "constructor": 1,
+    "quoted_constructor": 1,
+    "template_string": 1,
+    "template_no_substitution": 1,
+    "template_expression": 1,
+    "forward_ref": 1,
+    "find_dom_node": 1,
+    "is_mounted": 1,
+    "pure_class": 1,
+    "pure_expression": 1,
+    "jsx_text": 1
+  },
+  "outputs": {
+    "Go": {
+      "bytes": 10102,
+      "sha256": "5bb015dbdd5d3a03b693dfe3d5ddc3c33ed44196c27fc55bc2a80b2e7ff58642"
+    },
+    "today": {
+      "bytes": 10102,
+      "sha256": "5bb015dbdd5d3a03b693dfe3d5ddc3c33ed44196c27fc55bc2a80b2e7ff58642"
+    },
+    "prototype": {
+      "bytes": 10102,
+      "sha256": "5bb015dbdd5d3a03b693dfe3d5ddc3c33ed44196c27fc55bc2a80b2e7ff58642"
+    },
+    "Node": {
+      "bytes": 10102,
+      "sha256": "5bb015dbdd5d3a03b693dfe3d5ddc3c33ed44196c27fc55bc2a80b2e7ff58642"
+    }
+  },
+  "jsx_alias": "source authored as .a; .a.tsx symlink selects TSX parsing in the Go oracle"
+}

@@ -1,0 +1,304 @@
+{
+  "best": {
+    "Go": 0.3605632679973496,
+    "today": 2.2475520949992642,
+    "kind_table": 1.5652124580010423,
+    "all_listeners_table": 2.370772551999835
+  },
+  "samples": {
+    "Go": [
+      0.3962698859977536,
+      0.3864156790004927,
+      0.5055082049984776,
+      0.4538363749998098,
+      0.3605632679973496
+    ],
+    "today": [
+      2.4645354639978905,
+      2.342422961999546,
+      2.27261985399673,
+      2.2475520949992642,
+      2.26451947300302
+    ],
+    "kind_table": [
+      1.7001313469991146,
+      1.719889370000601,
+      1.5652124580010423,
+      1.7081371719978051,
+      1.7842025730024034
+    ],
+    "all_listeners_table": [
+      2.370772551999835,
+      2.4284167240002716,
+      2.5011157040025864,
+      2.5083378439994704,
+      2.473013295999408
+    ]
+  },
+  "runs": [
+    {
+      "round": 0,
+      "name": "Go",
+      "argv": [
+        "/workspace/lint-cost-baseline/oracle",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 0.3962698859977536,
+      "user": 0.39722599999999997,
+      "system": 0.116199
+    },
+    {
+      "round": 0,
+      "name": "today",
+      "argv": [
+        "/workspace/lint-cost-baseline/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.4645354639978905,
+      "user": 2.367617,
+      "system": 0.096141
+    },
+    {
+      "round": 0,
+      "name": "kind_table",
+      "argv": [
+        "/workspace/lint-cost-prototype/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 1.7001313469991146,
+      "user": 1.618982,
+      "system": 0.08064299999999999
+    },
+    {
+      "round": 0,
+      "name": "all_listeners_table",
+      "argv": [
+        "/workspace/lint-cost-all-listeners/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.370772551999835,
+      "user": 2.3104010000000006,
+      "system": 0.05953599999999998
+    },
+    {
+      "round": 1,
+      "name": "today",
+      "argv": [
+        "/workspace/lint-cost-baseline/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.342422961999546,
+      "user": 2.27839,
+      "system": 0.05710500000000002
+    },
+    {
+      "round": 1,
+      "name": "kind_table",
+      "argv": [
+        "/workspace/lint-cost-prototype/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 1.719889370000601,
+      "user": 1.6278569999999988,
+      "system": 0.09175999999999995
+    },
+    {
+      "round": 1,
+      "name": "all_listeners_table",
+      "argv": [
+        "/workspace/lint-cost-all-listeners/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.4284167240002716,
+      "user": 2.378794000000001,
+      "system": 0.04850500000000002
+    },
+    {
+      "round": 1,
+      "name": "Go",
+      "argv": [
+        "/workspace/lint-cost-baseline/oracle",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 0.3864156790004927,
+      "user": 0.42221499999999956,
+      "system": 0.104209
+    },
+    {
+      "round": 2,
+      "name": "kind_table",
+      "argv": [
+        "/workspace/lint-cost-prototype/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 1.5652124580010423,
+      "user": 1.5168549999999996,
+      "system": 0.04793700000000001
+    },
+    {
+      "round": 2,
+      "name": "all_listeners_table",
+      "argv": [
+        "/workspace/lint-cost-all-listeners/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.5011157040025864,
+      "user": 2.4404100000000017,
+      "system": 0.059697
+    },
+    {
+      "round": 2,
+      "name": "Go",
+      "argv": [
+        "/workspace/lint-cost-baseline/oracle",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 0.5055082049984776,
+      "user": 0.5109069999999996,
+      "system": 0.14250300000000005
+    },
+    {
+      "round": 2,
+      "name": "today",
+      "argv": [
+        "/workspace/lint-cost-baseline/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.27261985399673,
+      "user": 2.206748000000001,
+      "system": 0.06444699999999992
+    },
+    {
+      "round": 3,
+      "name": "all_listeners_table",
+      "argv": [
+        "/workspace/lint-cost-all-listeners/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.5083378439994704,
+      "user": 2.467673999999999,
+      "system": 0.0401490000000001
+    },
+    {
+      "round": 3,
+      "name": "Go",
+      "argv": [
+        "/workspace/lint-cost-baseline/oracle",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 0.4538363749998098,
+      "user": 0.45852800000000116,
+      "system": 0.14749199999999996
+    },
+    {
+      "round": 3,
+      "name": "today",
+      "argv": [
+        "/workspace/lint-cost-baseline/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.2475520949992642,
+      "user": 2.1888439999999996,
+      "system": 0.05716499999999991
+    },
+    {
+      "round": 3,
+      "name": "kind_table",
+      "argv": [
+        "/workspace/lint-cost-prototype/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 1.7081371719978051,
+      "user": 1.625550999999998,
+      "system": 0.08183600000000002
+    },
+    {
+      "round": 4,
+      "name": "Go",
+      "argv": [
+        "/workspace/lint-cost-baseline/oracle",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 0.3605632679973496,
+      "user": 0.4293250000000022,
+      "system": 0.06674700000000011
+    },
+    {
+      "round": 4,
+      "name": "today",
+      "argv": [
+        "/workspace/lint-cost-baseline/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.26451947300302,
+      "user": 2.188019999999998,
+      "system": 0.07452899999999985
+    },
+    {
+      "round": 4,
+      "name": "kind_table",
+      "argv": [
+        "/workspace/lint-cost-prototype/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 1.7842025730024034,
+      "user": 1.6676339999999996,
+      "system": 0.11347299999999994
+    },
+    {
+      "round": 4,
+      "name": "all_listeners_table",
+      "argv": [
+        "/workspace/lint-cost-all-listeners/scanner",
+        "--manifest",
+        "/workspace/lint-cost-baseline/compiler.txt",
+        "--count"
+      ],
+      "wall": 2.473013295999408,
+      "user": 2.339476000000001,
+      "system": 0.130598
+    }
+  ],
+  "load_before": "0.93 1.62 1.12 1/203 49102",
+  "load_after": "0.96 1.56 1.11 1/202 49175",
+  "nproc": "5",
+  "cpu_max": "400000 100000"
+}
