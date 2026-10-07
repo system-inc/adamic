@@ -150,3 +150,7 @@ Main remains f8013f0b, with the earlier six completed-rule landing oracles green
 ## Named harness adoption
 
 Current evidence supersedes the earlier JSX parser failure and main revision: JSX parsing now succeeds after adopting ab70f38d4; current main is c01907a7. Numeric registry integration and the own source-analysis work remain incomplete. See [HARNESS_AB70.md](HARNESS_AB70.md) for green completed-rule oracles, partial-kernel mutants, measured timings and exact limits.
+
+## Value attribute extraction
+
+Ported and independently compared ordered numeric value-attribute extraction, including invalid-first duplicate semantics. Expanded references pass 302 records and eight comparison-only mutants across five backends. See [ATTRIBUTES.md](ATTRIBUTES.md); full source rules remain incomplete and no new claims were taken.

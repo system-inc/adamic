@@ -18,7 +18,7 @@ for i,node in enumerate(data['Nodes']):
  # The driver fetches each root once and hands it to the helpers.
  driver+=f'{{ const node = tree[{i}]; if(node !== undefined) {{\nconsole.log(`reference ${{undef.reference(node,tree)}}`);\n'
  if node['Kind']!=79:driver+='console.log(`fragment ${fragments.qualifiedFragment(node,tree)}`);\n'
- driver+='console.log(`factory ${context.createContextCallee(node,tree)}`);\nconsole.log(`source ${fragments.fragmentSource(node,tree)}`);\n} }\n'
+ driver+='console.log(`factory ${context.createContextCallee(node,tree)}`);\nconsole.log(`source ${fragments.fragmentSource(node,tree)}`);\nconsole.log(`value ${context.valueExpression(node,tree)}`);\n} }\n'
 entry=out/'probe.a';entry.write_text(driver)
 for variant in ['normal','asan']:
  command=[a.adamic,'build',entry,'-o',out/variant]
@@ -26,11 +26,11 @@ for variant in ['normal','asan']:
  run('build-'+variant,command);actual,error=run('run-'+variant,[out/variant]);assert actual==truth and not error,variant
 actual,error=run('source-node',['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',entry]);assert actual==truth and not error
 js,_=run('emit',[a.adamic,'js',entry]);(out/'probe.js').write_bytes(js);actual,error=run('emitted-js',['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',out/'probe.js']);assert actual==truth and not error
-mutants=[('jsx_fragments',"receiver.text === 'React'","receiver.text === 'Other'"),('jsx_fragments',"argument.text === 'react'","argument.text === 'preact'"),('jsx_fragments','argument.kind === 14','argument.kind === 8'),('jsx_no_undef','return root.kind === 79 ? root.identity : -1;','return root.kind === 79 && this.componentName(root.text) ? root.identity : -1;'),('jsx_no_constructed_context_values','while(receiver.kind === 218)','while(receiver.kind === 8)')]
+mutants=[('jsx_fragments',"receiver.text === 'React'","receiver.text === 'Other'"),('jsx_fragments',"argument.text === 'react'","argument.text === 'preact'"),('jsx_fragments','argument.kind === 14','argument.kind === 8'),('jsx_no_undef','return root.kind === 79 ? root.identity : -1;','return root.kind === 79 && this.componentName(root.text) ? root.identity : -1;'),('jsx_no_constructed_context_values','while(receiver.kind === 218)','while(receiver.kind === 8)'),('jsx_no_constructed_context_values',"name.text !== 'value'","name.text !== 'Value'"),('jsx_no_constructed_context_values','initializer.kind !== 295','initializer.kind !== 8'),('jsx_no_constructed_context_values','if(initializer === undefined || initializer.kind !== 295) { return -1; }','if(initializer === undefined || initializer.kind !== 295) { continue; }')]
 for mutant_index,(folder,before,after) in enumerate(mutants):
  module=own/folder/'rule.a';source=module.read_text();assert source.count(before)==1
  source=re.sub(r"from '(\.[^']+)'",lambda m:"from '"+str((module.parent/m[1]).resolve())+"'",source.replace(before,after))
  label=folder+'-'+str(mutant_index);path=out/(label+'-mutant.a');path.write_text(source);probe=out/(label+'-probe.a');probe.write_text(driver.replace(str(module),str(path)))
  run(label+'-mutant-build',[a.adamic,'build',probe,'-o',out/(label+'-mutant'),'--sanitize']);actual,error=run(label+'-mutant-run',[out/(label+'-mutant')]);assert actual!=truth and not error,'mutant survived or failed outside comparison'
 (out/'runs.json').write_text(json.dumps(runs,indent=2)+'\n');(out/'source-sha256.json').write_text(json.dumps({str(x.relative_to(own)):hashlib.sha256(x.read_bytes()).hexdigest() for x in [own/folder/'rule.a' for folder in ['jsx_fragments','jsx_no_undef','jsx_no_constructed_context_values']]+[own/'numeric_tag.a',own/'testdata/references_test.go',Path(__file__).resolve()]},indent=2)+'\n')
-print(f'PASS partial JSX references: {len(data["Nodes"])} numeric AST nodes, {len(truth.splitlines())} records, {len(truth)} bytes; Go/native/sanitizers/source Node/emitted JS; five comparison-only mutants. Full source parity remains blocked.')
+print(f'PASS partial JSX references: {len(data["Nodes"])} numeric AST nodes, {len(truth.splitlines())} records, {len(truth)} bytes; Go/native/sanitizers/source Node/emitted JS; eight comparison-only mutants. Full source parity remains blocked.')

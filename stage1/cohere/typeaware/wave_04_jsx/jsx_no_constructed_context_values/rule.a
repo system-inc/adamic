@@ -18,6 +18,20 @@ export class JsxNoConstructedContextValues {
         const name = tree[callee.name] ?? panic('missing context factory name');
         return receiver.kind === 79 && receiver.text === 'React' && name.kind === 79 && name.text === 'createContext';
     }
+    // Snapshot receiver stores the initializer/expression; arguments_ stores attribute order.
+    valueExpression(node: NumericTag, tree: readonly NumericTag[]): number {
+        if(node.kind !== 293) { return -1; }
+        for(const index of node.arguments_) {
+            const property = tree[index] ?? panic('missing context attribute');
+            if(property.kind !== 292) { continue; }
+            const name = tree[property.name];
+            if(name === undefined || name.kind !== 79 || name.text !== 'value') { continue; }
+            const initializer = tree[property.receiver];
+            if(initializer === undefined || initializer.kind !== 295) { return -1; }
+            return initializer.receiver;
+        }
+        return -1;
+    }
     constructionKind(node: SyntaxNodeInterface): string {
         switch(node.kind) {
             case 211: return 'object';

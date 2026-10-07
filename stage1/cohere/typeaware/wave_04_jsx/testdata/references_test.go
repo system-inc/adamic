@@ -54,6 +54,25 @@ func TestWave04JsxReferences(t *testing.T) {
 	id := add(f.NewCallExpression(nodes[14], nil, nil, f.NewNodeList([]*ast.Node{nodes[react]}), 0), "", 14, -1)
 	entries[id].Arguments = []int{react}
 
+	valueName := add(f.NewIdentifier("value"), "value", -1, -1)
+	otherName := add(f.NewIdentifier("Value"), "Value", -1, -1)
+	expression := add(f.NewJsxExpression(nil, nodes[react]), "", react, -1)
+	emptyExpression := add(f.NewJsxExpression(nil, nil), "", -1, -1)
+	value := add(f.NewJsxAttribute(nodes[valueName], nodes[expression]), "", expression, valueName)
+	other := add(f.NewJsxAttribute(nodes[otherName], nodes[expression]), "", expression, otherName)
+	boolean := add(f.NewJsxAttribute(nodes[valueName], nil), "", -1, valueName)
+	literal := add(f.NewJsxAttribute(nodes[valueName], nodes[react]), "", react, valueName)
+	empty := add(f.NewJsxAttribute(nodes[valueName], nodes[emptyExpression]), "", emptyExpression, valueName)
+	spread := add(f.NewJsxSpreadAttribute(nodes[react]), "", react, -1)
+	for _, properties := range [][]int{{}, {value}, {other}, {boolean}, {literal}, {empty}, {spread, value}, {other, value}, {boolean, value}, {literal, value}, {value, boolean}, {empty, value}} {
+		list := []*ast.Node{}
+		for _, index := range properties {
+			list = append(list, nodes[index])
+		}
+		id := add(f.NewJsxAttributes(f.NewNodeList(list)), "", -1, -1)
+		entries[id].Arguments = properties
+	}
+
 	var expected strings.Builder
 	for _, n := range nodes {
 		ref := resolvableJsxReference(n)
@@ -71,6 +90,15 @@ func TestWave04JsxReferences(t *testing.T) {
 		}
 		fmt.Fprintf(&expected, "factory %t\n", jsxNoConstructedContextValuesIsCreateContextCallee(n))
 		fmt.Fprintf(&expected, "source %t\n", jsxFragmentsInitializerIsFragmentSource(n))
+		value := jsxNoConstructedContextValuesValueExpression(n)
+		valueIndex := -1
+		for i, candidate := range nodes {
+			if candidate == value {
+				valueIndex = i
+				break
+			}
+		}
+		fmt.Fprintf(&expected, "value %d\n", valueIndex)
 	}
 	data := struct {
 		Nodes    []entry
