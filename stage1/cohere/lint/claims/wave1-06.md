@@ -15,3 +15,21 @@ This claim is pushed before implementation.
 
 Foundation integration observed six conflicts rather than a clean merge.
 The requested docs/parallel-work.md is absent on main and both foundations.
+
+## Next batch, October 7
+
+After pushing all existing work and fetching all origin heads, claim:
+
+1. structure/tailwind-no-physical-direction (helper-ready position 46).
+2. @eslint-community/eslint-comments/require-description (first available syntax inventory entry).
+3. @next/next/google-font-display (next available syntax inventory entry).
+
+The other 45 helper-ready entries are named by claim files on origin branches.
+No implementation of these three is present on origin/main; its frequency log
+mentions them but contains no port. Claim files on all fetched origin heads
+were checked, excluding evidence and report files. Inventory order is the rules
+array in origin/codex/lint-inventory, restricted to entries that need neither
+type information nor a binding bridge. The helper report links HELPERS.md and
+readiness.json for its ordered handoff.
+
+This update is pushed before writing code. Original three-rule claim remains.
