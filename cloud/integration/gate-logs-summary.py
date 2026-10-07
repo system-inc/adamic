@@ -11,6 +11,8 @@ sha, state, log, failuresPath, statusPath = sys.argv[1:6]
 output = collections.defaultdict(list)
 buildOutput = collections.defaultdict(list)
 failedTests, failedBuilds, failedPackages, finishedPackages = [], set(), set(), set()
+requiredInputs = os.environ.get("GATE_LOGS_REQUIRED_INPUTS", "").split()
+skippedForInput = []
 counts = collections.Counter()
 for line in open(log, errors="replace"):
     try:
@@ -31,6 +33,11 @@ for line in open(log, errors="replace"):
             counts[action] += 1
             if action == "fail":
                 failedTests.append((package, test))
+            if action == "skip":
+                said = "".join(output[(package, test)])
+                named = [name for name in requiredInputs if name in said]
+                if named:
+                    skippedForInput.append((package, test, named))
         else:
             finishedPackages.add(package)
             if action == "fail":
@@ -48,6 +55,10 @@ with open(failuresPath, "w") as failures:
         failures.write(f"== {package} {test}\n")
         failures.writelines(output[(package, test)][-20:])
         failures.write("\n")
+    for package, test, named in skippedForInput:
+        failures.write(f"== {package} {test} (skipped: missing gate input {' '.join(named)})\n")
+        failures.writelines(output[(package, test)][-5:])
+        failures.write("\n")
     for package in sorted(failedPackages - failedBuilds):
         if not any(failed[0] == package for failed in failedTests):
             failures.write(f"== {package} (failed outside a test)\n")
@@ -57,7 +68,9 @@ with open(failuresPath, "w") as failures:
 with open(statusPath, "w") as status:
     status.write(
         f"{state}: {counts['pass']} pass, {counts['fail']} fail, {counts['skip']} skip; "
-        f"{len(failedBuilds)} packages failed to build; {len(finishedPackages)} packages finished\n"
+        f"{len(failedBuilds)} packages failed to build; {len(finishedPackages)} packages finished; "
+        f"{len(skippedForInput)} skipped for a missing gate input\n"
     )
     status.write(f"sha {sha}\n")
     status.write(os.environ.get("GATE_LOGS_SIGNALS", "inherited ignored signals: not recorded") + "\n")
+    status.write(os.environ.get("GATE_LOGS_INPUTS", "gate inputs: not recorded") + "\n")

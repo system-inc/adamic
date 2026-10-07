@@ -43,6 +43,16 @@ print(" ".join(signal.Signals(n).name for n in range(1, 65) if mask >> (n - 1) &
 	signals="inherited ignored signals (launching shell, pid $PPID): SigIgn=$mask ($names)"
 fi
 export GATE_LOGS_SIGNALS=$signals
+# A test whose required input is unset skips in 0 s, and main took a stage 1 test that way: name the
+# inputs this run started with, so a gate is judged with its input set, and the summary marks every
+# skip that names a missing one. The list is what developer tools' setup --gate-inputs provides.
+requiredInputs="ADAMIC_TYPESCRIPT_SOURCE ADAMIC_TS_PRETTIER ADAMIC_JSON_PRETTIER ADAMIC_GRAPHQL_PRETTIER ADAMIC_CSS_LIBRARY ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_ESTREE_LIBRARY ADAMIC_YAML_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY"
+missingInputs=""
+for name in $requiredInputs; do
+	[ -n "${!name:-}" ] || missingInputs="$missingInputs $name"
+done
+export GATE_LOGS_REQUIRED_INPUTS=$requiredInputs
+export GATE_LOGS_INPUTS="gate inputs missing at launch:${missingInputs:- none}"
 echo "gate-logs: publishing to ${ref#refs/heads/}; $signals"
 
 publish() {
