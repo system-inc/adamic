@@ -16,6 +16,13 @@ func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	return l.nonNullValue(node, value)
+}
+
+// nonNullValue also checks an already-held assignment target read.
+func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+	operand := node.AsNonNullExpression().Expression
+	var err error
 	for {
 		switch narrowed := value.(type) {
 		case ir.Unwrap:

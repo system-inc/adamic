@@ -12,10 +12,19 @@ import (
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	binary := node.AsBinaryExpression()
 	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
+	target := ast.SkipParentheses(binary.Left)
+	assertion := nonNullAssignmentTarget(target)
+	if assertion != nil {
+		for target.Kind == ast.KindNonNullExpression {
+			target = ast.SkipParentheses(target.AsNonNullExpression().Expression)
+		}
+		if isCompound || logicalAssignment(binary.OperatorToken.Kind) {
+			return l.nonNullUpdate(node, assertion, target, operator)
+		}
+	}
 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
-	target := ast.SkipParentheses(binary.Left)
 	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
