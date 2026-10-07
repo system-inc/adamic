@@ -1,7 +1,7 @@
 Built: pinned wasmtime installer and opt-in source differential tests over ordinary and input fixtures.
-Commits: claim 753ff69; initial implementation ef23383; final report commit is reported with the pushed SHA.
-Commands: native oracle PASS 198.193s; V8 WASI PASS 157.060s; wasmtime 314 fixtures, 299 pass, 15 fail, 0 skip, 110.450s.
-Mutants: stdout bytes, main exit 0 to 23, and stderr bytes all compile and are caught under wasmtime.
+Commits: claim 753ff69; implementation ef23383; fixture mappings f58d76b; main merge 2a5c93f; final pushed SHA accompanies this report.
+Commands: post-merge native oracle PASS 181.322s; V8 WASI PASS 277.968s; wasmtime 329 fixtures, 314 pass, 15 fail, 0 skip, 240.886s.
+Mutants: stdout, exit 0 to 23, and stderr changes all compile and are caught under wasmtime; an altered archive fails the checksum check.
 Not covered: reactor ABI, request lifecycle, performance, sanitizers in Wasm, and fixes outside this unit's files.
 
 ## Toolchain and setup
@@ -130,18 +130,24 @@ and clang rejected it; it was discarded, corrected with `<stdio.h>`, and rerun.
 Commands (all test output redirected to complete logs, never piped):
 
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m > /tmp/wasm-engines-oracle.log 2>&1
-ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestWASI' -count=1 -v -timeout 30m > /tmp/wasm-engines-wasi-oracle.log 2>&1
-ADAMIC_ORACLE_WASMTIME=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestWasmtime' -count=1 -v -timeout 30m > /tmp/wasm-engines-complete-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m > /tmp/wasm-engines-postmerge-oracle.log 2>&1
+ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestWASI' -count=1 -v -timeout 30m > /tmp/wasm-engines-postmerge-wasi.log 2>&1
+ADAMIC_ORACLE_WASMTIME=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestWasmtime' -count=1 -v -timeout 30m > /tmp/wasm-engines-postmerge-wasmtime.log 2>&1
 go vet ./internal/oracle > /tmp/wasm-engines-vet-latest.log 2>&1
 bash -n cloud/setup.sh > /tmp/wasm-engines-shell-latest.log 2>&1
 gofmt -l internal/oracle/wasi_engines_test.go > /tmp/wasm-engines-format-latest.log
 git diff --check > /tmp/wasm-engines-diff-latest.log
 ```
 
-Full uncached native oracle: PASS, 198.193s. Existing V8 WASI gate: PASS,
-157.060s. Complete final wasmtime run: 314 fixtures, 299 pass, 15 fail,
-0 skip; exit 1, 110.450s. All three mutants pass their rejection assertions. Vet, format, shell syntax and diff
+After merging origin/main f8013f0: full uncached native oracle PASS,
+181.322s. Existing V8 WASI gate PASS, 277.968s. Complete wasmtime run: 329 fixtures, 314 pass, 15 fail, 0 skip;
+exit 1, 240.886s. All three execution mutants pass their rejection assertions.
+The added 15 main fixtures all pass. A release archive with one appended byte
+fails the pinned SHA256 check, exit 1, before extraction.
+
+Before this merge, the native oracle passed in 198.193s and the V8 WASI gate
+passed in 157.060s; the 314-fixture wasmtime run had 299 pass and 15 fail in
+110.450s. These are retained as earlier observations, not post-merge results. Vet, format, shell syntax and diff
 checks have no diagnostics. The fixture table and preserved final logs give
 the exact complete WASI and wasmtime outcomes and timings.
 
@@ -150,9 +156,10 @@ performance measurements were made. No runtime or compiler production file
 outside the setup option was edited. No pull request was opened.
 
 The checkout initially fetched only main; the requested integration ref was
-fetched explicitly before creating codex/wasm-engines. `git fetch origin` and
-`git merge origin/main` reported Already up to date: main was already an
-ancestor. There was no rebase. Only codex/wasm-engines is pushed. The branch is
+fetched explicitly before creating codex/wasm-engines. The initial main merge
+was already up to date. The final fetch observed origin/main advancing from
+e8ba3d5 to f8013f0, and merged it in commit 2a5c93f. All three oracle scopes
+were then rerun. There was no rebase. Only codex/wasm-engines is pushed. The branch is
 reviewable, but strict source failures mean this is not a claimed green landing.
 
 Rebuild the independent engine-stack witness with the SDK compiler:
@@ -165,3 +172,6 @@ wasmtime run --dir /::/ /tmp/engine-stack.wasm
 
 The stdio and directory-byte probes use the same compiler, without the recursion
 flags. Pass the directory as the sole program argument to directory-bytes.wasm.
+
+The complete logs are preserved as .log.gz files beside this report.
+Uncompressed test logs remain in /tmp under the command paths above.

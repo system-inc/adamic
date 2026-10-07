@@ -1,8 +1,9 @@
-# Complete final fixture results
+# Complete post-merge fixture results
 
-fixtures=314 pass=299 fail=15 skip=0
+fixtures=329 pass=314 fail=15 skip=0
 
-No skipped fixture names. Final run exits 1 in 110.450s.
+No skipped fixture names. Final run exits 1 in 240.886s.
+Main merge: 2a5c93f, incorporating origin/main f8013f0.
 
 | Fixture | Result |
 | --- | --- |
@@ -300,6 +301,8 @@ No skipped fixture names. Final run exits 1 in 110.450s.
 | internal/oracle/testdata/devirtualize.a | PASS |
 | internal/oracle/testdata/user_iterators.a | PASS |
 | internal/oracle/testdata/user_iterators_rest_tdz.a | PASS |
+| internal/oracle/testdata/library_map_set_iterator_number_hash.a | PASS |
+| internal/oracle/testdata/library_map_set_iterator_exhausted.a | PASS |
 | internal/oracle/testdata/e4eec87_u02_optional_absent.a | PASS |
 | internal/oracle/testdata/literal_optional_shapes.a | PASS |
 | internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a | PASS |
@@ -308,6 +311,19 @@ No skipped fixture names. Final run exits 1 in 110.450s.
 | internal/oracle/testdata/e4eec87_f1_class_narrowed.a | FAIL |
 | internal/oracle/testdata/e4eec87_f1_alias_narrowed.a | FAIL |
 | internal/oracle/testdata/e4eec87_f1_field_present.a | PASS |
+| internal/oracle/testdata/047cb0d_n_element_plain.a | PASS |
+| internal/oracle/testdata/047cb0d_n_element.a | PASS |
+| internal/oracle/testdata/047cb0d_n_element_method.a | PASS |
+| internal/oracle/testdata/047cb0d_n_param.a | PASS |
+| internal/oracle/testdata/047cb0d_n_numparam.a | PASS |
+| internal/oracle/testdata/047cb0d_n_coalesce.a | PASS |
+| internal/oracle/testdata/047cb0d_n_typeof.a | PASS |
+| internal/oracle/testdata/047cb0d_n_template.a | PASS |
+| internal/oracle/testdata/047cb0d_n_optional.a | PASS |
+| internal/oracle/testdata/047cb0d_n_arrayindex.a | PASS |
+| internal/oracle/testdata/047cb0d_n_paren.a | PASS |
+| internal/oracle/testdata/047cb0d_n_conditional.a | PASS |
+| internal/oracle/testdata/override_same_representation.a | PASS |
 | internal/oracle/testdata/object_prototype.a | PASS |
 | internal/fresh/testdata/regexp_tree.ts | PASS |
 | internal/oracle/testdata/regexp_cycle_fields.a | PASS |
