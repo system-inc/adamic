@@ -1,6 +1,6 @@
 Built: removed the hand-written commentPattern matcher shared by default-case and no-fallthrough; fixed default-case regex uses the shared-table RegExp literal.
-Commits: prior rule delivery 551c529c8 and helper delivery 65890c010 are on current main c01907a7; migration SHA is in the response.
-Checks: 32 fixed-pattern queries, private Go/source Node/emitted JavaScript/sanitized native identical (184 bytes); required dynamic constructor refuses lowering; setup 42s, nproc 5.
+Commits: prior rule delivery 551c529c8 and helper delivery 65890c010 are based on current main c01907a7; migration SHA is in the response.
+Checks: 32 fixed-pattern queries, private Go/source Node/emitted JavaScript/sanitized native identical (184 bytes); required dynamic constructor refuses lowering; latest setup 20s, nproc 5.
 Mutants: absolute_end_removed compiles and runs successfully on all three runtimes, caught only by private-Go byte comparison; option_parity_guard_removed caught on source Node only.
 Limits: default-case/no-fallthrough runtime options are blocked; no current full-rule native/emitted parity, no new helper claim, no full gate.
 
@@ -33,3 +33,7 @@ python3 stage1/cohere/lint/rules/default-case/regex_contract_validate.py > /tmp/
 ```
 
 Every command's stdout/stderr is retained under evidence/regex-contract-*. Native successful comparisons use ASan/UBSan. The validator succeeds when the supported fixed comparison/mutant and the documented blockers are observed; it is not a green full-rule oracle. No finding.ts, context.ts, main.ts, generator, shared oracle or lint_test comparison was edited. The announced leak-helper diff is absent from main on this fetch; nothing was reverted. All new Adamic files are .a.
+
+Latest landing-cap refresh: origin/main is still c01907a7 and does not contain ab70f38d4. Both owned branches already have that main as an ancestor. The regex contract validator was rerun: fixed/private-Go 32-query parity and the three-runtime compiling absolute_end_removed mutant pass; the required runtime constructor still refuses both emitted and native lowering. External Go/Node dialect witnesses and the Node-only option guard mutant reproduce unchanged. The full rule oracle remains blocked, so this branch is not landing-ready and no new helper is claimed. See evidence/regex-refresh-summary.log.txt and evidence/regex-refresh-setup.log.txt.
+
+Listener contract correction: the twelve owned rule.json descriptors already declare ast.Kind names as strings. They remain the registration source of truth. The earlier unused numeric listeners.a probes are historical evidence, not a dispatch contract, and no numeric declaration is proposed for the unified harness. Existing index visitors continue through the registry's compatibility path; no shared driver or comparison file was changed. No leak-helper replacement has reached this main snapshot; none was reverted.
