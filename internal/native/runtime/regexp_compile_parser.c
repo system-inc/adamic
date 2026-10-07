@@ -28,6 +28,10 @@ static void *regex_parse_allocate(regex_parser *p, size_t size) {
     p->result->memory = memory;
     return memory + 1;
 }
+void *adamic_regex_parse_allocate(adamic_regex_parse_result *result, size_t size) {
+    regex_parser parser = {.result = result};
+    return regex_parse_allocate(&parser, size);
+}
 void adamic_regex_parse_free(adamic_regex_parse_result *result) {
     adamic_regex_parse_memory *memory = result->memory;
     while (memory != NULL) {
@@ -284,7 +288,7 @@ static regex_node *regex_parse_escape(regex_parser *p, bool in_class, bool *quan
         *quantifiable = false;
         return node;
     }
-    if (!in_class && byte >= '1' && byte <= '9') {
+    if (byte >= '1' && byte <= '9') {
         p->position--;
         const char *digits = regex_parse_decimal(p);
         if (digits == NULL) return NULL;
@@ -295,12 +299,12 @@ static regex_node *regex_parse_escape(regex_parser *p, bool in_class, bool *quan
             if (number > (SIZE_MAX - digit) / 10) { fits = false; break; }
             number = number * 10 + digit;
         }
-        if (fits && number <= p->capture_count) {
+        if (!in_class && fits && number <= p->capture_count) {
             regex_node *node = regex_parse_new(p, REGEX_PARSE_REFERENCE);
             if (node != NULL) node->index = number;
             return node;
         }
-        if (regex_parse_unicode(p)) return regex_parse_fail(p, start, "invalid decimal escape", "Invalid escape");
+        if (regex_parse_unicode(p)) return regex_parse_fail(p, start, "invalid decimal escape", in_class && byte <= '7' ? "Invalid decimal escape" : "Invalid escape");
         p->position = start + 1;
         return regex_parse_octal(p, start);
     }

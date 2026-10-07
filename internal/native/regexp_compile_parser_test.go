@@ -22,40 +22,8 @@ func TestRegExpRuntimeParserWASI(t *testing.T)       { runtimeParserAcceptance(t
 
 func runtimeParserAcceptance(t *testing.T, wasi bool) {
 	t.Helper()
-	data, err := os.ReadFile("../regexp/testdata/test262.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var cases [][]string
-	if err := json.Unmarshal(data, &cases); err != nil {
-		t.Fatal(err)
-	}
-	corpus := len(cases)
-	cohereData, err := os.ReadFile("../regexp/testdata/runtime-cohere.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var cohere [][]string
-	if err := json.Unmarshal(cohereData, &cohere); err != nil {
-		t.Fatal(err)
-	}
-	if len(cohere) != 875 {
-		t.Fatalf("cohere count %d", len(cohere))
-	}
-	cases = append(cases, cohere...)
-	cases = append(cases, [][]string{{"(?<℘>a)", "u", "Other_ID_Start"}, {"(?<a·>a)", "u", "Other_ID_Continue"}, {`\u{10000000000000000000000}`, "u", "overflow"}, {"a{2147483648,2147483647}", "", "clamp"}}...)
-	corpus += len(cohere)
-	rng := rand.New(rand.NewSource(0xEC2025))
-	atoms := []string{"a", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", `\d`, `\p{Letter}`, "[", "(", `\k<x>`, "(?<x>a)", "[a&&b]", `[\q{ab|}]`}
-	quantifiers := []string{"", "*", "+", "?", "{0}", "{1,}", "{2,4}", "{4,2}", "*?"}
-	flags := []string{"", "u", "v", "i", "gimsy", "uv", "uu"}
-	for i := 0; i < 4000; i++ {
-		p := atoms[rng.Intn(len(atoms))] + quantifiers[rng.Intn(len(quantifiers))]
-		if rng.Intn(2) == 0 {
-			p += "|" + atoms[rng.Intn(len(atoms))]
-		}
-		cases = append(cases, []string{p, flags[rng.Intn(len(flags))], "seeded"})
-	}
+	cases, corpus := runtimeRegexCompilerCases(t)
+	cohereCount := 875
 	input, _ := json.Marshal(cases)
 	node := exec.Command("node", "-e", `const c=JSON.parse(require('fs').readFileSync(0,'utf8'));process.stdout.write(JSON.stringify(c.map(x=>{try{new RegExp(x[0],x[1]);return ''}catch(e){if(!(e instanceof SyntaxError))throw e;return e.message}})));`)
 	node.Stdin = bytes.NewReader(input)
@@ -133,5 +101,44 @@ func runtimeParserAcceptance(t *testing.T, wasi bool) {
 	if disagreements != 0 {
 		t.Fatalf("%d reference versus Node disagreements", disagreements)
 	}
-	t.Logf("%d test262 + %d cohere + 4000 seeded + 4 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=%v)", corpus-len(cohere), len(cohere), wasi)
+	t.Logf("%d test262 + %d cohere + 4000 seeded + 4 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=%v)", corpus-cohereCount, cohereCount, wasi)
+}
+
+func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
+	t.Helper()
+	data, err := os.ReadFile("../regexp/testdata/test262.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var cases [][]string
+	if err := json.Unmarshal(data, &cases); err != nil {
+		t.Fatal(err)
+	}
+	corpus := len(cases)
+	cohereData, err := os.ReadFile("../regexp/testdata/runtime-cohere.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var cohere [][]string
+	if err := json.Unmarshal(cohereData, &cohere); err != nil {
+		t.Fatal(err)
+	}
+	if len(cohere) != 875 {
+		t.Fatalf("cohere count %d", len(cohere))
+	}
+	cases = append(cases, cohere...)
+	cases = append(cases, [][]string{{"(?<℘>a)", "u", "Other_ID_Start"}, {"(?<a·>a)", "u", "Other_ID_Continue"}, {`\u{10000000000000000000000}`, "u", "overflow"}, {"a{2147483648,2147483647}", "", "clamp"}}...)
+	corpus += len(cohere)
+	rng := rand.New(rand.NewSource(0xEC2025))
+	atoms := []string{"a", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", `\d`, `\p{Letter}`, "[", "(", `\k<x>`, "(?<x>a)", "[a&&b]", `[\q{ab|}]`}
+	quantifiers := []string{"", "*", "+", "?", "{0}", "{1,}", "{2,4}", "{4,2}", "*?"}
+	flags := []string{"", "u", "v", "i", "gimsy", "uv", "uu"}
+	for i := 0; i < 4000; i++ {
+		p := atoms[rng.Intn(len(atoms))] + quantifiers[rng.Intn(len(quantifiers))]
+		if rng.Intn(2) == 0 {
+			p += "|" + atoms[rng.Intn(len(atoms))]
+		}
+		cases = append(cases, []string{p, flags[rng.Intn(len(flags))], "seeded"})
+	}
+	return cases, corpus
 }

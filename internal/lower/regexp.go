@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -56,6 +57,10 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
+		var divergence *regex.V8DivergenceError
+		if errors.As(err, &divergence) {
+			return nil, l.notYet(node, divergence.Error())
+		}
 		return nil, fmt.Errorf("%s: invalid RegExp: %w", l.program.Where(node), err)
 	}
 	index := len(l.result.Regexps)

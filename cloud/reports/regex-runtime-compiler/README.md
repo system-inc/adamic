@@ -168,3 +168,22 @@ Output: reference-rulings.txt (3.355s). No mutation remains in the working tree.
 This is the requested partial parser checkpoint, not a compiler-identity claim.
 AST and bytecode identity, compiler emission mutants, remaining V8 shape refusals,
 dynamic lowering, dynamic fixture sizes and full post-merge gates remain pending.
+
+Bytecode layer: the per-call C set and instruction compiler agrees byte for byte
+with Go's pointer-independent native instruction snapshot for 7,430 programs.
+The shared corpus includes 5,746 test262 patterns, all 875 pinned cohere patterns,
+4,000 seeded patterns and four ruling probes; 3,195 cases reject or refuse.
+Linux runs ASan/UBSan; wasm32-wasi runs the same identity probe with no atomics.
+Changing SET to ASSERT in C is caught at case 0, byte 288. Making C accept `?`
+is caught at case 4,700, status byte 0. Combined compiler/parser/property identity,
+mutants, unused symbol proof and statics guard pass in 26.115s. Repository Go vet
+passes with the documented map_hash_test.go field-rename overlay.
+
+Linux RegExp directory after library merge and rulings, measured with
+cmd/adamic-test262: pass 53, disagreement 0, refused 424, crashed 73, skipped
+1,329 (1,879 total). Before: pass 53, disagreement 0, refused 424, crashed 73,
+skipped 1,329. There are no newly passing directory tests at this layer.
+The reversed oversized quantifier fixture now refuses through V8DivergenceError;
+its filtered uncached Node oracle passes. Optional matcher search optimizations
+are not part of the bytecode snapshot; the existing general VM consumes these
+instructions. Runtime V8 shape checks and dynamic lowering are still pending.

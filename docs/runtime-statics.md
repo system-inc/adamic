@@ -365,3 +365,10 @@ Unicode property ranges, strings and alias entries are immutable static const da
 Library merge audit: record.c contains immutable const names, reference masks and shapes, plus const local diagnostic strings. All mutable record tables and iterators are owned by heap values; it introduces no mutable static storage.
 
 - `runtime-file:record.c`
+
+Bytecode compiler audit: range/string builders, instruction buffers and capture/name lists belong to the per-call parse arena. Folding reads the existing immutable regexp_fold.h tables. There is no compiler cache, registration or startup path.
+
+- `runtime-file:regexp_compile_sets.c`
+- `runtime-file:regexp_compile_sets.h`
+- `runtime-file:regexp_compile_bytecode.c`
+- `runtime-file:regexp_compile_bytecode.h`
