@@ -1,5 +1,19 @@
 # Scanner blockers
 
+## October 7: slice evaluation order and reference-chain repair
+
+Shared tool now retains the original runtime graph and binding modules.
+Scanner still has 89 code declarations in eight files; 70 import-only/facade
+modules preserve the original 78-module evaluation graph. Node matches all
+509,014 tokens. Parser driver reaches 1,988 code declarations in 26 files,
+41,677 code-span lines; its full 35,456,964-byte dump matches the full tree.
+Reverse-import mutants fail Node on both slices and specifically fail the
+ordered-import audit while declaration bytes remain intact. --why identifies
+the old static Debug enum lookup as a false whole-barrel expansion; no
+reachable dynamic namespace member is dropped. See stage3/slice/WHY.md and
+evaluation-proof.json. This is a Node/tool proof, not a refreshed native run.
+Library Error SHA is still awaited; no new behind-stub discovery is done.
+
 ## October 7: silent miscompile isolated behind the discovery stubs
 
 **Found behind a stub, on the unpushed integration compiler, not attributed to

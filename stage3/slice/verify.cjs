@@ -16,4 +16,14 @@ for (const record of manifest.declarations) {
         throw new Error(`copied bytes differ: ${record.file}:${record.line} ${record.names.join(',')}`);
     }
 }
-console.log(`PASS: ${manifest.declarations.length} byte-identical source spans`);
+for (const module of manifest.evaluation || []) {
+    const destination = path.join(root, module.file);
+    const text = outputs.get(module.file) || fs.readFileSync(destination, 'utf8');
+    const lines = text.split(/\r?\n/);
+    for (let index = 0; index < module.imports.length; index++) {
+        let specifier = path.relative(path.dirname(destination), path.join(root, module.imports[index])).replaceAll(path.sep, '/');
+        if (!specifier.startsWith('.')) specifier = './' + specifier;
+        if (lines[index] !== `import ${JSON.stringify(specifier)};`) throw new Error(`evaluation order differs: ${module.file}:${index + 1}`);
+    }
+}
+console.log(`PASS: ${manifest.declarations.length} byte-identical source spans; ${(manifest.evaluation || []).length} ordered module import lists`);
