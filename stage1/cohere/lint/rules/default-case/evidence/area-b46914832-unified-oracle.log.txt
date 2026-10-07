@@ -1,0 +1,6 @@
+=== RUN   TestRulesAgree
+    lint_test.go:428: /workspace/wave10-rule-landing/stage1/cohere/lint/rules/default-case/pattern.a:13:96: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestRulesAgree (7.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	7.151s
+FAIL
