@@ -932,3 +932,42 @@ Mutants removing constant resolution, required-skip merge enforcement and
 required-input startup enforcement each fail their corresponding test. The
 package race suite, vet and Darwin arm64 cross-compilation are the verification
 scope; neither the whole gate nor the fleet is rerun.
+
+
+## Lint registry parents do not create backend children
+
+At proof tree 6edcd86de24b1b5cfca609e96171880e66b5c8ed, TestMutants reads each
+registered rule's mutant.json and registers change.Name. Its inner Node, emitted
+JavaScript and native rows run those execution modes inside a child; they are
+not t.Run registrations. The old literal reader mistook those three rows for
+children, including the nonexistent TestMutants/emitted_JavaScript.
+
+The literal reader now requires an unconditional direct t.Run bound to the loop
+value and the enclosing test receiver. For struct rows it selects the field that
+t.Run actually consumes, rather than assuming the first field names the child.
+Conditional calls and a name changed before t.Run are not statically enumerated.
+Registry-driven TestMutants uses a whole-parent unit: the literal reader cannot
+prove its metadata-driven names, so the planner does not invent selected children.
+All of its actual registry children run through the anchored ^TestMutants$ selector.
+Existing complement coverage remains for parents that are still split.
+
+The regression fixture contains dynamic registered names and an inner literal
+backend loop. It requires the literal audit to reject that loop, then runs the
+planner and a real Go test log and verifies every planned unit exists. Restoring
+the old reader is caught before a phantom child can be planned; restoring the
+old split fails the planner proof. A separate test covers a real name in the
+second struct field, conditional registrations and reassigned names.
+
+The fixed planner binary is run against a detached, clean worktree of the exact
+proof SHA, with both submodules pinned. Its fifteen-shard plan and a separate
+go test -json -list listing are retained in the evidence archive and compared
+for every stage1/cohere/lint unit. Gate-package race tests, vet and Darwin arm64
+cross-compilation are the verification scope. No lint compiler parity run,
+whole gate or new runtime measurement is claimed; the registry parent is whole
+and can affect shard wall time relative to splitting it.
+
+Merge now prints a labelled wall-seconds line for every shard, sorted by index,
+on both green and red verdicts. merged.json also records ShardWallTimes with
+explicit indices, wall seconds and the original build-flags line; the older
+WallSeconds array is retained for compatibility. Input-directory order therefore
+does not obscure which shard took each time.
