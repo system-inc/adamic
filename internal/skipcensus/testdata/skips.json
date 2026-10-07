@@ -12,11 +12,11 @@
       "TestRepositoryPassesCohereBaseline"
     ],
     "message": "\"%s is not 1: the cohere baseline runs in the gate, not in ordinary loops\"",
-    "class": "required-input",
-    "provides": "The dedicated cohere gate shard sets ADAMIC_GATE_COHERE=1 and runs TestRepositoryPassesCohereBaseline. cloud/cohere_gate.py builds the pinned cohere submodule and checks repository sources and docs against cloud/cohere-baseline.json; setup supplies Node v24.19.0, Go and Python 3.",
     "opt_in_off": [
       "ADAMIC_GATE_COHERE"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "The dedicated cohere gate shard sets ADAMIC_GATE_COHERE=1 and runs TestRepositoryPassesCohereBaseline. cloud/cohere_gate.py builds the pinned cohere submodule and checks repository sources and docs against cloud/cohere-baseline.json; setup supplies Node v24.19.0, Go and Python 3."
   },
   {
     "file": "cmd/adamic-test262/corpus_test.go",
@@ -65,17 +65,17 @@
       "TestCompilerStartupMeasurement"
     ],
     "message": "\"measurement only\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_TEST262_MEASURE"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "cmd/adamic/request_test.go",
     "test": "TestWASIRequest",
     "id": "TestWASIRequest:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 73,
+    "line": 78,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
@@ -84,17 +84,17 @@
       "TestWASIRequest"
     ],
     "message": "\"set ADAMIC_ORACLE_WASI=1\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "cmd/adamic/request_test.go",
     "test": "TestWASIRequestThrows",
     "id": "TestWASIRequestThrows:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 144,
+    "line": 153,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
@@ -103,10 +103,33 @@
       "TestWASIRequestThrows"
     ],
     "message": "\"set ADAMIC_ORACLE_WASI=1\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/lower/import_cycle_ledger_test.go",
+    "test": "TestOriginalCycleLedger",
+    "id": "TestOriginalCycleLedger:da7324176e508bbe06d88e40d3c1a68ace2387bbb1468c4611df3044e9b9c591",
+    "line": 31,
+    "condition": "root == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_CYCLE_LEDGER_OUTPUT\")",
+      "os.Getenv(\"ADAMIC_CYCLE_LEDGER_ROOT\")",
+      "os.Open(filepath.Join(bucket, \"trace.json.gz\"))",
+      "os.ReadFile(filepath.Join(bucket, \"ledger.json\"))",
+      "os.ReadFile(filepath.Join(bucket, \"order.json\"))"
+    ],
+    "callers": [
+      "TestOriginalCycleLedger"
+    ],
+    "message": "\"set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics\"",
+    "class": "required-input",
+    "provides": "setup --gate-inputs provides a pristine TypeScript 6.0.3 checkout at 050880ce with upstream processDiagnosticMessages output as ADAMIC_CYCLE_LEDGER_ROOT, and a writable ADAMIC_CYCLE_LEDGER_OUTPUT.",
+    "opt_in_off": [
+      "ADAMIC_CYCLE_LEDGER_ROOT"
     ]
   },
   {
@@ -185,11 +208,11 @@
       "TestNormalizeLongMeasurements"
     ],
     "message": "\"set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements\"",
-    "class": "measurement",
-    "provides": "ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.",
     "opt_in_off": [
       "ADAMIC_NORMALIZE_BENCH_LOG"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations."
   },
   {
     "file": "internal/native/record_test.go",
@@ -205,11 +228,11 @@
       "TestRecordBenchmark"
     ],
     "message": "\"set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons\"",
-    "class": "measurement",
-    "provides": "Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.",
     "opt_in_off": [
       "ADAMIC_RECORD_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness."
   },
   {
     "file": "internal/native/units_measure_test.go",
@@ -229,11 +252,11 @@
       "TestMeasureClangUnits"
     ],
     "message": "\"set ADAMIC_CLANG_MEASURE to emitted C evidence directory\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_CLANG_MEASURE"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "internal/native/units_tsgo_test.go",
@@ -248,11 +271,11 @@
       "TestSplitTSGoAgrees"
     ],
     "message": "\"set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive\"",
-    "class": "required-input",
-    "provides": "ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_CLANG_TSGO_ARCHIVE"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md."
   },
   {
     "file": "internal/native/wasm_test.go",
@@ -280,6 +303,25 @@
     "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
+    "file": "internal/oracle/enums_test.go",
+    "test": "TestEnumCleanupMutant",
+    "id": "TestEnumCleanupMutant:1743f5368e290c06ba6735cab080c81df3d75b4eadbff4df11f133275a5beced",
+    "line": 119,
+    "condition": "runtime.GOOS != \"linux\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestEnumCleanupMutant"
+    ],
+    "message": "\"LeakSanitizer detect_leaks is not supported on this platform\"",
+    "class": "not-applicable",
+    "provides": "macOS only: AddressSanitizer there has no leak detector; Linux runs this mutant with LeakSanitizer."
+  },
+  {
     "file": "internal/oracle/gcc_lane_test.go",
     "test": "TestGCCAgreesWithNode",
     "id": "TestGCCAgreesWithNode:8e1ac89c8ea9525bf996608391643f7c58b47070d50d2866cc1b34260c01c49f",
@@ -296,11 +338,11 @@
       "TestGCCAgreesWithNode"
     ],
     "message": "\"opt in with ADAMIC_GCC_LANE=1\"",
-    "class": "opt-in-lane",
-    "provides": "Dedicated GCC verification lane opts in with ADAMIC_GCC_LANE=1. ADAMIC_LANE_CC selects the compiler (default gcc); ADAMIC_LANE_SANITIZE=1 enables sanitizers. Missing compiler or failed builds fail the opted-in lane rather than skipping it.",
     "opt_in_off": [
       "ADAMIC_GCC_LANE"
-    ]
+    ],
+    "class": "opt-in-lane",
+    "provides": "Dedicated GCC verification lane opts in with ADAMIC_GCC_LANE=1. ADAMIC_LANE_CC selects the compiler (default gcc); ADAMIC_LANE_SANITIZE=1 enables sanitizers. Missing compiler or failed builds fail the opted-in lane rather than skipping it."
   },
   {
     "file": "internal/oracle/regexp_cycle_test.go",
@@ -333,11 +375,11 @@
       "TestNativeReleaseFlagsAgreeWithNode"
     ],
     "message": "\"set ADAMIC_RELEASE_LANE=1 for the full shipping-build lane\"",
-    "class": "opt-in-lane",
-    "provides": "Dedicated shipping-build verification lane opts in with ADAMIC_RELEASE_LANE=1. The lane traces production release options; missing tools or failed builds fail the opted-in lane rather than skipping it.",
     "opt_in_off": [
       "ADAMIC_RELEASE_LANE"
-    ]
+    ],
+    "class": "opt-in-lane",
+    "provides": "Dedicated shipping-build verification lane opts in with ADAMIC_RELEASE_LANE=1. The lane traces production release options; missing tools or failed builds fail the opted-in lane rather than skipping it."
   },
   {
     "file": "internal/oracle/release_flags_test.go",
@@ -356,11 +398,11 @@
       "TestNativeExistingReleaseAgreesWithNode"
     ],
     "message": "\"set ADAMIC_RELEASE_MEASURE=1 for the timing control\"",
-    "class": "measurement",
-    "provides": "Opt-in timing control: ADAMIC_RELEASE_MEASURE=1 compares the existing release variant on finishing fixtures; not a substitute for the shipping-build verification lane.",
     "opt_in_off": [
       "ADAMIC_RELEASE_MEASURE"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing control: ADAMIC_RELEASE_MEASURE=1 compares the existing release variant on finishing fixtures; not a substitute for the shipping-build verification lane."
   },
   {
     "file": "internal/oracle/slabs_test.go",
@@ -437,11 +479,11 @@
       "TestStage3FixtureHook"
     ],
     "message": "\"called only by the Stage 3 fixture runner\"",
-    "class": "not-applicable",
-    "provides": "Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.",
     "opt_in_off": [
       "ADAMIC_STAGE3_FIXTURE"
-    ]
+    ],
+    "class": "not-applicable",
+    "provides": "Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail."
   },
   {
     "file": "internal/oracle/wasi_test.go",
@@ -460,11 +502,11 @@
       "TestWASIAgreesWithNode"
     ],
     "message": "\"set ADAMIC_ORACLE_WASI=1 to run the WASI oracle\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "internal/oracle/wasi_test.go",
@@ -483,11 +525,11 @@
       "TestWASIOracleCatchesMutants"
     ],
     "message": "\"set ADAMIC_ORACLE_WASI=1\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "internal/oracle/wasi_test.go",
@@ -503,11 +545,11 @@
       "TestWASIRunnerCatchesMutants"
     ],
     "message": "\"set ADAMIC_ORACLE_WASI=1\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "internal/oracle/wasi_test.go",
@@ -523,11 +565,11 @@
       "TestWASIEmission"
     ],
     "message": "\"set ADAMIC_ORACLE_WASI=1\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_ORACLE_WASI"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "stage1/cohere/css/css_test.go",
@@ -639,11 +681,11 @@
       "TestCSSPrinterThroughput"
     ],
     "message": "\"set ADAMIC_CSS_PRINTER_BENCH=1\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_CSS_PRINTER_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/css/print_test.go",
@@ -659,11 +701,11 @@
       "TestCSSPrinterBoundaryProofs"
     ],
     "message": "\"set ADAMIC_CSS_PRINTER_LIBRARY\"",
-    "class": "required-input",
-    "provides": "ADAMIC_CSS_PRINTER_LIBRARY: npm directory with prettier@3.9.6; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_CSS_PRINTER_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_CSS_PRINTER_LIBRARY: npm directory with prettier@3.9.6; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/css/profile_test.go",
@@ -685,11 +727,11 @@
       "TestCSSProfileArtifacts"
     ],
     "message": "\"set ADAMIC_CSS_PROFILE_DIR\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_CSS_PROFILE_DIR"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/css/profile_test.go",
@@ -709,11 +751,11 @@
       "TestCSSProfileSnapshotsAgree"
     ],
     "message": "\"set ADAMIC_CSS_PROFILE_SNAPSHOTS\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_CSS_PROFILE_SNAPSHOTS"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/css/testdata/cohere_side_test.go",
@@ -731,11 +773,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by Adamic CSS slice\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/css/css_test.go askedCases writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/css/css_test.go askedCases writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/css/testdata/compose_side_test.go",
@@ -752,11 +794,11 @@
       "TestAdamicCompositionCases"
     ],
     "message": "\"run by Adamic CSS slice\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/css/css_test.go TestCompositionMatchesGo writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/css/css_test.go TestCompositionMatchesGo writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/css/testdata/print_side_test.go",
@@ -773,17 +815,17 @@
       "TestAdamicPrinterCases"
     ],
     "message": "\"run by Adamic CSS slice\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/css/print_test.go printerAnswers writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/css/print_test.go printerAnswers writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/formatfiles/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:4fd418791213190c8c02147c8709ae05919a7aa60a46f77c98fc6a9fcb512052",
-    "line": 281,
+    "line": 288,
     "condition": "requestPath == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_PORT_REQUEST\")",
@@ -794,11 +836,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by stage1/cohere/formatfiles/formatfiles_test.go in the adamic repository\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/formatfiles/formatfiles_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/formatfiles/formatfiles_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/gitignore/gitignore_test.go",
@@ -844,11 +886,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"ADAMIC_PORT_REQUEST names no request\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/gitignore/gitignore_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/gitignore/gitignore_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/graphql/graphql_test.go",
@@ -889,11 +931,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by stage1/cohere/graphql/graphql_test.go\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/graphql/graphql_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/graphql/graphql_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/json/audit_test.go",
@@ -910,11 +952,11 @@
       "TestUpstreamNumericSeparatorGap"
     ],
     "message": "\"set ADAMIC_JSON_PRETTIER for the external oracle\"",
-    "class": "required-input",
-    "provides": "ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_JSON_PRETTIER"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/json/audit_test.go",
@@ -933,11 +975,11 @@
       "TestUpstreamRepositoryCorpusParity"
     ],
     "message": "\"set ADAMIC_JSON_PRETTIER for the separate upstream report\"",
-    "class": "required-input",
-    "provides": "ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_JSON_PRETTIER"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/json/audit_test.go",
@@ -953,11 +995,11 @@
       "TestExternalComparisonCatchesThreePrinterMutants"
     ],
     "message": "\"set ADAMIC_JSON_PRETTIER for the external oracle\"",
-    "class": "required-input",
-    "provides": "ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_JSON_PRETTIER"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/json/performance_test.go",
@@ -975,11 +1017,11 @@
       "TestProfileSnapshotsAgree"
     ],
     "message": "\"set ADAMIC_JSON_PROFILE_BINARIES to profile snapshot binaries\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_JSON_PROFILE_BINARIES"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/json/port_test.go",
@@ -1037,11 +1079,11 @@
       "TestAdamicJSONAudit"
     ],
     "message": "\"run by stage1/cohere/json/audit_test.go\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/json/audit_test.go oracleAnswers writes ADAMIC_JSON_CASES (JSON array of name/text records) and ADAMIC_JSON_ANSWERS (writable answer path), then runs this overlay in pinned cohere.",
     "opt_in_off": [
       "ADAMIC_JSON_CASES"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/json/audit_test.go oracleAnswers writes ADAMIC_JSON_CASES (JSON array of name/text records) and ADAMIC_JSON_ANSWERS (writable answer path), then runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/lint/jsx_integration_test.go",
@@ -1227,9 +1269,7 @@
       "os.Getenv(\"COHERE_MEDIAQUERY_SEED\")",
       "os.ReadFile(answersPath)",
       "os.ReadFile(casesPath)",
-      "os.ReadFile(filepath.Join(packageDirectory, cohereFix.file))",
-      "os.ReadFile(name)",
-      "os.ReadFile(unfixedCasesPath)"
+      "os.ReadFile(name)"
     ],
     "callers": [
       "TestThePortParsesAsGoCohereDoes"
@@ -1255,11 +1295,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by stage1/cohere/mediaquery/mediaquery_test.go in the adamic repository\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/mediaquery/mediaquery_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/mediaquery/mediaquery_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/selector/selector_test.go",
@@ -1314,9 +1354,29 @@
   },
   {
     "file": "stage1/cohere/selector/selector_test.go",
+    "test": "TestCorpusKeepsEveryParseableFile",
+    "id": "TestCorpusKeepsEveryParseableFile:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 443,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")",
+      "os.ReadFile(corpus)"
+    ],
+    "callers": [
+      "TestCorpusKeepsEveryParseableFile"
+    ],
+    "message": "\"set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading\"",
+    "class": "required-input",
+    "provides": "setup --gate-inputs provides ADAMIC_SELECTOR_LIBRARY (the pinned postcss-selector-parser install).",
+    "opt_in_off": [
+      "ADAMIC_SELECTOR_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
     "id": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 441,
+    "line": 503,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")"
@@ -1347,17 +1407,17 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by Adamic selector slice\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/selector/selector_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/selector/selector_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/suppression/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
-    "line": 204,
+    "line": 203,
     "condition": "path == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_PORT_REQUEST\")",
@@ -1367,11 +1427,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by stage1/cohere/suppression/suppression_test.go in the adamic repository\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/suppression/suppression_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/suppression/suppression_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/values/testdata/cohere_side_test.go",
@@ -1387,11 +1447,11 @@
       "TestAdamicPortCases"
     ],
     "message": "\"run by stage1/cohere/values/values_test.go in the adamic repository\"",
-    "class": "required-input",
-    "provides": "stage1/cohere/values/values_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "stage1/cohere/values/values_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/values/values_test.go",
@@ -1436,14 +1496,14 @@
       "TestWholePerformance"
     ],
     "message": "\"set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout\"",
-    "class": "required-input",
-    "provides": "ADAMIC_TYPESCRIPT_SOURCE: TypeScript v6.0.3 source checkout at 050880ce59e30b356b686bd3144efe24f875ebc8, including src/compiler/*.ts; see docs/gate-inputs.md.",
     "opt_in_on": [
       "ADAMIC_PARSER_BENCH"
     ],
     "opt_in_off": [
       "ADAMIC_TYPESCRIPT_SOURCE"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_TYPESCRIPT_SOURCE: TypeScript v6.0.3 source checkout at 050880ce59e30b356b686bd3144efe24f875ebc8, including src/compiler/*.ts; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/typescript/parser/performance_test.go",
@@ -1466,11 +1526,11 @@
       "TestWholePerformance"
     ],
     "message": "\"set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_PARSER_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/typescript/scanner/profile_test.go",
@@ -1491,11 +1551,11 @@
       "TestProfileArtifacts"
     ],
     "message": "\"set ADAMIC_SCANNER_PROFILE_DIR to a scratch directory\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_SCANNER_PROFILE_DIR"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/typescript/scanner/profile_test.go",
@@ -1515,17 +1575,17 @@
       "TestProfileSnapshotsAgree"
     ],
     "message": "\"set ADAMIC_SCANNER_PROFILE_SNAPSHOTS to the artifact directories\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_SCANNER_PROFILE_SNAPSHOTS"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/typescript/scanner/scanner_test.go",
     "test": "TestPerformance",
     "id": "TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1",
-    "line": 392,
+    "line": 393,
     "condition": "os.Getenv(\"ADAMIC_SCANNER_BENCH\") == \"\"",
     "reads": [
       "filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tpaths = append(paths, absolute)\n\t}\n\treturn nil\n})",
@@ -1540,17 +1600,17 @@
       "TestPerformance"
     ],
     "message": "\"set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_SCANNER_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage3/fixtures/fixtures_test.go",
     "test": "TestFixtures",
     "id": "TestFixtures:3813651682ea3a338f3659a6f61cfb5202b65b0d7a4a8e5ddc65d39358852121",
-    "line": 257,
+    "line": 261,
     "condition": "entry.Platform != \"\" && entry.Platform != runtime.GOOS",
     "reads": [
       "os.ReadFile(path)",
@@ -1564,5 +1624,25 @@
     "message": "\"fixture records platform %s; current platform is %s\"",
     "class": "not-applicable",
     "provides": "Fixture manifest explicitly names a different runtime.GOOS platform."
+  },
+  {
+    "file": "stage3/fixtures/runner_guard_test.go",
+    "test": "TestTransformedNodeRunnerGuardHook",
+    "id": "TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2",
+    "line": 13,
+    "condition": "repository == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_RUNNER_GUARD_REPOSITORY\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestTransformedNodeRunnerGuardHook"
+    ],
+    "message": "\"subprocess hook\"",
+    "class": "not-applicable",
+    "provides": "Subprocess hook: runs only when the runner guard test starts it with ADAMIC_RUNNER_GUARD_REPOSITORY set; that parent test is the check.",
+    "opt_in_off": [
+      "ADAMIC_RUNNER_GUARD_REPOSITORY"
+    ]
   }
 ]
