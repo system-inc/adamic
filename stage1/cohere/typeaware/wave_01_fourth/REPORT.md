@@ -634,3 +634,46 @@ All three fourth-batch claims remain partial. No checker bridge question was
 added, so this step adds no new handle-release check. The full gate, the 17
 required external correctness comparisons and new native/Go timings were not
 run for this isolated helper; no skipped check is represented as green.
+
+## Landing on harness b46914832
+
+Fetched main c7991b900 and area b46914832d70e00847d82d5d221ab7bb24040c53.
+Rebased wave 01 onto area without conflicts; main is also an ancestor.
+No shared file was edited. The new options guard was retained unchanged and
+no adapter-options panic appeared in these checks. nproc reports 5.
+
+After sourcing /workspace/adamic-tools/env.sh, rebuilt cmd/adamic and the
+bridge/tsgo/archive C archive, then rebuilt symbol_suite.a with --sanitize
+and --tsgo /workspace/wave-01-fourth-checker.a. An initial build omitted
+--tsgo and correctly refused an unlinked checker call; the corrected build
+and all checks passed. Logs and raw helper streams are in validation/landing-b469.
+
+Ran ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-01-typescript go test
+./stage1/cohere/typeaware -run '^TestWave01AgreementAndMutants$' -count=1
+-timeout 30m -v: PASS in 148.956 seconds, 691 compiler findings and
+276439 identical bytes, repository and controls, sanitizers, three logic
+mutants and released/retained handle mutants. Ran continuation testdata/verify.py
+with --repository /workspace/adamic --typescript /workspace/wave-01-typescript
+--artifacts /workspace/wave01-b469-next: PASS all three rules, compiler and
+repository comparisons, sanitizers, three logic mutants, four released-handle
+questions and retained mutants, checker and bridge package tests.
+
+Symbol verify_symbol.py passed six control findings, compiler/repository
+byte agreement, sanitizers, argument mutant and released-question panic.
+Ran all eleven owned helper verifiers: atomic_solver, atomic_deferrals,
+atomic_syntax, atomic_escape, atomic_report, await_report, await_repair,
+await_head, await_demand, await_expand and await_context. All comparisons
+and sanitizer-clean byte-only mutants passed. Named-kind validation passed
+all nine manifests and wrong-kind mutants. Atomic transfer/meet and await
+syntax kernels were rebuilt and compared against unchanged Go overlays;
+refresh-deletion and await-using-mask mutants exited cleanly but failed byte
+comparison. The await kernel includes two additional native-only controls.
+
+This is a landing readiness refresh, not completion of the three partial
+claims. Generic ancestor-step collection, stand-in discovery, heritage lookup,
+atomic CFG/event collection and native checker-fact integration remain
+unimplemented. RuleContext in stage1/cohere/lint/context.ts supplies parser
+and source facts but no checker program handle; shared changes remain outside
+this unit. No new claims were made. The full gate and 17 required external
+correctness checks were not run or represented as green. No new speed claim
+is inferred from this rebase.
