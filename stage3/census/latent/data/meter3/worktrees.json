@@ -1,0 +1,21 @@
+[
+  {
+    "name": "meter-3",
+    "tree": "/tmp/latent3-tree",
+    "main": "634ef061fc72c061e2de1606d5c8faebec4411f6",
+    "features": [
+      "codex/taste-not-soundness",
+      "codex/flag-enums",
+      "codex/namespaces-tsc",
+      "codex/fallthrough-and-implicit-returns",
+      "codex/nested-functions"
+    ],
+    "pinned_commits": {
+      "origin/codex/taste-not-soundness": "d2c05df34443d9c0ae4fe6639beef2c5aee8a4ad",
+      "origin/codex/flag-enums": "246ecc073993de6a5f1bcb64346cde7938deec43",
+      "origin/codex/namespaces-tsc": "90f1baca0fce5285ddfa2f8801070dc9d7c9108c",
+      "origin/codex/fallthrough-and-implicit-returns": "5f77d3315f3a6472ee2a6cc28e23e2f7cb1eb8ff",
+      "origin/codex/nested-functions": "e7587d3ecc702d0b2d757b67b0f878a1bd7e7783"
+    }
+  }
+]

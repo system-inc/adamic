@@ -1,0 +1,70 @@
+{
+  "base": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "features": [
+    {
+      "branch": "origin/codex/taste-not-soundness",
+      "sha": "aa896b5d5ccc82210184fd01b8fe4d0ce0730a50"
+    },
+    {
+      "branch": "origin/codex/flag-enums",
+      "sha": "f7d62772fa8e52fcfae754e047ceb66dba88b782"
+    },
+    {
+      "branch": "origin/codex/namespaces-tsc",
+      "sha": "ce8a2acf14e420a9c82345236845a377cd4c7a50"
+    },
+    {
+      "branch": "origin/codex/nested-functions",
+      "sha": "b15216dabf65ffaa7152f6e64709b7b062ea01a9"
+    }
+  ],
+  "conflicts": [
+    {
+      "feature": "flag-enums",
+      "files": [
+        "internal/lower/class_inheritance.go",
+        "internal/lower/lower.go",
+        "internal/lower/refusals.go",
+        "internal/oracle/counts.md"
+      ],
+      "resolution": "incoming feature version for conflict files; automatic merge for the rest"
+    },
+    {
+      "feature": "namespaces-tsc",
+      "files": [
+        "internal/lower/enum_initialization.go",
+        "internal/lower/enums.go",
+        "internal/lower/enums_test.go",
+        "internal/lower/expression.go",
+        "internal/lower/invariance.go",
+        "internal/lower/lower.go",
+        "internal/lower/refusals.go",
+        "internal/oracle/counts.md"
+      ],
+      "resolution": "incoming feature version for conflict files; automatic merge for the rest"
+    },
+    {
+      "feature": "nested-functions",
+      "files": [
+        "internal/lower/expression.go",
+        "internal/lower/locals.go",
+        "internal/oracle/counts.md"
+      ],
+      "resolution": "incoming feature version for conflict files; automatic merge for the rest"
+    }
+  ],
+  "entryResults": {
+    "parser.ts": {
+      "exit": 0,
+      "result": "/tmp/parser-profiles/combined-parser.ts.json"
+    },
+    "scanner.ts": {
+      "exit": 0,
+      "result": "/tmp/parser-profiles/combined-scanner.ts.json"
+    }
+  },
+  "buildExit": 0,
+  "head": "0bdcc91c50452cd8280d3bd564772d382fa92067",
+  "scratchResolutionPatchSha256": "37c5b49bae5a7c027ca28abd80e9c332699d9db9e8a59a9a3d6ab294aaf94dfb",
+  "cohereGitlink": "160000 commit 715ba94f3608a6500086b1076ce5cb7e51b836db\tcohere"
+}

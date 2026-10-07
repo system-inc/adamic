@@ -1,0 +1,23 @@
+=== RUN   TestUpstreamRepositoryCorpusParity
+=== PAUSE TestUpstreamRepositoryCorpusParity
+=== CONT  TestUpstreamRepositoryCorpusParity
+    audit_test.go:138: repository groups: map[Adamic:501 TypeScript:202 cohere:835]; generated 34; total 1572
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 1572 texts in 17.821s
+        --- PASS: TestAdamicJSONAudit (18.93s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	18.990s
+    audit_test.go:176: Prettier: 1572 texts in 32.861s
+    audit_test.go:154: difference: stage1/cohere/json/gaps/numeric-separators.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/12/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/12/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/13/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/13/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/14/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:4)")
+    audit_test.go:154: difference: generated/14/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:4)")
+    audit_test.go:154: difference: generated/16/probe.json (Go error="json: empty input", Prettier error="")
+    audit_test.go:154: difference: generated/16/package.json (Go error="json: empty input", Prettier error="")
+    audit_test.go:172: exactly nine known upstream differences in 1572 texts
+--- PASS: TestUpstreamRepositoryCorpusParity (54.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	54.882s

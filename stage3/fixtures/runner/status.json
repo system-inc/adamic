@@ -27,8 +27,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/runner/02_is_string.a:3:42: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/runner/02_is_string.a:3:26: stage 0 can't lower a value of type unknown yet"
     }
   },
   {

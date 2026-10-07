@@ -1,0 +1,8 @@
+function widen(view: { x: number }): { x: number; y?: number } {
+	return view;
+}
+const original = { x: 1, y: true };
+const wider = widen(original);
+console.log(typeof wider.y);
+console.log(`${wider.y === undefined}`);
+console.log(`${(wider.y ?? 0) + 1}`);

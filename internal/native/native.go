@@ -44,6 +44,9 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Compiler selects clang (the default) or gcc for the differential lane.
+	Compiler string
+
 	// Split compiles generated functions in separate translation units. Off by default.
 	Split bool
 
@@ -57,13 +60,22 @@ type Options struct {
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
 
+	// Coverage compiles the program and the runtime with clang's source-based coverage
+	// (-fprofile-instr-generate -fcoverage-mapping), so each run writes a .profraw where
+	// LLVM_PROFILE_FILE says. It's on too when ADAMIC_C_COVERAGE=1 is in the environment, which is how
+	// verify/coverage/measure.sh reaches every build the fuzzer and the oracle make without touching
+	// their call sites. The flags are part of the runtime cache's key, so a covered runtime never
+	// mixes with an ordinary one. Nothing else changes: the same optimization level, the same
+	// sanitizers.
+	Coverage bool
+
 	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
 
-	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
+	// Slabs keeps the size-class allocator on in a sanitized build (heap.c), where every
 	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
-	slabs bool
+	Slabs bool
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
@@ -72,7 +84,11 @@ func Flags(options Options) []string {
 	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
 	// no-self-assign), not a reason the C can't compile.
-	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter"}
+	// GCC has no self-assignment warning corresponding to clang's.
+	if options.Compiler != "gcc" {
+		flags = append(flags, "-Wno-self-assign")
+	}
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
@@ -84,11 +100,14 @@ func Flags(options Options) []string {
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
-	if options.slabs {
+	if options.Slabs {
 		flags = append(flags, "-DADAMIC_SLABS")
 	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
+	}
+	if options.Coverage || CoverageRequested() {
+		flags = append(flags, "-fprofile-instr-generate", "-fcoverage-mapping")
 	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
@@ -96,8 +115,21 @@ func Flags(options Options) []string {
 	return append(flags, "-O2")
 }
 
+// CoverageRequested says whether the environment asks every build for clang's source-based coverage
+// (Options.Coverage).
+func CoverageRequested() bool {
+	return os.Getenv("ADAMIC_C_COVERAGE") == "1"
+}
+
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	compiler, err := selectedCompiler(options)
+	if err != nil {
+		return err
+	}
+	if compiler == "gcc" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
+		return fmt.Errorf("native: GCC lane requires an unsplit build")
+	}
 	if options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
 		return buildUnits(source, output, options)
 	}
@@ -120,9 +152,20 @@ func Build(source string, output string, options Options) error {
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	arguments = append(arguments, "-lm")
-	command := exec.Command("clang", arguments...)
+	command := exec.Command(compiler, arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+		return fmt.Errorf("native: %s failed: %w\n%s", compiler, err, combined)
 	}
 	return nil
+}
+
+func selectedCompiler(options Options) (string, error) {
+	switch options.Compiler {
+	case "", "clang":
+		return "clang", nil
+	case "gcc":
+		return "gcc", nil
+	default:
+		return "", fmt.Errorf("native: unsupported compiler %q", options.Compiler)
+	}
 }
