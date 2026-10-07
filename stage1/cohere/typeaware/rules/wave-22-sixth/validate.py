@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Isolated validation against the published JSX parser, without editing shared files."""
+"""Isolated validation against the current integrated parser, without editing shared files."""
 import gzip, hashlib, json, os, pathlib, shutil, subprocess, sys, time
 ROOT=pathlib.Path(__file__).resolve().parents[5]
 OWN=pathlib.Path(__file__).resolve().parent
 WORK=pathlib.Path('/workspace/wave-22-sixth-work')
 WORK.mkdir(exist_ok=True)
-JSX='a8a62d62ca49db7415e14c3887dd305022b17309'
+JSX=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
 def run(label,args,cwd=ROOT,ok=True,env=None):
     before=time.perf_counter()
     with (WORK/(label+'.stdout')).open('wb') as out,(WORK/(label+'.stderr')).open('wb') as err:
@@ -19,10 +19,6 @@ COPY=WORK/'source'
 for path in (ROOT/'stage1').rglob('*'):
     if path.is_file() and path.suffix in ('.a','.ts'):
         destination=COPY/path.relative_to(ROOT);destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(path,destination)
-for path in subprocess.check_output(['git','ls-tree','-r','--name-only',JSX,'stage1/typescript/parser','stage1/typescript/scanner'],cwd=ROOT,text=True).splitlines():
-    if path.endswith(('.ts','.a')):
-        destination=COPY/path;destination.parent.mkdir(parents=True,exist_ok=True)
-        destination.write_bytes(subprocess.check_output(['git','show',JSX+':'+path],cwd=ROOT))
 ENTRY=COPY/OWN.relative_to(ROOT)/'driver.a'
 COMPILER='/workspace/wave-22-sixth-adamic';ARCHIVE='/workspace/wave-22-sixth-checker.a'
 run('native-build',[COMPILER,'build',ENTRY,'-o',WORK/'native','--tsgo',ARCHIVE])
