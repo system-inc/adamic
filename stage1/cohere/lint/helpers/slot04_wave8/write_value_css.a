@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+import type { ValueNodeView } from './tree_view.a';
+export function writeValueCss(builder: number[], arena: readonly ValueNodeView[], roots: readonly number[]): void {
+    for(const id of roots) {
+        const node = arena[id] ?? panic('missing value node');
+        if(node.tag === 'word' || node.tag === 'separator') {
+            for(const byte of node.data) { builder.push(byte); }
+        } else if(node.tag === 'function') {
+            for(const byte of node.data) { builder.push(byte); }
+            builder.push(40);
+            writeValueCss(builder,arena,node.edges);
+            builder.push(41);
+        }
+    }
+}

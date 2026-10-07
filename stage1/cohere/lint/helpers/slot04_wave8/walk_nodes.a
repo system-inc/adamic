@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+import type { CssNodeView } from './tree_view.a';
+export function walkNodes(arena: readonly CssNodeView[], roots: readonly number[], visit: (id: number) => number): boolean {
+    for(const id of roots) {
+        const action = visit(id);
+        if(action === 2) { return false; }
+        if(action === 0) {
+            const node = arena[id] ?? panic('missing CSS node');
+            const container = node.tag === 'rule' || node.tag === 'at-rule' || node.tag === 'context' || node.tag === 'at-root';
+            if(container && node.edges.length > 0) {
+                if(!walkNodes(arena,node.edges,visit)) { return false; }
+            }
+        }
+    }
+    return true;
+}

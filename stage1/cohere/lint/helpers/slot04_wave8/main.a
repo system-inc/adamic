@@ -1,0 +1,76 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import type { CssNodeView, ValueNodeView } from './tree_view.a';
+import { Walk } from './walk.a';
+import { walkNodes } from './walk_nodes.a';
+import { writeValueCss } from './write_value_css.a';
+function action(mode: number, id: number): number {
+    if(mode === 1 && id === 0) { return 1; }
+    if(mode === 2 && id === 1) { return 2; }
+    if(mode === 3 && id === 0) { return 99; }
+    if(mode === 4 && id === 0) { return 2; }
+    if(mode === 5 && id % 2 === 0) { return 1; }
+    return 0;
+}
+function observe(css: readonly CssNodeView[], roots: readonly number[], values: readonly ValueNodeView[], valueRoots: readonly number[]): void {
+    for(let mode = 0; mode < 6; mode++) {
+        const trace: number[] = [];
+        const result = walkNodes(css,roots,(id: number): number => { trace.push(id); return action(mode,id); });
+        console.log(`nodes ${mode} ${result}|${trace.join(',')}`);
+        const wrapper: number[] = [];
+        Walk(css,roots,(id: number): number => { wrapper.push(id); return action(mode,id); });
+        console.log(`walk ${mode} ${wrapper.join(',')}`);
+    }
+    const builder: number[] = [137,0,255];
+    writeValueCss(builder,values,valueRoots);
+    console.log(`css ${builder.join(',')}`);
+    writeValueCss(builder,values,valueRoots);
+    console.log(`again ${builder.join(',')}`);
+}
+function raw(input: readonly number[]): void {
+    observe([
+        {tag:'rule',edges:[1,2]}, {tag:'context',edges:[3]},
+        {tag:'declaration',edges:[3]}, {tag:'at-root',edges:[4]},
+        {tag:'at-rule',edges:[5]}, {tag:'comment',edges:[]}
+    ],[0,2],[
+        {tag:'word',data:input,edges:[]}, {tag:'separator',data:[32],edges:[]},
+        {tag:'function',data:[102],edges:[3]}, {tag:'word',data:input,edges:[]},
+        {tag:'foreign',data:input,edges:[3]}
+    ],[0,1,2,4]);
+}
+function field(corpus: OptionsJson, row: number, name: string): number {
+    const value = corpus.node(row);
+    const index = value.keys.indexOf(name);
+    if(index < 0) { panic('missing field'); }
+    return value.children[index] ?? panic('field');
+}
+function integers(corpus: OptionsJson, index: number): number[] {
+    const result: number[] = [];
+    for(const value of corpus.node(index).children) { result.push(Number(corpus.node(value).text)); }
+    return result;
+}
+const argument = programArguments()[0] ?? panic('path');
+if(argument === '--full') {
+    raw([]);
+    for(let first = 0; first <= 255; first++) {
+        raw([first]);
+        for(let last = 0; last <= 255; last++) { raw([first,last]); }
+    }
+} else {
+    const input = readTextFile(argument);
+    if(input.kind === 'Error') { panic(input.message); }
+    const corpus = new OptionsJson(input.text);
+    const root = corpus.parse();
+    if(root < 0) { panic(corpus.error); }
+    for(const row of corpus.node(root).children) {
+        const css: CssNodeView[] = [];
+        const values: ValueNodeView[] = [];
+        for(const node of corpus.node(field(corpus,row,'Css')).children) {
+            css.push({tag:corpus.node(field(corpus,node,'Kind')).text,edges:integers(corpus,field(corpus,node,'Children'))});
+        }
+        for(const node of corpus.node(field(corpus,row,'Values')).children) {
+            values.push({tag:corpus.node(field(corpus,node,'Kind')).text,data:integers(corpus,field(corpus,node,'Bytes')),edges:integers(corpus,field(corpus,node,'Children'))});
+        }
+        observe(css,integers(corpus,field(corpus,row,'Roots')),values,integers(corpus,field(corpus,row,'ValueRoots')));
+    }
+}

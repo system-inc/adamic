@@ -1,0 +1,51 @@
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 7518 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 4074 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 294 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 921102 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (14.48s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (0.87s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.80s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.29s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (10.31s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit)
+    helpers_test.go:187: Node source compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+=== RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_}
+    helpers_test.go:187: Node source compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+=== RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_0)
+    helpers_test.go:187: Node source compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+=== RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01
+    helpers_test.go:187: Node source compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+=== RUN   TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator'
+    helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+=== RUN   TestStringsCompilingMutants/write_value_css.abuilder.push(41)
+    helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+--- PASS: TestStringsCompilingMutants (13.13s)
+    --- PASS: TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit) (1.98s)
+    --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_} (1.97s)
+    --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0) (2.02s)
+    --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01 (2.02s)
+    --- PASS: TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator' (2.05s)
+    --- PASS: TestStringsCompilingMutants/write_value_css.abuilder.push(41) (2.07s)
+=== RUN   TestStringsConsumerCoverage
+    helpers_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave8	27.626s

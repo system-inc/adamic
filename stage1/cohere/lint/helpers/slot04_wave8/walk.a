@@ -1,0 +1,5 @@
+import type { CssNodeView } from './tree_view.a';
+import { walkNodes } from './walk_nodes.a';
+export function Walk(arena: readonly CssNodeView[], roots: readonly number[], visit: (id: number) => number): void {
+    walkNodes(arena,roots,visit);
+}

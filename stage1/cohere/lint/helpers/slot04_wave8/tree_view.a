@@ -1,0 +1,3 @@
+// Flat identities preserve CSS pointer sharing without recursive ownership.
+export type CssNodeView = { readonly tag: string; readonly edges: readonly number[] };
+export type ValueNodeView = { readonly tag: string; readonly data: readonly number[]; readonly edges: readonly number[] };
