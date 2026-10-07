@@ -1,5 +1,61 @@
 # Memoize: blocked optional callback adaptation
 
+## Updated p2 compiler repeat
+
+Merged origin/area/stage3 at b2c4549f into this branch, without rebasing:
+merge commit `7b19183894b3b8869974968002d71e2d03dfa5ff` includes main
+`48c05d091f0a43c31cbe051b1d6578d99eeedf19`. In a detached scratch worktree,
+merged compiler's `adab0fe54fb8a53940b0c1481e2409b978c6050a` into that
+commit, again without rebasing or conflicts. Scratch merge commit:
+`46a5ded3e72f54d693a462968dff03382e126934`. Its compiler changes stay in
+scratch. Both checkouts use cohere `7945d102a6c18dd36adf9114a758ce646e8b2359`;
+the scratch worktree links the same initialized submodule directory.
+
+**Neither unchanged A nor unchanged B builds on either compiler.** All four
+`go run ./cmd/adamic build <unchanged-source> -o <output> --sanitize`
+commands exit 1, before cycle analysis. The exact diagnostics (identical on
+both revisions) are:
+
+```text
+adamic: /workspace/adamic/stage3/adapt/48-memoize/a.a:4:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0
+exit status 1
+adamic: /workspace/adamic/stage3/adapt/48-memoize/b.a:5:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0
+exit status 1
+```
+
+This repeat does not observe a cycle diagnostic or native B execution.
+Inspection of internal/lower/control.go:97 shows that the p2 presence test
+accepts `ir.Object` with undefined; optional callable conditions still reach
+the refusal. The compiler branch's notes describe a successful optional
+clearing control, not the complete two-call memoize B probe. These facts
+explain the observed stop; no compiler policy was changed to bypass it.
+
+The probe sources are byte-identical to commit 34ac6b2, checked against git
+objects. Their SHA-256 values, full commands, compiler revisions, build exits
+and exact output are in `evidence/p2-repeat/results.json`, alongside all four
+build logs. No binary or native output exists. The existing no-op adaptation
+remains declined because neither candidate qualifies.
+
+Reran verify.cjs against the previous applied tree, on Node v24.19.0:
+original, A and B each exit 0, stderr empty, stdout `42 42 1\n`; A's emitted
+JavaScript remains byte-identical. The one-byte mutant is caught again by
+exact comparison against original Node stdout. This is a Node comparator
+proof, not a native output proof. The fresh node-proof.json replaces the
+verification script's historical native annotation with this repeat's facts.
+
+Setup succeeded with GOPROXY `https://proxy.golang.org|direct`, sourced
+/workspace/adamic-tools/env.sh. Timing lines: Go 0.027s, Node 0.027s,
+markdown 0.080s, clang 0.208s, submodules 22.827s, build 289.062s,
+tests deferred 289.270s, cache warm 289.271s, done 289.304s. nproc=5,
+cgroup quota=4 CPUs; Go 1.27.1, clang 20.1.8, Node 24.19.0.
+
+This follow-up reruns only the requested native probes, Node comparison and
+output mutant; it does not repeat the full upstream oracle, lane, caller
+check or host extraction. Their older results below retain their original
+revision scope. All new evidence is in `evidence/p2-repeat/`. The rest of this
+README is the historical report on 03ccf222.
+
+
 Neither requested candidate qualifies on the requested base,
 `origin/area/stage3` at `03ccf222dfeedef4bfe5cc3e219e4586d14a5c13`.
 This unit records the failed probes rather than shipping an unproved rewrite.
