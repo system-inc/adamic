@@ -149,12 +149,12 @@ for name, directory, runtime_file, lowering_file in loops:
                     run(variant, label + '-prime', directory, 'prime', -1, env, binary, command)
                     primed.add(variant)
                 offset = comment
-                replacement = [value for value in range(65, 91) if value != original[comment]][round_number]
+                replacement = [value for value in range(75, 91) if value != original[comment]][round_number]
                 if kind == 'lowering-edit':
                     # Removing a blank-line byte preserves Go semantics but moves different
                     # source regions in each round, including compiler debug line tables.
                     blanks = [index + 1 for index in range(len(original) - 1) if original[index:index + 2] == b'\n\n']
-                    offset = min(blanks, key=lambda index: abs(index - len(original) * (round_number + 1) / 4))
+                    offset = min(blanks, key=lambda index: abs(index - len(original) * (round_number + 1) / 5))
                     replacement = 32
                 changed = original[:offset] + bytes([replacement]) + original[offset + 1:]
                 assert sum(a != b for a, b in zip(original, changed)) == 1
