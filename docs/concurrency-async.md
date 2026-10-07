@@ -1233,3 +1233,96 @@ The 153 rows added relative to async-ordinary 0bb0fab are imported area fixtures
 | internal/oracle/testdata/typeof_null_slots.a | 14 / 14 / 26 / 36 / 5 / 0 | Imported area fixture and measured area baseline |
 | internal/oracle/testdata/typeof_null_roll.a | 1 / 1 / 0 / 1 / 1 / 0 | Imported area fixture and measured area baseline |
 | internal/oracle/testdata/empty-path.a | 4 / 4 / 4 / 8 / 4 / 0 | Imported area fixture and measured area baseline |
+
+### Runtime area reconciliation verification
+
+Setup reran on the merged tree: Go ready 0.094s, Node ready 0.109s,
+submodules ready 0.227s, clang ready 0.467s, pinned markdown dependencies ready
+1.510s, Go build ready 42.429s, total 42.668s. nproc is 5 and cgroup CPU quota
+is four cores. Log: /tmp/async-area-setup.log. The original area probe initially
+lacked its cohere checkout; linking the already initialized matching 715ba94f
+submodule repaired that isolated setup without fetching a different revision.
+
+The complete analysis packages pass in /tmp/async-area-analysis-packages.log:
+lower 32.554s, fresh 58.911s, flow 98.290s, IR 2.095s. The full native package
+passes in 546.807s (/tmp/async-area-native.log), including host promises,
+allocator and shared-count sanitizer controls, the parallel TSan controls and
+mutants, the statics race/exit proofs, the slab quarantine proof and the static
+inventory guard. The merged async oracle, all async mutants and complete Linux
+counts regeneration pass in 66.441s (/tmp/async-area-async-counts.log).
+
+Removing only the new async.c:cleanups:1 audit row fails
+TestRuntimeStaticsAreListed on runtime/async.c line 20, explicitly naming the
+unlisted cleanups storage (/tmp/async-area-statics-mutant.log); the row was
+restored and the guard passes in 0.524s. The area's wrong async typeof mutant
+was preserved as a shared ordinary IR typeof-result mutation rather than a
+unit 1 folded-constant mutation. Both backends must disagree only on stdout
+with the original Node source. Its focused run passes in 17.559s
+(/tmp/async-area-typeof-mutant.log); consult the log for the measured duration.
+The compound typeof gap control is now a positive ordinary-function-value
+control, since that formerly unsafe function table lookup is supported.
+
+Heap/header merges retain the area inline retain/release paths and quarantine;
+interior cells have immutable zero counts and go to the slow path, which
+redirects ownership to the common environment or async frame. The area request
+ABI is preserved by cProgram(program, handler), with the conservative async
+optimizer settings shared by both C entry points. checkReady preserves async
+cell readiness while using the area's cArray initializer for long messages.
+New mutable runtime storage relative to the area is solely the compiler cleanup
+registry, audited in docs/runtime-statics.md. The Promise/frame/host producer
+ABI is unchanged; cleanup registration and forgetting remain the additive
+compiler-private hooks already documented by unit 2.
+
+The merge brings main 71d7e491 through the requested area 915b9e05. No graph-regions
+worker branch was merged. No main or area branch was pushed. Whole-tree staged
+whitespace inspection saw pre-existing area evidence logs/patches with trailing
+spaces; these imported artifacts were retained. The actual compiler, runtime
+and documentation delta against the area passes whitespace checks.
+
+### Completed runtime-area package gate
+
+The complete uncached oracle passes in 390.086s:
+`ADAMIC_GATE_UNCACHED=1 go test -v -count=1 -timeout 30m ./internal/oracle`
+(/tmp/async-area-oracle.log). It reports native hits=0/misses=2529,
+Node hits=0/misses=1170, probe hits=0/misses=25. All 26 async fixtures run
+three ways; all registered async mutants, source refusals, counts, output and
+ownership checks pass. Parallel variants have 30 passing TSan configurations
+across 15 fixture groups, each run three times at one worker or the default
+pool size: 90 successful race-perturbed executions with no accepted race.
+The fixture groups are listed below; native runtime race controls and
+protection-removal mutants also passed in the whole native package above.
+
+- `TestMovesAgreesWithNode`
+- `TestNativeAgreesWithNode/bench/parallel_files.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/fresh.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/global_capture.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/identity.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/large.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/map_capture.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/nested.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/numbers.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/readonly_forms.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/readonly_function.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/records.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/recursive_tree.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/strings.a`
+- `TestNativeAgreesWithNode/internal/oracle/testdata/concurrency/accepted/throw_middle.a`
+
+Exact additional commands:
+
+```sh
+gofmt -l cmd internal > /tmp/async-area-final-gofmt.log
+go vet ./... > /tmp/async-area-final-vet.log 2>&1
+go test -count=1 -timeout 30m ./internal/lower ./internal/fresh ./internal/flow ./internal/ir > /tmp/async-area-analysis-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native > /tmp/async-area-native.log 2>&1
+go test -count=1 -timeout 30m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/async_|TestAsync|TestCountsAreRecorded' -args -update-counts > /tmp/async-area-async-counts.log 2>&1
+```
+
+Formatting and vet emit no diagnostics. The working-tree whitespace check
+passes. The requested complete compiler/native/oracle package gate is green;
+`go test ./...` and stage-one packages were not rerun for this reconciliation.
+Non-suspending finally, await in catch/finally, full Promise compatibility and
+shared-SSA reconciliation retain the earlier explicit gaps. No macOS, mobile,
+WebAssembly opt-in or graph-regions proof was run in this Linux reconciliation.
+The earlier full-repository markdown timeout is not recast as a passing run.
+No automated review rejected an action.
