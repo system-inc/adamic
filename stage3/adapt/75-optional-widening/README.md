@@ -103,20 +103,63 @@ control survive the second application, and 75 changes only
 property addition on top of the prerequisite lines and checks 60,930 other
 reference baselines byte-for-byte.
 
-## Existing integration limitations
+## Full-apply revalidation, October 7
 
-The unmodified `stage3/apply.sh` on `origin/area/stage3` stops at adaptation 52:
-`Error: adaptation 52 requires a declaration slice`. The temporary scanner
-adaptations explicitly prohibit full-tree input. No infrastructure or neighboring
-adaptation was changed. Scratch validation excludes those slice-only directories.
+The former adaptation-52 full-apply stop is fixed. This branch merged current
+`origin/area/stage3` at `e343112`, which includes the checked `abdcf3d` relocation.
+Publication merge: `0a925036`. Refusal remains confined to scratch merge
+`f2a58e2e`; it was not merged into the publication branch. The unmodified full
+`stage3/apply.sh` succeeds with every current adaptation, including 75.
+The before-control uses the same runner with only directory 75 temporarily moved
+outside scratch's adapt directory and restored afterward.
 
-A full-tree control containing every other current adaptation reproduced 415
-sites, but its API snapshot additionally contains changes from 31, 32 and 33.
-The mechanical sanctioned-line checker rejects those existing differences.
-Its default oracle produced 106,366 passing tests, one failing API snapshot test,
-and only `api/typescript.d.ts` as a baseline difference. Therefore the sanctioned
-oracle control uses prerequisites 00, 10, 20, 30, 40, 45, 46 and 70 only. This
-subset is explicit in the provenance. It does not silently accept extra API lines.
+The full-composition relation inventory is **415 before, 391 after**, with 24
+cleared and no new sites. The latent lowering-reason meter is **82 before, 76 after**,
+all `refusal_scan`, on checker-rejected programs. These are eligible-body findings,
+not another count of the 415 relations. The complete remaining relation records
+and all 76 latent findings and reasons are in [full-apply evidence](evidence/full-apply).
+The ruling classification in [READ_WRITE.md](READ_WRITE.md) retains the coordinates
+of the original 391-site handoff; its proof boundaries explicitly distinguish
+Adamic's static `never` records from stock-checker reachability.
+
+Upstream's locked builds of both full trees produce **ten byte-identical JavaScript
+files**. Of 711 source files, only `src/compiler/types.ts` differs. Reapplying 75
+reports zero files and zero additions, with every source hash unchanged. The emitted
+API difference between those full before/after builds is exactly the sanctioned
+`JsonSourceFile.extendedSourceFiles?: string[]` addition. Strict diagnostic
+code/message pairs fall from 7,686 to 7,685, with zero introduced pairs and all five
+Adamic checker options retained. [verify.json](evidence/full-apply/verify.json)
+records the hashes and exact public member.
+
+The default **full** oracle, all runners and four workers, reports **106,366 passing,
+one failing, zero pending**, with **only api/typescript.d.ts** differing. Install and
+build exit 0; tests exit 1, taking 457.214s; wall time 466.047s. The disposable
+reference API is exactly the previously mechanically verified snapshot: the 189
+optional lines, 28 adaptation-40 lines, one readonly line, and 75's one public
+addition. No further API lines were accepted. Every other reference baseline matches.
+
+The mechanical API guard rejects extra changes already present in the full
+**before** control, including optional property/method contracts from the indexed-read
+predecessors. Their exact independent diff is [preexisting-api.diff](evidence/full-apply/preexisting-api.diff).
+Thus the full oracle is not green under the permitted API snapshot. Adaptation 75
+itself adds exactly its permitted member, as the full before/after proof establishes.
+This unit changes no neighboring adaptation and claims no broader API sanction.
+The earlier 106,367-test sanctioned-subset pass above remains historical evidence;
+it is not presented as the new full-composition result.
+
+Full-composition owner mutants were rerun. Replacing Type.resolvedBaseConstraint
+with boolean fails the declaration audit at compiler/types.ts:6465. Dropping the
+three Type additions restores 14 refusals: **391 becomes 405**, caught by the after-count
+guard. The ruling's actual wrong-tag and pre-write escape mutants move their sites
+out of (c) and (a), respectively; dropping one inventory row fails the 100-site
+partition assertion. No existing adaptation edit changed during revalidation.
+
+Commands and raw logs are preserved in the evidence and provenance. The principal
+commands were unmodified `bash stage3/apply.sh NEW_TREE`, upstream `npm ci` and
+`npm run build`, `verify.cjs FULL_BEFORE FULL_AFTER`, both
+`TestOptionalWideningCensus` runs, both scratch-only latent-tool runs with
+`LATENT_ASSERT_NO_OUTPUT=1`, and default `bash stage3/oracle/run.sh FULL_AFTER OUT`.
+All test output went to logs. Setup timings and `nproc` remain recorded below.
 
 ## Reproduction
 
@@ -170,7 +213,10 @@ cgroup OOM kills. Disposable trials occupied almost 8 GB of memory-backed `/tmp`
 Removing five already-recorded trial checkouts freed about 4 GB; the final attempt
 uses the unchanged four-worker default. Failed attempt reports are retained.
 
-## Declines for @system_adamic
+## Historical declaration declines
+
+The following records the pre-ruling declaration investigation. Current dispositions
+and write witnesses are in [READ_WRITE.md](READ_WRITE.md), which supersedes these recommendations.
 
 `never` sources have no owning object declaration to enlarge. The general `Type`
 to `TypeParameter` cases need subtype proof: adding `constraint` alone exposes

@@ -21,7 +21,7 @@
       "rest": 35
     },
     "caught": "control bucket counts differ; the affected site is refused",
-    "mutation": "Actual sys write RHS passes customLevels to Object.keys before the initializing write"
+    "mutation": "Actual sys numeric write RHS uses Object.keys(customLevels).length and passes the alias before the initializing write"
   },
   {
     "name": "missing-row",

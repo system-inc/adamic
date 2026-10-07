@@ -16,14 +16,15 @@ assert all(r['proof'].get('guards') for r in rows if r['bucket']=='c')
 assert all(r['proof'].get('immediate_write') for r in rows if r['bucket']=='a')
 # Keep the original complete list and its stable witness anchors.
 saved=out.read_text()
-start=saved.index('## Complete write-site list for @system_adamic')
+marker='## Complete write-site list for @system_adamic' if '## Complete write-site list for @system_adamic' in saved else '## Original 100-site write inventory and witness anchors'
+start=saved.index(marker)
 old=saved[start:].replace('## Complete write-site list for @system_adamic','## Original 100-site write inventory and witness anchors',1)
 old=old.replace('**100 sites; 58 distinct assignment witnesses.** Each W identifier','**100 original sites; 58 distinct assignment witnesses.** The new rest bucket is above. Each W identifier',1)
 operations={}
 for r in rows:
  for w in r['writes']:operations.setdefault((w['where'],w['access'],w['property'],w['written']),w)
 ids={k:f'W{i:03}' for i,k in enumerate(sorted(operations),1)}
-def cell(v):return str(v).replace('|','&#124;').replace('\n','<br>').replace('`','&#96;')
+def cell(v):return str(v).replace('|','&#124;').replace('\r','').replace('\n','<br>').replace('`','&#96;')
 def site(r):return f"{r['File']}:{r['Line']}:{r['Column']}"
 def witnesses(r):
  return '<br>'.join(f"[{ids[w['where'],w['access'],w['property'],w['written']]}](#{ids[w['where'],w['access'],w['property'],w['written']].lower()}): {cell(w['property'])} {cell(w['operation'])} {cell(w['written'])}" for w in r['writes'])
@@ -51,7 +52,7 @@ for r in rows:
 lines+=['','## Rest: full refused write list','','No further source adaptation is made. These require a source declaration or further compiler proof within the three permitted cases. A fresh result from a helper is not a fresh object literal; a tag supplied to a constructor is not itself a dominating tag check; a composite TypeVariable tag does not prove TypeParameter. The generic and sentinel relations retain the original conservative aliases and their exact write witnesses.','','| Site in src/compiler | Source type | Target type | First refused p | What is written |','|---|---|---|---|---|']
 for r in rows:
  if r['bucket']=='rest':lines.append(f"| {site(r)} | {cell(r['Source'])} | {cell(r['Target'])} | {cell(r['Property'])} | {witnesses(r)} |")
-lines+=['','## Reproduction and failing proofs','','The saved wave-2 tree supplies the exact line coordinates of the 100-site handoff. Source pin and original alias analysis are in [provenance](evidence/read-write/provenance.json) and [analysis](evidence/read-write/analysis.json.gz). The rebucketing uses the same strict checker options and adds no source edits. The exact per-site proof is in [ruling evidence](evidence/ruling/analysis.json.gz).','','```sh','NODE_PATH=STOCK_6_0_3_NODE_MODULES node stage3/adapt/75-optional-widening/rebucket.cjs TREE stage3/adapt/75-optional-widening/evidence/read-write/analysis.json.gz ruling.json > ruling.log 2>&1','NODE_PATH=STOCK_6_0_3_NODE_MODULES node stage3/adapt/75-optional-widening/probe-ruling.cjs MUTANT_TREE mutants.json > mutants.log 2>&1','python3 stage3/adapt/75-optional-widening/render-ruling.py ruling.json stage3/adapt/75-optional-widening/READ_WRITE.md > render.log 2>&1','```','','Mutant results and commands are recorded in [mutants](evidence/ruling/mutants.json). Full-apply revalidation is independent of this saved 391-site classification; its result is recorded in README.md when complete.','',old]
+lines+=['','## Reproduction and failing proofs','','The saved wave-2 tree supplies the exact line coordinates of the 100-site handoff. Source pin and original alias analysis are in [provenance](evidence/read-write/provenance.json) and [analysis](evidence/read-write/analysis.json.gz). The rebucketing uses the same strict checker options and adds no source edits. The exact per-site proof is in [ruling evidence](evidence/ruling/analysis.json.gz).','','```sh','NODE_PATH=STOCK_6_0_3_NODE_MODULES node stage3/adapt/75-optional-widening/rebucket.cjs TREE stage3/adapt/75-optional-widening/evidence/read-write/analysis.json.gz ruling.json > ruling.log 2>&1','NODE_PATH=STOCK_6_0_3_NODE_MODULES node stage3/adapt/75-optional-widening/probe-ruling.cjs MUTANT_TREE mutants.json > mutants.log 2>&1','python3 stage3/adapt/75-optional-widening/render-ruling.py ruling.json stage3/adapt/75-optional-widening/READ_WRITE.md > render.log 2>&1','```','','Mutant results and commands are recorded in [mutants](evidence/ruling/mutants.json). Full-apply revalidation is independent of this saved 391-site classification. Full apply passes; the composed inventory is 415 to 391 and the latent meter is 82 to 76. The default full oracle has 106,366 passes and one pre-existing API snapshot failure under the sanctioned lines. See [README.md](README.md#full-apply-revalidation-october-7) and [full evidence](evidence/full-apply/provenance.json).','',old]
 text='\n'.join(lines).rstrip()+'\n';assert '\u2014' not in text
 out.write_text(text)
 print(json.dumps(report['counts']))
