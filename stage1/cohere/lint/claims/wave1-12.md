@@ -234,3 +234,14 @@ main implementations and all fetched claim Markdown are claimed here:
 
 Owned directories use next-google-font-preconnect, next-inline-script-id and
 next-next-script-for-ga under rules/. This update is pushed before rule code.
+
+### Next-three outcome
+
+The three reserved Next.js ports are blocked on the shared JSX parser and AST
+adapter. Go cohere reports on all three positive witnesses; source Node, emitted
+JavaScript and sanitized native produce byte-identical parser panics instead.
+No incomplete registration is installed. Reproducible proof, a compiling probe
+control and exact coverage limits are in
+[the next-three report](wave1-12-next-evidence/REPORT.md). The claims remain owned
+by this branch pending that foundation. No per-rule parity, mutants or throughput
+result is claimed for these three names.

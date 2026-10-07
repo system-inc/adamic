@@ -1,0 +1,8 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+const path = programArguments()[0] ?? panic('missing witness');
+const source = readTextFile(path);
+if(source.kind === 'Error') { panic(source.message); }
+const parser = new Parser(source.text, path);
+parser.file();
+console.log('parsed');
