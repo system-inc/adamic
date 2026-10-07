@@ -1,0 +1,9 @@
+=== RUN   TestWave26AgreementAndMutants
+    wave_26_test.go:117: controls: 7023 identical finding bytes; findings 27
+    wave_26_test.go:125: controls-asan: 7023 identical finding bytes; findings 27
+    wave_26_test.go:136: operation mutant: exit 0, empty stderr, byte oracle catches byte 526
+    wave_26_test.go:134: provider mutant survived
+--- FAIL: TestWave26AgreementAndMutants (53.47s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	53.482s
+FAIL

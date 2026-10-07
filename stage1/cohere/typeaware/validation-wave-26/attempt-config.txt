@@ -1,0 +1,12 @@
+=== RUN   TestWave26AgreementAndMutants
+    wave_26_test.go:117: controls-go: exit status 2
+        
+        panic: invalid tsconfig
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave26-oracle.go:67 +0x16b8
+--- FAIL: TestWave26AgreementAndMutants (192.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	192.180s
+FAIL

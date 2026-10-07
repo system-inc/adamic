@@ -1,0 +1,66 @@
+{
+  "024-repository-timed-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "006-controls-native.stdout": {
+    "bytes": 7023,
+    "sha256": "933ec4ba4270f4eb32ca709d974814634e51fccdfadd1ab0d678e2e93a81772b"
+  },
+  "022-repository-asan-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "009-controls-asan-go.stdout": {
+    "bytes": 7023,
+    "sha256": "933ec4ba4270f4eb32ca709d974814634e51fccdfadd1ab0d678e2e93a81772b"
+  },
+  "025-repository-timed-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "023-repository-asan-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "030-compiler-timed-go.stdout": {
+    "bytes": 5318,
+    "sha256": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "027-compiler-native.stdout": {
+    "bytes": 5318,
+    "sha256": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "010-controls-asan-native.stdout": {
+    "bytes": 7023,
+    "sha256": "933ec4ba4270f4eb32ca709d974814634e51fccdfadd1ab0d678e2e93a81772b"
+  },
+  "029-compiler-asan-native.stdout": {
+    "bytes": 5318,
+    "sha256": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "005-controls-go.stdout": {
+    "bytes": 7023,
+    "sha256": "933ec4ba4270f4eb32ca709d974814634e51fccdfadd1ab0d678e2e93a81772b"
+  },
+  "021-repository-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "020-repository-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "031-compiler-timed-native.stdout": {
+    "bytes": 5318,
+    "sha256": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "028-compiler-asan-go.stdout": {
+    "bytes": 5318,
+    "sha256": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "026-compiler-go.stdout": {
+    "bytes": 5318,
+    "sha256": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  }
+}
