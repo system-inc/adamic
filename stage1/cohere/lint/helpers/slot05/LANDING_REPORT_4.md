@@ -45,3 +45,21 @@ Setup: ready Go, clang, Node and submodules 0s; cache warm 35s; done 35s on five
 - github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch11: 41.771s
 - github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch12: 30.482s
 - github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch13: 84.661s
+
+# Final publication base and gate
+
+Main advanced immediately before publication to 39638d9e278d38bb5aeae887f46d55a70e47aaad, adding Stage 3 work and the velocity record. The ancestry guard stopped the unrebased push. All 76 owned commits rebased cleanly, with all 76 range-diff entries equal. Final rebased tested head: 56f5279b4aa99744ef6aeb5d9dbe7d501f485065. Active implementation SHAs: makeBreak 4d1309fe; statements/makeContinue a03a623b; replacement claim c87f8384 (original published claim 98a779ba). Historical SHAs above describe the earlier publication and remain recorded as such.
+
+final-input-identity.json compares Git object IDs for internal, cmd, cohere, go.mod, oracle, cloud and the entire helper tree before/after this second rebase. Every object ID is identical. Thus all thirteen earlier-helper package results and all 110 earlier semantic witnesses apply to identical compiler/oracle/helper sources on the final base. The toolchain environment did not change. Stage 3's new files are not inputs to these helper oracles.
+
+The complete new trio was also rerun uncached on this final main: batch14 PASS 111.792s, batch15 PASS 145.503s. All 20 new compiling semantic mutants were caught again. Three helpers, 56,102 distinct invocations; the order check repeats its 806 baseline lists and does not add unique inputs. Source Node, emitted JavaScript and sanitized native all match Go. Final repository-wide vet and formatting logs are empty; the filtered uncached six-fixture input oracle PASS 1.143s, zero cache hits and six misses. Main was fetched again after the final gate and remained 39638d9e.
+
+```
+git rebase origin/main > /tmp/lint05-final-rebase.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -p 2 ./stage1/cohere/lint/helpers/slot05/batch14 ./stage1/cohere/lint/helpers/slot05/batch15 -count=1 -v -timeout=20m > /tmp/lint05-final-trio.log 2>&1
+go vet ./... > /tmp/lint05-final-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v > /tmp/lint05-final-oracle.log 2>&1
+gofmt -l cmd internal stage1/cohere/lint/helpers/slot05/batch14 stage1/cohere/lint/helpers/slot05/batch15 > /tmp/lint05-final-format.log 2>&1
+```
+
+No further claim is made. All 41 retained helpers are complete and landing-ready on the final main. Publication is only to codex/lint-helpers-05 with an exact lease against the original pushed claim 98a779ba; no main or area branch is pushed.
