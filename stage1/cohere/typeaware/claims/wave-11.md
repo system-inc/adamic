@@ -134,7 +134,11 @@ three depend on Cohere's high-level intermediate representation; its lowering,
 capture identities and control-flow semantics must be preserved. Shared generator
 and harness remain untouched; incomplete analysis must fail explicitly.
 
-Sixth batch status: BLOCKED, not ported. The native stage-1 tree has no equivalent
+Sixth batch status: PARKED, not ported. Counted finished for the landing-first
+cap under Ahra's explicit parking instruction. Native analysis is being ported
+on #dnv6f2c; JSX support is landing through area/stage1-lint.
+
+The native prerequisites remain missing: The native stage-1 tree has no equivalent
 of Cohere's function HIR lowering, SSA construction, capture edges, post-dominators
 or manual-memoization erasure/inlining. These are required by all three validators,
 not checker facts or the pending .a/suggestion harness changes. No rule stubs or
@@ -172,3 +176,28 @@ Fifteen completed rules now have numeric rule.json kinds metadata independently
 checked against live Go registrations. Existing string-kind execution awaits
 the shared handed-node API. React source-to-HIR reservations remain blocked;
 no new rules claimed. See ../WAVE_11_F801_REPORT.md for logs and limitations.
+
+## Seventh batch claim after React parking
+
+The three sixth-batch React claims are PARKED, not native ports: they require
+native high-level IR lowering, SSA, capture translation and memo transforms,
+tracked on #dnv6f2c. They count as finished for the landing-first cap under
+the latest explicit user instruction. Existing work was pushed through
+18021993; the fifteen completed rules remain oracle-green on main f8013f0b.
+
+Explicit all-heads fetch audited 529 origin refs, 515 distinct trees and 33
+unique reservation documents. JSON audit inventories of available rules are
+not reservations. The descending combined-volume ranking, lexical ties,
+excludes baseline ports and named origin reservations. These first three
+remaining rules use syntax and checker binding facts, not the parked HIR/SSA
+analysis pipeline, and are reserved before implementation:
+
+1. `react/jsx-fragments`
+2. `react/jsx-no-constructed-context-values`
+3. `react/jsx-no-undef`
+
+All have zero recorded compiler/repository counts. No main/bridge native port
+or origin reservation was found. New native sources are .a, rule.json kinds
+are numeric, and rules consume the relevant node handed by their driver.
+No shared parser, generator or harness edits are authorized. Snapshot and
+selection reconstruction are in ../wave-11-seventh/selection/.
