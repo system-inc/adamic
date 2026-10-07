@@ -1,0 +1,7 @@
+/* 世界 🌍 */
+export const repeated = result.result;
+export const optional = outcome?.outcome;
+export const different = result.value;
+export const computed = result['result'];
+export const nested = outcome.status.code;
+export const parenthesized = (result).result;

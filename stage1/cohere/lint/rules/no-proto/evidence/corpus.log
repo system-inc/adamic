@@ -1,0 +1,28 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:514: compiler and stage1: 397 files
+    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 20439895 bytes
+--- PASS: TestCompilerAndStage1Agree (84.19s)
+=== RUN   TestThroughput
+    lint_test.go:691: machine Linux 3829dac52117 6.18.44 #1 SMP Sat Sep 26 20:02:31 UTC 2026 x86_64 GNU/Linux; model name	: AMD EPYC 9V74 80-Core Processor; load before 1.17 1.09 0.94 1/302 211109
+    lint_test.go:714: round 1 Go 790.833039ms findings=15027
+    lint_test.go:714: round 1 native 2.783908022s findings=15027
+    lint_test.go:714: round 1 Node 1.851507828s findings=15027
+    lint_test.go:714: round 2 Go 801.115092ms findings=15027
+    lint_test.go:714: round 2 native 2.814980597s findings=15027
+    lint_test.go:714: round 2 Node 1.876561533s findings=15027
+    lint_test.go:714: round 3 Go 789.888448ms findings=15027
+    lint_test.go:714: round 3 native 3.120150241s findings=15027
+    lint_test.go:714: round 3 Node 1.873087331s findings=15027
+    lint_test.go:714: round 4 Go 770.241874ms findings=15027
+    lint_test.go:714: round 4 native 3.266783314s findings=15027
+    lint_test.go:714: round 4 Node 1.918449106s findings=15027
+    lint_test.go:714: round 5 Go 771.850648ms findings=15027
+    lint_test.go:714: round 5 native 2.771739525s findings=15027
+    lint_test.go:714: round 5 Node 1.816029789s findings=15027
+    lint_test.go:722: best of 5 Go: 0.770242s, 19509.46 findings/s (77 files, 15027 findings)
+    lint_test.go:722: best of 5 native: 2.771740s, 5421.51 findings/s (77 files, 15027 findings)
+    lint_test.go:722: best of 5 Node: 1.816030s, 8274.64 findings/s (77 files, 15027 findings)
+    lint_test.go:725: load after 1.29 1.13 0.96 4/301 211194
+--- PASS: TestThroughput (36.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	120.214s
