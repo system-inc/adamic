@@ -1,13 +1,77 @@
 package oracle
 
 import (
+	"fmt"
+
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
+
+// buildDecodeMutant builds a mutated program, sanitized on Linux, where LeakSanitizer is part of
+// the run, and plain on macOS, where the sanitizers have no leak check.
+func buildDecodeMutant(t *testing.T, code string) string {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(code, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
+		t.Fatal(err)
+	}
+	return binary
+}
+
+// runDecodeMutant runs a mutant that must leak nothing, and makes a leak its failure: on Linux
+// LeakSanitizer's, on macOS the counted build's report, so a leak is caught on either.
+func runDecodeMutant(t *testing.T, code, binary string) run {
+	t.Helper()
+	switch runtime.GOOS {
+	case "linux":
+		return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	case "darwin":
+		got := execute(t, binary)
+		if report := decodeMutantLeaks(t, code, binary); report != "" {
+			got.exitCode, got.stderr = 1, []byte(report)
+		}
+		return got
+	}
+	t.Fatalf("no leak check for %s", runtime.GOOS)
+	return run{}
+}
+
+// decodeMutantLeaks is the leak report for a finished mutant, or "" when it let go of everything.
+// On macOS that's a counted build's: leaks --atExit can't see a value the size-class allocator
+// holds, which is every value in a build without the sanitizers, so a leaked half-built array
+// passes it. A finished program's allocations are its frees and its regions (runtime/count.h).
+func decodeMutantLeaks(t *testing.T, code, binary string) string {
+	t.Helper()
+	switch runtime.GOOS {
+	case "linux":
+		return leakSanitizer(t, binary)
+	case "darwin":
+		counted := filepath.Join(t.TempDir(), "counted")
+		if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+			t.Fatal(err)
+		}
+		result := execute(t, counted)
+		var allocations, frees, retains, releases, peak, regions int
+		line := string(result.stderr)
+		if at := strings.LastIndex(line, "adamic: counts:"); at >= 0 {
+			line = line[at:]
+		}
+		if _, err := fmt.Sscanf(line, "adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d", &allocations, &frees, &retains, &releases, &peak, &regions); err != nil {
+			t.Fatalf("no counts from the counted build: %v\n%s", err, result.stderr)
+		}
+		if allocations != frees+regions {
+			return fmt.Sprintf("allocations %d, frees %d, regions %d", allocations, frees, regions)
+		}
+		return ""
+	}
+	t.Fatalf("no leak check for %s", runtime.GOOS)
+	return ""
+}
 
 // These changes touch the implementation's checks, not the fixture or its oracle descriptor.
 // Each validation mutant must compile, exit zero and leak nothing before Node can kill it.
@@ -51,11 +115,7 @@ func TestJSONDecodeValidationMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			code := inlineDecodeMutant(mutated, native.C(p))
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			got := runDecodeMutant(t, code, buildDecodeMutant(t, code))
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
@@ -96,11 +156,8 @@ func TestJSONDecodeParserMutants(t *testing.T) {
 			if mutated == string(original) {
 				t.Fatal("mutant changed nothing")
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(inlineDecodeMutant(mutated, native.C(p)), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			code := inlineDecodeMutant(mutated, native.C(p))
+			got := runDecodeMutant(t, code, buildDecodeMutant(t, code))
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
@@ -129,17 +186,19 @@ func TestJSONDecodeErrorLeakMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(inlineDecodeMutant(mutated, native.C(p)), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+	code := inlineDecodeMutant(mutated, native.C(p))
+	binary := buildDecodeMutant(t, code)
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	if diff := disagreement(onNode(t, path), executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)); diff != "" {
+	if diff := disagreement(onNode(t, path), executeWith(t, environment, binary)); diff != "" {
 		t.Fatalf("caught outside leak check: %s", diff)
 	}
-	if report := leakSanitizer(t, binary); !strings.Contains(report, "LeakSanitizer") {
-		t.Fatalf("leak mutant survived: %s", report)
+	if report := decodeMutantLeaks(t, code, binary); report == "" {
+		t.Fatal("leak mutant survived")
 	}
-	t.Log("half-array error cleanup: caught only by LeakSanitizer")
+	t.Log("half-array error cleanup: caught only by the leak check")
 }
 
 func TestJSONDecodeFieldPresenceMutants(t *testing.T) {
@@ -174,11 +233,8 @@ func TestJSONDecodeFieldPresenceMutants(t *testing.T) {
 			if mutated == string(original) {
 				t.Fatal("mutant changed nothing")
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(inlineDecodeMutant(mutated, native.C(p)), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			code := inlineDecodeMutant(mutated, native.C(p))
+			got := runDecodeMutant(t, code, buildDecodeMutant(t, code))
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
