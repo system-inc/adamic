@@ -1,0 +1,28 @@
+fixture	file	lines (inclusive)	warning	messages	builds
+internal/oracle/testdata/047cb0d_n_conditional.a	main.c	10	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/047cb0d_n_numparam.a	main.c	10	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/047cb0d_n_paren.a	main.c	10	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/047cb0d_n_typeof.a	main.c	13	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/classes.a	main.c	26,28,30	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/collections.a	main.c	120,124	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/find_shrinks.a	main.c	14	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/gaps.a	main.c	34	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/generic_values.a	main.c	19	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/indexing.a	main.c	19	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/json_stringify_scalars.a	main.c	18	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/literal_optional_shapes.a	main.c	17	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/long_literals.a	main.c	136,140-852	overflow	overflow in conversion from ‘int’ to ‘char’ changes value from ‘140’ to ‘-116’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘141’ to ‘-115’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘149’ to ‘-107’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘150’ to ‘-106’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘159’ to ‘-97’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘169’ to ‘-87’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘184’ to ‘-72’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘195’ to ‘-61’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘228’ to ‘-28’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘231’ to ‘-25’; overflow in conversion from ‘int’ to ‘char’ changes value from ‘240’ to ‘-16’	O1 ASan UBSan; O2
+internal/oracle/testdata/maps_and_text.a	main.c	32	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/maybe_booleans.a	main.c	35,43,47,51	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/maybe_collections.a	main.c	33,35,39	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/maybe_numbers.a	main.c	13,17	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/narrowed_compared.a	main.c	14,16	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/narrowed_numbers.a	main.c	8	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/optional_numbers.a	main.c	14,16	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/regexp.a	main.c	3085,3097	type-limits	comparison is always true due to limited range of data type	O1 ASan UBSan; O2
+internal/oracle/testdata/regexp_search.a	main.c	171	type-limits	comparison is always true due to limited range of data type	O1 ASan UBSan; O2
+internal/oracle/testdata/regexp_unicode.a	main.c	51,63,128,140	type-limits	comparison is always true due to limited range of data type	O1 ASan UBSan; O2
+internal/oracle/testdata/stack_forever.a	main.c	12	infinite-recursion	infinite recursion detected	O1 ASan UBSan; O2
+internal/oracle/testdata/sweeps/regexp_methods.a	main.c	178,190,3168,3180	type-limits	comparison is always true due to limited range of data type	O1 ASan UBSan; O2
+internal/oracle/testdata/tuple_values.a	main.c	81	pedantic	initializer element is not constant	O1 ASan UBSan; O2
+internal/oracle/testdata/user_iterators.a	main.c	113	pedantic	initializer element is not constant	O1 ASan UBSan; O2
