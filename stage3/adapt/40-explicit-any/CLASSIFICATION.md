@@ -1,18 +1,23 @@
-# Classification of the remaining 207 explicit any tokens
+# Explicit any classification: 70 done, 140 remaining
 
-This is a disjoint classification of the 207-token adapted census, not the original 210-token census. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
+Sites 138 (filesystem entry classification) and 58 (array predicate input) are done.
+The original census remains below for traceability.
+
+
+The original disjoint classification below describes the 207-token census after the first three owner edits, not the original 210-token census. Brands (36), enum display (23), diagnostics (6), the array predicate input (1), and filesystem entry classification (1) are now done, as recorded in PROGRESS.md: 70 tokens removed in total, 140 remaining. The location sections retain original site IDs for traceability. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
+
+Completed classes: brands 36, enum display 23, diagnostics 6, array predicate input 1, filesystem entry classification 1, plus the earlier three core owners: 70 of 210 tokens done.
+
+Remaining classes:
 
 | Pattern | Tokens | Proposed rule |
 | --- | ---: | --- |
 | JSON and config value pipeline | 38 | Unknown plus checked narrowing at genuinely untyped JSON/API boundaries; propagate validated recursive JSON/config value types through the internal pipeline. |
-| Nominal and phantom markers | 36 | Real type: undefined for absent phantom marker values, preserving marker keys and optionality; audit all construction, reads and assignability before applying. |
-| Enum and namespace display reflection | 23 | Real type: numeric-enum reflection map with string-or-number values, and the actual typeof namespace/enum at each owner. |
 | Timer handles and variadic timer forwarding | 16 | Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations. |
 | Incomplete runtime constructors and storage initialization | 11 | Decline until constructor return and staged initialization contracts are modeled at their owners. |
 | Generic enumerable copy and metadata copy | 10 | Decline until enumerable copy results and writable key relationships have an owner contract. |
 | Standard runtime feature probes | 8 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API. |
 | AST subtype properties and mutable manufactured nodes | 6 | Real type: the precise node union or manufactured node shape at the owning declaration. |
-| Diagnostic substitution arguments | 6 | Real type: the diagnostic substitution domain established from callers, string \| number \| boolean \| readonly string[] \| SourceFile \| undefined, with scanner/parser arg0 restricted to optional string \| number. |
 | Display projections on known internal objects | 6 | Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow. |
 | Generic builder program factory escapes | 5 | Decline until the generic program type is tied to the selected factory and persisted builder result at the owner. |
 | Broad generic API shape references | 4 | Real type: use the declared generic bound, BuilderProgram for ProgramHost and Node for NodeArray. |
@@ -26,11 +31,9 @@ This is a disjoint classification of the 207-token adapted census, not the origi
 | Mutable Debug assertion table | 2 | Decline: the restore assignment stores a cache entry object where the declared slot is callable; a truthful callable replacement exposes a runtime contract mismatch. |
 | Pragma argument name domain | 2 | Real type: string as the PragmaArgumentSpecification name parameter bound. |
 | Optional builder program feature access | 2 | Real type: an optional getSemanticDiagnosticsOfNextAffectedFile capability on the program owner, preserving the existing presence test. |
-| Generic array predicate input | 1 | Generic parameter for the internal value input while retaining the readonly unknown[] checked predicate. |
 | Default string comparator escape | 1 | Decline until the string default comparer is restricted to a string element branch or a generic caller supplies its comparator. |
 | System to config-host shape | 1 | Real type: the actual ParseConfigFileHost capability subset at the host declaration, proving required optional System methods before construction. |
 | Distributive conditional type | 1 | Generic parameter: use the identity condition U extends U to preserve distribution without a top-type escape. |
-| Filesystem entry classification | 1 | Real type: fs.Stats \| fs.Dirent \| undefined, with existing !stat continue retaining narrowing. |
 | Delegated generator next-input type | 1 | Generic parameter carrying the delegated iterator next-input type through flatMapIterator. |
 | Key-only mapped type | 1 | Real type: never as the unobserved mapped value, retaining the existing key remapping. |
 | Module resolution enum key | 1 | Real type: the actual ModuleResolutionKind string-key domain at the declaration producing moduleKindName. |
@@ -38,11 +41,11 @@ This is a disjoint classification of the 207-token adapted census, not the origi
 | Resolution result update | 1 | Real type: declare the mutable resolvedModule result field at its actual owner. |
 | Unused scanner reduction state | 1 | Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges. |
 
-Total: 207 tokens, 28 files, 33 disjoint classes. No token remains in an unclassified other bucket.
+Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table excludes all five completed classes: 140 tokens in 28 classes. No token remains unclassified.
 
 ## Decision
 
-Stop: largest class is JSON/config, 38 sites, and its whole-class rule requires runtime narrowing. No further adaptation or consumer edit.
+Brands are done under @system_adamic's October 7 ruling (#bw3xg7c): unread phantom marker members typed any become void. No runtime statement or consumer is changed. JSON/config remains held for checked runtime narrowing; its earlier decision is preserved below as historical context.
 
 The largest class is 38 JSON/config sites, not the 36 brands. For example, raw config extension merging writes ownConfig.raw.include/exclude/files and reads compileOnSave directly; public config conversion accepts arbitrary values before validation. Unknown would expose property-access errors. Adding object/field validation changes emitted JavaScript; a broad assertion would evade the requested proof. I therefore did not apply another class as a substitute for the largest class. The prior three-owner adapter and its proof are unchanged.
 
@@ -98,11 +101,13 @@ Locations:
 - 173: `src/compiler/types.ts:7705:11`
 - 180: `src/compiler/utilities.ts:7809:45`
 
-### Nominal and phantom markers (36)
+### Done: nominal and phantom markers (36 sites, 31 names, 8 files)
 
-Marker properties on branded primitives, arrays, AST families and SymbolLinks, including two cache-key markers without Brand suffix. This is distinct from JSON and overload signatures. No replacement is proved in this classification: changing marker value types can affect assignability and public declarations even though annotations erase.
+Marker properties on branded primitives, arrays, AST families and SymbolLinks, including two cache-key markers without Brand suffix. Each member was searched separately throughout src/compiler and independently audited as erased syntax. Every occurrence is a marker declaration: no reads, writes or tests, and no member retained for runtime use. Required markers and the one optional marker retain their keys and optionality. The adapter rejects runtime marker uses before writing.
 
-Rule: Real type: undefined for absent phantom marker values, preserving marker keys and optionality; audit all construction, reads and assignability before applying.
+Rule: any becomes void at each of the 36 declarations. This revises the earlier undefined adaptation; the number of removed any tokens remains 36. The sorted-array key is literally `" __sortedArrayBrand"` (leading space). Both pinned declarations are required, unread any, so they meet the ruling's exception and become void; a pre-existing required undefined marker would be left alone.
+
+The 27 changed public lines were already sanctioned for undefined on this base branch. Their entries now sanction void line for line under the ruling; no unrelated public declaration is added. The SymbolLinks string mutant fails the upstream build with TS2416 and TS2322. See [the void proof report](BRANDS-VOID.md) and [per-member searches](evidence/brands-void/member-audit.json).
 
 Locations:
 - 1: `src/compiler/builder.ts:1074:88`
@@ -424,11 +429,11 @@ Locations:
 - 144: `src/compiler/tsbuildPublic.ts:992:34`
 - 145: `src/compiler/tsbuildPublic.ts:993:33`
 
-### Generic array predicate input (1)
+### Done: generic array predicate input (1)
 
-isArray delegates to the runtime Array.isArray check. The incoming value is not inherently untyped JSON; a generic input preserves concrete caller types.
+Site 58 was already classified as Generic array predicate input. The October 7 follow-up adopts unknown at the existing internal owner: `isArray(value: unknown): value is readonly unknown[]`. The predicate body still delegates directly to `Array.isArray`; no caller source or runtime expression changes. Compiler host-blockers a85a9cb1 supplies the unknown-predicate precedent. The function is @internal, so there is no public API line or new sanction. See [the current proof report](BRANDS-VOID.md).
 
-Rule: Generic parameter for the internal value input while retaining the readonly unknown[] checked predicate.
+Rule: unknown input, retaining the existing readonly unknown[] predicate and body. Done: one token removed, zero public lines.
 
 Locations:
 - 58: `src/compiler/core.ts:1750:32`
@@ -460,11 +465,15 @@ Rule: Generic parameter: use the identity condition U extends U to preserve dist
 Locations:
 - 176: `src/compiler/types.ts:10320:49`
 
-### Filesystem entry classification (1)
+### Filesystem entry classification (done: 1, remaining: 0)
 
 Assignments come from statSync or readdirSync dirents. This host API has real declarations and common isFile/isDirectory methods; unknown plus new checks is unnecessary.
 
-Rule: Real type: fs.Stats | fs.Dirent | undefined, with existing !stat continue retaining narrowing.
+Proven type: `import("fs").Stats | import("fs").Dirent | undefined`.
+The local statSync declaration returns Stats | undefined; readdirSync supplies
+Dirent. The existing !stat continue retains narrowing. Only the local annotation
+changes; no emitted declaration or API sanction changes. Reproduction and
+full-build wrong-type mutant are in filesystem-proof.cjs.
 
 Locations:
 - 138: `src/compiler/sys.ts:1853:31`

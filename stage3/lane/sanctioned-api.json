@@ -24,7 +24,7 @@
     {
       "declaration": "TypeAliasDeclaration:[\"ts\",\"Path\"]#0",
       "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"AnyKeyword\"]]]]]",
-      "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"UndefinedKeyword\"]]]]]"
+      "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"VoidKeyword\"]]]]]"
     },
     {
       "declaration": "member:[\"ts\",\"AmdDependency\",\"name\"]#0",
@@ -39,7 +39,7 @@
     {
       "declaration": "member:[\"ts\",\"AutoAccessorPropertyDeclaration\",\"_autoAccessorBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_autoAccessorBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_autoAccessorBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_autoAccessorBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"BindingElement\",\"dotDotDotToken\"]#0",
@@ -69,7 +69,7 @@
     {
       "declaration": "member:[\"ts\",\"CallChain\",\"_optionalChainBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"CallExpression\",\"questionDotToken\"]#0",
@@ -99,7 +99,7 @@
     {
       "declaration": "member:[\"ts\",\"ClassElement\",\"_classElementBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_classElementBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_classElementBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_classElementBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"ClassElement\",\"name\"]#0",
@@ -214,7 +214,7 @@
     {
       "declaration": "member:[\"ts\",\"Declaration\",\"_declarationBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_declarationBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_declarationBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_declarationBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"DeclarationStatement\",\"name\"]#0",
@@ -259,7 +259,7 @@
     {
       "declaration": "member:[\"ts\",\"ElementAccessChain\",\"_optionalChainBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"ElementAccessExpression\",\"questionDotToken\"]#0",
@@ -324,12 +324,12 @@
     {
       "declaration": "member:[\"ts\",\"Expression\",\"_expressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_expressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_expressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_expressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"FlowContainer\",\"_flowContainerBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_flowContainerBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_flowContainerBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_flowContainerBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"ForOfStatement\",\"awaitModifier\"]#0",
@@ -379,7 +379,7 @@
     {
       "declaration": "member:[\"ts\",\"FunctionLikeDeclarationBase\",\"_functionLikeDeclarationBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_functionLikeDeclarationBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_functionLikeDeclarationBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_functionLikeDeclarationBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"GetAccessorDeclaration\",\"body\"]#0",
@@ -514,7 +514,7 @@
     {
       "declaration": "member:[\"ts\",\"JSDocContainer\",\"_jsdocContainerBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_jsdocContainerBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_jsdocContainerBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_jsdocContainerBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"JSDocImportTag\",\"attributes\"]#0",
@@ -564,7 +564,7 @@
     {
       "declaration": "member:[\"ts\",\"JSDocType\",\"_jsDocTypeBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_jsDocTypeBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_jsDocTypeBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_jsDocTypeBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"JSDocTypeLiteral\",\"jsDocPropertyTags\"]#0",
@@ -619,12 +619,12 @@
     {
       "declaration": "member:[\"ts\",\"LeftHandSideExpression\",\"_leftHandSideExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"LiteralExpression\",\"_literalExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_literalExpressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_literalExpressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_literalExpressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"LiteralLikeNode\",\"hasExtendedUnicodeEscape\"]#0",
@@ -634,7 +634,7 @@
     {
       "declaration": "member:[\"ts\",\"LocalsContainer\",\"_localsContainerBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_localsContainerBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_localsContainerBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_localsContainerBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"MappedTypeNode\",\"members\"]#0",
@@ -664,7 +664,7 @@
     {
       "declaration": "member:[\"ts\",\"MemberExpression\",\"_memberExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_memberExpressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_memberExpressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_memberExpressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"MethodSignature\",\"modifiers\"]#0",
@@ -714,12 +714,12 @@
     {
       "declaration": "member:[\"ts\",\"NonNullChain\",\"_optionalChainBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"ObjectLiteralElement\",\"_objectLiteralBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_objectLiteralBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_objectLiteralBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_objectLiteralBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"ObjectLiteralElement\",\"name\"]#0",
@@ -774,7 +774,7 @@
     {
       "declaration": "member:[\"ts\",\"PrimaryExpression\",\"_primaryExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_primaryExpressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_primaryExpressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_primaryExpressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"PrinterOptions\",\"newLine\"]#0",
@@ -804,12 +804,12 @@
     {
       "declaration": "member:[\"ts\",\"PropertyAccessChain\",\"_optionalChainBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"PropertyAccessEntityNameExpression\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"],[\"QuestionToken\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"],[\"QuestionToken\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"PropertyAccessExpression\",\"questionDotToken\"]#0",
@@ -909,17 +909,17 @@
     {
       "declaration": "member:[\"ts\",\"SortedArray\",\" __sortedArrayBrand\"]#0",
       "before": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"SortedReadonlyArray\",\" __sortedArrayBrand\"]#0",
       "before": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"Statement\",\"_statementBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_statementBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_statementBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_statementBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"Symbol\",\"declarations\"]#0",
@@ -989,7 +989,7 @@
     {
       "declaration": "member:[\"ts\",\"TypeElement\",\"_typeElementBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_typeElementBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_typeElementBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_typeElementBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"TypeElement\",\"name\"]#0",
@@ -999,7 +999,7 @@
     {
       "declaration": "member:[\"ts\",\"TypeNode\",\"_typeNodeBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_typeNodeBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_typeNodeBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_typeNodeBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"TypeParameterDeclaration\",\"constraint\"]#0",
@@ -1034,12 +1034,12 @@
     {
       "declaration": "member:[\"ts\",\"UnaryExpression\",\"_unaryExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_unaryExpressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_unaryExpressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_unaryExpressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"UpdateExpression\",\"_updateExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_updateExpressionBrand\"],[\"AnyKeyword\"]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"_updateExpressionBrand\"],[\"UndefinedKeyword\"]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_updateExpressionBrand\"],[\"VoidKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"UserPreferences\",\"importModuleSpecifierEnding\"]#0",
@@ -2907,7 +2907,7 @@
     },
     {
       "file": "stage3/adapt/40-explicit-any/class-rules.json",
-      "sha256": "0087371bf78d17c31cbc0bce58de8259ebd5c58695bb62f00341e9dcb3fc3231"
+      "sha256": "c198f6f48bb5e1730cbeb90a8702a09885d9d60edd93a6ef968b3f1ef09cf7f4"
     },
     {
       "file": "stage3/adapt/75-optional-widening/evidence/wave2/api.json",
@@ -2927,7 +2927,7 @@
     },
     {
       "file": "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
-      "sha256": "c4854d728af114d35c82c282fac9c380d6def13c1ec29b9c2ba54531cac6e720"
+      "sha256": "775c2ae6d7d1f784ca2d249dd277737526f7bac44de5c368c98db9cf0bd1ae2b"
     },
     {
       "file": "stage3/adapt/32-indexed-reads-program/resumed-watch/api.json",
@@ -2993,15 +2993,15 @@
     "     }\n",
     "     interface SortedReadonlyArray<T> extends ReadonlyArray<T> {\n",
     "-        \" __sortedArrayBrand\": any;\n",
-    "+        \" __sortedArrayBrand\": undefined;\n",
+    "+        \" __sortedArrayBrand\": void;\n",
     "     }\n",
     "     interface SortedArray<T> extends Array<T> {\n",
     "-        \" __sortedArrayBrand\": any;\n",
-    "+        \" __sortedArrayBrand\": undefined;\n",
+    "+        \" __sortedArrayBrand\": void;\n",
     "     }\n",
     "     type Path = string & {\n",
     "-        __pathBrand: any;\n",
-    "+        __pathBrand: undefined;\n",
+    "+        __pathBrand: void;\n",
     "     };\n",
     "     interface TextRange {\n",
     "         pos: number;\n",
@@ -3010,15 +3010,15 @@
     "     }\n",
     "     interface JSDocContainer extends Node {\n",
     "-        _jsdocContainerBrand: any;\n",
-    "+        _jsdocContainerBrand: undefined;\n",
+    "+        _jsdocContainerBrand: void;\n",
     "     }\n",
     "     interface LocalsContainer extends Node {\n",
     "-        _localsContainerBrand: any;\n",
-    "+        _localsContainerBrand: undefined;\n",
+    "+        _localsContainerBrand: void;\n",
     "     }\n",
     "     interface FlowContainer extends Node {\n",
     "-        _flowContainerBrand: any;\n",
-    "+        _flowContainerBrand: undefined;\n",
+    "+        _flowContainerBrand: void;\n",
     "     }\n",
     "     type HasJSDoc =\n",
     "         | AccessorDeclaration\n",
@@ -3027,7 +3027,7 @@
     "     type DeclarationName = PropertyName | JsxAttributeName | StringLiteralLike | ElementAccessExpression | BindingPattern | EntityNameExpression;\n",
     "     interface Declaration extends Node {\n",
     "-        _declarationBrand: any;\n",
-    "+        _declarationBrand: undefined;\n",
+    "+        _declarationBrand: void;\n",
     "     }\n",
     "     interface NamedDeclaration extends Declaration {\n",
     "-        readonly name?: DeclarationName;\n",
@@ -3129,12 +3129,12 @@
     "     }\n",
     "     interface AutoAccessorPropertyDeclaration extends PropertyDeclaration {\n",
     "-        _autoAccessorBrand: any;\n",
-    "+        _autoAccessorBrand: undefined;\n",
+    "+        _autoAccessorBrand: void;\n",
     "     }\n",
     "     interface ObjectLiteralElement extends NamedDeclaration {\n",
     "-        _objectLiteralBrand: any;\n",
     "-        readonly name?: PropertyName;\n",
-    "+        _objectLiteralBrand: undefined;\n",
+    "+        _objectLiteralBrand: void;\n",
     "+        readonly name?: PropertyName | undefined;\n",
     "     }\n",
     "     /** Unlike ObjectLiteralElement, excludes JSXAttribute and JSXSpreadAttribute. */\n",
@@ -3155,7 +3155,7 @@
     "      */\n",
     "     interface FunctionLikeDeclarationBase extends SignatureDeclarationBase {\n",
     "-        _functionLikeDeclarationBrand: any;\n",
-    "+        _functionLikeDeclarationBrand: undefined;\n",
+    "+        _functionLikeDeclarationBrand: void;\n",
     "         readonly asteriskToken?: AsteriskToken | undefined;\n",
     "         readonly questionToken?: QuestionToken | undefined;\n",
     "         readonly exclamationToken?: ExclamationToken | undefined;\n",
@@ -3211,7 +3211,7 @@
     "     }\n",
     "     interface TypeNode extends Node {\n",
     "-        _typeNodeBrand: any;\n",
-    "+        _typeNodeBrand: undefined;\n",
+    "+        _typeNodeBrand: void;\n",
     "     }\n",
     "     interface KeywordTypeNode<TKind extends KeywordTypeSyntaxKind = KeywordTypeSyntaxKind> extends KeywordToken<TKind>, TypeNode {\n",
     "         readonly kind: TKind;\n",
@@ -3295,7 +3295,7 @@
     "     }\n",
     "     interface Expression extends Node {\n",
     "-        _expressionBrand: any;\n",
-    "+        _expressionBrand: undefined;\n",
+    "+        _expressionBrand: void;\n",
     "     }\n",
     "     interface OmittedExpression extends Expression {\n",
     "         readonly kind: SyntaxKind.OmittedExpression;\n",
@@ -3304,13 +3304,13 @@
     "     }\n",
     "     interface UnaryExpression extends Expression {\n",
     "-        _unaryExpressionBrand: any;\n",
-    "+        _unaryExpressionBrand: undefined;\n",
+    "+        _unaryExpressionBrand: void;\n",
     "     }\n",
     "     /** Deprecated, please use UpdateExpression */\n",
     "     type IncrementExpression = UpdateExpression;\n",
     "     interface UpdateExpression extends UnaryExpression {\n",
     "-        _updateExpressionBrand: any;\n",
-    "+        _updateExpressionBrand: undefined;\n",
+    "+        _updateExpressionBrand: void;\n",
     "     }\n",
     "     type PrefixUnaryOperator = SyntaxKind.PlusPlusToken | SyntaxKind.MinusMinusToken | SyntaxKind.PlusToken | SyntaxKind.MinusToken | SyntaxKind.TildeToken | SyntaxKind.ExclamationToken;\n",
     "     interface PrefixUnaryExpression extends UpdateExpression {\n",
@@ -3319,15 +3319,15 @@
     "     }\n",
     "     interface LeftHandSideExpression extends UpdateExpression {\n",
     "-        _leftHandSideExpressionBrand: any;\n",
-    "+        _leftHandSideExpressionBrand: undefined;\n",
+    "+        _leftHandSideExpressionBrand: void;\n",
     "     }\n",
     "     interface MemberExpression extends LeftHandSideExpression {\n",
     "-        _memberExpressionBrand: any;\n",
-    "+        _memberExpressionBrand: undefined;\n",
+    "+        _memberExpressionBrand: void;\n",
     "     }\n",
     "     interface PrimaryExpression extends MemberExpression {\n",
     "-        _primaryExpressionBrand: any;\n",
-    "+        _primaryExpressionBrand: undefined;\n",
+    "+        _primaryExpressionBrand: void;\n",
     "     }\n",
     "     interface NullLiteral extends PrimaryExpression {\n",
     "         readonly kind: SyntaxKind.NullKeyword;\n",
@@ -3379,7 +3379,7 @@
     "     }\n",
     "     interface LiteralExpression extends LiteralLikeNode, PrimaryExpression {\n",
     "-        _literalExpressionBrand: any;\n",
-    "+        _literalExpressionBrand: undefined;\n",
+    "+        _literalExpressionBrand: void;\n",
     "     }\n",
     "     interface RegularExpressionLiteral extends LiteralExpression {\n",
     "         readonly kind: SyntaxKind.RegularExpressionLiteral;\n",
@@ -3393,7 +3393,7 @@
     "     }\n",
     "     interface PropertyAccessChain extends PropertyAccessExpression {\n",
     "-        _optionalChainBrand: any;\n",
-    "+        _optionalChainBrand: undefined;\n",
+    "+        _optionalChainBrand: void;\n",
     "         readonly name: MemberName;\n",
     "     }\n",
     "     interface SuperPropertyAccessExpression extends PropertyAccessExpression {\n",
@@ -3402,7 +3402,7 @@
     "     /** Brand for a PropertyAccessExpression which, like a QualifiedName, consists of a sequence of identifiers separated by dots. */\n",
     "     interface PropertyAccessEntityNameExpression extends PropertyAccessExpression {\n",
     "-        _propertyAccessExpressionLikeQualifiedNameBrand?: any;\n",
-    "+        _propertyAccessExpressionLikeQualifiedNameBrand?: undefined;\n",
+    "+        _propertyAccessExpressionLikeQualifiedNameBrand?: void;\n",
     "         readonly expression: EntityNameExpression;\n",
     "         readonly name: Identifier;\n",
     "     }\n",
@@ -3415,7 +3415,7 @@
     "     }\n",
     "     interface ElementAccessChain extends ElementAccessExpression {\n",
     "-        _optionalChainBrand: any;\n",
-    "+        _optionalChainBrand: undefined;\n",
+    "+        _optionalChainBrand: void;\n",
     "     }\n",
     "     interface SuperElementAccessExpression extends ElementAccessExpression {\n",
     "         readonly expression: SuperExpression;\n",
@@ -3431,7 +3431,7 @@
     "     }\n",
     "     interface CallChain extends CallExpression {\n",
     "-        _optionalChainBrand: any;\n",
-    "+        _optionalChainBrand: undefined;\n",
+    "+        _optionalChainBrand: void;\n",
     "     }\n",
     "     type OptionalChain = PropertyAccessChain | ElementAccessChain | CallChain | NonNullChain;\n",
     "     interface SuperCall extends CallExpression {\n",
@@ -3457,7 +3457,7 @@
     "     }\n",
     "     interface NonNullChain extends NonNullExpression {\n",
     "-        _optionalChainBrand: any;\n",
-    "+        _optionalChainBrand: undefined;\n",
+    "+        _optionalChainBrand: void;\n",
     "     }\n",
     "     interface MetaProperty extends PrimaryExpression, FlowContainer {\n",
     "         readonly kind: SyntaxKind.MetaProperty;\n",
@@ -3502,7 +3502,7 @@
     "     type JsxChild = JsxText | JsxExpression | JsxElement | JsxSelfClosingElement | JsxFragment;\n",
     "     interface Statement extends Node, JSDocContainer {\n",
     "-        _statementBrand: any;\n",
-    "+        _statementBrand: undefined;\n",
+    "+        _statementBrand: void;\n",
     "     }\n",
     "     interface NotEmittedStatement extends Statement {\n",
     "         readonly kind: SyntaxKind.NotEmittedStatement;\n",
@@ -3610,13 +3610,13 @@
     "     interface ClassElement extends NamedDeclaration {\n",
     "-        _classElementBrand: any;\n",
     "-        readonly name?: PropertyName;\n",
-    "+        _classElementBrand: undefined;\n",
+    "+        _classElementBrand: void;\n",
     "+        readonly name?: PropertyName | undefined;\n",
     "     }\n",
     "     interface TypeElement extends NamedDeclaration {\n",
     "-        _typeElementBrand: any;\n",
     "-        readonly name?: PropertyName;\n",
-    "+        _typeElementBrand: undefined;\n",
+    "+        _typeElementBrand: void;\n",
     "+        readonly name?: PropertyName | undefined;\n",
     "         readonly questionToken?: QuestionToken | undefined;\n",
     "     }\n",
@@ -3778,7 +3778,7 @@
     "     }\n",
     "     interface JSDocType extends TypeNode {\n",
     "-        _jsDocTypeBrand: any;\n",
-    "+        _jsDocTypeBrand: undefined;\n",
+    "+        _jsDocTypeBrand: void;\n",
     "     }\n",
     "     interface JSDocAllType extends JSDocType {\n",
     "         readonly kind: SyntaxKind.JSDocAllType;\n",

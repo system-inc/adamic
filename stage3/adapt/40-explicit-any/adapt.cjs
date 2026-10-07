@@ -7,8 +7,9 @@ if (process.argv.length !== 3) throw Error('usage: node adapt.cjs <tree>');
 const file = path.join(path.resolve(process.argv[2]), 'src/compiler/core.ts');
 const text = fs.readFileSync(file, 'utf8');
 const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
-const names = new Set(['length', 'toOffset', 'hasProperty']);
+const names = new Set(['length', 'toOffset', 'hasProperty', 'isArray']);
 const bodies = new Map([
+    ['isArray', '{\n    // See: https://github.com/microsoft/TypeScript/issues/17002\n    return Array.isArray(value);\n}'],
     ['length', '{\n    return array !== undefined ? array.length : 0;\n}'],
     ['toOffset', '{\n    return offset < 0 ? array.length + offset : offset;\n}'],
     ['hasProperty', '{\n    return hasOwnProperty.call(map, key);\n}'],
@@ -20,6 +21,14 @@ for (const node of source.statements) {
     if (node.body?.getText(source).replace(/\r\n/g, '\n') !== bodies.get(node.name.text)) throw Error('unreviewed uses: ' + node.name.text);
     const parameter = node.parameters[0];
     const type = parameter.type;
+    if (node.name.text === 'isArray') {
+        if (parameter.name.text !== 'value' || node.typeParameters ||
+            node.type?.getText(source) !== 'value is readonly unknown[]') throw Error('isArray predicate contract changed');
+        if (type.kind === ts.SyntaxKind.UnknownKeyword) continue;
+        if (type.kind !== ts.SyntaxKind.AnyKeyword) throw Error('unreviewed isArray input');
+        edits.push({start: type.getStart(source), end: type.end, value: 'unknown'});
+        continue;
+    }
     if (node.name.text === 'hasProperty' && type.kind === ts.SyntaxKind.ObjectKeyword && !node.typeParameters) continue;
     let element;
     if (node.name.text === 'hasProperty') {
@@ -50,3 +59,4 @@ require('./classes.cjs').applyEnums(path.resolve(process.argv[2]));
 require('./classes.cjs').applyEnums(path.resolve(process.argv[2]), 'diagnostic');
 require('./classes.cjs').applyDiagnosticReference(path.resolve(process.argv[2]));
 require('./classes.cjs').applyDiagnosticDeclarations(path.resolve(process.argv[2]));
+require('./classes.cjs').applyEnums(path.resolve(process.argv[2]), 'filesystem');

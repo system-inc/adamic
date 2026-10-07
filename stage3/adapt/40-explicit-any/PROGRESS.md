@@ -1,6 +1,8 @@
 # Type-only class applications
 
-Brands: 36 owner types changed from any to undefined, preserving marker keys
+The original brand proof below is historical. October 7 revises its 36 replacements to void under #bw3xg7c; see [BRANDS-VOID.md](BRANDS-VOID.md) for current composition, searches, build mutant and lane evidence.
+
+Historical brands: 36 owner types changed from any to undefined, preserving marker keys
 and optionality. Required markers remain required; the optional qualified-name
 marker remains optional. Branded primitives and AST construction use nominal
 assertions or staged constructors already present in upstream, rather than
@@ -125,3 +127,86 @@ contracts have not yet received the owner, consumer and oracle proof. In
 particular, timers need handle/argument generics propagated across owners;
 constructor/copy/callback classes need correlation and variance work. This is
 unfinished proof work, not a claim that those type-only edits are impossible.
+
+## Filesystem entry classification
+
+Site 138 is done: getAccessibleFileSystemEntries.stat carries
+`import("fs").Stats | import("fs").Dirent | undefined`. The Stats branch can
+return undefined and continues when absent; the other branch carries Dirent.
+Both branches are retained, so a narrower annotation would omit an assignment
+domain. No statement, public contract or API sanction is changed.
+
+The clean upstream before/after builds compare all 10 emitted JavaScript files
+and all 715 declarations byte for byte, with no changed declarations. sys.ts's
+standalone stock emission also matches exactly. Its SHA-256 is
+15497c1e88a70611797ff5357da31a08e74ec1ffd2716358db859d0f5580d5ca.
+A real stat: string mutant fails npm run build with TS2322 for both Stats and
+Dirent assignments, plus TS2339 on isFile/isDirectory. Restoration rebuilds
+successfully. Artifact byte mutants fail both comparisons. Seven AST guard
+mutants fail: renamed owner, missing declaration, duplicate declaration,
+initialized declaration, missing type, wrong type and changed declaration line.
+The final adapter applies once and is idempotent on the composed source.
+
+A first incremental comparison found two bundled declaration differences; it
+was rejected. Both clean builds then produced identical declarations. A later
+proof attempt exposed adaptation 47's one-line import offset. The filesystem
+lookup now uses its parsed function and variable owner, and the complete proof
+was rerun successfully. These failed exploratory attempts remain in /tmp logs
+and are not presented as passing runs.
+
+The filesystem follow-up alone recorded 69 removed, 141 remaining. Together with
+the array predicate input below, current progress is 70 removed, 140 remaining. Historical census
+JSONs and the earlier verifier snapshots remain unchanged. See
+evidence/filesystem/proof.json and guards.log for the independent observations.
+
+The Linux x64 landing lane passes with Node v24.19.0: 106,366 passing,
+one failing, zero pending. Its sole failure is the sanctioned Public APIs
+typescript.d.ts test and sole baseline difference is api/typescript.d.ts.
+The guard records 222 composed declarations, exactly 222 sanctioned, with
+28 already accepted reference declarations. The sanction manifest itself is
+unchanged. Apply exits 0, upstream oracle exits 1 as sanctioned, lane exits 0.
+The lane ran from the working tree before commit, so execution.json records
+the base commit 03ccf222 rather than this unit's later delivery commit.
+
+Setup log: /tmp/sys-stat-setup.log. With GOPROXY=https://proxy.golang.org|direct,
+setup reports submodules 0.109s, Go 0.100s, Node 0.109s, clang 0.515s, markdown
+dependencies 1.076s, Go build 37.528s, cache warm 37.617s, done 37.641s.
+nproc=5, CPU quota=4, Node v24.19.0, Go 1.27.1, clang 20.1.8. The printed
+/workspace/adamic-tools/env.sh was sourced for each build/test command.
+No setup workaround was needed. An unrelated recursive submodule fetch was
+stopped; the two requested origin refs were fetched without recursion.
+
+Not covered: native execution, the full Go gate, Windows filesystem behavior,
+other remaining any classes, source-map identity, or other host fixture updates.
+
+The separately requested oracle also completes: 106,366 passing, one failing,
+zero pending, only api/typescript.d.ts differs. Install and build exit 0; tests
+and oracle exit 1 for the sanctioned API failure. It used all runners, four
+workers, no test filter, and Node v24.19.0. Tests took 370.862s. The lane's
+tests took 452.513s; the two runs overlapped on the four-CPU quota.
+
+Commands, each with output redirected to its own log:
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/sys-stat-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+bash stage3/apply.sh /tmp/sys-stat-before-tree > /tmp/sys-stat-before-apply.log 2>&1
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/adapt/40-explicit-any/filesystem-proof.cjs /tmp/sys-stat-before-tree /tmp/sys-stat-final-proof > /tmp/sys-stat-final-proof.log 2>&1
+bash stage3/oracle/run.sh /tmp/sys-stat-before-tree /tmp/sys-stat-oracle > /tmp/sys-stat-oracle.log 2>&1
+bash stage3/lane/run.sh /tmp/sys-stat-lane > /tmp/sys-stat-lane.log 2>&1
+```
+
+Apply exits 0. The proof exits 0, including the restored clean build. The
+additional guard probes are reproduced by filesystem-proof.cjs and independently
+recorded in evidence/filesystem/guards.log. The full logs and exploratory
+failures are under /tmp/sys-stat-*. Syntax checks and git diff --check pass.
+
+## Internal array predicate input, October 7
+
+Site 58, already classified as Generic array predicate input, now uses unknown
+in `isArray(value: unknown): value is readonly unknown[]`. The body is unchanged;
+all compiler callers are checked by the stock compiler. This follows the
+host-blockers a85a9cb1 proof and removes one more any token. Combined with the
+filesystem entry classification, 70 of 210 are removed and 140 remain. The function is @internal and contributes no public API line.
+Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
