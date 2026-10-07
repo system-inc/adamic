@@ -1,0 +1,5 @@
+{
+  "name": "no-useless-constructor mutant from batch 8",
+  "from": "if(body < 0)",
+  "to": "if(body >= 0)"
+}

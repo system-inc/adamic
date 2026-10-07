@@ -1,0 +1,26 @@
+// Packed optional booleans, boxed unions and function fields use different slot members.
+interface Slots {
+    flag: boolean | undefined;
+    mixed: string | number;
+    run: (value: number) => string;
+}
+function show(slots: Slots): string {
+    return `${slots.flag}/${slots.mixed}/${slots.run(3)}`;
+}
+function update(slots: Slots): void {
+    slots.flag = false;
+    slots.mixed = 42;
+    slots.run = (value) => `changed${value}`;
+    console.log(show(slots));
+    slots.flag = undefined;
+    slots.mixed = `text${4}`;
+    slots.run = slots.run;
+    console.log(show(slots));
+}
+class Storage implements Slots {
+    flag: boolean | undefined = true;
+    mixed: string | number = `start${1}`;
+    run = (value: number): string => `class${value}`;
+}
+update(new Storage());
+update({ run: (value) => `literal${value}`, mixed: 0, flag: undefined });
