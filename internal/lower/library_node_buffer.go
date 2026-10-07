@@ -55,6 +55,24 @@ func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 	return symbol != nil && symbol.Name == name && nodeBufferModule(symbol) != ""
 }
 
+// Buffer has byte-array storage; its declared typed-array and Hash stream views
+// must not expose the private native slots. Buffer.from copies its input, so that
+// one argument can be read through the declared ArrayLike/Uint8Array overload.
+func (l *lowering) nodeBufferRepresentation(proven *checker.Type) (ir.Type, bool) {
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
+	return 0, false
+}
+
+func (l *lowering) nodeBufferContextualView(node *ast.Node, contextual *checker.Type) (bool, error) {
+	copyArgument := l.nodeBufferReadArgument(node)
+	if !copyArgument && !l.nodeBufferView(l.present(l.checker.GetTypeAtLocation(node)), l.present(contextual)) {
+		return false, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+	}
+	return copyArgument, nil
+}
+
 // Reading a host member as a value must not fall through to ordinary object
 // slots. Hash's private runtime layout is not its inherited stream layout.
 func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {

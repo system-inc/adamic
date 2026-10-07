@@ -27,7 +27,7 @@ mutants = [
     ('hex_case', buffer, 'static const char hex[] = "0123456789abcdef";', 'static const char hex[] = "0123456789ABCDEF";', 'encodings'),
     ('byte_swap_store', buffer, 'if (slot != NULL) { slot->number = (double)byte_value(value); }', 'if (slot != NULL) { slot->number = slot->number + 0 * byte_value(value); }', 'bom'),
     ('buffer_length', lower, 'return ir.Length{Array: object}, nil', 'if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") { return ir.Binary{Operator:ir.Add, Left:ir.Length{Array:object}, Right:ir.NumberConstant{Value:1}},nil }; return ir.Length{Array: object}, nil', 'utf16'),
-    ('buffer_index', lower, 'return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil', 'if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") { position = ir.Binary{Operator:ir.Add,Left:position,Right:ir.NumberConstant{Value:1}} }; return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil', 'writes'),
+    ('buffer_index', lower, 'return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil', 'if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") { position = ir.Binary{Operator:ir.Add,Left:position,Right:ir.NumberConstant{Value:1}} }; return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil', 'writes'),
     ('hash_initial_state', crypto, '0x6a09e667,0xbb67ae85', '0x6a09e666,0xbb67ae85', 'crypto'),
     ('hash_update_bytes', crypto, 'for (size_t i=0;i<input->length;i++)', 'for (size_t i=1;i<input->length;i++)', 'crypto'),
     ('hash_digest_hex', crypto, 'static const char hex[]="0123456789abcdef";', 'static const char hex[]="0123456789ABCDEF";', 'crypto'),

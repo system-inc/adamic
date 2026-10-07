@@ -1,0 +1,50 @@
+[
+  {
+    "file": "01_queue_empty.a",
+    "tsc": [
+      "src/compiler/core.ts:1573"
+    ],
+    "reason": "a function inside a function (a closure)",
+    "node": {
+      "stdout": "false true true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/runner/01_queue_empty.a:5:5: stage 0 can't lower a function inside a function (a closure) yet"
+    }
+  },
+  {
+    "file": "02_is_string.a",
+    "tsc": [
+      "src/compiler/core.ts:1769"
+    ],
+    "reason": "a type predicate",
+    "node": {
+      "stdout": "true false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/runner/02_is_string.a:3:26: stage 0 can't lower a value of type unknown yet"
+    }
+  },
+  {
+    "file": "03_return_true.a",
+    "tsc": [
+      "src/compiler/core.ts:1810"
+    ],
+    "reason": "non-boolean control condition",
+    "node": {
+      "stdout": "true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  }
+]

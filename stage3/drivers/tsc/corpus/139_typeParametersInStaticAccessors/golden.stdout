@@ -1,0 +1,3 @@
+typeParametersInStaticAccessors.ts(2,29): error TS2302: Static members cannot reference class type parameters.
+typeParametersInStaticAccessors.ts(2,33): error TS2322: Type 'null' is not assignable to type '() => T'.
+typeParametersInStaticAccessors.ts(3,28): error TS2302: Static members cannot reference class type parameters.

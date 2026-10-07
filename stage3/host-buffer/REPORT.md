@@ -1,8 +1,32 @@
-Catchable Node crypto .code remains unsupported; real BOM swaps hit indexed-read checker errors and full hash fixtures await fs.mkdtempSync.
-Built Buffer/SHA-256 lowering and runtime with shared loader 69c71d5; no private Node declarations remain.
-Landed code bcbce83 on codex/host-buffer-crypto-land, rebased onto origin/main e8ba3d5; only this new branch was pushed, without force.
-Checks: restored nine-fixture oracle PASS uncached (2.743s), focused package checks/vet/format PASS; all 15 semantic and three analysis/layout mutants caught.
-Acceptance on both backends: 02/03 Checker, 21/22 NotYet at fs.mkdtempSync; all owned components pass, full acceptance and native tsc proof remain incomplete.
+Catchable Node crypto .code remains unsupported; full host fixtures retain the indexed-read and fs.mkdtempSync blockers.
+Merged area/library 2faf682 into the Buffer/crypto landing branch, keeping compiler semantics with small named host hooks and the audited host records.
+Merge parents: 2a4a229 and 2faf682; branch codex/host-buffer-crypto-land. No rebase, force-push or push to main.
+Checks: full touched packages including internal/flow PASS; full oracle PASS; Linux counts regenerated; nine owned fixtures PASS uncached; byte-index mutant caught by Node.
+Full acceptance on both backends remains 02/03 Checker and 21/22 NotYet; owned host components pass. Native tsc proof and macOS remain untested.
+
+Library area merge, October 7
+
+Merged origin/area/library at 2faf682bbf365dcc0afde3768832a2fdffc7b965 into the existing published landing branch. Conflicts were expression.go, library_node_test.go, counts.md, stage3/fixtures/NOTICE and stage3/fixtures/host/status.json. This landing uses a merge commit with both published parents, without rewriting history.
+
+Expression conflict: took the compiler's entire area version, retaining iterator refusal, acceptsUndefined, typeof presence handling, proven satisfies relations, spelling of stale narrowings and conditional pair handling. Reapplied the host representation, unsupported-use and view checks as small named hooks. nodeBufferRepresentation and nodeBufferContextualView live in library_node_buffer.go; existing nodeBufferUnsupportedUse/nodeBufferView remain the refusal hooks. Buffer.from's input-copy exception is preserved without weakening the compiler checks on ordinary expressions.
+
+QualifiedName conflict: kept the area's corrected test and invariance.go fix. A proven qualified assertion passes; an Error-to-ErrnoException downcast with unproven optional fields is refused. NOTICE and host/status.json are byte-identical to origin/area/library, as requested. Linux counts were regenerated from executions of the complete fixture set. Compared with the area table, only the nine new Buffer/crypto rows are added; no area row changes or disappears.
+
+Gate commands, after sourcing /workspace/adamic-tools/env.sh:
+
+- `go test ./internal/lower -run 'NodeBuffer|NodeLibrary|Proven|Predicat|Narrowed|Iterator' -count=1 -v`: PASS, 5.239s.
+- `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`: PASS, 94.983s, Linux.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow ./internal/ir -count=1 -timeout 30m`: PASS. Load 4.952s, lower 49.974s, native 189.610s, fresh 65.732s, flow 117.399s, IR 3.192s; JavaScript has no standalone tests. This runs the whole flow package explicitly.
+- `go test ./internal/oracle -count=1 -timeout 30m`: PASS, 305.632s, including count-table verification and the area's regex/map fixtures. Ordinary worker cache policy; not claimed uncached.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m`: PASS, 6.153s, all nine owned fixtures; native release/sanitizer and JavaScript held to Node, zero cache hits.
+- `python3 stage3/host-buffer/check_host_acceptance.py --logs /tmp/host-buffer-area-acceptance`: exits 1 as intended for blocked acceptance; actual Node output agrees for all four fixtures. 02/03 are Checker on both backends, 21/22 are NotYet at node:fs.mkdtempSync on both backends. Owned component tests pass in the full native package gate.
+- `go vet ./...`, `gofmt -l cmd internal`, `git diff --check`: pass, no output.
+
+The old byte-index mutant pattern did not match the compiler's new l.defined wrapper. That attempt was invalid and not counted as a catch. The unit mutant runner was updated to keep the compiler wrapper intact while changing only Buffer's index by +1; the actual mutant was caught by stdout differences against source Node on native and JavaScript, with no compiler/sanitizer failure. Restored baseline: `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a$' -count=1 -timeout 30m` PASS, 0.614s. Exact source restored; /tmp/host-buffer-area-buffer-index-mutant.log and /tmp/host-buffer-area-mutant-restored.log record both results. All earlier mutant evidence is retained in the historical sections.
+
+Logs are under /tmp/host-buffer-area-*.log; each test invocation writes to a file. The complete repository gate was not run; all touched packages, the full oracle, explicit flow and the owned uncached fixtures were run. No private Node declaration files are added.
+
+The sections below are historical reports from earlier landing stages.
 
 Landing with the shared Node types, October 7
 

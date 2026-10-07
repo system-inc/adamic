@@ -16,6 +16,19 @@ import (
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
 // adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	// Constructor objects can inherit live data from their parent. Even a uniform offset
+	// names only their own storage, not necessarily the field JavaScript reads. The IR
+	// enumerates every static layout; keep lookup for names any such layout contains.
+	for _, layout := range e.program.Classes {
+		if !layout.Static {
+			continue
+		}
+		for _, field := range layout.Fields {
+			if field.Name == name {
+				return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+			}
+		}
+	}
 	if slot := e.uniformFieldSlot(object, name); slot != "" {
 		return slot
 	}

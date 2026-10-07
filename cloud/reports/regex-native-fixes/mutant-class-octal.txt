@@ -1,0 +1,540 @@
+=== RUN   TestLegacyClassOctalNode
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\1]" flags="" input=[1] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\1]" flags="" input=[49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\1]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\2]" flags="" input=[2] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\2]" flags="" input=[50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\3]" flags="" input=[3] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\3]" flags="" input=[51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\4]" flags="" input=[4] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\4]" flags="" input=[52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\5]" flags="" input=[5] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\5]" flags="" input=[53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\6]" flags="" input=[6] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\6]" flags="" input=[54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\7]" flags="" input=[7] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\7]" flags="" input=[55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\10]" flags="" input=[8] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\10]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\11]" flags="" input=[9] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\12]" flags="" input=[10] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\12]" flags="" input=[49 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\12]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\13]" flags="" input=[11] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\13]" flags="" input=[49 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\14]" flags="" input=[12] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\14]" flags="" input=[49 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\15]" flags="" input=[13] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\15]" flags="" input=[49 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\16]" flags="" input=[14] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\16]" flags="" input=[49 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\17]" flags="" input=[15] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\17]" flags="" input=[49 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\20]" flags="" input=[16] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\20]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\21]" flags="" input=[17] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\21]" flags="" input=[49 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\22]" flags="" input=[18] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\23]" flags="" input=[19] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\24]" flags="" input=[20] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\24]" flags="" input=[50 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\25]" flags="" input=[21] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\25]" flags="" input=[50 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\26]" flags="" input=[22] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\26]" flags="" input=[50 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\27]" flags="" input=[23] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\27]" flags="" input=[50 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\30]" flags="" input=[24] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\30]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\31]" flags="" input=[25] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\32]" flags="" input=[26] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\32]" flags="" input=[50 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\33]" flags="" input=[27] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\34]" flags="" input=[28] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\35]" flags="" input=[29] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\36]" flags="" input=[30] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\36]" flags="" input=[51 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\37]" flags="" input=[31] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\37]" flags="" input=[51 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\37]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[3 4]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\40]" flags="" input=[32] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\40]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\41]" flags="" input=[33] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\42]" flags="" input=[34] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\42]" flags="" input=[51 52] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\43]" flags="" input=[35] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\43]" flags="" input=[51 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\44]" flags="" input=[36] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\45]" flags="" input=[37] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\46]" flags="" input=[38] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\47]" flags="" input=[39] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\50]" flags="" input=[40] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\50]" flags="" input=[52 48] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\50]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\51]" flags="" input=[41] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\51]" flags="" input=[52 49] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\52]" flags="" input=[42] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\52]" flags="" input=[52 50] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\53]" flags="" input=[43] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\53]" flags="" input=[52 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\54]" flags="" input=[44] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\54]" flags="" input=[52 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\55]" flags="" input=[45] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\55]" flags="" input=[52 53] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\56]" flags="" input=[46] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\56]" flags="" input=[52 54] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\57]" flags="" input=[47] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\57]" flags="" input=[52 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\70]" flags="" input=[56] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\70]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\71]" flags="" input=[57] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\71]" flags="" input=[53 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\72]" flags="" input=[58] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\73]" flags="" input=[59] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\74]" flags="" input=[60] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\75]" flags="" input=[61] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\76]" flags="" input=[62] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\76]" flags="" input=[54 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\77]" flags="" input=[63] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\100]" flags="" input=[64] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\100]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\101]" flags="" input=[65] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\101]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\102]" flags="" input=[66] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\102]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\103]" flags="" input=[67] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\103]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\104]" flags="" input=[68] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\104]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\105]" flags="" input=[69] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\105]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\106]" flags="" input=[70] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\106]" flags="" input=[55 48] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\106]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\107]" flags="" input=[71] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\107]" flags="" input=[55 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\107]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\110]" flags="" input=[72] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\110]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\111]" flags="" input=[73] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\112]" flags="" input=[74] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\113]" flags="" input=[75] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\114]" flags="" input=[76] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\115]" flags="" input=[77] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\116]" flags="" input=[78] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\117]" flags="" input=[79] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\117]" flags="" input=[55 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\120]" flags="" input=[80] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\120]" flags="" input=[56 48] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\120]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\121]" flags="" input=[81] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\121]" flags="" input=[56 49] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\122]" flags="" input=[82] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\122]" flags="" input=[56 50] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\123]" flags="" input=[83] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\123]" flags="" input=[56 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\123]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[6 7]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\124]" flags="" input=[84] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\124]" flags="" input=[56 52] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\125]" flags="" input=[85] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\125]" flags="" input=[56 53] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\126]" flags="" input=[86] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\126]" flags="" input=[56 54] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\127]" flags="" input=[87] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\127]" flags="" input=[56 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\130]" flags="" input=[88] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\130]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\131]" flags="" input=[89] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\132]" flags="" input=[90] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\133]" flags="" input=[91] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\133]" flags="" input=[57 49] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\134]" flags="" input=[92] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\135]" flags="" input=[93] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\135]" flags="" input=[57 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\136]" flags="" input=[94] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\137]" flags="" input=[95] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\140]" flags="" input=[96] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\140]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\141]" flags="" input=[97] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\142]" flags="" input=[98] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\143]" flags="" input=[99] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\144]" flags="" input=[100] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\144]" flags="" input=[49 48 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\145]" flags="" input=[101] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\145]" flags="" input=[49 48 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\146]" flags="" input=[102] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\146]" flags="" input=[49 48 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\147]" flags="" input=[103] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\147]" flags="" input=[49 48 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\150]" flags="" input=[104] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\150]" flags="" input=[49 48 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\150]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\151]" flags="" input=[105] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\151]" flags="" input=[49 48 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\152]" flags="" input=[106] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\152]" flags="" input=[49 48 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\153]" flags="" input=[107] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\153]" flags="" input=[49 48 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\154]" flags="" input=[108] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\154]" flags="" input=[49 48 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\155]" flags="" input=[109] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\155]" flags="" input=[49 48 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\156]" flags="" input=[110] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\156]" flags="" input=[49 49 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\157]" flags="" input=[111] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\157]" flags="" input=[49 49 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\160]" flags="" input=[112] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\160]" flags="" input=[49 49 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\160]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\161]" flags="" input=[113] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\161]" flags="" input=[49 49 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\162]" flags="" input=[114] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\162]" flags="" input=[49 49 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\163]" flags="" input=[115] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\163]" flags="" input=[49 49 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\164]" flags="" input=[116] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\164]" flags="" input=[49 49 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\165]" flags="" input=[117] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\165]" flags="" input=[49 49 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\166]" flags="" input=[118] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\166]" flags="" input=[49 49 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\167]" flags="" input=[119] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\167]" flags="" input=[49 49 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\170]" flags="" input=[120] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\170]" flags="" input=[49 50 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\170]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\171]" flags="" input=[121] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\171]" flags="" input=[49 50 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\172]" flags="" input=[122] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\172]" flags="" input=[49 50 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\173]" flags="" input=[123] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\173]" flags="" input=[49 50 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\174]" flags="" input=[124] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\174]" flags="" input=[49 50 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\175]" flags="" input=[125] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\175]" flags="" input=[49 50 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\176]" flags="" input=[126] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\176]" flags="" input=[49 50 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\177]" flags="" input=[127] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\177]" flags="" input=[49 50 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\200]" flags="" input=[128] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\200]" flags="" input=[49 50 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\200]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\201]" flags="" input=[129] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\201]" flags="" input=[49 50 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\201]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\202]" flags="" input=[130] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\202]" flags="" input=[49 51 48] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\202]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\203]" flags="" input=[131] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\203]" flags="" input=[49 51 49] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\203]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\204]" flags="" input=[132] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\204]" flags="" input=[49 51 50] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\204]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\205]" flags="" input=[133] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\205]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\206]" flags="" input=[134] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\206]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\207]" flags="" input=[135] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\207]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\210]" flags="" input=[136] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\210]" flags="" input=[49 51 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\210]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\211]" flags="" input=[137] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\211]" flags="" input=[49 51 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\212]" flags="" input=[138] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\212]" flags="" input=[49 51 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\213]" flags="" input=[139] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\213]" flags="" input=[49 51 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\214]" flags="" input=[140] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\214]" flags="" input=[49 52 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\215]" flags="" input=[141] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\215]" flags="" input=[49 52 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\216]" flags="" input=[142] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\216]" flags="" input=[49 52 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\217]" flags="" input=[143] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\217]" flags="" input=[49 52 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\220]" flags="" input=[144] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\220]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\221]" flags="" input=[145] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\221]" flags="" input=[49 52 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\222]" flags="" input=[146] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\223]" flags="" input=[147] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\224]" flags="" input=[148] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\224]" flags="" input=[49 52 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\225]" flags="" input=[149] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\226]" flags="" input=[150] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\227]" flags="" input=[151] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\230]" flags="" input=[152] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\230]" flags="" input=[49 53 50] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\230]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\231]" flags="" input=[153] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\231]" flags="" input=[49 53 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\232]" flags="" input=[154] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\233]" flags="" input=[155] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\234]" flags="" input=[156] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\235]" flags="" input=[157] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\235]" flags="" input=[49 53 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\236]" flags="" input=[158] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\237]" flags="" input=[159] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\240]" flags="" input=[160] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\240]" flags="" input=[49 54 48] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\240]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\241]" flags="" input=[161] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\241]" flags="" input=[49 54 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\242]" flags="" input=[162] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\242]" flags="" input=[49 54 50] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\243]" flags="" input=[163] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\243]" flags="" input=[49 54 51] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\244]" flags="" input=[164] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\244]" flags="" input=[49 54 52] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\245]" flags="" input=[165] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\245]" flags="" input=[49 54 53] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\246]" flags="" input=[166] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\246]" flags="" input=[49 54 54] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\247]" flags="" input=[167] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\247]" flags="" input=[49 54 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\250]" flags="" input=[168] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\250]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\251]" flags="" input=[169] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\251]" flags="" input=[49 54 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\252]" flags="" input=[170] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\253]" flags="" input=[171] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\254]" flags="" input=[172] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\254]" flags="" input=[49 55 50] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\255]" flags="" input=[173] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\256]" flags="" input=[174] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\257]" flags="" input=[175] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\257]" flags="" input=[49 55 53] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\260]" flags="" input=[176] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\260]" flags="" input=[49 55 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\260]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\261]" flags="" input=[177] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\261]" flags="" input=[49 55 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\262]" flags="" input=[178] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\263]" flags="" input=[179] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\264]" flags="" input=[180] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\265]" flags="" input=[181] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\266]" flags="" input=[182] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\266]" flags="" input=[49 56 50] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\267]" flags="" input=[183] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\270]" flags="" input=[184] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\270]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\271]" flags="" input=[185] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\271]" flags="" input=[49 56 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\272]" flags="" input=[186] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\273]" flags="" input=[187] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\273]" flags="" input=[49 56 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\274]" flags="" input=[188] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\275]" flags="" input=[189] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\276]" flags="" input=[190] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\277]" flags="" input=[191] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\300]" flags="" input=[192] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\300]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\301]" flags="" input=[193] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\301]" flags="" input=[49 57 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\301]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\302]" flags="" input=[194] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\302]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\303]" flags="" input=[195] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\303]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\304]" flags="" input=[196] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\304]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\305]" flags="" input=[197] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\305]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\306]" flags="" input=[198] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\306]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\307]" flags="" input=[199] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\307]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\310]" flags="" input=[200] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\310]" flags="" input=[50 48 48] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\310]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\311]" flags="" input=[201] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\311]" flags="" input=[50 48 49] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\312]" flags="" input=[202] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\312]" flags="" input=[50 48 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\313]" flags="" input=[203] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\313]" flags="" input=[50 48 51] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\314]" flags="" input=[204] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\314]" flags="" input=[50 48 52] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\315]" flags="" input=[205] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\315]" flags="" input=[50 48 53] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\316]" flags="" input=[206] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\316]" flags="" input=[50 48 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\317]" flags="" input=[207] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\317]" flags="" input=[50 48 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\320]" flags="" input=[208] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\320]" flags="" input=[50 48 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\320]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\321]" flags="" input=[209] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\321]" flags="" input=[50 48 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\322]" flags="" input=[210] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\322]" flags="" input=[50 49 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\323]" flags="" input=[211] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\323]" flags="" input=[50 49 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\324]" flags="" input=[212] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\324]" flags="" input=[50 49 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\325]" flags="" input=[213] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\325]" flags="" input=[50 49 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\326]" flags="" input=[214] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\326]" flags="" input=[50 49 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\327]" flags="" input=[215] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\327]" flags="" input=[50 49 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\330]" flags="" input=[216] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\330]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\331]" flags="" input=[217] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\331]" flags="" input=[50 49 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\332]" flags="" input=[218] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\332]" flags="" input=[50 49 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\333]" flags="" input=[219] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\334]" flags="" input=[220] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\335]" flags="" input=[221] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\336]" flags="" input=[222] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\337]" flags="" input=[223] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\337]" flags="" input=[50 50 51] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\340]" flags="" input=[224] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\340]" flags="" input=[50 50 52] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\340]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\341]" flags="" input=[225] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\342]" flags="" input=[226] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\342]" flags="" input=[50 50 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\343]" flags="" input=[227] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\344]" flags="" input=[228] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\345]" flags="" input=[229] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\346]" flags="" input=[230] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\346]" flags="" input=[50 51 48] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\347]" flags="" input=[231] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\347]" flags="" input=[50 51 49] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\350]" flags="" input=[232] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\350]" flags="" input=[50 51 50] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\350]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\351]" flags="" input=[233] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\351]" flags="" input=[50 51 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\352]" flags="" input=[234] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\352]" flags="" input=[50 51 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\353]" flags="" input=[235] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\353]" flags="" input=[50 51 53] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\354]" flags="" input=[236] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\354]" flags="" input=[50 51 54] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\355]" flags="" input=[237] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\355]" flags="" input=[50 51 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\356]" flags="" input=[238] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\356]" flags="" input=[50 51 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\357]" flags="" input=[239] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\357]" flags="" input=[50 51 57] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\360]" flags="" input=[240] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\360]" flags="" input=[50 52 48] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\360]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\361]" flags="" input=[241] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\361]" flags="" input=[50 52 49] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\362]" flags="" input=[242] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\362]" flags="" input=[50 52 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\363]" flags="" input=[243] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\363]" flags="" input=[50 52 51] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\364]" flags="" input=[244] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\364]" flags="" input=[50 52 52] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\365]" flags="" input=[245] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\365]" flags="" input=[50 52 53] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\366]" flags="" input=[246] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\366]" flags="" input=[50 52 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\367]" flags="" input=[247] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\367]" flags="" input=[50 52 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\370]" flags="" input=[248] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\370]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\371]" flags="" input=[249] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\372]" flags="" input=[250] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\372]" flags="" input=[50 53 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\373]" flags="" input=[251] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\374]" flags="" input=[252] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\375]" flags="" input=[253] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\375]" flags="" input=[50 53 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\376]" flags="" input=[254] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\377]" flags="" input=[255] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\400]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\401]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\402]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\403]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\404]" flags="" input=[50 54 48] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\404]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\405]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\406]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\407]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[[4 5]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\410]" flags="" input=[50 54 52] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\420]" flags="" input=[50 55 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\421]" flags="" input=[50 55 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\423]" flags="" input=[50 55 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\424]" flags="" input=[50 55 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\425]" flags="" input=[50 55 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\426]" flags="" input=[50 55 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\427]" flags="" input=[50 55 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\446]" flags="" input=[50 57 52] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\462]" flags="" input=[51 48 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\472]" flags="" input=[51 49 52] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\475]" flags="" input=[51 49 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\501]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\502]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\503]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\504]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\505]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\506]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\507]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\517]" flags="" input=[51 51 53] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\526]" flags="" input=[51 52 50] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\530]" flags="" input=[51 52 52] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\531]" flags="" input=[51 52 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\532]" flags="" input=[51 52 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\534]" flags="" input=[51 52 56] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\535]" flags="" input=[51 52 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\536]" flags="" input=[51 53 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\537]" flags="" input=[51 53 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\540]" flags="" input=[51 53 50] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\541]" flags="" input=[51 53 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\542]" flags="" input=[51 53 52] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\544]" flags="" input=[51 53 54] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\546]" flags="" input=[51 53 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\547]" flags="" input=[51 53 57] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\560]" flags="" input=[51 54 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\561]" flags="" input=[51 54 57] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\570]" flags="" input=[51 55 54] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\571]" flags="" input=[51 55 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\572]" flags="" input=[51 55 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\602]" flags="" input=[51 56 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\614]" flags="" input=[51 57 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\700]" flags="" input=[52 52 56] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\701]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\702]" flags="" input=[52 53 48] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\702]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\703]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\704]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\705]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\706]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\707]" flags="" input=[0 1 10 31 32 48 83 65533] lastIndex=0 got={Captures:[[5 6]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\711]" flags="" input=[52 53 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\713]" flags="" input=[52 53 57] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\715]" flags="" input=[52 54 49] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\723]" flags="" input=[52 54 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\726]" flags="" input=[52 55 48] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\730]" flags="" input=[52 55 50] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\731]" flags="" input=[52 55 51] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\732]" flags="" input=[52 55 52] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\733]" flags="" input=[52 55 53] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\735]" flags="" input=[52 55 55] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\736]" flags="" input=[52 55 56] lastIndex=0 got={Captures:[[1 2]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\740]" flags="" input=[52 56 48] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\741]" flags="" input=[52 56 49] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\742]" flags="" input=[52 56 50] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\743]" flags="" input=[52 56 51] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\745]" flags="" input=[52 56 53] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\746]" flags="" input=[52 56 54] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\747]" flags="" input=[52 56 55] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[2 3]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\757]" flags="" input=[52 57 53] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\760]" flags="" input=[52 57 54] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\761]" flags="" input=[52 57 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source= pattern="[\\773]" flags="" input=[53 48 55] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: DISAGREEMENT source=cohere pattern 620 pattern="\\2()(\\12)(foo)\\1\\0[\\0\\1\\01\\123\\08\\8](\\3\\03)\\5\\005\\9\\009" flags="" input=[10 102 111 111 0 83 102 111 111 3 5 5 57 0 57] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 15] [0 0] [0 1] [1 4] [6 10]] LastIndex:0 Groups:map[]}
+    native_fixes_test.go:23: execution totals: 1537 cases, 1537 compared, 0 property stand-in unavailable
+--- FAIL: TestLegacyClassOctalNode (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/regexp	0.084s
+FAIL

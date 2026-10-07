@@ -1,0 +1,25 @@
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: () => string; }
+const dog: Dog = { name: 'Rex', bark: () => 'woof' };
+const animal = dog as Animal;
+console.log(`${animal.name} ${animal === dog}`);
+const dogs: Dog[] = [dog];
+const animals = dogs as readonly Animal[];
+console.log(`${animals[0]?.name ?? 'missing'} ${animals === dogs}`);
+class Base { readonly name: string; constructor(name: string) { this.name = name; } read(): string { return this.name; } }
+class Child extends Base { override read(): string { return this.name + '!'; } }
+const child = new Child('child');
+const base = child as Base;
+console.log(`${base.read()} ${base === child}`);
+const named = child as Animal;
+console.log(named.name);
+const literal = { name: 'literal', extra: 7 } as Animal;
+console.log(literal.name);
+const empty = { name: 'empty' } as { readonly name: string; readonly count?: number };
+console.log(`${empty.count ?? 0}`);
+let calls = 0;
+function next(): Dog { calls++; return dog; }
+console.log(`${(next() as Animal).name} ${calls}`);
+const callback = (value: Animal): Dog => dog;
+const widened = callback as (value: Dog) => Animal;
+console.log(widened(dog).name);

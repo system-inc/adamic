@@ -1,0 +1,46 @@
+=== RUN   TestStringIndexMatchesNode
+=== PAUSE TestStringIndexMatchesNode
+=== RUN   TestStringViewAfterAppendMatchesNode
+=== PAUSE TestStringViewAfterAppendMatchesNode
+=== RUN   TestStringIndexCacheStatesMatchNode
+=== PAUSE TestStringIndexCacheStatesMatchNode
+=== RUN   TestStringsMatchJavaScript
+=== PAUSE TestStringsMatchJavaScript
+=== CONT  TestStringIndexMatchesNode
+=== RUN   TestStringIndexMatchesNode/mixed
+=== PAUSE TestStringIndexMatchesNode/mixed
+=== RUN   TestStringIndexMatchesNode/BMP
+=== PAUSE TestStringIndexMatchesNode/BMP
+=== CONT  TestStringIndexCacheStatesMatchNode
+=== RUN   TestStringIndexMatchesNode/BMP_low_halves
+=== PAUSE TestStringIndexMatchesNode/BMP_low_halves
+=== CONT  TestStringViewAfterAppendMatchesNode
+=== RUN   TestStringIndexMatchesNode/ASCII
+=== PAUSE TestStringIndexMatchesNode/ASCII
+=== CONT  TestStringIndexMatchesNode/mixed
+=== CONT  TestStringIndexMatchesNode/ASCII
+=== CONT  TestStringsMatchJavaScript
+--- PASS: TestStringIndexCacheStatesMatchNode (0.49s)
+=== CONT  TestStringIndexMatchesNode/BMP_low_halves
+=== NAME  TestStringsMatchJavaScript
+    string_test.go:207: 11460 answers, 0 mismatches
+--- PASS: TestStringsMatchJavaScript (0.60s)
+=== CONT  TestStringIndexMatchesNode/BMP
+=== NAME  TestStringViewAfterAppendMatchesNode
+    string_index_test.go:406: 43 lines match Node, including literal, stack and in-place append views
+--- PASS: TestStringViewAfterAppendMatchesNode (0.65s)
+=== NAME  TestStringIndexMatchesNode/ASCII
+    string_index_test.go:278: 7296 lines, 0 mismatches
+=== NAME  TestStringIndexMatchesNode/BMP
+    string_index_test.go:278: 7296 lines, 0 mismatches
+=== NAME  TestStringIndexMatchesNode/BMP_low_halves
+    string_index_test.go:278: 7296 lines, 0 mismatches
+=== NAME  TestStringIndexMatchesNode/mixed
+    string_index_test.go:278: 8940 lines, 0 mismatches
+--- PASS: TestStringIndexMatchesNode (0.00s)
+    --- PASS: TestStringIndexMatchesNode/ASCII (3.62s)
+    --- PASS: TestStringIndexMatchesNode/BMP (6.73s)
+    --- PASS: TestStringIndexMatchesNode/BMP_low_halves (7.16s)
+    --- PASS: TestStringIndexMatchesNode/mixed (8.53s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.563s
