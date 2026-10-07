@@ -3,6 +3,10 @@ import { Diagnostic } from './diagnostic.ts';
 import { Bindings } from './bindings.ts';
 import { Reassign } from './reassign.ts';
 import { FifthFacts } from './wave_11_fifth_support.a';
+import { RegularExpressionLiteral, SourceFile } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [RegularExpressionLiteral, SourceFile];
 class RegexEnclosure { readonly kind: string; readonly negative: boolean; constructor(kind: string, negative: boolean) { this.kind = kind; this.negative = negative; } }
 class RegexSpan { readonly name: string; readonly number: number; readonly start: number; end: number; readonly path: number[]; constructor(name: string, number: number, start: number, end: number, path: number[]) { this.name = name; this.number = number; this.start = start; this.end = end; this.path = path; } }
 class ConstantValue { readonly text: string; readonly string: boolean; readonly known: boolean; constructor(text = '', string = false, known = false) { this.text = text; this.string = string; this.known = known; } }

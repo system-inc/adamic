@@ -3,6 +3,10 @@ import { Diagnostic } from './diagnostic.ts';
 import { Repair } from './repair.ts';
 import { Shadow } from './shadow.ts';
 import { FifthFacts } from './wave_11_fifth_support.a';
+import { SourceFile } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [SourceFile];
 class CallbackFrame { usesThis = false; usesSuper = false; usesNewTarget = false; usesArguments = false; }
 class CallbackInfo { callback = false; lexical = false; member = -1; call = -1; }
 export class PreferArrowCallback {

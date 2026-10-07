@@ -4,6 +4,10 @@ import { types } from './facts.ts';
 import { numberLike, unionFlag, intersectionFlag } from './flags.ts';
 import { hasNumberIndex } from './number_index_type.a';
 import { Diagnostic } from './diagnostic.ts';
+import { ForInStatement } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [ForInStatement];
 export class NoForInArray {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }

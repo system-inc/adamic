@@ -5,6 +5,10 @@ import { types } from './facts.ts';
 import { Frames, header } from './frames.ts';
 import { stringLike, unionFlag, intersectionFlag } from './flags.ts';
 import { validPattern } from './regular_expression_syntax.a';
+import { CallExpression } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [CallExpression];
 export class PreferRegexpExec {
     readonly rules: Rules;
     readonly bindings: Bindings;

@@ -1,6 +1,10 @@
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { FifthFacts } from './wave_11_fifth_support.a';
+import { ThrowStatement } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [ThrowStatement];
 export class NoThrowLiteral {
     readonly rules: Rules; readonly facts: FifthFacts;
     constructor(rules: Rules, facts: FifthFacts) { this.rules = rules; this.facts = facts; }

@@ -3,6 +3,10 @@ import { types } from './facts.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { declarationLineage } from './declaration_lineage.a';
 import { awaitedType } from './awaited_type_shape.a';
+import { ExpressionStatement } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [ExpressionStatement];
 const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
 const suffixes = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
 class OutcomeArms {

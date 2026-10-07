@@ -151,3 +151,15 @@ existing rule/raw-question mutants and released-handle checks again. Bridge
 checks and the expanded compiler oracle passed. Detailed limits, old/new commit
 maps and logs are in ../WAVE_11_LANDING_REPORT.md. The three sixth-batch React
 claims remain blocked and unported; no additional rules are reserved.
+
+## Numeric listener declarations
+
+All fifteen completed rules now export numeric listenerKinds arrays matching
+Go's production-default registrations. The independent Go registration oracle,
+source Node, normal/sanitized native probe and two comparison-only metadata
+mutants passed. All five complete rule byte-oracle suites and their existing
+mutants/released-handle checks passed again on main e8ba3d5d. Full evidence and
+API limits are in ../WAVE_11_LISTENERS_REPORT.md. The shared parser still exposes
+string kinds and has no numeric handed-node callback API, so the execution-path
+conversion remains pending. Three React reservations remain blocked; no new
+claims were made.

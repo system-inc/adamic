@@ -2,6 +2,10 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { Reassign } from './reassign.ts';
 import { globalBinding, accessObject, staticName } from './wave_11_third_support.a';
+import { CallExpression, BinaryExpression } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [CallExpression, BinaryExpression];
 const builtins = ["AggregateError", "Array", "ArrayBuffer", "Atomics", "BigInt", "BigInt64Array", "BigUint64Array", "Boolean", "DataView", "Date", "Error", "EvalError", "FinalizationRegistry", "Float16Array", "Float32Array", "Float64Array", "Function", "Infinity", "Int16Array", "Int32Array", "Int8Array", "Intl", "Iterator", "JSON", "Map", "Math", "NaN", "Number", "Object", "Promise", "Proxy", "RangeError", "ReferenceError", "Reflect", "RegExp", "Set", "SharedArrayBuffer", "String", "Symbol", "SyntaxError", "TypeError", "URIError", "Uint16Array", "Uint32Array", "Uint8Array", "Uint8ClampedArray", "WeakMap", "WeakRef", "WeakSet"];
 export class NoExtendNative {
     readonly rules: Rules; readonly writes: Reassign;

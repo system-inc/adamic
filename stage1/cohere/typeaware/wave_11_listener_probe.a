@@ -1,0 +1,34 @@
+import { listenerKinds as kinds0 } from './no_for_in_array.a';
+import { listenerKinds as kinds1 } from './prefer_regexp_exec.a';
+import { listenerKinds as kinds2 } from './correctness_no_collection_misuse.a';
+import { listenerKinds as kinds3 } from './correctness_no_discarded_outcome.a';
+import { listenerKinds as kinds4 } from './correctness_no_discarded_pure_result.a';
+import { listenerKinds as kinds5 } from './correctness_no_identical_branches.a';
+import { listenerKinds as kinds6 } from './no_eval.a';
+import { listenerKinds as kinds7 } from './no_extend_native.a';
+import { listenerKinds as kinds8 } from './no_func_assign.a';
+import { listenerKinds as kinds9 } from './no_new_func.a';
+import { listenerKinds as kinds10 } from './no_new_native_nonconstructor.a';
+import { listenerKinds as kinds11 } from './no_new_wrappers.a';
+import { listenerKinds as kinds12 } from './no_throw_literal.a';
+import { listenerKinds as kinds13 } from './no_useless_backreference.a';
+import { listenerKinds as kinds14 } from './prefer_arrow_callback.a';
+
+function describe(name: string, kinds: readonly number[]): void {
+    console.log(name + "\t" + kinds.map((kind) => kind.toString()).join(","));
+}
+describe('@typescript-eslint/no-for-in-array', kinds0);
+describe('@typescript-eslint/prefer-regexp-exec', kinds1);
+describe('nexus/correctness-no-collection-misuse', kinds2);
+describe('nexus/correctness-no-discarded-outcome', kinds3);
+describe('nexus/correctness-no-discarded-pure-result', kinds4);
+describe('nexus/correctness-no-identical-branches', kinds5);
+describe('no-eval', kinds6);
+describe('no-extend-native', kinds7);
+describe('no-func-assign', kinds8);
+describe('no-new-func', kinds9);
+describe('no-new-native-nonconstructor', kinds10);
+describe('no-new-wrappers', kinds11);
+describe('no-throw-literal', kinds12);
+describe('no-useless-backreference', kinds13);
+describe('prefer-arrow-callback', kinds14);

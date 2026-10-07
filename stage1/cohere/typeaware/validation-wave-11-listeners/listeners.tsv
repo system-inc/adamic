@@ -1,0 +1,15 @@
+@typescript-eslint/no-for-in-array	250
+@typescript-eslint/prefer-regexp-exec	214
+nexus/correctness-no-collection-misuse	213,214,227
+nexus/correctness-no-discarded-outcome	245
+nexus/correctness-no-discarded-pure-result	245
+nexus/correctness-no-identical-branches	228,246
+no-eval	79,212,213,214
+no-extend-native	214,227
+no-func-assign	307
+no-new-func	214,215
+no-new-native-nonconstructor	215
+no-new-wrappers	215
+no-throw-literal	258
+no-useless-backreference	13,307
+prefer-arrow-callback	307

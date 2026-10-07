@@ -1,0 +1,15 @@
+// Numeric SyntaxKind values from the pinned typescript-go parser.
+// The listener oracle checks these against production Go rule registrations.
+export const RegularExpressionLiteral = 13;
+export const Identifier = 79;
+export const PropertyAccessExpression = 212;
+export const ElementAccessExpression = 213;
+export const CallExpression = 214;
+export const NewExpression = 215;
+export const BinaryExpression = 227;
+export const ConditionalExpression = 228;
+export const ExpressionStatement = 245;
+export const IfStatement = 246;
+export const ForInStatement = 250;
+export const ThrowStatement = 258;
+export const SourceFile = 307;

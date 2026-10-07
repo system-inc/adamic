@@ -1,6 +1,10 @@
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { globalBinding } from './wave_11_fourth_support.a';
+import { NewExpression } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [NewExpression];
 export class NoNewWrappers {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }

@@ -1,0 +1,72 @@
+[
+  {
+    "batch": "first",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11AgreementAndMutants$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 159.703
+  },
+  {
+    "batch": "next",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11NextAgreementAndMutants$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 317.89
+  },
+  {
+    "batch": "third",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11ThirdAgreementAndMutants$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 151.238
+  },
+  {
+    "batch": "fourth",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11FourthAgreementAndMutants$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 140.14
+  },
+  {
+    "batch": "fifth",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11FifthAgreementAndMutants$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 181.918
+  }
+]

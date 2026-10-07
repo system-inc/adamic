@@ -5,6 +5,10 @@ import { Diagnostic } from './diagnostic.ts';
 import { Frames, header } from './frames.ts';
 import { declarationLineage } from './declaration_lineage.a';
 import { stringLike, numberLike, booleanLike, bigintLike, nullish } from './flags.ts';
+import { ElementAccessExpression, CallExpression, BinaryExpression } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [ElementAccessExpression, CallExpression, BinaryExpression];
 const anyCollections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet', 'WeakMap', 'WeakSet'];
 const sizedCollections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet'];
 const typedArrays = ['Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float16Array', 'Float32Array', 'Float64Array', 'BigInt64Array', 'BigUint64Array'];

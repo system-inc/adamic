@@ -2,6 +2,10 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { Shadow } from './shadow.ts';
 import { globalBinding, accessObject, staticName, calleeInner } from './wave_11_third_support.a';
+import { Identifier, PropertyAccessExpression, ElementAccessExpression, CallExpression } from './wave_11_syntax_kinds.a';
+
+// Registration metadata for the forthcoming numeric kind-indexed driver.
+export const listenerKinds: readonly number[] = [Identifier, PropertyAccessExpression, ElementAccessExpression, CallExpression];
 const globalNames = ['global', 'window', 'globalThis'];
 const wrappers = ['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'ExpressionWithTypeArguments'];
 export class NoEval {
