@@ -1,0 +1,3 @@
+Merged area 65017b318, the shared SSA port; main remains 48c05d091. Lint production graph, compiler and oracle unchanged, so existing 48c fixture parity/witness/four owned-mutant evidence remains current.
+
+Fresh expanded corpus comparison on identical production sources in codex/lint-wave1-07-profile-tests: TestCompilerAndStage1Agree PASS 401.652s, 495 files, 27902766 identical bytes on Go, Node, emitted JavaScript and native. Raw log retained here. Profile follow-up pushed at 2b0466a62. consistent-return still awaits Judge/EndReachable context integration; constructor-super remains unfinished on this original branch. No new helper claim.
