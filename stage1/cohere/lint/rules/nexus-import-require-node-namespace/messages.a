@@ -1,0 +1,7 @@
+export const requireCorrectAlias = "Node namespace alias must be '{{expected}}', got '{{actual}}'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as {{expected}} from 'node:{{bare}}'";
+export const requireNamespaceImport = "Node built-in '{{source}}' must use a namespace import, so every call site says which module it came from. Use: import * as {{expected}} from 'node:{{bare}}'";
+export const requireNodePrefix = "Node built-in '{{source}}' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as {{expected}} from 'node:{{bare}}'";
+
+export function render(template: string, actual: string, bare: string, expected: string, source: string): string {
+    return template.split('{{actual}}').join(actual).split('{{bare}}').join(bare).split('{{expected}}').join(expected).split('{{source}}').join(source);
+}

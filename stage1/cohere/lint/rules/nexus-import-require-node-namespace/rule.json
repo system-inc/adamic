@@ -1,0 +1,12 @@
+{
+  "name": "nexus/import-require-node-namespace",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "oracle": "oracleImportRequireNodeNamespace",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestImportRequireNodeNamespace",
+  "factory": "create",
+  "class": "Rule"
+}
