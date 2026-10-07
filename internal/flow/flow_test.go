@@ -43,7 +43,12 @@ func programs(t *testing.T) []string {
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
 	// and operator shapes here, and the oracle still runs the full sweep.
+	// These oracle fixtures are explicitly registered as expected NotYet,
+	// so they have no accepted IR to trace. The oracle still verifies refusal.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
+		if name := filepath.Base(path); name == "regexp_surrogate_limit_refused.a" || name == "regexp_surrogate_nested_limit_refused.a" || name == "regexp_native_write_groups_compound_missing.a" {
+			return true
+		}
 		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
 	})
 	if len(paths) < 60 {

@@ -1,0 +1,417 @@
+[
+  {
+    "pattern": "[a-z]{2,4}[\\q{ab|a|}]*?\\w??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(?:a)*?[\\q{ab|a|}]*?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "a{1,}[\\q{ab|a|}]*(?:a)",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(?<=a)[\\q{ab|a|}]{2,4}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{0}(a|(b)){1,}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{2,4}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": ".{1,}|\\p{Letter}?[\\q{ab|a|}]?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{0}(a){2,4}\\b",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*a+?(a)*[\\q{ab|a|}]*?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": ".+?[^a]?[^a]+?[\\q{ab|a|}]+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]??[a-z]{0}\\p{Letter}??",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{1,}|(?:a)+(a){0}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a?b){2,4}.??[\\q{ab|a|}]??",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+?[a-z]*s{0}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\p{Letter}?[\\q{ab|a|}]??",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+?[[a-z]&&[^aeiou]]{1,}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]??|.",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a)+?s+[\\q{ab|a|}]",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\1(a){1,}[\\q{ab|a|}]+b+",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a)+?[\\q{ab|a|}]+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": ".+|\\d?|[\\q{ab|a|}]{1,}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]?[^]+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(?<x>a)\\k<x>+?[\\q{ab|a|}]{2,4}|a?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "b{2,4}(?:a)\\d*?[\\q{ab|a|}]*",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*?b{2,4}|\\d+",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\d?|[\\q{ab|a|}]*?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+?(?<x>a)\\k<x>{1,}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*?\\d??[^a]{2,4}s{1,}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{1,}b+?|[a-z]{0}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "a{1,}[\\q{ab|a|}]{0}[ab]{2,4}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{1,}|(?<x>a)\\k<x>?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a?b)[\\q{ab|a|}]??\\p{Letter}+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{1,}(?<=a)(?:a)",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\d{0}[\\q{ab|a|}]",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "k??[\\q{ab|a|}]+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{2,4}.+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(?<x>a)\\k<x>{0}[\\q{ab|a|}]??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a|(b))+[\\q{ab|a|}]??b{2,4}|[^a]+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\p{Letter}+[ab]+?[\\q{ab|a|}]{0}\\p{Letter}{1,}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{0}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\1(a)+?[^]|[\\q{ab|a|}]+",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{1,}(?:a)?[a-z]+",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a)+[^]+?|[\\q{ab|a|}]+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+?[^]+[\\q{ab|a|}]*",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[a-z]*?|\\d{2,4}[\\q{ab|a|}]?[^]??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*[ab]{1,}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "b{2,4}[^][\\q{ab|a|}]{2,4}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{2,4}[a-z]{1,}|a{0}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[^][\\q{ab|a|}]{2,4}[a-z]{0}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]s+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\w+?|[\\q{ab|a|}]*",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}].??a{0}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[^]?(?:a)[\\q{ab|a|}]{2,4}\\p{Letter}*",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]??",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+|(a){0}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]+k*",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a){0}\\d*(a)*[\\q{ab|a|}]",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\p{Letter}+?|[\\q{ab|a|}]??(a)+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\d*?[\\q{ab|a|}]+",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]\\p{Letter}{2,4}|[[a-z]&&[^aeiou]]??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": ".*?|[\\q{ab|a|}]+?[^]??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\p{Letter}{0}[^a]{0}[\\q{ab|a|}]??\\p{Letter}{2,4}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "k?|[\\q{ab|a|}]{0}|\\d",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[^]{1,}[\\q{ab|a|}]??.*?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(?:a){2,4}[\\q{ab|a|}]??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "b+?[\\q{ab|a|}]+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "\\w{1,}[\\q{ab|a|}][[a-z]&&[^aeiou]]+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]{1,}[a-z]?(a?b)",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(?:a)*[\\q{ab|a|}]{2,4}",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a?b)*?|[\\q{ab|a|}]??(a?b){2,4}",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*|(a)+|k*?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*?[^a]",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]*?|\\1(a)+?|a*?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a)\\1*[\\q{ab|a|}]+?",
+    "flags": "vd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[^]*?[\\q{ab|a|}]??",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "b+?[^]?[\\q{ab|a|}]*?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "[\\q{ab|a|}]??\\1(a)+?|a*",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  },
+  {
+    "pattern": "(a)\\1[\\q{ab|a|}]{0}b+?",
+    "flags": "ivd",
+    "reason": "RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree"
+  }
+]
