@@ -77,3 +77,21 @@ int main(void) {
 		}
 	}
 }
+
+// First-use character reads overlap on every worker; Node fixes the byte order independently.
+func TestParallelStringViews(t *testing.T) {
+	t.Parallel()
+	want := runWithInput(t, "", "node", "--eval", `const hash=Array.from({length:128},(_,i)=>i).reduce((s,c)=>(s*33+c)%1000003,0);for(let i=0;i<128;i++)console.log(hash);`)
+	for _, build := range parallelBuilds(t) {
+		t.Run(build.name, func(t *testing.T) {
+			binary := parallelHarness(t, "string_views.c", build.options)
+			for _, threads := range []string{"1", "4"} {
+				got, _ := parallelRun(t, binary, threads)
+				if got != want {
+					t.Fatalf("threads %s: character bytes differ from Node", threads)
+				}
+				parallelLeaks(t, binary, build.options, threads)
+			}
+		})
+	}
+}

@@ -351,3 +351,12 @@ Observed exit 0, package 44.498s. This includes signal behavior under native san
 Setup rerun: Go 1.27.1 ready 0s, clang 20.1.8 ready 0s, Node 24.19.0 ready 0s, submodules ready 0s; nproc 5. It failed during test-cache warming because integrated `internal/native/map_hash_test.go:90` uses `Options{slabs: ...}` while the field is now `Slabs`. The old missing-target-API failure is resolved by integration. Rather than editing another unit's test, the commands above run the runtime proof/guard Go files directly; they compile and exercise the actual integrated C runtime. The complete native package and repository gate remain blocked by that unrelated merged test build error.
 
 Final signal/exit, two new mutants, scanner and coverage checks passed together in 59.332s (`/tmp/runtime-statics-followup-final.log`). The two new mutants each produced three explicit TSan race summaries. The integrated 11-fixture proof was run after the signal-loop/exit-lock implementation; the final additional code change retries an interrupted handler pipe write and was covered by this final signal run.
+
+## String view character pool
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `string_slice_impl.h:bytes:1` | 128 ASCII bytes, C aggregate initializer only | Const storage; initialized before any pool starts, no runtime writers |
+| `string_slice_impl.h:characters:1` | 128 one-unit immortal string headers, C aggregate initializer only | Written only before pool starts by static initialization. Counts are zero, units are known, and indexes carry the literal marker; retain/release and string caches never mutate them |
+
+Whole slices retain their input without writing its units field, including immortal character headers. Shared input cache construction uses string_index.c's existing release/acquire CAS publication; new view metadata is filled before the view escapes. All owner count queries use adamic_reference_count and retention uses the shared atomic path. Region storage with no retainable count copies rather than becoming an immortal byte owner.
