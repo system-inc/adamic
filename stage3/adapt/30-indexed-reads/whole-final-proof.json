@@ -1,0 +1,98 @@
+{
+  "status": "pass: three files closed; nine diagnostics declined or handed off",
+  "integration": "634ef061fc72c061e2de1606d5c8faebec4411f6",
+  "before": 24,
+  "after": 9,
+  "completed_files": [
+    "debug.ts",
+    "scanner.ts",
+    "utilities.ts"
+  ],
+  "all_codes": true,
+  "fresh_pipeline": "all 17 owned file bytes match verified tree",
+  "original_line_counts": {
+    "core.ts": 2595,
+    "utilities.ts": 12447,
+    "utilitiesPublic.ts": 2670,
+    "parser.ts": 10823,
+    "scanner.ts": 4101,
+    "factory/baseNodeFactory.ts": 60,
+    "factory/emitHelpers.ts": 1491,
+    "factory/emitNode.ts": 381,
+    "factory/nodeChildren.ts": 61,
+    "factory/nodeConverters.ts": 193,
+    "factory/nodeFactory.ts": 7542,
+    "factory/nodeTests.ts": 1201,
+    "factory/parenthesizerRules.ts": 706,
+    "factory/utilities.ts": 1757,
+    "factory/utilitiesPublic.ts": 52,
+    "debug.ts": 1254,
+    "path.ts": 1115
+  },
+  "node_cases": {
+    "scanner": 2660,
+    "parser": 164,
+    "utilities": 5232
+  },
+  "idempotence": "all 17 files pass",
+  "sanctioned_api_lines": {
+    "20": 189,
+    "40": 28,
+    "70": 0
+  },
+  "adaptation70": "absent from pinned integration",
+  "other_reference_baselines_identical": 60930,
+  "oracle": {
+    "tree": "/tmp/stage3-close-final-fresh2",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.58
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 1.775
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 340.137
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 344.554
+  },
+  "baseline_diff_bytes": 0,
+  "node_heap_mib": 1536,
+  "global_clean_total_claim": false,
+  "native_acceptance_claim": false
+}

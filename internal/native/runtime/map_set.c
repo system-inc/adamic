@@ -13,13 +13,35 @@ uint64_t adamic_map_maybe_key_hash(double key) {
 	if (!value.present) {
 		return ADAMIC_UNDEFINED_BITS;
 	}
-	if (isnan(value.number)) {
-		return 0x7ff8000000000000ull;
+	return adamic_map_number_hash(value.number);
+}
+
+// V8 13.6.233.17: Object::GetSimpleHash (src/objects/objects-inl.h),
+// ComputeUnseededHash and ComputeLongHash (src/utils/utils.h). Unsigned arithmetic
+// wraps exactly as V8's does; check the signed range before converting a double.
+uint64_t adamic_map_number_hash(double number) {
+	if (isnan(number)) {
+		return 0x3fffffffu;
 	}
-	double number = value.number == 0 ? 0 : value.number;
-	uint64_t bits;
-	memcpy(&bits, &number, sizeof bits);
-	return (bits ^ (bits >> 29)) * 1099511628211ull;
+	if (number >= INT32_MIN && number <= INT32_MAX && trunc(number) == number) {
+		uint32_t hash = (uint32_t)(int32_t)number;
+		hash = ~hash + (hash << 15);
+		hash ^= hash >> 12;
+		hash += hash << 2;
+		hash ^= hash >> 4;
+		hash *= 2057;
+		hash ^= hash >> 16;
+		return hash & 0x3fffffffu;
+	}
+	uint64_t hash;
+	memcpy(&hash, &number, sizeof hash);
+	hash = ~hash + (hash << 18);
+	hash ^= hash >> 31;
+	hash *= 21;
+	hash ^= hash >> 11;
+	hash += hash << 6;
+	hash ^= hash >> 22;
+	return hash & 0x3fffffffu;
 }
 
 static const char *const iterator_names[] = {"next"};
