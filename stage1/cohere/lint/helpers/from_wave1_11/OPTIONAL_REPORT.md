@@ -1,0 +1,13 @@
+Built: React.skipParenthesesOptional in one .a file using numeric kinds and an input-node coordinate; four prerequisites removed, zero complete rules declared ready.
+Commits: claim 3be4ab56f pushed before code; rule parking refresh 067beff01; this report accompanies the helper implementation.
+Commands and outputs: four original Go consumer suites PASS, 2,185 actual calls, 15 distinct chains plus 4,513 controls; 4,528 cases / 84,932 bytes identical to Go on Node, emitted JavaScript and sanitized native.
+Mutant: parenthesis_identity_unwrap_lost compiles/runs with zero exits and empty stderr; only byte comparisons catch it on all three runtimes.
+Not covered: complete React detection or full rule parity, cyclic ASTs, arbitrary depths/kinds; this is an explicit node-chain adapter rather than shared context wiring. Shared lint harness remains parked under #zmh9v36.
+
+Consumers: react/default-props-match-prop-types (1,079 calls), react/no-access-state-in-setstate (481), react/no-set-state (231), react/no-unused-state (394). All four original test suites run with unchanged assertions; none needs an extra probe. Go overlay wraps the actual private function without changing its body, records the input numeric root-to-expression chain and checks that the returned pointer belongs to that chain. Native and Node receive only numeric input chains, not Go results. The helper returns the original node's position, or -1 for nil; adapters can retrieve that same node. This preserves identity even when an outer and inner node have the same kind.
+
+The independent Go oracle reconstructs chains, invokes the original helper through an exported overlay wrapper and finds the returned pointer's original position. Every distinct actual input is retained because the predicate is pure. Controls cover numeric kinds 0..500 with depths 0..8, nil and all-parenthesis chains of depths 0..9, and ignored tails after ordinary leaf kinds. Parenthesis kind is 218 from the pinned parser. All source is owned; no shared finding, context, main, registry generator, oracle or comparison files are edited.
+
+Reproduce: source /workspace/adamic-tools/env.sh; python3 stage1/cohere/lint/helpers/from_wave1_11/validate_optional.py --scratch <directory>, redirecting output to a log. TestReactOptionalParenthesesMatchesGoWithMutant replays retained metadata against the actual Go helper and rebuilds the sanitized native and emitted backends.
+
+Owned replay test PASS in 3.938s; go vet on the owned package PASS. The four unchanged helpers retain their preceding full-package green result. Total five-helper scope: 11,258 metadata cases and five byte-only semantic mutants.

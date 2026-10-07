@@ -1,0 +1,49 @@
+package react
+
+import (
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"os"
+	"sync"
+)
+
+var wave11OptionalCaptureLock sync.Mutex
+
+func skipParenthesesOptional(node *ast.Node) *ast.Node {
+	chain := []int{}
+	nodes := []*ast.Node{}
+	for current := node; current != nil; {
+		chain = append(chain, int(current.Kind))
+		nodes = append(nodes, current)
+		if current.Kind != ast.KindParenthesizedExpression {
+			break
+		}
+		current = current.AsParenthesizedExpression().Expression
+	}
+	result := wave11OriginalSkipParenthesesOptional(node)
+	index := -1
+	for i, n := range nodes {
+		if n == result {
+			index = i
+			break
+		}
+	}
+	if result != nil && index < 0 {
+		panic("unexpected result node identity")
+	}
+	row := struct {
+		Chain  []int `json:"chain"`
+		Result int   `json:"result"`
+	}{chain, index}
+	wave11OptionalCaptureLock.Lock()
+	defer wave11OptionalCaptureLock.Unlock()
+	file, err := os.OpenFile(os.Getenv("WAVE11_OPTIONAL_CAPTURE"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	if err = json.NewEncoder(file).Encode(row); err != nil {
+		panic(err)
+	}
+	return result
+}

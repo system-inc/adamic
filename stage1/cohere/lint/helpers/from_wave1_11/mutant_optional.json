@@ -1,0 +1,6 @@
+{
+  "name": "parenthesis_identity_unwrap_lost",
+  "file": "react_skip_parentheses_optional.a",
+  "from": "if (kind !== 218) { return index; }",
+  "to": "if (kind !== 218) { return 0; }"
+}

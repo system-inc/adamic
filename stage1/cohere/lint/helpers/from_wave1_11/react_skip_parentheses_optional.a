@@ -1,0 +1,10 @@
+// Return the original node's position in the supplied root-to-expression chain.
+// -1 represents nil; numeric parenthesis kind 218 is from the pinned Go parser.
+export function skipParenthesesOptionalIndex(chain: readonly number[]): number {
+    let index = 0;
+    for (const kind of chain) {
+        if (kind !== 218) { return index; }
+        index++;
+    }
+    return -1;
+}

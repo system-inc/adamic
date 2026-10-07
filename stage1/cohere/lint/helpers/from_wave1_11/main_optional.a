@@ -1,0 +1,14 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { skipParenthesesOptionalIndex } from './react_skip_parentheses_optional.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if (input.kind === 'Error') { panic(input.message); }
+const data = new OptionsJson(input.text); const root = data.parse();
+let number = 0;
+for (const row of data.node(root).children) {
+    const chain: number[] = [];
+    const index = data.field(row, 'chain');
+    for (const child of data.node(index).children) { chain.push(Number(data.node(child).text)); }
+    console.log(`case ${number}`); number++;
+    console.log(`result\t${skipParenthesesOptionalIndex(chain)}`);
+}

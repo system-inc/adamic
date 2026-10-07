@@ -1,0 +1,19 @@
+{
+  "actualCalls": 2185,
+  "consumers": {
+    "react/default-props-match-prop-types": 1079,
+    "react/no-access-state-in-setstate": 481,
+    "react/no-set-state": 231,
+    "react/no-unused-state": 394
+  },
+  "cases": 4528,
+  "bytes": 84932,
+  "stdoutSha256": "8fe6c66405ebea2f8fd6e2f48d8638c9981b80dd21ee23e210442b6d995be823",
+  "mutant": "parenthesis_identity_unwrap_lost",
+  "backends": [
+    "Node",
+    "emitted",
+    "native"
+  ],
+  "onlyByteComparison": true
+}

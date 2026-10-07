@@ -1,0 +1,5 @@
+package react
+
+import "github.com/microsoft/TypeScript/tsc/shim/ast"
+
+func Wave11SkipParenthesesOptional(node *ast.Node) *ast.Node { return skipParenthesesOptional(node) }

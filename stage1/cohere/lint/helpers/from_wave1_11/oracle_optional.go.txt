@@ -1,0 +1,48 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	react "github.com/system-inc/cohere/internal/lint/rules/react"
+	"os"
+)
+
+type Row struct{ Chain []int }
+
+func main() {
+	raw, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var rows []Row
+	if err = json.Unmarshal(raw, &rows); err != nil {
+		panic(err)
+	}
+	factory := ast.NewNodeFactory(ast.NodeFactoryHooks{})
+	for i, row := range rows {
+		var node *ast.Node
+		nodes := make([]*ast.Node, len(row.Chain))
+		for j := len(row.Chain) - 1; j >= 0; j-- {
+			kind := ast.Kind(row.Chain[j])
+			if kind == ast.KindParenthesizedExpression {
+				node = factory.NewParenthesizedExpression(node)
+			} else {
+				node = &ast.Node{Kind: kind}
+			}
+			nodes[j] = node
+		}
+		result := react.Wave11SkipParenthesesOptional(node)
+		index := -1
+		for j, n := range nodes {
+			if n == result {
+				index = j
+				break
+			}
+		}
+		if result != nil && index < 0 {
+			panic("result identity missing")
+		}
+		fmt.Printf("case %d\nresult\t%d\n", i, index)
+	}
+}
