@@ -1,0 +1,678 @@
+{
+  "directory": "/tmp/handler-landing-proofs",
+  "repo": "/tmp/adamic-handler-measure",
+  "proofs": [
+    {
+      "name": "wait4 helper exec with no arguments and timeout termination",
+      "passed": true
+    },
+    {
+      "name": "four columns agree, fixed counts and interleaved order",
+      "samples": 24
+    },
+    {
+      "name": "source sieve pins",
+      "values": [
+        168,
+        1229,
+        9592
+      ]
+    },
+    {
+      "name": "changed-response source mutant",
+      "caught": "checksum mismatch: service/adamic-js preflight; refused",
+      "timedSamples": 0,
+      "expected": "6:388:478017052:139489648",
+      "actual": "6:388:3086986072:1823433884",
+      "buildLog": "/tmp/handler-landing-proofs/changed-response-build.stderr"
+    },
+    {
+      "name": "dropped startup subtraction source mutant",
+      "caught": "per-pair startup-subtracted wall and resolvable CPU assertions",
+      "method": "same measured K=1/K=0 pairs passed through original and mutated reducers; no second noisy timing run",
+      "rows": [
+        {
+          "workload": "service",
+          "variant": "native",
+          "requests": 6,
+          "subtractedWallMsPerRequest": 0.053015,
+          "mutantWallMsPerRequest": 0.2439511666666667,
+          "subtractedCpuMsPerRequest": 0.05383333333333332,
+          "mutantCpuMsPerRequest": 0.2323333333333333,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": 0.08186666666666668,
+                "cpuMsPerRequest": 0.07933333333333331,
+                "rawWallMsPerRequest": 0.2439511666666667,
+                "rawCpuMsPerRequest": 0.2323333333333333,
+                "startupWallMs": 0.972507,
+                "startupCpuMs": 0.918,
+                "maxRssBytes": 942080,
+                "startupMaxRssBytes": 1077248
+              },
+              "mutant": {
+                "wallMsPerRequest": 0.2439511666666667,
+                "cpuMsPerRequest": 0.2323333333333333,
+                "rawWallMsPerRequest": 0.2439511666666667,
+                "rawCpuMsPerRequest": 0.2323333333333333,
+                "startupWallMs": 0.972507,
+                "startupCpuMs": 0.918,
+                "maxRssBytes": 942080,
+                "startupMaxRssBytes": 1077248
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 0.027665833333333317,
+                "cpuMsPerRequest": 0.022333333333333354,
+                "rawWallMsPerRequest": 0.21148383333333332,
+                "rawCpuMsPerRequest": 0.1965,
+                "startupWallMs": 1.102908,
+                "startupCpuMs": 1.045,
+                "maxRssBytes": 966656,
+                "startupMaxRssBytes": 1077248
+              },
+              "mutant": {
+                "wallMsPerRequest": 0.21148383333333332,
+                "cpuMsPerRequest": 0.1965,
+                "rawWallMsPerRequest": 0.21148383333333332,
+                "rawCpuMsPerRequest": 0.1965,
+                "startupWallMs": 1.102908,
+                "startupCpuMs": 1.045,
+                "maxRssBytes": 966656,
+                "startupMaxRssBytes": 1077248
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 0.053015,
+                "cpuMsPerRequest": 0.05383333333333332,
+                "rawWallMsPerRequest": 0.26685583333333335,
+                "rawCpuMsPerRequest": 0.25616666666666665,
+                "startupWallMs": 1.283045,
+                "startupCpuMs": 1.214,
+                "maxRssBytes": 966656,
+                "startupMaxRssBytes": 1069056
+              },
+              "mutant": {
+                "wallMsPerRequest": 0.26685583333333335,
+                "cpuMsPerRequest": 0.25616666666666665,
+                "rawWallMsPerRequest": 0.26685583333333335,
+                "rawCpuMsPerRequest": 0.25616666666666665,
+                "startupWallMs": 1.283045,
+                "startupCpuMs": 1.214,
+                "maxRssBytes": 966656,
+                "startupMaxRssBytes": 1069056
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "service",
+          "variant": "wasm",
+          "requests": 6,
+          "subtractedWallMsPerRequest": -0.39209316666666655,
+          "mutantWallMsPerRequest": 14.224544166666666,
+          "subtractedCpuMsPerRequest": 0.11883333333333468,
+          "mutantCpuMsPerRequest": 16.183,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": 1.9267524999999992,
+                "cpuMsPerRequest": 1.3746666666666674,
+                "rawWallMsPerRequest": 14.224544166666666,
+                "rawCpuMsPerRequest": 16.183,
+                "startupWallMs": 73.78675,
+                "startupCpuMs": 88.85,
+                "maxRssBytes": 49442816,
+                "startupMaxRssBytes": 48660480
+              },
+              "mutant": {
+                "wallMsPerRequest": 14.224544166666666,
+                "cpuMsPerRequest": 16.183,
+                "rawWallMsPerRequest": 14.224544166666666,
+                "rawCpuMsPerRequest": 16.183,
+                "startupWallMs": 73.78675,
+                "startupCpuMs": 88.85,
+                "maxRssBytes": 49442816,
+                "startupMaxRssBytes": 48660480
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": -1.0392725000000003,
+                "cpuMsPerRequest": -0.3521666666666666,
+                "rawWallMsPerRequest": 12.765697333333334,
+                "rawCpuMsPerRequest": 15.166833333333335,
+                "startupWallMs": 82.829819,
+                "startupCpuMs": 93.114,
+                "maxRssBytes": 49459200,
+                "startupMaxRssBytes": 48918528
+              },
+              "mutant": {
+                "wallMsPerRequest": 12.765697333333334,
+                "cpuMsPerRequest": 15.166833333333335,
+                "rawWallMsPerRequest": 12.765697333333334,
+                "rawCpuMsPerRequest": 15.166833333333335,
+                "startupWallMs": 82.829819,
+                "startupCpuMs": 93.114,
+                "maxRssBytes": 49459200,
+                "startupMaxRssBytes": 48918528
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": -0.39209316666666655,
+                "cpuMsPerRequest": 0.11883333333333468,
+                "rawWallMsPerRequest": 17.6737915,
+                "rawCpuMsPerRequest": 20.8255,
+                "startupWallMs": 108.395308,
+                "startupCpuMs": 124.24,
+                "maxRssBytes": 49700864,
+                "startupMaxRssBytes": 49053696
+              },
+              "mutant": {
+                "wallMsPerRequest": 17.6737915,
+                "cpuMsPerRequest": 20.8255,
+                "rawWallMsPerRequest": 17.6737915,
+                "rawCpuMsPerRequest": 20.8255,
+                "startupWallMs": 108.395308,
+                "startupCpuMs": 124.24,
+                "maxRssBytes": 49700864,
+                "startupMaxRssBytes": 49053696
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "service",
+          "variant": "adamic-js",
+          "requests": 6,
+          "subtractedWallMsPerRequest": -0.03667166666666569,
+          "mutantWallMsPerRequest": 6.390513666666667,
+          "subtractedCpuMsPerRequest": -0.09483333333333259,
+          "mutantCpuMsPerRequest": 6.770666666666667,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": 0.3777831666666671,
+                "cpuMsPerRequest": 0.5279999999999999,
+                "rawWallMsPerRequest": 7.38269,
+                "rawCpuMsPerRequest": 7.8870000000000005,
+                "startupWallMs": 42.029441,
+                "startupCpuMs": 44.154,
+                "maxRssBytes": 31588352,
+                "startupMaxRssBytes": 30539776
+              },
+              "mutant": {
+                "wallMsPerRequest": 7.38269,
+                "cpuMsPerRequest": 7.8870000000000005,
+                "rawWallMsPerRequest": 7.38269,
+                "rawCpuMsPerRequest": 7.8870000000000005,
+                "startupWallMs": 42.029441,
+                "startupCpuMs": 44.154,
+                "maxRssBytes": 31588352,
+                "startupMaxRssBytes": 30539776
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": -0.2650030000000001,
+                "cpuMsPerRequest": -0.19450000000000026,
+                "rawWallMsPerRequest": 5.947692333333333,
+                "rawCpuMsPerRequest": 6.402666666666666,
+                "startupWallMs": 37.276172,
+                "startupCpuMs": 39.583,
+                "maxRssBytes": 31850496,
+                "startupMaxRssBytes": 30539776
+              },
+              "mutant": {
+                "wallMsPerRequest": 5.947692333333333,
+                "cpuMsPerRequest": 6.402666666666666,
+                "rawWallMsPerRequest": 5.947692333333333,
+                "rawCpuMsPerRequest": 6.402666666666666,
+                "startupWallMs": 37.276172,
+                "startupCpuMs": 39.583,
+                "maxRssBytes": 31850496,
+                "startupMaxRssBytes": 30539776
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": -0.03667166666666569,
+                "cpuMsPerRequest": -0.09483333333333259,
+                "rawWallMsPerRequest": 6.390513666666667,
+                "rawCpuMsPerRequest": 6.770666666666667,
+                "startupWallMs": 38.563112,
+                "startupCpuMs": 41.193,
+                "maxRssBytes": 31981568,
+                "startupMaxRssBytes": 30539776
+              },
+              "mutant": {
+                "wallMsPerRequest": 6.390513666666667,
+                "cpuMsPerRequest": 6.770666666666667,
+                "rawWallMsPerRequest": 6.390513666666667,
+                "rawCpuMsPerRequest": 6.770666666666667,
+                "startupWallMs": 38.563112,
+                "startupCpuMs": 41.193,
+                "maxRssBytes": 31981568,
+                "startupMaxRssBytes": 30539776
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "service",
+          "variant": "node-source",
+          "requests": 6,
+          "subtractedWallMsPerRequest": 0.8273103333333319,
+          "mutantWallMsPerRequest": 14.330162666666666,
+          "subtractedCpuMsPerRequest": 0.6331666666666678,
+          "mutantCpuMsPerRequest": 19.091333333333335,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": 3.7480714999999996,
+                "cpuMsPerRequest": 4.774166666666666,
+                "rawWallMsPerRequest": 17.791495833333332,
+                "rawCpuMsPerRequest": 23.095166666666668,
+                "startupWallMs": 84.260546,
+                "startupCpuMs": 109.926,
+                "maxRssBytes": 54906880,
+                "startupMaxRssBytes": 54517760
+              },
+              "mutant": {
+                "wallMsPerRequest": 17.791495833333332,
+                "cpuMsPerRequest": 23.095166666666668,
+                "rawWallMsPerRequest": 17.791495833333332,
+                "rawCpuMsPerRequest": 23.095166666666668,
+                "startupWallMs": 84.260546,
+                "startupCpuMs": 109.926,
+                "maxRssBytes": 54906880,
+                "startupMaxRssBytes": 54517760
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": -26.642235833333334,
+                "cpuMsPerRequest": -26.75266666666667,
+                "rawWallMsPerRequest": 13.971707,
+                "rawCpuMsPerRequest": 19.067666666666668,
+                "startupWallMs": 243.683657,
+                "startupCpuMs": 274.922,
+                "maxRssBytes": 55037952,
+                "startupMaxRssBytes": 54513664
+              },
+              "mutant": {
+                "wallMsPerRequest": 13.971707,
+                "cpuMsPerRequest": 19.067666666666668,
+                "rawWallMsPerRequest": 13.971707,
+                "rawCpuMsPerRequest": 19.067666666666668,
+                "startupWallMs": 243.683657,
+                "startupCpuMs": 274.922,
+                "maxRssBytes": 55037952,
+                "startupMaxRssBytes": 54513664
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 0.8273103333333319,
+                "cpuMsPerRequest": 0.6331666666666678,
+                "rawWallMsPerRequest": 14.330162666666666,
+                "rawCpuMsPerRequest": 19.091333333333335,
+                "startupWallMs": 81.017114,
+                "startupCpuMs": 110.749,
+                "maxRssBytes": 54906880,
+                "startupMaxRssBytes": 54644736
+              },
+              "mutant": {
+                "wallMsPerRequest": 14.330162666666666,
+                "cpuMsPerRequest": 19.091333333333335,
+                "rawWallMsPerRequest": 14.330162666666666,
+                "rawCpuMsPerRequest": 19.091333333333335,
+                "startupWallMs": 81.017114,
+                "startupCpuMs": 110.749,
+                "maxRssBytes": 54906880,
+                "startupMaxRssBytes": 54644736
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "sieve",
+          "variant": "native",
+          "requests": 3,
+          "subtractedWallMsPerRequest": 0.9066409999999999,
+          "mutantWallMsPerRequest": 1.2835576666666666,
+          "subtractedCpuMsPerRequest": 0.9066666666666666,
+          "mutantCpuMsPerRequest": 1.2496666666666667,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": 0.9066409999999999,
+                "cpuMsPerRequest": 0.9066666666666666,
+                "rawWallMsPerRequest": 1.2534373333333333,
+                "rawCpuMsPerRequest": 1.2303333333333333,
+                "startupWallMs": 1.040389,
+                "startupCpuMs": 0.971,
+                "maxRssBytes": 1851392,
+                "startupMaxRssBytes": 942080
+              },
+              "mutant": {
+                "wallMsPerRequest": 1.2534373333333333,
+                "cpuMsPerRequest": 1.2303333333333333,
+                "rawWallMsPerRequest": 1.2534373333333333,
+                "rawCpuMsPerRequest": 1.2303333333333333,
+                "startupWallMs": 1.040389,
+                "startupCpuMs": 0.971,
+                "maxRssBytes": 1851392,
+                "startupMaxRssBytes": 942080
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 1.252439,
+                "cpuMsPerRequest": 1.2506666666666666,
+                "rawWallMsPerRequest": 1.5171783333333335,
+                "rawCpuMsPerRequest": 1.4973333333333334,
+                "startupWallMs": 0.794218,
+                "startupCpuMs": 0.74,
+                "maxRssBytes": 1982464,
+                "startupMaxRssBytes": 950272
+              },
+              "mutant": {
+                "wallMsPerRequest": 1.5171783333333335,
+                "cpuMsPerRequest": 1.4973333333333334,
+                "rawWallMsPerRequest": 1.5171783333333335,
+                "rawCpuMsPerRequest": 1.4973333333333334,
+                "startupWallMs": 0.794218,
+                "startupCpuMs": 0.74,
+                "maxRssBytes": 1982464,
+                "startupMaxRssBytes": 950272
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 0.7316316666666666,
+                "cpuMsPerRequest": 0.7240000000000001,
+                "rawWallMsPerRequest": 1.2835576666666666,
+                "rawCpuMsPerRequest": 1.2496666666666667,
+                "startupWallMs": 1.655778,
+                "startupCpuMs": 1.577,
+                "maxRssBytes": 1863680,
+                "startupMaxRssBytes": 950272
+              },
+              "mutant": {
+                "wallMsPerRequest": 1.2835576666666666,
+                "cpuMsPerRequest": 1.2496666666666667,
+                "rawWallMsPerRequest": 1.2835576666666666,
+                "rawCpuMsPerRequest": 1.2496666666666667,
+                "startupWallMs": 1.655778,
+                "startupCpuMs": 1.577,
+                "maxRssBytes": 1863680,
+                "startupMaxRssBytes": 950272
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "sieve",
+          "variant": "wasm",
+          "requests": 3,
+          "subtractedWallMsPerRequest": 1.1898776666666653,
+          "mutantWallMsPerRequest": 36.378653,
+          "subtractedCpuMsPerRequest": 3.616666666666665,
+          "mutantCpuMsPerRequest": 45.016999999999996,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": -0.6836913333333333,
+                "cpuMsPerRequest": 2.670666666666667,
+                "rawWallMsPerRequest": 32.216250333333335,
+                "rawCpuMsPerRequest": 40.321666666666665,
+                "startupWallMs": 98.699825,
+                "startupCpuMs": 112.953,
+                "maxRssBytes": 54423552,
+                "startupMaxRssBytes": 48918528
+              },
+              "mutant": {
+                "wallMsPerRequest": 32.216250333333335,
+                "cpuMsPerRequest": 40.321666666666665,
+                "rawWallMsPerRequest": 32.216250333333335,
+                "rawCpuMsPerRequest": 40.321666666666665,
+                "startupWallMs": 98.699825,
+                "startupCpuMs": 112.953,
+                "maxRssBytes": 54423552,
+                "startupMaxRssBytes": 48918528
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 1.1898776666666653,
+                "cpuMsPerRequest": 3.616666666666665,
+                "rawWallMsPerRequest": 36.378653,
+                "rawCpuMsPerRequest": 45.016999999999996,
+                "startupWallMs": 105.566326,
+                "startupCpuMs": 124.201,
+                "maxRssBytes": 54460416,
+                "startupMaxRssBytes": 48787456
+              },
+              "mutant": {
+                "wallMsPerRequest": 36.378653,
+                "cpuMsPerRequest": 45.016999999999996,
+                "rawWallMsPerRequest": 36.378653,
+                "rawCpuMsPerRequest": 45.016999999999996,
+                "startupWallMs": 105.566326,
+                "startupCpuMs": 124.201,
+                "maxRssBytes": 54460416,
+                "startupMaxRssBytes": 48787456
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 11.348264333333333,
+                "cpuMsPerRequest": 15.271666666666667,
+                "rawWallMsPerRequest": 40.90715333333333,
+                "rawCpuMsPerRequest": 50.906666666666666,
+                "startupWallMs": 88.676667,
+                "startupCpuMs": 106.905,
+                "maxRssBytes": 54685696,
+                "startupMaxRssBytes": 48918528
+              },
+              "mutant": {
+                "wallMsPerRequest": 40.90715333333333,
+                "cpuMsPerRequest": 50.906666666666666,
+                "rawWallMsPerRequest": 40.90715333333333,
+                "rawCpuMsPerRequest": 50.906666666666666,
+                "startupWallMs": 88.676667,
+                "startupCpuMs": 106.905,
+                "maxRssBytes": 54685696,
+                "startupMaxRssBytes": 48918528
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "sieve",
+          "variant": "adamic-js",
+          "requests": 3,
+          "subtractedWallMsPerRequest": 4.106847333333332,
+          "mutantWallMsPerRequest": 17.07958233333333,
+          "subtractedCpuMsPerRequest": 5.980000000000001,
+          "mutantCpuMsPerRequest": 19.755666666666666,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": 4.520045999999998,
+                "cpuMsPerRequest": 6.088000000000001,
+                "rawWallMsPerRequest": 17.07958233333333,
+                "rawCpuMsPerRequest": 19.755666666666666,
+                "startupWallMs": 37.678609,
+                "startupCpuMs": 41.003,
+                "maxRssBytes": 39161856,
+                "startupMaxRssBytes": 30670848
+              },
+              "mutant": {
+                "wallMsPerRequest": 17.07958233333333,
+                "cpuMsPerRequest": 19.755666666666666,
+                "rawWallMsPerRequest": 17.07958233333333,
+                "rawCpuMsPerRequest": 19.755666666666666,
+                "startupWallMs": 37.678609,
+                "startupCpuMs": 41.003,
+                "maxRssBytes": 39161856,
+                "startupMaxRssBytes": 30670848
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 4.106847333333332,
+                "cpuMsPerRequest": 5.980000000000001,
+                "rawWallMsPerRequest": 19.436024666666665,
+                "rawCpuMsPerRequest": 22.099666666666668,
+                "startupWallMs": 45.987532,
+                "startupCpuMs": 48.359,
+                "maxRssBytes": 38985728,
+                "startupMaxRssBytes": 30539776
+              },
+              "mutant": {
+                "wallMsPerRequest": 19.436024666666665,
+                "cpuMsPerRequest": 22.099666666666668,
+                "rawWallMsPerRequest": 19.436024666666665,
+                "rawCpuMsPerRequest": 22.099666666666668,
+                "startupWallMs": 45.987532,
+                "startupCpuMs": 48.359,
+                "maxRssBytes": 38985728,
+                "startupMaxRssBytes": 30539776
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 1.7243173333333317,
+                "cpuMsPerRequest": 2.6046666666666667,
+                "rawWallMsPerRequest": 16.180477666666665,
+                "rawCpuMsPerRequest": 18.109333333333336,
+                "startupWallMs": 43.368481,
+                "startupCpuMs": 46.514,
+                "maxRssBytes": 39059456,
+                "startupMaxRssBytes": 30408704
+              },
+              "mutant": {
+                "wallMsPerRequest": 16.180477666666665,
+                "cpuMsPerRequest": 18.109333333333336,
+                "rawWallMsPerRequest": 16.180477666666665,
+                "rawCpuMsPerRequest": 18.109333333333336,
+                "startupWallMs": 43.368481,
+                "startupCpuMs": 46.514,
+                "maxRssBytes": 39059456,
+                "startupMaxRssBytes": 30408704
+              },
+              "round": 2
+            }
+          ]
+        },
+        {
+          "workload": "sieve",
+          "variant": "node-source",
+          "requests": 3,
+          "subtractedWallMsPerRequest": -0.3302549999999987,
+          "mutantWallMsPerRequest": 29.140825000000003,
+          "subtractedCpuMsPerRequest": -1.818999999999998,
+          "mutantCpuMsPerRequest": 33.16866666666667,
+          "pairs": [
+            {
+              "normal": {
+                "wallMsPerRequest": -3.4180053333333356,
+                "cpuMsPerRequest": -1.818999999999998,
+                "rawWallMsPerRequest": 26.437511333333333,
+                "rawCpuMsPerRequest": 31.590666666666667,
+                "startupWallMs": 89.56655,
+                "startupCpuMs": 100.229,
+                "maxRssBytes": 51810304,
+                "startupMaxRssBytes": 49008640
+              },
+              "mutant": {
+                "wallMsPerRequest": 26.437511333333333,
+                "cpuMsPerRequest": 31.590666666666667,
+                "rawWallMsPerRequest": 26.437511333333333,
+                "rawCpuMsPerRequest": 31.590666666666667,
+                "startupWallMs": 89.56655,
+                "startupCpuMs": 100.229,
+                "maxRssBytes": 51810304,
+                "startupMaxRssBytes": 49008640
+              },
+              "round": 0
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": 5.949264666666664,
+                "cpuMsPerRequest": 6.023333333333336,
+                "rawWallMsPerRequest": 29.657405999999998,
+                "rawCpuMsPerRequest": 35.87133333333333,
+                "startupWallMs": 71.124424,
+                "startupCpuMs": 89.544,
+                "maxRssBytes": 51929088,
+                "startupMaxRssBytes": 48807936
+              },
+              "mutant": {
+                "wallMsPerRequest": 29.657405999999998,
+                "cpuMsPerRequest": 35.87133333333333,
+                "rawWallMsPerRequest": 29.657405999999998,
+                "rawCpuMsPerRequest": 35.87133333333333,
+                "startupWallMs": 71.124424,
+                "startupCpuMs": 89.544,
+                "maxRssBytes": 51929088,
+                "startupMaxRssBytes": 48807936
+              },
+              "round": 1
+            },
+            {
+              "normal": {
+                "wallMsPerRequest": -0.3302549999999987,
+                "cpuMsPerRequest": -2.2960000000000016,
+                "rawWallMsPerRequest": 29.140825000000003,
+                "rawCpuMsPerRequest": 33.16866666666667,
+                "startupWallMs": 88.41324,
+                "startupCpuMs": 106.394,
+                "maxRssBytes": 51884032,
+                "startupMaxRssBytes": 49070080
+              },
+              "mutant": {
+                "wallMsPerRequest": 29.140825000000003,
+                "cpuMsPerRequest": 33.16866666666667,
+                "rawWallMsPerRequest": 29.140825000000003,
+                "rawCpuMsPerRequest": 33.16866666666667,
+                "startupWallMs": 88.41324,
+                "startupCpuMs": 106.394,
+                "maxRssBytes": 51884032,
+                "startupMaxRssBytes": 49070080
+              },
+              "round": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "passed": true
+}
