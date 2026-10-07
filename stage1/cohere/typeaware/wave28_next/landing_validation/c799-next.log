@@ -1,0 +1,29 @@
+=== RUN   TestContinuation
+    next_test.go:57: accepted controls 132
+    next_test.go:58: controls: 65679 identical finding bytes; findings 108
+    next_test.go:62: dom-controls: 8438 identical finding bytes; findings 14
+    next_test.go:68: no-process-exit-after-output positive findings 6
+    next_test.go:68: no-uncleared-race-timeout positive findings 6
+    next_test.go:68: require-blocking-standard-streams positive findings 2
+    checks_test.go:60: mutant exit exited zero, empty stderr, comparison caught byte 1798
+    checks_test.go:60: mutant timeout exited zero, empty stderr, comparison caught byte 4756
+    checks_test.go:60: mutant blocking exited zero, empty stderr, comparison caught byte 7801
+    checks_test.go:64: controls-asan: 8438 identical finding bytes; findings 14
+    checks_test.go:73: repository: 18485 identical finding bytes; findings 0
+    checks_test.go:74: repository-asan: 18485 identical finding bytes; findings 0
+    checks_test.go:81: repository round 0 native 604.62373ms Go 321.543165ms
+    checks_test.go:81: repository round 1 native 448.925879ms Go 241.938933ms
+    checks_test.go:81: repository round 2 native 621.247281ms Go 260.545299ms
+    checks_test.go:73: compiler: 5010 identical finding bytes; findings 0
+    checks_test.go:74: compiler-asan: 5010 identical finding bytes; findings 0
+    checks_test.go:81: compiler round 0 native 4.652013227s Go 612.825969ms
+    checks_test.go:81: compiler round 1 native 4.66911432s Go 670.275906ms
+    checks_test.go:81: compiler round 2 native 3.475375699s Go 999.458909ms
+    checks_test.go:109: released: panic 70, no sanitizer findings
+    checks_test.go:109: released-asan: panic 70, no sanitizer findings
+    checks_test.go:115: released registry mutant exited zero; required panic assertion catches it
+    next_test.go:72: expanded-controls-final: 65679 identical finding bytes; findings 108
+    next_test.go:73: expanded-controls-asan: 65679 identical finding bytes; findings 108
+--- PASS: TestContinuation (237.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_next	237.211s

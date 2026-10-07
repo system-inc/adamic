@@ -1,0 +1,23 @@
+=== RUN   TestWave28AgreementAndMutants
+    wave_28_test.go:174: production test sources and extra controls: 255 accepted, 0 parse-invalid excluded
+    wave_28_test.go:176: controls: 43634 identical finding bytes; findings 126
+    wave_28_test.go:182: base/correctness-require-verify-optional-parity: 12 control findings
+    wave_28_test.go:182: block-scoped-var: 47 control findings
+    wave_28_test.go:182: getter-return: 67 control findings
+    wave_28_test.go:186: controls-asan: 43634 identical finding bytes; findings 126
+    wave_28_test.go:197: parity mutant: exit 0, empty stderr, independent Go bytes catch byte 35093
+    wave_28_test.go:197: scope mutant: exit 0, empty stderr, independent Go bytes catch byte 42
+    wave_28_test.go:197: getter mutant: exit 0, empty stderr, independent Go bytes catch byte 20821
+    wave_28_test.go:210: repository: 18485 identical finding bytes; findings 0
+    wave_28_test.go:211: repository-asan: 18485 identical finding bytes; findings 0
+    wave_28_test.go:216: repository native process_s=0.560699 findings 0 tsgo: load_ns=181861826 query_ns=0 queries=0 first_query_ns=0 run_ns=354141943
+    wave_28_test.go:216: repository Go process_s=0.239462 findings 0 cohere: load_ns=123299746 rule_ns=6081967 run_ns=94160625
+    wave_28_test.go:210: compiler: 5010 identical finding bytes; findings 0
+    wave_28_test.go:211: compiler-asan: 5010 identical finding bytes; findings 0
+    wave_28_test.go:216: compiler native process_s=7.088591 findings 0 tsgo: load_ns=571385917 query_ns=1811505909 queries=193228 first_query_ns=10655051 run_ns=6418281812
+    wave_28_test.go:216: compiler Go process_s=4.857657 findings 0 cohere: load_ns=686849086 rule_ns=4006592019 run_ns=4104526571
+    wave_28_test.go:229: released handle: panic 70, invalid or released checker handle
+    wave_28_test.go:234: released-registry mutant: exit 0, caught by required panic 70
+--- PASS: TestWave28AgreementAndMutants (234.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	234.869s
