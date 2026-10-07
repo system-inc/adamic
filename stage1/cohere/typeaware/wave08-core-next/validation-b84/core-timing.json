@@ -1,0 +1,300 @@
+{
+  "samples": [
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "variant": "go",
+      "round": 0,
+      "seconds": 0.4451861839988851
+    },
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "variant": "native",
+      "round": 0,
+      "seconds": 9.569202679998853
+    },
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "variant": "native",
+      "round": 1,
+      "seconds": 8.733068135999929
+    },
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "variant": "go",
+      "round": 1,
+      "seconds": 0.4704782670014538
+    },
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "variant": "go",
+      "round": 2,
+      "seconds": 0.48011404700082494
+    },
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "variant": "native",
+      "round": 2,
+      "seconds": 10.59533614099928
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "variant": "go",
+      "round": 0,
+      "seconds": 0.3919118689991592
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "variant": "native",
+      "round": 0,
+      "seconds": 12.401297906999389
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "variant": "native",
+      "round": 1,
+      "seconds": 8.738310247001209
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "variant": "go",
+      "round": 1,
+      "seconds": 0.5298003229981987
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "variant": "go",
+      "round": 2,
+      "seconds": 0.50367214599828
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "variant": "native",
+      "round": 2,
+      "seconds": 10.614610048000031
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "variant": "go",
+      "round": 0,
+      "seconds": 0.4050202739999804
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "variant": "native",
+      "round": 0,
+      "seconds": 3.22734803899948
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "variant": "native",
+      "round": 1,
+      "seconds": 3.350312129001395
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "variant": "go",
+      "round": 1,
+      "seconds": 0.3787897559996054
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "variant": "go",
+      "round": 2,
+      "seconds": 0.37538465699981316
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "variant": "native",
+      "round": 2,
+      "seconds": 3.2184103409999807
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "variant": "go",
+      "round": 0,
+      "seconds": 0.2409201820009912
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "variant": "native",
+      "round": 0,
+      "seconds": 1.6632382380012132
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "variant": "native",
+      "round": 1,
+      "seconds": 1.4723914030000742
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "variant": "go",
+      "round": 1,
+      "seconds": 0.29728026099837734
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "variant": "go",
+      "round": 2,
+      "seconds": 0.274197352999181
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "variant": "native",
+      "round": 2,
+      "seconds": 1.0928032829979202
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "variant": "go",
+      "round": 0,
+      "seconds": 0.2072322060012084
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "variant": "native",
+      "round": 0,
+      "seconds": 1.1851038029999472
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "variant": "native",
+      "round": 1,
+      "seconds": 1.0445036490018538
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "variant": "go",
+      "round": 1,
+      "seconds": 0.17480247500134283
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "variant": "go",
+      "round": 2,
+      "seconds": 0.16390848700029892
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "variant": "native",
+      "round": 2,
+      "seconds": 1.044790631000069
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "variant": "go",
+      "round": 0,
+      "seconds": 0.16650633099925471
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "variant": "native",
+      "round": 0,
+      "seconds": 0.48498260699852835
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "variant": "native",
+      "round": 1,
+      "seconds": 0.6733560439970461
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "variant": "go",
+      "round": 1,
+      "seconds": 0.18639136099955067
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "variant": "go",
+      "round": 2,
+      "seconds": 0.17229644899998675
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "variant": "native",
+      "round": 2,
+      "seconds": 0.4937194949998229
+    }
+  ],
+  "medians": [
+    {
+      "corpus": "compiler",
+      "rule": "atomic",
+      "go": 0.4704782670014538,
+      "native": 9.569202679998853,
+      "ratio": 20.33930863796793
+    },
+    {
+      "corpus": "compiler",
+      "rule": "await",
+      "go": 0.50367214599828,
+      "native": 10.614610048000031,
+      "ratio": 21.07444323124487
+    },
+    {
+      "corpus": "compiler",
+      "rule": "symbol",
+      "go": 0.3787897559996054,
+      "native": 3.22734803899948,
+      "ratio": 8.520156598434626
+    },
+    {
+      "corpus": "repository",
+      "rule": "atomic",
+      "go": 0.274197352999181,
+      "native": 1.4723914030000742,
+      "ratio": 5.369823548239986
+    },
+    {
+      "corpus": "repository",
+      "rule": "await",
+      "go": 0.17480247500134283,
+      "native": 1.044790631000069,
+      "ratio": 5.9769784780910165
+    },
+    {
+      "corpus": "repository",
+      "rule": "symbol",
+      "go": 0.17229644899998675,
+      "native": 0.4937194949998229,
+      "ratio": 2.865523334145214
+    }
+  ]
+}

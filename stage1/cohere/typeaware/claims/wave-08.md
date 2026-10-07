@@ -122,3 +122,9 @@ the native release and string runtime changes. All ten completed owned profiles
 and both parked kernels are re-green, with byte-only mutants and sanitizer/
 released-handle checks. A fresh 606-ref audit still finds no unclaimed rule.
 See ../wave08-core-next/LANDING_D65_REPORT.md for the current evidence and times.
+
+Current-main landing: rebased onto area/stage1-lint b84a9d931, containing main
+c7991b900 and its lowering/record runtime changes. All ten completed profiles
+and the two parked kernels pass again, with all rule mutants and released-handle
+checks. A 631-ref audit has no unclaimed entry. No selected check skipped.
+See ../wave08-core-next/LANDING_B84_REPORT.md.
