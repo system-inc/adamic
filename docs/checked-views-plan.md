@@ -271,3 +271,31 @@ routes eligible structural downcasts to the existing full `view(node,value,targe
 admission, rather than treating them as proven upcasts. The preflight does not
 certify any field. Lane 2 and lane 3 hooks and ownership remain unchanged. Shared
 readiness still handles staged assertions; no second state representation is added.
+
+## Lazy admission takeover, October 7, 2026
+
+The October 7 15:00 ruling replaces eager target-contract eligibility with lazy
+admission. Working delivery estimate: **October 8, 2026 at 22:00 UTC**.
+This estimate covers lazy admission and its evidence, not full tsc compilation.
+The previous lane 1 worker is stopped; this work owns its view entry point and
+shared read plumbing on `codex/views-lazy-admission`, based on `ab4d6f902`.
+
+1. Merge lane 2 `codex/views-arrays-callables-parser` at `2693041a` or newer,
+   keeping both cast paths, then consume lane 3's existing shared closed-world
+   flow on `codex/shape-conformance`. Do not create a second flow graph.
+2. Intern unsupported member descriptors without refusing the cast. Preserve
+   tagged entry checks. Refuse unsupported families by field name at reads
+   reachable from viewed values; unresolved flow retains a runtime tag check.
+3. Cover helpers accepting both viewed and ordinary values, generic instances,
+   callbacks, stored fields, aliases and transitive reads using shared may-flow.
+   Unknown origins never justify trusting a read.
+4. Add an unread unsupported-field fixture and the helper-read mutant, with
+   source Node and both backend evidence. Run independent check-removal mutants
+   and touched-package gates, with all test output captured in log files.
+5. Rerun the pinned 2,936-site census, separating actual tagged and untagged
+   lowering successes from contract eligibility and remaining read families.
+   Merge current origin/main, recheck, and push only this branch.
+
+Push every passing checkpoint. Any unfinished family or unmeasured census stays
+explicitly unclaimed. Compiler changes begin only after reading view() and its
+callers and the shared flow implementation.
