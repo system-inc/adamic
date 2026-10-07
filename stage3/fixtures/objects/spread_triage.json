@@ -11,7 +11,7 @@
     "src/compiler/moduleNameResolver.ts:1302",
     "src/compiler/moduleNameResolver.ts:1303"
   ],
-  "compiler_object_sha256": "a0fb9ed536a66ca7e489e5a24d9112d08d1c255f8312ed45558884ff10549a52",
+  "compiler_object_sha256": "8492729fe45759661925505e8bf4550ec51ef68ee1101440ee64a04fcb58a8da",
   "note": "This script performs no native comparison. The reduced cache fixture is registered under TestNativeAgreesWithNode; see the focused oracle log for its comparison. The 17-site original corpus has not been compiled or dynamically verified; original upstream operands are not proven closed by this run.",
   "fixtures": [
     {
@@ -161,7 +161,7 @@
     {
       "file": "12_decorator_descriptor.a",
       "source_sha256": "afa50d81d3377ad8303224341cb89106cf0f4be808262629c6f8c310a98f37e3",
-      "lane": "post-creation writes (README: declared-slot exception); value-valued logical expressions",
+      "lane": "post-creation writes (README: declared-slot exception); chained assignment",
       "original_outcome": "NotYet",
       "stage0": {
         "outcome": "NotYet",
@@ -414,5 +414,6 @@
         "exit": 0
       }
     }
-  ]
+  ],
+  "integrated_main": "e8ba3d5d81de4d3773c723914fccd4c76248b965"
 }
