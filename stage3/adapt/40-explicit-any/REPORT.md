@@ -170,3 +170,14 @@ declaration changes precisely explained; public API unchanged. Full oracle
 106,367 passing, zero failures, empty baseline.diff. The enum-domain checker
 mutant and real API-baseline mutant both fail their dedicated checks. Evidence
 is in evidence/enum-display and current progress is in PROGRESS.md.
+
+## Type-only diagnostic argument class
+
+Applied six sites and related owner-only argument alias/generic constraints.
+Initial rule exposed 16 consumer errors, all recorded verbatim. Final rule:
+zero new errors, all emitted JavaScript identical, mechanically limited API
+exception, idempotent, census 148 -> 142. Full 10+30+40 oracle without 20:
+106,367 passing, zero failures, empty baseline diff. Real checker and API
+reference mutants are caught; reference restored exactly. See PROGRESS.md and
+evidence/diagnostic. The remaining 142 sites are classified but unfinished;
+JSON/config and host-extension checks remain held for separate authorization.

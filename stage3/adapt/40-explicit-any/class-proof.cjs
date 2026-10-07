@@ -11,19 +11,34 @@ function enclosing(node) {
     for(let p=node.parent;p;p=p.parent) if ((ts.isInterfaceDeclaration(p)||ts.isTypeAliasDeclaration(p)||ts.isClassDeclaration(p)||ts.isFunctionDeclaration(p) || ts.isVariableDeclaration(p))&&p.name) return p.name.text;
 }
 function declarationProjection(text, contracts) {
-    const src=ts.createSourceFile('api.d.ts',text,ts.ScriptTarget.Latest,true), edits=[];
+    const src=ts.createSourceFile('api.d.ts',text,ts.ScriptTarget.Latest,true), edits=[];let aliasNeeded=false;
     function visit(n) {
-        if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end]);
+        if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end,className==='brands'?'undefined':'Record<string, string | number>']);
+        if(className==='diagnostic'&&ts.isParameter(n)&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) {
+            if(n.type?.kind===ts.SyntaxKind.AnyKeyword)edits.push([n.type.getStart(src),n.type.end,'string | number']);
+            else if(ts.isArrayTypeNode(n.type)&&n.type.elementType.kind===ts.SyntaxKind.AnyKeyword){edits.push([n.type.elementType.getStart(src),n.type.elementType.end,'DiagnosticArguments[number]']);aliasNeeded=true;}
+        }
+        if(className==='diagnostic'&&ts.isTypeAliasDeclaration(n)&&n.name.text==='DiagnosticArguments')edits.push([n.type.getStart(src),n.type.end,'(string | number | boolean | readonly string[] | SourceFile | undefined)[]']);
         ts.forEachChild(n,visit);
     }
     visit(src);
-    for(const [a,b] of edits.sort((a,b)=>b[0]-a[0]))text=text.slice(0,a)+(className==='brands'?'undefined':'Record<string, string | number>')+text.slice(b);
+    if(aliasNeeded)for(const n of src.statements) {
+        if(ts.isImportDeclaration(n)&&n.moduleSpecifier.text==='./_namespaces/ts.js'&&ts.isNamedImports(n.importClause?.namedBindings)) {
+            const elements=n.importClause.namedBindings.elements;
+            if(!elements.some(e=>e.name.text==='DiagnosticArguments')) {
+                const message=elements.find(e=>e.name.text==='DiagnosticMessage');assert(message);
+                edits.push([message.getStart(src),message.getStart(src),'type DiagnosticArguments, ']);
+            }
+        }
+    }
+    for(const [a,b,value] of edits.sort((a,b)=>b[0]-a[0]))text=text.slice(0,a)+value+text.slice(b);
     return text;
 }
 function expectedSource(text,file) {
+    if(className==='diagnostic')for(const r of require('./diagnostic-declarations.json').filter(r=>r.file===file)){assert.equal(text.split(r.before).length,2,'consumer owner reconstruction');text=text.replace(r.before,r.after);}
     const lines=text.split('\n');
     for(const r of rules.filter(r=>r.file===file)) {
-        if(className==='enum-display') {
+        if(className!=='brands') {
             assert.equal(lines[r.line-1].replace(/\r$/,''),r.originalLine,'independent enum owner reconstruction');
             const at=lines[r.line-1].indexOf('any',r.column-1);assert.equal(at,r.column-1);
             lines[r.line-1]=lines[r.line-1].slice(0,at)+r.replacement+lines[r.line-1].slice(at+3);continue;
@@ -79,8 +94,9 @@ if(mode==='before') {
     const state=snapshot();
     state.reference=fs.readFileSync(api,'utf8');state.contracts=[];
     if(className==='enum-display')state.contracts=[{owner:'formatEnum',key:'enumObject'}];
+    else if(className==='diagnostic')state.contracts=rules.map(r=>({owner:r.owner,key:r.key}));
     else for(const r of rules){const src=ts.createSourceFile(r.file,state.texts[r.file],ts.ScriptTarget.Latest,true);function visit(n){if((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&n.name.text===r.key&&src.getLineAndCharacterOfPosition(n.getStart(src)).line+1===r.line)state.contracts.push({key:r.key,owner:enclosing(n)});ts.forEachChild(n,visit);}visit(src);}
-    assert.equal(state.contracts.length,className==='brands'?rules.length:1);
+    assert.equal(state.contracts.length,className==='enum-display'?1:rules.length);
     fs.writeFileSync(statePath,JSON.stringify(state));
     const {texts,declarations,reference,contracts,...summary}=state;
     fs.writeFileSync(path.join(evidence,'before.json'),JSON.stringify({...summary,contracts},null,2)+'\n');
@@ -119,7 +135,7 @@ if(mode==='before') {
     killed('unrelated API edit',()=>assert.equal(declarationProjection(before.reference,before.contracts)+'\ntype Unreviewed = string;\n',fs.readFileSync(api,'utf8')));
     killed('idempotence changed byte',()=>assert.equal(after.texts[first.file]+'\n',fs.readFileSync(path.join(tree,first.file),'utf8')));
     if(className==='brands'){const bad=before.texts[first.file].replace('__incrementalBuildInfoFileIdBrand: any','__incrementalBuildInfoFileIdBrand: string');killed('unreviewed owner type',()=>require('./classes.cjs').plan(bad,first.file));}
-    else {const bad=before.texts[first.file].replace(first.originalLine,first.originalLine.replace('enumObject: any','enumObject: string'));killed('unreviewed enum owner type',()=>require('./classes.cjs').planEnum(bad,first.file));}
+    else {const invalid=className==='enum-display'?first.originalLine.replace('enumObject: any','enumObject: string'):first.originalLine.replace('args: any[]','args: boolean[]');const bad=before.texts[first.file].replace(first.originalLine,invalid);killed('unreviewed class owner type',()=>require('./classes.cjs').planEnum(bad,first.file,className));}
     const configPath=path.join(tree,'src/compiler/tsconfig.json');
     const config=ts.parseJsonConfigFileContent(ts.readConfigFile(configPath,ts.sys.readFile).config,ts.sys,path.dirname(configPath),undefined,configPath);
     const host=ts.createCompilerHost(config.options), originalRead=host.readFile;
@@ -127,11 +143,12 @@ if(mode==='before') {
         const text=originalRead(file);
         if(className==='brands'&&file===path.join(tree,'src/compiler/checker.ts'))return text.replace('declare _symbolLinksBrand: undefined;','declare _symbolLinksBrand: string;');
         if(className==='enum-display'&&file===path.join(tree,'src/compiler/debug.ts'))return text.replace('enumObject: Record<string, string | number>','enumObject: Record<string, boolean>');
+        if(className==='diagnostic'&&file===path.join(tree,'src/compiler/commandLineParser.ts'))return text.replace('...args: DiagnosticArguments[number][]','...args: boolean[]');
         return text;
     };
     const mutantCode=className==='brands'?2322:2345;
     assert(ts.getPreEmitDiagnostics(ts.createProgram(config.fileNames,config.options,host)).some(d=>d.code===mutantCode),'checker catches conflicting class contract');
-    mutants.push(className==='brands'?'real brand implementation mismatch caught by stock checker TS2322':'real enum map domain mutation caught by stock checker TS2345');
+    mutants.push(className==='brands'?'real brand implementation mismatch caught by stock checker TS2322':className==='enum-display'?'real enum map domain mutation caught by stock checker TS2345':'real diagnostic argument domain mutation caught by stock checker TS2345');
     const proof={class:className,before:before.census.length,after:after.census.length,removed:rules.length,jsFiles:Object.keys(after.js).length,declarationFiles:Object.keys(after.declarations).length,changedDeclarations,consumerErrors,idempotent:true,mutants};
     fs.writeFileSync(path.join(evidence,'proof.json'),JSON.stringify(proof,null,2)+'\n');console.log(JSON.stringify(proof,null,2));
 } else throw Error('unknown proof mode');

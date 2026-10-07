@@ -12,10 +12,10 @@ This is a disjoint classification of the 207-token adapted census, not the origi
 | Generic enumerable copy and metadata copy | 10 | Decline until enumerable copy results and writable key relationships have an owner contract. |
 | Standard runtime feature probes | 8 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API. |
 | AST subtype properties and mutable manufactured nodes | 6 | Real type: the precise node union or manufactured node shape at the owning declaration. |
-| Diagnostic substitution arguments | 6 | Real type: the diagnostic substitution domain established from callers, expected string \| number, with optional arguments retaining undefined. |
+| Diagnostic substitution arguments | 6 | Real type: the diagnostic substitution domain established from callers, string \| number \| boolean \| readonly string[] \| SourceFile \| undefined, with scanner/parser arg0 restricted to optional string \| number. |
 | Display projections on known internal objects | 6 | Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow. |
 | Generic builder program factory escapes | 5 | Decline until the generic program type is tied to the selected factory and persisted builder result at the owner. |
-| Broad generic API shape references | 4 | Real type: use the declared generic bound, Program \| BuilderProgram for ProgramHost and Node for NodeArray. |
+| Broad generic API shape references | 4 | Real type: use the declared generic bound, BuilderProgram for ProgramHost and Node for NodeArray. |
 | Sorted array brand assertions | 4 | Decline until sortedness proof and its branded result are expressible at the sorting/empty-array owner. |
 | Heterogeneous node callback dispatch | 3 | Generic parameter associating the node kind and concrete node type with the callback input/output at registration and dispatch. |
 | Generic defaults and constraints | 3 | Generic parameter: retain the argument tuple and checked input/output relationship explicitly, removing permissive defaults after auditing explicit generic callers. |
@@ -268,7 +268,7 @@ Locations:
 
 Diagnostic formatter, resolution trace and scanner/parser diagnostic arguments. They are formatted into messages, not stored arbitrary callback tuples. The proposed domain must still be checked against services and public callers.
 
-Rule: Real type: the diagnostic substitution domain established from callers, expected string | number, with optional arguments retaining undefined.
+Rule: Real type: the diagnostic substitution domain established from callers, string | number | boolean | readonly string[] | SourceFile | undefined; scanner/parser arg0 is optional string | number.
 
 Locations:
 - 8: `src/compiler/commandLineParser.ts:2206:72`
@@ -309,7 +309,7 @@ Locations:
 
 ProgramHost readFile/host projections and emit NodeArray callbacks. Type-only generic instantiations are not evidence of untyped input; the projected member may not depend on the generic argument.
 
-Rule: Real type: use the declared generic bound, Program | BuilderProgram for ProgramHost and Node for NodeArray.
+Rule: Real type: use the declared generic bound, BuilderProgram for ProgramHost and Node for NodeArray.
 
 Locations:
 - 104: `src/compiler/program.ts:393:27`

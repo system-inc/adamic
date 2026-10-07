@@ -88,3 +88,40 @@ mutants are caught; an enumObject Boolean-map mutant produces stock TS2345.
 The real API reference mutant causes one failing test and one baseline diff,
 then exact restoration and zero remaining differences. The earlier brand
 audit and consumer limitations still apply. See evidence/enum-display.
+
+## Diagnostic substitution arguments
+
+All six sites applied: scanner/parser arg0 is optional string | number;
+formatter and resolution trace arguments use DiagnosticArguments[number][].
+Actual callers establish the shared domain as string | number | boolean |
+readonly string[] | SourceFile | undefined. The existing formatting code
+string-coerces these values and checks defined placeholders; no check was
+inserted. Two owning generic declarations in program.ts now constrain their
+SourceFileOrString parameter to SourceFile | string, matching both callers.
+The alias and type import are also declaration-only edits.
+
+The initial string | number rule exposed 16 TS2345 errors. Every diagnostic,
+including exact text, is in evidence/diagnostic/exploratory-consumer-errors.json.
+The final owner declarations produce zero new consumer errors. No consumer
+statement was changed. All ten emitted JavaScript files are byte-identical;
+714 declarations are compared, six differ exactly by the reviewed projection.
+The API reference differs only by ErrorCallback.arg0's any -> string | number,
+proved mechanically. Census 148 -> 142, adapter second pass changes zero bytes.
+
+Full oracle with 10+30+40 and without 20: 106,367 passing, zero failing/pending,
+baseline.diff zero bytes, 210.184 seconds. Seven artifact/source/census/API/
+idempotence/owner mutants fail their checks. A real diagnostic argument-domain
+mutation is caught by stock TS2345. An unrelated actual API-reference edit
+fails one test and produces one baseline difference; its reference is restored
+exactly, with zero remaining differences. See evidence/diagnostic.
+
+Stopping after these three classes: brands (36), enum display (23), diagnostic
+arguments (6), each independently built, proved, committed and pushed. Together
+with the previous three owners, 68 of 210 tokens are removed; 142 remain.
+JSON/config (38) and process/stream extensions (3) retain their checked-boundary
+rules above and are held for the separate runtime-behavior decision. Other
+classes retain proposals and exact locations in CLASSIFICATION.md; their
+contracts have not yet received the owner, consumer and oracle proof. In
+particular, timers need handle/argument generics propagated across owners;
+constructor/copy/callback classes need correlation and variance work. This is
+unfinished proof work, not a claim that those type-only edits are impossible.

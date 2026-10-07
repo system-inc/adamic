@@ -63,8 +63,8 @@ function apply(tree) {
 }
 module.exports = {plan,apply,owner};
 
-function planEnum(text,file) {
-    const selected=(rules['enum-display']||[]).filter(r=>r.file===file);
+function planEnum(text,file,className='enum-display') {
+    const selected=(rules[className]||[]).filter(r=>r.file===file);
     const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true), lines=text.split('\n');
     let removed=0;
     for(const r of selected) {
@@ -88,11 +88,42 @@ function planEnum(text,file) {
     }
     return {text:lines.join('\n'),removed};
 }
-function applyEnums(tree) {
-    const plans=[...new Set((rules['enum-display']||[]).map(r=>r.file))].map(file=>{const name=path.join(tree,file),before=fs.readFileSync(name,'utf8');return{name,before,...planEnum(before,file)};});
+function applyEnums(tree,className='enum-display') {
+    const plans=[...new Set((rules[className]||[]).map(r=>r.file))].map(file=>{const name=path.join(tree,file),before=fs.readFileSync(name,'utf8');return{name,before,...planEnum(before,file,className)};});
     for(const p of plans)if(fs.readFileSync(p.name,'utf8')!==p.before)throw Error('concurrent enum source change');
     for(const p of plans)if(p.before!==p.text)fs.writeFileSync(p.name,p.text);
-    console.log(JSON.stringify({class:'enum-display',removed:plans.reduce((n,p)=>n+p.removed,0)}));
+    console.log(JSON.stringify({class:className,removed:plans.reduce((n,p)=>n+p.removed,0)}));
 }
 module.exports.planEnum=planEnum;
 module.exports.applyEnums=applyEnums;
+
+function applyDiagnosticReference(tree) {
+    const file=path.join(tree,'tests/baselines/reference/api/typescript.d.ts'),text=fs.readFileSync(file,'utf8');
+    const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true),edits=[];let matched=0;
+    function visit(n) {
+        if(ts.isParameter(n)&&n.name.text==='arg0'&&owner(n)==='ErrorCallback') {
+            matched++;
+            if(n.type.kind===ts.SyntaxKind.AnyKeyword)edits.push([n.type.getStart(source),n.type.end]);
+            else if(n.type.getText(source)!=='string | number')throw Error('unreviewed public diagnostic type');
+        }
+        ts.forEachChild(n,visit);
+    }
+    visit(source);if(matched!==1)throw Error('public diagnostic callback count changed');
+    let after=text;for(const [a,b]of edits.sort((a,b)=>b[0]-a[0]))after=after.slice(0,a)+'string | number'+after.slice(b);
+    if(after!==text)fs.writeFileSync(file,after);
+}
+module.exports.applyDiagnosticReference=applyDiagnosticReference;
+
+function applyDiagnosticDeclarations(tree) {
+    const extras=require('./diagnostic-declarations.json');
+    const texts=new Map();
+    for(const r of extras) {
+        const file=path.join(tree,r.file);let text=texts.get(file)??fs.readFileSync(file,'utf8');
+        if(!text.includes(r.after)) {
+            if(text.split(r.before).length!==2)throw Error('diagnostic declaration drift: '+r.before);
+            text=text.replace(r.before,r.after);texts.set(file,text);
+        }
+    }
+    for(const [file,text]of texts)fs.writeFileSync(file,text);
+}
+module.exports.applyDiagnosticDeclarations=applyDiagnosticDeclarations;

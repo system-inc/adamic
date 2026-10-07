@@ -461,5 +461,73 @@
       "replacement": "Record<number, string>",
       "parentKind": "AsExpression"
     }
+  ],
+  "diagnostic": [
+    {
+      "id": 8,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2206,
+      "column": 72,
+      "originalLine": "export function getDiagnosticText(message: DiagnosticMessage, ...args: any[]): string {",
+      "replacement": "DiagnosticArguments[number]",
+      "parentKind": "ArrayType",
+      "owner": "getDiagnosticText",
+      "key": "args"
+    },
+    {
+      "id": 94,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 118,
+      "column": 88,
+      "originalLine": "export function trace(host: ModuleResolutionHost, message: DiagnosticMessage, ...args: any[]): void {",
+      "replacement": "DiagnosticArguments[number]",
+      "parentKind": "ArrayType",
+      "owner": "trace",
+      "key": "args"
+    },
+    {
+      "id": 100,
+      "file": "src/compiler/parser.ts",
+      "line": 2176,
+      "column": 75,
+      "originalLine": "    function scanError(message: DiagnosticMessage, length: number, arg0?: any): void {",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "scanError",
+      "key": "arg0"
+    },
+    {
+      "id": 112,
+      "file": "src/compiler/scanner.ts",
+      "line": 39,
+      "column": 81,
+      "originalLine": "export type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "ErrorCallback",
+      "key": "arg0"
+    },
+    {
+      "id": 114,
+      "file": "src/compiler/scanner.ts",
+      "line": 1161,
+      "column": 87,
+      "originalLine": "    function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: any): void;",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "error",
+      "key": "arg0"
+    },
+    {
+      "id": 115,
+      "file": "src/compiler/scanner.ts",
+      "line": 1162,
+      "column": 94,
+      "originalLine": "    function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: any): void {",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "error",
+      "key": "arg0"
+    }
   ]
 }
