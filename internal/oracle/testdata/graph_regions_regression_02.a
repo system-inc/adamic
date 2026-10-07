@@ -1,0 +1,8 @@
+import type { Weak } from 'adamic';
+interface ListNode {
+	prev: Weak<ListNode>;
+	next: ListNode | undefined;
+}
+const first: ListNode = { prev: undefined, next: undefined };
+first.next = first;
+

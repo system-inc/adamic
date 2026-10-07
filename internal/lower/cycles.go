@@ -96,28 +96,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
-	for _, proven := range finder.seen {
-		if err := finder.slotsOf(proven); err != nil {
-			return err
-		}
-	}
-	for local, declared := range l.result.Locals {
-		if !declared.Captured || declared.Global {
-			continue
-		}
-		proven, node := l.localTypes[local], l.localNodes[local]
-		if proven == nil || node == nil || finder.weak(proven) {
-			continue
-		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) {
-			return &Refused{
-				Where: l.program.Where(node),
-				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-				Fix:   "write the function as a function declaration (function " + declared.Name + "() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
-			}
-		}
-	}
-	return nil
+	return finder.graphTypes(modules)
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is

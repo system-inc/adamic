@@ -1,0 +1,9 @@
+import type { Weak } from 'adamic';
+interface Tree { readonly label: string; child: Tree | undefined; parent: Weak<Tree>; }
+function run(index: number): void {
+ const root: Tree = { label: `root${index}`, child: undefined, parent: undefined };
+ const child: Tree = { label: `child${index}`, child: undefined, parent: root };
+ root.child = child;
+ console.log(`${root.child.label} ${child.parent?.label ?? '-'}`);
+}
+run(3);
