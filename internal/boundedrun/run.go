@@ -26,6 +26,10 @@ const (
 	Shard = 70 * time.Minute
 )
 
+// WithTimeout supplies the execution clock. The default is the standard immediate
+// deadline; nonparallel tests may replace it to arm only after child readiness.
+var WithTimeout = context.WithTimeout
+
 // Cmd owns a child and its bounded wait.
 type Cmd struct {
 	*exec.Cmd
@@ -38,7 +42,7 @@ func Command(limit time.Duration, name string, args ...string) (*Cmd, func()) {
 	if cap, err := strconv.ParseFloat(os.Getenv("ADAMIC_CHILD_DEADLINE"), 64); err == nil && cap > 0 && cap < limit.Seconds() {
 		limit = time.Duration(cap * float64(time.Second))
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	ctx, cancel := WithTimeout(context.Background(), limit)
 	command := CommandContext(ctx, name, args...)
 	return command, cancel
 }
@@ -46,7 +50,7 @@ func Command(limit time.Duration, name string, args ...string) (*Cmd, func()) {
 func (cmd *Cmd) finish(err error) error {
 	_ = Kill(cmd.Cmd)
 	if cmd.context.Err() != nil {
-		return fmt.Errorf("child %s: %w; process group killed", cmd.Path, cmd.context.Err())
+		return fmt.Errorf("child %s: %w; process group killed", cmd.Path, context.Cause(cmd.context))
 	}
 	if errors.Is(err, exec.ErrWaitDelay) {
 		return fmt.Errorf("child %s: output pipe deadline exceeded; process group killed: %w", cmd.Path, err)

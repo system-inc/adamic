@@ -1,0 +1,85 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.059s)
+setup: node ready (0.063s)
+setup: submodules ready (0.111s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s
+setup: markdown dependencies ready (0.142s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.316s)
+setup: gate input css skipped (validated lock and installed bytes); step-duration=0.019s
+setup: gate input graphql skipped (validated lock and installed bytes); step-duration=0.133s
+setup: gate input media-query skipped (validated lock and installed bytes); step-duration=0.007s
+setup: gate input selector skipped (validated lock and installed bytes); step-duration=0.014s
+setup: gate input values skipped (validated lock and installed bytes); step-duration=0.009s
+setup: gate input json-prettier skipped (validated lock and installed bytes); step-duration=0.022s
+setup: gate input css-printer skipped (validated lock and installed bytes); step-duration=0.018s
+setup: gate npm inputs ready (0.456s)
+setup: gate input TypeScript source skipped (validated exact commit and checkout bytes); step-duration=5.864s
+setup: gate input 100 MiB gitignore skipped (validated deterministic 100 MiB bytes); step-duration=0.133s
+setup: gate corpora ready (6.096s)
+setup: downloading module dependencies in /workspace/adamic
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools/customlint/testdata
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tsc
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/ast
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/bundled
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/checker
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/compiler
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/core
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/format
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/incremental
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/locale
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/parser
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/scanner
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tsoptions
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tspath
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/cachedvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/osvfs
+all modules verified
+setup: module dependencies downloaded and verified (20 module directories); step-duration=19.232s
+setup: module dependencies ready (19.409s)
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/../internal/boundedrun/python.py", line 70, in <module>
+    runpy.run_path(script, run_name="__main__")
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 213, in <module>
+    main()
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 208, in main
+    answer = action()
+             ^^^^^^^^
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 203, in <lambda>
+    'archive': [('checker archive', lambda: archive(repository, root))],
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 177, in archive
+    with tempfile.TemporaryDirectory(prefix='checker-', dir=root) as temporary:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 28] No space left on device: '/workspace/adamic-tools/gate-inputs/checker-ww9jjizc'

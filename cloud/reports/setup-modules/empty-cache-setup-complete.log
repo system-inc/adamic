@@ -1,0 +1,30 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.074s)
+setup: node ready (0.081s)
+setup: submodules ready (0.138s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.163s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.322s)
+setup: gate input css skipped (validated lock and installed bytes); step-duration=0.017s
+setup: gate input graphql skipped (validated lock and installed bytes); step-duration=0.124s
+setup: gate input media-query skipped (validated lock and installed bytes); step-duration=0.006s
+setup: gate input selector skipped (validated lock and installed bytes); step-duration=0.019s
+setup: gate input values skipped (validated lock and installed bytes); step-duration=0.011s
+setup: gate input json-prettier skipped (validated lock and installed bytes); step-duration=0.020s
+setup: gate input css-printer skipped (validated lock and installed bytes); step-duration=0.018s
+setup: gate npm inputs ready (0.460s)
+setup: module dependencies skipped (validated manifests and downloaded module cache); step-duration=0.392s
+setup: module dependencies ready (0.592s)
+setup: gate input TypeScript source skipped (validated exact commit and checkout bytes); step-duration=7.861s
+setup: gate input 100 MiB gitignore skipped (validated deterministic 100 MiB bytes); step-duration=0.343s
+setup: gate corpora ready (8.357s)
+setup: gate input checker archive skipped (validated Go actions and archive bytes); step-duration=92.548s
+setup: go build ready (155.029s)
+setup: test binaries deferred (use --warm-tests) (155.261s)
+setup: build cache warm (155.267s)
+setup: build-flags commit=8b5bf1f2dfefb127ce146036c0b067ff4205ded3 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true load-before=2.32 4.64 3.97 2/519 164501 load-after=8.09 6.13 4.64 1/506 166031
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (155.338s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.Mob92i

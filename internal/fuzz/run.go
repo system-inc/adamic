@@ -11,6 +11,8 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync/atomic"
+	"syscall"
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
@@ -61,6 +63,9 @@ type Run struct {
 	Stdout   []byte
 	Stderr   []byte
 	ExitCode int
+	// Signal is the signal that ended the process, by name ("segmentation fault"), or "" when it
+	// exited on its own. ExitCode is then -1.
+	Signal   string
 	TimedOut bool
 }
 
@@ -68,6 +73,15 @@ type Run struct {
 type Verdict string
 
 const (
+	// Crash: native died by a signal or a sanitizer reported a bad access or undefined behavior
+	// (AddressSanitizer, UndefinedBehaviorSanitizer, ThreadSanitizer), or the JavaScript backend died by
+	// a signal, whatever Node did short of misbehaving itself. It's the most dangerous verdict there
+	// is: a type the checker believed that the program's values didn't hold, reaching memory. Node
+	// ending cleanly, or throwing an ordinary JavaScript exception at another point or even at the
+	// same one, doesn't make it less: Node threw, native corrupted memory. Key says which way crashed
+	// and how, as one line ("native AddressSanitizer: heap-use-after-free", "javascript backend
+	// signal: abort trap").
+	Crash Verdict = "crash"
 	// Agreed: all three ways agree, and the sanitizers found nothing.
 	Agreed Verdict = "agreed"
 	// Invalid: the checker refused the program, so the generator wrote something that isn't Adamic.
@@ -82,9 +96,13 @@ const (
 	// Unfit: the program misbehaved on Node itself (it never ended, or printed megabytes), which is
 	// the generator's fault.
 	Unfit Verdict = "unfit"
-	// Finding: a disagreement, a sanitizer report, a leak, a compiler crash, or C that clang refused.
+	// Finding: a disagreement, a leak (LeakSanitizer's report, or a leak run that failed), the compiler
+	// crashing (its own Go panic, not the program's), or C that clang refused.
 	Finding Verdict = "finding"
 )
+
+// Verdicts are every verdict, the most severe first: the order a summary lists them in.
+var Verdicts = []Verdict{Crash, Finding, Agreed, Checked, NotYet, Invalid, Unfit}
 
 // Outcome is a verdict with what it rests on. Key names the kind of finding, so shrinking can keep a
 // candidate only when it still fails the same way.
@@ -163,9 +181,12 @@ func (c *Checkout) build(path string, directory string, javascript bool) (string
 	return binary, nil
 }
 
-// sanitizerReport finds the kind of report a sanitizer wrote, if any: ASan's error name, or UBSan's
-// "runtime error" with its words, numbers taken out so the same bug at another address is the same.
-var sanitizerReport = regexp.MustCompile(`ERROR: AddressSanitizer: ([a-z-]+)|runtime error: ([^\n]*)|ERROR: LeakSanitizer`)
+// sanitizerReport finds the first report of a bad access or undefined behavior a sanitizer wrote, if
+// any: AddressSanitizer's or ThreadSanitizer's headline (ERROR: AddressSanitizer: SEGV on unknown
+// address ..., WARNING: ThreadSanitizer: data race ...), or UndefinedBehaviorSanitizer's "runtime
+// error" with its words. LeakSanitizer's isn't one: a leak is a leak, not memory corruption, and the
+// leak run below makes it a finding.
+var sanitizerReport = regexp.MustCompile(`(?:ERROR|WARNING): ((?:Address|Thread|UndefinedBehavior)Sanitizer): ([^\n]*)|runtime error: ([^\n]*)`)
 
 // clangWarning is the warning -Werror made an error, by its flag, so two kinds of bad C stay apart.
 var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
@@ -185,6 +206,46 @@ var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 // carries the program's own words, and anything else is a JavaScript error with its class's name.
 var javascriptError = regexp.MustCompile(`^adamic: panic: (RangeError|TypeError|ReferenceError|SyntaxError|Error|InternalError)\b`)
 
+// sanitized is a run's first sanitizer report as one line that stays the same when the same bug is
+// at another address: the sanitizer and what it found, without where ("on address 0x...", "(pid=...)")
+// and with its numbers as N. A report Node wrote too is the program's own words, not a sanitizer's.
+func sanitized(run Run, node Run) string {
+	match := sanitizerReport.FindSubmatch(run.Stderr)
+	if match == nil || bytes.Contains(node.Stderr, match[0]) {
+		return ""
+	}
+	if match[1] == nil {
+		return "UndefinedBehaviorSanitizer: runtime error: " + digits.ReplaceAllString(string(match[3]), "N")
+	}
+	what := string(match[2])
+	for _, where := range []string{" on ", " ("} {
+		if index := strings.Index(what, where); index >= 0 {
+			what = what[:index]
+		}
+	}
+	return string(match[1]) + ": " + digits.ReplaceAllString(strings.TrimSpace(what), "N")
+}
+
+// crashed is how native, or the JavaScript backend, crashed, as Crash's Key names it, or "" when
+// neither did. Native's report comes before its signal, since on macOS ASan aborts after every
+// report and the report says more. The JavaScript backend runs on Node, unsanitized, so only a
+// signal counts there: sanitizer words in its stderr are the program's. A run stopped at its
+// deadline was killed by the harness, which is "never finished", not a crash.
+func crashed(outcome Outcome) (string, string) {
+	if !outcome.Native.TimedOut {
+		if report := sanitized(outcome.Native, outcome.Node); report != "" {
+			return "native " + report, firstLines(string(outcome.Native.Stderr), 20)
+		}
+		if outcome.Native.Signal != "" {
+			return "native signal: " + outcome.Native.Signal, firstLines(string(outcome.Native.Stderr), 20)
+		}
+	}
+	if !outcome.Backend.TimedOut && outcome.Backend.Signal != "" {
+		return "javascript backend signal: " + outcome.Backend.Signal, firstLines(string(outcome.Backend.Stderr), 20)
+	}
+	return "", ""
+}
+
 func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
 	switch {
 	case outcome.Node.TimedOut:
@@ -196,12 +257,8 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node printed more than a megabyte", ""
 		return outcome
 	}
-	if match := sanitizerReport.FindSubmatch(outcome.Native.Stderr); match != nil {
-		kind := string(match[1])
-		if kind == "" && match[2] != nil {
-			kind = "undefined behavior: " + digits.ReplaceAllString(string(match[2]), "N")
-		}
-		outcome.Verdict, outcome.Key, outcome.Detail = Finding, "sanitizer: "+kind, firstLines(string(outcome.Native.Stderr), 20)
+	if key, detail := crashed(outcome); key != "" {
+		outcome.Verdict, outcome.Key, outcome.Detail = Crash, key, detail
 		return outcome
 	}
 	var differences []string
@@ -239,8 +296,14 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		return outcome
 	}
 	// Every program that finishes must let go of everything: the same binary again, leak detection on.
+	// LeakSanitizer's report here (on Linux), or any other failure (macOS's ASan aborting because it
+	// has no leak detection), is a leak, a finding. A report of a bad access is a Crash like any other.
 	if outcome.Node.ExitCode == 0 {
 		leaked := execute(directory, []string{"ASAN_OPTIONS=detect_leaks=1"}, 20*time.Second, binary)
+		if report := sanitized(leaked, outcome.Node); report != "" {
+			outcome.Verdict, outcome.Key, outcome.Detail = Crash, "native "+report, firstLines(string(leaked.Stderr), 20)
+			return outcome
+		}
 		if leaked.ExitCode != 0 {
 			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(string(leaked.Stderr), 20)
 			return outcome
@@ -300,11 +363,14 @@ func difference(expected Run, actual Run) string {
 // mini-fixture compile/Node/native maxima were 77ms/84ms/6ms; generated-program
 // package checks completed in 10.9s, so these limits retain ample margin.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	ctx, cancel := boundedrun.WithTimeout(context.Background(), limit)
 	defer cancel()
 	command := boundedrun.CommandContext(ctx, name, arguments...)
 	defer boundedrun.Kill(command.Cmd)
 	command.Dir = directory
+	if profile := coverageProfile(); profile != "" {
+		environment = append(append([]string{}, environment...), "LLVM_PROFILE_FILE="+profile)
+	}
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -320,11 +386,29 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	switch {
 	case err == nil || errors.As(err, &exitError):
 		run.ExitCode = command.ProcessState.ExitCode()
+		if status, ok := command.ProcessState.Sys().(syscall.WaitStatus); ok && status.Signaled() {
+			run.Signal = status.Signal().String()
+		}
 	default:
 		run.ExitCode = -1
 		run.Stderr = append(run.Stderr, []byte(err.Error())...)
 	}
 	return run
+}
+
+// profiles numbers the runs of a coverage measurement, so each one writes its own .profraw.
+var profiles atomic.Uint64
+
+// coverageProfile is where the next run writes its clang coverage profile, when
+// verify/coverage/measure.sh asks for one (native.Options.Coverage): a path no other run of this
+// process or another uses, under ADAMIC_C_COVERAGE_DIRECTORY. Only a binary built with coverage
+// writes it; Node and the compiler ignore it. Empty when nothing is being measured.
+func coverageProfile() string {
+	directory := os.Getenv("ADAMIC_C_COVERAGE_DIRECTORY")
+	if directory == "" || !native.CoverageRequested() {
+		return ""
+	}
+	return filepath.Join(directory, fmt.Sprintf("fuzz-%d-%d-%%p.profraw", os.Getpid(), profiles.Add(1)))
 }
 
 func firstLines(text string, count int) string {

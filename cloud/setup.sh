@@ -146,13 +146,29 @@ if "$gateInputs"; then
 fi
 }
 
+prepareGoAndSignal() {
+	trap ': > "$run/go-failed"' EXIT
+	prepareGo
+	: > "$run/go-ready"
+	trap - EXIT
+}
+
 prepareSubmodules() {
 # cohere, and typescript-go inside it, over HTTPS (the recorded URL is SSH, which clouds can't use).
 cd "$repository"
 bounded 30 git config submodule.cohere.url https://github.com/system-inc/cohere.git
 bounded 600 git submodule update --init --recursive --depth 1 --filter=blob:none
 step "submodules ready"
-
+# Go and submodules must exist before warming the nested workspace graphs.
+# The ready file keeps this in parallel preparation without racing either installer.
+while [ ! -f "$run/go-ready" ]; do
+	[ ! -f "$run/go-failed" ] || return 1
+	sleep 0.05
+done
+[ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-modules.py" "$repository" "$tools" > "$run/modules.log" 2>&1 || { cat "$run/modules.log"; return 1; }
+cat "$run/modules.log"
+step "module dependencies ready"
 }
 
 prepareGateCorpora() {
@@ -166,11 +182,11 @@ prepareGateCorpora() {
 # Bound the preparation shells as well as their individual children. Observed
 # complete setup was 32.8s; 30m also allows cold downloads and toolchain work.
 export started repository cloudSource tools gate run gateInputs gateInputsRoot markdownDependencies goArchitecture nodeArchitecture llvmArchitecture ADAMIC_BOUNDED_REPORT
-export -f bounded step prepareGo prepareClang prepareNode prepareSubmodules prepareGateCorpora
+export -f bounded step prepareGo prepareGoAndSignal prepareClang prepareNode prepareSubmodules prepareGateCorpora
 for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
  export -f "$boundedTool"
 done
-bounded 1800 bash -c "set -euo pipefail; prepareGo" & goProcess=$!
+bounded 1800 bash -c "set -euo pipefail; prepareGoAndSignal" & goProcess=$!
 bounded 1800 bash -c "set -euo pipefail; prepareClang" & clangProcess=$!
 bounded 1800 bash -c "set -euo pipefail; prepareNode" & nodeProcess=$!
 bounded 1800 bash -c "set -euo pipefail; prepareSubmodules" & submoduleProcess=$!
