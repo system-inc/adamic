@@ -26,13 +26,13 @@ func TestReleaseRecursionKeepsFrames(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The runtime archives with the llvm-ar beside clang, when there is one, and with ar otherwise
+	// (native.archiverName). The wrapper stands where clang is, so it needs that llvm-ar beside it;
+	// with none, ar is found on PATH as usual. macOS's ar is an xcrun shim that finds its tool by
+	// the name it's called with, so it must never be linked in as llvm-ar.
 	archiver := filepath.Join(filepath.Dir(resolved), "llvm-ar")
-	_, err = os.Stat(archiver)
-	if err != nil {
-		archiver, err = exec.LookPath("ar")
-	}
-	if err != nil {
-		t.Fatal(err)
+	if _, err := os.Stat(archiver); err != nil {
+		archiver = ""
 	}
 	directory := t.TempDir()
 	log := filepath.Join(directory, "commands.jsonl")
@@ -50,8 +50,10 @@ os.execv(COMPILER, [COMPILER, *args])
 	if err := os.WriteFile(filepath.Join(directory, "clang"), []byte(wrapper), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.Symlink(archiver, filepath.Join(directory, "llvm-ar")); err != nil {
-		t.Fatal(err)
+	if archiver != "" {
+		if err := os.Symlink(archiver, filepath.Join(directory, "llvm-ar")); err != nil {
+			t.Fatal(err)
+		}
 	}
 	originalPath := os.Getenv("PATH")
 	for _, fixture := range []string{"stack_forever.a", "stack_tail_call.a"} {
