@@ -1,3 +1,5 @@
+Historical checkpoint at ae3a6c52. The 17 helpers have since been repaired; current results are in [SCAFFOLDING.md](SCAFFOLDING.md).
+
 Built the Node argument absence and consumption proof; 17 fixtures remain blocked at Error-to-ErrnoException initializers.
 Branch: codex/node-options-widening; refusal-3 merge cbde74ef, latest p2b merge 1d5e5647 (f133f7c7).
 Merged boundary checks pass (6.682s), new Node/native/JavaScript oracle passes (1.283s), restored predicate passes (3.319s).

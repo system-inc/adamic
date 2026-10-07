@@ -1,3 +1,5 @@
+Historical checkpoint at ae3a6c52. The 17 helpers have since been repaired; current results are in [SCAFFOLDING.md](SCAFFOLDING.md).
+
 All 17 sources are unchanged. On the merged refusal-3 compiler their first optional-widening relation is an Error-to-ErrnoException initializer, outside Node argument positions. The complete flow and counts gates independently report the same refusal.
 
 | Fixture | Stage | Location | Missing field |
