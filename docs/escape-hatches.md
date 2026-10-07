@@ -933,3 +933,48 @@ work was still running, using the unit's permitted scoped fallback. Its Go proce
 exited 143 on termination, and all ten remaining child processes were stopped.
 The full gate is not claimed to have passed. The completed scoped commands above
 are the regression evidence for this unit.
+
+## Predicate bodies proven in stage 0
+
+**Built, October 7, 2026.** Written `x is T`, `asserts x is T` and boolean
+`asserts cond` signatures now require proof from their body. The verifier asks the
+pinned checker's flow analysis about each return path, using only direct parameter
+checks: `typeof`, literal `===`/`!==`, discriminant comparisons and nominal class
+`instanceof`, composed with `!`, `&&` and `||`. It accepts blocks, branches,
+explicit returns and assertion fallthrough; throws and runtime panics do not return.
+A guard's true narrowings must match its declared type, and every false return must
+exclude it. Every normal assertion return must have the checker's exact target type.
+
+A rebound parameter is refused, including a write in a captured closure. Calls,
+property reads that may invoke getters, and writes discard previous facts, including
+discriminant facts reached through aliases.
+An unproven return names its location and obligation and recommends inlining the
+check or returning a discriminant comparison. Admitted guards lower as ordinary
+boolean functions; assertions lower as ordinary void functions. Call sites use the
+checker's narrowing. No runtime validator or extra check is inserted.
+
+**Observation.** `proven_guards.a`, `proven_class_guards.a` and
+`proven_assertions.a` agree with source Node and both compiled backends, including
+false branches, narrowing `filter` callbacks, thrown failures, native sanitizers and
+leak checks. Refusal probes include unconditional true, a different variable, stale
+field checks, broader and narrower body types, false-branch lies and empty assertions.
+Each compiler mutant below was caught by a refusal probe becoming accepted, before
+native compilation; none was counted as killed by a build error.
+
+| Mutant | Refusal probe that caught it |
+|---|---|
+| Skip nominal matching | Structurally identical classes with different nominal identity |
+| Accept any body | Unconditional true and empty assertions |
+| Skip the true narrowing comparisons | Wider narrowing: number claimed as literal 1 |
+| Skip the aggregate exact match | Only literal 1 returns true, but number is declared |
+| Skip the false-return proof | A number returns false from an is-number guard |
+| Preserve facts across calls and writes | Stale discriminant calls/getter reads and assertion call invalidation |
+| Permit parameter rebinding | Direct assignment and a captured closure write |
+| Use assignability for assertion matching | A wider optional shape claimed after checking only the kind |
+| Skip assertion postconditions | Empty, early, wider-shape and false-condition assertion returns |
+
+**Limits.** `in` and enums remain refused on the main revision used for this unit.
+Loops, switches, try/finally, opaque or recursive helper summaries, computed property
+checks, default/rest parameters and `this` predicates stay refused by this verifier.
+It caps branching at 256 paths. The separate cohere predicate lint rule is unchanged.
+The historical survey and other hatch decisions above are not remeasured here.

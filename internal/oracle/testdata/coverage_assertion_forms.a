@@ -1,0 +1,11 @@
+import { panic } from 'adamic';
+function assertText(value: string | undefined): asserts value is string { if (value === undefined) { panic('missing text'); } }
+function assertTrue(cond: boolean): asserts cond { if (cond === true) { return; } else { throw new Error('false condition'); } }
+class Checks { assertNumber(value: number | string): asserts value is number { if ('number' !== typeof value) { throw new Error('not number'); } return; } }
+const checks: Checks = new Checks();
+function show(value: number | string): void { try { checks.assertNumber(value); console.log(`${value + 1}`); } catch { console.log('string'); } }
+show(4); show('four');
+function showText(value: string | undefined): void { assertText(value); console.log(value.toUpperCase()); }
+showText('ready');
+function showCondition(value: number | undefined): void { try { assertTrue(value !== undefined); console.log(`${value + 2}`); } catch { console.log('undefined'); } }
+showCondition(6); showCondition(undefined);

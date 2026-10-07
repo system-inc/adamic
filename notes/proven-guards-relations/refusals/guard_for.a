@@ -1,0 +1,1 @@
+function isNumber(x: number | string): x is number { for (let i = 0; i < 1; i++) { if (typeof x === 'number') { return true; } } return false; }

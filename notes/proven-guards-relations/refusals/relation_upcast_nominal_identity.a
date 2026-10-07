@@ -1,0 +1,1 @@
+class A { read(): string { return 'a'; } } class B { read(): string { return 'b'; } } const b = new B(); const checked = b as A;

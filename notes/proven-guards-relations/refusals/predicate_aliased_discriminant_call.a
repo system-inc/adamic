@@ -1,0 +1,1 @@
+type A = { kind: 'a'; n: number }; type B = { kind: 'b'; n: number }; function change(x: A | B): void {} function isA(x: A | B): x is A { if (x.kind === 'a') { change(x); return true; } return false; }

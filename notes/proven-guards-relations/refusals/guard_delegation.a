@@ -1,0 +1,1 @@
+function check(x: string | number): boolean { return typeof x === 'number'; } function isNumber(x: string | number): x is number { return check(x); }

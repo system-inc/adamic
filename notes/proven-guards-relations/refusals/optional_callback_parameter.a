@@ -1,0 +1,1 @@
+interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } const callback = (x: Counted): string => x.name; const checked = callback as (x: Named) => string;

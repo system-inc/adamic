@@ -1,0 +1,1 @@
+function isOne(x: number | string): x is 1 { return typeof x === 'number'; }

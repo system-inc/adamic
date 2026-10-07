@@ -1,0 +1,376 @@
+[
+  {
+    "file": "internal/oracle/testdata/coverage_assertion_forms.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_assertion_forms.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_assertion_forms"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_assertion_forms.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_assertion_forms"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "5\nstring\nREADY\n8\nundefined\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "5\nstring\nREADY\n8\nundefined\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_guard_imports.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_guard_imports.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_guard_imports"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_guard_imports.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_guard_imports"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "3\n4\n5\nbranch\n3\ncaught branch\nobserve\n3\nfalse\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "3\n4\n5\nbranch\n3\ncaught branch\nobserve\n3\nfalse\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_guard_imports_helper.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_guard_imports_helper.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_guard_imports_helper"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_guard_imports_helper.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_guard_imports_helper"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_guard_literals.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_guard_literals.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_guard_literals"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_guard_literals.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_guard_literals"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "2\ntrue\nfalse\ntrue\n7\nOK\nabsent\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "2\ntrue\nfalse\ntrue\n7\nOK\nabsent\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_guard_match_null.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_guard_match_null.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_guard_match_null"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_guard_match_null.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_guard_match_null"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "yes\nmissing\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "yes\nmissing\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_guard_nodes.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_guard_nodes.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_guard_nodes"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_guard_nodes.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_guard_nodes"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "name,42\nname\n1\nname\n42\n9\nname,42\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "name,42\nname\n1\nname\n42\n9\nname,42\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_guard_tags.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_guard_tags.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_guard_tags"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_guard_tags.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_guard_tags"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "first\n2\non\n0\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "first\n2\non\n0\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_relation_array_literals.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_relation_array_literals.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_relation_array_literals"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_relation_array_literals.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_relation_array_literals"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "entry:a:0,entry:b:2\nfirst 3\nnested\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "entry:a:0,entry:b:2\nfirst 3\nnested\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_relation_containers.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_relation_containers.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_relation_containers"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_relation_containers.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_relation_containers"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "one,two\n1,0,3\ntrue one\ntrue 2\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "one,two\n1,0,3\ntrue one\ntrue 2\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_relation_fresh_copies.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_relation_fresh_copies.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_relation_fresh_copies"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_relation_fresh_copies.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_relation_fresh_copies"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "one,two,new\none,two,new\none,two,one,new\none,two,new\n1 2 1\n2 1 1\n3 2\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "one,two,new\none,two,new\none,two,one,new\none,two,new\n1 2 1\n2 1 1\n3 2\n",
+      "stderr": ""
+    },
+    "passed": true
+  },
+  {
+    "file": "internal/oracle/testdata/coverage_relation_views.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/coverage_relation_views.a",
+      "-o",
+      "/tmp/adamic-gate/coverage_relation_views"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/coverage_relation_views.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/coverage_relation_views"
+    ],
+    "build_exit": 0,
+    "build_output": "",
+    "node": {
+      "exit": 0,
+      "stdout": "7\nitem\ncopy 7\n8 item\nitem true\nitem\nitem\nother\nitem,fresh\nitem\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "7\nitem\ncopy 7\n8 item\nitem true\nitem\nitem\nother\nitem,fresh\nitem\n",
+      "stderr": ""
+    },
+    "passed": true
+  }
+]

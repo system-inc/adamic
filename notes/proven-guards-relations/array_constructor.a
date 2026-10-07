@@ -1,0 +1,6 @@
+interface Named { readonly name: string }
+interface Counted extends Named { readonly count?: number }
+const one: Counted = { name: 'one', count: 1 };
+const two: Counted = { name: 'two', count: 2 };
+const copy = new Array<Counted>(one, two) as Named[];
+console.log(copy[0]?.name ?? 'missing');

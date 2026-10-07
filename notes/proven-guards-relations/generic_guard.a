@@ -1,0 +1,5 @@
+type Leaf = { readonly kind: 'leaf'; readonly value: number };
+type Branch = { readonly kind: 'branch'; readonly label: string };
+function isLeaf<T extends Leaf | Branch>(node: T): node is T & Leaf { return node.kind === 'leaf'; }
+function show(node: Leaf | Branch): void { if (isLeaf(node)) { console.log(`${node.value}`); } else { console.log(node.label); } }
+show({ kind: 'leaf', value: 3 }); show({ kind: 'branch', label: 'oak' });

@@ -1,0 +1,1 @@
+interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } const values: Counted[] = []; const checked = values as Named[];

@@ -1,0 +1,1 @@
+interface Named { readonly name: string } const x: readonly Named[] = [{name:'a'}]; const checked = [...x] satisfies readonly { readonly name: string; readonly count?: number }[];

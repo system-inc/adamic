@@ -1,0 +1,1 @@
+interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } const holder: { pet: Counted } = { pet: { name: 'a' } }; const checked = holder satisfies { pet: Named };

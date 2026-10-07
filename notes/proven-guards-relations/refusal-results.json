@@ -1,0 +1,1042 @@
+[
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_unconditional_true.a",
+    "expected": "true return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_unconditional_true.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_unconditional_true.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to string | number, not number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_different_variable.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_different_variable.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_different_variable.a:1:78: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_wider_narrowing.a",
+    "expected": "true return narrows to number, not 1",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_wider_narrowing.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_wider_narrowing.a:1:46: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to number, not 1); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_partial_true_set.a",
+    "expected": "does not match",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_partial_true_set.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_partial_true_set.a:1:69: Adamic 0.1 refuses a type predicate whose return is not proven (the body's true narrowing does not match number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_narrower_narrowing.a",
+    "expected": "false return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_narrower_narrowing.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_narrower_narrowing.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (false return can still contain number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_false_branch_lie.a",
+    "expected": "false return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_false_branch_lie.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_false_branch_lie.a:1:83: Adamic 0.1 refuses a type predicate whose return is not proven (false return can still contain number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_positive_number.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_positive_number.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_positive_number.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_opaque_call.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_opaque_call.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_opaque_call.a:1:115: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_modified_parameter.a",
+    "expected": "parameter is assigned",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_modified_parameter.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_modified_parameter.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (the predicate parameter is assigned); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_captured_write.a",
+    "expected": "parameter is assigned",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_captured_write.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_captured_write.a:1:83: Adamic 0.1 refuses a type predicate whose return is not proven (the predicate parameter is assigned); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_call.a",
+    "expected": "true return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_call.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_aliased_discriminant_call.a:1:172: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to A | B, not A); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_write.a",
+    "expected": "true return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_write.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_aliased_discriminant_write.a:1:193: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to A | B, not A); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_getter.a",
+    "expected": "true return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_getter.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_aliased_discriminant_getter.a:1:185: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to A | B, not A); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_wider_shape.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assertion_wider_shape.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assertion_wider_shape.a:1:180: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed x to Claimed); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_nominal_guard_mismatch.a",
+    "expected": "true return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_nominal_guard_mismatch.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_nominal_guard_mismatch.a:1:112: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to B, not A); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_nominal_assertion_mismatch.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_nominal_assertion_mismatch.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_nominal_assertion_mismatch.a:1:100: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed x to A); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_empty.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assertion_empty.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assertion_empty.a:1:64: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed x to number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_early_return.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assertion_early_return.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assertion_early_return.a:1:66: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed x to number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_wrong_branch.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assertion_wrong_branch.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assertion_wrong_branch.a:1:64: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed x to number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_call_invalidation.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assertion_call_invalidation.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assertion_call_invalidation.a:1:127: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed x to A); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assert_cond_empty.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assert_cond_empty.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assert_cond_empty.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed cond to true); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assert_cond_false.a",
+    "expected": "normal return",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assert_cond_false.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assert_cond_false.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed cond to true); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assert_cond_nonboolean.a",
+    "expected": "boolean parameter",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_assert_cond_nonboolean.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_assert_cond_nonboolean.a:1:41: Adamic 0.1 refuses a type predicate whose return is not proven (asserts cond needs a boolean parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_bodyless_signature.a",
+    "expected": "no body",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_bodyless_signature.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_bodyless_signature.a:1:38: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_default_argument.a",
+    "expected": "unchanged plain parameter",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_default_argument.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_default_argument.a:1:44: Adamic 0.1 refuses a type predicate whose return is not proven (the predicate must name an unchanged plain parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_unknown_control_flow.a",
+    "expected": "return paths",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/predicate_unknown_control_flow.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/predicate_unknown_control_flow.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (return paths through KindWhileStatement are not verified); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_mutable_array.a",
+    "expected": "can write Animal where Dog is read",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_mutable_array.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_mutable_array.a:5:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_mutable_array.a",
+    "expected": "can write Animal where Dog is read",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_upcast_mutable_array.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_upcast_mutable_array.a:5:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_mutable_field.a",
+    "expected": "can write Animal where Dog is read",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_mutable_field.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_mutable_field.a:5:60: Adamic 0.1 refuses a value of type { pet: Dog; } seen as { pet: Animal; }, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_nested_mutable_literal.a",
+    "expected": "can write Animal where Dog is read",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_nested_mutable_literal.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_nested_mutable_literal.a:5:26: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_readonly_to_writable.a",
+    "expected": "readonly field pet becomes writable",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_readonly_to_writable.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_readonly_to_writable.a:5:69: Adamic 0.1 refuses a value of type { readonly pet: Dog; } seen as { pet: Dog; }, whose readonly field pet becomes writable: a readonly field may hold something narrower than Dog, which a write of Dog would replace; keep pet readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_function_parameter.a",
+    "expected": "function taking Dog",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_function_parameter.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_function_parameter.a:5:129: Adamic 0.1 refuses a function taking Dog seen as one taking Animal (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_function_parameter.a",
+    "expected": "function taking Dog",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_upcast_function_parameter.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_upcast_function_parameter.a:5:129: Adamic 0.1 refuses a function taking Dog seen as one taking Animal (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_nominal_identity.a",
+    "expected": "nominal ancestry for A",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_upcast_nominal_identity.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_upcast_nominal_identity.a:1:122: Adamic 0.1 refuses an unproven relation from B to A: nominal ancestry for A; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_nominal_identity.a",
+    "expected": "nominal ancestry for A",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_nominal_identity.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_nominal_identity.a:1:61: Adamic 0.1 refuses an unproven relation from { read: () => string; } to A: nominal ancestry for A; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_hidden_optional.a",
+    "expected": "optional field count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_hidden_optional.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_hidden_optional.a:1:113: Adamic 0.1 refuses an unproven relation from { readonly name: string; } to { readonly name: string; readonly count?: number; }: optional field count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_hidden_optional.a",
+    "expected": "optional field count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_upcast_hidden_optional.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_upcast_hidden_optional.a:1:113: Adamic 0.1 refuses an unproven relation from { readonly name: string; } to { readonly name: string; readonly count?: number; }: optional field count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_mutable_optional_elements.a",
+    "expected": "optional field element.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_upcast_mutable_optional_elements.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_upcast_mutable_optional_elements.a:1:149: Adamic 0.1 refuses an unproven relation from Counted[] to Named[]: optional field element.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_mutable_optional_field.a",
+    "expected": "optional field pet.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_mutable_optional_field.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_mutable_optional_field.a:1:176: Adamic 0.1 refuses an unproven relation from { pet: Counted; } to { pet: Named; }: optional field pet.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_invariant_optional_class_argument.a",
+    "expected": "optional field type argument.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_upcast_invariant_optional_class_argument.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_upcast_invariant_optional_class_argument.a:1:246: Adamic 0.1 refuses an unproven relation from Box<Counted> to Box<Named>: optional field type argument.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_nested_optional.a",
+    "expected": "optional field element.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/relation_satisfies_nested_optional.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/relation_satisfies_nested_optional.a:1:139: Adamic 0.1 refuses an unproven relation from { readonly name: string; }[] to readonly { readonly name: string; readonly count?: number; }[]: optional field element.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_delegation.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_delegation.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_delegation.a:1:132: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_computed.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_computed.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_computed.a:1:100: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_optional_chain.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_optional_chain.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_optional_chain.a:1:100: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_alias.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_alias.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_alias.a:1:71: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_rest.a",
+    "expected": "rest parameter",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_rest.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "notes/proven-guards-relations/refusals/guard_rest.a:1:48: error TS1229: A type predicate cannot reference a rest parameter.\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_this.a",
+    "expected": "no body",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_this.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_this.a:1:18: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/assertion_value.a",
+    "expected": "TS2322",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/assertion_value.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "notes/proven-guards-relations/refusals/assertion_value.a:1:66: error TS2322: Type 'boolean' is not assignable to type 'void'.\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_implicit.a",
+    "expected": "TS2366",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_implicit.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "notes/proven-guards-relations/refusals/guard_implicit.a:1:40: error TS2366: Function lacks ending return statement and return type does not include 'undefined'.\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_branch_call.a",
+    "expected": "branch is not a trusted",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_branch_call.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_branch_call.a:1:115: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_callback_result.a",
+    "expected": "optional field count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_callback_result.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_callback_result.a:1:163: Adamic 0.1 refuses an unproven relation from () => Named to () => Counted: optional field count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_callback_parameter.a",
+    "expected": "optional field parameter.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_callback_parameter.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_callback_parameter.a:1:168: Adamic 0.1 refuses an unproven relation from (x: Counted) => string to (x: Named) => string: optional field parameter.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_spread.a",
+    "expected": "optional field count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_spread.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_spread.a:1:88: Adamic 0.1 refuses an unproven relation from { name: string; } to { readonly name: string; readonly count?: number; }: optional field count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_shorthand.a",
+    "expected": "optional field x.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_shorthand.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_shorthand.a:1:88: Adamic 0.1 refuses an unproven relation from { x: Named; } to { readonly x: { readonly name: string; readonly count?: number; }; }: optional field x.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_spread_array.a",
+    "expected": "optional field element.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_spread_array.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_spread_array.a:1:101: Adamic 0.1 refuses an unproven relation from Named[] to readonly { readonly name: string; readonly count?: number; }[]: optional field element.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_tuple.a",
+    "expected": "optional field element.count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_tuple.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_tuple.a:1:119: Adamic 0.1 refuses an unproven relation from readonly [Named, Named] to readonly { readonly name: string; readonly count?: number; }[]: optional field element.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_generic.a",
+    "expected": "optional field count",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/optional_generic.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/optional_generic.a:1:104: Adamic 0.1 refuses an unproven relation from T to { readonly name: string; readonly count?: number; }: optional field count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_path_limit.a",
+    "expected": "too many return paths",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_path_limit.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_path_limit.a:11:1: Adamic 0.1 refuses a type predicate whose return is not proven (too many return paths to prove); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_switch.a",
+    "expected": "return paths",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_switch.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_switch.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (return paths through KindSwitchStatement are not verified); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_for.a",
+    "expected": "return paths",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_for.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_for.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (return paths through KindForStatement are not verified); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_try.a",
+    "expected": "return paths",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_try.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_try.a:1:54: Adamic 0.1 refuses a type predicate whose return is not proven (return paths through KindTryStatement are not verified); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_nested_property.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_nested_property.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_nested_property.a:1:138: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_literal_alias.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_literal_alias.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_literal_alias.a:1:118: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_negative_literal.a",
+    "expected": "return expression",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/refusals/guard_negative_literal.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/refusals/guard_negative_literal.a:1:43: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/generic_guard.a",
+    "expected": "true return narrows to T, not T & Leaf",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/generic_guard.a",
+      "-o",
+      "/tmp/adamic-gate/proven-refusal"
+    ],
+    "exit": 1,
+    "output": "adamic: /workspace/adamic/notes/proven-guards-relations/generic_guard.a:3:71: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to T, not T & Leaf); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "passed": true
+  }
+]

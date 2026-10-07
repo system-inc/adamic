@@ -1,0 +1,15 @@
+import { Leaf as TokenLeaf, Branch as TokenBranch, isLeaf } from './coverage_guard_imports_helper.a';
+function isImportedLeaf(node: TokenLeaf | TokenBranch): node is TokenLeaf { return node instanceof TokenLeaf; }
+const nodes: readonly (TokenLeaf | TokenBranch)[] = [new TokenLeaf(3), new TokenBranch('branch')];
+const alias = isImportedLeaf;
+const stored = { guard: isImportedLeaf };
+console.log(nodes.filter(isLeaf).map(node => `${node.value}`).join(','));
+console.log(nodes.filter(alias).map(node => `${node.value + 1}`).join(','));
+for (const node of nodes) { if (stored.guard(node)) { console.log(`${node.value + 2}`); } else { console.log(node.label); } }
+function isLeafOrThrow(node: TokenLeaf | TokenBranch): node is TokenLeaf { if (node instanceof TokenLeaf) { return true; } throw new Error('branch'); }
+for (const node of nodes) { try { if (isLeafOrThrow(node)) { console.log(`${node.value}`); } } catch { console.log('caught branch'); } }
+function observe(): void { console.log('observe'); }
+function rechecked(node: TokenLeaf | TokenBranch): node is TokenLeaf { if (node instanceof TokenLeaf) { observe(); return node instanceof TokenLeaf; } return false; }
+console.log(nodes.filter(rechecked).map(node => `${node.value}`).join(','));
+function isNever(value: string): value is never { return false; }
+console.log(`${isNever('text')}`);

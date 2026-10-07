@@ -1,0 +1,1 @@
+const actual = { name: 'a', count: 'wrong' }; const hidden: { readonly name: string } = actual; const checked = hidden satisfies { readonly name: string; readonly count?: number };

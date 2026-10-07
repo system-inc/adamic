@@ -1,0 +1,1 @@
+type A = { kind: 'a' }; type B = { kind: 'b' }; class Reader { get value(): number { return 1; } } function isA(x: A | B, reader: Reader): x is A { if (x.kind === 'a') { reader.value; return true; } return false; }

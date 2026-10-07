@@ -1,0 +1,262 @@
+[
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_unconditional_true.a",
+    "expected": "true return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_different_variable.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_wider_narrowing.a",
+    "expected": "true return narrows to number, not 1"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_partial_true_set.a",
+    "expected": "does not match"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_narrower_narrowing.a",
+    "expected": "false return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_false_branch_lie.a",
+    "expected": "false return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_positive_number.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_opaque_call.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_modified_parameter.a",
+    "expected": "parameter is assigned"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_captured_write.a",
+    "expected": "parameter is assigned"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_call.a",
+    "expected": "true return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_write.a",
+    "expected": "true return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_aliased_discriminant_getter.a",
+    "expected": "true return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_wider_shape.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_nominal_guard_mismatch.a",
+    "expected": "true return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_nominal_assertion_mismatch.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_empty.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_early_return.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_wrong_branch.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assertion_call_invalidation.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assert_cond_empty.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assert_cond_false.a",
+    "expected": "normal return"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_assert_cond_nonboolean.a",
+    "expected": "boolean parameter"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_bodyless_signature.a",
+    "expected": "no body"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_default_argument.a",
+    "expected": "unchanged plain parameter"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/predicate_unknown_control_flow.a",
+    "expected": "return paths"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_mutable_array.a",
+    "expected": "can write Animal where Dog is read"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_mutable_array.a",
+    "expected": "can write Animal where Dog is read"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_mutable_field.a",
+    "expected": "can write Animal where Dog is read"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_nested_mutable_literal.a",
+    "expected": "can write Animal where Dog is read"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_readonly_to_writable.a",
+    "expected": "readonly field pet becomes writable"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_function_parameter.a",
+    "expected": "function taking Dog"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_function_parameter.a",
+    "expected": "function taking Dog"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_nominal_identity.a",
+    "expected": "nominal ancestry for A"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_nominal_identity.a",
+    "expected": "nominal ancestry for A"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_hidden_optional.a",
+    "expected": "optional field count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_hidden_optional.a",
+    "expected": "optional field count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_mutable_optional_elements.a",
+    "expected": "optional field element.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_mutable_optional_field.a",
+    "expected": "optional field pet.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_upcast_invariant_optional_class_argument.a",
+    "expected": "optional field type argument.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/relation_satisfies_nested_optional.a",
+    "expected": "optional field element.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_delegation.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_computed.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_optional_chain.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_alias.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_rest.a",
+    "expected": "rest parameter"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_this.a",
+    "expected": "no body"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/assertion_value.a",
+    "expected": "TS2322"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_implicit.a",
+    "expected": "TS2366"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_branch_call.a",
+    "expected": "branch is not a trusted"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_callback_result.a",
+    "expected": "optional field count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_callback_parameter.a",
+    "expected": "optional field parameter.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_spread.a",
+    "expected": "optional field count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_shorthand.a",
+    "expected": "optional field x.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_spread_array.a",
+    "expected": "optional field element.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_tuple.a",
+    "expected": "optional field element.count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/optional_generic.a",
+    "expected": "optional field count"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_path_limit.a",
+    "expected": "too many return paths"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_switch.a",
+    "expected": "return paths"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_for.a",
+    "expected": "return paths"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_try.a",
+    "expected": "return paths"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_nested_property.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_literal_alias.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/refusals/guard_negative_literal.a",
+    "expected": "return expression"
+  },
+  {
+    "file": "notes/proven-guards-relations/generic_guard.a",
+    "expected": "true return narrows to T, not T & Leaf"
+  }
+]

@@ -1,0 +1,17 @@
+interface Named { readonly name: string }
+interface Counted extends Named { readonly count?: number }
+const one: Counted = { name: 'one', count: 1 };
+const two: Counted = { name: 'two' };
+const values: Counted[] = [one, two];
+const readonlyValues = values as readonly Named[];
+console.log(readonlyValues.map(value => value.name).join(','));
+const spread = [...values, { name: 'three', count: 3 }] satisfies readonly Counted[];
+console.log(spread.map(value => value.count ?? 0).join(','));
+const map = new Map<string, Counted>(); map.set('one', one); map.set('two', two);
+const checkedMap = map satisfies ReadonlyMap<string, Named>;
+const mapView = map as ReadonlyMap<string, Named>;
+console.log(`${checkedMap === map} ${mapView.get('one')?.name ?? 'missing'}`);
+const set = new Set<Counted>(); set.add(one); set.add(two);
+const checkedSet = set satisfies ReadonlySet<Named>;
+const setView = set as ReadonlySet<Named>;
+console.log(`${checkedSet === set} ${setView.size}`);

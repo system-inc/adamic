@@ -1,0 +1,1 @@
+type A = { kind: 'a'; n: number }; type B = { kind: 'b'; n: number }; function isA(x: A | B): x is A { const alias: { kind: 'a' | 'b'; n: number } = x; if (x.kind === 'a') { alias.kind = 'b'; return true; } return false; }

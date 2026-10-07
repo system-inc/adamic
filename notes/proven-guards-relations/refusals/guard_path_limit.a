@@ -1,0 +1,12 @@
+function isNumber(x: number | string): x is number {
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+if (typeof x === 'number') { ; }
+return typeof x === 'number';
+}

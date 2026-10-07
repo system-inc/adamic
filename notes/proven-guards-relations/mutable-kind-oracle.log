@@ -1,0 +1,22 @@
+Command: go test ./internal/oracle -run TestNativeAgreesWithNode/notes/proven-guards-relations/mutable_kind_guard[.]a -count=1 -timeout 30m -v
+Exit: 1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/notes/proven-guards-relations/mutable_kind_guard.a
+=== PAUSE TestNativeAgreesWithNode/notes/proven-guards-relations/mutable_kind_guard.a
+=== CONT  TestNativeAgreesWithNode/notes/proven-guards-relations/mutable_kind_guard.a
+    oracle_test.go:611: exit codes differ
+        node:   exit 0, stdout "branch undefined\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:624: leaks:
+        exit 70
+        adamic: panic: compiler bug: a field the checker proved is there is missing
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/notes/proven-guards-relations/mutable_kind_guard.a (0.43s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.435s
+FAIL

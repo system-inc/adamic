@@ -1,0 +1,7 @@
+interface Entry { readonly kind: 'entry'; readonly name: string; readonly count?: number }
+const values = [{ kind: 'entry', name: 'a' }, { kind: 'entry', name: 'b', count: 2 }] satisfies readonly Entry[];
+console.log(values.map(value => `${value.kind}:${value.name}:${value.count ?? 0}`).join(','));
+const tuple = [{ name: 'first', count: 1 }, { name: 'second', count: 3 }] satisfies readonly [{ readonly name: string; readonly count?: number }, { readonly name: string; readonly count?: number }];
+console.log(`${tuple[0].name} ${tuple[1].count}`);
+const exact = ({ item: ({ name: 'nested' }) } satisfies { readonly item: { readonly name: string; readonly count?: number } });
+console.log(exact.item.name);

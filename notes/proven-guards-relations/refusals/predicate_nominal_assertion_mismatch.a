@@ -1,0 +1,1 @@
+class A { readonly n = 1; } class B { readonly n = 1; } function assertA(x: A | B): asserts x is A { if (!(x instanceof B)) { throw new Error('other'); } }

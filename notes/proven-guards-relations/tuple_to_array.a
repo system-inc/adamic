@@ -1,0 +1,12 @@
+interface Named { readonly name: string }
+interface Counted extends Named { readonly count?: number }
+const one: Counted = { name: 'one', count: 1 };
+const two: Counted = { name: 'two' };
+const values: Counted[] = [one, two];
+const readonlyValues = values as readonly Named[];
+console.log(readonlyValues.map(value => value.name).join(','));
+const spread = [...values, { name: 'three', count: 3 }] satisfies readonly Counted[];
+console.log(spread.map(value => value.count ?? 0).join(','));
+const tuple: readonly [Counted, Counted] = [one, two];
+const array = tuple as readonly Named[];
+console.log(array.map(value => value.name).join(','));

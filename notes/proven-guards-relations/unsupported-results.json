@@ -1,0 +1,218 @@
+[
+  {
+    "file": "notes/proven-guards-relations/tuple_to_array.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/tuple_to_array.a",
+      "-o",
+      "/tmp/adamic-gate/tuple_to_array"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/tuple_to_array.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/tuple_to_array.a:11:15: stage 0 can't lower a readonly [Counted, Counted] seen as a readonly Named[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "one,two\n1,0,3\none,two\n",
+      "stderr": ""
+    },
+    "expected": "a tuple is held as an object",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/exact_optional_tuple.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/exact_optional_tuple.a",
+      "-o",
+      "/tmp/adamic-gate/exact_optional_tuple"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/exact_optional_tuple.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/exact_optional_tuple.a:1:15: Adamic 0.1 refuses an unproven relation from [{ name: string; }, { name: string; count: number; }] to readonly [{ readonly name: string; readonly count?: number; }, { readonly name: string; readonly count?: number; }]: optional field element.count has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "first 3\n",
+      "stderr": ""
+    },
+    "expected": "optional field element.count",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/nullable_primitives.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/nullable_primitives.a",
+      "-o",
+      "/tmp/adamic-gate/nullable_primitives"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/nullable_primitives.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/nullable_primitives.a:1:17: stage 0 can't lower a value of type number | null yet\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "2\ntrue\nfalse\nnull\n4\ntrue\n7\nOK\nabsent\nabsent\n",
+      "stderr": ""
+    },
+    "expected": "number | null",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/unknown_guard.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/unknown_guard.a",
+      "-o",
+      "/tmp/adamic-gate/unknown_guard"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/unknown_guard.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/unknown_guard.a:1:19: stage 0 can't lower a value of type unknown yet\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "5\nother\n",
+      "stderr": ""
+    },
+    "expected": "a value of type unknown",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/generic_guard.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/generic_guard.a",
+      "-o",
+      "/tmp/adamic-gate/generic_guard"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/generic_guard.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/generic_guard.a:3:71: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to T, not T & Leaf); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "3\noak\n",
+      "stderr": ""
+    },
+    "expected": "true return narrows to T, not T & Leaf",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/array_from_iterable.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/array_from_iterable.a",
+      "-o",
+      "/tmp/adamic-gate/array_from_iterable"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/array_from_iterable.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/array_from_iterable.a:4:14: stage 0 can't lower Array.from with other than { length } and a callback yet\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "one\n",
+      "stderr": ""
+    },
+    "expected": "Array.from with other than { length } and a callback",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/array_constructor.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/array_constructor.a",
+      "-o",
+      "/tmp/adamic-gate/array_constructor"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/array_constructor.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/array_constructor.a:5:14: stage 0 can't lower new an Identifier yet\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "one\n",
+      "stderr": ""
+    },
+    "expected": "new an Identifier",
+    "passed": true
+  },
+  {
+    "file": "notes/proven-guards-relations/primitive_filter_guard.a",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/primitive_filter_guard.a",
+      "-o",
+      "/tmp/adamic-gate/primitive_filter_guard"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/primitive_filter_guard.a"
+    ],
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/notes/proven-guards-relations/primitive_filter_guard.a:2:46: stage 0 can't lower an array of string | number yet\nexit status 1\n",
+    "node": {
+      "exit": 0,
+      "stdout": "1,2\n",
+      "stderr": ""
+    },
+    "expected": "an array of string | number",
+    "passed": true
+  }
+]

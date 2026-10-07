@@ -1,0 +1,9 @@
+type First = { readonly kind: 1; readonly text: string };
+type Second = { readonly kind: 2; readonly value: number };
+function isFirst(value: First | Second): value is First { return value.kind === 1; }
+function isSecond(value: First | Second): value is Second { if (value.kind === 1) { return false; } return true; }
+for (const value of [{ kind: 1, text: 'first' }, { kind: 2, value: 2 }] satisfies readonly (First | Second)[]) { if (isFirst(value)) { console.log(value.text); } else if (isSecond(value)) { console.log(`${value.value}`); } }
+type Enabled = { readonly enabled: true; readonly text: string };
+type Disabled = { readonly enabled: false; readonly value: number };
+function isEnabled(value: Enabled | Disabled): value is Enabled { return true === value.enabled; }
+for (const value of [{ enabled: true, text: 'on' }, { enabled: false, value: 0 }] satisfies readonly (Enabled | Disabled)[]) { if (isEnabled(value)) { console.log(value.text); } else { console.log(`${value.value}`); } }

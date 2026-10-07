@@ -1,0 +1,2 @@
+const tuple = [{ name: 'first' }, { name: 'second', count: 3 }] satisfies readonly [{ readonly name: string; readonly count?: number }, { readonly name: string; readonly count?: number }];
+console.log(`${tuple[0].name} ${tuple[1].count}`);

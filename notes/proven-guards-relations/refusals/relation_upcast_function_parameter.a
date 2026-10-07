@@ -1,0 +1,5 @@
+interface Animal { readonly name: string }
+interface Dog extends Animal { readonly bark: () => string }
+const dog: Dog = { name: 'rex', bark: () => 'woof' };
+const dogs: Dog[] = [dog];
+interface Handler { run(value: Animal): string } const handler = { run: (value: Dog): string => value.bark() }; const checked = handler as Handler;

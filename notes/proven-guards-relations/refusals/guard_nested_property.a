@@ -1,0 +1,1 @@
+type A = { readonly node: { readonly kind: 'a' } }; type B = { readonly node: { readonly kind: 'b' } }; function isA(x: A | B): x is A { return x.node.kind === 'a'; }

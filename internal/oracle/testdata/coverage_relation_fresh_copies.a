@@ -1,0 +1,20 @@
+interface Named { readonly name: string }
+interface Counted extends Named { readonly count?: number }
+const one: Counted = { name: 'one', count: 1 };
+const two: Counted = { name: 'two', count: 2 };
+const values: Counted[] = [one, two];
+const sliced = values.slice() as Named[];
+const filtered = values.filter(value => value.name === 'one') satisfies Named[];
+const mapped = values.map(value => value) as Named[];
+const concatenated = values.concat([one]) as Named[];
+const copied = Array.from({ length: values.length }, (_, index) => values[index] ?? two) as Named[];
+for (const copy of [sliced, mapped, concatenated, copied]) { copy.push({ name: 'new' }); console.log(copy.map(value => value.name).join(',')); }
+console.log(`${filtered[0]?.count ?? 0} ${values.length} ${values[0]?.count ?? 0}`);
+const map = new Map<string, Counted>(); map.set('one', one);
+const mapCopy = new Map<string, Counted>(map) as Map<string, Named>;
+mapCopy.set('new', { name: 'new' });
+console.log(`${mapCopy.size} ${map.size} ${map.get('one')?.count ?? 0}`);
+const set = new Set<Counted>(values);
+const setCopy = new Set<Counted>(set) as Set<Named>;
+setCopy.add({ name: 'new' });
+console.log(`${setCopy.size} ${set.size}`);

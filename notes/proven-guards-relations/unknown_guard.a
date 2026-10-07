@@ -1,0 +1,3 @@
+function isNumber(value: unknown): value is number { return typeof value === 'number'; }
+function show(value: unknown): void { if (isNumber(value)) { console.log(`${value + 1}`); } else { console.log('other'); } }
+show(4); show('four');

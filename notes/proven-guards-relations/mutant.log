@@ -1,0 +1,16 @@
+Mutation: internal/lower/predicates.go:249
+return p.check(binary.Left) && p.check(binary.Right) -> return false
+Command: go test ./internal/oracle -run TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes[.]a -count=1 -timeout 30m -v
+Exit: 1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a
+    oracle_test.go:588: Lower: /workspace/adamic/internal/oracle/testdata/coverage_guard_nodes.a:6:2: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.045s
+FAIL

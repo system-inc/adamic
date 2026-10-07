@@ -1,0 +1,1 @@
+function assertNumber(x: number | string): asserts x is number { return; }

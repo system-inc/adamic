@@ -1,0 +1,1 @@
+function isNumber(x: number | string): x is number { if (x === 1) { return true; } throw new Error("rest"); }

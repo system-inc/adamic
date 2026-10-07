@@ -1,0 +1,7 @@
+type Leaf = { kind: 'leaf'; readonly value: number };
+type Branch = { kind: 'branch'; readonly label: string };
+type SyntaxNode = Leaf | Branch;
+function change(node: SyntaxNode): void { node.kind = 'branch'; }
+function isBranch(node: SyntaxNode): node is Branch { return node.kind === 'branch'; }
+function show(node: SyntaxNode): void { change(node); if (isBranch(node)) { console.log(`branch ${node.label}`); } }
+show({ kind: 'leaf', value: 4 });

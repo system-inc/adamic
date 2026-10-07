@@ -1,0 +1,1 @@
+function isNumber(x: number | string): x is number { switch (typeof x) { case 'number': return true; default: return false; } }

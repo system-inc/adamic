@@ -1,0 +1,1 @@
+function isNumbers(...x: (number | string)[]): x is number[] { return true; }

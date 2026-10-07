@@ -1,0 +1,10 @@
+function isTwo(value: 1 | 2 | 3): value is 2 { return 2 === value; }
+function isTrue(value: boolean): value is true { return value === true; }
+function isBoolean(value: number | boolean): value is boolean { return 'boolean' === typeof value; }
+function isPresent(value: string | undefined): value is string { return undefined !== value; }
+const numbers: readonly (1 | 2 | 3)[] = [1, 2, 3];
+console.log(numbers.filter(isTwo).join(','));
+for (const value of [true, false]) { console.log(`${isTrue(value)}`); }
+function boolean(value: number | boolean): void { if (isBoolean(value)) { console.log(`${!value}`); } else { console.log(`${value + 2}`); } }
+boolean(false); boolean(5);
+for (const value of ['ok', undefined]) { if (isPresent(value)) { console.log(value.toUpperCase()); } else { console.log('absent'); } }

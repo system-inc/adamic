@@ -1,0 +1,73 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_fresh_copies.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_fresh_copies.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports_helper.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports_helper.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_match_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_match_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_tags.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_tags.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_literals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_literals.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_assertion_forms.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_assertion_forms.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_containers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_containers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_views.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_views.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_array_literals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_array_literals.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_fresh_copies.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_containers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_array_literals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_views.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_literals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_assertion_forms.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports_helper.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_match_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_tags.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a (1.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_containers.a (1.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a (1.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a (1.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_fresh_copies.a (1.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a (1.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_array_literals.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_literals.a (1.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_relation_views.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a (1.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_assertion_forms.a (1.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports_helper.a (1.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_match_null.a (1.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_nodes.a (1.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_imports.a (1.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_guard_tags.a (1.15s)
+PASS
+gate cache: native hits=0 misses=48
+gate cache: node hits=0 misses=32
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.419s

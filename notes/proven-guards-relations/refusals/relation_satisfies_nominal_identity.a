@@ -1,0 +1,1 @@
+class A { read(): string { return 'a'; } } const checked = ({ read: () => 'b' } satisfies A);

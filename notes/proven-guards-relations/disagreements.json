@@ -1,0 +1,63 @@
+[
+  {
+    "file": "notes/proven-guards-relations/mutable_kind_guard.a",
+    "oracle_command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/notes/proven-guards-relations/mutable_kind_guard[.]a",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "build_command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "notes/proven-guards-relations/mutable_kind_guard.a",
+      "-o",
+      "/tmp/adamic-gate/mutable_kind_guard"
+    ],
+    "node_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "notes/proven-guards-relations/mutable_kind_guard.a"
+    ],
+    "native_command": [
+      "/tmp/adamic-gate/mutable_kind_guard"
+    ],
+    "javascript_command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "js",
+      "notes/proven-guards-relations/mutable_kind_guard.a"
+    ],
+    "backend_command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/adamic-gate/mutable_kind_guard.mjs"
+    ],
+    "node": {
+      "exit": 0,
+      "stdout": "branch undefined\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "backend": {
+      "exit": 0,
+      "stdout": "branch undefined\n",
+      "stderr": ""
+    },
+    "likely_cause": "internal/lower/class.go:446 emits a discriminant store without proving the resulting complete variant; internal/lower/predicates.go:160 accepts checker narrowing that assumes that variant invariant"
+  }
+]

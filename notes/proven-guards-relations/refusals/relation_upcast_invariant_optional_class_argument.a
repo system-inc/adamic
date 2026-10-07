@@ -1,0 +1,1 @@
+interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } class Box<T> { readonly value: T; constructor(value: T) { this.value = value; } } const box = new Box<Counted>({ name: 'a' }); const checked = box as Box<Named>;

@@ -1,0 +1,27 @@
+interface Named { readonly name: string }
+interface Counted extends Named { readonly count?: number }
+const counted: Counted = { name: 'item', count: 7 };
+const nested = { item: counted } satisfies { readonly item: Counted };
+console.log(`${nested.item.count ?? 0}`);
+const shorthand = { counted } satisfies { readonly counted: Counted };
+console.log(shorthand.counted.name);
+const copied = { ...counted, name: 'copy' } satisfies Counted;
+console.log(`${copied.name} ${copied.count ?? 0}`);
+const callback = (value: Named): Counted => ({ name: value.name, count: 8 });
+const checked = callback satisfies (value: Counted) => Named;
+const widened = callback as (value: Counted) => Named;
+console.log(`${checked(counted).count ?? 0} ${widened(counted).name}`);
+class Box<T> { readonly value: T; constructor(value: T) { this.value = value; } }
+const box = new Box<Counted>(counted);
+const same = box satisfies Box<Counted>;
+console.log(`${same.value.name} ${same === box}`);
+function view<T extends Counted>(value: T): Named { return value as Named; }
+console.log(view(counted).name);
+function union(flag: boolean): Counted | { readonly name: string; readonly count: number } { return flag ? counted : { name: 'other', count: 9 }; }
+for (const flag of [true, false]) { const result = union(flag) satisfies Named | Counted; console.log(result.name); }
+const freshArray = [counted] as Named[];
+freshArray.push({ name: 'fresh' });
+console.log(freshArray.map(value => value.name).join(','));
+const freshMap = new Map<string, Named>() satisfies Map<string, Named>;
+freshMap.set('item', counted);
+console.log(freshMap.get('item')?.name ?? 'missing');

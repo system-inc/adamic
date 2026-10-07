@@ -1,0 +1,1 @@
+interface Named { readonly name: string } function view<T extends Named>(x: T): void { const checked = x satisfies { readonly name: string; readonly count?: number }; }

@@ -1,0 +1,1 @@
+type A = { kind: 'a' }; type B = { kind: 'b' }; function change(x: A | B): void {} function assertA(x: A | B): asserts x is A { if (x.kind !== 'a') { throw new Error('bad'); } change(x); }

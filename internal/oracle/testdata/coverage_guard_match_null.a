@@ -1,0 +1,2 @@
+function isMissing(value: RegExpExecArray | null): value is null { return null === value; }
+for (const text of ['yes', 'no']) { const match = /yes/.exec(text); if (isMissing(match)) { console.log('missing'); } else { console.log(match[0] ?? 'empty'); } }

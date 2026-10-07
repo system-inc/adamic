@@ -1,0 +1,20 @@
+type Identifier = { readonly kind: 'identifier'; readonly text: string };
+type Literal = { readonly kind: 'literal'; readonly text: string };
+type End = { readonly kind: 'end'; readonly position: number };
+type SyntaxNode = Identifier | Literal | End;
+function isText(node: SyntaxNode): node is Identifier | Literal {
+ return ('identifier' === node.kind) || (node.kind === 'literal');
+}
+const isIdentifier = function(node: SyntaxNode): node is Identifier { return !(node.kind !== 'identifier'); };
+function isEnd(node: SyntaxNode): node is End { return node.kind !== 'identifier' && node.kind !== 'literal'; }
+function isIdentifierOrLiteral(node: SyntaxNode): node is Identifier | Literal { if (node.kind === 'end') { return false; } if (node.kind === 'identifier') { return true; } return true; }
+class Visitor {
+ isLiteral(node: SyntaxNode): node is Literal { if (node.kind === 'literal') { ; return true; } else { return false; } }
+}
+const visitor = new Visitor();
+const nodes: readonly SyntaxNode[] = [{ kind: 'identifier', text: 'name' }, { kind: 'literal', text: '42' }, { kind: 'end', position: 9 }];
+console.log(nodes.filter(isText).map(node => node.text).join(','));
+console.log(nodes.filter(isIdentifier).map(node => node.text).join(','));
+console.log(`${nodes.filter((node: SyntaxNode): node is End => node.kind === 'end').length}`);
+for (const node of nodes) { if (visitor.isLiteral(node)) { console.log(node.text); } else if (isEnd(node)) { console.log(`${node.position}`); } else { console.log(node.text); } }
+console.log(nodes.filter(isIdentifierOrLiteral).map(node => node.text).join(','));
