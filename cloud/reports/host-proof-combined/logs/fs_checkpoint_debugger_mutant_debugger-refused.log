@@ -1,0 +1,8 @@
+--- FAIL: TestDebuggerNativeEmitsNothing (0.00s)
+    --- FAIL: TestDebuggerNativeEmitsNothing/.ts (0.04s)
+        debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.ts29824936/001/main.ts:4:5: Adamic 0.1 refuses debugger; remove it
+    --- FAIL: TestDebuggerNativeEmitsNothing/.a (0.04s)
+        debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.a703008950/001/main.a:4:5: Adamic 0.1 refuses debugger; remove it
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.050s
+FAIL

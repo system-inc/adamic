@@ -1,0 +1,50 @@
+[
+  {
+    "name": "identifier",
+    "backend": "c",
+    "source": "interface Identifier { escapedText: string; } const node: Identifier = { escapedText: undefined! };",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/identifier.a:1:87: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "identifier",
+    "backend": "js",
+    "source": "interface Identifier { escapedText: string; } const node: Identifier = { escapedText: undefined! };",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/identifier.a:1:87: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "number",
+    "backend": "c",
+    "source": "interface NumberNode { value: number; } const node: NumberNode = { value: null! };",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/number.a:1:75: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "number",
+    "backend": "js",
+    "source": "interface NumberNode { value: number; } const node: NumberNode = { value: null! };",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/number.a:1:75: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "static",
+    "backend": "c",
+    "source": "class State { static value: number = undefined!; }",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/static.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "static",
+    "backend": "js",
+    "source": "class State { static value: number = undefined!; }",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/static.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "boxed",
+    "backend": "c",
+    "source": "const raw: { value: string | number } = { value: undefined! };",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/boxed.a:1:50: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  },
+  {
+    "name": "boxed",
+    "backend": "js",
+    "source": "const raw: { value: string | number } = { value: undefined! };",
+    "diagnostic": "adamic: /tmp/fs-field-view-repro-2f192d7/boxed.a:1:50: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  }
+]

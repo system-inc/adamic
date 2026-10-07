@@ -30,7 +30,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 25_readDirectory.a | Checker | Checker | Refused | Refused | debugger at 691:5 | Adaptation / language ruling |
+| 25_readDirectory.a | Checker | Checker | Refused | Refused | Error as any cast at 693:10 | Adaptation |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
 ```
@@ -248,3 +248,29 @@ Targeted lower predicate/condition/callback/empty-array/unknown-array/phantom te
 Each collision says `Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined` (or null), followed by `declare the variable optional and assign undefined`. These incoming initializer fixtures are incompatible with the earlier exact-nullish ruling retained in this proof; no compiler policy changed to make them pass. Other tested field-view cases pass. Full repository gate, flow rerun, full Linux counts regeneration and macOS not run in this step. Only proof branch pushed, no main/area push, force or rebase.
 
 Final recount: all 25 adapted and all 25 pristine fixtures freshly rerun on both backends: 22/25 adapted and 16/25 pristine agree byte-for-byte with Node. Final WASI host leg PASS 18.748s, compiling the complete updated runtime archive. Logs fs_predicate_final_*.log.
+
+## Debugger and non-null logical checkpoint
+
+Merged 7d2cbc89 via 87f19194 and 63a202a3 via cc090e0a, both merge commits. Kept the newer truthiness/concatenation/operator and label semantics in the documentation and JavaScript dispatch; debugger now emits no native operation and is preserved by JS. Exact fixture tree remains 0d11046e; no fixture workaround. All 25 adapted and original fixtures rerun on both backends: 22/25 adapted and 16/25 pristine agree byte-for-byte with fresh Node. 05/13 remain green; 08 and 14 unchanged.
+
+25 advances past debugger to Refused at 693:10 on both backends:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:693:10: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+```
+
+Verified one-line source `const value = Error as any;` on both backends gives the same cast refusal at 1:15. Owner: adaptation (the explicit any in Debug.fail).
+
+WASI host tests plus debugger artifact and non-null logical readiness/mutant checks PASS 91.108s. Formerly blocked non-null write/logical fixtures agree with Node on sanitized/release/native/JS oracle legs, PASS 49.944s. Always-evaluate RHS mutant finishes cleanly but prints 3 0 against Node 0 0, caught only by stdout. The WASI removed-symlink-adapter mutant also remains caught. No new runtime .c files or calls; complete WASI archive exercised.
+
+Field-view reproducers from 2f192d71 reverified on both backends with this checkpoint compiler:
+
+- TestNarrowedFieldUsesSharedReadiness: `interface Identifier { escapedText: string; } const node: Identifier = { escapedText: undefined! };` (1:87, exact-undefined refusal). Null variant `interface NumberNode { value: number; } const node: NumberNode = { value: null! };` (1:75, exact-null refusal).
+- TestViewFieldInheritedStaticReadiness: `class State { static value: number = undefined!; }` (1:38, exact-undefined refusal).
+- TestDefaultTaggedSourceViews: `const raw: { value: string | number } = { value: undefined! };` (1:50, exact-undefined refusal).
+
+Each diagnostic is `Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined` (or null), followed by `declare the variable optional and assign undefined`. These remain initializer forms; the statement-only exemption does not cover them. Complete fixture/line list is in the preceding predicate recount section. No full repository gate, macOS execution or full Linux counts regeneration in this checkpoint. Only proof branch pushed, no main/area push, force or rebase.
+
+Final four-flow command: `go test ./internal/flow -run '^(TestEveryFunctionIsInSingleAssignment|TestEveryPathNodeTakesIsInTheGraph|TestEveryMutationIsInItsRange|TestLivenessHoldsOnEveryPath|TestDebuggerHasNoFlowInstruction)$' -count=1 -timeout 15m -v`. PASS 152.741s. All four formerly failing tests PASS; no Lower diagnostic. No refusal exclusion was added in this checkpoint.
+
+Six debugger mutants executed and restored: native trap caught by artifact test; native trap caught by Node exit; dropping JS statement caught by preservation count; dropping lowered IR caught by preservation count; restoring syntax refusal caught by compiler test; adding a flow instruction caught by TestDebuggerHasNoFlowInstruction. All fail the intended checks, no build/clang failure. Raw logs preserved.

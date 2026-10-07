@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestEveryFunctionIsInSingleAssignment",
+    "state": "PASS",
+    "time": "95.90s"
+  },
+  {
+    "test": "TestEveryPathNodeTakesIsInTheGraph",
+    "state": "PASS",
+    "time": "0.04s"
+  },
+  {
+    "test": "TestEveryMutationIsInItsRange",
+    "state": "PASS",
+    "time": "152.64s"
+  },
+  {
+    "test": "TestLivenessHoldsOnEveryPath",
+    "state": "PASS",
+    "time": "152.73s"
+  }
+]
