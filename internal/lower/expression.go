@@ -575,8 +575,8 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
 	case prefix.Operator == ast.KindPlusToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
-	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
-		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
+	case prefix.Operator == ast.KindExclamationToken && (operand.Type() == ir.Boolean || operand.Type() == ir.MaybeBoolean):
+		return ir.Unary{Operator: ir.Not, Operand: censusBooleanCondition(operand)}, nil
 	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
 	}
@@ -694,13 +694,10 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
-	if (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && both(ir.Boolean) {
-		lowered := ir.And
-		if operator == ast.KindBarBarToken {
-			lowered = ir.Or
-		}
-		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	if value, known := l.censusBooleanLogical(node, operator, left, right); known {
+		return value, nil
 	}
+
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 

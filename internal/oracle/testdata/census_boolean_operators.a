@@ -1,0 +1,46 @@
+let effects = 0;
+function right(value: boolean): boolean { effects++; return value; }
+function inspect(value: boolean | undefined): void {
+    console.log(`${value}:${!value}:${!!value}`);
+    console.log(String(value && right(true)));
+    console.log(String(value || right(false)));
+    console.log(String(true && value));
+    console.log(String(false || value));
+    console.log(String(value && value));
+    console.log(String(value || value));
+    console.log(value ? 'yes' : 'no');
+    if (value) console.log('if:yes'); else console.log('if:no');
+    let visits = 0;
+    while (value) { visits++; break; }
+    console.log(`${visits}:${effects}`);
+}
+inspect(true);
+inspect(false);
+inspect(undefined);
+interface State { flag: boolean | undefined; }
+const state: State = { flag: undefined };
+console.log(String(!state.flag));
+state.flag = false;
+console.log(String(!state.flag));
+state.flag = true;
+console.log(String(!state.flag));
+const flags: boolean[] = [true, false];
+let index = 0;
+let reads = 0;
+function read(): boolean | undefined { reads++; return flags[index]; }
+console.log(String(!read()));
+console.log(String(!!read()));
+console.log(String(read() && right(true)));
+console.log(String(read() || right(false)));
+console.log(read() ? 'yes' : 'no');
+if (read()) console.log('effect:yes');
+while (read()) index++;
+console.log(`${reads}:${effects}`);
+index = 9;
+console.log(String(!read()));
+console.log(String(read() && right(true)));
+console.log(String(read() || right(false)));
+console.log(`${reads}:${effects}`);
+
+const absent: { flag?: boolean } = {};
+console.log(String(!absent.flag));

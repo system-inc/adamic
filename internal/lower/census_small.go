@@ -228,3 +228,38 @@ func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.T
 	}
 	return of
 }
+
+// Only exactly true is truthy in boolean | undefined. Equality evaluates the value once.
+func censusBooleanCondition(value ir.Expression) ir.Expression {
+	if value.Type() == ir.MaybeBoolean {
+		return ir.Binary{Operator: ir.Equal, Left: value, Right: fit(ir.BooleanConstant{Value: true}, ir.MaybeBoolean)}
+	}
+	return value
+}
+
+func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left, right ir.Expression) (ir.Expression, bool) {
+	if operator != ast.KindAmpersandAmpersandToken && operator != ast.KindBarBarToken {
+		return nil, false
+	}
+	boolean := func(of ir.Type) bool { return of == ir.Boolean || of == ir.MaybeBoolean }
+	if !boolean(left.Type()) || !boolean(right.Type()) {
+		return nil, false
+	}
+	of, err := l.typeOf(node)
+	if err != nil || !boolean(of) {
+		return nil, false
+	}
+	lowered := ir.And
+	if operator == ast.KindBarBarToken {
+		lowered = ir.Or
+	}
+	if lowered == ir.And && left.Type() == ir.MaybeBoolean {
+		of = ir.MaybeBoolean
+	}
+	if of == ir.MaybeBoolean {
+		left, right = fit(left, of), fit(right, of)
+	} else {
+		left, right = censusBooleanCondition(left), censusBooleanCondition(right)
+	}
+	return ir.Binary{Operator: lowered, Left: left, Right: right}, true
+}

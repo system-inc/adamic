@@ -1,0 +1,12 @@
+const flags: boolean[] = Array.from({ length: 30 }, (): boolean => true);
+flags[0] = false;
+flags[1] = false;
+for (let i = 2; i < flags.length; i++) {
+    if (!flags[i]) continue;
+    for (let j = i * i; j < flags.length; j += i) flags[j] = false;
+}
+let primes = '';
+for (let i = 0; i < flags.length; i++) {
+    if (flags[i]) primes += `${i},`;
+}
+console.log(primes);

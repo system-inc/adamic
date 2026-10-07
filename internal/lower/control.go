@@ -93,12 +93,13 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 }
 
 // condition lowers an expression that decides a branch or a loop. 0.1 requires a boolean there
-// (docs/0.1.md), so `if (name)` on a string is refused rather than given JavaScript's truthiness.
+// or boolean | undefined, where only exactly true takes the branch. Other truthiness is refused.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	condition, err := l.expression(node)
 	if err != nil {
 		return nil, err
 	}
+	condition = censusBooleanCondition(condition)
 	if condition.Type() != ir.Boolean {
 		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0"}
 	}
