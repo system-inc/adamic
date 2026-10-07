@@ -1,0 +1,6 @@
+{
+  "name": "identifier_expression_ignored",
+  "file": "rule.a",
+  "from": "case 'NullKeyword': case 'Identifier':",
+  "to": "case 'NullKeyword':"
+}
