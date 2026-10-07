@@ -16,7 +16,9 @@ import (
 func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/node_path_posix.a",
+		"internal/oracle/testdata/node_path_relative.a",
 		"internal/oracle/testdata/node_fs_directory_entries.a",
+		"internal/oracle/testdata/node_fs_directory_layout.a",
 		"internal/oracle/testdata/node_fs_directory_realpath.a",
 		"internal/oracle/testdata/node_fs_directory_system.a",
 		"internal/oracle/testdata/node_fs_directory_permissions.a",

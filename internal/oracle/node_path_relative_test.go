@@ -9,8 +9,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// This runtime/emitter check does not substitute for compiling the upstream
-// acceptance fixture. It can run while fs_file's declaration hook is pending.
+// This runtime/emitter mutant isolates relative semantics. The normal input
+// harness also compiles this source through the pinned Node declarations.
 func TestNodePathRelativeRuntime(t *testing.T) {
 	t.Parallel()
 	paths := []string{"", ".", "..", "/", "/a", "/a/b", "/aa", "/a/b/", "a/../b", "é/中", "\x00", "a//b"}

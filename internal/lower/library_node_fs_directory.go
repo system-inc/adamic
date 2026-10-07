@@ -3,8 +3,14 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
-	"strings"
+	"github.com/system-inc/adamic/internal/load"
 )
+
+func init() {
+	RegisterNodeLibraryMembers("node:fs.readdirSync", "node:fs.realpathSync", "node:fs.native",
+		"node:fs.Dirent.name", "node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink",
+		"node:path.resolve", "node:path.dirname", "node:path.join", "node:path.relative")
+}
 
 // nodeHostMember follows @types/node declarations, including aliases and the
 // node:* modules' re-exports of fs/path. The shared fs_file loader owns their source.
@@ -16,11 +22,7 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 	}
 	for _, declaration := range symbol.Declarations {
 		source := ast.GetSourceFileOfNode(declaration)
-		if source == nil {
-			continue
-		}
-		filename := strings.ReplaceAll(source.FileName(), "\\", "/")
-		if !strings.HasSuffix(filename, "/node/fs.d.ts") && !strings.HasSuffix(filename, "/node/path.d.ts") {
+		if !load.IsNodeLibrary(source) {
 			continue
 		}
 		owner := ""
@@ -166,7 +168,7 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 		return nil, false, nil
 	}
 	if module != "node:fs" || (member != "realpathSync" && member != "native") {
-		return nil, true, l.notYet(node, module+"."+member+" as a value")
+		return nil, false, nil
 	}
 	index := len(l.result.Functions)
 	parameter := len(l.result.Locals)
