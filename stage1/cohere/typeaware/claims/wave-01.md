@@ -81,3 +81,11 @@ parked. These three use checker/ordinary CFG facts rather than React HIR/SSA.
 The immediate pre-claim refresh found none claimed. This reservation is pushed
 before implementation. New handlers must consume numeric node kinds and nodes
 from the shared driver; their rule.json kinds declare that contract.
+
+Fourth-batch status: partial, not finished and not parked.
+- symbol-description: native numeric listener and raw bridge question tested using captured syntax; shared native-driver integration pending.
+- require-atomic-updates: native transfer/meet kernel tested; event collection and full-rule analysis pending.
+- require-await: native numeric syntax kernel tested; checker-demand analysis, diagnostic/suggestion rendering and full-rule replay pending.
+
+The exact observations and limits are in wave_01_fourth/REPORT.md. No next batch
+will be claimed while these three remain incomplete.

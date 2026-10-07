@@ -1,0 +1,25 @@
+import { tsgoInspect } from 'adamic';
+import { Frames, header } from '../../frames.ts';
+export class CallSymbolShape {
+    readonly arguments: number;
+    readonly calleeKind: number;
+    readonly calleeText: string;
+    readonly resolved: boolean;
+    readonly ambient: readonly boolean[];
+    constructor(program: number, path: string, position: number, end: number) {
+        const frames = new Frames(tsgoInspect(program, path, position, end, 'CallExpression', 'call-symbol-shape'));
+        header(frames, 'call-symbol-shape');
+        this.arguments = frames.natural();
+        const present = frames.yes();
+        this.calleeKind = present ? frames.natural() : 0;
+        this.calleeText = present ? frames.field() : '';
+        this.resolved = present ? frames.yes() : false;
+        const count = this.resolved ? frames.natural() : 0;
+        const ambient: boolean[] = [];
+        for(let index = 0; index < count; index++) {
+            ambient.push(frames.yes());
+        }
+        this.ambient = ambient;
+        frames.end();
+    }
+}

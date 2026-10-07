@@ -1,0 +1,19 @@
+import { AwaitSyntax, AwaitSyntaxNode } from '../require_await/syntax.a';
+const cases = [
+    new AwaitSyntaxNode(224),
+    new AwaitSyntaxNode(251, 0, true),
+    new AwaitSyntaxNode(262, 8198),
+    new AwaitSyntaxNode(262, 8194),
+    new AwaitSyntaxNode(262, 8196),
+    new AwaitSyntaxNode(263, 0, false, [0]),
+    new AwaitSyntaxNode(264, 0, false, [0]),
+    new AwaitSyntaxNode(251),
+];
+const syntax = new AwaitSyntax(cases);
+for(let index = 0; index < cases.length; index++) {
+    const body = new AwaitSyntaxNode(242, 0, false, [index]);
+    console.log(`${index} ${syntax.empty(body)} ${syntax.contains(body)}`);
+}
+const empty = new AwaitSyntaxNode(242);
+console.log(`empty ${syntax.empty(empty)} ${syntax.contains(empty)}`);
+console.log(`concise ${syntax.contains(cases[0] ?? empty)}`);

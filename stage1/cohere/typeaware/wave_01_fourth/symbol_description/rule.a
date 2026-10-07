@@ -1,0 +1,42 @@
+import { Diagnostic } from '../../diagnostic.ts';
+import { CallSymbolShape } from './call_symbol_shape.a';
+// Numeric kind and UTF-8 ranges are supplied once by the shared driver.
+export class HandedNode {
+    readonly kind: number;
+    readonly position: number;
+    readonly start: number;
+    readonly end: number;
+    constructor(kind: number, position: number, start: number, end: number) {
+        this.kind = kind;
+        this.position = position;
+        this.start = start;
+        this.end = end;
+    }
+}
+export class SymbolDescription {
+    readonly listenerKinds: readonly number[] = [214];
+    onNode(program: number, path: string, node: HandedNode): Diagnostic | undefined {
+        if(node.kind !== 214) {
+            return undefined;
+        }
+        const shape = new CallSymbolShape(program, path, node.position, node.end);
+        if(
+            shape.arguments !== 0 ||
+            shape.calleeKind !== 79 ||
+            shape.calleeText !== 'Symbol' ||
+            !shape.resolved ||
+            shape.ambient.length === 0 ||
+            !shape.ambient.every((ambient) => ambient)
+        ) {
+            return undefined;
+        }
+        return new Diagnostic(
+            'symbol-description',
+            'expected',
+            'This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.',
+            node.start,
+            node.end,
+            '',
+        );
+    }
+}

@@ -1,0 +1,48 @@
+import { panic } from 'adamic';
+// The driver supplies these syntax facts; this helper never reads string kinds.
+export class AwaitSyntaxNode {
+    readonly kind: number;
+    readonly flags: number;
+    readonly awaitModifier: boolean;
+    readonly children: readonly number[];
+    constructor(kind: number, flags = 0, awaitModifier = false, children: number[] = []) {
+        this.kind = kind;
+        this.flags = flags;
+        this.awaitModifier = awaitModifier;
+        this.children = children;
+    }
+}
+export class AwaitSyntax {
+    readonly nodes: readonly AwaitSyntaxNode[];
+    constructor(nodes: readonly AwaitSyntaxNode[]) {
+        this.nodes = nodes;
+    }
+    empty(body: AwaitSyntaxNode): boolean {
+        return body.kind === 242 && body.children.length === 0;
+    }
+    walk(node: AwaitSyntaxNode): boolean {
+        if(node.kind === 224 || (node.kind === 251 && node.awaitModifier)) {
+            return true;
+        }
+        if(node.kind === 262 && (node.flags & 7) === 6) {
+            return true;
+        }
+        if([263, 219, 220, 175, 178, 179, 177, 264, 232].includes(node.kind)) {
+            return false;
+        }
+        for(const child of node.children) {
+            if(this.walk(this.nodes[child] ?? panic('missing supplied syntax node'))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    contains(body: AwaitSyntaxNode): boolean {
+        for(const child of body.children) {
+            if(this.walk(this.nodes[child] ?? panic('missing supplied syntax node'))) {
+                return true;
+            }
+        }
+        return body.kind !== 242 && this.walk(body);
+    }
+}

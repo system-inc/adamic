@@ -1,0 +1,39 @@
+// Numeric event kinds mirror Cohere's atomicEventKind; symbols are checker IDs.
+export class AtomicReadState {
+    readonly fresh = new Set<number>();
+    readonly outdated = new Set<number>();
+    transfer(kind: number, symbol: number): boolean {
+        if(kind === 0) {
+            this.fresh.add(symbol);
+            this.outdated.delete(symbol);
+        } else if(kind === 1) {
+            for(const freshSymbol of this.fresh) {
+                this.outdated.add(freshSymbol);
+            }
+            this.fresh.clear();
+        } else if(kind === 2) {
+            return this.outdated.has(symbol);
+        }
+        return false;
+    }
+    clone(): AtomicReadState {
+        const result = new AtomicReadState();
+        for(const symbol of this.fresh) {
+            result.fresh.add(symbol);
+        }
+        for(const symbol of this.outdated) {
+            result.outdated.add(symbol);
+        }
+        return result;
+    }
+    meet(other: AtomicReadState): AtomicReadState {
+        const result = this.clone();
+        for(const symbol of other.fresh) {
+            result.fresh.add(symbol);
+        }
+        for(const symbol of other.outdated) {
+            result.outdated.add(symbol);
+        }
+        return result;
+    }
+}
