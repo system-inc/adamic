@@ -6,6 +6,22 @@ reconstructed measurement, not an exact reproduction of #93z4yv7: those notes
 and its parse-only harness were not available in the repository. Batch 8 at
 4189abd provides the driver and Go oracle, but no parse-only profiling harness.
 
+## Build flags for every native instruction number in this report
+
+All native Ir numbers below use clang 20.1.8, `-O2 -g`, **sanitizers off**,
+`-ffp-contract=off`, `-fno-optimize-sibling-calls`, no LTO, and no counted-runtime
+hooks. The exact baseline command, run from the repository root, is:
+
+```sh
+clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -g -I internal/native/runtime /workspace/scratch/parse-speed/parse.c internal/native/runtime/*.c -lm -o /workspace/scratch/parse-speed/native-parse > /tmp/parse-speed-clang.log 2>&1
+```
+
+The user accepted the 9,259,261,285 Ir reconstruction as the baseline on
+October 7, 2026; #93z4yv7 has no attached notes. The historical boundary no
+longer needs recovery. Go numbers use Go 1.27.1's ordinary optimized build,
+without race/sanitizer instrumentation, under Callgrind with
+`GOMAXPROCS=1 GODEBUG=asyncpreemptoff=1`.
+
 ## Numbers and dated targets
 
 | Workload | Callgrind Ir |
@@ -44,6 +60,11 @@ output, including diagnostics, suggestions, edits and fixed sources, compares
 byte for byte with its Go oracle: **11,442,907 bytes**, `cmp` exits 0.
 
 ## Disjoint self costs
+
+**October 7 correction:** the v1 table below classified the 225,738,054 Ir
+`decode` body as character work; its source is input.c and it belongs to file
+UTF-8 decoding. [DESTRUCTION.md](DESTRUCTION.md) supplies corrected v2 before/after
+buckets, also including known inline runtime work. The raw total is unchanged.
 
 Each self instruction in the native whole-process profile is in exactly one
 row below. These are mechanism buckets: runtime children remain in their own

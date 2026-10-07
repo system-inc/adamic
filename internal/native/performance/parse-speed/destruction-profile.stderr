@@ -1,0 +1,14 @@
+==21977== Callgrind, a call-graph generating cache profiler
+==21977== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==21977== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==21977== Command: /workspace/scratch/parse-speed/destruction-profile --manifest /workspace/scratch/parse-speed/compiler.txt --count
+==21977== 
+==21977== For interactive control, run 'callgrind_control -h'.
+==21977== brk segment overflow in thread #1: can't grow to 0x4838000
+==21977== (see section Limitations in user manual)
+==21977== NOTE: further instances of this message will not be shown
+==21977== 
+==21977== Events    : Ir
+==21977== Collected : 9058329178
+==21977== 
+==21977== I   refs:      9,058,329,178

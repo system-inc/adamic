@@ -1,0 +1,459 @@
+{
+  "allocated": 3377171,
+  "destroyed": 3377171,
+  "peak_nodes": 298172,
+  "release_states": {
+    "null": 3529,
+    "immortal": 16386567,
+    "nonfinal": 23714166,
+    "final": 960535
+  },
+  "by_type": [
+    {
+      "type": "string",
+      "destroyed": 693374,
+      "instructions": 45636729,
+      "per_object": 65.81834478939216,
+      "during_collect": 293034,
+      "file_cleanup": 400256,
+      "after_files": 84,
+      "bytes_at_death": 59916566
+    },
+    {
+      "type": "object",
+      "destroyed": 201142,
+      "instructions": 48236247,
+      "per_object": 239.81190899961223,
+      "during_collect": 200756,
+      "file_cleanup": 385,
+      "after_files": 1,
+      "bytes_at_death": 25671088
+    },
+    {
+      "type": "array_reference",
+      "destroyed": 20022,
+      "instructions": 22007769,
+      "per_object": 1099.1793527120167,
+      "during_collect": 19632,
+      "file_cleanup": 385,
+      "after_files": 5,
+      "bytes_at_death": 12763720
+    },
+    {
+      "type": "map",
+      "destroyed": 79,
+      "instructions": 12829,
+      "per_object": 162.39240506329114,
+      "during_collect": 0,
+      "file_cleanup": 77,
+      "after_files": 2,
+      "bytes_at_death": 0
+    },
+    {
+      "type": "cell",
+      "destroyed": 1116,
+      "instructions": 65190,
+      "per_object": 58.413978494623656,
+      "during_collect": 1116,
+      "file_cleanup": 0,
+      "after_files": 0,
+      "bytes_at_death": 0
+    },
+    {
+      "type": "closure",
+      "destroyed": 34750,
+      "instructions": 2334676,
+      "per_object": 67.18492086330936,
+      "during_collect": 34750,
+      "file_cleanup": 0,
+      "after_files": 0,
+      "bytes_at_death": 0
+    },
+    {
+      "type": "node",
+      "destroyed": 889146,
+      "instructions": 205667730,
+      "per_object": 231.30929003785656,
+      "during_collect": 0,
+      "file_cleanup": 889146,
+      "after_files": 0,
+      "bytes_at_death": 128037024
+    },
+    {
+      "type": "array_number",
+      "destroyed": 1537542,
+      "instructions": 165465955,
+      "per_object": 107.6171935465828,
+      "during_collect": 648163,
+      "file_cleanup": 889377,
+      "after_files": 2,
+      "bytes_at_death": 108099496
+    }
+  ],
+  "references": [
+    {
+      "type": 0,
+      "state": 0,
+      "release": 3529,
+      "retain": 0,
+      "child": 2249897
+    },
+    {
+      "type": 0,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 0,
+      "state": 2,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 0,
+      "state": 3,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 1,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 1,
+      "state": 1,
+      "release": 16386567,
+      "retain": 20843709,
+      "child": 20325
+    },
+    {
+      "type": 1,
+      "state": 2,
+      "release": 1641187,
+      "retain": 642969,
+      "child": 213181
+    },
+    {
+      "type": 1,
+      "state": 3,
+      "release": 285149,
+      "retain": 1211399,
+      "child": 408225
+    },
+    {
+      "type": 2,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 2,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 2,
+      "state": 2,
+      "release": 9690440,
+      "retain": 7807040,
+      "child": 194676
+    },
+    {
+      "type": 2,
+      "state": 3,
+      "release": 199795,
+      "retain": 2078076,
+      "child": 1347
+    },
+    {
+      "type": 3,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 3,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 3,
+      "state": 2,
+      "release": 1154619,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 3,
+      "state": 3,
+      "release": 19714,
+      "retain": 1154619,
+      "child": 308
+    },
+    {
+      "type": 4,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 4,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 4,
+      "state": 2,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 4,
+      "state": 3,
+      "release": 2,
+      "retain": 0,
+      "child": 77
+    },
+    {
+      "type": 5,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 5,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 5,
+      "state": 2,
+      "release": 1116,
+      "retain": 33480,
+      "child": 33480
+    },
+    {
+      "type": 5,
+      "state": 3,
+      "release": 0,
+      "retain": 1116,
+      "child": 1116
+    },
+    {
+      "type": 6,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 6,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 6,
+      "state": 2,
+      "release": 2628517,
+      "retain": 700923,
+      "child": 0
+    },
+    {
+      "type": 6,
+      "state": 3,
+      "release": 154,
+      "retain": 1927594,
+      "child": 34596
+    },
+    {
+      "type": 7,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 7,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 7,
+      "state": 2,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 7,
+      "state": 3,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 8,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 8,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 8,
+      "state": 2,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 8,
+      "state": 3,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 9,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 9,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 9,
+      "state": 2,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 9,
+      "state": 3,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 10,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 10,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 10,
+      "state": 2,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 10,
+      "state": 3,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 11,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 11,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 11,
+      "state": 2,
+      "release": 3989367,
+      "retain": 59926,
+      "child": 0
+    },
+    {
+      "type": 11,
+      "state": 3,
+      "release": 0,
+      "retain": 3929441,
+      "child": 889146
+    },
+    {
+      "type": 12,
+      "state": 0,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 12,
+      "state": 1,
+      "release": 0,
+      "retain": 0,
+      "child": 0
+    },
+    {
+      "type": 12,
+      "state": 2,
+      "release": 4608920,
+      "retain": 1681684,
+      "child": 1116
+    },
+    {
+      "type": 12,
+      "state": 3,
+      "release": 455721,
+      "retain": 2928352,
+      "child": 1081821
+    }
+  ]
+}

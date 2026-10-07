@@ -1,0 +1,93 @@
+{
+  "allocated": 3377171,
+  "destroyed": 3377171,
+  "peak_nodes": 298172,
+  "release_states": {
+    "null": 3529,
+    "immortal": 16386567,
+    "nonfinal": 23714166,
+    "final": 960535
+  },
+  "by_type": [
+    {
+      "type": "string",
+      "destroyed": 693374,
+      "instructions": 45636729,
+      "per_object": 65.81834478939216,
+      "during_collect": 293034,
+      "file_cleanup": 400256,
+      "after_files": 84,
+      "bytes_at_death": 59916566
+    },
+    {
+      "type": "object",
+      "destroyed": 201142,
+      "instructions": 48236247,
+      "per_object": 239.81190899961223,
+      "during_collect": 200756,
+      "file_cleanup": 385,
+      "after_files": 1,
+      "bytes_at_death": 25671088
+    },
+    {
+      "type": "array_reference",
+      "destroyed": 20022,
+      "instructions": 22007769,
+      "per_object": 1099.1793527120167,
+      "during_collect": 19632,
+      "file_cleanup": 385,
+      "after_files": 5,
+      "bytes_at_death": 12763720
+    },
+    {
+      "type": "map",
+      "destroyed": 79,
+      "instructions": 12829,
+      "per_object": 162.39240506329114,
+      "during_collect": 0,
+      "file_cleanup": 77,
+      "after_files": 2,
+      "bytes_at_death": 0
+    },
+    {
+      "type": "cell",
+      "destroyed": 1116,
+      "instructions": 65190,
+      "per_object": 58.413978494623656,
+      "during_collect": 1116,
+      "file_cleanup": 0,
+      "after_files": 0,
+      "bytes_at_death": 0
+    },
+    {
+      "type": "closure",
+      "destroyed": 34750,
+      "instructions": 2334676,
+      "per_object": 67.18492086330936,
+      "during_collect": 34750,
+      "file_cleanup": 0,
+      "after_files": 0,
+      "bytes_at_death": 0
+    },
+    {
+      "type": "node",
+      "destroyed": 889146,
+      "instructions": 205667730,
+      "per_object": 231.30929003785656,
+      "during_collect": 0,
+      "file_cleanup": 889146,
+      "after_files": 0,
+      "bytes_at_death": 128037024
+    },
+    {
+      "type": "array_number",
+      "destroyed": 1537542,
+      "instructions": 165465955,
+      "per_object": 107.6171935465828,
+      "during_collect": 648163,
+      "file_cleanup": 889377,
+      "after_files": 2,
+      "bytes_at_death": 108099496
+    }
+  ]
+}

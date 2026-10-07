@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/internal/native/performance/parse-speed/destruction_summary.py", line 38, in <module>
+    assert counts[11] == phases[3, 11], 'nodes destroyed outside per-file cleanup'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: nodes destroyed outside per-file cleanup

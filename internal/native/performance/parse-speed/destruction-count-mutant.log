@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/internal/native/performance/parse-speed/destruction_summary.py", line 36, in <module>
+    assert allocated == sum(counts.values()), 'allocated and destroyed counts differ'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: allocated and destroyed counts differ
