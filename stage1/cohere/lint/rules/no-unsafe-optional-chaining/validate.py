@@ -23,8 +23,14 @@ def run(command,cwd=root,env=None):
  return output
 # Go compiler commands can print benign build information; successful executions below require no stderr.
 def build(entry,target):
- target.mkdir(exist_ok=True);env=os.environ.copy();env['WAVE07_PROFILE']=str(entry);env['WAVE07_ARTIFACTS']=str(target)
- run(['go','test','./'+str(owned.relative_to(root)),'-run','^TestCompileProfiles$','-count=1','-v'],env=env)
+ target.mkdir(exist_ok=True)
+ compiler=scratch/'adamic-profile-compiler'
+ if not compiler.exists():
+  run(['go','build','-o',str(compiler),'./cmd/adamic'])
+ run([str(compiler),'build',str(entry),'-o',str(target/'native'),'--sanitize'])
+ run([str(compiler),'build',str(entry),'-o',str(target/'release')])
+ (target/'emitted.mjs').write_bytes(run([str(compiler),'js',str(entry)]))
+
 variant='NoUnsafeOptionalChaining'
 virtual=root/'cohere/adamic_wave07_owned.go';adapter=root/'cohere/adamic_wave07_adapter.go'
 overlay=scratch/'oracle-overlay.json';overlay.write_text(json.dumps({'Replace':{str(virtual):str(owned/'testdata/oracle-driver.go.txt'),str(adapter):str(owned/'oracle.go')}}))
