@@ -1,3 +1,66 @@
+# Non-null and checked overload results native rerun: red
+
+Newest fetched non-null-check a02613eff851e07f567ab9934adfc8a2dc98eeca and
+census-small-families 33a90f4 are merged into unpushed scratch HEAD
+b729fadd78fafb52c190f44d8bd89cbc3bfffd22 (both merge-base checks pass).
+The stage0 executable rebuilds. The core.ts:28 indexed-read ! refusal is gone.
+The actual first parser slice failure now, identical unsplit/split/split repeat:
+
+```
+/tmp/parser-front-driver-slice/src/compiler/core.ts:54:101:
+Adamic 0.1 refuses a type predicate whose return is not proven
+(there is no body proving this parameter); inline the check where you use it,
+or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+```
+
+This is every's overload callback type `(element: T, index: number) => element is U`.
+The type-only FunctionType has no body. The complete callback of a call site can
+have a real proven body; current predicate validation rejects the signature first.
+Minimal native-predicate-callback.a (from pristine core.ts:140) checker-passes,
+then reproduces the refusal at line 3:45. Raw source Node exits 0, stdout `true`.
+No source adaptation, predicate weakening, or stub used to bypass this blocker.
+
+The 81-file Node reference was rerun three times: cmp 0, 36,429,231 bytes,
+SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615,
+best user 6.109186 seconds. Parser C generation is unreached; no native binary,
+no native 81-file or 10,406-case comparison, and no native parser output mutant.
+Case reference still contains 1,323,111 nodes, 1,996 parse diagnostic rows and
+34 JSDoc rows. Both references are required by native-proof.py before green.
+Unsplit, split and repeat attempts all exit 1 before clang, so C size/lines,
+clang time, parser binary size and native runtime/instruction counts are null.
+No warm cache claim. nproc 5, perf is not installed.
+
+## Scratch integration and checks
+
+Non-null lowering conflicts preserve both readiness checks and import-cycle
+module-read checks. The existing predicate verifier remains; non-null and
+uninitialized-read refusal entries come out as the new readiness feature requires.
+Small-families conflicts touch class field storage, condition coercion, callable
+parameter fitting and invariance. Preserve omitted-argument padding and enum
+relations while using the new callable representation; conditions use census ToBoolean.
+Native conflicts preserve process exit status, checked field readiness and Node
+performance invocation while adding maybe-boolean fields and receiver-aware calls.
+Full UTF-16 view uses the new shared header layout, also serving RegExp's view.
+The combined closure ABI has three parameters and a receiver field: the old Node
+performance built-ins initially fail clang, then scratch-only signature/initializer
+updates make the non-null native probe compile. All exact diffs and failures retained.
+No scratch merge or compiler change is pushed on the proof branch.
+
+Targeted lower TestNonNull, TestCensusOverloadReturnProof, TestPhantom and TestRequire
+pass (2.914s). A broader TestCensusOverloadRelation/result_covariance check fails
+because phantom-brand refusal precedes its expected overload-result diagnostic;
+this is reported, not claimed green. No full repository gate was run.
+The native-nonnull.a valid probe prints `1`, native/Node stdout cmp 0 and empty
+native stderr. An empty-array input mutant compiles and exits 70 with
+`non-null assertion failed: array[index]! is null or undefined`; the ruled loud
+check is observed. This is a minimal feature probe, not a native parser proof.
+Evidence: evidence/front8/report.json, compressed logs and scratch diff.
+
+Status: **syntax tree and parse diagnostics identical on Node, JSDoc unverified,
+error recovery unverified**.
+
+---
+
 # Recovery mutant and corrected old coverage: third checkpoint
 
 Important correction: the old reference.json coverage.diagnostic_rows 0 counted
