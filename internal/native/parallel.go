@@ -9,12 +9,26 @@ import (
 
 // parallelMap keeps both operands alive through the runtime's join. The result is owned.
 func (e *emitter) parallelMap(expression ir.ParallelMap) string {
-	const declaration = "adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);\n"
+	name := "adamic_parallel_map"
+	if expression.Moved {
+		name = "adamic_parallel_map_move"
+	}
+	declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
 	if !slices.Contains(e.declarations, declaration) {
 		e.declarations = append(e.declarations, declaration)
 	}
 	items := e.value(expression.Items)
 	original := e.value(expression.Work)
+	if expression.Moved {
+		read, ok := expression.Items.(ir.Read)
+		if !ok || e.program.Locals[read.Local].Global || e.program.Locals[read.Local].Captured || e.program.Locals[read.Local].Borrowed {
+			panic("parallel move without an owned local binding")
+		}
+		// Operand evaluation has completed. The statement now owns the shell;
+		// source scope cleanup sees NULL, including when the join propagates error.
+		items = e.own(ir.Array, items)
+		e.line("%s = NULL;", e.localName(read.Local))
+	}
 	// A fresh adapter carries the original closure plus reference-valued globals.
 	// Calling the original code with its original self preserves function identity.
 	adapter := e.temporary() + "_parallel"
@@ -25,7 +39,7 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 		value := e.value(global)
 		e.line("%s->cells[%d] = adamic_cell_new((adamic_value){.reference = %s}, true);", work, index+1, retained(value))
 	}
-	result := e.own(ir.Array, fmt.Sprintf("adamic_parallel_map(%s, %s, %t)", items, work, expression.Result.IsReference()))
+	result := e.own(ir.Array, fmt.Sprintf("%s(%s, %s, %t)", name, items, work, expression.Result.IsReference()))
 	e.closureThrown()
 	return result
 }

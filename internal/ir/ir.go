@@ -701,6 +701,9 @@ type (
 	// ParallelMap is structured fork-join; the callback takes item then index.
 	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
 	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
 		Items, Work Expression
 		// Shared includes immutable reference globals read by the task's call graph.
 		// They are marking roots, not extra evaluations in the sequential witness.
