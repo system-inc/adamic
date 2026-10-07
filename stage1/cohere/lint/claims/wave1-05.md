@@ -45,3 +45,22 @@ syntax-only entries in inventory order are reserved for this branch:
 These names are neither ported on main nor present in any origin claim Markdown.
 This update is committed and pushed before implementation. Earlier implementation
 and evidence through 4570161b were already pushed; no shared source is claimed.
+
+## Third continuation claim, October 7
+
+All earlier candidates and blocked-rule work are pushed through 3b58afe4. The
+Google-font URL decision and entity decoder match Go on 276 cases and have a
+compiling semantic mutant caught on all three runtimes; full rule execution is
+blocked by shared JSX parsing. Profile compilation and non-null suggestion
+serialization remain shared-harness gaps; no shared source is edited.
+
+Fetched all 329 origin refs. Checked 52 unique claim Markdown blobs recursively,
+main's descriptors and source modules. No eligible helper-ready entry remains.
+The first three eligible syntax-only inventory entries are now reserved here:
+
+1. @typescript-eslint/prefer-function-type
+2. @typescript-eslint/prefer-namespace-keyword
+3. @typescript-eslint/triple-slash-reference
+
+This claim is pushed before implementation. The .ts fallback explicitly granted
+by Ahra remains in effect while the shared .a harness branch is unavailable.
