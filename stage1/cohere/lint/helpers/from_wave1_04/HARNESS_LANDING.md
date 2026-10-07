@@ -25,3 +25,19 @@ classes and variant order. No additional rule becomes completely helper-ready.
 Existing report boundaries (opaque loaders, explicit dependencies and consumer
 fixture input-domain replays) remain unchanged. This is helper parity evidence,
 not a whole CSS-engine or whole-rule native certification.
+
+Landing refresh, 2026-10-07: both origin heads advanced. This branch rebased
+cleanly onto area b84a9d9314b65d3d0261ee017e233287b4f071da, including main
+c7991b900362796aefd111474e65eb5398e91953. The ledger has no changes.
+The full owned seven-helper gate passes again in 207.960s, with all twenty
+compiling semantic mutants caught by actual Go comparisons on source Node,
+emitted JavaScript and ASan/UBSan native. Owned helper vet passes.
+Commands: source /workspace/adamic-tools/env.sh; go test
+./stage1/cohere/lint/helpers/from_wave1_04 -count=1 -v -timeout=10m; go vet
+./stage1/cohere/lint/helpers/from_wave1_04. Evidence: newarea-helper-tests.log
+and newarea-helper-vet.log. The temporary worktree used the initialized pinned
+cohere submodule from the primary worktree; its gitlink is unchanged.
+The related rule branch is pushed at de97588de1fd8370cf0d9252d1df0d51f23a2b3f.
+Its core oracle passes on this base, but dynamic option RegExp lowering still
+refuses the Tailwind surface. No additional helper or rule claimed. The full
+repository gate and its seventeen required correctness checks were not run.
