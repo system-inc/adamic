@@ -188,3 +188,11 @@ Full cross-file context integration still refuses at shared parser.ts:41:20,
 including a separate graph using only the integrated shared JSX parser. The
 standalone adapter succeeds. The context rule remains incomplete, not parked;
 no new claim was added. See wave16_seventh/AREA_LANDING.md and area-7481 evidence.
+
+Latest runtime landing: rebased onto area/stage1-lint d65a8f931, containing
+current main 39638d9e2 and the integrated harness. All fifteen earlier ports
+re-green in 414.449s; the new 60-command gate and filtered Node/JavaScript/native
+runtime checks pass. Cross-file context remains blocked by the full-graph
+shared parser.ts:41:20 constructor refusal, while its standalone adapter runs.
+The context rule remains incomplete, not parked; no new rule was claimed.
+See wave16_seventh/AREA_D65_LANDING.md and area-d65 evidence.
