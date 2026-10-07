@@ -1,0 +1,2 @@
+git grep -l -e ForFunctionWithoutManualMemoization -e ControlDominators -e high_level_intermediate_representation -e RegexSyntax -e ConstantStringIn -e SkipPatternEscape origin/codex/lint-helpers origin/codex/lint-helpers-01 origin/codex/lint-helpers-02 origin/codex/lint-helpers-03 origin/codex/lint-helpers-04 origin/codex/lint-helpers-05 -- *.a *.ts
+exit=1

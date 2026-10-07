@@ -1,0 +1,114 @@
+cohere/internal/lint/rules/react/set_state_in_effect.go
+258: 				if !high_level_intermediate_representation.MayHoldComponentOrHook(ctx) {
+266: 					lowered := high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)
+290: func analyzeSetStateInEffectSubject(ctx rule.Context, function *high_level_intermediate_representation.Function) {
+302: 	function = high_level_intermediate_representation.AsCompilationUnit(ctx, function,
+303: 		high_level_intermediate_representation.ForFunctionWithoutManualMemoization)
+308: func reportSetStateInEffects(ctx rule.Context, function *high_level_intermediate_representation.Function) {
+315: 	setStateFunctions := map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place{}
+330: 			case *high_level_intermediate_representation.LoadLocal:
+344: 			case *high_level_intermediate_representation.LoadContext:
+348: 			case *high_level_intermediate_representation.StoreLocal:
+372: 			case *high_level_intermediate_representation.FunctionExpression:
+389: 			case *high_level_intermediate_representation.CallExpression:
+391: 			case *high_level_intermediate_representation.MethodCall:
+418: 	function *high_level_intermediate_representation.Function,
+419: 	target high_level_intermediate_representation.IdentifierId,
+420: 	callee high_level_intermediate_representation.Place,
+421: 	args []high_level_intermediate_representation.Argument,
+422: 	setStateFunctions map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place,
+452: 	function *high_level_intermediate_representation.Function,
+453: 	setStateFunctions map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place,
+454: ) (high_level_intermediate_representation.Place, bool) {
+456: 		return high_level_intermediate_representation.Place{}, false
+459: 	refDerived := map[high_level_intermediate_representation.IdentifierId]bool{}
+460: 	local := map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place{}
+465: 	isDerivedFromRef := func(place high_level_intermediate_representation.Place) bool {
+476: 	isRefControlledBlock := high_level_intermediate_representation.ControlDominators(function, isDerivedFromRef)
+499: 			if load, isLoad := instruction.Value.(*high_level_intermediate_representation.PropertyLoad); isLoad {
+523: 				if store, isStore := instruction.Value.(*high_level_intermediate_representation.StoreLocal); isStore {
+548: 				if destructure, isDestructure := instruction.Value.(*high_level_intermediate_representation.Destructure); isDestructure {
+554: 			case *high_level_intermediate_representation.LoadLocal:
+569: 			case *high_level_intermediate_representation.LoadContext:
+592: 			case *high_level_intermediate_representation.StoreLocal:
+597: 			case *high_level_intermediate_representation.CallExpression:
+604: 					return high_level_intermediate_representation.Place{}, false
+611: 					return high_level_intermediate_representation.Place{}, false
+617: 	return high_level_intermediate_representation.Place{}, false
+628: func instructionReadsRefDerived(instruction *high_level_intermediate_representation.Instruction, isDerived func(high_level_intermediate_representation.Place) bool) bool {
+630: 	case *high_level_intermediate_representation.LoadLocal:
+632: 	case *high_level_intermediate_representation.StoreLocal:
+634: 	case *high_level_intermediate_representation.PropertyLoad:
+636: 	case *high_level_intermediate_representation.Destructure:
+638: 	case *high_level_intermediate_representation.ComputedLoad:
+640: 	case *high_level_intermediate_representation.BinaryExpression:
+642: 	case *high_level_intermediate_representation.UnaryExpression:
+644: 	case *high_level_intermediate_representation.CallExpression:
+653: 	case *high_level_intermediate_representation.MethodCall:
+686: 	value *high_level_intermediate_representation.FunctionExpression,
+687: 	nested *high_level_intermediate_representation.Function,
+688: 	outer map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place,
+689: ) map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place {
+690: 	inner := map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place{}
+711: func markPatternRefDerived(pattern high_level_intermediate_representation.Pattern, refDerived map[high_level_intermediate_representation.IdentifierId]bool) {
+713: 	case *high_level_intermediate_representation.PlacePattern:
+715: 	case *high_level_intermediate_representation.ObjectPattern:
+727: 	case *high_level_intermediate_representation.ArrayPattern:
+768: func firstIdentifierArgument(args []high_level_intermediate_representation.Argument) (high_level_intermediate_representation.IdentifierId, bool) {
+782: 	function *high_level_intermediate_representation.Function,
+783: 	value *high_level_intermediate_representation.FunctionExpression,
+784: 	setStateFunctions map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place,
+814: 	function *high_level_intermediate_representation.Function,
+815: 	place high_level_intermediate_representation.Place,
+816: 	known map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.Place,
+844: func isSetterTyped(ctx rule.Context, function *high_level_intermediate_representation.Function, place high_level_intermediate_representation.Place) bool {
+849: func isRefTyped(ctx rule.Context, function *high_level_intermediate_representation.Function, place high_level_intermediate_representation.Place) bool {
+863: func typeAliasNameOf(ctx rule.Context, function *high_level_intermediate_representation.Function, place high_level_intermediate_representation.Place) string {
+898: func effectHookKind(ctx rule.Context, function *high_level_intermediate_representation.Function, callee high_level_intermediate_representation.Place) effectHookKindOf {
+959: func setStateInEffectNestedFunction(function *high_level_intermediate_representation.Function, value *high_level_intermediate_representation.FunctionExpression) *high_level_intermediate_representation.Function {
+970: func setStateInEffectIdentifierNodeOf(function *high_level_intermediate_representation.Function, id high_level_intermediate_representation.IdentifierId) *ast.Node {
+988: func reportSetter(ctx rule.Context, function *high_level_intermediate_representation.Function, setter high_level_intermediate_representation.Place) {
+cohere/internal/lint/rules/react/set_state_in_render.go
+175: 				if !high_level_intermediate_representation.MayHoldComponentOrHook(ctx) {
+182: 					lowered := high_level_intermediate_representation.ForFunction(ctx, functionNode)
+205: func analyzeSetStateSubject(ctx rule.Context, function *high_level_intermediate_representation.Function) {
+217: 	function = high_level_intermediate_representation.AsCompilationUnit(ctx, function,
+218: 		high_level_intermediate_representation.ForFunction)
+219: 	reportSetStateInRender(ctx, function, function.Node, true, map[high_level_intermediate_representation.IdentifierId]bool{})
+254: 	function *high_level_intermediate_representation.Function,
+257: 	unconditionalSetStateFunctions map[high_level_intermediate_representation.IdentifierId]bool,
+259: 	unconditional := high_level_intermediate_representation.UnconditionalBlocks(function)
+274: 			case *high_level_intermediate_representation.LoadLocal:
+284: 			case *high_level_intermediate_representation.LoadContext:
+288: 			case *high_level_intermediate_representation.StoreLocal:
+298: 			case *high_level_intermediate_representation.FunctionExpression:
+342: 			case *high_level_intermediate_representation.CallExpression:
+378: func nestedFunction(function *high_level_intermediate_representation.Function, value *high_level_intermediate_representation.FunctionExpression) *high_level_intermediate_representation.Function {
+423: 	enclosing *high_level_intermediate_representation.Function,
+424: 	value *high_level_intermediate_representation.FunctionExpression,
+425: 	nested *high_level_intermediate_representation.Function,
+426: 	unconditionalSetStateFunctions map[high_level_intermediate_representation.IdentifierId]bool,
+427: ) (map[high_level_intermediate_representation.IdentifierId]bool, bool) {
+428: 	translated := map[high_level_intermediate_representation.IdentifierId]bool{}
+454: func isStateSetter(ctx rule.Context, function *high_level_intermediate_representation.Function, id high_level_intermediate_representation.IdentifierId) bool {
+478: func identifierNodeOf(function *high_level_intermediate_representation.Function, id high_level_intermediate_representation.IdentifierId) *ast.Node {
+495: func reportSetterCall(ctx rule.Context, function *high_level_intermediate_representation.Function, id high_level_intermediate_representation.IdentifierId, message rule.Message) {
+cohere/internal/lint/rules/react/static_components.go
+112: 				if !high_level_intermediate_representation.MayHoldComponentOrHook(ctx) {
+119: 					lowered := high_level_intermediate_representation.ForFunction(ctx, functionNode)
+161: func reportDynamicComponents(ctx rule.Context, function *high_level_intermediate_representation.Function) {
+169: 	dynamic := map[high_level_intermediate_representation.IdentifierId]high_level_intermediate_representation.IdentifierId{}
+195: 			case *high_level_intermediate_representation.FunctionExpression:
+197: 			case *high_level_intermediate_representation.CallExpression:
+199: 			case *high_level_intermediate_representation.NewExpression:
+201: 			case *high_level_intermediate_representation.MethodCall:
+206: 			case *high_level_intermediate_representation.LoadLocal:
+210: 			case *high_level_intermediate_representation.StoreLocal:
+219: 			case *high_level_intermediate_representation.JsxExpression:
+271: func analyzeCompiledFunction(ctx rule.Context, function *high_level_intermediate_representation.Function) {
+286: 	function = high_level_intermediate_representation.AsCompilationUnit(ctx, function,
+287: 		high_level_intermediate_representation.ForFunction)
+318: func identifierNode(function *high_level_intermediate_representation.Function, id high_level_intermediate_representation.IdentifierId) *ast.Node {
+335: func staticComponentsMessage(ctx rule.Context, function *high_level_intermediate_representation.Function, creator high_level_intermediate_representation.IdentifierId) rule.Message {
+372: func isCompilationUnit(function *high_level_intermediate_representation.Function) bool {
+373: 	if function == nil || function.Kind == high_level_intermediate_representation.FunctionKindOther {

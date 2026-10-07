@@ -1,0 +1,7 @@
+exit=0
+origin/main:stage1/cohere/lint/volume_evidence/frequency.log:171:skip-types	react-hooks/set-state-in-effect
+origin/main:stage1/cohere/lint/volume_evidence/frequency.log:172:skip-types	react-hooks/set-state-in-render
+origin/main:stage1/cohere/lint/volume_evidence/frequency.log:173:skip-types	react-hooks/static-components
+origin/codex/tsgo-c-library:stage1/cohere/typeaware/testdata/count_coverage.go:214:	"react-hooks/set-state-in-effect":             true,
+origin/codex/tsgo-c-library:stage1/cohere/typeaware/testdata/count_coverage.go:215:	"react-hooks/set-state-in-render":             true,
+origin/codex/tsgo-c-library:stage1/cohere/typeaware/testdata/count_coverage.go:216:	"react-hooks/static-components":               true,
