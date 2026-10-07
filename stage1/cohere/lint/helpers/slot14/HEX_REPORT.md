@@ -7,7 +7,9 @@ Four consumers ties the maximum remaining unclaimed concrete-symbol fan-out.
 
 The .a implementation takes raw bytes, byte index, introducer width, digit
 count and Unicode mode. Bytes must be integers in [0,255], index an integer
-in [0,length], and width/digits nonnegative integers. It preserves all decoded
+in [0,length], and width/digits nonnegative integers at most 2^31-1. This keeps arithmetic
+exact and outside Go int overflow. Actual escape-scanner callers use width 1
+and digit count 2 or 4. It preserves all decoded
 fields, signed rune conversion after uint32 parsing, exact width, absence of
 error, errors.Is(ErrUnsupportedSyntax), and raw error bytes. Invalid UTF-8
 fallback and Go fmt's one-rune precision retain their different semantics.
