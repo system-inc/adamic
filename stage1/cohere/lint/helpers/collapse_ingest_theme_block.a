@@ -1,0 +1,41 @@
+import { panic } from 'adamic';
+export interface CollapseThemeNode {
+    readonly kind: string;
+    readonly name: string;
+    readonly property: string;
+    readonly value: string;
+}
+export interface CollapseThemeIngestDependencies {
+    readonly parseOptions: (params: string) => { readonly options: number; readonly prefix: string };
+    readonly validPrefix: (prefix: string) => boolean;
+    readonly quote: (value: string) => string;
+    readonly walk: (roots: readonly number[], visit: (index: number) => number) => void;
+    readonly isContainer: (node: CollapseThemeNode) => boolean;
+    readonly unescape: (property: string) => string;
+    readonly add: (key: string, value: string, options: number) => string;
+}
+// Walk actions use Go's continue=0, skip=1, stop=2. Dependencies preserve their owned behavior.
+export function collapseIngestThemeBlock(theme: { prefix: string }, params: string, nodes: readonly CollapseThemeNode[], roots: readonly number[], path: string, dependencies: CollapseThemeIngestDependencies): string {
+    const parsed = dependencies.parseOptions(params);
+    if (parsed.prefix !== '') {
+        if (!dependencies.validPrefix(parsed.prefix)) {
+            return `${path}: the prefix ${dependencies.quote(parsed.prefix)} is invalid. Prefixes must be lowercase ASCII letters (a-z) only`;
+        }
+        theme.prefix = parsed.prefix;
+    }
+    let error = '';
+    dependencies.walk(roots, index => {
+        const child = nodes[index] ?? panic('NotYet: theme node index outside arena');
+        if (child.kind === 'at-rule' && child.name === '@keyframes') { return 1; }
+        if (child.kind === 'comment') { return 0; }
+        if (child.kind === 'declaration' && child.property.startsWith('--')) {
+            const addError = dependencies.add(dependencies.unescape(child.property), child.value, parsed.options);
+            if (addError !== '') { error = `${path}: ${addError}`; return 2; }
+            return 0;
+        }
+        if (dependencies.isContainer(child)) { return 0; }
+        error = `${path}: \`@theme\` blocks must only contain custom properties or \`@keyframes\`, found ${child.kind} ${dependencies.quote(child.property)}`;
+        return 2;
+    });
+    return error;
+}

@@ -94,9 +94,12 @@ func main() {
 		fixtureCount += found
 	}
 
-	sources = append(sources, "", "foo", "foo-*", "-*", "*", "foo-*-*", "\u00a0foo\u3000", "foo bar", "é𝒜", "foo\u200b")
+	sources = append(sources, "", "foo", "foo-*", "-*", "*", "foo-*-*", "\u00a0foo\u3000", "foo bar", "é𝒜", "foo\u200b", "initial", "not-custom")
 	for _, source := range sources {
 		input, actual := collapse.AdamicWave7Utility(source)
+		if os.Args[4] == "theme" {
+			input, actual = collapse.AdamicWave7Theme(source)
+		}
 		must(encode.Encode(input))
 		for _, line := range actual {
 			fmt.Fprintln(expected, line)

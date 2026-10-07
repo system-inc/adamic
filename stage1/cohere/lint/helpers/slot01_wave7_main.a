@@ -1,5 +1,7 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
+import { collapseIngestThemeBlock } from './collapse_ingest_theme_block.a';
+import type { CollapseThemeNode } from './collapse_ingest_theme_block.a';
 import { collapseIngestUtilityBlock } from './collapse_ingest_utility_block.a';
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
@@ -9,12 +11,67 @@ function units(value: string): string {
     for (let index = 0; index < value.length; index++) { output += `${value.charCodeAt(index)},`; }
     return output;
 }
+function walkTheme(list: readonly number[], nodes: readonly CollapseThemeNode[], children: readonly number[][], visit: (index: number) => number, actions: number[]): boolean {
+    for (const index of list) {
+        const action = visit(index);
+        actions.push(action);
+        if (action === 2) { return false; }
+        const node = nodes[index] ?? panic('node');
+        if (action === 0 && ['rule', 'at-rule', 'context', 'at-root'].includes(node.kind)) {
+            if (!walkTheme(children[index] ?? panic('children'), nodes, children, visit, actions)) { return false; }
+        }
+    }
+    return true;
+}
 for (const line of file.text.split('\n')) {
     if (line === '') { continue; }
     const json = new OptionsJson(line);
     const root = json.parse();
     if (root < 0) { panic(json.error); }
     const fields = json.node(root).children;
+    if (args[1] === 'theme') {
+        const params = json.node(fields[0] ?? panic('params')).text;
+        const options = Number(json.node(fields[1] ?? panic('options')).text);
+        const prefix = json.node(fields[2] ?? panic('prefix')).text;
+        const valid = json.node(fields[3] ?? panic('valid')).text === 'true';
+        const quoted = new Map<string, string>();
+        quoted.set(prefix, json.node(fields[4] ?? panic('quote prefix')).text);
+        const nodes: CollapseThemeNode[] = [];
+        const children: number[][] = [];
+        const unescaped = new Map<string, string>();
+        const addErrors = new Map<string, string>();
+        for (const child of json.node(fields[5] ?? panic('nodes')).children) {
+            const row = json.node(child).children;
+            const property = json.node(row[2] ?? panic('property')).text;
+            nodes.push({ kind: json.node(row[0] ?? panic('kind')).text, name: json.node(row[1] ?? panic('name')).text, property, value: json.node(row[3] ?? panic('value')).text });
+            const list: number[] = [];
+            for (const index of json.node(row[4] ?? panic('children')).children) { list.push(Number(json.node(index).text)); }
+            children.push(list);
+            const key = json.node(row[5] ?? panic('key')).text;
+            unescaped.set(property, key);
+            addErrors.set(key, json.node(row[6] ?? panic('error')).text);
+            quoted.set(property, json.node(row[7] ?? panic('quote property')).text);
+        }
+        const roots: number[] = [];
+        for (const index of json.node(fields[6] ?? panic('roots')).children) { roots.push(Number(json.node(index).text)); }
+        const actions: number[] = [];
+        const calls: string[] = [];
+        const theme = { prefix: 'old' };
+        const error = collapseIngestThemeBlock(theme, params, nodes, roots, 'fixture.css', {
+            parseOptions: value => { if (value !== params) { panic('params changed'); } return { options, prefix }; },
+            validPrefix: value => { if (value !== prefix) { panic('prefix changed'); } return valid; },
+            quote: value => quoted.get(value) ?? panic('quote missing'),
+            walk: (list, visit) => { walkTheme(list, nodes, children, visit, actions); },
+            isContainer: node => ['rule', 'at-rule', 'context', 'at-root'].includes(node.kind),
+            unescape: property => unescaped.get(property) ?? panic('unescape missing'),
+            add: (key, value, bits) => { calls.push(`${units(key)} ${units(value)} ${bits}`); return addErrors.get(key) ?? ''; }
+        });
+        console.log(units(error));
+        console.log(units(theme.prefix));
+        console.log(actions.join(','));
+        for (const call of calls) { console.log(call); }
+        continue;
+    }
     const state = { roots: new Map<string, number>(), definitions: [] as { readonly name: string; readonly nodes: readonly number[] }[], statics: new Map<string, readonly number[]>() };
     const bodies: number[][] = [];
     const queries: string[] = [];

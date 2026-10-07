@@ -68,6 +68,35 @@ func slot01Wave7Fixture(t *testing.T, dependency string, consumers int, mode str
 	virtual := filepath.Join(root, "adamic_slot01_wave7.go")
 	bridge, _ := filepath.Abs("testdata/slot01_wave7_collapse.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave7.go"): bridge}})
+	if mode == "theme" {
+		walkPath := filepath.Join(root, "internal/lint/rules/tailwind/collapse/walk.go")
+		data, err := os.ReadFile(walkPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+		anchor := "switch visit(node) {"
+		if strings.Count(string(data), anchor) != 1 {
+			t.Fatal("walk trace anchor drift")
+		}
+		traced := filepath.Join(directory, "walk.go")
+		if err := os.WriteFile(traced, []byte(strings.Replace(string(data), anchor, "action := visit(node)\n        wave7Actions = append(wave7Actions, int(action))\n        switch action {", 1)), 0644); err != nil {
+			t.Fatal(err)
+		}
+		designPath := filepath.Join(root, "internal/lint/rules/tailwind/collapse/design_system.go")
+		data, err = os.ReadFile(designPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+		anchor = "collector.theme.Add("
+		if strings.Count(string(data), anchor) != 1 {
+			t.Fatal("add trace anchor drift")
+		}
+		designTraced := filepath.Join(directory, "design_system.go")
+		if err := os.WriteFile(designTraced, []byte(strings.Replace(string(data), anchor, "wave7ThemeAdd(collector.theme, ", 1)), 0644); err != nil {
+			t.Fatal(err)
+		}
+		overlay, _ = json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave7.go"): bridge, walkPath: traced, designPath: designTraced}})
+	}
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -109,7 +138,7 @@ func slot01Wave7Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, sanitized native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave7_main.a", "collapse_ingest_utility_block.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave7_main.a", "collapse_ingest_utility_block.a", "collapse_ingest_theme_block.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -146,4 +175,25 @@ func TestSlot01Wave7UtilityBodyMutant(t *testing.T) {
 }
 func TestSlot01Wave7UtilityNameMutant(t *testing.T) {
 	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "root.includes('*')", "false")
+}
+
+// Not parallel: actual Go visitor observations and sanitized compiler builds.
+func TestSlot01Wave7ThemeMatchesCohere(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "child.name === '@keyframes'", "child.name === '@not-keyframes'")
+}
+func TestSlot01Wave7ThemePrefixMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "theme.prefix = parsed.prefix;", "")
+}
+func TestSlot01Wave7ThemePropertyMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "child.property.startsWith('--')", "true")
+}
+
+func TestSlot01Wave7ThemeUnescapeMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "dependencies.unescape(child.property)", "child.property")
+}
+func TestSlot01Wave7ThemeErrorStopMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "error = `${path}: ${addError}`; return 2;", "error = `${path}: ${addError}`; return 0;")
+}
+func TestSlot01Wave7ThemeInvalidPrefixMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock", "theme", "collapse_ingest_theme_block.a", "!dependencies.validPrefix(parsed.prefix)", "false")
 }
