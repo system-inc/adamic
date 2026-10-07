@@ -368,3 +368,29 @@ pairs and source witnesses are in stage3/interface-downcasts/lane2/read-census.
 Existing controls include function-field, class-method, callable missing/kind/
 uninitialized fixtures and the pinned opaque-signature refusal. The previous
 signature mutant was caught; its evidence is retained in parser-return-logs.
+
+Lane 5 helper checkpoint: `completeViewCallableShapeContract(node,target,id,build)`
+is a reached-read hook, not an admission hook. It fills the placeholder's existing
+Parameters/Result slots for fixed, nongeneric, single signatures and propagates
+child failures. Optional/rest/generic/overload signatures remain unknown until
+implemented. Native `adamic_view_callable_shape(value,recorded,expected,expression,
+optional)` and JavaScript `adamicViewCallableShape` compare producer metadata;
+they introduce no call convention. Native NULL is confirmed undefined from the
+shared presence/nullish check, never permission to treat null as absent.
+Lane 1 wires completion only at reads and wires shape checks after readiness;
+the closure owner supplies metadata at creation. These helpers alone certify
+zero census reads. Lane 1 tip ab4d6f90 has 13 shared code/count merge conflicts;
+per the lane 2 handoff, lane 1 resolves and publishes the reconciled lazy tip.
+Both backends also provide `emitViewCallableShape(value,recorded,expected,
+expression,optional)`, inserting the helper around already evaluated operands.
+It returns the same callable identity and adds no ownership or receiver wrapper.
+The caller must preserve the field-read's existing lifetime and route subsequent
+calls through the reconciled convention.
+Producer handoff locations on this base: native closure creation is in
+`emit_expressions.go` (adamic_closure_new), and JavaScript creation is in
+`javascript.go` (new AdamicClosure). Both are shared owner files. Use the
+implementation Function.Parameters/Returns, excluding a hidden receiver from
+advertised arity. Function.Returns zero means void in existing IR; it must not
+be copied as the helper's zero/unknown signature code. A void descriptor needs
+an explicit agreed representation before enabling that family. Count-row and
+real-source read-time failure registration remain central owner handoffs.
