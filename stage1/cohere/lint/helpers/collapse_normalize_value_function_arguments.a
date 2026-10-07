@@ -1,0 +1,11 @@
+import { panic } from 'adamic';
+export interface CollapseArgumentNode { readonly kind: string; readonly valuePresent: boolean; value: string; readonly children: readonly number[]; }
+export function collapseNormalizeValueFunctionArguments(nodes: readonly CollapseArgumentNode[], roots: readonly number[], rewrite: (value: string) => string): void {
+    for (const index of roots) {
+        const node = nodes[index] ?? panic('normalization node missing');
+        collapseNormalizeValueFunctionArguments(nodes, node.children, rewrite);
+        if (node.kind !== 'declaration' || !node.valuePresent || node.value === '') { continue; }
+        if (!node.value.includes('--value(') && !node.value.includes('--modifier(')) { continue; }
+        node.value = rewrite(node.value);
+    }
+}

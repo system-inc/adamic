@@ -1,6 +1,8 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
 import { collapseNormalizeUtilityDefinition } from './collapse_normalize_utility_definition.a';
+import { collapseNormalizeValueFunctionArguments } from './collapse_normalize_value_function_arguments.a';
+import type { CollapseArgumentNode } from './collapse_normalize_value_function_arguments.a';
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
 if (file.kind === 'Error') { panic(file.message); }
@@ -14,16 +16,38 @@ for (const line of file.text.split('\n')) {
     const rows = json.node(fields[1] ?? panic('rows')).children;
     const values: string[] = [];
     const whole: string[] = [];
+    const nodes: CollapseArgumentNode[] = [];
+    const rewritten = new Map<string, string>();
+    const trace: string[] = [];
+    for (const row of rows) {
+        const parts = json.node(row).children;
+        const raw = json.node(parts[2] ?? panic('raw')).text;
+        const children: number[] = [];
+        for (const child of json.node(parts[4] ?? panic('children')).children) { children.push(Number(json.node(child).text)); }
+        rewritten.set(raw, json.node(parts[3] ?? panic('rewritten')).text);
+        nodes.push({ kind: json.node(parts[0] ?? panic('kind')).text, valuePresent: json.node(parts[1] ?? panic('present')).text === 'true', value: raw, children });
+    }
     for (const row of rows) { const parts = json.node(row).children; values.push(json.node(parts[2] ?? panic('raw')).text); whole.push(json.node(parts[5] ?? panic('whole')).text); }
     const roots: number[] = [];
     for (const child of json.node(fields[2] ?? panic('roots')).children) { roots.push(Number(json.node(child).text)); }
-    collapseNormalizeUtilityDefinition({ bound, nodes: roots }, forwarded => {
+    if (args[1] === 'walker') {
+        collapseNormalizeValueFunctionArguments(nodes, roots, value => { trace.push(value); return rewritten.get(value) ?? panic('rewrite missing'); });
+        for (let index = 0; index < nodes.length; index++) { values[index] = (nodes[index] ?? panic('node')).value; }
+    } else { collapseNormalizeUtilityDefinition({ bound, nodes: roots }, forwarded => {
         // Actual Go normalization supplies the externally owned dependency's observations.
         if (forwarded.includes(0)) { for (let index = 0; index < values.length; index++) { values[index] = whole[index] ?? panic('whole missing'); } }
-    });
+    }); }
     for (const value of values) {
         let output = `${value.length}:`;
         for (let index = 0; index < value.length; index++) { output += `${value.charCodeAt(index)},`; }
         console.log(output);
+    }
+    if (args[1] === 'walker') {
+        console.log(`trace:${trace.length}`);
+        for (const value of trace) {
+            let output = `${value.length}:`;
+            for (let index = 0; index < value.length; index++) { output += `${value.charCodeAt(index)},`; }
+            console.log(output);
+        }
     }
 }

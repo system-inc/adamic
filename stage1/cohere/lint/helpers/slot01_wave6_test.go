@@ -68,6 +68,20 @@ func slot01Wave6Fixture(t *testing.T, dependency string, consumers int, mode str
 	virtual := filepath.Join(root, "adamic_slot01_wave6.go")
 	bridge, _ := filepath.Abs("testdata/slot01_wave6_collapse.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave6.go"): bridge}})
+	utilitySource := filepath.Join(root, "internal/lint/rules/tailwind/collapse/utility_nodes.go")
+	utilityData, err := os.ReadFile(utilitySource)
+	if err != nil {
+		t.Fatal(err)
+	}
+	anchor := "valueAst := ParseValue(node.Value)"
+	if strings.Count(string(utilityData), anchor) != 1 {
+		t.Fatal("Go trace anchor drift")
+	}
+	tracedPath := filepath.Join(directory, "utility_nodes.go")
+	if err := os.WriteFile(tracedPath, []byte(strings.Replace(string(utilityData), anchor, "wave6Trace = append(wave6Trace, node.Value)\n\t\t"+anchor, 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	overlay, _ = json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave6.go"): bridge, utilitySource: tracedPath}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -109,7 +123,7 @@ func slot01Wave6Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave6_main.a", "collapse_normalize_utility_definition.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave6_main.a", "collapse_normalize_utility_definition.a", "collapse_normalize_value_function_arguments.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -143,4 +157,27 @@ func TestSlot01Wave6DefinitionMatchesCohere(t *testing.T) {
 }
 func TestSlot01Wave6DefinitionForwardMutant(t *testing.T) {
 	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeUtilityDefinition", "definition", "collapse_normalize_utility_definition.a", "normalizeArguments(definition.nodes);", "")
+}
+
+// Not parallel: bounded external captures and sanitizer compilation.
+func TestSlot01Wave6WalkerMatchesCohere(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments", "walker", "collapse_normalize_value_function_arguments.a", "collapseNormalizeValueFunctionArguments(nodes, node.children, rewrite);", "")
+}
+func TestSlot01Wave6WalkerPresentMutant(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments", "walker", "collapse_normalize_value_function_arguments.a", "!node.valuePresent", "false")
+}
+func TestSlot01Wave6WalkerKindMutant(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments", "walker", "collapse_normalize_value_function_arguments.a", "node.kind !== 'declaration'", "false")
+}
+func TestSlot01Wave6WalkerBailMutant(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments", "walker", "collapse_normalize_value_function_arguments.a", "if (!node.value.includes('--value(') && !node.value.includes('--modifier(')) { continue; }", "")
+}
+
+// Not parallel: bounded sanitizer builds and external Go observations.
+func TestSlot01Wave6WalkerOrderMutant(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments", "walker", "collapse_normalize_value_function_arguments.a", `collapseNormalizeValueFunctionArguments(nodes, node.children, rewrite);
+        if (node.kind !== 'declaration' || !node.valuePresent || node.value === '') { continue; }
+        if (!node.value.includes('--value(') && !node.value.includes('--modifier(')) { continue; }
+        node.value = rewrite(node.value);`, `if (node.kind === 'declaration' && node.valuePresent && node.value !== '' && (node.value.includes('--value(') || node.value.includes('--modifier('))) { node.value = rewrite(node.value); }
+        collapseNormalizeValueFunctionArguments(nodes, node.children, rewrite);`)
 }

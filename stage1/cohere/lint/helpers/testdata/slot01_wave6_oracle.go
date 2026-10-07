@@ -98,8 +98,12 @@ func main() {
 	sources = append(sources, "", "--value(--spacing)", "calc(--value(--text --line-height) * 2)", "--modifier([ *])", "--value(--a, --b)", "--value(--a) --modifier(--b)", "--value (--spacing)", "--VALUE(--a)", "'--value(--a)'", "--value(--é --𝒜)", "--value(--a\\*)", "--value(--a\n--b)")
 	for _, value := range sources {
 		for _, bound := range []bool{false, true} {
-			rows, actual := collapse.AdamicWave6Definition(value, bound, os.Args[4])
-			must(encode.Encode([]any{bound, rows, []int{0, 5}}))
+			rows, actual, trace := collapse.AdamicWave6Definition(value, bound, os.Args[4])
+			roots := []int{0, 5}
+			if os.Args[4] == "walker" && !bound {
+				roots = []int{}
+			}
+			must(encode.Encode([]any{bound, rows, roots}))
 			for _, output := range actual {
 				units := utf16.Encode([]rune(output))
 				fmt.Fprintf(expected, "%d:", len(units))
@@ -107,6 +111,17 @@ func main() {
 					fmt.Fprintf(expected, "%d,", unit)
 				}
 				fmt.Fprintln(expected)
+			}
+			if os.Args[4] == "walker" {
+				fmt.Fprintf(expected, "trace:%d\n", len(trace))
+				for _, value := range trace {
+					units := utf16.Encode([]rune(value))
+					fmt.Fprintf(expected, "%d:", len(units))
+					for _, unit := range units {
+						fmt.Fprintf(expected, "%d,", unit)
+					}
+					fmt.Fprintln(expected)
+				}
 			}
 		}
 	}

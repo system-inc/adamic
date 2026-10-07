@@ -1,6 +1,8 @@
 package tailwind
 
-func AdamicWave6Definition(source string, bound bool, mode string) ([][]any, []string) {
+var wave6Trace []string
+
+func AdamicWave6Definition(source string, bound bool, mode string) ([][]any, []string, []string) {
 	nodes := []*Node{
 		{Kind: KindRule, Value: source, ValuePresent: true},
 		{Kind: KindDeclaration, Value: source, ValuePresent: true},
@@ -25,6 +27,7 @@ func AdamicWave6Definition(source string, bound bool, mode string) ([][]any, []s
 		rows[index] = append(rows[index], node.Value)
 		node.Value = rows[index][2].(string)
 	}
+	wave6Trace = nil
 	if bound {
 		normalizeUtilityDefinition(&UtilityDefinition{Nodes: roots})
 	} else {
@@ -34,5 +37,5 @@ func AdamicWave6Definition(source string, bound bool, mode string) ([][]any, []s
 	for index, node := range nodes {
 		actual[index] = node.Value
 	}
-	return rows, actual
+	return rows, actual, wave6Trace
 }
