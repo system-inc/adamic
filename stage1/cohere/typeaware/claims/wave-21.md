@@ -142,3 +142,6 @@ native source ports. No further reservation was taken.
 
 
 Numeric listener continuation: all thirteen owned modules now export pinned numeric syntaxKinds declarations, checked independently against production Go registrations in native and ASAN builds with a qualifying wrong-kind mutant. The shared parser still exposes only string kinds, so numeric dispatch and handed-node integration remain blocked outside this unit. React source ports are still partial; reservations are retained. No new batch claimed. See ../WAVE_21_LISTENER_REPORT.md.
+
+
+Rule JSON continuation: wave21_rules/<module>/rule.json now declares the Go listener kinds for all thirteen owned modules, checked against unmodified production Go maps alongside native numeric exports under normal and ASAN builds. This is inactive metadata, not source-handler registration. Shared numeric ParseNode/handed-node integration and native React HIR lowering remain missing. The harness branch now handles .a and suggestions. React reservations remain retained; no new claims. See ../WAVE_21_RULE_JSON_REPORT.md.

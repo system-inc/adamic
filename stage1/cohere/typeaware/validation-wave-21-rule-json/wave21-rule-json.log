@@ -1,0 +1,19 @@
+=== RUN   TestWave21ListenerDeclarations
+    wave_21_listeners_test.go:157: 13 numeric listener declarations match production Go, normal and ASAN; wrong-listener mutant exits 0 with empty stderr, byte comparison catches byte 15
+    wave_21_listeners_test.go:158: listener contract:
+        no_mixed_enums:267
+        correctness_no_collection_misuse:227,213,214
+        correctness_no_discarded_outcome:245
+        correctness_no_discarded_pure_result:245
+        correctness_no_process_exit_after_output:307
+        correctness_no_uncleared_race_timeout:214
+        correctness_require_blocking_standard_streams:307
+        no_obj_calls:307
+        no_object_constructor:215,214
+        no_promise_executor_return:220,254
+        set_state_in_effect:307
+        set_state_in_render:307
+        static_components:307
+--- PASS: TestWave21ListenerDeclarations (28.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	28.428s

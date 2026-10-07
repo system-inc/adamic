@@ -1,0 +1,8 @@
+{
+  "name": "nexus/correctness-no-collection-misuse",
+  "kinds": [
+    "BinaryExpression",
+    "ElementAccessExpression",
+    "CallExpression"
+  ]
+}

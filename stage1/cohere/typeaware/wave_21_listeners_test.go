@@ -2,6 +2,7 @@ package typeaware
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	goast "go/ast"
 	"go/parser"
@@ -86,6 +87,28 @@ func TestWave21ListenerDeclarations(t *testing.T) {
 		if maps != 1 || len(kinds) == 0 {
 			t.Fatal("production listener maps", name, maps)
 		}
+		manifestPath := filepath.Join(repository, "stage1/cohere/typeaware/wave21_rules", name, "rule.json")
+		manifestData, err := os.ReadFile(manifestPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var manifest struct {
+			Name  string   `json:"name"`
+			Kinds []string `json:"kinds"`
+		}
+		if err := json.Unmarshal(manifestData, &manifest); err != nil {
+			t.Fatal(err)
+		}
+		if manifest.Name == "" || len(manifest.Kinds) != len(kinds) {
+			t.Fatal("manifest shape", name)
+		}
+		for i, kindName := range manifest.Kinds {
+			kind, ok := values["Kind"+kindName]
+			if !ok || strconv.Itoa(int(kind)) != kinds[i] {
+				t.Fatal("manifest listener differs from Go", name, kindName)
+			}
+		}
+
 		module := filepath.Join(repository, "stage1/cohere/typeaware", name+".a")
 		if family == "react" {
 			module = filepath.Join(repository, "stage1/cohere/typeaware/wave21_react", name+".a")
