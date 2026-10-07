@@ -1,0 +1,14 @@
+baseline matches
+compiling numeric-kind mutant caught: react-no-unsafe
+compiling numeric-kind mutant caught: react-self-closing-comp
+compiling numeric-kind mutant caught: sort-vars
+compiling numeric-kind mutant caught: structure-tailwind-no-physical-direction
+compiling numeric-kind mutant caught: typescript-ban-tslint-comment
+compiling numeric-kind mutant caught: typescript-no-invalid-this
+compiling numeric-kind mutant caught: arrow-body-style
+compiling numeric-kind mutant caught: max-lines
+compiling numeric-kind mutant caught: no-extra-bind
+compiling numeric-kind mutant caught: default-case
+compiling numeric-kind mutant caught: no-extra-label
+compiling numeric-kind mutant caught: no-fallthrough
+PASS: 12 declarations match pinned Go on Node, emitted JS and ASan/UBSan native; 12 compiling mutants caught on every runtime; bytes 322

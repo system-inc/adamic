@@ -1,0 +1,11 @@
+package main
+import("encoding/json";"fmt";"os";"strconv";"strings";syntax "github.com/microsoft/TypeScript/tsc/shim/ast")
+func main(){
+ kinds:=map[string]int{};for kind:=syntax.Kind(0);kind<syntax.KindCount;kind++{kinds[strings.TrimPrefix(kind.String(),"Kind")]=int(kind)}
+ for _,path:=range os.Args[1:]{
+  data,err:=os.ReadFile(path);if err!=nil{panic(err)}
+  var rule struct{Name string;Kinds []string};if err:=json.Unmarshal(data,&rule);err!=nil{panic(err)}
+  values:=[]string{};for _,name:=range rule.Kinds{value,ok:=kinds[name];if !ok{panic(name)};values=append(values,strconv.Itoa(value))}
+  fmt.Println(rule.Name+"\t"+strings.Join(values,","))
+ }
+}
