@@ -95,3 +95,11 @@ Both owned branches contain main 71d7e491 and lint area b28757f3, with fresh own
 - github.com/system-inc/cohere/internal/lint/ecmascript/imports.SpecifierNode
 
 File: wave15/import_specifier/specifier_node.a. Consumers: nexus/boundary-no-internal-import, nexus/boundary-no-nexus-outside-import and nexus/boundary-no-project-import. Preserve nil, import module-specifier identity, first call-argument identity regardless of whether it is a literal/import call, and self fallback. Numeric supplied-node facts and stable node handles carry the parser's links; no repeated parser fetch or node-table traversal. Compare the actual Go helper during every consuming rule's tests plus shape/identity controls on source Node, emitted JavaScript and sanitized native. Require a compiling call-argument omission mutant caught only by output comparison. Three prerequisite edges, zero whole-rule readiness promised. Claim pushed before implementation.
+
+## Import source listener continuation
+
+SpecifierNode is tested and pushed at c88973892. Refreshed 772 origin refs and inspected all helper claims; the next highest remaining count tie is unclaimed:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/imports.SourceVisitors
+
+Proposed file: wave15/import_source_visitors/source_visitors.a. Same three Nexus boundary consumers as SpecifierNode. Preserve a fresh two-kind listener map and report callback identity; import listeners reject missing/nonliteral specifiers, call listeners delegate to the separately owned CallExpressionSource, and reports blame the original node. First verify the exact numeric-kind map of function-valued listeners and captured callback substrate under native compilation. If that substrate is refused, record its precise compiler diagnostic and preserve Node proof instead of editing shared compiler or harness files or changing the public listener contract. Compare actual Go reports over every consumer fixture and shape/order controls; require a compiling listener-omission mutant wherever compilation succeeds. Claim pushed before code.
