@@ -9,3 +9,24 @@ Positions 13, 14 and 15 in the helper handoff list in HELPERS.md, linked from he
 - no-cond-assign: claimed for this worker, under rules/no-cond-assign/.
 
 The registration foundation merged cleanly. The helper foundation conflicted in six shared lint files; the directory registration versions were retained, with helper-owned files brought in. docs/parallel-work.md is absent; docs/lint-registration.md supplies the registration contract.
+
+## Continuation claim, October 7
+
+Fetched all origin heads without recursive submodule fetching. Checked direct
+claim Markdown files on all 297 origin refs and main's stage1 lint tree.
+The first eligible helper-ready rule, then the first two eligible syntax-only
+inventory entries in inventory order, are reserved for this branch:
+
+1. structure/tailwind-no-physical-direction
+2. @eslint-community/eslint-comments/require-description
+3. @next/next/google-font-display
+
+The inventory syntax-only queue includes both syntax-ready and syntax-waiting-on-
+helpers rules; type-aware and binding rules are excluded. These names were not
+found in any claim file and no corresponding port was found on origin/main.
+This update is pushed before implementation. The earlier no-cond-assign draft
+was saved in 85dd293 at the user's request; it is not a certified port.
+
+Read docs/parallel-work.md from origin/codex/no-shared-lists. Shared infrastructure
+remains its owner's territory. Compatibility overlays may be used in scratch
+for evidence, with any default integration blocker stated separately.
