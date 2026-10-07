@@ -1,0 +1,12 @@
+parser control 0: exit 70
+parser control 1: exit 70
+parser control 2: exit 70
+ordinary TypeScript: native parser exits 0
+file	/workspace/wave-07-react-probe/control-0.tsx
+45	50	react-hooks/static-components	staticComponents	This component is created during render, at `make`, so it gets a new identity every time this function runs. React compares components by identity, so it unmounts the previous one and mounts this as a fresh component rather than updating it, discarding all of its state and re-rendering its whole subtree on every render. The usual symptom is an input that loses what was typed into it. Move the component to module scope, or pass the value that varies as a prop.	0	0
+file	/workspace/wave-07-react-probe/control-1.tsx
+53	61	react-hooks/set-state-in-render	setStateInRender	This state setter is called while the component is rendering, on every render rather than in response to an event. Setting state schedules another render, and that render calls the setter again, so this loops until React gives up and throws `Too many re-renders`. To reset state when a prop changes, keep the previous prop in state and compare it during render. To derive a value from state or props, compute it during render instead of storing it.	0	0
+file	/workspace/wave-07-react-probe/control-2.tsx
+68	76	react-hooks/set-state-in-effect	setStateInEffect	This effect calls a state setter synchronously in its body, so every time the effect runs React starts another render, which runs the effect's dependencies again. Effects are for synchronizing React with something outside it, such as the document title, a subscription, or a network request, and a setter called straight from the body is usually a value that could have been computed during render instead. Derive the value while rendering, pass the initial value to `useState`, or set it from the event that actually caused the change. Calling the setter from a callback the effect registers, such as a subscription or a timer, is fine and is not reported.	0	0
+findings 3
+

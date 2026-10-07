@@ -1,0 +1,17 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+const args = programArguments();
+const path = args[0] ?? panic('missing input');
+const source = readTextFile(path);
+if(source.kind === 'Error') {
+    panic(source.message);
+}
+const parser = new Parser(source.text, path);
+parser.file();
+let jsx = 0;
+for(const node of parser.nodes) {
+    if(['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'].includes(node.kind)) {
+        jsx++;
+    }
+}
+console.log(`jsx ${jsx}`);

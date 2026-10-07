@@ -93,3 +93,12 @@ and claims on every origin head, the first three eligible rules are:
 
 This claim is pushed before implementation. New Adamic files will be .a and
 shared harness, dispatcher and generator files remain untouched.
+
+## Third continuation status
+
+Blocked before rule implementation: the shared native parser cannot parse JSX.
+All three positive production Go controls report; the native parser exits 70 at
+the self-closing JSX slash in each. Ordinary TypeScript parses successfully.
+See ../wave07_react/REPORT.md and its reproducible probe evidence. Ahra's
+shared-file restriction prevents extending the parser in this unit. All three
+claims remain incomplete; no additional rules are claimed.

@@ -1,0 +1,7 @@
+{
+  "control-1.tsx": "function Widget(){const [state,setState]=useState(0);setState(1);return <div/>;}\nexport {};\n",
+  "plain.tsx": "function Widget(){return 1;}\nexport {};\n",
+  "ambient.d.ts": "declare namespace JSX {interface IntrinsicElements {div:unknown;}} type Dispatch<T>=(value:T)=>void;declare function useState<T>(x:T):[T,Dispatch<T>];declare function useEffect(callback:()=>void):void;declare function make():()=>unknown;",
+  "control-2.tsx": "function Widget(){const [state,setState]=useState(0);useEffect(()=>{setState(1);});return <div/>;}\nexport {};\n",
+  "control-0.tsx": "function Widget(){const Inner=make();return <Inner/>;}\nexport {};\n"
+}
