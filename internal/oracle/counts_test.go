@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 	"sync"
 	"syscall"
@@ -134,6 +135,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
+	fixtures := append(slices.Clone(fixtures), slowRegExpFixtures...)
 	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {

@@ -107,3 +107,43 @@ Landing validation on origin/main e8ba3d5:
 - go test ./internal/load ./internal/lower ./internal/native ./internal/flow ./internal/fresh ./internal/javascript -count=1 -timeout 30m: /tmp/fs_file_land_packages.log, PASS (load 5.076s, lower 69.885s, native 171.247s, flow 141.179s, fresh 90.594s; JavaScript has no package tests and is covered by the oracles).
 - go test ./internal/oracle -run ^TestCountsAreRecorded$ -count=1 -timeout 30m, without updates: /tmp/fs_file_land_counts.log, PASS 21.942s.
 - A final git fetch confirmed origin/main remains e8ba3d5.
+
+Library area merge validation (Linux, October 7)
+
+Merged origin/area/library 8b2f78bdea92053f925cc3fbfdcbc47d9cfd4c4c into
+codex/host-fs-file-land starting at published d46ab6a5fc2bae8279554c10292414e867f6c2cf.
+This is a normal merge, without rebase or force; main was not pushed. Later unpublished
+scratch work remains separately preserved and is not part of this merge.
+
+Both libraryIteratorUnsupportedUse and nodeBufferUnsupportedUse remain in expression
+lowering. Counts include slowRegExpFixtures, ordinary fixtures, inputFixtures and all
+15 fsFileFixtures, regenerated on Linux in registration order. NOTICE and host/status.json
+use the library area's TypeScript seat version unchanged.
+
+The initial touched-package run exposed an area integration defect: the deliberately
+refused regexp_native_write_groups_compound_missing.a was included by the flow program
+glob. That one named fixture is now explicitly excluded from the compilable-program
+registry; other lowering failures still fail. Its oracle refusal remains registered
+and passed in the full oracle suite. Before the fix, all four flow proof gates failed
+on that refusal; after it, the complete flow package passed.
+
+Commands and logs:
+- go test ./internal/load ./internal/lower ./internal/native ./internal/fresh ./internal/flow ./internal/javascript -count=1 -timeout 30m
+  /tmp/fs_area_packages.log: load 3.862s, lower 56.575s, native 143.255s,
+  fresh 66.333s passed; JavaScript has no tests. Initial flow failed as described above.
+- go test ./internal/flow -count=1 -timeout 30m
+  /tmp/fs_area_flow_fixed.log: PASS, 86.238s after the registry fix.
+- go test ./internal/regexp -count=1 -timeout 10m
+  /tmp/fs_area_regexp.log: PASS, 6.722s.
+- go test ./internal/oracle -count=1 -timeout 30m -args -update-counts
+  /tmp/fs_area_oracle.log: PASS, 364.789s. Full oracle package includes both backends,
+  all 15 fs fixtures, all 31 behavioral fs mutants, input, Buffer, RegExp timing,
+  long-backtracking sanitizer/release/leak and the area's additional oracle cases.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m
+  /tmp/fs_area_counts_verify.log: PASS, 22.049s without update mode.
+
+The 31 individual mutants and their Node-only comparisons remain documented above.
+No new fs behavior or real-host adaptation was introduced by this merge.
+The original real-host stages and earlier full-repository timeout limitations above
+remain; this validation ran the named packages and full oracle, not go test ./....
+macOS was not run.

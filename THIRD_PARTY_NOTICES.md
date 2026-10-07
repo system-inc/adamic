@@ -13,6 +13,9 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
+    src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
+    V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own

@@ -1,0 +1,8 @@
+=== RUN   TestRegExpGroupCompoundRefusals
+    regexp_native_fixes_test.go:27: want regex assignment NotYet for g.y +=, got <nil>
+    regexp_native_fixes_test.go:27: want regex assignment NotYet for g['y'] +=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals1098295603/005/main.a:1:96: stage 0 can't lower assigning an element of a value yet
+    regexp_native_fixes_test.go:27: want regex assignment NotYet for g.x +=, got <nil>
+--- FAIL: TestRegExpGroupCompoundRefusals (0.52s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.528s
+FAIL

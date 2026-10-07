@@ -297,7 +297,7 @@ typedef struct adamic_map {
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
 // to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
-// holds the map, and letting go of it ends the iteration.
+// holds the map; exhaustion or letting go ends the iteration exactly once.
 typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
@@ -321,6 +321,7 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 adamic_map *adamic_map_new_booleans(bool reference_values);
 bool adamic_map_maybe_key_equal(double left, double right);
 uint64_t adamic_map_maybe_key_hash(double key);
+uint64_t adamic_map_number_hash(double number);
 
 // adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
@@ -598,6 +599,8 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // point: indexOf's answer, found through the index rather than by counting from the start.
 size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
+// Borrowed until the string is freed or appended to; NULL for ownerless stack pieces.
+const uint16_t *adamic_string_utf16_view(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
