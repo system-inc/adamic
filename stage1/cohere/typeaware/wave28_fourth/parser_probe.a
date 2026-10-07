@@ -1,0 +1,12 @@
+// Blocker reproduction only. This does not implement the three claimed rules.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+const args = programArguments();
+const path = args[0] ?? panic('missing source path');
+const input = readTextFile(path);
+if(input.kind === 'Error') {
+    panic(input.message);
+}
+const parser = new Parser(input.text, path);
+parser.file();
+console.log('parsed');

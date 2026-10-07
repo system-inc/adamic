@@ -47,3 +47,5 @@ All nine earlier ports are tested and pushed at `431ab666b8d3fc3919f8d6a434e5853
 3. `react-hooks/static-components` (0 compiler, 0 repository).
 
 No matching implementation literal was found in the 34 distinct origin typeaware trees. No selected rule was skipped. This claim is pushed before fourth-batch implementation.
+
+Fourth-batch status: claimed but unported. Native JSX parsing rejects all three Go-positive controls before rule execution. The required native SSA/control-flow IR is also absent on this branch. See `../wave28_fourth/REPORT.md` and its reproduction evidence. Stopped without editing shared files or claiming another batch.
