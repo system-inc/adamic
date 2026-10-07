@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "chain-kind",
+    "exit": 1,
+    "caught": "TestExportCheckerQuestions accepted invalid question",
+    "log": "/workspace/wave13-refusal-mutants/chain-kind.log"
+  },
+  {
+    "mutant": "module-kind",
+    "exit": 1,
+    "caught": "TestExportCheckerQuestions accepted invalid question",
+    "log": "/workspace/wave13-refusal-mutants/module-kind.log"
+  },
+  {
+    "mutant": "chain-suffix",
+    "exit": 1,
+    "caught": "TestExportCheckerQuestions accepted invalid question",
+    "log": "/workspace/wave13-refusal-mutants/chain-suffix.log"
+  },
+  {
+    "mutant": "module-suffix",
+    "exit": 1,
+    "caught": "TestExportCheckerQuestions accepted invalid question",
+    "log": "/workspace/wave13-refusal-mutants/module-suffix.log"
+  }
+]
