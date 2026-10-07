@@ -1,3 +1,44 @@
+# Corrected host unknown integration: row 8 remains green
+
+Merged host-blockers b788e96e into unpushed scratch e3846087. The merge is
+02274b02; a test-only merge correction yields final scratch c7e63804. The corrected
+host tip replaces a85a9cb1 as the selected implementation; older commits remain
+ancestors. Compiler rebuild passes. The probe retains its sanctioned unknown
+signature and its source is unchanged this turn.
+
+native-array-is-array-predicate.a builds and prints `true\nfalse\n` natively
+and on Node, exit 0 and empty stderr. stdout/stderr comparisons both exit 0.
+The binary is 440,888 bytes. A one-byte change to actual native stdout is caught
+(cmp exit 1). Commands, outputs and actual mutant are in evidence/front20/probe.
+
+Initial focused testing could not compile its package: the merge had duplicated
+err/refused declarations in two qualified Node tests. Scratch repair removed
+only duplicate identical lowerSource calls/declarations, keeping both sets of
+refusal assertions. Final focused array-predicate, unknown-reflection and
+qualified-Node tests pass in 0.983s. Initial failure and final log are retained;
+no expectation was weakened. The test-only correction did not alter compiler
+code used for the already-built probe.
+
+The merge replaces old Array.isArray-only unknown restrictions with incoming
+general unknown/nonprimitive representation, while keeping record storage,
+namespace readiness, checked cast dispatch, Node/detached-own paths and the
+shared never-array adapter. Erased unknown-array element reads stay refused.
+Exact ancestry, merge resolutions and scratch-only patch are in front20/report.json
+and scratch-merge.patch.gz. No compiler merge was pushed.
+
+The user identifies b788e96e as fixing the prior unknown-narrowing regressions in
+library fixtures 05 and 13. Those fixtures were not rerun here; the local claim
+covers row 8 and focused lower contracts, not their full library runtime behavior.
+No full gate, complete oracle, counts gate or sanitizer run is claimed.
+
+Full slice and both native references remain held for the namespace fix. The
+last observed first slice stop is still core.ts:11:52, and no fresh cumulative
+11-probe count is asserted. Only row 8 was rerun. No source adaptation or compiler
+proof bypass was introduced. Native JSDoc/error-recovery acceptance remains
+unverified. See evidence/front20/run-probe.py for reproduction.
+
+---
+
 # Nullable-array rerun: nine probes green, slice red at namespace initialization
 
 Before merging, `git ls-remote --heads origin compiler/stage3-front-3` returned
