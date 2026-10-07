@@ -48,7 +48,10 @@ static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool n
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	got := execute(t, binary)
+	if report := leakChecked(t, mutant, binary); report != "" {
+		t.Fatalf("mutant must finish without leaks: %s", report)
+	}
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		t.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
 	}
@@ -85,7 +88,10 @@ static adamic_string *typeof_string_mutant(const adamic_heap *value, bool null) 
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	got := execute(t, binary)
+	if report := leakChecked(t, mutant, binary); report != "" {
+		t.Fatalf("mutant must finish without leaks: %s", report)
+	}
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		t.Fatalf("mutant must finish cleanly: exit %d, stderr %q", got.exitCode, got.stderr)
 	}

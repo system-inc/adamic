@@ -163,7 +163,7 @@ type gateIdentity struct {
 	cache       *resultCache
 	context     string
 	nodeVersion string
-	libraries   [3]string // sanitized, release, counted
+	libraries   [4]string // by nativeVariant: sanitized, release, counted, slabs
 }
 
 var gateOnce sync.Once
@@ -185,7 +185,7 @@ func identity(t *testing.T) gateIdentity {
 			return
 		}
 		gate.nodeVersion = string(version)
-		for index, options := range []native.Options{{Sanitize: true}, {}, {Count: true}} {
+		for index, options := range []native.Options{{Sanitize: true}, {}, {Count: true}, {Sanitize: true, Slabs: true}} {
 			library, err := native.RuntimeLibrary("", options)
 			if err != nil {
 				gateError = err
@@ -331,18 +331,17 @@ func cachedNode(t *testing.T, path string, execute func() run) run {
 	return cachedResult(t, given.cache, nodeResults, key, func() recordedRun { return record(execute()) }).run()
 }
 
-func cachedNative(t *testing.T, program *ir.Program, release bool) nativeResult {
+func cachedNative(t *testing.T, program *ir.Program, variant nativeVariant) nativeResult {
 	t.Helper()
 	given := identity(t)
-	variant := 0
-	if release {
-		variant = 1
-	}
 	code := native.C(program)
-	key := nativeResultKey(code, given.libraries[variant], given.nodeVersion, cacheKey(given.context, fmt.Sprint(variant)))
+	key := nativeResultKey(code, given.libraries[variant], given.nodeVersion, cacheKey(given.context, fmt.Sprint(int(variant))))
 	return cachedResult(t, given.cache, nativeResults, key, func() nativeResult {
-		if release {
+		switch variant {
+		case releaseBuild:
 			return nativeResult{Run: record(releasedUncached(t, program))}
+		case slabsBuild:
+			return nativeResult{Run: record(slabbedUncached(t, program))}
 		}
 		result, binary := nativelyUncached(t, program)
 		leak := ""

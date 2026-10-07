@@ -1,0 +1,4 @@
+Benchmark 1: taskset -c 3 /workspace/scratch/release-lto/baseline/parse --manifest /workspace/scratch/release-lto/compiler.txt --count
+0
+  Time (abs ≡):        911.2 ms               [User: 886.7 ms, System: 24.1 ms]
+ 

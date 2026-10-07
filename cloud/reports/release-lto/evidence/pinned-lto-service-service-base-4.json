@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "command": "taskset -c 3 /workspace/scratch/release-lto/baseline/service /tmp/wasm-requests-profile/requests.jsonl run",
+      "mean": 11.096163137,
+      "stddev": null,
+      "median": 11.096163137,
+      "user": 10.699734,
+      "system": 0.396049,
+      "min": 11.096163137,
+      "max": 11.096163137,
+      "times": [
+        11.096163137
+      ],
+      "exit_codes": [
+        0
+      ]
+    }
+  ]
+}

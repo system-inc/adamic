@@ -30,6 +30,7 @@ func Generate(seed uint64) *Program {
 // Features are the parts of the language the generator can leave out by name, so it can stay inside
 // what an older stage 0 lowered: fuzzing an old commit, a program that's all not-yets tests nothing.
 var Features = []string{
+	"moves",                // inferred task ownership of fresh mutable records, plus exact refusals
 	"field-updates",        // +=, ++ and the rest on a field (holder.value += 1), not plain =
 	"number-tostring",      // (1.5).toString()
 	"number-functions",     // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
@@ -62,6 +63,7 @@ var Features = []string{
 	"overrides",            // static read-only signatures with implementations that mutate or escape arguments
 	"liveness",             // locals assigned from calls that may throw, read in catch, finally, after and in loops (liveness.go)
 	"field-representation", // number | undefined fields narrowed then cleared, and literals with undefined fields (field_representation.go)
+	"parallel",             // parallelMap over readonly values, plus exact refusals
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -73,7 +75,12 @@ func GenerateWithout(seed uint64, without []string) *Program {
 // GenerateFeatures makes the program a seed names with some features left out and some of OptIn
 // put in. The same seed and the same features always make the same program.
 func GenerateFeatures(seed uint64, without []string, with []string) *Program {
-	return newGenerator(seed, without, with).program()
+	generator := newGenerator(seed, without, with)
+	// Select the family on a separate stream to preserve established ordinary seeds.
+	if generator.allowed("parallel") && generator.allowed("moves") && rand.New(rand.NewPCG(seed, 0x6d6f766573)).IntN(2) == 0 {
+		return generator.movesProgram()
+	}
+	return generator.program()
 }
 
 // newGenerator is the generator for a seed and its features, before it has made anything.
@@ -298,6 +305,19 @@ func (g *generator) program() *Program {
 	if shareDeclaration != nil {
 		add(shareDeclaration)
 		add(shareCall)
+	}
+
+	// Parallel work runs before the random statements, so a later timeout still executed it, and a
+	// refusal is the only parallelMap in the file (preflight reports that one).
+	if section, refusal := g.parallelSection(); len(section) > 0 {
+		program.Refusal = refusal
+		if refusal != "" {
+			add(statement("// parallel-refuse: " + refusal))
+		}
+		for _, part := range section {
+			add(part)
+		}
+		program.Block.Statements = append([]*Statement{statement("import { parallelMap } from 'adamic';")}, program.Block.Statements...)
 	}
 
 	for range 6 + g.random.IntN(14) {

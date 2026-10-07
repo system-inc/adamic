@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Async *AsyncProgram
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -125,6 +127,12 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Typed arrays hold numbers in one flat buffer of the element width.
+	Uint8Array
+	Int32Array
+	Float64Array
+	Uint16Array
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -157,7 +165,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -729,6 +737,19 @@ type (
 		Depth     int
 	}
 
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
+	}
+
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
 	// Node's readFileSync(path, 'utf8') decodes them, in { kind: 'Ok', text }, or what went wrong in
 	// { kind: 'Error', message }, a message in Adamic's own words.
@@ -1150,3 +1171,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

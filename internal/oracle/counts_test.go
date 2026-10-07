@@ -29,7 +29,8 @@ values live at once; in regions is the values let go of with their region (runti
 finished program's allocations are its frees and its values in regions. A fixture that panics is counted where it stopped; an input
 fixture runs as TestInputAgreesWithNode runs it, a directory of its own to write in included, and must finish. Every run has an
 8 MiB stack (ulimit -s 8192), so a fixture's counts never depend on the stack of whoever runs it. This is the baseline borrow
-inference and reuse in place are measured against (docs/memory.md).
+inference and reuse in place are measured against (docs/memory.md). Parallel fixtures run with ADAMIC_THREADS=1;
+parallel peak liveness and work after an exception otherwise depend on scheduling.
 
 Not counted, though the oracle runs it as it runs every fixture: internal/oracle/testdata/stack_overflow.a, which recurses until
 the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them.
@@ -71,10 +72,13 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	}
 	given := identity(t)
 	context := cacheKey(given.context, path, fmt.Sprint(input, unreadable, writes), cacheKey(arguments...))
+	if usesParallelMap(program) {
+		context = cacheKey(context, "parallel-threads-1")
+	}
 	if input {
 		context = cacheKey(context, inputIdentity(t))
 	}
-	key := nativeResultKey(native.C(program), given.libraries[2], given.nodeVersion, context)
+	key := nativeResultKey(native.C(program), given.libraries[countedBuild], given.nodeVersion, context)
 	executeCounted := func() recordedRun {
 		var result run
 		if input {
@@ -108,7 +112,11 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			result = execute(t, name, pinned...)
+			if usesParallelMap(program) {
+				result = executeWith(t, []string{"ADAMIC_THREADS=1"}, name, pinned...)
+			} else {
+				result = execute(t, name, pinned...)
+			}
 		}
 		return record(result)
 	}

@@ -12,6 +12,8 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
+		return e.typedArrayValue(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)
@@ -173,7 +175,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
 		e.line("if (!%s.present) {", value)
-		e.line("\tstatic const char message[] = %s;", cString(narrowedAwayMessage))
+		e.line("\tstatic const char message[] = %s;", cArray(narrowedAwayMessage))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
@@ -349,11 +351,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			tests = append(tests, e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)))
 		}
 		e.line("if (!(%s)) {", strings.Join(tests, " || "))
-		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+		e.line("\tstatic const char message[] = %s;", cArray(expression.Message))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			index := e.value(expression.Index)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("adamic_typed_array_get(%s, %s)", array, index))
+		}
 		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
@@ -484,6 +491,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
 	case ir.HasOwn:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has(%s, %s)", e.value(expression.Object), e.value(expression.Key)))
+	case ir.ParallelMap:
+		return e.parallelMap(expression)
 	case ir.ReadTextFile:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
@@ -553,6 +562,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			length := fmt.Sprintf("adamic_typed_array_length(%s)", array)
+			if expression.Optional {
+				return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, %s})", array, zero(ir.MaybeNumber), length))
+			}
+			return e.snapshot(ir.Number, length)
+		}
 		if expression.Optional {
 			array := e.value(expression.Array)
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))

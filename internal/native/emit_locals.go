@@ -63,7 +63,7 @@ func (e *emitter) store(local int, value string, owned bool) {
 func (e *emitter) checkReady(local int) {
 	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
 	e.line("if (!%s) {", readyName(local))
-	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
 }

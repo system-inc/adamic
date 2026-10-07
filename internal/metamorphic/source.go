@@ -436,7 +436,7 @@ func firstLine(text string) string {
 // Imports says whether a program imports anything, and whether anything it imports is a file beside
 // it (a relative path), which has to travel with it.
 func Imports(path string, source string) (imports bool, relative bool) {
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: parseName(path), Path: tspath.Path(parseName(path))}, source, core.ScriptKindTS)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePath(parseName(path))}, source, core.ScriptKindTS)
 	for _, statement := range file.Statements.Nodes {
 		if statement.Kind != ast.KindImportDeclaration {
 			continue
