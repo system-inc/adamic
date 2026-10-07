@@ -1,7 +1,9 @@
 # Closure environment placement
 
 The base is codex/nested-functions b15216d with codex/call-targets 280fc49
-merged first as b6e7738. The profile motivation is not an escape proof:
+merged first as b6e7738. Current origin/main e8ba3d5 was then merged into
+this feature branch as 7225152; no main or area branch was pushed or merged into.
+The profile motivation is not an escape proof:
 checkTypeRelatedTo and getFlowTypeOfReference account for about 48% of the
 sampled Node allocations in docs/stage3-tsc-profile.md on the profile branch.
 No whole TypeScript checker compilation or speed claim follows from this unit.
@@ -219,3 +221,36 @@ package and filtered gates above were rerun for the fixed aggregate. No full
 post-change stage1 gate, macOS run, variable-layout run, parallel or async
 execution, arbitrary thrown-closure execution, or native tsc compilation is
 claimed.
+
+## Landing verification against current main
+
+Merged origin/main e8ba3d5 into codex/environment-placement as 7225152.
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/ir ./internal/lower
+-count=1 -timeout 15m` passed: native 145.171s, ir 30.986s, lower 26.783s.
+Log: /tmp/environment-placement-main-packages.log.
+
+The first complete uncached oracle run passed the execution and mutant checks
+but failed the exact count-table check. Regeneration changed only the ordering
+of main's devirtualize row; no numeric count changed. The update command was
+`go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m
+-args -update-counts`, passing in 13.901s. Logs:
+/tmp/environment-placement-main-oracle.log and
+/tmp/environment-placement-main-counts.log.
+
+The temporary Call.Function reader mutant was rerun against the merged guard.
+`go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -v` failed as
+intended with an unapproved region.go:environmentCallEscapes:Call.Function read
+in 4.594s. Production source was restored. Log:
+/tmp/environment-placement-main-guard-mutant.log.
+`go vet ./...` and `gofmt -l cmd internal` both passed with empty logs:
+/tmp/environment-placement-main-vet.log and
+/tmp/environment-placement-main-format.log.
+
+The final complete oracle rerun passed in 80.884s:
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 15m`.
+This includes every registered oracle fixture, all permanent environment mutants,
+and the complete count-table check. Log:
+/tmp/environment-placement-main-oracle-final.log.
+A final fetch still resolved origin/main to e8ba3d5. The required package gate
+and complete oracle are green on that synchronized feature branch. Only this
+feature branch is submitted for landing; integration remains with the owner.
