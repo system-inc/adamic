@@ -1,0 +1,26 @@
+dom-controls identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+node-controls identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+dom-asan identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+node-asan identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+timer mutant exits 0, empty stderr; independent bytes catch it
+released symbol-ancestry handle: exit 70, exact refusal
+CFG reuse blocked: stage 0 constructor refusal at shared bindings.ts:49:33
+repository identical bytes 18485 sha256 20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f findings 0
+repository-asan identical bytes 18485 sha256 20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f findings 0
+compiler identical bytes 5318 sha256 7cfb6143ad95344317ca4494f9c3cfd3b3d3e67b163691f8a4e52200c00fd871 findings 0
+compiler-asan identical bytes 5318 sha256 7cfb6143ad95344317ca4494f9c3cfd3b3d3e67b163691f8a4e52200c00fd871 findings 0
+repository go round 0 0.129677 findings 0 cohere: load_ns=70241596 rule_ns=4723928 run_ns=47084141
+repository native round 0 0.365064 findings 0 tsgo: load_ns=71159992 query_ns=1220824 queries=31 first_query_ns=220140 run_ns=289012989
+repository native round 1 0.322278 findings 0 tsgo: load_ns=78210481 query_ns=1083565 queries=31 first_query_ns=234794 run_ns=237965819
+repository go round 1 0.125109 findings 0 cohere: load_ns=65030789 rule_ns=4612289 run_ns=47582351
+repository go round 2 0.147218 findings 0 cohere: load_ns=73749264 rule_ns=5615659 run_ns=58423783
+repository native round 2 0.379900 findings 0 tsgo: load_ns=78161302 query_ns=7486733 queries=31 first_query_ns=6474782 run_ns=295638429
+repository medians {"go": 0.12967706199924578, "native": 0.36506428699976823}
+compiler go round 0 0.382230 findings 0 cohere: load_ns=290410372 rule_ns=33225320 run_ns=73144872
+compiler native round 0 2.620961 findings 0 tsgo: load_ns=250226720 query_ns=14189413 queries=32 first_query_ns=6310576 run_ns=2351156147
+compiler native round 1 2.511583 findings 0 tsgo: load_ns=250297002 query_ns=13327918 queries=32 first_query_ns=4818705 run_ns=2237890897
+compiler go round 1 0.393975 findings 0 cohere: load_ns=301580218 rule_ns=32982456 run_ns=70725595
+compiler go round 2 0.344536 findings 0 cohere: load_ns=256481784 rule_ns=33033628 run_ns=72086225
+compiler native round 2 2.492041 findings 0 tsgo: load_ns=248664865 query_ns=12580522 queries=32 first_query_ns=4450270 run_ns=2210425939
+compiler medians {"go": 0.38223007199849235, "native": 2.5115827119989262}
+PASS timer comparison, mutant and sanitizers

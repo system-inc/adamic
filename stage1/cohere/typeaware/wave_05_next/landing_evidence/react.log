@@ -1,0 +1,6 @@
+globals Go reports; native parser refuses JSX, exit 70
+immutability Go reports; native parser refuses JSX, exit 70
+derived Go reports; native parser refuses JSX, exit 70
+non-JSX control parses natively and is clean in Go
+probe no-op mutant exits 0; expected-refusal assertion catches it (not a rule mutant)
+PASS exact JSX gap reproduction; no React port claimed

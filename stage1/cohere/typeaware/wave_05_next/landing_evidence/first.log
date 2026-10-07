@@ -1,0 +1,11 @@
+=== RUN   TestWave05AgreementAndMutants
+    wave_05_test.go:65: controls: 7149 identical finding bytes; findings 20
+    wave_05_test.go:71: controls-asan: 7149 identical finding bytes; findings 20
+    wave_05_test.go:114: template mutant: exit 0; independent Go byte comparison catches byte 281
+    wave_05_test.go:114: parameter mutant: exit 0; independent Go byte comparison catches byte 1632
+    wave_05_test.go:114: dead-store mutant: exit 0; independent Go byte comparison catches byte 3646
+    wave_05_test.go:135: released handle: exit 70, invalid or released checker handle
+    wave_05_test.go:143: released registry mutant: exits 0; required exit 70 catches it
+--- PASS: TestWave05AgreementAndMutants (120.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	120.762s
