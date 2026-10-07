@@ -41,6 +41,7 @@ type runtimeKind struct {
 type program struct {
 	name    string
 	source  string
+	script  string // the same source with an extension Node can strip types from
 	native  string
 	counted string
 }
@@ -88,6 +89,19 @@ func main() {
 		program := &programs[index]
 		program.native = filepath.Join(work, program.name)
 		program.counted = filepath.Join(work, program.name+".counted")
+		program.script = program.source
+		if filepath.Ext(program.source) == ".a" {
+			// Node treats .a as JavaScript. Copy the source unchanged so its own type stripper
+			// runs it, independently of Adamic's JavaScript backend, outside the timing.
+			program.script = filepath.Join(work, program.name+".ts")
+			source, err := os.ReadFile(program.source)
+			if err != nil {
+				fail(err)
+			}
+			if err := os.WriteFile(program.script, source, 0600); err != nil {
+				fail(err)
+			}
+		}
 		for _, build := range [][]string{{"build", program.source, "-o", program.native}, {"build", program.source, "-o", program.counted, "--count"}} {
 			if output, err := exec.Command(adamic, build...).CombinedOutput(); err != nil {
 				fail(fmt.Errorf("adamic %s: %v\n%s", strings.Join(build, " "), err, output))
@@ -167,6 +181,12 @@ func findPrograms(directory string, only string) ([]program, error) {
 	if err != nil {
 		return nil, err
 	}
+	adamicSources, err := filepath.Glob(filepath.Join(directory, "*.a"))
+	if err != nil {
+		return nil, err
+	}
+	sources = append(sources, adamicSources...)
+	slices.Sort(sources)
 	wanted := map[string]bool{}
 	for _, name := range strings.Split(only, ",") {
 		if name != "" {
@@ -175,7 +195,7 @@ func findPrograms(directory string, only string) ([]program, error) {
 	}
 	programs := []program{}
 	for _, source := range sources {
-		name := strings.TrimSuffix(filepath.Base(source), ".ts")
+		name := strings.TrimSuffix(filepath.Base(source), filepath.Ext(source))
 		if len(wanted) == 0 || wanted[name] {
 			programs = append(programs, program{name: name, source: source})
 		}
@@ -190,10 +210,10 @@ func findPrograms(directory string, only string) ([]program, error) {
 func availableRuntimes() []runtimeKind {
 	runtimes := []runtimeKind{
 		{"native", func(program program) []string { return []string{program.native} }},
-		{"node", func(program program) []string { return []string{"node", program.source} }},
+		{"node", func(program program) []string { return []string{"node", program.script} }},
 	}
 	if _, err := exec.LookPath("bun"); err == nil {
-		runtimes = append(runtimes, runtimeKind{"bun", func(program program) []string { return []string{"bun", program.source} }})
+		runtimes = append(runtimes, runtimeKind{"bun", func(program program) []string { return []string{"bun", program.script} }})
 	}
 	return runtimes
 }
