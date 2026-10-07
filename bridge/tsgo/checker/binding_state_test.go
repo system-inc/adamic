@@ -30,6 +30,9 @@ func TestBindingState(t *testing.T) {
 	var visit func(*ast.Node)
 	visit = func(node *ast.Node) {
 		if node.Kind == ast.KindIdentifier {
+			if _, err := p.Inspect(file, uint64(node.Pos()), uint64(node.End()), "Identifier", "binding-state\nextra"); err == nil {
+				t.Fatal("accepted binding-state suffix on valid Identifier")
+			}
 			wire, err := p.Inspect(file, uint64(node.Pos()), uint64(node.End()), "Identifier", "binding-state")
 			if err != nil {
 				t.Fatal(err)
