@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-// This records a blocking shared-parser prerequisite, not completed rule ports.
+// This proves JSX extraction after integration, not complete rule or React analysis parity.
 func TestWave30JsxPrerequisites(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -49,19 +49,20 @@ func TestWave30JsxPrerequisites(t *testing.T) {
 		if !bytes.Contains(truth.stdout, []byte("\t"+row.rule+"\t")) {
 			t.Fatalf("%s lacks positive Go control: %s", row.rule, truth.stdout)
 		}
-		got := h.run(row.name+"-native-parser", exec.Command(binary, paths[at]))
-		if got.err != nil {
-			exit, ok := got.err.(*exec.ExitError)
-			if !ok || exit.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("adamic: panic:")) {
-				t.Fatalf("unexpected parser failure: %v %s", got.err, got.stderr)
-			}
-			t.Logf("%s: Go reports; native parser refuses JSX, exit 70: %s", row.rule, strings.TrimSpace(string(got.stderr)))
-		} else {
-			if bytes.Contains(got.stdout, []byte("Jsx")) || !bytes.Contains(got.stdout, []byte("TypeAssertionExpression")) {
-				t.Fatalf("shared JSX prerequisite changed: %s", got.stdout)
-			}
-			t.Logf("%s: Go accepts TSX and reports; native parser treats JSX as TypeAssertionExpression, emits no JSX node", row.rule)
+		got := h.must(row.name+"-native-parser", exec.Command(binary, paths[at]))
+		kind := "JsxSelfClosingElement"
+		if len(got.stderr) != 0 || !wave30ParserHasJsxKind(got.stdout, kind) {
+			t.Fatalf("native JSX prerequisite missing: %s %s", got.stdout, got.stderr)
 		}
+		changed := bytes.ReplaceAll(got.stdout, []byte(kind+"\n"), []byte("Identifier\n"))
+		if wave30ParserHasJsxKind(changed, kind) {
+			t.Fatal("missing-JSX-node mutant escaped extraction check")
+		}
+		t.Logf("%s: Go reports; native parser extracts %s; missing-node mutant caught; full rule/analysis parity is not established", row.rule, kind)
 
 	}
+}
+
+func wave30ParserHasJsxKind(output []byte, kind string) bool {
+	return bytes.Contains(output, []byte(kind+"\n")) && !bytes.Contains(output, []byte("TypeAssertionExpression\n"))
 }

@@ -6,6 +6,6 @@
     "JsxSelfClosingElement"
   ],
   "status": "partial components only",
-  "blocker": "Shared native JSX AST and handed-node driver are not integrated on main.",
+  "blocker": "Registered RuleContext has no checker program handle or checker-node mapping; type-aware checker-fact integration is required.",
   "component": "components.a"
 }
