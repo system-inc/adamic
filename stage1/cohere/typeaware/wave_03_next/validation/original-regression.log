@@ -1,0 +1,6 @@
+=== RUN   TestWave03AgreementAndMutants
+    wave_03_test.go:99: controls: 10189 identical finding bytes; findings 46
+    wave_03_test.go:109: loose-this: 942 identical finding bytes; findings 4
+--- PASS: TestWave03AgreementAndMutants (21.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	21.086s

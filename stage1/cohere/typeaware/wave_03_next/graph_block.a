@@ -1,0 +1,9 @@
+export interface GraphEventInterface { readonly statement: boolean; readonly node: number; }
+export class GraphBlock {
+    readonly reachable: boolean;
+    readonly successors: readonly number[];
+    readonly events: readonly GraphEventInterface[];
+    constructor(reachable: boolean, successors: readonly number[], events: readonly GraphEventInterface[]) {
+        this.reachable = reachable; this.successors = successors; this.events = events;
+    }
+}

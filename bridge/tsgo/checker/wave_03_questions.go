@@ -1,7 +1,6 @@
 package checker
 
 import (
-	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
@@ -17,6 +16,6 @@ func (p *Program) inspectWave03(out *fields, c *checker.Checker, node *ast.Node,
 	case "import-runtime-options":
 		return p.importRuntimeOptions(out, node, question)
 	default:
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.inspectWave03Next(out, c, node, mode, question)
 	}
 }

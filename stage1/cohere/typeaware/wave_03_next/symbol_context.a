@@ -1,0 +1,30 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import type { ContextDeclaration} from './context_declaration.a';
+import { contextDeclaration } from './context_declaration.a';
+
+export class SymbolContext {
+    readonly own: number;
+    readonly ownFlags: number;
+    readonly ownDeclarations: readonly ContextDeclaration[];
+    readonly identity: number;
+    readonly flags: number;
+    readonly declarations: readonly ContextDeclaration[];
+    readonly shorthand: number;
+    constructor(own: number, ownFlags: number, ownDeclarations: readonly ContextDeclaration[], identity: number,
+        flags: number, declarations: readonly ContextDeclaration[], shorthand: number) {
+        this.own = own; this.ownFlags = ownFlags; this.ownDeclarations = ownDeclarations;
+        this.identity = identity; this.flags = flags; this.declarations = declarations; this.shorthand = shorthand;
+    }
+}
+export function symbolContext(rules: Rules, index: number): SymbolContext {
+    const frames = new Frames(rules.ask(index, 'symbol-context')); header(frames, 'symbol-context');
+    const own = frames.natural(); const ownFlags = frames.natural(); const ownCount = frames.natural();
+    const ownDeclarations: ContextDeclaration[] = [];
+    for(let at = 0; at < ownCount; at++) { ownDeclarations.push(contextDeclaration(frames)); }
+    const identity = frames.natural(); const flags = frames.natural(); const count = frames.natural();
+    const declarations: ContextDeclaration[] = [];
+    for(let at = 0; at < count; at++) { declarations.push(contextDeclaration(frames)); }
+    const shorthand = frames.natural(); frames.end();
+    return new SymbolContext(own, ownFlags, ownDeclarations, identity, flags, declarations, shorthand);
+}

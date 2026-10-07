@@ -1,0 +1,15 @@
+=== RUN   TestWave03ContinuationAgreementAndMutants
+    wave_03_next_test.go:153: parser blocker retained in candidates: /workspace/wave-03/next-final/next-control-063.ts: unknown annotation followed by await import
+    wave_03_next_test.go:159: generated controls: 93 candidates, 93 independently parseable
+    wave_03_next_test.go:160: next-controls: 55313 identical finding bytes; findings 90
+    wave_03_next_test.go:190: ordered: 7026 identical finding bytes; findings 12
+    wave_03_next_test.go:193: imported: 632 identical finding bytes; findings 1
+    wave_03_next_test.go:199: next-controls-asan: 55313 identical finding bytes; findings 90
+    wave_03_next_test.go:200: ordered-asan: 7026 identical finding bytes; findings 12
+    wave_03_next_test.go:207: race-run: exit status 70
+        
+        adamic: panic: unsupported checker question: source-module-context
+--- FAIL: TestWave03ContinuationAgreementAndMutants (146.35s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	146.364s
+FAIL

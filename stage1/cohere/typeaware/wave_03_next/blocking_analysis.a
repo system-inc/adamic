@@ -1,0 +1,170 @@
+import type { ContextDeclaration } from './context_declaration.a';
+import type { Rules } from '../rules.ts';
+import { NextFacts } from './next_facts.a';
+import type { ProcessEffects} from './process_effects.a';
+import { processEffects } from './process_effects.a';
+import type { NextModules } from './next_modules.a';
+import { outputFlow, outputEvent } from './output_flow.a';
+import type { OutputEventInterface } from './output_flow.a';
+import { codePathGraph } from './code_path_graph.a';
+export interface StartedFunctionsInterface { readonly runs: readonly number[]; readonly hands: readonly number[]; }
+export class BlockingAnalysis {
+    readonly rules: Rules;
+    readonly facts: NextFacts;
+    readonly effects: ProcessEffects;
+    readonly modules: NextModules;
+    readonly ordered: boolean;
+    readonly memo: Map<string, number>;
+    constructor(facts: NextFacts, modules: NextModules, memo: Map<string, number>, effects: ProcessEffects) {
+        this.facts = facts; this.rules = facts.rules; this.effects = effects;
+        this.modules = modules; this.memo = memo; this.ordered = modules.canBlock.has(this.rules.path);
+    }
+    callLike(index: number): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(this.effects.syntax.kind(index)); }
+    functionWithBody(index: number): boolean { return this.effects.syntax.functionKind(this.effects.syntax.kind(index)) && this.effects.syntax.body(index) >= 0; }
+    localFunction(index: number): number {
+         const expression = this.rules.skip(index); const kind = this.effects.syntax.kind(expression);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) { return expression; }
+        if(kind !== 'Identifier') { return -1; }
+        for(const declaration of this.facts.symbol(expression).ownDeclarations) {
+            if(declaration.path !== this.rules.path) { continue; }
+            if(declaration.kind() === 'FunctionDeclaration' && declaration.bodyKind !== '') { return this.facts.sources.index(declaration.path, declaration.kind(), declaration.start(), declaration.end()); }
+            if(declaration.kind() !== 'VariableDeclaration' || !declaration.constant()) { continue; }
+            const bound = this.facts.sources.index(declaration.path, declaration.kind(), declaration.start(), declaration.end());
+            const initializer = this.effects.syntax.shape.initializer(bound); if(initializer < 0) { continue; }
+            const value = this.rules.skip(initializer); if(['FunctionExpression', 'ArrowFunction'].includes(this.effects.syntax.kind(value))) { return value; }
+        }
+        return -1;
+    }
+    generator(index: number): boolean {
+        return this.rules.parser.node(index).children.some((child) => this.effects.syntax.kind(child) === 'AsteriskToken');
+    }
+    started(index: number): StartedFunctionsInterface {
+         const kind = this.effects.syntax.kind(index); const runs: number[] = []; const hands: number[] = [];
+        if(kind !== 'NewExpression') {
+            const callee = this.effects.syntax.child(index); const functionIndex = this.localFunction(callee);
+            if(functionIndex >= 0) { if(this.generator(functionIndex)) { hands.push(functionIndex); } else { runs.push(functionIndex); } }
+        }
+        if(kind !== 'TaggedTemplateExpression') {
+            for(const argument of this.effects.syntax.arguments(index)) { const functionIndex = this.localFunction(argument); if(functionIndex >= 0) { hands.push(functionIndex); } }
+        }
+        return { runs, hands };
+    }
+    handsMayBlock(index: number): boolean {
+        const expression = this.rules.skip(index); const kind = this.effects.syntax.kind(expression);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) { return this.mayBlockWhenRun(expression); }
+        if(kind !== 'Identifier') { return false; }
+        const symbol = this.facts.symbol(expression); return symbol.identity !== 0 && (symbol.flags & 16) !== 0 && this.symbolMayBlock(expression);
+    }
+    symbolMayBlock(index: number): boolean {
+        const declarations = this.facts.symbol(index).declarations;
+        return declarations.length === 0 || declarations.some((declaration) => this.declarationMayBlock(declaration, this.rules.parser.node(index).text));
+    }
+    declarationMayBlock(declaration: ContextDeclaration, name: string): boolean {
+        if(declaration.path === '') { return true; }
+        if(!this.modules.canBlock.has(declaration.path)) { return declaration.declared && name === 'require'; }
+        if(declaration.declared || (declaration.kind() === 'FunctionDeclaration' && declaration.name() === 'blockStandardStreams' &&
+            ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) => declaration.path.endsWith(suffix)))) { return true; }
+        const rules = this.facts.sources.file(declaration.path);
+        const analysis = declaration.path === this.rules.path ? this : blockingAnalysis(new NextFacts(rules, this.facts.sources), this.modules, this.memo);
+        const index = this.facts.sources.index(declaration.path, declaration.kind(), declaration.start(), declaration.end()); 
+        if(['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(declaration.kind())) {
+            if(declaration.bodyKind === '') { return declaration.kind() !== 'FunctionDeclaration' || (declaration.flags() & 8388608) !== 0; }
+            return analysis.mayBlockWhenRun(index);
+        }
+        if(declaration.kind() === 'VariableDeclaration') {
+            const initializer = analysis.effects.syntax.shape.initializer(index);
+            if(initializer >= 0) { const value = rules.skip(initializer); if(['FunctionExpression', 'ArrowFunction'].includes(analysis.effects.syntax.kind(value))) { return analysis.mayBlockWhenRun(value); } }
+        }
+        if(['ClassDeclaration', 'ClassExpression'].includes(declaration.kind())) { return analysis.mayBlockWhenRun(index); }
+        return true;
+    }
+    callMayBlock(index: number): boolean {
+         const kind = this.effects.syntax.kind(index); if(!this.callLike(index)) { return false; }
+        const callee = this.rules.skip(this.effects.syntax.child(index));
+        if(kind === 'CallExpression' && this.effects.syntax.kind(callee) === 'ImportKeyword') { return true; }
+        if(kind !== 'TaggedTemplateExpression' && this.effects.syntax.arguments(index).some((argument) => this.handsMayBlock(argument))) { return true; }
+        if(['FunctionExpression', 'ArrowFunction'].includes(this.effects.syntax.kind(callee))) { return this.mayBlockWhenRun(callee); }
+        const name = this.effects.syntax.kind(callee) === 'Identifier' ? callee : this.effects.syntax.kind(callee) === 'PropertyAccessExpression' ? this.effects.syntax.last(callee) : -1;
+        return name < 0 || this.symbolMayBlock(name);
+    }
+    callsBlock(index: number, skipFunctions: boolean): boolean {
+        if(skipFunctions && this.functionWithBody(index)) { return false; }
+        if(this.callLike(index) && this.callMayBlock(index)) { return true; }
+        return this.rules.parser.node(index).children.some((child) => this.callsBlock(child, skipFunctions));
+    }
+    mayBlockWhenRun(index: number): boolean {
+        const key = `${this.rules.path}:${index}`; const status = this.memo.get(key) ?? 0;
+        if(status !== 0) { return status === 1; }
+        this.memo.set(key, 3);
+        const blocks = this.rules.parser.node(index).children.some((child) => this.callsBlock(child, false));
+        this.memo.set(key, blocks ? 1 : 2); return blocks;
+    }
+    importsBlockAtLoad(): boolean {
+        const empty: string[] = []; const seen = new Set<string>(); seen.add(this.rules.path); const queue: string[] = [this.rules.path];
+        let cursor = 0; while(cursor < queue.length) { const queuePosition = cursor; cursor++;
+            for(const path of this.modules.edges.get(queue[queuePosition] ?? '') ?? empty) {
+                if(seen.has(path)) { continue; } seen.add(path); queue.push(path);
+                if(!this.modules.canBlock.has(path)) { continue; }
+                if(this.modules.declared.get(path) !== false) { return true; }
+                const rules = this.facts.sources.file(path); const analysis = blockingAnalysis(new NextFacts(rules, this.facts.sources), this.modules, this.memo);
+                if(rules.parser.node(this.facts.sources.root(path)).children.some((child) => analysis.callsBlock(child, true))) { return true; }
+            }
+        }
+        return false;
+    }
+    argumentsMayBlock(index: number): boolean {
+        return this.effects.syntax.arguments(index).some((argument) => this.argumentBlocks(argument));
+    }
+    argumentBlocks(index: number): boolean {
+        if(this.functionWithBody(index)) { return false; }
+        if(this.effects.syntax.kind(index) === 'AwaitExpression' || (this.callLike(index) && this.callMayBlock(index))) { return true; }
+        return this.rules.parser.node(index).children.some((child) => this.argumentBlocks(child));
+    }
+    analyzeRoot(root: number): { readonly exits: readonly number[]; readonly started: readonly number[] } {
+         const blocks = codePathGraph(this.rules, root, this.facts.sources);
+        const recorded = new Set<number>(); const events: OutputEventInterface[][] = [];
+        for(const block of blocks) {
+            const items: OutputEventInterface[] = [];
+            for(const event of block.events) {
+                const node = event.node; const kind = this.effects.syntax.kind(node);
+                if(event.statement) {
+                    const parent = this.effects.syntax.parent(node);
+                    if(kind === 'Block' && this.effects.syntax.kind(parent) === 'CatchClause') { items.push(outputEvent(3, this.effects.syntax.parent(parent))); }
+                    if(this.ordered && ((kind === 'ForOfStatement' && this.rules.parser.node(node).children.some((child) => this.effects.syntax.kind(child) === 'AwaitKeyword')) ||
+                        (kind === 'VariableStatement' && this.rules.text(this.rules.parser.node(node)).startsWith('await using')))) { items.push(outputEvent(5, node)); }
+                    continue;
+                }
+                if((!this.callLike(node) && kind !== 'AwaitExpression') || this.effects.syntax.catchBinding(node, root)) { continue; }
+                if(kind === 'AwaitExpression') { if(this.ordered) { recorded.add(node); items.push(outputEvent(5, node)); } continue; }
+                if(kind === 'CallExpression' && this.effects.exit(node)) { recorded.add(node); items.push(outputEvent(2, node)); continue; }
+                if(kind === 'CallExpression' && this.effects.write(node) && !this.effects.holdsExit(node)) { items.push(outputEvent(1, node)); }
+                const started = this.started(node); const functions: number[] = [];
+                if(!this.ordered || started.runs.length === 0 || !this.argumentsMayBlock(node)) { for(const functionIndex of started.runs) { functions.push(functionIndex); } }
+                if(!this.ordered) { for(const functionIndex of started.hands) { functions.push(functionIndex); } }
+                if(functions.length > 0) { items.push({ kind: 4, node, starts: functions }); }
+                if(this.ordered && this.callMayBlock(node)) { recorded.add(node); items.push(outputEvent(5, node)); }
+            }
+            events.push(items);
+        }
+        for(let node = 0; node < this.rules.parser.nodes.length; node++) {
+            if(node === root || recorded.has(node)) { continue; }
+            const target = this.rules.parser.node(node); const owner = this.rules.parser.node(root);
+            if(target.pos < owner.pos || target.end > owner.end) { continue; }
+            if(this.effects.syntax.kind(node) === 'CallExpression' && this.effects.syntax.root(node) === root && this.effects.exit(node)) { const empty: number[] = []; return { exits: empty, started: empty }; }
+            if(this.ordered && this.effects.syntax.inRun(node, root) && (this.effects.syntax.kind(node) === 'AwaitExpression' || (this.callLike(node) && this.callMayBlock(node)))) { const empty: number[] = []; return { exits: empty, started: empty }; }
+        }
+        return outputFlow(this.rules).run(root, blocks, events);
+    }
+    reachedExits(): readonly number[] {
+        const root = this.facts.sources.root(this.rules.path); const queue: number[] = [root]; const queued = new Set<number>(); queued.add(root);
+        const exits: number[] = [];
+        let cursor = 0; while(cursor < queue.length) { const queuePosition = cursor; cursor++;
+            const result = this.analyzeRoot(queue[queuePosition] ?? root);
+            for(const exit of result.exits) { if(!exits.includes(exit)) { exits.push(exit); } }
+            for(const started of result.started) { if(!queued.has(started)) { queued.add(started); queue.push(started); } }
+        }
+        return exits;
+    }
+}
+
+export function blockingAnalysis(facts: NextFacts, modules: NextModules, memo: Map<string, number>): BlockingAnalysis { const effects = processEffects(facts); return new BlockingAnalysis(facts, modules, memo, effects); }

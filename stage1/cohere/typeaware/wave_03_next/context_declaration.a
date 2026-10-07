@@ -1,0 +1,48 @@
+import type { Frames } from '../frames.ts';
+
+export interface ContextAncestorInterface {
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly flags: number;
+    readonly name: string;
+    readonly global: boolean;
+}
+export class ContextDeclaration {
+    readonly path: string;
+    readonly declared: boolean;
+    readonly library: boolean;
+    readonly external: boolean;
+    readonly ancestry: readonly ContextAncestorInterface[];
+    readonly bodyStart: number;
+    readonly bodyEnd: number;
+    readonly bodyKind: string;
+    readonly functionFlags: number;
+    constructor(path: string, declared: boolean, library: boolean, external: boolean,
+        ancestry: readonly ContextAncestorInterface[], bodyStart: number, bodyEnd: number, bodyKind: string,
+        functionFlags: number) {
+        this.path = path; this.declared = declared; this.library = library; this.external = external;
+        this.ancestry = ancestry; this.bodyStart = bodyStart; this.bodyEnd = bodyEnd;
+        this.bodyKind = bodyKind; this.functionFlags = functionFlags;
+    }
+    kind(): string { return this.ancestry[0]?.kind ?? ''; }
+    name(): string { return this.ancestry[0]?.name ?? ''; }
+    start(): number { const node = this.ancestry[0]; return node === undefined ? 0 : node.start; }
+    end(): number { const node = this.ancestry[0]; return node === undefined ? 0 : node.end; }
+    flags(): number { const node = this.ancestry[0]; return node === undefined ? 0 : node.flags; }
+    constant(): boolean { const list = this.ancestry[1]; return list !== undefined && list.kind === 'VariableDeclarationList' && (list.flags & 2) !== 0; }
+}
+export function contextDeclaration(frames: Frames): ContextDeclaration {
+    const path = frames.field(); const declared = frames.yes(); const library = frames.yes();
+    const external = frames.yes(); const count = frames.natural();
+    const ancestry: ContextAncestorInterface[] = [];
+    for(let at = 0; at < count; at++) {
+        const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+        const flags = frames.natural(); const name = frames.field(); const global = frames.yes();
+        ancestry.push({ kind, start, end, flags, name, global });
+    }
+    let bodyStart = 0; let bodyEnd = 0; let bodyKind = '';
+    if(frames.yes()) { bodyStart = frames.natural(); bodyEnd = frames.natural(); bodyKind = frames.field(); }
+    return new ContextDeclaration(path, declared, library, external, ancestry, bodyStart, bodyEnd,
+        bodyKind, frames.natural());
+}

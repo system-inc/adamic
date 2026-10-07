@@ -1,0 +1,32 @@
+import { nextDiagnostic } from './next_diagnostic.a';
+import type { NextFacts } from './next_facts.a';
+import type { NextModules } from './next_modules.a';
+import { blockingAnalysis } from './blocking_analysis.a';
+import { processEffects } from './process_effects.a';
+export class CorrectnessRequireBlockingStandardStreams {
+    readonly facts: NextFacts;
+    readonly modules: NextModules;
+    constructor(facts: NextFacts, modules: NextModules) { this.facts = facts; this.modules = modules; }
+    candidate(): boolean {
+        const effects = processEffects(this.facts); const exits = new Set<number>(); const writes = new Set<number>();
+        for(let index = 0; index < this.facts.rules.parser.nodes.length; index++) {
+            if(effects.syntax.kind(index) !== 'CallExpression') { continue; }
+            const root = effects.syntax.root(index);
+            if(effects.exit(index)) { exits.add(root); if(writes.has(root)) { return true; } }
+            else if(effects.write(index)) { writes.add(root); if(exits.has(root)) { return true; } }
+        }
+        return false;
+    }
+    run(): void {
+         if(!this.facts.rules.scanner.text.includes('exit') || !this.candidate()) { return; }
+        const shebang = this.facts.rules.scanner.text.startsWith('#!'); if(!shebang && this.modules.imported.has(this.facts.rules.path)) { return; }
+        const analysis = blockingAnalysis(this.facts, this.modules, new Map<string, number>());
+        if(analysis.ordered && analysis.importsBlockAtLoad()) { return; }
+        const exits = analysis.reachedExits().slice(); if(exits.length === 0) { return; }
+        exits.sort((left, right) => this.facts.rules.parser.node(left).pos - this.facts.rules.parser.node(right).pos);
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = exits.length > 1 ? `, the first of ${exits.length} such exits in this file` : '';
+        const message = `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`;
+        this.facts.rules.findings.push(nextDiagnostic(this.facts.rules, 'nexus/correctness-require-blocking-standard-streams', 'exitBeforeBlockingStandardStreams', message, exits[0] ?? -1));
+    }
+}

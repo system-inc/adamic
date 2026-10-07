@@ -1,0 +1,51 @@
+{
+  "controls": {
+    "roots": 94,
+    "bytes": 58887,
+    "findings": 96,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 58,
+      "nexus/correctness-require-blocking-standard-streams": 26,
+      "nexus/correctness-no-uncleared-race-timeout": 12
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "ordered": {
+    "roots": 10,
+    "bytes": 7036,
+    "findings": 12,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 10,
+      "nexus/correctness-require-blocking-standard-streams": 2
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "imported": {
+    "roots": 2,
+    "bytes": 634,
+    "findings": 1,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 1
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "repository": {
+    "roots": 287,
+    "bytes": 18485,
+    "findings": 0,
+    "rules": {},
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "compiler": {
+    "roots": 77,
+    "bytes": 5857,
+    "findings": 0,
+    "rules": {},
+    "fixes": 0,
+    "suggestions": 0
+  }
+}

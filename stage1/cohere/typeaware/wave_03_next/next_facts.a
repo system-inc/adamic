@@ -1,0 +1,14 @@
+import type { Rules } from '../rules.ts';
+import type { SymbolContext} from './symbol_context.a';
+import { symbolContext } from './symbol_context.a';
+import type { NextSources } from './next_sources.a';
+export class NextFacts {
+    readonly rules: Rules;
+    readonly sources: NextSources;
+    readonly symbols = new Map<number, SymbolContext>();
+    constructor(rules: Rules, sources: NextSources) { this.rules = rules; this.sources = sources; }
+    symbol(index: number): SymbolContext {
+        const cached = this.symbols.get(index); if(cached !== undefined) { return cached; }
+        const result = symbolContext(this.rules, index); this.symbols.set(index, result); return result;
+    }
+}

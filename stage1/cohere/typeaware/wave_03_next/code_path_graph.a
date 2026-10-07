@@ -1,0 +1,25 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+import { GraphBlock } from './graph_block.a';
+import type { GraphEventInterface } from './graph_block.a';
+import type { NextSources } from './next_sources.a';
+export function codePathGraph(rules: Rules, root: number, sources: NextSources): readonly GraphBlock[] {
+    const frames = new Frames(rules.ask(root, 'code-path-graph')); header(frames, 'code-path-graph');
+    const count = frames.natural(); if(count === 0) { panic('empty code path graph'); }
+    const blocks: GraphBlock[] = [];
+    for(let at = 0; at < count; at++) {
+        const reachable = frames.yes(); const length = frames.natural(); const successors: number[] = [];
+        for(let child = 0; child < length; child++) { const next = frames.natural(); if(next >= count) { panic('invalid code path edge'); } successors.push(next); }
+        const size = frames.natural(); const events: GraphEventInterface[] = [];
+        for(let event = 0; event < size; event++) {
+            const statement = frames.yes(); const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+            if(statement ? ['Block', 'ForOfStatement', 'VariableStatement'].includes(kind) :
+                ['CallExpression', 'NewExpression', 'TaggedTemplateExpression', 'AwaitExpression'].includes(kind)) {
+                events.push({ statement, node: sources.index(rules.path, kind, start, end) });
+            }
+        }
+        blocks.push(new GraphBlock(reachable, successors, events));
+    }
+    frames.end(); return blocks;
+}

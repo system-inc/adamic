@@ -1,0 +1,22 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export interface ProgramModuleEdgeInterface {
+    readonly kind: string;
+    readonly typeOnly: boolean;
+    readonly literal: boolean;
+    readonly target: string;
+}
+export interface ProgramModuleFileInterface { readonly path: string; readonly declared: boolean; readonly edges: readonly ProgramModuleEdgeInterface[]; }
+export function programModuleEdges(rules: Rules, root: number): readonly ProgramModuleFileInterface[] {
+    const frames = new Frames(rules.ask(root, 'program-module-edges')); header(frames, 'program-module-edges');
+    const count = frames.natural(); const files: ProgramModuleFileInterface[] = [];
+    for(let at = 0; at < count; at++) {
+        const path = frames.field(); const declared = frames.yes(); const size = frames.natural(); const edges: ProgramModuleEdgeInterface[] = [];
+        for(let edge = 0; edge < size; edge++) {
+            const kind = frames.field(); const typeOnly = frames.yes(); const literal = frames.yes(); const target = frames.field();
+            edges.push({ kind, typeOnly, literal, target });
+        }
+        files.push({ path, declared, edges });
+    }
+    frames.end(); return files;
+}

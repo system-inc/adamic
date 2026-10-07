@@ -1,0 +1,113 @@
+import type { ContextDeclaration } from './context_declaration.a';
+import { nextDiagnostic } from './next_diagnostic.a';
+import type { Rules } from '../rules.ts';
+import type { NextFacts } from './next_facts.a';
+import type { NextSyntax } from './next_syntax.a';
+
+const message = "This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.";
+export class CorrectnessNoUnclearedRaceTimeout {
+    readonly rules: Rules;
+    readonly facts: NextFacts;
+    readonly syntax: NextSyntax;
+    constructor(facts: NextFacts, syntax: NextSyntax) { this.rules = facts.rules; this.facts = facts; this.syntax = syntax; }
+    libraryMember(index: number): boolean {
+        const declarations = this.facts.symbol(index).ownDeclarations;
+        return declarations.length > 0 && declarations.every((decl) => decl.library &&
+            decl.ancestry[1]?.kind === 'InterfaceDeclaration' && decl.ancestry[1]?.name === 'PromiseConstructor');
+    }
+    promise(index: number): number {
+        let element = this.rules.skip(index);
+        if(this.syntax.kind(element) === 'Identifier') {
+            const declarations = this.facts.symbol(element).ownDeclarations;
+            if(declarations.length !== 1) { return -1; }
+            const declaration = declarations[0];
+            if(declaration === undefined || declaration.kind() !== 'VariableDeclaration' ||
+                declaration.path !== this.rules.path || !declaration.constant()) { return -1; }
+            const bound = this.facts.sources.index(declaration.path, declaration.kind(), declaration.start(), declaration.end());
+            const initializer = this.syntax.shape.initializer(bound); if(initializer < 0) { return -1; }
+            element = this.rules.skip(initializer);
+        }
+        if(this.syntax.kind(element) !== 'NewExpression') { return -1; }
+        const constructor = this.rules.skip(this.syntax.child(element));
+        if(this.syntax.kind(constructor) !== 'Identifier' || this.rules.parser.node(constructor).text !== 'Promise') { return -1; }
+        const declarations = this.facts.symbol(constructor).ownDeclarations;
+        return declarations.length > 0 && declarations.every((decl) => decl.library) ? element : -1;
+    }
+    timer(index: number): boolean {
+        const callee = this.rules.skip(this.syntax.child(index)); let name = callee;
+        if(this.syntax.kind(callee) === 'PropertyAccessExpression') {
+            const receiver = this.rules.skip(this.syntax.child(callee));
+            if(this.syntax.kind(receiver) !== 'Identifier' || !['globalThis', 'window'].includes(this.rules.parser.node(receiver).text)) { return false; }
+            name = this.syntax.last(callee);
+        }
+        if(this.syntax.kind(name) !== 'Identifier' || this.rules.parser.node(name).text !== 'setTimeout') { return false; }
+        const declarations = this.facts.symbol(name).ownDeclarations;
+        return declarations.length > 0 && declarations.every((decl) => this.timerDeclaration(decl));
+    }
+    timerDeclaration(decl: ContextDeclaration): boolean {
+        if(!decl.declared) { return false; }
+        const parent = decl.ancestry[1]; if(parent === undefined) { return false; }
+        if(parent.kind === 'SourceFile') { return !decl.external; }
+        if(parent.kind === 'ModuleBlock') { return decl.ancestry[2]?.global === true; }
+        return parent.kind === 'InterfaceDeclaration' && parent.name === 'WindowOrWorkerGlobalScope' && decl.library;
+    }
+    plainTarget(index: number): boolean {
+        const outer = this.syntax.outer(index); const parent = this.syntax.parent(outer);
+        return this.syntax.kind(parent) === 'BinaryExpression' && this.syntax.child(parent) === outer &&
+            this.syntax.kind(this.syntax.child(parent, 1)) === 'EqualsToken';
+    }
+    neverRead(index: number): boolean {
+        const symbol = this.facts.symbol(index); const declarations = symbol.ownDeclarations;
+        if(declarations.length !== 1) { return false; }
+        const declaration = declarations[0];
+        if(declaration === undefined || declaration.kind() !== 'VariableDeclaration' || declaration.path !== this.rules.path) { return false; }
+        const bound = this.facts.sources.index(declaration.path, declaration.kind(), declaration.start(), declaration.end());
+        const name = this.syntax.shape.name(bound); if(name < 0) { return false; }
+        const text = this.rules.parser.node(name).text;
+        for(let node = 0; node < this.rules.parser.nodes.length; node++) {
+            if(node === name || this.syntax.kind(node) !== 'Identifier' || this.rules.parser.node(node).text !== text) { continue; }
+            const reference = this.facts.symbol(node);
+            const identity = this.syntax.kind(this.syntax.parent(node)) === 'ShorthandPropertyAssignment' && reference.shorthand !== 0 ? reference.shorthand : reference.own;
+            if(identity === symbol.own && !this.plainTarget(node)) { return false; }
+        }
+        return true;
+    }
+    lost(index: number, executor: number): boolean {
+        const outer = this.syntax.outer(index); const parent = this.syntax.parent(outer); const kind = this.syntax.kind(parent);
+        if(['ExpressionStatement', 'VoidExpression'].includes(kind) || parent === executor) { return true; }
+        if(kind === 'VariableDeclaration' && this.syntax.shape.initializer(parent) === outer) {
+            const name = this.syntax.shape.name(parent); return this.syntax.kind(name) === 'Identifier' && this.neverRead(name);
+        }
+        if(kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(parent, 1)) === 'EqualsToken' && this.syntax.child(parent, 2) === outer) {
+            const target = this.rules.skip(this.syntax.child(parent));
+            return this.syntax.kind(target) === 'Identifier' && this.syntax.kind(this.syntax.parent(this.syntax.outer(parent))) === 'ExpressionStatement' && this.neverRead(target);
+        }
+        return false;
+    }
+    timers(index: number, executor: number): void {
+        const kind = this.syntax.kind(index);
+        if(this.syntax.functionKind(kind) || ['ClassDeclaration', 'ClassExpression', 'CallSignature', 'ConstructSignature', 'MethodSignature'].includes(kind)) { return; }
+        if(kind === 'CallExpression' && this.timer(index) && this.lost(index, executor)) {
+            this.rules.findings.push(nextDiagnostic(this.rules, 'nexus/correctness-no-uncleared-race-timeout', 'unclearedRaceTimeout', message, index));
+        }
+        for(const child of this.rules.parser.node(index).children) { this.timers(child, executor); }
+    }
+    race(index: number): void {
+        const callee = this.rules.skip(this.syntax.child(index));
+        if(this.syntax.kind(callee) !== 'PropertyAccessExpression') { return; }
+        const name = this.syntax.last(callee);
+        if(this.syntax.kind(name) !== 'Identifier' || this.rules.parser.node(name).text !== 'race' || !this.libraryMember(name)) { return; }
+        const first = this.syntax.arguments(index)[0]; if(first === undefined) { return; }
+        const array = this.rules.skip(first); if(this.syntax.kind(array) !== 'ArrayLiteralExpression') { return; }
+        for(const element of this.rules.parser.node(array).children) {
+            const promise = this.promise(element); if(promise < 0) { continue; }
+            const argument = this.syntax.arguments(promise)[0]; if(argument === undefined) { continue; }
+            const executor = this.rules.skip(argument);
+            if(!['ArrowFunction', 'FunctionExpression'].includes(this.syntax.kind(executor))) { continue; }
+            const body = this.syntax.body(executor); if(body >= 0) { this.timers(body, executor); }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) { if(this.syntax.kind(index) === 'CallExpression') { this.race(index); } }
+    }
+}

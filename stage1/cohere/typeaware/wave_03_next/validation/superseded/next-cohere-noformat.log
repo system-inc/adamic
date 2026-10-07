@@ -1,0 +1,27 @@
+panic: ScriptKind must be specified when parsing source file: /workspace/adamic/stage1/cohere/typeaware/wave_03_next/blocking_analysis.a
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).initializeState(0x80808080808023?, {{0x3b76dc4825f0, 0x4a}, {0x3b76dc4825f0, 0x4a}, {0x0, 0x0}}, {0x3b76de830a00?, 0x17f9f60?}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:293 +0x465
+github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile({{0x3b76dc4825f0, 0x4a}, {0x3b76dc4825f0, 0x4a}, {0x0, 0x0}}, {0x3b76de830a00, 0x325c}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:138 +0x10a
+github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile(...)
+	/workspace/adamic/cohere/TypeScript-shim/parser/shim.go:16
+main.proposalsForText({0x3b76dc4825f0, 0x4a}, {0x3b76de830a00, 0x325c}, 0x3b76dc67cb40, {0x3b76dddbe000, 0x1eb, 0x4868b8?})
+	/workspace/adamic/cohere/command/cohere/fix.go:460 +0xfc
+main.applyProposedFixes.func2({0x3b76dc4825f0?, 0x2?}, {0x3b76de830a00?, 0x2?})
+	/workspace/adamic/cohere/command/cohere/fix.go:238 +0x2d
+main.applyProposedFixes.func1.func1({0x0?, 0x4a?}, {0x3b76de830a00?, 0x325c?})
+	/workspace/adamic/cohere/command/cohere/fix.go:234 +0x48
+github.com/system-inc/cohere/internal/edit.FixText({0x3b76dc4825f0, 0x4a}, {0x3b76de82a000, 0x322d}, 0x3b76dc3bf690, 0xa)
+	/workspace/adamic/cohere/internal/edit/engine.go:131 +0x396
+github.com/system-inc/cohere/internal/edit.FixAndTransformText({0x3b76dc4825f0, 0x4a}, {0x3b76de82a000, 0x322d}, 0x3b76dc3bf690, 0x3b76ddc986f0, 0xa)
+	/workspace/adamic/cohere/internal/edit/engine.go:366 +0xdb
+github.com/system-inc/cohere/internal/edit.CheckFile({0x3b76dc4825f0, 0x4a}, 0x3b76dc3bf690, 0x3b76ddc986f0, 0xa)
+	/workspace/adamic/cohere/internal/edit/engine.go:348 +0x16e
+main.applyProposedFixes({_, _}, _, {_, _, _}, {_, _, _}, 0x3b76ddc986d8, ...)
+	/workspace/adamic/cohere/command/cohere/fix.go:252 +0x1337
+main.run()
+	/workspace/adamic/cohere/command/cohere/main.go:863 +0x7c1e
+main.main()
+	/workspace/adamic/cohere/command/cohere/main.go:43 +0x17

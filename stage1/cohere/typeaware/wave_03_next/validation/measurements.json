@@ -1,0 +1,28 @@
+{
+  "samples": 1,
+  "units": "seconds",
+  "repository": {
+    "native_wall": 0.85123854,
+    "go_wall": 0.376977993,
+    "native_load": 0.203747461,
+    "native_query": 0.013156753,
+    "native_queries": 319,
+    "native_first_query": 1.8463e-05,
+    "native_run": 0.600332351,
+    "go_load": 0.203573408,
+    "go_rule": 0.011421972,
+    "go_run": 0.13116121
+  },
+  "compiler": {
+    "native_wall": 6.301710826,
+    "go_wall": 0.994304173,
+    "native_load": 0.7271642,
+    "native_query": 0.101510029,
+    "native_queries": 110,
+    "native_first_query": 1.8916e-05,
+    "native_run": 5.257089901,
+    "go_load": 0.868889247,
+    "go_rule": 0.036462341,
+    "go_run": 0.083250805
+  }
+}

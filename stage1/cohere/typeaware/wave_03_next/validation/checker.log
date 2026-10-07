@@ -1,0 +1,23 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.02s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestWave03CheckerQuestions
+--- PASS: TestWave03CheckerQuestions (0.02s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.05s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.22s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.275s
+?   	github.com/system-inc/adamic/bridge/tsgo/code_path_graph	[no test files]

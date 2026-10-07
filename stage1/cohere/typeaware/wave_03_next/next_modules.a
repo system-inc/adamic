@@ -1,0 +1,33 @@
+import type { Rules } from '../rules.ts';
+import { programModuleEdges } from './program_module_edges.a';
+export class NextModules {
+    readonly declared = new Map<string, boolean>();
+    readonly imported = new Set<string>();
+    readonly canBlock = new Set<string>();
+    readonly edges = new Map<string, string[]>();
+    constructor(rules: Rules, root: number) {
+        const files = programModuleEdges(rules, root); const importers = new Map<string, string[]>();
+        const queue: string[] = [];
+        for(const file of files) { this.declared.set(file.path, file.declared); }
+        for(const file of files) {
+            if(['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) => file.path.endsWith(suffix))) {
+                this.canBlock.add(file.path); queue.push(file.path);
+            }
+            const targets: string[] = [];
+            for(const edge of file.edges) {
+                if(edge.typeOnly) { continue; }
+                if(edge.kind === 'load-call' && !edge.literal) { if(!this.canBlock.has(file.path)) { this.canBlock.add(file.path); queue.push(file.path); } continue; }
+                if(!edge.literal || edge.target === '' || edge.target === file.path || !this.declared.has(edge.target)) { continue; }
+                targets.push(edge.target); this.imported.add(edge.target);
+                const fresh: string[] = []; const previous = importers.get(edge.target) ?? fresh; previous.push(file.path); importers.set(edge.target, previous);
+            }
+            this.edges.set(file.path, targets);
+        }
+        const empty: string[] = [];
+        let cursor = 0; while(cursor < queue.length) { const queuePosition = cursor; cursor++;
+            for(const parent of importers.get(queue[queuePosition] ?? '') ?? empty) {
+                if(!this.canBlock.has(parent)) { this.canBlock.add(parent); queue.push(parent); }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+=== RUN   TestWave03ContinuationAgreementAndMutants
+    wave_03_next_test.go:148: generated controls: 94 candidates, 94 independently parseable
+    wave_03_next_test.go:149: next-controls: 58887 identical finding bytes; findings 96
+    wave_03_next_test.go:179: ordered: 7036 identical finding bytes; findings 12
+    wave_03_next_test.go:182: imported: 634 identical finding bytes; findings 1
+    wave_03_next_test.go:188: next-controls-asan: 58887 identical finding bytes; findings 96
+    wave_03_next_test.go:189: ordered-asan: 7036 identical finding bytes; findings 12
+    wave_03_next_test.go:200: race: builds, exit 0, empty stderr, byte oracle catches byte 15225
+    wave_03_next_test.go:200: output: builds, exit 0, empty stderr, byte oracle catches byte 56
+    wave_03_next_test.go:200: blocking: builds, exit 0, empty stderr, byte oracle catches byte 8652
+    wave_03_next_test.go:210: repository: 18485 identical finding bytes; findings 0
+    wave_03_next_test.go:211: repository-asan: 18485 identical finding bytes; findings 0
+    wave_03_next_test.go:219: repository timing: native 851.23854ms Go 376.977993ms; native tsgo: load_ns=203747461 query_ns=13156753 queries=319 first_query_ns=18463 run_ns=600332351
+         Go cohere: load_ns=203573408 rule_ns=11421972 run_ns=131161210
+    wave_03_next_test.go:210: compiler: 5857 identical finding bytes; findings 0
+    wave_03_next_test.go:211: compiler-asan: 5857 identical finding bytes; findings 0
+    wave_03_next_test.go:219: compiler timing: native 6.301710826s Go 994.304173ms; native tsgo: load_ns=727164200 query_ns=101510029 queries=110 first_query_ns=18916 run_ns=5257089901
+         Go cohere: load_ns=868889247 rule_ns=36462341 run_ns=83250805
+    wave_03_next_test.go:228: released module query: required panic 70
+    wave_03_next_test.go:233: released registry mutant exits 0 and is caught by required panic 70
+--- PASS: TestWave03ContinuationAgreementAndMutants (191.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	191.808s

@@ -41,3 +41,11 @@ in validation-wave-03/continuation-selection.json. Continue on this branch;
 new native rule sources use .a and positive controls plus per-rule byte mutants
 are required despite the zero-volume corpus counts. Shared harness and generator
 files remain untouched.
+
+
+Continuation 1 validation complete: the three reserved Nexus rules have native
+.a implementations, 364 frozen corpus roots match production Go byte for byte,
+106 positive/negative control roots match, three byte-only rule mutants are
+caught, and ASan/UBSan/LSan plus released-handle checks pass. Timings and the
+shared registration/JavaScript integration limits are in
+../wave_03_next/REPORT.md. No further rules were claimed.

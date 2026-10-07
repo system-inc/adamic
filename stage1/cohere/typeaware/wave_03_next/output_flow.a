@@ -1,0 +1,61 @@
+import type { Rules } from '../rules.ts';
+import type { GraphBlock } from './graph_block.a';
+import type { NextSyntax} from './next_syntax.a';
+import { nextSyntax } from './next_syntax.a';
+export interface OutputEventInterface {
+    readonly kind: number;
+    readonly node: number;
+    readonly starts: readonly number[];
+}
+export interface OutputResultInterface { readonly exits: readonly number[]; readonly started: readonly number[]; }
+export interface OutputPositionInterface { readonly block: number; readonly state: readonly string[]; }
+export class OutputFlow {
+    readonly rules: Rules;
+    readonly syntax: NextSyntax;
+    constructor(rules: Rules, syntax: NextSyntax) { this.rules = rules; this.syntax = syntax; }
+    holds(outer: string, inner: string): boolean {
+        return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`));
+    }
+    with(state: readonly string[], chain: string): readonly string[] {
+        const next: string[] = [];
+        for(const held of state) { if(this.holds(chain, held)) { return state; } if(!this.holds(held, chain)) { next.push(held); } }
+        next.push(chain); next.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); return next;
+    }
+    chain(write: number, root: number): string {
+        const ids: number[] = []; let previous = write;
+        for(let current = this.syntax.parent(write); current >= 0 && current !== root; current = this.syntax.parent(current)) {
+            if(this.syntax.kind(current) === 'TryStatement' && this.syntax.child(current) === previous &&
+                this.rules.parser.node(current).children.some((child) => this.syntax.kind(child) === 'CatchClause')) { ids.push(current); }
+            previous = current;
+        }
+        ids.sort((left, right) => left - right); return `,${ids.map((id) => `${id}`).join(',')}${ids.length > 0 ? ',' : ''}`;
+    }
+    run(root: number, blocks: readonly GraphBlock[], events: readonly (readonly OutputEventInterface[])[]): OutputResultInterface {
+        const exits: number[] = []; const started: number[] = [];
+        const emptyState: string[] = []; const emptyEvents: OutputEventInterface[] = []; const emptyEdges: number[] = [];
+        const visited = new Set<string>(); const queue: OutputPositionInterface[] = [{ block: 0, state: emptyState }]; visited.add('0:');
+        let cursor = 0; while(cursor < queue.length) { const queuePosition = cursor; cursor++;
+            const current = queue[queuePosition]; if(current === undefined) { continue; }
+            let state = current.state; let ended = false;
+            for(const event of events[current.block] ?? emptyEvents) {
+                if(event.kind === 1) { state = this.with(state, this.chain(event.node, root)); }
+                else if(event.kind === 2) { if(state.length > 0 && !exits.includes(event.node)) { exits.push(event.node); } ended = true; }
+                else if(event.kind === 3) { const member = `,${event.node},`; state = state.filter((held) => !held.includes(member)); }
+                else if(event.kind === 4) { for(const functionIndex of event.starts) { if(!started.includes(functionIndex)) { started.push(functionIndex); } } }
+                else if(event.kind === 5) { ended = true; }
+                if(ended) { break; }
+            }
+            if(ended) { continue; }
+            for(const next of blocks[current.block]?.successors ?? emptyEdges) {
+                if(blocks[next]?.reachable !== true) { continue; }
+                const key = `${next}:${state.join('|')}`; if(visited.has(key)) { continue; }
+                visited.add(key); queue.push({ block: next, state });
+            }
+        }
+        return { exits, started };
+    }
+}
+
+export function outputEvent(kind: number, node: number): OutputEventInterface { const starts: number[] = []; return { kind, node, starts }; }
+
+export function outputFlow(rules: Rules): OutputFlow { const syntax = nextSyntax(rules); return new OutputFlow(rules, syntax); }

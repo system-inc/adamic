@@ -1,0 +1,54 @@
+import { nextDiagnostic } from './next_diagnostic.a';
+import type { Rules } from '../rules.ts';
+import type { NextFacts } from './next_facts.a';
+import type { ProcessEffects } from './process_effects.a';
+import { outputFlow, outputEvent } from './output_flow.a';
+import type { OutputEventInterface } from './output_flow.a';
+import { codePathGraph } from './code_path_graph.a';
+const message = "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.";
+export class CorrectnessNoProcessExitAfterOutput {
+    readonly rules: Rules;
+    readonly facts: NextFacts;
+    readonly effects: ProcessEffects;
+    constructor(facts: NextFacts, effects: ProcessEffects) { this.rules = facts.rules; this.facts = facts; this.effects = effects; }
+    analyze(root: number, exits: readonly number[]): void {
+        const blocks = codePathGraph(this.rules, root, this.facts.sources);
+        const recorded = new Set<number>(); const events: OutputEventInterface[][] = [];
+        
+        for(const block of blocks) {
+            const items: OutputEventInterface[] = [];
+            for(const event of block.events) {
+                
+                if(event.statement) {
+                    const parent = this.effects.syntax.parent(event.node);
+                    if(this.effects.syntax.kind(event.node) === 'Block' && this.effects.syntax.kind(parent) === 'CatchClause') { items.push(outputEvent(3, this.effects.syntax.parent(parent))); }
+                }
+                else if(this.effects.syntax.kind(event.node) === 'CallExpression' && !this.effects.syntax.catchBinding(event.node, root)) {
+                    if(this.effects.exit(event.node)) { recorded.add(event.node); items.push(outputEvent(2, event.node)); }
+                    else if(this.effects.writes(event.node) && !this.effects.holdsExit(event.node)) { items.push(outputEvent(1, event.node)); }
+                }
+            }
+            events.push(items);
+        }
+        if(exits.some((exit) => !recorded.has(exit))) { return; }
+        const result = outputFlow(this.rules).run(root, blocks, events);
+        for(const exit of exits) {
+            if(result.exits.includes(exit)) { this.rules.findings.push(nextDiagnostic(this.rules, 'nexus/correctness-no-process-exit-after-output', 'exitAfterOutput', message, exit)); }
+        }
+    }
+    run(): void {
+        const roots = new Map<number, number[]>(); 
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.effects.syntax.kind(index) !== 'CallExpression' || !this.effects.exit(index)) { continue; }
+            const root = this.effects.syntax.root(index); if(root < 0) { continue; }
+            const fresh: number[] = []; const exits = roots.get(root) ?? fresh; exits.push(index); roots.set(root, exits);
+        }
+        for(const root of roots.keys()) {
+            let writes = false;
+            for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+                if(this.effects.syntax.kind(index) === 'CallExpression' && this.effects.syntax.root(index) === root && this.effects.writes(index)) { writes = true; break; }
+            }
+            if(writes) { const empty: number[] = []; this.analyze(root, roots.get(root) ?? empty); }
+        }
+    }
+}

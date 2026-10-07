@@ -1,0 +1,14 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+import { contextDeclaration } from './context_declaration.a';
+import type { ContextDeclaration } from './context_declaration.a';
+export interface ResolvedCallDeclarationInterface {
+    readonly declaration: ContextDeclaration | undefined;
+    readonly returns: number;
+}
+export function resolvedCallDeclaration(rules: Rules, index: number): ResolvedCallDeclarationInterface {
+    const frames = new Frames(rules.ask(index, 'resolved-call-declaration')); header(frames, 'resolved-call-declaration');
+    let declaration: ContextDeclaration | undefined; let returns = 0;
+    if(frames.yes()) { if(frames.yes()) { declaration = contextDeclaration(frames); } if(frames.yes()) { returns = frames.natural(); } }
+    frames.end(); return { declaration, returns };
+}

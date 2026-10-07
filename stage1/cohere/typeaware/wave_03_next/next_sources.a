@@ -1,0 +1,31 @@
+import { sourceModuleContext } from './source_module_context.a';
+import { panic, readTextFile } from 'adamic';
+import { Rules } from '../rules.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+export class NextSources {
+    readonly program: number;
+    readonly files = new Map<string, Rules>();
+    readonly roots = new Map<string, number>();
+    readonly spans = new Map<string, number>();
+    constructor(program: number) { this.program = program; }
+    file(path: string): Rules {
+        const found = this.files.get(path); if(found !== undefined) { return found; }
+        const source = readTextFile(path); if(source.kind === 'Error') { panic(source.message); }
+        const parser = new Parser(source.text, path); const scanner = new Scanner(source.text);
+        const offsets = byteOffsets(source.text); parser.awaitContext = sourceModuleContext(this.program, path, offsets[offsets.length - 1] ?? 0); const unary = new UnaryMinus(this.program, path, parser, scanner, offsets);
+        const rules = new Rules(this.program, path, parser, scanner, offsets, unary); const root = parser.file();
+        let at = 0; while(at < parser.nodes.length) { rules.parents.push(-1); at++; }
+        rules.links(root, -1); this.files.set(path, rules); this.roots.set(path, root);
+        for(let index = 0; index < parser.nodes.length; index++) {
+            const node = parser.node(index);
+            this.spans.set(`${path}:${node.kind}:${rules.byte(node.pos)}:${rules.byte(node.end)}`, index);
+        }
+        return rules;
+    }
+    root(path: string): number { this.file(path); return this.roots.get(path) ?? panic('missing source root'); }
+    index(path: string, kind: string, start: number, end: number): number {
+        this.file(path); return this.spans.get(`${path}:${kind}:${start}:${end}`) ?? panic('compiler node absent from native parser');
+    }
+}

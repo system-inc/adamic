@@ -1,0 +1,8 @@
+=== RUN   TestWave03ContinuationAgreementAndMutants
+    wave_03_next_test.go:153: parser blocker retained in candidates: /workspace/wave-03/next-quick3/next-control-063.ts: unknown annotation followed by await import
+    wave_03_next_test.go:159: generated controls: 93 candidates, 93 independently parseable
+    wave_03_next_test.go:160: next-controls mismatch byte 14530: native "workspace/wave-03/next-quick3/next-control-040.ts\n967\t982\tnexus/correctness-no-process-exit-after-output\texitAfterOutput\tThis calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, " Go "workspace/wave-03/next-quick3/next-control-040.ts\nfile\t/workspace/wave-03/next-quick3/next-control-041.ts\n868\t883\tnexus/correctness-no-process-exit-after-output\texitAfterOutput\tThis calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends "
+--- FAIL: TestWave03ContinuationAgreementAndMutants (39.92s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	39.946s
+FAIL

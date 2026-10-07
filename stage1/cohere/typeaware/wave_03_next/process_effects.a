@@ -1,0 +1,87 @@
+import type { ContextDeclaration } from './context_declaration.a';
+import type { Rules } from '../rules.ts';
+import { NextFacts } from './next_facts.a';
+import type { NextSyntax} from './next_syntax.a';
+import { nextSyntax } from './next_syntax.a';
+import { resolvedCallDeclaration } from './resolved_call_declaration.a';
+export class ProcessEffects {
+    readonly rules: Rules;
+    readonly facts: NextFacts;
+    readonly syntax: NextSyntax;
+    readonly writers = new Map<number, boolean>();
+    readonly bodies = new Map<string, boolean>();
+    constructor(facts: NextFacts, syntax: NextSyntax) { this.facts = facts; this.rules = facts.rules; this.syntax = syntax; }
+    processMember(index: number): boolean {
+        if(index < 0) { return false; }
+        const declarations = this.facts.symbol(index).declarations;
+        return declarations.length > 0 && declarations.every((decl) => decl.declared &&
+            ['MethodSignature', 'PropertySignature'].includes(decl.kind()) &&
+            decl.ancestry[1]?.kind === 'InterfaceDeclaration' && decl.ancestry[1]?.name === 'Process' &&
+            decl.ancestry[2]?.kind === 'ModuleBlock' && decl.ancestry[3]?.kind === 'ModuleDeclaration' &&
+            decl.ancestry[3]?.name === 'NodeJS');
+    }
+    exit(index: number): boolean {
+        const callee = this.rules.skip(this.syntax.child(index)); const name = this.syntax.member(callee);
+        return name >= 0 && this.rules.parser.node(name).text === 'exit' && this.processMember(name);
+    }
+    globalConsole(index: number): boolean {
+        const declarations = this.facts.symbol(index).ownDeclarations;
+        return declarations.length > 0 && declarations.every((decl) => this.consoleDeclaration(decl));
+    }
+    consoleDeclaration(decl: ContextDeclaration): boolean {
+        if(!decl.declared || decl.kind() !== 'VariableDeclaration' ||
+            decl.ancestry[1]?.kind !== 'VariableDeclarationList' || decl.ancestry[2]?.kind !== 'VariableStatement') { return false; }
+        const container = decl.ancestry[3];
+        return container?.kind === 'SourceFile' ? !decl.external :
+            container?.kind === 'ModuleBlock' && decl.ancestry[4]?.global === true;
+    }
+    write(index: number): boolean {
+        const callee = this.rules.skip(this.syntax.child(index)); const kind = this.syntax.kind(callee);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind)) { return false; }
+        const member = this.rules.parser.node(this.syntax.last(callee));
+        if(kind === 'ElementAccessExpression' && !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(member.kind)) { return false; }
+        const receiver = this.rules.skip(this.syntax.child(callee));
+        if(['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(member.text) &&
+            this.syntax.kind(receiver) === 'Identifier' && this.rules.parser.node(receiver).text === 'console') { return this.globalConsole(receiver); }
+        if(member.text !== 'write') { return false; }
+        const stream = this.syntax.member(receiver);
+        return stream >= 0 && ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) && this.processMember(stream);
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.rules.parser.node(index).children) {
+            if(this.syntax.rootKind(child)) { continue; }
+            if(this.syntax.kind(child) === 'CallExpression' && this.exit(child)) { return true; }
+            if(this.holdsExit(child)) { return true; }
+        }
+        return false;
+    }
+    bodyEffects(index: number): number {
+        if(this.syntax.rootKind(index)) { return 0; }
+        let found = 0;
+        if(this.syntax.kind(index) === 'CallExpression') { if(this.exit(index)) { return 2; } if(this.write(index)) { found = 1; } }
+        for(const child of this.rules.parser.node(index).children) { const effect = this.bodyEffects(child); if(effect === 2) { return 2; } if(effect === 1) { found = 1; } }
+        return found;
+    }
+    writes(index: number): boolean {
+        const known = this.writers.get(index); if(known !== undefined) { return known; }
+        if(this.write(index)) { this.writers.set(index, true); return true; }
+        const call = resolvedCallDeclaration(this.rules, index); 
+        let result = false;
+        if(call.declaration !== undefined && ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(call.declaration.kind()) &&
+            call.declaration.bodyKind !== '' && (call.declaration.path === this.rules.path || call.declaration.external) &&
+            (call.declaration.functionFlags & 1) === 0 && (call.returns & 262144) === 0 &&
+            ((call.declaration.functionFlags & 2) === 0 || this.syntax.kind(this.syntax.parent(this.syntax.outer(index))) === 'AwaitExpression')) {
+            const key = `${call.declaration.path}:${call.declaration.start()}:${call.declaration.end()}`; const cached = this.bodies.get(key);
+            if(cached !== undefined) { result = cached; }
+            else {
+                const rules = this.facts.sources.file(call.declaration.path);
+                const effects = call.declaration.path === this.rules.path ? this : processEffects(new NextFacts(rules, this.facts.sources));
+                const body = this.facts.sources.index(call.declaration.path, call.declaration.bodyKind, call.declaration.bodyStart, call.declaration.bodyEnd);
+                result = effects.bodyEffects(body) === 1; this.bodies.set(key, result);
+            }
+        }
+        this.writers.set(index, result); return result;
+    }
+}
+
+export function processEffects(facts: NextFacts): ProcessEffects { const syntax = nextSyntax(facts.rules); return new ProcessEffects(facts, syntax); }

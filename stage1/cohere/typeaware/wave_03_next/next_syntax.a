@@ -1,0 +1,63 @@
+import type { Rules } from '../rules.ts';
+import { Shadow } from '../shadow.ts';
+export class NextSyntax {
+    readonly rules: Rules;
+    readonly shape: Shadow;
+    constructor(rules: Rules, shape: Shadow) { this.rules = rules; this.shape = shape; }
+    kind(index: number): string { return index < 0 ? '' : this.rules.parser.node(index).kind; }
+    child(index: number, at = 0): number { return index < 0 ? -1 : this.rules.parser.node(index).children[at] ?? -1; }
+    last(index: number): number { return index < 0 ? -1 : this.rules.parser.node(index).children[this.rules.parser.node(index).children.length - 1] ?? -1; }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    outer(index: number): number { let current = index; while(this.kind(this.parent(current)) === 'ParenthesizedExpression') { current = this.parent(current); } return current; }
+    functionKind(kind: string): boolean { return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(kind); }
+    body(index: number): number {
+        const last = this.last(index); if(this.kind(last) === 'Block') { return last; }
+        return this.kind(index) === 'ArrowFunction' ? last : -1;
+    }
+    rootKind(index: number): boolean {
+        return this.kind(index) === 'SourceFile' || this.functionKind(this.kind(index)) ||
+            this.kind(index) === 'ClassStaticBlockDeclaration' ||
+            (this.kind(index) === 'PropertyDeclaration' && this.shape.initializer(index) >= 0);
+    }
+    root(index: number): number {
+        let previous = index; let decorator = -1;
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            const kind = this.kind(current); if(kind === 'Decorator') { decorator = current; }
+            if(kind === 'SourceFile') { return current; }
+            if(this.rootKind(current)) {
+                if(kind === 'PropertyDeclaration') { if(this.shape.initializer(current) === previous) { return current; } }
+                else if(kind === 'ClassStaticBlockDeclaration') { if(this.last(current) === previous) { return current; } }
+                else if(this.shape.name(current) !== previous && !(decorator >= 0 &&
+                    (this.parent(decorator) === current || this.parent(decorator) === previous))) { return current; }
+            }
+            previous = current;
+        }
+        return -1;
+    }
+    member(index: number): number {
+        const kind = this.kind(index);
+        if(kind === 'Identifier') { return index; }
+        if(kind === 'PropertyAccessExpression') { const name = this.last(index); return this.kind(name) === 'Identifier' ? name : -1; }
+        if(kind === 'ElementAccessExpression') { const name = this.last(index); return this.kind(name) === 'Identifier' ? name : -1; }
+        return -1;
+    }
+    arguments(index: number): readonly number[] {
+        const node = this.rules.parser.node(index); const empty: number[] = []; return node.list > 0 ? node.children.slice(node.children.length - node.list) : empty;
+    }
+    catchBinding(index: number, root: number): boolean {
+        let previous = index;
+        for(let current = this.parent(index); current >= 0 && current !== root; current = this.parent(current)) {
+            if(this.kind(current) === 'CatchClause' && this.child(current) === previous && this.kind(previous) === 'VariableDeclaration') { return true; }
+            previous = current;
+        }
+        return false;
+    }
+    inRun(index: number, root: number): boolean {
+        for(let current = this.parent(index); current >= 0 && current !== root; current = this.parent(current)) {
+            if(this.functionKind(this.kind(current)) && this.body(current) >= 0) { return false; }
+        }
+        return true;
+    }
+}
+
+export function nextSyntax(rules: Rules): NextSyntax { const shape = new Shadow(rules); return new NextSyntax(rules, shape); }
