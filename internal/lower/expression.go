@@ -487,6 +487,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return l.closure(node)
 	case ast.KindAsExpression:
 		return l.cast(node)
+	case ast.KindSatisfiesExpression:
+		satisfies := node.AsSatisfiesExpression()
+		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
+			return nil, err
+		}
+		return l.expression(satisfies.Expression)
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
