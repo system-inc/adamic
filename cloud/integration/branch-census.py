@@ -11,8 +11,11 @@ cherry-picked after its patches landed counts as superseded. The classes:
                since a merge can carry a conflict resolution nothing upstream has
   superseded   it has commits of its own, but every patch they carry is already in main or an area
   in-flight    patches not landed, last commit under --fresh-hours old (a worker may be on it)
-  unmerged     patches not landed, last commit between --fresh-hours and --stale-hours old:
-               finished work nobody merged, the list each Circle gets
+  unmerged     patches not landed, last commit between --fresh-hours and --stalled-hours old
+  stalled      patches not landed, no commit for --stalled-hours (2) up to --stale-hours: work
+               that stopped short or finished and was never merged; each run names these to their
+               owner with the last commit's subject. (Codex sessions don't record their branch, so
+               a branch can't yet be tied to whether its worker is still running.)
   abandoned    patches not landed, last commit older than --stale-hours
   closed       its owner says it's dead or held elsewhere (census-closed.tsv, with the reason)
 
@@ -116,6 +119,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fresh-hours", type=float, default=1)
     parser.add_argument("--stale-hours", type=float, default=24)
+    parser.add_argument("--stalled-hours", type=float, default=2)
+    parser.add_argument("--notify-dir", help="write one stalled-branch message per owner here")
     parser.add_argument("--lookback-days", type=int, default=10)
     parser.add_argument("--messages-db")
     parser.add_argument("--tsv")
@@ -171,8 +176,10 @@ def main():
             category = "superseded"
         elif age < arguments.fresh_hours:
             category = "in-flight"
-        elif age < arguments.stale_hours:
+        elif age < arguments.stalled_hours:
             category = "unmerged"
+        elif age < arguments.stale_hours:
+            category = "stalled"
         else:
             category = "abandoned"
         owner = ownerOverrides.get(short) or next((circle for prefix, circle in prefixOwners if short.startswith(prefix)), None) or owners.get(short, "unknown")
@@ -188,7 +195,7 @@ def main():
                 file.write("\t".join([row[0], row[1], row[2], row[3][:8], f"{row[4]:.1f}", str(row[5]), str(row[6])]) + "\n")
 
     byClass = collections.Counter(row[0] for row in rows)
-    print(f"{len(rows)} branches outside main and the areas: " + ", ".join(f"{byClass[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "abandoned", "closed")))
+    print(f"{len(rows)} branches outside main and the areas: " + ", ".join(f"{byClass[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "stalled", "abandoned", "closed")))
     print(f"distinct commits on superseded branches, already landed as patches: {len(distinctSuperseded)}")
     print(f"distinct commits outside main and the areas whose patches haven't landed: {len(distinctUnlanded)}")
     print()
@@ -197,11 +204,22 @@ def main():
         byOwner[row[1]][row[0]] += 1
     for owner in sorted(byOwner):
         counts = byOwner[owner]
-        print(f"{owner}: " + ", ".join(f"{counts[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "abandoned", "closed") if counts[c]))
+        print(f"{owner}: " + ", ".join(f"{counts[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "stalled", "abandoned", "closed") if counts[c]))
     print()
-    print("unmerged, by owner, oldest first (branch, tip, hours since last commit, unlanded patches):")
+    if arguments.notify_dir:
+        os.makedirs(arguments.notify_dir, exist_ok=True)
+        for owner in sorted(byOwner):
+            stalled = sorted((row for row in rows if row[1] == owner and row[0] == "stalled"), key=lambda row: -row[4])
+            if not stalled or owner == "unknown":
+                continue
+            with open(os.path.join(arguments.notify_dir, f"{owner}.txt"), "w") as file:
+                file.write(f"Stalled branches (branch census): yours, with unlanded work and no commit for {arguments.stalled_hours:g} hours or more, oldest first. Each is either still being worked (say so), finished (land it through your area), or dead (say so and it's closed). Branch, tip, hours since its last commit, unlanded commits, last commit:\n")
+                for row in stalled:
+                    subject = git("log", "-1", "--format=%s", row[3]).strip()
+                    file.write(f"- {row[2]} {row[3][:8]} {row[4]:.1f}h {row[6]} | {subject}\n")
+    print("unmerged and stalled, by owner, oldest first (branch, tip, hours since last commit, unlanded patches):")
     for owner in sorted(byOwner):
-        unmerged = sorted((row for row in rows if row[1] == owner and row[0] == "unmerged"), key=lambda row: -row[4])
+        unmerged = sorted((row for row in rows if row[1] == owner and row[0] in ("unmerged", "stalled")), key=lambda row: -row[4])
         if unmerged:
             print(f"  {owner}")
             for row in unmerged:
