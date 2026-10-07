@@ -1,0 +1,61 @@
+import { panic } from 'adamic';
+// Resolver boundary: facts must come from the project's actual Tailwind design system.
+export class ClassFacts {
+    readonly name: string;
+    readonly variants: string;
+    readonly selector: string;
+    readonly properties: readonly string[];
+    readonly composes: boolean;
+    constructor(name: string, variants: string, selector: string, properties: readonly string[], composes: boolean) {
+        this.name = name; this.variants = variants; this.selector = selector; this.properties = properties; this.composes = composes;
+    }
+}
+export class Conflict {
+    readonly name: string;
+    readonly others: readonly string[];
+    readonly properties: readonly string[];
+    constructor(name: string, others: readonly string[], properties: readonly string[]) { this.name = name; this.others = others; this.properties = properties; }
+}
+export function conflicts(facts: readonly ClassFacts[]): readonly Conflict[] {
+    const distinct: ClassFacts[] = [];
+    const seen: string[] = [];
+    for (const fact of facts) { if (!seen.includes(fact.name)) { seen.push(fact.name); distinct.push(fact); } }
+    const result: Conflict[] = [];
+    for (let i = 0; i < distinct.length; i++) {
+        const subject = distinct[i] ?? panic('missing conflict subject');
+        if (subject.composes) continue;
+        const others: string[] = [];
+        const properties: string[] = [];
+        for (let j = 0; j < distinct.length; j++) {
+            const other = distinct[j] ?? panic('missing conflict peer');
+            if (i === j || other.composes) continue;
+            if (other.variants !== subject.variants || other.selector !== subject.selector) continue;
+            const shared: string[] = [];
+            for (const property of subject.properties) if (other.properties.includes(property)) shared.push(property);
+            if (shared.length === 0 || shared.length !== subject.properties.length || shared.length !== other.properties.length) continue;
+            others.push(other.name);
+            for (const property of shared) if (!properties.includes(property)) properties.push(property);
+        }
+        if (others.length === 0) continue;
+        properties.sort(compareProperties);
+        result.push(new Conflict(subject.name, others, properties));
+    }
+    return result;
+}
+export function message(name: string, others: readonly string[], properties: readonly string[]): string {
+    return 'The class "' + name + '" and "' + others.join('", "') + '" set the same CSS ' + (properties.length === 1 ? 'property' : 'properties') + ' (' + properties.join(', ') + '), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest.';
+}
+
+// Go sorts valid UTF-8 property names by scalar order, including supplementary characters.
+function compareProperties(left: string, right: string): number {
+    let l = 0;
+    let r = 0;
+    while (l < left.length && r < right.length) {
+        const a = left.codePointAt(l) ?? panic('missing left scalar');
+        const b = right.codePointAt(r) ?? panic('missing right scalar');
+        if (a !== b) return a < b ? -1 : 1;
+        l += a > 0xffff ? 2 : 1;
+        r += b > 0xffff ? 2 : 1;
+    }
+    return l < left.length ? 1 : r < right.length ? -1 : 0;
+}
