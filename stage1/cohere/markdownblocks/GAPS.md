@@ -6,6 +6,31 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Seat compiler reconciliation, October 7, 2026
+
+On seat `1cd00a262ed08e67c51c1bc368e07bc5a4ec0117`, with main
+`71d7e491b3c9724f7a0e2ee754592149e7f9790b` already merged, gap 11 is closed:
+the unchanged function-expression probe now runs byte-identically on source
+Node, native and the JavaScript backend, with leak detection. `AstPath.map`
+now calls `each` with a capturing function expression, removing the duplicated
+traversal loop. Result collection still uses push because gap 13 remains open.
+
+Gap 16 moved from NotYet to the exact Refused diagnostic recorded below. Its
+unchanged program already calls shift on its receiver; that form is still
+refused, so the production task-list removal retains discarded splice(0,1).
+The test holds the complete diagnostic, including source line/column and fix.
+
+Main also closed gap 6: its unchanged probe prints `missing` on all three
+backends with leak detection, as main's positive test already asserts. The source
+decoder retains its explicit initialized match flag: it is how the decoder
+tracks whether a reference matched, independently of optional-field initialization.
+All other representation probes retain their recorded diagnoses or observations,
+including gap 13's fatal array-growth check. Historical unit coverage counts
+below describe their original censuses. Gate corpora now use this unit's files
+and generated cases; the whole-repository census is opt-in through
+`ADAMIC_MARKDOWNBLOCKS_CENSUS=1`. The width oracle has its seat's named skip
+without `ADAMIC_MARKDOWNWIDTH_DEPS`; with dependencies installed it runs unchanged.
+
 ## Native tokenizer event primitives and full mdast construction
 
 `tokenArena.ts` and `tokenizerEvents.ts` port token identity, copied points,
@@ -141,8 +166,14 @@ message mutants retain exit70/empty stdout and are caught only by stderr bytes.
 - `gaps/15_string_or.ts`: Node prints `fallback` and `x`; string `||` is NotYet,
   `a BinaryExpression with a string and a string`. Production uses explicit
   comparisons/conditionals for truthy-string defaults.
-- `gaps/16_array_shift.ts`: Node prints `1` and `2`; lowering is NotYet,
-  `.shift on a value`. Production task-list removal uses discarded splice(0,1).
+- `gaps/16_array_shift.ts`: Node prints `1` and `2`. Its direct receiver call
+  now receives this exact Refused diagnostic (relative path shown):
+
+  ```text
+  gaps/16_array_shift.ts:2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)
+  ```
+
+  Production task-list removal keeps discarded splice(0,1).
 - `gaps/17_long_optional_chain.ts`: Node prints `1`; lowering is NotYet,
   `an optional chain longer than one step`. Production checks the chunk then
   reads its text length. All three exact diagnostics and Node outputs are held.
@@ -225,9 +256,10 @@ Each numbered program is executable on source Node and covered by a test:
   property/index frames, with numeric IDs instead of owning graph edges.
 - `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments are
   NotYet, `push with other than one value`. Production pushes one frame at a time.
-- `gaps/11_function_expression.ts`: Node prints `value`; a function expression
-  is NotYet, `a function expression (an arrow function captures this as written)`.
-  The production map uses an explicit loop and its supplied callback.
+- `gaps/11_function_expression.ts` is closed: the unchanged direct function
+  expression prints `value` on source Node, native and the JavaScript backend,
+  with sanitizer/leak checks. Production map now supplies a capturing function
+  expression to each, rather than duplicating traversal in an explicit loop.
 - `gaps/12_conditional_empty_array.ts`: Node prints `0`; the inferred empty arm
   is NotYet, `an array of never`. Production empties have explicit array types.
 - `gaps/13_array_growth.ts`: Node prints `1`. Native AND the JavaScript backend

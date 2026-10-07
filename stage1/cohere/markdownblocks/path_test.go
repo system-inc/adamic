@@ -128,6 +128,7 @@ func TestMarkdownAstPath(t *testing.T) {
 		t.Fatal(report)
 	}
 	for _, m := range []struct{ name, from, to string }{
+		{"map callback result", "results.push(callback(path, index, array));", "results.push(callback(path, index, array) + 1);"},
 		{"array frame", "this.at(-3)", "this.at(-5)"},
 		{"ancestor order", "index -= 2", "index -= 4"},
 		{"call restore", "this.truncate(length);\n        return result;", "this.truncate(length + 2);\n        return result;"},

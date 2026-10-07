@@ -1,3 +1,222 @@
+Seat compiler reconciliation is green on stage1-format/markdown-blocks-2.
+Gap11 is positive and map uses a direct capturing function; gap16 holds the exact Refused message.
+Whole package PASS1150.846s in gate mode and PASS1221.337s with pinned width dependencies.
+All1,140,277 widths and1,163 census documents agree with Go; mutants, sanitizers and leaks pass.
+gofmt, vet and cohere clean; gap6 already closed on main, every other representation gap unchanged.
+
+Seat compiler reconciliation, October 7, 2026
+
+Parent seat: 1cd00a262ed08e67c51c1bc368e07bc5a4ec0117.
+Merged main: 71d7e491b3c9724f7a0e2ee754592149e7f9790b (already up to date).
+Owner @system_cohere_format; only stage1/cohere/markdownblocks changes.
+No test comparison relaxed, no new case excluded, leak detection unchanged.
+The seat's named dependency skip and opt-in census policy are retained.
+
+Changes and observations
+
+The initial probe run reproduced both failures: gap11 lowered successfully instead
+of NotYet; gap16 returned Refused instead of NotYet. Gap11's unchanged source
+now runs as a positive Node/native/backend/sanitizer/leak comparison. AstPath.map
+removes its duplicated traversal loop and calls each with a capturing function
+expression. Collection still uses push because gap13's indexed growth remains a
+recorded panic on both compiled backends. Full path comparison still includes
+actual Go/fork observations, empty/missing children, nesting, map results and
+restoration. Added a zero-exit output mutant incrementing each map callback result.
+
+Gap16 already calls values.shift() on its receiver. That direct form still receives:
+gaps/16_array_shift.ts:2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)
+The probe asserts full Error text, line, column, type and fix; production task-list
+removal retains discarded splice(0,1). No unbound call was introduced.
+
+Reviewed all15 representation probes plus gaps6/13 and GAPS.md. Gap6 is already
+closed by main's positive optional-string regression: all backends print missing,
+leaks pass. Main's existing GAPS.md records integration15's initialization fix.
+The decoder's match flag remains matching state. Other witnesses retain behavior:
+1/5/7/8/9/10/12/15/17 NotYet; 2/4 cycle Refused; 3/14 positive comparisons;
+13 empty-array indexed growth still fatal70 on both compiled backends. No probes
+deleted. Seven embedding witnesses and fourteen complete outputs retained.
+Counts in historical reports reflect their old censuses, not this seat's gate set.
+Some older log messages still print the historical4943 layout count; actual case
+counts and physical-file counts in this run determine coverage.
+
+Setup and commands
+
+Read CLAUDE.md, README.md, docs/0.1.md, docs/memory.md, GAPS.md and each edited source.
+Cloud runtime skill checked workspace/network configuration; no VPN/identity.
+Initial fetch was interrupted after stalling, bounded retry completed successfully.
+The clone's fetch refspec tracked only main, so the requested fetch populated
+FETCH_HEAD but not origin/stage1-format/markdown-blocks; checkout failed with
+'origin/stage1-format/markdown-blocks is not a commit'. Explicit refspec fetch
+created the tracking ref, then checkout and merge succeeded:
+git fetch origin refs/heads/stage1-format/markdown-blocks:refs/remotes/origin/stage1-format/markdown-blocks
+git checkout -b stage1-format/markdown-blocks-2 origin/stage1-format/markdown-blocks
+git merge origin/main
+Logs /tmp/markdown-seat-fetch2.log, -fetch-ref.log, -checkout.log, -merge.log.
+
+bash cloud/setup.sh > /tmp/markdown-seat-setup.log 2>&1: PASS.
+Timing lines: submodules ready0.062s; go ready0.062s; Node ready0.072s;
+clang ready0.409s; markdown dependencies step-duration1.160s, ready1.329s;
+go build ready38.111s; test binaries deferred38.507s; build cache warm38.512s;
+done38.633s. nproc5, cpu.max400000100000,17.6GB; Go1.27.1, Node24.19.0, clang20.1.8.
+source /workspace/adamic-tools/env.sh for all toolchain commands. Setup now exports
+width dependencies; gate commands explicitly unset them and census/fork variables.
+
+npm install --prefix /tmp/markdown-seat-width-deps --save-exact
+emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3
+> /tmp/markdown-seat-width-install.log 2>&1: added3packages in2s.
+npm ls --prefix /tmp/markdown-seat-width-deps --depth=0 confirms all three versions.
+
+Initial probe command: env -u ADAMIC_MARKDOWNWIDTH_DEPS
+-u ADAMIC_MARKDOWNBLOCKS_CENSUS -u ADAMIC_MARKDOWNBLOCKS_FORK go test
+./stage1/cohere/markdownblocks
+-run '^(TestParserRepresentationProbes|TestArrayGrowthWitness|TestOptionalStringInitializationWitness)$'
+-count=1 -v > /tmp/markdown-seat-probes-before.log 2>&1
+FAIL7.228s, exactly gaps11/16; gap6 positive passed, gap13 retained its panic.
+Updated probe-only run PASS1.186s in /tmp/markdown-seat-probes-after.log.
+
+Exact diagnostic control: temporary Go overlay changes only expected fix text
+'prototype members are not stored' to 'prototype members are stored'.
+go test -overlay=/tmp/markdown-seat-refusal-overlay.json
+./stage1/cohere/markdownblocks -run '^TestParserRepresentationProbes/gaps/16_array_shift.ts$'
+-count=1 -v > /tmp/markdown-seat-refusal-mutant.log 2>&1
+Expected FAIL0.129s, exclusively 'Exact refusal changed'. Source and compiler
+unchanged. This proves the diagnostic assertion; not counted as a formatter mutant.
+
+Full gate mode:
+env -u ADAMIC_MARKDOWNWIDTH_DEPS -u ADAMIC_MARKDOWNBLOCKS_CENSUS
+-u ADAMIC_MARKDOWNBLOCKS_FORK go test ./stage1/cohere/markdownblocks
+-count=1 -v -timeout 30m > /tmp/markdown-seat-gate.log 2>&1
+PASS1150.846s. Exactly the seat's named width dependency skip; all other tests
+and their mutants run. Gate corpus3physical+4067generated=4070 layout documents;
+79,000 event/chunk cases,4,226 preprocessing contexts,4,135 constructed trees,
+4,102 path contexts (41,358,945 output bytes),2,241,395 decode strings,
+1,112,064 identifier scalars, all numeric text-classification cases, and all
+existing layer oracles. Native/source/backend byte parity, sanitizers and leaks
+pass. New map callback-result mutant caught solely by stdout at byte770;
+existing path mutants caught at bytes268/191/260. Total positive native mutants
+from the previous report40 plus this unit's1 =41; three diagnostic mutants remain
+additional. External Go heading/list/fence baseline mutants also caught.
+
+Opt-in whole-repository census:
+env -u ADAMIC_MARKDOWNWIDTH_DEPS -u ADAMIC_MARKDOWNBLOCKS_FORK
+ADAMIC_MARKDOWNBLOCKS_CENSUS=1 go test ./stage1/cohere/markdownblocks
+-run '^TestWholeDocumentOraclePreflight$' -count=1 -v -timeout 30m
+> /tmp/markdown-seat-census.log 2>&1
+PASS380.126s. All1,163 documents (1,086physical+77generated) byte-identical Go/fork
+with embedding off. Auto mode1,152/1,163 agrees, exactly11named historical gaps;
+all seven real-file witness hashes and fourteen complete outputs remain held.
+All three external Go mutants caught by CLAUDE.md: headingbyte1, listbyte618,
+fencebyte4922. Measured Go59.3/fork67.8 documents/s (startup/I/O included);
+these are baselines, not a native complete Markdown formatter measurement.
+
+Full package with pinned width dependencies:
+env -u ADAMIC_MARKDOWNBLOCKS_CENSUS -u ADAMIC_MARKDOWNBLOCKS_FORK
+ADAMIC_MARKDOWNWIDTH_DEPS=/tmp/markdown-seat-width-deps go test
+./stage1/cohere/markdownblocks -count=1 -v -timeout 30m
+> /tmp/markdown-seat-width-gate.log 2>&1
+PASS1221.337s, no skips and no failures. Every package check and mutant reran.
+Width parent PASS139.24s:1,140,277 widths including every Unicode scalar,
+source lines and generated sequences. Actual Go, pinned original dependencies,
+fork group-fit oracle, sanitized native/source/backend and release agree.
+Leak detection and generated-table regeneration pass unchanged.
+All three width output-only mutants caught: East Asian27.82s, narrow emoji27.99s,
+ASCII DEL27.57s. Every other layer reran green on the same gate corpus.
+
+A temporary log-only overlay also recorded all15 complete current compiler
+diagnostics, with original assertions intact: PASS1.455s,
+/tmp/markdown-seat-probe-observations.log. Gap2 remains the captured state-cell
+cycle at4:9. Gap4 remains the structural array cycle at9:7, now naming the
+unproven append write at11:5 and its top-level caller in the refusal explanation.
+Neither became supported; both remain the recorded cycle Refused shapes.
+No other NotYet.What changed, and all three positive representation probes pass.
+
+The complete-repository test gate was not run; both requested whole-package gates,
+whole-repository census preflight and repository-wide vet were run. Native grammar
+and an integrated native source Markdown formatter remain outside this unit.
+The proxy fallback amendment was received; no module fetch failed, so it was
+not needed. If needed the instructed setting is GOPROXY='https://proxy.golang.org|direct'.
+
+go vet ./... > /tmp/markdown-seat-vet.log 2>&1: exit0, empty.
+gofmt -l stage1/cohere/markdownblocks > /tmp/markdown-seat-gofmt.log: empty.
+git diff --check > /tmp/markdown-seat-diff.log: empty.
+go build -C cohere -o /tmp/markdown-seat-cohere ./command/cohere
+/tmp/markdown-seat-cohere --no-cache --no-fix stage1/cohere/markdownblocks/astPath.ts
+> /tmp/markdown-seat-cohere-check.log 2>&1:
+276rules,4checked,zero findings,100%Adamic-ready (3of3).
+
+Mutant observations from the width-enabled full package log:
+
+TestMarkdownASTPreprocessing/raw_source: ast_test.go:168: caught by generated/table-layout/| a | b |
+TestMarkdownASTPreprocessing/wiki_risk: ast_test.go:168: caught by stage1/cohere/markdownblocks/GAPS.md at projected AST byte56
+TestMarkdownASTPreprocessing/list_alignment: ast_test.go:168: caught by generated/list-layout/edge/0. a
+TestMicromarkInputChunks/initial_BOM: chunks_test.go:163: caught by unit/65278 at chunk byte0
+TestMicromarkInputChunks/tab_stop: chunks_test.go:163: caught by generated/list-layout/-	a *b _c_* `x`
+TestMicromarkInputChunks/CRLF: chunks_test.go:163: caught by sequence/2/9 at chunk byte2
+TestMarkdownSourceDecoding/numeric_replacement: decode_test.go:163: caught by decoded bytes
+TestMarkdownSourceDecoding/hex_digit_bound: decode_test.go:163: caught by decoded bytes
+TestMarkdownSourceDecoding/escape_punctuation: decode_test.go:163: caught by decoded bytes
+TestTokenizerEvents/event_rollback: events_test.go:172: caught by stage1/cohere/markdownblocks/GAPS.md at event byte132791
+TestTokenizerEvents/virtual_serialization: events_test.go:172: caught by generated/list-layout/-	a *b _c_* `x`
+TestTokenizerEvents/restored_construct: events_test.go:172: caught by stage1/cohere/markdownblocks/GAPS.md at event byte739820
+TestMdastIdentifierScalars: identifier_test.go:74: all1112064 Unicode scalars match actual Go normalization, native/source/backend and sanitizer/leaks; output-only case-table mutant caught at byte183; Go Unicode17.0.0
+TestMdastMalformedEvents/unclosed: mdast_errors_test.go:104: stderr-only message mutant caught; Go="Cannot close document, a token (`paragraph`) is still open\n" fork="Cannot close document, a token (`paragraph`, 1:1-1:1) is still open\n"
+TestMdastMalformedEvents/not-open: mdast_errors_test.go:104: stderr-only message mutant caught; Go="Cannot close `paragraph`: it’s not open\n" fork="Cannot close `paragraph` (1:1-1:1): it’s not open\n"
+TestMdastMalformedEvents/mismatch: mdast_errors_test.go:104: stderr-only message mutant caught; Go="Cannot close `strong`: a different token (`paragraph`) is open\n" fork="Cannot close `strong` (1:1-1:1): a different token (`paragraph`, 1:1-1:1) is open\n"
+TestNativeMdastConstruction/text_construction: mdast_test.go:163: caught by stage1/cohere/markdownblocks/GAPS.md at byte66468
+TestNativeMdastConstruction/list_spread: mdast_test.go:163: caught by stage1/cohere/markdownblocks/GAPS.md at byte90677
+TestNativeMdastConstruction/front_matter_fallback: mdast_test.go:163: caught by generated/mdast-front/---
+TestMarkdownAstPath/map_callback_result: path_test.go:159: caught by path bytes, first difference770
+TestMarkdownAstPath/array_frame: path_test.go:159: caught by path bytes, first difference268
+TestMarkdownAstPath/ancestor_order: path_test.go:159: caught by path bytes, first difference191
+TestMarkdownAstPath/call_restore: path_test.go:159: caught by path bytes, first difference260
+TestMarkdownTextSplitting/fake_whitespace: text_test.go:148: caught by observable token fields
+TestMarkdownTextSplitting/Hangul_kind: text_test.go:148: caught by observable token fields
+TestMarkdownTextSplitting/variation_selector: text_test.go:148: caught by observable token fields
+TestMarkdownUnicodeWidths/East_Asian_width: width_test.go:136: caught by observable width output
+TestMarkdownUnicodeWidths/narrow_emoji: width_test.go:136: caught by observable width output
+TestMarkdownUnicodeWidths/ASCII_DEL_shortcut: width_test.go:136: caught by observable width output
+TestMarkdownParserPrefixes/CRLF_chunk: prefix_test.go:139: output-only native mutant caught in "generated/prefix/short/93" at byte 84526
+TestMarkdownParserPrefixes/tab_virtual_spaces: prefix_test.go:139: output-only native mutant caught in "generated/prefix/short/84" at byte 83653
+TestWholeDocumentOraclePreflight/heading_prefix: audit_test.go:299: output-only mutant caught by stage1/cohere/markdownblocks/GAPS.md at byte 1
+TestMarkdownParserPrefixes/quote_continuation_limit: prefix_test.go:139: output-only native mutant caught in "generated/prefix/short/87" at byte 83946
+TestWholeDocumentOraclePreflight/list_marker: audit_test.go:299: output-only mutant caught by stage1/cohere/markdownblocks/GAPS.md at byte 9329
+TestWholeDocumentOraclePreflight/fence_length: audit_test.go:299: output-only mutant caught by stage1/cohere/markdownblocks/GAPS.md at byte 8369
+TestMarkdownHTMLBlockLayout/HTML_root_trim: lists_test.go:391: output-only native mutant caught by "generated/html-layout/<div>\nx  \n</div>\u00a0\n" at byte 159698
+TestMarkdownCodeBlockLayout/fence_minimum: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 8503
+TestMarkdownHTMLBlockLayout/HTML_comment_line: lists_test.go:391: output-only native mutant caught by "generated/html-layout/<!-- a  \nb\t -->\n" at byte 163435
+TestMarkdownCodeBlockLayout/fence_longest: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 44690
+TestMarkdownHTMLBlockLayout/HTML_literal_root: lists_test.go:391: output-only native mutant caught by "generated/block/> <div>\nx\n</div>" at byte 67065
+TestMarkdownCodeBlockLayout/code_indentation: lists_test.go:391: output-only native mutant caught by "generated/block/    x\n    y" at byte 66884
+TestMarkdownStructureLayout/heading_depth: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 1
+TestMarkdownLeafComposition/strong_delimiter: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 44068
+TestMarkdownStructureLayout/sentence_separator: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 129
+TestMarkdownLeafComposition/reference_collapse: lists_test.go:391: output-only native mutant caught by "generated/leaves/edge/![a][b] [a][b] ![b][] [b][] ![b] [b]\n\n[b]: /x 'title'\n" at byte 198053
+TestMarkdownStructureLayout/paragraph_fill_tail: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 129
+TestMarkdownLeafComposition/footnote_indentation: lists_test.go:391: output-only native mutant caught by "generated/leaves/edge/[^x]\n\n[^x]: first\n    second\n\n    - a\n    - b\n" at byte 197887
+TestFrontMatterStage/YAML_fallback_delimiter: frontmatter_test.go:161: native output-only mutant caught at output byte 70712 by generated/front-matter/64
+TestFrontMatterStage/UTF-16_blank_prefix: frontmatter_test.go:161: native output-only mutant caught at output byte 66987 by generated/block/---
+TestFrontMatterStage/JavaScript_BOM_trimming: frontmatter_test.go:161: native output-only mutant caught at output byte 113330 by generated/front-matter/896
+TestMarkdownRootLayout/root_double_line: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 45
+TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie: whitespace_test.go:77: caught by Go policy document classification
+TestMarkdownRootLayout/ignored_source_span: lists_test.go:391: output-only native mutant caught by "generated/list-layout/edge/<!-- prettier-ignore -->\n*  a\n+   b\n" at byte 102018
+TestMarkdownWhitespaceLayout/policy_Korean_pair: whitespace_test.go:77: caught by Go policy document classification
+TestMarkdownRootLayout/ignore_range_closing_comment: lists_test.go:391: output-only native mutant caught by "generated/root/ignore/range/before\n\n<!--prettier-ignore-start-->\n+    a\n*   b\n<!--prettier-ignore-end-->\n\n# after\n" at byte 181343
+TestMarkdownWhitespaceLayout/policy_single_line: whitespace_test.go:77: caught by Go policy document classification
+TestMarkdownListLayout/unordered_marker: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 9505
+TestMarkdownWhitespaceLayout/preserved_newline: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 129
+TestMarkdownListLayout/task_box: lists_test.go:391: output-only native mutant caught by "generated/list-layout/- [x] a *b _c_* `x`\n" at byte 68032
+TestMarkdownWhitespaceLayout/space_removal: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 10
+TestMarkdownListLayout/ordered_cap: lists_test.go:391: output-only native mutant caught by "generated/list/999999999./nn" at byte 66458
+TestMarkdownWhitespaceLayout/ordered_syntax: lists_test.go:391: output-only native mutant caught by "stage1/cohere/markdownblocks/GAPS.md" at byte 13446
+TestMarkdownTableLayout/table_minimum: lists_test.go:391: output-only native mutant caught by "generated/block/|a|b|\n|-|-|\n|x|y|" at byte 66957
+TestMarkdownQuoteLayout/quote_marker: lists_test.go:391: output-only native mutant caught by "generated/block/> ```\nx\n```" at byte 66998
+TestMarkdownTableLayout/table_center: lists_test.go:391: output-only native mutant caught by "generated/table-layout/| a | b |\n| :-: | :-: |\n| abcdef | x |\n| long text | y |\n" at byte 118274
+TestMarkdownQuoteLayout/quote_alignment: lists_test.go:391: output-only native mutant caught by "generated/block/> ```\nx\n```" at byte 67004
+TestMarkdownTableLayout/table_alignment: lists_test.go:391: output-only native mutant caught by "generated/table-layout/| a | b |\n| --: | --: |\n|  | x |\n| long text | y |\n" at byte 113339
+TestMarkdownQuoteLayout/quote_blank_line: lists_test.go:391: output-only native mutant caught by "generated/block/> ---\na: b\n---" at byte 67112
+
+Historical unit reports follow unchanged.
+
 Native tokenizer event primitives and complete mdast construction from resolved events are green.
 79,873 event cases and 5,008 document trees agree with Go and the pinned fork.
 All 1,112,064 Unicode scalars held to Go; seven output and three diagnostic mutants caught.

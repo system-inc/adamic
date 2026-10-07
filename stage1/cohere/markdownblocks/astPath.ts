@@ -210,17 +210,9 @@ export class AstPath {
         names: readonly PathFrameInterface[],
     ): number[] {
         const results: number[] = [];
-        const length = this.checkpoint();
-        this.enter(names);
-        const value = this.value();
-        for(let index = 0; index < this.arrayLength(value); index++) {
-            const before = this.checkpoint();
-            this.stack.push(pathFrame('index', index, ''));
-            this.stack.push(this.arrayElement(value, index));
-            results.push(callback(this, index, value));
-            this.truncate(before);
-        }
-        this.truncate(length);
+        this.each(function(path: AstPath, index: number, array: PathFrameInterface): void {
+            results.push(callback(path, index, array));
+        }, names);
         return results;
     }
     match(predicates: readonly PathPredicateInterface[]): boolean {
