@@ -1,0 +1,72 @@
+=== RUN   TestEmittedJavaScriptMismatch
+    harness_test.go:54: ordinary comparison rejected clean-running emitted JavaScript mutant:
+        === RUN   TestEmittedJavaScriptMismatch
+            harness_test.go:23: Go, Node, emitted JavaScript, native identical: 661 bytes
+            harness_test.go:32: emitted JavaScript: case 0 line 7: port "planted emitted JavaScript mismatch", Go ""
+                Go context:
+                /tmp/adamic-gate/TestEmittedJavaScriptMismatch1399703500/001/no-var-0.ts:1:1
+                  no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+                
+                range 0 5 unexpectedVar 			0 5
+                fixed	var a;\u000a
+        --- FAIL: TestEmittedJavaScriptMismatch (43.31s)
+        FAIL
+--- PASS: TestEmittedJavaScriptMismatch (43.32s)
+=== RUN   TestDotARename
+    harness_test.go:64: Go, Node, emitted JavaScript, native identical: 646 bytes
+    harness_test.go:82: Go, Node, emitted JavaScript, native identical: 646 bytes
+    harness_test.go:86: rename only: .ts and .a identical on all three runtimes against Go (646 bytes)
+--- PASS: TestDotARename (65.94s)
+=== RUN   TestCompleteSuggestionSerialization
+    harness_test.go:114: Go, Node, emitted JavaScript, native identical: 734 bytes
+    harness_test.go:140: second suggestion edit mutant caught on Node: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+        Go context:
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 8 17 unexpectedDebugger suggestions			8 17
+        suggestion	first	first | :\u000a\ud83d\ude00	2
+        suggestion-edit	8 9	a|:\u0009\u000a\ud83d\ude00\u005c
+        suggestion-edit	9 10	
+        suggestion	second	second	1
+        suggestion-edit	10 10	?.
+        suggestion	empty	no edits	0
+        fixed	/*\ud83d\ude00*/debugger;\u000a
+    harness_test.go:140: second suggestion edit mutant caught on emitted JavaScript: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+        Go context:
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 8 17 unexpectedDebugger suggestions			8 17
+        suggestion	first	first | :\u000a\ud83d\ude00	2
+        suggestion-edit	8 9	a|:\u0009\u000a\ud83d\ude00\u005c
+        suggestion-edit	9 10	
+        suggestion	second	second	1
+        suggestion-edit	10 10	?.
+        suggestion	empty	no edits	0
+        fixed	/*\ud83d\ude00*/debugger;\u000a
+    harness_test.go:140: second suggestion edit mutant caught on native: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+        Go context:
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 8 17 unexpectedDebugger suggestions			8 17
+        suggestion	first	first | :\u000a\ud83d\ude00	2
+        suggestion-edit	8 9	a|:\u0009\u000a\ud83d\ude00\u005c
+        suggestion-edit	9 10	
+        suggestion	second	second	1
+        suggestion-edit	10 10	?.
+        suggestion	empty	no edits	0
+        fixed	/*\ud83d\ude00*/debugger;\u000a
+--- PASS: TestCompleteSuggestionSerialization (65.00s)
+=== RUN   TestSuggestionAlongsideAutomaticFix
+    harness_test.go:167: Go, Node, emitted JavaScript, native identical: 721 bytes
+    harness_test.go:171: automatic fix remains applied while all three suggestions remain unapplied and serialized
+--- PASS: TestSuggestionAlongsideAutomaticFix (42.44s)
+=== RUN   TestWitnessScriptKind
+    harness_test.go:188: Go, Node, emitted JavaScript, native identical: 507 bytes
+--- PASS: TestWitnessScriptKind (36.33s)
+=== RUN   TestProfileCompilation
+    profile_test.go:116: release, counted and -O2 -g profiling builds saved in /tmp/adamic-gate/TestProfileCompilation745561844/001
+    profile_test.go:119: Go, Node, emitted JavaScript, native identical: 653 bytes
+    profile_test.go:152: counted instrumentation: adamic: counts: allocations 120 frees 120 retains 1012 releases 635 peak 86 regions 0
+--- PASS: TestProfileCompilation (41.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	294.490s
