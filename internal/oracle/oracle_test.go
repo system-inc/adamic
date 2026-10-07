@@ -486,6 +486,9 @@ var fixtures = []struct {
 	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
 	{"internal/oracle/testdata/error_spread.a", false, false},
 	{"internal/oracle/testdata/error_spread_view.a", false, false},
+	// An uncaught error with an empty name, and with both empty (integration's reading of 9984394).
+	{"internal/oracle/testdata/uncaught_names.a", true, false},
+	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
