@@ -377,3 +377,40 @@ were not repeated. No full-rule timings or compiler/repository replay are claime
 for this renderer. Full CFG/event collection, binding/capture facts, deferral
 and finding-pass integration remain unfinished, as do await and symbol native
 integration. No shared files were edited and no new claims were taken.
+
+## Await diagnostic and suggestion rendering continuation
+
+Added require_await/report.a: Adamic selects arrow/function/method descriptions,
+named versus unnamed labels including empty names, the missingAwait message,
+and the removeAsync suggestion with one supplied repair. No automatic fixes
+are emitted. The renderer can omit a suggestion if no async token span is supplied;
+that fallback and constructor label are not exercised by this comparison.
+
+The independent Go overlay parses 15 source controls and invokes unchanged
+checkRequireAwait with a nil checker, so this is syntax/rendering coverage and
+not contextual promise-contract coverage. It captures raw naming flags/name,
+head/async spans and the replacement produced by Go's repair helper. Native
+decides labels, IDs, messages and suggestion construction; no expected finding
+text is passed to native. Head-span selection, async-token scanning and semicolon
+repair decisions are still supplied by Go and remain unfinished native work.
+
+All canonical finding/suggestion/repair bytes match under ASan/UBSan/LSan.
+Controls include declarations, anonymous/named expressions, property-held
+functions and arrows, object/class methods, empty/computed names, Unicode
+prefix/name, comments following async, exported declarations and class-field
+semicolon-sensitive repairs. Changing removeAsync to removeAsynchronous compiles
+and exits zero with empty sanitizer stderr, then fails only byte comparison.
+Exact input captures and streams are under validation/await-report.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_report.py /workspace/wave01-await-report /workspace/wave-01-fourth-adamic > /tmp/wave01-await-report.log 2>&1
+```
+
+Output: PASS 15 Go findings with exact suggestions; sanitizer-clean suggestion-ID
+mutant caught by bytes. gofmt and git diff --check pass. Current main/area bases
+are unchanged. No checker handles are created by the renderer; no new handle or
+full-rule throughput coverage is claimed. Existing full-rule gates were unchanged
+and not repeated. No new claims were taken and no shared files were edited. Full
+await checker-demand and source-range/repair analysis, full atomic integration
+and symbol native-driver integration remain unfinished.

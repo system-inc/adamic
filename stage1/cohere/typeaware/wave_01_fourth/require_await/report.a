@@ -1,0 +1,20 @@
+import { Diagnostic } from '../../diagnostic.ts';
+import { Suggestion } from '../../suggestion.ts';
+import { Repair } from '../../repair.ts';
+export function awaitDescription(arrow: boolean, method: boolean, constructor: boolean, named: boolean, name: string): string {
+    if(arrow) {
+        return 'Async arrow function';
+    }
+    if(constructor) {
+        return "Async method 'constructor'";
+    }
+    const kind = method ? 'method' : 'function';
+    return named ? "Async " + kind + " '" + name + "'" : 'Async ' + kind;
+}
+export function awaitDiagnostic(start: number, end: number, description: string, asyncStart: number, asyncEnd: number, replacement: string): Diagnostic {
+    const finding = new Diagnostic('require-await', 'missingAwait', description + ' has no `await` expression. The `async` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove `async`, or await what this was waiting for.', start, end, '');
+    if(asyncStart >= 0) {
+        finding.suggestions.push(new Suggestion('removeAsync', "Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.", [new Repair(asyncStart, asyncEnd, replacement)]));
+    }
+    return finding;
+}
