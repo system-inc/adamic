@@ -71,45 +71,25 @@ if ! git merge-base --is-ancestor "$old" "$sha"; then
 	# landing is a merge whose tree is the gated tree plus exactly those record paths from main, so
 	# what reaches main is what the gate tested; any other commit on main means merge and gate again.
 	gated=$sha
-	base=$(git merge-base "$old" "$gated")
-	recordPaths=$(git diff --name-only "$base" "$old")
+	# git computes the merge itself (merge-tree, no worktree), so a stack that already holds main's
+	# older commits, or two merge bases, is judged by the tree it would really produce.
+	if ! tree=$(git merge-tree --write-tree "$old" "$gated" | head -n 1) || [ -z "$tree" ]; then
+		echo "refused: ${gated:0:8} doesn't merge cleanly with main ${old:0:8}; merge it in and gate again" >&2
+		exit 1
+	fi
+	recordPaths=$(git diff --name-only "$gated" "$tree")
 	notRecords=$(printf '%s\n' "$recordPaths" | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep . || true)
 	if [ -n "$notRecords" ]; then
 		echo "refused: main moved to ${old:0:8} under this gate, beyond record commits ($(printf '%s' "$notRecords" | head -n 3 | paste -sd ' ' -)); merge it in and gate again" >&2
 		exit 1
 	fi
 	if printf '%s\n' "$recordPaths" | grep -qx 'stage3/progress.json' && git grep -q 'progress\.json' "$gated" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.a'; then
-		echo "refused: main's stage3/progress.json changed and ${gated:0:8} reads it; merge it in and gate again" >&2
+		echo "refused: main's stage3/progress.json differs from ${gated:0:8}'s and ${gated:0:8} reads it; merge it in and gate again" >&2
 		exit 1
 	fi
-	index=$(mktemp)
-	GIT_INDEX_FILE=$index git read-tree "$gated"
-	while IFS= read -r file; do
-		[ -n "$file" ] || continue
-		mainEntry=$(git ls-tree "$old" -- "$file")
-		gatedEntry=$(git ls-tree "$gated" -- "$file")
-		baseEntry=$(git ls-tree "$base" -- "$file")
-		# The stack changed this record path too: take main's only if both agree byte for byte.
-		if [ "$gatedEntry" != "$baseEntry" ] && [ "$gatedEntry" != "$mainEntry" ]; then
-			echo "refused: ${gated:0:8} and main ${old:0:8} both changed $file differently; merge it in and gate again" >&2
-			exit 1
-		fi
-		if [ -n "$mainEntry" ]; then
-			GIT_INDEX_FILE=$index git update-index --add --cacheinfo "$(printf '%s' "$mainEntry" | awk '{print $1}'),$(printf '%s' "$mainEntry" | awk '{print $3}'),${file}"
-		else
-			GIT_INDEX_FILE=$index git update-index --force-remove "$file"
-		fi
-	done <<<"$recordPaths"
-	tree=$(GIT_INDEX_FILE=$index git write-tree)
-	rm -f "${index:?}"
 	sha=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "Land ${gated:0:8} over main ${old:0:8}, which moved only by record commits
 
-The tree is ${gated:0:8}'s, as gated, plus main's record paths since ${base:0:8}: $(printf '%s\n' "$recordPaths" | sed 's#^stage3/meter/runs/\([^/]*\)/.*#stage3/meter/runs/\1/#' | sort -u | paste -sd ' ' -).")
-	outside=$(git diff --name-only "$gated" "$sha" | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' || true)
-	if [ -n "$outside" ]; then
-		echo "refused: the landing merge differs from the gated tree outside record paths: $outside" >&2
-		exit 1
-	fi
+The tree is ${gated:0:8}'s, as gated, plus main's record paths: $(printf '%s\n' "$recordPaths" | grep . | sed 's#^stage3/meter/runs/\([^/]*\)/.*#stage3/meter/runs/\1/#' | sort -u | paste -sd ' ' -).")
 	echo "Landing ${gated:0:8} over record-only main ${old:0:8} as ${sha:0:8} (tree = gated tree + record paths)."
 fi
 git push origin "${sha}:refs/heads/main"
