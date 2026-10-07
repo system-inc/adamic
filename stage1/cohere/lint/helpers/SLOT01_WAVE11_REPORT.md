@@ -185,3 +185,9 @@ Rebased without conflicts onto origin/area/stage1-lint b84a9d9314b65d3d0261ee017
 `go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 609.715s with 76 top-level passes and eight explicit ownership-blocked skips. All 77 compiled semantic mutants and eight source-only tree mutants were caught; the two expected refusal checks passed. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 10.461s. Logs: evidence/slot01-wave11/b84-{oracle,vet,input}.log.
 
 The tree-helper CollapseCopyNode[] adamic/cycle-capable refusal persists, so native/emitted-JavaScript tree parity and compiled tree mutants remain unverified. This is not a fully green gate. The full repository and 17 required-input correctness checks were not run in this bounded worker verification. No required-input check was skipped, weakened or deleted by this work. No new helper is claimed and no tree readiness credit is added.
+
+## Registry integration refresh on b4691483
+
+Rebased without conflicts onto origin/area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53, containing unchanged main c7991b90. Retained the incoming registry migration without shared edits. The integration delta does not change helper, compiler or external Go fixture inputs; prior full helper evidence remains b84-oracle.log (609.715s, 76 passes, eight blocked skips).
+
+Reran `go test ./stage1/cohere/lint/helpers -run '^TestSlot01Wave11' -count=1 -v -timeout=20m`: 32.376s, eight explicit skips after Go/Node parity and all eight source-only mutant catches. The exact node-arena ownership refusal remains; native/emitted-JavaScript tree parity is unverified. `go vet ./stage1/cohere/lint/helpers` passed. Fresh logs: evidence/slot01-wave11/b469-{oracle,vet}.log. No full or required-input gate is claimed green, no checks are relaxed, and no new helper is claimed.
