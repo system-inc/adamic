@@ -1,0 +1,24 @@
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:5:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:7:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:8:7: variable root: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:10:7: variable properties: Map<string, number>
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:11:7: variable propertyIndex: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:12:7: variable propertyObject: OptionValue
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:13:9: variable i: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:14:11: variable key: string
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:17:11: variable row: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:18:11: variable arena: PropertySortNode[]
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:19:11: variable roots: number[]
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:20:15: variable index: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:21:15: variable children: number[]
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:22:19: variable child: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:31:15: variable index: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:32:11: variable result: PropertySortResult
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:34:15: variable position: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:36:15: variable property: string
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:38:11: variable again: PropertySortResult
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:40:15: variable position: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:42:15: variable property: string
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:43:47: variable index: number
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:44:15: variable node: PropertySortNode
+stage1/cohere/lint/helpers/from_wave1_09/sort_main.a:44:79: variable index: number
