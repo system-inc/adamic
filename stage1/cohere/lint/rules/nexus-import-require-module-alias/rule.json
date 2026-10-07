@@ -1,0 +1,12 @@
+{
+  "name": "nexus/import-require-module-alias",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleModuleAlias",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestImportRequireModuleAlias"
+}

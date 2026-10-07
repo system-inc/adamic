@@ -1,0 +1,196 @@
+package lint
+
+import (
+    "bytes"
+    "context"
+    "fmt"
+    "os"
+"os/exec"
+"github.com/system-inc/adamic/internal/native"
+    "path/filepath"
+    "strings"
+    "testing"
+    "time"
+    "github.com/system-inc/adamic/internal/javascript"
+    "github.com/system-inc/adamic/internal/load"
+    "github.com/system-inc/adamic/internal/lower"
+)
+
+const wave14Rule = "nexus/import-require-module-alias"
+const wave14Slug = "nexus-import-require-module-alias"
+
+func wave14JS(t *testing.T, directory, path string) execution {
+    t.Helper()
+    prepareRegistry(t, directory)
+    program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+    if err != nil { t.Fatal(err) }
+    ir, err := lower.Lower(context.Background(), program)
+    if err != nil { t.Fatal(err) }
+    target := filepath.Join(t.TempDir(), "emitted.mjs")
+    if err := os.WriteFile(target, []byte(javascript.JavaScript(ir)), 0644); err != nil { t.Fatal(err) }
+    runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+    if err != nil { t.Fatal(err) }
+    return execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, target, "--manifest", path)
+}
+
+func wave14Compare(t *testing.T, directory, path, oracle, binary string) {
+    t.Helper()
+    want := compare(t, oracle, binary, directory, path)
+    got := wave14JS(t, directory, path)
+    if diff := difference(got.output, want); diff != "" { t.Fatal("emitted JavaScript: " + diff) }
+    t.Logf("emitted JavaScript identical: %d bytes", len(want))
+}
+
+func TestWave14Rules(t *testing.T) {
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    var rows []string
+    for _, row := range upstream(t) {
+        if strings.Split(row, "\t")[1] == wave14Rule { rows = append(rows, row) }
+    }
+    if len(rows) < 25 { t.Fatalf("module alias capture too small: %d", len(rows)) }
+    t.Logf("module alias captured source/options combinations: %d", len(rows))
+    source := "// 😀 Unicode trivia\r\nimport Reakt, * as Nope from 'react';\nimport type * as ts from 'typescript';\nimport 'react';\nimport { React as Reakt } from 'react';\nimport wrong from 'other';\n"
+    for i, options := range []string{
+        "null", "{}", `{"modules":null}`,
+        `{"modules":{"react":{"name":null,"style":"Namespace"},"typescript":{"name":"TS","style":null}}}`,
+        `{"modules":{"react":{"name":""},"other":{"name":"Other"}}}`,
+        `{"modules":{"react":{"name":"Réact","style":"Namespace"},"typescript":{"name":"TS","style":"Default"}}}`,
+        `{"modules":{"react":null,"typescript":{"name":"TypeScript","style":"unrecognized"}}}`,
+        `{"modules":{"react":{"name":"{{source}} {{actual}}","style":""}}}`,
+    } {
+        path := filepath.Join(t.TempDir(), fmt.Sprintf("options-%d.ts", i))
+        if err := os.WriteFile(path, []byte(source), 0644); err != nil { t.Fatal(err) }
+        rows = append(rows, path+"\t"+wave14Rule+"\t\t\tfalse\t"+options)
+    }
+    for _, witness := range ownedWitnesses(t, directory, wave14Slug) { rows = append(rows, witness+"\t"+wave14Rule) }
+    selected := filepath.Join(t.TempDir(), "other-rule.ts")
+    if err := os.WriteFile(selected, []byte("a == b;\n"), 0644); err != nil { t.Fatal(err) }
+    rows = append(rows, selected+"\teqeqeq\t\t\tfalse\t{\"Mode\":\"Smart\"}")
+    oracle := goOracle(t)
+    path := manifest(t, rows)
+    count := execute(t, "", oracle, "--manifest", path, "--count")
+    if string(count.output) == "0\n" { t.Fatal("positive comparison control found nothing") }
+    t.Logf("rule fixture findings: %s", strings.TrimSpace(string(count.output)))
+    wave14Compare(t, directory, path, oracle, buildPort(t, directory, true))
+}
+
+func wave14Corpus(t *testing.T) []string {
+    t.Helper()
+    source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+    if source == "" { t.Fatal("ADAMIC_TYPESCRIPT_SOURCE is required") }
+    pin := execute(t, source, "git", "rev-parse", "HEAD")
+    if strings.TrimSpace(string(pin.output)) != compilerCommit { t.Fatal("wrong compiler pin") }
+    var rows []string
+    for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+        before := len(rows)
+        err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+            if err != nil { return err }
+            if !entry.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
+                absolute, err := filepath.Abs(path)
+                if err != nil { return err }
+                rows = append(rows, absolute+"\t"+wave14Rule)
+            }
+            return nil
+        })
+        if err != nil { t.Fatal(err) }
+        if len(rows) == before { t.Fatal("empty source corpus") }
+        t.Logf("%s corpus files: %d", root, len(rows)-before)
+    }
+    return rows
+}
+
+func TestWave14Corpus(t *testing.T) {
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    wave14Compare(t, directory, manifest(t, wave14Corpus(t)), goOracle(t), buildPort(t, directory, true))
+}
+
+func TestWave14Mutant(t *testing.T) {
+    witness := ownedWitnesses(t, ".", wave14Slug)[0]
+    path := manifest(t, []string{witness+"\t"+wave14Rule})
+    want := execute(t, "", goOracle(t), "--manifest", path).output
+    directory := mutant(t, "if(!expectsNamespace) {", "if(!expectsNamespace && source === '') {", "rules/"+wave14Slug+"/rule.a")
+    for _, side := range []struct { name string; run execution }{
+        {"Node source", node(t, directory, path, false)},
+        {"sanitized native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
+        {"emitted JavaScript", wave14JS(t, directory, path)},
+    } {
+        if bytes.Equal(side.run.output, want) { t.Fatal("mutant survived on " + side.name) }
+        t.Logf("compiling, successful mutant caught only by comparison on %s: %s", side.name, difference(side.run.output, want))
+    }
+}
+
+func TestWave14Throughput(t *testing.T) {
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    rows := wave14Corpus(t)
+    oracle := goOracle(t)
+    path := manifest(t, rows)
+    observed := execute(t, "", oracle, "--manifest", path, "--count")
+    t.Logf("natural compiler plus stage1 findings: %s", strings.TrimSpace(string(observed.output)))
+    if string(observed.output) == "0\n" {
+        data, err := os.ReadFile("rules/"+wave14Slug+"/testdata/witness.ts.txt")
+        if err != nil { t.Fatal(err) }
+        probe := filepath.Join(t.TempDir(), "positive-benchmark.ts")
+        if err := os.WriteFile(probe, []byte(strings.Repeat(string(data), 500)), 0644); err != nil { t.Fatal(err) }
+        rows = append(rows, probe+"\t"+wave14Rule)
+        path = manifest(t, rows)
+        t.Log("zero natural findings: throughput workload adds 500 witness copies (2000 findings); do not interpret this as natural compiler throughput")
+    }
+    binary := buildPort(t, directory, false)
+    best := map[string]time.Duration{}
+    var want []byte
+    for round := 0; round < 5; round++ {
+        for _, name := range []string{"Go", "native", "Node"} {
+            var result execution
+            switch name {
+            case "Go": result = execute(t, "", oracle, "--manifest", path, "--count")
+            case "native": result = execute(t, "", binary, "--manifest", path, "--count")
+            case "Node": result = node(t, directory, path, true)
+            }
+            if want == nil { want = result.output }
+            if !bytes.Equal(want, result.output) { t.Fatalf("%s count differs: %s vs %s", name, result.output, want) }
+            if best[name] == 0 || result.duration < best[name] { best[name] = result.duration }
+            t.Logf("round %d %s: %s findings=%s", round+1, name, result.duration, strings.TrimSpace(string(result.output)))
+        }
+    }
+    var count int
+    if _, err := fmt.Sscan(string(want), &count); err != nil || count == 0 { t.Fatal("no positive timing evidence") }
+    for _, name := range []string{"native", "Node", "Go"} { t.Logf("%s %.6fs %.2f findings/s count=%d files=%d", name, best[name].Seconds(), float64(count)/best[name].Seconds(), count, len(rows)) }
+}
+
+func TestWave14DuplicateOptions(t *testing.T) {
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    changed := mutant(t, "uniqueOptions(raw);", "// duplicate guard omitted", "rules/"+wave14Slug+"/rule.a")
+    runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+    if err != nil { t.Fatal(err) }
+    for _, variant := range []struct { directory string; refused bool }{{directory, true}, {changed, false}} {
+        source := filepath.Join(variant.directory, "rules", wave14Slug, "options_probe.a")
+        program, err := load.Load([]string{source})
+        if err != nil { t.Fatal(err) }
+        ir, err := lower.Lower(context.Background(), program)
+        if err != nil { t.Fatal(err) }
+        binary := filepath.Join(t.TempDir(), "options")
+        if err := native.Build(native.C(ir), binary, native.Options{Sanitize:true}); err != nil { t.Fatal(err) }
+        js := filepath.Join(t.TempDir(), "options.mjs")
+        if err := os.WriteFile(js, []byte(javascript.JavaScript(ir)), 0644); err != nil { t.Fatal(err) }
+        for _, args := range [][]string{{"node", "--disable-warning=ExperimentalWarning", runner, source}, {binary}, {"node", "--disable-warning=ExperimentalWarning", runner, js}} {
+            output := filepath.Join(t.TempDir(), "options.log")
+            file, err := os.Create(output)
+            if err != nil { t.Fatal(err) }
+            command := exec.Command(args[0], args[1:]...)
+            command.Stdout, command.Stderr = file, file
+            runErr := command.Run()
+            file.Close()
+            data, err := os.ReadFile(output)
+            if err != nil { t.Fatal(err) }
+            if variant.refused {
+                exit, ok := runErr.(*exec.ExitError)
+                if !ok || exit.ExitCode()!=70 || string(data)!="adamic: panic: NotYet: repeated module alias option keys require Go merge semantics\n" { t.Fatalf("explicit refusal: %v %s", runErr, data) }
+            } else if runErr!=nil || string(data)!="accepted\n" { t.Fatalf("duplicate mutant did not run cleanly: %v %s", runErr,data) }
+        }
+    }
+    t.Log("duplicate-key refusal identical on Node, emitted JavaScript and sanitized native; deleting the guard compiles and prints accepted on all three")
+}
