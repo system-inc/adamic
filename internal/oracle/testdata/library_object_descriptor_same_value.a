@@ -1,0 +1,14 @@
+const object = { nan: NaN, zero: -0, text: 'same', flag: true };
+Object.defineProperty(object, 'nan', { writable: false, configurable: false });
+Object.defineProperty(object, 'nan', { value: NaN });
+Object.defineProperty(object, 'zero', { writable: false, configurable: false });
+Object.defineProperty(object, 'zero', { value: -0 });
+Object.defineProperty(object, 'text', { writable: false, configurable: false });
+Object.defineProperty(object, 'text', { value: 'sa' + 'me' });
+console.log(`${Object.is(object.nan, NaN)} ${Object.is(object.zero, -0)} ${object.text}`);
+try { Object.defineProperty(object, 'zero', { value: 0 }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+try { Object.defineProperty(object, 'nan', { writable: true }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+try { Object.defineProperty(object, 'text', { enumerable: false }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+Object.preventExtensions(object);
+Object.defineProperty(object, 'flag', { configurable: false, writable: false });
+console.log(`${Object.isSealed(object)} ${Object.isFrozen(object)}`);

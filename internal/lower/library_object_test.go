@@ -22,7 +22,7 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 		{`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.assign({value:1},view);`, "widened source"},
 		{`Object.values({number:1, text:'wrong'});`, "homogeneous"},
 		{`Object.entries({number:1, text:'wrong'});`, "homogeneous"},
-		{`Object.hasOwn({value:1}, 'notDeclared');`, "declared public field"},
+		{`Object.hasOwn({value:1}, '#private');`, "public string literal"},
 	} {
 		t.Run(probe.reason+probe.source, func(t *testing.T) {
 			t.Parallel()
@@ -61,7 +61,6 @@ func TestObjectIntegrityRefusesUnrepresentedDescriptors(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		`Object.seal([1]);`,
-		`Object.preventExtensions(new Map<string, number>());`,
 		`function seal(value: { n?: number }): void { Object.seal(value); }`,
 		`function compare(left: number | null | undefined): boolean { return Object.is(left, undefined); }`,
 		`const tuple: [number] = [1]; Object.isSealed(tuple);`,

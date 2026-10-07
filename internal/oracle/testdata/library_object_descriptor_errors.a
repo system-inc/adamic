@@ -1,0 +1,10 @@
+try { Object.defineProperty({}, 'x', 12); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { Object.defineProperty({}, 'x', true); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { Object.defineProperty({}, 'x', 'abc'); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { Object.defineProperty(5, 'x', {}); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+const object = {};
+console.log(`${Object.hasOwn(object, 'extra')}`);
+Object.defineProperty(object, 'extra', { value: 1 });
+console.log(`${Object.hasOwn(object, 'extra')} ${object.propertyIsEnumerable('extra')}`);
+try { Object.defineProperty(null, 'x', {}); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { Object.defineProperties(null, {}); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }

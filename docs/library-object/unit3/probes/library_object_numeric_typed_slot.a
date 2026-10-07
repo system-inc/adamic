@@ -1,0 +1,3 @@
+const object = { NaN: 0 };
+Object.defineProperty(object, NaN, { value: 9 });
+console.log(`${object.NaN}`);

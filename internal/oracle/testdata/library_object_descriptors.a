@@ -1,0 +1,24 @@
+const object = { value: 1, label: 'old', active: true };
+console.log(`${Object.defineProperty(object, 'value', { value: 2 }) === object}`);
+Object.defineProperty(object, 'label', { value: `new${object.value}`, enumerable: false });
+Object.defineProperty(object, 'active', { value: false, writable: false, configurable: false });
+Object.defineProperty(object, 'hidden', { value: 'secret' });
+Object.defineProperty(object, 'public', { value: 3, enumerable: true, writable: true, configurable: true });
+console.log(`${object.value} ${object.label} ${object.active}`);
+console.log(Object.keys(object).join(','));
+console.log(Object.getOwnPropertyNames(object).join(','));
+console.log(`${object.hasOwnProperty('hidden')} ${object.propertyIsEnumerable('hidden')} ${object.propertyIsEnumerable('label')}`);
+try { Object.defineProperty(object, 'active', { value: true }); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(`${Object.isExtensible(object)} ${Object.isSealed(object)} ${Object.isFrozen(object)}`);
+Object.seal(object);
+console.log(`${Object.isExtensible(object)} ${Object.isSealed(object)} ${Object.isFrozen(object)}`);
+try { Object.defineProperty(object, 'extra', { value: 4 }); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+Object.freeze(object);
+console.log(`${Object.isExtensible(object)} ${Object.isSealed(object)} ${Object.isFrozen(object)}`);
+for (let index = 0; index < 3; index += 1) {
+ const local = { text: 'initial' };
+ Object.defineProperty(local, 'text', { value: `text${index}` });
+ Object.defineProperty(local, 'extra', { value: `extra${index}`, enumerable: true });
+ Object.defineProperty(local, 'extra', { value: `again${index}` });
+ console.log(`${local.text} ${Object.keys(local).join(',')}`);
+}

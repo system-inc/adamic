@@ -1,0 +1,10 @@
+const object = { z: 1, '10': 10, '2': 2 };
+Object.defineProperty(object, '01', { value: 1, enumerable: true });
+Object.defineProperty(object, '1', { value: 1, enumerable: true });
+Object.defineProperty(object, '0', { value: 0, enumerable: true });
+Object.defineProperty(object, '4294967295', { value: 5, enumerable: true });
+Object.defineProperty(object, '4294967294', { value: 4, enumerable: true });
+Object.defineProperty(object, 'hidden', { value: undefined });
+console.log(Object.keys(object).join(','));
+console.log(Object.getOwnPropertyNames(object).join(','));
+console.log(`${object.hasOwnProperty('hidden')} ${object.propertyIsEnumerable('hidden')}`);

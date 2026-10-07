@@ -1,0 +1,3 @@
+const object = { value: 1 };
+Object.defineProperty(object, 'value', { enumerable: false });
+console.log(Object.values(object).join(','));

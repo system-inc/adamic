@@ -1,0 +1,5 @@
+const descriptors = { x: { value: 1 } };
+Object.defineProperty(descriptors, 'y', { value: 1, enumerable: true });
+const object = {};
+try { Object.defineProperties(object, descriptors); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log(`${object.hasOwnProperty('x')}`);

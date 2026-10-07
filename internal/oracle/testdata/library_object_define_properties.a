@@ -1,0 +1,13 @@
+const object = { a: 1, b: 2 };
+console.log(`${Object.defineProperties(object, { a: { value: 3, enumerable: false }, c: { value: 4, enumerable: true } }) === object}`);
+console.log(`${object.a} ${Object.keys(object).join(',')} ${Object.getOwnPropertyNames(object).join(',')}`);
+Object.defineProperty(object, 'b', { configurable: false, writable: false });
+try { Object.defineProperties(object, { a: { value: 5 }, b: { value: 6 } }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log(`${object.a} ${object.b}`);
+const ordered = {};
+Object.defineProperties(ordered, { '10': { value: 10, enumerable: true }, x: { value: 1, enumerable: true }, '2': { value: 2, enumerable: true }, '01': { value: 1, enumerable: true } });
+console.log(Object.keys(ordered).join(','));
+const partial = { '10': 0 };
+Object.defineProperty(partial, '10', { configurable: false, writable: false });
+try { Object.defineProperties(partial, { '10': { value: 10 }, '2': { value: 2 } }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log(`${partial.hasOwnProperty('2')}`);

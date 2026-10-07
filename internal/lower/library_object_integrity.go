@@ -25,6 +25,18 @@ func (l *lowering) objectIntegrityCall(node *ast.Node, name string) (ir.Expressi
 		value, err := l.expression(argument)
 		return value, true, err
 	}
+	// Collections have internal entries, but no own properties in this supported
+	// representation. Integrity changes do not restrict Map.set or Set.add.
+	if mutation && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.Map || l.includesUndefined(proven) {
+			return nil, true, l.notYet(argument, "Object."+name+" on an unproven collection receiver")
+		}
+		return ir.ObjectCall{Method: name, Arguments: []ir.Expression{fit(value, ir.Union)}, Returns: ir.Map}, true, nil
+	}
 	if mutation && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Object."+name+" on a shape not proven by a plain literal or its const binding")
 	}

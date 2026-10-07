@@ -18,10 +18,11 @@ static adamic_string *name_string(const char *bytes, size_t length) {
 
 adamic_array *adamic_object_names(const adamic_heap *value, bool all) {
 	if (value->kind == adamic_kind_object) {
-		return adamic_object_keys((const adamic_object *)value);
+		adamic_array *altered = adamic_object_descriptor_names((const adamic_object *)value, all);
+		return altered != NULL ? altered : adamic_object_keys((const adamic_object *)value);
 	}
-	size_t length = value->kind == adamic_kind_string ? adamic_string_length((const adamic_string *)value) : 0;
-	bool has_length = all && value->kind == adamic_kind_string;
+	size_t length = value->kind == adamic_kind_string ? adamic_string_length((const adamic_string *)value) : value->kind == adamic_kind_array ? ((const adamic_array *)value)->length : 0;
+	bool has_length = all && (value->kind == adamic_kind_string || value->kind == adamic_kind_array);
 	adamic_array *names = adamic_array_new(length + (has_length ? 1 : 0), true);
 	for (size_t index = 0; index < length; index++) {
 		char bytes[32];

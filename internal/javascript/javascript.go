@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(objectDescriptorRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicHasOwn = (object, name) => !name.startsWith('#') && Object.hasOwn(object, name);\n")
@@ -641,6 +642,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "String.fromCharCode(" + codes + ")"
 	case ir.ObjectCall:
+		if expression.Method == "definePropertyError" {
+			return "adamicDefinePropertyError(" + e.values(expression.Arguments) + ")"
+		}
+		if expression.Method == "typeError" {
+			return "new TypeError(" + e.values(expression.Arguments) + ")"
+		}
+		if expression.Method == "propertyIsEnumerable" {
+			return "adamicObjectEnumerable(" + e.values(expression.Arguments) + ")"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "prototypeHasOwnProperty" {

@@ -28,6 +28,7 @@ static void release_field(adamic_object *object, size_t index, void (*release)(v
 }
 
 void adamic_object_free_children(adamic_object *object, void (*release)(void *)) {
+	adamic_object_descriptors_free(object, release);
 	if (object->class == NULL) {
 		for (size_t index = 0; index < object->shape->count; index++) {
 			release_field(object, index, release);

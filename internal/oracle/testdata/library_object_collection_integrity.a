@@ -1,0 +1,11 @@
+const map = new Map<string, number>([['a', 1]]);
+console.log(`${Object.isExtensible(map)} ${Object.isSealed(map)} ${Object.isFrozen(map)}`);
+console.log(`${Object.seal(map) === map}`);
+map.set('b', 2);
+console.log(`${map.size} ${Object.isExtensible(map)} ${Object.isSealed(map)} ${Object.isFrozen(map)}`);
+const set = new Set<number>([1]);
+console.log(`${Object.preventExtensions(set) === set}`);
+set.add(2);
+console.log(`${set.size} ${Object.isExtensible(set)} ${Object.isSealed(set)} ${Object.isFrozen(set)}`);
+Object.seal(set);
+console.log(`${Object.isSealed(set)}`);
