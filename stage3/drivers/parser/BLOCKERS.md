@@ -5,7 +5,7 @@ the user now permits that shared file if the scanner oracle remains identical.
 
 | Number | Directory | Exact proposed edit | Removal condition |
 | --- | --- | --- | --- |
-| 60 | 60-temporary-factory-local-symbol | At createBaseDeclaration's localSymbol assignment only, view node as Mutable<Declaration>, whose field admits undefined; retain the assignment and return verbatim. | Factory construction establishes the generic subtype's fields. |
+| 60 | 60-temporary-factory-local-symbol | At createBaseDeclaration's localSymbol assignment only, view node as { localSymbol: Declaration["localSymbol"] | undefined }, explicitly admitting absence; retain the assignment and return verbatim. | Factory construction establishes the generic subtype's fields. |
 | 61 | 61-temporary-factory-type-expression | At createJSDocTypeLikeTagWorker's typeExpression assignment only, use a structural write view with JSDocTypeExpression or undefined; retain the assignment and return verbatim. | Factory construction establishes the generic subtype's fields. |
 | 62 | 62-temporary-tracing-write | At writeSync(typesFd, JSON.stringify(descriptor)) only, give writeSync a type-only call view admitting string or undefined. Undefined still reaches Node and throws as before. | Node binding admission models this call's throwing behavior. |
 | 63 | 63-temporary-tracing-legend | At writeFileSync(legendPath, JSON.stringify(legend)) only, give writeFileSync the equivalent type-only data view. Preserve path and data evaluation order. | Node binding admission models this call's throwing behavior. |
@@ -23,6 +23,8 @@ skipping that element, or asserting presence changes or lies about that
 behavior. Widening the target array at the push would leave its T[] return
 contract unproved. No core adaptation is proposed until an exact, truthful
 contract repair is available. Lowering remains behind that checker gate.
+
+The initial Mutable<Declaration> probe still rejects undefined: that optional base field does not admit an explicit write of undefined. The revised structural view above is pushed before implementing it.
 
 Each implemented temporary must preserve emitted JavaScript byte for byte,
 pass the default stage 3 suite with no additional API changes, and preserve
