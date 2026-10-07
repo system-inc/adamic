@@ -158,6 +158,20 @@ func TestWorkers(t *testing.T) {
 				if stderr != "route exploded\nRangeError: utf8At index -1 is not a byte of a text of 0 bytes\n" {
 					t.Fatalf("panic stderr: %q", stderr)
 				}
+			case "decode_json":
+				want := []string{"new:2:-", "one:0:hello", "at $: missing field count", "at $.name: expected string, found number", "invalid JSON at line 1 column 15: expected object key"}
+				if len(results) != len(want) {
+					t.Fatalf("decode response count: %d", len(results))
+				}
+				for i, body := range want {
+					status := 400
+					if i < 2 {
+						status = 200
+					}
+					if results[i].Body != body || results[i].Status != status {
+						t.Fatalf("decode %d: %v", i, results[i])
+					}
+				}
 			case "compute":
 				if len(results) != 2 || results[0].Status != 200 || !strings.HasPrefix(results[0].Body, "/compute:") || !strings.HasPrefix(results[1].Body, "/compute%2Fagain:") {
 					t.Fatalf("compute: %v", results)

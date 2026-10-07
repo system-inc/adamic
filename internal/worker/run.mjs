@@ -1,5 +1,6 @@
 // Run a generated bridge using Node's Request and Response as the platform witness.
 // Optional --oracle-runtime enables the source oracle's hooks and throwing panic policy.
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { registerHooks, stripTypeScriptTypes } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -27,7 +28,8 @@ if (mode === '--oracle-runtime') {
 				return { format: 'module', source: source.slice(0, begin) + policy + source.slice(end), shortCircuit: true };
 			}
 			if (url.endsWith('.a') || url.endsWith('.ts')) {
-				const source = readFileSync(fileURLToPath(url), 'utf8');
+				let source = readFileSync(fileURLToPath(url), 'utf8');
+				if (source.includes('decodeJson') || source.includes('encodeJson')) source = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: fileURLToPath(new URL('../../', import.meta.url)), encoding: 'utf8' }))[fileURLToPath(url)];
 				return { format: 'module', source: stripTypeScriptTypes(source), shortCircuit: true };
 			}
 			return nextLoad(url, context);
