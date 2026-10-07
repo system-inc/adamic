@@ -34,6 +34,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
+			if len(node.TypeParameters()) > 0 {
+				return l.nestedGenericFunction(node)
+			}
 			return nil, l.notYet(node, "a function inside a function (a closure)")
 		}
 		// Lowered already, by declareModule.

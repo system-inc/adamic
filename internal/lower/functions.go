@@ -155,6 +155,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		defer func() { l.closures = outerClosures }()
 	}
 	body := declaration.Body()
+	l.registerNestedGenerics(body)
 	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
 	l.function, l.functionIndex = &function, index
 	if this >= 0 {

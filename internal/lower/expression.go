@@ -57,9 +57,19 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsObject != 0:
+		if l.genericSignature(proven) != nil {
+			return ir.Object, true
+		}
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
+		if l.genericSignature(proven) == nil {
+			for _, member := range proven.Types() {
+				if l.genericSignature(member) != nil {
+					return 0, false
+				}
+			}
+		}
 		if l.includesNull(proven) {
 			// A nullable match result uses NULL. A type also holding undefined needs a tag.
 			if l.includesUndefined(proven) {
@@ -160,6 +170,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent != nil && parent.Kind == ast.KindSpreadAssignment && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {
+		return nil, l.notYet(node, "spreading a generic function value")
+	}
 	value, err := l.value(node)
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
@@ -218,6 +235,13 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
 		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeeping(inside, viewed, visited)
+	}
+	fromGeneric, toGeneric := l.genericSignature(from), l.genericSignature(to)
+	if (fromGeneric != nil) != (toGeneric != nil) {
+		return false
+	}
+	if fromGeneric != nil && (len(fromGeneric.Declaration().TypeParameters()) != len(toGeneric.Declaration().TypeParameters()) || !l.checker.IsTypeAssignableTo(from, to) || !l.checker.IsTypeAssignableTo(to, from)) {
+		return false
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -496,6 +520,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		written := node.AsTypeOfExpression().Expression
+		if l.genericSignature(l.checker.GetTypeAtLocation(written)) != nil {
+			return ir.Conditional{Condition: ir.IsUndefined{Value: operand}, WhenTrue: ir.StringConstant{Index: l.constant("undefined")}, WhenNot: ir.StringConstant{Index: l.constant("function")}, Of: ir.String}, nil
+		}
 		null := l.typeOfNull(written)
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
@@ -555,6 +582,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		l.touch(l.this)
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
+		if len(node.TypeParameters()) > 0 {
+			return l.genericClosure(node)
+		}
 		return l.closure(node)
 	case ast.KindAsExpression:
 		return l.cast(node)
@@ -927,11 +957,17 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+		if nestedGenericDeclaration(declaration) {
+			return l.callNestedGeneric(node, declaration)
+		}
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
 		}
 		return l.callFunction(call, instance)
+	}
+	if signature := l.genericSignature(l.checker.GetTypeAtLocation(callee)); signature != nil {
+		return l.callGenericClosure(node, signature)
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
@@ -1093,6 +1129,10 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		property.Method = true
 		closure = property
 	}
+	return l.callClosureValue(node, closure, nil)
+}
+
+func (l *lowering) callClosureValue(node *ast.Node, closure ir.Expression, resolved *checker.Signature) (ir.Expression, error) {
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -1110,7 +1150,11 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	if resolved != nil {
+		signatures = []*checker.Signature{resolved}
+	}
+	if len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
 			if index < len(arguments) {
 				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {

@@ -1,0 +1,33 @@
+// Generic arrows in returned properties retain per-invocation captured state.
+function createScanner(label: string) {
+    let calls = 0;
+    return {
+        scanRange: <T>(callback: () => T): T => {
+            return scanRange(callback);
+        },
+    };
+    // Hoisted declaration after return; its captured cells belong to this scanner.
+    function scanRange<T>(callback: () => T): T {
+        calls += 1;
+        console.log(`${label}:${calls}`);
+        return callback();
+    }
+}
+type Scanner = ReturnType<typeof createScanner>;
+interface Item { readonly text: string; }
+const first = createScanner('first'.repeat(2));
+const second = createScanner('second'.repeat(2));
+const alias: Scanner = first;
+console.log(`${alias.scanRange<number>(() => 0)} ${second.scanRange<number>(() => 7)}`);
+console.log(`${first.scanRange<string>(() => 'word'.repeat(2))}`);
+const item: Item = { text: 'item'.repeat(2) };
+console.log(`${alias.scanRange<Item>(() => item) === item}`);
+console.log(`${first.scanRange === alias.scanRange} ${first.scanRange === second.scanRange} ${typeof first.scanRange}`);
+let receivers = 0;
+let callbacks = 0;
+function receiver(): Scanner { receivers += 1; return first; }
+console.log(`${receiver().scanRange<number>(() => { callbacks += 1; return 9; })} ${receivers} ${callbacks}`);
+// Replacing the runtime property must change dispatch, even through an alias.
+const replacement = createScanner('third'.repeat(2));
+first.scanRange = replacement.scanRange;
+console.log(`${alias.scanRange<number>(() => 11)} ${first.scanRange === replacement.scanRange}`);
