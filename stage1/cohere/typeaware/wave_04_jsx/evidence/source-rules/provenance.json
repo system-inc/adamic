@@ -1,0 +1,25 @@
+{
+  "branch": "codex/typeaware-wave-04",
+  "base": "625f0354d881fc0f4bd1b1691b6d12c2775ab358",
+  "main": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+  "area": "d65a8f931c98655936ae04c6899f38f14862b73e",
+  "sources": {
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/oracle.go": "3255ef87824cd0e1fd26de253a90d32bd81cbf711620ed53231ef167290853fc",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/validate_source.py": "ec616ed46cd9cec1e037226ad9b1da8491ebd4158aab7406221c703dd7060c7c",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/rule.a": "62fbd4cf605db2c7bf7fc782c65da2ac022efb318d8e1302ba68bc19c30d4ea7",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/declaration.a": "8740cdc1b8412ef3ae8ed387d5de355dca1047668ec690ae1d5c519ab7a4d830",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/source_main.a": "c703e077da090252af8c4e10fe07d0506e2a07440188c66260bf649b7473627b",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/source.a": "7353d7bcca37e723b197bef5d137a04c58854cb832f88a21164e6b5492f7ceb2",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_fragments/rule.json": "3a2f2c273891cc5b7b2df2ed4f26c86ab8912f69f5d4248f412390556a4b0cc1",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_no_undef/oracle.go": "6ac0205850df35817f170160cb0ea717c4664fee7947a5c38adb5f2ee9e6c451",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_no_undef/validate_source.py": "21c5552653da4cc1ccfc872c70b3bd520a0661fe685c4c20e03b85c90b33d3bb",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_no_undef/rule.a": "f06188733036d2e0acfcf210cf5fd01c631a34cd01fc3e519ac049d863ad9e1e",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_no_undef/source_main.a": "cf4e6c5caefa4f0ee6074f7d2d03c73b64e665c67197cbbeb4b65840db9fbdf1",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_no_undef/source.a": "68c9a2c02c71983a95e8def09d8eb8ac30311168141d2dc0c455da8b5dae7cef",
+    "stage1/cohere/typeaware/wave_04_jsx/jsx_no_undef/rule.json": "d1c994035151176cdbab7839c37ab8d843d2fc5bc4be0a6aa5c51177f55ff071"
+  },
+  "corpora": {
+    "/workspace/typeaware-wave-04/compiler.manifest": "34ea25104e6a23a32c6c8be8150635541ac1e2a007b0d3ab5f65b0eddb186d16",
+    "/workspace/typeaware-wave-04/repository.manifest": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  }
+}

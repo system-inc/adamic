@@ -1,0 +1,91 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../rules.ts';
+import { Bindings } from '../../bindings.ts';
+import { JsxFragments } from './rule.a';
+
+// The driver dispatches the three declared kinds; each callback receives its node once.
+export class FragmentSource {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly messages = new JsxFragments();
+    readonly preferElement: boolean;
+    constructor(rules: Rules, preferElement: boolean) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+        this.preferElement = preferElement;
+    }
+    initializerSource(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') { return node.text === 'React'; }
+        if(node.kind === 'PropertyAccessExpression') { return this.qualified(node); }
+        if(node.kind !== 'CallExpression' || node.list === 0) { return false; }
+        const callee = this.rules.parser.node(node.children[0] ?? panic('missing fragment factory'));
+        if(callee.kind !== 'Identifier' || callee.text !== 'require') { return false; }
+        const argument = this.rules.parser.node(node.children[node.children.length - node.list] ?? panic('missing fragment module'));
+        return (argument.kind === 'StringLiteral' || argument.kind === 'NoSubstitutionTemplateLiteral') && argument.text === 'react';
+    }
+    qualified(node: ParseNode): boolean {
+        const receiver = this.rules.parser.node(node.children[0] ?? panic('missing fragment receiver'));
+        const name = this.rules.parser.node(node.children[node.children.length - 1] ?? panic('missing fragment property'));
+        return receiver.kind === 'Identifier' && receiver.text === 'React' && name.kind === 'Identifier' && name.text === 'Fragment';
+    }
+    moduleName(index: number): string {
+        let current = index;
+        for(const kind of ['NamedImports', 'ImportClause', 'ImportDeclaration']) {
+            current = this.bindings.parent(current);
+            if(current < 0 || this.rules.parser.node(current).kind !== kind) { return ''; }
+        }
+        for(const child of this.rules.parser.node(current).children) {
+            const module_ = this.rules.parser.node(child);
+            if(module_.kind === 'StringLiteral' || module_.kind === 'NoSubstitutionTemplateLiteral') { return module_.text; }
+        }
+        return '';
+    }
+    declaration(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        switch(node.kind) {
+            case 'ImportSpecifier': {
+                // The first name is the imported name, including a string-literal export name.
+                const imported = node.children.find((child) => ['Identifier', 'StringLiteral'].includes(this.rules.parser.node(child).kind)) ?? -1;
+                if(imported < 0) { return false; }
+                const name = this.rules.parser.node(imported);
+                return name.kind === 'Identifier' && name.text === 'Fragment' && this.moduleName(index) === 'react';
+            }
+            case 'BindingElement': {
+                const pattern = this.bindings.parent(index);
+                if(pattern < 0 || this.rules.parser.node(pattern).kind !== 'ObjectBindingPattern') { return false; }
+                const variable = this.bindings.parent(pattern);
+                return variable >= 0 && this.rules.parser.node(variable).kind === 'VariableDeclaration' && this.initializerSource(this.bindings.shape.initializer(variable));
+            }
+            case 'VariableDeclaration': return this.initializerSource(this.bindings.shape.initializer(index));
+        }
+        return false;
+    }
+    named(node: ParseNode, header: ParseNode): void {
+        if(this.preferElement) { return; }
+        const tagIndex = header.children[0] ?? -1;
+        if(tagIndex < 0) { return; }
+        const tag = this.rules.parser.node(tagIndex);
+        let fragment = false;
+        if(tag.kind === 'PropertyAccessExpression') { fragment = this.qualified(tag); }
+        else if(tag.kind === 'Identifier') {
+            // GetSymbolAtLocation's own declarations, without following import aliases.
+            fragment = this.bindings.list(tagIndex,'binding-declarations',false).some((declaration) => this.declaration(declaration));
+        }
+        if(!fragment) { return; }
+        const attributes = this.rules.parser.node(header.children[header.children.length - 1] ?? panic('missing JSX attributes'));
+        if(attributes.children.length !== 0) { return; }
+        this.report(node,false);
+    }
+    report(node: ParseNode, preferElement: boolean): void {
+        this.rules.findings.push(this.messages.reportSpan(this.rules.byte(this.rules.start(node)),this.rules.byte(node.end),preferElement));
+    }
+    element(node: ParseNode): void {
+        const opening = node.children[0] ?? -1;
+        if(opening >= 0) { this.named(node,this.rules.parser.node(opening)); }
+    }
+    selfClosing(node: ParseNode): void { this.named(node,node); }
+    fragment(node: ParseNode): void { if(this.preferElement) { this.report(node,true); } }
+}

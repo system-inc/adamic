@@ -174,3 +174,7 @@ Rebased onto current area d65a8f931 with current main 39638d9e2. Fresh rule/sani
 ## Fragment declarations
 
 Ported fragment import/alias/destructure/variable declaration judgments and exact module ancestry; production-Go comparisons pass 1291 records with twelve clean reference mutants across five backends. See [FRAGMENT_DECLARATIONS.md](FRAGMENT_DECLARATIONS.md). Source symbol resolution/adapters remain unfinished; no new claims.
+
+## Native fragment and undefined-name source visitors
+
+See [SOURCE_RULES.md](SOURCE_RULES.md). Both reserved source visitors now match production Go on positive controls and both frozen corpora under sanitizers, with comparison-only mutants and released-handle refusal. Constructed-context source analysis and shared checker/factory integration remain unfinished. No new claims.

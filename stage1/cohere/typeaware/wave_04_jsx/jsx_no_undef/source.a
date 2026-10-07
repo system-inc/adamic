@@ -1,0 +1,44 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../rules.ts';
+import { Frames, header } from '../../frames.ts';
+import { JsxNoUndef } from './rule.a';
+
+export class UndefSource {
+    readonly rules: Rules;
+    readonly allowGlobals: boolean;
+    readonly messages = new JsxNoUndef();
+    constructor(rules: Rules, allowGlobals: boolean) { this.rules = rules; this.allowGlobals = allowGlobals; }
+    reference(index: number): number {
+        let node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') { return this.messages.componentName(node.text) ? index : -1; }
+        if(node.kind !== 'PropertyAccessExpression') { return -1; }
+        while(node.kind === 'PropertyAccessExpression') {
+            index = node.children[0] ?? panic('missing JSX member receiver');
+            node = this.rules.parser.node(index);
+        }
+        return node.kind === 'Identifier' ? index : -1;
+    }
+    declared(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index,'binding-declarations')); header(frames,'binding-declarations');
+        const present = frames.yes();
+        let own = false;
+        if(present) {
+            frames.natural();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const path = frames.field(); frames.field(); frames.natural(); frames.natural();
+                if(path === this.rules.path) { own = true; }
+            }
+        }
+        frames.end();
+        return present && (this.allowGlobals || this.rules.path.endsWith('.cjs') || own);
+    }
+    check(node: ParseNode): void {
+        const tag = node.children[0] ?? panic('missing JSX name');
+        const reference = this.reference(tag);
+        if(reference < 0 || this.declared(reference)) { return; }
+        const name = this.rules.parser.node(reference);
+        this.rules.findings.push(this.messages.reportSpan(this.rules.byte(this.rules.start(name)),this.rules.byte(name.end)));
+    }
+}

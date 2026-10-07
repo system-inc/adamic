@@ -1,0 +1,56 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Rules } from '../../rules.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { UndefSource } from './source.a';
+import { parseSource } from '../../wave_04_next/source_context.a';
+
+
+class UndefWalk {
+    readonly parser: Parser;
+    readonly fragments: UndefSource;
+    constructor(parser: Parser, fragments: UndefSource) { this.parser = parser; this.fragments = fragments; }
+    walk(index: number): void {
+        const node = this.parser.node(index);
+        switch(node.kind) {
+            case 'JsxOpeningElement': this.fragments.check(node); break;
+            case 'JsxSelfClosingElement': this.fragments.check(node); break;
+        }
+        for(const child of node.children) { this.walk(child); }
+    }
+}
+
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+const mode = args[2] ?? 'local';
+if(mode !== 'local' && mode !== 'globals') { panic('undef mode must be local or globals'); }
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config,paths);
+let findings = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const parser = new Parser(source.text,path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program,path,parser,scanner,offsets);
+    const rules = new Rules(program,path,parser,scanner,offsets,unary);
+    const root = parseSource(rules);
+    for(let index = 0; index < parser.nodes.length; index++) {
+        rules.parents.push(-1);
+    }
+    rules.links(root,-1);
+    const fragments = new UndefSource(rules,mode === 'globals');
+    // Kind dispatch belongs to the driver. The rule receives the already fetched node.
+    new UndefWalk(parser,fragments).walk(root);
+    rules.findings.sort((a,b) => a.written() < b.written() ? -1 : a.written() > b.written() ? 1 : 0);
+    console.log(`file\t${written(path)}`);
+    for(const finding of rules.findings) { console.log(finding.written()); }
+    findings += rules.findings.length;
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);
