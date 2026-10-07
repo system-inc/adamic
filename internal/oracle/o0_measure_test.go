@@ -47,10 +47,12 @@ func TestO0Measure(t *testing.T) {
 	if err := scanner.Err(); err != nil {
 		t.Fatal(err)
 	}
+	checkedFixtures := map[string]bool{}
 	var paths []string
 	for _, fixture := range fixtures {
 		if fixture.lowers {
 			paths = append(paths, fixture.path)
+			checkedFixtures[fixture.path] = fixture.checked
 		}
 	}
 	sort.Strings(paths)
@@ -239,7 +241,7 @@ func TestO0Measure(t *testing.T) {
 							}
 							write(map[string]any{"fixture": path, "loop": loop, "variant": variant.name, "mode": mode, "stage": stage, "seconds": time.Since(start).Seconds(), "hash": o0Hash(node), "stdout_hash": fmt.Sprintf("%x", sha256.Sum256(node.stdout)), "stderr_hash": fmt.Sprintf("%x", sha256.Sum256(node.stderr)), "exit": node.exitCode})
 							observations[mode+"/"+stage] = node
-							if stage == "node" && node.exitCode == 0 && variant.options.Sanitize {
+							if stage == "node" && node.exitCode == 0 && variant.options.Sanitize && !checkedFixtures[path] {
 								start = time.Now()
 								leak := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 								observations[mode+"/leak"] = leak
@@ -362,6 +364,10 @@ func TestO0MeasureWall(t *testing.T) {
 			modes = []string{"o0", "current"}
 		}
 		for _, mode := range modes {
+			loadBefore, err := os.ReadFile("/proc/loadavg")
+			if err != nil {
+				t.Fatal(err)
+			}
 			start := time.Now()
 			t.Run(fmt.Sprintf("%d/%s", loop, mode), func(t *testing.T) {
 				for _, fixture := range fixtures {
@@ -471,7 +477,12 @@ func TestO0MeasureWall(t *testing.T) {
 					})
 				}
 			})
-			write(map[string]any{"stage": "wall", "loop": loop, "mode": mode, "seconds": time.Since(start).Seconds()})
+			duration := time.Since(start).Seconds()
+			loadAfter, err := os.ReadFile("/proc/loadavg")
+			if err != nil {
+				t.Fatal(err)
+			}
+			write(map[string]any{"stage": "wall", "loop": loop, "mode": mode, "seconds": duration, "load_before": strings.TrimSpace(string(loadBefore)), "load_after": strings.TrimSpace(string(loadAfter))})
 		}
 	}
 	bytes, err := os.ReadFile("/proc/loadavg")
