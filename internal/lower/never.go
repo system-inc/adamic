@@ -70,6 +70,35 @@ func (l *lowering) neverExpression(node *ast.Node) (ir.Expression, error) {
 			of = l.result.Locals[local].Type
 		}
 	}
+
+	condition := node
+	for condition.Parent != nil && condition.Parent.Kind == ast.KindParenthesizedExpression {
+		condition = condition.Parent
+	}
+	if parent := condition.Parent; parent != nil {
+		switch parent.Kind {
+		case ast.KindIfStatement:
+			if parent.AsIfStatement().Expression == condition {
+				of = ir.Boolean
+			}
+		case ast.KindConditionalExpression:
+			if parent.AsConditionalExpression().Condition == condition {
+				of = ir.Boolean
+			}
+		case ast.KindWhileStatement:
+			if parent.AsWhileStatement().Expression == condition {
+				of = ir.Boolean
+			}
+		case ast.KindDoStatement:
+			if parent.AsDoStatement().Expression == condition {
+				of = ir.Boolean
+			}
+		case ast.KindForStatement:
+			if parent.AsForStatement().Condition == condition {
+				of = ir.Boolean
+			}
+		}
+	}
 	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
 	if contextual == nil {
 		contextual = l.impliedTarget(node)

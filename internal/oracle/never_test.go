@@ -96,3 +96,34 @@ func TestNeverCondition(t *testing.T) {
 		}
 	}
 }
+
+func TestNeverFieldConditions(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct{ name, declaration, write, read string }{
+		{"property_condition", "const holder: { value: boolean } = { value: false };", "holder.value = true", "holder.value"},
+		{"element_condition", "const values: boolean[] = [false];", "values[0] = true", "values[0]"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), test.name+".a")
+			source := test.declaration + "\nfunction change(): void { " + test.write + "; }\nif (" + test.read + " === false) {\n    change();\n    if (" + test.read + " !== false) {\n        if (" + test.read + ") { console.log('continued'); }\n    }\n}\n"
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			observed := onNode(t, path)
+			if observed.exitCode != 0 || string(observed.stdout) != "continued\n" || len(observed.stderr) != 0 {
+				t.Fatalf("Node: %#v", observed)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{exitCode: 70, stderr: []byte("adamic: panic: unreachable expression " + test.read + " at " + test.name + ".a:6:13\n")}
+			actual, _ := nativelyUncached(t, program)
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s: exit %d, stdout %q, stderr %q", difference, got.exitCode, got.stdout, got.stderr)
+				}
+			}
+		})
+	}
+}
