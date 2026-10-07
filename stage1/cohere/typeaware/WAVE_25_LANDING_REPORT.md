@@ -600,3 +600,45 @@ migrations remain partial, with no IR/SSA/capture parking classification.
 Only named obsolete binaries from my first scratch landing were removed to
 free disk space; all source, evidence and current binaries were retained.
 No main or area ref was pushed.
+
+## Typeof compiler and runtime landing pass
+
+Rebased cleanly onto origin/area/stage1-lint d3a37422c, including current
+origin/main b6b1538b0. Tested head: e40db09f8db856bc5fc8c740b81e6c051b2505de.
+All upstream compiler/runtime changes were retained. No rule source changed
+and no new claims were taken.
+
+All five claimed-rule suites and refusal checks passed in 406.801s.
+Inherited ten-rule coverage passed in 510.737s, including 7,120,613 identical
+compiler finding bytes under normal and sanitizer builds. All 24 rule mutants
+built, exited normally and were caught only by Go byte comparisons. Released
+handles and retained-registry mutants passed. Bridge packages passed in
+73.576s and 0.258s.
+
+The initial filtered Node run failed before execution: runtime-cache mkdir
+reported no space left on device. Its intact log is retained. Only explicitly
+named obsolete binaries and C archives in my old fifth-final, fourth-final
+and third-validation-final3 scratch directories were removed. All source,
+logs, checked-in evidence and current binaries remain. The uncached retry
+passed in 13.568s with zero cache hits, 56 native misses and 39 Node misses.
+It includes the new typeof fixtures and TestTypeOfConstructorMutant,
+TestTypeOfStringLiteralMutant, TestTypeOfNullSlotPresenceMutant and
+TestTypeOfNullMutant (five null fixtures). Their clean-running mutants were
+caught by ordinary Node stdout comparisons. The retry corrected the initial
+selector's capitalization from TestTypeof to TestTypeOf. go vet ./... passed
+with empty output, and registry generation passed.
+
+Fifth-suite compiler whole-process sample with nil Boolean options: native
+3.671190077s, Go 0.362931905s. This is one observation, not a median or an
+equivalent individual-listener benchmark. Commands, intact logs and the
+smallest configurable-RegExp reproducer are in validation-wave-25-typeof.
+The freshly rebuilt compiler still rejects that reproducer at 3:28 with
+build exit 1: stage 0 can't lower RegExp with a nonconstant pattern yet.
+
+Boolean remains partial for options, imported props, typed wrappers,
+placeholder regex and remaining dispatch migrations, and does not qualify
+for IR/SSA/capture parking. The full mandatory-input gate and standalone
+wave emitted-JavaScript certification remain unrun. Shared harness
+serialization was not repeated on this compiler/runtime landing; its last
+green evidence is validation-wave-25-registry. No check was skipped, relaxed
+or deleted, and no main or area ref was pushed.

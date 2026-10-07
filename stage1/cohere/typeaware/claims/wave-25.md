@@ -166,3 +166,9 @@ Rebased onto registry migration area b46914832, with main c7991b900 as ancestor.
 All claimed suites, refusals, mutants, sanitizer corpora and shared suggestion
 serialization checks passed again. Boolean remains partial and reserved; no
 new claims. Evidence: ../validation-wave-25-registry.
+
+Rebased onto area d3a37422c and main b6b1538b0. Claimed suites, inherited
+checker coverage, bridge, uncached filtered Node with typeof compiler mutants,
+vet and registry generation passed again. Boolean remains partial and
+reserved; nonconstant RegExp lowering still rejects the reproducer. No new
+claims. Evidence: ../validation-wave-25-typeof.

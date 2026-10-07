@@ -1,0 +1,13 @@
+{
+  "tested_head": "e40db09f8db856bc5fc8c740b81e6c051b2505de",
+  "main": "b6b1538b0cebc4ba6741ac34f1aedb60293c1d06",
+  "area": "d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898",
+  "prior_pushed_head": "82662353f3a6446548266acd92c8ef34ca7050d7",
+  "node_retry_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestTypeOf|TestTheOracleCatchesOneByte|TestNativeAgreesWithNode/internal/oracle/testdata/(typeof_.*|closures|classes|strings|array_from)\\.a$' -count=1 -v -timeout 10m",
+  "node_initial_exit": 1,
+  "node_retry_exit": 0,
+  "vet_exit": 0,
+  "registry_exit": 0,
+  "regexp_probe_exit": 1,
+  "full_mandatory_input_gate": "unrun"
+}
