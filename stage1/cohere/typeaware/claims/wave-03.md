@@ -136,3 +136,7 @@ Under the updated no-handwritten-matcher requirement, boolean-prop-naming's opti
 ### Landing refresh on b8fb957aa
 
 Rebased onto fetched origin/main b8fb957aa and reran all owned suites. Twelve rules pass full comparisons, mutants, sanitizer and handle checks; the combined three-rule React suite explicitly skips for the unchanged native new RegExp(pattern, 'u') refusal. The standalone literal interpolation again passes all 15 Go/native/emitted-JavaScript/sanitizer controls and its compiled byte-only mutant. No new claims; the branch is not described as fully oracle-green while this blocker remains. See wave_03_react/LANDING_B8FB.md.
+
+### Requested lint area rebase
+
+Rebased onto origin/area/stage1-lint 7481e0324, which includes main 39638d9e2 and harness 41eb6eab2. Twelve rules pass all four full owned suites, mutants, sanitizers and released-handle checks in a 570.413s run. The combined three-rule React suite explicitly skips for unchanged native runtime RegExp construction; the literal interpolation helper passes all 15 Go/native/JavaScript/sanitizer controls and its compiled comparison mutant. No new claims; no pushes to main or area. See wave_03_react/LANDING_AREA.md.
