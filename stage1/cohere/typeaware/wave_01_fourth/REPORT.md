@@ -156,3 +156,34 @@ API is still absent from current main. No new claim was taken. The six completed
 ports were unchanged and their previously recorded oracle gates were not repeated.
 No full-rule timing, released-handle coverage or corpus agreement is claimed for
 this pure solver addition; it creates no checker handles.
+
+## Atomic deferred-event placement continuation
+
+Current origin/main remains c01907a7036a; branch base is unchanged. Added
+require_atomic_updates/deferrals.a, porting production placeDeferrals over
+supplied raw byte ranges and original event-order floors. Kept events preserve
+their order; deferred events sharing an insertion slot preserve their order.
+No regex or diagnostic offset conversion is involved.
+
+An independent test-only Go overlay invokes unchanged placeDeferrals on 32
+fixtures: four floors, contained and noncontained valid ranges, missing targets
+and shared insertion slots. All output bytes match native under ASan/UBSan/LSan.
+The mutant that drops the original floor compiles, exits zero with empty stderr,
+and fails only the production-Go byte comparison. Exact streams are recorded
+in validation/atomic-deferrals.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_atomic_deferrals.py /workspace/wave-01-deferrals-validation /workspace/wave-01-fourth-adamic > /tmp/wave-01-deferrals.log 2>&1
+```
+
+Output: PASS 32 placements; sanitizers clean; lost-floor mutant caught by Go bytes.
+gofmt and git diff --check pass. Existing completed-rule gates were not repeated
+for this isolated helper, which is not wired into their suites. No checker handle
+is created by this helper; no new handle check or full-rule timing is claimed.
+
+Remaining atomic work includes syntax/CFG event collection, symbol resolution,
+escape filtering, construction of the two deferral phases and full findings.
+Await and symbol integration remain incomplete as previously recorded. The
+shared numeric supplied-node interface remains absent on main. No new claims
+were taken, and no shared files were edited.

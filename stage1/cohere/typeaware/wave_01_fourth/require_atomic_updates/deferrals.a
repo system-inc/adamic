@@ -1,0 +1,52 @@
+import { panic } from 'adamic';
+// Positions are raw parser byte offsets. No diagnostic positions are built here.
+export class AtomicPositionedEvent {
+    readonly id: number;
+    readonly start: number;
+    readonly end: number;
+    constructor(id: number, start: number, end: number) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+    }
+}
+export class AtomicDeferral {
+    readonly start: number;
+    readonly end: number;
+    readonly originalIndex: number;
+    readonly event: AtomicPositionedEvent;
+    constructor(start: number, end: number, originalIndex: number, event: AtomicPositionedEvent) {
+        this.start = start;
+        this.end = end;
+        this.originalIndex = originalIndex;
+        this.event = event;
+    }
+}
+export function placeAtomicDeferrals(kept: readonly AtomicPositionedEvent[], deferrals: readonly AtomicDeferral[]): AtomicPositionedEvent[] {
+    const slots: number[] = [];
+    for(const deferral of deferrals) {
+        let slot = deferral.originalIndex;
+        if(slot < 0 || slot > kept.length) {
+            panic('invalid atomic deferral floor');
+        }
+        for(let index = slot; index < kept.length; index++) {
+            const target = kept[index] ?? panic('missing atomic event');
+            if(target.start >= 0 && target.start >= deferral.start && target.end <= deferral.end) {
+                slot = index + 1;
+            }
+        }
+        slots.push(slot);
+    }
+    const rebuilt: AtomicPositionedEvent[] = [];
+    for(let slot = 0; slot <= kept.length; slot++) {
+        for(let index = 0; index < deferrals.length; index++) {
+            if(slots[index] === slot) {
+                rebuilt.push((deferrals[index] ?? panic('missing deferral')).event);
+            }
+        }
+        if(slot < kept.length) {
+            rebuilt.push(kept[slot] ?? panic('missing kept event'));
+        }
+    }
+    return rebuilt;
+}
