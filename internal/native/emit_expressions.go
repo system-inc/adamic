@@ -72,6 +72,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Logical:
 		return e.logicalValue(expression)
 	case ir.Unary:
+		if expression.Operator == ir.BitNot && pure(expression) {
+			return "adamic_signed_bits(" + e.integerBits(expression) + ")"
+		}
 		operand := e.value(expression.Operand)
 		switch expression.Operator {
 		case ir.Negate:
@@ -84,6 +87,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "adamic_bitwise_not(" + operand + ")"
 		}
 	case ir.Binary:
+		if cBitwise[expression.Operator] != "" && pure(expression) {
+			bits := e.integerBits(expression)
+			if expression.Operator == ir.ShiftRightUnsigned {
+				return "((double)" + bits + ")"
+			}
+			return "adamic_signed_bits(" + bits + ")"
+		}
 		if expression.Operator == ir.And || expression.Operator == ir.Or {
 			return e.logical(expression)
 		}
@@ -686,8 +696,8 @@ var cOperators = map[ir.Operator]string{
 func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string, right string) string {
 	switch {
 	case operator == ir.Remainder:
-		// JavaScript's % is C's fmod: truncated, with the sign of the dividend.
-		return fmt.Sprintf("fmod(%s, %s)", left, right)
+		// Whole operands use integer remainder; the runtime preserves signed zero.
+		return fmt.Sprintf("adamic_remainder(%s, %s)", left, right)
 	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
 	case cBitwise[operator] != "":

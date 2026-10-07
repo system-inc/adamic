@@ -801,14 +801,8 @@ adamic_string *adamic_string_from_code_points_of(const adamic_array *values);
 double adamic_utf8_length(const adamic_string *text);
 double adamic_utf8_at(const adamic_string *text, double index);
 
-// JavaScript's bitwise operators on numbers, each through ToInt32 or ToUint32 exactly (bitwise.c).
-double adamic_bitwise_and(double left, double right);
-double adamic_bitwise_or(double left, double right);
-double adamic_bitwise_xor(double left, double right);
-double adamic_bitwise_not(double value);
-double adamic_shift_left(double left, double right);
-double adamic_shift_right(double left, double right);
-double adamic_shift_right_unsigned(double left, double right);
+// Inline integer remainder and bitwise operators, with general double fallbacks.
+#include "integer.h"
 
 // String.fromCharCode and String.fromCodePoint over their arguments, already evaluated in order
 // (from_codes.c): each a string the caller owns. fromCodePoint panics with V8's RangeError where a
