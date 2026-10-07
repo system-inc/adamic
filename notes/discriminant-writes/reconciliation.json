@@ -1,0 +1,38 @@
+{
+  "supplied_events": 437,
+  "missing": 0,
+  "duplicated": 0,
+  "original_fields_changed": 0,
+  "rechecked_assignment_value_type_differences": 0,
+  "rechecked_assignment_update_events": 93,
+  "supplied_construction": {
+    "inside": 388,
+    "outside local construction": 47,
+    "not established": 2
+  },
+  "supplied_kind": {
+    "inside": 79
+  },
+  "supplied_rule": {
+    "accepted": 430,
+    "refused": 7,
+    "plain_refused": 34
+  },
+  "extra_events": 71,
+  "extra_construction": {
+    "outside local construction": 23,
+    "inside": 48
+  },
+  "extra_rule": {
+    "accepted": 55,
+    "refused": 16,
+    "plain_refused": 23
+  },
+  "root_declaration_witness_missing": 65,
+  "receiver_to_member_filter_differs": 6,
+  "combined": {
+    "accepted": 485,
+    "refused": 23,
+    "plain_refused": 57
+  }
+}

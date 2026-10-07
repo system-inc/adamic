@@ -1,0 +1,964 @@
+[
+  {
+    "file": "src/compiler/core.ts",
+    "line": 307,
+    "column": 5,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Incoming array parameter in filterMutate/clear.",
+    "evidence": [],
+    "source_line": "array.length = outIndex;",
+    "source_sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 312,
+    "column": 5,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Incoming array parameter in filterMutate/clear.",
+    "evidence": [],
+    "source_line": "array.length = 0;",
+    "source_sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1596,
+    "column": 13,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Queue array is captured by dequeue; the queue returns this closure, publishing the holder before later dequeue calls.",
+    "evidence": [
+      "src/compiler/core.ts:1569",
+      "src/compiler/core.ts:1603"
+    ],
+    "source_line": "elements.length = newLength;",
+    "source_sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+  },
+  {
+    "file": "src/compiler/tracing.ts",
+    "line": 71,
+    "column": 9,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Module-level typeCatalog/eventStack is persistent tracing state and reused across public tracing operations.",
+    "evidence": [],
+    "source_line": "typeCatalog.length = 0;",
+    "source_sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+  },
+  {
+    "file": "src/compiler/tracing.ts",
+    "line": 163,
+    "column": 9,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Module-level typeCatalog/eventStack is persistent tracing state and reused across public tracing operations.",
+    "evidence": [],
+    "source_line": "eventStack.length--;",
+    "source_sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+  },
+  {
+    "file": "src/compiler/tracing.ts",
+    "line": 170,
+    "column": 9,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Module-level typeCatalog/eventStack is persistent tracing state and reused across public tracing operations.",
+    "evidence": [],
+    "source_line": "eventStack.length = 0;",
+    "source_sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 233,
+    "column": 17,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Polling queue is supplied to the polling routine and reused between timer/poll invocations.",
+    "evidence": [],
+    "source_line": "queue.length = definedValueCopyToIndex;",
+    "source_sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1623,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1654,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1729,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1773,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1822,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1869,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1953,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = undefined; // initialized by parser for grammar errors",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1975,
+    "column": 13,
+    "property": "modifiers",
+    "construction": "outside local construction",
+    "explanation": "finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished.",
+    "evidence": [],
+    "source_line": "updated.modifiers = original.modifiers;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1987,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2043,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2106,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2232,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2698,
+    "column": 9,
+    "property": "operator",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.operator = operator;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 3189,
+    "column": 9,
+    "property": "name",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.name = asName(name);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 3659,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 3660,
+    "column": 9,
+    "property": "name",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.name = asName(name);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 3878,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4391,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4444,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4481,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4516,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4551,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4628,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = undefined; // initialized by parser to report grammar errors",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4643,
+    "column": 13,
+    "property": "modifiers",
+    "construction": "outside local construction",
+    "explanation": "finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished.",
+    "evidence": [],
+    "source_line": "updated.modifiers = original.modifiers;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4656,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4658,
+    "column": 9,
+    "property": "isTypeOnly",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.isTypeOnly = isTypeOnly;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4698,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4732,
+    "column": 9,
+    "property": "isTypeOnly",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.isTypeOnly = phaseModifier === SyntaxKind.TypeKeyword;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4762,
+    "column": 9,
+    "property": "token",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.token = SyntaxKind.AssertKeyword;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4813,
+    "column": 9,
+    "property": "token",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.token = token ?? SyntaxKind.WithKeyword;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4897,
+    "column": 9,
+    "property": "isTypeOnly",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.isTypeOnly = isTypeOnly;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4922,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4955,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = asNodeArray(modifiers);",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4956,
+    "column": 9,
+    "property": "isTypeOnly",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.isTypeOnly = isTypeOnly;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 4991,
+    "column": 17,
+    "property": "modifiers",
+    "construction": "outside local construction",
+    "explanation": "finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished.",
+    "evidence": [],
+    "source_line": "updated.modifiers = original.modifiers;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5016,
+    "column": 9,
+    "property": "isTypeOnly",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.isTypeOnly = isTypeOnly;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5872,
+    "column": 9,
+    "property": "token",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.token = token;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5930,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = undefined; // initialized by parser to report grammar errors",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5949,
+    "column": 13,
+    "property": "modifiers",
+    "construction": "outside local construction",
+    "explanation": "finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished.",
+    "evidence": [],
+    "source_line": "updated.modifiers = original.modifiers;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5966,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup.",
+    "evidence": [
+      "src/compiler/factory/nodeFactory.ts:1209",
+      "src/compiler/factory/baseNodeFactory.ts:57"
+    ],
+    "source_line": "node.modifiers = undefined; // initialized by parser to report grammar errors",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5984,
+    "column": 13,
+    "property": "modifiers",
+    "construction": "outside local construction",
+    "explanation": "finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished.",
+    "evidence": [],
+    "source_line": "updated.modifiers = original.modifiers;",
+    "source_sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "file": "src/compiler/factory/emitNode.ts",
+    "line": 308,
+    "column": 9,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "sourceEmitHelpers aliases sourceEmitNode.helpers on an existing supplied source node; shrinking it updates published emit metadata.",
+    "evidence": [
+      "src/compiler/factory/emitNode.ts:291"
+    ],
+    "source_line": "sourceEmitHelpers.length -= helpersRemoved;",
+    "source_sha256": "d4e8f25e7c30e6c6f5fbb72d56812d140f8d15384be4a7bd4da226a47559583a"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 2283,
+    "column": 17,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Rollback truncates the parser-owned diagnostic array reused across parse/speculation calls, not a newly constructed receiver.",
+    "evidence": [],
+    "source_line": "parseDiagnostics.length = saveParseDiagnosticsLength;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 6749,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children.",
+    "evidence": [
+      "src/compiler/parser.ts:2600",
+      "src/compiler/parser.ts:2619",
+      "src/compiler/parser.ts:1847"
+    ],
+    "source_line": "node.modifiers = modifiers;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 7547,
+    "column": 13,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children.",
+    "evidence": [
+      "src/compiler/parser.ts:2600",
+      "src/compiler/parser.ts:2619",
+      "src/compiler/parser.ts:1847"
+    ],
+    "source_line": "(missing as Mutable<MissingDeclaration>).modifiers = modifiersIn;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 7939,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children.",
+    "evidence": [
+      "src/compiler/parser.ts:2600",
+      "src/compiler/parser.ts:2619",
+      "src/compiler/parser.ts:1847"
+    ],
+    "source_line": "(node as Mutable<ClassStaticBlockDeclaration>).modifiers = modifiers;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 8142,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children.",
+    "evidence": [
+      "src/compiler/parser.ts:2600",
+      "src/compiler/parser.ts:2619",
+      "src/compiler/parser.ts:1847"
+    ],
+    "source_line": "(missing as Mutable<MissingDeclaration>).modifiers = modifiers;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 8380,
+    "column": 9,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children.",
+    "evidence": [
+      "src/compiler/parser.ts:2600",
+      "src/compiler/parser.ts:2619",
+      "src/compiler/parser.ts:1847"
+    ],
+    "source_line": "(node as Mutable<NamespaceExportDeclaration>).modifiers = modifiers;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 8867,
+    "column": 13,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Rollback truncates the parser-owned diagnostic array reused across parse/speculation calls, not a newly constructed receiver.",
+    "evidence": [],
+    "source_line": "parseDiagnostics.length = saveParseDiagnosticsLength;",
+    "source_sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 1974,
+    "column": 9,
+    "property": "length",
+    "construction": "inside",
+    "explanation": "candidates is the local [] at 1965. Resolver fills the supplied output array; candidate signatures are copied into candidatesSet. The array itself is not returned or stored, and is reset before its second local resolver pass.",
+    "evidence": [
+      "src/compiler/checker.ts:1963",
+      "src/compiler/checker.ts:36586"
+    ],
+    "source_line": "candidates.length = 0;",
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8129,
+    "column": 25,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Recovery callback captures trackedSymbols/unreportedErrors and is returned by startRecoveryScope. The enclosing builder also returns the recovery API; truncation occurs when a holder of that API invokes it.",
+    "evidence": [
+      "src/compiler/checker.ts:8109",
+      "src/compiler/checker.ts:8122"
+    ],
+    "source_line": "trackedSymbols.length = trackedSymbolsTop;",
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8132,
+    "column": 25,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Recovery callback captures trackedSymbols/unreportedErrors and is returned by startRecoveryScope. The enclosing builder also returns the recovery API; truncation occurs when a holder of that API invokes it.",
+    "evidence": [
+      "src/compiler/checker.ts:8109",
+      "src/compiler/checker.ts:8122"
+    ],
+    "source_line": "unreportedErrors.length = unreportedErrorsTop;",
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16171,
+    "column": 13,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "Conservative outside classification: result starts as a local slice/[], but 16169 passes it into a type mapper before this resize. Array mappers retain targets, and instantiation can retain/cache that mapper. A local allocation is not a fresh-holder proof after this potential publication.",
+    "evidence": [
+      "src/compiler/checker.ts:16158",
+      "src/compiler/checker.ts:16169",
+      "src/compiler/checker.ts:20613",
+      "src/compiler/checker.ts:20786",
+      "src/compiler/checker.ts:20981"
+    ],
+    "source_line": "result.length = typeParameters!.length;",
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 43553,
+    "column": 17,
+    "property": "value",
+    "construction": "outside local construction",
+    "explanation": "thisTypeForErrorOut is the supplied output-holder parameter; the routine writes an existing caller-owned record.",
+    "evidence": [],
+    "source_line": "thisTypeForErrorOut.value = thisTypeForError;",
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 51498,
+    "column": 31,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "indexInfoToIndexSignatureDeclaration returns a fresh factory.createIndexSignature. Key/value serialization and tracker work precede allocation of this holder; its modifier initialization happens before result.push publishes it.",
+    "evidence": [
+      "src/compiler/checker.ts:7977",
+      "src/compiler/checker.ts:8000",
+      "src/compiler/checker.ts:51501"
+    ],
+    "source_line": "(((node as Mutable<typeof node>).modifiers ||= factory.createNodeArray()) as MutableNodeArray<Modifier>).unshift(factory.createModifier(SyntaxKind.StaticKeyword));",
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 316,
+    "column": 13,
+    "property": "length",
+    "construction": "outside local construction",
+    "explanation": "mappingCharCodes is a captured buffer owned by the returned source-map generator; flushMappingBuffer runs on subsequent public generator operations.",
+    "evidence": [
+      "src/compiler/sourcemap.ts:40",
+      "src/compiler/sourcemap.ts:52"
+    ],
+    "source_line": "mappingCharCodes.length = 0;",
+    "source_sha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4"
+  },
+  {
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 351,
+    "column": 25,
+    "property": "length",
+    "construction": "inside",
+    "explanation": "declarations is a fresh local [] at 347. Invalid binding patterns clear it before any enclosing transformed statement is built or published.",
+    "evidence": [
+      "src/compiler/transformers/esnext.ts:347"
+    ],
+    "source_line": "declarations.length = 0;",
+    "source_sha256": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 364,
+    "column": 17,
+    "property": "length",
+    "construction": "inside",
+    "explanation": "commonPathComponents aliases a newly returned normalized-path array. Synchronous local forEach truncates it before the function returns a path string; external canonicalization receives only component strings.",
+    "evidence": [
+      "src/compiler/program.ts:342",
+      "src/compiler/program.ts:346",
+      "src/compiler/program.ts:351",
+      "src/compiler/program.ts:384"
+    ],
+    "source_line": "commonPathComponents.length = i;",
+    "source_sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 371,
+    "column": 13,
+    "property": "length",
+    "construction": "inside",
+    "explanation": "commonPathComponents aliases a newly returned normalized-path array. Synchronous local forEach truncates it before the function returns a path string; external canonicalization receives only component strings.",
+    "evidence": [
+      "src/compiler/program.ts:342",
+      "src/compiler/program.ts:346",
+      "src/compiler/program.ts:351",
+      "src/compiler/program.ts:384"
+    ],
+    "source_line": "commonPathComponents.length = sourcePathComponents.length;",
+    "source_sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1424,
+    "column": 16,
+    "property": "length",
+    "construction": "inside",
+    "explanation": "root is the local [] at 1254. Synchronous file-info enumeration invokes tryAddRoot while building it; the buildInfo object containing root is assembled/returned only after these writes.",
+    "evidence": [
+      "src/compiler/builder.ts:1254",
+      "src/compiler/builder.ts:1257",
+      "src/compiler/builder.ts:1269",
+      "src/compiler/builder.ts:1364"
+    ],
+    "source_line": "return root.length = root.length - 1;",
+    "source_sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 832,
+    "column": 13,
+    "property": "version",
+    "construction": "outside local construction",
+    "explanation": "originalGetSourceFile returns an existing host-supplied source file. Rewriting its version updates a shared/cached receiver; this wrapper does not construct that receiver.",
+    "evidence": [],
+    "source_line": "result.version = getSourceFileVersionAsHashFromText(compilerHost, result.text);",
+    "source_sha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 773,
+    "column": 21,
+    "property": "version",
+    "construction": "outside local construction",
+    "explanation": "hostSourceFile is an existing watch-host cache entry, possibly shared; assigning the loaded source file version changes that entry.",
+    "evidence": [],
+    "source_line": "hostSourceFile.version = sourceFile.version;",
+    "source_sha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef"
+  },
+  {
+    "file": "src/compiler/expressionToTypeNode.ts",
+    "line": 469,
+    "column": 21,
+    "property": "modifiers",
+    "construction": "inside",
+    "explanation": "If visitEachChild returns the original, this path clones it; otherwise the stock factory visitor has created an updated copy. Stock markNodeReuse only clones/sets original and range metadata; it does not publish the clone. Modifiers are set before returning visited.",
+    "evidence": [
+      "src/compiler/expressionToTypeNode.ts:463",
+      "src/compiler/checker.ts:6407",
+      "src/compiler/checker.ts:6517"
+    ],
+    "source_line": "(visited as Mutable<ParameterDeclaration>).modifiers = undefined;",
+    "source_sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+  },
+  {
+    "file": "src/compiler/binder.ts",
+    "line": 1016,
+    "column": 21,
+    "property": "node",
+    "construction": "outside local construction",
+    "explanation": "createBinder returns bindSourceFile at 560 before binding begins. currentFlow is persistent state captured by that published closure; storing the new flow record into currentFlow at 1014 publishes it to that existing holder before the node-field write at 1016. Allocation immediately before a write does not undo that publication.",
+    "evidence": [
+      "src/compiler/binder.ts:509",
+      "src/compiler/binder.ts:526",
+      "src/compiler/binder.ts:560",
+      "src/compiler/binder.ts:1014"
+    ],
+    "source_line": "currentFlow.node = node as FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration;",
+    "source_sha256": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3"
+  }
+]
