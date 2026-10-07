@@ -95,3 +95,30 @@ four consumers still remove zero complete blocker sets. No full repository gate,
 new throughput measurement or full regexp integration is claimed. Setup evidence
 remains the preceding unchanged-toolchain run: 149s total, nproc 5, quota 4.
 Remote bases were checked before pushing.
+
+## Typeof compiler landing refresh
+
+Rebased onto area/stage1-lint d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898,
+containing main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. The lint ledger
+is unchanged. Accepted all unowned compiler changes without editing them.
+Both owned validators were rerun from scratch, not reused from b46914832:
+
+- python3 stage1/cohere/lint/helpers/slot14/validate_hex.py: PASS, 68,844
+  actual Go/control records, 2,149,768 identical bytes per backend.
+- python3 stage1/cohere/lint/helpers/slot14/validate_unicode.py: PASS, 12,935
+  actual Go/control records, 834,966 identical bytes per backend.
+
+Source Node, emitted JavaScript and ASan/UBSan native agree with the real private
+Go decoders. All four original consumer suites and every targeted real-rule
+leaf-call assertion PASS again. Both width mutants compile, exit zero with clean
+stderr, and only Go byte comparison catches them on each of the three backends.
+Fresh output is in evidence/hex* and evidence/unicode*.
+
+The filtered inherited-static-field fixture and one-byte compiler-oracle control
+PASS (6.564s; three native misses, one hit), and go vet ./... PASS. Setup tools
+ready 0s each, submodules 0s, build cache warm 151s, total 151s; nproc 5, quota
+4 cores. Remote bases were checked before pushing. No shared harness file was
+edited. The four consumers still receive eight prerequisites, with zero complete
+rule blocker sets removed. Full regexp integration, the full repository gate
+and a fresh throughput benchmark are not claimed. The separate rule branch is
+being revalidated; no new work is claimed while its landing gate remains blocked.
