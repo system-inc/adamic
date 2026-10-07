@@ -1,0 +1,54 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (88.91s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (37.87s)
+    --- PASS: TestHelperMutants/options_json.ts (7.71s)
+    --- PASS: TestHelperMutants/option_schema.ts (7.11s)
+    --- PASS: TestHelperMutants/policy_message.ts (7.92s)
+    --- PASS: TestHelperMutants/strict_options.ts (7.80s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (7.17s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (2.41s)
+=== RUN   TestSlot04ElementParts
+    slot04_test.go:67: Go, Node source and sanitized native match 20331 output lines
+--- PASS: TestSlot04ElementParts (8.28s)
+=== RUN   TestSlot04ElementPartsMutant
+    slot04_test.go:91: sanitized native compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+    slot04_test.go:91: Node source compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+--- PASS: TestSlot04ElementPartsMutant (2.52s)
+=== RUN   TestSlot04ElementShapes
+    slot04_test.go:100: Go, Node and sanitized native match 130 shape output lines
+--- PASS: TestSlot04ElementShapes (1.91s)
+=== RUN   TestSlot04SettingsKey
+    slot04_test.go:128: settings-consumers.json: Go, Node source and sanitized native match 5 settings keys
+    slot04_test.go:128: settings-witnesses.json: Go, Node source and sanitized native match 467 settings keys
+--- PASS: TestSlot04SettingsKey (8.60s)
+=== RUN   TestSlot04SettingsKeyMutant
+    slot04_test.go:154: sanitized native compiling mutant caught at line 1: got "1,", Go "1,1,"
+    slot04_test.go:154: Node source compiling mutant caught at line 1: got "1,", Go "1,1,"
+--- PASS: TestSlot04SettingsKeyMutant (3.24s)
+=== RUN   TestSlot04CompiledReader
+    slot04_test.go:196: reader-consumers.json: Go, Node source and sanitized native match 323 cache calls
+    slot04_test.go:196: reader-witnesses.json: Go, Node source and sanitized native match 364 cache calls
+--- PASS: TestSlot04CompiledReader (3.95s)
+=== RUN   TestSlot04CompiledReaderMutant
+    slot04_test.go:222: sanitized native compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+    slot04_test.go:222: Node source compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+--- PASS: TestSlot04CompiledReaderMutant (3.10s)
+=== RUN   TestSlot04ConsumerCoverage
+    slot04_test.go:321: consumers.json covers all 24 consumers; removing @next/next/google-font-display is caught
+    slot04_test.go:321: tailwind-consumers.json covers all 12 consumers; removing better-tailwindcss/enforce-canonical-classes is caught
+--- PASS: TestSlot04ConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	167.977s
