@@ -1,0 +1,13 @@
+import { readTextFile } from 'adamic';
+import { Buffer } from 'node:buffer';
+import { createHash } from 'node:crypto';
+for (const path of ['reading/hello.txt', 'reading/bom.txt', 'reading/truncated.txt', 'reading/node_buffer_base64.txt']) {
+ const read = readTextFile(path);
+ if (read.kind === 'Ok') {
+  const bytes = Buffer.from(read.text);
+  console.log(bytes.toString('base64'));
+  console.log(bytes.toString('hex'));
+  console.log(createHash('sha256').update(read.text).digest('hex'));
+  console.log(Buffer.from(read.text, 'base64').toString('utf8'));
+ } else { console.log(read.message); }
+}

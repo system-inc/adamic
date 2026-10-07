@@ -1,0 +1,21 @@
+import { Buffer, type Buffer as ByteBuffer } from 'node:buffer';
+function read(buffer: ByteBuffer): string {
+ let len = buffer.length;
+ if (len >= 2 && buffer[0] === 0xfe && buffer[1] === 0xff) {
+  len &= ~1;
+  for (let i = 0; i < len; i += 2) {
+   const temp = buffer[i] ?? 0;
+   buffer[i] = buffer[i + 1] ?? 0;
+   buffer[i + 1] = temp;
+  }
+  return buffer.toString('utf16le', 2);
+ }
+ if (len >= 2 && buffer[0] === 0xff && buffer[1] === 0xfe) { return buffer.toString('utf16le', 2); }
+ if (len >= 3 && buffer[0] === 0xef && buffer[1] === 0xbb && buffer[2] === 0xbf) { return buffer.toString('utf8', 3); }
+ return buffer.toString('utf8');
+}
+for (const hex of ['feff0041d8000042ff', 'feff0041d83cdf0d', 'fffe41004200ff', 'efbbbf61f09f8c8d', '616263', 'fe', 'feff', 'fffe', 'efbbbf']) {
+ const bytes = Buffer.from(hex, 'hex');
+ console.log(read(bytes));
+ console.log(bytes.toString('hex'));
+}
