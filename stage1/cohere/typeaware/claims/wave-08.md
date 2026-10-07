@@ -135,3 +135,9 @@ mutants and sanitizer/released-handle checks pass again. Shared registry and
 complete suggestion serialization tests pass. A 639-ref audit finds no unclaimed
 rule. No selected Go check skipped; the full gate was not run.
 See ../wave08-core-next/LANDING_B469_REPORT.md.
+
+Typeof runtime landing: rebased onto area/stage1-lint d3a37422c, containing main
+b6b1538b0. Fresh compiler, all ten completed profiles, both parked kernels, rule
+mutants, sanitizers and released-handle probes pass. New typeof Node oracle
+mutants pass. A 654-ref audit finds no unclaimed rule; no selected Go check
+skipped. Full gate not run. See ../wave08-core-next/LANDING_D3A_REPORT.md.
