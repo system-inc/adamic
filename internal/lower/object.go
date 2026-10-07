@@ -916,7 +916,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			if of := l.result.Locals[local].Type; slotless(of) {
+			if of := l.result.Locals[local].Type; slotless(of) && !(of == ir.Union && l.writable(l.checker.GetTypeAtLocation(binding.Name()))) {
 				return nil, l.notYet(binding, "a tuple element of type "+typeName(of))
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
@@ -1287,7 +1287,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
-	if !valueKnown || slotless(value) {
+	if !valueKnown || (slotless(value) && !(value == ir.Union && l.writable(arguments[1]))) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
