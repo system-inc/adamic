@@ -1,6 +1,6 @@
 Built: finished the six prior claims, then ported no-global-assign, no-implicit-globals and no-implied-eval; nine rules total on this branch.
 Commits: six completed in 63298efb and 590f4fa6; next-three claim 89222643; final implementation is the commit containing this report.
-Commands and outputs: final agreement PASS 125.335s; bridge PASS 154.798s; checker PASS 0.602s; vet and formatting PASS.
+Commands and outputs: final agreement PASS 125.335s; bridge PASS 154.802s; checker PASS 0.602s; vet and formatting PASS.
 Mutants: three new native rule mutants caught only by full byte comparison; both checker guard mutants, retained registry and seven bridge mutants caught.
 Not covered: full repository gate, nondefault options, CLI lint for .a, and JavaScript execution of these FFI rules; no requested rule remains blocked.
 
