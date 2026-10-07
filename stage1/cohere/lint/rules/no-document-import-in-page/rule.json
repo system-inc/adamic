@@ -1,0 +1,12 @@
+{
+  "name": "@next/next/no-document-import-in-page",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDocumentImportInPage",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoDocumentImportInPage"
+}

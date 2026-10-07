@@ -1,0 +1,6 @@
+{
+  "Name": "wrong-module-specifier",
+  "File": "rule.a",
+  "From": "node.text === 'next/document'",
+  "To": "node.text === 'next/documents'"
+}

@@ -1,0 +1,19 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const path = this.context.parser.path;
+        const split = path.lastIndexOf('pages');
+        const page = split < 0 ? path : path.slice(split + 5);
+        if(page.startsWith('/_document') || page.startsWith('\\_document')) { return; }
+        for(const child of this.context.node(index).children) {
+            const node = this.context.node(child);
+            if((node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral') && node.text === 'next/document') {
+                this.context.report(index, '@next/next/no-document-import-in-page', 'noDocumentImportInPage', message, '', '', '');
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
