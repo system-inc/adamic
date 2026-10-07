@@ -36,7 +36,8 @@ Whole functions are kept together; trace extracted files with `git log --follow 
 ## The gate
 
 ```
-gofmt -l cmd internal
+gofmt -l cmd internal cloud
+python3 cloud/cohere_gate.py --output "$TMPDIR/cohere.jsonl" > "$TMPDIR/cohere.log" 2>&1
 go vet ./...
 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
@@ -61,6 +62,8 @@ cohere checks and formats every Adamic program in this repository, `.ts` and `.a
 - `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
 - `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
 - `review/**`: reviewers' probes, written to break things.
+
+The cohere baseline gate builds the pinned submodule binary and checks every repository-owned `.ts` and `.a` file, plus formatting and docs. The pinned cohere does not discover `.a` yet, so the gate exposes disposable `.a.ts` copies and adjusts their import suffixes; it never edits cohere or source files. Type and lint phases run independently so intentional type-error fixtures do not hide lint findings. The existing refusal, gap and review exclusions still apply. Remaining findings are recorded in `cloud/cohere-baseline.json`; `--record` removes resolved entries and refuses additions, and the gate also refuses baseline growth relative to `origin/main`. The audit and limitations are in `cloud/reports/cohere-77nj6af/report.txt`.
 
 ## Working here
 
