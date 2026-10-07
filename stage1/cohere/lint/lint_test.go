@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"testing"
@@ -751,6 +752,12 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 	t.Logf("%d rows: identical with and without unattached node rows, %d bytes", len(rows), len(plain.output))
 }
 
+// mutantBuilds bounds how many of TestMutants' sanitized native builds run at once. The subtests run in
+// parallel, since each works in its own copy of the port and the cost is one build per rule, which grows
+// with every port batch. A sanitized clang build of the whole port is the memory-heavy step, so only a few
+// run together, whatever the machine's core count.
+var mutantBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
+
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	for _, descriptor := range prepareRegistry(t, ".") {
@@ -763,7 +770,21 @@ func TestMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Run(change.Name, func(t *testing.T) {
-			rows := generated(t)
+			t.Parallel()
+			// A mutant can change only its own rule's output, so it runs on the rows that select that rule:
+			// its witnesses, and the generated rows selecting it or all rules. Rows naming another rule
+			// cannot show it. An "all" row stays as it is, since its options are every rule's bag.
+			var rows []string
+			for _, row := range generated(t) {
+				// A bare path selects all rules, as main.ts reads it.
+				selected := "all"
+				if fields := strings.Split(row, "\t"); len(fields) > 1 && fields[1] != "" {
+					selected = fields[1]
+				}
+				if selected == "all" || selected == descriptor.Name {
+					rows = append(rows, row)
+				}
+			}
 			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
@@ -771,10 +792,13 @@ func TestMutants(t *testing.T) {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			mutantBuilds <- struct{}{}
+			binary := buildPort(t, directory, true)
+			<-mutantBuilds
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}
