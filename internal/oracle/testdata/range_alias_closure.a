@@ -1,0 +1,16 @@
+interface Leaf { text: string; }
+interface Root { child: Leaf; }
+function changes(root: Root): void {
+	const child = root.child;
+	const text = child.text;
+	const change = (n: number): void => {
+		root.child.text = `changed${n}`;
+	};
+	console.log(`before${0}`);
+	change(1);
+	change(2);
+	console.log(text);
+}
+const root: Root = { child: { text: `start${0}` } };
+changes(root);
+console.log(root.child.text);
