@@ -7,18 +7,21 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// This checkout has no parallelMap API or task boundary to implement sharing at.
-// Pin the actual import failure, not a simulated sequential map called parallelMap.
-func TestGraphParallelMapIsUnavailable(t *testing.T) {
-	path := filepath.Join(repository, "internal/oracle/refusals/graph_regions_parallel.a")
-	_, err := load.Load([]string{path})
-	var checked *load.CheckError
-	if !errors.As(err, &checked) || !strings.Contains(err.Error(), "has no exported member 'parallelMap'") {
-		t.Fatalf("want named parallelMap compile-time rejection, got %v", err)
+// An incoming graph cannot be shared with a task while its region counts are plain.
+// Pin the ownership refusal and its move fix at the integrated parallelMap boundary.
+func TestGraphParallelMapRefusesRegions(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/concurrency/refused/graph_region.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "Ring.next") || !strings.Contains(refused.Fix, "part 2 (#p286ycm)") {
+		t.Fatalf("want named graph ownership rejection and move fix, got %v", err)
 	}
 	t.Logf("%v", err)
 }

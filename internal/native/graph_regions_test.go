@@ -113,11 +113,29 @@ func TestGraphRegionsRuntime(t *testing.T) {
 				if err != nil {
 					t.Fatalf("anchor mutant failed before leak check: %v\n%s", err, text)
 				}
-				if report := leakcheck.Report(t, graphHarness, binary, mode); report == "" {
-					t.Fatal("unreleased anchor not caught by shared leak check")
-				} else {
-					t.Logf("unreleased anchor counted=%t: %s", counted, report)
+				report := leakcheck.Report(t, graphHarness, binary, mode)
+				if report == "" {
+					// LSan can conservatively find a stale pointer after run returns. The
+					// ownership ledger must still catch the four deliberately held values.
+					countedBinary := binary
+					if !counted {
+						countedBinary = filepath.Join(t.TempDir(), "anchor-counted")
+						if err := native.Build(graphHarness, countedBinary, native.Options{Sanitize: true, Count: true}); err != nil {
+							t.Fatal(err)
+						}
+					}
+					command := exec.Command(countedBinary, mode)
+					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
+					output, err := command.CombinedOutput()
+					if err != nil {
+						t.Fatalf("anchor mutant failed before counted leak check: %v\n%s", err, output)
+					}
+					report = leakcheck.Unbalanced(leakcheck.Run{Stderr: output})
+					if !strings.Contains(report, "heap values leaked: 4") {
+						t.Fatalf("unreleased anchor not caught by counted leak check: %s\n%s", report, output)
+					}
 				}
+				t.Logf("unreleased anchor counted=%t: %s", counted, report)
 			case "shared":
 				if err == nil || !strings.Contains(text, "merging shared graph regions is not yet supported") {
 					t.Fatalf("shared merge not rejected: %v\n%s", err, text)
