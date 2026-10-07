@@ -1,0 +1,13 @@
+scanner_test.go:360: 30671195 answer bytes identical
+parser_test.go:290: 77 whole compiler files, 28836875 identical expression tree bytes
+whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+print_test.go:104: Prettier npm default: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+print_test.go:106: Prettier fork default: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+print_test.go:104: Prettier npm narrow: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+print_test.go:106: Prettier fork narrow: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+graphql_test.go:102: 3426 texts, 2052 parsed (119782 nodes, 4216 comments), 1374 refused: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+values_test.go:91: 8208 parses (5598 trees, 2610 refusals): every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+mediaquery_test.go:83: 4134 cases (3981 parsed, 153 refused; 2479 nodes left of undecided type): every tree the same from Go cohere, the port natively, on Node and through the JavaScript backend
+audit_test.go:172: exactly nine known upstream differences in 1752 texts
+lint_test.go:466: compiler and stage1: 399 files
+lint_test.go:467: Go, Node, emitted JavaScript, native identical: 21008652 bytes
