@@ -1,0 +1,14 @@
+import type { Context } from '../context.a';
+import type { Node } from '../node.a';
+import { Frames, header } from '../../frames.ts';
+export class GenericCall {
+    readonly explicit: boolean;readonly typeParameters: readonly number[];readonly declared: readonly number[];readonly rest: boolean;readonly element: number;
+    readonly resolved: readonly number[];readonly returns: number;readonly contextual: number;readonly graph: string;
+    constructor(explicit: boolean,typeParameters: readonly number[],declared: readonly number[],rest: boolean,element: number,resolved: readonly number[],returns: number,contextual: number,graph: string) {
+        this.explicit=explicit;this.typeParameters=typeParameters;this.declared=declared;this.rest=rest;this.element=element;this.resolved=resolved;this.returns=returns;this.contextual=contextual;this.graph=graph;
+    }
+}
+export function genericCall(context: Context,node: Node): GenericCall {
+    const f=new Frames(context.ask(node,'wave19-generic-call'));header(f,'wave19-generic-call');
+    const result=new GenericCall(f.yes(),f.ids(),f.ids(),f.yes(),f.natural(),f.ids(),f.natural(),f.natural(),f.field());f.end();return result;
+}

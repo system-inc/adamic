@@ -1,0 +1,34 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { Node } from './node.a';
+import { kindName } from './kinds.a';
+import { Frames, header } from '../frames.ts';
+import { Diagnostic } from '../diagnostic.ts';
+export class SymbolFacts {
+    readonly present: boolean; readonly ambient: readonly boolean[];
+    constructor(present: boolean, ambient: readonly boolean[]) {this.present=present;this.ambient=ambient;}
+}
+export class Context {
+    readonly program: number; readonly path: string; readonly source: string; readonly offsets: readonly number[];
+    readonly flags: readonly number[]; readonly nodes: readonly Node[]; readonly parents: readonly number[]; readonly findings: Diagnostic[]=[];
+    constructor(program: number,path: string,source: string,offsets: readonly number[],nodes: readonly Node[],parents: readonly number[],flags: readonly number[]=[]) {
+        this.program=program;this.path=path;this.source=source;this.offsets=offsets;this.nodes=nodes;this.parents=parents;this.flags=flags;
+    }
+    byte(pos: number): number {return this.offsets[pos] ?? panic('invalid source offset');}
+    ask(node: Node, question: string): string {return tsgoInspect(this.program,this.path,this.byte(node.pos),this.byte(node.end),kindName(node.kind),question);}
+    add(name: string,id: string,message: string,node: Node): Diagnostic {return this.range(name,id,message,node.start,node.end);}
+    range(name: string,id: string,message: string,start: number,end: number): Diagnostic {
+        const finding=new Diagnostic(name,id,message,this.byte(start),this.byte(end),'');this.findings.push(finding);return finding;
+    }
+    symbol(node: Node): SymbolFacts {
+        const frames=new Frames(this.ask(node,'declaration-ancestry'));header(frames,'declaration-ancestry');
+        const present=frames.yes();const ambient: boolean[]=[];
+        if(present) {
+            frames.natural();frames.natural();const count=frames.natural();
+            for(let i=0;i<count;i++) {
+                frames.field();ambient.push(frames.yes());frames.yes();frames.yes();const length=frames.natural();
+                for(let j=0;j<length;j++) {frames.field();frames.field();frames.natural();frames.natural();frames.natural();frames.yes();}
+            }
+        }
+        frames.end();return new SymbolFacts(present,ambient);
+    }
+}

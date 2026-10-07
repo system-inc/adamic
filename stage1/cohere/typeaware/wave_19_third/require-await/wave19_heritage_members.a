@@ -1,0 +1,5 @@
+import type { Context } from '../context.a';
+import type { Node } from '../node.a';
+import { types } from '../../facts.ts';
+import type { Types } from '../../types.ts';
+export function heritageMembers(context: Context,node: Node): Types {return types(context.ask(node,'wave19-heritage-members'),'wave19-heritage-members');}

@@ -1,0 +1,11 @@
+import type { Context } from '../context.a';
+import type { Node } from '../node.a';
+import { Frames, header } from '../../frames.ts';
+export class Members {
+    readonly property: number;readonly stringIndex: number;readonly numberIndex: number;readonly tuple: boolean;readonly elements: readonly number[];readonly graph: string;
+    constructor(property: number,stringIndex: number,numberIndex: number,tuple: boolean,elements: readonly number[],graph: string) {this.property=property;this.stringIndex=stringIndex;this.numberIndex=numberIndex;this.tuple=tuple;this.elements=elements;this.graph=graph;}
+}
+export function members(context: Context,node: Node,id: number,name: string): Members {
+    const f=new Frames(context.ask(node,`wave19-type-members\n${id}\n${name}`));header(f,'wave19-type-members');
+    const result=new Members(f.natural(),f.natural(),f.natural(),f.yes(),f.ids(),f.field());f.end();return result;
+}

@@ -1,0 +1,188 @@
+import { panic } from 'adamic';
+import type { Context } from '../context.a';
+import type { Node } from '../node.a';
+import { at } from '../node.a';
+import { types } from '../../facts.ts';
+import type { TypeFact } from '../../type_fact.ts';
+import type { Types } from '../../types.ts';
+import { signatures } from './wave19_type_signatures.a';
+import { genericCall } from './wave19_generic_call.a';
+import { members } from './wave19_type_members.a';
+import { heritageMembers } from './wave19_heritage_members.a';
+import { FunctionExpression,ArrowFunction,MethodDeclaration,ClassDeclaration,ClassExpression,AsyncKeyword,AsteriskToken,Identifier,PrivateIdentifier,StringLiteral,NumericLiteral,NoSubstitutionTemplateLiteral,ObjectLiteralExpression,PropertyAssignment,ArrayLiteralExpression,ConditionalExpression,BinaryExpression,ParenthesizedExpression,ReturnStatement,CallExpression,NewExpression,SpreadElement,StaticKeyword,BarBarToken,QuestionQuestionToken,AnyKeyword,UnknownKeyword,NumberKeyword,BigIntKeyword,BooleanKeyword,StringKeyword,SymbolKeyword,ObjectKeyword,UndefinedKeyword,NeverKeyword,VoidKeyword,IntrinsicKeyword,EqualsGreaterThanToken } from './kinds.a';
+class Step {
+    readonly operation: number;readonly name: string;readonly index: number;
+    constructor(operation: number,name='',index=0) {this.operation=operation;this.name=name;this.index=index;}
+}
+class Demand {
+    readonly generic: boolean;readonly roots: readonly number[];readonly substitutions: Map<number,number[]>;
+    constructor(generic: boolean,roots: readonly number[],substitutions: Map<number,number[]>) {this.generic=generic;this.roots=roots;this.substitutions=substitutions;}
+}
+export class Contract {
+    readonly context: Context;readonly node: Node;readonly records=new Map<number,TypeFact>();
+    constructor(context: Context,node: Node) {this.context=context;this.node=node;}
+    accept(graph: Types): Types {for(const record of graph.records) {this.records.set(record.id,record);}return graph;}
+    payload(text: string): void {this.accept(types(text,'wave19-contract-types'));}
+    query(question: string): Types {return this.accept(types(this.context.ask(this.node,question),question.split('\n')[0] ?? panic('missing question')));}
+    type(id: number): TypeFact {return this.records.get(id) ?? panic('missing contract type');}
+    parts(id: number): readonly number[] {const type=this.type(id);return (type.flags & 134217728)!==0?type.parts:[id];}
+    expand(roots: readonly number[],substitutions: Map<number,number[]>): number[] {
+        const result: number[]=[];
+        for(const id of roots) {for(const part of this.parts(id)) {
+            const replacement=substitutions.get(part);
+            if(replacement===undefined) {result.push(part);} else {for(const standIn of replacement) {for(const leaf of this.parts(standIn)) {result.push(leaf);}}}
+        }}
+        return result;
+    }
+    callable(id: number): boolean {
+        const apparent=this.query(`apparent-shape\n${id}`);
+        for(const root of apparent.roots) {for(const part of this.parts(root)) {const packet=signatures(this.context,this.node,part);this.payload(packet.graph);if(packet.rows.length>0) {return true;}}}
+        return false;
+    }
+    thenable(id: number): boolean {
+        const apparent=this.query(`apparent-shape\n${id}`);
+        for(const root of apparent.roots) {for(const part of this.parts(root)) {
+            const then=this.query(`property-shape\n${part}\nthen`);if(!then.present) {continue;}
+            for(const thenRoot of then.roots) {for(const thenPart of this.parts(thenRoot)) {
+                const packet=signatures(this.context,this.node,thenPart);this.payload(packet.graph);
+                for(const signature of packet.rows) {
+                    if(signature.parameters.length===0) {continue;}
+                    const parameter=signature.rest?signature.element:(signature.parameters[0] ?? 0);
+                    if(parameter!==0 && this.callable(parameter)) {return true;}
+                }
+            }}
+        }}
+        return false;
+    }
+    demands(roots: readonly number[],substitutions: Map<number,number[]>): boolean {
+        let saw=false;
+        for(const part of this.expand(roots,substitutions)) {
+            const packet=signatures(this.context,this.node,part);this.payload(packet.graph);
+            for(const signature of packet.rows) {
+                saw=true;
+                for(const returned of this.expand([signature.returns],substitutions)) {if(!this.thenable(returned)) {return false;}}
+            }
+        }
+        return saw;
+    }
+    name(node: Node): Node | undefined {
+        for(const index of node.children) {const child=at(this.context.nodes,index);if([Identifier,PrivateIdentifier,StringLiteral,NumericLiteral,NoSubstitutionTemplateLiteral].includes(child.kind)) {return child;}}
+        return undefined;
+    }
+    returnContext(node: Node): boolean {
+        if(node.kind!==FunctionExpression && node.kind!==ArrowFunction) {return false;}
+        const primitives=[AnyKeyword,UnknownKeyword,NumberKeyword,BigIntKeyword,BooleanKeyword,StringKeyword,SymbolKeyword,ObjectKeyword,UndefinedKeyword,NeverKeyword,VoidKeyword,IntrinsicKeyword];
+        for(const index of node.children.slice(0,-1)) {
+            const child=at(this.context.nodes,index);
+            if(child.kind===AsyncKeyword || child.kind===AsteriskToken || (child.kind>=182 && child.kind<=211) || primitives.includes(child.kind)) {return false;}
+        }
+        return true;
+    }
+    apply(roots: readonly number[],step: Step): number[] {
+        const next: number[]=[];
+        for(const part of roots) {
+            if(step.operation===2) {
+                const packet=signatures(this.context,this.node,part);this.payload(packet.graph);
+                for(const signature of packet.rows) {next.push(signature.returns);}
+            }
+            else {
+                const packet=members(this.context,this.node,part,step.name);this.payload(packet.graph);
+                let selected=0;
+                if(step.operation===0) {selected=packet.property!==0?packet.property:packet.stringIndex;}
+                else {selected=packet.tuple?(packet.elements[step.index] ?? 0):packet.numberIndex;}
+                if(selected!==0) {next.push(selected);}
+            }
+        }
+        return next;
+    }
+    fromCall(call: Node,argument: Node,steps: readonly Step[]): Demand {
+        const substitutions=new Map<number,number[]>();const empty: number[]=[];const fallback=new Demand(false,empty,substitutions);
+        const first=call.children.length-call.count;let position=-1;
+        for(let index=first;index<call.children.length;index++) {
+            const child=at(this.context.nodes,call.children[index] ?? -1);
+            if(child.index===argument.index) {position=index-first;break;}
+            if(child.kind===SpreadElement) {return fallback;}
+        }
+        if(position<0) {return fallback;}
+        const packet=genericCall(this.context,call);this.payload(packet.graph);
+        if(packet.explicit || packet.typeParameters.length===0) {return fallback;}
+        const parameter=packet.rest && position>=packet.declared.length-1?packet.element:(packet.declared[position] ?? 0);
+        if(parameter===0) {return fallback;}
+        for(let index=0;index<call.count;index++) {
+            if(index===position || index>=packet.declared.length || index>=packet.resolved.length || (packet.rest && index>=packet.declared.length-1)) {continue;}
+            const declared=packet.declared[index] ?? 0;
+            if(!packet.typeParameters.includes(declared)) {continue;}
+            const emptyReplacement: number[]=[];const replacement=substitutions.get(declared) ?? emptyReplacement;replacement.push(packet.resolved[index] ?? panic('missing resolved parameter'));substitutions.set(declared,replacement);
+        }
+        if(packet.typeParameters.includes(packet.returns) && packet.contextual!==0) {
+            const emptyReplacement: number[]=[];const replacement=substitutions.get(packet.returns) ?? emptyReplacement;replacement.push(packet.contextual);substitutions.set(packet.returns,replacement);
+        }
+        let roots: number[]=[parameter];
+        for(let index=steps.length-1;index>=0;index--) {roots=this.apply(this.expand(roots,substitutions),steps[index] ?? panic('missing context step'));}
+        return new Demand(true,roots,substitutions);
+    }
+    generic(): Demand {
+        const empty: number[]=[];const fallback=new Demand(false,empty,new Map<number,number[]>());const steps: Step[]=[];let current=this.node;
+        if(current.kind===MethodDeclaration) {
+            const parent=at(this.context.nodes,this.context.parents[current.index] ?? -1);const name=this.name(current);
+            if(parent.kind!==ObjectLiteralExpression || name===undefined) {return fallback;}
+            steps.push(new Step(0,name.text));current=parent;
+        }
+        while((this.context.parents[current.index] ?? -1)>=0) {
+            let parent=at(this.context.nodes,this.context.parents[current.index] ?? -1);
+            if(parent.kind===ParenthesizedExpression) {}
+            else if(parent.kind===ConditionalExpression) {
+                if((parent.children[2] ?? -1)!==current.index && (parent.children[parent.children.length-1] ?? -1)!==current.index) {return fallback;}
+            }
+            else if(parent.kind===BinaryExpression) {
+                const operator=at(this.context.nodes,parent.children[1] ?? -1);
+                if(operator.kind!==BarBarToken && operator.kind!==QuestionQuestionToken) {return fallback;}
+            }
+            else if(parent.kind===PropertyAssignment) {
+                if((parent.children[parent.children.length-1] ?? -1)!==current.index) {return fallback;}
+                const name=this.name(parent);if(name===undefined) {return fallback;}
+                steps.push(new Step(0,name.text));const above=this.context.parents[parent.index] ?? -1;if(above<0) {return fallback;}parent=at(this.context.nodes,above);
+            }
+            else if(parent.kind===ArrayLiteralExpression) {
+                let position=-1;
+                for(let index=0;index<parent.children.length;index++) {
+                    const child=at(this.context.nodes,parent.children[index] ?? -1);
+                    if(child.index===current.index) {position=index;break;}
+                    if(child.kind===SpreadElement) {return fallback;}
+                }
+                if(position<0) {return fallback;}steps.push(new Step(1,'',position));
+            }
+            else if(parent.kind===ReturnStatement) {
+                let index=this.context.parents[parent.index] ?? -1;
+                while(index>=0) {const candidate=at(this.context.nodes,index);if([263,219,220,175,178,179,177].includes(candidate.kind)) {break;}index=this.context.parents[index] ?? -1;}
+                if(index<0) {return fallback;}const functionNode=at(this.context.nodes,index);if(!this.returnContext(functionNode)) {return fallback;}
+                steps.push(new Step(2));parent=functionNode;
+            }
+            else if(parent.kind===ArrowFunction) {
+                if((parent.children[parent.children.length-1] ?? -1)!==current.index || !this.returnContext(parent)) {return fallback;}
+                steps.push(new Step(2));
+            }
+            else if(parent.kind===CallExpression || parent.kind===NewExpression) {return this.fromCall(parent,current,steps);}
+            else {return fallback;}
+            current=parent;
+        }
+        return fallback;
+    }
+    required(): boolean {
+        const declared=this.generic();if(declared.generic) {return this.demands(declared.roots,declared.substitutions);}
+        let contextual=this.query('contextual-shape');
+        if(!contextual.present && this.node.kind===MethodDeclaration) {
+            const name=this.name(this.node);let staticMember=false;for(const index of this.node.children) {if(at(this.context.nodes,index).kind===StaticKeyword) {staticMember=true;}}
+            const parentIndex=this.context.parents[this.node.index] ?? -1;
+            if(!staticMember && name!==undefined && name.kind===Identifier && parentIndex>=0) {
+                const parent=at(this.context.nodes,parentIndex);
+                if(parent.kind===ClassDeclaration || parent.kind===ClassExpression) {
+                    const heritage=this.accept(heritageMembers(this.context,this.node));
+                    contextual=heritage;
+                    if(heritage.roots.length>0) {return this.demands([heritage.roots[0] ?? 0],new Map<number,number[]>());}
+                }
+            }
+        }
+        return contextual.present && this.demands(contextual.roots,new Map<number,number[]>());
+    }
+}

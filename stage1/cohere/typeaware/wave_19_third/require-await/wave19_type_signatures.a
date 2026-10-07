@@ -1,0 +1,17 @@
+import type { Context } from '../context.a';
+import type { Node } from '../node.a';
+import { Frames, header } from '../../frames.ts';
+export class Signature {
+    readonly returns: number;readonly parameters: readonly number[];readonly rest: boolean;readonly element: number;
+    constructor(returns: number,parameters: readonly number[],rest: boolean,element: number) {this.returns=returns;this.parameters=parameters;this.rest=rest;this.element=element;}
+}
+export class Signatures {
+    readonly rows: readonly Signature[];readonly graph: string;
+    constructor(rows: readonly Signature[],graph: string) {this.rows=rows;this.graph=graph;}
+}
+export function signatures(context: Context,node: Node,id: number): Signatures {
+    const frames=new Frames(context.ask(node,`wave19-type-signatures\n${id}`));header(frames,'wave19-type-signatures');
+    const count=frames.natural();const rows: Signature[]=[];
+    for(let index=0;index<count;index++) {rows.push(new Signature(frames.natural(),frames.ids(),frames.yes(),frames.natural()));}
+    const graph=frames.field();frames.end();return new Signatures(rows,graph);
+}

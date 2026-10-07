@@ -1,0 +1,89 @@
+import { panic } from 'adamic';
+import type { Node } from '../node.a';
+import { at } from '../node.a';
+import type { Context } from '../context.a';
+import { Contract } from './contract.a';
+import { Suggestion } from '../../suggestion.ts';
+import { Repair } from '../../repair.ts';
+import { AsyncKeyword,AsteriskToken,AwaitKeyword,AwaitExpression,VariableDeclarationList,ForOfStatement,FunctionDeclaration,FunctionExpression,ArrowFunction,MethodDeclaration,GetAccessor,SetAccessor,Constructor,ClassDeclaration,ClassExpression,Block,SourceFile,PropertyAssignment,PropertyDeclaration,HeritageClause,ExportKeyword,DefaultKeyword,DeclareKeyword,EqualsGreaterThanToken,Identifier,PrivateIdentifier,StringLiteral,NumericLiteral,NoSubstitutionTemplateLiteral,ExpressionStatement,VariableStatement } from './kinds.a';
+export class Rule {
+    readonly listenerKinds: readonly number[]=[263,219,220,175,178,179,177];
+    functionKind(kind: number): boolean {return this.listenerKinds.includes(kind);}
+    space(character: string): boolean {return [' ','\t','\r','\n'].includes(character);}
+    following(context: Context,pos: number): number {let end=pos;while(end<context.source.length && this.space(context.source.slice(end,end+1))) {end++;}return end;}
+    name(node: Node,context: Context): Node | undefined {
+        for(const index of node.children) {const child=at(context.nodes,index);if([Identifier,PrivateIdentifier,StringLiteral,NumericLiteral,NoSubstitutionTemplateLiteral].includes(child.kind)) {return child;}}
+        return undefined;
+    }
+    containsAwait(node: Node,context: Context,flags: readonly number[],top=true): boolean {
+        if(!top && (this.functionKind(node.kind) || node.kind===ClassDeclaration || node.kind===ClassExpression)) {return false;}
+        if(node.kind===AwaitExpression || (node.kind===VariableDeclarationList && (flags[node.index] ?? 0)===6)) {return true;}
+        if(node.kind===ForOfStatement) {for(const index of node.children) {if(at(context.nodes,index).kind===AwaitKeyword) {return true;}}}
+        for(const index of node.children) {if(this.containsAwait(at(context.nodes,index),context,flags,false)) {return true;}}
+        return false;
+    }
+    previous(node: Node,context: Context): Node | undefined {
+        let current=node;
+        while((context.parents[current.index] ?? -1)>=0) {
+            const parent=at(context.nodes,context.parents[current.index] ?? -1);
+            if([ClassDeclaration,ClassExpression,Block,SourceFile].includes(parent.kind)) {
+                const offset=parent.children.indexOf(current.index);return offset>0?at(context.nodes,parent.children[offset-1] ?? -1):undefined;
+            }
+            current=parent;
+        }
+        return undefined;
+    }
+    replacement(node: Node,context: Context,end: number): string {
+        const next=context.source.slice(end,end+1);const rest=context.source.slice(end);
+        const continues=next==='[' || next==='(' || /^(in|instanceof)([^a-zA-Z0-9_$]|$)/.test(rest);
+        if(!continues) {return '';}
+        const previous=this.previous(node,context);if(previous===undefined) {return '';}
+        let canContinue=previous.kind===ExpressionStatement || previous.kind===VariableStatement;
+        if(previous.kind===PropertyDeclaration && previous.children.length>1) {
+            const last=at(context.nodes,previous.children[previous.children.length-1] ?? -1);
+            canContinue=[8,9,10,13,14,79,80,96,105,109,111].includes(last.kind) || last.kind>=212;
+        }
+        if(!canContinue || context.source.slice(previous.start,previous.end).trimEnd().endsWith(';')) {return '';}
+        return ';';
+    }
+    description(node: Node,context: Context): string {
+        if(node.kind===ArrowFunction) {return 'Async arrow function';}
+        if(node.kind===Constructor) {return "Async method 'constructor'";}
+        let kind=[MethodDeclaration,GetAccessor,SetAccessor].includes(node.kind)?'method':'function';let holder=node;
+        const parentIndex=context.parents[node.index] ?? -1;
+        if(parentIndex>=0) {const parent=at(context.nodes,parentIndex);if(parent.kind===PropertyAssignment) {holder=parent;kind='method';}}
+        const name=this.name(holder,context);return name===undefined?`Async ${kind}`:`Async ${kind} '${name.text}'`;
+    }
+    visit(node: Node,context: Context): void {
+        let async: Node | undefined;
+        for(const index of node.children) {const child=at(context.nodes,index);if(child.kind===AsteriskToken) {return;}if(child.kind===AsyncKeyword) {async=child;}}
+        if(async===undefined || node.children.length===0) {return;}
+        const body=at(context.nodes,node.children[node.children.length-1] ?? -1);
+        if(node.kind!==ArrowFunction && body.kind!==Block) {return;}
+        if(body.kind===Block && body.children.length===0) {return;}
+        if(this.containsAwait(body,context,context.flags)) {return;}
+        if(new Contract(context,node).required()) {return;}
+        const parentIndex=context.parents[node.index] ?? -1;
+        let start=node.start;let end=start;
+        const parent=parentIndex<0?undefined:at(context.nodes,parentIndex);
+        if(parent!==undefined && (parent.kind===PropertyAssignment || parent.kind===PropertyDeclaration)) {
+            start=parent.start;const position=context.source.indexOf('(',start);end=position>=0 && position<node.end?position:start;
+        }
+        else if(node.kind===ArrowFunction) {
+            for(const index of node.children) {const child=at(context.nodes,index);if(child.kind===EqualsGreaterThanToken) {start=child.start;end=child.end;}}
+        }
+        else {
+            for(const index of node.children) {
+                const child=at(context.nodes,index);
+                if([ExportKeyword,DefaultKeyword,DeclareKeyword].includes(child.kind)) {start=this.following(context,child.end);} else {break;}
+            }
+            const name=this.name(node,context);
+            if(name!==undefined) {end=name.end;} else {const position=context.source.indexOf('(',start);end=position>=0 && position<node.end?position:start;}
+            if(end<=start) {end=start+5;}
+        }
+        const message=`${this.description(node,context)} has no \`await\` expression. The \`async\` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove \`async\`, or await what this was waiting for.`;
+        const finding=context.range('require-await','missingAwait',message,start,end);
+        const removeEnd=this.following(context,async.end);
+        finding.suggestions.push(new Suggestion('removeAsync',"Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.",[new Repair(context.byte(async.start),context.byte(removeEnd),this.replacement(node,context,removeEnd))]));
+    }
+}

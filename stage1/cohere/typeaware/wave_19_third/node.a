@@ -1,0 +1,14 @@
+import { panic } from 'adamic';
+export class Node {
+    readonly index: number; readonly kind: number; readonly pos: number; readonly start: number; readonly end: number;
+    readonly text: string; readonly operator: string; readonly children: readonly number[]; readonly count: number;
+    constructor(index: number, kind: number, pos: number, start: number, end: number, text: string, operator: string, children: readonly number[], count: number) {
+        this.index=index; this.kind=kind; this.pos=pos; this.start=start; this.end=end; this.text=text; this.operator=operator; this.children=children; this.count=count;
+    }
+}
+export function at(nodes: readonly Node[], index: number): Node { return nodes[index] ?? panic('missing numeric node'); }
+export function unwrap(nodes: readonly Node[], node: Node): Node {
+    let current=node;
+    while(current.kind===218) { current=at(nodes,current.children[0] ?? -1); }
+    return current;
+}

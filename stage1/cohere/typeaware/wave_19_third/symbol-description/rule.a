@@ -1,0 +1,15 @@
+import type { Node } from '../node.a';
+import { at, unwrap } from '../node.a';
+import type { Context } from '../context.a';
+export class Rule {
+    readonly listenerKinds: readonly number[]=[214];
+    visit(node: Node,context: Context): void {
+        if(node.count>0 || node.children.length===0) {return;}
+        const callee=unwrap(context.nodes,at(context.nodes,node.children[0] ?? -1));
+        if(callee.kind!==79 || callee.text!=='Symbol') {return;}
+        const symbol=context.symbol(callee);
+        if(!symbol.present || !(symbol.ambient[0] ?? false)) {return;}
+        context.add('symbol-description','expected',
+            'This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.',node);
+    }
+}

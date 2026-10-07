@@ -1,0 +1,13 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -203,6 +203,10 @@
+ 	mode := strings.Split(question, "\n")[0]
+ 	out.text(mode)
+ 	switch mode {
++case "wave19-type-signatures": return p.wave19TypeSignatures(out,c,node,question)
++case "wave19-generic-call": return p.wave19GenericCall(out,c,node,question)
++case "wave19-type-members": return p.wave19TypeMembers(out,c,node,question)
++case "wave19-heritage-members": return p.wave19HeritageMembers(out,c,node,question)
+ 	case "node-symbol-origin": return p.nodeSymbolOrigin(out, c, node, question)
+ 	case "isolated-declarations": return p.isolatedDeclarations(out, node, question)
+ 	case "index-signature-access": return p.indexSignatureAccess(out, c, node, question)

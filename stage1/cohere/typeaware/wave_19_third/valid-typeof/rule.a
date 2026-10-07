@@ -1,0 +1,44 @@
+import type { Node } from '../node.a';
+import { at, unwrap } from '../node.a';
+import type { Context } from '../context.a';
+import { Suggestion } from '../../suggestion.ts';
+import { Repair } from '../../repair.ts';
+export class Rule {
+    readonly listenerKinds: readonly number[]=[227];
+    readonly requireStringLiterals: boolean;
+    constructor(requireStringLiterals=false) {this.requireStringLiterals=requireStringLiterals;}
+    visit(node: Node,context: Context): void {
+        const token=at(context.nodes,node.children[1] ?? -1);
+        if(![34, 36, 35, 37].includes(token.kind)) {return;}
+        const left=unwrap(context.nodes,at(context.nodes,node.children[0] ?? -1));
+        const right=unwrap(context.nodes,at(context.nodes,node.children[2] ?? -1));
+        if(left.kind===222) {this.operand(right,context);}
+        else if(right.kind===222) {this.operand(left,context);}
+    }
+    nonString(found: string): string {
+        return `A typeof expression always produces a string, and \`${found}\` is not one, so this comparison is always false (always true for != and !==) and the branch behind it is dead or unconditional. Compare against the string instead: \`typeof value === "undefined"\`, not \`typeof value === undefined\`.`;
+    }
+    strictMessage(): string {
+        return 'Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.';
+    }
+    operand(node: Node,context: Context): void {
+        if(node.kind===10 || node.kind===14) {
+            if(!['undefined','object','boolean','number','string','function','symbol','bigint'].includes(node.text)) {
+                context.add('valid-typeof','invalidTypeofValue',`A typeof expression can only produce one of eight strings, and "${node.text}" is not among them, so this comparison is always false and the branch behind it is dead. The eight are undefined, object, boolean, number, string, function, symbol and bigint. Almost every finding here is a typo or a guess at a type name that the language does not report: typeof null is "object", an array is "object", and there is no "array", "null" or "date".`,node);
+            }
+            return;
+        }
+        if([8,9,13,105,111,96].includes(node.kind)) {
+            context.add('valid-typeof','invalidTypeofValue',this.nonString(context.source.slice(node.start,node.end)),node);return;
+        }
+        if(node.kind===79 && node.text==='undefined') {
+            const symbol=context.symbol(node);let shadowed=false;
+            for(const ambient of symbol.ambient) {if(!ambient) {shadowed=true;}}
+            if(!shadowed) {
+                const finding=context.add('valid-typeof',this.requireStringLiterals?'notString':'invalidTypeofValue',this.requireStringLiterals?this.strictMessage():this.nonString('undefined'),node);
+                finding.suggestions.push(new Suggestion('suggestString','Use `"undefined"` instead of `undefined`.',[new Repair(context.byte(node.start),context.byte(node.end),'"undefined"')]));return;
+            }
+        }
+        if(this.requireStringLiterals && node.kind!==222) {context.add('valid-typeof','notString',this.strictMessage(),node);}
+    }
+}
