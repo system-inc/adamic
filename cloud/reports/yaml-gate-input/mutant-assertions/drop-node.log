@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_each_component_invalidates (__main__.InstallationKey.test_each_component_invalidates) (component='node')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 31, in test_each_component_invalidates
+    self.assertNotEqual(original, helper.installation_key(**changed), component)
+AssertionError: '9202b2f0f2e696617391bc46f56024a0eb8ff0921f41d788ac3ebcecd98deaad' == '9202b2f0f2e696617391bc46f56024a0eb8ff0921f41d788ac3ebcecd98deaad' : node
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

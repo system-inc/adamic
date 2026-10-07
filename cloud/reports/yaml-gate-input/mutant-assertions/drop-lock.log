@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_each_component_invalidates (__main__.InstallationKey.test_each_component_invalidates) (component='lock')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 31, in test_each_component_invalidates
+    self.assertNotEqual(original, helper.installation_key(**changed), component)
+AssertionError: 'c98ff3842291aa6932736c455f87a1c62a45d0edf35ffd838efd14bb8f9ea657' == 'c98ff3842291aa6932736c455f87a1c62a45d0edf35ffd838efd14bb8f9ea657' : lock
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

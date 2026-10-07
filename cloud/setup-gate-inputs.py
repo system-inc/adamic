@@ -24,7 +24,7 @@ VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript', 'ADAMIC_CSS_LIBRARY': 'cs
              'ADAMIC_GRAPHQL_LIBRARY': 'graphql', 'ADAMIC_MEDIA_QUERY_LIBRARY': 'media-query',
              'ADAMIC_SELECTOR_LIBRARY': 'selector', 'ADAMIC_VALUES_LIBRARY': 'values',
              'ADAMIC_JSON_PRETTIER': 'json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': 'css-printer',
-             'ADAMIC_TS_PRETTIER': 'css-printer',
+             'ADAMIC_TS_PRETTIER': 'css-printer', 'ADAMIC_YAML_LIBRARY': 'css-printer',
              'ADAMIC_GITIGNORE_LARGEST': 'gitignore/.gitignore',
              'ADAMIC_CLANG_TSGO_ARCHIVE': 'checker/tsgo.a'}
 ARCHIVE_FLAGS = ['-trimpath', '-buildvcs=false', '-buildmode=c-archive']

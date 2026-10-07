@@ -26,11 +26,23 @@ class Inputs(unittest.TestCase):
             with patch.object(sys, 'argv', ['setup', 'env', temporary, temporary, 'node']), contextlib.redirect_stdout(io.StringIO()) as output:
                 gate.main()
             exports = dict(shlex.split(line)[1].split('=', 1) for line in output.getvalue().splitlines())
+            self.assertIn('ADAMIC_YAML_LIBRARY', exports)
+            self.assertEqual(exports['ADAMIC_YAML_LIBRARY'], exports['ADAMIC_CSS_PRINTER_LIBRARY'])
             self.assertIn('ADAMIC_TS_PRETTIER', exports)
             self.assertEqual(exports['ADAMIC_TS_PRETTIER'], str(root / 'css-printer'))
             self.assertEqual(exports['ADAMIC_TS_PRETTIER'], exports['ADAMIC_CSS_PRINTER_LIBRARY'])
             self.assertEqual(exports['ADAMIC_TYPESCRIPT_SOURCE'], str(root / 'typescript'))
             self.assertEqual(gate.TS_COMMIT, '050880ce59e30b356b686bd3144efe24f875ebc8')
+
+    def test_shared_yaml_pins_and_integrity(self):
+        directory = SOURCE / 'gate-inputs/css-printer'
+        manifest = json.loads((directory / 'package.json').read_text())
+        lock = json.loads((directory / 'package-lock.json').read_text())
+        for name, version in [('yaml', '2.9.0'), ('prettier', '3.9.6'), ('yaml-unist-parser', '3.2.0')]:
+            self.assertEqual(manifest['dependencies'][name], version)
+            package = lock['packages']['node_modules/' + name]
+            self.assertEqual(package['version'], version)
+            self.assertTrue(package['integrity'].startswith('sha512-'))
 
     def test_shared_prettier_installed_once(self):
         with tempfile.TemporaryDirectory() as temporary:
