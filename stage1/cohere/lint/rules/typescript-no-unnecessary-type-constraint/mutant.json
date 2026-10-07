@@ -1,0 +1,6 @@
+{
+  "name": "constraint_suggestion_deletes_name",
+  "file": "rule.a",
+  "from": "this.context.node(name).end, bound.end",
+  "to": "this.context.start(name), bound.end"
+}
