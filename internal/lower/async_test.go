@@ -91,3 +91,27 @@ func TestAsyncSuspensionEndsFreshConfinement(t *testing.T) {
 		t.Fatal("holder write was not analyzed")
 	}
 }
+
+func TestAsyncProgramsDisableCallFreshnessSummaries(t *testing.T) {
+	program, err := lowerSource(t, `function make(): { text: string } { return { text: "held" }; }
+function write(holder: { item: { text: string } | undefined }): void { holder.item = make(); }
+async function run(): Promise<void> { await Promise.resolve(); }
+const holder: { item: { text: string } | undefined } = { item: undefined };
+write(holder);
+await run();`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := false
+	for _, write := range fresh.ProveWrites(program) {
+		if write.Name == "item" {
+			checked = true
+			if write.Proven {
+				t.Fatal("async program used a call freshness summary")
+			}
+		}
+	}
+	if !checked {
+		t.Fatal("holder write was not analyzed")
+	}
+}

@@ -789,3 +789,42 @@ implementation is 6d8afa4. Counts regeneration passes in 59.194s; the seventeent
 async fixture adds this measured row (allocations, frees, retains, releases, peak,
 regions): async_fresh_holder.a = 12, 12, 23, 38, 11, 0. Existing async rows retain
 their numbers; main's other fixture changes are incorporated by regeneration.
+
+### Final granted-seam verification
+
+The required lower, flow, IR and native packages plus fresh pass in
+/tmp/async-fresh-packages.log (29.923s, 73.518s, 1.625s, 120.591s and 37.937s).
+The seventeen-fixture async three-way oracle, registered async mutants and full
+counts check pass in 30.896s (/tmp/async-fresh-oracle.log). The complete oracle
+also passes on the latest-main reconciliation 8cbc05c, including main c01907a,
+in 190.540s (/tmp/async-fresh-final-main-oracle.log). Main's only compiler-test
+change since f8013f0 is the dormant Stage 3 oracle hook; the compiler implementation
+and stage-one suites are unchanged. Neither main nor an area branch was pushed.
+
+The complete command ran to termination:
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...`.
+It exits 1, logged in /tmp/async-fresh-full-gate.log. Every package except
+stage1/cohere/markdownblocks passes, including the entire oracle, Unicode
+properties, CSS, JSON, lint, markdowninline and typeaware. Markdownblocks first
+reports a missing original Node width dependency at
+/tmp/adamic-markdown-width/node_modules/emoji-regex/index.js, then reaches the
+30-minute package timeout while layout/composition tests are still active.
+The pinned dependencies from its documentation were installed outside the repo:
+emoji-regex 10.6.0, get-east-asian-width 1.6.0, narrow-emojis 0.0.3, using npm
+with scripts disabled. The focused retry
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m
+./stage1/cohere/markdownblocks -run '^TestMarkdownUnicodeWidths$'`
+passes in 352.295s (/tmp/async-fresh-markdown-width.log). A complete green
+markdownblocks package or full gate is not claimed; timed-out layout tests were
+not rerun. There was no compiler-source edit to accommodate that dependency.
+
+The added freshness controls independently prove both conservative switches:
+TestAsyncSuspensionEndsFreshConfinement kills removal of the Suspend escape
+(/tmp/async-fresh-mutant.log); TestAsyncProgramsDisableCallFreshnessSummaries
+kills enabling summaries in an async program
+(/tmp/async-fresh-summary-mutant.log). Both mutants were restored. The final
+whole lower package passes in 11.961s (/tmp/async-fresh-final-lower.log).
+Formatting, diff checks and vet passed before the documentation-only final
+report. This seam adds no native emission hook and makes no Promise ABI change.
+The previously listed hooks and cycle mutants remain in the earlier evidence.
+Finally completion routing and shared-SSA reconciliation remain explicit gaps.
