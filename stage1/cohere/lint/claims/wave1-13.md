@@ -60,3 +60,17 @@ inventory entries, absent from main and from all origin claims, are:
 - guard-for-in: claimed here.
 
 This update is committed and pushed before any rule code is written.
+
+## Fourth continuation claim
+
+Previous three implementations and final evidence are pushed through 115987be.
+Fetched 335 origin refs on 2026-10-07; main remains ef3d907e. Checked all
+52 distinct recursive claim Markdown blobs and main's rule registrations.
+All 46 helper-ready rules are covered. The first three unclaimed syntax-ready
+entries are:
+
+- no-constructor-return: claimed here.
+- no-delete-var: claimed here.
+- no-eq-null: claimed here.
+
+This claim update is pushed before rule implementation.
