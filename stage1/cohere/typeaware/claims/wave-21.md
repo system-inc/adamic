@@ -36,3 +36,8 @@ branch (5afbdb83) are reserved for this branch:
 
 Previously named rules, including explicitly released reservations, were skipped.
 This claim is pushed before implementation.
+
+Continuation completion: all three continuation rules are implemented and
+verified in c565946d. See ../WAVE_21_NEXT_REPORT.md and
+../validation-wave-21-next/ for byte comparisons, mutants, sanitizer results
+and timings. No further claims were taken after Ahra's correction.

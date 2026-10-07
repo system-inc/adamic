@@ -1,0 +1,20 @@
+=== RUN   TestWave21NextAgreement
+    wave_21_next_test.go:178: correctness_no_collection_misuse: 6 upstream fixture sources
+    wave_21_next_test.go:178: correctness_no_discarded_outcome: 30 upstream fixture sources
+    wave_21_next_test.go:178: correctness_no_discarded_pure_result: 22 upstream fixture sources
+    wave_21_next_test.go:225: controls: 34896 identical finding bytes; findings 71
+    wave_21_next_test.go:233: controls-asan: 34896 identical finding bytes; findings 71
+    wave_21_next_test.go:272: collection mutant: exit 0, comparison catches byte 1435
+    wave_21_next_test.go:272: outcome mutant: exit 0, comparison catches byte 7809
+    wave_21_next_test.go:272: pure mutant: exit 0, comparison catches byte 18010
+    wave_21_next_test.go:299: awaited-shape: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_next_test.go:299: type-declaration-ancestors: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_next_test.go:306: compiler: 5087 identical finding bytes; findings 0
+    wave_21_next_test.go:307: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_next_test.go:313: compiler quiet timing native 2.506309s Go 0.774367s
+    wave_21_next_test.go:306: repository: 18485 identical finding bytes; findings 0
+    wave_21_next_test.go:307: repository-asan: 18485 identical finding bytes; findings 0
+    wave_21_next_test.go:313: repository quiet timing native 0.299993s Go 0.138314s
+--- PASS: TestWave21NextAgreement (61.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	61.042s
