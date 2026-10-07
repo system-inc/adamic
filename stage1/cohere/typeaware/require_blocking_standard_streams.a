@@ -1,0 +1,72 @@
+import type { Rules } from './rules.ts';
+import { ProcessCalls } from './process_calls.a';
+import { BlockingModuleIndex } from './blocking_module_index.a';
+import { BlockingStreamAnalysis } from './blocking_stream_analysis.a';
+import { Diagnostic } from './diagnostic.ts';
+export class RequireBlockingStandardStreams {
+    readonly calls: ProcessCalls;
+    constructor(rules: Rules) {
+        this.calls = new ProcessCalls(rules);
+    }
+    run(): void {
+        if(!this.calls.rules.scanner.text.includes('exit')) {
+            return;
+        }
+        const roots = new Map<number, number>();
+        let candidate = false;
+        for(let index = 0; index < this.calls.rules.parser.nodes.length; index++) {
+            if(this.calls.parent(index) < 0 || this.calls.kind(index) !== 'CallExpression') {
+                continue;
+            }
+            let bit = 0;
+            if(this.calls.isExit(index)) {
+                bit = 1;
+            }
+            else if(this.calls.isWrite(index)) {
+                bit = 2;
+            }
+            if(bit === 0) {
+                continue;
+            }
+            const root = this.calls.root(index);
+            const bits = (roots.get(root) ?? 0) | bit;
+            roots.set(root, bits);
+            if(bits === 3) {
+                candidate = true;
+                break;
+            }
+        }
+        if(!candidate) {
+            return;
+        }
+        const root = this.calls.rules.parser.nodes.length - 1;
+        const index = new BlockingModuleIndex(this.calls.rules, root);
+        const shebang = this.calls.rules.scanner.text.startsWith('#!');
+        if(!shebang && index.imported.has(this.calls.rules.path)) {
+            return;
+        }
+        const analysis = new BlockingStreamAnalysis(this.calls, index);
+        if(analysis.ordered && analysis.importsBlockAtLoad()) {
+            return;
+        }
+        const exits = analysis.reached(root);
+        if(exits.length === 0) {
+            return;
+        }
+        exits.sort((left, right) => this.calls.rules.parser.node(left).pos - this.calls.rules.parser.node(right).pos);
+        const node = this.calls.rules.parser.node(exits[0] ?? -1);
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = exits.length > 1 ? `, the first of ${exits.length} such exits in this file` : '';
+        const message = `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`;
+        this.calls.rules.findings.push(
+            new Diagnostic(
+                'nexus/correctness-require-blocking-standard-streams',
+                'exitBeforeBlockingStandardStreams',
+                message,
+                this.calls.rules.byte(this.calls.rules.start(node)),
+                this.calls.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+}

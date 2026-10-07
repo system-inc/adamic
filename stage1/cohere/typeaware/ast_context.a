@@ -1,0 +1,69 @@
+import { tsgoInspect } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class AstContext {
+    declarationFile = false;
+    external = false;
+    library = false;
+    rootKind = '';
+    rootStart = 0;
+    rootEnd = 0;
+    readonly kinds: string[] = [];
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    readonly names: string[] = [];
+    readonly global: boolean[] = [];
+    readonly constant: boolean[] = [];
+    readonly ambient: boolean[] = [];
+    readonly bodyKinds: string[] = [];
+    readonly bodyStarts: number[] = [];
+    readonly bodyEnds: number[] = [];
+    readonly generator: boolean[] = [];
+    readonly async: boolean[] = [];
+    constructor(wire: string) {
+        const frames = new Frames(wire);
+        header(frames, 'ast-context');
+        this.declarationFile = frames.yes();
+        this.external = frames.yes();
+        this.library = frames.yes();
+        if(frames.yes()) {
+            this.rootKind = frames.field();
+            this.rootStart = frames.natural();
+            this.rootEnd = frames.natural();
+        }
+        for(let depth = 0; depth < 6; depth++) {
+            if(!frames.yes()) {
+                continue;
+            }
+            this.kinds.push(frames.field());
+            this.starts.push(frames.natural());
+            this.ends.push(frames.natural());
+            frames.natural();
+            this.names.push(frames.field());
+            this.global.push(frames.yes());
+            this.constant.push(frames.yes());
+            this.ambient.push(frames.yes());
+            if(frames.yes()) {
+                this.bodyKinds.push(frames.field());
+                this.bodyStarts.push(frames.natural());
+                this.bodyEnds.push(frames.natural());
+            }
+            else {
+                this.bodyKinds.push('');
+                this.bodyStarts.push(0);
+                this.bodyEnds.push(0);
+            }
+            this.generator.push(frames.yes());
+            this.async.push(frames.yes());
+        }
+        frames.end();
+    }
+}
+export function astContext(rules: Rules, file: string, start: number, end: number, kind: string): AstContext {
+    if(file === rules.path) {
+        return new AstContext(tsgoInspect(rules.program, file, start, end, kind, 'ast-context'));
+    }
+    const root = rules.parser.nodes.length - 1;
+    return new AstContext(rules.ask(root, `ast-context\n${file}\n${start}\n${end}\n${kind}`));
+}

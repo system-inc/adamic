@@ -1,0 +1,64 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { ProgramModules } from './program_modules.a';
+export class BlockingModuleIndex {
+    readonly raw: ProgramModules;
+    readonly edges = new Map<string, string[]>();
+    readonly imported = new Map<string, boolean>();
+    readonly canBlock = new Map<string, boolean>();
+    constructor(rules: Rules, root: number) {
+        this.raw = new ProgramModules(rules, root);
+        const seeds: string[] = [];
+        for(let at = 0; at < this.raw.paths.length; at++) {
+            const file = this.raw.paths[at] ?? '';
+            if(
+                file.endsWith('/source/system/StandardStreams.ts') ||
+                file.endsWith('/source/system/StandardStreams.d.ts')
+            ) {
+                seeds.push(file);
+            }
+            const edges: string[] = [];
+            this.edges.set(file, edges);
+            if(this.raw.declarations[at] === true) {
+                continue;
+            }
+            const text = this.raw.texts[at] ?? '';
+            const dynamic = text.includes('import(') || text.includes('require(');
+            const only = this.raw.typeOnly[at] ?? panic('missing module type flags');
+            const literals = this.raw.literals[at] ?? panic('missing module literal flags');
+            const targets = this.raw.targets[at] ?? panic('missing module targets');
+            const kinds = this.raw.referenceKinds[at] ?? panic('missing module references');
+            for(let reference = 0; reference < kinds.length; reference++) {
+                const kind = kinds[reference] ?? '';
+                const called = ['import-call', 'require-call'].includes(kind);
+                if((called && !dynamic) || only[reference] === true) {
+                    continue;
+                }
+                if(called && literals[reference] !== true) {
+                    seeds.push(file);
+                    continue;
+                }
+                const target = targets[reference] ?? '';
+                if(target !== '' && target !== file && this.raw.paths.includes(target)) {
+                    edges.push(target);
+                    this.imported.set(target, true);
+                }
+            }
+        }
+        const queue = [...seeds];
+        for(const seed of seeds) {
+            this.canBlock.set(seed, true);
+        }
+        for(const target of queue) {
+            for(const file of this.raw.paths) {
+                if(
+                    !this.canBlock.has(file) &&
+                    (this.edges.get(file) ?? panic('missing module edges')).includes(target)
+                ) {
+                    this.canBlock.set(file, true);
+                    queue.push(file);
+                }
+            }
+        }
+    }
+}

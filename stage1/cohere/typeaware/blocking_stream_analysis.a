@@ -1,0 +1,442 @@
+import { panic } from 'adamic';
+import type { ProcessCalls } from './process_calls.a';
+import type { BlockingModuleIndex } from './blocking_module_index.a';
+import { resolvedDeclarations } from './resolved_declarations.a';
+import { astContext } from './ast_context.a';
+import { ExecutionGraph } from './execution_graph.a';
+import { ProcessWriteState } from './process_write_state.a';
+export class BlockingStreamAnalysis {
+    readonly calls: ProcessCalls;
+    readonly index: BlockingModuleIndex;
+    readonly ordered: boolean;
+    readonly emptyArguments: number[] = [];
+    readonly mayBlock = new Map<string, number>();
+    constructor(calls: ProcessCalls, index: BlockingModuleIndex) {
+        this.calls = calls;
+        this.index = index;
+        this.ordered = index.canBlock.has(calls.rules.path);
+    }
+    callLike(calls: ProcessCalls, node: number): boolean {
+        return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(calls.kind(node));
+    }
+    functionBody(calls: ProcessCalls, node: number): boolean {
+        return calls.bindings.functionKind(calls.kind(node)) && calls.body(node) >= 0;
+    }
+    arguments(calls: ProcessCalls, index: number): number[] {
+        const node = calls.rules.parser.node(index);
+        return ['CallExpression', 'NewExpression'].includes(node.kind)
+            ? node.children.slice(node.children.length - node.list)
+            : this.emptyArguments;
+    }
+    runMayBlock(calls: ProcessCalls, index: number): boolean {
+        const key = `${calls.rules.path}:${index}`;
+        const previous = this.mayBlock.get(key) ?? 0;
+        if(previous !== 0) {
+            return previous === 1;
+        }
+        this.mayBlock.set(key, 3);
+        const result = this.childrenMayBlock(calls, index);
+        this.mayBlock.set(key, result ? 1 : 2);
+        return result;
+    }
+    childrenMayBlock(calls: ProcessCalls, index: number): boolean {
+        for(const child of calls.rules.parser.node(index).children) {
+            if(
+                (this.callLike(calls, child) && this.callMayBlock(calls, child)) ||
+                this.childrenMayBlock(calls, child)
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    symbolMayBlock(calls: ProcessCalls, name: number): boolean {
+        const declarations = resolvedDeclarations(calls.rules, name);
+        if(declarations.length === 0) {
+            return true;
+        }
+        for(const declaration of declarations) {
+            if(!this.index.canBlock.has(declaration.file)) {
+                if(declaration.declarationFile && calls.rules.parser.node(name).text === 'require') {
+                    return true;
+                }
+                continue;
+            }
+            if(declaration.declarationFile) {
+                return true;
+            }
+            const context = astContext(
+                calls.rules,
+                declaration.file,
+                declaration.start,
+                declaration.end,
+                declaration.kind,
+            );
+            if(
+                declaration.kind === 'FunctionDeclaration' &&
+                context.names[0] === 'blockStandardStreams' &&
+                (declaration.file.endsWith('/source/system/StandardStreams.ts') ||
+                    declaration.file.endsWith('/source/system/StandardStreams.d.ts'))
+            ) {
+                return true;
+            }
+            if(
+                ['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(
+                    declaration.kind,
+                ) &&
+                (context.bodyKinds[0] ?? '') === ''
+            ) {
+                if(declaration.kind !== 'FunctionDeclaration' || context.ambient[0] === true) {
+                    return true;
+                }
+                continue;
+            }
+            const owner = calls.forFile(declaration.file);
+            const node = owner.lookup(declaration.kind, declaration.start, declaration.end);
+            if(
+                [
+                    'FunctionDeclaration',
+                    'MethodDeclaration',
+                    'Constructor',
+                    'GetAccessor',
+                    'SetAccessor',
+                    'ClassDeclaration',
+                    'ClassExpression',
+                ].includes(declaration.kind)
+            ) {
+                if(this.runMayBlock(owner, node)) {
+                    return true;
+                }
+                continue;
+            }
+            if(declaration.kind === 'VariableDeclaration') {
+                const initializer = owner.bindings.shape.initializer(node);
+                if(initializer >= 0) {
+                    const unwrapped = owner.rules.skip(initializer);
+                    if(['FunctionExpression', 'ArrowFunction'].includes(owner.kind(unwrapped))) {
+                        if(this.runMayBlock(owner, unwrapped)) {
+                            return true;
+                        }
+                        continue;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    handsOnMayBlock(calls: ProcessCalls, index: number): boolean {
+        const node = calls.rules.skip(index);
+        const kind = calls.kind(node);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) {
+            return this.runMayBlock(calls, node);
+        }
+        if(kind !== 'Identifier') {
+            return false;
+        }
+        const declarations = resolvedDeclarations(calls.rules, node);
+        return (
+            declarations.some((declaration) => declaration.kind === 'FunctionDeclaration') &&
+            this.symbolMayBlock(calls, node)
+        );
+    }
+    callMayBlock(calls: ProcessCalls, index: number): boolean {
+        const node = calls.rules.parser.node(index);
+        const callee = calls.rules.skip(node.children[0] ?? -1);
+        if(node.kind === 'CallExpression' && calls.kind(callee) === 'ImportKeyword') {
+            return true;
+        }
+        for(const argument of this.arguments(calls, index)) {
+            if(this.handsOnMayBlock(calls, argument)) {
+                return true;
+            }
+        }
+        if(['FunctionExpression', 'ArrowFunction'].includes(calls.kind(callee))) {
+            return this.runMayBlock(calls, callee);
+        }
+        const name = calls.member(callee);
+        return name < 0 || this.symbolMayBlock(calls, name);
+    }
+    topLevelMayBlock(calls: ProcessCalls, index: number): boolean {
+        for(const child of calls.rules.parser.node(index).children) {
+            if(this.functionBody(calls, child)) {
+                continue;
+            }
+            if(
+                (this.callLike(calls, child) && this.callMayBlock(calls, child)) ||
+                this.topLevelMayBlock(calls, child)
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    importsBlockAtLoad(): boolean {
+        const queue = [this.calls.rules.path];
+        const seen = [...queue];
+        for(const queued of queue) {
+            for(const file of this.index.edges.get(queued ?? '') ?? panic('missing module edges')) {
+                if(seen.includes(file)) {
+                    continue;
+                }
+                seen.push(file);
+                queue.push(file);
+                if(!this.index.canBlock.has(file)) {
+                    continue;
+                }
+                const offset = this.index.raw.paths.indexOf(file);
+                if(offset < 0 || this.index.raw.declarations[offset] === true) {
+                    return true;
+                }
+                const owner = this.calls.forFile(file);
+                const root = owner.rules.parser.nodes.length - 1;
+                if(this.topLevelMayBlock(owner, root)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    localFunction(calls: ProcessCalls, index: number): number {
+        const node = calls.rules.skip(index);
+        const kind = calls.kind(node);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) {
+            return node;
+        }
+        if(kind !== 'Identifier') {
+            return -1;
+        }
+        // Do not follow aliases: only functions declared in this file start here.
+        for(const declaration of calls.bindings.list(node, 'binding-declarations', false)) {
+            if(calls.kind(declaration) === 'FunctionDeclaration' && calls.body(declaration) >= 0) {
+                return declaration;
+            }
+            if(calls.kind(declaration) !== 'VariableDeclaration') {
+                continue;
+            }
+            const list = calls.parent(declaration);
+            if(calls.kind(list) !== 'VariableDeclarationList' || calls.context(list).constant[0] !== true) {
+                continue;
+            }
+            const initializer = calls.bindings.shape.initializer(declaration);
+            if(initializer < 0) {
+                continue;
+            }
+            const functionNode = calls.rules.skip(initializer);
+            if(['FunctionExpression', 'ArrowFunction'].includes(calls.kind(functionNode))) {
+                return functionNode;
+            }
+        }
+        return -1;
+    }
+    /**
+     * @mutates runs Records functions this call runs before returning.
+     * @mutates handsOn Records function arguments the call can invoke later.
+     */
+    started(index: number, runs: number[], handsOn: number[]): void {
+        const node = this.calls.rules.parser.node(index);
+        if(node.kind !== 'NewExpression') {
+            const functionNode = this.localFunction(this.calls, node.children[0] ?? -1);
+            if(functionNode >= 0) {
+                if(this.calls.context(functionNode).generator[0] === true) {
+                    handsOn.push(functionNode);
+                }
+                else {
+                    runs.push(functionNode);
+                }
+            }
+        }
+        for(const argument of this.arguments(this.calls, index)) {
+            const functionNode = this.localFunction(this.calls, argument);
+            if(functionNode >= 0) {
+                handsOn.push(functionNode);
+            }
+        }
+    }
+    argumentMayBlock(index: number): boolean {
+        if(this.functionBody(this.calls, index)) {
+            return false;
+        }
+        if(
+            this.calls.kind(index) === 'AwaitExpression' ||
+            (this.callLike(this.calls, index) && this.callMayBlock(this.calls, index))
+        ) {
+            return true;
+        }
+        for(const child of this.calls.rules.parser.node(index).children) {
+            if(this.argumentMayBlock(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    argumentsMayBlock(index: number): boolean {
+        for(const argument of this.arguments(this.calls, index)) {
+            if(this.argumentMayBlock(argument)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    inRun(index: number, root: number): boolean {
+        let current = this.calls.parent(index);
+        while(current >= 0 && current !== root) {
+            if(this.functionBody(this.calls, current)) {
+                return false;
+            }
+            current = this.calls.parent(current);
+        }
+        return true;
+    }
+    /**
+     * @mutates found Accumulates qualifying exits in the caller's result list.
+     * @mutates started Accumulates roots the caller should visit next.
+     */
+    analyze(root: number, found: number[], started: number[]): void {
+        const graph = new ExecutionGraph(this.calls.bindings, root);
+        const recorded: number[] = [];
+        for(const events of graph.events) {
+            for(const index of events) {
+                if(this.calls.catchBinding(index, root)) {
+                    continue;
+                }
+                if(
+                    (this.calls.kind(index) === 'CallExpression' && this.calls.isExit(index)) ||
+                    (this.ordered &&
+                        (this.calls.kind(index) === 'AwaitExpression' ||
+                            (this.callLike(this.calls, index) && this.callMayBlock(this.calls, index))))
+                ) {
+                    recorded.push(index);
+                }
+            }
+        }
+        const outer = this.calls.rules.parser.node(root);
+        for(let index = 0; index < this.calls.rules.parser.nodes.length; index++) {
+            const node = this.calls.rules.parser.node(index);
+            if(
+                index === root ||
+                this.calls.parent(index) < 0 ||
+                node.pos < outer.pos ||
+                node.end > outer.end ||
+                recorded.includes(index)
+            ) {
+                continue;
+            }
+            if(
+                this.calls.kind(index) === 'CallExpression' &&
+                this.calls.root(index) === root &&
+                this.calls.isExit(index)
+            ) {
+                return;
+            }
+            if(
+                this.ordered &&
+                this.inRun(index, root) &&
+                (this.calls.kind(index) === 'AwaitExpression' ||
+                    (this.callLike(this.calls, index) && this.callMayBlock(this.calls, index)))
+            ) {
+                return;
+            }
+        }
+        const walk = new ProcessWriteState(this.calls, root);
+        const blocks = [0];
+        const states: string[][] = [[]];
+        const seen = new Map<string, boolean>();
+        seen.set('0:', true);
+        for(let at = 0; at < blocks.length; at++) {
+            const block = blocks[at] ?? -1;
+            let state = states[at] ?? panic('missing process state');
+            let ended = false;
+            for(const index of graph.events[block] ?? panic('missing graph events')) {
+                const node = this.calls.rules.parser.node(index);
+                if(this.callLike(this.calls, index) || node.kind === 'AwaitExpression') {
+                    if(this.calls.catchBinding(index, root)) {
+                        continue;
+                    }
+                    if(node.kind === 'AwaitExpression') {
+                        if(this.ordered) {
+                            ended = true;
+                            break;
+                        }
+                        continue;
+                    }
+                    if(node.kind === 'CallExpression' && this.calls.isExit(index)) {
+                        if(state.length > 0 && !found.includes(index)) {
+                            found.push(index);
+                        }
+                        ended = true;
+                        break;
+                    }
+                    if(node.kind === 'CallExpression' && this.calls.isWrite(index) && !this.calls.holdsExit(index)) {
+                        state = walk.with(state, walk.chain(index));
+                    }
+                    const runs: number[] = [];
+                    const handsOn: number[] = [];
+                    this.started(index, runs, handsOn);
+                    if(!this.ordered || !this.argumentsMayBlock(index)) {
+                        for(const functionNode of runs) {
+                            if(!started.includes(functionNode)) {
+                                started.push(functionNode);
+                            }
+                        }
+                    }
+                    if(!this.ordered) {
+                        for(const functionNode of handsOn) {
+                            if(!started.includes(functionNode)) {
+                                started.push(functionNode);
+                            }
+                        }
+                    }
+                    if(this.ordered && this.callMayBlock(this.calls, index)) {
+                        ended = true;
+                        break;
+                    }
+                }
+                else {
+                    if(node.kind === 'Block' && this.calls.kind(this.calls.parent(index)) === 'CatchClause') {
+                        state = walk.entering(state, this.calls.parent(this.calls.parent(index)));
+                    }
+                    if(
+                        this.ordered &&
+                        ((node.kind === 'ForOfStatement' &&
+                            node.children.some((child) => this.calls.kind(child) === 'AwaitKeyword')) ||
+                            (node.kind === 'VariableStatement' &&
+                                node.children.some(
+                                    (child) =>
+                                        this.calls.kind(child) === 'VariableDeclarationList' &&
+                                        this.calls.rules.parser.node(child).semantic === '6',
+                                )))
+                    ) {
+                        ended = true;
+                        break;
+                    }
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            for(const successor of graph.successors[block] ?? panic('missing graph edges')) {
+                const key = `${successor}:${state.join('|')}`;
+                if(graph.reachable[successor] === true && !seen.has(key)) {
+                    seen.set(key, true);
+                    blocks.push(successor);
+                    states.push(state);
+                }
+            }
+        }
+    }
+    reached(root: number): number[] {
+        const queue = [root];
+        const exits: number[] = [];
+        for(const queued of queue) {
+            const started: number[] = [];
+            this.analyze(queued, exits, started);
+            for(const functionNode of started) {
+                if(!queue.includes(functionNode)) {
+                    queue.push(functionNode);
+                }
+            }
+        }
+        return exits;
+    }
+}

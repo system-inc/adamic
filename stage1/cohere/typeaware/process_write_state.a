@@ -1,0 +1,53 @@
+import type { ProcessCalls } from './process_calls.a';
+export class ProcessWriteState {
+    readonly calls: ProcessCalls;
+    readonly root: number;
+    constructor(calls: ProcessCalls, root: number) {
+        this.calls = calls;
+        this.root = root;
+    }
+    chain(index: number): string {
+        const ids: number[] = [];
+        let previous = index;
+        let current = this.calls.parent(index);
+        while(current >= 0 && current !== this.root) {
+            const node = this.calls.rules.parser.node(current);
+            if(
+                node.kind === 'TryStatement' &&
+                node.children[0] === previous &&
+                node.children.some((child) => this.calls.kind(child) === 'CatchClause')
+            ) {
+                ids.push(current);
+            }
+            previous = current;
+            current = this.calls.parent(current);
+        }
+        ids.sort((left, right) => left - right);
+        return `,${ids.length === 0 ? '' : `${ids.join(',')},`}`;
+    }
+    holds(outer: string, inner: string): boolean {
+        for(const id of inner.split(',')) {
+            if(id !== '' && !outer.includes(`,${id},`)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    with(state: readonly string[], chain: string): string[] {
+        const next: string[] = [];
+        for(const held of state) {
+            if(this.holds(chain, held)) {
+                return [...state];
+            }
+            if(!this.holds(held, chain)) {
+                next.push(held);
+            }
+        }
+        next.push(chain);
+        next.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+        return next;
+    }
+    entering(state: readonly string[], statement: number): string[] {
+        return state.filter((held) => !held.includes(`,${statement},`));
+    }
+}

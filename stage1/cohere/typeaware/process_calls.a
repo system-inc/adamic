@@ -1,0 +1,272 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import type { AstContext } from './ast_context.a';
+import { astContext } from './ast_context.a';
+import { nodeSymbol } from './library_declarations.a';
+import { resolvedDeclarations } from './resolved_declarations.a';
+import { ResolvedCall } from './resolved_call.a';
+import { foreignRules } from './foreign_rules.a';
+export class ProcessCalls {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly contexts = new Map<number, AstContext>();
+    readonly exits = new Map<number, boolean>();
+    readonly writes = new Map<number, boolean>();
+    readonly followed = new Map<number, boolean>();
+    readonly files: Map<string, Rules>;
+    constructor(rules: Rules, files = new Map<string, Rules>()) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+        this.files = files;
+        this.files.set(rules.path, rules);
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    context(index: number): AstContext {
+        if(!this.contexts.has(index)) {
+            const node = this.rules.parser.node(index);
+            this.contexts.set(
+                index,
+                astContext(
+                    this.rules,
+                    this.rules.path,
+                    this.rules.byte(node.pos),
+                    this.rules.byte(node.end),
+                    node.kind,
+                ),
+            );
+        }
+        return this.contexts.get(index) ?? panic('missing AST context');
+    }
+    lookup(kind: string, start: number, end: number): number {
+        return this.bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('missing process AST node');
+    }
+    forFile(path: string): ProcessCalls {
+        if(!this.files.has(path)) {
+            this.files.set(path, foreignRules(this.rules.program, path));
+        }
+        return new ProcessCalls(this.files.get(path) ?? panic('missing process source'), this.files);
+    }
+
+    root(index: number): number {
+        const context = this.context(index);
+        return context.rootKind === '' ? -1 : this.lookup(context.rootKind, context.rootStart, context.rootEnd);
+    }
+    body(index: number): number {
+        const context = this.context(index);
+        const kind = context.bodyKinds[0] ?? '';
+        return kind === '' ? -1 : this.lookup(kind, context.bodyStarts[0] ?? 0, context.bodyEnds[0] ?? 0);
+    }
+    isRoot(index: number): boolean {
+        const kind = this.kind(index);
+        return (
+            this.bindings.functionKind(kind) ||
+            ['SourceFile', 'ClassStaticBlockDeclaration'].includes(kind) ||
+            (kind === 'PropertyDeclaration' && this.bindings.shape.initializer(index) >= 0)
+        );
+    }
+    member(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = node.children[node.children.length - 1] ?? -1;
+            return this.kind(name) === 'Identifier' ? name : -1;
+        }
+        return node.kind === 'Identifier' ? index : -1;
+    }
+    processMember(index: number): boolean {
+        const declarations = resolvedDeclarations(this.rules, index);
+        if(declarations.length === 0) {
+            return false;
+        }
+        for(const declaration of declarations) {
+            if(!declaration.declarationFile || !['MethodSignature', 'PropertySignature'].includes(declaration.kind)) {
+                return false;
+            }
+            const context = astContext(
+                this.rules,
+                declaration.file,
+                declaration.start,
+                declaration.end,
+                declaration.kind,
+            );
+            if(
+                context.kinds[1] !== 'InterfaceDeclaration' ||
+                context.names[1] !== 'Process' ||
+                context.kinds[2] !== 'ModuleBlock' ||
+                context.kinds[3] !== 'ModuleDeclaration' ||
+                context.names[3] !== 'NodeJS'
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+    isExit(index: number): boolean {
+        if(!this.exits.has(index)) {
+            const callee = this.rules.skip(this.rules.parser.node(index).children[0] ?? -1);
+            const name = this.member(callee);
+            this.exits.set(
+                index,
+                name >= 0 && this.rules.parser.node(name).text === 'exit' && this.processMember(name),
+            );
+        }
+        return this.exits.get(index) ?? false;
+    }
+    globalConsole(index: number): boolean {
+        const symbol = nodeSymbol(this.rules, index);
+        if(symbol.declarations.length === 0) {
+            return false;
+        }
+        for(const declaration of symbol.declarations) {
+            if(!declaration.declarationFile || declaration.kind !== 'VariableDeclaration') {
+                return false;
+            }
+            const context = astContext(
+                this.rules,
+                declaration.file,
+                declaration.start,
+                declaration.end,
+                declaration.kind,
+            );
+            if(context.kinds[1] !== 'VariableDeclarationList' || context.kinds[2] !== 'VariableStatement') {
+                return false;
+            }
+            if(context.kinds[3] === 'SourceFile') {
+                if(context.external) {
+                    return false;
+                }
+            }
+            else if(context.kinds[3] !== 'ModuleBlock' || context.global[4] !== true) {
+                return false;
+            }
+        }
+        return true;
+    }
+    isWrite(index: number): boolean {
+        if(this.writes.has(index)) {
+            return this.writes.get(index) ?? false;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(this.rules.parser.node(index).children[0] ?? -1));
+        let result = false;
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+            const key = callee.children[callee.children.length - 1] ?? -1;
+            const textual = callee.kind === 'PropertyAccessExpression' || this.kind(key) === 'StringLiteral';
+            const member = textual ? this.rules.parser.node(key).text : '';
+            const receiver = this.rules.skip(callee.children[0] ?? -1);
+            if(
+                ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(member) &&
+                this.kind(receiver) === 'Identifier' &&
+                this.rules.parser.node(receiver).text === 'console'
+            ) {
+                result = this.globalConsole(receiver);
+            }
+            else if(member === 'write') {
+                const stream = this.member(receiver);
+                result =
+                    stream >= 0 &&
+                    ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) &&
+                    this.processMember(stream);
+            }
+        }
+        this.writes.set(index, result);
+        return result;
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.rules.parser.node(index).children) {
+            if(this.isRoot(child)) {
+                continue;
+            }
+            if((this.kind(child) === 'CallExpression' && this.isExit(child)) || this.holdsExit(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        let previous = index;
+        let current = this.parent(index);
+        while(current >= 0 && current !== root) {
+            if(this.kind(current) === 'CatchClause' && this.kind(previous) === 'VariableDeclaration') {
+                return true;
+            }
+            previous = current;
+            current = this.parent(current);
+        }
+        return false;
+    }
+    awaited(index: number): boolean {
+        let parent = this.parent(index);
+        while(this.kind(parent) === 'ParenthesizedExpression') {
+            parent = this.parent(parent);
+        }
+        return this.kind(parent) === 'AwaitExpression';
+    }
+    /** @mutates result Records this root's direct calls in the caller's output list. */
+    ownCalls(index: number, result: number[]): void {
+        if(this.isRoot(index)) {
+            return;
+        }
+        if(this.kind(index) === 'CallExpression') {
+            result.push(index);
+        }
+        for(const child of this.rules.parser.node(index).children) {
+            this.ownCalls(child, result);
+        }
+    }
+    bodyWrites(index: number): boolean {
+        const body = this.body(index);
+        const calls: number[] = [];
+        if(this.kind(body) === 'Block') {
+            for(const child of this.rules.parser.node(body).children) {
+                this.ownCalls(child, calls);
+            }
+        }
+        else if(body >= 0) {
+            this.ownCalls(body, calls);
+        }
+        let wrote = false;
+        for(const call of calls) {
+            if(this.isExit(call)) {
+                return false;
+            }
+            if(this.isWrite(call)) {
+                wrote = true;
+            }
+        }
+        return wrote;
+    }
+    writesThrough(index: number): boolean {
+        if(this.isWrite(index)) {
+            return true;
+        }
+        const signature = new ResolvedCall(this.rules, index);
+        if(
+            !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(
+                signature.kind,
+            ) ||
+            (signature.returnFlags & 131072) !== 0
+        ) {
+            return false;
+        }
+        const context = astContext(this.rules, signature.file, signature.start, signature.end, signature.kind);
+        if(
+            (context.bodyKinds[0] ?? '') === '' ||
+            (signature.file !== this.rules.path && !context.external) ||
+            context.generator[0] === true ||
+            (context.async[0] === true && !this.awaited(index))
+        ) {
+            return false;
+        }
+        const owner = this.forFile(signature.file);
+        const declaration = owner.lookup(signature.kind, signature.start, signature.end);
+        if(!owner.followed.has(declaration)) {
+            owner.followed.set(declaration, owner.bodyWrites(declaration));
+        }
+        return owner.followed.get(declaration) ?? false;
+    }
+}

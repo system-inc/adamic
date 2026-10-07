@@ -1,0 +1,39 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ProgramModules {
+    readonly paths: string[] = [];
+    readonly texts: string[] = [];
+    readonly declarations: boolean[] = [];
+    readonly externals: boolean[] = [];
+    readonly referenceKinds: string[][] = [];
+    readonly typeOnly: boolean[][] = [];
+    readonly literals: boolean[][] = [];
+    readonly targets: string[][] = [];
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'program-modules'));
+        header(frames, 'program-modules');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.paths.push(frames.field());
+            this.declarations.push(frames.yes());
+            this.externals.push(frames.yes());
+            this.texts.push(frames.field());
+            const kinds: string[] = [];
+            const only: boolean[] = [];
+            const literals: boolean[] = [];
+            const targets: string[] = [];
+            const length = frames.natural();
+            for(let reference = 0; reference < length; reference++) {
+                kinds.push(frames.field());
+                only.push(frames.yes());
+                literals.push(frames.yes());
+                targets.push(frames.field());
+            }
+            this.referenceKinds.push(kinds);
+            this.typeOnly.push(only);
+            this.literals.push(literals);
+            this.targets.push(targets);
+        }
+        frames.end();
+    }
+}

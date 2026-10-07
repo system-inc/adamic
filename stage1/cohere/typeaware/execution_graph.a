@@ -1,0 +1,43 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+export class ExecutionGraph {
+    readonly reachable: boolean[] = [];
+    readonly events: number[][] = [];
+    readonly hooks: string[][] = [];
+    readonly successors: number[][] = [];
+    constructor(bindings: Bindings, root: number) {
+        const frames = new Frames(bindings.rules.ask(root, 'execution-graph'));
+        header(frames, 'execution-graph');
+        const length = frames.natural();
+        for(let block = 0; block < length; block++) {
+            this.reachable.push(frames.yes());
+            const events: number[] = [];
+            const hooks: string[] = [];
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                hooks.push(frames.field());
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                events.push(
+                    bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('execution event absent from native AST'),
+                );
+            }
+            this.events.push(events);
+            this.hooks.push(hooks);
+            this.successors.push(frames.ids());
+        }
+        frames.end();
+        if(length === 0) {
+            panic('empty execution graph');
+        }
+        for(const targets of this.successors) {
+            for(const target of targets) {
+                if(target >= length) {
+                    panic('invalid execution graph edge');
+                }
+            }
+        }
+    }
+}

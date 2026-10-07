@@ -1,0 +1,43 @@
+import type { Rules } from './rules.ts';
+import { DeclarationFact } from './caller.ts';
+import { nodeSymbol } from './library_declarations.a';
+import { Frames, header } from './frames.ts';
+import { astContext } from './ast_context.a';
+export function resolvedDeclarations(rules: Rules, index: number): DeclarationFact[] {
+    const symbol = nodeSymbol(rules, index);
+    if((symbol.flags & 2097152) === 0) {
+        return [...symbol.declarations];
+    }
+    const frames = new Frames(rules.ask(index, 'alias-declarations'));
+    header(frames, 'alias-declarations');
+    const declarations: DeclarationFact[] = [];
+    if(frames.yes()) {
+        frames.natural();
+        const length = frames.natural();
+        for(let at = 0; at < length; at++) {
+            const file = frames.field();
+            const kind = frames.field();
+            const start = frames.natural();
+            const end = frames.natural();
+            const context = astContext(rules, file, start, end, kind);
+            declarations.push(
+                new DeclarationFact(
+                    file,
+                    kind,
+                    start,
+                    end,
+                    context.declarationFile,
+                    context.library,
+                    context.kinds[1] ?? '',
+                    context.names[1] ?? '',
+                    context.starts[1] ?? 0,
+                    context.ends[1] ?? 0,
+                    [],
+                    [],
+                ),
+            );
+        }
+    }
+    frames.end();
+    return declarations;
+}

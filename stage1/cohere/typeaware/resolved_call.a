@@ -1,0 +1,25 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ResolvedCall {
+    file = '';
+    kind = '';
+    start = 0;
+    end = 0;
+    returnFlags = 0;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'resolved-call'));
+        header(frames, 'resolved-call');
+        if(frames.yes()) {
+            if(frames.yes()) {
+                this.file = frames.field();
+                this.kind = frames.field();
+                this.start = frames.natural();
+                this.end = frames.natural();
+            }
+            if(frames.yes()) {
+                this.returnFlags = frames.natural();
+            }
+        }
+        frames.end();
+    }
+}

@@ -1,0 +1,128 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { ProcessCalls } from './process_calls.a';
+import { ProcessWriteState } from './process_write_state.a';
+import { ExecutionGraph } from './execution_graph.a';
+import { Diagnostic } from './diagnostic.ts';
+const exitMessage =
+    'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.';
+export class NoProcessExitAfterOutput {
+    readonly calls: ProcessCalls;
+    constructor(rules: Rules) {
+        this.calls = new ProcessCalls(rules);
+    }
+    analyze(root: number, exits: readonly number[]): void {
+        const graph = new ExecutionGraph(this.calls.bindings, root);
+        const recorded: number[] = [];
+        for(const events of graph.events) {
+            for(const index of events) {
+                if(
+                    this.calls.kind(index) === 'CallExpression' &&
+                    !this.calls.catchBinding(index, root) &&
+                    this.calls.isExit(index)
+                ) {
+                    recorded.push(index);
+                }
+            }
+        }
+        if(exits.some((exit) => !recorded.includes(exit))) {
+            return;
+        }
+        const walk = new ProcessWriteState(this.calls, root);
+        const reported: number[] = [];
+        const blocks = [0];
+        const states: string[][] = [[]];
+        const seen = new Map<string, boolean>();
+        seen.set('0:', true);
+        for(let at = 0; at < blocks.length; at++) {
+            const block = blocks[at] ?? -1;
+            let state = states[at] ?? panic('missing process state');
+            let ended = false;
+            for(const index of graph.events[block] ?? panic('missing graph events')) {
+                const node = this.calls.rules.parser.node(index);
+                if(node.kind === 'CallExpression' && !this.calls.catchBinding(index, root)) {
+                    if(this.calls.isExit(index)) {
+                        if(state.length > 0 && !reported.includes(index)) {
+                            reported.push(index);
+                        }
+                        ended = true;
+                        break;
+                    }
+                    if(this.calls.writesThrough(index) && !this.calls.holdsExit(index)) {
+                        state = walk.with(state, walk.chain(index));
+                    }
+                }
+                else if(node.kind === 'Block' && this.calls.kind(this.calls.parent(index)) === 'CatchClause') {
+                    state = walk.entering(state, this.calls.parent(this.calls.parent(index)));
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            for(const successor of graph.successors[block] ?? panic('missing graph edges')) {
+                const key = `${successor}:${state.join('|')}`;
+                if(graph.reachable[successor] === true && !seen.has(key)) {
+                    seen.set(key, true);
+                    blocks.push(successor);
+                    states.push(state);
+                }
+            }
+        }
+        for(const index of exits) {
+            if(!reported.includes(index)) {
+                continue;
+            }
+            const node = this.calls.rules.parser.node(index);
+            this.calls.rules.findings.push(
+                new Diagnostic(
+                    'nexus/correctness-no-process-exit-after-output',
+                    'exitAfterOutput',
+                    exitMessage,
+                    this.calls.rules.byte(this.calls.rules.start(node)),
+                    this.calls.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+    run(): void {
+        const roots: number[] = [];
+        const byRoot = new Map<number, number[]>();
+        for(let index = 0; index < this.calls.rules.parser.nodes.length; index++) {
+            if(
+                this.calls.parent(index) < 0 ||
+                this.calls.kind(index) !== 'CallExpression' ||
+                !this.calls.isExit(index)
+            ) {
+                continue;
+            }
+            const root = this.calls.root(index);
+            if(root < 0) {
+                continue;
+            }
+            if(!byRoot.has(root)) {
+                byRoot.set(root, []);
+                roots.push(root);
+            }
+            const exits = byRoot.get(root) ?? panic('missing exit root');
+            exits.push(index);
+        }
+        for(const root of roots) {
+            let wrote = false;
+            for(let index = 0; index < this.calls.rules.parser.nodes.length; index++) {
+                if(
+                    this.calls.parent(index) >= 0 &&
+                    this.calls.kind(index) === 'CallExpression' &&
+                    this.calls.root(index) === root &&
+                    this.calls.writesThrough(index)
+                ) {
+                    wrote = true;
+                    break;
+                }
+            }
+            if(wrote) {
+                this.analyze(root, byRoot.get(root) ?? panic('missing exit root'));
+            }
+        }
+    }
+}
