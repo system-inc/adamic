@@ -173,7 +173,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
 		e.line("if (!%s.present) {", value)
-		e.line("\tstatic const char message[] = %s;", cString(narrowedAwayMessage))
+		e.line("\tstatic const char message[] = %s;", cArray(narrowedAwayMessage))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
@@ -349,7 +349,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			tests = append(tests, e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)))
 		}
 		e.line("if (!(%s)) {", strings.Join(tests, " || "))
-		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+		e.line("\tstatic const char message[] = %s;", cArray(expression.Message))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		return object

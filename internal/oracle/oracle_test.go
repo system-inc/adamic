@@ -481,6 +481,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// A field name longer than a C string literal may be (integration's reading of 4ddd17f).
+	{"internal/oracle/testdata/long_field_name.a", true, false},
 	// A method called on a spread's source inside the literal runs code with the source as this
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
