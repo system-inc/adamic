@@ -1,0 +1,5 @@
+=== RUN   TestProfileArtifacts
+    profile_test.go:59: release, counted and -O2 -g profiling builds saved in /tmp/slot02-profile-b4691483
+--- PASS: TestProfileArtifacts (36.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	36.213s
