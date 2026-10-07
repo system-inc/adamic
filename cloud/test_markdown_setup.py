@@ -44,7 +44,10 @@ class InstallationKey(unittest.TestCase):
             permissions = helper.tree_digest(root)
             self.assertNotEqual(changed, permissions)
             file.rename(root / 'other.js')
-            self.assertNotEqual(permissions, helper.tree_digest(root))
+            renamed = helper.tree_digest(root)
+            self.assertNotEqual(permissions, renamed)
+            root.chmod(0o755 if root.stat().st_mode & 0o777 != 0o755 else 0o700)
+            self.assertNotEqual(renamed, helper.tree_digest(root))
 
     def test_unexpected_symlink_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
