@@ -1,5 +1,15 @@
 # Scanner blockers
 
+## October 7: adaptation 82 forwards generic scanner callbacks
+
+Three Scanner object properties have explicit generic forwarding arrows.
+Public interface and original helpers unchanged. Merely spelling the interface
+methods as properties still refused; wrappers close it. Census reason
+method-signature-style; generic function widening pending. Next exact refusal:
+scanner:949:48, EscapeSequenceScanningFlags.String combined with an unproven
+numeric zero branch (enum-flags). Combined suite passes 106,367 tests with zero
+differences; Node tokens match. Evidence native82-next-blocker.log.
+
 ## October 7: adaptation 81 preserves the JSX default while widening its type
 
 reScanJsxToken parameter is boolean | undefined = true. Omitted/undefined
