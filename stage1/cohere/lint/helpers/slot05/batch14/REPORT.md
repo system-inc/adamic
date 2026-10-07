@@ -37,3 +37,5 @@ The first private-driver run refused a function declaration inside its case loop
 All test output goes directly to logs. Setup succeeded: Go/clang/Node/submodules ready 0s; build cache warm 35s; done 35s on five processors (cpu.max 400000 100000), 17.6 GB. Go 1.27.1, clang 20.1.8, Node 24.19.0. Repository-wide vet, type loading and uncached six-fixture input oracle are rerun after rebase and archived with landing evidence. Full repository test gate is not run.
 
 No new rule, rule dispatch, finding serialization, shared registration, shared harness or protected compiler file was changed. Exact regex instructions remain respected: this helper does no pattern matching; it compares identifier labels with array includes.
+
+Current-main landing gate completed: all thirteen actual earlier-helper packages PASS and all 110 prior variants caught. The command had one extra no-Go-files slot root argument and exited 1; no actual test failed. Corrected package pattern plus explicit-refusal check exited 0. Rebased vet/types and filtered oracle PASS 1.380s. See ../LANDING_REPORT_4.md for all commands, timings and the exact argument error.
