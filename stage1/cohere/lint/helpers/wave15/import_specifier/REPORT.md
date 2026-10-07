@@ -1,0 +1,11 @@
+Built imports.SpecifierNode as one .a helper using supplied numeric Go kind facts and stable node handles.
+Claim aa10be586 was pushed before implementation; both prior branches were current-main and owned-oracle green.
+Go, source Node, emitted JavaScript and ASan/UBSan native match 82 observations / 265 bytes; all three consumer test families pass.
+A compiling call-argument omission mutant is caught only by output comparison on every Adamic execution path, with normal exits and empty stderr.
+Supplies three dependency edges to Nexus boundary rules; zero whole-rule readiness asserted, full gate and external checks not run.
+
+Consumers: nexus/boundary-no-internal-import (6 real calls), nexus/boundary-no-nexus-outside-import (9) and nexus/boundary-no-project-import (5). The oracle overlay wraps the real Go SpecifierNode while preserving its return value, and every original consumer test runs against that wrapper. Controls cover nil nodes, non-import nodes, nil/missing specifiers, nil/empty argument lists, a nil first argument, computed arguments, first-versus-second choice, self aliases and relocated handles (97, 214, 273 and 65535). Exact calls not reached by valid rule cases are not invented. Additional controls supply 62 observations.
+
+API: specifierNode(index, kind, moduleSpecifier, hasFirstArgument, firstArgument) returns a stable handle. -1 represents nil. Facts must describe a valid parser node and its actual direct links; the helper does not parse, refetch nodes or convert offsets. Numeric constants 273 (Go ImportDeclaration) and 214 (Go CallExpression) are checked against real Go on every regeneration. hasFirstArgument distinguishes a missing argument from a present nil entry. The result preserves pointer identity, including self aliases, so the caller can use its original node for finding ranges. No rule port or shared harness integration is claimed.
+
+Command: source /workspace/adamic-tools/env.sh; python3 stage1/cohere/lint/helpers/wave15/import_specifier/validate.py > /tmp/wave15-specifier-validation.log 2>&1. Exit 0. Raw helper observations, coverage, upstream test logs, all four outputs and SHA256 hashes are in evidence/. The first compile experiment found the owned main used number-valued console.log despite the prelude's string signature; it was corrected to a template string. No shared files were changed.

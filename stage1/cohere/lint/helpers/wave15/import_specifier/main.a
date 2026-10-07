@@ -1,0 +1,14 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { specifierNode } from './specifier_node.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const index = Number(fields[0] ?? '-1');
+    const kind = Number(fields[1] ?? '0');
+    const moduleSpecifier = Number(fields[2] ?? '-1');
+    const hasFirstArgument = fields[3] === '1';
+    const firstArgument = Number(fields[4] ?? '-1');
+    console.log(`${specifierNode(index, kind, moduleSpecifier, hasFirstArgument, firstArgument)}`);
+}

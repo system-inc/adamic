@@ -1,0 +1,12 @@
+// Stable node handles preserve Go pointer identity. The caller supplies the links
+// of the node it already holds; this helper never fetches or scans a node table.
+// -1 represents nil. Kind constants are checked against the actual Go oracle.
+const importDeclarationKind = 273;
+const callExpressionKind = 214;
+export function specifierNode(index: number, kind: number, moduleSpecifier: number, hasFirstArgument: boolean, firstArgument: number): number {
+    if(index < 0) { return -1; }
+    if(kind === importDeclarationKind && moduleSpecifier >= 0) { return moduleSpecifier; }
+    // A present argument list may contain a nil first entry; Go returns nil then.
+    if(kind === callExpressionKind && hasFirstArgument) { return firstArgument; }
+    return index;
+}
