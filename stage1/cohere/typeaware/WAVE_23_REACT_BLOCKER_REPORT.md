@@ -95,3 +95,35 @@ configuration, exits, selection snapshot and logs. The new native source is .a;
 .tsx names identify TypeScript input controls stored as data, not Adamic ports.
 No shared parser, registration generator, test harness or protected compiler file
 changed. No PR was opened.
+
+## Fresh origin recheck
+
+Fetched all origin heads again: 419 refs, four distinct parser.ts blobs. The
+published branch codex/stage1-jsx-lint now supplies JSX grammar at implementation
+commit e715ef4a2f898230af63c40195dea6586a557899, with evidence tip
+ a8a62d62ca49db7415e14c3887dd305022b17309. This supersedes any interpretation
+that no JSX implementation exists anywhere. It has not landed on this branch,
+origin/main (e011f8f60899586d6373a5ccb07335ad82cfbf3c), the bridge tip
+(eb6df00e91b07c9fc81b2ec396a6f118be55d172), or the shared harness tip
+(f4d98cab50048692781da3599131317dc569d466). Only the JSX worker's parser blob
+contains JSX productions among the fetched origin parser.ts versions.
+
+Its implementation changes shared parser.ts, lookahead.ts and scanner.ts,
+adds jsx.ts and shared parser/lint tests, and includes a separate lint batch.
+Those shared files are outside this unit's allowed territory. No merge,
+cherry-pick or local copy of those shared changes was performed. Integration of
+that published frontend dependency is the current concrete blocker, rather than
+absence of published JSX work. The React rules still also need their native
+lowering and decision implementations; JSX integration alone does not complete
+those ports.
+
+Replayed the existing native probe and independent Go oracle. The ordinary
+control still exits 0; component/effect/render JSX controls still exit 70 at
+bytes 53/101/83 respectively. Go exits 0 and emits the same 1,909-byte stream
+with three findings. This replay uses the existing compiled native probe;
+it does not test the published JSX branch or claim its validation as ours.
+nproc remains 5. No new rule mutants, sanitizer gate, released-handle checks,
+native/Go performance comparison or full repository gate were run. No new rules
+were claimed. Previous work was verified pushed at e3ad77a8 before this recheck.
+Fresh ref snapshots and exact replay observations are in
+[recheck.json](validation-wave23-react-blocker/recheck.json).

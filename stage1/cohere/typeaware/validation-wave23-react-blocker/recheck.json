@@ -1,0 +1,35 @@
+{
+  "control.a": {
+    "exit": 0,
+    "stdout": "parsed SourceFile\n",
+    "stderr": ""
+  },
+  "component.tsx": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 53 in /workspace/wave-23/react-blocker/component.tsx\n"
+  },
+  "effect.tsx": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 101 in /workspace/wave-23/react-blocker/effect.tsx\n"
+  },
+  "render.tsx": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 83 in /workspace/wave-23/react-blocker/render.tsx\n"
+  },
+  "go": {
+    "exit": 0,
+    "bytes": 1909,
+    "stderr": "cohere: load_ns=14694385 rule_ns=761339 run_ns=1244216\n"
+  },
+  "refs": {
+    "HEAD": "e3ad77a82b384fa6d5635f1159ef0847ad17816b",
+    "origin/main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "origin/codex/tsgo-c-library": "eb6df00e91b07c9fc81b2ec396a6f118be55d172",
+    "origin/codex/lint-harness-dot-a": "f4d98cab50048692781da3599131317dc569d466",
+    "origin/codex/stage1-jsx-lint": "a8a62d62ca49db7415e14c3887dd305022b17309"
+  },
+  "nproc": "5"
+}
