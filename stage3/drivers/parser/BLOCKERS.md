@@ -1,3 +1,49 @@
+# Detached own-property and Debug namespace probes: both runtime comparisons green
+
+Merged records-lowering 198ff780 and namespaces-tsc f893faf2 into unpushed
+scratch 42b2ee13, yielding e54b4179. Compiler rebuild succeeds after scratch
+merge resolution; all compiler edits remain unpushed. Both probe sources are
+unchanged, with no temporary adaptation or proof bypass.
+
+native-has-own-property.a compiles and prints `true\nfalse\n` natively and on
+Node. native-debug-namespace.a compiles and prints `false\n` in both. Both exit
+0, with empty stderr; stdout and stderr comparisons each exit 0. A one-byte
+change to each actual native output is caught by cmp exit 1. Probe binaries
+are 436,672 and 436,328 bytes respectively. Commands, outputs and actual mutants
+are in evidence/front16/probes/, with run-probes.py for reproduction.
+
+## Integration tests reported separately
+
+The broader focused lower command exits 1 in 1.177s, with three expectation
+failures. IncrementalParser in TestTscNamespaceDeclarationShapes returns nil
+instead of the expected NotYet function without a body. The computed_enum and
+early_enum cases in TestNamespaceLimitsStayLoud get namespace initialization
+NotYet rather than the expected enum diagnostic. These observations do not
+establish why declaration admission changed; no expectation or compiler proof
+was weakened to turn the tests green. Full output is retained in tests.log.gz.
+
+The selected detached-own, namespace type erasure, receiver-refusal,
+returned-assignment and parser-factory hoisting tests pass in 0.713s. The full
+gate, counts gate, sanitizers and complete oracle were not run.
+
+Merge conflicts touch lowering, namespace state/module registration, enum
+handling and native/JavaScript readiness emission. Existing checked-view cast
+preflight, import-cycle checks, open numeric/flag enums, lazy non-null defaults,
+records and Node bindings were retained while integrating namespace dispatch.
+The localRead helper carries the existing checked union read and its possible
+NotYet error through all namespace callers. The initial helper-signature compile
+failure and its correction are recorded. Exact ancestry/resolutions and the
+scratch-only merge patch are in evidence/front16/report.json and
+scratch-merge.patch.gz; no compiler changes are on the proof branch.
+
+The full parser rerun remains held as requested. core.ts:204:12 remains the
+last observed first real slice stop, with no new slice check claimed. The prior
+full eleven-probe run was 6/11; rows 7 and 11 are now separately green, but a
+fresh 8/11 run was not performed. Both native parser references, JSDoc and error
+recovery remain unverified. No fresh C/clang/timing metric is claimed.
+
+---
+
 # Deferred cast preflight rerun: six probes green, slice red at sameMap return
 
 Merged views-arrays-callables-parser 4ed5e301 into the unpushed scratch, producing
