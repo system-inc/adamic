@@ -1,0 +1,154 @@
+{
+  "roots": 78,
+  "codes": [
+    2345,
+    18048,
+    2532,
+    2322,
+    2538
+  ],
+  "counts": {
+    "parser.ts": {
+      "TS2345": 3,
+      "TS18048": 10,
+      "TS2532": 5,
+      "TS2322": 5,
+      "TS2538": 0
+    },
+    "scanner.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 8,
+      "TS2322": 1,
+      "TS2538": 0
+    },
+    "factory/baseNodeFactory.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/emitHelpers.ts": {
+      "TS2345": 5,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/emitNode.ts": {
+      "TS2345": 1,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 2,
+      "TS2538": 0
+    },
+    "factory/nodeChildren.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeConverters.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeFactory.ts": {
+      "TS2345": 4,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeTests.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/parenthesizerRules.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/utilities.ts": {
+      "TS2345": 8,
+      "TS18048": 0,
+      "TS2532": 3,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/utilitiesPublic.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    }
+  },
+  "total": 55,
+  "diagnostics": [
+    "src/compiler/factory/emitHelpers.ts:466:78: error TS2345: Argument of type 'BindingOrAssignmentElement | undefined' is not assignable to parameter of type 'BindingOrAssignmentElement'.\n  Type 'undefined' is not assignable to type 'BindingOrAssignmentElement'.",
+    "src/compiler/factory/emitHelpers.ts:475:53: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'.",
+    "src/compiler/factory/emitHelpers.ts:477:29: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'.",
+    "src/compiler/factory/emitHelpers.ts:479:47: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'.",
+    "src/compiler/factory/emitHelpers.ts:721:34: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/factory/emitNode.ts:298:23: error TS2345: Argument of type 'EmitHelper | undefined' is not assignable to parameter of type 'EmitHelper'.\n  Type 'undefined' is not assignable to type 'EmitHelper'.",
+    "src/compiler/factory/emitNode.ts:300:13: error TS2322: Type '(EmitHelper | undefined)[]' is not assignable to type 'EmitHelper[]'.\n  Type 'EmitHelper | undefined' is not assignable to type 'EmitHelper'.\n    Type 'undefined' is not assignable to type 'EmitHelper'.",
+    "src/compiler/factory/emitNode.ts:303:13: error TS2322: Type 'EmitHelper | undefined' is not assignable to type 'EmitHelper'.\n  Type 'undefined' is not assignable to type 'EmitHelper'.",
+    "src/compiler/factory/nodeFactory.ts:6898:37: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/factory/nodeFactory.ts:6928:30: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/factory/nodeFactory.ts:6928:78: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'.",
+    "src/compiler/factory/nodeFactory.ts:6966:41: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+    "src/compiler/factory/utilities.ts:1283:54: error TS2345: Argument of type 'BinaryExpression | undefined' is not assignable to parameter of type 'BinaryExpression'.\n  Type 'undefined' is not assignable to type 'BinaryExpression'.",
+    "src/compiler/factory/utilities.ts:1298:41: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/factory/utilities.ts:1298:69: error TS2345: Argument of type 'TState | undefined' is not assignable to parameter of type 'TState'.\n  'TState' could be instantiated with an arbitrary type which could be unrelated to 'TState | undefined'.",
+    "src/compiler/factory/utilities.ts:1316:28: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/factory/utilities.ts:1316:65: error TS2345: Argument of type 'TState | undefined' is not assignable to parameter of type 'TState'.\n  'TState' could be instantiated with an arbitrary type which could be unrelated to 'TState | undefined'.",
+    "src/compiler/factory/utilities.ts:1330:42: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/factory/utilities.ts:1330:71: error TS2345: Argument of type 'TState | undefined' is not assignable to parameter of type 'TState'.\n  'TState' could be instantiated with an arbitrary type which could be unrelated to 'TState | undefined'.",
+    "src/compiler/factory/utilities.ts:1347:39: error TS2345: Argument of type 'BinaryExpression | undefined' is not assignable to parameter of type 'BinaryExpression'.\n  Type 'undefined' is not assignable to type 'BinaryExpression'.",
+    "src/compiler/factory/utilities.ts:1352:64: error TS2345: Argument of type 'TState | undefined' is not assignable to parameter of type 'TState'.\n  'TState' could be instantiated with an arbitrary type which could be unrelated to 'TState | undefined'.",
+    "src/compiler/factory/utilities.ts:265:32: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'.",
+    "src/compiler/factory/utilities.ts:292:32: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'.",
+    "src/compiler/parser.ts:10458:13: error TS2322: Type '(position: number) => Node | undefined' is not assignable to type '(position: number) => Node'.\n  Type 'Node | undefined' is not assignable to type 'Node'.\n    Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/parser.ts:10656:17: error TS2322: Type '{ name: string | undefined; path: string; }[]' is not assignable to type 'AmdDependency[]'.\n  Type '{ name: string | undefined; path: string; }' is not assignable to type 'AmdDependency' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'name' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/parser.ts:10717:22: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/parser.ts:10733:74: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/parser.ts:10735:29: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/parser.ts:10737:45: error TS18048: 'value' is possibly 'undefined'.",
+    "src/compiler/parser.ts:10741:25: error TS2322: Type 'string | undefined' is not assignable to type 'string | { value: string; pos: number; end: number; }'.\n  Type 'undefined' is not assignable to type 'string | { value: string; pos: number; end: number; }'.",
+    "src/compiler/parser.ts:10769:18: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/parser.ts:10788:26: error TS18048: 'argument' is possibly 'undefined'.",
+    "src/compiler/parser.ts:10791:13: error TS18048: 'argument' is possibly 'undefined'.",
+    "src/compiler/parser.ts:10794:16: error TS18048: 'argument' is possibly 'undefined'.",
+    "src/compiler/parser.ts:10794:9: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/parser.ts:1290:28: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node | NodeArray<Node>'.\n  Type 'undefined' is not assignable to type 'Node | NodeArray<Node>'.",
+    "src/compiler/parser.ts:1882:104: error TS18048: 'prevStatement' is possibly 'undefined'.",
+    "src/compiler/parser.ts:1883:125: error TS18048: 'nextStatement' is possibly 'undefined'.",
+    "src/compiler/parser.ts:1892:41: error TS18048: 'nextStatement' is possibly 'undefined'.",
+    "src/compiler/parser.ts:1905:47: error TS18048: 'nonAwaitStatement' is possibly 'undefined'.",
+    "src/compiler/parser.ts:1909:45: error TS18048: 'nonAwaitStatement' is possibly 'undefined'.",
+    "src/compiler/parser.ts:1929:104: error TS18048: 'prevStatement' is possibly 'undefined'.",
+    "src/compiler/parser.ts:1945:51: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/parser.ts:1954:52: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/parser.ts:9032:37: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/parser.ts:9036:47: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:360:16: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:373:13: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:373:41: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:377:20: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:486:17: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:491:22: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:491:45: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.",
+    "src/compiler/scanner.ts:494:28: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:512:31: error TS2532: Object is possibly 'undefined'."
+  ]
+}

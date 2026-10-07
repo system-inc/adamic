@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Retain the five requested codes, on exactly the three owned compiler files."""
+"""Retain the five requested codes in the explicitly selected adaptation wave."""
 import json
 from pathlib import Path
 import re
@@ -8,10 +8,19 @@ import sys
 source = json.loads(Path(sys.argv[1]).read_text())
 codes = [2345, 18048, 2532, 2322, 2538]
 files = ["core.ts", "utilities.ts", "utilitiesPublic.ts"]
+if len(sys.argv) > 3 and sys.argv[3] not in ("", "--wave2"):
+    raise SystemExit("usage: census.py <raw-diagnostics> <output> [--wave2]")
+wave2 = len(sys.argv) > 3 and sys.argv[3] == "--wave2"
+if wave2:
+    files = ["parser.ts", "scanner.ts"] + ["factory/" + name + ".ts" for name in [
+        "baseNodeFactory", "emitHelpers", "emitNode", "nodeChildren", "nodeConverters",
+        "nodeFactory", "nodeTests", "parenthesizerRules", "utilities", "utilitiesPublic",
+    ]]
+pattern = "|".join(re.escape(file) for file in files)
 counts = {file: {f"TS{code}": 0 for code in codes} for file in files}
 diagnostics = []
 for text in source["diagnostics"]:
-    match = re.match(r".*/src/compiler/(core.ts|utilities.ts|utilitiesPublic.ts):(\d+):(\d+): error TS(\d+):", text)
+    match = re.match(r".*/src/compiler/(" + pattern + r"):(\d+):(\d+): error TS(\d+):", text)
     if match and int(match[4]) in codes:
         counts[match[1]][f"TS{match[4]}"] += 1
         diagnostics.append("src/compiler/" + text[match.start(1):])

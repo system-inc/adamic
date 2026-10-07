@@ -17,4 +17,4 @@ PY
 cd "$repo"
 ADAMIC_INDEXED_ROOT="$tree/src/compiler" ADAMIC_INDEXED_OUT="$out/all-diagnostics.json" \
     go test -overlay="$out/overlay.json" ./cmd/adamic-meter -run '^TestIndexedReadsCensus$' -count=1 -v > "$out/export.log" 2>&1
-python3 "$unit/census.py" "$out/all-diagnostics.json" "$out/census.json" > "$out/counts.log" 2>&1
+python3 "$unit/census.py" "$out/all-diagnostics.json" "$out/census.json" "${3:-}" > "$out/counts.log" 2>&1

@@ -1,6 +1,10 @@
-# Required indexed reads, first partition
+# Required indexed reads, core and parser/scanner/factory partitions
 
-This adapter changes only `src/compiler/core.ts`, `utilities.ts`, and
+The adapter covers the three core/utilities files plus parser.ts, scanner.ts,
+and all ten factory files. The cumulative ledger has 190 required-read
+assertions, four U-zero operands, and 79 declines; per-wave evidence follows.
+
+The first wave changed `src/compiler/core.ts`, `utilities.ts`, and
 `utilitiesPublic.ts` in TypeScript 6.0.3, pinned at
 `050880ce59e30b356b686bd3144efe24f875ebc8`. It adds **144 `!` checks** and
 **four numeric U-zero expressions**, and records **43 declined sites** below.
@@ -21,9 +25,28 @@ U-position, U-table, U-grid, U-regex, U-zero, and U-typed. Selection was reviewe
 against parsed reads and the actual five-code census. `sites.json` records each
 expression and occurrence; line/column numbers document the pinned source and
 are never edit addresses. The adapter parses current text with stock 6.0.3,
-validates occurrence counts, plans all three files before writing, and fails
+validates occurrence counts, plans every scoped file before writing, and fails
 on unexpected site shapes. Later partitions must revise their own reviewed
 ledger rather than blanket-asserting every indexed expression.
+
+## Rules learned from the first wave
+
+- Keep all five requested diagnostic codes in the census, including unrelated
+  overload errors. A lower count is not a claim that the file now passes the
+  checker; give each residual finding its actual cause.
+- Trace an indexed value through its local variable before asserting it. The
+  decoder's `nextCode: number` annotation looked required, but exhaustion was
+  deliberately handled by the following bitwise continuation test. An explicit
+  number annotation alone does not establish a presence obligation.
+- Treat emitted JavaScript as a separate proof. Required `!` additions must
+  erase byte for byte; allow only the individually reviewed U-zero operands in
+  the comparison. A populated-input oracle can miss an illegal `?? 0` default.
+- Record a repeated read separately even after a nearby absence guard. The
+  addRange decline intentionally leaves a diagnostic because eliminating it
+  would obscure its legitimate absence handling or change an observable read.
+- Pin expression occurrence counts, not historical source offsets. Type-import
+  adaptation changes columns; parse the current text, validate all files before
+  writing, and reject site drift rather than guessing a replacement location.
 
 ## Tree and scope
 
@@ -39,7 +62,7 @@ Toolchain setup passed: Go 0s, clang 0s, Node 0s, submodules 1s, build cache 127
 total 127s. `nproc` was 5, CPU quota 4. Environment:
 `source /workspace/adamic-tools/env.sh`; Node 24.19.0, Go 1.27.1, clang 20.1.8.
 
-## Census
+## First-wave census
 
 The real Adamic loader/checker, with unchanged fixed strictness options, checked
 78 prepared compiler roots. The exporter uses a Go overlay and **no implicit
@@ -74,7 +97,7 @@ These three files still do not pass the full Adamic checker. This partition
 removes required indexed-read findings; it does not implement the compiler's
 other language features or repair legitimate optional/non-indexed contracts.
 
-## Proof and mutants
+## First-wave proof and mutants
 
 `verify.cjs` independently emits JavaScript with stock TypeScript. It requires
 byte-identical output after allowing exactly the four reviewed U-zero operands,
@@ -133,12 +156,111 @@ does not carry pipeline files on main. The observed scratch paths are
 are `/tmp/stage3-indexed-census-{before,after}.log`; oracle phase logs are in
 `/tmp/stage3-indexed-10-oracle/`. All command output was redirected to logs.
 
+## Second wave: parser, scanner, and factory
+
+Second-wave toolchain setup passed: Go 0s, clang 1s, Node 1s, submodules 1s,
+build cache 24s, total 24s. `nproc` was 5, CPU quota 4. Versions match the first
+wave. The first-wave findings and source changes remain intact.
+
+The adapter now also validates `parser.ts`, `scanner.ts`, and all ten
+`factory/*.ts` files. This wave adds **46 required-read assertions**, **36
+new declined sites**, and **no U-zero defaults**. Combined with the first wave,
+the growing ledger contains **190 assertions, four U-zero operands, and 79
+declines** across 15 files. Six factory files have no required indexed reads;
+they remain explicitly included in the census and emitted-JavaScript check.
+No file outside the two assigned partitions is adapted.
+
+The bounded Unicode search needs its populated start/end pair at each even
+position. The factory trampoline's current node is installed before entering
+each frame; onEnter populates that frame's user state before left/operator/right
+and exit, while root previous-state absence stays optional. Debug equality
+operands and the loop condition remain separate unchanged reads. The compiler's
+checker/emitter callbacks return populated WorkArea states; the generic API's
+required-state obligation is recorded rather than inferred from array bounds.
+
+New census, on exactly these twelve files with the same five codes:
+
+| File | Before | After |
+| --- | ---: | ---: |
+| parser.ts | 23 | 6 |
+| scanner.ts | 9 | 2 |
+| factory/baseNodeFactory.ts | 0 | 0 |
+| factory/emitHelpers.ts | 5 | 0 |
+| factory/emitNode.ts | 3 | 0 |
+| factory/nodeChildren.ts | 0 | 0 |
+| factory/nodeConverters.ts | 0 | 0 |
+| factory/nodeFactory.ts | 4 | 0 |
+| factory/nodeTests.ts | 0 | 0 |
+| factory/parenthesizerRules.ts | 0 | 0 |
+| factory/utilities.ts | 11 | 0 |
+| factory/utilitiesPublic.ts | 0 | 0 |
+| **Total** | **55** | **8** |
+
+`wave2-census-before.json` and `wave2-census-after.json` preserve the per-code
+counts and complete chains. The remaining eight findings are:
+
+- parser.ts:10458, TS2322: SyntaxCursor promises Node, but the implementation
+  deliberately returns undefined on misses and handles misses locally.
+- parser.ts:10656, TS2322: the optional AMD dependency name is forwarded in
+  an object literal; this is an optional-declaration issue outside this unit.
+- parser.ts:10735 and 10741, TS2322, and 10737, TS18048: the existing OR over
+  alternative quote captures has an optional result. Each individual capture
+  legitimately can be absent; a required result annotation would concern the
+  OR expression, not an indexed read. An empty single-quoted capture also
+  falls through to the absent other branch, so presence must not be assumed.
+- parser.ts:10794, TS2322: optional pragma arguments can be absent and the
+  original dictionary write forwards their value.
+- scanner.ts:491, TS2532 and TS2322: next-line lookahead can be absent on the
+  final line. The comparison then falls through to the text-length/return
+  branch; asserting either repeated lookahead would change this behavior.
+
+Stock TypeScript emitted JavaScript is byte-identical for every new file.
+Both in-memory idempotence and a real second CLI run pass, with zero edits in
+all 15 scoped files. A fresh apply.sh discovery run uses setup, adaptation 10
+at a3ef0dc, and the extended adaptation 30; adaptation 20 remains excluded.
+
+The new mutant replaces `map[0]!` at scanner.ts:360:16 with `(map[0] ?? 0)`.
+**The census does not catch it:** all eight diagnostics remain identical,
+because the replacement is still a number. Stock emitted-JavaScript comparison
+fails on scanner.ts and the site-contract check reports `required read
+defaulted: scanner.ts:360:16`, both exit 1. The default oracle was not rerun
+on this mutant; no passing populated-input suite is claimed to detect it.
+`wave2-census-mutant.json` records the observed coverage limit.
+
+The second-wave **default oracle passed: 106,367 passing, 0 failing, 0
+pending**. Install, build, and unfiltered `all` suites each exited 0, with
+four workers and `--light=false`. `wave2-baseline.diff` is **empty (0 bytes)**;
+no baseline was accepted or changed. Install took 2.377s, build 22.467s, tests
+336.481s, total 361.366s. `wave2-oracle-report.json` and `wave2-proof.json`
+retain the commands, counts, hashes, idempotence, and mutant observations.
+Lint, browser/ESLint integrations, and native Adamic tsc compilation were not
+run. The eight new residual findings are preserved deliberately.
+
+To reproduce this wave's census, append `--wave2` to census.sh's two existing
+arguments, for example:
+
+```sh
+bash stage3/adapt/30-indexed-reads/census.sh /tmp/tsc-before /tmp/wave2-before --wave2 > /tmp/wave2-before.log 2>&1
+bash stage3/adapt/30-indexed-reads/census.sh /tmp/tsc-after /tmp/wave2-after --wave2 > /tmp/wave2-after.log 2>&1
+```
+
+The before tree has adaptation 10 and the first indexed-read wave; the new
+files are untouched there. The current adapted tree is
+`/tmp/stage3-indexed-pipeline-tree`; the fresh discovery tree is
+`/tmp/stage3-indexed-wave2-discovery`. The 15-file original-source snapshot for
+emitted-JavaScript comparison is `/tmp/stage3-indexed-pristine`. Raw second-wave
+census, verification, idempotence, and mutant logs use the
+`/tmp/stage3-indexed-wave2-*` prefix. Oracle phase logs are in
+`/tmp/stage3-indexed-wave2-oracle/`.
+
 ## Site ledger
 
 Each row identifies one read in the pinned source, its class, action, and the
 one-line invariant or decline reason. Repeated expressions on the same line
 have separate columns and separate rows. Pure stores and existing casts are
 listed when encountered in the possibly-undefined inventory, but not adapted.
+
+### First wave
 
 | Site | Read | Class | Action | Invariant or decline reason |
 | --- | --- | --- | --- | --- |
@@ -333,3 +455,90 @@ listed when encountered in the possibly-undefined inventory, but not adapted.
 | utilitiesPublic.ts:1263:61 | `comments[1]` | U-endpoint | decline | The equality assertion compares possibly absent comments and needs no present value. |
 | utilitiesPublic.ts:1353:53 | `node.parent.typeParameters[0]` | U-endpoint | decline | An equality comparison with node legitimately permits an absent element. |
 | utilitiesPublic.ts:2653:48 | `(parseTreeNode.parent as SignatureDeclaration).parameters[paramIdx - 1]` | U-position | decline | The previous-parameter branch explicitly handles an absent predecessor. |
+
+### Second wave
+
+| Site | Read | Class | Action | Invariant or decline reason |
+| --- | --- | --- | --- | --- |
+| scanner.ts:360:16 | `map[0]` | U-endpoint | assert | All four Unicode range tables are nonempty populated lists of start/end pairs. |
+| scanner.ts:373:13 | `map[mid]` | U-position | assert | The range-map binary search rounds mid down to an even position; lo + 1 < hi keeps both pair cells in bounds. |
+| scanner.ts:373:41 | `map[mid + 1]` | U-position | assert | The range-map binary search rounds mid down to an even position; lo + 1 < hi keeps both pair cells in bounds. |
+| scanner.ts:377:20 | `map[mid]` | U-position | assert | The range-map binary search selects a populated start cell at its even mid position. |
+| scanner.ts:415:12 | `tokenStrings[t]` | U-table | decline | tokenToString explicitly returns undefined for non-textual token kinds; the reverse map is intentionally sparse. |
+| scanner.ts:427:12 | `regExpFlagCharCodes[f]` | U-table | decline | The reverse regexp-flag map exposes undefined for flags without a character code. |
+| scanner.ts:486:17 | `lineStarts[line]` | U-position | assert | The computed nonempty line map and line clamp/failure check leave a valid populated line entry. |
+| scanner.ts:491:22 | `lineStarts[line + 1]` | U-position | decline | The next start is legitimately absent on the last line; the comparison is false and the debugText/return branch handles that case. |
+| scanner.ts:491:45 | `lineStarts[line + 1]` | U-position | decline | The next start is legitimately absent on the last line; the comparison is false and the debugText/return branch handles that case. |
+| scanner.ts:494:28 | `lineStarts[line + 1]` | U-position | assert | The explicit line < lineStarts.length - 1 guard establishes the populated next-line entry. |
+| scanner.ts:512:31 | `lineStarts[lineNumber]` | U-position | assert | computeLineOfPosition returns the valid populated predecessor entry in the nonempty computed line map. |
+| scanner.ts:1334:29 | `text[identifierStart]` | U-position | decline | The literal comparison accepts an absent character without dereferencing or requiring a value. |
+| scanner.ts:1858:22 | `text[pos]` | U-position | assert | The preceding digit test on charCodeUnchecked(pos) succeeds only at a present character in the source string. |
+| scanner.ts:2325:38 | `text[pos + 1]` | U-position | decline | The shebang lookahead comparison accepts absent text at EOF. |
+| scanner.ts:3644:17 | `match[1]` | U-regex | decline | The switch and final undefined return handle an unrecognized or absent directive capture; no required-value use occurs. |
+| factory/nodeFactory.ts:6897:31 | `source[statementOffset]` | U-loop | assert | statementOffset is nonnegative and below the populated caller statement-list length before its predicate. |
+| factory/nodeFactory.ts:6927:31 | `source[statementOffset]` | U-loop | assert | The supplied prologue offset is defined, nonnegative, and below the populated caller statement-list length. |
+| factory/nodeFactory.ts:6966:41 | `array[i]` | U-loop | assert | start is a nonnegative prologue partition offset and i < array.length bounds each populated input element. |
+| factory/nodeFactory.ts:7047:42 | `statements[i]` | U-loop | decline | The prologue read already has an explicit PrologueDirective cast; no additional required-read annotation is needed. |
+| factory/nodeFactory.ts:7051:43 | `declarations[i]` | U-loop | decline | The prologue read already has an explicit PrologueDirective cast; no additional required-read annotation is needed. |
+| factory/nodeFactory.ts:7539:9 | `destRanges[key]` | U-table | decline | The source-map range payload explicitly permits undefined, and the other indexed expression is its unchanged pure destination store. |
+| factory/nodeFactory.ts:7539:27 | `sourceRanges[key]` | U-table | decline | The source-map range payload explicitly permits undefined, and the other indexed expression is its unchanged pure destination store. |
+| factory/emitNode.ts:148:12 | `node.emitNode?.tokenSourceMapRanges?.[token]` | U-table | decline | The existing optional-chain lookup and optional return type deliberately handle a missing token range. |
+| factory/emitNode.ts:157:5 | `tokenSourceMapRanges[token]` | U-table | decline | This is a pure store of an explicitly optional source-map range, not a required read. |
+| factory/emitNode.ts:297:24 | `sourceEmitHelpers[i]` | U-loop | assert | The bounded loop traverses the populated helper list; compaction writes only earlier indices. |
+| factory/emitHelpers.ts:466:78 | `elements[i]` | U-loop | assert | The bounded loop visits populated binding elements before the final rest element. |
+| factory/emitHelpers.ts:470:34 | `computedTempVariables[computedTempVariableOffset]` | U-parallel | assert | computedTempVariables is asserted defined and contains one populated entry for each computed binding property in traversal order. |
+| factory/emitHelpers.ts:720:23 | `input[i]` | U-parallel | assert | A real tagged-template call supplies args.length + 1 populated string segments, so the shared args index selects a segment. |
+| factory/emitHelpers.ts:721:34 | `args[i]` | U-loop | assert | The bounded loop selects a populated unique-name argument supplied by the tagged-template call. |
+| factory/emitHelpers.ts:723:19 | `input[input.length - 1]` | U-endpoint | assert | The tagged-template string array has one final populated segment beyond all substitutions. |
+| factory/utilities.ts:265:32 | `children[0]` | U-endpoint | assert | The children.length > 0 and length <= 1 branch selects the sole populated transformed JSX child. |
+| factory/utilities.ts:292:32 | `children[0]` | U-endpoint | assert | The children.length > 0 and length <= 1 branch selects the sole populated transformed JSX child. |
+| factory/utilities.ts:1281:48 | `userStateStack[stackIndex - 1]` | U-position | decline | onEnter accepts an optional previous state; the root frame explicitly supplies undefined. |
+| factory/utilities.ts:1282:27 | `stateStack[stackIndex]` | U-position | decline | Debug.assertEqual already checks the slot against the known enter function; its operand API permits absence. |
+| factory/utilities.ts:1283:54 | `nodeStack[stackIndex]` | U-position | assert | The initial frame and pushStack install the node before enter runs; the active frame index selects that populated node. |
+| factory/utilities.ts:1295:27 | `stateStack[stackIndex]` | U-position | decline | Debug.assertEqual already checks the slot against the known left function; its operand API permits absence. |
+| factory/utilities.ts:1298:41 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before left; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1298:69 | `userStateStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before left; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1298:97 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before left; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1313:27 | `stateStack[stackIndex]` | U-position | decline | Debug.assertEqual already checks the slot against the known operator function; its operand API permits absence. |
+| factory/utilities.ts:1316:28 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before operator; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1316:65 | `userStateStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before operator; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1316:93 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before operator; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1327:27 | `stateStack[stackIndex]` | U-position | decline | Debug.assertEqual already checks the slot against the known right function; its operand API permits absence. |
+| factory/utilities.ts:1330:42 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before right; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1330:71 | `userStateStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before right; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1330:99 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before right; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1345:27 | `stateStack[stackIndex]` | U-position | decline | Debug.assertEqual already checks the slot against the known exit function; its operand API permits absence. |
+| factory/utilities.ts:1347:39 | `nodeStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before exit; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1347:62 | `userStateStack[stackIndex]` | U-parallel | assert | enter installed the active frame user state before exit; node and user-state stacks share the same live frame index. |
+| factory/utilities.ts:1351:30 | `stateStack[stackIndex]` | U-position | decline | The state-function equality comparison does not require a present operand; leave the original side-selection read. |
+| factory/utilities.ts:1352:64 | `userStateStack[stackIndex]` | U-position | assert | After popping a child, the parent index selects its already-entered populated user state for foldState. |
+| factory/utilities.ts:1366:27 | `stateStack[stackIndex]` | U-position | decline | Debug.assertEqual already checks the slot against the known done function; its operand API permits absence. |
+| factory/utilities.ts:1403:30 | `nodeStack[stackIndex]` | U-position | decline | The circularity assertion compares values and does not require the indexed operand to be present. |
+| factory/utilities.ts:1481:16 | `stateStack[stackIndex]` | U-position | decline | The done-function comparison does not require a present operand; the separate subsequent callee read is asserted at its own point. |
+| factory/utilities.ts:1482:26 | `stateStack[stackIndex]` | U-position | assert | Initial allocation and pushStack install every active state function; each transition preserves a valid live frame index. |
+| parser.ts:1290:28 | `current[i]` | U-loop | assert | The parser-built NodeArray is populated; the reverse loop checks i >= 0 before enqueueing its child. |
+| parser.ts:1616:35 | `result.statements[0]` | U-endpoint | decline | The existing optional chain handles a missing first JSON expression statement. |
+| parser.ts:1876:35 | `sourceFile.statements[pos]` | U-position | assert | pos starts at zero or is a successful statement search result; the active await range has a populated statement at pos. |
+| parser.ts:1877:35 | `sourceFile.statements[start]` | U-position | assert | start is a successful findNextStatementWithAwait result, not its -1 sentinel. |
+| parser.ts:1904:51 | `sourceFile.statements[pos]` | U-position | assert | pos >= 0 excludes the failed-search sentinel; successful search selects a populated boundary statement. |
+| parser.ts:1925:35 | `sourceFile.statements[pos]` | U-position | assert | The final pos >= 0 branch selects the populated boundary statement returned by the preceding search. |
+| parser.ts:1945:51 | `statements[i]` | U-loop | assert | The bounded loop traverses the parser-built populated statement list. |
+| parser.ts:1954:52 | `statements[i]` | U-loop | assert | The bounded loop traverses the parser-built populated statement list. |
+| parser.ts:6056:53 | `children[children.length - 1]` | U-endpoint | decline | An empty JSX children list legitimately has no last child; the following optional kind test handles it. |
+| parser.ts:9025:44 | `comments[0]` | U-endpoint | decline | The newline equality comparisons tolerate absence and require no dereference; the nonempty guard is retained. |
+| parser.ts:9025:68 | `comments[0]` | U-endpoint | decline | The newline equality comparisons tolerate absence and require no dereference; the nonempty guard is retained. |
+| parser.ts:9032:37 | `comments[comments.length - 1]` | U-endpoint | assert | comments.length is nonzero and pushComment built a populated string list before its last comment is trimmed. |
+| parser.ts:9036:47 | `comments[comments.length - 1]` | U-endpoint | assert | The last comment remains populated across the local trimEnd call and before any pop or replacement. |
+| parser.ts:10454:23 | `currentArray[currentArrayIndex]` | U-position | decline | The syntax cursor represents misses with undefined and handles them through its current-node tests and rescan. |
+| parser.ts:10469:35 | `currentArray[currentArrayIndex]` | U-position | decline | The syntax cursor represents misses with undefined and handles them through its current-node tests and rescan. |
+| parser.ts:10523:39 | `array[i]` | U-loop | decline | visitArray explicitly checks child before using it, preserving absence handling in the syntax cursor. |
+| parser.ts:10636:25 | `arg.arguments["no-default-lib"]` | U-table | decline | The pragma optional-key comparison accepts a missing no-default-lib argument. |
+| parser.ts:10717:22 | `tripleSlash[1]` | U-regex | assert | A successful tripleSlashXMLCommentStartRegEx match requires its non-whitespace capture 1. |
+| parser.ts:10731:35 | `matchResult[2]` | U-regex | decline | Captures 2 and 3 are alternative quote branches; either capture can be absent and the existing OR chooses the branch. |
+| parser.ts:10731:53 | `matchResult[3]` | U-regex | decline | Captures 2 and 3 are alternative quote branches; either capture can be absent and the existing OR chooses the branch. |
+| parser.ts:10733:74 | `matchResult[1]` | U-regex | assert | getNamedArgRegEx always captures the whitespace/name/equal prefix in group 1; the quote branches concern other groups. |
+| parser.ts:10769:18 | `match[1]` | U-regex | assert | Both caller regexps require a nonempty pragma-name capture 1 on successful matches. |
+| parser.ts:10774:18 | `match[2]` | U-regex | decline | Capture 2 is optional pragma text and getNamedPragmaArguments explicitly handles its absence. |
+| parser.ts:10787:26 | `pragma.args[i]` | U-loop | assert | The bounded loop selects a populated argument-definition entry in the pragma metadata. |
+| parser.ts:10788:14 | `args[i]` | U-parallel | decline | The missing-argument test explicitly accepts absence for an optional pragma definition. |
+| parser.ts:10794:33 | `args[i]` | U-parallel | decline | The nearby argument test permits missing optional arguments and the original indexed dictionary write forwards that value. |

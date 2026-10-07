@@ -3,7 +3,13 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
-const files = ["core.ts", "utilities.ts", "utilitiesPublic.ts"];
+const files = [
+    "core.ts", "utilities.ts", "utilitiesPublic.ts", "parser.ts", "scanner.ts",
+    "factory/baseNodeFactory.ts", "factory/emitHelpers.ts", "factory/emitNode.ts",
+    "factory/nodeChildren.ts", "factory/nodeConverters.ts", "factory/nodeFactory.ts",
+    "factory/nodeTests.ts", "factory/parenthesizerRules.ts", "factory/utilities.ts",
+    "factory/utilitiesPublic.ts",
+];
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
@@ -68,7 +74,7 @@ function main() {
     const tree = path.resolve(process.argv[check ? 3 : 2]);
     const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
     if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
-    // Validate all three files before writing any; retain original bytes and reads.
+    // Validate every scoped file before writing any; retain original bytes and reads.
     const plans = files.map(file => {
         const name = path.join(tree, "src/compiler", file);
         const before = fs.readFileSync(name, "utf8");
