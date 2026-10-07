@@ -1,0 +1,9 @@
+--- FAIL: TestNativeAgreesWithNode (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a (0.44s)
+        oracle_test.go:590: Lower: /workspace/adamic/internal/oracle/testdata/library_object_keys.a:16:13: stage 0 can't lower Object.keys on a non-object yet
+FAIL
+gate cache: native hits=0 misses=48
+gate cache: node hits=0 misses=34
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	8.827s
+FAIL

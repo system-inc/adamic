@@ -1,0 +1,31 @@
+[detached HEAD 538ebfc] Hold Object assign failures and property name boundaries with oracle fixtures
+ 31 files changed, 2772 insertions(+)
+ create mode 100644 docs/library-object/prototype-evidence/after.json
+ create mode 100644 docs/library-object/prototype-evidence/after.txt
+ create mode 100644 docs/library-object/prototype-evidence/assign-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/before.json
+ create mode 100644 docs/library-object/prototype-evidence/before.txt
+ create mode 100644 docs/library-object/prototype-evidence/counts.txt
+ create mode 100644 docs/library-object/prototype-evidence/format.txt
+ create mode 100644 docs/library-object/prototype-evidence/groups-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/item1.txt
+ create mode 100644 docs/library-object/prototype-evidence/item2.txt
+ create mode 100644 docs/library-object/prototype-evidence/item3.txt
+ create mode 100644 docs/library-object/prototype-evidence/item4.txt
+ create mode 100644 docs/library-object/prototype-evidence/iterator-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/iterator-tag-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/iterator-view-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/oracle.txt
+ create mode 100644 docs/library-object/prototype-evidence/packages.txt
+ create mode 100644 docs/library-object/prototype-evidence/prefix-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/private-js-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/private-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/public-hash-mutant.txt
+ create mode 100644 docs/library-object/prototype-evidence/representations.txt
+ create mode 100644 docs/library-object/prototype-evidence/vet.txt
+ create mode 100644 docs/library-object/run-prototype-mutant.py
+ create mode 100644 internal/oracle/testdata/library_object_iterator_view.a
+ create mode 100644 internal/oracle/testdata/library_object_prefix_names.a
+ create mode 100644 internal/oracle/testdata/library_object_public_hash.a
+ create mode 100644 internal/oracle/testdata/library_object_try_assign.a
+Successfully rebased and updated refs/heads/codex/library-object-prototype-land.

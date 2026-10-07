@@ -1,0 +1,10 @@
+--- FAIL: TestCountsAreRecorded (42.40s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.00s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_keys.a (0.09s)
+            counts_test.go:143: Lower: /workspace/adamic/internal/oracle/testdata/library_object_keys.a:16:13: stage 0 can't lower Object.keys on a non-object yet
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	42.406s
+FAIL
