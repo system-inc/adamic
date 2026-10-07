@@ -21,6 +21,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if kind := l.typedArrayKind(proven); kind != 0 {
+		return kind, true
+	}
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -160,7 +163,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.typedArraySetArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
+					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
+				}
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
@@ -206,6 +212,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
+		return fromKind != 0 && fromKind == toKind
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -373,6 +382,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, handled, err := l.typedArrayExpression(node); handled {
+		return value, err
+	}
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
 	}
@@ -834,6 +846,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 }
 
 func typeName(valueType ir.Type) string {
+	if valueType.IsTypedArray() {
+		return typedArrayName(valueType)
+	}
 	switch valueType {
 	case ir.Number:
 		return "number"
