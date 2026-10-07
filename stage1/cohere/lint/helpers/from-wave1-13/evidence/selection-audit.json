@@ -1,0 +1,2363 @@
+{
+  "origin_refs": 427,
+  "helper_claim_blobs": {
+    "808734237c08fbb684c665bd5561ebe1d6c674b5": {
+      "path": "stage1/cohere/lint/helpers/claims/01.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-01"
+      ]
+    },
+    "2a1ca8a6308184de7d98ac5fa955867af19da808": {
+      "path": "stage1/cohere/lint/helpers/claims/02.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-02"
+      ]
+    },
+    "f76727dec99e8efddd5a9f140c4d9c3745fbfa29": {
+      "path": "stage1/cohere/lint/helpers/claims/03.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-03"
+      ]
+    },
+    "fc5afbf62f005deb4379ae0e9dc83a37a68dba17": {
+      "path": "stage1/cohere/lint/helpers/claims/04.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-04"
+      ]
+    },
+    "d8d5349a6dc57f582ec7159903a85d06cf168de5": {
+      "path": "stage1/cohere/lint/helpers/claims/05.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-05"
+      ]
+    },
+    "e4d5aaccb7cc746ad2236bae5f386cd414ac5203": {
+      "path": "stage1/cohere/lint/helpers/claims/codex-lint-wave1-03.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-03"
+      ]
+    },
+    "48accd39bf17e24651a0ac458cd9b791b1896712": {
+      "path": "stage1/cohere/lint/helpers/claims/codex-lint-wave1-14.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-14"
+      ]
+    },
+    "b48be369cded694c712047f6594de3a615016402": {
+      "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-04.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-04"
+      ]
+    },
+    "3ed03b1cb89d832f00bfd7525bd7d24ef72532e7": {
+      "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-06.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-06"
+      ]
+    },
+    "ecd01a3fa7f433d4b14a7ea2140831dce0c62db9": {
+      "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-09.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-09"
+      ]
+    },
+    "6aa4b1c4a2d6a782c2ed617b86f004d14a2a230b": {
+      "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-10.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-10"
+      ]
+    },
+    "9b0c779f01031b93bd79e8e45fd1c4c6ede0f1b7": {
+      "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-11.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-11"
+      ]
+    },
+    "26d6f11212da1dcfad9a4cec38916c597f2aabf1": {
+      "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-15.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-15"
+      ]
+    },
+    "25c4b51eb47368edb75a7dce1e369d78a94545ac": {
+      "path": "stage1/cohere/lint/helpers/claims/lint-wave1-05.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-05"
+      ]
+    },
+    "ddd80a22ef7fba1f0d87df78600cb5ce16f0bda5": {
+      "path": "stage1/cohere/lint/helpers/claims/lint-wave1-08.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-08"
+      ]
+    },
+    "4855c4cb1e4270134a14ecc966654e9864f78b7b": {
+      "path": "stage1/cohere/lint/helpers/claims/lint-wave1-12.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-12"
+      ]
+    },
+    "6f7c00b2a304bb12b1a8e4c59f03e7955641f450": {
+      "path": "stage1/cohere/lint/helpers/claims/lint-wave1-13.md",
+      "refs": [
+        "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-13"
+      ]
+    }
+  },
+  "readiness_origin_sha": "95100eb440b47f3f18e960c6f5b49cadf0dc1d9d",
+  "unmentioned_symbols": [
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemThrough",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingest",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestCustomVariant",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestThemeBlock",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.loadFile",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.resolveImport",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.LoadDesignSystem",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewUtilityEvaluator",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.decodeArbitraryValue",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionNodes",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
+      "consumers": 6
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsExportedByName",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.HasExportModifier",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsExported",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.DesignSystemDeclineMessage",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.dissectClass",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Theme",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.CallExpressionSource",
+      "consumers": 5
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchIgnoringCase",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.HasAttributeNamed",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Canonicalize",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseClass",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseEquivalenceGroups",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseEquivalents",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Compile",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.EscapeClassRune",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.boundedQuantifierWidth",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.buildCaseTables",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.caseExtras",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.caseTables",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.checkGroupConstruct",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.checkGroupQuantifier",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtom.covers",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtom.write",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtoms",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.countGroups",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decimalEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeControlEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeFixedHex",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeLegacyOctal",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeNumericEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodePropertyEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeUnicodeEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.errNothingToRepeat",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.expandsOnUppercase",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.groupKindOf",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.identityEscape",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.isDecimalDigit",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.joinRanges",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.literalRune",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.modifierGroup",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.namedBackreference",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.namedGroupOpener",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.nonWordClassAtoms",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.parseFlags",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.quantifierWidth",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.readClass",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.rewrite",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.simpleFold",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordBoundary",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordCharacters",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordClassAtoms",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.writeClass",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].appendSuccessor",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].binaryExpression",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].bindWithDefault",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].classLike",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].condition",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].conditionalExpression",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].doStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enter",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enterDisconnected",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].expr",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].firstThrowableFork",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forInOfStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forkOptionalChain",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].ifStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].labeledStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].link",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].linkWithCycleBarrier",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].loop",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeBreak",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeContinue",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeReturn",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeThrow",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeUnreachable",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeYield",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].markFinal",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].markThrown",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].memberHeader",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].nestedFunction",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].parameter",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternBind",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternReads",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternWrites",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].popJump",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].pushJump",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].reachedStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].read",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].restoreForks",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].returnFrame",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].setCycleBarrier",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].snapshotForks",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].statement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].statements",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].switchStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].tryStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclaration",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclarationList",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].visitUnknown",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].whileStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].write",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.Build",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.declineListeners",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classTokensIn",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classTokensOf",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Utilities",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ResolveWith",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.variableReference",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*UtilityEvaluator.Compile",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*UtilityEvaluator.compile",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.modifierAsValue",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveArbitraryArgument",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveBareArgument",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveDeclaration",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveThemeArgument",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveValueFunction",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveValueFunctions",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.walk",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.InferDataType",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColor",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsLength",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsNamedColor",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsPositiveInteger",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.cloneNode",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.cloneNodes",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.escapeCSSIdentifier",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.formatJavaScriptNumber",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.hasAnyPrefix",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.hasMathFunction",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAbsoluteSize",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAngle",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundPosition",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundSize",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBracketed",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isDigit",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFamilyName",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isGenericName",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isImage",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLineWidth",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMultipleOf",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isNumber",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isPercentage",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isQuotedLiteral",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isRelativeSize",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isURL",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.matchesDataType",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.modFloat",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.removeNodes",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.replaceValueNode",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.roundTripsAsJavaScriptNumber",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.unionNodeSets",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.DecodeCompilerRuleOptions",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.skipParenthesesOptional",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isEs5ComponentCallStrict",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.parameterTypeNode",
+      "consumers": 4
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsDocumentFile",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.lastSeparator",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitPath",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/property.NameTagged",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.anyCandidateResolves",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classesOf",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.segmentsOfTemplate",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.trimDelimiters",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.DeclaresFunctionalUtility",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*UtilityEvaluator.Reading",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ClassValueResolvesIn",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Description",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Description",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ResolveFunctionalUtilityValue",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueHandler",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValuePredicate",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueTransform",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.borderSideDescription",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.colorArm",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.descriptionForRoot",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.gapRootAcceptsModifierOnArbitrary",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFontStretchPercentage",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isPositiveInteger",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isStrictPositiveInteger",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidOpacityValue",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskStopDescription",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArm",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArmByInferredType",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArmColor",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveNamedValue",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.themeArm",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.widthArm",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitVariantPrefix",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.HasPathSegment",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.SourceVisitors",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.SpecifierNode",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.AllHexDigits",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ClassEnd",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.IsHexDigit",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexFlags",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.PatternAndFlags",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.RegexFlags.UV",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.SkipPatternEscape",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.appendNodeSignature",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.appendTokensBetween",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.tokenSignature",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/property.AccessedName",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isComponentClass",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isCreateReactClassCall",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isReactComponentBase",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isReactComponentBaseName",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.DecodeNoMethodSetStateOptions",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.IsLikelyReactComponent",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isJsxValue",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.jsxAfterParentheses",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collect",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectFunctionDeclaration",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectVariableStatement",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.NetworkFileAnalysisFor",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.bodyCallsNetworkService",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.findNetworkServiceCalls",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.typeReferenceName",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.NameOf",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.borrowedName",
+      "consumers": 3
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsDocumentPage",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsInApplicationDirectory",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.HasDefaultModifier",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitSegments",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.BestMatch",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.MinimumEditDistance",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.ForEachDuplicate",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.IsAccessorKind",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.IsOverloadSignature",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.KeyOf",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.MemberName",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/typescript.isTypeScriptSourceFile",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.forEachDeclaredTypeName",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplateSegmentsIn",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Variants",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*RunVariantOrder.IndexOf",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*VariantRegistry.BuildVariantOrder",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*VariantRegistry.Compare",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Emit",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.staticValueEmitter",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Emit",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVariantAndNested",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareComposing",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareComposingMask",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareComposingWebkit",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareProperties",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareProperty",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareSorted",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareWrapped",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.variantsAreEqual",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classExistsIn",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.applyQuantifier",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.emit",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.emitAndQuantify",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.kindFromSource",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.readEscape",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.run",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.walkClass",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.Walk",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.braceQuantifierEnd",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.consumeDigits",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.decodeRune",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.escapeValue",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.extendOctalEscape",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.groupPrologueEnd",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.isAsciiLetter",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.octalEscapeValue",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.quantifierAt",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.unicodeEscapeValue",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseHexUint",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexCharacterClassWithEnd",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.hexValue",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.parseRegexCharacterClass",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.readClassEscape",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.readRawClassChar",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.hasSameTokens",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.isEmptyBracketLiteral",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isComponentIdentifierName",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isHookIdentifierName",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCreateElementCall",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.parameterName",
+      "consumers": 2
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.ParseDisable",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.ParseEnable",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.Recognize",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.endsWord",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.isLineComment",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.parseRuleNames",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.splitDirective",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.splitReason",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.splitScope",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.stripCommentMarkers",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.LocalNameOfDefaultImport",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsDefaultExported",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsInPagesDirectory",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/next.urlQueryValue",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/typescript.nonNullAssertionOperatorRange",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.DeclaresTypeNamed",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/decorators.CallName",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/decorators.HasDecoratorInSet",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/decorators.Of",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.candidateValueText",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.sourceValueAfterRoot",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitCandidateIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*strictVariantLevel.entry",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*strictVariantLevel.order",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.atoi",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.buildClass",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classOrderKeys",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.compareVariantMasks",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.deprecationFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.isArbitraryVariant",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.isArrayIndexKey",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.jsKeyOrder",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.newStrictVariantLevel",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.parseTailwindVersion",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.propertyIndexBeyond",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.readingFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.sortClassesByKey",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.strictClassOrder",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.strictVariantsOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.tailwindAtLeast",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Descriptor.axisFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*RunVariantOrder.VariantBitmask",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.ArbitraryPropertyReading",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.Lookup",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.bareReading",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.frameworkReading",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.AxisReadings.readingForType",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.CompareVariantBitmasks",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Reading",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.ReadingFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.readingOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ModifierAxisFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PrintVariant",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bracketed",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.escapeUnderscoreAndSpace",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.escapeUnderscoresAndSpaces",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLoneVar",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isSpaceSeparator",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printArbitraryValue",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printModifier",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printNodesCss",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.toPrintNodes",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.unwrapIsSelector",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.withoutRemoved",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplatesIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.boundaryAfterHole",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.boundaryBeforeHole",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.endsWithWhitespace",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.startsWithWhitespace",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.templateExpressionOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.templatesFrom",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.composesForRoot",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.repositoryClassFacts",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.resolveClassFactsIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.valueIsColorIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.valueResolutionIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Get",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*UtilityEvaluator.Has",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ComposesFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DeclaredPropertiesFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.EmitGapRoot",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColorKeyword",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.SelectorShapeForRoot",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.SelectorShapeOfNodes",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranch.isOneOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranch.maskStopIsColor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranch.shadowIsColor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranchFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.absentValued",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVisibleProperty",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.borderSideEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.collectVisibleProperties",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.containsString",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declarations",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.emitFunctionalRoot",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.emitRootWithValue",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.gapTypeListFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.gradientPositionEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskEdgeEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskGradientEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ringEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.rotateEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scaleEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.shadowFamilyEmitter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.visibleDeclarationText",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.withResolvedValue",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.containsString",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.compileIgnorePatterns",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.isIgnored",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassSegmentsIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.HasValue",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.IsGenerator",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.IsScope",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.Judge",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.Name",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.ReportRange",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.Verb",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.canRunOffEnd",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.capitaliseFirst",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.isExemptFromEndJudgment",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.judgeReturns",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.judgeScope",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.staticName",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.isSeparateEvaluationContext",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.CompileAllowPattern",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.Listeners",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.checkComputed",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.computedFix",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.continuesAnIdentifier",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.hasCommentBetween",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.isOptionalAccess",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.jsonQuote",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.keywordFix",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.literalKey",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.useBracketsMessage",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.useDotMessage",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.GraphemeCount",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.continuesCluster",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulJoins",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulLeading",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulSyllable",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulTrailing",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulVowel",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulVowelSyllable",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isGraphemeControl",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isGraphemeExtend",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isIndicLinker",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isPictograph",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isRegionalIndicator",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.idDenylistIsDestructuringTarget",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.idDenylistIsImportAttributeKey",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.idDenylistIsImportOptionsObject",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.numericLiteralSign",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.consistentReturnIsGenerator",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.CookedToRaw",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.cookedBytesProducedBy",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.escapeWidthInStringLiteral",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.producesNoCookedBytes",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.noRestrictedExportsNameText",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.bodyDefinitelyExits",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.switchStatementExits",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.tryStatementExits",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].Current",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IndexRoots",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.codePathRoots",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.isNullOrUndefined",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/core.memberAccessObject",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.FunctionBody",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.FunctionParameters",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCompilerComponentName",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCompilerHookName",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsComponentOrHookLike",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsReachableRootPosition",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.SkipParenthesesUpward",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.callsHooksOrCreatesJsx",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.containsRef",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.containsSubstring",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasComponentOrHookName",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasComponentShapedParameters",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasPrimitiveTypeAnnotation",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.inferredFunctionName",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isCompilerHookCallee",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isJsxNode",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isSkippedNestedFunction",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isSpreadParameter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Block[E].Index",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].Emit",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].IsCyclic",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].IsOnEveryFinalPath",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].countFinalPaths",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].findFinalPathDominators",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].findShortestPaths",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*cyclePaths[E].count",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*cyclePaths[E].countToEnd",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.AnalyzePaths",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.newCyclePaths",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.enclosingFunctionOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.hasValidComponentParameters",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isFunctionLike",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isNonNodeExpression",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isReactCompiledFunction",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isRestParameter",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isTopLevelCompilationCandidate",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.mentionsRef",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.parametersOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.reactFunctionNameOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.returnsNonNode",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.enclosingClassOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.functionBodyBlock",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.semanticParentOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.sortDefaultPropsInitializerOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.attributesOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.commentValueOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isJavaScriptIdentifier",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.jsxAnnotationIn",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.reactPragmaFor",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.sourceSliceOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.enclosingComponentOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.stylePropObjectUnwrapParentheses",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isThisExpression",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isPureComponentBase",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isAnonymousWrapperCall",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.callExpressionCallee",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isCacheInvalidateCall",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.RouteContractExports",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.buildRouteFileContracts",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isForwardRefCall",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.BodyOf",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.EnclosingFunctionLike",
+      "consumers": 1
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.AllDeclaredTypeNames",
+      "consumers": 1
+    }
+  ],
+  "note": "Includes rule-local option marker gaps, not just concrete shared helpers. Base-delivered comment bundle excluded. A mention counts as reservation conservatively; withdrawals are not reselected without ownership resolution."
+}

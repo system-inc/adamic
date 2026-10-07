@@ -1,0 +1,8 @@
+=== RUN   TestClassOrderFixturesActuallyRan
+=== PAUSE TestClassOrderFixturesActuallyRan
+=== CONT  TestClassOrderFixturesActuallyRan
+    enforce_consistent_class_order_test.go:735: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+--- FAIL: TestClassOrderFixturesActuallyRan (0.00s)
+FAIL
+FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.009s
+FAIL
