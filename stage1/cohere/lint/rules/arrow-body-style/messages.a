@@ -1,0 +1,8 @@
+export function message(id: string): string {
+    if(id === "unexpectedOtherBlock") return "This arrow function wraps its body in braces while the configuration asks for none. The block does more than return a value, so there is no concise form of it and nothing here can be rewritten automatically. Change the body, or allow braces.";
+    if(id === "unexpectedEmptyBlock") return "This arrow function has an empty braced body, which returns undefined. Write that value after the arrow instead, so the arrow says what it produces rather than leaving the reader to infer it from an empty block.";
+    if(id === "unexpectedObjectBlock") return "This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.";
+    if(id === "unexpectedSingleBlock") return "This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.";
+    if(id === "expectedBlock") return "This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.";
+    return '';
+}

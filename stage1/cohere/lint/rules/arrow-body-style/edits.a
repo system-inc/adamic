@@ -1,0 +1,8 @@
+import { Fix, SuggestedFinding } from '../typescript-no-non-null-assertion/suggestions.a';
+export class FixedFinding extends SuggestedFinding {
+    readonly fixes: readonly Fix[];
+    constructor(rule: string, id: string, message: string, start: number, end: number, fixes: readonly Fix[]) {
+        super(rule, id, message, start, end, []);
+        this.fixes = fixes;
+    }
+}

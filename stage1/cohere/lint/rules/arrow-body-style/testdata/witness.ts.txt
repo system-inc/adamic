@@ -1,0 +1,3 @@
+const é = () => { return {text: '😀'}; };
+const kept = () => { /* head */ return 5; /* tail */ };
+const comma = () => { return a, b; };

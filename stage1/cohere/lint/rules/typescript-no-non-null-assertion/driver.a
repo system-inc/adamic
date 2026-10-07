@@ -5,6 +5,9 @@ import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { Settings } from '../../settings.ts';
 import { Linter } from '../../lint.ts';
 
+import { provideGraphEnds } from '../array-callback-return/graph-boundary.a';
+import { FixedFinding } from '../arrow-body-style/edits.a';
+import { fixed } from '../arrow-body-style/private-fixer.a';
 import { SuggestedFinding, enableDetailedReporting } from './suggestions.a';
 enableDetailedReporting();
 
@@ -15,6 +18,7 @@ function run(row: string, countOnly: boolean): number {
     if(source.kind === 'Error') {
         panic(source.message);
     }
+    provideGraphEnds(fields[7] ?? '');
     const parser = new Parser(source.text, path);
     const scanner = new Scanner(source.text);
     const settings = new Settings();
@@ -28,9 +32,11 @@ function run(row: string, countOnly: boolean): number {
         return linter.findings.length;
     }
     const offsets: number[] = [0];
+    const lines: number[] = [0];
     let bytes = 0;
     for(let index = 0; index < source.text.length; index++) {
         const code = source.text.codePointAt(index) ?? 0;
+        if(code === 10) lines.push(index + 1);
         if(code > 65535) {
             offsets.push(bytes);
             index++;
@@ -41,13 +47,21 @@ function run(row: string, countOnly: boolean): number {
     for(const finding of linter.findings) {
         const start = offsets[finding.start] ?? panic('finding outside source');
         const end = offsets[finding.end] ?? panic('finding end outside source');
-        const prefix = source.text.slice(0, finding.start);
-        const line = prefix.split('\n').length;
-        const previous = prefix.lastIndexOf('\n');
-        const column = start - (offsets[previous + 1] ?? 0) + 1;
+        let left = 0;
+        let right = lines.length;
+        while(left < right) {
+            const middle = Math.floor((left + right) / 2);
+            if((lines[middle] ?? 0) <= finding.start) left = middle + 1;
+            else right = middle;
+        }
+        const line = left;
+        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;
         console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
         console.log(`range ${start} ${end} ${finding.id}`);
-        if(finding.repair === 'fix') console.log(`fix ${start} ${end}\t${written(finding.replacement)}`);
+        if(finding instanceof FixedFinding) {
+            for(const fix of finding.fixes) console.log(`fix ${offsets[fix.start]} ${offsets[fix.end]}\t${written(fix.text)}`);
+        }
+        else if(finding.repair === 'fix') console.log(`fix ${start} ${end}\t${written(finding.replacement)}`);
         if(finding instanceof SuggestedFinding) {
             for(const suggestion of finding.suggestions) {
                 console.log(`suggestion\t${suggestion.id}\t${written(suggestion.message)}`);
@@ -65,7 +79,7 @@ function run(row: string, countOnly: boolean): number {
             }
         }
     }
-    console.log(`fixed\t${written(linter.fixed())}`);
+    console.log(`fixed\t${written(fixed(linter))}`);
     return linter.findings.length;
 }
 
