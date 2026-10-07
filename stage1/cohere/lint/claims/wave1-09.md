@@ -37,3 +37,18 @@ inventory order and including rules whose helper dependencies remain explicit.
 All Markdown documents under claims were inspected across every origin ref;
 rule-name matches exclude an entry. Main source/registration files were inspected
 outside inventory/helper/testdata artifacts. These new claims precede rule code.
+
+## Third allocation, October 7
+
+After pushing all existing work and fetching every origin head, 311 origin refs
+and 33 claim documents were checked against origin/main ef3d907e. The original
+46-rule helper handoff is exhausted. The first three available syntax-only
+inventory entries, preserving inventory order, are:
+
+1. `@typescript-eslint/no-dupe-class-members`
+2. `@typescript-eslint/no-empty-object-type`
+3. `@typescript-eslint/no-import-type-side-effects`
+
+These claims are published before rule code. Inventory revision remains
+73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf. All existing claims, including this
+worker's prior allocations, count as occupied; no replay exemptions apply.
