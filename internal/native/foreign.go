@@ -116,6 +116,14 @@ func (e *emitter) foreignBody(function ir.Function) {
 				convert = "adamic_apple_options"
 			}
 			value = fmt.Sprintf("%s(%s, %d, %s_names, %s_values)", convert, parameter(argument), len(names), name, name)
+		case ir.NativeBlock:
+			// A block on this function's stack, holding the closure; Apple copies it if it keeps it.
+			block := e.blockFunctions(argument.Type)
+			e.line("adamic_apple_block %s;", name)
+			e.line("adamic_apple_block_start(&%s, %s, &%s_descriptor, (void (*)(void))%s_invoke);", name, parameter(argument), block, block)
+			natives, types = append(natives, "(id)&"+name), append(types, "id")
+			cleanups = append(cleanups, "adamic_apple_block_end(&"+name+");")
+			continue
 		case ir.NativeAction:
 			// One closure is two native arguments: the target that calls it, and its action.
 			e.line("id %s = adamic_apple_action(%s);", name, parameter(argument))
@@ -127,6 +135,10 @@ func (e *emitter) foreignBody(function ir.Function) {
 		natives, types = append(natives, name), append(types, ctype)
 	}
 
+	if foreign.Kind == ir.CFunction {
+		e.foreignFunctionCall(function, natives, types, cleanups)
+		return
+	}
 	selector := "selector"
 	e.line("static SEL %s;", selector)
 	e.line("if (%s == NULL) {", selector)
@@ -151,8 +163,6 @@ func (e *emitter) foreignBody(function ir.Function) {
 			e.line("id allocated = ((id (*)(id, SEL))objc_msgSend)(class, allocate);")
 			receiver = "allocated"
 		}
-	case ir.CFunction:
-		panic("native: C functions from bindings aren't emitted yet")
 	}
 	returns := nativeCType(foreign.Returns)
 	if foreign.Kind == ir.Construct {
@@ -178,23 +188,142 @@ func (e *emitter) foreignBody(function ir.Function) {
 	for _, cleanup := range cleanups {
 		e.line("%s", cleanup)
 	}
+	e.foreignReturn(function, result)
+}
+
+// foreignReturn gives back a foreign call's result, named result, as Adamic holds it.
+func (e *emitter) foreignReturn(function ir.Function, result string) {
+	foreign := function.Foreign
+	// What Apple promises isn't nil, or what new made, is checked: nil there panics, never trusted.
+	what := cString(strings.TrimSpace(foreign.Class + " " + foreign.Selector))
 	switch {
 	case foreign.Kind == ir.Construct:
-		e.line("return adamic_apple_box(adamic_apple_constructed(result), true);")
+		e.line("return adamic_apple_box(adamic_apple_constructed(adamic_apple_present(%s, %s)), true);", result, what)
 	case function.Returns == 0:
+	case foreign.Returns.Kind == ir.NativeObject && !foreign.Returns.Nullable:
+		e.line("return adamic_apple_box(adamic_apple_present(%s, %s), %t);", result, what, foreign.Retained)
 	case foreign.Returns.Kind == ir.NativeObject:
-		e.line("return adamic_apple_box(result, %t);", foreign.Retained)
+		e.line("return adamic_apple_box(%s, %t);", result, foreign.Retained)
 	case foreign.Returns.Kind == ir.NativeString:
-		e.line("adamic_string *text = adamic_apple_string_from(result);")
+		if foreign.Returns.Nullable {
+			e.line("if (%s == nil) {", result)
+			e.line("\treturn NULL;")
+			e.line("}")
+		} else {
+			e.line("adamic_apple_present(%s, %s);", result, what)
+		}
+		e.line("adamic_string *text = adamic_apple_string_from(%s);", result)
 		if foreign.Retained {
-			e.line("objc_release(result);")
+			e.line("objc_release(%s);", result)
 		}
 		e.line("return text;")
 	case foreign.Returns.Kind == ir.NativeBoolean:
-		e.line("return result != NO;")
+		e.line("return %s != NO;", result)
 	default:
-		e.line("return (double)result;")
+		e.line("return (double)%s;", result)
 	}
+}
+
+// foreignFunctionCall emits a C function's call: declared here with the native types it's called
+// with, since the program's C includes none of Apple's headers but libobjc's.
+func (e *emitter) foreignFunctionCall(function ir.Function, natives []string, types []string, cleanups []string) {
+	foreign := function.Foreign
+	returns := nativeCType(foreign.Returns)
+	parameters := types
+	if len(parameters) == 0 {
+		parameters = []string{"void"}
+	}
+	prototype := fmt.Sprintf("%s %s(%s);", returns, foreign.Selector, strings.Join(parameters, ", "))
+	if e.foreignPrototypes == nil {
+		e.foreignPrototypes = map[string]string{}
+	}
+	if declared, seen := e.foreignPrototypes[foreign.Selector]; !seen {
+		e.foreignPrototypes[foreign.Selector] = prototype
+		e.declarations = append(e.declarations, prototype)
+	} else if declared != prototype {
+		panic("native: " + foreign.Selector + " is bound twice with different types: " + declared + " and " + prototype)
+	}
+	call := fmt.Sprintf("%s(%s)", foreign.Selector, strings.Join(natives, ", "))
+	if returns == "void" {
+		e.line("%s;", call)
+	} else {
+		e.line("%s result = %s;", returns, call)
+	}
+	for _, cleanup := range cleanups {
+		e.line("%s", cleanup)
+	}
+	e.foreignReturn(function, "result")
+}
+
+// blockFunctions declares, once for each block type, what a block of that type needs at file scope:
+// the arguments it's called with, held for the main thread; invoke, which Apple calls on any thread
+// and which only retains and hands over; deliver, which runs on the main thread, makes the arguments
+// Adamic values and calls the closure; and the block's descriptor, with its signature. It returns the
+// name they share as a prefix.
+func (e *emitter) blockFunctions(block ir.NativeType) string {
+	key := fmt.Sprint(block.Parameters)
+	if e.blockTypes == nil {
+		e.blockTypes = map[string]string{}
+	}
+	if name, declared := e.blockTypes[key]; declared {
+		return name
+	}
+	index := len(e.blockTypes)
+	name := fmt.Sprintf("adamic_block_%d", index)
+	e.blockTypes[key] = name
+	fields := []string{"\tid holder;"}
+	parameters := []string{"adamic_apple_block *block"}
+	held := []string{"\tcall->holder = objc_retain(block->holder);"}
+	converted := []string{}
+	releases := []string{}
+	// The signature: the block itself, then each argument, eight bytes apart.
+	signature := fmt.Sprintf("v%d@?0", 8*(len(block.Parameters)+1))
+	for position, parameter := range block.Parameters {
+		ctype := nativeCType(parameter)
+		fields = append(fields, fmt.Sprintf("\t%s p%d;", ctype, position))
+		parameters = append(parameters, fmt.Sprintf("%s p%d", ctype, position))
+		encoding := map[ir.NativeKind]string{ir.NativeDouble: "d", ir.NativeInteger: "q", ir.NativeUnsigned: "Q", ir.NativeBoolean: "B"}[parameter.Kind]
+		if encoding == "" {
+			encoding = "@"
+		}
+		signature += fmt.Sprintf("%s%d", encoding, 8*(position+1))
+		value := fmt.Sprintf("call->p%d", position)
+		switch parameter.Kind {
+		case ir.NativeObject:
+			held = append(held, fmt.Sprintf("\tcall->p%d = objc_retain(p%d);", position, position))
+			converted = append(converted, fmt.Sprintf("\targuments[%d].reference = adamic_apple_box(%s, true);", position, value))
+			releases = append(releases, fmt.Sprintf("\tadamic_release(arguments[%d].reference);", position))
+		case ir.NativeString:
+			held = append(held, fmt.Sprintf("\tcall->p%d = objc_retain(p%d);", position, position))
+			converted = append(converted, fmt.Sprintf("\targuments[%d].reference = adamic_apple_string_from(%s);", position, value), fmt.Sprintf("\tobjc_release(%s);", value))
+			releases = append(releases, fmt.Sprintf("\tadamic_release(arguments[%d].reference);", position))
+		case ir.NativeBoolean:
+			held = append(held, fmt.Sprintf("\tcall->p%d = p%d;", position, position))
+			converted = append(converted, fmt.Sprintf("\targuments[%d].boolean = %s != NO;", position, value))
+		default:
+			held = append(held, fmt.Sprintf("\tcall->p%d = p%d;", position, position))
+			converted = append(converted, fmt.Sprintf("\targuments[%d].number = (double)%s;", position, value))
+		}
+	}
+	count := len(block.Parameters)
+	if count == 0 {
+		count = 1
+	}
+	var builder strings.Builder
+	fmt.Fprintf(&builder, "struct %s_call {\n%s\n};\n\n", name, strings.Join(fields, "\n"))
+	fmt.Fprintf(&builder, "static void %s_deliver(void *context) {\n\tstruct %s_call *call = context;\n\tadamic_value arguments[%d];\n", name, name, count)
+	if len(converted) > 0 {
+		builder.WriteString(strings.Join(converted, "\n") + "\n")
+	}
+	builder.WriteString("\tadamic_apple_block_call(call->holder, arguments);\n")
+	if len(releases) > 0 {
+		builder.WriteString(strings.Join(releases, "\n") + "\n")
+	}
+	builder.WriteString("\tobjc_release(call->holder);\n\tadamic_apple_call_free(call);\n}\n\n")
+	fmt.Fprintf(&builder, "static void %s_invoke(%s) {\n\tstruct %s_call *call = adamic_apple_call_new(sizeof *call);\n%s\n\tadamic_apple_on_main(call, %s_deliver);\n}\n\n", name, strings.Join(parameters, ", "), name, strings.Join(held, "\n"), name)
+	fmt.Fprintf(&builder, "static const adamic_apple_block_descriptor %s_descriptor = {0, sizeof(adamic_apple_block), adamic_apple_block_copy, adamic_apple_block_dispose, %s, NULL};", name, cString(signature))
+	e.declarations = append(e.declarations, builder.String())
+	return name
 }
 
 // BuildApple compiles a program that calls Apple's frameworks: Build's, with the Objective-C

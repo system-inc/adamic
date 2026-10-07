@@ -37,6 +37,7 @@ constructor(contentRectangle: Rectangle, options: { readonly styleMask: readonly
 - `@objc static <selector> <arguments> -> <result>` is a message to the class (a constructor may be one, as `+[NSButton buttonWithTitle:target:action:]` is).
 - `@objc method <selector> <arguments> -> <result>` is a message to the object.
 - `@objc get <selector> -> <result>` and `@objc set <selector> <type>` are a property's getter and setter.
+- `@objc function <symbol> <arguments> -> <result>` is a C function: on its own, as a class's static member, or as an instance member, where the object is its first argument (`CFRunLoopStop(loop)` is `loop.stop()`).
 
 Each argument is `<source>:<type>`, in the selector's order. The source is the Adamic argument's position (`0`), a field of an options object written at the call (`1.styleMask`, or `1.defer?:boolean=no` where the field may be left out), or a constant (`nil`, `yes`, `no`). The types:
 
@@ -46,13 +47,15 @@ Each argument is `<source>:<type>`, in the selector's order. The source is the A
 | `integer`, `unsigned` | `NSInteger`, `NSUInteger` | `number`, truncated toward zero, NaN as 0, clamped to the range |
 | `boolean` | `BOOL` | `boolean` |
 | `string` | `NSString *` | `string`, crossing as UTF-16 units, a lone surrogate included |
+| `string?` | `NSString *`, `nil` allowed | `string \| undefined` |
 | `object`, `object?` | any object, `nil` allowed with `?` | a class from a binding file, `T \| undefined` where `nil` is a value |
 | `rectangle` | `CGRect` | `{ x, y, width, height }` |
 | `enum(Name=value,...)` | an integer | a string literal union |
 | `options(Name=bit,...)` | a bit mask | a readonly array of the literals |
 | `action` | a target and its selector | a closure, `() => void` |
+| `block(type,...)` | a block returning nothing | a closure taking those parameters |
 
-A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); any other object result is retained on its way into Adamic.
+A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); any other object result is retained on its way into Adamic. A result Apple promises isn't `nil` (`object`, `string`), and whatever `new` makes, is checked: `nil` there panics, naming the selector, rather than reaching Adamic as a value its type says can't be. So `new Url('not a url')` panics, as Swift's `URL(string:)!` would.
 
 The seed bindings are written by hand for the first proof. The generator (#qxe07rq) writes them from the SDK's headers through clang's syntax tree, with the rename table (#cgs2gpc) choosing each Adamic name, and replaces them.
 
@@ -80,7 +83,9 @@ The function's IR body only panics, so the JavaScript backend, which can't reach
 - **Objects.** An Objective-C object in Adamic is a foreign value (`runtime/foreign.c`): an object of no fields to everything that looks at objects, so a path that reaches one by name panics rather than reading memory that isn't there, and its last release calls `objc_release`. Every reference parameter of a foreign function is borrowed.
 - **A constructed window** is told not to release itself when closed: Adamic's count owns it.
 - **Actions.** A closure given as an action becomes an `AdamicAction`, an `NSObject` subclass made at runtime whose instance variable holds the closure (counted) and whose `adamicAct:` calls it. A control holds its target only weakly, so the action is kept by the object it was given to, as an associated object, and its `dealloc` releases the closure.
+- **Blocks.** A closure given as a block is a block laid out by hand as the block ABI lays one out, no `-fblocks` needed: it starts on the stack of the call it's given to, holds the closure through an object whose count is Objective-C's (safe on any thread), and Apple copies it if it keeps it. Apple calls a block on whatever queue it likes, and Adamic's counts aren't atomic, so the block's invoke only retains what it was given and hands it to the main thread; there the arguments become Adamic values and the closure runs. A block called on the main thread runs at once, so an enumeration finishes before the call that enumerates returns. Entering Adamic from a block off the main thread panics: that's a runtime bug, never a race.
 - **The pool.** `main` runs inside an autorelease pool, drained when the program finishes, after its globals are released, so whatever Apple held of Adamic's comes back and is freed before the counts are taken.
+- **Waiting.** A program that isn't an app waits for its callbacks in the main thread's run loop: `RunLoop.run()` until a callback calls `RunLoop.main.stop()`.
 - **Exceptions.** An Objective-C exception nothing catches ends the program as a panic, with its name and reason, before anything unwinds through Adamic's frames. An Adamic throw out of an action is uncaught, since nothing in Objective-C can catch it.
 - **Output** is flushed each time the main run loop is about to wait, so an app that never exits still shows what it printed.
 
@@ -94,11 +99,13 @@ Node can't run AppKit, so an Apple program answers to a witness instead (`intern
 
 macOS's `leaks` tool isn't one of the checks. Inside an AppKit process it reports nothing for an object leaked on purpose, in plain Objective-C as in Adamic, though it finds the same leak in a program that only uses Foundation. A check that can't fail proves nothing.
 
-Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), and never letting go of the `NSString`s made for arguments (73 owed).
+The test serves JSON from a server of its own and gives every program its address. `window.a` drives a window, a view, a label and a button through real target-action; `fetch.a` makes two requests through `URLSession`, one fetching the JSON and one refused, each completion a closure Apple calls as a block on a background queue.
+
+Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics).
 
 ## Not yet
 
 - **Cycles through Apple.** An action's closure that captures something holding the control it's attached to is a cycle neither count can see. The cycle finder will treat what a foreign value holds as a slot that reaches anything unless it's `Weak`, and refuse the closing write, as it does for a map's values; a delegate is the test case.
-- **The rest of the bridge:** blocks, delegates and `NSObject` subclasses written as Adamic classes; C functions; rectangles, enumerations and options as results; options objects passed as a value rather than written at the call; compound assignment to an Apple property.
+- **The rest of the bridge:** blocks that return a value or take a block, struct or enumeration; delegates and `NSObject` subclasses written as Adamic classes; rectangles, enumerations and options as results; options objects passed as a value rather than written at the call; compound assignment to an Apple property.
 - **Identity.** Two boxes of the same object aren't `===` yet.
 - **The analyses.** A foreign callee is taken as unknown by region planning; the other analyses read its IR body, which only panics, until every analysis asks one place what a call can do (internal/ir/call_targets.go, landing from codex/call-targets), where a foreign callee will answer unknown. That matters beyond ownership: a foreign call can run Adamic code before it returns (`performClick` runs the button's closure), so nothing may assume a variable is unchanged across one. The native side never keeps a value without retaining it, so the counts hold either way.

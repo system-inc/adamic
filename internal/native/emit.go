@@ -203,6 +203,11 @@ type emitter struct {
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	function      *ir.Function
 	functionDepth int
+
+	// foreignPrototypes are the C functions Apple calls declared so far, by symbol, and blockTypes
+	// the block types, by their parameters (foreign.go).
+	foreignPrototypes map[string]string
+	blockTypes        map[string]string
 }
 
 func (e *emitter) line(format string, arguments ...any) {

@@ -65,6 +65,9 @@ type NativeType struct {
 	// writes, and the integer the native side takes.
 	Names  []string
 	Values []int64
+
+	// Parameters are a block's: what Apple hands the closure when it calls it.
+	Parameters []NativeType
 }
 
 // NativeKind is a native value's representation.
@@ -101,4 +104,8 @@ const (
 	// NativeAction is a closure an Objective-C control calls when it acts: two native arguments, the
 	// target and its action selector, made from one Adamic () => void.
 	NativeAction
+
+	// NativeBlock is a closure as an Objective-C block that returns nothing: Apple calls it with
+	// Parameters, on whatever thread it likes, and the closure runs on the main thread.
+	NativeBlock
 )

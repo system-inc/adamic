@@ -10,6 +10,8 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -21,6 +23,9 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
+
+// stackJSON is what the test's server serves at /stack.json, for the programs that fetch.
+const stackJSON = `[{"identifier":"magnesium","name":"Magnesium","milligrams":200,"timing":"Evening"},{"identifier":"vitamin-d","name":"Vitamin D","milligrams":0.05,"timing":"Morning"}]`
 
 // TestProgramsAgreeWithTheirWitnesses builds each program and its witness under the address and
 // undefined-behavior sanitizers, and holds the program to the witness: the same stdout, byte for
@@ -34,6 +39,18 @@ import (
 // proves nothing, so the counts hold the line instead.
 func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 	t.Parallel()
+	// Every program and witness is given the address of a server of the test's own as its first
+	// argument; those that don't fetch ignore it.
+	server := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		if request.URL.Path != "/stack.json" {
+			http.NotFound(writer, request)
+			return
+		}
+		writer.Header().Set("Content-Type", "application/json")
+		_, _ = writer.Write([]byte(stackJSON))
+	}))
+	t.Cleanup(server.Close)
+	address := server.URL
 	programs, err := filepath.Glob(filepath.Join("testdata", "*.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -53,17 +70,17 @@ func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 
 			witness := filepath.Join(directory, "witness")
 			compile(t, "clang", "-fobjc-arc", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-g", "-Wall", "-Werror", witnessSource, "-framework", "AppKit", "-o", witness)
-			expected := run(t, witness)
+			expected := run(t, witness, address)
 
 			sanitized := filepath.Join(directory, "sanitized")
 			build(t, program, sanitized, native.Options{Sanitize: true})
-			if observed := run(t, sanitized); !bytes.Equal(observed, expected) {
+			if observed := run(t, sanitized, address); !bytes.Equal(observed, expected) {
 				t.Fatalf("%s disagrees with its witness\nwitness:\n%s\nadamic:\n%s", program, expected, observed)
 			}
 
 			counted := filepath.Join(directory, "counted")
 			build(t, program, counted, native.Options{Count: true})
-			allocations, frees, owed := counts(t, counted)
+			allocations, frees, owed := counts(t, counted, address)
 			if allocations != frees {
 				t.Errorf("%s allocated %d values and freed %d", program, allocations, frees)
 			}
@@ -100,10 +117,10 @@ func compile(t *testing.T, command string, arguments ...string) {
 }
 
 // run runs a binary and returns its stdout, failing on any exit but 0 or anything on stderr.
-func run(t *testing.T, binary string) []byte {
+func run(t *testing.T, binary string, arguments ...string) []byte {
 	t.Helper()
 	var stdout, stderr bytes.Buffer
-	command := exec.Command(binary)
+	command := exec.Command(binary, arguments...)
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil || stderr.Len() > 0 {
 		t.Fatalf("%s: %v\nstderr:\n%s", filepath.Base(binary), err, stderr.Bytes())
@@ -118,10 +135,10 @@ var (
 
 // counts runs a counted build and reads what it allocated and freed, and what Objective-C references
 // its conversions still owe.
-func counts(t *testing.T, binary string) (int, int, int) {
+func counts(t *testing.T, binary string, arguments ...string) (int, int, int) {
 	t.Helper()
 	var stderr bytes.Buffer
-	command := exec.Command(binary)
+	command := exec.Command(binary, arguments...)
 	command.Stderr = &stderr
 	if err := command.Run(); err != nil {
 		t.Fatalf("%s: %v\n%s", filepath.Base(binary), err, stderr.Bytes())

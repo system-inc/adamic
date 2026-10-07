@@ -60,6 +60,10 @@ adamic_object *adamic_apple_box(id object, bool retained);
 // adamic_apple_unbox is what a box holds, nil for undefined.
 id adamic_apple_unbox(const adamic_object *box);
 
+// adamic_apple_present is object, which Apple's header promises isn't nil (or which new made): nil
+// there panics, naming what gave it, rather than reaching Adamic as a value its type says can't be.
+id adamic_apple_present(id object, const char *what);
+
 // adamic_apple_constructed is what an init made, made safe to hold by count: a window that would
 // release itself when closed is told not to, since Adamic's count owns it.
 id adamic_apple_constructed(id object);
@@ -87,5 +91,42 @@ unsigned long adamic_apple_options(const adamic_array *names, size_t count, cons
 id adamic_apple_action(adamic_closure *closure);
 SEL adamic_apple_action_selector(void);
 void adamic_apple_keep(id owner, id kept, const void *key);
+
+// adamic_apple_block is a closure as an Objective-C block, laid out as the block ABI lays one out
+// (clang's Block-ABI-Apple), with one captured value: holder, an object holding the closure, whose
+// count is Objective-C's and so safe on any thread. The compiler declares, for each block type, its
+// descriptor and its invoke (internal/native/foreign.go); a block starts on the stack of the call it's
+// given to, and Apple copies it to keep it, which copy and dispose follow.
+typedef struct adamic_apple_block_descriptor {
+	unsigned long reserved;
+	unsigned long size;
+	void (*copy)(void *destination, const void *source);
+	void (*dispose)(const void *block);
+	const char *signature;
+	const char *layout;
+} adamic_apple_block_descriptor;
+
+typedef struct adamic_apple_block {
+	void *isa;
+	int flags;
+	int reserved;
+	void (*invoke)(void);
+	const adamic_apple_block_descriptor *descriptor;
+	id holder;
+} adamic_apple_block;
+
+void adamic_apple_block_start(adamic_apple_block *block, adamic_closure *closure, const adamic_apple_block_descriptor *descriptor, void (*invoke)(void));
+void adamic_apple_block_end(adamic_apple_block *block);
+void adamic_apple_block_copy(void *destination, const void *source);
+void adamic_apple_block_dispose(const void *block);
+
+// A block's invoke may run on any thread, and Adamic's counts belong to the main thread: so invoke
+// only retains what it was given into a call (adamic_apple_call_new), and adamic_apple_on_main runs
+// the call's deliver on the main thread, at once when invoke is already there, otherwise when the
+// main queue next runs. deliver makes the arguments Adamic values and calls adamic_apple_block_call.
+void *adamic_apple_call_new(size_t size);
+void adamic_apple_call_free(void *call);
+void adamic_apple_on_main(void *call, void (*deliver)(void *));
+void adamic_apple_block_call(id holder, adamic_value *arguments);
 
 #endif

@@ -4,6 +4,8 @@
 #include "adamic_apple.h"
 
 #include <CoreFoundation/CoreFoundation.h>
+#include <dispatch/dispatch.h>
+#include <pthread.h>
 #include <objc/objc-exception.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,6 +89,13 @@ static void panic_text(const char *prefix, const char *detail) {
 	memcpy(message, prefix, prefix_length);
 	memcpy(message + prefix_length, detail, detail_length + 1);
 	adamic_panic(message, prefix_length + detail_length);
+}
+
+id adamic_apple_present(id object, const char *what) {
+	if (object == nil) {
+		panic_text("Apple gave nil where it promised a value: ", what);
+	}
+	return object;
 }
 
 id adamic_apple_class(const char *name) {
@@ -222,9 +231,19 @@ static void act(id self, SEL command, id sender) {
 	}
 }
 
+static void release_closure(void *closure) {
+	adamic_release(closure);
+}
+
+// An action or a block's holder may be let go of last on another thread, when Apple drops a block
+// there: its closure is released on the main thread, where Adamic's counts are kept.
 static void action_dealloc(id self, SEL command) {
 	adamic_closure **closure = (adamic_closure **)((char *)self + ivar_getOffset(action_closure));
-	adamic_release(*closure);
+	if (pthread_main_np()) {
+		adamic_release(*closure);
+	} else {
+		dispatch_async_f(dispatch_get_main_queue(), *closure, release_closure);
+	}
 	*closure = NULL;
 	struct objc_super super = {self, class_getSuperclass(object_getClass(self))};
 	((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&super, command);
@@ -259,6 +278,70 @@ id adamic_apple_action(adamic_closure *closure) {
 
 SEL adamic_apple_action_selector(void) {
 	return sel_registerName("adamicAct:");
+}
+
+// The block ABI's flags: the block has copy and dispose helpers, and a signature.
+enum {
+	block_has_copy_dispose = 1 << 25,
+	block_has_signature = 1 << 30,
+};
+
+extern void *_NSConcreteStackBlock[32];
+
+void adamic_apple_block_start(adamic_apple_block *block, adamic_closure *closure, const adamic_apple_block_descriptor *descriptor, void (*invoke)(void)) {
+	block->isa = _NSConcreteStackBlock;
+	block->flags = block_has_copy_dispose | block_has_signature;
+	block->reserved = 0;
+	block->invoke = invoke;
+	block->descriptor = descriptor;
+	block->holder = adamic_apple_action(closure);
+}
+
+void adamic_apple_block_end(adamic_apple_block *block) {
+	adamic_apple_let_go(block->holder);
+}
+
+void adamic_apple_block_copy(void *destination, const void *source) {
+	((adamic_apple_block *)destination)->holder = objc_retain(((const adamic_apple_block *)source)->holder);
+}
+
+void adamic_apple_block_dispose(const void *block) {
+	objc_release(((const adamic_apple_block *)block)->holder);
+}
+
+void *adamic_apple_call_new(size_t size) {
+	void *call = malloc(size);
+	if (call == NULL) {
+		static const char message[] = "out of memory";
+		adamic_panic(message, sizeof message - 1);
+	}
+	return call;
+}
+
+void adamic_apple_call_free(void *call) {
+	free(call);
+}
+
+void adamic_apple_on_main(void *call, void (*deliver)(void *)) {
+	if (pthread_main_np()) {
+		deliver(call);
+		return;
+	}
+	dispatch_async_f(dispatch_get_main_queue(), call, deliver);
+}
+
+void adamic_apple_block_call(id holder, adamic_value *arguments) {
+	if (!pthread_main_np()) {
+		// Adamic's counts aren't atomic: its code runs on the main thread only, and this is the door.
+		static const char message[] = "runtime bug: a block called Adamic code off the main thread";
+		adamic_panic(message, sizeof message - 1);
+	}
+	adamic_closure *closure = *(adamic_closure **)((char *)holder + ivar_getOffset(action_closure));
+	adamic_value result = closure->code(closure, arguments);
+	(void)result;
+	if (adamic_thrown != NULL) {
+		adamic_uncaught();
+	}
 }
 
 void adamic_apple_keep(id owner, id kept, const void *key) {
