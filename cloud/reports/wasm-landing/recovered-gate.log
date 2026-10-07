@@ -1,0 +1,32 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	143.633s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.243s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic	2.195s
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	5.672s
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.537s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	63.526s
+ok  	github.com/system-inc/adamic/internal/flow	116.125s
+ok  	github.com/system-inc/adamic/internal/fresh	52.323s
+ok  	github.com/system-inc/adamic/internal/fuzz	12.449s
+ok  	github.com/system-inc/adamic/internal/ir	1.685s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.895s
+ok  	github.com/system-inc/adamic/internal/lower	36.842s
+ok  	github.com/system-inc/adamic/internal/native	206.729s
+ok  	github.com/system-inc/adamic/internal/oracle	193.873s
+ok  	github.com/system-inc/adamic/internal/regexp	8.562s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	709.134s
+ok  	github.com/system-inc/adamic/stage1/cohere/css	605.715s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	112.360s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	21.381s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	36.604s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	39.873s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	45.549s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	452.367s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	603.382s

@@ -16,6 +16,9 @@ type Program struct {
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
+	// BoundaryStrings belong only to declaration metadata, never codegen.
+	BoundaryStrings BoundaryStringTable
+
 	// Regexps contain immutable C bytecode compiled during lowering.
 	Regexps []RegExpProgram
 
@@ -75,7 +78,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	Name     string
+	Position SourcePosition
+	Boundary FunctionBoundary
 
 	// Parameters are locals, in order.
 	Parameters []int

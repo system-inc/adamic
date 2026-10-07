@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:8933
+// Census reason: non-boolean control condition
+interface Diagnostic { canonicalHead?: { code: number }; code: number; }
+function getDiagnosticCode(d: Diagnostic): number {
+    return d.canonicalHead?.code || d.code;
+}
+
+for (const code of [0, -0, NaN, 2322]) { console.log(String(getDiagnosticCode({canonicalHead: {code}, code: 2345}))); }
+console.log(String(getDiagnosticCode({code: 18048})));

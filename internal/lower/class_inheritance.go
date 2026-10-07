@@ -211,8 +211,10 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			return err
 		}
 		l.result.Functions[initializer].Parameters = append([]int{this}, l.result.Functions[initializer].Parameters...)
+		l.result.Functions[initializer].Boundary.Parameters = append([]*ir.JSONDecodeSchema{nil}, l.result.Functions[initializer].Boundary.Parameters...)
 	} else {
 		l.result.Functions[initializer].Parameters = []int{this}
+		l.result.Functions[initializer].Boundary.Parameters = []*ir.JSONDecodeSchema{nil}
 		if instance.base != nil {
 			for _, parameter := range l.result.Functions[instance.base.initializer].Parameters[1:] {
 				local := len(l.result.Locals)
@@ -220,6 +222,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 				incoming.Function, incoming.Captured, incoming.Borrowed = initializer, false, false
 				l.result.Locals = append(l.result.Locals, incoming)
 				l.result.Functions[initializer].Parameters = append(l.result.Functions[initializer].Parameters, local)
+				l.result.Functions[initializer].Boundary.Parameters = append(l.result.Functions[initializer].Boundary.Parameters, nil)
 			}
 		}
 	}

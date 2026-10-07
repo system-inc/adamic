@@ -1,0 +1,29 @@
+--- a/src/compiler/core.ts
++++ b/src/compiler/core.ts
+@@ -19,7 +19,7 @@
+ export const emptyMap: ReadonlyMap<never, never> = new Map<never, never>();
+ 
+ /** @internal */
+-export function length(array: readonly any[] | undefined): number {
++export function length<T>(array: readonly T[] | undefined): number {
+     return array !== undefined ? array.length : 0;
+ }
+ 
+@@ -962,7 +962,7 @@
+  * Gets the actual offset into an array for a relative offset. Negative offsets indicate a
+  * position offset from the end of the array.
+  */
+-function toOffset(array: readonly any[], offset: number) {
++function toOffset<T>(array: readonly T[], offset: number) {
+     return offset < 0 ? array.length + offset : offset;
+ }
+ 
+@@ -1263,7 +1263,7 @@
+  *
+  * @internal
+  */
+-export function hasProperty(map: MapLike<any>, key: string): boolean {
++export function hasProperty(map: object, key: string): boolean {
+     return hasOwnProperty.call(map, key);
+ }
+ 

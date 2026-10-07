@@ -1,0 +1,102 @@
+interface Data {
+	readonly name: string;
+	readonly values: readonly number[];
+	readonly child: { readonly count: number; readonly note: string | undefined };
+}
+interface Deep {
+	readonly child: { readonly child: { readonly count: number } };
+}
+class Box {
+	readonly value: number;
+	constructor(value: number) {
+		this.value = value;
+	}
+}
+function data(value: Data): number {
+	let result = value.name.length + value.child.count;
+	for (const item of value.values) {
+		result += item;
+	}
+	return result;
+}
+function tooDeep(value: Deep): number {
+	let result = value.child.child.count;
+	for (let i = 0; i < 1; i++) {
+		result += 1;
+	}
+	return result;
+}
+function classParameter(value: Box): number {
+	let result = value.value;
+	for (let i = 0; i < 1; i++) {
+		result += 1;
+	}
+	return result;
+}
+function returnsClosure(value: number): () => number {
+	for (let i = 0; i < 1; i++) {
+		value += 1;
+	}
+	return () => 2;
+}
+function unionParameter(value: number | string): number {
+	let result = 0;
+	for (let i = 0; i < 1; i++) {
+		result += 1;
+	}
+	if (typeof value === 'number') {
+		return result + value;
+	}
+	return result + value.length;
+}
+function tupleParameter(value: readonly [number, string]): number {
+	let result = value[0];
+	for (let i = 0; i < value[1].length; i++) {
+		result += 1;
+	}
+	return result;
+}
+function throughAlias(value: number): number {
+	let callback = (n: number): number => {
+		let result = n;
+		for (let i = 0; i < 1; i++) {
+			result += 1;
+		}
+		return result;
+	};
+	const alias = callback;
+	return alias(value);
+}
+function mutationInCallee(value: { items: number[] }): number {
+	return writeItems(value.items);
+}
+function writeItems(items: number[]): number {
+	for (let i = 0; i < 1; i++) {
+		items.push(1);
+	}
+	return items.length;
+}
+function copiedArray(items: number[]): number {
+	const copy = items.slice();
+	for (let i = 0; i < 1; i++) {
+		copy.push(1);
+	}
+	return copy.length;
+}
+function passthrough(items: number[]): number[] {
+	return items;
+}
+function mutationThroughReturn(items: number[]): number {
+	const alias = passthrough(items);
+	for (let i = 0; i < 1; i++) {
+		alias.push(1);
+	}
+	return alias.length;
+}
+function glue(): number {
+	console.log('shapes');
+	return data({ name: 'ab', values: [1, 2], child: { count: 3, note: undefined } });
+}
+console.log(`${glue()} ${tooDeep({ child: { child: { count: 1 } } })} ${classParameter(new Box(2))}`);
+console.log(`${returnsClosure(1)()} ${unionParameter('abc')} ${tupleParameter([2, 'abc'])} ${throughAlias(3)}`);
+console.log(`${mutationInCallee({ items: [] })} ${copiedArray([1, 2])} ${mutationThroughReturn([])}`);

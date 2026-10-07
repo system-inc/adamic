@@ -18,3 +18,5 @@ export function programArguments() { panic('programArguments: not available on W
 // The JavaScript backend imports decodeJson. Its Workers implementation is a separate unit, so until it
 // lands a call panics, loudly, rather than decoding with code the oracle also runs.
 export function decodeJson() { panic('decodeJson: not yet available on Workers'); }
+// Keep the backend's encoder import linkable until the Workers JSON runtime unit lands.
+export function encodeJson() { panic('encodeJson: not yet available on Workers'); }

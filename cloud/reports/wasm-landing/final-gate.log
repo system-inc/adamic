@@ -1,0 +1,67 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	262.386s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.239s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic	21.084s
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	6.545s
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.282s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	78.210s
+ok  	github.com/system-inc/adamic/internal/flow	126.918s
+ok  	github.com/system-inc/adamic/internal/fresh	56.594s
+ok  	github.com/system-inc/adamic/internal/fuzz	14.084s
+ok  	github.com/system-inc/adamic/internal/ir	16.016s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.990s
+ok  	github.com/system-inc/adamic/internal/lower	37.997s
+ok  	github.com/system-inc/adamic/internal/native	210.286s
+ok  	github.com/system-inc/adamic/internal/oracle	199.597s
+ok  	github.com/system-inc/adamic/internal/regexp	6.796s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	680.971s
+ok  	github.com/system-inc/adamic/stage1/cohere/css	564.663s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	85.799s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	12.662s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	25.935s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	26.251s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	36.887s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	407.938s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	570.022s
+--- FAIL: TestMarkdownUnicodeWidths (3.91s)
+    width_test.go:78: original dependencies exit 1 stderr node:internal/modules/esm/resolve:271
+            throw new ERR_MODULE_NOT_FOUND(
+                  ^
+        
+        Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/tmp/adamic-markdown-width/node_modules/emoji-regex/index.js' imported from /workspace/adamic/stage1/cohere/markdownblocks/testdata/width_library.mjs
+            at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+            at moduleResolve (node:internal/modules/esm/resolve:865:10)
+            at defaultResolve (node:internal/modules/esm/resolve:992:11)
+            at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+            at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+            at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+            at #resolve (node:internal/modules/esm/loader:683:17)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+            at node:internal/modules/esm/loader:632:32
+            at TracingChannel.tracePromise (node:diagnostics_channel:362:14) {
+          code: 'ERR_MODULE_NOT_FOUND',
+          url: 'file:///tmp/adamic-markdown-width/node_modules/emoji-regex/index.js'
+        }
+        
+        Node.js v24.19.0
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	1693.076s
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width	[no test files]
+ok  	github.com/system-inc/adamic/stage1/cohere/markdowninline	371.589s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	10.367s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	24.892s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	25.679s
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	909.622s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	27.281s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	168.562s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	42.799s
+FAIL

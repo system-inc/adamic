@@ -807,12 +807,27 @@ _Noreturn void adamic_panic(const char *message, size_t length);
 // when the address sanitizer keeps locals elsewhere.
 extern uintptr_t adamic_stack_limit;
 _Noreturn void adamic_stack_overflow(void);
+#ifdef ADAMIC_TARGET_WASI
+// Even a function using only Wasm locals must advance the linear stack. Otherwise
+// its engine call stack can trap before this check sees any movement. The volatile
+// endpoints preserve a 64-byte frame, including in optimized recursive functions.
+#define ADAMIC_CHECK_STACK() \
+	do { \
+		volatile unsigned char adamic_stack_frame[64]; \
+		adamic_stack_frame[0] = 0; \
+		adamic_stack_frame[63] = 0; \
+		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
+			adamic_stack_overflow(); \
+		} \
+	} while (0)
+#else
 #define ADAMIC_CHECK_STACK() \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
 			adamic_stack_overflow(); \
 		} \
 	} while (0)
+#endif
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.

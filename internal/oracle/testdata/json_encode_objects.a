@@ -47,3 +47,12 @@ console.log(unusualText);
 const unusualAgain = decodeJson<Unusual>(unusualText);
 if (unusualAgain.kind !== 'Ok') panic('unusual fields round trip failed');
 if (encodeJson<Unusual>(unusualAgain.value) !== unusualText) panic('unusual fields re-encode differs');
+
+// One call site crosses optional fields present and missing in several layouts.
+const middleOptional = {name:'middle', count:2};
+const changingShapes: readonly Optional[] = [
+ {name:'a', count:1}, middleOptional, {name:'b'},
+ {name:'c', count:3}, {name:'d', note:'é🌍'}
+];
+for (const value of changingShapes) console.log(encodeJson<Optional>(value));
+console.log(encodeJson<string>('é🌍'.repeat(10000)+'\ud800"end'));

@@ -62,6 +62,19 @@ func TestWorkerEncodeJSON(t *testing.T) {
 			entry := filepath.Join(directory, "entry.a")
 			write(t, entry, string(source)+"\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n")
 			generated := filepath.Join(directory, "worker")
+			if strings.HasSuffix(fixture, "_notyet.a") {
+				// The merged encoder includes a refusal fixture alongside successes.
+				for _, args := range [][]string{{"worker", entry, "--out", generated}, {"build", fixture, "-o", filepath.Join(directory, "native")}} {
+					cmd := exec.Command(compiler, args...)
+					cmd.Dir = root
+					output, err := cmd.CombinedOutput()
+					if err == nil || !bytes.Contains(output, []byte("encodeJson of a class instance is not yet supported; describe the data with an interface")) {
+						t.Fatalf("expected class-instance NotYet for %v: %v\n%s", args, err, output)
+					}
+				}
+				t.Log("Worker and native both retain the class-instance NotYet refusal")
+				return
+			}
 			run(compiler, "worker", entry, "--out", generated)
 			native := filepath.Join(directory, "native")
 			run(compiler, "build", fixture, "-o", native)
@@ -105,7 +118,7 @@ func TestWorkerEncodeJSON(t *testing.T) {
 	}
 	mutants := []struct{ name, before, after string }{
 		{"omit-falsy-optional", "field.optional && value[name] === undefined", "field.optional && !value[name]"},
-		{"reverse-fields", "const entries = [];\n\t\t\t\tfor (const field of node.fields) {", "const entries = [];\n\t\t\t\tfor (const field of [...node.fields].reverse()) {"},
+		{"reverse-fields", "const entries = [];\n\t\t\t\t\tfor (const field of fields) {", "const entries = [];\n\t\t\t\t\tfor (const field of [...fields].reverse()) {"},
 		{"replace-lone-surrogate", "return JSON.stringify(value);", "return JSON.stringify(typeof value === 'string' ? value.replace(/[\\uD800-\\uDFFF]/g, '\\uFFFD') : value);"},
 		{"write-infinity", "return JSON.stringify(value);", "return typeof value === 'number' && !Number.isFinite(value) ? String(value) : JSON.stringify(value);"},
 	}
