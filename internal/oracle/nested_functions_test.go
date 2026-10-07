@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"minimal", "captures", "hoisting", "mutual", "returned", "array", "three_levels", "tdz", "tdz_write", "weak", "destructured", "destructured_tdz", "mixed", "pattern_parameter", "owned_parameter", "generic_capture", "assignment_return"} {
+	for _, name := range []string{"minimal", "captures", "hoisting", "mutual", "returned", "array", "three_levels", "tdz", "tdz_write", "weak", "destructured", "destructured_tdz", "mixed", "pattern_parameter", "owned_parameter", "generic_capture", "assignment_return", "reduced_parameter_unused", "reduced_parameter_unreachable", "reduced_parameter_escaped"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

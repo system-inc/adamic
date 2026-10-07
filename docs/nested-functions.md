@@ -490,3 +490,62 @@ preserved in /tmp/adamic-nested-land-{counts,gate,vet,format}.log. No complete
 repository stage1 gate was run for this integration preparation. The earlier
 individual compiler overlay mutants were not rerun; the permanent oracle mutant
 and refusal checks ran in both complete oracle gates.
+
+
+## Reduced borrowed-parameter witnesses
+
+Three exact reduced function bodies supplied from adamic-reduce, based on full
+fixtures 02, 03 and 04 at b15216d, are now executable oracle fixtures beside the
+existing synthetic programs:
+
+| Fixture | Driver output |
+| --- | --- |
+| nested_reduced_parameter_unused.a | scanner created followed by a newline |
+| nested_reduced_parameter_unreachable.a | read: followed by a newline |
+| nested_reduced_parameter_escaped.a | scanner 4 followed by a newline |
+
+Each driver builds its text at runtime with concatenation and String(number).
+The first two preserve their unused/unreachable nested declarations exactly.
+The third saves createScanner's returned function and invokes it in the next
+statement, after both the enclosing frame and argument statement have ended.
+No compiler implementation was changed for these additions.
+
+The focused uncached Node/JavaScript/native/release/sanitizer/leak oracle passed
+in 2.156s (/tmp/adamic-nested-witness-oracle.log). Four compiler overlay mutants
+were run independently, with production files unchanged:
+
+* Remove the EnvironmentCell exclusion from borrowed parameters. Each of the
+  three witnesses, run separately, fails with native: a store into the borrowed
+  parameter text. Logs are /tmp/adamic-nested-witness-mutant-borrow-{unused,
+  unreachable,escaped}.log.
+* Omit the retain when storing a reference into an environment cell. The escaped
+  witness compiles, then ASan reports heap-use-after-free in adamic_retain called
+  by getText, after the text argument was freed at the end of the createScanner
+  statement. This is a runtime failure, not a clang warning. The log is
+  /tmp/adamic-nested-witness-mutant-no-cell-retain.log.
+
+The full count regeneration passed in 15.433s and adds only the following rows.
+All existing rows are unchanged. Columns are allocations, frees, retains,
+releases, peak live and regions:
+
+| Reduced witness | Allocations | Frees | Retains | Releases | Peak | Regions |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| unused | 4 | 4 | 3 | 6 | 4 | 0 |
+| unreachable | 5 | 5 | 4 | 8 | 4 | 0 |
+| escaped | 4 | 4 | 6 | 10 | 4 | 0 |
+
+These new rows measure new driver programs, including runtime-built strings and
+the counted frame/closure; they are not changes to any full fixture's counts.
+The original TypeScript fixture count remains 8/11. Main is still e8ba3d5, and
+there are no new language decisions on main that clear the three paused originals.
+The narrow parser proof is retained. No graph-regions work is built before that
+unit reaches main, and none of the remaining originals is blocked only by cycles.
+
+Setup: all tool readiness lines 0s, cache warm and total 77s, nproc 5 with a
+4-CPU quota. Test shells source /workspace/adamic-tools/env.sh. Complete oracle,
+vet and format logs are /tmp/adamic-nested-witness-{complete-oracle,vet,format}.log.
+No complete repository stage1 gate or other new compiler feature is claimed.
+
+The complete uncached oracle passed in 76.919s, including all twenty synthetic
+nested fixtures, the eight supported originals, the three typed refusal probes
+and the permanent cycle mutant. Vet and formatting passed without diagnostics.
