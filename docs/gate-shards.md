@@ -1,5 +1,90 @@
 # Gate shards
 
+## Provisioned whole-gate timings, October 7
+
+The timing file was regenerated with the tool, rather than estimated from package spans:
+
+```sh
+adamic-gate timings -out cmd/adamic-gate/timings.json /workspace/plain-2adf65c/gate-out/test.jsonl
+```
+
+Input: `gate-logs/2adf65c2514e/plain:plain.tgz`, `gate-out/test.jsonl`, tested commit
+`2adf65c2514eefbbb073bfdab922d00a4e80a3d3`, 4,114 pass, 0 fail, 21 skip,
+4,135 distinct terminal tests. The gate duration recorded by that worker is
+3,471.920 seconds. Build flags: `nproc=5`, `cpu.max="400000 100000"`,
+`go="go version go1.27.1 linux/amd64"`, `clang="clang version 20.1.8 (87f0227)"`,
+`node="v24.19.0"`, uncached gate, setup `--gate-inputs`. Gate load before/after
+was not recorded; setup recorded 0.25/6.51, which is a different interval.
+These fields apply to the source observations behind every prediction below.
+
+| Shards | Maximum predicted seconds | Maximum predicted minutes |
+| ---: | ---: | ---: |
+| 8 | 2,034.970 | 33.92 |
+| 10 | 1,656.950 | 27.62 |
+| 12 | 1,404.950 | 23.42 |
+| 13 | 1,308.010 | 21.80 |
+| 14 | 1,224.940 | 20.42 |
+| 15 | 1,152.940 | 19.22 |
+| 16 | 1,089.910 | 18.17 |
+
+Fifteen is the smallest passing count; sixteen has more margin. Counts up to twelve
+cannot fit the 15,120.390 seconds of known unit work into twenty minutes per shard,
+even before parent setup; thirteen and fourteen also fail in the actual plans. Instrument:
+`adamic-gate plan -count N`, using the regenerated timings and the current source.
+These are sums of recorded elapsed work plus repeated parent setup, not measured
+fleet wall times. Missing timings, compilation, discovery, vet and contention
+are not included. Ten new integration and gate-tool units have unknown weights;
+no production shards or new 58-minute plain reference were run on this box.
+The full per-shard predictions, including each shard's largest unit, are in
+`cmd/adamic-gate/evidence/replan-provisioned.json`.
+
+| Largest single unit | Seconds | Minutes |
+| --- | ---: | ---: |
+| `internal/unicodeproperties::TestCanonicalizeUnicodeNode` | 822.510 | 13.71 |
+| `stage1/cohere/json::TestPortMatchesGoCohere` | 762.200 | 12.70 |
+| `stage1/cohere/markdownblocks::TestMarkdownWhitespaceLayout` | 762.150 | 12.70 |
+| `stage1/cohere/markdownblocks::TestMarkdownASTPreprocessing` | 729.800 | 12.16 |
+| `stage1/cohere/markdownblocks::TestMarkdownQuoteLayout` | 626.800 | 10.45 |
+
+No planned unit exceeds 15 minutes. The 2,762.341-second Markdown package terminal
+is an aggregate span, not one unit: its top-level tests are already selectable.
+The Unicode sweep and JSON parity test contain no `t.Run` around their heavy work.
+Markdown layout mutants are selectable, but the parent performs corpus generation,
+compilation and batch parity outside them; splitting those children would repeat
+the heavy work. No test files were changed.
+
+## Compare with a plain reference branch
+
+Local raw logs remain supported. To fetch and compare a reference at the merged
+plan's SHA, use:
+
+```sh
+adamic-gate compare /workspace/merged git:origin:gate-logs/TESTED_SHA/plain
+```
+
+The branch's SHA may be abbreviated to at least seven hex digits. The archive
+must contain `gate-out/test.jsonl` and `gate-out/run-notes.txt`, with exactly one
+`commit=<full tested SHA>` line matching `merged.json`'s `Plan.Commit`. A plain
+reference at 2adf65c supplies timing weights for newer code, but cannot certify
+a fleet at the new tip. Run the new reference at that fleet's exact SHA and
+provide its corresponding branch to compare.
+
+The command fetches fresh evidence into a temporary disk-backed directory and
+removes it afterward. It neither checks out the evidence branch nor reuses a
+cached archive. Every Git child has a bounded process-group deadline. Only the
+two expected regular archive members are copied; missing, linked or duplicate
+members, a wrong tested SHA, and corrupt compression are refused. The ordinary
+comparison still checks every test verdict and the terminal event count.
+
+The real local-remote test compares green, replaces the same branch's archive
+with a wrong-SHA mutant and requires refusal, then changes one terminal verdict
+and requires failure. A source-overlay mutant removing the tested-SHA check
+fails this test. All 42 named gate-package tests pass with `-race`; vet and
+Darwin arm64 cross-compilation pass. A transport smoke check fetched the actual
+origin archive and compared it with a summary derived from that same log:
+4,135 terminal events, empty diff. That validates transport, not a new fleet.
+Proof logs are in `cmd/adamic-gate/evidence/replan-proofs.tar.gz`.
+
 Build `go build -o /workspace/adamic-gate ./cmd/adamic-gate` after `bash cloud/setup.sh`
 and source the environment file setup prints. The mandatory Markdown width oracle also needs
 its three pinned dependencies, which cloud/setup.sh does not install:
@@ -26,6 +111,40 @@ package checkpoints for the identical plan, environment, toolchain and job count
 writes `merged.json` and the concatenated raw `test.jsonl`. A red merge retains its evidence
 and exits 1. Compare exits 1 for a different test name, verdict, or distinct terminal-event
 count, or for a red merge. Test identity includes both package and the entire Go test name.
+
+## Recursive submodule provenance
+
+Before discovery or reuse of a checkpoint, each shard reads every gitlink recursively
+from the tested `HEAD` tree using `git ls-tree -rz`. Nested pins come from the pinned
+parent commit, even if its checkout is stale. `summary.json` records `Submodules`, sorted
+by repository-relative `Path`, with `Pinned`, `Checked` (the actual `rev-parse HEAD`),
+and `Dirty` for each module. In this tree these are `cohere` and `cohere/TypeScript`.
+An uninitialized module, a checkout differing from its pin, or tracked/untracked dirt
+refuses the shard before any Go discovery or tests. Local submodule ignore settings
+cannot hide changes. The audit is repeated after execution and changes make the shard red.
+
+Merge checks every shard against the tested tree's paths and pins and against other
+shards' checkout records. Missing, duplicate, unexpected, dirty, or conflicting records
+make merge red; conflicts name both shard indices and the submodule. Older summaries
+without recursive provenance cannot certify a tree containing submodules.
+
+`TestShardRefusesStaleRecursiveSubmodules` creates two cohere pins with different nested
+pins, moves the real checkout, and verifies the shard refuses it by name. It also checks
+stale nested checkouts on resume and tracked/untracked dirt. A two-shard miniature gate
+in `TestMergeRejectsDifferentCohereCommits` first merges green, then changes one recorded
+cohere checkout and requires a red merge naming shards 0 and 1 and cohere. No new cache
+is introduced; each invocation, including resume, performs the provenance audit again.
+
+Verified after merging integration at `2adf65c`: 34 named package tests pass with
+`go test -race -count=1 -json ./cmd/adamic-gate`; focused vet and Darwin arm64 test
+cross-compilation pass. Source-overlay mutants removing the shard preflight and the
+merge provenance check each fail their respective real-entry-point regression test.
+Raw JSON, separate stderr, and overlay inputs are in
+`cmd/adamic-gate/evidence/submodule-provenance.tar.gz`. No production gate or Mac
+execution was attempted. Setup reached Go 1.27.1, clang 20.1.8 and Node 24.19.0
+on a box with `nproc=5`, then failed downloading `github.com/klauspost/compress@v1.20.0`
+because the module proxy's Google Storage redirect returned Forbidden. The existing
+toolchain, sourced from `/workspace/adamic-tools/env.sh`, completed these checks.
 
 ## Selection and coverage
 
@@ -656,3 +775,88 @@ go test -race -count=20 -json -run 'Deadline|ExitedLeader|WaitCannot|CompilerWor
 `cmd/adamic-gate/evidence/readiness-proofs.tar.gz` preserves the supervisors, raw trial logs,
 source hashes, toolchain/CPU metadata, full suite, Python tests, Darwin build, vet and both mutants.
 This is a scheduling-contention correctness proof, not a whole-gate performance measurement.
+
+
+## Concurrency measurement before the provisioned fleet
+
+All four trials tested fixed commit `6f61080201f13b84cdec1bc6078b1813d135ac21`,
+uncached, on this box. Shard 8 is the heaviest shard of the 15-shard plan: predicted
+1,152.940 seconds, 51 planned units. Required parity corpora and the verified tsgo
+C archive were supplied. The three requested settings each ran once because they
+take over five minutes. A fourth run repeated the baseline after the alternatives
+to detect run-order/compiler-cache effects. Each emitted the identical set of
+429 named terminal verdicts: 429 pass, zero fail, zero skip; summary errors empty.
+
+| Loop / setting | Wall seconds | Peak RSS GiB | Sampled cgroup peak GiB | Load 1/5/15 min before → after |
+| --- | ---: | ---: | ---: | --- |
+| today (`auto`) | 654.116 | 2.230 | 12.592 | 4.99/5.23/3.16 → 1.09/3.88/4.33 |
+| four-one (`4x1`) | 510.437 | 2.225 | 12.551 | 1.09/3.88/4.33 → 1.03/2.32/3.55 |
+| two-two (`2x2`) | 562.544 | 2.225 | 12.308 | 1.03/2.32/3.55 → 1.04/1.80/2.86 |
+| today-repeat (`auto`) | 524.655 | 2.222 | 12.744 | 1.04/1.80/2.86 → 1.09/2.15/2.87 |
+
+The fastest alternative, `4x1`, is only 2.710% faster than the repeated baseline,
+below the requested 5% threshold. Retain today's default: `-concurrency auto`.
+`2x2` is slower than the repeated baseline. The initial baseline paid additional
+compilation work despite plan-discovery warming; treating its 21.97% difference
+as a concurrency improvement would confound compilation-cache/run-order effects.
+ADAMIC_GATE_UNCACHED bypassed answer caches in every trial; the Go compilation
+cache remained enabled. No new answer cache was added.
+
+Here `auto` resolved to five package jobs and Go's unset `-parallel`, whose effective
+default was five: a nominal budget of 25, despite a four-core cgroup quota.
+`4x1` and `2x2` each have a nominal budget of four. Limits apply to package workers
+and Go parallel tests; they do not cap every native subprocess inside one test.
+`-concurrency JOBSxPARALLEL` sets both through one flag. The shard summary records
+Setting, Jobs, Parallel, EffectiveParallel and Budget; its build-flags line also
+records them. Resume keys include both explicit and effective parallelism, and
+merge validates package checkpoints against the actual `-parallel` argument.
+Two source-overlay mutants dropping those individual key components must fail
+`TestConcurrencyBudgetAndResumeIdentity`; the checkpoint test also rejects an
+invocation with different parallelism.
+
+Every trial's build flags: commit above; `nproc=5`; `cpu.max="400000 100000"`;
+`go version go1.27.1 linux/amd64`;
+`clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`;
+`node=v24.19.0`; `uncached=1`; GOFLAGS, CGO_ENABLED and GOMAXPROCS unset.
+Per-trial loads are in the table and complete build-flags lines are in summaries.
+GNU time's maximum RSS is a process peak, not the sum of concurrent process RSS.
+The supplemental cgroup peaks were sampled at 100 ms and include page cache and
+other cgroup processes, so they are not an isolated application-memory measurement.
+
+Exact instrument, with CASE/SETTING respectively `today/auto`, `four-one/4x1`,
+`two-two/2x2`, `today-repeat/auto`, in that order:
+
+```sh
+source /workspace/adamic-tools/env.sh
+source /workspace/gate-concurrency-inputs.env
+export ADAMIC_GATE_UNCACHED=1
+/workspace/gate-concurrency-measure/time-tools/usr/bin/time -v \
+  -o /workspace/gate-concurrency-measure/CASE/time.txt \
+  /workspace/adamic-gate-budget shard -index 8 -count 15 -concurrency SETTING \
+  -scratch /workspace/gate-concurrency-scratch \
+  -out /workspace/gate-concurrency-measure/CASE/shard
+```
+
+Before/after for the scheduling change: repeated auto 524.655 s before,
+4x1 510.437 s after, instrument above; retained default because the difference
+is under 5%. No whole gate or other fleet shards were run for this measurement.
+
+The timing replan remains: 8 shards 33.92 min; 10 27.62; 12 23.42;
+14 20.42; 15 19.22; 16 18.17 predicted maximum. Choose **15** as the smallest
+count below twenty minutes; 16 gives more margin. These predictions retain the
+plain-log weights, rather than scaling the fleet using this one shard's observed
+wall time. Unknown complement work and host contention remain prediction limits.
+No single known unit exceeds fifteen minutes; the largest remains
+`internal/unicodeproperties::TestCanonicalizeUnicodeNode`, 822.510 s.
+
+For the fleet, build the CLI once, generate `adamic-gate plan -count 15`, then run
+one index per box with `adamic-gate shard -index INDEX -count 15 -concurrency auto
+-resume -scratch DISK_SCRATCH -out OUTPUT`. Provision gate inputs everywhere and
+the WASI SDK/variables on the required WASI shard as documented above.
+
+Setup's module warming hit the already-observed forbidden compress-module ZIP
+redirect. The pinned tsgo C archive was built directly, and verified gate-input
+environment was generated from setup's helper. GNU time was extracted from the
+Ubuntu package because this box had no installed time binary. The evidence archive
+contains raw stdout-only JSON logs, separate stderr, summaries, commands, samples,
+verification and both key mutants.
