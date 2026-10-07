@@ -27,7 +27,7 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 		if _, err := l.view(node, value, target); err != nil {
 			return nil, err
 		}
-		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
+		return l.certifiedCheckedCast(node, ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, target)
 	}
 	return nil, nil
 }

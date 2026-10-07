@@ -1,8 +1,13 @@
-Built: dependency integration and merge repairs only; lane 3's eraser is not implemented.
-Commits: e460cff4, 93a33d6c, f88b9418, 41f14055, 92944877, 3985ee2c.
-Commands: setup and lower/IR tests pass; final oracle passes in 16.964s; further checks recorded below.
-Mutants: existing view/readiness mutants are caught; no lane 3 eraser mutant is claimed.
-Uncovered: allocation-to-cast query, declared-field certificates, eraser, and real adapted-tree conforms share.
+Built: shared allocation-flow query, declared field certificates, and a conservative scalar-record eraser; real tsc share remains unmeasured.
+Commits: lane 1 dependency merge 40ad020d; implementation and final report SHAs are recorded in the branch history.
+Commands: complete lower/IR packages, scoped Node/native/JavaScript oracle, vet, and 43-fixture graph count comparison; final logs listed below.
+Mutants: ignore one nonconforming shape and ignore readiness both finish with wrong output and are caught by pinned semantic assertions.
+Uncovered: broader assignability, nested/container/callback flows, staged-after-store erasure, native host view metadata, per-cast lookup emission, and the 2,936-site real share.
+
+Current report: [FLOW-ERASER-REPORT.md](FLOW-ERASER-REPORT.md).
+
+The following is the earlier dependency-only checkpoint.
+
 
 # Lane 3 dependency checkpoint, October 7, 2026
 

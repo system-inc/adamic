@@ -529,6 +529,7 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
+		ViewContract  ViewContractID
 		CheckedFields bool
 		Value         Expression
 		Field         string
@@ -817,6 +818,8 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
+	// Certificate is compile-time declaration evidence, independent of layout.
+	Certificate *FieldTypeCertificate
 	// Uninitialized reserves storage without making its typed value readable.
 	Uninitialized bool
 	Name          string

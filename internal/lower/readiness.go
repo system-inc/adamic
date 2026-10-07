@@ -53,6 +53,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // assignments clear readiness; calls invalidate slots that a captured writer can clear.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	defer eraseProvenViewChecks(program)
 	deinitialized := map[int]bool{}
 	collect := func(node any) bool {
 		if assign, ok := node.(ir.Assign); ok && assign.Uninitialized {

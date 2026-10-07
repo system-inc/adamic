@@ -20,6 +20,7 @@ func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expre
 	}
 	switch value := value.(type) {
 	case ir.ObjectLiteral:
+		value = l.certifyAllocationFields(node, value)
 		value.GraphTypes = ids
 		return value
 	case ir.ArrayLiteral:
