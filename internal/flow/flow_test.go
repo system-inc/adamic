@@ -47,7 +47,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
+		return refusedNonNullFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -276,4 +276,18 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			}
 		}
 	}
+}
+
+// These sources pin compile-time refusals, so they have no IR graph. Keep the
+// standalone deinitialization fixtures eligible: refusing them must fail SSA.
+func refusedNonNullFixture(path string) bool {
+	name := filepath.Base(path)
+	if strings.HasPrefix(name, "non_null_refuse_") {
+		return true
+	}
+	switch name {
+	case "non_null_scanner_initialized.a", "non_null_static_uninitialized.a", "non_null_uninitialized_catch.a", "non_null_uninitialized_field.a", "non_null_uninitialized_map_entry.a", "non_null_initialized.a", "non_null_literal_statement.a", "non_null_static_initialized.a", "non_null_literal_return.a", "non_null_uninitialized_append.a", "non_null_uninitialized_default.a", "non_null_uninitialized_iteration.a", "non_null_uninitialized_spread.a", "non_null_uninitialized_const.a", "non_null_uninitialized_interface.a", "non_null_uninitialized_optional.a":
+		return true
+	}
+	return false
 }
