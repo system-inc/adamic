@@ -154,3 +154,13 @@ and none requires React HIR/SSA/capture analysis. Native syntax and raw checker
 binding facts are their dependencies. This reservation is pushed before code.
 New rules will declare numeric SyntaxKind listeners in their own rule.json
 and consume the supplied node. Shared harness and parser files are untouched.
+
+Sixth-batch eligibility correction before code: jsx-no-constructed-context-values
+is parked because its separate stability module requires nested callback/callee
+return and capture/escape analysis (anyEscapes, StaysHome and functionEvaluation).
+It remains reserved, and its implementation has not started. The next eligible
+ranked rule replaces it: react/no-adjacent-inline-elements. The active sixth
+batch is jsx-fragments, jsx-no-undef and no-adjacent-inline-elements.
+No-adjacent-inline-elements uses JSX sibling syntax and createElement import
+resolution only; it needs no high-level IR/SSA/capture analysis. This update
+is pushed before implementation too.
