@@ -4,6 +4,8 @@ Checks: 15 production findings match 6,333 complete bytes across native, ASan/UB
 Mutants: three reporting-ID mutants caught only by Go byte comparison; two unsupported-input guard mutants and three numeric metadata mutations caught by separate checks.
 Uncovered: native JSX source parsing, source callbacks/verdicts/span discovery, source corpus parity and comparable native/Go lint timing.
 
+Latest continuation: rebased onto area d65a8f931. Go-style Unicode quoting is now implemented in the owned constructed-context reporter. Korean, Greek and zero-width-joiner production names and 6,202 Go strconv.Quote boundary inputs agree on native, sanitized native, source Node and emitted JavaScript. The earlier ASCII-only limitation and ASCII guard evidence below are historical; an unpaired-surrogate refusal now defines the unsupported input boundary. Current checks, mutants, timings and shared blockers are in ../wave12_fifth/landing/RUNTIME_REFRESH_REPORT.md.
+
 Current area rebase and fresh validation: ../wave12_fifth/landing/AREA_REPORT.md. Native JSX parsing is now supported; the first five lines and initial run below are historical.
 
 Current contract correction: rule.json kinds are ast.Kind names and node: true requests a supplied node. No numeric adapter is required. Fresh named-contract validation is recorded in ../wave12_fifth/landing/NAMED_REPORT.md; the initial timing/count lines above describe the historical reporting run.

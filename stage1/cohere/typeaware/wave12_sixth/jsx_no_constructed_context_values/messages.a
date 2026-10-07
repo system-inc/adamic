@@ -1,16 +1,8 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
 import { SuppliedNode } from '../node.a';
+import { quote } from './quote.a';
 const names = ['object', 'array', 'function expression', 'function declaration', 'class expression', 'new expression', 'regular expression', 'JSX element', 'JSX fragment', 'assignment expression'];
-function quote(name: string): string {
-    // This reporting slice supports plain ASCII identifier spellings only.
-    // Refuse other supplied text until Go's Unicode %q semantics are ported.
-    for(let at = 0; at < name.length; at++) {
-        const code = name.charCodeAt(at);
-        if(!((code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (at > 0 && code >= 48 && code <= 57) || code === 36 || code === 95)) { panic('wave 12 reporting requires an ASCII identifier'); }
-    }
-    return `"${name}"`;
-}
 export function report(node: SuppliedNode, construction: number, nodeLine: number, usageLine: number, variableName: string): Diagnostic {
     const name = names[construction] ?? panic('unknown prepared construction kind');
     const function_ = construction === 2 || construction === 3;

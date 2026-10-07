@@ -36,6 +36,9 @@ cases = [
  ('assignment', 'function C() { let v: any; return <Ctx.Provider value={v = {}}/>; }', 9, ''),
  ('memo', 'function C() { const v = useMemo(() => ({a:1})); return <Ctx.Provider value={v}/>; }', -1, ''),
  ('unstable', 'function C() { const dep = {}; const v = useMemo(() => ({a:1}), [dep]); return <Ctx.Provider value={v}/>; }', -1, ''),
+ ('korean', 'function C() { const 테스트 = {}; return <Ctx.Provider value={테스트}/>; }', 0, '테스트'),
+ ('greek', 'function C() { function Ω() {} return <Ctx.Provider value={Ω}/>; }', 3, 'Ω'),
+ ('joiner', 'function C() { const a\u200db = {}; return <Ctx.Provider value={a\u200db}/>; }', 0, 'a\u200db'),
 ]
 paths=[]
 for name, source, _, _ in cases:
@@ -99,16 +102,21 @@ for folder,original in [('jsx_fragments',"'jsx-fragments'"),('jsx_no_undef',"'js
     binary=scratch/(folder+'-mutant');run(binary.name+'-build',[stage0,'build',entry,'-o',binary]);got,err=run(binary.name+'-run',[binary]);assert not err;assert got!=expected
     mutants.append(dict(rule=folder,first_difference=next(i for i,(a,b) in enumerate(zip(got,expected)) if a!=b)))
     file.write_text(text)
+quote_file=copy/'jsx_no_constructed_context_values/quote.a'
+quote_text=quote_file.read_text();assert quote_text.count("result += character;")==1
+quote_file.write_text(quote_text.replace("result += character;", "result += 'X';", 1))
+mutated=scratch/'unicode-quote-mutant';run(mutated.name+'-build',[stage0,'build',entry,'-o',mutated]);got,err=run(mutated.name+'-run',[mutated]);assert not err and got!=expected
+mutants.append(dict(rule='constructed-context-unicode-quote',first_difference=next(i for i,(a,b) in enumerate(zip(got,expected)) if a!=b)))
+quote_file.write_text(quote_text)
 guard_results=[]
 context_file=copy/'jsx_no_constructed_context_values/messages.a'
 original_context=context_file.read_text()
 for name,call,before,after in [
-    ('ascii', 'context(new SuppliedNode(0,1), 0, 1, 1, "테")', "if(!((code >= 65", "if(!((true || code >= 65"),
     ('construction-range', 'context(new SuppliedNode(0,1), 100, 1, 0, "")', "names[construction]", "names[0]"),
 ]:
     entry.write_text(imports+'console.log('+call+'.written());\n')
     normal=scratch/(name+'-guard');run(normal.name+'-build',[stage0,'build',entry,'-o',normal])
-    got,err=run(normal.name+'-run',[normal],expected=70);assert not got;assert err == (b'adamic: panic: wave 12 reporting requires an ASCII identifier\n' if name == 'ascii' else b'adamic: panic: unknown prepared construction kind\n')
+    got,err=run(normal.name+'-run',[normal],expected=70);assert not got;assert err == b'adamic: panic: unknown prepared construction kind\n'
     assert original_context.count(before)==1
     context_file.write_text(original_context.replace(before,after,1))
     mutated=scratch/(name+'-guard-mutant');run(mutated.name+'-build',[stage0,'build',entry,'-o',mutated]);got,err=run(mutated.name+'-run',[mutated]);assert got and not err
@@ -130,5 +138,7 @@ assert not got and b'refuses an unlinked typescript-go library call' in err
 bypass=scratch/'checker-gap-bypass.a';bypass.write_text("console.log('checker probe bypassed');\n")
 got,err=run('checker-gap-bypass-node',['node','--disable-warning=ExperimentalWarning',repository/'oracle/node.mjs',bypass]);assert got and not err
 emitted,err=run('checker-gap-bypass-emitted',[stage0,'js',bypass]);assert emitted and not err
-(scratch/'summary.json').write_text(json.dumps(dict(reporting_only=True,cases=len(cases),findings=counts,bytes=len(expected),mutants=mutants,guards=guard_results,metadata_mutants=metadata_mutants,checker_gap=dict(source_node_exit=70,emitted_js_exit=1,bypass_mutant_exit=0),commands=commands),indent=2)+'\n')
+from check_quote import validate_quote
+quote_summary=validate_quote(scratch,run,stage0,owned,repository)
+(scratch/'summary.json').write_text(json.dumps(dict(reporting_only=True,cases=len(cases),findings=counts,bytes=len(expected),mutants=mutants,guards=guard_results,metadata_mutants=metadata_mutants,checker_gap=dict(source_node_exit=70,emitted_js_exit=1,bypass_mutant_exit=0),quote=quote_summary,commands=commands),indent=2)+'\n')
 print('PARTIAL REPORTING PASS',counts,len(expected),'bytes; three ID mutants caught only by Go bytes')
