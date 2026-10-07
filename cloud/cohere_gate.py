@@ -5,6 +5,7 @@ import collections
 import fnmatch
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 import subprocess
@@ -51,7 +52,12 @@ def make_mirror(directory):
             raise ValueError(f'.a alias collides with an existing source: {name}')
         destination.parent.mkdir(parents=True, exist_ok=True)
         if source.suffix in ('.a', '.ts'):
-            destination.write_text(source.read_text().replace(".a'", ".a.ts'").replace('.a"', '.a.ts"'))
+            text = re.sub(
+                r"(\bfrom\s+|\bimport\s*(?:\(\s*)?)([\"'])([^\"'\n]+\.a)\2",
+                lambda match: match[1] + match[2] + match[3] + '.ts' + match[2],
+                source.read_text(),
+            )
+            destination.write_text(text)
         else:
             shutil.copyfile(source, destination)
     config = json.loads((ROOT / 'tsconfig.json').read_text())
