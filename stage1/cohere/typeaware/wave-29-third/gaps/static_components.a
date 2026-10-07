@@ -1,0 +1,4 @@
+import { Parser } from '../../../../typescript/parser/parser.ts';
+const parser = new Parser('declare function makeIt():()=>unknown; function Widget(){const C=makeIt();return <C/>;}', 'input.tsx');
+parser.file();
+for(const node of parser.nodes) { console.log(node.kind); }

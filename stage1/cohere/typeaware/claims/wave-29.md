@@ -44,3 +44,5 @@ Previous six native rule ports are tested and pushed through 7f4eabb8. The share
 3. `react-hooks/static-components`.
 
 This claim update is committed and pushed before implementation. No other rules are claimed by this update.
+
+Third-batch status: blocked, not ported. [wave-29-third/REPORT.md](../wave-29-third/REPORT.md) records positive Go findings, native JSX misclassification/failure and the separate missing native React SSA pipeline. No additional claims were taken.

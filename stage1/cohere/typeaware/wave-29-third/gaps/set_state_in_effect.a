@@ -1,0 +1,4 @@
+import { Parser } from '../../../../typescript/parser/parser.ts';
+const parser = new Parser('import {useState,useEffect} from "react"; function Widget(){const [s,setS]=useState(0);useEffect(()=>setS(1));return <div>{s}</div>;}', 'input.tsx');
+parser.file();
+for(const node of parser.nodes) { console.log(node.kind); }
