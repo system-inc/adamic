@@ -1,0 +1,89 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { signatureKinds } from './signature_kinds.a';
+
+export class NoUnsafeCall {
+    readonly rules: Rules;
+    readonly strict: boolean;
+    constructor(rules: Rules, strict: boolean) { this.rules = rules; this.strict = strict; }
+    builtin(index: number, facts: Types, subject: TypeFact): boolean {
+        if((subject.flags & 268435456) !== 0) {
+            return subject.parts.some((id) => this.builtin(index, facts, facts.type(id)));
+        }
+        if((subject.flags & 134217728) !== 0) {
+            return subject.parts.every((id) => this.builtin(index, facts, facts.type(id)));
+        }
+        if((subject.flags & 524288) !== 0) {
+            return subject.constraint !== 0 && this.builtin(index, facts, facts.type(subject.constraint));
+        }
+        const frames = new Frames(this.rules.ask(index, `type-origin\n${subject.id}`));
+        header(frames, 'type-origin');
+        if(!frames.yes()) { frames.end(); return false; }
+        const name = frames.field();
+        const count = frames.natural();
+        let library = false;
+        for(let at = 0; at < count; at++) {
+            frames.field(); const declaration = frames.yes(); const defaultLib = frames.yes();
+            if(declaration && defaultLib) { library = true; }
+        }
+        frames.end();
+        if(name === 'Function' && library) { return true; }
+        const bases = types(this.rules.ask(index, `base-shapes\n${subject.id}`), 'base-shapes');
+        return bases.roots.some((id) => this.builtin(index, bases, bases.type(id)));
+    }
+    thisExpression(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ThisKeyword') { return index; }
+        if(['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression', 'ParenthesizedExpression'].includes(node.kind)) {
+            return this.thisExpression(node.children[0] ?? -1);
+        }
+        return -1;
+    }
+    check(subject: number, report: number, unsafeId: string, errorId: string): void {
+        const facts = types(this.rules.ask(subject, 'type-shape'), 'type-shape');
+        if(!facts.present) { return; }
+        const type = facts.root();
+        let unsafe = unsafeId;
+        let error = errorId;
+        let typeText = 'an `any`';
+        if((type.flags & 1) !== 0) {
+            if(!this.strict) {
+                const thisNode = this.thisExpression(subject);
+                if(thisNode >= 0) {
+                    const thisType = types(this.rules.ask(thisNode, 'type-shape'), 'type-shape');
+                    if((thisType.root().flags & 1) !== 0) { unsafe = 'unsafeCallThis'; error = 'errorCallThis'; }
+                }
+            }
+        }
+        else {
+            if(!this.builtin(subject, facts, type)) { return; }
+            const signatures = signatureKinds(this.rules, subject, type.id);
+            if(signatures.constructs > 0) { return; }
+            if(unsafe === 'unsafeNew' ? signatures.returns.some((flags) => (flags & 16) === 0) : signatures.returns.length > 0) { return; }
+            typeText = 'a `Function`';
+        }
+        const id = type.error ? error : unsafe;
+        let message: string;
+        if(id === 'errorCall') { message = 'Unsafe call of a type that could not be resolved.'; }
+        else if(id === 'errorCallThis') { message = 'Unsafe call of a `this` type that could not be resolved.'; }
+        else if(id === 'errorNew') { message = 'Unsafe construction of a type that could not be resolved.'; }
+        else if(id === 'errorTemplateTag') { message = 'Unsafe use of a template tag whose type could not be resolved.'; }
+        else if(id === 'unsafeNew') { message = `Unsafe construction of ${typeText} typed value.`; }
+        else if(id === 'unsafeTemplateTag') { message = `Unsafe use of ${typeText} typed template tag.`; }
+        else if(id === 'unsafeCallThis') { message = `Unsafe call of ${typeText} typed value. \`this\` is typed as ${typeText}.\nYou can try to fix this by turning on the \`noImplicitThis\` compiler option, or adding a \`this\` parameter to the function.`; }
+        else { message = `Unsafe call of ${typeText} typed value.`; }
+        this.rules.add('no-unsafe-call', id, message, report);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(!['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(node.kind)) { continue; }
+            const subject = this.rules.skip(node.children[0] ?? -1);
+            if(this.rules.parser.node(subject).kind === 'ImportKeyword') { continue; }
+            this.check(subject, node.kind === 'NewExpression' ? index : subject, node.kind === 'NewExpression' ? 'unsafeNew' : node.kind === 'TaggedTemplateExpression' ? 'unsafeTemplateTag' : 'unsafeCall', node.kind === 'NewExpression' ? 'errorNew' : node.kind === 'TaggedTemplateExpression' ? 'errorTemplateTag' : 'errorCall');
+        }
+    }
+}

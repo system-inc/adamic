@@ -1,0 +1,6 @@
+export class ImportToken {
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    constructor(kind: string, start: number, end: number) { this.kind = kind; this.start = start; this.end = end; }
+}

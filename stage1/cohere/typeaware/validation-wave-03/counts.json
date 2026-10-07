@@ -1,0 +1,36 @@
+{
+  "compiler": {
+    "@typescript-eslint/consistent-type-imports": {
+      "findings": 83,
+      "with_fixes": 71,
+      "suggestions": 0
+    },
+    "@typescript-eslint/no-unsafe-call": {
+      "findings": 91,
+      "with_fixes": 0,
+      "suggestions": 0
+    },
+    "@typescript-eslint/no-unnecessary-template-expression": {
+      "findings": 4,
+      "with_fixes": 4,
+      "suggestions": 0
+    }
+  },
+  "repository": {
+    "@typescript-eslint/no-unnecessary-template-expression": {
+      "findings": 80,
+      "with_fixes": 80,
+      "suggestions": 0
+    },
+    "@typescript-eslint/no-unsafe-call": {
+      "findings": 4,
+      "with_fixes": 0,
+      "suggestions": 0
+    },
+    "@typescript-eslint/consistent-type-imports": {
+      "findings": 2,
+      "with_fixes": 2,
+      "suggestions": 0
+    }
+  }
+}

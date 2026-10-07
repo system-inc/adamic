@@ -1,0 +1,213 @@
+import { ImportToken } from './import_token.a';
+import { ImportEdit } from './import_edit.a';
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { nodeBinding, type NodeBinding } from './node_binding.a';
+import { importRuntimeNames } from './import_runtime_options.a';
+import { Repair } from './repair.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+
+const allTypesMessage = 'Every name this declaration imports is used only in a type position, so nothing it brings in survives compilation. Written as `import type`, the statement is erased outright rather than leaving a module request that a bundler has to keep, and a reader can see at a glance that it cannot affect runtime behavior.';
+
+
+export class ConsistentTypeImports {
+    readonly rules: Rules;
+    readonly empty: number[] = [];
+    readonly noNames: string[] = [];
+    readonly bindings = new Map<number, NodeBinding>();
+    readonly names = new Map<string, number[]>();
+    constructor(rules: Rules) { this.rules = rules; }
+    kind(index: number): string { return index < 0 ? '' : this.rules.parser.node(index).kind; }
+    start(index: number): number { return this.rules.start(this.rules.parser.node(index)); }
+    end(index: number): number { return this.rules.parser.node(index).end; }
+    text(index: number): string { return this.rules.text(this.rules.parser.node(index)); }
+    binding(index: number): NodeBinding {
+        if(!this.bindings.has(index)) { this.bindings.set(index, nodeBinding(this.rules, index)); }
+        return this.bindings.get(index) ?? panic('missing import binding');
+    }
+    typeReference(index: number): boolean {
+        if(this.binding(index).typeNode) { return true; }
+        let current = index;
+        while(current >= 0) {
+            const node = this.rules.parser.node(current);
+            if(['TypeQuery', 'QualifiedName'].includes(node.kind)) { return true; }
+            if(node.kind === 'ExportSpecifier') {
+                if(node.semantic === '1') { return true; }
+                let parent = this.rules.parents[current] ?? -1;
+                while(parent >= 0) {
+                    const outer = this.rules.parser.node(parent);
+                    if(outer.kind === 'ExportDeclaration') { return outer.semantic === '1'; }
+                    parent = this.rules.parents[parent] ?? -1;
+                }
+                return false;
+            }
+            if(['ExportAssignment', 'ExpressionWithTypeArguments'].includes(node.kind)) { return false; }
+            if(node.kind.endsWith('Statement') || node.kind.endsWith('Declaration')) { return false; }
+            current = this.rules.parents[current] ?? -1;
+        }
+        return false;
+    }
+    onlyTypes(local: number, jsxNames: readonly string[]): boolean {
+        const name = this.rules.parser.node(local).text;
+        if(jsxNames.includes(name)) { return false; }
+        const symbol = this.binding(local).own;
+        if(symbol === 0) { return false; }
+        let found = false;
+        for(const candidate of this.names.get(name) ?? this.empty) {
+            if(candidate === local) { continue; }
+            const binding = this.binding(candidate);
+            if(binding.own !== symbol && binding.exported !== symbol) { continue; }
+            found = true;
+            if(!this.typeReference(candidate)) { return false; }
+        }
+        return found;
+    }
+    tokens(index: number): ImportToken[] {
+        const scanner = new Scanner(this.rules.scanner.text);
+        scanner.pos = this.start(index);
+        const tokens: ImportToken[] = [];
+        while(scanner.pos < this.end(index)) {
+            const kind = scanner.scan();
+            tokens.push(new ImportToken(kind, scanner.start, scanner.pos));
+            if(kind === 'EndOfFileToken') { break; }
+        }
+        return tokens;
+    }
+    before(tokens: readonly ImportToken[], pos: number): ImportToken {
+        let result = new ImportToken('', pos, pos);
+        for(const token of tokens) { if(token.end <= pos) { result = token; } }
+        return result;
+    }
+    after(tokens: readonly ImportToken[], pos: number): ImportToken {
+        return tokens.find((token) => token.start >= pos) ?? new ImportToken('', pos, pos);
+    }
+    next(pos: number): number {
+        let current = pos;
+        while(current < this.rules.scanner.text.length && this.rules.scanner.text.slice(current, current + 1).trim() === '') { current++; }
+        return current;
+    }
+    fix(index: number, defaultName: number, namespace: number, named: readonly number[], selected: readonly number[], module: number): string {
+        const tokens = this.tokens(index);
+        const edits: ImportEdit[] = [];
+        const importToken = tokens[0];
+        if(importToken === undefined || importToken.kind !== 'ImportKeyword') { return ''; }
+        const allNamedIncludingInline = named.every((item) => selected.includes(item) || this.rules.parser.node(item).semantic === '1');
+        const simple = (defaultName < 0 && namespace < 0 && named.length > 0 && allNamedIncludingInline) || (namespace >= 0 && defaultName < 0) || (defaultName >= 0 && selected.includes(defaultName) && named.length === 0 && namespace < 0);
+        if(simple) {
+            edits.push(new ImportEdit(importToken.end, importToken.end, ' type'));
+            for(const item of named) {
+                if(this.rules.parser.node(item).semantic === '1') {
+                    const token = tokens.find((candidate) => candidate.kind === 'TypeKeyword' && candidate.start >= this.start(item) && candidate.end <= this.end(item));
+                    if(token !== undefined) { edits.push(new ImportEdit(token.start, this.next(token.end), '')); }
+                }
+            }
+        }
+        else {
+            const subset = named.filter((item) => selected.includes(item));
+            const groups: number[][] = [];
+            let group: number[] = [];
+            for(const item of named) {
+                if(subset.includes(item)) { group.push(item); }
+                else if(group.length > 0) { groups.push(group); group = []; }
+            }
+            if(group.length > 0) { groups.push(group); }
+            const fragments: string[] = [];
+            if(subset.length > 0 && subset.length === named.length) {
+                const open = this.before(tokens, this.start(subset[0] ?? -1));
+                const comma = this.before(tokens, open.start);
+                const close = tokens.find((token) => token.kind === 'CloseBraceToken' && token.start >= open.end);
+                if(comma.kind !== 'CommaToken' || close === undefined) { return ''; }
+                fragments.push(this.rules.scanner.text.slice(open.end, close.start));
+                edits.push(new ImportEdit(comma.start, close.end, ''));
+            }
+            else {
+                for(const members of groups) {
+                    const first = members[0] ?? -1;
+                    const last = members[members.length - 1] ?? -1;
+                    const before = this.before(tokens, this.start(first));
+                    const after = this.after(tokens, this.end(last));
+                    fragments.push(this.rules.scanner.text.slice(before.end, after.start));
+                    const removeStart = before.kind === 'CommaToken' ? before.start : before.end;
+                    const isEdge = named[0] === first || named[named.length - 1] === last;
+                    edits.push(new ImportEdit(removeStart, isEdge && after.kind === 'CommaToken' ? after.end : this.end(last), ''));
+                }
+            }
+            if(subset.length > 0) { edits.push(new ImportEdit(this.start(index), this.start(index), `import type {${fragments.join(',')}} from ${this.text(module)};\n`)); }
+            if(namespace >= 0 && selected.includes(namespace)) {
+                const comma = this.before(tokens, this.start(namespace));
+                if(comma.kind !== 'CommaToken') { return ''; }
+                edits.push(new ImportEdit(this.start(index), this.start(index), `import type ${this.text(namespace)} from ${this.text(module)};\n`));
+                edits.push(new ImportEdit(comma.start, this.end(namespace), ''));
+            }
+            if(defaultName >= 0 && selected.includes(defaultName)) {
+                const total = named.length + (namespace < 0 ? 0 : 1) + 1;
+                if(selected.length === total) { edits.push(new ImportEdit(importToken.end, importToken.end, ' type')); }
+                else {
+                    const comma = this.after(tokens, this.end(defaultName));
+                    if(comma.kind !== 'CommaToken') { return ''; }
+                    edits.push(new ImportEdit(this.start(index), this.start(index), `import type ${this.rules.scanner.text.slice(this.start(defaultName), comma.start).trim()} from ${this.text(module)};\n`));
+                    edits.push(new ImportEdit(this.start(defaultName), this.next(comma.end), ''));
+                }
+            }
+        }
+        edits.sort((left, right) => left.start !== right.start ? left.start - right.start : left.end - right.end);
+        let cursor = this.start(index);
+        let replacement = '';
+        for(const edit of edits) {
+            if(edit.start < cursor || edit.end > this.end(index) || edit.start < this.start(index)) { return ''; }
+            replacement += this.rules.scanner.text.slice(cursor, edit.start) + edit.text;
+            cursor = edit.end;
+        }
+        return replacement + this.rules.scanner.text.slice(cursor, this.end(index));
+    }
+    visit(index: number, jsxNames: readonly string[]): void {
+        const node = this.rules.parser.node(index);
+        const clauseIndex = node.children.find((child) => this.kind(child) === 'ImportClause') ?? -1;
+        if(clauseIndex < 0) { return; }
+        const clause = this.rules.parser.node(clauseIndex);
+        if(clause.semantic === 'TypeKeyword') { return; }
+        const module = node.children.find((child) => this.kind(child) === 'StringLiteral') ?? -1;
+        const attributes = node.children.some((child) => this.kind(child) === 'ImportAttributes');
+        const defaultName = clause.children.find((child) => this.kind(child) === 'Identifier') ?? -1;
+        const namespace = clause.children.find((child) => this.kind(child) === 'NamespaceImport') ?? -1;
+        const namedContainer = clause.children.find((child) => this.kind(child) === 'NamedImports') ?? -1;
+        const named = namedContainer < 0 ? this.empty : this.rules.parser.node(namedContainer).children;
+        const selected: number[] = [];
+        const names: string[] = [];
+        if(defaultName >= 0 && this.onlyTypes(defaultName, jsxNames)) { selected.push(defaultName); names.push(this.rules.parser.node(defaultName).text); }
+        if(namespace >= 0) {
+            const local = this.rules.parser.node(namespace).children[0] ?? -1;
+            if(this.onlyTypes(local, jsxNames)) { selected.push(namespace); names.push(this.rules.parser.node(local).text); }
+        }
+        for(const item of named) {
+            const specifier = this.rules.parser.node(item);
+            const local = specifier.children[specifier.children.length - 1] ?? -1;
+            if(specifier.semantic !== '1' && this.onlyTypes(local, jsxNames)) { selected.push(item); names.push(this.rules.parser.node(local).text); }
+        }
+        if(names.length === 0) { return; }
+        const total = named.length + (defaultName >= 0 ? 1 : 0) + (namespace >= 0 ? 1 : 0);
+        if(names.length === total && attributes) { return; }
+        const list = names.length === 1 ? names[0] ?? '' : names.length === 2 ? names.join(' and ') : `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1] ?? ''}`;
+        const finding = this.rules.add('consistent-type-imports', names.length === total ? 'typeOverValue' : 'someImportsAreOnlyTypes', names.length === total ? allTypesMessage : `Imports ${list} are only used as type.`, index);
+        if(!attributes) {
+            const replacement = this.fix(index, defaultName, namespace, named, selected, module);
+            if(replacement !== '') { finding.repairs.push(new Repair(this.rules.byte(this.start(index)), this.rules.byte(this.end(index)), replacement)); }
+        }
+    }
+    run(root: number): void {
+        const runtime = importRuntimeNames(this.rules, root);
+        const jsx = this.rules.parser.nodes.some((node) => ['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'].includes(node.kind));
+        const fragment = this.rules.parser.nodes.some((node) => node.kind === 'JsxFragment');
+        const jsxNames = jsx ? (fragment ? runtime : runtime.slice(0, 1)) : this.noNames;
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'Identifier') {
+                if(!this.names.has(node.text)) { this.names.set(node.text, []); }
+                const candidates = this.names.get(node.text) ?? panic('missing identifier index');
+                candidates.push(index);
+            }
+            if(node.kind === 'ImportType') { this.rules.add('consistent-type-imports', 'noImportTypeAnnotations', 'An `import()` written inside a type annotation hides a module dependency where nothing looking at the import list will find it. Move it to a real `import type` declaration at the top of the file and refer to the name.', index); }
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) { if(this.kind(index) === 'ImportDeclaration') { this.visit(index, jsxNames); } }
+    }
+}

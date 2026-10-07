@@ -1,0 +1,10 @@
+export class TemplatePart {
+    readonly expression: number;
+    readonly before: string;
+    readonly after: string;
+    readonly open: number;
+    readonly close: number;
+    constructor(expression: number, before: string, after: string, open: number, close: number) {
+        this.expression = expression; this.before = before; this.after = after; this.open = open; this.close = close;
+    }
+}

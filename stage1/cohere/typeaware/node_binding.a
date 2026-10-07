@@ -1,0 +1,14 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class NodeBinding {
+    readonly own: number;
+    readonly exported: number;
+    readonly typeNode: boolean;
+    constructor(own: number, exported: number, typeNode: boolean) { this.own = own; this.exported = exported; this.typeNode = typeNode; }
+}
+export function nodeBinding(rules: Rules, index: number): NodeBinding {
+    const frames = new Frames(rules.ask(index, 'node-binding'));
+    header(frames, 'node-binding');
+    const result = new NodeBinding(frames.natural(), frames.natural(), frames.yes());
+    frames.end(); return result;
+}

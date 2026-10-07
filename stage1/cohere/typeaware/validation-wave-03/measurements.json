@@ -1,0 +1,28 @@
+{
+  "samples": 1,
+  "units": "seconds",
+  "repository": {
+    "files": 287,
+    "native_wall": 0.763368062,
+    "go_wall": 0.460611944,
+    "native_load": 0.155745436,
+    "native_query": 0.242580827,
+    "native_queries": 26405,
+    "native_run": 0.597911797,
+    "go_load": 0.171049152,
+    "go_rule": 0.124057872,
+    "go_run": 0.261983384
+  },
+  "compiler": {
+    "files": 77,
+    "native_wall": 5.777461592,
+    "go_wall": 1.93845787,
+    "native_load": 0.78194225,
+    "native_query": 2.097717467,
+    "native_queries": 185745,
+    "native_run": 4.932240005,
+    "go_load": 0.596996928,
+    "go_rule": 1.087205492,
+    "go_run": 1.266589682
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "/workspace/adamic/tsconfig.json",
+  "files": [
+    "/workspace/adamic/stage1/cohere/typeaware/no_unsafe_call.a",
+    "/workspace/adamic/stage1/cohere/typeaware/no_unnecessary_template_expression.a",
+    "/workspace/adamic/stage1/cohere/typeaware/wave_03_suite.a",
+    "/workspace/adamic/stage1/cohere/typeaware/import_token.a",
+    "/workspace/adamic/stage1/cohere/typeaware/import_edit.a",
+    "/workspace/adamic/stage1/cohere/typeaware/import_runtime_options.a",
+    "/workspace/adamic/stage1/cohere/typeaware/template_part.a",
+    "/workspace/adamic/stage1/cohere/typeaware/node_binding.a",
+    "/workspace/adamic/stage1/cohere/typeaware/signature_kinds.a",
+    "/workspace/adamic/stage1/cohere/typeaware/consistent_type_imports.a",
+    "/workspace/adamic/internal/load/prelude.d.ts"
+  ],
+  "include": []
+}

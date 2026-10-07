@@ -1,0 +1,23 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class SignatureKinds {
+    readonly constructs: number;
+    readonly returns: readonly number[];
+    constructor(constructs: number, returns: readonly number[]) {
+        this.constructs = constructs;
+        this.returns = returns;
+    }
+}
+export function signatureKinds(rules: Rules, index: number, id: number): SignatureKinds {
+    const frames = new Frames(rules.ask(index, `signature-kinds\n${id}`));
+    header(frames, 'signature-kinds');
+    const constructs = frames.natural();
+    const count = frames.natural();
+    const returns: number[] = [];
+    for(let at = 0; at < count; at++) {
+        returns.push(frames.yes() ? frames.natural() : 16);
+    }
+    frames.end();
+    return new SignatureKinds(constructs, returns);
+}

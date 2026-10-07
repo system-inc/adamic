@@ -1,0 +1,166 @@
+import { TemplatePart } from './template_part.a';
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { stringLike } from './flags.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+
+
+function evenRun(text: string, index: number): boolean {
+    let count = 0;
+    for(let at = index - 1; at >= 0 && text.slice(at, at + 1) === '\\'; at--) { count++; }
+    return count % 2 === 0;
+}
+function dollar(text: string): boolean { return text.endsWith('$') && evenRun(text, text.length - 1); }
+function escapeSpecials(text: string): string {
+    let out = '';
+    for(let at = 0; at < text.length; at++) {
+        const character = text.slice(at, at + 1);
+        if(evenRun(text, at) && (character === '`' || (character === '$' && text.slice(at + 1, at + 2) === '{'))) { out += '\\'; }
+        out += character;
+    }
+    return out;
+}
+export class NoUnnecessaryTemplateExpression {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    rawStart(index: number): number { return this.rules.start(this.rules.parser.node(index)) + 1; }
+    rawEnd(index: number): number {
+        const node = this.rules.parser.node(index);
+        return node.end - (['TemplateHead', 'TemplateMiddle'].includes(node.kind) ? 2 : 1);
+    }
+    raw(index: number): string { return this.rules.scanner.text.slice(this.rawStart(index), this.rawEnd(index)); }
+    parts(index: number): TemplatePart[] {
+        const node = this.rules.parser.node(index);
+        const parts: TemplatePart[] = [];
+        let previous = node.children[0] ?? -1;
+        for(const span of node.children.slice(1)) {
+            const children = this.rules.parser.node(span).children;
+            const expression = children[0] ?? -1;
+            const literal = children[1] ?? -1;
+            parts.push(new TemplatePart(expression, this.raw(previous), this.raw(literal), this.rawEnd(previous), this.rawStart(literal)));
+            previous = literal;
+        }
+        return parts;
+    }
+    comments(part: TemplatePart): boolean {
+        const node = this.rules.parser.node(part.expression);
+        const leading = this.rules.scanner.text.slice(node.pos, this.rules.start(node));
+        const trailing = this.rules.scanner.text.slice(node.end, part.close);
+        return leading.includes('//') || leading.includes('/*') || trailing.includes('//') || trailing.includes('/*');
+    }
+    collapse(index: number, isType: boolean): boolean {
+        const raw = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(isType && (raw.root().flags & 524288) !== 0) { return false; }
+        let facts = raw;
+        if((raw.root().flags & 524288) !== 0) {
+            if(raw.root().constraint === 0) { return false; }
+            facts = types(this.rules.ask(index, 'type-shape'), 'type-shape');
+        }
+        if(!facts.present) { return false; }
+        for(const union of facts.parts(facts.root())) {
+            const parts = facts.parts(facts.type(union), 268435456);
+            if(!parts.some((id) => (facts.type(id).flags & stringLike) !== 0)) { return false; }
+            if(isType && parts.some((id) => (facts.type(id).flags & 32768) !== 0)) { return false; }
+        }
+        return true;
+    }
+    plain(index: number): boolean {
+        return ['StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword', 'RegularExpressionLiteral'].includes(this.rules.parser.node(index).kind);
+    }
+    identifier(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'Identifier' && ['undefined', 'Infinity', 'NaN'].includes(node.text);
+    }
+    template(index: number): boolean { return ['TemplateExpression', 'NoSubstitutionTemplateLiteral'].includes(this.rules.parser.node(index).kind); }
+    inner(index: number): number {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'LiteralType' ? node.children[0] ?? -1 : index;
+    }
+    unnecessary(part: TemplatePart, isType: boolean): boolean {
+        if(this.comments(part)) { return false; }
+        const expression = this.inner(part.expression);
+        const node = this.rules.parser.node(expression);
+        if(isType && ['NullKeyword', 'UndefinedKeyword'].includes(node.kind)) { return true; }
+        if(!isType && this.identifier(expression)) { return true; }
+        if(!this.template(expression) && !this.plain(expression)) { return false; }
+        const newline = ['\n', '\r', '\u2028', '\u2029'].some((start) => part.after.startsWith(start));
+        return !(newline && ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind) && node.text.trim() === '');
+    }
+    finding(start: number, end: number): Diagnostic {
+        const finding = new Diagnostic('no-unnecessary-template-expression', 'noUnnecessaryTemplateExpression', 'Template literal expression is unnecessary and can be simplified.', this.rules.byte(start), this.rules.byte(end));
+        this.rules.findings.push(finding); return finding;
+    }
+    repair(start: number, end: number, text: string): Repair {
+        return new Repair(this.rules.byte(start), this.rules.byte(end), text);
+    }
+    moved(template: number, expression: number): string {
+        const node = this.rules.parser.node(expression);
+        const code = this.rules.text(node);
+        if(['Identifier', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression', 'PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression', 'NewExpression', 'NoSubstitutionTemplateLiteral', 'TypeReference', 'TypeOperator', 'TaggedTemplateExpression', 'ExpressionWithTypeArguments'].includes(node.kind)) { return code; }
+        const parentIndex = this.rules.parents[template] ?? -1;
+        if(parentIndex < 0) { return code; }
+        const parent = this.rules.parser.node(parentIndex);
+        const weak = ['PrefixUnaryExpression', 'PostfixUnaryExpression', 'BinaryExpression', 'ConditionalExpression', 'AwaitExpression', 'TypeOfExpression', 'VoidExpression', 'DeleteExpression'].includes(parent.kind) || (['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(parent.kind) && parent.children[0] === template);
+        return weak ? `(${code})` : code;
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        const isType = node.kind === 'TemplateLiteralType';
+        const parent = this.rules.parents[index] ?? -1;
+        if(!isType && parent >= 0 && this.rules.parser.node(parent).kind === 'TaggedTemplateExpression') { return; }
+        const all = this.parts(index);
+        const only = all[0];
+        if(all.length === 1 && only !== undefined && only.before === '' && only.after === '' && !this.comments(only) && this.collapse(only.expression, isType)) {
+            const expression = this.rules.parser.node(only.expression);
+            const finding = this.finding(this.rules.start(expression) - 2, expression.end + 1);
+            finding.repairs.push(this.repair(this.rules.start(node), node.end, this.moved(index, only.expression)));
+            return;
+        }
+        const parts = all.filter((part) => this.unnecessary(part, isType));
+        let nextBrace = false;
+        for(let at = parts.length - 1; at >= 0; at--) {
+            const part = parts[at];
+            if(part === undefined) { continue; }
+            if(part.after !== '') { nextBrace = part.after.startsWith('{'); }
+            const expression = this.inner(part.expression);
+            const child = this.rules.parser.node(expression);
+            const finding = this.finding(part.open, part.close);
+            if(this.plain(expression) || this.identifier(expression) || child.kind === 'UndefinedKeyword') {
+                const raw = this.rules.text(child);
+                let spliced = raw;
+                if(child.kind === 'StringLiteral') { spliced = raw.slice(1, -1); }
+                else {
+                    if(child.kind === 'NumericLiteral') { spliced = child.text; }
+                    if(child.kind === 'BigIntLiteral') { spliced = child.text.endsWith('n') ? child.text.slice(0, -1) : child.text; }
+                    spliced = spliced.split('\\').join('\\\\');
+                }
+                spliced = escapeSpecials(spliced);
+                if(nextBrace && dollar(spliced)) { spliced = `${spliced.slice(0, -1)}\\$`; }
+                if(spliced !== '') { nextBrace = spliced.startsWith('{'); }
+                finding.repairs.push(this.repair(this.rules.start(child), child.end, spliced));
+            }
+            else if(this.template(expression)) {
+                let last = expression;
+                if(child.kind === 'TemplateExpression') {
+                    const span = this.rules.parser.node(child.children[child.children.length - 1] ?? -1);
+                    last = span.children[1] ?? -1;
+                }
+                if(nextBrace && dollar(this.raw(last))) { finding.repairs.push(this.repair(child.end - 2, child.end - 2, '\\')); }
+                if(child.kind === 'NoSubstitutionTemplateLiteral' && this.raw(expression) !== '') { nextBrace = this.raw(expression).startsWith('{'); }
+                finding.repairs.push(this.repair(this.rules.start(child), this.rules.start(child) + 1, ''));
+                finding.repairs.push(this.repair(child.end - 1, child.end, ''));
+            }
+            else { nextBrace = false; }
+            if(nextBrace && dollar(part.before)) { finding.repairs.push(this.repair(part.open - 1, part.open, '\\$')); }
+            const original = this.rules.parser.node(part.expression);
+            finding.repairs.push(this.repair(part.open, this.rules.start(original), ''));
+            finding.repairs.push(this.repair(original.end, part.close, ''));
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(['TemplateExpression', 'TemplateLiteralType'].includes(this.rules.parser.node(index).kind)) { this.visit(index); }
+        }
+    }
+}
