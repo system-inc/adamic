@@ -1,0 +1,18 @@
+=== RUN   TestCheckedViewIntersectionConjunction
+=== RUN   TestCheckedViewIntersectionConjunction/good
+=== RUN   TestCheckedViewIntersectionConjunction/wrong
+    checked_views_intersections_test.go:47: exit codes differ; got oracle.run{stdout:[]uint8{0x6e, 0x61, 0x6d, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== RUN   TestCheckedViewIntersectionConjunction/nested
+    checked_views_intersections_test.go:47: exit codes differ; got oracle.run{stdout:[]uint8{0x6e, 0x61, 0x6d, 0x65, 0x3a, 0x62, 0x61, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== RUN   TestCheckedViewIntersectionConjunction/absent
+--- FAIL: TestCheckedViewIntersectionConjunction (0.60s)
+    --- PASS: TestCheckedViewIntersectionConjunction/good (0.16s)
+    --- FAIL: TestCheckedViewIntersectionConjunction/wrong (0.12s)
+    --- FAIL: TestCheckedViewIntersectionConjunction/nested (0.13s)
+    --- PASS: TestCheckedViewIntersectionConjunction/absent (0.12s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.611s
+FAIL

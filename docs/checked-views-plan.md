@@ -935,3 +935,78 @@ unit's final remote check. Dictionary source admission remains blocked on the
 registry, record compiler operations, source probes and transitive indexed-read
 hooks above. The recovered exact submodule checkout builds successfully; setup
 rerun exits 0 in 24.177s and the existing record package passes in 11.344s.
+
+
+## Lane 7: nonprimitive intersection field contracts, October 7
+
+Branch `codex/views-intersections` starts at lane 4 tip 9ecdda53, after
+583d19b7, and merges phantom-brands d90994da without copying cohere code.
+The user authorizes this lane-specific plan addition. Own only new
+`internal/lower/view_intersections.go` and `view_intersections_test.go`,
+`internal/native/view_intersections.go` and `view_intersections_test.go`,
+`internal/javascript/view_intersections.go` and `view_intersections_test.go`,
+`internal/native/runtime/view_intersections.c/.h`,
+`internal/oracle/checked_views_intersections_test.go`, and
+`stage3/interface-downcasts/lane7/` fixtures, ranking, evidence and reports.
+Existing shared files remain with their owners, including counts.md.
+
+The frozen family ledger contains 198 pairs and 1,145 reads. Primitive brands
+are tracked separately, never counted as lane 7 completions. Lane 4 owns
+__String (30 direct-display pairs, 543 reads); other primitive branded aliases
+such as Path need ownership reconciliation. Type displays alone cannot establish
+that an intersection constituent is phantom. Reuse phantomField from the merged
+brand implementation and preserve the overload result rule.
+
+Priority follows the ranked pair ledger, starting with object refinement fields,
+then nested intersections, interface composition, and array/callable overlaps.
+An intersection checks every runtime constituent, ignoring only a proven phantom
+constituent. A bare object heap tag never proves constituent fields. Nested
+results retain their intersection contract through helper, generic, callback,
+container and alias reads. Optional absence and readiness use shared machinery.
+Unknown provenance retains checks; unread unsupported children do not refuse casts.
+
+Concrete handoff to the lazy-admission/shared-dispatch owner:
+
+1. Route TypeFlagsIntersection before generic representation/callable dispatch
+   through lane 7's viewIntersectionContractHook. The lane will supply the hook
+   and builder in its new lower file. Reserve recursive ids in the common registry.
+2. Supply a distinct intersection descriptor (all member ids, not union selection)
+   in common IR, or an explicit all-members discriminator. ViewUnion cannot encode
+   conjunction. ViewObject flattened fields alone must preserve repeated-field
+   conjunction and each member's readonly/optional obligations.
+3. At each potentially viewed intersection read, validate shared presence/readiness
+   once and hand the evaluated snapshot plus all constituent ids to the lane's
+   matcher. Keep child contracts on subsequent reads; no getter reevaluation.
+4. Expose a pure non-panicking shared member matcher and normalized slot probes.
+   They must distinguish missing, uninitialized, undefined and null. Array and
+   callable constituents require the respective owners' adapters. Unsupported
+   members remain named read-site obligations, not successful Unknown contracts.
+
+Observed base has no intersection hook or descriptor. Lazy-admission branch is
+not yet published at this checkpoint. These handoffs are prerequisites for source
+integration; a standalone helper must not be counted as completed pairs.
+Working estimate for the whole nonprimitive family: October 16, 2026, 23:00 UTC,
+conditional on shared hooks and lazy admission by October 9. This is a planning
+estimate, not an observed delivery. No runtime completion is claimed yet.
+
+Lane 7 component API checkpoint: `(*lowering).viewIntersectionContracts(node,
+target,build)` returns all nonphantom constituent ids, propagating unsupported
+member errors. It does not reserve an aggregate descriptor. The shared owner
+should call it from the intersection dispatch hook after defining the all-members
+IR discriminator. Runtime entry points are `adamic_view_intersection_matches`
+and `adamic_view_intersection_require`; JavaScript helper text is exported by
+`javascript.IntersectionRuntime()`. They reuse lane 4's normalized snapshot type
+and accept a pure member matcher from shared dispatch. Production source admission
+is not enabled. Four source Node controls and six C/JS adapter mutations pass;
+these do not prove frontend transitive propagation or optional/readiness behavior.
+The ranked frozen ledger still has zero completed pairs and zero completed reads.
+
+Lane 7 coordination update: the user now assigns all cross-lane merges/conflict
+resolution to `codex/views-integration` (worker 01a11882-3830). Lane 7's lazy,
+callable and shape merge attempts were aborted without editing conflict hunks.
+No individual lane is merged after this ruling. The integration branch was not
+published during this checkpoint. Source c/js compilation of lane7/good.a still
+refuses Named & Counted at value, so zero pairs/reads are complete. Native and
+JavaScript package tests pass; lower retains the documented mixed-array adapter
+failure. The lane-owned component work, six executable mutants and exact blocker
+handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.

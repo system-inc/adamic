@@ -1,8 +1,8 @@
-Integrated lazy admission first from the lane-1 base ab4d6f902.
-Owner tip e6aec805 includes lane-2 merge 592f1f71 and shared-flow merge c01ae313.
-Focused package tests and vet pass; filtered Node comparison excludes one reproduced baseline failure.
-Nested-loop rollback mutant is caught by string_views_policy.a: Node exits 0, mutant native exits 70.
-Full repository gate and production tsc census were not rerun; baseline failures remain listed below.
+Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
+Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
+Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
+27 explicit implementation/component mutants were caught and restored, alongside the fixture payload mutants.
+Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
 with no conflicting hunks and no bulk or whole-file resolutions.
@@ -182,3 +182,51 @@ pairs / 2,256 reads remain pending. The frozen ranking is reproduced byte for
 byte; existing record semantics are checked against Node as a representation
 control, not checked dictionary admission. Full IR, focused compiler packages,
 filtered checked-view/Node oracle and vet are rerun with the same baseline skip.
+
+## Lane 7 intersection reconciliation
+
+Tip bd7042cc adds constituent decomposition and conjunction components. The
+single plan hunk retains every prior dated handoff plus the intersection
+all-members discriminator/probe requirements. No shared compiler resolution
+recurs, because inherited phantom-brand code is already integrated. Conjunction
+requires every runtime member; the primitive phantom lane remains separate.
+Production wiring is deferred, and all 198 pairs / 1,145 reads remain pending.
+Six independent component mutants are rerun and restored: native/JavaScript
+skip-check, any-member instead of all-members, and dropped nested adapter.
+Nested mutations prove the component adapter seam, not source propagation.
+Normal focused compiler packages, full IR, filtered checked-view Node oracle
+and vet follow, with the same recorded parent array-callback exclusion.
+
+## Final integration verification
+
+The final restored intersection gate passes: lower 16.018s, native 27.202s,
+JavaScript 3.458s, full IR 31.324s, oracle 84.397s; go vet ./... exits 0.
+Every gate writes its complete output to integration/logs before review.
+Final commands:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/javascript -run 'Test.*View|TestUntaggedView|TestLazyView|TestPrepareViewCallableRead|TestSharedArrayContractAdapter|TestDefaultTaggedInterface|TestOptional|TestMixedUnion|TestPhantomOverload' -count=1 -timeout 30m
+go test ./internal/ir -count=1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test.*View|Test.*Phantom|TestNativeAgreesWithNode/internal/oracle/testdata/.*(view|union|brand|optional|array)' -skip 'TestNativeAgreesWithNode/internal/oracle/testdata/library_array_holes_callbacks.a' -count=1 -timeout 30m
+go vet ./...
+```
+
+The sole filtered-oracle exclusion was rerun on the final tree. It still fails
+at library_array_holes_callbacks.a:12:37 with the exact adamic/no-type-predicate
+refusal for (value) => value !== undefined, matching detached c01ae313.
+The separate failure log is views-integration-final-array-callback-baseline.log;
+it is a failure, not a passing test. Other reproduced lower baseline failures
+are listed above; full native graph-region failures are carried owner evidence,
+not a new full-native run. No requested lane was omitted for a new failure.
+
+The 27 explicit mutants comprise nested-loop rollback (1), unsafe overload
+covariance (1), callable producer/read adapter defects (3), array search/source
+write defects (9), untagged selector/adapter defects (6), Error producer rollback
+(1), and intersection conjunction/adapter defects (6). All execute meaningful
+refusal/output checks; none relies on a build error. Component adapter mutants
+do not certify missing compiler propagation. Previous eleven array mutants are
+carried lane evidence, not reruns in this integration session.
+
+Setup cache ready 1177.301s and done 1177.419s; nproc 5, quota 4.
+The compiler census and complete repository gate remain outside this run.
+The branch is ready to receive subsequent lane tips through this integrator.
