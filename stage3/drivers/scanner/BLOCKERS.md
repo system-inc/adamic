@@ -1,5 +1,22 @@
 # Scanner blockers
 
+## October 7: removing the assertion contract exposes non-null assertions
+
+In the same untracked diagnostic copy, changing only `asserts expression` to
+`void` leaves the checker clear and reaches:
+`scanner.ts:291:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case`.
+This is `languageVersion! >= ScriptTarget.ES2015`. Census reason:
+non-null assertions. No closing feature branch was demonstrated. Undefined
+languageVersion is legitimate here: JavaScript's comparison is false and selects
+the older Unicode map. Replacing it with a panic would change that behavior.
+
+Other non-null uses in the reached scanner include textInitial!, regex exec,
+codePointAt, and the intentional assignment `tokenValue = undefined!`. They
+are not interchangeable checked-read repairs. In particular, blindly replacing
+undefined! with an empty string would change observable scanner state. These
+remain unadapted; the scratch assertion-contract and V8 omissions are not
+included in the tracked adaptations. No native binary exists yet.
+
 ## October 7: scratch omission of V8 capture exposes assertion contract
 
 An untracked scratch copy removes only the captureStackTrace if-block from

@@ -189,8 +189,9 @@ for (const [source, nodes] of [...byFile].sort((a,b) => a[0].fileName.localeComp
     for (const node of nodes.sort((a,b) => a.pos-b.pos)) emit(node);
     fs.mkdirSync(path.dirname(destination), {recursive: true}); fs.writeFileSync(destination, result);
 }
-const summary = {typescript: ts.version, tree, entries, declarations: ledger.length,
-    value_declarations: ledger.filter(r => !['InterfaceDeclaration','TypeAliasDeclaration'].includes(r.kind)).length,
+const summary = {typescript: ts.version, tree, entries, declarations: ledger.filter(r => !r.kind.startsWith("Namespace")).length,
+    copied_spans: ledger.length, namespace_wrapper_spans: ledger.filter(r => r.kind.startsWith("Namespace")).length,
+    value_declarations: ledger.filter(r => !['InterfaceDeclaration','TypeAliasDeclaration'].includes(r.kind) && !r.kind.startsWith('Namespace')).length,
     type_declarations: ledger.filter(r => ['InterfaceDeclaration','TypeAliasDeclaration'].includes(r.kind)).length,
     files: byFile.size, declaration_lines: lines, declaration_bytes: bytes, rewritten_import_lines: importLines};
 fs.writeFileSync(path.join(output, 'slice.json'), JSON.stringify({summary, declarations: ledger}, null, 2)+'\n');
