@@ -1,0 +1,1 @@
+const system = { directoryExists(path: string): boolean { return true; }, createDirectory(path: string): void { if (!system.directoryExists(path)) console.log(path); } }; system.createDirectory('x');

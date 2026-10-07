@@ -26,7 +26,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
-	case ast.KindImportDeclaration, ast.KindExportDeclaration:
+	case ast.KindImportDeclaration:
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil

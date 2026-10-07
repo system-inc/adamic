@@ -1,0 +1,277 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "before": "return buffer.toString(\"utf8\", 3);",
+    "after": "return buffer.toString(\"utf8\", 0);",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "\"\"\n\"a\"\n\"\ufeffa\"\n\"\ufffd\"\n\"\ufffd(\"\n\"a\\u0000b\"\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "before": "if (len >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE)",
+    "after": "if (false)",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "\"\ufffd\ufffd\"\n\"\ufffd\ufffda\\u0000\"\n\"\ufffd\ufffd=\ufffd\\u0000\ufffd\"\n\"\ufffd\ufffda\\u0000b\"\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "before": "buffer[i] = buffer[i + 1];",
+    "after": "buffer[i] = temp;",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "\"\"\n\"\\u0000\"\n\"\ud8d8\udede\"\n\"\\u0000\"\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "before": "return undefined;",
+    "after": "return \"\";",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "\n\n\"\"\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "05_writeFile.a",
+    "before": "data = byteOrderMarkIndicator + data;",
+    "after": "data = data;",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "68c3a96c6c6f20f09f8c8d0a\n78\nENOENT\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "06_fileExists.a",
+    "before": "return stat.isFile();",
+    "after": "return stat.isDirectory();",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "file false\ndir true\nmissing false\nfileLink false\ndirLink true\nbroken false\nfile/child false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "07_directoryExists.a",
+    "before": "return stat.isDirectory();",
+    "after": "return stat.isFile();",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "file true\ndir false\nmissing false\nfileLink true\ndirLink false\nbroken false\nfile/child false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "08_getDirectories.a",
+    "before": "directories.sort();",
+    "after": "directories.reverse();",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "z,link,a\nz,link,a\n\nz,link,a\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "09_realpath.a",
+    "before": "return path;",
+    "after": "return _path.resolve(path);",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "true\ntrue\n/workspace/adamic/absent\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "before": "return statSync(path)?.mtime;",
+    "after": "return undefined;",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "undefined\nundefined\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "before": "_fs.utimesSync(path, time, time);",
+    "after": "_fs.utimesSync(path, new Date(0), new Date(0));",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "0\n0\nmissing ignored\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "12_deleteFile.a",
+    "before": "return _fs.unlinkSync(path);",
+    "after": "return;",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "true\ntrue\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "13_createDirectory.a",
+    "before": "if (!nodeSystem.directoryExists(directoryName))",
+    "after": "if (false)",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "",
+      "stderr": "adamic: panic: Error: ENOENT: no such file or directory, stat '/tmp/adamic-gate/adamic-host-J0laZ0/dir'\n",
+      "exit": 70
+    }
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "before": "callback = undefined!;",
+    "after": "// callback stays live",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "true\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "before": "__filename.endsWith(\"sys.js\")",
+    "after": "__filename.endsWith(\"sys.cjs\")",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "sys.js\n_tsc.js\n__fake__.js\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "before": "return process.env[name] || \"\";",
+    "after": "return \"\";",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "\"\"\n\"\"\n\"\"\n\"\"\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "17_write.a",
+    "before": "process.stdout.write(s);",
+    "after": "process.stdout.write(s + \"?\");",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "first?|h\u00e9llo \ud83c\udf0d\n??last?!\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "18_exit_0.a",
+    "before": "nodeSystem.exit(0);",
+    "after": "nodeSystem.exit(1);",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "exit 0\n",
+      "stderr": "",
+      "exit": 1
+    }
+  },
+  {
+    "file": "19_exit_1.a",
+    "before": "nodeSystem.exit(1);",
+    "after": "nodeSystem.exit(2);",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "exit 1\n",
+      "stderr": "",
+      "exit": 2
+    }
+  },
+  {
+    "file": "20_exit_2.a",
+    "before": "nodeSystem.exit(2);",
+    "after": "nodeSystem.exit(0);",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "exit 2\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "21_createHash.a",
+    "before": "createHash(\"sha256\")",
+    "after": "createHash(\"sha1\")",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "da39a3ee5e6b4b0d3255bfef95601890afd80709\na9993e364706816aba3e25717850c26c9cd0d89d\n3d100d877e936e4baff8c55a424233d2383c315f\n4a3dec2d1f8245280855c42db0ee4239f917fdb8\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "before": "let acc = 5381;",
+    "after": "let acc = 5382;",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "5382\n193521900\n-23518873\n-4970440250\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "23_newLine.a",
+    "before": "newLine: _os.EOL",
+    "after": "newLine: \"\\r\\n\"",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "\"\\r\\n\"\nVersion 6.0.3\ndiagnostic\n\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "before": "return !fileExists(swapCase(__filename));",
+    "after": "return fileExists(swapCase(__filename));",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "false\nfalse\nfalse\ntrue\naBc_09.TS\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "25_readDirectory.a",
+    "before": "if (extensions && !fileExtensionIsOneOf(name, extensions)) continue;",
+    "after": "if (false) continue;",
+    "nodeCaught": true,
+    "observed": {
+      "stdout": "a.ts,plain.js,z.ts,alias/b.ts,alias/deep/c.ts\na.ts,plain.js,z.ts\nsrc/b.ts,src/deep/c.ts,a.ts\na.ts,plain.js,z.ts,alias/b.ts,alias/deep/c.ts,excluded/no.ts\n\n",
+      "stderr": "",
+      "exit": 0
+    }
+  }
+]

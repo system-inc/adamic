@@ -1,0 +1,38 @@
+[
+  {
+    "file": "cloud/reports/host-proof-combined/probes/10_optional_call.a",
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_optional_call.a:1:81: stage 0 can't lower a call through ?. (an optional call) yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_optional_call.a:1:81: stage 0 can't lower a call through ?. (an optional call) yet\n"
+    },
+    "node": {
+      "stdout": "0\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/13_driver_helper.a",
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/13_driver_helper.a:48:22: stage 0 can't lower reading directoryExists yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/13_driver_helper.a:48:22: stage 0 can't lower reading directoryExists yet\n"
+    },
+    "node": {
+      "stdout": "true\ntrue\nENOENT\n",
+      "stderr": "",
+      "exit": 0
+    }
+  }
+]

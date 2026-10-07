@@ -1,0 +1,1 @@
+import { statSync } from 'node:fs'; function errorCode(error: unknown): string | undefined { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined; } try { statSync('/adamic-proof-missing'); } catch (e) { console.log(errorCode(e)); }

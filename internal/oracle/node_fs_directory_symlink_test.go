@@ -50,7 +50,7 @@ func TestNodeFSDirectorySymlinkMutants(t *testing.T) {
 						t.Fatalf("%s: %s Node=%q got=%q stderr=%q", name, difference, truth.stdout, observation.stdout, observation.stderr)
 					}
 				}
-				if leaked := inputLeaks(t, prepare("leaks"), program, binary); leaked != "" {
+				if leaked := inputLeaks(t, func() inputRun { return prepare("leaks") }, program, binary); leaked != "" {
 					t.Fatal(leaked)
 				}
 			}

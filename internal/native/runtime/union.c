@@ -63,6 +63,8 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 }
 
 adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
+	// Unknown uses a distinct null sentinel; it has no object payload to inspect.
+	if (value == &adamic_null) { return &adamic_typeof_object; }
 	if (value == NULL) {
 		return null ? &adamic_typeof_object : &adamic_typeof_undefined;
 	}
