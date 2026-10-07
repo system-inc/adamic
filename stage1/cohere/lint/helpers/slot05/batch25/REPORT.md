@@ -33,3 +33,7 @@ gofmt -l cmd internal stage1/cohere/lint/helpers/slot05 > /tmp/lint05-batch25-fo
 Go 1.27.1, clang 20.1.8, Node 24.19.0, five processors (cgroup quota four cores). Exact setup timing lines are retained in evidence/setup.log. All selected tests PASS; seven uncached Node probe misses, empty static check logs. No shared registration, harness, compiler or upstream source was edited. Main 71d7e491 and area b28757f3 remained ancestors at final fetch; all twenty origin helper claim trees were reread and selected ownership was unique to slot05. Only codex/lint-helpers-05 is published; no main/area push or PR.
 
 The previous 68 helpers remain complete with unchanged source. Their retained complete landing proof covers all 24 previous packages and 290 semantic variants; this batch adds twelve, not a rerun claim for the old packages. Full repository and seventeen required external-input tests were not run or credited; no skip or relaxation. No arbitrary corpus exhaustive proof, whole-rule diagnostic/fix parity, flags validation or new rule adapter is claimed.
+
+## Current lint-area landing
+
+See LANDING26.md for area e667e3e1, unchanged compiler/helper input proof and twelve fresh compiling semantic mutant witnesses. No new reservation.

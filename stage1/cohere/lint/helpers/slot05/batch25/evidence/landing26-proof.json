@@ -1,0 +1,36 @@
+{
+  "previous_publication": "9074a9f2bf4d37c3c76c8402e496faa1a75e9e46",
+  "tested_source": "b5c4a06df6082d7c88fb28778a298fabd59a3c63",
+  "main": "71d7e491b3c9724f7a0e2ee754592149e7f9790b",
+  "area": "e667e3e1dbdfd1b9125c3256961bfbc8ec31946b",
+  "identical_input_entries": 2369,
+  "input_paths": [
+    "cmd",
+    "internal",
+    "oracle",
+    "cohere",
+    "go.mod",
+    "go.sum",
+    "stage1/cohere/lint/helpers",
+    "lib",
+    "library",
+    "tsconfig.json",
+    "CohereSettings.json"
+  ],
+  "input_tree_sha256": "2728d1fbf707676acdfafb95096e13a14fa4123e48b0b416c6bcf61acc4cbd39",
+  "helper_log_sha256": "309ba339965fd460ca686fe9f7a27cb9036a7854c42c46238c4746487c2b4eec",
+  "fresh_mutants": [
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(117)\" -> \"false\" caught at output line 13: mutant \"false|false\", Go \"true|false\"",
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(118)\" -> \"false\" caught at output line 89: mutant \"true|false\", Go \"true|true\"",
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(117)\" -> \"bytes[0] === 117\" caught at output line 13: mutant \"false|false\", Go \"true|false\"",
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(118)\" -> \"bytes[0] === 118\" caught at output line 89: mutant \"true|false\", Go \"true|true\"",
+    "    helper_test.go:104: regex_flags_uv.a mutant \"flags.unicode || flags.unicodeSets\" -> \"flags.unicode && flags.unicodeSets\" caught at output line 13: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: regex_flags_uv.a mutant \"flags.unicode || flags.unicodeSets\" -> \"flags.unicode\" caught at output line 507: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: regex_flags_uv.a mutant \"flags.unicode || flags.unicodeSets\" -> \"flags.unicodeSets\" caught at output line 13: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"bytes[0] !== 47\" -> \"false\" caught at output line 13: mutant \"0a2020202020202020202020202f|20225b2220616e6420225d22206573636170656420617320225c7835422220616e6420225c7530303544220a2020202020202020202020206e65772052656745787028225c783542205c5c75666530665c753030354422290a0a202020202020202020202020\", Go \"|\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"lastSlash = i;\" -> \"if (lastSlash < 0) { lastSlash = i; }\" caught at output line 457: mutant \"|206120636f6d6d656e742061626f757420746865207061747465726e0a76617220666f6f203d202f626172202062617a2f3b\", Go \"2f206120636f6d6d656e742061626f757420746865207061747465726e0a76617220666f6f203d202f626172202062617a|3b\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"pattern: bytes.slice(1), flags: []\" -> \"pattern: [], flags: []\" caught at output line 272: mutant \"|\", Go \"00|\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"bytes.slice(1, lastSlash)\" -> \"bytes.slice(0, lastSlash)\" caught at output line 273: mutant \"2f00|7576\", Go \"00|7576\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"bytes.slice(lastSlash + 1)\" -> \"bytes.slice(lastSlash)\" caught at output line 273: mutant \"00|2f7576\", Go \"00|7576\""
+  ]
+}
