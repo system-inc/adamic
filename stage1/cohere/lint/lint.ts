@@ -7,7 +7,7 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 
-import type { Finding } from './finding.ts';
+import { Finding } from './finding.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
 
@@ -123,7 +123,27 @@ export class Linter {
         let findings = this.findings;
         let lastProposals: Finding[] = [];
         for(let pass = 0; pass < passBudget; pass++) {
-            const proposals = findings.filter((finding) => finding.repair === 'fix');
+            const proposals: Finding[] = [];
+            for(const finding of findings) {
+                if(finding.repair === 'fix') {
+                    proposals.push(finding);
+                    for(const extra of finding.extraFixes) {
+                        const fix = new Finding(
+                            finding.rule,
+                            finding.id,
+                            finding.message,
+                            finding.start,
+                            finding.end,
+                            'fix',
+                            extra.text,
+                            '',
+                        );
+                        fix.editStart = extra.start;
+                        fix.editEnd = extra.end;
+                        proposals.push(fix);
+                    }
+                }
+            }
             lastProposals = proposals;
             proposals.sort(compareEdits);
             const applied: Finding[] = [];
