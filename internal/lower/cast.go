@@ -34,6 +34,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, proof.deferredError
 	}
+	if proof.interfaceView {
+		return l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))
+	}
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}

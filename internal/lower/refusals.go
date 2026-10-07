@@ -139,6 +139,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
+		if node.Kind == ast.KindCallExpression {
+			if err := l.predicateArguments(node); err != nil {
+				found = err
+				return true
+			}
+		}
 		if err := l.enumRefusal(node); err != nil {
 			found = err
 			return true
@@ -152,7 +158,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-			checkedCast = proof.lowering != castLoweringNone || len(proof.allowed) > 0 || len(proof.classes) > 0
+			checkedCast = proof.lowering != castLoweringNone || proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if err := l.recordStorageView(node); err != nil {
 			found = err

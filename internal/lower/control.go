@@ -98,7 +98,7 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	return truthy(value), nil
+	return censusCondition(value), nil
 }
 
 func truthy(value ir.Expression) ir.Expression {

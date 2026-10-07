@@ -203,6 +203,7 @@ func TestCountsAreRecorded(t *testing.T) {
 			table.WriteString("\n")
 		}
 	}
+	table.WriteString(predicateCountsTable(t))
 	if *updateCounts {
 		if err := os.WriteFile(countsPath, []byte(table.String()), 0o644); err != nil {
 			t.Fatal(err)

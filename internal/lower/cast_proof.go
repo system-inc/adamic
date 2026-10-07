@@ -13,6 +13,7 @@ import (
 type castProof struct {
 	lowering      castLoweringKind
 	deferredError error
+	interfaceView bool
 	field         string
 	allowed       []*checker.Type
 	classes       []*checker.Type
@@ -180,6 +181,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{lowering: kind, deferredError: refused}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if checked, err := l.interfaceCast(node, ir.Read{Of: ir.Object}, source, target); checked != nil || err != nil {
+			return castProof{interfaceView: checked != nil}, err
+		}
 		return castProof{}, refused
 	}
 	if !l.castUnionWrites(source) {
