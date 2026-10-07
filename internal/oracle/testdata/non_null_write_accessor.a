@@ -1,0 +1,12 @@
+class Box {
+ stored: number | undefined = 4;
+ reads = 0;
+ writes = 0;
+ get value(): number | undefined { this.reads++; return this.stored; }
+ set value(value: number | undefined) { this.writes++; this.stored = value; }
+}
+const box = new Box();
+box.value! |= 1;
+console.log(`${box.reads} ${box.writes} ${box.stored}`);
+box.value! = 0;
+console.log(`${box.reads} ${box.writes} ${box.stored}`);

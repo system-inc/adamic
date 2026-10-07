@@ -1,0 +1,5 @@
+let calls = 0;
+function index(): number { const result = calls; calls++; return result; }
+const values = [4, 8];
+values[index()]! |= 1;
+console.log(`${calls} ${values[0]} ${values[1]}`);

@@ -242,6 +242,12 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
 				failing = node.Method
 			}
+		case ir.TypedArrayNew:
+			if !node.FromArray && !constantWithin(node.Source, 0, 9007199254740991) {
+				failing = "typed array length conversion"
+			}
+		case ir.TypedArraySet:
+			failing = "typed array set range validation"
 		case ir.ArrayFill:
 			if node.Array == nil && !constantWithin(node.Length, 0, 4294967295) {
 				failing = "new Array(length)"

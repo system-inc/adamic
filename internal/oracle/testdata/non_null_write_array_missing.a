@@ -1,0 +1,4 @@
+const values: number[] = [];
+console.log('before');
+values[0]! += 1;
+console.log(`${values[0]}`);

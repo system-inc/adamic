@@ -71,6 +71,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
+		if node.Kind == ast.KindNonNullExpression {
+			flags := l.checker.GetTypeAtLocation(node.AsNonNullExpression().Expression).Flags()
+			if flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull {
+				operand := "undefined"
+				if flags == checker.TypeFlagsNull {
+					operand = "null"
+				}
+				found = &Refused{Where: l.program.Where(node), What: "a non-null assertion whose operand is exactly " + operand, Fix: "declare the variable optional and assign undefined"}
+				return true
+			}
+		}
+		if err := l.typedArrayUnsupported(node); err != nil {
+			found = err
+			return true
+		}
 		if node.Kind == ast.KindTypePredicate {
 			if err := l.provePredicate(node); err != nil {
 				found = err
@@ -97,7 +112,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}

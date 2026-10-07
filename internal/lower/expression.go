@@ -51,6 +51,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if of, known := l.dateStringRepresentation(proven); known {
 		return of, true
 	}
+	if kind := l.typedArrayKind(proven); kind != 0 {
+		return kind, true
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
@@ -244,7 +247,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if viewErr != nil {
 				return nil, viewErr
 			}
-			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.typedArraySetArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
+					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
+				}
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
@@ -292,6 +298,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	visited[[2]*checker.Type{from, to}] = true
 	if !l.nodeBufferView(from, to) {
 		return false
+	}
+	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
+		return fromKind != 0 && fromKind == toKind
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
@@ -478,6 +487,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	}
 	node = ast.SkipParentheses(node)
 	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
+	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
 	if value, known, err := l.enumExpression(node); known {
@@ -1051,6 +1063,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 }
 
 func typeName(valueType ir.Type) string {
+	if valueType.IsTypedArray() {
+		return typedArrayName(valueType)
+	}
 	switch valueType {
 	case ir.Number:
 		return "number"

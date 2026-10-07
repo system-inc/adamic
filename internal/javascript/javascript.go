@@ -629,6 +629,14 @@ func (e *emitter) value(expression ir.Expression) string {
 		case "exit":
 			return "adamicProcessExit(" + e.value(expression.Arguments[0]) + ")"
 		}
+	case ir.TypedArrayNew:
+		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
+	case ir.TypedArrayFill:
+		return e.value(expression.Array) + ".fill(" + e.values(expression.Arguments) + ")"
+	case ir.TypedArraySet:
+		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
+	case ir.TypedArraySubarray:
+		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
 			return "new RegExp(" + e.values(expression.Arguments) + ")"
