@@ -43,6 +43,14 @@ type engine struct {
 	worker           int
 	root             string
 	fallback         *compilerFallback
+	timeout          time.Duration
+}
+
+func (e *engine) executionTimeout() time.Duration {
+	if e.timeout > 0 {
+		return e.timeout
+	}
+	return 15 * time.Second
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
@@ -56,6 +64,9 @@ func prepareProfile(root string, test262 string, work string, profile *runProfil
 func prepareMode(root string, test262 string, work string, profile *runProfile, inProcess bool) (*engine, error) {
 	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
+		return nil, err
+	}
+	if err := os.WriteFile(filepath.Join(work, "results.jsonl"), nil, 0o644); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
@@ -210,6 +221,25 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	for index := range files {
 		<-ready[index]
 		report.add(results[index])
+		if !classifyOnly {
+			// Retain every result, not just aggregate reasons, for before/after audits.
+			encoded, err := json.Marshal(results[index])
+			if err != nil {
+				return report, err
+			}
+			file, err := os.OpenFile(filepath.Join(e.work, "results.jsonl"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644)
+			if err != nil {
+				return report, err
+			}
+			_, writeErr := file.Write(append(encoded, '\n'))
+			closeErr := file.Close()
+			if writeErr != nil {
+				return report, writeErr
+			}
+			if closeErr != nil {
+				return report, closeErr
+			}
+		}
 		if (index+1)%50 == 0 || index+1 == len(files) {
 			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d crashed=%d skipped=%d\n",
 				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.Crashed, report.Skipped)
@@ -313,7 +343,7 @@ func (e *engine) attempt(test classified) result {
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
 	arguments = append(arguments, e.runtime...)
 	arguments = append(arguments, "-lm")
-	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s", "2m", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
+	nativeCommand := cacheKey(cacheKey(arguments...), binary, e.executionTimeout().String(), "2m", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
@@ -325,7 +355,7 @@ func (e *engine) attempt(test classified) result {
 			return linked, false
 		}
 		defer os.Remove(binary)
-		return profile.command("native", func() execution { return runCommand(15*time.Second, nativeEnvironment, binary) }), true
+		return profile.command("native", func() execution { return runCommand(e.executionTimeout(), nativeEnvironment, binary) }), true
 	})
 	// A link failure is a compiler crash rather than a native execution verdict.
 	// Only successful links publish observations, so a hit always holds a real execution.
@@ -335,10 +365,10 @@ func (e *engine) attempt(test classified) result {
 		base.Reason = "clang: " + firstLine(nativeRun.Stderr)
 		return base
 	}
-	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s", fmt.Sprint(outputLimit))
+	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, e.executionTimeout().String(), fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
-		return runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
+		return runCommand(e.executionTimeout(), nil, "node", "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
@@ -348,6 +378,29 @@ func (e *engine) attempt(test classified) result {
 	})
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
+	// The existing generic harness checks Error ancestry, not constructor
+	// identity. Independent Node success cannot prove that missing native check.
+	// Do not award a RegExp pass until exact constructor checks are supported.
+	if base.Kind == outcomePass && test.ConstructorAssertion {
+		base.Kind = outcomeRefused
+		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
+		return base
+	}
+	if base.Kind == outcomePass && test.Original != "" {
+		original := e.originalRegExp(test)
+		if crashedExecution(original) {
+			base.Kind = outcomeCrashed
+			base.Reason = "original Node test: " + crashReason(verdictInput{Node: original})
+		} else if test.NegativePhase == "runtime" {
+			if original.Exit == 0 || !errorNamed(original.Stderr, test.NegativeType) {
+				base.Kind = outcomeFail
+				base.Reason = "original Node negative expectation not observed"
+			}
+		} else if original.Exit != 0 || original.Stdout != nodeRun.Stdout || original.Stderr != nodeRun.Stderr {
+			base.Kind = outcomeFail
+			base.Reason = "original Node test disagrees with adaptation: " + firstLine(original.Stderr)
+		}
+	}
 	return base
 }
 

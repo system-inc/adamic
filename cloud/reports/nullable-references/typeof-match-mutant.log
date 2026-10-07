@@ -1,0 +1,19 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references_typeof_match.a (0.69s)
+        oracle_test.go:559: gate cache node miss
+        oracle_test.go:559: gate cache node miss
+        oracle_test.go:448: gate cache native miss
+        oracle_test.go:441: gate cache native miss
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "object true\nobject\nobject\n", stderr ""
+            native: exit 0, stdout "undefined true\nobject\nundefined\n", stderr ""
+        oracle_test.go:586: JavaScript backend: stdout differs
+            node:    exit 0, stdout "object true\nobject\nobject\n", stderr ""
+            backend: exit 0, stdout "undefined true\nobject\nundefined\n", stderr ""
+        oracle_test.go:455: gate cache native hit
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.709s
+FAIL

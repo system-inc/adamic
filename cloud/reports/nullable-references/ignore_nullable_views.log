@@ -1,0 +1,6 @@
+--- FAIL: TestNullableReferenceViewsCannotChangeTheEmptyCase (0.37s)
+    nullable_test.go:45: function f(v: { readonly x: string | null }): void { const wider: { readonly x?: string | null } = v; }: got <nil>, want NotYet
+    nullable_test.go:45: function f<T>(v: { readonly x: T }): void { const wider: { readonly x?: T } = v; } f<{readonly a:string}|null>({x:null});: got <nil>, want NotYet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.379s
+FAIL

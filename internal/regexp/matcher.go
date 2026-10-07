@@ -33,6 +33,7 @@ type Program struct {
 	filterFirst bool
 	prefix      []rune
 	anchored    bool
+	regular     *regularProgram
 }
 
 type opcode uint8
@@ -127,6 +128,7 @@ func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error
 	p.firstASCII, p.filterFirst = p.nativeFirstASCII()
 	p.prefix = p.nativePrefix()
 	p.anchored = p.nativeAnchored()
+	p.regular = p.compileRegular()
 	return p, nil
 }
 
@@ -313,9 +315,10 @@ func maxCharacter(f Flags) rune {
 // RegExp owns JavaScript's mutable lastIndex. Programs can be shared by instances.
 // LastIndex is already converted by ToLength by the embedding runtime.
 type RegExp struct {
-	Program   *Program
-	LastIndex uint64
-	StepLimit uint64
+	Program        *Program
+	LastIndex      uint64
+	StepLimit      uint64
+	DisableRegular bool
 }
 
 func (p *Program) New() *RegExp { return &RegExp{Program: p} }
@@ -336,6 +339,12 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 		}
 		if p.anchored && position != 0 {
 			break
+		}
+		if p.regular != nil && r.StepLimit == 0 && !r.DisableRegular {
+			position = p.regularFind(input, position, p.flags.Sticky)
+			if position < 0 {
+				break
+			}
 		}
 		if !p.anchored && !p.flags.Sticky {
 			for position < len(input) {

@@ -34,6 +34,7 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -53,6 +54,7 @@ func run(arguments []string) (exit int) {
 	subprocess := flags.Bool("compiler-subprocess", false, "start adamic c for each test (reference path; also used with an explicit -root)")
 	jobs := flags.Int("jobs", runtime.GOMAXPROCS(0), "number of concurrent tests")
 	limit := flags.Int("limit", 0, "run at most this many attempted tests per filter (0 is all)")
+	executionTimeout := flags.Duration("timeout", 15*time.Second, "wall limit for each native or Node execution")
 	flags.Usage = func() {
 		fmt.Fprintf(os.Stderr, "usage: adamic-test262 [flags] <filter>...\n\n")
 		fmt.Fprintf(os.Stderr, "  filter is a directory under test262's test/, like built-ins/String/prototype/padStart\n\n")
@@ -108,6 +110,11 @@ func run(arguments []string) (exit int) {
 	prepared.adapt = *adapt
 	prepared.jobs = *jobs
 	prepared.inProcess = inProcess
+	if *executionTimeout <= 0 {
+		fmt.Fprintln(os.Stderr, "timeout must be positive")
+		return 2
+	}
+	prepared.timeout = *executionTimeout
 	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
 		report, err := prepared.runFilter(filter, *limit, *classifyOnly)

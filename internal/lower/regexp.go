@@ -33,13 +33,32 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "RegExp with more than two arguments")
 		}
 		if len(args) > 0 {
-			var ok bool
-			pattern, ok = l.constantPattern(args[0], 0)
-			if !ok {
-				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+			if l.constantUndefined(args[0], 0) {
+				pattern = ""
+			} else if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
+				var ok bool
+				pattern, flags, ok = l.constantRegExp(args[0], 0)
+				if !ok {
+					return nil, l.notYet(args[0], "RegExp with a nonconstant RegExp source")
+				}
+				// RegExp(re) preserves identity; new RegExp(re) makes a fresh
+				// object. Only an intrinsic undefined can be omitted without
+				// evaluating a second argument (including its possible TDZ).
+				if node.Kind == ast.KindCallExpression && (len(args) == 1 || l.intrinsicUndefined(args[1])) {
+					return l.expression(args[0])
+				}
+				if node.Kind == ast.KindCallExpression && len(args) == 2 && l.checker.GetTypeAtLocation(args[1]).Flags()&checker.TypeFlagsUndefined != 0 {
+					return nil, l.notYet(node, "RegExp identity construction with an evaluated undefined flag")
+				}
+			} else {
+				var ok bool
+				pattern, ok = l.constantPattern(args[0], 0)
+				if !ok {
+					return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+				}
 			}
 		}
-		if len(args) > 1 {
+		if len(args) > 1 && !l.constantUndefined(args[1], 0) {
 			var ok bool
 			flags, ok = l.constantPattern(args[1], 0)
 			if !ok {
@@ -56,7 +75,7 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
-		return nil, fmt.Errorf("%s: invalid RegExp: %w", l.program.Where(node), err)
+		return nil, l.notYet(node, "a RegExp constructor that throws SyntaxError: "+err.Error())
 	}
 	index := len(l.result.Regexps)
 	declarations, err := program.NativeDeclarations(fmt.Sprintf("adamic_regex_%d", index))
@@ -82,13 +101,10 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
 		return node.Text(), true
 	case ast.KindIdentifier:
-		if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
-			return "", true
-		}
 		symbol := l.symbol(node)
 		if symbol != nil && len(symbol.Declarations) == 1 {
 			declaration := symbol.Declarations[0]
-			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil {
+			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.AsVariableDeclaration().Initializer != nil && l.regexStableBinding(symbol, declaration) {
 				return l.constantPattern(declaration.AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
