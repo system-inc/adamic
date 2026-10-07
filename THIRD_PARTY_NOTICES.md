@@ -45,6 +45,10 @@ IN THE SOFTWARE.
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
+  - Object primitive own-name reflection (`runtime/object_names.c`, after
+    src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
+  - Object sealing and extensibility (`runtime/object_integrity.c`, after
+    src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
