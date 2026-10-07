@@ -10,9 +10,19 @@ ROOT = pathlib.Path(__file__).resolve().parents[4]
 UNIT = pathlib.Path(__file__).resolve().parent
 OUT = pathlib.Path(os.environ.get('ADAMIC_WAVE07_LANDING', '/workspace/wave-07-landing'))
 OUT.mkdir(exist_ok=True)
-records = []
+RESUME = os.environ.get('ADAMIC_WAVE07_RESUME', '')
+records = json.loads((OUT/'commands.json').read_text()) if RESUME else []
+resume_pending = bool(RESUME)
 
 def run(name, command, extra=None):
+    global resume_pending
+    if resume_pending:
+        if name != RESUME:
+            previous = [row for row in records if row['name'] == name]
+            assert previous and previous[-1]['exit'] == 0, name+' has no passing prior run'
+            print(name+': prior PASS (resumed run)', flush=True)
+            return
+        resume_pending = False
     environment = dict(os.environ)
     environment.update(extra or {})
     started = time.monotonic_ns()
@@ -61,4 +71,5 @@ run('gofmt',['gofmt','-l','cmd','internal','bridge/tsgo','stage1/cohere/typeawar
 assert not (OUT/'gofmt.log').read_text().strip(), 'Go formatting differs'
 run('react-branch-blocker',['python3',UNIT/'probe.py'])
 run('jsx-dependency',['python3',UNIT/'dependency_probe.py'])
+assert not resume_pending, 'Unknown resume step: '+RESUME
 print('PASS wave-07 landing gates; React ports and shared dispatch integration remain incomplete.',flush=True)
