@@ -199,6 +199,18 @@ class LatentReportTests(unittest.TestCase):
         self.assertEqual(reason_owner('reading SyntaxKind.SomeFlag', owners), 'compiler/stage3-front')
         self.assertEqual(reason_owner('a method call through a structural signature on X', owners), '01a1143c')
         self.assertEqual(reason_owner('a value of type X seen as Y', owners), 'adaptation 70, stage 3')
+        for name in ('ModifierFlags', 'Extension', 'NodeFlags', 'Comparison', 'ModuleKind', 'EmitFlags'):
+            self.assertEqual(reason_owner('reading ' + name, owners), 'compiler/stage3-front')
+        self.assertEqual(reason_owner('reading Error', owners), 'OWNER BLANK')
+        self.assertEqual(reason_owner('reading addOutput', owners), 'OWNER BLANK')
+        self.assertEqual(reason_owner('a function returning T seen as U', owners), 'adaptation 70, stage 3')
+        self.assertEqual(reason_owner('a value of type any seen as X', owners), 'adaptation 70, stage 3')
+        for reason, owner in {'||=': '01a113e3-a058', 'a string as a condition': '01a113e3-a058',
+                              'a boolean | undefined as a condition': '01a113e3-a058',
+                              'a namespace object used as a value': 'codex/namespaces-tsc',
+                              'an index signature': '01a113e7', 'a value of type any': 'adaptation 40, stage 3',
+                              "a cast the runtime can't check": '01a11410', 'a value of type unknown': '01a114ab'}.items():
+            self.assertEqual(reason_owner(reason, owners), owner)
         self.assertEqual(reason_owner('unmatched', owners), 'OWNER BLANK')
         self.assertEqual(reason_owner('reading SyntaxKind', {'reading': 'general', 'reading SyntaxKind': 'specific'}), 'specific')
 

@@ -96,9 +96,10 @@ extra NotYet on a checker-rejected program with existing NotYet and Refused find
 count may increase; every existing reason and the Refused total must stay fixed.
 
 Reason tables group identical reason text across NotYet and Refused and show an
-owner column. owners.json is a flat reason-to-owner map. Exact matches win,
-then the longest matching prefix. The explicit "seen as" entry also matches
-that phrase inside variance messages, whose source type precedes it.
+owner column. owners.json is a flat reason-to-owner map. The explicit "seen as" entry wins whenever that phrase occurs inside a reason.
+Other reasons use exact matches, then the longest matching prefix. Enum-read
+entries cover the enum declarations in the pinned compiler sources; ordinary
+function reads and the Error constructor are not assigned as enums.
 Unknown reasons get OWNER BLANK. The Unowned section appears immediately after
 the checker table and before owned reason tables. It lists only reasons with at least 10 unique sites on either tree, sorted by
 the larger per-tree count. A final line summarizes the number of omitted reasons

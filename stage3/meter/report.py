@@ -13,15 +13,15 @@ MEASUREMENT = 'measured on a checker-rejected program'
 
 
 def reason_owner(reason, owners):
+    # The variance family owns every such message, including ones that also
+    # begin with a mapped type or generic-return prefix.
+    if ' seen as ' in reason and 'seen as' in owners:
+        return owners['seen as']
     if reason in owners:
         return owners[reason]
     for prefix in sorted(owners, key=lambda key: (-len(key), key)):
         if prefix != 'seen as' and reason.startswith(prefix):
             return owners[prefix]
-    # Variance messages put the source type before this phrase, so a prefix
-    # cannot match them. The explicit map entry owns this diagnostic family.
-    if ' seen as ' in reason and 'seen as' in owners:
-        return owners['seen as']
     return 'OWNER BLANK'
 
 
