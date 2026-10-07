@@ -1,0 +1,3 @@
+const self = this;
+const wrapped = (this);
+let target; (target as any) += this;
