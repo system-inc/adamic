@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Exercise warming keys and real setup invalidation; all subprocess output goes to logs."""
 import copy
+import contextlib
+import io
+import json
 import importlib.util
 import os
 from pathlib import Path
@@ -9,12 +12,12 @@ import sys
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 SOURCE = Path(__file__).resolve().parent
-spec = importlib.util.spec_from_file_location(
-    "setup_key", os.environ.get("ADAMIC_SETUP_KEY_MODULE", SOURCE / "setup-key.py")
-)
+KEY_MODULE = Path(os.environ.get("ADAMIC_SETUP_KEY_MODULE", SOURCE / "setup-key.py"))
+spec = importlib.util.spec_from_file_location("setup_key", KEY_MODULE)
 key = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(key)
 
@@ -34,6 +37,75 @@ class WarmingKey(unittest.TestCase):
                 changed = dict(inputs, **{component: value})
                 self.assertNotEqual(answer, key.warming_key(**changed), component)
 
+    def test_module_and_workspace_manifests(self):
+        with tempfile.TemporaryDirectory(prefix="setup-manifests-") as directory:
+            module = Path(directory) / "go.mod"
+            sums = Path(directory) / "go.sum"
+            workspace = Path(directory) / "go.work"
+            workspace_sums = Path(directory) / "go.work.sum"
+            paths = {str(module), str(sums), str(workspace), str(workspace_sums)}
+            module.write_text("module proof\n")
+            previous = key.manifest_bytes(paths)
+            for file in [sums, workspace, workspace_sums]:
+                file.write_text("")
+                answer = key.manifest_bytes(paths)
+                self.assertNotEqual(previous, answer, "missing and empty must differ")
+                previous = answer
+            for file in [module, sums, workspace, workspace_sums]:
+                file.write_text(file.read_text() + "\n")
+                answer = key.manifest_bytes(paths)
+                self.assertNotEqual(previous, answer, str(file))
+                previous = answer
+
+    def test_collected_manifests_invalidate(self):
+        with tempfile.TemporaryDirectory(prefix="setup-collected-") as directory:
+            repository = Path(directory)
+            (repository / "cloud").mkdir()
+            (repository / "cloud/setup.sh").write_text("setup source")
+            cache = repository / "cache"
+            cache.mkdir()
+            artifact = cache / "artifact-d"
+            artifact.write_text("compiled dependency")
+            dependency = repository / "dependency"
+            dependency.mkdir()
+            paths = [repository / "go.mod", repository / "go.sum", repository / "go.work",
+                     repository / "go.work.sum", dependency / "go.mod", dependency / "go.sum"]
+            for file in paths:
+                file.write_text("manifest\n")
+            packages = repository / "packages.json"
+            packages.write_text(json.dumps({"ImportPath": "proof", "BuildID": "unchanged",
+                                           "Export": str(artifact),
+                                           "Module": {"GoMod": str(dependency / "go.mod")}}))
+            environment = {"GOGCCFLAGS": "-fPIC", "GOCACHE": str(cache),
+                           "GOWORK": str(repository / "go.work")}
+
+            def command(arguments):
+                if arguments == ["go", "env", "-json"]:
+                    return json.dumps(environment).encode()
+                if arguments == ["go", "version"]:
+                    return b"go version go1.27.1 linux/amd64\n"
+                if arguments == ["git", "rev-parse", "HEAD"]:
+                    return b"unchanged-head\n"
+                raise AssertionError(arguments)
+
+            def answer():
+                original = Path.cwd()
+                try:
+                    with patch.object(key.subprocess, "check_output", command), patch.object(
+                        key.sys, "argv", ["setup-key.py", str(repository), str(packages), "false"]
+                    ), contextlib.redirect_stdout(io.StringIO()) as output:
+                        key.main()
+                    return output.getvalue()
+                finally:
+                    os.chdir(original)
+
+            previous = answer()
+            for file in paths:
+                file.write_text(file.read_text() + "changed\n")
+                current = answer()
+                self.assertNotEqual(previous, current, str(file))
+                previous = current
+
     def test_streamed_package_records(self):
         self.assertEqual(list(key.records(' {"ImportPath":"one"}\n{"ImportPath":"two"} ')),
                          [{"ImportPath": "one"}, {"ImportPath": "two"}])
@@ -47,7 +119,8 @@ class SetupIntegration(unittest.TestCase):
         repository = scratch / "repository"
         (repository / "cloud").mkdir(parents=True)
         for name in ["setup.sh", "setup-key.py"]:
-            shutil.copyfile(SOURCE / name, repository / "cloud" / name)
+            shutil.copyfile(KEY_MODULE if name == "setup-key.py" else SOURCE / name,
+                            repository / "cloud" / name)
         (repository / "go.mod").write_text("module setup-proof\n\ngo 1.27\n")
         (repository / "go.sum").write_text("")
         (repository / ".gitignore").write_text("setup-proof\n")
@@ -61,6 +134,9 @@ class SetupIntegration(unittest.TestCase):
         environment = os.environ.copy()
         environment["GOCACHE"] = str(scratch / "cache")
         environment["GOTOOLCHAIN"] = "auto"
+        # The stamp's HEAD and checksum checks must stand on their own, rather than being
+        # incidentally caught by VCS metadata in main-package compilation actions.
+        environment["GOFLAGS"] = "-buildvcs=false"
         environment.pop("ADAMIC_GATE_UNCACHED", None)
         number = 0
 

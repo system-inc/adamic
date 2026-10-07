@@ -39,6 +39,15 @@ def warming_key(head, sums, version, environment, packages, cache, mode):
     return hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
 
 
+def manifest_bytes(paths):
+    manifests = []
+    for path in sorted(paths):
+        file = Path(path)
+        digest = hashlib.sha256(file.read_bytes()).hexdigest() if file.exists() else None
+        manifests.append([str(file), digest])
+    return json.dumps(manifests, sort_keys=True).encode()
+
+
 def main():
     repository, package_file, mode = sys.argv[1:]
     os.chdir(repository)
@@ -52,9 +61,20 @@ def main():
     environment["setup-source"] = hashlib.sha256(Path("cloud/setup.sh").read_bytes()).hexdigest()
     environment["key-source"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     packages = []
+    manifests = {"go.mod", "go.sum"}
+    workspace = environment.get("GOWORK")
+    if workspace and workspace != "off":
+        manifests.update([workspace, workspace + ".sum"])
     for package in records(Path(package_file).read_text()):
         if package.get("Error") or package.get("DepsErrors"):
             raise RuntimeError("Go could not validate dependencies")
+        module = package.get("Module", {})
+        for dependency in [module, module.get("Replace", {})]:
+            if dependency.get("GoMod"):
+                path = Path(dependency["GoMod"])
+                manifests.add(str(path))
+                if path.name == "go.mod":
+                    manifests.add(str(path.with_name("go.sum")))
         artifact = package.get("Export")
         if artifact:
             # Stat also notices an artifact deleted between go list and this key.
@@ -78,7 +98,7 @@ def main():
     cache.sort()
     print(warming_key(
         subprocess.check_output(["git", "rev-parse", "HEAD"]).decode().strip(),
-        Path("go.sum").read_bytes() if Path("go.sum").exists() else b"",
+        manifest_bytes(manifests),
         subprocess.check_output(["go", "version"]).decode().strip(),
         environment, sorted(packages), cache, mode,
     ))

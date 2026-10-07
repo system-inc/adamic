@@ -27,7 +27,10 @@ scratch = Path(tempfile.mkdtemp(prefix="setup-trials-", dir="/workspace"))
 revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repository).decode().strip()
 baseline = subprocess.check_output(["git", "show", f"{arguments.before}:cloud/setup.sh"],
                                    cwd=repository).decode()
-results = []
+results_file = output / "timings.json"
+results = json.loads(results_file.read_text()) if results_file.exists() else []
+assert all(entry["before"]["commit"] == revision and entry["cold"] == arguments.cold
+           for entry in results), "resumed trials must have the same commit and cold mode"
 
 
 def captured(command, cwd, environment):
@@ -50,6 +53,9 @@ def flags(cwd, environment):
 
 for loop in range(1, arguments.loops + 1):
     for mode in (["before", "after"] if loop % 2 else ["after", "before"]):
+        if any(entry["loop"] == loop and entry["mode"] == mode and entry["exit"] == 0
+               for entry in results):
+            continue
         trial = scratch / f"{mode}-{loop}"
         trial.mkdir()
         cwd = repository
@@ -105,6 +111,10 @@ for loop in range(1, arguments.loops + 1):
                 if added in text:
                     rc.write_text(text.replace(added, ""))
             assert trial.parent == scratch and trial.name == f"{mode}-{loop}"
+            # Go deliberately makes downloaded module directories read-only. They are all
+            # inside this runner's asserted scratch trial; restore directory write permission.
+            for directory, _, _ in os.walk(trial):
+                os.chmod(directory, 0o700)
             shutil.rmtree(trial)
         if result.returncode:
             raise SystemExit(result.returncode)
