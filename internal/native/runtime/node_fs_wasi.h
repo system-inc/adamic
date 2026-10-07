@@ -54,6 +54,15 @@ ADAMIC_WASI_PATH_OPERATION(open, (const char *path, int flags, mode_t mode), (re
 ADAMIC_WASI_PATH_OPERATION(utimensat, (int fd, const char *path, const struct timespec times[2], int flags), (fd, resolved, times, flags))
 #undef ADAMIC_WASI_PATH_OPERATION
 
+// Node on Linux reports ENOENT for an empty symlink target. Preview 1
+// reports EINVAL instead; the input distinguishes this case without masking
+// any other syscall failure.
+static inline int adamic_node_wasi_symlink(const char *target, const char *path) {
+    int result = symlink(target, path);
+    if (result != 0 && target[0] == 0 && errno == EINVAL) { errno = ENOENT; }
+    return result;
+}
+
 static inline DIR *adamic_node_wasi_opendir(const char *path) {
     char *resolved = adamic_node_fs_wasi_path(path);
     if (resolved == NULL) { return NULL; }
@@ -67,6 +76,7 @@ static inline DIR *adamic_node_wasi_opendir(const char *path) {
 #define rmdir(...) adamic_node_wasi_rmdir(__VA_ARGS__)
 #define open(...) adamic_node_wasi_open(__VA_ARGS__)
 #define utimensat(...) adamic_node_wasi_utimensat(__VA_ARGS__)
+#define symlink(...) adamic_node_wasi_symlink(__VA_ARGS__)
 #define opendir(...) adamic_node_wasi_opendir(__VA_ARGS__)
 #endif
 #endif
