@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/no-empty-object-type",
+  "kinds": [
+    "InterfaceDeclaration",
+    "TypeLiteral"
+  ],
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleNoEmptyObjectType",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoEmptyObjectType"
+}
