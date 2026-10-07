@@ -1,0 +1,58 @@
+[
+  {
+    "group": "original",
+    "corpus": "compiler",
+    "go": 0.479800676,
+    "native": 2.356451983,
+    "ratio": 4.911314428827525
+  },
+  {
+    "group": "original",
+    "corpus": "repository",
+    "go": 0.302095716,
+    "native": 0.446881075,
+    "ratio": 1.4792698185763085
+  },
+  {
+    "group": "timeout",
+    "corpus": "compiler",
+    "go": 0.421565972,
+    "native": 2.986781859,
+    "ratio": 7.0849690377761325
+  },
+  {
+    "group": "timeout",
+    "corpus": "repository",
+    "go": 0.199699892,
+    "native": 0.378864028,
+    "ratio": 1.8971669148423977
+  },
+  {
+    "group": "process",
+    "corpus": "compiler",
+    "go": 0.420189835,
+    "native": 1.979270079,
+    "ratio": 4.710418753942489
+  },
+  {
+    "group": "process",
+    "corpus": "repository",
+    "go": 0.244300653,
+    "native": 0.419083174,
+    "ratio": 1.7154402530393564
+  },
+  {
+    "group": "blocking",
+    "corpus": "compiler",
+    "go": 0.428408629,
+    "native": 2.223158103,
+    "ratio": 5.189340159159119
+  },
+  {
+    "group": "blocking",
+    "corpus": "repository",
+    "go": 0.208030232,
+    "native": 0.353484758,
+    "ratio": 1.699198979886731
+  }
+]

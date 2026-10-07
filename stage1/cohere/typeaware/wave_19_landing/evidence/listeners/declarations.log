@@ -1,0 +1,16 @@
+=== RUN   TestWave19NumericListenerDeclarations
+=== RUN   TestWave19NumericListenerDeclarations/consistent_generic_constructors.a
+=== RUN   TestWave19NumericListenerDeclarations/dot_notation.a
+=== RUN   TestWave19NumericListenerDeclarations/no_array_constructor.a
+=== RUN   TestWave19NumericListenerDeclarations/no_uncleared_race_timeout.a
+=== RUN   TestWave19NumericListenerDeclarations/no_process_exit_after_output.a
+=== RUN   TestWave19NumericListenerDeclarations/require_blocking_standard_streams.a
+--- PASS: TestWave19NumericListenerDeclarations (0.00s)
+    --- PASS: TestWave19NumericListenerDeclarations/consistent_generic_constructors.a (0.00s)
+    --- PASS: TestWave19NumericListenerDeclarations/dot_notation.a (0.00s)
+    --- PASS: TestWave19NumericListenerDeclarations/no_array_constructor.a (0.00s)
+    --- PASS: TestWave19NumericListenerDeclarations/no_uncleared_race_timeout.a (0.00s)
+    --- PASS: TestWave19NumericListenerDeclarations/no_process_exit_after_output.a (0.00s)
+    --- PASS: TestWave19NumericListenerDeclarations/require_blocking_standard_streams.a (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.013s

@@ -38,6 +38,8 @@ export class ReachedStreams {
     readonly exits: number[] = []; readonly started: number[] = [];
 }
 export class RequireBlockingStandardStreams {
+    // Pinned Go SyntaxKind IDs for the pending numeric dispatcher.
+    readonly listenerKinds: readonly number[] = [307];
     readonly rules: Rules; readonly symbols: NoProcessExitAfterOutput; readonly bindings: Bindings;
     readonly index: StreamIndex; readonly memo: Map<string, number>; readonly ordered: boolean;
     constructor(rules: Rules, index: StreamIndex, memo: Map<string, number>, symbols: NoProcessExitAfterOutput, bindings: Bindings) {

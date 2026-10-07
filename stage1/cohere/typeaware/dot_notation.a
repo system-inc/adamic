@@ -2,6 +2,8 @@ import type { Rules } from './rules.ts';
 import { indexSignatureOption, stringIndexWithoutProperty } from './index_signature_access.a';
 
 export class DotNotation {
+    // Pinned Go SyntaxKind IDs for the pending numeric dispatcher.
+    readonly listenerKinds: readonly number[] = [213];
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     identifier(text: string, first = true): boolean {

@@ -14,6 +14,8 @@ export class StreamPosition {
     constructor(block: number, state: string[]) { this.block = block; this.state = state; }
 }
 export class NoProcessExitAfterOutput {
+    // Pinned Go SyntaxKind IDs for the pending numeric dispatcher.
+    readonly listenerKinds: readonly number[] = [214];
     readonly rules: Rules; readonly exits = new Map<number, boolean>(); readonly writes = new Map<number, boolean>();
     readonly functions = new Map<string, boolean>(); readonly files = new Map<string, RuleContext>();
     readonly tries = new Map<number, number>();

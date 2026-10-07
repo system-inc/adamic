@@ -4,6 +4,8 @@ import { nodeSymbolOrigin } from './node_symbol_origin.a';
 import { Repair } from './repair.ts';
 
 export class ConsistentGenericConstructors {
+    // Pinned Go SyntaxKind IDs for the pending numeric dispatcher.
+    readonly listenerKinds: readonly number[] = [261, 173, 170];
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     exempt(index: number): boolean {

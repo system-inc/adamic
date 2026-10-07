@@ -5,6 +5,8 @@ import { declarationAncestry } from './declaration_ancestry.a';
 import { nodeSymbolOrigin } from './node_symbol_origin.a';
 
 export class NoUnclearedRaceTimeout {
+    // Pinned Go SyntaxKind IDs for the pending numeric dispatcher.
+    readonly listenerKinds: readonly number[] = [214];
     readonly rules: Rules; readonly bindings: Bindings;
     constructor(rules: Rules) { this.rules = rules; this.bindings = new Bindings(rules); }
     parent(index: number): number { return this.rules.parents[index] ?? -1; }

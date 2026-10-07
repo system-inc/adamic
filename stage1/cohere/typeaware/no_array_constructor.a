@@ -4,6 +4,8 @@ import { Repair } from './repair.ts';
 import { Suggestion } from './suggestion.ts';
 
 export class NoArrayConstructor {
+    // Pinned Go SyntaxKind IDs for the pending numeric dispatcher.
+    readonly listenerKinds: readonly number[] = [214, 215];
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     global(index: number): boolean {
