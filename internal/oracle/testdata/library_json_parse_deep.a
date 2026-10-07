@@ -1,0 +1,9 @@
+for (const depth of [1, 1000, 20000]) {
+ JSON.parse('['.repeat(depth) + '0' + ']'.repeat(depth));
+ JSON.parse('{"x":'.repeat(depth) + 'null' + '}'.repeat(depth));
+ console.log(`${depth}`);
+}
+const depth = 20000;
+const invalid = '['.repeat(depth) + '1x';
+try { JSON.parse(invalid); }
+catch (error) { if (error instanceof Error) console.log(error.message); }

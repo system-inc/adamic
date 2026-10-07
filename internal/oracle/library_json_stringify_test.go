@@ -17,16 +17,16 @@ import (
 func TestJSONStringifyRefusals(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, source, reason string }{
-		{"parse", `JSON.parse('{"n":1}');`, "result's type can't be proven from the text"},
+		{"parse", `const value: { n: number } = JSON.parse('{"n":1}');`, "result's type can't be proven from the text"},
 		{"hidden_fields", `const full = { n: 1, extra: 'kept by Node' }; const view: { readonly n: number } = full; JSON.stringify(view);`, "structural types can hide fields"},
 		{"array_of_objects", `const items = [{ n: 1 }]; JSON.stringify(items);`, "structural types can hide fields"},
-		{"toJSON", `JSON.stringify({ toJSON: () => 7 });`, "toJSON semantics"},
-		{"replacer_function", `JSON.stringify(7, (key: string, value: number) => value);`, "callback must have a proven type"},
+		{"toJSON", `JSON.stringify({ toJSON: (key: string) => 7 });`, "zero-argument callback"},
+		{"replacer_function", `JSON.stringify({ n: 7 }, (key: string, value: number) => value);`, "without a proven scalar input"},
 		{"prototype", `JSON.stringify({ __proto__: null });`, "__proto__ semantics"},
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
-			path := filepath.Join(t.TempDir(), "probe.ts")
+			path := filepath.Join(t.TempDir(), "probe.a")
 			if err := os.WriteFile(path, []byte(test.source), 0600); err != nil {
 				t.Fatal(err)
 			}
@@ -47,7 +47,7 @@ func TestJSONStringifyRefusals(t *testing.T) {
 
 func TestJSONStringifyResultMayBeUndefined(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(t.TempDir(), "probe.ts")
+	path := filepath.Join(t.TempDir(), "probe.a")
 	// Even a serializable argument is not used as a license to lie in the public declaration.
 	if err := os.WriteFile(path, []byte(`const result: string = JSON.stringify(undefined); console.log(result);`), 0600); err != nil {
 		t.Fatal(err)
@@ -62,7 +62,7 @@ func TestJSONStringifyResultMayBeUndefined(t *testing.T) {
 // notice that the descriptor enumerates integer-index keys in the wrong order.
 func TestJSONStringifyOracleCatchesKeyOrder(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(t.TempDir(), "mutant.ts")
+	path := filepath.Join(t.TempDir(), "mutant.a")
 	source := `console.log(JSON.stringify({ '2': 2, '1': 1, z: 'built'.repeat(2), a: 3 }) ?? 'missing');`
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
 		t.Fatal(err)

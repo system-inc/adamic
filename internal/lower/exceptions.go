@@ -157,8 +157,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
-		case ir.Throw:
+		case ir.Throw, ir.JSONParse:
 			found = true
+		case ir.JSONStringify:
+			found = found || (node.Schema.CallsUserCode() || node.ReplacerSchema.CallsUserCode())
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
