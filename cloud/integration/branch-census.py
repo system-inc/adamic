@@ -5,12 +5,22 @@ A branch's commits outside main and every area are compared by patch id, not com
 every commit main and the areas gained in the lookback window, so a branch that was rebased or
 cherry-picked after its patches landed counts as superseded. The classes:
 
-  merged       its tip is already in main or an area
+  merged       its tip is already in main or an area (an ancestor of one of them)
+  merges-only  its only commits outside main and the areas are merges (an integration or
+               speculative branch, or one whose work landed through other merges); never deleted,
+               since a merge can carry a conflict resolution nothing upstream has
   superseded   it has commits of its own, but every patch they carry is already in main or an area
   in-flight    patches not landed, last commit under --fresh-hours old (a worker may be on it)
   unmerged     patches not landed, last commit between --fresh-hours and --stale-hours old:
                finished work nobody merged, the list each Circle gets
   abandoned    patches not landed, last commit older than --stale-hours
+  closed       its owner says it's dead or held elsewhere (census-closed.tsv, with the reason)
+
+census-owners.tsv names the owner where the prefix or the messages get it wrong.
+
+--delete-merged deletes the merged branches from origin by name, each pushed with a lease on the
+tip the census saw, so a branch that moved since is left alone, and appends every name it deleted
+to --deleted-log. Every commit on a merged branch is in main or an area, so nothing is lost.
 
 Integration branches (cloud/integrate-*, cloud/speculate-*) and coverage readers' notes are
 counted under integration. The owner comes from the branch's prefix, from the fleet roster's
@@ -19,6 +29,7 @@ integration a message naming the branch. It deletes nothing and changes no ref.
 
 usage: cloud/integration/branch-census.py [--fresh-hours 1] [--stale-hours 24] [--lookback-days 10]
          [--messages-db ~/Projects/ahra/modules/os/data/os.db] [--tsv out.tsv]
+         [--delete-merged --deleted-log deleted.tsv]
 """
 
 import argparse
@@ -53,6 +64,16 @@ prefixOwners = [
     ("cloud/speculate-", "system_adamic_integration"),
     ("coverage/", "system_adamic_integration"),
 ]
+
+
+def readTable(path):
+    table = {}
+    if os.path.exists(path):
+        for line in open(path):
+            if line.strip() and not line.startswith("#"):
+                key, value = line.rstrip("\n").split("\t", 1)
+                table[key] = value
+    return table
 
 
 def git(*arguments, input_text=None):
@@ -98,6 +119,8 @@ def main():
     parser.add_argument("--lookback-days", type=int, default=10)
     parser.add_argument("--messages-db")
     parser.add_argument("--tsv")
+    parser.add_argument("--delete-merged", action="store_true")
+    parser.add_argument("--deleted-log")
     arguments = parser.parse_args()
 
     if subprocess.run(["git", "fetch", "-q", "origin"], capture_output=True).returncode != 0:
@@ -126,6 +149,9 @@ def main():
     if arguments.messages_db:
         owners = ownersFromMessages(arguments.messages_db, [short for short, _, _ in branches])
 
+    directory = os.path.dirname(os.path.abspath(__file__))
+    closed = readTable(os.path.join(directory, "census-closed.tsv"))
+    ownerOverrides = readTable(os.path.join(directory, "census-owners.tsv"))
     now = datetime.datetime.now(datetime.timezone.utc).timestamp()
     rows = []
     distinctUnlanded = set()
@@ -134,8 +160,13 @@ def main():
         commits = git("rev-list", "--no-merges", f"origin/{short}", "--not", *upstreams).split()
         unlanded = [commit for commit in commits if outside.get(commit) not in landed]
         age = (now - committed) / 3600
-        if not commits:
+        tipLanded = any(subprocess.run(["git", "merge-base", "--is-ancestor", sha, upstream]).returncode == 0 for upstream in upstreams)
+        if tipLanded:
             category = "merged"
+        elif not commits:
+            category = "merges-only"
+        elif short in closed:
+            category = "closed"
         elif not unlanded:
             category = "superseded"
         elif age < arguments.fresh_hours:
@@ -144,8 +175,8 @@ def main():
             category = "unmerged"
         else:
             category = "abandoned"
-        owner = next((circle for prefix, circle in prefixOwners if short.startswith(prefix)), None) or owners.get(short, "unknown")
-        rows.append((category, owner, short, sha[:8], age, len(commits), len(unlanded)))
+        owner = ownerOverrides.get(short) or next((circle for prefix, circle in prefixOwners if short.startswith(prefix)), None) or owners.get(short, "unknown")
+        rows.append((category, owner, short, sha, age, len(commits), len(unlanded)))
         distinctUnlanded.update(unlanded)
         if category == "superseded":
             distinctSuperseded.update(commits)
@@ -154,10 +185,10 @@ def main():
         with open(arguments.tsv, "w") as file:
             file.write("class\towner\tbranch\ttip\tage_hours\tcommits_outside\tpatches_unlanded\n")
             for row in rows:
-                file.write("\t".join([row[0], row[1], row[2], row[3], f"{row[4]:.1f}", str(row[5]), str(row[6])]) + "\n")
+                file.write("\t".join([row[0], row[1], row[2], row[3][:8], f"{row[4]:.1f}", str(row[5]), str(row[6])]) + "\n")
 
     byClass = collections.Counter(row[0] for row in rows)
-    print(f"{len(rows)} branches outside main and the areas: " + ", ".join(f"{byClass[c]} {c}" for c in ("merged", "superseded", "in-flight", "unmerged", "abandoned")))
+    print(f"{len(rows)} branches outside main and the areas: " + ", ".join(f"{byClass[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "abandoned", "closed")))
     print(f"distinct commits on superseded branches, already landed as patches: {len(distinctSuperseded)}")
     print(f"distinct commits outside main and the areas whose patches haven't landed: {len(distinctUnlanded)}")
     print()
@@ -166,7 +197,7 @@ def main():
         byOwner[row[1]][row[0]] += 1
     for owner in sorted(byOwner):
         counts = byOwner[owner]
-        print(f"{owner}: " + ", ".join(f"{counts[c]} {c}" for c in ("merged", "superseded", "in-flight", "unmerged", "abandoned") if counts[c]))
+        print(f"{owner}: " + ", ".join(f"{counts[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "abandoned", "closed") if counts[c]))
     print()
     print("unmerged, by owner, oldest first (branch, tip, hours since last commit, unlanded patches):")
     for owner in sorted(byOwner):
@@ -174,7 +205,23 @@ def main():
         if unmerged:
             print(f"  {owner}")
             for row in unmerged:
-                print(f"    {row[2]} {row[3]} {row[4]:.1f}h {row[6]}")
+                print(f"    {row[2]} {row[3][:8]} {row[4]:.1f}h {row[6]}")
+
+    if arguments.delete_merged:
+        merged = [row for row in rows if row[0] == "merged"]
+        deleted = []
+        for row in merged:
+            result = subprocess.run(["git", "push", "-q", f"--force-with-lease=refs/heads/{row[2]}:{row[3]}", "origin", f":refs/heads/{row[2]}"], capture_output=True, text=True)
+            if result.returncode == 0:
+                deleted.append(row)
+            else:
+                print(f"left {row[2]}: {result.stderr.strip().splitlines()[-1] if result.stderr.strip() else 'push refused'}", file=sys.stderr)
+        stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        if arguments.deleted_log:
+            with open(arguments.deleted_log, "a") as file:
+                for row in deleted:
+                    file.write(f"{stamp}\tdeleted\t{row[2]}\t{row[3]}\t{row[1]}\n")
+        print(f"deleted {len(deleted)} of {len(merged)} merged branches")
 
 
 if __name__ == "__main__":
