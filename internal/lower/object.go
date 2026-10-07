@@ -14,6 +14,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
