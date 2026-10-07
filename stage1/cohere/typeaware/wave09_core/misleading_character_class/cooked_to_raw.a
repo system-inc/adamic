@@ -1,0 +1,50 @@
+// Port of cohere literal.CookedToRaw, including its deliberately permissive
+// escape comparison. Mapping indices and entries are UTF-8 byte offsets.
+import {PatternBytes} from './character_class.a';
+
+function escapeWidth(raw:PatternBytes,index:number):number {
+    const next=raw.at(index+1);
+    if(next===117){
+        if(raw.at(index+2)===123){const end=raw.find(125,index+3);return end>=0?end-index+1:2;}
+        return index+5<raw.bytes.length&&raw.hex(index+2,index+6)?6:2;
+    }
+    if(next===120){return index+3<raw.bytes.length&&raw.hex(index+2,index+4)?4:2;}
+    if(next>=48&&next<=55){
+        let width=2;const limit=next>51?2:3;
+        while(width<limit+1&&index+width<raw.bytes.length&&raw.at(index+width)>=48&&raw.at(index+width)<=55){width++;}
+        return width;
+    }
+    const width=raw.rune(index+1).width;return width===0?2:1+width;
+}
+
+function producesNothing(raw:PatternBytes,index:number):boolean {
+    while(index<raw.bytes.length){
+        if(raw.at(index)!==92){return false;}
+        if(index+1>=raw.bytes.length){return true;}
+        if(raw.at(index+1)!==10&&raw.at(index+1)!==13){return false;}
+        index+=2;
+        if(raw.at(index-1)===13&&raw.at(index)===10){index++;}
+    }
+    return true;
+}
+
+export function cookedToRaw(rawText:string,cookedText:string):number[]|undefined {
+    const raw=new PatternBytes(rawText);const cooked=new PatternBytes(cookedText);
+    const offsets:number[]=[];let rawIndex=0;let cookedIndex=0;
+    while(rawIndex<raw.bytes.length&&cookedIndex<cooked.bytes.length){
+        const escaped=raw.at(rawIndex)===92&&rawIndex+1<raw.bytes.length;
+        const width=escaped?escapeWidth(raw,rawIndex):raw.rune(rawIndex).width;
+        if(width===0){return undefined;}
+        const produced=cooked.rune(cookedIndex).width;
+        if(produced===0){return undefined;}
+        if(raw.at(rawIndex)!==92){
+            if(produced>width){return undefined;}
+            for(let at=0;at<produced;at++){if(raw.at(rawIndex+at)!==cooked.at(cookedIndex+at)){return undefined;}}
+        }
+        for(let count=0;count<produced;count++){offsets.push(rawIndex);}
+        rawIndex+=width;cookedIndex+=produced;
+    }
+    if(cookedIndex!==cooked.bytes.length){return undefined;}
+    if(rawIndex<raw.bytes.length&&producesNothing(raw,rawIndex)){return undefined;}
+    offsets.push(rawIndex);return offsets;
+}
