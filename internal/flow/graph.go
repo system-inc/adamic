@@ -40,8 +40,11 @@ func Finalize(function *Function) {
 // terminals name a fallthrough (the block after an if or a loop) beside their real edges, and visit it
 // first so loop bodies come before their continuation; Adamic's terminals have only real edges, so
 // that part, and the placeholder block it keeps for a fallthrough nothing reaches, isn't here. The
-// order is still a reverse postorder, which is what single assignment needs. Mutable ranges, when
-// they're lifted, will want the loop-body-first order back, and with it a fallthrough on If.
+// order is still a reverse postorder, which is what single assignment needs. Mutable ranges are
+// lifted too. Build's loop and forOf headers put the body in Consequent and the continuation in
+// Alternate; visiting successors in reverse and then reversing postorder puts the body before
+// the continuation without a structural fallthrough. MarkEvaluationOrder numbers that same order
+// for ranges.go; reverse postorder alone does not promise this order for arbitrary graphs.
 func ReversePostorder(function *Function) {
 	if function == nil {
 		return
