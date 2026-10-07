@@ -1,0 +1,16 @@
+[detached HEAD 929d7a20d] Record helper oracle rerun on current main
+ Date: Wed Oct 7 04:20:13 2026 +0000
+ 1 file changed, 19 insertions(+)
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/LANDING_F801.md
+[detached HEAD 2625d8237] Preserve fresh landing oracle logs
+ Date: Wed Oct 7 04:20:22 2026 +0000
+ 9 files changed, 387 insertions(+)
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/evidence-replay.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/fetch.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/history.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/input.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/oracle.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/rebase.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/replay.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/rule-rebase.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing-f801/vet.log
