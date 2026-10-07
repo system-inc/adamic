@@ -1,13 +1,133 @@
 [
   {
+    "go": "050-compiler-asan-go.stdout",
+    "native": "051-compiler-asan-native.stdout",
+    "bytes": 5857,
+    "sha256": "5750d6b0f3fad92ef1d933a5c33f2368488715ce42309eef8efd0688797901da"
+  },
+  {
+    "go": "054-compiler-boolean-go.stdout",
+    "native": "055-compiler-boolean-native.stdout",
+    "bytes": 5857,
+    "sha256": "5750d6b0f3fad92ef1d933a5c33f2368488715ce42309eef8efd0688797901da"
+  },
+  {
+    "go": "048-compiler-go.stdout",
+    "native": "049-compiler-native.stdout",
+    "bytes": 5857,
+    "sha256": "5750d6b0f3fad92ef1d933a5c33f2368488715ce42309eef8efd0688797901da"
+  },
+  {
     "go": "compiler-quiet-go.stdout",
     "native": "compiler-quiet-native.stdout",
     "bytes": 5857,
     "sha256": "5750d6b0f3fad92ef1d933a5c33f2368488715ce42309eef8efd0688797901da"
   },
   {
+    "go": "052-compiler-timed-go.stdout",
+    "native": "053-compiler-timed-native.stdout",
+    "bytes": 5857,
+    "sha256": "5750d6b0f3fad92ef1d933a5c33f2368488715ce42309eef8efd0688797901da"
+  },
+  {
+    "go": "024-react-controls-asan-go.stdout",
+    "native": "025-react-controls-asan-native.stdout",
+    "bytes": 57194,
+    "sha256": "f7102c336b4ba517d3e53ad770adaee1f9527791f46d27d1b3e2b970947aa306"
+  },
+  {
+    "go": "006-react-controls-go.stdout",
+    "native": "007-react-controls-native.stdout",
+    "bytes": 57194,
+    "sha256": "f7102c336b4ba517d3e53ad770adaee1f9527791f46d27d1b3e2b970947aa306"
+  },
+  {
+    "go": "008-react-options-00-go.stdout",
+    "native": "009-react-options-00-native.stdout",
+    "bytes": 68438,
+    "sha256": "8d9f64abd4a7b843655f328e62cee04e7234952b99fa7d97fc5d5e2bc7d32fb7"
+  },
+  {
+    "go": "010-react-options-01-go.stdout",
+    "native": "011-react-options-01-native.stdout",
+    "bytes": 69096,
+    "sha256": "cf1771fa76706fb10c585b85ff6534c5b4ae14f4810dbd21ae5fdb8f995f7481"
+  },
+  {
+    "go": "012-react-options-02-go.stdout",
+    "native": "013-react-options-02-native.stdout",
+    "bytes": 69750,
+    "sha256": "3582950921052f2cf019fd10d47d98ba6ac6e9fe870e40e83f46bb327a9063a0"
+  },
+  {
+    "go": "014-react-options-03-go.stdout",
+    "native": "015-react-options-03-native.stdout",
+    "bytes": 68227,
+    "sha256": "a0b0bd39e055e631f3a62079eca3b1bf2d87bbae2aacd6cfc2b9de4c7d6e3a02"
+  },
+  {
+    "go": "016-react-options-04-go.stdout",
+    "native": "017-react-options-04-native.stdout",
+    "bytes": 72533,
+    "sha256": "2f3af848f07671f2a5c5a30590e5b09b80240cc7050f2e25ba5a458573b99d9f"
+  },
+  {
+    "go": "018-react-options-05-go.stdout",
+    "native": "019-react-options-05-native.stdout",
+    "bytes": 73350,
+    "sha256": "8b6b1d7636fa3bf9be6767a04366d540a18b1f48cb8d204c96a63fb97b1db83b"
+  },
+  {
+    "go": "020-react-options-06-go.stdout",
+    "native": "021-react-options-06-native.stdout",
+    "bytes": 68220,
+    "sha256": "15a80852b67ce1953463d54abca68a227f6afa354baa529c1f8dc6390714bf46"
+  },
+  {
+    "go": "041-repository-asan-go.stdout",
+    "native": "042-repository-asan-native.stdout",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "go": "045-repository-boolean-go.stdout",
+    "native": "046-repository-boolean-native.stdout",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "go": "039-repository-go.stdout",
+    "native": "040-repository-native.stdout",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
     "go": "repository-quiet-go.stdout",
     "native": "repository-quiet-native.stdout",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "go": "043-repository-timed-go.stdout",
+    "native": "044-repository-timed-native.stdout",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "go": "026-react-boolean-go.stdout",
+    "native": "027-react-boolean-asan.stdout",
+    "bytes": 69096,
+    "sha256": "cf1771fa76706fb10c585b85ff6534c5b4ae14f4810dbd21ae5fdb8f995f7481"
+  },
+  {
+    "go": "054-compiler-boolean-go.stdout",
+    "native": "056-compiler-boolean-asan.stdout",
+    "bytes": 5857,
+    "sha256": "5750d6b0f3fad92ef1d933a5c33f2368488715ce42309eef8efd0688797901da"
+  },
+  {
+    "go": "045-repository-boolean-go.stdout",
+    "native": "047-repository-boolean-asan.stdout",
     "bytes": 18485,
     "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
   }
