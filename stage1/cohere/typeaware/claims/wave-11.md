@@ -16,3 +16,23 @@ from VOLUME_REPORT.md's validation-volume counts, lexical ties, excluding the
 Audited all 263 distinct fetched origin trees on October 7, 2026 for ports
 and typeaware claims. None of these rules was ported or claimed. Existing
 count tables, message catalogs and configuration references are not ports.
+
+## Continuation claim
+
+Fetched all origin heads after pushing completed wave 11 through `fca4b6e5`.
+Audited 320 origin refs, 315 distinct trees, and 30 claim files. Selection
+uses VOLUME_REPORT.md's combined compiler-all.counts and repository-all.counts,
+descending total with lexical ties. Excluded all 26 documented base ports,
+other native ports on origin/main and origin/codex/tsgo-c-library, and every
+rule named in any origin typeaware claim file, including released reservations.
+
+Next three reserved before implementation:
+
+1. `nexus/correctness-no-collection-misuse`
+2. `nexus/correctness-no-discarded-outcome`
+3. `nexus/correctness-no-discarded-pure-result`
+
+All three have zero compiler and repository counts. No port on main or the
+bridge branch and no origin claim names these rules. Native sources use `.a`;
+positive controls, independent Go byte comparisons and per-rule mutants are
+required. Continue on codex/typeaware-wave-11, without changing base history.
