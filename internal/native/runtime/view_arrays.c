@@ -25,6 +25,9 @@ void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
 void adamic_view_array_storage_check(const adamic_array *array, unsigned char storage, const char *expression) {
     unsigned char physical = storage == 3 || storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 10 ? 10 : storage;
     if (array->element_kind != physical) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->element_kind)); }
+    // A pointer byte cannot certify the original object/class/map signature.
+    // Keep reference writes closed until the source element contract is known.
+    if (storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 9 || storage == 10) { array_view_failure(expression, array_storage_name(storage), "uncertified source element contract"); }
 }
 
 adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {

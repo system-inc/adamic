@@ -322,3 +322,14 @@ pairs and source witnesses are in stage3/interface-downcasts/lane2/read-census.
 Existing controls include function-field, class-method, callable missing/kind/
 uninitialized fixtures and the pinned opaque-signature refusal. The previous
 signature mutant was caught; its evidence is retained in parser-return-logs.
+
+## Centralized checked-view integration
+
+The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
+lane tip and resolve conflicts once, hunk by hunk. This supersedes all direct
+cross-lane merge instructions above, including the Lane 1 cast-conflict handoff.
+Each worker pushes only its own branch and obtains another lane's code by merging
+the newest codex/views-integration SHA when needed. Workers blocked on lazy
+admission build against that integration branch where possible; otherwise they
+report the blocker and rest until the lead wakes them. Lane 2 remains native
+arrays only, and Lane 5 retains callable ownership and certification hooks.
