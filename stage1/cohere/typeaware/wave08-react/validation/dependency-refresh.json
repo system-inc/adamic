@@ -1,0 +1,47 @@
+{
+  "originRefs": 389,
+  "candidateFiles": {
+    "refs/remotes/origin/codex/typeaware-wave-08": [
+      "stage1/cohere/typeaware/wave08-react/immutability.a",
+      "stage1/cohere/typeaware/wave08-react/no_deriving_state_in_effects.a"
+    ]
+  },
+  "parsers": {
+    "origin/main": {
+      "exists": true,
+      "parseJsxEntries": 0,
+      "commit": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+    },
+    "origin/codex/lint-harness-dot-a": {
+      "exists": true,
+      "parseJsxEntries": 0,
+      "commit": "f4d98cab50048692781da3599131317dc569d466"
+    },
+    "origin/codex/tsgo-c-library": {
+      "exists": true,
+      "parseJsxEntries": 0,
+      "commit": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6"
+    }
+  },
+  "existingSanitizedKernelAndGlobalsBinaryProbes": [
+    {
+      "name": "jsx",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 44 in /workspace/wave08-react-final/jsx.tsx\n"
+    },
+    {
+      "name": "immutability",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: wave08 immutability blocked: native React HIR lowering, SSA, instruction transfer and reporting are unavailable in the shared profile\n"
+    },
+    {
+      "name": "derivation",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: wave08 derivation rule blocked: native React HIR lowering, SSA, manual memoization erasure, candidate gathering and checker/identifier mapping are unavailable in the shared profile\n"
+    }
+  ],
+  "scope": "Filename inventory plus shared-parser entry-point inspection; does not claim exhaustive semantic search or rebuild against newer branches."
+}

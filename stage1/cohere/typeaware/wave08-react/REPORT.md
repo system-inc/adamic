@@ -81,3 +81,15 @@ streams. Native sources are `.a`. No shared production source was changed in
 this continuation. The full bridge sanitizer/ownership gate passed for the
 preceding completed ports; this continuation adds sanitized Globals/kernel
 execution and the raw-symbol released-handle check, not another full gate run.
+
+## Dependency refresh after the next continuation request
+
+Fetched all origin heads again: 389 refs. A token-boundary filename inventory
+finds only this branch's two partial kernels for React HIR/SSA/immutability/
+derivation candidates. Main, the bridge branch and the harness branch still
+have zero `parseJsx` entries in their shared parser. The previously built
+Globals JSX probe and both production refusal probes were rerun: all exit 70
+with empty output and the same documented reasons. This refresh does not
+rebuild against newer branches or claim exhaustive semantic source inspection.
+The dependencies remain unavailable; no new rules are claimed. Frozen branch
+commits, inventory and refusal results are in validation/dependency-refresh.json.
