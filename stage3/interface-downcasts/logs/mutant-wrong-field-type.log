@@ -1,0 +1,8 @@
+=== RUN   TestInterfaceConstructionProof
+=== RUN   TestInterfaceConstructionProof/wrong_payload
+    interface_cast_test.go:39: want refusal containing "incompatible field name", got <nil>
+--- FAIL: TestInterfaceConstructionProof (0.03s)
+    --- FAIL: TestInterfaceConstructionProof/wrong_payload (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.035s
+FAIL

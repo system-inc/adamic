@@ -1,0 +1,1981 @@
+{
+  "corpus": "cohere/TypeScript/tsc/testdata/fixtures/compiler",
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "typescript_go_commit": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+  "source_sha256": {
+    "utilities.ts": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "factory/nodeFactory.ts": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "types.ts": "0aee7de545a590cb38ee3083ea4993e9fabce54d051a39437dec3cf5a252c00c",
+    "factory/baseNodeFactory.ts": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a",
+    "parser.ts": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  "cast_counts": "Use stage3/fixtures/assertions/ledger-summary.json at 5b173f3920ab2c5b7058f0a9fe4b8e4a91f52523; not remeasured",
+  "predicate_obligations": "Use stage3/fixtures/predicates/ledger.json at e42eaf9854563617734ff13987cc27e4e09f78b1; descriptions are not proof verdicts",
+  "constructors": {
+    "Node": {
+      "path": "utilities.ts",
+      "line": 8505,
+      "assigned_fields": [
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "transformFlags"
+      ]
+    },
+    "Token": {
+      "path": "utilities.ts",
+      "line": 8519,
+      "assigned_fields": [
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ]
+    },
+    "Identifier": {
+      "path": "utilities.ts",
+      "line": 8531,
+      "assigned_fields": [
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "original",
+        "parent",
+        "pos",
+        "transformFlags"
+      ]
+    }
+  },
+  "wrappers": {
+    "createBaseNode": {
+      "path": "factory/nodeFactory.ts",
+      "line": 1209,
+      "assigned_fields": [],
+      "contains_unchecked_initialization": false,
+      "copies_dynamic_fields": false
+    },
+    "createBaseIdentifier": {
+      "path": "factory/nodeFactory.ts",
+      "line": 1304,
+      "assigned_fields": [
+        "escapedText",
+        "flowNode",
+        "jsDoc",
+        "symbol"
+      ],
+      "contains_unchecked_initialization": true,
+      "copies_dynamic_fields": false
+    },
+    "createIdentifier": {
+      "path": "factory/nodeFactory.ts",
+      "line": 1326,
+      "assigned_fields": [
+        "escapedText"
+      ],
+      "contains_unchecked_initialization": false,
+      "copies_dynamic_fields": false
+    },
+    "createNumericLiteral": {
+      "path": "factory/nodeFactory.ts",
+      "line": 1233,
+      "assigned_fields": [
+        "numericLiteralFlags",
+        "text"
+      ],
+      "contains_unchecked_initialization": false,
+      "copies_dynamic_fields": false
+    },
+    "cloneNode": {
+      "path": "factory/nodeFactory.ts",
+      "line": 6368,
+      "assigned_fields": [],
+      "contains_unchecked_initialization": false,
+      "copies_dynamic_fields": true
+    }
+  },
+  "direct_generic_base_allocation_sites": [
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 1581,
+      "interface_argument": "QualifiedName",
+      "kind": "QualifiedName"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 1601,
+      "interface_argument": "ComputedPropertyName",
+      "kind": "ComputedPropertyName"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 1701,
+      "interface_argument": "Decorator",
+      "kind": "Decorator"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2260,
+      "interface_argument": "TemplateLiteralTypeSpan",
+      "kind": "TemplateLiteralTypeSpan"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2286,
+      "interface_argument": "TypePredicateNode",
+      "kind": "TypePredicate"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2305,
+      "interface_argument": "TypeReferenceNode",
+      "kind": "TypeReference"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2432,
+      "interface_argument": "TypeQueryNode",
+      "kind": "TypeQuery"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2464,
+      "interface_argument": "ArrayTypeNode",
+      "kind": "ArrayType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2479,
+      "interface_argument": "TupleTypeNode",
+      "kind": "TupleType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2517,
+      "interface_argument": "OptionalTypeNode",
+      "kind": "OptionalType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2532,
+      "interface_argument": "RestTypeNode",
+      "kind": "RestType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2580,
+      "interface_argument": "ConditionalTypeNode",
+      "kind": "ConditionalType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2604,
+      "interface_argument": "InferTypeNode",
+      "kind": "InferType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2619,
+      "interface_argument": "TemplateLiteralTypeNode",
+      "kind": "TemplateLiteralType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2642,
+      "interface_argument": "ImportTypeNode",
+      "kind": "ImportType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2675,
+      "interface_argument": "ParenthesizedTypeNode",
+      "kind": "ParenthesizedType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2690,
+      "interface_argument": "ThisTypeNode",
+      "kind": "ThisType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2697,
+      "interface_argument": "TypeOperatorNode",
+      "kind": "TypeOperator"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2715,
+      "interface_argument": "IndexedAccessTypeNode",
+      "kind": "IndexedAccessType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2760,
+      "interface_argument": "LiteralTypeNode",
+      "kind": "LiteralType"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2779,
+      "interface_argument": "ObjectBindingPattern",
+      "kind": "ObjectBindingPattern"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2800,
+      "interface_argument": "ArrayBindingPattern",
+      "kind": "ArrayBindingPattern"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 2849,
+      "interface_argument": "ArrayLiteralExpression",
+      "kind": "ArrayLiteralExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3114,
+      "interface_argument": "TaggedTemplateExpression",
+      "kind": "TaggedTemplateExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3142,
+      "interface_argument": "TypeAssertion",
+      "kind": "TypeAssertionExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3161,
+      "interface_argument": "ParenthesizedExpression",
+      "kind": "ParenthesizedExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3306,
+      "interface_argument": "DeleteExpression",
+      "kind": "DeleteExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3321,
+      "interface_argument": "TypeOfExpression",
+      "kind": "TypeOfExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3336,
+      "interface_argument": "VoidExpression",
+      "kind": "VoidExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3351,
+      "interface_argument": "AwaitExpression",
+      "kind": "AwaitExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3369,
+      "interface_argument": "PrefixUnaryExpression",
+      "kind": "PrefixUnaryExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3395,
+      "interface_argument": "PostfixUnaryExpression",
+      "kind": "PostfixUnaryExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3474,
+      "interface_argument": "ConditionalExpression",
+      "kind": "ConditionalExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3510,
+      "interface_argument": "TemplateExpression",
+      "kind": "TemplateExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3614,
+      "interface_argument": "YieldExpression",
+      "kind": "YieldExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3635,
+      "interface_argument": "SpreadElement",
+      "kind": "SpreadElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3696,
+      "interface_argument": "OmittedExpression",
+      "kind": "OmittedExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3701,
+      "interface_argument": "ExpressionWithTypeArguments",
+      "kind": "ExpressionWithTypeArguments"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3720,
+      "interface_argument": "AsExpression",
+      "kind": "AsExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3739,
+      "interface_argument": "NonNullExpression",
+      "kind": "NonNullExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3758,
+      "interface_argument": "SatisfiesExpression",
+      "kind": "SatisfiesExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3777,
+      "interface_argument": "NonNullChain",
+      "kind": "NonNullExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3795,
+      "interface_argument": "MetaProperty",
+      "kind": "MetaProperty"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3827,
+      "interface_argument": "TemplateSpan",
+      "kind": "TemplateSpan"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3846,
+      "interface_argument": "SemicolonClassElement",
+      "kind": "SemicolonClassElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3857,
+      "interface_argument": "Block",
+      "kind": "Block"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3877,
+      "interface_argument": "VariableStatement",
+      "kind": "VariableStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3901,
+      "interface_argument": "EmptyStatement",
+      "kind": "EmptyStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3908,
+      "interface_argument": "ExpressionStatement",
+      "kind": "ExpressionStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3926,
+      "interface_argument": "IfStatement",
+      "kind": "IfStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3950,
+      "interface_argument": "DoStatement",
+      "kind": "DoStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3971,
+      "interface_argument": "WhileStatement",
+      "kind": "WhileStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 3992,
+      "interface_argument": "ForStatement",
+      "kind": "ForStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4021,
+      "interface_argument": "ForInStatement",
+      "kind": "ForInStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4047,
+      "interface_argument": "ForOfStatement",
+      "kind": "ForOfStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4078,
+      "interface_argument": "ContinueStatement",
+      "kind": "ContinueStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4097,
+      "interface_argument": "BreakStatement",
+      "kind": "BreakStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4116,
+      "interface_argument": "ReturnStatement",
+      "kind": "ReturnStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4137,
+      "interface_argument": "WithStatement",
+      "kind": "WithStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4158,
+      "interface_argument": "SwitchStatement",
+      "kind": "SwitchStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4180,
+      "interface_argument": "LabeledStatement",
+      "kind": "LabeledStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4201,
+      "interface_argument": "ThrowStatement",
+      "kind": "ThrowStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4219,
+      "interface_argument": "TryStatement",
+      "kind": "TryStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4243,
+      "interface_argument": "DebuggerStatement",
+      "kind": "DebuggerStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4277,
+      "interface_argument": "VariableDeclarationList",
+      "kind": "VariableDeclarationList"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4588,
+      "interface_argument": "ModuleBlock",
+      "kind": "ModuleBlock"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4605,
+      "interface_argument": "CaseBlock",
+      "kind": "CaseBlock"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4697,
+      "interface_argument": "ImportDeclaration",
+      "kind": "ImportDeclaration"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4759,
+      "interface_argument": "AssertClause",
+      "kind": "AssertClause"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4777,
+      "interface_argument": "AssertEntry",
+      "kind": "AssertEntry"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4794,
+      "interface_argument": "ImportTypeAssertionContainer",
+      "kind": "ImportTypeAssertionContainer"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4812,
+      "interface_argument": "ImportAttributes",
+      "kind": "ImportAttributes"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4830,
+      "interface_argument": "ImportAttribute",
+      "kind": "ImportAttribute"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4880,
+      "interface_argument": "NamedImports",
+      "kind": "NamedImports"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 4999,
+      "interface_argument": "NamedExports",
+      "kind": "NamedExports"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5015,
+      "interface_argument": "ExportSpecifier",
+      "kind": "ExportSpecifier"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5050,
+      "interface_argument": "ExternalModuleReference",
+      "kind": "ExternalModuleReference"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5157,
+      "interface_argument": "JSDocTypeExpression",
+      "kind": "JSDocTypeExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5376,
+      "interface_argument": "JSDocNameReference",
+      "kind": "JSDocNameReference"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5390,
+      "interface_argument": "JSDocMemberName",
+      "kind": "JSDocMemberName"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5408,
+      "interface_argument": "JSDocLink",
+      "kind": "JSDocLink"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5423,
+      "interface_argument": "JSDocLinkCode",
+      "kind": "JSDocLinkCode"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5438,
+      "interface_argument": "JSDocLinkPlain",
+      "kind": "JSDocLinkPlain"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5569,
+      "interface_argument": "JSDocText",
+      "kind": "JSDocText"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5583,
+      "interface_argument": "JSDoc",
+      "kind": "JSDoc"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5603,
+      "interface_argument": "JsxElement",
+      "kind": "JsxElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5625,
+      "interface_argument": "JsxSelfClosingElement",
+      "kind": "JsxSelfClosingElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5650,
+      "interface_argument": "JsxOpeningElement",
+      "kind": "JsxOpeningElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5675,
+      "interface_argument": "JsxClosingElement",
+      "kind": "JsxClosingElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5691,
+      "interface_argument": "JsxFragment",
+      "kind": "JsxFragment"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5713,
+      "interface_argument": "JsxText",
+      "kind": "JsxText"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5730,
+      "interface_argument": "JsxOpeningFragment",
+      "kind": "JsxOpeningFragment"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5737,
+      "interface_argument": "JsxClosingFragment",
+      "kind": "JsxClosingFragment"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5779,
+      "interface_argument": "JsxSpreadAttribute",
+      "kind": "JsxSpreadAttribute"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5795,
+      "interface_argument": "JsxExpression",
+      "kind": "JsxExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5813,
+      "interface_argument": "JsxNamespacedName",
+      "kind": "JsxNamespacedName"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5836,
+      "interface_argument": "CaseClause",
+      "kind": "CaseClause"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5856,
+      "interface_argument": "DefaultClause",
+      "kind": "DefaultClause"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5871,
+      "interface_argument": "HeritageClause",
+      "kind": "HeritageClause"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 5897,
+      "interface_argument": "CatchClause",
+      "kind": "CatchClause"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6198,
+      "interface_argument": "Bundle",
+      "kind": "Bundle"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6219,
+      "interface_argument": "SyntheticExpression",
+      "kind": "SyntheticExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6228,
+      "interface_argument": "SyntaxList",
+      "kind": "SyntaxList"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6245,
+      "interface_argument": "NotEmittedStatement",
+      "kind": "NotEmittedStatement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6260,
+      "interface_argument": "PartiallyEmittedExpression",
+      "kind": "PartiallyEmittedExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6278,
+      "interface_argument": "NotEmittedTypeElement",
+      "kind": "NotEmittedTypeElement"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6295,
+      "interface_argument": "CommaListExpression",
+      "kind": "CommaListExpression"
+    },
+    {
+      "path": "factory/nodeFactory.ts",
+      "line": 6310,
+      "interface_argument": "SyntheticReferenceExpression",
+      "kind": "SyntheticReferenceExpression"
+    }
+  ],
+  "direct_interface_kind_declarations": [
+    {
+      "path": "types.ts",
+      "line": 1701,
+      "interface": "Identifier",
+      "kind": "Identifier"
+    },
+    {
+      "path": "types.ts",
+      "line": 1729,
+      "interface": "QualifiedName",
+      "kind": "QualifiedName"
+    },
+    {
+      "path": "types.ts",
+      "line": 1796,
+      "interface": "ComputedPropertyName",
+      "kind": "ComputedPropertyName"
+    },
+    {
+      "path": "types.ts",
+      "line": 1803,
+      "interface": "PrivateIdentifier",
+      "kind": "PrivateIdentifier"
+    },
+    {
+      "path": "types.ts",
+      "line": 1821,
+      "interface": "Decorator",
+      "kind": "Decorator"
+    },
+    {
+      "path": "types.ts",
+      "line": 1827,
+      "interface": "TypeParameterDeclaration",
+      "kind": "TypeParameter"
+    },
+    {
+      "path": "types.ts",
+      "line": 1864,
+      "interface": "CallSignatureDeclaration",
+      "kind": "CallSignature"
+    },
+    {
+      "path": "types.ts",
+      "line": 1868,
+      "interface": "ConstructSignatureDeclaration",
+      "kind": "ConstructSignature"
+    },
+    {
+      "path": "types.ts",
+      "line": 1875,
+      "interface": "VariableDeclaration",
+      "kind": "VariableDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 1887,
+      "interface": "VariableDeclarationList",
+      "kind": "VariableDeclarationList"
+    },
+    {
+      "path": "types.ts",
+      "line": 1894,
+      "interface": "ParameterDeclaration",
+      "kind": "Parameter"
+    },
+    {
+      "path": "types.ts",
+      "line": 1906,
+      "interface": "BindingElement",
+      "kind": "BindingElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 1919,
+      "interface": "PropertySignature",
+      "kind": "PropertySignature"
+    },
+    {
+      "path": "types.ts",
+      "line": 1932,
+      "interface": "PropertyDeclaration",
+      "kind": "PropertyDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 1993,
+      "interface": "PropertyAssignment",
+      "kind": "PropertyAssignment"
+    },
+    {
+      "path": "types.ts",
+      "line": 2005,
+      "interface": "ShorthandPropertyAssignment",
+      "kind": "ShorthandPropertyAssignment"
+    },
+    {
+      "path": "types.ts",
+      "line": 2020,
+      "interface": "SpreadAssignment",
+      "kind": "SpreadAssignment"
+    },
+    {
+      "path": "types.ts",
+      "line": 2039,
+      "interface": "ObjectBindingPattern",
+      "kind": "ObjectBindingPattern"
+    },
+    {
+      "path": "types.ts",
+      "line": 2045,
+      "interface": "ArrayBindingPattern",
+      "kind": "ArrayBindingPattern"
+    },
+    {
+      "path": "types.ts",
+      "line": 2085,
+      "interface": "FunctionDeclaration",
+      "kind": "FunctionDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 2092,
+      "interface": "MethodSignature",
+      "kind": "MethodSignature"
+    },
+    {
+      "path": "types.ts",
+      "line": 2108,
+      "interface": "MethodDeclaration",
+      "kind": "MethodDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 2119,
+      "interface": "ConstructorDeclaration",
+      "kind": "Constructor"
+    },
+    {
+      "path": "types.ts",
+      "line": 2131,
+      "interface": "SemicolonClassElement",
+      "kind": "SemicolonClassElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 2138,
+      "interface": "GetAccessorDeclaration",
+      "kind": "GetAccessor"
+    },
+    {
+      "path": "types.ts",
+      "line": 2151,
+      "interface": "SetAccessorDeclaration",
+      "kind": "SetAccessor"
+    },
+    {
+      "path": "types.ts",
+      "line": 2165,
+      "interface": "IndexSignatureDeclaration",
+      "kind": "IndexSignature"
+    },
+    {
+      "path": "types.ts",
+      "line": 2172,
+      "interface": "ClassStaticBlockDeclaration",
+      "kind": "ClassStaticBlockDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 2198,
+      "interface": "ImportTypeAssertionContainer",
+      "kind": "ImportTypeAssertionContainer"
+    },
+    {
+      "path": "types.ts",
+      "line": 2205,
+      "interface": "ImportTypeNode",
+      "kind": "ImportType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2217,
+      "interface": "ThisTypeNode",
+      "kind": "ThisType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2228,
+      "interface": "FunctionTypeNode",
+      "kind": "FunctionType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2235,
+      "interface": "ConstructorTypeNode",
+      "kind": "ConstructorType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2246,
+      "interface": "TypeReferenceNode",
+      "kind": "TypeReference"
+    },
+    {
+      "path": "types.ts",
+      "line": 2251,
+      "interface": "TypePredicateNode",
+      "kind": "TypePredicate"
+    },
+    {
+      "path": "types.ts",
+      "line": 2259,
+      "interface": "TypeQueryNode",
+      "kind": "TypeQuery"
+    },
+    {
+      "path": "types.ts",
+      "line": 2265,
+      "interface": "TypeLiteralNode",
+      "kind": "TypeLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 2270,
+      "interface": "ArrayTypeNode",
+      "kind": "ArrayType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2275,
+      "interface": "TupleTypeNode",
+      "kind": "TupleType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2280,
+      "interface": "NamedTupleMember",
+      "kind": "NamedTupleMember"
+    },
+    {
+      "path": "types.ts",
+      "line": 2288,
+      "interface": "OptionalTypeNode",
+      "kind": "OptionalType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2293,
+      "interface": "RestTypeNode",
+      "kind": "RestType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2300,
+      "interface": "UnionTypeNode",
+      "kind": "UnionType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2305,
+      "interface": "IntersectionTypeNode",
+      "kind": "IntersectionType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2310,
+      "interface": "ConditionalTypeNode",
+      "kind": "ConditionalType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2318,
+      "interface": "InferTypeNode",
+      "kind": "InferType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2323,
+      "interface": "ParenthesizedTypeNode",
+      "kind": "ParenthesizedType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2328,
+      "interface": "TypeOperatorNode",
+      "kind": "TypeOperator"
+    },
+    {
+      "path": "types.ts",
+      "line": 2339,
+      "interface": "IndexedAccessTypeNode",
+      "kind": "IndexedAccessType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2345,
+      "interface": "MappedTypeNode",
+      "kind": "MappedType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2356,
+      "interface": "LiteralTypeNode",
+      "kind": "LiteralType"
+    },
+    {
+      "path": "types.ts",
+      "line": 2361,
+      "interface": "StringLiteral",
+      "kind": "StringLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 2382,
+      "interface": "TemplateLiteralTypeSpan",
+      "kind": "TemplateLiteralTypeSpan"
+    },
+    {
+      "path": "types.ts",
+      "line": 2400,
+      "interface": "OmittedExpression",
+      "kind": "OmittedExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2406,
+      "interface": "PartiallyEmittedExpression",
+      "kind": "PartiallyEmittedExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2431,
+      "interface": "PrefixUnaryExpression",
+      "kind": "PrefixUnaryExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2442,
+      "interface": "PostfixUnaryExpression",
+      "kind": "PostfixUnaryExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2460,
+      "interface": "NullLiteral",
+      "kind": "NullKeyword"
+    },
+    {
+      "path": "types.ts",
+      "line": 2464,
+      "interface": "TrueLiteral",
+      "kind": "TrueKeyword"
+    },
+    {
+      "path": "types.ts",
+      "line": 2468,
+      "interface": "FalseLiteral",
+      "kind": "FalseKeyword"
+    },
+    {
+      "path": "types.ts",
+      "line": 2474,
+      "interface": "ThisExpression",
+      "kind": "ThisKeyword"
+    },
+    {
+      "path": "types.ts",
+      "line": 2478,
+      "interface": "SuperExpression",
+      "kind": "SuperKeyword"
+    },
+    {
+      "path": "types.ts",
+      "line": 2482,
+      "interface": "ImportExpression",
+      "kind": "ImportKeyword"
+    },
+    {
+      "path": "types.ts",
+      "line": 2486,
+      "interface": "DeleteExpression",
+      "kind": "DeleteExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2491,
+      "interface": "TypeOfExpression",
+      "kind": "TypeOfExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2496,
+      "interface": "VoidExpression",
+      "kind": "VoidExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2501,
+      "interface": "AwaitExpression",
+      "kind": "AwaitExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2506,
+      "interface": "YieldExpression",
+      "kind": "YieldExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2512,
+      "interface": "SyntheticExpression",
+      "kind": "SyntheticExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2648,
+      "interface": "BinaryExpression",
+      "kind": "BinaryExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2735,
+      "interface": "ConditionalExpression",
+      "kind": "ConditionalExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2751,
+      "interface": "FunctionExpression",
+      "kind": "FunctionExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2758,
+      "interface": "ArrowFunction",
+      "kind": "ArrowFunction"
+    },
+    {
+      "path": "types.ts",
+      "line": 2788,
+      "interface": "RegularExpressionLiteral",
+      "kind": "RegularExpressionLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 2808,
+      "interface": "NoSubstitutionTemplateLiteral",
+      "kind": "NoSubstitutionTemplateLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 2858,
+      "interface": "NumericLiteral",
+      "kind": "NumericLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 2864,
+      "interface": "BigIntLiteral",
+      "kind": "BigIntLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 2876,
+      "interface": "TemplateHead",
+      "kind": "TemplateHead"
+    },
+    {
+      "path": "types.ts",
+      "line": 2883,
+      "interface": "TemplateMiddle",
+      "kind": "TemplateMiddle"
+    },
+    {
+      "path": "types.ts",
+      "line": 2890,
+      "interface": "TemplateTail",
+      "kind": "TemplateTail"
+    },
+    {
+      "path": "types.ts",
+      "line": 2906,
+      "interface": "TemplateExpression",
+      "kind": "TemplateExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2918,
+      "interface": "TemplateSpan",
+      "kind": "TemplateSpan"
+    },
+    {
+      "path": "types.ts",
+      "line": 2925,
+      "interface": "ParenthesizedExpression",
+      "kind": "ParenthesizedExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2935,
+      "interface": "ArrayLiteralExpression",
+      "kind": "ArrayLiteralExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2942,
+      "interface": "SpreadElement",
+      "kind": "SpreadElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 2959,
+      "interface": "ObjectLiteralExpression",
+      "kind": "ObjectLiteralExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 2969,
+      "interface": "PropertyAccessExpression",
+      "kind": "PropertyAccessExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3002,
+      "interface": "ElementAccessExpression",
+      "kind": "ElementAccessExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3025,
+      "interface": "CallExpression",
+      "kind": "CallExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3108,
+      "interface": "ExpressionWithTypeArguments",
+      "kind": "ExpressionWithTypeArguments"
+    },
+    {
+      "path": "types.ts",
+      "line": 3113,
+      "interface": "NewExpression",
+      "kind": "NewExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3120,
+      "interface": "TaggedTemplateExpression",
+      "kind": "TaggedTemplateExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3140,
+      "interface": "AsExpression",
+      "kind": "AsExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3146,
+      "interface": "TypeAssertion",
+      "kind": "TypeAssertionExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3152,
+      "interface": "SatisfiesExpression",
+      "kind": "SatisfiesExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3162,
+      "interface": "NonNullExpression",
+      "kind": "NonNullExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3173,
+      "interface": "MetaProperty",
+      "kind": "MetaProperty"
+    },
+    {
+      "path": "types.ts",
+      "line": 3191,
+      "interface": "JsxElement",
+      "kind": "JsxElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3225,
+      "interface": "JsxAttributes",
+      "kind": "JsxAttributes"
+    },
+    {
+      "path": "types.ts",
+      "line": 3231,
+      "interface": "JsxNamespacedName",
+      "kind": "JsxNamespacedName"
+    },
+    {
+      "path": "types.ts",
+      "line": 3238,
+      "interface": "JsxOpeningElement",
+      "kind": "JsxOpeningElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3247,
+      "interface": "JsxSelfClosingElement",
+      "kind": "JsxSelfClosingElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3255,
+      "interface": "JsxFragment",
+      "kind": "JsxFragment"
+    },
+    {
+      "path": "types.ts",
+      "line": 3263,
+      "interface": "JsxOpeningFragment",
+      "kind": "JsxOpeningFragment"
+    },
+    {
+      "path": "types.ts",
+      "line": 3269,
+      "interface": "JsxClosingFragment",
+      "kind": "JsxClosingFragment"
+    },
+    {
+      "path": "types.ts",
+      "line": 3289,
+      "interface": "JsxSpreadAttribute",
+      "kind": "JsxSpreadAttribute"
+    },
+    {
+      "path": "types.ts",
+      "line": 3295,
+      "interface": "JsxClosingElement",
+      "kind": "JsxClosingElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3301,
+      "interface": "JsxExpression",
+      "kind": "JsxExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3308,
+      "interface": "JsxText",
+      "kind": "JsxText"
+    },
+    {
+      "path": "types.ts",
+      "line": 3327,
+      "interface": "NotEmittedStatement",
+      "kind": "NotEmittedStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3331,
+      "interface": "NotEmittedTypeElement",
+      "kind": "NotEmittedTypeElement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3338,
+      "interface": "CommaListExpression",
+      "kind": "CommaListExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3344,
+      "interface": "SyntheticReferenceExpression",
+      "kind": "SyntheticReferenceExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3350,
+      "interface": "EmptyStatement",
+      "kind": "EmptyStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3354,
+      "interface": "DebuggerStatement",
+      "kind": "DebuggerStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3358,
+      "interface": "MissingDeclaration",
+      "kind": "MissingDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3372,
+      "interface": "Block",
+      "kind": "Block"
+    },
+    {
+      "path": "types.ts",
+      "line": 3378,
+      "interface": "VariableStatement",
+      "kind": "VariableStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3384,
+      "interface": "ExpressionStatement",
+      "kind": "ExpressionStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3394,
+      "interface": "IfStatement",
+      "kind": "IfStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3405,
+      "interface": "DoStatement",
+      "kind": "DoStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3410,
+      "interface": "WhileStatement",
+      "kind": "WhileStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3419,
+      "interface": "ForStatement",
+      "kind": "ForStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3430,
+      "interface": "ForInStatement",
+      "kind": "ForInStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3436,
+      "interface": "ForOfStatement",
+      "kind": "ForOfStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3443,
+      "interface": "BreakStatement",
+      "kind": "BreakStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3448,
+      "interface": "ContinueStatement",
+      "kind": "ContinueStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3457,
+      "interface": "ReturnStatement",
+      "kind": "ReturnStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3462,
+      "interface": "WithStatement",
+      "kind": "WithStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3468,
+      "interface": "SwitchStatement",
+      "kind": "SwitchStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3475,
+      "interface": "CaseBlock",
+      "kind": "CaseBlock"
+    },
+    {
+      "path": "types.ts",
+      "line": 3481,
+      "interface": "CaseClause",
+      "kind": "CaseClause"
+    },
+    {
+      "path": "types.ts",
+      "line": 3489,
+      "interface": "DefaultClause",
+      "kind": "DefaultClause"
+    },
+    {
+      "path": "types.ts",
+      "line": 3500,
+      "interface": "LabeledStatement",
+      "kind": "LabeledStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3506,
+      "interface": "ThrowStatement",
+      "kind": "ThrowStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3511,
+      "interface": "TryStatement",
+      "kind": "TryStatement"
+    },
+    {
+      "path": "types.ts",
+      "line": 3518,
+      "interface": "CatchClause",
+      "kind": "CatchClause"
+    },
+    {
+      "path": "types.ts",
+      "line": 3558,
+      "interface": "ClassExpression",
+      "kind": "ClassExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3578,
+      "interface": "InterfaceDeclaration",
+      "kind": "InterfaceDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3587,
+      "interface": "HeritageClause",
+      "kind": "HeritageClause"
+    },
+    {
+      "path": "types.ts",
+      "line": 3594,
+      "interface": "TypeAliasDeclaration",
+      "kind": "TypeAliasDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3602,
+      "interface": "EnumMember",
+      "kind": "EnumMember"
+    },
+    {
+      "path": "types.ts",
+      "line": 3611,
+      "interface": "EnumDeclaration",
+      "kind": "EnumDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3631,
+      "interface": "ModuleDeclaration",
+      "kind": "ModuleDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3657,
+      "interface": "ModuleBlock",
+      "kind": "ModuleBlock"
+    },
+    {
+      "path": "types.ts",
+      "line": 3672,
+      "interface": "ImportEqualsDeclaration",
+      "kind": "ImportEqualsDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3684,
+      "interface": "ExternalModuleReference",
+      "kind": "ExternalModuleReference"
+    },
+    {
+      "path": "types.ts",
+      "line": 3694,
+      "interface": "ImportDeclaration",
+      "kind": "ImportDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3719,
+      "interface": "ImportClause",
+      "kind": "ImportClause"
+    },
+    {
+      "path": "types.ts",
+      "line": 3742,
+      "interface": "ImportAttribute",
+      "kind": "ImportAttribute"
+    },
+    {
+      "path": "types.ts",
+      "line": 3749,
+      "interface": "ImportAttributes",
+      "kind": "ImportAttributes"
+    },
+    {
+      "path": "types.ts",
+      "line": 3757,
+      "interface": "NamespaceImport",
+      "kind": "NamespaceImport"
+    },
+    {
+      "path": "types.ts",
+      "line": 3763,
+      "interface": "NamespaceExport",
+      "kind": "NamespaceExport"
+    },
+    {
+      "path": "types.ts",
+      "line": 3769,
+      "interface": "NamespaceExportDeclaration",
+      "kind": "NamespaceExportDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3777,
+      "interface": "ExportDeclaration",
+      "kind": "ExportDeclaration"
+    },
+    {
+      "path": "types.ts",
+      "line": 3790,
+      "interface": "NamedImports",
+      "kind": "NamedImports"
+    },
+    {
+      "path": "types.ts",
+      "line": 3796,
+      "interface": "NamedExports",
+      "kind": "NamedExports"
+    },
+    {
+      "path": "types.ts",
+      "line": 3804,
+      "interface": "ImportSpecifier",
+      "kind": "ImportSpecifier"
+    },
+    {
+      "path": "types.ts",
+      "line": 3812,
+      "interface": "ExportSpecifier",
+      "kind": "ExportSpecifier"
+    },
+    {
+      "path": "types.ts",
+      "line": 3852,
+      "interface": "ExportAssignment",
+      "kind": "ExportAssignment"
+    },
+    {
+      "path": "types.ts",
+      "line": 3885,
+      "interface": "JSDocTypeExpression",
+      "kind": "JSDocTypeExpression"
+    },
+    {
+      "path": "types.ts",
+      "line": 3890,
+      "interface": "JSDocNameReference",
+      "kind": "JSDocNameReference"
+    },
+    {
+      "path": "types.ts",
+      "line": 3896,
+      "interface": "JSDocMemberName",
+      "kind": "JSDocMemberName"
+    },
+    {
+      "path": "types.ts",
+      "line": 3906,
+      "interface": "JSDocAllType",
+      "kind": "JSDocAllType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3910,
+      "interface": "JSDocUnknownType",
+      "kind": "JSDocUnknownType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3914,
+      "interface": "JSDocNonNullableType",
+      "kind": "JSDocNonNullableType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3920,
+      "interface": "JSDocNullableType",
+      "kind": "JSDocNullableType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3926,
+      "interface": "JSDocOptionalType",
+      "kind": "JSDocOptionalType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3931,
+      "interface": "JSDocFunctionType",
+      "kind": "JSDocFunctionType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3935,
+      "interface": "JSDocVariadicType",
+      "kind": "JSDocVariadicType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3940,
+      "interface": "JSDocNamepathType",
+      "kind": "JSDocNamepathType"
+    },
+    {
+      "path": "types.ts",
+      "line": 3951,
+      "interface": "JSDoc",
+      "kind": "JSDoc"
+    },
+    {
+      "path": "types.ts",
+      "line": 3964,
+      "interface": "JSDocLink",
+      "kind": "JSDocLink"
+    },
+    {
+      "path": "types.ts",
+      "line": 3970,
+      "interface": "JSDocLinkCode",
+      "kind": "JSDocLinkCode"
+    },
+    {
+      "path": "types.ts",
+      "line": 3976,
+      "interface": "JSDocLinkPlain",
+      "kind": "JSDocLinkPlain"
+    },
+    {
+      "path": "types.ts",
+      "line": 3984,
+      "interface": "JSDocText",
+      "kind": "JSDocText"
+    },
+    {
+      "path": "types.ts",
+      "line": 3989,
+      "interface": "JSDocUnknownTag",
+      "kind": "JSDocTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4007,
+      "interface": "JSDocAuthorTag",
+      "kind": "JSDocAuthorTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4015,
+      "interface": "JSDocClassTag",
+      "kind": "JSDocClassTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4019,
+      "interface": "JSDocPublicTag",
+      "kind": "JSDocPublicTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4023,
+      "interface": "JSDocPrivateTag",
+      "kind": "JSDocPrivateTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4027,
+      "interface": "JSDocProtectedTag",
+      "kind": "JSDocProtectedTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4031,
+      "interface": "JSDocReadonlyTag",
+      "kind": "JSDocReadonlyTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4035,
+      "interface": "JSDocOverrideTag",
+      "kind": "JSDocOverrideTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4039,
+      "interface": "JSDocEnumTag",
+      "kind": "JSDocEnumTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4045,
+      "interface": "JSDocThisTag",
+      "kind": "JSDocThisTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4050,
+      "interface": "JSDocTemplateTag",
+      "kind": "JSDocTemplateTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4056,
+      "interface": "JSDocSeeTag",
+      "kind": "JSDocSeeTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4061,
+      "interface": "JSDocReturnTag",
+      "kind": "JSDocReturnTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4066,
+      "interface": "JSDocTypeTag",
+      "kind": "JSDocTypeTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4071,
+      "interface": "JSDocTypedefTag",
+      "kind": "JSDocTypedefTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4079,
+      "interface": "JSDocCallbackTag",
+      "kind": "JSDocCallbackTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4087,
+      "interface": "JSDocOverloadTag",
+      "kind": "JSDocOverloadTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4093,
+      "interface": "JSDocThrowsTag",
+      "kind": "JSDocThrowsTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4098,
+      "interface": "JSDocSignature",
+      "kind": "JSDocSignature"
+    },
+    {
+      "path": "types.ts",
+      "line": 4114,
+      "interface": "JSDocPropertyTag",
+      "kind": "JSDocPropertyTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4118,
+      "interface": "JSDocParameterTag",
+      "kind": "JSDocParameterTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4122,
+      "interface": "JSDocTypeLiteral",
+      "kind": "JSDocTypeLiteral"
+    },
+    {
+      "path": "types.ts",
+      "line": 4129,
+      "interface": "JSDocSatisfiesTag",
+      "kind": "JSDocSatisfiesTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4139,
+      "interface": "JSDocImportTag",
+      "kind": "JSDocImportTag"
+    },
+    {
+      "path": "types.ts",
+      "line": 4320,
+      "interface": "SourceFile",
+      "kind": "SourceFile"
+    },
+    {
+      "path": "types.ts",
+      "line": 4494,
+      "interface": "Bundle",
+      "kind": "Bundle"
+    },
+    {
+      "path": "types.ts",
+      "line": 4511,
+      "interface": "JsonMinusNumericLiteral",
+      "kind": "PrefixUnaryExpression"
+    }
+  ],
+  "observed_identifier_constructor_lacks_escapedText": true,
+  "observed_identifier_wrapper_sets_escapedText": true,
+  "limits": "Lexical discovery for explicitly named direct generic allocations and kind declarations only. No full initialization, escape, inheritance, constructor replacement or publication proof. Interfaces without their own kind declaration are not counted. No assertion annotations are trusted."
+}

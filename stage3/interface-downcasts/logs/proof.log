@@ -1,0 +1,34 @@
+=== RUN   TestInterfaceConstructionProof
+=== RUN   TestInterfaceConstructionProof/complete
+=== RUN   TestInterfaceConstructionProof/missing_payload
+=== RUN   TestInterfaceConstructionProof/wrong_payload
+=== RUN   TestInterfaceConstructionProof/broad_tag
+=== RUN   TestInterfaceConstructionProof/alias_write
+=== RUN   TestInterfaceConstructionProof/unused_bad_factory
+=== RUN   TestInterfaceConstructionProof/different_tag
+=== RUN   TestInterfaceConstructionProof/dynamic_complete
+=== RUN   TestInterfaceConstructionProof/optional_target
+=== RUN   TestInterfaceConstructionProof/spread
+=== RUN   TestInterfaceConstructionProof/reflection_alias
+=== RUN   TestInterfaceConstructionProof/generic
+=== RUN   TestInterfaceConstructionProof/staged_class
+=== RUN   TestInterfaceConstructionProof/forged_payload
+--- PASS: TestInterfaceConstructionProof (0.37s)
+    --- PASS: TestInterfaceConstructionProof/complete (0.03s)
+    --- PASS: TestInterfaceConstructionProof/missing_payload (0.02s)
+    --- PASS: TestInterfaceConstructionProof/wrong_payload (0.03s)
+    --- PASS: TestInterfaceConstructionProof/broad_tag (0.03s)
+    --- PASS: TestInterfaceConstructionProof/alias_write (0.02s)
+    --- PASS: TestInterfaceConstructionProof/unused_bad_factory (0.03s)
+    --- PASS: TestInterfaceConstructionProof/different_tag (0.02s)
+    --- PASS: TestInterfaceConstructionProof/dynamic_complete (0.02s)
+    --- PASS: TestInterfaceConstructionProof/optional_target (0.03s)
+    --- PASS: TestInterfaceConstructionProof/spread (0.02s)
+    --- PASS: TestInterfaceConstructionProof/reflection_alias (0.03s)
+    --- PASS: TestInterfaceConstructionProof/generic (0.02s)
+    --- PASS: TestInterfaceConstructionProof/staged_class (0.03s)
+    --- PASS: TestInterfaceConstructionProof/forged_payload (0.04s)
+=== RUN   TestInterfaceConstructionFlagOff
+--- PASS: TestInterfaceConstructionFlagOff (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.418s
