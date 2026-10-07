@@ -38,8 +38,9 @@ def digest(file):
 
 oracle = args.node_run / 'node.dump'
 report['oracle'] = digest(oracle)
-assert report['oracle'] == {'bytes': 35456964,
-    'sha256': '2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5'}
+reference = json.loads((here / 'reference.json').read_text())
+assert report['oracle'] == {key: reference[key] for key in ['bytes', 'sha256']}
+report['dump_schema'] = reference['schema']
 report['build'] = run([str(args.compiler), 'build', report['entry'], '-o', str(binary)], 'build')
 node_env = dict(os.environ, PARSER_RUNTIME=str(here.parents[2] / 'oracle/adamic.mjs'))
 assert node_env.get('PARSER_TYPESCRIPT'), 'set PARSER_TYPESCRIPT to stock 6.0.3'

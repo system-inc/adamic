@@ -1,3 +1,22 @@
+Current reference v2: **36,429,231 bytes**, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Full adapted tree and slice outputs compare byte for byte, empty stderr.
+reference.json is now the native acceptance target. The old 35,456,964-byte
+SHA 2014ef06... reference is syntax-only historical evidence: dropping tags
+left it unchanged. Blind-spot proof was pushed separately before this repair.
+
+The full corpus emits 4,149 JSDoc nodes, 3,846 tag nodes, five type expressions
+and 56 links. Its 81 jsDocDiagnostics lists are empty because the corpus uses
+TS mode. jsdoc-inputs.json supplies directed JS cases, including a real malformed
+@param type producing TS1110, and structured comment/link/type/tag text. The
+same driver renders those cases; evidence/jsdoc-extended holds exact output.
+Strict scratch checker accepts the extended driver without diagnostics.
+
+Status pending native proof: **syntax tree and parse diagnostics identical on
+Node, JSDoc unverified**. Extended JSDoc Node equality is an observed oracle
+result; no native JSDoc result is claimed. When module-init-order lands, native
+comparison uses the v2 reference, never the historical syntax-only SHA.
+
 # Parser source proof driver
 
 main.a calls createSourceFile and forEachChild from the adapted TypeScript
@@ -19,15 +38,21 @@ after adaptation 10 changes the generator template. The generated JSON is an
 additional corpus file, alongside the generated TypeScript diagnostic map.
 
 The manifest includes every regular file recursively under src/compiler in
-lexicographic relative-path order. Every input, including JSON, is parsed as
-ScriptKind.TS, ScriptTarget.Latest, with parent links disabled. The source-file
+lexicographic relative-path order. Compiler corpus inputs, including JSON, are parsed as ScriptKind.TS; directed
+.js inputs use ScriptKind.JS. ScriptTarget.Latest and disabled parent links
+apply to both. The source-file
 name is the relative manifest name. Each file header is followed by preorder
 nodes and that file's parse diagnostics in parser order. Positions and ends
 are UTF-16 offsets. Nodes print canonical kind name, pos, end, integer flags,
 and cooked identifier/private-identifier/literal text. Backslash and non-ASCII
 code units are escaped as \\uXXXX, so one node or diagnostic occupies one line.
-No parent, transform, list or JSDoc-tag fields are included. forEachChild is the
-ordinary compiler traversal, not a separate traversal of attached JSDoc tags.
+The v2 traversal prints each node, then attached node.jsDoc entries, then
+forEachChild children. Each JSDoc and tag has kind/pos/end/flags; tags include
+tagName. Comments distinguish absence, string text and structured parts; link
+parts print their text and name descendants. forEachChild on JSDoc traverses
+tags, their type-expression nodes and all type descendants. Each file prints
+parseDiagnostics and jsDocDiagnostics, including zero-length lists. Parents,
+transform and other list metadata are not dumped.
 
 kinds.a preserves TypeScript 6.0.3's canonical enum names, excluding First/Last
 range aliases. The dump itself uses the adapted tree's node kinds and flags.
@@ -46,6 +71,6 @@ The full dump is retained outside Git at
 Only its byte size, SHA-256, corpus manifest and mutant evidence are committed.
 All tests and runs write output to logs. No repository-wide gate is claimed.
 
-The declaration-slice proof is pending the shared scanner tool. See
-BLOCKERS.md for its required sequence and WITNESS.md for the completed
-stage1 projection comparison.
+The shared declaration slice and full tree match on Node. The native build
+remains blocked; see BLOCKERS.md. WITNESS.md compares only the legacy ordinary
+syntax projection and does not establish JSDoc coverage.

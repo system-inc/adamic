@@ -1,3 +1,29 @@
+# Extended JSDoc dump: second checkpoint
+
+Status until native proof: **syntax tree and parse diagnostics identical on
+Node, JSDoc unverified**. Full adapted compiler and slice extended Node dumps
+are byte-identical (cmp 0, empty stderr): **36,429,231 bytes**, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+The old 35,456,964-byte SHA 2014ef06... is no longer the native acceptance target.
+reference.json and native-proof.py enforce the v2 reference.
+
+The driver visits attached node.jsDoc before ordinary children. On each JSDoc
+and tag it prints kind/pos/end/flags, tagName where applicable, string or
+structured comment text, and recursively visits tags/type expressions, link
+names and all their children with forEachChild. It prints both parseDiagnostics
+and jsDocDiagnostics per file. Full corpus: 4,149 JSDoc nodes, 3,846 tags, five
+JSDocTypeExpressions, 56 links. No new slice declarations are needed.
+
+The fixed TS/JSON compiler corpus has zero jsDocDiagnostics. Directed .js
+inputs use range-cases' JS mode and produce a nonempty jsDocDiagnostics list:
+code 1110, start 13, length 1, Type expected. They also exercise type expressions,
+tag comments and a link/structured comment. Same driver, no synthetic diagnostic.
+Strict integrated checker accepts the extended driver. Exact full/slice reports,
+coverage and directed output are in evidence/jsdoc-extended. The permanent
+no-tags mutant and rerun omission/end checks are the next separate checkpoints.
+
+---
+
 # JSDoc blind spot proved: first checkpoint
 
 Status: **syntax tree and parse diagnostics identical on Node, JSDoc unverified**.
