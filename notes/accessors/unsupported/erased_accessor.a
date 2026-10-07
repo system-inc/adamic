@@ -1,0 +1,1 @@
+interface Empty {} class A { get x(): number { return 1; } } const erased: Empty = new A();

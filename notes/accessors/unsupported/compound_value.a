@@ -1,0 +1,1 @@
+class A { get total(): number { return 1; } set total(value: number) {} } const a = new A(); const value = (a.total += 1); console.log(`${value}`);

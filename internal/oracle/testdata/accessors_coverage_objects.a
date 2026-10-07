@@ -1,0 +1,14 @@
+class Item { readonly label = 'item'.repeat(2); }
+class Values {
+ private stored = new Item();
+ get item(): Item { return this.stored; }
+ set item(value: Item) { this.stored = value; }
+ get error(): Error { return new Error('error'.repeat(2)); }
+ get pattern(): RegExp { return /a+/g; }
+}
+const values = new Values();
+const before = values.item;
+values.item = new Item();
+console.log(`${before === values.item} ${before.label} ${values.error.message}`);
+const pattern = values.pattern;
+console.log(`${pattern.test('aa')} ${pattern.lastIndex}`);

@@ -1,0 +1,14 @@
+class Sink {
+ stored = '';
+ set text(value: string) { console.log(`set ${value}`); this.stored = value; }
+ get text(): string { return this.stored; }
+}
+const first = new Sink();
+const second = new Sink();
+let selected = first;
+function operand(): string { console.log('operand'); selected = second; return 'made'.repeat(2); }
+selected.text = operand();
+console.log(`${first.text}|${second.text}`);
+function receiver(): Sink { console.log('receiver'); return first; }
+receiver().text = operand();
+console.log(`${first.text}|${second.text}`);

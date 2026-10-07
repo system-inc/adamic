@@ -1,0 +1,1 @@
+class A { get x(): number { return 1; } constructor() { console.log(this.x.toString()); } } class B extends A { field = 1; } const value = new B();

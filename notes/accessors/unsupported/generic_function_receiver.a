@@ -1,0 +1,1 @@
+class A { get x(): number { return 1; } } function read<T extends A>(value: T): number { return value.x; } console.log(read(new A()).toString());

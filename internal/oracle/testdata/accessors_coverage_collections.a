@@ -1,0 +1,26 @@
+class Collections {
+ private stored: string[] = ['stored'.repeat(2)];
+ private table = new Map<string, string>([['key', 'value'.repeat(2)]]);
+ private members = new Set<string>(['member'.repeat(2)]);
+ get fresh(): string[] { return ['new'.repeat(2)]; }
+ get items(): string[] { return this.stored; }
+ set items(value: string[]) { this.stored = value; }
+ get map(): Map<string, string> { return this.table; }
+ set map(value: Map<string, string>) { this.table = value; }
+ get set(): Set<string> { return this.members; }
+ set set(value: Set<string>) { this.members = value; }
+ get pair(): readonly [number, string] { return [3, 'pair'.repeat(2)]; }
+}
+const values = new Collections();
+const before = values.items;
+values.items.push('extra'.repeat(2));
+values.items = values.fresh;
+console.log(`${before.join(',')} ${values.items.join(',')}`);
+const map = values.map;
+values.map = new Map<string, string>([['other', 'replacement'.repeat(2)]]);
+console.log(`${map.get('key')} ${values.map.get('other')}`);
+const set = values.set;
+values.set = new Set<string>(['next'.repeat(2)]);
+console.log(`${[...set].join(',')} ${[...values.set].join(',')}`);
+const pair = values.pair;
+console.log(`${pair[0]} ${pair[1]}`);

@@ -1,0 +1,25 @@
+class Initialized {
+ private stored: number;
+ constructor(value: number) {
+  this.stored = value;
+  console.log(`constructor ${this.total}`);
+  this.total += 1;
+ }
+ get total(): number { return this.twice(); }
+ set total(value: number) { this.stored = value; }
+ twice(): number { return this.stored * 2; }
+}
+const value = new Initialized(3);
+const read = () => value.total;
+console.log(`${value.total} ${read()}`);
+class Base {
+ stored = 1;
+ get total(): number { return this.stored; }
+ set total(value: number) { this.stored = value; }
+}
+class Derived extends Base {
+ constructor() { super(); this.stored = 4; console.log(`derived ${this.total}`); }
+ override get total(): number { return this.stored * 3; }
+ override set total(value: number) { this.stored = value; }
+}
+console.log(`${new Derived().total}`);

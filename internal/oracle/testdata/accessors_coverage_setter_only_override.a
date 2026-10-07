@@ -1,0 +1,8 @@
+class Base {
+ set total(value: number) { console.log(`base ${value}`); }
+}
+class Derived extends Base {
+ override set total(value: number) { console.log(`derived ${value}`); }
+}
+const values: readonly Base[] = [new Base(), new Derived()];
+for (const value of values) { value.total = 3; }

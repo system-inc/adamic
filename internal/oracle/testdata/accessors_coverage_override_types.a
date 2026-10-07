@@ -1,0 +1,18 @@
+interface Animal { readonly name: string }
+interface Dog extends Animal { readonly bark: string }
+class Base {
+ get pets(): readonly Animal[] { return [{ name: 'base'.repeat(2) }]; }
+ get code(): number { return 0; }
+ set code(value: 1) { console.log(`base ${value}`); }
+}
+class Derived extends Base {
+ override get pets(): readonly Dog[] { return [{ name: 'dog'.repeat(2), bark: 'woof'.repeat(2) }]; }
+ override get code(): 1 { return 1; }
+ override set code(value: number) { console.log(`derived ${value}`); }
+}
+const base: Base = new Derived();
+base.code = 1;
+console.log(`${base.code} ${base.pets[0]?.name}`);
+const derived = new Derived();
+derived.code = 9;
+console.log(derived.pets[0]?.bark ?? 'none');

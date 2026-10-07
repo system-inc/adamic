@@ -1,0 +1,1 @@
+class A { stored = 1; } class B extends A { get total(): number { return 2; } } const value: A = new B(); console.log(`${value.stored}`);

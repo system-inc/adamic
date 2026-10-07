@@ -1,0 +1,8 @@
+interface Item { readonly label: string }
+class Maker {
+ get item(): Item { console.log('item'); return { label: 'fresh'.repeat(2) }; }
+ get text(): string { console.log('text'); return 'fresh'.repeat(2); }
+}
+new Maker().item;
+new Maker().text;
+console.log(new Maker().item.label);

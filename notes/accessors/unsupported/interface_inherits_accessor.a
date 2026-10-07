@@ -1,0 +1,1 @@
+class A { get x(): number { return 1; } } interface View extends A {} const value: View = new A(); console.log(value.x.toString());

@@ -1,0 +1,14 @@
+import type { Weak } from 'adamic';
+interface Item { readonly label: string }
+class Reader {
+ private stored: Weak<Item>;
+ constructor(value: Item) { this.stored = value; }
+ get item(): Weak<Item> { return this.stored; }
+ set item(value: Weak<Item>) { this.stored = value; }
+}
+function show(value: Reader): void { console.log(value.item?.label ?? 'none'); }
+const item: Item = { label: 'held'.repeat(2) };
+const reader = new Reader(item);
+show(reader);
+reader.item = undefined;
+show(reader);

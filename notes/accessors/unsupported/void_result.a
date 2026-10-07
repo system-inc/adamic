@@ -1,0 +1,1 @@
+class A { get total(): void { console.log('called'); return undefined; } } const value = new A().total; console.log(`${value === undefined}`);

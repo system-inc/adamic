@@ -1,0 +1,1 @@
+class A { get x(): number { return 1; } } class B extends A { override get x(): number { return super.x + 1; } } const b = new B();

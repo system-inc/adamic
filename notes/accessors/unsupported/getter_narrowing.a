@@ -1,0 +1,1 @@
+class A { get total(): number | string { return 1; } } const value = new A(); if (typeof value.total === 'number') { console.log(`${value.total + 1}`); }

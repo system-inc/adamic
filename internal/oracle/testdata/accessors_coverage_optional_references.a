@@ -1,0 +1,21 @@
+interface Item { readonly label: string }
+class Maybe {
+ private stored: Item | undefined = undefined;
+ private text: string | undefined = undefined;
+ get item(): Item | undefined { return this.stored; }
+ set item(value: Item | undefined) { this.stored = value; }
+ get name(): string | undefined { return this.text; }
+ set name(value: string | undefined) { this.text = value; }
+}
+function show(value: Maybe): void {
+ console.log(`${value.item?.label ?? 'none'} ${value.name ?? 'none'}`);
+}
+const maybe = new Maybe();
+show(maybe);
+maybe.item = { label: 'item'.repeat(2) };
+maybe.name = 'text'.repeat(2);
+if (maybe.item !== undefined) { console.log(maybe.item.label); }
+if (maybe.name !== undefined) { console.log(`${maybe.name.length}`); }
+maybe.item = undefined;
+maybe.name = undefined;
+show(maybe);

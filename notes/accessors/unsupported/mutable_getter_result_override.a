@@ -1,0 +1,1 @@
+interface Animal { readonly name: string } interface Dog extends Animal { readonly bark: () => string } class A { get pets(): Animal[] { return []; } } class B extends A { override get pets(): Dog[] { return []; } } const b = new B();

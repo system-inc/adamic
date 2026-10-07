@@ -1,0 +1,1 @@
+class A { set x(value: number) {} } console.log(new A().x.toString());

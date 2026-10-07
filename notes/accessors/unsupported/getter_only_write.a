@@ -1,0 +1,1 @@
+class A { get total(): number { return 1; } } const value = new A(); value.total = 3;

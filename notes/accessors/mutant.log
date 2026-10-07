@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessors_coverage_operators.a (0.39s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 11\nget 11\nset 10\nget 10\nset 9\nget 9\nset 10\nget 10\nset 11\nget 11\nset 12\nget 12\nset 11\nget 11\nset 10\nget 10\n10\n", stderr ""
+            native: exit 0, stdout "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 12\nget 12\nset 10\nget 10\nset 8\nget 8\nset 10\nget 10\nset 12\nget 12\nset 14\nget 14\nset 13\nget 13\nset 12\nget 12\n12\n", stderr ""
+        oracle_test.go:586: JavaScript backend: stdout differs
+            node:    exit 0, stdout "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 11\nget 11\nset 10\nget 10\nset 9\nget 9\nset 10\nget 10\nset 11\nget 11\nset 12\nget 12\nset 11\nget 11\nset 10\nget 10\n10\n", stderr ""
+            backend: exit 0, stdout "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 12\nget 12\nset 10\nget 10\nset 8\nget 8\nset 10\nget 10\nset 12\nget 12\nset 14\nget 14\nset 13\nget 13\nset 12\nget 12\n12\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.404s
+FAIL

@@ -1,0 +1,1 @@
+class A { x: number; get value(): number { return this.x; } constructor() { console.log(this.value.toString()); this.x = 1; } } const value = new A();
