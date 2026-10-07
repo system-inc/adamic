@@ -256,6 +256,9 @@ static void deallocate(adamic_heap *heap) {
 
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
 	if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
@@ -291,6 +294,9 @@ static void list(void *value) {
 // drop_reference never touches the freeing queue unless the last reference went away.
 static bool drop_reference(void *value) {
 	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
 	if (heap == NULL) { return false; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
@@ -307,7 +313,11 @@ static bool drop_reference(void *value) {
 
 // Children are queued for an outer drain, never freed recursively.
 static void let_go(void *value) {
-	if (drop_reference(value)) { list(value); }
+	if (drop_reference(value)) {
+		adamic_heap *heap = value;
+		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) heap = &((adamic_cell *)heap)->owner->heap;
+		list(heap);
+	}
 }
 
 static void free_one(void *value) {
@@ -349,6 +359,14 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+	case adamic_kind_environment: {
+		adamic_environment *environment = value;
+		for (size_t index = 0; index < environment->count; index++) {
+			adamic_cell *cell = &environment->cells[index];
+			if (cell->references) { let_go(cell->value.reference); }
+		}
+		break;
+	}
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
 		for (size_t index = 0; index < closure->count; index++) {
@@ -386,7 +404,11 @@ __attribute__((noinline)) static void release_last(void *value) {
 }
 
 void adamic_release_slow(void *value) {
-	if (drop_reference(value)) { release_last(value); }
+	if (drop_reference(value)) {
+		adamic_heap *heap = value;
+		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) heap = &((adamic_cell *)heap)->owner->heap;
+		release_last(heap);
+	}
 }
 
 void adamic_heap_thread_end(void) {
