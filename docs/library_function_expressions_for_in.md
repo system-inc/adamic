@@ -20,7 +20,7 @@ values, creates per-iteration let/const bindings, and supports an existing strin
 and continue. The runtime obtains keys from the actual shape, not the static interface.
 Arrays and tuples are refused explicitly because holes and enumerable array properties are not
 represented. Literal origins, their aliases, and all direct assignments must be proved plain.
-Parameters, call results, classes, prototype-setting __proto__ literals, optional structural fields,
+Parameters, call results, classes, prototype-setting **proto** literals, optional structural fields,
 possibly absent spread fields, and destructuring writes are conservatively refused. No symbols,
 prototype enumeration, property deletion/addition, or getters are admitted by this slice.
 
@@ -72,50 +72,50 @@ Node's adapted test output and exit status. Skips are runner feature/harness exc
 
 Before:
 
-| Directory | Pass | Disagree | Refused | Crash | Skip | Total |
-|---|---:|---:|---:|---:|---:|---:|
-| built-ins/Object | 0 | 2 | 2333 | 0 | 1076 | 3411 |
-| built-ins/JSON | 0 | 0 | 102 | 0 | 63 | 165 |
-| built-ins/Map | 5 | 0 | 78 | 0 | 121 | 204 |
-| built-ins/Set | 5 | 0 | 219 | 0 | 159 | 383 |
-| built-ins/Array | 62 | 0 | 2409 | 1 | 610 | 3082 |
-| built-ins/RegExp | 0 | 0 | 550 | 0 | 1329 | 1879 |
-| Total | 72 | 2 | 5691 | 1 | 3358 | 9124 |
+| Directory        | Pass | Disagree | Refused | Crash | Skip | Total |
+| ---------------- | ---: | -------: | ------: | ----: | ---: | ----: |
+| built-ins/Object |    0 |        2 |    2333 |     0 | 1076 |  3411 |
+| built-ins/JSON   |    0 |        0 |     102 |     0 |   63 |   165 |
+| built-ins/Map    |    5 |        0 |      78 |     0 |  121 |   204 |
+| built-ins/Set    |    5 |        0 |     219 |     0 |  159 |   383 |
+| built-ins/Array  |   62 |        0 |    2409 |     1 |  610 |  3082 |
+| built-ins/RegExp |    0 |        0 |     550 |     0 | 1329 |  1879 |
+| Total            |   72 |        2 |    5691 |     1 | 3358 |  9124 |
 
 After:
 
-| Directory | Pass | Disagree | Refused | Crash | Skip | Total |
-|---|---:|---:|---:|---:|---:|---:|
-| built-ins/Object | 0 | 0 | 2335 | 0 | 1076 | 3411 |
-| built-ins/JSON | 0 | 0 | 102 | 0 | 63 | 165 |
-| built-ins/Map | 6 | 0 | 77 | 0 | 121 | 204 |
-| built-ins/Set | 6 | 0 | 218 | 0 | 159 | 383 |
-| built-ins/Array | 63 | 0 | 2408 | 1 | 610 | 3082 |
-| built-ins/RegExp | 0 | 0 | 550 | 0 | 1329 | 1879 |
-| Total | 75 | 0 | 5690 | 1 | 3358 | 9124 |
+| Directory        | Pass | Disagree | Refused | Crash | Skip | Total |
+| ---------------- | ---: | -------: | ------: | ----: | ---: | ----: |
+| built-ins/Object |    0 |        0 |    2335 |     0 | 1076 |  3411 |
+| built-ins/JSON   |    0 |        0 |     102 |     0 |   63 |   165 |
+| built-ins/Map    |    6 |        0 |      77 |     0 |  121 |   204 |
+| built-ins/Set    |    6 |        0 |     218 |     0 |  159 |   383 |
+| built-ins/Array  |   63 |        0 |    2408 |     1 |  610 |  3082 |
+| built-ins/RegExp |    0 |        0 |     550 |     0 | 1329 |  1879 |
+| Total            |   75 |        0 |    5690 |     1 | 3358 |  9124 |
 
 ## Verification and mutants
 
 All test output was written to files. Commands and results:
 
-* `go test ./internal/lower -count=1`: passed, 1.886s before the final optional-field boundary addition.
-* `go test ./internal/oracle -count=1 -run 'TestNativeAgreesWithNode/internal/oracle/testdata/library_' -timeout 10m`: passed, 5.739s, including Node source, JavaScript backend, sanitized native, release native, and leak checks.
-* `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts`: passed, 122.577s. The new function, enumeration, and global fixtures allocate/free 56/56, 74/74, and 5/5 respectively; zero region-held values.
-* `gofmt -l cmd internal`: empty output.
-* `go vet ./...`: empty output, exit 0.
-* `go test -count=1 -timeout 30m ./...`: the initial full invocation exited 1 solely because TestEveryWriteIsRecordedAndKnown did not recognize the three new IR nodes. All other packages passed, including the full oracle (759.146s), native (263.674s), flow (158.248s), and all six stage1/cohere packages. After adding the slice integration hook, fresh/lower and the filtered feature oracles were rerun and passed. The full 13-minute suite was not repeated after that hook; this report does not claim a clean single full-gate invocation on the final tree. The original full-gate log is /tmp/adamic-language-gate.log; corrected integration and oracle logs are /tmp/adamic-language-integration.log and /tmp/adamic-language-final-oracle.log.
-* `go test ./internal/fresh ./internal/lower -count=1 -timeout 10m`: passed after the missing IR integration hook was added, fresh 41.082s, lower 11.138s.
-* The filtered feature oracle command above was repeated after that hook: passed, 22.684s.
+- `go test ./internal/lower -count=1`: passed, 1.886s before the final optional-field boundary addition.
+- `go test ./internal/oracle -count=1 -run 'TestNativeAgreesWithNode/internal/oracle/testdata/library_' -timeout 10m`: passed, 5.739s, including Node source, JavaScript backend, sanitized native, release native, and leak checks.
+- `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts`: passed, 122.577s. The new function, enumeration, and global fixtures allocate/free 56/56, 74/74, and 5/5 respectively; zero region-held values.
+- `gofmt -l cmd internal`: empty output.
+- `go vet ./...`: empty output, exit 0.
+- `go test -count=1 -timeout 30m ./...`: the initial full invocation exited 1 solely because TestEveryWriteIsRecordedAndKnown did not recognize the three new IR nodes. All other packages passed, including the full oracle (759.146s), native (263.674s), flow (158.248s), and all six stage1/cohere packages. After adding the slice integration hook, fresh/lower and the filtered feature oracles were rerun and passed. The full 13-minute suite was not repeated after that hook; this report does not claim a clean single full-gate invocation on the final tree. The original full-gate log is /tmp/adamic-language-gate.log; corrected integration and oracle logs are /tmp/adamic-language-integration.log and /tmp/adamic-language-final-oracle.log.
+- `go test ./internal/fresh ./internal/lower -count=1 -timeout 10m`: passed after the missing IR integration hook was added, fresh 41.082s, lower 11.138s.
+- The filtered feature oracle command above was repeated after that hook: passed, 22.684s.
 
 One temporary source mutant was run for each feature and restored immediately afterward. Each
 compiled, sanitized and release executions exited 0 with empty stderr, and the JavaScript backend
 still agreed with Node. Only the Node/native stdout comparison detected the semantic error:
 
-| Feature | Mutant | Node | Native | Detector |
-|---|---|---|---|---|
-| Named function expressions | Replace ClosureSelf's retained current closure with a freshly made closure | self() === self prints true | prints false | stdout differs |
-| for...in | Reverse integer-key insertion-sort comparison from previous < index to previous > index | starts 0, 2, 10, 4294967294 | starts 4294967294, 10, 2, 0 | stdout differs |
-| Global values | Alternate each identity read between its stable token and the next token | seven self comparisons print true | all seven print false | stdout differs |
+| Feature                    | Mutant                                                                                  | Node                              | Native                      | Detector       |
+| -------------------------- | --------------------------------------------------------------------------------------- | --------------------------------- | --------------------------- | -------------- |
+| Named function expressions | Replace ClosureSelf's retained current closure with a freshly made closure              | self() === self prints true       | prints false                | stdout differs |
+| for...in                   | Reverse integer-key insertion-sort comparison from previous < index to previous > index | starts 0, 2, 10, 4294967294       | starts 4294967294, 10, 2, 0 | stdout differs |
+| Global values              | Alternate each identity read between its stable token and the next token                | seven self comparisons print true | all seven print false       | stdout differs |
 
 For each mutant the command was:
 
@@ -137,9 +137,9 @@ compiler boundaries; the three semantic mutants above prove the Node comparison 
 The completed surveys observe 3 newly passing tests, 0 lost passes, and 0 final disagreements
 (the baseline had 2). The three new passes are:
 
-* `built-ins/Map/constructor.js`
-* `built-ins/Set/constructor.js`
-* `built-ins/Array/constructor.js`
+- `built-ins/Map/constructor.js`
+- `built-ins/Set/constructor.js`
+- `built-ins/Array/constructor.js`
 
 These constructor tests exercise global identity. No additional complete library tests were
 unlocked by function expressions or for...in in these six directories, despite their passing
@@ -160,4 +160,3 @@ All six directories' after counts above are from the single final completed run,
 The baseline and final JSON/log files are /tmp/adamic-language-before.{json,log} and
 /tmp/adamic-language-final.{json,log}. Final survey exit: 0; the inherited crash is counted
 in the report rather than treated as a disagreement.
-

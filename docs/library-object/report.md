@@ -5,9 +5,9 @@ Branch: `codex/library-object`. Started from `origin/main` at `fe3b9f2`; the req
 Test262 commit: `5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81`. Node: `v24.19.0`. These are full `built-ins/Object` measurements with the same pinned checkout, not a limit or a classify-only run. The runner adapts the harness and runs the same adapted source on Node and natively.
 
 | Measurement | Pass | Disagreements | Refused | Crashed | Skipped | Total |
-|---|---:|---:|---:|---:|---:|---:|
-| Before | 0 | 0 | 2335 | 0 | 1076 | 3411 |
-| After | 11 | 0 | 2324 | 0 | 1076 | 3411 |
+| ----------- | ---: | ------------: | ------: | ------: | ------: | ----: |
+| Before      |    0 |             0 |    2335 |       0 |    1076 |  3411 |
+| After       |   11 |             0 |    2324 |       0 |    1076 |  3411 |
 
 Observed: 11 newly passing, every one agreed with Node, no disagreements or crashes. The biggest remaining refusal is `var`: 394 tests both before and after. Full machine-readable reports: [before.json](before.json) and [after.json](after.json).
 
@@ -26,21 +26,21 @@ New implementation is in `internal/lower/library_object.go`, `internal/native/ru
 
 ## Explicit refusals and remaining coverage
 
-| Operation or input | Result and reason in the diagnostic |
-|---|---|
-| defineProperty, defineProperties, getOwnPropertyDescriptor, getOwnPropertyDescriptors | Refused: property descriptors expose or change field presence, types and access behavior outside fixed plain loads and stores. |
-| getPrototypeOf, setPrototypeOf, create | Refused: prototypes expose or replace fields outside the declared shape; use declared composition. |
-| fromEntries | Refused: tsc returns an index-signature object with unproven keys; Adamic fixes shapes and refuses index signatures. Use Map. |
-| groupBy | NotYet: tsc returns a partial record with dynamically present keys; this slice cannot represent it. Use Map and a typed grouping loop. |
-| assign with no source or more than three sources | Refused when tsc chooses its any-returning overload; a proven result type is required. |
-| assign with widening or conflicting field types | Refused: both directions must agree with the intersection result. |
-| assign with mutable reference-valued fields | Conservatively refused; this slice only copies scalar values and strings and does not attempt a new cycle proof. |
-| assign adding fields | NotYet: the target allocation has a fixed shape and aliases must keep the same object. |
-| heterogeneous or unproven values/entries | Refused: no homogeneous, proven result element representation; any is not a type proof. |
-| keys/values/entries/freeze on annotated, returned or otherwise unproven shapes | NotYet: this slice proves only literal shapes or their unannotated const bindings. Hidden fields and synthetic absent slots cannot be guessed. |
-| hasOwn with arbitrary keys or unproven object views | Refused for undeclared keys; NotYet for unproven views, including optional object parameters. |
-| catches around possibly frozen field writes or assign | NotYet: library TypeErrors currently panic natively rather than participate in catch cleanup. The diagnostic prevents a silent difference, conservatively across aliases and calls. |
-| class/array/function freezing, null, symbols, heterogeneous union values/entries, computed names and special prototype/private-like literal names | Not covered; existing lowering or the shape proof reports a refusal or NotYet. |
+| Operation or input                                                                                                                                | Result and reason in the diagnostic                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| defineProperty, defineProperties, getOwnPropertyDescriptor, getOwnPropertyDescriptors                                                             | Refused: property descriptors expose or change field presence, types and access behavior outside fixed plain loads and stores.                                                      |
+| getPrototypeOf, setPrototypeOf, create                                                                                                            | Refused: prototypes expose or replace fields outside the declared shape; use declared composition.                                                                                  |
+| fromEntries                                                                                                                                       | Refused: tsc returns an index-signature object with unproven keys; Adamic fixes shapes and refuses index signatures. Use Map.                                                       |
+| groupBy                                                                                                                                           | NotYet: tsc returns a partial record with dynamically present keys; this slice cannot represent it. Use Map and a typed grouping loop.                                              |
+| assign with no source or more than three sources                                                                                                  | Refused when tsc chooses its any-returning overload; a proven result type is required.                                                                                              |
+| assign with widening or conflicting field types                                                                                                   | Refused: both directions must agree with the intersection result.                                                                                                                   |
+| assign with mutable reference-valued fields                                                                                                       | Conservatively refused; this slice only copies scalar values and strings and does not attempt a new cycle proof.                                                                    |
+| assign adding fields                                                                                                                              | NotYet: the target allocation has a fixed shape and aliases must keep the same object.                                                                                              |
+| heterogeneous or unproven values/entries                                                                                                          | Refused: no homogeneous, proven result element representation; any is not a type proof.                                                                                             |
+| keys/values/entries/freeze on annotated, returned or otherwise unproven shapes                                                                    | NotYet: this slice proves only literal shapes or their unannotated const bindings. Hidden fields and synthetic absent slots cannot be guessed.                                      |
+| hasOwn with arbitrary keys or unproven object views                                                                                               | Refused for undeclared keys; NotYet for unproven views, including optional object parameters.                                                                                       |
+| catches around possibly frozen field writes or assign                                                                                             | NotYet: library TypeErrors currently panic natively rather than participate in catch cleanup. The diagnostic prevents a silent difference, conservatively across aliases and calls. |
+| class/array/function freezing, null, symbols, heterogeneous union values/entries, computed names and special prototype/private-like literal names | Not covered; existing lowering or the shape proof reports a refusal or NotYet.                                                                                                      |
 
 These are implementation boundaries, not a claim that all ordinary JavaScript forms of Object are fundamentally unsound. Descriptor and prototype mutation conflict with Adamic fixed shapes; groupBy and general fromEntries would require a different representation. The lower tests contain adversarial widened-view, conflicting-type and incomplete-shape probes and check the diagnostic reasons.
 
@@ -48,19 +48,19 @@ These are implementation boundaries, not a claim that all ordinary JavaScript fo
 
 Six source oracles cover ordering, SameValue, declared own fields, assign, freeze and a failing frozen write. Every successful fixture is compared with source on Node, the JavaScript backend, sanitized native and release native, and receives a separate leak check. The keys fixture exercises `0`, `2`, `10`, `01`, `-0`, `4294967294`, `4294967295` and `1e0`, alongside ordinary strings. Values and entries include strings constructed at runtime.
 
-| Mutant | Fixture | What caught it |
-|---|---|---|
-| [keys-integer-last](mutants/keys-integer-last.log) | library_object_keys.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [keys-descending](mutants/keys-descending.log) | library_object_keys.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [values-first-slot](mutants/values-first-slot.log) | library_object_keys.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [entries-wrong-key](mutants/entries-wrong-key.log) | library_object_keys.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [assign-a-plus-one](mutants/assign-a-plus-one.log) | library_object_assign.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [same-value-nan-false](mutants/same-value-nan-false.log) | library_object_is.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [same-value-zero](mutants/same-value-zero.log) | library_object_is.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [has-own-always-false](mutants/has-own-always-false.log) | library_object_has_own.a | Node stdout; test exit 1, no sanitizer or clang rejection |
-| [freeze-no-flag](mutants/freeze-no-flag.log) | library_object_freeze.a | Node stdout; test exit 1, no sanitizer or clang rejection |
+| Mutant                                                   | Fixture                       | What caught it                                                     |
+| -------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------ |
+| [keys-integer-last](mutants/keys-integer-last.log)       | library_object_keys.a         | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [keys-descending](mutants/keys-descending.log)           | library_object_keys.a         | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [values-first-slot](mutants/values-first-slot.log)       | library_object_keys.a         | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [entries-wrong-key](mutants/entries-wrong-key.log)       | library_object_keys.a         | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [assign-a-plus-one](mutants/assign-a-plus-one.log)       | library_object_assign.a       | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [same-value-nan-false](mutants/same-value-nan-false.log) | library_object_is.a           | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [same-value-zero](mutants/same-value-zero.log)           | library_object_is.a           | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [has-own-always-false](mutants/has-own-always-false.log) | library_object_has_own.a      | Node stdout; test exit 1, no sanitizer or clang rejection          |
+| [freeze-no-flag](mutants/freeze-no-flag.log)             | library_object_freeze.a       | Node stdout; test exit 1, no sanitizer or clang rejection          |
 | [freeze-write-ignored](mutants/freeze-write-ignored.log) | library_object_freeze_write.a | Node exit and stdout; test exit 1, no sanitizer or clang rejection |
-| [spread-reuses-frozen](mutants/spread-reuses-frozen.log) | library_object_freeze.a | Node stdout; test exit 1, no sanitizer or clang rejection |
+| [spread-reuses-frozen](mutants/spread-reuses-frozen.log) | library_object_freeze.a       | Node stdout; test exit 1, no sanitizer or clang rejection          |
 
 All eleven were run and restored. `run-mutants.py` rejects a mutant caught by compilation or a sanitizer. The first attempted assign mutant skipped the store while retaining/releasing strings and was caught by ASan; it does not qualify and was replaced by the numeric `assign-a-plus-one` mutation. A temporary fixture interpolated standalone undefined and was corrected to compare it with Object.is, since standalone undefined interpolation is an existing lowering gap.
 
@@ -111,89 +111,89 @@ Full gate: exit 0. `go test -count=1 -timeout 30m ./...` passed every package, i
 
 ### Before
 
-| Directory | Pass | Disagreements | Refused | Crashed | Skipped |
-|---|---:|---:|---:|---:|---:|
-| built-ins/Object | 0 | 0 | 55 | 0 | 6 |
-| built-ins/Object/assign | 0 | 0 | 17 | 0 | 21 |
-| built-ins/Object/create | 0 | 0 | 280 | 0 | 40 |
-| built-ins/Object/defineProperties | 0 | 0 | 361 | 0 | 271 |
-| built-ins/Object/defineProperty | 0 | 0 | 722 | 0 | 409 |
-| built-ins/Object/entries | 0 | 0 | 10 | 0 | 11 |
-| built-ins/Object/freeze | 0 | 0 | 23 | 0 | 30 |
-| built-ins/Object/fromEntries | 0 | 0 | 8 | 0 | 17 |
-| built-ins/Object/getOwnPropertyDescriptor | 0 | 0 | 306 | 0 | 4 |
-| built-ins/Object/getOwnPropertyDescriptors | 0 | 0 | 8 | 0 | 10 |
-| built-ins/Object/getOwnPropertyNames | 0 | 0 | 37 | 0 | 8 |
-| built-ins/Object/getOwnPropertySymbols | 0 | 0 | 0 | 0 | 12 |
-| built-ins/Object/getPrototypeOf | 0 | 0 | 37 | 0 | 2 |
-| built-ins/Object/groupBy | 0 | 0 | 10 | 0 | 4 |
-| built-ins/Object/hasOwn | 0 | 0 | 47 | 0 | 15 |
-| built-ins/Object/internals/DefineOwnProperty | 0 | 0 | 0 | 0 | 6 |
-| built-ins/Object/is | 0 | 0 | 14 | 0 | 7 |
-| built-ins/Object/isExtensible | 0 | 0 | 36 | 0 | 2 |
-| built-ins/Object/isFrozen | 0 | 0 | 56 | 0 | 3 |
-| built-ins/Object/isSealed | 0 | 0 | 30 | 0 | 3 |
-| built-ins/Object/keys | 0 | 0 | 52 | 0 | 7 |
-| built-ins/Object/preventExtensions | 0 | 0 | 14 | 0 | 26 |
-| built-ins/Object/prototype | 0 | 0 | 9 | 0 | 6 |
-| built-ins/Object/prototype/__defineGetter__ | 0 | 0 | 4 | 0 | 7 |
-| built-ins/Object/prototype/__defineSetter__ | 0 | 0 | 4 | 0 | 7 |
-| built-ins/Object/prototype/__lookupGetter__ | 0 | 0 | 9 | 0 | 7 |
-| built-ins/Object/prototype/__lookupSetter__ | 0 | 0 | 9 | 0 | 7 |
-| built-ins/Object/prototype/__proto__ | 0 | 0 | 7 | 0 | 8 |
-| built-ins/Object/prototype/constructor | 0 | 0 | 2 | 0 | 0 |
-| built-ins/Object/prototype/hasOwnProperty | 0 | 0 | 49 | 0 | 14 |
-| built-ins/Object/prototype/isPrototypeOf | 0 | 0 | 3 | 0 | 7 |
-| built-ins/Object/prototype/propertyIsEnumerable | 0 | 0 | 9 | 0 | 7 |
-| built-ins/Object/prototype/toLocaleString | 0 | 0 | 9 | 0 | 3 |
-| built-ins/Object/prototype/toString | 0 | 0 | 13 | 0 | 28 |
-| built-ins/Object/prototype/valueOf | 0 | 0 | 17 | 0 | 3 |
-| built-ins/Object/seal | 0 | 0 | 56 | 0 | 38 |
-| built-ins/Object/setPrototypeOf | 0 | 0 | 4 | 0 | 8 |
-| built-ins/Object/values | 0 | 0 | 8 | 0 | 12 |
+| Directory                                       | Pass | Disagreements | Refused | Crashed | Skipped |
+| ----------------------------------------------- | ---: | ------------: | ------: | ------: | ------: |
+| built-ins/Object                                |    0 |             0 |      55 |       0 |       6 |
+| built-ins/Object/assign                         |    0 |             0 |      17 |       0 |      21 |
+| built-ins/Object/create                         |    0 |             0 |     280 |       0 |      40 |
+| built-ins/Object/defineProperties               |    0 |             0 |     361 |       0 |     271 |
+| built-ins/Object/defineProperty                 |    0 |             0 |     722 |       0 |     409 |
+| built-ins/Object/entries                        |    0 |             0 |      10 |       0 |      11 |
+| built-ins/Object/freeze                         |    0 |             0 |      23 |       0 |      30 |
+| built-ins/Object/fromEntries                    |    0 |             0 |       8 |       0 |      17 |
+| built-ins/Object/getOwnPropertyDescriptor       |    0 |             0 |     306 |       0 |       4 |
+| built-ins/Object/getOwnPropertyDescriptors      |    0 |             0 |       8 |       0 |      10 |
+| built-ins/Object/getOwnPropertyNames            |    0 |             0 |      37 |       0 |       8 |
+| built-ins/Object/getOwnPropertySymbols          |    0 |             0 |       0 |       0 |      12 |
+| built-ins/Object/getPrototypeOf                 |    0 |             0 |      37 |       0 |       2 |
+| built-ins/Object/groupBy                        |    0 |             0 |      10 |       0 |       4 |
+| built-ins/Object/hasOwn                         |    0 |             0 |      47 |       0 |      15 |
+| built-ins/Object/internals/DefineOwnProperty    |    0 |             0 |       0 |       0 |       6 |
+| built-ins/Object/is                             |    0 |             0 |      14 |       0 |       7 |
+| built-ins/Object/isExtensible                   |    0 |             0 |      36 |       0 |       2 |
+| built-ins/Object/isFrozen                       |    0 |             0 |      56 |       0 |       3 |
+| built-ins/Object/isSealed                       |    0 |             0 |      30 |       0 |       3 |
+| built-ins/Object/keys                           |    0 |             0 |      52 |       0 |       7 |
+| built-ins/Object/preventExtensions              |    0 |             0 |      14 |       0 |      26 |
+| built-ins/Object/prototype                      |    0 |             0 |       9 |       0 |       6 |
+| built-ins/Object/prototype/**defineGetter**     |    0 |             0 |       4 |       0 |       7 |
+| built-ins/Object/prototype/**defineSetter**     |    0 |             0 |       4 |       0 |       7 |
+| built-ins/Object/prototype/**lookupGetter**     |    0 |             0 |       9 |       0 |       7 |
+| built-ins/Object/prototype/**lookupSetter**     |    0 |             0 |       9 |       0 |       7 |
+| built-ins/Object/prototype/**proto**            |    0 |             0 |       7 |       0 |       8 |
+| built-ins/Object/prototype/constructor          |    0 |             0 |       2 |       0 |       0 |
+| built-ins/Object/prototype/hasOwnProperty       |    0 |             0 |      49 |       0 |      14 |
+| built-ins/Object/prototype/isPrototypeOf        |    0 |             0 |       3 |       0 |       7 |
+| built-ins/Object/prototype/propertyIsEnumerable |    0 |             0 |       9 |       0 |       7 |
+| built-ins/Object/prototype/toLocaleString       |    0 |             0 |       9 |       0 |       3 |
+| built-ins/Object/prototype/toString             |    0 |             0 |      13 |       0 |      28 |
+| built-ins/Object/prototype/valueOf              |    0 |             0 |      17 |       0 |       3 |
+| built-ins/Object/seal                           |    0 |             0 |      56 |       0 |      38 |
+| built-ins/Object/setPrototypeOf                 |    0 |             0 |       4 |       0 |       8 |
+| built-ins/Object/values                         |    0 |             0 |       8 |       0 |      12 |
 
 ### After
 
-| Directory | Pass | Disagreements | Refused | Crashed | Skipped |
-|---|---:|---:|---:|---:|---:|
-| built-ins/Object | 0 | 0 | 55 | 0 | 6 |
-| built-ins/Object/assign | 0 | 0 | 17 | 0 | 21 |
-| built-ins/Object/create | 0 | 0 | 280 | 0 | 40 |
-| built-ins/Object/defineProperties | 0 | 0 | 361 | 0 | 271 |
-| built-ins/Object/defineProperty | 0 | 0 | 722 | 0 | 409 |
-| built-ins/Object/entries | 0 | 0 | 10 | 0 | 11 |
-| built-ins/Object/freeze | 4 | 0 | 19 | 0 | 30 |
-| built-ins/Object/fromEntries | 0 | 0 | 8 | 0 | 17 |
-| built-ins/Object/getOwnPropertyDescriptor | 0 | 0 | 306 | 0 | 4 |
-| built-ins/Object/getOwnPropertyDescriptors | 0 | 0 | 8 | 0 | 10 |
-| built-ins/Object/getOwnPropertyNames | 0 | 0 | 37 | 0 | 8 |
-| built-ins/Object/getOwnPropertySymbols | 0 | 0 | 0 | 0 | 12 |
-| built-ins/Object/getPrototypeOf | 0 | 0 | 37 | 0 | 2 |
-| built-ins/Object/groupBy | 0 | 0 | 10 | 0 | 4 |
-| built-ins/Object/hasOwn | 0 | 0 | 47 | 0 | 15 |
-| built-ins/Object/internals/DefineOwnProperty | 0 | 0 | 0 | 0 | 6 |
-| built-ins/Object/is | 2 | 0 | 12 | 0 | 7 |
-| built-ins/Object/isExtensible | 0 | 0 | 36 | 0 | 2 |
-| built-ins/Object/isFrozen | 5 | 0 | 51 | 0 | 3 |
-| built-ins/Object/isSealed | 0 | 0 | 30 | 0 | 3 |
-| built-ins/Object/keys | 0 | 0 | 52 | 0 | 7 |
-| built-ins/Object/preventExtensions | 0 | 0 | 14 | 0 | 26 |
-| built-ins/Object/prototype | 0 | 0 | 9 | 0 | 6 |
-| built-ins/Object/prototype/__defineGetter__ | 0 | 0 | 4 | 0 | 7 |
-| built-ins/Object/prototype/__defineSetter__ | 0 | 0 | 4 | 0 | 7 |
-| built-ins/Object/prototype/__lookupGetter__ | 0 | 0 | 9 | 0 | 7 |
-| built-ins/Object/prototype/__lookupSetter__ | 0 | 0 | 9 | 0 | 7 |
-| built-ins/Object/prototype/__proto__ | 0 | 0 | 7 | 0 | 8 |
-| built-ins/Object/prototype/constructor | 0 | 0 | 2 | 0 | 0 |
-| built-ins/Object/prototype/hasOwnProperty | 0 | 0 | 49 | 0 | 14 |
-| built-ins/Object/prototype/isPrototypeOf | 0 | 0 | 3 | 0 | 7 |
-| built-ins/Object/prototype/propertyIsEnumerable | 0 | 0 | 9 | 0 | 7 |
-| built-ins/Object/prototype/toLocaleString | 0 | 0 | 9 | 0 | 3 |
-| built-ins/Object/prototype/toString | 0 | 0 | 13 | 0 | 28 |
-| built-ins/Object/prototype/valueOf | 0 | 0 | 17 | 0 | 3 |
-| built-ins/Object/seal | 0 | 0 | 56 | 0 | 38 |
-| built-ins/Object/setPrototypeOf | 0 | 0 | 4 | 0 | 8 |
-| built-ins/Object/values | 0 | 0 | 8 | 0 | 12 |
+| Directory                                       | Pass | Disagreements | Refused | Crashed | Skipped |
+| ----------------------------------------------- | ---: | ------------: | ------: | ------: | ------: |
+| built-ins/Object                                |    0 |             0 |      55 |       0 |       6 |
+| built-ins/Object/assign                         |    0 |             0 |      17 |       0 |      21 |
+| built-ins/Object/create                         |    0 |             0 |     280 |       0 |      40 |
+| built-ins/Object/defineProperties               |    0 |             0 |     361 |       0 |     271 |
+| built-ins/Object/defineProperty                 |    0 |             0 |     722 |       0 |     409 |
+| built-ins/Object/entries                        |    0 |             0 |      10 |       0 |      11 |
+| built-ins/Object/freeze                         |    4 |             0 |      19 |       0 |      30 |
+| built-ins/Object/fromEntries                    |    0 |             0 |       8 |       0 |      17 |
+| built-ins/Object/getOwnPropertyDescriptor       |    0 |             0 |     306 |       0 |       4 |
+| built-ins/Object/getOwnPropertyDescriptors      |    0 |             0 |       8 |       0 |      10 |
+| built-ins/Object/getOwnPropertyNames            |    0 |             0 |      37 |       0 |       8 |
+| built-ins/Object/getOwnPropertySymbols          |    0 |             0 |       0 |       0 |      12 |
+| built-ins/Object/getPrototypeOf                 |    0 |             0 |      37 |       0 |       2 |
+| built-ins/Object/groupBy                        |    0 |             0 |      10 |       0 |       4 |
+| built-ins/Object/hasOwn                         |    0 |             0 |      47 |       0 |      15 |
+| built-ins/Object/internals/DefineOwnProperty    |    0 |             0 |       0 |       0 |       6 |
+| built-ins/Object/is                             |    2 |             0 |      12 |       0 |       7 |
+| built-ins/Object/isExtensible                   |    0 |             0 |      36 |       0 |       2 |
+| built-ins/Object/isFrozen                       |    5 |             0 |      51 |       0 |       3 |
+| built-ins/Object/isSealed                       |    0 |             0 |      30 |       0 |       3 |
+| built-ins/Object/keys                           |    0 |             0 |      52 |       0 |       7 |
+| built-ins/Object/preventExtensions              |    0 |             0 |      14 |       0 |      26 |
+| built-ins/Object/prototype                      |    0 |             0 |       9 |       0 |       6 |
+| built-ins/Object/prototype/**defineGetter**     |    0 |             0 |       4 |       0 |       7 |
+| built-ins/Object/prototype/**defineSetter**     |    0 |             0 |       4 |       0 |       7 |
+| built-ins/Object/prototype/**lookupGetter**     |    0 |             0 |       9 |       0 |       7 |
+| built-ins/Object/prototype/**lookupSetter**     |    0 |             0 |       9 |       0 |       7 |
+| built-ins/Object/prototype/**proto**            |    0 |             0 |       7 |       0 |       8 |
+| built-ins/Object/prototype/constructor          |    0 |             0 |       2 |       0 |       0 |
+| built-ins/Object/prototype/hasOwnProperty       |    0 |             0 |      49 |       0 |      14 |
+| built-ins/Object/prototype/isPrototypeOf        |    0 |             0 |       3 |       0 |       7 |
+| built-ins/Object/prototype/propertyIsEnumerable |    0 |             0 |       9 |       0 |       7 |
+| built-ins/Object/prototype/toLocaleString       |    0 |             0 |       9 |       0 |       3 |
+| built-ins/Object/prototype/toString             |    0 |             0 |      13 |       0 |      28 |
+| built-ins/Object/prototype/valueOf              |    0 |             0 |      17 |       0 |       3 |
+| built-ins/Object/seal                           |    0 |             0 |      56 |       0 |      38 |
+| built-ins/Object/setPrototypeOf                 |    0 |             0 |       4 |       0 |       8 |
+| built-ins/Object/values                         |    0 |             0 |       8 |       0 |      12 |
 
 ## Newly passing tests
 

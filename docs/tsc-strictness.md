@@ -25,15 +25,15 @@ and removed **3,718 TS1484 findings** using its existing in-memory type-import
 rewrite. Imports outside that directory are followed by the checker. All 200
 selected findings below are located inside `src/compiler`.
 
-| Group | Code | Population | Sample |
-| --- | --- | ---: | ---: |
-| Exact optional | TS2412 | 617 | 85 |
-| Exact optional | TS2375 | 76 | 11 |
-| Exact optional | TS2379 | 31 | 4 |
-| **Exact optional total** | | **724** | **100** |
-| Possibly undefined | TS18048 | 354 | 61 |
-| Possibly undefined | TS2532 | 224 | 39 |
-| **Possibly undefined total** | | **578** | **100** |
+| Group                        | Code    | Population |  Sample |
+| ---------------------------- | ------- | ---------: | ------: |
+| Exact optional               | TS2412  |        617 |      85 |
+| Exact optional               | TS2375  |         76 |      11 |
+| Exact optional               | TS2379  |         31 |       4 |
+| **Exact optional total**     |         |    **724** | **100** |
+| Possibly undefined           | TS18048 |        354 |      61 |
+| Possibly undefined           | TS2532  |        224 |      39 |
+| **Possibly undefined total** |         |    **578** | **100** |
 
 The unit is a diagnostic, not a unique property, function, or required edit.
 One diagnostic chain may discuss several properties; several diagnostics may
@@ -69,7 +69,7 @@ probes below use stock npm TypeScript 6.0.3 and Node 24.
 ## Decision categories
 
 **M: mechanical candidate.** A concrete meaning-preserving transformation exists
-for the pattern. The 96 optional cases are candidates for *owned declaration*
+for the pattern. The 96 optional cases are candidates for _owned declaration_
 corrections, not a claim that 96 automatic edits already pass a complete compiler
 port. Change a declaration only after resolving its owner and rechecking all
 consumers and specialized interfaces. Public API policy still needs review.
@@ -95,17 +95,17 @@ operation safe; the diagnostic does not tell us whether that invariant holds.
 
 ## Exact optional properties: 100 findings
 
-| Pattern | Count | Decision | Examples |
-| --- | ---: | --- | --- |
-| E-init: materialized undefined factory/constructor slots | 30 | M | E030, E068, E095, E096 |
-| E-clear: reset caches or metadata to undefined | 8 | M | E005, E010, E087, E091 |
-| E-forward: copy optional values or factory arguments | 44 | M | E002, E031, E044, E092 |
-| E-literal: explicit maybe-undefined object properties/options | 13 | M | E004, E008, E080, E094 |
-| E-view: structural optional view mismatch | 1 | M | E082 |
-| E-index: optional write fed by an indexed read | 2 | C | E022, E023 |
-| E-generic: arbitrary specialization of a factory type | 1 | R | E070 |
-| E-other: discriminator/union issue under an optional error code | 1 | R | E027 |
-| **Total** | **100** | **96 M, 2 C, 2 R** | |
+| Pattern                                                         |   Count | Decision           | Examples               |
+| --------------------------------------------------------------- | ------: | ------------------ | ---------------------- |
+| E-init: materialized undefined factory/constructor slots        |      30 | M                  | E030, E068, E095, E096 |
+| E-clear: reset caches or metadata to undefined                  |       8 | M                  | E005, E010, E087, E091 |
+| E-forward: copy optional values or factory arguments            |      44 | M                  | E002, E031, E044, E092 |
+| E-literal: explicit maybe-undefined object properties/options   |      13 | M                  | E004, E008, E080, E094 |
+| E-view: structural optional view mismatch                       |       1 | M                  | E082                   |
+| E-index: optional write fed by an indexed read                  |       2 | C                  | E022, E023             |
+| E-generic: arbitrary specialization of a factory type           |       1 | R                  | E070                   |
+| E-other: discriminator/union issue under an optional error code |       1 | R                  | E027                   |
+| **Total**                                                       | **100** | **96 M, 2 C, 2 R** |                        |
 
 For E030, `factory/nodeFactory.ts:1308` writes `node.flowNode = undefined`
 with the comment "initialized by binder". E010, `checker.ts:13369`, clears
@@ -160,18 +160,18 @@ optionality or automatically weaken Printer's parameter type.
 
 ## Possibly undefined values: 100 findings
 
-| Pattern | Count | Decision | Examples |
-| --- | ---: | --- | --- |
-| U-loop: indexed traversal elements | 27 | C | U001, U014, U062, U093 |
-| U-parallel: related arrays, tuple flags, template segments | 26 | C | U003, U031, U035, U087 |
-| U-endpoint: first/last/fixed positions and nonempty assumptions | 26 | C | U017, U056, U059, U075 |
-| U-position: computed search, caller, or stack index | 10 | C | U051, U071, U078 |
-| U-table: dynamic entry lookup | 2 | C | U063, U070 |
-| U-grid: allocated rows and cells | 4 | C | U065, U066, U067, U068 |
-| U-regex: required capture in a successful match | 2 | C | U073, U079 |
-| U-zero: deliberate numeric undefined-to-zero coercion | 2 | M | U083, U096 |
-| U-typed: typed-array computed position | 1 | C | U099 |
-| **Total** | **100** | **2 M, 98 C** | |
+| Pattern                                                         |   Count | Decision      | Examples               |
+| --------------------------------------------------------------- | ------: | ------------- | ---------------------- |
+| U-loop: indexed traversal elements                              |      27 | C             | U001, U014, U062, U093 |
+| U-parallel: related arrays, tuple flags, template segments      |      26 | C             | U003, U031, U035, U087 |
+| U-endpoint: first/last/fixed positions and nonempty assumptions |      26 | C             | U017, U056, U059, U075 |
+| U-position: computed search, caller, or stack index             |      10 | C             | U051, U071, U078       |
+| U-table: dynamic entry lookup                                   |       2 | C             | U063, U070             |
+| U-grid: allocated rows and cells                                |       4 | C             | U065, U066, U067, U068 |
+| U-regex: required capture in a successful match                 |       2 | C             | U073, U079             |
+| U-zero: deliberate numeric undefined-to-zero coercion           |       2 | M             | U083, U096             |
+| U-typed: typed-array computed position                          |       1 | C             | U099                   |
+| **Total**                                                       | **100** | **2 M, 98 C** |                        |
 
 U062, `commandLineParser.ts:1982`, dereferences `s = args[i]` in the argument
 traversal. U017, `checker.ts:16708`, dereferences the first parameter after a
@@ -219,17 +219,17 @@ ordinary addition, or any place where undefined has different semantics.
 
 Two source-local hazards deserve particular review:
 
-* **U051, `checker.ts:38421`:** `if (pos < paramCount)` does not exclude a negative
+- **U051, `checker.ts:38421`:** `if (pos < paramCount)` does not exclude a negative
   position before `signature.parameters[pos].escapedName`. A negative number
   satisfies the declared number type and the local guard, then throws. Valid
   upstream callers may ensure nonnegative positions; that reachability was not
   established here.
-* **U059, `checker.ts:52403`:** a present empty `node.typeParameters` array passes
+- **U059, `checker.ts:52403`:** a present empty `node.typeParameters` array passes
   the truthiness test, is not length greater than one, and can reach
   `node.typeParameters[0].constraint`. Empty arrays are admitted by the array
   type. The reduced condition throws on `[]`; parser/grammar suppression may
   prevent that path in the real checker. This is evidence of an incomplete
-  *local* contract, not a demonstrated TypeScript compiler crash.
+  _local_ contract, not a demonstrated TypeScript compiler crash.
 
 No selected possibly-undefined finding was established to be just a lost local
 narrowing with a proven, unconditional syntax-only repair. The length-guard
@@ -324,11 +324,11 @@ Adamic port or an execution of all TypeScript compiler paths.
 Three deliberately wrong candidate rewrites were run and caught by assertions,
 not by compilation failure:
 
-| Mutant | Catch |
-| --- | --- |
-| Delete an optional slot instead of storing undefined | Node own-key/presence/spread fingerprint differs |
-| Remove a required-value check and return the input unchecked | Expected missing-value throw disappears |
-| Default every missing required value to zero | Expected missing-value throw disappears |
+| Mutant                                                       | Catch                                            |
+| ------------------------------------------------------------ | ------------------------------------------------ |
+| Delete an optional slot instead of storing undefined         | Node own-key/presence/spread fingerprint differs |
+| Remove a required-value check and return the input unchecked | Expected missing-value throw disappears          |
+| Default every missing required value to zero                 | Expected missing-value throw disappears          |
 
 All test output went to scratch log files and was read afterward. A full
 native/oracle gate was not run for this documentation and scratch-tooling-only

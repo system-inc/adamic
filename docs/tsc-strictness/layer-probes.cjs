@@ -10,12 +10,25 @@ const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'adamic-layer-probes-'))
 function codes(source) {
     const name = path.join(directory, 'probe.ts');
     fs.writeFileSync(name, source);
-    const program = ts.createProgram([name], {strict: true, noUncheckedIndexedAccess: true, exactOptionalPropertyTypes: true, noImplicitReturns: true, noEmit: true, target: ts.ScriptTarget.ES2024});
-    return ts.getPreEmitDiagnostics(program).map(d => d.code);
+    const program = ts.createProgram([name], {
+        strict: true,
+        noUncheckedIndexedAccess: true,
+        exactOptionalPropertyTypes: true,
+        noImplicitReturns: true,
+        noEmit: true,
+        target: ts.ScriptTarget.ES2024,
+    });
+    return ts.getPreEmitDiagnostics(program).map((d) => d.code);
 }
 function output(source) {
     let result = '';
-    vm.runInNewContext(ts.transpileModule(source, {compilerOptions: {target: ts.ScriptTarget.ES2024}}).outputText, {console: {log: (...values) => {result += values.join(' ') + '\n';}}});
+    vm.runInNewContext(ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2024 } }).outputText, {
+        console: {
+            log: (...values) => {
+                result += values.join(' ') + '\n';
+            },
+        },
+    });
     return result;
 }
 try {
@@ -26,7 +39,10 @@ try {
     assert.equal(output(alias), output(narrowed));
     console.log('PASS: direct typeof of const local preserves output and restores narrowing');
     const replace = `const stringReplace = String.prototype.replace; function f(s: string, replacement: string): string { return stringReplace.call(s, "*", replacement); } console.log(f("a*b*c", "$&x"));`;
-    const annotated = replace.replace('const stringReplace =', 'const stringReplace: (this: string, search: string, replacement: string) => string =');
+    const annotated = replace.replace(
+        'const stringReplace =',
+        'const stringReplace: (this: string, search: string, replacement: string) => string =',
+    );
     assert(codes(replace).includes(2345));
     assert.deepEqual(codes(annotated), []);
     assert.equal(output(replace), output(annotated));
@@ -39,8 +55,11 @@ try {
     assert.notEqual(output(index), output(index.replace('input[3]', 'input.charAt(3)')));
     console.log('PASS: explicit String preserves indexOf coercion; charAt default changes output');
     const views = `interface Base { isReadonly?: boolean; } interface Source { isReadonly?: boolean | undefined; } const source: Source = {isReadonly: undefined}; function f(x: Base) { console.log(Object.hasOwn(x,"isReadonly"), x.isReadonly); } f(source);`;
-    const aligned = views.replace('interface Base { isReadonly?: boolean;', 'interface Base { isReadonly?: boolean | undefined;');
-    assert(codes(views).some(code => code === 2345 || code === 2379));
+    const aligned = views.replace(
+        'interface Base { isReadonly?: boolean;',
+        'interface Base { isReadonly?: boolean | undefined;',
+    );
+    assert(codes(views).some((code) => code === 2345 || code === 2379));
     assert.deepEqual(codes(aligned), []);
     assert.equal(output(views), output(aligned));
     console.log('PASS: optional view alignment preserves present undefined');
@@ -48,7 +67,8 @@ try {
     assert(codes(holes).includes(2345));
     assert.equal(output(holes), 'undefined\nnumber\nundefined\n');
     console.log('PASS: admitted sparse arrays and callback deletion supply undefined to T callback');
-} finally {
+}
+finally {
     fs.rmSync(path.join(directory, 'probe.ts'));
     fs.rmdirSync(directory);
 }

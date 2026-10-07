@@ -32,11 +32,11 @@ The scanner driver still calculates values, flags and errors in count mode.
 Both builds use the same scanner source and corpus. Only the two runtime
 string files differ between the measured snapshots.
 
-| Scanner instructions | Before | Final | Change |
-| --- | ---: | ---: | ---: |
-| Whole process | 2,429,579,448 | 2,123,196,245 | -12.61% |
-| Inclusive `main` | 2,429,400,549 | 2,123,017,336 | -12.61% |
-| Whole process per token | 5,587.94 | 4,883.27 | -12.61% |
+| Scanner instructions    |        Before |         Final |  Change |
+| ----------------------- | ------------: | ------------: | ------: |
+| Whole process           | 2,429,579,448 | 2,123,196,245 | -12.61% |
+| Inclusive `main`        | 2,429,400,549 | 2,123,017,336 | -12.61% |
+| Whole process per token |      5,587.94 |      4,883.27 | -12.61% |
 
 A repeat measured exactly 2,123,017,336 inclusive `main` instructions again.
 Whole-process Ir was 2,123,196,263, 18 higher; only two anonymous startup
@@ -48,26 +48,26 @@ between helpers, so the total is the performance comparison.
 
 Selected self instructions, not additive to inclusive rows:
 
-| Function | Before | Final |
-| --- | ---: | ---: |
-| `adamic_string_locate` | 288,080,341 | 35,994,723 |
-| `usable` | 153,766,828 | 110,761,836 |
-| `adamic_string_units` | 104,515,436 | 85,787,221 |
+| Function                  |      Before |       Final |
+| ------------------------- | ----------: | ----------: |
+| `adamic_string_locate`    | 288,080,341 |  35,994,723 |
+| `usable`                  | 153,766,828 | 110,761,836 |
+| `adamic_string_units`     | 104,515,436 |  85,787,221 |
 | `adamic_string_char_code` | 157,435,393 | 176,168,501 |
-| `adamic_string_bmp_view` | 0 | 37,455,410 |
+| `adamic_string_bmp_view`  |           0 |  37,455,410 |
 
 The string fixtures, generated once as C and compiled against each runtime
 snapshot with the same release flags, print identical bytes:
 
-| Fixture | Before Ir | Final Ir | Change |
-| --- | ---: | ---: | ---: |
-| `strings.a` | 193,000 | 192,301 | -0.36% |
-| `strings_more.a` | 281,106 | 280,992 | -0.04% |
-| `string_positions.a` | 559,995 | 539,304 | -3.69% |
-| `string_index.a` | 247,162 | 246,603 | -0.23% |
-| `string_append.a` | 11,994,860 | 11,999,664 | +0.04% |
-| `shared_slices.a` | 155,370,965 | 157,729,171 | +1.52% |
-| `lone_surrogates.a` | 184,672 | 184,026 | -0.35% |
+| Fixture              |   Before Ir |    Final Ir | Change |
+| -------------------- | ----------: | ----------: | -----: |
+| `strings.a`          |     193,000 |     192,301 | -0.36% |
+| `strings_more.a`     |     281,106 |     280,992 | -0.04% |
+| `string_positions.a` |     559,995 |     539,304 | -3.69% |
+| `string_index.a`     |     247,162 |     246,603 | -0.23% |
+| `string_append.a`    |  11,994,860 |  11,999,664 | +0.04% |
+| `shared_slices.a`    | 155,370,965 | 157,729,171 | +1.52% |
+| `lone_surrogates.a`  |     184,672 |     184,026 | -0.35% |
 
 The shared-slice regression remains. The cache test and backward-cursor
 selection add work on mixed supplementary strings that cannot use the BMP
@@ -136,12 +136,12 @@ All three requested mutants were run and restored in the separate
 `/workspace/utf16-measure/mutants` worktree against the final implementation.
 Each compiles; none is killed by a compiler warning.
 
-| Mutant | Check and observed failure |
-| --- | --- |
+| Mutant                                                                                 | Check and observed failure                                                                                                 |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Keep the old index and cursor across an in-place append, resetting only the unit count | `TestStringViewAfterAppendMatchesNode`: ASan heap-buffer-overflow in `adamic_string_char_code`, reading the stale BMP view |
-| Count a supplementary point as one UTF-16 unit | `TestStringIndexMatchesNode/mixed`: 7,206 native lines versus 8,940 Node lines |
-| Return the forward cursor's offset unchanged on a backward step | `TestStringIndexMatchesNode/mixed`: normal execution, 7,653 of 8,940 lines differ from Node |
-| Increase the Callgrind summary by one | `profile.py --summarize-only`: `self costs do not sum to summary` |
+| Count a supplementary point as one UTF-16 unit                                         | `TestStringIndexMatchesNode/mixed`: 7,206 native lines versus 8,940 Node lines                                             |
+| Return the forward cursor's offset unchanged on a backward step                        | `TestStringIndexMatchesNode/mixed`: normal execution, 7,653 of 8,940 lines differ from Node                                |
+| Increase the Callgrind summary by one                                                  | `profile.py --summarize-only`: `self costs do not sum to summary`                                                          |
 
 Logs, exact substitutions and the runner are saved beside the measurements.
 Trailing whitespace was removed from committed text logs; the original

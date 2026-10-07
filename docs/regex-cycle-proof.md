@@ -102,10 +102,10 @@ counts table. Main's counts table is unchanged.
 
 Additional independently caught proof mutants:
 
-| Mutant | Catch |
-|---|---|
-| Do not interpret regex call arguments | `TestRegexOperandsStillJudgeCycleWrites`: lost cycle-closing operand write |
-| Accept a future method without `WriteUnknown` | `TestFutureRegexMethodRemainsUnknown`: became silently safe |
+| Mutant                                        | Catch                                                                      |
+| --------------------------------------------- | -------------------------------------------------------------------------- |
+| Do not interpret regex call arguments         | `TestRegexOperandsStillJudgeCycleWrites`: lost cycle-closing operand write |
+| Accept a future method without `WriteUnknown` | `TestFutureRegexMethodRemainsUnknown`: became silently safe                |
 
 Both mutant runs exited 1. All mutants were restored. The unsafe ordinary-field
 mutant above is the memory-safety demonstration; stdout alone would not catch it.
@@ -132,9 +132,9 @@ The minimal closed gap passed in 2.826s. The final source-fixture oracle passed
 in 0.532s, with fresh Node/native observations; its initial memory checks passed
 in 51.006s. The standard counts harness measured this fixture's row in 0.177s:
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
-|---|---:|---:|---:|---:|---:|---:|
-| internal/fresh/testdata/regexp_tree.ts | 97 | 97 | 65 | 81 | 35 | 0 |
+| Fixture                                | Allocations | Frees | Retains | Releases | Peak | Regions |
+| -------------------------------------- | ----------: | ----: | ------: | -------: | ---: | ------: |
+| internal/fresh/testdata/regexp_tree.ts |          97 |    97 |      65 |       81 |   35 |       0 |
 
 The main table cannot include this row until the native regex dependency merges:
 the ordinary main fixture set does not contain it. The scratch table was restored

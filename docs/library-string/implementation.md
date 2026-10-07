@@ -31,20 +31,20 @@ Five fixtures are registered in `internal/oracle/oracle_test.go` with measured r
 
 `TestLibraryStringMutants` runs 12 executable mutants. Each compiles, exits 0, has clean sanitizer and leak results, and is caught solely by `stdout differs` against the original fixture on Node. See [mutants.log](mutants.log) for every result.
 
-| Family | Mutation caught by Node |
-| --- | --- |
-| conversion | Negate NumberToString input |
-| prototype | trim becomes trimStart |
-| charAt | Shift the UTF-16 index by one |
-| at | Shift the index by one |
-| codePointAt | Shift the index by one |
-| substring | Use the end as the slice start |
-| concat | Drop the final concatenated part |
-| raw | Permit substitution after the final segment |
-| rawTemplate | Cook a raw backslash-n escape into a newline |
+| Family       | Mutation caught by Node                                  |
+| ------------ | -------------------------------------------------------- |
+| conversion   | Negate NumberToString input                              |
+| prototype    | trim becomes trimStart                                   |
+| charAt       | Shift the UTF-16 index by one                            |
+| at           | Shift the index by one                                   |
+| codePointAt  | Shift the index by one                                   |
+| substring    | Use the end as the slice start                           |
+| concat       | Drop the final concatenated part                         |
+| raw          | Permit substitution after the final segment              |
+| rawTemplate  | Cook a raw backslash-n escape into a newline             |
 | fromCharCode | Use code point construction instead of UTF-16 code units |
-| normalize | NFC becomes NFD |
-| replace | Replace all occurrences instead of the first |
+| normalize    | NFC becomes NFD                                          |
+| replace      | Replace all occurrences instead of the first             |
 
 An initial raw mutant changed only the first generated helper and survived because that call had no observable extra substitution. The final mutant changes every substitution boundary, and the fixture with excess substitutions kills it. The surviving attempt was not counted as successful proof.
 

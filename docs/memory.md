@@ -14,13 +14,13 @@ Every heap value starts at 1. `adamic_retain` adds one, and `adamic_release` sub
 
 The conventions stage 0 uses today, chosen for being obviously right rather than fast:
 
-| Where a reference is | Who owns it |
-|---|---|
-| A value made mid-statement | the statement; released when it ends |
-| A variable | the variable; released when reassigned or when its scope ends, by `break`, `continue` or `return` included |
-| A parameter | the callee, which retains on entry and releases on every way out |
-| A return value | the caller, which receives it owned |
-| A field or element | the object or array that holds it; released when that's freed |
+| Where a reference is          | Who owns it                                                                                                                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A value made mid-statement    | the statement; released when it ends                                                                                                                                                                  |
+| A variable                    | the variable; released when reassigned or when its scope ends, by `break`, `continue` or `return` included                                                                                            |
+| A parameter                   | the callee, which retains on entry and releases on every way out                                                                                                                                      |
+| A return value                | the caller, which receives it owned                                                                                                                                                                   |
+| A field or element            | the object or array that holds it; released when that's freed                                                                                                                                         |
 | A module's top-level variable | the program; released when main finishes, the last declared first (modules in reverse of their evaluation order), so the leak check sees what it reached. Not on a panic, which stops where it stands |
 
 Counts are plain `size_t`, not atomic, because 0.1 is single-threaded. When concurrency lands (#p286ycm), a value shared across threads is one of the shareable, immutable kinds, and its count becomes atomic at the moment it's shared (Lean 4 does exactly this), so single-threaded code never pays for atomics.
@@ -72,11 +72,11 @@ Liveness is held the way the graph's edges are. `TestLivenessHoldsOnEveryPath` w
 
 Each has a mutant that puts the old behavior back:
 
-| Mutant | Caught by |
-|---|---|
-| A borrowed parameter moved | ASan, in `reuse_forward.a` |
+| Mutant                                         | Caught by                                           |
+| ---------------------------------------------- | --------------------------------------------------- |
+| A borrowed parameter moved                     | ASan, in `reuse_forward.a`                          |
 | Only the callee checked before moving a global | UBSan null dereference, in `reuse_global_sibling.a` |
-| Weak handles ignored | stdout differs, in both `Weak` fixtures |
+| Weak handles ignored                           | stdout differs, in both `Weak` fixtures             |
 
 **Found on the way:** the spread itself was miscompiled. Native copied the source's object after evaluating the fields' values, so `{ ...point, x: moveY(point) }` showed a write `moveY` made to `point.y`. Node prints `1 0 99`, native printed `1 99 99`. It's fixed, and `spread_snapshot.a` holds it.
 
@@ -224,13 +224,13 @@ That recommendation came from reading, not from measuring. What would settle it 
 
 cohere's `ssa.go`, `ssa_eliminate.go`, `ssa_verify.go` and `graph.go` (at 715ba94) were copied in and then edited only where Adamic's graph differs. Counted line by line against the originals (`difflib`, comments and blank lines apart):
 
-| File | Code lines kept | Removed or changed | New | Comments kept |
-|---|---:|---:|---:|---:|
-| `ssa.go` (`Construct`) | 182 of 226 | 44 | 3 | 123 of 235 |
-| `ssa_eliminate.go` | 81 of 82 | 1 | 0 | 36 of 37 |
-| `ssa_verify.go` | 222 of 229 | 7 | 2 | 70 of 91 |
-| `graph.go` | 108 of 188 | 80 | 2 | 34 of 62 |
-| **All four** | **593 of 725 (82%)** | **132** | **7** | **263 of 425 (62%)** |
+| File                   |      Code lines kept | Removed or changed |   New |        Comments kept |
+| ---------------------- | -------------------: | -----------------: | ----: | -------------------: |
+| `ssa.go` (`Construct`) |           182 of 226 |                 44 |     3 |           123 of 235 |
+| `ssa_eliminate.go`     |             81 of 82 |                  1 |     0 |             36 of 37 |
+| `ssa_verify.go`        |           222 of 229 |                  7 |     2 |             70 of 91 |
+| `graph.go`             |           108 of 188 |                 80 |     2 |             34 of 62 |
+| **All four**           | **593 of 725 (82%)** |            **132** | **7** | **263 of 425 (62%)** |
 
 What the 132 were:
 
@@ -268,12 +268,12 @@ A switch case falling through into the next case's body is not a mutant at all. 
 
 The second lift brings over cohere's alias graph and mutable ranges, React's `InferMutationAliasingRanges`, with evaluation order back to number them. Counted the same way against cohere's files at 715ba94 (code lines; the first three rows are this lift):
 
-| File | Kept | Removed or changed | New |
-|---|---:|---:|---:|
-| `ranges.go` (alias graph, `mutate`, both halves) | 682 of 809 (84%) | 127 | 0 |
-| `graph.go` (with evaluation order back) | 132 of 188 (70%) | 56 | 2 |
-| `effects.go` (the effect types) | 120 of 944 (13%) | 824 | 0 |
-| `ssa.go`, `ssa_eliminate.go`, `ssa_verify.go` (the first lift) | 485 of 537 | 52 | 5 |
+| File                                                           |             Kept | Removed or changed | New |
+| -------------------------------------------------------------- | ---------------: | -----------------: | --: |
+| `ranges.go` (alias graph, `mutate`, both halves)               | 682 of 809 (84%) |                127 |   0 |
+| `graph.go` (with evaluation order back)                        | 132 of 188 (70%) |                 56 |   2 |
+| `effects.go` (the effect types)                                | 120 of 944 (13%) |                824 |   0 |
+| `ssa.go`, `ssa_eliminate.go`, `ssa_verify.go` (the first lift) |       485 of 537 |                 52 |   5 |
 
 - **`ranges.go`:** the 127 are 79 for `MutationSites`, which counts HIR instruction shapes, 10 for nested functions, 9 for `StoreContext`, 14 for React's frozen parameters plus the context and `Returns` places, 11 for React's frozen closures, and 5 for the return terminal. The alias graph, the `mutate` worklist and both halves of the pass came over unchanged.
 - **Evaluation order:** 23 of the 57 lines came back unchanged. The other 34 are two lines for each of the 17 terminal kinds Adamic doesn't have.
@@ -287,14 +287,14 @@ The second lift brings over cohere's alias graph and mutable ranges, React's `In
 
 Six mutants, each caught:
 
-| Mutant | Mutations outside a range |
-|---|---:|
-| A write into a container doesn't mutate it | 29,249, in 10 programs |
-| A read of a variable isn't the same object | 29,277, in 11 |
-| A call doesn't mutate escaped values | 20, in 3 |
-| `mutate` doesn't travel back to what a value was created from | 7, in `mutations.a` |
-| A for...of element isn't part of what the loop iterates | 3 |
-| The mixed read above goes back to an `Alias` | 3 |
+| Mutant                                                        | Mutations outside a range |
+| ------------------------------------------------------------- | ------------------------: |
+| A write into a container doesn't mutate it                    |    29,249, in 10 programs |
+| A read of a variable isn't the same object                    |             29,277, in 11 |
+| A call doesn't mutate escaped values                          |                  20, in 3 |
+| `mutate` doesn't travel back to what a value was created from |       7, in `mutations.a` |
+| A for...of element isn't part of what the loop iterates       |                         3 |
+| The mixed read above goes back to an `Alias`                  |                         3 |
 
 The last three were caught only once `mutations.a` existed. Before it, no program mutated through those paths in a function whose values nothing else reached.
 
@@ -306,7 +306,7 @@ Reference counting can't free a cycle, and a garbage collector is refused (no cy
 
 - **Immutable data is acyclic.** A value built from `readonly` parts can only point at values that already existed when it was made, so no `readonly` structure can ever reach itself. Immutable by default is the first answer.
 - **A cycle needs a write.** It forms only when an existing object's mutable slot (a mutable field, an array or map element, a closure's captured variable) is set to something that can reach that object back.
-- **That's visible in the types.** A mutable slot of type `T` inside type `S` can close a cycle only if `T` can reach `S` through the type graph. The checker holds that graph, so every *cycle-capable* slot can be found at compile time.
+- **That's visible in the types.** A mutable slot of type `T` inside type `S` can close a cycle only if `T` can reach `S` through the type graph. The checker holds that graph, so every _cycle-capable_ slot can be found at compile time.
 
 What stage 0 does (`internal/lower/cycles.go`):
 
@@ -326,10 +326,10 @@ The type rule is sound and, for builders of trees, costly: every parser pushes f
 
 **The two proofs.** Within the function that makes the write, over the whole function at once (flow-insensitively, so a capture on a later loop iteration counts), either suffices:
 
-1. *A fresh value.* Everything the written value can reach was made in this function (a literal, `new`, or a call to a function summarized as returning fresh values, below), nothing in it has escaped (been handed to a call, stored in a global or a cell, or into an escaped value) anywhere in the function, and the holder is never captured into any of it. Then the value reaches only things this function made and saw everything done to, and the holder isn't among them.
-2. *A fresh holder.* The holder was made in this function and hasn't escaped before the write, and nothing in the function ever captures the holder into the value or anything it reaches. Whatever the value reaches that was made elsewhere can't reach the holder, since nothing made elsewhere has had a chance to hold it. This is the parser's case: `const node = { kind, children: [] }; node.children.push(parseChild());` is proven without knowing anything about `parseChild`.
+1. _A fresh value._ Everything the written value can reach was made in this function (a literal, `new`, or a call to a function summarized as returning fresh values, below), nothing in it has escaped (been handed to a call, stored in a global or a cell, or into an escaped value) anywhere in the function, and the holder is never captured into any of it. Then the value reaches only things this function made and saw everything done to, and the holder isn't among them.
+2. _A fresh holder._ The holder was made in this function and hasn't escaped before the write, and nothing in the function ever captures the holder into the value or anything it reaches. Whatever the value reaches that was made elsewhere can't reach the holder, since nothing made elsewhere has had a chance to hold it. This is the parser's case: `const node = { kind, children: [] }; node.children.push(parseChild());` is proven without knowing anything about `parseChild`.
 
-A function is *summarized as returning fresh values* when its result, by proof 1 inside it, reaches only what it made, its parameters' strong contents excepted, and then a call's result is fresh at a call site whose arguments in those parameters are themselves fresh there. A Weak edge is no capture at all (it keeps nothing), so a parent pointer declared `Weak` doesn't spoil either proof.
+A function is _summarized as returning fresh values_ when its result, by proof 1 inside it, reaches only what it made, its parameters' strong contents excepted, and then a call's result is fresh at a call site whose arguments in those parameters are themselves fresh there. A Weak edge is no capture at all (it keeps nothing), so a parent pointer declared `Weak` doesn't spoil either proof.
 
 **Where it falls back to the refusal.** Any write neither proof covers: a holder that is a parameter (a helper `addChild(parent, child)`; extending proof 2 across calls, by checking every call site, is the next step if the ports need it), a holder that escaped before the write, a value read from a global, a cell or a call not summarized, a value or holder handed to a call that could tie them together, values a runtime callback produces (`map`, `forEach`, a `sort` comparator, whose writes the graph can't see into), and anything inside a generic class judged per instantiation where the flow graph has none.
 
@@ -337,7 +337,7 @@ A function is *summarized as returning fresh values* when its result, by proof 1
 
 **Built (stream B3).** `internal/fresh` is the proof, `internal/lower/fresh.go` ties it to the finder. Where it departs from the design above, it's on the side of refusing:
 
-- **One interpretation, both proofs.** Each function is interpreted over its graph (`internal/flow`, exception edges included), flow-sensitively to a fixed point, so a capture on a later pass of a loop reaches the write through the back edge. The abstract objects are allocation sites (a literal, `new Map()`, `split`'s array, an object a summarized call makes), each split by recency into its newest instance and its older ones, plus *outside*: anything the function didn't make, or made and let escape. The state is what each variable and each object's fields, elements and entries may hold (weak updates only), and which objects have escaped: handed to a call or a callback, stored in a global or a captured variable, thrown, or stored into anything outside or escaped, with everything they reach, through a `Weak` too, since whoever holds the `Weak` can read it. A write is proven when no object the value reaches strongly may be the holder: the confined objects it reaches aren't the holder, and if it reaches anything outside or escaped, the holder is confined. A fresh value and a fresh holder are the two ways that holds.
+- **One interpretation, both proofs.** Each function is interpreted over its graph (`internal/flow`, exception edges included), flow-sensitively to a fixed point, so a capture on a later pass of a loop reaches the write through the back edge. The abstract objects are allocation sites (a literal, `new Map()`, `split`'s array, an object a summarized call makes), each split by recency into its newest instance and its older ones, plus _outside_: anything the function didn't make, or made and let escape. The state is what each variable and each object's fields, elements and entries may hold (weak updates only), and which objects have escaped: handed to a call or a callback, stored in a global or a captured variable, thrown, or stored into anything outside or escaped, with everything they reach, through a `Weak` too, since whoever holds the `Weak` can read it. A write is proven when no object the value reaches strongly may be the holder: the confined objects it reaches aren't the holder, and if it reaches anything outside or escaped, the holder is confined. A fresh value and a fresh holder are the two ways that holds.
 - **The holder is the object written into.** In `node.children.push(child)` that's the array `node.children` holds, found through the field, so a node whose `children` was replaced by an outside array isn't taken as fresh.
 - **Recency.** A site's newest instance is fresh when it's made, whatever its older ones did: a loop that fills a node and then lets it escape into a list proves the next pass's node. The older instances keep every escape.
 - **Summaries take their parameters as outside.** A function's summary is the confined objects its result reaches at its exit (after any `finally`), by where each was first made; a call makes them anew. A parameter's contents are outside in it, not "fresh at a call site whose arguments are fresh"; arguments always escape. A call through a function value or a runtime callback (`map`, `forEach`, `Array.from`, a `sort` comparator) is outside, with everything handed to it escaped. The fixed point over the call graph starts at "returns nothing" and falls back to "returns something outside" after 32 rounds.
@@ -346,19 +346,19 @@ A function is *summarized as returning fresh values* when its result, by proof 1
 
 **How it's held.** 24 probes in `internal/oracle/testdata/fresh_refused`, each a program Node runs whose line marked `// closes the cycle` really closes one: the design's list, plus an index write, `map`'s callback, a closure that captures the holder, a constructor that adds itself to its parent, a holder that escapes on the way to a `catch`, a node an earlier pass of a loop let escape, a summarized function whose result escapes in a `finally` after its `return`, and, since Sets hold objects and Maps take them as keys, a set given itself and a map keyed by its holder. `TestFreshWriteProbesStayRefused` requires each refused, naming that write; one accepted is built, run, and leak-checked, and the failure says what LeakSanitizer found. `fresh_parser.a` (a recursive descent parser pushing each child into the node it's parsing, gap 4's and gap 5's shapes from stage 1, and a helper given the parent with a `Weak` parent pointer) and `fresh_writes.a` (every kind of write, a loop, a constructor, a write after a catch) run three ways and leak nothing. `TestEveryWriteIsRecordedAndKnown` holds that every write in every oracle program is one lowering recorded and the proof knows: 314 writes in 148 programs, 295 proven. Mutants, each against the probes, and each caught by LeakSanitizer reporting the cycle (Node and native print the same and exit 0, so only the leak check sees it):
 
-| Mutant | Probes accepted, and leaking |
-|---|---|
-| Every value taken as fresh (reaching outside ignored) | `one_call`, `wraps_argument`, `returns_argument` |
-| Escapes before the write ignored (an escaped holder taken as confined) | the same three |
-| A call through a function value or callback taken as fresh | `map_callback`, `array_from`, `closure_captures` |
-| A summary's outside taken as fresh | `one_call`, `wraps_argument`, `returns_argument`, `returns_global`, `global_then_function`, `caught`, `older_instance`, `escapes_after_return` |
-| Escapes into globals ignored | `older_instance`, `global_then_function`, `returns_global`, `escapes_after_return` |
-| Views skipped (a write matched only to its own holder type) | `another_view` |
-| Loops not iterated to a fixed point | `next_iteration`, `older_instance` |
-| Recency forgetting an older instance's escape | `older_instance` |
-| A summary ignoring what escaped by the function's exit | `escapes_after_return` |
-| `set.add` stored without being judged | `set_add` |
-| A write lowering didn't record (`TestEveryWriteIsRecordedAndKnown`) | 15 writes reported |
+| Mutant                                                                 | Probes accepted, and leaking                                                                                                                   |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Every value taken as fresh (reaching outside ignored)                  | `one_call`, `wraps_argument`, `returns_argument`                                                                                               |
+| Escapes before the write ignored (an escaped holder taken as confined) | the same three                                                                                                                                 |
+| A call through a function value or callback taken as fresh             | `map_callback`, `array_from`, `closure_captures`                                                                                               |
+| A summary's outside taken as fresh                                     | `one_call`, `wraps_argument`, `returns_argument`, `returns_global`, `global_then_function`, `caught`, `older_instance`, `escapes_after_return` |
+| Escapes into globals ignored                                           | `older_instance`, `global_then_function`, `returns_global`, `escapes_after_return`                                                             |
+| Views skipped (a write matched only to its own holder type)            | `another_view`                                                                                                                                 |
+| Loops not iterated to a fixed point                                    | `next_iteration`, `older_instance`                                                                                                             |
+| Recency forgetting an older instance's escape                          | `older_instance`                                                                                                                               |
+| A summary ignoring what escaped by the function's exit                 | `escapes_after_return`                                                                                                                         |
+| `set.add` stored without being judged                                  | `set_add`                                                                                                                                      |
+| A write lowering didn't record (`TestEveryWriteIsRecordedAndKnown`)    | 15 writes reported                                                                                                                             |
 
 A weaker form of the recency mutant, which drops the escape but still re-closes escapes after the rename, isn't caught: the array a node holds is renamed first, while the node is still escaped, and re-closing puts the array's escape back. That mutant is masked rather than caught, and no probe reaches the difference.
 
@@ -374,10 +374,10 @@ A weaker form of the recency mutant, which drops the escape but still re-closes 
 
 **The summary becomes a transfer.** Besides what the function returns, it records, in terms of placeholders, the function's own fresh objects by origin (now including those it stored only into placeholders, which the caller makes anew and stores where the edges say), and outside:
 
-1. *Edges:* what the function stored into a placeholder's fields, elements or entries.
-2. *Leaks:* which placeholders it let escape for real: handed to a call that isn't summarized, stored in a global or a captured variable, thrown, or stored into outside or into something leaked. A placeholder that starts escaped is not a leak; only what the function does is.
-3. *Clobbers:* whether it called anything not summarized, which may write anything it can reach into the caller's arguments.
-4. *Deferred writes:* each write the function couldn't prove, with its holder and value.
+1. _Edges:_ what the function stored into a placeholder's fields, elements or entries.
+2. _Leaks:_ which placeholders it let escape for real: handed to a call that isn't summarized, stored in a global or a captured variable, thrown, or stored into outside or into something leaked. A placeholder that starts escaped is not a leak; only what the function does is.
+3. _Clobbers:_ whether it called anything not summarized, which may write anything it can reach into the caller's arguments.
+4. _Deferred writes:_ each write the function couldn't prove, with its holder and value.
 
 Its result may now name a placeholder too: `same(node)` returns the argument, precisely, rather than outside.
 
@@ -385,11 +385,11 @@ Its result may now name a placeholder too: `same(node)` returns the argument, pr
 
 **Why it's sound.**
 
-- *Placeholders are outside for everything the function decides alone.* A placeholder is escaped, its fields read as `D` and, after any call that clobbers, as outside too. So a write the function proves without its callers is one it would prove with every parameter outside, which is what's proven today. Aliasing between parameters (`addChild(node, node)`) can't fool it: no judgment rests on two placeholders being different objects.
-- *The caller sees no less than happened.* Every effect the callee had on what the caller can reach goes through its arguments (edges, leaks) or through what's already escaped in the caller (a global, a captured variable), which the caller already reads as outside. A clobber can only reach the caller's arguments or escaped objects, and only the caller's own placeholders are read more precisely than outside, so those are what it marks.
-- *Judging after the call is conservative.* The abstract heap and the escaped set only grow, so if the value could reach the holder when the callee wrote, it still can in the state after the call. `D(i, f)` is translated as everything the argument reaches through `f` after the replay, which covers what it reached when the call began and whatever the callee added, through any parameter.
-- *Every way a function runs is a call site that judges it.* Writes are deferred only out of functions called by `ir.Call` alone. A function used as a sort comparator, or a closure, keeps its parameters outside and defers nothing. A function nobody calls never runs its writes.
-- *Summaries are found to a fixed point as before, deferred writes included.* Each is keyed by the write it came from, and its holder and value range over finite sets (origins, a placeholder per parameter and per field read from one, outside), so the fixed point exists. When it's given up on, every function goes back to outside parameters and nothing is deferred.
+- _Placeholders are outside for everything the function decides alone._ A placeholder is escaped, its fields read as `D` and, after any call that clobbers, as outside too. So a write the function proves without its callers is one it would prove with every parameter outside, which is what's proven today. Aliasing between parameters (`addChild(node, node)`) can't fool it: no judgment rests on two placeholders being different objects.
+- _The caller sees no less than happened._ Every effect the callee had on what the caller can reach goes through its arguments (edges, leaks) or through what's already escaped in the caller (a global, a captured variable), which the caller already reads as outside. A clobber can only reach the caller's arguments or escaped objects, and only the caller's own placeholders are read more precisely than outside, so those are what it marks.
+- _Judging after the call is conservative._ The abstract heap and the escaped set only grow, so if the value could reach the holder when the callee wrote, it still can in the state after the call. `D(i, f)` is translated as everything the argument reaches through `f` after the replay, which covers what it reached when the call began and whatever the callee added, through any parameter.
+- _Every way a function runs is a call site that judges it._ Writes are deferred only out of functions called by `ir.Call` alone. A function used as a sort comparator, or a closure, keeps its parameters outside and defers nothing. A function nobody calls never runs its writes.
+- _Summaries are found to a fixed point as before, deferred writes included._ Each is keyed by the write it came from, and its holder and value range over finite sets (origins, a placeholder per parameter and per field read from one, outside), so the fixed point exists. When it's given up on, every function goes back to outside parameters and nothing is deferred.
 
 **What it should prove:** `addChild(node, parseItem())` from a function that made `node`; the same through a helper that calls `addChild` in turn (deferred twice); `addChild(root, new Node())` at the top level, where the value is fresh; and a helper that makes the child, adds it, and returns it.
 
@@ -397,21 +397,21 @@ Its result may now name a placeholder too: `same(node)` returns the argument, pr
 
 **Built (stream B3), and where it departs from the above.**
 
-- *A field and what's below it are two placeholders.* Reading field `f` of `P(i)` gives `F(i, f)`, which a caller translates as exactly what its argument holds there; reading anything of `F(i, f)` gives `S(i, f)`, everything below, which a caller translates as everything that reaches, strongly or weakly. A holder `parent.nodes` is then the array itself at the call site, not the whole subtree, which after the push would include the child just pushed. A write two fields deep (`parent.nodes[0].nodes.push(...)`) has the whole subtree as its holder, so it's proven only for a value that reaches nothing outside and nothing in it.
-- *What a deferred write's value reaches outside is judged by what had escaped before the call.* Replaying a push into a global holder lets the pushed value escape, and that escape is the write's own effect, not a way the value could have reached the holder. While the callee runs, only code it can't see into could tie its arguments to anything, so before the call is what counts, unless the callee clobbers, and then everything escaped after the replay counts. Whether the holder is exposed is judged after the replay: the callee may have stored it into something escaped itself.
-- *A function's exits are its returns and its throws,* so a write before a throw is in its summary. One that never leaves keeps its deferred writes refused.
+- _A field and what's below it are two placeholders._ Reading field `f` of `P(i)` gives `F(i, f)`, which a caller translates as exactly what its argument holds there; reading anything of `F(i, f)` gives `S(i, f)`, everything below, which a caller translates as everything that reaches, strongly or weakly. A holder `parent.nodes` is then the array itself at the call site, not the whole subtree, which after the push would include the child just pushed. A write two fields deep (`parent.nodes[0].nodes.push(...)`) has the whole subtree as its holder, so it's proven only for a value that reaches nothing outside and nothing in it.
+- _What a deferred write's value reaches outside is judged by what had escaped before the call._ Replaying a push into a global holder lets the pushed value escape, and that escape is the write's own effect, not a way the value could have reached the holder. While the callee runs, only code it can't see into could tie its arguments to anything, so before the call is what counts, unless the callee clobbers, and then everything escaped after the replay counts. Whether the holder is exposed is judged after the replay: the callee may have stored it into something escaped itself.
+- _A function's exits are its returns and its throws,_ so a write before a throw is in its summary. One that never leaves keeps its deferred writes refused.
 
 **How it's held.** 12 more probes in `internal/oracle/testdata/fresh_refused/call_*.a`, the list above (with the child holding its parent written into the child's literal, so the probe is about the push and not about a second cycle-capable field). Each stays refused naming its marked write. `fresh_calls.a` runs three ways leak-clean: a parser built on `addChild`, `addPair` deferring through `addChild`, a helper that makes a child with a `Weak` parent pointer and returns it, and pushes at the top level into a global holder of fresh values. `TestEveryWriteIsRecordedAndKnown`: 314 writes in 148 programs, 295 proven. Mutants, against all 36 probes:
 
-| Mutant | Probes accepted, and leaking |
-|---|---|
-| A placeholder that starts confined | 11, among them `call_same`, `call_wrapper`, `call_owner`, `call_twice_deferred`, `call_grandchild` (10 leak reports; the 11th was refused at another write) |
-| Replay without the edges | `call_grandchild` |
-| Leaks not replayed | `call_leaks_parent`, `caught` |
-| A comparator treated as a direct call | `call_comparator` |
-| A deferred write dropped instead of judged by callers | 35, every probe but one (34 leak reports; the 35th was refused at another write) |
-| Clobbers ignored | none: masked |
-| What had escaped before the call ignored | none: masked |
+| Mutant                                                | Probes accepted, and leaking                                                                                                                                |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A placeholder that starts confined                    | 11, among them `call_same`, `call_wrapper`, `call_owner`, `call_twice_deferred`, `call_grandchild` (10 leak reports; the 11th was refused at another write) |
+| Replay without the edges                              | `call_grandchild`                                                                                                                                           |
+| Leaks not replayed                                    | `call_leaks_parent`, `caught`                                                                                                                               |
+| A comparator treated as a direct call                 | `call_comparator`                                                                                                                                           |
+| A deferred write dropped instead of judged by callers | 35, every probe but one (34 leak reports; the 35th was refused at another write)                                                                            |
+| Clobbers ignored                                      | none: masked                                                                                                                                                |
+| What had escaped before the call ignored              | none: masked                                                                                                                                                |
 
 The two masked mutants drop conditions that keep the abstract reach sound when code the callee can't see adds links. Every link such code could add is itself a write into a cycle-capable slot (every edge on a cycle is one), judged in that code with its parameters outside, and refused there; so no whole program is accepted by those mutants that the proof refuses. They're kept because the proof's argument rests on them, not because a probe needs them.
 
@@ -432,12 +432,13 @@ Measured, on a shared 4-vCPU cloud container (Intel Xeon @ 2.80GHz, load about 1
 
 - **In the mechanisms alone** (`bench/unwinding/unwinding.c`, plain C, every frame able to be thrown through, 4,000 rounds of a recursion 14 deep):
 
-  | Workload | no exceptions | cleanup paths | `setjmp` and a cleanup stack |
-  |---|---|---|---|
-  | trees, allocating (as `trees.ts`) | 2.492 s | 2.520 s (+1%) | 2.668 s (+7%) |
-  | calls, no allocation, tiny frames | 0.258 s | 0.302 s (+17%) | 0.289 s (+12%) |
+    | Workload                          | no exceptions | cleanup paths  | `setjmp` and a cleanup stack |
+    | --------------------------------- | ------------- | -------------- | ---------------------------- |
+    | trees, allocating (as `trees.ts`) | 2.492 s       | 2.520 s (+1%)  | 2.668 s (+7%)                |
+    | calls, no allocation, tiny frames | 0.258 s       | 0.302 s (+17%) | 0.289 s (+12%)               |
 
-  Throwing from the deepest frame every 64th round costs neither anything measurable. On tiny frames the cleanup stack's push and pop is cheaper than a test after each of two calls; once a frame does real work, both vanish into it, the cleanup paths more completely.
+    Throwing from the deepest frame every 64th round costs neither anything measurable. On tiny frames the cleanup stack's push and pop is cheaper than a test after each of two calls; once a frame does real work, both vanish into it, the cleanup paths more completely.
+
 - **In what Adamic emits**, with every function marked as one a throw can leave, so every call is followed by its test (a local build, not committed): `trees` 4.211 s against 3.966 s with the tests, `nbody` 1.083 against 1.074, `spectral_norm` 0.462 against 0.469, `sort` 0.464 against 0.483, `word_count` 0.233 against 0.226. Every difference is inside the noise, either way.
 
 **Decided: cleanup paths.** In real code their cost didn't show at all, and only a function a throw can leave pays it; a program with no `throw` is the code it was. They keep the C structured, so clang optimizes it and the sanitizers see every release, where a `longjmp` skips past frames the count then has to be told about, and past the runtime's own loops (`sort`, a map's iteration) holding references of their own. The cleanup stack won one microbenchmark, on frames that do nothing but call; if real code ever shows the test, the call graph is the place to shave it (a callee that can't throw needs none).
@@ -513,10 +514,10 @@ Each needs a fixture that builds its strings and objects at runtime. Each must f
 
 **What building it measured.** The design held, with one correction to its prediction. On `bench/trees.ts`, counted:
 
-| | allocations | frees | in regions | retains | releases | peak live |
-|---|---:|---:|---:|---:|---:|---:|
-| Before | 68,332,244 | 68,332,244 | 0 | 272,979,306 | 204,647,140 | 2,097,149 |
-| After | 68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
+|        | allocations |      frees | in regions |     retains |    releases | peak live |
+| ------ | ----------: | ---------: | ---------: | ----------: | ----------: | --------: |
+| Before |  68,332,244 | 68,332,244 |          0 | 272,979,306 | 204,647,140 | 2,097,149 |
+| After  |  68,332,244 |  1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
 
 - **In regions:** 66,759,344 is exactly the nodes of every `check(build(depth))`. It's the sum of the counts the program prints for its eight depths.
 - **The correction:** the prediction above (66,759,382 in regions and 1,572,862 frees) took every allocation besides the two long-lived trees for a node. It forgot the 38 strings the program builds to print, which are freed one at a time.
@@ -524,10 +525,10 @@ Each needs a fixture that builds its strings and objects at runtime. Each must f
 
 **Time barely moved.** `go run ./bench -only trees -rounds 5`, best of 5, in the noisy cloud container (load about 4):
 
-| | native | Node | native vs Node |
-|---|---:|---:|---:|
-| Before | 2.727 s | 1.602 s | 1.70x |
-| After | 2.519 s | 1.464 s | 1.72x |
+|        |  native |    Node | native vs Node |
+| ------ | ------: | ------: | -------------: |
+| Before | 2.727 s | 1.602 s |          1.70x |
+| After  | 2.519 s | 1.464 s |          1.72x |
 
 Native's 8% is the same as Node's own run-to-run swing. Native's memory stayed at 97.9 MB, because the two long-lived trees are on the heap.
 
@@ -542,14 +543,14 @@ So 66.8 million `malloc`s and `free`s were cheap here: glibc's small-object cach
 
 Each kept value is read after its statement. Mutants, against the whole oracle:
 
-| Mutant | Caught by |
-|---|---|
-| No parameter escapes | ASan heap-use-after-free |
-| A fresh function hands its region to calls that don't feed its return | ASan heap-use-after-free |
-| Every fresh call in a statement that has a region gets it | ASan heap-use-after-free, on the one-statement-two-values line |
-| Every statement with a fresh call gets a region | ASan, in `regions.a` and the existing `weak_parent.a` and `08_results.ts` |
-| A region's end doesn't release what its values hold | the leak check |
-| A region's end doesn't free its blocks | the leak check |
+| Mutant                                                                | Caught by                                                                 |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| No parameter escapes                                                  | ASan heap-use-after-free                                                  |
+| A fresh function hands its region to calls that don't feed its return | ASan heap-use-after-free                                                  |
+| Every fresh call in a statement that has a region gets it             | ASan heap-use-after-free, on the one-statement-two-values line            |
+| Every statement with a fresh call gets a region                       | ASan, in `regions.a` and the existing `weak_parent.a` and `08_results.ts` |
+| A region's end doesn't release what its values hold                   | the leak check                                                            |
+| A region's end doesn't free its blocks                                | the leak check                                                            |
 
 Freeing the blocks at the region's end is what poisons them: the blocks are ordinary `malloc` blocks, so ASan sees any later read as a use after free.
 
@@ -568,10 +569,10 @@ A value in a region needs no count, but a fresh function can't know whether its 
 
 Measured on `bench/trees.ts`, counted:
 
-| | allocations | frees | in regions | retains | releases | peak live |
-|---|---:|---:|---:|---:|---:|---:|
-| Before | 68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
-| After | 68,332,244 | 1,572,900 | 66,759,344 | 139,810,138 | 71,128,452 | 2,097,149 |
+|        | allocations |     frees | in regions |     retains |    releases | peak live |
+| ------ | ----------: | --------: | ---------: | ----------: | ----------: | --------: |
+| Before |  68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
+| After  |  68,332,244 | 1,572,900 | 66,759,344 | 139,810,138 |  71,128,452 | 2,097,149 |
 
 Retains and releases each fell by about 133 million. That's three of each per inner node (two fields and the return, against the two call results and the literal) and one per leaf (the return, against the literal), over the 66.8 million region nodes. Nothing else moved. What's left of the retains is mostly `retain(NULL)` for a leaf's two `undefined` fields, plus the long-lived trees, which are on the heap.
 
@@ -581,9 +582,9 @@ In the oracle's table, only `regions.a` moved: retains 624 to 517, releases 708 
 
 Two mutants, each run against `regions.a` and each caught:
 
-| Mutant | Caught by |
-|---|---|
-| A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check |
+| Mutant                                                                         | Caught by                                                              |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check                                                         |
 | A region literal holds every field without a retain, its heap strings included | ASan heap-use-after-free, on a label string the region's end let go of |
 
 ### No retain of the constant undefined
@@ -592,10 +593,10 @@ Retain passes over the null pointer, but each `adamic_retain(NULL)` was still a 
 
 Measured on `bench/trees.ts`, counted, against 926feae:
 
-| | retains | releases |
-|---|---:|---:|
+|        |    retains |  releases |
+| ------ | ---------: | --------: |
 | Before | 71,827,454 | 3,145,768 |
-| After | 3,145,726 | 3,145,768 |
+| After  |  3,145,726 | 3,145,768 |
 
 That's 68,681,728 fewer retains: the two `undefined` children of every leaf. Nothing else moved. The merge of main had already taken `trees` from 139,810,138 retains and 71,128,452 releases to the "before" row: lent reads now see through `ir.Defined`, so `check` reads its tree's children without a count.
 
@@ -603,9 +604,9 @@ That's 68,681,728 fewer retains: the two `undefined` children of every leaf. Not
 
 Two mutants:
 
-| Mutant | Result |
-|---|---|
-| Any C containing `NULL` taken for the constant | changes no fixture's C: no value that reaches `retained` contains `NULL` but the constant, so it proves nothing |
+| Mutant                                                    | Result                                                                                                          |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Any C containing `NULL` taken for the constant            | changes no fixture's C: no value that reaches `retained` contains `NULL` but the constant, so it proves nothing |
 | Any cast pointer, `((T *)(name))`, taken for the constant | changes only `unions.a`, where a string or object boxed into a union loses its retain: ASan heap-use-after-free |
 
 ### Moving a statement's temporary into what keeps it
@@ -625,9 +626,9 @@ Time, `go run ./bench -only trees -rounds 5`, best of 5 at load about 3: native 
 
 Two mutants, each run against the whole oracle and each caught by ASan alone:
 
-| Mutant | Caught by |
-|---|---|
-| A value the statement doesn't own is moved too, so nothing retains it | heap-use-after-free, in 28 fixtures |
+| Mutant                                                                 | Caught by                           |
+| ---------------------------------------------------------------------- | ----------------------------------- |
+| A value the statement doesn't own is moved too, so nothing retains it  | heap-use-after-free, in 28 fixtures |
 | An owned temporary is moved but still let go of at the statement's end | heap-use-after-free, in 63 fixtures |
 
 ### Declarations, assignments and `??` take what the statement owns
@@ -642,12 +643,12 @@ Three moves, each where nothing can run between the move and the end of what own
 
 Counted:
 
-| | retains | releases |
-|---|---:|---:|
-| `nbody` before | 52,000,118 | 52,000,122 |
-| `nbody` after | 22,000,050 | 22,000,054 |
-| `word_count` | 7,140,552 to 6,100,372 | 6,140,609 to 5,100,429 |
-| `tokenizer` | 2,407,586 to 2,405,063 | 2,402,543 to 2,400,020 |
+|                |                retains |               releases |
+| -------------- | ---------------------: | ---------------------: |
+| `nbody` before |             52,000,118 |             52,000,122 |
+| `nbody` after  |             22,000,050 |             22,000,054 |
+| `word_count`   | 7,140,552 to 6,100,372 | 6,140,609 to 5,100,429 |
+| `tokenizer`    | 2,407,586 to 2,405,063 | 2,402,543 to 2,400,020 |
 
 `trees` lost its last 2 of each, and `sort` 2 of each. In the oracle's table 114 rows moved, 1,025,184 retains and 1,025,233 releases in all. Allocations, frees and peak moved on none.
 
@@ -657,11 +658,11 @@ Time, best of 5 at load about 3: `nbody` 0.393 s to 0.242 s interleaved against 
 
 Three mutants, each run against the whole oracle and each caught by ASan alone:
 
-| Mutant | Caught by |
-|---|---|
-| An assignment takes a value the statement doesn't own, so nothing retains it | heap-use-after-free, in 3 fixtures |
-| `??` passes its left operand on, and the statement still lets go of it | heap-use-after-free, in 19 fixtures |
-| `??` passes its fallback on, and still lets go of it | heap-use-after-free, in 3 fixtures |
+| Mutant                                                                       | Caught by                           |
+| ---------------------------------------------------------------------------- | ----------------------------------- |
+| An assignment takes a value the statement doesn't own, so nothing retains it | heap-use-after-free, in 3 fixtures  |
+| `??` passes its left operand on, and the statement still lets go of it       | heap-use-after-free, in 19 fixtures |
+| `??` passes its fallback on, and still lets go of it                         | heap-use-after-free, in 3 fixtures  |
 
 ### A variable borrowed from an array (designed)
 
@@ -676,6 +677,7 @@ What's left on `nbody` is one retain and one release per element a variable is g
 - **A throw.** A throw out of the live range ends `v` without a release. A borrowed `v` has none to give, so a throw path needs nothing. A call that can throw is judged by what it does, like any other.
 
 **What else must know.** A borrowed `v` holds no count, so nothing may treat it as owned:
+
 - reuse in place must not take it over (its object's count is the array's, so it looks unique);
 - a call must not move it into a consumed parameter;
 - its scope must not release it.
@@ -702,17 +704,17 @@ Each probe must keep its count (be refused borrowing). A mutant that drops each 
 
 In `borrow_element.a`, probes 1 to 6 are refused. Probes 7 and 8 borrow, and are held by reuse and moves refusing a `Borrowed` variable. Probe 9 and `total`'s loop borrow. One mutant per rule, each caught on that fixture:
 
-| Mutant | Caught by |
-|---|---|
-| A store into an element isn't a change (probe 1) | ASan heap-use-after-free |
-| `splice` and `pop` aren't changes (probe 2) | ASan heap-use-after-free |
-| A call is never a change, whatever its callee does (probe 3) | ASan heap-use-after-free |
-| A call through a function value isn't a change (probe 4) | ASan heap-use-after-free |
-| The array's variable may be assigned (probe 5) | ASan heap-use-after-free |
-| `map` isn't a change (probe 6) | ASan heap-use-after-free |
-| Reuse takes over a borrowed variable (probe 7) | stdout: `7 item0* item0*`, the array's object written over |
-| A borrowed variable is moved into a consumed parameter (probe 8) | ASan heap-use-after-free |
-| The fallback's owner isn't let go of (probe 9) | the leak check |
+| Mutant                                                           | Caught by                                                  |
+| ---------------------------------------------------------------- | ---------------------------------------------------------- |
+| A store into an element isn't a change (probe 1)                 | ASan heap-use-after-free                                   |
+| `splice` and `pop` aren't changes (probe 2)                      | ASan heap-use-after-free                                   |
+| A call is never a change, whatever its callee does (probe 3)     | ASan heap-use-after-free                                   |
+| A call through a function value isn't a change (probe 4)         | ASan heap-use-after-free                                   |
+| The array's variable may be assigned (probe 5)                   | ASan heap-use-after-free                                   |
+| `map` isn't a change (probe 6)                                   | ASan heap-use-after-free                                   |
+| Reuse takes over a borrowed variable (probe 7)                   | stdout: `7 item0* item0*`, the array's object written over |
+| A borrowed variable is moved into a consumed parameter (probe 8) | ASan heap-use-after-free                                   |
+| The fallback's owner isn't let go of (probe 9)                   | the leak check                                             |
 
 On `nbody`, counted: retains 22,000,050 to 7,000,019. Releases stayed at 22,000,054: the fallback's owner is let go of once per declaration, NULL every time here. No other row of the oracle's table moved, and the other benchmarks didn't either. Time, best of 5 interleaved against 4636a33 at load about 2.5: 0.235 s to 0.222 s, small enough that the noise could hide it. The release of an owner that is NULL is the next thing to take out of `nbody`'s loop.
 

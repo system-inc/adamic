@@ -64,24 +64,24 @@ Mutants that bound `this` before the base returned, ran derived fields first, om
 
 Each run exited 1 at the named oracle or assertion, then restored the implementation. These are observations from actual runs, not predictions about possible failures.
 
-| Mutant | What caught it |
-| --- | --- |
-| `static_escape` | Region-plan assertion and ASan use-after-free after an override stored an arena argument. |
-| `split_consumption` | Shared-ownership assertion and LeakSanitizer. |
-| `disable_regions` | Hierarchy region-plan assertion. |
-| `disable_reuse` | Hierarchy spread-reuse assertion. |
-| `global_targets` | UBSan null access and Node exit parity after a static-only global-move decision. |
-| `collapsed_layouts` | Missing object layout in the monomorphization assertion. |
-| `erased_identity` | Node/native instanceof stdout differed while both exited 0. |
-| `unmapped_bases` | The positive generic layout test failed to lower a substituted base. |
-| `ready_before_return` | A retry after base failure became an uncaught duplicate-binding error instead of Node's successful construction. |
-| `early_fields` | Initializer-order stdout differed, with all backends exiting 0. |
-| `missing_super_return` | Missing ReferenceError changed stdout. |
-| `second_super` | The first object's value was overwritten and derived initialization repeated; stdout differed. |
-| `conditional_this` | The pre-super capture refusal test got no error. |
-| `nominal_arguments` | The generic class-view refusal test got no error. |
-| `nominal_constraints` | The generic constraint refusal test got no error. |
-| `factory_mapper` | The projected generic factory layout test could no longer lower the concrete field type. |
+| Mutant                 | What caught it                                                                                                   |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `static_escape`        | Region-plan assertion and ASan use-after-free after an override stored an arena argument.                        |
+| `split_consumption`    | Shared-ownership assertion and LeakSanitizer.                                                                    |
+| `disable_regions`      | Hierarchy region-plan assertion.                                                                                 |
+| `disable_reuse`        | Hierarchy spread-reuse assertion.                                                                                |
+| `global_targets`       | UBSan null access and Node exit parity after a static-only global-move decision.                                 |
+| `collapsed_layouts`    | Missing object layout in the monomorphization assertion.                                                         |
+| `erased_identity`      | Node/native instanceof stdout differed while both exited 0.                                                      |
+| `unmapped_bases`       | The positive generic layout test failed to lower a substituted base.                                             |
+| `ready_before_return`  | A retry after base failure became an uncaught duplicate-binding error instead of Node's successful construction. |
+| `early_fields`         | Initializer-order stdout differed, with all backends exiting 0.                                                  |
+| `missing_super_return` | Missing ReferenceError changed stdout.                                                                           |
+| `second_super`         | The first object's value was overwritten and derived initialization repeated; stdout differed.                   |
+| `conditional_this`     | The pre-super capture refusal test got no error.                                                                 |
+| `nominal_arguments`    | The generic class-view refusal test got no error.                                                                |
+| `nominal_constraints`  | The generic constraint refusal test got no error.                                                                |
+| `factory_mapper`       | The projected generic factory layout test could no longer lower the concrete field type.                         |
 
 ## Current limits
 
@@ -95,39 +95,39 @@ Virtual return allocation currently uses the heap calling convention. Region esc
 
 Files outside the original new lowering/native files and `internal/lower/class.go`, across the initial unit and continuation:
 
-| File | Reason |
-| --- | --- |
-| `internal/flow/build.go` | Include every virtual target's exceptional control flow. |
-| `internal/lower/cycles.go` | Preserve private field spelling in cycle diagnostics. |
-| `internal/lower/exceptions.go` | Propagate virtual exceptions through all possible targets. |
-| `internal/lower/fresh.go` | Match private symbols to qualified write slots. |
-| `internal/lower/lower_test.go` | Remove the obsolete ordinary-instanceof gap expectation. |
-| `internal/lower/object.go` | Qualify private fields by declaring class. |
-| `internal/lower/refusals.go` | Apply override and nominal-view checks before lowering. |
-| `internal/native/borrow.go` | Visit ancestry operands while classifying the test as pure. |
-| `internal/native/runtime/heap.c` | Use the class destructor chain with iterative teardown. |
-| `internal/native/runtime/object.c` | Give plain and copied objects no class identity. |
-| `internal/native/runtime/region.c` | Release region children through the shared class helper. |
-| `internal/oracle/testdata/class_identity.a` | Test spread identity loss and instanceof side effects. |
-| `internal/oracle/testdata/class_inheritance.a` | Test dispatch, ancestry, abstracts, Weak and private fields. |
-| `internal/oracle/testdata/class_inheritance_exceptions.a` | Test virtual throws and failed-construction cleanup. |
-| `internal/oracle/testdata/class_inheritance_order.a` | Make constructor and field order observable. |
-| `internal/oracle/testdata/class_layouts.a` | Use interfaces for structural literals instead of nominal fakes. |
-| `internal/native/region.go` | Join virtual escapes and recognize class allocators. |
-| `internal/native/reuse.go` | Normalize virtual parameter ownership and follow all targets for moves. |
-| `internal/native/emit.go` | Small hooks for region calls, field ownership and named errors. |
-| `internal/native/runtime/adamic.h` | Add erased class identity to descriptors. |
-| `internal/ir/ir.go` | Carry erased identity and constructor ReferenceError names. |
-| `internal/javascript/javascript.go` | Match erased identity and named errors in the second backend. |
-| `internal/fresh/fresh.go` | Analyze virtual calls, ancestry operands and error-name operands. |
-| `internal/lower/lower.go` | Small conditional-super hook and generic factory cache field. |
-| `internal/lower/expression.go` | Lower class instanceof and resolve concrete generic representations. |
-| `internal/oracle/class_inheritance_test.go` | Register the new differential fixtures. |
-| `internal/oracle/testdata/class_inheritance_memory.a` | Exercise regions, reuse and dynamic ownership. |
-| `internal/oracle/testdata/class_inheritance_generic.a` | Exercise generic hierarchies, identities and factories. |
-| `internal/oracle/testdata/class_inheritance_conditional.a` | Exercise branching construction and exceptional binding. |
-| `internal/oracle/counts.md` | Record every fixture's measured memory costs. |
-| `docs/inheritance.md` | Make the implementation and verification report available in the repository. |
+| File                                                       | Reason                                                                       |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `internal/flow/build.go`                                   | Include every virtual target's exceptional control flow.                     |
+| `internal/lower/cycles.go`                                 | Preserve private field spelling in cycle diagnostics.                        |
+| `internal/lower/exceptions.go`                             | Propagate virtual exceptions through all possible targets.                   |
+| `internal/lower/fresh.go`                                  | Match private symbols to qualified write slots.                              |
+| `internal/lower/lower_test.go`                             | Remove the obsolete ordinary-instanceof gap expectation.                     |
+| `internal/lower/object.go`                                 | Qualify private fields by declaring class.                                   |
+| `internal/lower/refusals.go`                               | Apply override and nominal-view checks before lowering.                      |
+| `internal/native/borrow.go`                                | Visit ancestry operands while classifying the test as pure.                  |
+| `internal/native/runtime/heap.c`                           | Use the class destructor chain with iterative teardown.                      |
+| `internal/native/runtime/object.c`                         | Give plain and copied objects no class identity.                             |
+| `internal/native/runtime/region.c`                         | Release region children through the shared class helper.                     |
+| `internal/oracle/testdata/class_identity.a`                | Test spread identity loss and instanceof side effects.                       |
+| `internal/oracle/testdata/class_inheritance.a`             | Test dispatch, ancestry, abstracts, Weak and private fields.                 |
+| `internal/oracle/testdata/class_inheritance_exceptions.a`  | Test virtual throws and failed-construction cleanup.                         |
+| `internal/oracle/testdata/class_inheritance_order.a`       | Make constructor and field order observable.                                 |
+| `internal/oracle/testdata/class_layouts.a`                 | Use interfaces for structural literals instead of nominal fakes.             |
+| `internal/native/region.go`                                | Join virtual escapes and recognize class allocators.                         |
+| `internal/native/reuse.go`                                 | Normalize virtual parameter ownership and follow all targets for moves.      |
+| `internal/native/emit.go`                                  | Small hooks for region calls, field ownership and named errors.              |
+| `internal/native/runtime/adamic.h`                         | Add erased class identity to descriptors.                                    |
+| `internal/ir/ir.go`                                        | Carry erased identity and constructor ReferenceError names.                  |
+| `internal/javascript/javascript.go`                        | Match erased identity and named errors in the second backend.                |
+| `internal/fresh/fresh.go`                                  | Analyze virtual calls, ancestry operands and error-name operands.            |
+| `internal/lower/lower.go`                                  | Small conditional-super hook and generic factory cache field.                |
+| `internal/lower/expression.go`                             | Lower class instanceof and resolve concrete generic representations.         |
+| `internal/oracle/class_inheritance_test.go`                | Register the new differential fixtures.                                      |
+| `internal/oracle/testdata/class_inheritance_memory.a`      | Exercise regions, reuse and dynamic ownership.                               |
+| `internal/oracle/testdata/class_inheritance_generic.a`     | Exercise generic hierarchies, identities and factories.                      |
+| `internal/oracle/testdata/class_inheritance_conditional.a` | Exercise branching construction and exceptional binding.                     |
+| `internal/oracle/counts.md`                                | Record every fixture's measured memory costs.                                |
+| `docs/inheritance.md`                                      | Make the implementation and verification report available in the repository. |
 
 The generic factory mapper currently reads the checker's private signature mapper through a checked reflection bridge, alongside the existing checker bridge in `instantiate.go`. A shim accessor would remove this dependency. Unsupported mappings are diagnosed instead of silently choosing a layout.
 
@@ -149,11 +149,11 @@ go test -count=1 -timeout 30m ./... > /tmp/inheritance-gate.log 2>&1
 
 The final counts update passed in 99.847s. Comparing all 173 pre-branch rows printed `regressions: []`: allocations, frees, retains, releases and peak never increased; region counts never decreased. New fixture measurements:
 
-| Fixture | Allocations | Heap frees | Retains | Releases | Peak | Regions |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Hierarchy memory | 48 | 42 | 22 | 60 | 11 | 6 |
-| Generic hierarchy and factories | 89 | 89 | 104 | 167 | 39 | 0 |
-| Conditional constructors | 164 | 164 | 148 | 251 | 35 | 0 |
+| Fixture                         | Allocations | Heap frees | Retains | Releases | Peak | Regions |
+| ------------------------------- | ----------: | ---------: | ------: | -------: | ---: | ------: |
+| Hierarchy memory                |          48 |         42 |      22 |       60 |   11 |       6 |
+| Generic hierarchy and factories |          89 |         89 |     104 |      167 |   39 |       0 |
+| Conditional constructors        |         164 |        164 |     148 |      251 |   35 |       0 |
 
 The generic row increased from its earlier version because the fixture gained six constructed objects, generic factories and additional output. It did not exist on pre-branch main; existing input rows remain unchanged or improve.
 

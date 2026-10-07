@@ -10,10 +10,13 @@ separate report.
 
 ```ts
 // Before
-interface Slot { value?: string; callback?: () => string; }
+interface Slot {
+    value?: string;
+    callback?: () => string;
+}
 // After
 interface Slot {
-    value?: (string) | undefined;
+    value?: string | undefined;
     callback?: (() => string) | undefined;
 }
 ```
@@ -53,14 +56,14 @@ Same input as the [survey](tsc-strictness.md):
 `050880ce59e30b356b686bd3144efe24f875ebc8`, all 77 roots under `src/compiler`.
 [Complete final meter report](tsc-strictness/meter-adapted.json).
 
-| Measure | Import adaptation only | Both adaptations |
-| --- | ---: | ---: |
-| Checker diagnostics | 2,744 | 2,070 |
-| TS2412 | 617 | 6 |
-| TS2375 | 76 | 11 |
-| TS2379 | 31 | 14 |
-| Exact-optional total | 724 | 31 |
-| Entries reaching lowering | 0 | 0 |
+| Measure                   | Import adaptation only | Both adaptations |
+| ------------------------- | ---------------------: | ---------------: |
+| Checker diagnostics       |                  2,744 |            2,070 |
+| TS2412                    |                    617 |                6 |
+| TS2375                    |                     76 |               11 |
+| TS2379                    |                     31 |               14 |
+| Exact-optional total      |                    724 |               31 |
+| Entries reaching lowering |                      0 |                0 |
 
 The new adaptation changes **415 declarations** and removes **693 exact-optional
 diagnostics**. The existing import rule still removes **3,718 TS1484** findings.
@@ -68,12 +71,12 @@ The total checker reduction is **674**, rather than 693, because consumers are
 rechecked and other diagnostic counts change:
 
 | Other changed code | Before | After |
-| --- | ---: | ---: |
-| TS2345 | 688 | 693 |
-| TS2322 | 103 | 102 |
-| TS2366 | 1 | 0 |
-| TS2430 | 0 | 10 |
-| TS2320 | 0 | 6 |
+| ------------------ | -----: | ----: |
+| TS2345             |    688 |   693 |
+| TS2322             |    103 |   102 |
+| TS2366             |      1 |     0 |
+| TS2430             |      0 |    10 |
+| TS2320             |      0 |     6 |
 
 The new interface diagnostics expose relationships that need consistent
 representation across declarations. For example, `SignatureDeclarationBase`
@@ -84,16 +87,16 @@ base declarations without write evidence or lowering a rejected program.
 
 Leading remaining reasons:
 
-| Reason | Count |
-| --- | ---: |
-| TS2345: incompatible argument | 693 |
-| TS18048: possibly undefined value | 354 |
-| TS7030: missing return on some paths | 251 |
-| TS2532: possibly undefined object | 224 |
-| TS1294: syntax incompatible with erasableSyntaxOnly | 180 |
-| TS2322: incompatible assignment | 102 |
-| TS7029: switch fallthrough | 83 |
-| TS2591: missing Node globals/types | 54 |
+| Reason                                              | Count |
+| --------------------------------------------------- | ----: |
+| TS2345: incompatible argument                       |   693 |
+| TS18048: possibly undefined value                   |   354 |
+| TS7030: missing return on some paths                |   251 |
+| TS2532: possibly undefined object                   |   224 |
+| TS1294: syntax incompatible with erasableSyntaxOnly |   180 |
+| TS2322: incompatible assignment                     |   102 |
+| TS7029: switch fallthrough                          |    83 |
+| TS2591: missing Node globals/types                  |    54 |
 
 **No entry reaches lowering.** Entries without diagnostics in their own files
 are also tried independently with the final overlay; their dependency closures
@@ -145,11 +148,11 @@ regression proves the overlay is checked and the disk source remains unchanged.
 Actual implementation mutants were run through Go file overlays, without
 changing the working tree:
 
-| Mutant | Fixture and observed failure |
-| --- | --- |
-| Replace an undefined write with `delete slot.p` | `TestAdaptOptionalPropertiesPreservesRuntimeAndDisk`: adapted Node output changes from `true true p,callback` to `false false callback`; exit 1 |
-| Apply a callable-property rewrite to a live prototype method, replacing it with an initialized instance field | `TestOptionalAdaptationPreservesLiveMethodPlacement`: Node prints `true false` instead of `false true`; exit 1 |
-| Restore disk-first `.a` alias reads | `TestOverlayPrecedesDiskForAdamicAliases/.a`: checker reads the disk's wrong string value and reports TS2322 instead of accepting the numeric overlay; exit 1 |
+| Mutant                                                                                                        | Fixture and observed failure                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Replace an undefined write with `delete slot.p`                                                               | `TestAdaptOptionalPropertiesPreservesRuntimeAndDisk`: adapted Node output changes from `true true p,callback` to `false false callback`; exit 1               |
+| Apply a callable-property rewrite to a live prototype method, replacing it with an initialized instance field | `TestOptionalAdaptationPreservesLiveMethodPlacement`: Node prints `true false` instead of `false true`; exit 1                                                |
+| Restore disk-first `.a` alias reads                                                                           | `TestOverlayPrecedesDiskForAdamicAliases/.a`: checker reads the disk's wrong string value and reports TS2322 instead of accepting the numeric overlay; exit 1 |
 
 Both meaning-changing adapter mutants typecheck; they fail the Node runtime
 comparison, rather than a parser, compiler, or clang warning. The loader mutant
