@@ -41,3 +41,18 @@ a compiling byte-oracle mutant, raw facts tests and sanitizer checks. Actual
 JSX parsing remains a shared integration gap. See WAVE_15_LEAKED_REPORT.md.
 The implementation is committed locally, but two HTTPS credential failures
 prevented its push. No additional rules are claimed.
+
+## Third reservation
+
+All prior claimed rule implementations and evidence are pushed through b13ded14.
+Leaked-number-render retains the documented shared native JSX integration gap.
+Fetched 335 origin refs; 33 claim documents mention 114 ranked checker rules.
+The first three remaining combined-volume candidates, after excluding ports on
+main and the bridge branch and claims on every origin branch, are:
+
+- no-invalid-regexp (combined volume 0)
+- no-label-var (combined volume 0)
+- no-misleading-character-class (combined volume 0)
+
+Reserved before implementation. Main and bridge matches are only inventories
+and count records, not ports.
