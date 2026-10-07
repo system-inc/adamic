@@ -151,3 +151,6 @@ No helper or batch-only rule is claimed. The ledger names source batches for
 35 batch-only rules but does not assign any specifically to wave1-02. New
 work remains behind the named landing blocker. Main and area branches were
 not pushed.
+
+
+Landed-area refresh: rebased all forty own commits cleanly onto origin/area/stage1-lint 7481e0324e34a2537aafa9db7eeacda50405611b, including landed harness 50a5f105 and current main 39638d9e278d38bb5aeae887f46d55a70e47aaad. Ledger is byte-identical to the previously reconciled 41eb6eab2 version; the same six winning registered ports remain and six losing ports stay retired. Zero shared lint hunks against area. Registry PASS 0.077s; TestOwnedWitnesses FAIL 2.797s at restricted-types default witness with zero Go findings. Option-aware shared witness support remains absent after landing. Logs: evidence/area-7481e032-*.log. No new semantic mutant or full-rule runtime parity is asserted, no new helper or rule claimed.
