@@ -1,0 +1,5 @@
+let count = 0;
+count++;
+for(let i = 0; i < 3; i++) {
+    count--;
+}

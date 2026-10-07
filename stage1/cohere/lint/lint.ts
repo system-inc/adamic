@@ -1,5 +1,5 @@
-// The lint harness: parse, one preorder walk that hands each node to the generated rule registry and to
-// volume's rules, the stable finding sort, and the converging fixer. Every rule lives in its own directory.
+// The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
+// stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
 import { RuleContext } from './context.ts';
 import { createRuleSet, type RuleSet } from './.generated/registry.ts';
 import { panic, utf8Length } from 'adamic';
@@ -8,12 +8,11 @@ import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 
 import type { Finding } from './finding.ts';
-import { VolumeRules } from './volume.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
 
 // compareFindings orders by position alone. The sort is stable, so findings at one position keep the order
-// they were collected in: volume's in walk order, then the registry's in walk order and descriptor order.
+// they were collected in: walk order, and descriptor order within one node's visit.
 function compareFindings(left: Finding, right: Finding): number {
     return left.start - right.start;
 }
@@ -37,8 +36,6 @@ export class Linter {
     readonly rejected: string[] = [];
     parents: number[] = [];
     root = -1;
-    rules: RuleSet | undefined = undefined;
-    volume: VolumeRules | undefined = undefined;
     readonly selected: string;
     readonly mode: string;
     readonly nullPolicy: string;
@@ -66,15 +63,6 @@ export class Linter {
     run(): void {
         this.root = this.parser.file();
         this.parents = this.parser.nodes.map(() => -1);
-        this.volume = new VolumeRules(
-            this.source,
-            this.parser,
-            this.scanner,
-            this.parents,
-            this.findings,
-            this.selected,
-            this.settings,
-        );
         this.ancestry(this.root, -1);
         const context = new RuleContext(
             this.source,
@@ -88,12 +76,11 @@ export class Linter {
             this.settings,
             this.root,
         );
-        this.rules = createRuleSet(context);
-        this.rules.prepare(this.root);
-        this.volume.prepare(this.root);
-        this.walk(this.root, -1);
-        this.rules.finish(this.root);
-        for(const finding of this.rules.context.findings) {
+        const rules = createRuleSet(context);
+        rules.prepare(this.root);
+        this.walk(this.root, -1, rules);
+        rules.finish(this.root);
+        for(const finding of context.findings) {
             this.findings.push(finding);
         }
         this.findings.sort(compareFindings);
@@ -107,15 +94,10 @@ export class Linter {
     node(index: number): ParseNode {
         return this.parser.node(index);
     }
-    walk(index: number, parent: number): void {
-        if(this.rules !== undefined) {
-            this.rules.visit(index, parent);
-        }
-        this.parents[index] = parent;
-        const node = this.node(index);
-        (this.volume ?? panic('missing additional rules')).visit(index);
-        for(const child of node.children) {
-            this.walk(child, index);
+    walk(index: number, parent: number, rules: RuleSet): void {
+        rules.visit(index, parent);
+        for(const child of this.node(index).children) {
+            this.walk(child, index, rules);
         }
     }
     fixed(): string {

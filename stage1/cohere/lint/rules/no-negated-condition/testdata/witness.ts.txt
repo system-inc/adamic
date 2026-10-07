@@ -1,0 +1,7 @@
+if(!flag) {
+    doOne();
+}
+else {
+    doTwo();
+}
+const chosen = !flag ? left : right;

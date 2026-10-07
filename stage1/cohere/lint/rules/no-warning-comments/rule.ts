@@ -153,18 +153,24 @@ export class Rule {
             for(;;) {
                 while(
                     position < this.context.source.length &&
-                    (isSpace(this.context.source.charCodeAt(position)) || isLineBreak(this.context.source.charCodeAt(position)))
+                    (isSpace(this.context.source.charCodeAt(position)) ||
+                        isLineBreak(this.context.source.charCodeAt(position)))
                 ) {
                     position++;
                 }
                 const opening =
-                    this.context.source.charCodeAt(position) === 47 ? this.context.source.slice(position, position + 2) : '';
+                    this.context.source.charCodeAt(position) === 47
+                        ? this.context.source.slice(position, position + 2)
+                        : '';
                 if(opening !== '//' && opening !== '/*') {
                     break;
                 }
                 reachable[position] = true;
                 if(opening === '//') {
-                    while(position < this.context.source.length && !isLineBreak(this.context.source.charCodeAt(position))) {
+                    while(
+                        position < this.context.source.length &&
+                        !isLineBreak(this.context.source.charCodeAt(position))
+                    ) {
                         position++;
                     }
                 }
@@ -189,7 +195,8 @@ export class Rule {
                 }
                 continue;
             }
-            const opening = this.context.source.charCodeAt(cursor) === 47 ? this.context.source.slice(cursor, cursor + 2) : '';
+            const opening =
+                this.context.source.charCodeAt(cursor) === 47 ? this.context.source.slice(cursor, cursor + 2) : '';
             if(opening !== '//' && opening !== '/*') {
                 cursor++;
                 continue;
@@ -218,7 +225,12 @@ export class Rule {
             }
             for(const term of terms) {
                 if(
-                    matches(value, term, this.context.settings.read('location', 'start'), this.context.settings.list('decoration', []))
+                    matches(
+                        value,
+                        term,
+                        this.context.settings.read('location', 'start'),
+                        this.context.settings.list('decoration', []),
+                    )
                 ) {
                     this.context.reportRange(
                         start,

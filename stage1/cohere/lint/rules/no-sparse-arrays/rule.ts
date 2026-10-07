@@ -9,10 +9,7 @@ export class Rule {
         this.context = context;
     }
     visit(node: ParseNode, index: number): void {
-        if(
-            !this.assignmentTarget(index) &&
-            node.children.some((child) => this.context.node(child).kind === 'OmittedExpression')
-        ) {
+        if(!this.assignmentTarget(index) && this.context.has(index, 'OmittedExpression')) {
             this.context.report(index, 'no-sparse-arrays', 'unexpectedSparseArray', messageSparse, '', '', '');
         }
     }

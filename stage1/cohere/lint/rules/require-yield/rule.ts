@@ -8,7 +8,7 @@ export class Rule {
         this.context = context;
     }
     visit(node: ParseNode, index: number): void {
-        if(this.context.children(index, 'AsteriskToken').length === 0) {
+        if(!this.context.has(index, 'AsteriskToken')) {
             return;
         }
         for(const child of node.children) {

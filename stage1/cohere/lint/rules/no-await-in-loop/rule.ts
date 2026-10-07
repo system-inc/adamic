@@ -8,7 +8,7 @@ export class Rule {
         this.context = context;
     }
     visit(node: ParseNode, index: number, parent: number): void {
-        if(node.kind === 'ForOfStatement' && this.context.children(index, 'AwaitKeyword').length === 0) {
+        if(node.kind === 'ForOfStatement' && !this.context.has(index, 'AwaitKeyword')) {
             return;
         }
         // An `await using` declaration list awaits its disposal.
@@ -19,7 +19,9 @@ export class Rule {
             return;
         }
         const subject =
-            node.kind === 'VariableDeclarationList' && parent >= 0 && this.context.node(parent).kind === 'VariableStatement'
+            node.kind === 'VariableDeclarationList' &&
+            parent >= 0 &&
+            this.context.node(parent).kind === 'VariableStatement'
                 ? parent
                 : index;
         this.context.report(subject, 'no-await-in-loop', 'unexpectedAwait', messageAwait, '', '', '');
@@ -37,7 +39,7 @@ export class Rule {
             if(
                 this.context.functionLike(parent) ||
                 node.kind === 'ClassStaticBlockDeclaration' ||
-                (node.kind === 'ForOfStatement' && this.context.children(parent, 'AwaitKeyword').length !== 0)
+                (node.kind === 'ForOfStatement' && this.context.has(parent, 'AwaitKeyword'))
             ) {
                 return false;
             }

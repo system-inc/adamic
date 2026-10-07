@@ -165,7 +165,16 @@ export class RuleContext {
             panic('a finding carries at most one automatic edit');
         }
         const edit = edits[0];
-        const finding = new Finding(rule, id, message, start, end, edit === undefined ? '' : 'fix', edit === undefined ? '' : edit.text, '');
+        const finding = new Finding(
+            rule,
+            id,
+            message,
+            start,
+            end,
+            edit === undefined ? '' : 'fix',
+            edit === undefined ? '' : edit.text,
+            '',
+        );
         if(edit !== undefined) {
             finding.editStart = edit.start;
             finding.editEnd = edit.end;
@@ -231,6 +240,15 @@ export class RuleContext {
     }
     functionLike(index: number): boolean {
         return isFunctionKind(this.node(index).kind);
+    }
+    // has is whether a direct child is of this kind, without collecting the children that are.
+    has(index: number, kind: string): boolean {
+        for(const child of this.node(index).children) {
+            if(this.node(child).kind === kind) {
+                return true;
+            }
+        }
+        return false;
     }
     children(index: number, kind: string): number[] {
         return this.node(index).children.filter((child) => this.kind(child) === kind);
@@ -302,7 +320,7 @@ export class RuleContext {
         return children[children.length - 1] ?? panic('access without name');
     }
     questionDot(index: number): boolean {
-        return this.children(index, 'QuestionDotToken').length !== 0;
+        return this.has(index, 'QuestionDotToken');
     }
     initializer(index: number): number {
         const children = this.node(index).children;

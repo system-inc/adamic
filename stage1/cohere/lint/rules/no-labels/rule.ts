@@ -1,11 +1,7 @@
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import {
-    messageUnexpectedLabel,
-    messageUnexpectedLabelInBreak,
-    messageUnexpectedLabelInContinue,
-} from './messages.ts';
+import { messageUnexpectedLabel, messageUnexpectedLabelInBreak, messageUnexpectedLabelInContinue } from './messages.ts';
 
 // Upstream judges the whole file from its SourceFile listener, so every finding exists before the walk
 // reaches any other node. Walking from the file here keeps that order: a labeled `continue` reports

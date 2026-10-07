@@ -161,7 +161,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	}
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	var recovery []string
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
