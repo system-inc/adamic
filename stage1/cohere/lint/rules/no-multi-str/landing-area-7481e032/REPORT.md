@@ -1,0 +1,9 @@
+Rebased the eight surviving owned rules onto landed lint area 7481e0324e34a2537aafa9db7eeacda50405611b, containing main 39638d9e.
+Applied the unchanged dedup ledger: five contested winners and three unique rules retained; four losing active copies remain retired.
+Unified TestOwnedWitnesses passes in 21.329s, 59204 identical bytes across Go, Node, emitted JavaScript and sanitized native.
+All eight surviving semantic mutants are caught only by comparison on all three Adamic paths; TestMutants passes in 273.157s.
+Broad TestRulesAgree still fails at case-906/Octal.ts, expected semicolon at 10; no new claim, full repository gate or throughput proof.
+
+The owned rule and bridge files are unchanged from b38b1db7 after the completed rebase. Three shared conflicts took exact origin/area/stage1-lint file versions; renamed retired active-copy conflicts were resolved by removal, preserving archival evidence and support files. No shared implementation was authored. The ledger has not changed and lists batch source branches without assigning a new batch-only rule to wave1-15.
+
+Commands, with /workspace/adamic-tools/env.sh sourced: go test ./stage1/cohere/lint -run ^TestOwnedWitnesses$ -count=1 -v -timeout=20m; go test ./stage1/cohere/lint -run the eight named TestMutants subtests -count=1 -v -timeout=20m; go test ./stage1/cohere/lint -run ^TestRulesAgree$ -count=1 -v -timeout=20m. Logs retained beside this report. The initial broad attempt stopped when Go linking ran out of disk. After freeing old owned raw outputs, the retry completes its support setup and fails in 95.235s at the same explicit Octal.ts parser refusal. This is outside owned rule scope. The harness landing fixes the former shared integration obstacles; the parser refusal still prevents full broad parity and is not claimed as eligible under the harness-only parking exception. No new helper claim was taken.

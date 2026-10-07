@@ -1,0 +1,8 @@
+=== RUN   TestRulesAgree
+    lint_test.go:314: go [test -overlay=/tmp/adamic-gate/TestRulesAgree818389348/019/overlay.json ./internal/lint/rules/next -run ^(TestNoAssignModuleVariable) -count=1 -timeout=10m]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/rules/next.test
+        /workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device
+--- FAIL: TestRulesAgree (103.32s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	103.372s
+FAIL
