@@ -130,3 +130,13 @@ checks pass with the new compiler. The specific new main fixture also passes
 the independent Node/native/emitted-JavaScript oracle. Existing checker-backed
 source, React analysis and dynamic-RegExp gaps remain explicit; no new claims
 are taken. See [landing report](../wave-29-fourth/LANDING_B8FB957A_REPORT.md).
+
+## Updated shared harness 41eb6eab2
+
+Integrated the exact newly named harness on the already landing-ready main
+b8fb957aa base. Registry tests and the updated 54-source JSX tree oracle pass.
+The ledger names no owned typeaware loser. Compiler, bridge, owned runtime and
+checker context are unchanged, so prior owned oracle/mutant evidence remains
+applicable; it was not rerun for this focused shared update. Checker-backed
+source, parked analysis and dynamic-RegExp gaps remain. No new claim is taken.
+See [harness report](../wave-29-fourth/HARNESS_41EB6EAB2_REPORT.md).
