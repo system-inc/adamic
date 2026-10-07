@@ -1,7 +1,7 @@
-Built: nodesFromStaticDeclarations and private propertySort, one .a file each, removing twelve listed prerequisites across six Tailwind rules.
-Commits: first claim 4d352341, first delivery f1c61f9e and logs 24416e8e; second claim 87bcfd7e pushed before second-helper code.
-Checks: two-helper package PASS 49.224s; 6,924 cases match actual Go/source Node/emitted JavaScript/ASan+UBSan native; vet/types/format pass; filtered uncached input oracle PASS 7.056s.
-Mutants: twelve compiling semantic mutations, five declaration-node and seven property-sort, all exit 0 without stderr and fail only comparison on all three execution paths.
+Built: nodesFromStaticDeclarations, private propertySort and ParseValue, one .a file each, removing eighteen listed prerequisites across six Tailwind rules.
+Commits: first claim 4d352341, first delivery f1c61f9e and logs 24416e8e; second claim 87bcfd7e, second delivery f2636e0c; third claim 0441b40c pushed before parser code.
+Checks: three-helper package PASS 61.792s; 17,154 cases match actual Go/source Node/emitted JavaScript/ASan+UBSan native; vet/types/format pass; filtered uncached input oracle PASS 7.056s.
+Mutants: nineteen compiling semantic mutations, five declaration-node, seven property-sort and seven parser, all exit 0 without stderr and fail only comparison on all three execution paths.
 Not covered: whole-rule findings/fixes/suggestions, production integration, raw invalid UTF-8, dynamic/external fixture execution or the full repository gate.
 
 ## Observed behavior
@@ -83,3 +83,33 @@ gofmt -l stage1/cohere/lint/helpers/from_wave1_09 > /tmp/lint-helpers-wave109-tw
 ```
 
 The complete two-helper package passes in 49.224s, after a focused sort run passed in 34.040s. Vet and formatting output are empty; types prints checked declarations. Prior filtered uncached input oracle remains PASS 7.056s; unchanged compiler/input behavior was not retested. Evidence includes complete two-helper gate output, coverage and input/output hashes. The representation covers finite valid-text acyclic trees and actual integer property positions; raw invalid UTF-8, nil Go node pointers, cyclic graphs, native slice capacity and nil-versus-empty sort-list allocation are outside this consumer boundary.
+
+## Third delivery: ParseValue
+
+The prior two helpers were fully tested and pushed at f2636e0c before the third claim. A fresh 423-origin-ref, 17-claim-blob audit found FrameworkStaticReading newly reserved elsewhere; it was skipped without code or claim. ParseValue tied the largest unclaimed concrete count, six, and was claimed/pushed at 0441b40c before implementation. The same six Tailwind rules each lose a third listed dependency; zero lose their final blocker.
+
+parse_value.a uses an indexed arena with explicit roots and function child indices. Function nodes retain non-nil child-list presence even when empty; words and separators retain absence. The other-owned isValueSeparator is supplied through a membership set independently exported by the actual Go predicate over all 256 byte values. No separator helper is duplicated. UTF-16 scanning preserves valid UTF-8 text because syntax/separator comparisons are ASCII and escaped continuation/surrogate text is appended unchanged; Unicode controls exercise this boundary.
+
+The corpus has 10,230 inputs: the 639 distinct nonempty consumer test literals, 8,115 strings captured from the actual valueparser_fixtures.json and wave2b_fixtures.json files, plus a cross-product of eleven syntax/Unicode tokens up to length three, explicit malformed/CRLF/NUL controls, and 64 nested functions. Fixture capture includes input values and expected tree-node value strings as derivative inputs, not just top-level parser cases. Expected answers are freshly computed by actual Go ParseValue, never copied from fixture answers. Every input is parsed twice, then the complete tree shape, node text, child presence and child counts are compared in document order. 808,162 output bytes match all four execution paths.
+
+| Parser mutation | First differing line | Mutant / actual Go |
+|---|---:|---|
+| Omit CRLF normalization | 947 | 2 / 1 |
+| Drop trailing-backslash undefined text | 6491 | backslash / backslash-undefined |
+| Treat slash as separator | 6434 | separator / word |
+| Flush rather than discard at unmatched close | 6843 | 2 / 1 |
+| Lose function child-list presence | 6350 | false / true |
+| Final word inside unclosed function | 7751 | 2 / 3 |
+| Swallow unterminated quoted tail | 6683 | 2 / 3 |
+
+All seven independently compile to both backends and exit 0 without stderr before the Go comparison catches them on source Node, emitted JavaScript and sanitized native. The actual parser's unusual malformed-input outcomes are retained. The complete three-helper gate is PASS 61.792s; a prior focused parser gate passed in 16.407s. Vet and formatting are empty; types prints checked parser/probe declarations. All exact outputs and hashes are retained under evidence.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_WAVE109_HELPER_EVIDENCE=/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_09/evidence ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_09 -count=1 -v -timeout=15m > /tmp/lint-helpers-wave109-three-final.log 2>&1
+go vet ./stage1/cohere/lint/helpers/from_wave1_09 > /tmp/lint-helpers-wave109-three-vet.log 2>&1
+go run ./cmd/adamic types stage1/cohere/lint/helpers/from_wave1_09/value_main.a > /tmp/lint-helpers-wave109-value-types.log 2>&1
+gofmt -l stage1/cohere/lint/helpers/from_wave1_09 > /tmp/lint-helpers-wave109-three-format.log
+```
+
+Production CSS parser/rule integration and full findings/fixes remain outside this helper delivery. ParseValue covers valid-text strings, not arbitrary invalid Go UTF-8 byte strings. The corpus is bounded rather than an exhaustive unbounded proof. Native is sanitizer/leak checked; repeated parse calls do not retain previous arenas.

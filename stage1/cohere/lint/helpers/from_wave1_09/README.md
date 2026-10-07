@@ -11,3 +11,5 @@ go test ./stage1/cohere/lint/helpers/from_wave1_09 -count=1 -v -timeout=15m > /t
 See [REPORT.md](REPORT.md) for coverage, mutants and integration limits.
 
 `property_sort.a` exports `propertySort(arena, roots, propertyOrder)`. It returns `order`, `count` and the exact declaration `visited` trace. Arena nodes have indexed children. Only rule/at-rule children are enqueued. Provide the real PropertyOrder map and a finite acyclic tree; missing indices refuse rather than silently skip work.
+
+`parse_value.a` exports `parseValue(source, separators)`, returning an acyclic `arena` and ordered `roots`. Each node retains exact text, kind, indexed children and `nodesPresent`. Pass the membership set from actual Go isValueSeparator; no CSS parser or serializer integration is implied.
