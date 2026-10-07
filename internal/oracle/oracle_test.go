@@ -53,6 +53,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_receiver.a", true, false},
 	{"internal/oracle/testdata/async_mutation.a", true, false},
 	{"internal/oracle/testdata/async_catch_return.a", true, false},
+	{"internal/oracle/testdata/async_fresh_holder.a", true, false},
 
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},

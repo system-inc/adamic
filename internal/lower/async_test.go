@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
+	"os"
 	"strings"
 	"testing"
 )
@@ -65,5 +66,28 @@ func TestPromisePayloadCannotHideUserCycles(t *testing.T) {
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
 		t.Fatalf("Promise payload hid the user back-reference: %v", err)
+	}
+}
+
+func TestAsyncSuspensionEndsFreshConfinement(t *testing.T) {
+	source, err := os.ReadFile("../oracle/testdata/async_fresh_holder.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowerSource(t, string(source))
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := false
+	for _, write := range fresh.ProveWrites(program) {
+		if write.Name == "item" {
+			checked = true
+			if write.Proven {
+				t.Fatal("frame-held value retained fresh confinement across suspension")
+			}
+		}
+	}
+	if !checked {
+		t.Fatal("holder write was not analyzed")
 	}
 }

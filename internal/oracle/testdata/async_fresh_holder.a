@@ -1,0 +1,8 @@
+async function run(seed: string): Promise<string> {
+    const value = { text: `${seed}:held` };
+    const holder: { item: { text: string } | undefined } = { item: undefined };
+    await Promise.resolve();
+    holder.item = value;
+    return holder.item.text;
+}
+console.log(await run(`seed${9}`));
