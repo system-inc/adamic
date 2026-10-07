@@ -1,6 +1,7 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
 import { unescapeStringLiteralText, type EntityResult } from './unescape_string_literal_text.a';
+import { parameterNodes } from './parameter_nodes.a';
 import { hexValue } from './hex_value.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
 if(input.kind === 'Error') { panic(input.message); }
@@ -29,4 +30,15 @@ for(const item of json.node(json.field(root, 'texts')).children) {
         return entities.get(body) ?? panic('missing real Go entity observation');
     });
     console.log(`${render(output)}:${calls.join('|')}`);
+}
+
+for(const item of json.node(json.field(root, 'parameters')).children) {
+    const present = json.node(json.field(item, 'present')).text === 'true';
+    const nodes: number[] = [];
+    for(const child of json.node(json.field(item, 'nodes')).children) { nodes.push(json.node(child).number); }
+    const result = parameterNodes(present, nodes);
+    console.log(result.join(','));
+    if(result.length > 0) { result[0] = -1; }
+    console.log(nodes.join(','));
+    console.log(parameterNodes(present, nodes).join(','));
 }

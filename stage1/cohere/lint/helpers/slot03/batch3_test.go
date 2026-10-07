@@ -15,7 +15,7 @@ import (
 
 func batch3Oracle(t *testing.T) (string, []byte) {
 	t.Helper()
-	verifyCoverageAt(t, "batch3/testdata", []string{"/text.hexValue", "/text.UnescapeStringLiteralText"})
+	verifyCoverageAt(t, "batch3/testdata", []string{"/text.hexValue", "/text.UnescapeStringLiteralText", "/structure.parameterNodes"})
 	root, _ := filepath.Abs("../../../../../cohere")
 	here, _ := filepath.Abs("batch3/testdata")
 	directory := t.TempDir()
@@ -36,7 +36,7 @@ func batch3Oracle(t *testing.T) (string, []byte) {
 	if err = os.WriteFile(traced, []byte(modified), 0644); err != nil {
 		t.Fatal(err)
 	}
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{original: traced, virtual: filepath.Join(here, "hex_oracle.go"), filepath.Join(root, "internal/lint/ecmascript/text/adamic_slot03_batch3.go"): filepath.Join(here, "text_export.go")}})
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{original: traced, virtual: filepath.Join(here, "hex_oracle.go"), filepath.Join(root, "internal/lint/ecmascript/text/adamic_slot03_batch3.go"): filepath.Join(here, "text_export.go"), filepath.Join(root, "internal/lint/rules/structure/adamic_slot03_batch3.go"): filepath.Join(here, "structure_export.go")}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -66,10 +66,10 @@ func TestBatch3Helpers(t *testing.T) {
 // Not parallel: compiling semantic variants run serially with sanitizer observations.
 func TestBatch3Mutants(t *testing.T) {
 	cases, want := batch3Oracle(t)
-	for _, mutant := range []struct{ file, old, new string }{{"hex_value.a", "character <= 70", "character <= 69"}, {"unescape_string_literal_text.a", "result += replacement.text;", "result += body;"}} {
+	for _, mutant := range []struct{ file, old, new string }{{"hex_value.a", "character <= 70", "character <= 69"}, {"unescape_string_literal_text.a", "result += replacement.text;", "result += body;"}, {"parameter_nodes.a", "return nodes;", "return nodes.slice(0);"}, {"parameter_nodes.a", "if(!parametersPresent) { return []; }", "if(!parametersPresent) { return nodes; }"}} {
 		t.Run(mutant.file, func(t *testing.T) {
 			scratch := t.TempDir()
-			for _, file := range []string{"hex_value.a", "unescape_string_literal_text.a", "hex_main.a"} {
+			for _, file := range []string{"hex_value.a", "unescape_string_literal_text.a", "parameter_nodes.a", "hex_main.a"} {
 				data, err := os.ReadFile(filepath.Join("batch3", file))
 				if err != nil {
 					t.Fatal(err)

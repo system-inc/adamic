@@ -1,0 +1,19 @@
+=== RUN   TestBatch3Helpers
+    batch3_test.go:63: 1117147 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch3Helpers (17.77s)
+=== RUN   TestBatch3Mutants
+=== RUN   TestBatch3Mutants/hex_value.a
+    batch3_test.go:99: compiled semantic mutant caught at line 43: got "-1" Go "15"
+=== RUN   TestBatch3Mutants/unescape_string_literal_text.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1114212: got "0,99,111,112,121,10,:99,111,112,121," Go "0,169,10,:99,111,112,121,"
+=== RUN   TestBatch3Mutants/parameter_nodes.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1115397: got "2" Go "-1"
+=== RUN   TestBatch3Mutants/parameter_nodes.a#01
+    batch3_test.go:99: compiled semantic mutant caught at line 1115375: got "0,1" Go ""
+--- PASS: TestBatch3Mutants (10.87s)
+    --- PASS: TestBatch3Mutants/hex_value.a (2.16s)
+    --- PASS: TestBatch3Mutants/unescape_string_literal_text.a (1.85s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a (1.85s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a#01 (2.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	28.655s

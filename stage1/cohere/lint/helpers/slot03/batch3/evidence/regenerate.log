@@ -1,7 +1,8 @@
 {
   "symbols": [
     "text.hexValue",
-    "text.UnescapeStringLiteralText"
+    "text.UnescapeStringLiteralText",
+    "structure.parameterNodes"
   ],
   "rules": [
     "@next/next/google-font-display",
@@ -12,9 +13,16 @@
     "@next/next/no-html-link-for-pages",
     "@next/next/no-page-custom-font",
     "@next/next/no-unwanted-polyfillio",
-    "structure/boundary-no-project-theme-value"
+    "structure/boundary-no-project-theme-value",
+    "structure/network-require-hook-options-parameter",
+    "structure/network-require-hook-request-suffix",
+    "structure/network-require-hook-variables-type",
+    "structure/next-require-api-parameter-name",
+    "structure/react-component-no-destructuring",
+    "structure/react-component-require-properties-parameter",
+    "structure/react-component-require-properties-type-suffix"
   ],
-  "sources": 323,
+  "sources": 694,
   "packages": [
     "./internal/lint/rules/next",
     "./internal/lint/rules/structure"

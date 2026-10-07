@@ -10,6 +10,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/text"
+	"github.com/system-inc/cohere/internal/lint/rules/structure"
 	"os"
 	"sort"
 	"strings"
@@ -31,6 +32,55 @@ func main() {
 	scan := bufio.NewScanner(z)
 	scan.Buffer(make([]byte, 4096), 16<<20)
 	texts := map[string]bool{}
+	parameterRows := []map[string]any{}
+	parameterWant := []string{}
+	nodeIDs := map[*ast.Node]int{}
+	nextID := 0
+	nodeID := func(n *ast.Node) int {
+		if n == nil {
+			return -1
+		}
+		if id, ok := nodeIDs[n]; ok {
+			return id
+		}
+		id := nextID
+		nextID++
+		nodeIDs[n] = id
+		return id
+	}
+	renderNodes := func(nodes []*ast.Node) string {
+		ids := []string{}
+		for _, node := range nodes {
+			ids = append(ids, fmt.Sprint(nodeID(node)))
+		}
+		return strings.Join(ids, ",")
+	}
+	observeParameters := func(parameters *ast.NodeList, input []*ast.Node) {
+		ids := []int{}
+		for _, n := range input {
+			ids = append(ids, nodeID(n))
+		}
+		parameterRows = append(parameterRows, map[string]any{"present": fmt.Sprint(parameters != nil), "nodes": ids})
+		result := structure.AdamicParameterNodes(parameters)
+		parameterWant = append(parameterWant, renderNodes(result))
+		var first *ast.Node
+		if len(input) > 0 {
+			first = input[0]
+		}
+		if len(result) > 0 {
+			result[0] = nil
+		}
+		parameterWant = append(parameterWant, renderNodes(input), renderNodes(structure.AdamicParameterNodes(parameters)))
+		if len(input) > 0 {
+			input[0] = first
+		}
+	}
+	observeParameters(nil, []*ast.Node{{Kind: ast.KindParameter}, {Kind: ast.KindParameter}})
+	observeParameters(&ast.NodeList{}, nil)
+	observeParameters(&ast.NodeList{Nodes: []*ast.Node{}}, []*ast.Node{})
+	controlA, controlB := &ast.Node{Kind: ast.KindParameter}, &ast.Node{Kind: ast.KindParameter}
+	controlList := &ast.NodeList{Nodes: []*ast.Node{controlA, nil, controlB, controlA}}
+	observeParameters(controlList, controlList.Nodes)
 	points := map[int]bool{-2147483648: true, -1: true, 0x110000: true, 2147483647: true}
 	for scan.Scan() {
 		var row struct{ File, Source string }
@@ -58,6 +108,13 @@ func main() {
 				texts[n.AsJsxText().Text] = true
 			case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
 				texts[n.Text()] = true
+			}
+			if data := n.FunctionLikeData(); data != nil {
+				var input []*ast.Node
+				if data.Parameters != nil {
+					input = data.Parameters.Nodes
+				}
+				observeParameters(data.Parameters, input)
 			}
 			n.ForEachChild(walk)
 			return false
@@ -104,7 +161,8 @@ func main() {
 		decoded, ok := text.AdamicDecodeEntity(body)
 		entities = append(entities, map[string]any{"body": body, "text": decoded, "ok": fmt.Sprint(ok)})
 	}
-	data, e := json.Marshal(map[string]any{"points": list, "texts": textList, "entities": entities})
+
+	data, e := json.Marshal(map[string]any{"points": list, "texts": textList, "entities": entities, "parameters": parameterRows})
 	must(e)
 	must(os.WriteFile(os.Args[2], data, 0644))
 	for _, point := range list {
@@ -129,4 +187,7 @@ func main() {
 		fmt.Println(render(decoded) + ":" + strings.Join(rendered, "|"))
 	}
 
+	for _, line := range parameterWant {
+		fmt.Println(line)
+	}
 }
