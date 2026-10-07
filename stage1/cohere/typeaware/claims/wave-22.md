@@ -180,3 +180,18 @@ Landing checks on main b8fb957aa pass for all eighteen implemented rules:
 controls, mutants, both frozen corpora and sanitizer checks. The raw Unicode
 question and its released-handle controls also pass. The three older React
 graph claims remain parked. No further claim is made.
+
+## Integrated landing status
+
+Rebased onto origin/area/stage1-lint d65a8f931, including main 39638d9e2. All
+eighteen existing implementations passed their byte oracles, mutants and
+sanitized frozen corpora again. Current integrated parser builds now; the two
+owned validation scripts no longer substitute the older JSX parser. Listener
+manifest kinds are AST names, with numeric comparisons inside the visitors.
+
+Configured dynamic RegExp remains blocked by native nonconstant-pattern
+lowering. Whole-rule emitted JavaScript and shared-driver integration remain
+blocked by the native checker binding, which RuleContext does not expose. The
+three React HIR/SSA/capture reservations remain parked. No new rules are claimed:
+all remaining ranked entries are already ported or claimed on the fetched 601
+origin refs. See rules/wave-22-seventh/LANDING_REPORT.md and its owned evidence.
