@@ -17,7 +17,7 @@ Helpers and tooling retain their source-unit slug instead of inventing a rule ow
 An arbitrary accepted option-pattern language is infinite. The table inventories
 all compile sites and source expressions, including each runtime option family;
 it cannot enumerate every possible user string. See [gaps.md](gaps.md) for the
-measured constructor and dialect blockers and the incomplete rule migrations.
+measured constructor and esregexp blockers and the incomplete rule migrations.
 
 | Feature class | Table rows |
 | --- | ---: |
@@ -41,7 +41,9 @@ The comparison checks every whole match and its UTF-16 start/end, including empt
 matches with Go's adjacent-empty enumeration rule. The oracle alone maps Go's byte
 spans through a single UTF-16 helper. Rule finding positions are not involved yet.
 Captures, named-group objects, replacement APIs and invalid UTF-8 are not covered.
-No universally faithful translation of arbitrary Go options is claimed. All fixed
+Options are JavaScript by contract; their oracle is cohere esregexp, pending the
+rule-side migration #7mztrdd. Old dynamic-row status prose in the unchanged table
+predates that ruling and is superseded by gaps.md. All fixed
 sites agree on the recorded corpus; that is bounded evidence, not a proof over all
 Unicode versions or all input strings.
 

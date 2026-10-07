@@ -1,3 +1,23 @@
+## Review correction and parking
+
+The fleet ruled that user option patterns are JavaScript, not Go regexp. The old
+raw-option dialect comparison below is historical and is superseded by this section.
+The option test now runs cohere esregexp Compile(source, "u") against Node's unchanged
+new RegExp(source, "u"), using nine agreement controls and one separately named
+property-gap control. The constant-pattern table, literal module and comparison
+corpus are unchanged from 071fb0128.
+
+Both parking dependencies are named here and in gaps.md: the dynamic RegExp library
+reproducer, already sent to @system_adamic_library by the fleet, and the Go option-rule
+migration #7mztrdd. The pinned esregexp property escape `\p{Script=Greek}` is also
+observed to reject a pattern Node accepts; its reproducer remains explicit and is
+excluded from agreement totals. The three rule migrations remain waiting, with no
+fallback. This branch is parked until these prerequisites clear.
+
+Review validation is recorded in evidence/options-review.log and options-vet.log.
+Only the changed option/gap tests were rerun; the unchanged constant-pattern gate
+and its three-backend mutant retain the earlier evidence below.
+
 Built: fixed RegExp literal table and Go/source-Node/emitted-JS/sanitized-native comparison; rule migrations blocked.
 Commits: see git log on codex/lint-regex; base f8013f0baac41ddc340d76f83bddde38536a8f07.
 Commands: owned package PASS 10.352s, vet clean; filtered external regexp oracle PASS 11.580s.
@@ -12,18 +32,15 @@ on all four paths over 2,104 inputs from the documented alternate 100-file corpu
 The Go oracle runs under cohere's own pinned Go module and maps byte spans to UTF-16
 at one observation boundary. No per-rule byte conversion or matching fallback exists.
 
-The native constructor gap and five observed raw-option dialect disagreements are
-recorded for @system_adamic_library in gaps.md. None of the three requested rule
+The native constructor gap is recorded for @system_adamic_library in gaps.md.
+The former RE2 option comparison is superseded by the review correction above. None of the three requested rule
 migrations is claimed complete. Existing no-warning-comments source was preserved;
 the shared harness and registry were not edited. Two fixed comment patterns are
 exported from patterns.a for integration after the shared harness is ready.
 
 Every fixed site's translation agrees on this bounded corpus. No fixed site was
-observed to require an unavailable JS construct. An unrestricted raw Go option
-pattern has no faithful translation under the required unchanged new RegExp(pattern,
-'u') contract: \s disagrees, and (?i), \p{Greek}, \z and (?P<name>) are rejected by
-Node. This does not mean those expressions lack port-time JS translations; it means
-port-time translation cannot operate on an unknown future configuration string.
+observed to require an unavailable JS construct. The user-option contract is JavaScript and will be enforced by cohere esregexp after
+#7mztrdd; Go-only input syntax is not the option contract.
 
 The pinned cohere 715ba94f has 39 regexp-importing files, 88 MustCompile calls and
 19 Compile calls. Current upstream 7945d102 was inspected separately without

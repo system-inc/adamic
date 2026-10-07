@@ -1,8 +1,6 @@
-// Independent Node observations of the required raw-option constructor.
-for (const [pattern, text] of [
-  ['\\s', '\u00a0'], ['a$', 'a\n'], ['(?i)todo', 'TODO'],
-  ['\\p{Greek}', 'α'], ['a\\z', 'a'], ['(?P<word>a)', 'a'],
-]) {
+// Independent JavaScript option contract, unchanged raw source with the u flag.
+import { readFileSync } from 'node:fs';
+for (const [pattern, text] of JSON.parse(readFileSync(process.argv[2], 'utf8'))) {
   try { console.log(`${pattern}\t${new RegExp(pattern, 'u').test(text)}`); }
   catch (error) { if (!(error instanceof SyntaxError)) throw error; console.log(`${pattern}\tSyntaxError`); }
 }

@@ -1,0 +1,11 @@
+=== RUN   TestDynamicPatternGap
+    regex_test.go:128: /workspace/adamic-regex/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestDynamicPatternGap (0.18s)
+=== RUN   TestOptionPatternsAgreeWithESRegexp
+    regex_test.go:158: 9 unchanged JavaScript option sources agree against cohere esregexp Compile(source, u), including syntax rejection: "\\s\ttrue\na$\tfalse\n(?<word>a)\ttrue\na(?=b)\ttrue\n(?<=a)b\ttrue\n(a)\\1\ttrue\n.\tfalse\n^TODO$\ttrue\n(\tSyntaxError\n"
+--- PASS: TestOptionPatternsAgreeWithESRegexp (0.32s)
+=== RUN   TestOptionPropertyGap
+    regex_test.go:165: named pinned esregexp property gap, excluded from agreement controls: Go "\\p{Script=Greek}\tSyntaxError\n" Node "\\p{Script=Greek}\ttrue\n"
+--- PASS: TestOptionPropertyGap (0.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/regex	0.840s

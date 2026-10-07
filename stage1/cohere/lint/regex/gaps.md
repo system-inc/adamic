@@ -25,25 +25,35 @@ This prevents id-length's `exceptionPatterns`, no-inline-comments' `ignorePatter
 and no-warning-comments' generated configurable terms/decorations from following
 the required RegExp path on native. Their full finding migrations were not made.
 
-## Raw option dialect is not Go regexp
+## JavaScript option oracle migration, #7mztrdd
 
-Run `TestOptionDialectGap`. Every listed Go pattern is accepted by Go regexp.
+Ruling from @system_cohere_lint: option patterns are JavaScript by contract.
+The earlier RE2-versus-JavaScript option comparison used the wrong oracle.
+Cohere's option-consuming rules will migrate to its JavaScript-semantics
+`esregexp` package under #7mztrdd. There is no requirement to translate arbitrary
+Go-only syntax in user options. `new RegExp(pattern, 'u')` remains the native contract.
 
-| Pattern | Input | Go | `new RegExp(pattern, 'u')` on Node |
-| --- | --- | --- | --- |
-| `\s` | U+00A0 | false | true |
-| `a$` | `a` followed by LF | false | false |
-| `(?i)todo` | `TODO` | true | SyntaxError |
-| `\p{Greek}` | `α` | true | SyntaxError |
-| `a\z` | `a` | true | SyntaxError |
-| `(?P<word>a)` | `a` | true | SyntaxError |
+`TestOptionPatternsAgreeWithESRegexp` now compares unchanged user patterns against
+`cohere/internal/lint/ecmascript/regexp.Compile(source, "u")` and independent Node.
+Nine controls agree, covering Unicode whitespace, anchors, named captures,
+lookahead, lookbehind, backreferences, line terminators and invalid syntax.
+The Go adapter is added through an owned virtual-file overlay so no cohere source
+or shared lint oracle is edited. The constant-pattern Go regexp table is unchanged.
 
-The last four have port-time JS spellings (`/todo/iu`, `/\p{Script=Greek}/u`,
-`/a(?![\s\S])/u`, `/(?<word>a)/u`). Raw arbitrary options cannot be translated
-once at port time: the source does not exist until configuration is read.
-A constructor implementation that disagrees with Node is not an acceptable fix.
-The fleet needs a decision on restricting options to a proven common dialect,
-or changing the requirement for runtime translation. This unit does neither.
+### Pinned esregexp property escape gap
+
+`TestOptionPropertyGap` retains this separately, excluded from the nine agreement
+controls. With source `\p{Script=Greek}`, flags `u`, and input `α`, Node prints
+`true`. Pinned cohere `esregexp.Compile` returns an error, reported by the observer
+as `SyntaxError`. The pair is recorded in `testdata/option_property_gap.json`.
+Reproduce with the owned test; no translation, fallback or engine change was added.
+When this gap closes the gap test fails and tells the worker to put the case back
+into the option agreement corpus. This is a property of the pinned esregexp package,
+not proof that the JavaScript option contract needs changing.
+
+This branch is parked pending the dynamic RegExp library work and #7mztrdd; this
+additional esregexp property mismatch must also be resolved for its covered option.
+The three full rule migrations remain waiting. Do not resume them with hand matchers.
 
 ## Harness integration, #zmh9v36
 
