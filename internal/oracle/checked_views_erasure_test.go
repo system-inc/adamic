@@ -10,6 +10,8 @@ import (
 func TestCheckedViewShapeErasure(t *testing.T) {
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"proven", "hello\n", ""},
+		{"proven-property", "hello\n", ""},
+		{"nonconforming-property", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"nonconforming", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"uninitialized", "", "field read failed: (held as Identifier).ready is not initialized; expected boolean, found uninitialized"},
 	} {

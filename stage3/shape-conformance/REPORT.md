@@ -1,3 +1,13 @@
+Built: record-property and constant-element allocation flow, with visible-store joins and conservative unknown frontiers.
+Commits: merge checkpoint c1f4c5a70bd7d98fd543f4eb7ff96191be4a338b; implementation commit is in branch history.
+Commands: full lower/IR tests, vet, 43 unchanged graph-region counts, native fixtures against Node, and independent census audits pass.
+Mutants: four projection guards, six measurement guards, forged host/body proofs, and native wrong-shape/readiness erasures caught.
+Limits: no tsc cast is proven free; callbacks, dynamic keys, classes, whole-array and transitive contracts remain unproven.
+
+Current report: [PROJECTION-SHARE-REPORT.md](PROJECTION-SHARE-REPORT.md).
+
+Previous checkpoints follow.
+
 Built: merge main 48c05d09 with checked views, readiness and lane 3 hooks retained; fresh adapted-tree census.
 Commits: previous census ffe5a90e; this merge is recorded in branch history.
 Commands: full lower/IR packages, scoped uncached oracle, 43 graph-count guards, cast oracle, vet and independent census audits pass.

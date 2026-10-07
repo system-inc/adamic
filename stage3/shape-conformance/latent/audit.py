@@ -39,10 +39,11 @@ def audit(result,mapped,root,fixtures=False):
  for kind in counts:assert dict(reasons[kind])==result['unknown_reasons'][kind]
  if not fixtures:assert len(seen)==2936 and sum(counts['tagged'].values())==1758 and sum(counts['untagged'].values())==1178
  else:
-  expected={'read':OUTCOMES[0],'stageRead':OUTCOMES[1],'wrong':OUTCOMES[2],'hostRead':'unknown','diagnosed':'unknown','incoming':'unknown','callback':'unknown','forged':'unknown','hostField':'unknown','aliased':'unknown','nestedClean':OUTCOMES[0],'nestedCapture':'unknown'}
+  expected={'read':OUTCOMES[0],'stageRead':OUTCOMES[1],'wrong':OUTCOMES[2],'hostRead':'unknown','diagnosed':'unknown','incoming':'unknown','callback':'unknown','forged':'unknown','hostField':'unknown','aliased':'unknown','nestedClean':OUTCOMES[0],'nestedCapture':'unknown','propertyRead':OUTCOMES[0],'stringKeyRead':OUTCOMES[0],'arrayRead':OUTCOMES[0],'storeRead':OUTCOMES[2],'opaqueRead':'unknown','diagnosedStoreRead':'unknown','hostThroughField':'unknown','augmentedArray':'unknown'}
   by_owner={s['adapted']['owner']:s for s in result['sites']};assert set(by_owner)==set(expected)
   for owner,outcome in expected.items():assert by_owner[owner]['outcome']==outcome,(owner,by_owner[owner])
-  for owner,reason in {'hostRead':'host metadata','hostField':'host metadata','diagnosed':'diagnosed body','incoming':'diagnosed body','nestedCapture':'diagnosed body','callback':REASONS[1],'forged':REASONS[1],'aliased':REASONS[1]}.items():assert by_owner[owner]['reason']==reason,(owner,by_owner[owner])
+  for owner,reason in {'hostRead':'host metadata','hostField':'host metadata','diagnosed':'diagnosed body','opaqueRead':REASONS[1],'diagnosedStoreRead':'diagnosed body','hostThroughField':'host metadata','incoming':'diagnosed body','nestedCapture':'diagnosed body','callback':REASONS[1],'forged':REASONS[1],'aliased':REASONS[1]}.items():assert by_owner[owner]['reason']==reason,(owner,by_owner[owner])
+  assert 'array intrinsic and augmented-field certificates unavailable' in by_owner['augmentedArray']['detail']
   assert 'JSON.parse' in by_owner['hostRead']['host_values'] and 'JSON.parse' in by_owner['hostField']['host_values']
   assert any(f['name']=='ready' and f['declared']=='number' and f['expected']=='boolean' for f in by_owner['wrong']['fields'])
   assert any(f['name']=='ready' and f['reason']=='initialization not proven at the cast' for f in by_owner['stageRead']['fields'])

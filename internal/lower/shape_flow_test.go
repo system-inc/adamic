@@ -69,3 +69,49 @@ func TestShapeFlowOmittedAndCallbackArgumentsAreUnknown(t *testing.T) {
 		}
 	}
 }
+
+func TestShapeProjectionJoinsInitialAndStoredValues(t *testing.T) {
+	first := ir.ObjectLiteral{GraphTypes: []int{-2}}
+	second := ir.ObjectLiteral{GraphTypes: []int{-3}}
+	receiver := ir.Read{Local: 0, Of: ir.Object}
+	program := &ir.Program{Locals: []ir.Local{{Type: ir.Object}}, Main: []ir.Statement{
+		ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}, Fields: []ir.Field{{Name: "child", Value: first}}}},
+		ir.SetProperty{Object: receiver, Name: "child", Value: second},
+	}}
+	result := newAllocationFlowGraph(program).ReachingAllocations(ir.Property{Object: receiver, Name: "child", Of: ir.Object})
+	if result.Unknown || !reflect.DeepEqual(result.Sites, []int{-3, -2}) {
+		t.Fatalf("field join lost reaching shapes: %+v", result)
+	}
+	program.Main = append(program.Main, ir.SetProperty{Object: ir.Read{Local: 99, Of: ir.Object}, Name: "child", Value: second})
+	result = newAllocationFlowGraph(program).ReachingAllocations(ir.Property{Object: receiver, Name: "child", Of: ir.Object})
+	if !result.Unknown || !reflect.DeepEqual(result.Sites, []int{-3, -2}) {
+		t.Fatalf("opaque store must retain known shapes and unknown: %+v", result)
+	}
+}
+func TestShapeProjectionCyclesAndMissingFieldsStayUnknown(t *testing.T) {
+	receiver := ir.Read{Local: 0, Of: ir.Object}
+	property := ir.Property{Object: receiver, Name: "child", Of: ir.Object}
+	program := &ir.Program{Locals: []ir.Local{{Type: ir.Object}}, Main: []ir.Statement{
+		ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}, Fields: []ir.Field{{Name: "child", Value: ir.ObjectLiteral{GraphTypes: []int{-2}}}}}},
+		ir.SetProperty{Object: receiver, Name: "child", Value: property},
+	}}
+	if result := newAllocationFlowGraph(program).ReachingAllocations(property); !result.Unknown || !reflect.DeepEqual(result.Sites, []int{-2}) {
+		t.Fatalf("recursive store should terminate conservatively: %+v", result)
+	}
+	program.Main = append(program.Main, ir.SetProperty{Object: receiver, Name: "missing", Value: ir.ObjectLiteral{GraphTypes: []int{-3}}})
+	if result := newAllocationFlowGraph(program).ReachingAllocations(ir.Property{Object: receiver, Name: "missing", Of: ir.Object}); !result.Unknown {
+		t.Fatal("store without path readiness certified an initially missing field")
+	}
+}
+func TestShapeProjectionConstantElements(t *testing.T) {
+	receiver := ir.Read{Local: 0, Of: ir.Array}
+	element := ir.ArrayIndex{Array: receiver, Index: ir.NumberConstant{}, Element: ir.Object}
+	program := &ir.Program{Locals: []ir.Local{{Type: ir.Array}}, Main: []ir.Statement{ir.Declare{Local: 0, Value: ir.ArrayLiteral{GraphTypes: []int{-1}, Element: ir.Object, Elements: []ir.Expression{ir.ObjectLiteral{GraphTypes: []int{-2}}}}}}}
+	if result := newAllocationFlowGraph(program).ReachingAllocations(element); result.Unknown || !reflect.DeepEqual(result.Sites, []int{-2}) {
+		t.Fatalf("constant element lost allocation: %+v", result)
+	}
+	program.Main = append(program.Main, ir.Evaluate{Value: ir.ArrayPush{Array: receiver}})
+	if result := newAllocationFlowGraph(program).ReachingAllocations(element); !result.Unknown {
+		t.Fatal("mutable element certified")
+	}
+}

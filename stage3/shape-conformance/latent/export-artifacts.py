@@ -19,7 +19,7 @@ for s in r['sites']:
  if s['reason']=="flow the graph can't see":
   frontiers[s['kind']].update(set(d.split(' at /tmp/')[0] for d in s['detail']))
 write('latent-flow-reasons.json',{'measurement':label,'overlapping_detail_counts':{k:dict(v.most_common()) for k,v in frontiers.items()}})
-write('latent-host-values.json',{'measurement':label,'cast_related_host_frontiers':[{k:s[k] for k in ('file','line','column','kind','target_type','reason','host_values','detail')} for s in r['sites'] if s['host_values']],'additional_native_fixture':{'file':'stage3/interface-downcasts/lane3/host.a','value':'readTextFile(...)','fields':{'kind':'string','message':'string'},'observed':'view retained; native stops at kind with unsupported representation; source Node prints true','included_in_2936_sites':False}})
+write('latent-host-values.json',{'measurement':label,'full_frontier_details': 'latent-share.json.gz sites[].detail', 'cast_related_host_frontiers':[{k:s[k] for k in ('file','line','column','kind','target_type','reason','host_values')} for s in r['sites'] if s['host_values']],'additional_native_fixture':{'file':'stage3/interface-downcasts/lane3/host.a','value':'readTextFile(...)','fields':{'kind':'string','message':'string'},'observed':'view retained; native stops at kind with unsupported representation; source Node prints true','included_in_2936_sites':False}})
 rows=[]
 for s in r['sites']:
  old=lookup[(s['file'],s['start'],s['end'])]
