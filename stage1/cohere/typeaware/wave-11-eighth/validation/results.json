@@ -1,0 +1,39 @@
+{
+  "base": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "claim": "667e6a47a4dcc9047044b0316eb1525ba2a5a48d",
+  "controls": 250,
+  "parse_clean": 250,
+  "findings": {
+    "react/no-danger-with-children": 28,
+    "react/no-multi-comp": 134,
+    "react/no-namespace": 31
+  },
+  "fixes": 0,
+  "suggestions": 0,
+  "repository_roots": 287,
+  "compiler_roots": 77,
+  "repository_findings": 0,
+  "compiler_findings": 0,
+  "mutants": [
+    "danger-property",
+    "namespace-colon",
+    "component-first",
+    "raw-whitespace",
+    "raw-uppercase",
+    "released-registry"
+  ],
+  "native_sanitized_agreement": true,
+  "suite_seconds": 111.157,
+  "earlier_jsx_regression": {
+    "before_exit": 70,
+    "before_stderr": "adamic: panic: Unhandled case in Node.Text: *ast.JsxText\n",
+    "after_suite_seconds": 97.767,
+    "controls": 230,
+    "findings": 307
+  },
+  "uncovered": [
+    "ignoreStateless=true",
+    "shared harness integration",
+    "emitted JavaScript lint execution"
+  ]
+}

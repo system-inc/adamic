@@ -253,3 +253,14 @@ when present; these three rules have no Go regexp. The new shared finding model
 ab70f38d4 is on origin/lint-rules/harness and is not yet on current main; shared
 harness and generator files remain outside this worker's territory.
 Selection evidence and reconstruction are in ../wave-11-eighth/selection/.
+
+
+Eighth batch completed at production defaults in implementation 48433207,
+on current main c01907a7. Numeric handed-node callbacks, full Go/native
+findings/fixes/suggestions agreement, 250 parse-clean controls, both corpora,
+sanitizers, six new mutant witnesses and released handles pass. An earlier
+owned raw-question JSX-text crash was fixed, and its full three-rule suite
+passed again with 230 controls and 307 findings. Wave 11 now has 21 native
+production-default ports; four analysis claims remain parked. No new rules
+are reserved. Evidence, quiet native/Go times and option/harness limits are
+in ../wave-11-eighth/REPORT.md.

@@ -1,0 +1,469 @@
+file	/tmp/wave-11-eighth-validation/control-000.tsx
+0	55	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+104	162	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-001.tsx
+0	51	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-002.tsx
+95	110	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-003.tsx
+147	175	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-004.tsx
+0	65	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-005.tsx
+0	7	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+105	134	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+51	77	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+9	15	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-006.tsx
+37	57	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-007.tsx
+29	49	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-008.tsx
+114	125	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+29	55	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+56	84	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+93	104	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-009.tsx
+109	132	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+37	69	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-010.tsx
+68	97	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+73	96	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-011.tsx
+101	116	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+51	68	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+78	91	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-012.tsx
+132	167	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-013.tsx
+108	119	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+132	143	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+33	44	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+62	73	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+84	95	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-014.tsx
+33	59	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+88	123	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+96	122	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-015.tsx
+119	130	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+144	174	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+30	51	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+57	87	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-016.tsx
+51	62	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+79	112	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-017.tsx
+124	157	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+19	73	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+75	88	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-018.tsx
+9	95	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-019.tsx
+0	72	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-020.tsx
+80	110	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-021.tsx
+102	120	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-022.tsx
+9	99	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-023.tsx
+0	74	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-024.tsx
+0	61	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-025.tsx
+9	142	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-026.tsx
+9	185	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-027.tsx
+9	144	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-028.tsx
+9	187	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-029.tsx
+80	125	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-030.tsx
+102	135	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-031.tsx
+192	225	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-032.tsx
+file	/tmp/wave-11-eighth-validation/control-033.tsx
+file	/tmp/wave-11-eighth-validation/control-034.tsx
+file	/tmp/wave-11-eighth-validation/control-035.tsx
+file	/tmp/wave-11-eighth-validation/control-036.tsx
+file	/tmp/wave-11-eighth-validation/control-037.tsx
+file	/tmp/wave-11-eighth-validation/control-038.tsx
+file	/tmp/wave-11-eighth-validation/control-039.tsx
+file	/tmp/wave-11-eighth-validation/control-040.tsx
+file	/tmp/wave-11-eighth-validation/control-041.tsx
+file	/tmp/wave-11-eighth-validation/control-042.tsx
+file	/tmp/wave-11-eighth-validation/control-043.tsx
+file	/tmp/wave-11-eighth-validation/control-044.tsx
+file	/tmp/wave-11-eighth-validation/control-045.tsx
+file	/tmp/wave-11-eighth-validation/control-046.tsx
+file	/tmp/wave-11-eighth-validation/control-047.tsx
+file	/tmp/wave-11-eighth-validation/control-048.tsx
+file	/tmp/wave-11-eighth-validation/control-049.tsx
+0	72	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-050.tsx
+0	61	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-051.tsx
+0	87	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-052.tsx
+0	88	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-053.tsx
+file	/tmp/wave-11-eighth-validation/control-054.tsx
+0	86	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-055.tsx
+49	116	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-056.tsx
+0	72	react/no-danger-with-children	noDangerWithChildren	This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.	0	0
+file	/tmp/wave-11-eighth-validation/control-057.tsx
+file	/tmp/wave-11-eighth-validation/control-058.tsx
+file	/tmp/wave-11-eighth-validation/control-059.tsx
+file	/tmp/wave-11-eighth-validation/control-060.tsx
+0	20	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-061.tsx
+0	39	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-062.tsx
+0	20	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-063.tsx
+0	39	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-064.tsx
+0	21	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-065.tsx
+0	40	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-066.tsx
+0	20	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-067.tsx
+0	39	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-068.tsx
+0	20	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-069.tsx
+0	39	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-070.tsx
+0	20	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-071.tsx
+0	39	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-072.tsx
+0	21	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-073.tsx
+0	40	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-074.tsx
+0	20	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-075.tsx
+0	39	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-076.tsx
+0	27	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-077.tsx
+0	29	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-078.tsx
+file	/tmp/wave-11-eighth-validation/control-079.tsx
+file	/tmp/wave-11-eighth-validation/control-080.tsx
+file	/tmp/wave-11-eighth-validation/control-081.tsx
+file	/tmp/wave-11-eighth-validation/control-082.tsx
+file	/tmp/wave-11-eighth-validation/control-083.tsx
+file	/tmp/wave-11-eighth-validation/control-084.tsx
+17	44	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-085.tsx
+0	24	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-086.tsx
+0	28	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-087.tsx
+0	35	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-088.tsx
+0	8	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-089.tsx
+0	6	react/no-namespace	noNamespace	This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.	0	0
+file	/tmp/wave-11-eighth-validation/control-090.tsx
+file	/tmp/wave-11-eighth-validation/control-091.tsx
+file	/tmp/wave-11-eighth-validation/control-092.tsx
+file	/tmp/wave-11-eighth-validation/control-093.tsx
+file	/tmp/wave-11-eighth-validation/control-094.tsx
+file	/tmp/wave-11-eighth-validation/control-095.tsx
+file	/tmp/wave-11-eighth-validation/control-096.tsx
+file	/tmp/wave-11-eighth-validation/control-097.tsx
+file	/tmp/wave-11-eighth-validation/control-098.tsx
+file	/tmp/wave-11-eighth-validation/control-099.tsx
+file	/tmp/wave-11-eighth-validation/control-100.tsx
+113	179	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-101.tsx
+file	/tmp/wave-11-eighth-validation/control-102.tsx
+60	307	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-103.tsx
+99	191	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-104.tsx
+99	225	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-105.tsx
+file	/tmp/wave-11-eighth-validation/control-106.tsx
+120	246	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-107.tsx
+file	/tmp/wave-11-eighth-validation/control-108.tsx
+file	/tmp/wave-11-eighth-validation/control-109.tsx
+file	/tmp/wave-11-eighth-validation/control-110.tsx
+file	/tmp/wave-11-eighth-validation/control-111.tsx
+93	187	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-112.tsx
+file	/tmp/wave-11-eighth-validation/control-113.tsx
+138	411	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-114.tsx
+file	/tmp/wave-11-eighth-validation/control-115.tsx
+file	/tmp/wave-11-eighth-validation/control-116.tsx
+191	287	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+211	277	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+58	137	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-117.tsx
+153	279	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+288	418	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-118.tsx
+99	191	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-119.tsx
+99	225	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-120.tsx
+150	253	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-121.tsx
+166	227	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-122.tsx
+127	217	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-123.tsx
+117	162	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-124.tsx
+123	195	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-125.tsx
+168	229	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-126.tsx
+151	201	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-127.tsx
+159	220	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-128.tsx
+153	203	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-129.tsx
+168	218	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-130.tsx
+165	226	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-131.tsx
+166	216	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-132.tsx
+170	231	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-133.tsx
+179	240	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-134.tsx
+167	217	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-135.tsx
+43	60	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-136.tsx
+43	60	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-137.tsx
+44	61	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-138.tsx
+44	61	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-139.tsx
+45	62	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-140.tsx
+44	61	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-141.tsx
+44	61	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-142.tsx
+42	59	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-143.tsx
+49	66	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-144.tsx
+46	63	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-145.tsx
+46	63	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-146.tsx
+41	56	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-147.tsx
+file	/tmp/wave-11-eighth-validation/control-148.tsx
+file	/tmp/wave-11-eighth-validation/control-149.tsx
+41	75	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-150.tsx
+41	69	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-151.tsx
+41	69	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-152.tsx
+41	72	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-153.tsx
+41	74	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-154.tsx
+41	78	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-155.tsx
+file	/tmp/wave-11-eighth-validation/control-156.tsx
+41	57	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-157.tsx
+41	100	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-158.tsx
+41	81	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-159.tsx
+41	91	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-160.tsx
+54	88	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-161.tsx
+61	121	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-162.tsx
+88	142	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-163.tsx
+39	77	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-164.tsx
+file	/tmp/wave-11-eighth-validation/control-165.tsx
+37	73	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-166.tsx
+file	/tmp/wave-11-eighth-validation/control-167.tsx
+54	86	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-168.tsx
+26	50	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+79	105	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+80	104	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-169.tsx
+82	106	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-170.tsx
+70	94	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-171.tsx
+file	/tmp/wave-11-eighth-validation/control-172.tsx
+31	67	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-173.tsx
+31	62	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-174.tsx
+73	105	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+78	104	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-175.tsx
+49	76	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-176.tsx
+file	/tmp/wave-11-eighth-validation/control-177.tsx
+49	81	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-178.tsx
+49	71	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-179.tsx
+30	90	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-180.tsx
+35	69	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-181.tsx
+30	59	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+60	94	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-182.tsx
+58	92	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-183.tsx
+29	57	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+58	86	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-184.tsx
+39	59	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-185.tsx
+36	47	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-186.tsx
+36	47	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-187.tsx
+file	/tmp/wave-11-eighth-validation/control-188.tsx
+file	/tmp/wave-11-eighth-validation/control-189.tsx
+46	58	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-190.tsx
+file	/tmp/wave-11-eighth-validation/control-191.tsx
+file	/tmp/wave-11-eighth-validation/control-192.tsx
+59	72	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-193.tsx
+59	74	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-194.tsx
+71	109	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+81	107	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-195.tsx
+31	75	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+42	74	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-196.tsx
+file	/tmp/wave-11-eighth-validation/control-197.tsx
+18	52	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-198.tsx
+36	48	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-199.tsx
+61	73	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-200.tsx
+file	/tmp/wave-11-eighth-validation/control-201.tsx
+file	/tmp/wave-11-eighth-validation/control-202.tsx
+41	74	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-203.tsx
+41	78	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-204.tsx
+file	/tmp/wave-11-eighth-validation/control-205.tsx
+file	/tmp/wave-11-eighth-validation/control-206.tsx
+41	54	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-207.tsx
+41	78	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-208.tsx
+41	59	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-209.tsx
+41	57	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-210.tsx
+41	58	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-211.tsx
+29	57	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-212.tsx
+54	86	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-213.tsx
+55	79	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-214.tsx
+54	78	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-215.tsx
+file	/tmp/wave-11-eighth-validation/control-216.tsx
+68	86	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-217.tsx
+35	64	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+65	94	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-218.tsx
+48	68	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-219.tsx
+53	81	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-220.tsx
+55	85	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-221.tsx
+42	70	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-222.tsx
+41	69	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-223.tsx
+49	72	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-224.tsx
+file	/tmp/wave-11-eighth-validation/control-225.tsx
+33	56	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-226.tsx
+file	/tmp/wave-11-eighth-validation/control-227.tsx
+37	50	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-228.tsx
+49	63	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-229.tsx
+45	75	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-230.tsx
+45	75	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-231.tsx
+48	78	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-232.tsx
+48	60	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-233.tsx
+37	67	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-234.tsx
+37	67	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-235.tsx
+45	73	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-236.tsx
+41	71	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-237.tsx
+41	71	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-238.tsx
+45	78	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-239.tsx
+45	57	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-240.tsx
+31	61	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-241.tsx
+35	48	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-242.tsx
+63	125	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-243.tsx
+103	131	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+35	63	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+93	133	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-244.tsx
+72	89	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-245.tsx
+31	61	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+62	92	react/no-multi-comp	onlyOneComponent	Declare only one React component per file	0	0
+file	/tmp/wave-11-eighth-validation/control-246.tsx
+file	/tmp/wave-11-eighth-validation/control-247.tsx
+file	/tmp/wave-11-eighth-validation/control-248.tsx
+file	/tmp/wave-11-eighth-validation/control-249.tsx
+findings 218
