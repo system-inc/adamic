@@ -1,0 +1,117 @@
+Shared Markdown layout fixture proposal
+
+Base before/split: 13f1680026835bc8b71d5a8e790c0038d0deb3e6.
+Base overlap/combined/final gate: 69c73b375aae3e8132536fdd165654981b1980a5.
+The merge's tree equals 13f16800's tree (git diff --stat is empty).
+Branch: devtools/markdown-fixture-speed; owner reviews and lands it.
+
+Step                     Before     After (seconds, median of three)
+corpus                      0.003     0.002
+go-list-build               0.335     0.683
+go-list-run                 3.294     5.862
+go-doc-build                0.208     0.431
+go-doc-run                  0.174     0.828
+lower                      17.380    19.240
+sanitized-build            32.532    32.541
+sanitized-run               1.308     1.296
+source-node                 0.475     2.515
+backend-node                0.562     2.148
+leaks                       1.420     1.430
+doc-node                    0.482     2.377
+library-node                4.270     5.347
+release-build               8.057     8.848
+release-run                 0.180     0.206
+total                      71.206    56.276
+
+Variant                 Fixture    Sanitized build    Release build (seconds)
+before                    71.206             32.532            8.057
+split                     70.792             32.598            6.968
+concurrent                59.545             38.795            9.371
+combined                  56.276             32.541            8.848
+
+Individual fixture totals, seconds:
+before: 89.251763, 69.126276, 71.205687
+split: 70.791866, 90.562734, 65.908137
+concurrent: 59.544964, 50.293726, 60.908576
+combined: 57.651491, 53.253349, 56.275725
+
+Every sample is a separate package process on the same box. Scratch, uncommitted
+instrumentation used time.Now/time.Since and t.Logf, and is absent from this proposal.
+Commands:
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -run '^TestMarkdownWhitespaceLayout$' -v ./stage1/cohere/markdownblocks
+Split alone and combined additionally set ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=5.
+Final code supplies the equivalent native.Options{Split:true, Jobs:5} only for the
+shared fixture's two builds; other native helpers and the fresh canary keep their modes.
+Go's action cache and the existing runtime-library cache follow the requested command
+and native library contract; split object-cache hits/publication are bypassed.
+No tests, benchmarks, or correctness runs overlapped any measurement sample.
+The reported fixture total excludes the later whitespace-policy/mutant checks that
+also run under TestMarkdownWhitespaceLayout. Those still execute on every invocation.
+
+Phase medians do not sum to the wall total after overlap. Native build phases before
+include C emission, runtime preparation, compile and link; after, one shared C emission
+is separate (median 0.120098 s).
+The backend's source emission/write also moves into main-thread preparation before
+its timed Node observation. The exact phase samples and command wall/memory readings
+are in measurements.json. Neither source emission cost explains the remaining floor.
+
+Work overlaps the two Go builds, Go fixtures, lowering and fork Markdown parsing,
+then sanitized/release compilation and independent source/backend/document Node
+observations. Sanitized and release flags remain unchanged. All original comparisons,
+width poisoning, corpus inputs, optional keep/benchmark paths and leak checks remain.
+All workers return errors and buffered command output; await reports each error on
+its owning test goroutine. A deferred WaitGroup join prevents work outliving a failure.
+
+Target under 30 s was not reached. The best measured sample across both concurrent
+variants is 50.294 s; final combined's best is 53.253 s. The necessary dependency path
+is about 17-19 s load/lower, then 30-34 s sanitized compilation, then about 2.5 s for
+sanitized execution and leaks. Improving that path requires compiler/load/lower work
+outside these two test files or weakening native build checks. No check was weakened.
+The phase table identified C emission duplication; it is now performed once, but its
+0.1 s cost is small. No source or compiler implementation outside the allowed files changes.
+
+Setup assumption: the requested bash cloud/setup.sh --gate-inputs exits 2 on both
+bases (unsupported flag). The same script unconditionally installs the pinned width
+inputs. Ran bash cloud/setup.sh, then sourced /workspace/adamic-tools/env.sh. Node is
+v24.19.0 and all required inputs are present. Setup had no Go Forbidden fetch failure,
+so no retry was needed. Setup build-flags line:
+setup: build-flags commit=13f1680026835bc8b71d5a8e790c0038d0deb3e6 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.30 0.16 0.06 1/136 930 load-after=7.78 2.37 0.83 1/138 1729
+
+Memory: cgroup limit 17179869184 bytes (16 GiB). The kernel memory.peak is a
+lifetime cgroup high-water mark, not an isolated process RSS or a resettable per-run
+peak here. Baseline/split and all overlap/combined samples ended at 5231226880 bytes
+(4.872 GiB). Sampled memory.current maximum for overlap was 4351430656 bytes
+(4.053 GiB); combined 4139442176 bytes (3.855 GiB). Monitoring sampled every 100 ms.
+Full package kernel memory.peak: 8050589696 bytes (7.498 GiB); sampled peak 8043773952 bytes.
+Full uncached package PASS, no skips; command wall 821.838 s.
+Command:
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./stage1/cohere/markdownblocks
+The complete retained catch ledger matches mutant_evidence/catches-after.txt:
+68/68 catches = 62 output, three diagnostic, three Go oracle controls.
+The case_table ledger entry is an inline assertion in TestMdastIdentifierScalars,
+confirmed by its explicit caught-at-byte183 log; the other 67 are named subtests.
+TestMarkdownListLayout/unordered_marker PASS. Its unchanged branch invokes
+nativeMutant on a newly edited scratch source, performs a fresh sanitized clang
+build, and requires its output to equal mutated Node output and differ from Go.
+testBlockLayout and all mutation/canary code are byte-identical to the base.
+
+Negative controls (Go scratch overlays; never committed):
+comparison: serial and concurrent TestMarkdownWhitespaceLayout both exit 1;
+identical message, once, reported by the named test:
+Go document layout first byte difference at 0 (lengths 199383/199383)
+
+worker: serial and concurrent TestMarkdownWhitespaceLayout both exit 1;
+identical message, once, reported by the named test:
+Go layout: exit status 1
+go: reading overlay: open /tmp/markdown-fixture-deliberately-missing-overlay.json: no such file or directory
+
+The comparison control flips the first expected byte immediately after the Go
+list-fixture execution. The worker control gives the concurrent Go document build
+an actual missing overlay, while other branches are running. Both fail their named
+test with their original messages; worker output is buffered and never interleaved.
+Commands for each of comparison and worker, before and after:
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -run '^TestMarkdownWhitespaceLayout$' -overlay=/tmp/markdown-<version>-<control>-overlay.json ./stage1/cohere/markdownblocks
+
+go vet ./stage1/cohere/markdownblocks PASS. gofmt and git diff --check clean.
+Raw logs and scratch instrumentation remain local under /tmp/markdown-*; aggregate
+numbers and expected diagnostic messages are saved here, with no corpus/raw log upload.
