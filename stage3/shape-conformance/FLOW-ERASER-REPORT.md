@@ -1,6 +1,6 @@
 Built: shared allocation-flow query, declared field certificates, and a conservative scalar-record eraser; real tsc share remains unmeasured.
-Commits: lane 1 dependency merge 40ad020d; implementation and final report SHAs are recorded in the branch history.
-Commands: complete lower/IR packages, scoped Node/native/JavaScript oracle, vet, and 43-fixture graph count comparison; final logs listed below.
+Commits: lane 1 dependency merge 40ad020d; allocation flow, certificates and scalar eraser 59db5d63.
+Commands: lower 35.217s, IR 28.663s, scoped oracle 38.385s, vet and all 43 graph count assertions pass.
 Mutants: ignore one nonconforming shape and ignore readiness both finish with wrong output and are caught by pinned semantic assertions.
 Uncovered: broader assignability, nested/container/callback flows, staged-after-store erasure, native host view metadata, per-cast lookup emission, and the 2,936-site real share.
 
