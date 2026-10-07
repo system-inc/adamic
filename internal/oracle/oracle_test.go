@@ -254,6 +254,7 @@ var fixtures = []struct {
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	{"internal/oracle/testdata/borrow_loop.a", true, false},
+	{"internal/oracle/testdata/borrow_loop_calls.a", true, false},
 	{"internal/oracle/testdata/borrow_global_call.a", true, false},
 	{"internal/oracle/testdata/borrow_element_throw.a", true, false},
 	{"internal/oracle/testdata/borrow_element_virtual_store.a", true, false},

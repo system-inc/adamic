@@ -1438,6 +1438,69 @@ Logs: `/tmp/loop-hold-setup.log`, `/tmp/loop-hold-focus.log`,
 `/tmp/loop-hold-counts-kept.md`; preserved generated C is
 `/tmp/loop-hold-before.c` and `/tmp/loop-hold-after.c`.
 
+### Calls that can free a loop's array (coverage, October 7, 2026)
+
+`borrow_loop_calls.a` sits on `2b63ccb`, which is `6c6417a` plus the iterator
+borrowing a stable local or parameter. Both proofs are one fact, so one fixture
+covers both. The strings are built at runtime. A callee that pops (including
+through another parameter holding the same array, a branch, a try, or a deeper
+call), spreads, maps, stores an index, or is reached virtually keeps the
+iterator's count and retains the binding. A callee that reads a length, forwards
+to such a read, or only pushes does not: the binding is borrowed and the
+iterator takes no count. `TestLoopCallCoverage` checks that plan and the
+iterator temporary for all 26 loops.
+
+Two elided loops are cases a call really can free, and another owner still holds
+the array. `scanCopy` copies a global into a local and then calls a function
+that replaces the global; the local's count is the owner. `scanLent` takes the
+global as a borrowed parameter and calls the function that replaces it.
+`reportQuiet` does lend its global, because that callee never touches it.
+`scanLent` does not: lending follows the callee and sees the assignment, so the
+call retains. The loop then borrows. Replacing the global drops the global's
+count and leaves the argument's. Both labels print, and the global's length is
+then 0. A field copied into a local survives a call that replaces the field.
+Iterating the field expression directly does not borrow; the iterator holds
+that read.
+
+| Mutant | Catcher |
+|---|---|
+| A direct call counts as unchanging | ASan heap-use-after-free in `popLocal`, the element `remove` freed |
+| Global lending does not follow callees | ASan heap-use-after-free in `scanLent`, after `resetLent` releases the global |
+
+Run `source /opt/adamic-tools/env.sh` and
+`python3 internal/native/testdata/run-loop-call-mutants.py`. Each mutant is
+restored. Logs are `/tmp/adamic-loop-call-mutants/<mutant>.log`. Both exited 1
+with that ASan report and no other failure mode.
+
+The new counts row is 263/261/189/355/25/2. `TestCountsAreRecorded -update-counts`
+regenerated the whole table after merging `codex/loop-array-hold` into `e8ba3d5`.
+Call targets from that main changed the rows the two sides had disagreed on:
+`library_object_keys.a` 32/72 retains/releases, `library_object_is.a` 21/190,
+`class_as_interface.a` 345/510, `optional_class_method.a` 44/71,
+`class_inheritance_memory.a` 20/58, `class_inheritance_generic.a` 85/148,
+`class_inheritance_interface.a` 44/70, `class_inheritance_conditional.a` 146/249,
+`devirtualize.a` 23/63, `user_iterators.a` 465/914, and `prompt_then_read.a`
+2/2/2/4/2/0. The direct-call mutant now skips `CallTargets` instead of the old
+`Virtual == 0` test, which this main no longer has. It still frees the element
+under `popLocal`.
+
+```text
+source /opt/adamic-tools/env.sh
+go test ./internal/native -run 'TestLoopCallCoverage|TestLoopArrayHoldC|TestLoopBorrowPlan|TestGlobalArgumentLending|TestNbodyBorrowedLoopC' -count=1 -timeout 10m
+ok github.com/system-inc/adamic/internal/native 0.266s
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 22.942s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/borrow_loop' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/oracle 0.943s
+python3 internal/native/testdata/run-loop-call-mutants.py
+call-unchanging and touches-ignores-callees caught; exit 0
+```
+
+The oracle run is source Node, the JavaScript backend, release native, ASan,
+UBSan, and LeakSanitizer for this fixture. The whole repository gate was not
+run. Closure-body binding optimization, destructuring, and write-only global
+effect summaries remain uncovered, as they were before this fixture.
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.
