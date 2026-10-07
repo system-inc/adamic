@@ -1,0 +1,5 @@
+--- FAIL: TestFunctionCountersDoNotMove (0.00s)
+    counters_test.go:52: later function cache moved: missing static adamic_slot_cache adamic_cache_adamic_function_1_second_1;
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.010s
+FAIL

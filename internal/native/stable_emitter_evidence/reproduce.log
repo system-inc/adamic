@@ -1,0 +1,19 @@
+temporary caught exit 1
+cache caught exit 1
+region-facts caught exit 1
+=== RUN   TestReportLintUnitChanges
+    unit_changes_probe_test.go:328: add-function: body/state units changed=29/29 shared-header-changed=true effective-invalidations=29
+    unit_changes_probe_test.go:328: add-temporary: body/state units changed=20/29 shared-header-changed=true effective-invalidations=29
+    unit_changes_probe_test.go:328: 14-to-array-length: body/state units changed=20/29 shared-header-changed=true effective-invalidations=29
+--- PASS: TestReportLintUnitChanges (2.47s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	2.473s
+
+=== RUN   TestReportLintUnitChanges
+    unit_changes_probe_test.go:328: add-function: body/state units changed=29/29 shared-header-changed=true effective-invalidations=29
+    unit_changes_probe_test.go:328: add-temporary: body/state units changed=19/29 shared-header-changed=true effective-invalidations=29
+    unit_changes_probe_test.go:328: 14-to-array-length: body/state units changed=1/29 shared-header-changed=false effective-invalidations=1
+--- PASS: TestReportLintUnitChanges (2.49s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	2.502s
+

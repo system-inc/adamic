@@ -59,6 +59,7 @@ func C(program *ir.Program) string {
 	for index, function := range program.Functions {
 		for _, inRegion := range emitter.regionVariants(index) {
 			emitter.inRegion = inRegion
+			emitter.resetCounters()
 			fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
 			emitter.indent = 1
 			emitter.functionIndex = index
@@ -69,6 +70,7 @@ func C(program *ir.Program) string {
 		}
 	}
 	emitter.inRegion = false
+	emitter.resetCounters()
 	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
@@ -158,8 +160,9 @@ type emitter struct {
 	self     bool
 	lent     bool
 
-	// temporaries counts the C temporaries made so far, for unique names.
+	// temporaries and caches count names within the body being emitted.
 	temporaries int
+	caches      int
 
 	// owned is the string temporaries the statement being emitted releases when it ends.
 	owned []string
@@ -209,4 +212,12 @@ func (e *emitter) line(format string, arguments ...any) {
 func (e *emitter) temporary() string {
 	e.temporaries++
 	return fmt.Sprintf("adamic_temporary_%d", e.temporaries)
+}
+
+// resetCounters starts a function body (each region variant has its own counters).
+func (e *emitter) resetCounters() {
+	e.temporaries = 0
+	e.caches = 0
+	// Region facts use C temporary names, whose lifetime now ends with this body.
+	e.regionValues = map[string]bool{}
 }

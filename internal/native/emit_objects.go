@@ -253,8 +253,15 @@ func (e *emitter) methodThunk(function int) string {
 
 // cache declares a field cache for one place in the program that finds a field.
 func (e *emitter) cache() string {
-	e.temporaries++
-	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
+	e.caches++
+	owner := "main"
+	if e.function != nil {
+		owner = e.functionName(e.functionIndex)
+		if e.inRegion {
+			owner = e.regionFunctionName(e.functionIndex)
+		}
+	}
+	name := fmt.Sprintf("adamic_cache_%s_%d", owner, e.caches)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
 }
