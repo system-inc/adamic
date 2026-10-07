@@ -58,6 +58,7 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -231,6 +232,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
 	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	if expression.Direct > 0 {
+		call = fmt.Sprintf("%s(%s, %s)", e.functionName(expression.Direct-1), closure, packed)
+	}
 	if receiver != "" {
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
@@ -240,13 +244,17 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	if expression.Returns == 0 {
 		e.line("%s;", call)
-		e.closureThrown()
+		if e.program.ClosureMayThrow(expression) {
+			e.checkThrown()
+		}
 		return "0"
 	}
 	result := e.temporary()
 	e.line("adamic_value %s = %s;", result, call)
 	// A throw gives back a zero value, nothing to let go.
-	e.closureThrown()
+	if e.program.ClosureMayThrow(expression) {
+		e.checkThrown()
+	}
 	if expression.Returns.IsReference() {
 		// A closure's result comes back owned.
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))

@@ -428,3 +428,8 @@ into that buffer. The generic iterator retains the array. Existing heap freeing
 releases owners, buffers and iterators; no new global cache or static counter is
 introduced. This entry records this extension, not an inventory of earlier units.
 
+## Ordinary async environment cleanup
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |

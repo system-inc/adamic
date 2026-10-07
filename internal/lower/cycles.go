@@ -65,8 +65,8 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
 	// Only their runtime-owned protocol edges are exempt. Source types, including a class
 	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
-	if l.result.Async != nil {
-		for _, generated := range l.result.Async.Generated {
+	if l.result.HasAsync() {
+		for _, generated := range l.result.Generated {
 			if !fresh.RuntimeBreaksCycles(generated) {
 				return fmt.Errorf("lower: unaudited generated cycle identity")
 			}
@@ -121,10 +121,14 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			continue
 		}
 		if finder.reaches(proven, cycleNode{cell: local + 1}) {
+			kind := ""
+			if declared.Function >= 0 && l.result.Functions[declared.Function].Async {
+				kind = "async frame capture cycle: "
+			}
 			return &Refused{
 				Where: l.program.Where(node),
-				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-				Fix:   "write the function as a function declaration (function " + declared.Name + "() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+				What:  kind + "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 			}
 		}
 	}
@@ -142,7 +146,7 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(proven):
 		f.use(proven, where)
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -198,7 +202,7 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 	if f.isFunction(proven) {
 		return
 	}
-	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -373,6 +377,20 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			if node == target {
 				return true
 			}
+			// An interior async cell retains its owner, not just its declared value.
+			// Completion drops private slots; captured slots remain reachable through
+			// any escaped cell. Follow every such slot irrespective of signature.
+			local := f.l.result.Locals[node.cell-1]
+			if local.EnvironmentCell && local.Function >= 0 {
+				owner := f.l.result.Functions[local.Function]
+				if owner.Async {
+					for _, held := range owner.FrameEnvironment {
+						if f.l.result.Locals[held].Captured {
+							queue = append(queue, cycleNode{cell: held + 1})
+						}
+					}
+				}
+			}
 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
 				queue = append(queue, cycleNode{proven: proven})
 			}
@@ -423,7 +441,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
-		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
 				queue = append(queue, cycleNode{proven: argument})
 			}

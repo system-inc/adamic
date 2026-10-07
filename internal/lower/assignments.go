@@ -40,6 +40,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
+	if l.result.Locals[local].NestedFunction > 0 {
+		return nil, l.notYet(target, "rebinding a nested function declaration")
+	}
 	if l.caught[l.symbol(target)] {
 		return nil, l.notYet(target, "assigning to what a catch caught")
 	}
