@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(fieldReadinessRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
@@ -360,7 +361,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		if statement.Define {
 			e.line("Object.defineProperty(%s, %s, {value: %s, writable: true, enumerable: %t, configurable: true});", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"))
 		} else {
-			e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
@@ -633,10 +634,22 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
-			return fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+			object = fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+		}
+		unready := []string{}
+		for _, field := range expression.Fields {
+			if field.Uninitialized {
+				unready = append(unready, quote(field.Name))
+			}
+		}
+		if len(unready) > 0 {
+			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
 		return object
 	case ir.Property:
+		if expression.Readiness != "" {
+			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional)
+		}
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}

@@ -1127,3 +1127,30 @@ checked-read share is claimed by this decision entry.
 Tagged (c) lands first. Untagged checked views have a deadline of 18:00 UTC on
 October 8. If that step cannot finish, report it early with the highest-exposure
 untagged locations, clearly distinguishing static counts from measured hot paths.
+
+## Non-null assertion implementation
+
+`e!` now lowers through the existing nullish coalescing panic path. It evaluates
+its operand once, checks the stored maybe pair or null reference (including mixed
+unions), and returns the non-null representation. The diagnostic captures the
+assertion's original source text, including `!`. Panic flushes stdout, prints
+`adamic: panic: non-null assertion failed: <expression text> is null or undefined`
+to stderr and exits 70 without running catch or finally.
+
+Numbers and booleans in maybe pairs, optional references, mixed unions containing
+undefined, and nullable match results are covered. Present zero, false, empty
+string and NaN pass. Assertions on already present types emit no additional check;
+reads narrowed from nullable storage keep a check, including after calls or
+capture writes. No new flow elision or reference representation was introduced.
+
+The nine non_null oracle fixtures pass uncached, with successes held to source
+Node and failures held to the checked JavaScript backend. Mutants removing the
+native check, rejecting zero, false or empty string, and evaluating twice fail
+those comparisons. A changed message fails the exact-text lowering test; ignoring
+nullable storage after a capture write fails the oracle under UBSan.
+
+### Shared field readiness representation
+
+Each native object carries one initialized byte per field after its `adamic_value` slots, indexed by its actual shape. `adamic_object_initialized(const adamic_object *object)` exposes those bytes; `adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized)` updates a named slot. Fresh ordinary fields are initialized; an `ir.Field.Uninitialized` starts clear. Writes set the bit. The bytes share the object's allocation, including region allocations.
+
+Checked reads use `adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression)` in native code and `adamicReadField(object, name, expression, optional = false)` in JavaScript. `ir.Property.Readiness` supplies the source expression. Missing or uninitialized fields panic with `read before assignment: field '<name>' in <expression>`. The state is independent of the value, so zero, false, empty strings, and assigned undefined do not mean uninitialized. JavaScript keeps state in a WeakMap, preserving own keys.

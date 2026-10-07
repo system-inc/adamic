@@ -3,13 +3,16 @@
 #include "adamic.h"
 
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * sizeof object->slots[0], adamic_kind_object);
+	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 1), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+	memset(adamic_object_initialized(object), 1, shape->count);
 	return object;
 }
 
@@ -21,6 +24,9 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 		adamic_slot_cache cache = {NULL, 0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
 		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		if (accessor == NULL) {
+			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
+		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
 		}
@@ -114,4 +120,26 @@ adamic_value *adamic_object_optional_field(const adamic_object *object, const ch
 		return NULL;
 	}
 	return &((adamic_object *)object)->slots[cache->index];
+}
+
+// The caller supplies the source expression, so both backends name the same failed read.
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
+	adamic_value *slot = adamic_object_optional_field(object, name, cache);
+	if (slot == NULL || !adamic_object_initialized(object)[cache->index]) {
+		size_t capacity = strlen(name) + strlen(expression) + sizeof "read before assignment: field '' in ";
+		char *message = malloc(capacity);
+		if (message == NULL) {
+			static const char failure[] = "out of memory";
+			adamic_panic(failure, sizeof failure - 1);
+		}
+		int length = snprintf(message, capacity, "read before assignment: field '%s' in %s", name, expression);
+		adamic_panic(message, (size_t)length);
+	}
+	return slot;
+}
+
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized) {
+	adamic_slot_cache cache = {NULL, 0};
+	(void)adamic_object_field(object, name, &cache);
+	adamic_object_initialized(object)[cache.index] = initialized;
 }
