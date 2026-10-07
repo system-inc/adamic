@@ -252,3 +252,9 @@ Markdown baseline: after installing documented pinned scratch dependencies emoji
 Only counts conflicted; regenerated on Linux (26.986s). All four enum value/collection/switch/import programs retain their exact incoming drivers and expected observations. Whole uncached oracle passed 178.401s; vet passed. Open numeric enums required no driver correction. Existing enum semantic and cleanup mutants ran in the full oracle. No new failure or stage3 record change. Logs: /tmp/landing-batch-3-18-*.log.
 
 Pre-c-1 focused gap baseline: CSS optional-boolean condition now lowers, selector undefined switch now reports a case type mismatch, Markdown recursive state now reports a first-class nested function reference from another nested function. Node observations remain unchanged. Logs: /tmp/landing-batch-3-pre-c1-{gaps,gap-admission}.log. These precede the c-1 merges.
+
+### Item 19: cohere-dry-guard
+
+Clean exact merge cf94c23ba. Reused cb2c256 as f01d4f985 for predicates and proven relations. Guard found moved cast proof, retired blanket definite-assignment refusal, unlisted record judgments and existing regression references. Manifest now records those locations with the existing ownership decisions and retiring task. No check or refusal was removed. Optional-widening is active, so the old pending-function rename mutant survived legitimately; retired_landing now establishes a green synthetic pending-only baseline and renames its function, which the unchanged guard rejects as stale. Guard, all seven mutants (lifted_header, commit_source, unlisted_rule, assembled_rule, removed_entry, stale_entry, retired_landing) passed 4.293s; vet passed; Linux counts passed 27.589s unchanged. Logs: /tmp/landing-batch-3-19-*.log.
+
+The c-1 histories introduce no extra call-targets or MayThrow commits beyond main. 2dbee1148, 5af7bfbc6 and 3ab8f94c1 are already ancestors of this tip. call-targets remains skipped as directed.

@@ -453,19 +453,25 @@ func TestMirrorMutants(t *testing.T) {
 				write(expectedFile, []byte("package retired\n"))
 				expectedAction = "remove its"
 			case "retired landing":
-				for _, entry := range entries {
-					if entry.PendingFunction != "" {
-						expectedFile = entry.Path
-						source, err := os.ReadFile(filepath.Join(root, entry.Path))
-						if err != nil {
-							t.Fatal(err)
-						}
-						// Rename only the declaration, leaving the other active rule in this file intact.
-						source = []byte(strings.Replace(string(source), "func (l *lowering) "+entry.PendingFunction+"(", "func (l *lowering) retiredLanding(", 1))
-						write(entry.Path, source)
-						break
-					}
+				// The actual optional-widening landing is implemented now. Exercise a
+				// pending-only entry in scratch, so an active diagnostic cannot mask retirement.
+				pending := entries[removedIndex]
+				pending.Path = "pending_landing.go"
+				pending.Evidence = ""
+				pending.PendingFunction = "pendingLanding"
+				expectedFile = pending.Path
+				write(expectedFile, []byte("package scratch\nfunc (l *lowering) pendingLanding() {}\n"))
+				withPending := append(append([]mirror{}, entries...), pending)
+				changed, err := json.Marshal(withPending)
+				if err != nil {
+					t.Fatal(err)
 				}
+				write("cohere-mirrors.json", changed)
+				baseline, err := checkMirrors(root)
+				if err != nil || len(baseline) != 0 {
+					t.Fatalf("pending mutant baseline: %v, %v", baseline, err)
+				}
+				write(expectedFile, []byte("package scratch\nfunc (l *lowering) retiredLanding() {}\n"))
 				expectedAction = "remove its"
 			}
 			problems, err := checkMirrors(root)

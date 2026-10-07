@@ -101,12 +101,12 @@
     "retiring_task": "xjdce2d"
   },
   {
-    "path": "internal/lower/cast.go",
+    "path": "internal/lower/cast_proof.go",
     "kind": "rule",
     "rule_id": "adamic/no-unchecked-cast",
     "counterpart": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
     "decision": "a",
-    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Ruling 22715 requires unsupported checked downcasts to use an Adamic-only id; blocked until cohere exposes its checked-downcast judgment by reference. Keep the eventual id choice separate from codex/checked-downcasts.",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. The checked-cast proof now lives in cast_proof.go; emission consumes that proof.",
     "retiring_task": "xjdce2d"
   },
   {
@@ -128,24 +128,13 @@
     "retiring_task": "xjdce2d"
   },
   {
-    "path": "internal/lower/refusals.go",
-    "kind": "rule",
-    "rule_id": "adamic/no-definite-assignment",
-    "counterpart": "cohere/internal/lint/rules/adamic/no_definite_assignment.go",
-    "decision": "a",
-    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. The refusal currently has no rule id; evidence pins its diagnostic wording.",
-    "retiring_task": "xjdce2d",
-    "evidence": "a definite assignment assertion !"
-  },
-  {
     "path": "internal/lower/invariance.go",
     "kind": "rule",
     "rule_id": "adamic/no-optional-widening",
     "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
     "decision": "a",
-    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Pending on codex/no-optional-widening: main has no optional-widening diagnostic. The existing relation walker is the landing site, not evidence of an implemented check.",
-    "retiring_task": "xjdce2d",
-    "pending_function": "widened"
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Optional-widening is now an implemented relation check in this file.",
+    "retiring_task": "xjdce2d"
   },
   {
     "path": "internal/lower/proven_relations.go",
@@ -163,6 +152,105 @@
     "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
     "decision": "a",
     "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Proven satisfies and erased upcasts now enforce this obligation in their common relation proof.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/cast_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-unchecked-cast",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/enums_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/library_node_fs_file_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/library_node_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/optional_widening_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/records.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "a",
+    "reason": "Own-key record lowering enforces the existing cohere-owned obligation; Adamic will consume its judgment by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/records.go",
+    "kind": "rule",
+    "rule_id": "adamic/single-spread",
+    "counterpart": "cohere/internal/lint/rules/adamic/single_spread.go",
+    "decision": "a",
+    "reason": "Own-key record lowering enforces the existing cohere-owned obligation; Adamic will consume its judgment by reference.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/oracle/arrow_block_view_site_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/oracle/cast_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-unchecked-cast",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/oracle/generic_maybe_undefined_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/oracle/spread_positions_test.go",
+    "kind": "rule",
+    "rule_id": "adamic/single-spread",
+    "counterpart": "cohere/internal/lint/rules/adamic/single_spread.go",
+    "decision": "a",
+    "reason": "The regression pins the cohere-owned soundness obligation used by the compiler; no judgment implementation is copied.",
     "retiring_task": "xjdce2d"
   }
 ]
