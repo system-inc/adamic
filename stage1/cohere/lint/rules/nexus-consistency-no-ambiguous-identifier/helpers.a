@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
 // Shared regex table rows nexus/consistency_no_ambiguous_identifier.go:17-19.
 // MatchString asks only for existence; no global iteration state is needed.
@@ -44,4 +45,34 @@ export function eventContext(context: RuleContext, index: number): string {
         }
     }
     return 'unclear';
+}
+
+// foreignName is whether an identifier names something this file does not declare here: a property read
+// through another object, a property or binding key, an import or export name, a qualified or type name
+// part, or a JSX tag or attribute. The rule judges only names the file chose.
+export function foreignName(context: RuleContext, index: number, node: ParseNode): boolean {
+    const owner = context.parent(index);
+    if(owner < 0) { return false; }
+    const parent = context.node(owner);
+    const first = parent.children[0] ?? -1;
+    const last = parent.children[parent.children.length - 1] ?? -1;
+    switch(parent.kind) {
+        case 'PropertyAccessExpression': return last === index && context.kind(first) !== 'ThisKeyword';
+        case 'PropertyAssignment':
+        case 'PropertySignature': return context.name(owner) === index;
+        case 'BindingElement':
+            if(first !== index || parent.children.length < 2) { return false; }
+            return context.scanAt(node.end) === 'ColonToken';
+        case 'ImportSpecifier':
+        case 'ExportSpecifier':
+        case 'NamespaceImport':
+        case 'ImportClause': return true;
+        case 'QualifiedName': return last === index;
+        case 'TypeReference': return first === index;
+        case 'JsxOpeningElement':
+        case 'JsxClosingElement':
+        case 'JsxSelfClosingElement':
+        case 'JsxAttribute': return true;
+        default: return false;
+    }
 }

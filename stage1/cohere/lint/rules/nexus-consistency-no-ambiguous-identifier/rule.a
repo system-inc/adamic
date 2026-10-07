@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { comparator, eventContext, singleLowercaseLetter } from './helpers.a';
+import { comparator, eventContext, foreignName, singleLowercaseLetter } from './helpers.a';
 import { messageNoAmbiguousE, messageNoSingleLetter, messageNoUnderscore } from './messages.a';
 const name = 'nexus/consistency-no-ambiguous-identifier';
 export class Rule {
@@ -9,7 +9,7 @@ export class Rule {
     visit(node: ParseNode, index: number): void {
         const text = node.text;
         if(text !== '_' && !singleLowercaseLetter.test(text)) { return; }
-        if(this.context.foreignName(index, node)) { return; }
+        if(foreignName(this.context, index, node)) { return; }
         if(text === 'x' || text === 'y' || text === 'z') { return; }
         if(text === '_') { this.report(node, 'noUnderscore', messageNoUnderscore); return; }
         if(text === 'e') { this.report(node, 'noAmbiguousE', messageNoAmbiguousE(eventContext(this.context, index))); return; }
