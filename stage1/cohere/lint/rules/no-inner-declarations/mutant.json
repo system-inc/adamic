@@ -1,0 +1,6 @@
+{
+  "Name": "wrong-enclosing-scope",
+  "File": "rule.a",
+  "From": "let body = 'program';",
+  "To": "let body = 'function body';"
+}

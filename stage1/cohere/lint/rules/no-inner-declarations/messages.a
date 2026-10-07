@@ -1,0 +1,3 @@
+export function message(type: string, body: string): string {
+    return `Move ${type} declaration to ${body} root. A declaration written inside a block does not belong to that block: \`var\` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.`;
+}
