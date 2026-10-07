@@ -1,0 +1,6 @@
+{"suite": "adamic-no-definite-assignment", "cases": 18, "bytes": 10617, "mutants": ["definite_assignment_subscription_lost"], "backends": ["Node", "emitted", "sanitized native"], "byteOnly": true}
+{"suite": "base-security-require-context-access", "cases": 54, "bytes": 15596, "mutants": ["context_access_alias_lost"], "backends": ["Node", "emitted", "sanitized native"], "byteOnly": true}
+{"suite": "nexus-consistency-no-screaming-snake-case", "cases": 23, "bytes": 7274, "mutants": ["screaming_environment_exemption_lost"], "backends": ["Node", "emitted", "sanitized native"], "byteOnly": true}
+{"suite": "nexus-import-no-forbidden-source", "cases": 24, "bytes": 4756, "mutants": ["forbidden_exact_match_widened"], "backends": ["Node", "emitted", "sanitized native"], "byteOnly": true}
+{"suite": "nexus-import-require-path-alias", "cases": 43, "bytes": 8037, "mutants": ["path_alias_longest_directory_reversed"], "backends": ["Node", "emitted", "sanitized native"], "byteOnly": true}
+PASS owned parking fixture and mutant gates
