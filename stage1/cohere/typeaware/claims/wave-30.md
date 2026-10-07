@@ -164,3 +164,13 @@ sanitizers and emitted JavaScript. Unpaired surrogates explicitly refuse. Main
 remains c01907a70; the announced ab70f38d4 shared harness is not on main. Full
 JSX rule statuses and blockers remain unchanged. No new rules claimed.
 See ../WAVE_30_UNICODE_REPORT.md and validation-wave-30-unicode/.
+
+Named-kind correction: the three partial JSX rule.json declarations now contain
+only named kinds, matching the announced registry's ast.Kind spellings. Numeric
+metadata is removed. Their owned check compares names against pinned Go and
+rejects a changed name for each descriptor. All component comparisons and four
+behavior mutants re-pass. The remaining shared prerequisite is native JSX
+extraction and handed-node integration, not a numeric parser API. Earlier numeric
+API comments are superseded by Ahra's correction. These descriptors remain
+partial component metadata, not registered full rules; no new claim is made.
+See ../WAVE_30_KIND_NAMES_REPORT.md.

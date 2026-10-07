@@ -1,0 +1,11 @@
+=== RUN   TestWave30JsxComponents
+    wave_30_jsx_components_test.go:102: jsx-fragments: wrong-name descriptor mutant caught by pinned Go kind-name comparison
+    wave_30_jsx_components_test.go:159: fragments: 1215 Go bytes match native, sanitizer and emitted JavaScript; successful-exit mutant caught only by Go at byte 98
+    wave_30_jsx_components_test.go:102: jsx-no-undef: wrong-name descriptor mutant caught by pinned Go kind-name comparison
+    wave_30_jsx_components_test.go:159: undef: 12037 Go bytes match native, sanitizer and emitted JavaScript; successful-exit mutant caught only by Go at byte 22
+    wave_30_jsx_components_test.go:102: jsx-no-constructed-context-values: wrong-name descriptor mutant caught by pinned Go kind-name comparison
+    wave_30_jsx_components_test.go:159: context: 148002 Go bytes match native, sanitizer and emitted JavaScript; successful-exit mutant caught only by Go at byte 44006
+    wave_30_jsx_components_test.go:186: Unicode astral escape mutant exits successfully and is caught only by Go at byte 13368
+--- PASS: TestWave30JsxComponents (11.50s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	11.511s
