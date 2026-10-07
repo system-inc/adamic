@@ -1,0 +1,88 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { collapseCloneNode } from '../collapse_clone_node.a';
+import type { CollapseCopyNode, CollapseNodeList } from '../collapse_clone_node.a';
+import { collapseCloneNodes } from '../collapse_clone_nodes.a';
+import { collapseRemoveNodes } from '../collapse_remove_nodes.a';
+function units(value: string): string {
+    let result = `${value.length}:`;
+    for (let index = 0; index < value.length; index++) { result += `${value.charCodeAt(index)},`; }
+    return result;
+}
+function listValue(json: OptionsJson, index: number): CollapseNodeList {
+    const row = json.node(index).children;
+    const values: number[] = [];
+    for (const child of json.node(row[3] ?? panic('list values')).children) { values.push(Number(json.node(child).text)); }
+    return { nil: json.node(row[0] ?? panic('nil')).text === 'true', length: Number(json.node(row[1] ?? panic('length')).text), capacity: Number(json.node(row[2] ?? panic('capacity')).text), values };
+}
+function cloneEntry(arena: readonly CollapseCopyNode[], index: number, allocate: (node: CollapseCopyNode) => number): number {
+    return collapseCloneNode(arena, index, list => collapseCloneNodes(list, child => cloneEntry(arena, child, allocate)), allocate);
+}
+function identity(index: number, originalCount: number): number { return index === -1 ? -1 : index < originalCount ? index : -2; }
+function emitList(list: CollapseNodeList, arena: readonly CollapseCopyNode[], originalCount: number, keys: readonly string[], seen: Map<number, number>): void {
+    console.log(`${list.nil}:${list.length}:${list.capacity}`);
+    for (let position = 0; position < list.capacity; position++) { console.log(`${identity(list.values[position] ?? panic('backing'), originalCount)}`); }
+    for (let position = 0; position < list.length; position++) { emitNode(list.values[position] ?? panic('node index'), arena, originalCount, keys, seen); }
+}
+function emitNode(index: number, arena: readonly CollapseCopyNode[], originalCount: number, keys: readonly string[], seen: Map<number, number>): void {
+    if (index === -1) { console.log('nil'); return; }
+    const old = seen.get(index);
+    if (old !== undefined) { console.log(`ref:${old}`); return; }
+    const id = seen.size; seen.set(index, id);
+    console.log(`node:${id}:${identity(index, originalCount)}`);
+    const node = arena[index] ?? panic('observation node');
+    for (const value of [node.kind, node.selector, node.name, node.params, node.property, node.value]) { console.log(units(value)); }
+    console.log(`${node.valuePresent}:${node.important}:${node.contextPresent}`);
+    let count = 0;
+    for (const key of keys) { if (node.contextPresent && node.context.has(key)) { count++; } }
+    console.log(`${count}`);
+    for (const key of keys) { if (node.contextPresent && node.context.has(key)) { console.log(units(key)); console.log(units(node.context.get(key) ?? panic('context value'))); } }
+    emitList(node.children, arena, originalCount, keys, seen);
+}
+function emit(list: CollapseNodeList, arena: readonly CollapseCopyNode[], originalCount: number, keys: readonly string[]): void { emitList(list, arena, originalCount, keys, new Map<number, number>()); }
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line); const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const fields = json.node(root).children;
+    const arena: CollapseCopyNode[] = [];
+    for (const item of json.node(fields[0] ?? panic('arena')).children) {
+        const row = json.node(item).children; const context = new Map<string, string>();
+        for (const entry of json.node(row[9] ?? panic('context')).children) {
+            const pair = json.node(entry).children;
+            context.set(json.node(pair[0] ?? panic('key')).text, json.node(pair[1] ?? panic('value')).text);
+        }
+        arena.push({ kind: json.node(row[0] ?? panic('kind')).text, selector: json.node(row[1] ?? panic('selector')).text, name: json.node(row[2] ?? panic('name')).text, params: json.node(row[3] ?? panic('params')).text, property: json.node(row[4] ?? panic('property')).text, value: json.node(row[5] ?? panic('value')).text,
+            valuePresent: json.node(row[6] ?? panic('present')).text === 'true', important: json.node(row[7] ?? panic('important')).text === 'true', contextPresent: json.node(row[8] ?? panic('context presence')).text === 'true', context, children: listValue(json, row[10] ?? panic('children')) });
+    }
+    const originalCount = arena.length;
+    const originalValues: number[] = []; for (let index = 0; index < originalCount; index++) { originalValues.push(index); }
+    const originalList: CollapseNodeList = { nil: false, length: originalCount, capacity: originalCount, values: originalValues };
+    const roots = listValue(json, fields[1] ?? panic('roots'));
+    const removed = new Map<number, boolean>();
+    for (const item of json.node(fields[2] ?? panic('removed')).children) {
+        const row = json.node(item).children; removed.set(Number(json.node(row[0] ?? panic('removed index')).text), json.node(row[1] ?? panic('removed value')).text === 'true');
+    }
+    const chosen = Number(json.node(fields[3] ?? panic('chosen')).text);
+    const keys: string[] = []; for (const item of json.node(fields[4] ?? panic('keys')).children) { keys.push(json.node(item).text); }
+    let out: CollapseNodeList = { nil: true, length: 0, capacity: 0, values: [] };
+    if (args[1] === 'node') { out = { nil: false, length: 1, capacity: 1, values: [cloneEntry(arena, chosen, node => { const index = arena.length; arena.push(node); return index; })] }; }
+    else if (args[1] === 'list') { out = collapseCloneNodes(roots, child => cloneEntry(arena, child, node => { const index = arena.length; arena.push(node); return index; })); }
+    else { out = collapseRemoveNodes(arena, roots, removed); }
+    emit(out, arena, originalCount, keys); emit(originalList, arena, originalCount, keys);
+    if (out.length > 0) {
+        const index = out.values[0] ?? panic('out first');
+        if (index !== -1) {
+            const node = arena[index] ?? panic('out node'); node.value = 'changed';
+            if (node.contextPresent) { node.context.set('slot-probe', 'written'); }
+            if (node.children.length > 0) { const child = node.children.values[0] ?? panic('out child'); if (child !== -1) { const value = arena[child] ?? panic('child node'); value.selector = 'child-changed'; } }
+        }
+    }
+    emit(originalList, arena, originalCount, keys);
+    if (chosen !== -1) { const node = arena[chosen] ?? panic('chosen node'); if (node.contextPresent) { node.context.set('slot-probe', 'source-write'); } }
+    if (roots.length > 0) { roots.values[0] = -1; }
+    emit(out, arena, originalCount, keys);
+}

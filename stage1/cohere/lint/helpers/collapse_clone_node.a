@@ -1,0 +1,18 @@
+// BLOCKED: native oracle pending; see SLOT01_WAVE11_REPORT.md. No readiness credit.
+import { panic } from 'adamic';
+export interface CollapseNodeList { readonly nil: boolean; readonly length: number; readonly capacity: number; readonly values: number[]; }
+export interface CollapseCopyNode {
+    kind: string; selector: string; name: string; params: string; property: string; value: string;
+    valuePresent: boolean; important: boolean; contextPresent: boolean; context: Map<string, string>; children: CollapseNodeList;
+}
+export function collapseCloneNode(arena: readonly CollapseCopyNode[], index: number, cloneChildren: (children: CollapseNodeList) => CollapseNodeList, allocate: (node: CollapseCopyNode) => number): number {
+    if (index === -1) { return -1; }
+    const node = arena[index] ?? panic('clone node missing');
+    const context = new Map<string, string>();
+    if (node.contextPresent) {
+        for (const key of node.context.keys()) { context.set(key, node.context.get(key) ?? panic('context key missing')); }
+    }
+    const children = cloneChildren(node.children);
+    return allocate({ kind: node.kind, selector: node.selector, name: node.name, params: node.params, property: node.property, value: node.value,
+        valuePresent: node.valuePresent, important: node.important, contextPresent: node.contextPresent, context, children });
+}

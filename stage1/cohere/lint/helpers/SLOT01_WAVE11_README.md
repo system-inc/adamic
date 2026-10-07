@@ -1,0 +1,13 @@
+# Slot 01 tree helper partial port: blocked
+
+These three .a helper sources are proposed APIs, not native-validated handoffs. Their defining Go functions agree with source Node over all four consumer fixture files and shape/alias controls. Native lowering refuses the mutable node arena in the driver as adamic/cycle-capable; using read-only arena parameters and a caller-owned allocator does not clear that refusal. No prerequisite removal is credited.
+
+- collapseCloneNode(readonlyArena, index, cloneChildren, allocate) accepts -1 as a nil node, otherwise copies every Node field, copies a present context map, delegates child-list cloning, and passes the new record to a caller-owned numeric-handle allocator.
+- collapseCloneNodes(list, cloneNode) retains nil slices and otherwise allocates exactly length entries in order, cloning each occurrence independently, including nil elements.
+- collapseRemoveNodes(readonlyArena, list, removed) returns the unchanged list header/backing storage for an empty set. Otherwise it makes capacity equal to input length, skips only true-valued entries, recurses into nonempty children regardless of kind, mutates retained original nodes in place, and retains empty containers.
+
+CollapseNodeList carries immutable nil/length/capacity fields and a mutable backing values array. Only positions below length are present elements; capacity-tail entries preserve Go nil pointers using -1. CollapseCopyNode preserves all ten Go fields, with context presence separate from an empty map and numeric child handles. Inputs are valid acyclic trees or DAGs; Go's own recursive helpers do not terminate on cycles. Nil context maps require contextPresent false and an empty backing map. Arbitrary invalid handles/header shapes are not adapter inputs.
+
+The driver is under gaps/slot01_wave11_main.a, where the existing repository exclusion records uncompiled stage-1 programs. No shared configuration is changed. Tests first compare Go and source Node and run a source-only mutant, then try lowering. Only the specific cycle-capable refusal causes an explicit BLOCKED skip; other failures fail the test. When that refusal closes, native, emitted-JavaScript and sanitized-native mutant checks automatically resume. Compiler refusal is never credited as a semantic mutant kill.
+
+Eight source-only mutants were caught. Eight native checks remain skipped, and zero native semantic mutants are credited. See SLOT01_WAVE11_REPORT.md and slot01_wave11_readiness.json for commands, exact blocker, affected consumers and residual dependencies. No shared compiler, rule harness, registration generator or rule directory is edited. No regex matching implementation is introduced.

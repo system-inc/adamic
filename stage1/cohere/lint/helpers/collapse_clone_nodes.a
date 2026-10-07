@@ -1,0 +1,9 @@
+// BLOCKED: native oracle pending; see SLOT01_WAVE11_REPORT.md. No readiness credit.
+import { panic } from 'adamic';
+import type { CollapseNodeList } from './collapse_clone_node.a';
+export function collapseCloneNodes(nodes: CollapseNodeList, cloneNode: (index: number) => number): CollapseNodeList {
+    if (nodes.nil) { return nodes; }
+    const values: number[] = [];
+    for (let position = 0; position < nodes.length; position++) { values.push(cloneNode(nodes.values[position] ?? panic('clone list index'))); }
+    return { nil: false, length: nodes.length, capacity: nodes.length, values };
+}

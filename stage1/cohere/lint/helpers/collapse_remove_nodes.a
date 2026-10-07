@@ -1,0 +1,17 @@
+// BLOCKED: native oracle pending; see SLOT01_WAVE11_REPORT.md. No readiness credit.
+import { panic } from 'adamic';
+import type { CollapseCopyNode, CollapseNodeList } from './collapse_clone_node.a';
+export function collapseRemoveNodes(arena: readonly CollapseCopyNode[], nodes: CollapseNodeList, removed: ReadonlyMap<number, boolean>): CollapseNodeList {
+    if (removed.size === 0) { return nodes; }
+    const values: number[] = [];
+    for (let position = 0; position < nodes.length; position++) {
+        const index = nodes.values[position] ?? panic('removal list index');
+        if (removed.get(index) === true) { continue; }
+        const node = arena[index] ?? panic('removal node missing');
+        if (node.children.length > 0) { node.children = collapseRemoveNodes(arena, node.children, removed); }
+        values.push(index);
+    }
+    const length = values.length;
+    while (values.length < nodes.length) { values.push(-1); }
+    return { nil: false, length, capacity: nodes.length, values };
+}
