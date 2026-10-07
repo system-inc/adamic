@@ -36,3 +36,18 @@ Continuation status: completed by implementation 7f0647dd. All three ports have
 normal and sanitized byte agreement, rule mutants, bridge mutants and lifetime
 checks. See wave_13_next/REPORT.md and its validation/ evidence. The previous
 BLOCKED.md interpretation is superseded. No further rules were claimed yet.
+
+
+## Second continuation claim
+
+All six previous claims are implemented, tested and pushed through 60e1618c.
+Fetched all origin heads and scanned 347 refs after that push. The 197-rule
+ranking has 25 existing checker ports on main/base and 120 claimed ranked rules
+on origin; 52 remain. The next three by combined volume and lexical ties are:
+
+- no-obj-calls (0)
+- no-object-constructor (0)
+- no-promise-executor-return (0)
+
+This claim update is pushed before any implementation. New native files use .a,
+and shared registration generators and harnesses remain unchanged.
