@@ -435,11 +435,8 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 	e.breakables = append(e.breakables, len(e.scopes))
 	depth := 0
 	for _, matched := range statement.Cases {
-		tests := []string{}
-		for _, test := range matched.Tests {
-			tests = append(tests, e.binary(ir.Equal, statement.Value.Type(), held, e.value(test)))
-		}
-		e.line("if (%s) {", unwrap(strings.Join(tests, " || ")))
+		condition := e.switchTests(statement.Value.Type(), held, matched.Tests)
+		e.line("if (%s) {", condition)
 		e.nested(matched.Body, nil)
 		e.line("} else {")
 		e.indent++

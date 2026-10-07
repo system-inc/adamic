@@ -448,6 +448,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return ir.TypeOf{Value: operand}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if _, compound := compoundAssignments[binary.OperatorToken.Kind]; compound || binary.OperatorToken.Kind == ast.KindEqualsToken {
+			return l.assignmentValue(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindCommaToken {
 			return l.comma(node)
 		}
@@ -512,8 +515,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			if err == nil && lowered.Type() == 0 {
-				// forEach is void; as a value it's undefined, which only places 0.1 refuses would use.
-				return nil, l.notYet(node, "a void call used as a value")
+				return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: lowered}}, Result: ir.Undefined{}}, nil
 			}
 			return lowered, err
 		}
@@ -522,9 +524,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if call.Type() == 0 {
-			// The checker allows a void call where a value goes only in places 0.1 refuses anyway
-			// (a template of void prints "undefined"); stage 0 says so rather than guess.
-			return nil, l.notYet(node, "a void call used as a value")
+			return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: call}}, Result: ir.Undefined{}}, nil
 		}
 		return call, nil
 	}

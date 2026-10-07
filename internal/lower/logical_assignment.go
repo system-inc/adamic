@@ -97,6 +97,9 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 					return nil, l.notYet(target, "a computed logical assignment key")
 				}
 				field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(access.Expression), text)
+				if field != nil && field.Flags&ast.SymbolFlagsOptional != 0 {
+					return nil, l.notYet(target, "writing a possibly absent optional own field")
+				}
 				if field != nil && accessorSymbol(field) {
 					return nil, l.notYet(target, "a logical assignment to an accessor")
 				}

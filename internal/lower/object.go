@@ -69,11 +69,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
+			if declared := l.declaredField(node, fieldName); declared != 0 {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if slotless(value.Type()) {
+			if slotless(value.Type()) && value.Type() != ir.MaybeBoolean && value.Type() != ir.Union {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -251,7 +251,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
-	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
+	arrayType := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
 	}
@@ -263,7 +263,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
 		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
 				arrayType = contextual
 			}
 		}
@@ -277,7 +277,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.kept(element)
-	if !isKnown || slotless(valueType) {
+	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
@@ -459,12 +459,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		optional := access.QuestionDotToken != nil
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored == ir.Union && of != ir.Union && !of.IsReference() {
+				return nil, l.notYet(node, "a narrowed scalar in a boxed union field")
+			}
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 				// Read the declared representation before trusting the narrowing. A call or an
 				// alias write may have restored undefined, just as for a narrowed variable.
-				if slotless(stored) {
-					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
-				}
+
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
 				if comparedWithUndefined(node) {
 					return read, nil
@@ -480,9 +481,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if slotless(of) {
-			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
-		}
+
 		if of == ir.MaybeNumber {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
@@ -966,7 +965,7 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 	return []ir.Statement{lowered}, nil
 }
 
-// switchStatement lowers switch, whose cases 0.1 requires to be constants.
+// switchStatement preserves ordered case expression evaluation.
 func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsSwitchStatement()
 	value, err := l.expression(statement.Expression)
@@ -988,11 +987,6 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			test, err := l.expression(clause.AsCaseOrDefaultClause().Expression)
 			if err != nil {
 				return nil, err
-			}
-			switch test.(type) {
-			case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
-			default:
-				return nil, l.notYet(clause, "a case that isn't a constant")
 			}
 			if test.Type() != value.Type() {
 				return nil, l.notYet(clause, "a case whose type differs from the switch's")
@@ -1090,6 +1084,9 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	}
 	switch name {
 	case "includes", "indexOf":
+		if element == ir.Union {
+			return nil, true, l.notYet(node, "searching boxed union array elements")
+		}
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, name+" with a starting index")
 		}

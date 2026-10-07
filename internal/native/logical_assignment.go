@@ -28,6 +28,8 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 			field := unslotted(storage, slot+"->"+member(storage))
 			if storage.IsReference() {
 				left = e.own(storage, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s)", slot, cType(storage), field))
+			} else if storage.IsMaybe() {
+				left = e.snapshot(storage, fmt.Sprintf("%s == NULL ? %s : %s", slot, zero(storage), field))
 			} else {
 				left = e.snapshot(storage, field)
 			}

@@ -69,6 +69,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
+			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+				valueType, isKnown = ir.Object, true
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
