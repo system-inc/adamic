@@ -1,0 +1,101 @@
+package lint
+
+import (
+	"bytes"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+// Not parallel: corpus capture and generated registry share environment state.
+func TestWave12OptionsAndShapes(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fixture := filepath.Join(t.TempDir(), "options.ts")
+	text := "interface ClaudeCallResultInterface { success: boolean; error: string; }\ninterface State { succeeded: boolean; }\ntype LookupResult = { readonly ok?: boolean; value: string; };\ninterface Result { isSuccess: boolean; isError: boolean; error: string; }\ninterface CloudResponse { success: boolean; errors: string[]; messages: string[]; result: string; }\ninterface Duplicate { success: boolean; success: true; error: string; }\ninterface DuplicateAgain { success: true; success: boolean; error: string; }\ninterface Orders { failed: boolean; success: boolean; reason: string; }\ninterface UnicodeResult { isOk: boolean; data: string; }\ninterface TypeResultInterfaceResponse { ok: boolean; value: string; }\nclass Entity { @OrmColumn() ['💎']: string; @OrmColumn() [dynamicName]: string; @OrmColumn() 'quoted': string; @OrmColumn() 42: string; @OrmColumn bare: string; @OrmColumnIndex() @OrmPrimaryKey() multiple: string; }\n"
+	if err := os.WriteFile(fixture, []byte(text), 0644); err != nil {
+		t.Fatal(err)
+	}
+	var rows []string
+	for _, option := range []string{"null", "{}", `{"allowedTypeNames":["ClaudeCallResultInterface"]}`, `{"allowedTypeNames":null}`, `{"allowedTypeNames":[]}`, `{"allowedTypeNames":["NoMatch","TypeResultInterfaceResponse"]}`} {
+		rows = append(rows, fixture+"\tnexus/consistency-no-boolean-outcome\t\t\tfalse\t"+option)
+	}
+	rows = append(rows, fixture+"\tbase/correctness-require-orm-column-declare", fixture+"\tall")
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+func TestWave12Throughput(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if corpus == "" {
+		t.Fatal("missing pinned TypeScript source")
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, subject := range []struct{ name, source string }{
+		{"base/correctness-require-orm-column-declare", "class E%d { @OrmColumn value: string; @OrmPrimaryKey() key: number; }\n"},
+		{"nexus/consistency-no-boolean-outcome", "interface Lookup%dResult { success: boolean; error: string; }\n"},
+	} {
+		var compilerRows []string
+		err := filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+			if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+				compilerRows = append(compilerRows, path+"\t"+subject.name)
+			}
+			return err
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		compiler := execute(t, "", oracle, "--manifest", manifest(t, compilerRows), "--count")
+		t.Logf("%s: compiler alone %d files findings=%s", subject.name, len(compilerRows), strings.TrimSpace(string(compiler.output)))
+		var text strings.Builder
+		for i := 0; i < 1000; i++ {
+			fmt.Fprintf(&text, subject.source, i)
+		}
+		stress := filepath.Join(t.TempDir(), "throughput.ts")
+		if err := os.WriteFile(stress, []byte(text.String()), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows := append(compilerRows, stress+"\t"+subject.name)
+		path := manifest(t, rows)
+		best := map[string]time.Duration{}
+		var want []byte
+		for round := 0; round < 5; round++ {
+			for _, side := range []string{"Go", "native", "Node"} {
+				var result execution
+				if side == "Go" {
+					result = execute(t, "", oracle, "--manifest", path, "--count")
+				} else if side == "native" {
+					result = execute(t, "", binary, "--manifest", path, "--count")
+				} else {
+					result = node(t, directory, path, true)
+				}
+				if want == nil {
+					want = result.output
+				}
+				if !bytes.Equal(want, result.output) {
+					t.Fatalf("%s count differs on %s", subject.name, side)
+				}
+				if best[side] == 0 || result.duration < best[side] {
+					best[side] = result.duration
+				}
+				t.Logf("%s round %d %s %.6fs findings=%s", subject.name, round+1, side, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(want), &count); err != nil || count == 0 {
+			t.Fatalf("invalid benchmark count %q", want)
+		}
+		for _, side := range []string{"Go", "native", "Node"} {
+			t.Logf("%s best of 5 %s %.6fs %.2f findings/s (%d files, %d findings)", subject.name, side, best[side].Seconds(), float64(count)/best[side].Seconds(), len(rows), count)
+		}
+	}
+}

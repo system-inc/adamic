@@ -1,0 +1,98 @@
+// Go cohere's envelope test, including first-name order and last duplicate value.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { StrictOptions } from '../../helpers/strict_options.ts';
+import { message, targetDescriptor } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly allowed: readonly string[];
+    constructor(context: RuleContext, allowed: readonly string[]) {
+        this.context = context;
+        this.allowed = allowed;
+    }
+    property(index: number): string {
+        const context = this.context;
+        const member = context.node(index);
+        if(member.kind !== 'PropertySignature') { return ''; }
+        for(const child of member.children) {
+            if(context.node(child).kind === 'ReadonlyKeyword') { continue; }
+            return context.node(child).kind === 'Identifier' ? context.node(child).text : '';
+        }
+        return '';
+    }
+    boolean(index: number): boolean {
+        const children = this.context.node(index).children;
+        const type = children[children.length - 1] ?? -1;
+        return type >= 0 && this.context.node(type).kind === 'BooleanKeyword';
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const node = context.node(index);
+        let name = '';
+        for(const child of node.children) {
+            if(context.node(child).kind === 'Identifier') { name = context.node(child).text; break; }
+        }
+        if(name === '' || this.allowed.includes(name) || name.endsWith('Properties')) { return; }
+        let members: readonly number[] = node.children;
+        if(node.kind === 'TypeAliasDeclaration') {
+            const type = node.children[node.children.length - 1] ?? panic('alias type');
+            if(context.node(type).kind !== 'TypeLiteral') { return; }
+            members = context.node(type).children;
+        }
+        const properties = new Map<string, number>();
+        for(const member of members) {
+            const spelling = this.property(member);
+            if(spelling !== '') { properties.set(spelling, member); }
+        }
+        let flag = -1;
+        let flagName = '';
+        for(const [spelling, member] of properties) {
+            if(['success', 'succeeded', 'ok', 'isSuccess', 'isOk', 'failed', 'isError', 'isFailure'].includes(spelling)
+                && this.boolean(member)) { flag = member; flagName = spelling; break; }
+        }
+        if(flag < 0) { return; }
+        let companion = false;
+        for(const spelling of properties.keys()) {
+            if(spelling !== flagName && ['error', 'errors', 'message', 'value', 'result', 'reason', 'data'].includes(spelling)) {
+                companion = true;
+            }
+            if(['isLoading', 'isPending', 'isFetching', 'isRefetching', 'status'].includes(spelling)) { return; }
+        }
+        if(!companion) { return; }
+        if(['success', 'errors', 'messages', 'result'].every(field => properties.has(field))) { return; }
+        if(properties.has('isSuccess') && properties.has('isError')) { return; }
+        let suggested = name;
+        let shortened = true;
+        while(shortened) {
+            shortened = false;
+            for(const suffix of ['Interface', 'Type', 'Result', 'Response', 'Properties']) {
+                if(suggested.endsWith(suffix)) {
+                    suggested = suggested.slice(0, suggested.length - suffix.length);
+                    shortened = true;
+                    break;
+                }
+            }
+        }
+        if(suggested === '') { suggested = name; }
+        context.report(flag, 'nexus/consistency-no-boolean-outcome', 'booleanOutcome',
+            message(flagName, `${node.kind === 'InterfaceDeclaration' ? 'interface' : 'type'} ${name}`, suggested), '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule {
+    const allowed: string[] = [];
+    if(!context.enabled('nexus/consistency-no-boolean-outcome')) { return new Rule(context, allowed); }
+    const raw = context.settings.text === '' ? 'null' : context.settings.text;
+    const target = new StrictOptions(targetDescriptor);
+    const verdict = target.check(raw);
+    if(verdict !== 'valid') { panic(`invalid boolean-outcome options: ${verdict}`); }
+    const json = new OptionsJson(raw);
+    const root = json.parse();
+    if(root < 0) { panic(`invalid boolean-outcome options: ${json.error}`); }
+    const values = json.field(root, 'allowedTypeNames');
+    if(values >= 0 && json.node(values).kind === 'array') {
+        for(const child of json.node(values).children) { allowed.push(json.node(child).text); }
+    }
+    return new Rule(context, allowed);
+}

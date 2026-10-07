@@ -1,0 +1,6 @@
+{
+  "name": "boolean_outcome_companion_ignored",
+  "file": "rule.a",
+  "from": "if(!companion) { return; }",
+  "to": "if(!companion && flagName === '') { return; }"
+}

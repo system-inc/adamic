@@ -1,0 +1,2 @@
+interface LookupResult { success: boolean; error: string; }
+interface State { succeeded: boolean; }

@@ -1,0 +1,3 @@
+# Unified patch context and raw output preserve their original whitespace.
+compatibility.patch -whitespace
+evidence/*.txt -whitespace

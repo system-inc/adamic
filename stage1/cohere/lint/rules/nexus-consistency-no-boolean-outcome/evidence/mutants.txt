@@ -1,0 +1,68 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/orm_bare_decorator_ignored
+    lint_test.go:491: orm_bare_decorator_ignored caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:53", Go "/tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:22"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:22
+          base/correctness-require-orm-column-declare  Property 'bare' decorated with @OrmColumn() must use 'declare' (e.g. `declare bare: ...`)
+        
+        range 21 25 missingDeclare 		
+        /tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:53
+    lint_test.go:491: orm_bare_decorator_ignored caught on emitted JavaScript: case 24 line 522: port "/tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:53", Go "/tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:22"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:22
+          base/correctness-require-orm-column-declare  Property 'bare' decorated with @OrmColumn() must use 'declare' (e.g. `declare bare: ...`)
+        
+        range 21 25 missingDeclare 		
+        /tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:53
+    lint_test.go:491: orm_bare_decorator_ignored caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:53", Go "/tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:22"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:22
+          base/correctness-require-orm-column-declare  Property 'bare' decorated with @OrmColumn() must use 'declare' (e.g. `declare bare: ...`)
+        
+        range 21 25 missingDeclare 		
+        /tmp/adamic-gate/TestMutantsorm_bare_decorator_ignored1970922368/007/base-correctness-require-orm-column-declare-0.ts:1:53
+=== RUN   TestMutants/boolean_outcome_companion_ignored
+    lint_test.go:491: boolean_outcome_companion_ignored caught on Node: case 24 line 526: port "/tmp/adamic-gate/TestMutantsboolean_outcome_companion_ignored161554037/007/nexus-consistency-no-boolean-outcome-0.ts:2:19", Go "fixed\tinterface LookupResult { success: boolean; error: string; }\\u000ainterface State { succeeded: boolean; }\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsboolean_outcome_companion_ignored161554037/007/nexus-consistency-no-boolean-outcome-0.ts:1:26
+          nexus/consistency-no-boolean-outcome  `success: boolean` on interface LookupResult collapses every outcome into one bit, at the moment the distinction is cheapest to keep. Return a named outcome instead: a union of `outcome` members naming each way the operation can turn out, with the payload on the arm that carries it. Suggested name: LookupOutcomeType.
+        
+        range 25 42 booleanOutcome 		
+        fixed	interface LookupResult { success: boolean; error: string; }\u000ainterface State { succeeded: boolean; }\u000a
+    lint_test.go:491: boolean_outcome_companion_ignored caught on emitted JavaScript: case 24 line 526: port "/tmp/adamic-gate/TestMutantsboolean_outcome_companion_ignored161554037/007/nexus-consistency-no-boolean-outcome-0.ts:2:19", Go "fixed\tinterface LookupResult { success: boolean; error: string; }\\u000ainterface State { succeeded: boolean; }\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsboolean_outcome_companion_ignored161554037/007/nexus-consistency-no-boolean-outcome-0.ts:1:26
+          nexus/consistency-no-boolean-outcome  `success: boolean` on interface LookupResult collapses every outcome into one bit, at the moment the distinction is cheapest to keep. Return a named outcome instead: a union of `outcome` members naming each way the operation can turn out, with the payload on the arm that carries it. Suggested name: LookupOutcomeType.
+        
+        range 25 42 booleanOutcome 		
+        fixed	interface LookupResult { success: boolean; error: string; }\u000ainterface State { succeeded: boolean; }\u000a
+    lint_test.go:491: boolean_outcome_companion_ignored caught on native: case 24 line 526: port "/tmp/adamic-gate/TestMutantsboolean_outcome_companion_ignored161554037/007/nexus-consistency-no-boolean-outcome-0.ts:2:19", Go "fixed\tinterface LookupResult { success: boolean; error: string; }\\u000ainterface State { succeeded: boolean; }\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsboolean_outcome_companion_ignored161554037/007/nexus-consistency-no-boolean-outcome-0.ts:1:26
+          nexus/consistency-no-boolean-outcome  `success: boolean` on interface LookupResult collapses every outcome into one bit, at the moment the distinction is cheapest to keep. Return a named outcome instead: a union of `outcome` members naming each way the operation can turn out, with the payload on the arm that carries it. Suggested name: LookupOutcomeType.
+        
+        range 25 42 booleanOutcome 		
+        fixed	interface LookupResult { success: boolean; error: string; }\u000ainterface State { succeeded: boolean; }\u000a
+--- PASS: TestMutants (78.34s)
+    --- PASS: TestMutants/orm_bare_decorator_ignored (31.70s)
+    --- PASS: TestMutants/boolean_outcome_companion_ignored (41.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	78.364s

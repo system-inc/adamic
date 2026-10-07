@@ -1,0 +1,7 @@
+// Catalog subset copied from the Go-generated resolved policy catalog.
+import { PolicyMessage } from '../../helpers/policy_message.ts';
+const policy = new PolicyMessage("{\"nexus/consistency-no-boolean-outcome\":{\"booleanOutcome\":{\"Text\":\"`{{flagName}}: boolean` on {{declaration}} collapses every outcome into one bit, at the moment the distinction is cheapest to keep. Return a named outcome instead: a union of `outcome` members naming each way the operation can turn out, with the payload on the arm that carries it. Suggested name: {{suggested}}OutcomeType.\",\"Options\":null}}}");
+export const targetDescriptor = "{\"fields\":{\"allowedTypeNames\":{\"shape\":{\"item\":{\"kind\":\"string\"},\"kind\":\"array\"},\"tagged\":true}},\"kind\":\"object\"}";
+export function message(flagName: string, declaration: string, suggested: string): string {
+    return policy.render('nexus/consistency-no-boolean-outcome', 'booleanOutcome', new Map<string, string>([['flagName', flagName], ['declaration', declaration], ['suggested', suggested]]), []);
+}

@@ -1,0 +1,53 @@
+=== RUN   TestRulesAgree
+    lint_test.go:324: cohere cases: 256 unique source/rule/options combinations
+    lint_test.go:364: Go, Node, emitted JavaScript, native identical: 147239 bytes
+--- PASS: TestRulesAgree (120.22s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:398: compiler and stage1: 212 files
+    lint_test.go:399: Go, Node, emitted JavaScript, native identical: 12620096 bytes
+--- PASS: TestCompilerAndStage1Agree (79.89s)
+=== RUN   TestWave12OptionsAndShapes
+    wave12_overlay_test.go:25: Go, Node, emitted JavaScript, native identical: 29882 bytes
+--- PASS: TestWave12OptionsAndShapes (70.14s)
+=== RUN   TestWave12Throughput
+    wave12_overlay_test.go:46: base/correctness-require-orm-column-declare: compiler alone 77 files findings=0
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 1 Go 0.366009s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 1 native 2.185698s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 1 Node 1.941142s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 2 Go 0.416025s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 2 native 2.214777s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 2 Node 1.972574s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 3 Go 0.372586s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 3 native 2.119515s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 3 Node 1.500734s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 4 Go 0.349543s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 4 native 1.683039s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 4 Node 1.777478s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 5 Go 0.339185s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 5 native 1.766033s findings=2000
+    wave12_overlay_test.go:62: base/correctness-require-orm-column-declare round 5 Node 1.950806s findings=2000
+    wave12_overlay_test.go:67: base/correctness-require-orm-column-declare best of 5 Go 0.339185s 5896.49 findings/s (78 files, 2000 findings)
+    wave12_overlay_test.go:67: base/correctness-require-orm-column-declare best of 5 native 1.683039s 1188.33 findings/s (78 files, 2000 findings)
+    wave12_overlay_test.go:67: base/correctness-require-orm-column-declare best of 5 Node 1.500734s 1332.68 findings/s (78 files, 2000 findings)
+    wave12_overlay_test.go:46: nexus/consistency-no-boolean-outcome: compiler alone 77 files findings=0
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 1 Go 0.339260s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 1 native 2.319801s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 1 Node 1.296064s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 2 Go 0.286630s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 2 native 1.806847s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 2 Node 1.273556s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 3 Go 0.321351s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 3 native 1.725259s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 3 Node 1.297691s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 4 Go 0.307245s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 4 native 1.715800s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 4 Node 1.626059s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 5 Go 0.309827s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 5 native 2.408872s findings=1000
+    wave12_overlay_test.go:62: nexus/consistency-no-boolean-outcome round 5 Node 1.530463s findings=1000
+    wave12_overlay_test.go:67: nexus/consistency-no-boolean-outcome best of 5 Go 0.286630s 3488.82 findings/s (78 files, 1000 findings)
+    wave12_overlay_test.go:67: nexus/consistency-no-boolean-outcome best of 5 native 1.715800s 582.82 findings/s (78 files, 1000 findings)
+    wave12_overlay_test.go:67: nexus/consistency-no-boolean-outcome best of 5 Node 1.273556s 785.20 findings/s (78 files, 1000 findings)
+--- PASS: TestWave12Throughput (51.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	321.607s

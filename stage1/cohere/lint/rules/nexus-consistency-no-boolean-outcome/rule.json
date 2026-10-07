@@ -1,0 +1,13 @@
+{
+  "name": "nexus/consistency-no-boolean-outcome",
+  "kinds": [
+    "InterfaceDeclaration",
+    "TypeAliasDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleBooleanOutcome",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyNoBooleanOutcome"
+}
