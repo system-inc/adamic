@@ -129,6 +129,9 @@ function run(row: string, countOnly: boolean): number {
         for(const rejection of linter.rejected) {
             console.log(rejection);
         }
+        if(linter.unconverged.length > 0) {
+            console.log(`unconverged\t${linter.unconverged.join(',')}`);
+        }
         console.log(`fixed\t${written(fixed)}`);
     }
     return linter.findings.length;
