@@ -26,3 +26,11 @@ Each helper removes one prerequisite from each of:
 This removes twelve prerequisite entries across four distinct rules. No rule reaches zero blockers from this batch alone. The frozen ledger and other workers' unintegrated implementations are not treated as completed rule execution.
 
 Not covered: complete native lint findings/fixes/suggestions, a port of strconv.ParseFloat, arbitrary incorrect dependency callbacks, exhaustive float64 bit patterns or NaN payload bits. Remainders are observed through the formatter, so positive results at or above 1e21 collapse to its empty-string result. The full repository gate is outside this bounded helper verification.
+
+## Landing verification on current main
+
+Rebased all 55 worker commits onto c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06 without conflicts. The rebased numeric implementation is 13284e9e996187d55f42b9c1df20fbd2c1c77d67; its rewritten claim is 7654ca3f. Historical ba863481 remains the pushed-before-code claim receipt. No shared test changes were reverted.
+
+`go test -p 2 -count=1 -v -timeout=20m ./stage1/cohere/lint/helpers/...` passed for all fifteen packages. The new package passed in 19.933s; inherited options/policy in 104.416s and comments in 142.756s. All retained helpers' semantic mutants, consumer omissions and other package checks were rerun. The complete package output is in evidence/landing-helpers.log, with the exact package list in landing-packages.log.
+
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -v ./internal/oracle -run '^TestInputAgreesWithNode$'` passed in 1.822s, six probe misses and no cache hits. `go vet ./stage1/cohere/lint/helpers/...` and `git diff --check` passed with empty logs. A final fetch confirmed that current main remained c01907a and the worker remote still held original claim ba863481c76e722bc838ff55906f714f636c381b. The own-branch push uses that exact lease; main and area branches are not push targets.
