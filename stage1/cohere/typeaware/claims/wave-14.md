@@ -58,3 +58,24 @@ Real JSX source remains blocked by the shared native parser, independently of
 harness file was changed. This is not a claim of end-to-end JSX parity.
 No additional rules are claimed while that original completion gate is blocked.
 See ../WAVE_14_RENDER_REPORT.md for the evidence and exact scope.
+
+## Third batch, October 7, 2026
+
+The preceding six rule implementations and their available comparisons are pushed
+at 5bd31ee5. Real JSX remains a shared-parser gap, documented in
+WAVE_14_RENDER_REPORT.md. The latest instruction permits moving on after pushing
+the available implementation and reporting that gap.
+
+Fetched all 335 origin refs. After excluding the 26 ports on origin/main and
+origin/codex/tsgo-c-library and every reservation under typeaware/claims on every
+origin branch, the first three remaining rules in the combined by-volume ranking
+are claimed here:
+
+1. `no-invalid-regexp`
+2. `no-label-var`
+3. `no-misleading-character-class`
+
+All three have zero compiler and repository findings. Neither base branch has
+rule-named native files for them. There are 58 remaining unclaimed ranking rows
+before this reservation. This claim is pushed before implementation. New native
+files use .a; shared parser, registration generator and harness remain untouched.
