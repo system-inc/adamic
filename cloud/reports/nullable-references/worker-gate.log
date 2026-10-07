@@ -1,0 +1,16 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	2.429s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	278.069s
+ok  	github.com/system-inc/adamic/internal/flow	219.465s
+ok  	github.com/system-inc/adamic/internal/fresh	84.367s
+ok  	github.com/system-inc/adamic/internal/fuzz	23.653s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	5.456s
+ok  	github.com/system-inc/adamic/internal/lower	45.969s
+ok  	github.com/system-inc/adamic/internal/native	654.029s
+ok  	github.com/system-inc/adamic/internal/oracle	299.294s
+ok  	github.com/system-inc/adamic/internal/regexp	26.871s

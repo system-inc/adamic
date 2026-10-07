@@ -1,0 +1,25 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references_json.a (0.23s)
+        oracle_test.go:559: gate cache node hit
+        oracle_test.go:559: gate cache node hit
+        oracle_test.go:448: gate cache native hit
+        oracle_test.go:441: gate cache native hit
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "null\nundefined\ntrue\n{\"n\":null}\n[null,null]\nnull\nundefined\n\"built1\"\n\"built2\"\nfalse\n{\"n\":\"built1\",\"u\":\"built2\"}\n[\"built1\",\"built2\"]\n\"built1\"\n\"built2\"\n\"\"\n\"\"\nfalse\n{\"n\":\"\",\"u\":\"\"}\n[\"\",\"\"]\n\"\"\n\"\"\nnull\nundefined\n{\"n\":null}\n[null,null]\n[\"a\"]\n[\"b\"]\n{\"n\":[\"a\"],\"u\":[\"b\"]}\n[[\"a\"],[\"b\"]]\nnull\nundefined\n{\"n\":null}\n[null,null]\n{}\n{}\n{\"n\":{},\"u\":{}}\n[{},{}]\nnull\nundefined\n{\"n\":null}\n[null,null]\nundefined\nundefined\n{}\n[null,null]\n", stderr ""
+            native: exit 0, stdout "undefined\nundefined\ntrue\n{}\n[null,null]\nundefined\nundefined\n\"built1\"\n\"built2\"\nfalse\n{\"n\":\"built1\",\"u\":\"built2\"}\n[\"built1\",\"built2\"]\n\"built1\"\n\"built2\"\n\"\"\n\"\"\nfalse\n{\"n\":\"\",\"u\":\"\"}\n[\"\",\"\"]\n\"\"\n\"\"\nundefined\nundefined\n{}\n[null,null]\n[\"a\"]\n[\"b\"]\n{\"n\":[\"a\"],\"u\":[\"b\"]}\n[[\"a\"],[\"b\"]]\nundefined\nundefined\n{}\n[null,null]\n{}\n{}\n{\"n\":{},\"u\":{}}\n[{},{}]\nundefined\nundefined\n{}\n[null,null]\nundefined\nundefined\n{}\n[null,null]\n", stderr ""
+        oracle_test.go:455: gate cache native hit
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references_slots.a (0.23s)
+        oracle_test.go:559: gate cache node hit
+        oracle_test.go:559: gate cache node hit
+        oracle_test.go:448: gate cache native hit
+        oracle_test.go:441: gate cache native hit
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "null\nundefined\nnull undefined\n0 NaN\nobject undefined\n{\"n\":null}\n[null,null]\nowned1\nowned2\nowned1 owned2\nNaN NaN\nstring string\n{\"n\":\"owned1\",\"u\":\"owned2\"}\n[\"owned1\",\"owned2\"]\nnull\ntrue false object\n\nfalse false string\nelement3\nfalse false string\nundefined\nfalse true undefined\n\nfalse false string\nelement4\nfalse false string\n[null,\"\",\"element3\"]\n[null,\"\",\"element4\"]\ntrue false object\nfalse false object\ntrue false object\nnone\nfalse false object\nclass6\nfalse true undefined\nnone\nfalse false object\nclass7\ntrue false object\nfalse false object\na\nnull\nb\nmapvalue9\nnull\nundefined\nnull\nundefined\ncapture10\ncapture11\n", stderr ""
+            native: exit 0, stdout "null\nundefined\nnull undefined\n0 NaN\nobject undefined\n{}\n[null,null]\nowned1\nowned2\nowned1 owned2\nNaN NaN\nstring string\n{\"n\":\"owned1\",\"u\":\"owned2\"}\n[\"owned1\",\"owned2\"]\nnull\ntrue false object\n\nfalse false string\nelement3\nfalse false string\nundefined\nfalse true undefined\n\nfalse false string\nelement4\nfalse false string\n[null,\"\",\"element3\"]\n[null,\"\",\"element4\"]\ntrue false object\nfalse false object\ntrue false object\nnone\nfalse false object\nclass6\nfalse true undefined\nnone\nfalse false object\nclass7\ntrue false object\nfalse false object\na\nnull\nb\nmapvalue9\nnull\nundefined\nnull\nundefined\ncapture10\ncapture11\n", stderr ""
+        oracle_test.go:455: gate cache native hit
+FAIL
+gate cache: native hits=12 misses=0
+gate cache: node hits=8 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.257s
+FAIL

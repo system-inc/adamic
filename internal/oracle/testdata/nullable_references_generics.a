@@ -1,0 +1,122 @@
+function observe<T>(v: T): string { return `${v === null} ${v === undefined} ${typeof v}`; }
+function kind<T>(v: T): string { return typeof v; }
+class Holder<T> {
+ readonly value: T;
+ constructor(value: T) { this.value = value; }
+ observe(): string { return `${this.value === null} ${this.value === undefined} ${typeof this.value}`; }
+ get(): T { return this.value; }
+}
+class Item { readonly label = 'item'; }
+interface Shape { readonly label: string; }
+function shapes(n: Shape | null, u: Shape | undefined): void {
+ console.log(observe<Shape | null>(n));
+ console.log(observe<Shape | undefined>(u));
+ console.log(`${n?.label ?? 'none'} ${u?.label ?? 'none'} ${!n} ${!u}`);
+ if (n !== null) { console.log(n.label); }
+ if (u !== undefined) { console.log(u.label); }
+}
+function arrays(n: string[] | null, u: string[] | undefined): void {
+ console.log(observe<string[] | null>(n));
+ console.log(observe<string[] | undefined>(u));
+ console.log(`${n?.length ?? -1} ${u?.length ?? -1} ${!n} ${!u}`);
+ console.log((n ?? ['fallback']).join(','));
+ console.log((u ?? ['fallback']).join(','));
+}
+function items(n: Item | null, u: Item | undefined): void {
+ console.log(observe<Item | null>(n));
+ console.log(observe<Item | undefined>(u));
+ console.log(`${n?.label ?? 'none'} ${u?.label ?? 'none'} ${!n} ${!u}`);
+}
+function maps(n: Map<string, string> | null, u: Map<string, string> | undefined): void {
+ console.log(observe<Map<string, string> | null>(n));
+ console.log(observe<Map<string, string> | undefined>(u));
+ console.log(`${!n} ${!u}`);
+ if (n !== null) { console.log(n.get('a') ?? 'none'); }
+ if (u !== undefined) { console.log(u.get('a') ?? 'none'); }
+}
+console.log(observe<string | null>(null));
+console.log(observe<string | undefined>(undefined));
+console.log(observe<string | null>(''));
+console.log(observe<string | undefined>(''));
+console.log(kind(null));
+console.log(kind(undefined));
+function empty<T>(v: T): string { return `${v} ${Number(v)}`; }
+console.log(empty(null));
+console.log(empty(undefined));
+console.log(new Holder<string | null>(null).observe());
+console.log(new Holder<string | undefined>(undefined).observe());
+console.log(new Holder<string | null>(null).get());
+console.log(new Holder<string | undefined>(undefined).get());
+shapes(null, undefined);
+shapes({label: 'shape'}, {label: 'shape'});
+arrays(null, undefined);
+arrays(['a'], ['b']);
+items(null, undefined);
+items(new Item(), new Item());
+maps(null, undefined);
+maps(new Map([['a', 'map']]), new Map([['a', 'map']]));
+console.log(observe<(() => string) | null>(null));
+console.log(observe<(() => string) | undefined>(undefined));
+console.log(observe<(() => string) | null>(() => 'function'));
+console.log(new Holder<Shape | null>(null).observe());
+console.log(new Holder<Shape | undefined>(undefined).observe());
+console.log(new Holder<string[] | null>(null).observe());
+console.log(new Holder<string[] | undefined>(undefined).observe());
+console.log(new Holder<Item | null>(null).observe());
+console.log(new Holder<Item | undefined>(undefined).observe());
+console.log(new Holder<Map<string, string> | null>(null).observe());
+console.log(new Holder<Map<string, string> | undefined>(undefined).observe());
+
+function emptyArrayNull(v: string[] | null): void {
+ if (v === null) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+function emptyArrayUndefined(v: string[] | undefined): void {
+ if (v === undefined) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+emptyArrayNull(null);
+emptyArrayUndefined(undefined);
+
+function emptyObjectNull(v: Shape | null): void {
+ if (v === null) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+function emptyObjectUndefined(v: Shape | undefined): void {
+ if (v === undefined) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+emptyObjectNull(null);
+emptyObjectUndefined(undefined);
+
+function emptyClassNull(v: Item | null): void {
+ if (v === null) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+function emptyClassUndefined(v: Item | undefined): void {
+ if (v === undefined) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+emptyClassNull(null);
+emptyClassUndefined(undefined);
+
+function emptyMapNull(v: Map<string,string> | null): void {
+ if (v === null) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+function emptyMapUndefined(v: Map<string,string> | undefined): void {
+ if (v === undefined) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+emptyMapNull(null);
+emptyMapUndefined(undefined);
+
+function emptySetNull(v: Set<string> | null): void {
+ if (v === null) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+function emptySetUndefined(v: Set<string> | undefined): void {
+ if (v === undefined) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+emptySetNull(null);
+emptySetUndefined(undefined);
+
+function emptyFunctionNull(v: (() => string) | null): void {
+ if (v === null) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+function emptyFunctionUndefined(v: (() => string) | undefined): void {
+ if (v === undefined) { console.log(`${v} ${Number(v)} ${typeof v}`); console.log(JSON.stringify(v)); }
+}
+emptyFunctionNull(null);
+emptyFunctionUndefined(undefined);

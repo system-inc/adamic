@@ -1,0 +1,10 @@
+console_null_as_undefined: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+typeof_null_as_undefined: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+number_null_as_nan: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+json_omits_null: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+generic_undefined_true_for_null: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+generic_null_true_for_undefined: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+generic_keys_merge_nullable_strings: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+ignore_nullable_views: caught by TestNullableReferenceViewsCannotChangeTheEmptyCase: got <nil>
+empty_string_is_truthy: caught by TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references: stdout differs
+admit_two_empty_cases: caught by TestNullableReferencesNeedAnEmptyCaseTag: got <nil>
