@@ -1,0 +1,16 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+--- PASS: TestNativeAgreesWithNode (0.16s)
+=== NAME  TestTheOracleCatchesOneByte
+    oracle_test.go:487: gate cache native miss
+    oracle_test.go:653: gate cache node miss
+--- PASS: TestTheOracleCatchesOneByte (1.83s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.928s

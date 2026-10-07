@@ -42,9 +42,11 @@ try:
  replacements=json.loads(capture_overlay.read_text())['Replace']
  replacements[str(cohere/'internal/lint/rules/core/slot14_hex_test.go')]=str(owned/'hex_core_test.go.txt')
  replacements[str(cohere/'internal/lint/rules/typescript/slot14_hex_test.go')]=str(owned/'hex_typescript_test.go.txt')
+ replacements[str(cohere/'internal/lint/rules/next/slot14_hex_test.go')]=str(owned/'hex_next_test.go.txt')
  targeted_overlay=scratch/'targeted-overlay.json'
  targeted_overlay.write_text(json.dumps({'Replace':replacements}))
  for name,package,pattern in [
+  ('@next/next/no-html-link-for-pages','next','TestSlot14HexRoutes'),
   ('no-restricted-exports','core','TestSlot14HexExports'),
   ('no-restricted-imports','core','TestSlot14HexImports'),
   ('@typescript-eslint/no-empty-object-type','typescript','TestSlot14HexEmptyObject')]:

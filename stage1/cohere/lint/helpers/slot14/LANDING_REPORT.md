@@ -72,3 +72,6 @@ model landing SHA has not been supplied.
 ## Recheck after stage3 landing
 
 Rebased onto current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Bounded withdrawn leadingInteger and nodesFromStaticDeclarations comparisons pass again on source Node, emitted JavaScript and sanitized native: 4,761 inputs / 160,778 bytes and 1,012 cases / 139,208 bytes. Both compiling semantic mutants are again caught only by Go comparison on all three paths. They remain non-executable archived witnesses, not delivered helpers; the six missing live Tailwind consumer paths remain explicitly unpassed. No active helper reservation has been added before this rebase and push.
+
+## Current compiler landing b8fb957aa
+Rebased and re-green after inherited static-field emission landed. Retained fixed-hex helper: 68,844 unique inputs / 2,149,768 bytes, actual Go private helper compared with Node, emitted JavaScript and sanitized native; width mutant caught on all three. All four original consumer suites pass, with additional real hex-path calls in all four consumers. Archived withdrawn integer/declaration witnesses pass again without delivery credit. Full consumer findings on Adamic require the surrounding regexp/rule integration and are not claimed by this leaf result. See HEX_REPORT.md.

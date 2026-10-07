@@ -19,7 +19,7 @@ python3 stage1/cohere/lint/helpers/slot14/validate_hex.py > /tmp/fixed-hex.log 2
 The oracle calls the pinned Go cohere private helper itself, through test-only
 Go overlays. No shared repository harness, parser, compiler or Go submodule
 source is edited. Source Node, emitted JavaScript and ASAN/UBSAN native each
-compare every output byte over 68,842 unique inputs (2,149,711 output bytes).
+compare every output byte over 68,844 unique inputs (2,149,768 output bytes).
 Controls include every two-byte hex payload, all fallback bytes, malformed
 UTF-8, byte offsets after multibyte characters, signed uint32 boundaries,
 prefix/sign/underscore rejection, zero/large digit counts, and seeded cases.
@@ -27,10 +27,10 @@ prefix/sign/underscore rejection, zero/large digit counts, and seeded cases.
 All four original consumer Go suites pass their assertions. None invokes this
 leaf on its original fixtures; this fact is recorded rather than inferred as
 live coverage. Additional real decoder/rule tests record two private calls for
-no-restricted-exports, two for no-restricted-imports, and one for
-@typescript-eslint/no-empty-object-type. Those captured inputs join the same
-three-runtime Go comparison. @next/next/no-html-link-for-pages records zero
-calls and has no claimed live fixed-hex fixture. These checks compare the leaf
+no-restricted-exports, two for no-restricted-imports, one for
+@typescript-eslint/no-empty-object-type, and two for Next.js route compilation. Those captured inputs join the same
+three-runtime Go comparison. The Next.js control drives its real compileRouteSources path and checks both
+matching and nonmatching hrefs. These checks compare the leaf
 result; they do not run an Adamic regexp engine or compare complete consumer
 findings/fixes on native. The surrounding regexp/parser adapters still need
 integration, outside this helper's owned file.
@@ -47,3 +47,13 @@ Dependency entries made available: four, for @next/next/no-html-link-for-pages,
 no-restricted-imports. Complete rule blocker sets removed by this leaf alone:
 zero. The complete-regexp and complete-consumer-parity gaps are explicit;
 this bounded result must not be advertised as four completed rule ports.
+
+Rebased onto current origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
+The retained helper and width mutant were rebuilt and compared again after
+the compiler change. Archived withdrawn witnesses were also re-green: 4,761
+integer cases and 1,012 declaration cases; they remain excluded from delivered
+helper counts. The actual inherited_static_field_read.a oracle passes across
+source Node, emitted JavaScript, sanitized native and release native, and
+TestTheOracleCatchesOneByte passes. An initial abbreviated fixture filter ran
+only the parent test; the full slash-separated path was corrected and its
+executed subtest is visible in the retained log. Full repository gate not run.
