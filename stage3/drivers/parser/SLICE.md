@@ -33,7 +33,31 @@ the output. Raw slices are /tmp/parser-fixed-entry-slice and
 /tmp/parser-fixed-driver-slice. Node and stage0 results follow in separate
 commits.
 
-# Previous tool results, superseded below
+## Step 2: slice and full-tree dump are byte-identical
+
+The corrected driver slice parses the original 81-file corpus successfully:
+exit 0, empty stderr, 35,456,964 bytes, SHA256
+2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+cmp against the retained original full-tree dump exits 0. The actual Node
+Identifier-end mutation completes and cmp rejects it, exactly one changed
+record (moduleSpecifiers end 3145 -> 3146).
+
+The actual omission mutant removes one reached declaration: Parser.initializeState
+at adapted parser.ts:1735, 46 copied-span lines / 1,935 bytes. The passing
+control audits all spans and ordered import lists and emits the full oracle
+dump. The mutant audit exits 1 at initializeState; Node exits 70 with
+ReferenceError: initializeState is not defined; comparing its output with
+the successful full dump exits 1. Unlike the old tool's attempt, the control
+now passes before this mutation. No omission remains in the delivered slice.
+
+Commands use run.sh with --inputs /tmp/parser-adapted10, followed by cmp
+against /tmp/parser-node10-final/node.dump. The gathered parser is
+/tmp/parser-fixed-driver-slice; the separate omission copy is
+/tmp/parser-fixed-omission. evidence/fixed-slice-equivalence.json records
+all exits, bytes, hash and both mutants; the omitted span and raw audit/
+runtime/comparison diagnostics are saved beside it.
+
+# Previous tool results, superseded by the fixed-tool results above
 
 # createSourceFile declaration slice
 
