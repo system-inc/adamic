@@ -1,0 +1,11 @@
+case 0
+/workspace/adamic/stage1/cohere/lint/claims/wave1-09-fourth-evidence/optional-chain.ts:1:1
+  @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x1867f1d6e820?, 0x1867f1e71080?}, 0x0, 0x1867f1e71080)
+	/workspace/adamic/cohere/wave109_oracle.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/wave109_oracle.go:143 +0x2f7
