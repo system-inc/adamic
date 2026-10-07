@@ -1,0 +1,6 @@
+=== RUN   TestRulesAgree
+    lint_test.go:420: /tmp/wave109-rules-landing/stage1/cohere/lint/rules/typescript-no-empty-object-type/rule.ts:27:58: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestRulesAgree (6.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	6.669s
+FAIL
