@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// Mutable locations are invariant in 0.1 (docs/0.1.md, adamic/invariant-mutable): tsc relates an
+// Mutable locations are invariant in 0.1 (documentation/0.1.md, adamic/invariant-mutable): tsc relates an
 // array's elements, a property and a map's values covariantly, so a Dog[] is accepted as an Animal[],
 // and the wider name can then write a cat where the dogs are read. Stage 0 doesn't run cohere's lint,
 // so it refuses the same views itself, before lowering: every place a value goes into a typed slot

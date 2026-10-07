@@ -92,7 +92,7 @@ go run ./cmd/adamic-test262 -json -test262 /workspace/scratch/test262 -work /tmp
 go run ./cmd/adamic-test262 -json -test262 /workspace/scratch/test262 -work /tmp/object-final built-ins/Object > /tmp/object-final.json 2> /tmp/object-final.log
 go test -count=1 ./internal/lower -run TestObject > /tmp/object-refusals.log 2>&1
 go test -count=1 -timeout 10m ./internal/oracle -run TestNativeAgreesWithNode/internal/oracle/testdata/library_object > /tmp/object-oracle.log 2>&1
-python3 docs/library-object/run-mutants.py > /tmp/object-mutants.log 2>&1
+python3 documentation/library-object/run-mutants.py > /tmp/object-mutants.log 2>&1
 gofmt -l cmd internal > /tmp/object-format.log
 go vet ./... > /tmp/object-vet.log 2>&1
 go test -count=1 -timeout 30m ./internal/oracle -run TestCountsAreRecorded -args -update-counts > /tmp/object-counts.log 2>&1

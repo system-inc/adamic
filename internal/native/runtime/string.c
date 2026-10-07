@@ -6,7 +6,7 @@
 // has to guess who's still looking.
 //
 // The bytes are UTF-8. JavaScript's strings are UTF-16 to a program (length, indexes, <), and the
-// operations that see the difference arrive with the program that needs them (docs/0.1.md, program
+// operations that see the difference arrive with the program that needs them (documentation/0.1.md, program
 // 10), each held to Node by the oracle.
 
 #include "adamic.h"

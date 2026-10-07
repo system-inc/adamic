@@ -21,7 +21,7 @@ Object/array/function ToPrimitive, boxed String construction/internal slots, pro
 
 `localeCompare` remains refused. Node uses locale collation, which is not ordinal UTF-16 comparison even for ASCII: `"Z" < "a"` is true while `"Z".localeCompare("a")` returns 1; `"a" < "B"` is false while its localeCompare returns -1. No general ordinal subset is claimed. A refusal probe prevents an ordinal approximation.
 
-`docs/0.1.md` explicitly places both `==` and `!=` in Never. Loose inequality remains deliberately refused, with a regression probe; this is not a lowering gap.
+`documentation/0.1.md` explicitly places both `==` and `!=` in Never. Loose inequality remains deliberately refused, with a regression probe; this is not a lowering gap.
 
 The RegExp unit has not landed. Regex-dependent `match`, `matchAll`, `search`, RegExp-pattern `replace`/`replaceAll`/`split`, replacement callbacks, and Symbol.match/Symbol.matchAll/Symbol.replace/Symbol.search/Symbol.split behavior are not implemented. Existing runner skips for unsupported syntax and harness features remain unchanged. String-pattern replacement is covered; no regex behavior is approximated.
 

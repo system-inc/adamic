@@ -9,7 +9,7 @@ import (
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
 // depth-first in the order they're written, then the module itself. The prelude's 'adamic' module
-// has no body to run. An import cycle is refused, as 0.1 says (docs/0.1.md).
+// has no body to run. An import cycle is refused, as 0.1 says (documentation/0.1.md).
 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
 	order := []*ast.SourceFile{}
 	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed

@@ -36,7 +36,7 @@ The continuation compared all 173 existing counted rows with pre-inheritance mai
 
 Mutants that ignored escaping overrides triggered ASan on an object stored beyond its temporary region. A mutant that omitted the shared consumption convention leaked under LeakSanitizer. Following only the static target for a global move produced a null access caught by UBSan and Node exit parity. Restoring either blanket optimizer guard failed the plan test. The optimization step used native and lowering package tests, filtered oracles and the complete counts update. The final full gate below verifies the combined implementation.
 
-Outside the original lowering/native territory, this continuation updates `internal/oracle/class_inheritance_test.go` to register the memory fixture, `internal/oracle/testdata/class_inheritance_memory.a` to exercise dynamic ownership, and `internal/oracle/counts.md` to record measurements. `internal/native/emit.go` has small integration changes for joined region arguments and constructor allocation, and moves the final field-store temporary rather than retaining and releasing it. `docs/inheritance.md` is the reader-facing report.
+Outside the original lowering/native territory, this continuation updates `internal/oracle/class_inheritance_test.go` to register the memory fixture, `internal/oracle/testdata/class_inheritance_memory.a` to exercise dynamic ownership, and `internal/oracle/counts.md` to record measurements. `internal/native/emit.go` has small integration changes for joined region arguments and constructor allocation, and moves the final field-store temporary rather than retaining and releasing it. `documentation/inheritance.md` is the reader-facing report.
 
 ## Generic hierarchies
 
@@ -127,7 +127,7 @@ Files outside the original new lowering/native files and `internal/lower/class.g
 | `internal/oracle/testdata/class_inheritance_generic.a` | Exercise generic hierarchies, identities and factories. |
 | `internal/oracle/testdata/class_inheritance_conditional.a` | Exercise branching construction and exceptional binding. |
 | `internal/oracle/counts.md` | Record every fixture's measured memory costs. |
-| `docs/inheritance.md` | Make the implementation and verification report available in the repository. |
+| `documentation/inheritance.md` | Make the implementation and verification report available in the repository. |
 
 The generic factory mapper currently reads the checker's private signature mapper through a checked reflection bridge, alongside the existing checker bridge in `instantiate.go`. A shim accessor would remove this dependency. Unsupported mappings are diagnosed instead of silently choosing a layout.
 

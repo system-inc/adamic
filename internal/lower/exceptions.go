@@ -8,7 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
+// Exceptions (documentation/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
 // caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
 // Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
 
@@ -138,7 +138,7 @@ func (l *lowering) exceptions() error {
 	}
 	for _, record := range l.tries {
 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
-			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md)")
 		}
 	}
 	return nil

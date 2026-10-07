@@ -14,7 +14,7 @@ enum adamic_stream {
 	adamic_stderr = 2,
 };
 
-// adamic_heap begins every value on the heap: strings, objects and arrays (heap.c, docs/memory.md).
+// adamic_heap begins every value on the heap: strings, objects and arrays (heap.c, documentation/memory.md).
 // references 0 is a constant the program spelled out, immortal; anything made at runtime starts at 1,
 // and its last release frees it and releases what it holds.
 enum adamic_kind {

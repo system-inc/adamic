@@ -119,7 +119,7 @@
 === CONT  TestDocumentedStageZeroGaps/emptyFallback.ts
     gaps_test.go:41: /workspace/adamic/stage1/cohere/json/gaps/emptyFallback.ts:2:29: stage 0 can't lower an array of never yet; Node "0\n"
 === CONT  TestDocumentedStageZeroGaps/repeatInTry.ts
-    gaps_test.go:41: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; Node "xxx\n"
+    gaps_test.go:41: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) yet; Node "xxx\n"
 === CONT  TestThreePortMutantsAreCaught/missing_final_newline
 --- PASS: TestDocumentedStageZeroGaps (0.00s)
     --- PASS: TestDocumentedStageZeroGaps/multiplePush.ts (0.14s)

@@ -1,4 +1,4 @@
-// The other writes the relaxation for fresh writes proves (docs/memory.md), each of a value that
+// The other writes the relaxation for fresh writes proves (documentation/memory.md), each of a value that
 // can't reach what it's written into: every kind of write, a fresh holder through a loop where the
 // last pass's node escaped, a value made by a summarized function, a holder made by a constructor,
 // and a write after a catch.

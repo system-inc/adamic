@@ -9,7 +9,7 @@ import (
 
 // Keep the regex IR proof testable on main before the native regex slice merges.
 // The source fixture in testdata/regexp_tree.ts is also run by the full Node oracle
-// on the CSS scratch merge; docs/regex-cycle-proof.md records that command.
+// on the CSS scratch merge; documentation/regex-cycle-proof.md records that command.
 func TestRegexOperationsDoNotPoisonTreeWrites(t *testing.T) {
 	t.Parallel()
 	expressions := []ir.Expression{

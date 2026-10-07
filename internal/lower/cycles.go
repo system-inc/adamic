@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// The cycle finder (docs/memory.md). Reference counting can't free a cycle, and Adamic has no
+// The cycle finder (documentation/memory.md). Reference counting can't free a cycle, and Adamic has no
 // collector, so a cycle must not be able to form. One forms only when a slot (a field, readonly or
 // not, since a constructor writes a readonly one, an element of an array that isn't readonly, a map's
 // value, a variable a function value captures) is set to something that can reach back to what

@@ -38,7 +38,7 @@ creates an explicitly typed `number[]` local before assigning its optional slot.
 `programArguments`, and prints `a` with no arguments. Adamic reports:
 
 ```text
-stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) yet
 ```
 
 A literal repeat can be folded and does not prove this gap. The composition uses

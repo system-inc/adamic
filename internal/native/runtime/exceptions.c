@@ -1,4 +1,4 @@
-// exceptions.c: throw, try, catch and finally, by cleanup paths (docs/memory.md, "Exceptions,
+// exceptions.c: throw, try, catch and finally, by cleanup paths (documentation/memory.md, "Exceptions,
 // designed into counting"). The emitter does the unwinding; the runtime holds what's thrown.
 
 #include "adamic.h"

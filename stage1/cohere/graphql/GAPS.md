@@ -69,7 +69,7 @@ stage 0 can't lower throwing an Error that isn't made where it's thrown or caugh
 
 ## Cooking a string without `String.fromCodePoint`
 
-The gitignore slice's gap 1 again: `String.fromCodePoint` and `String.fromCharCode` are in docs/0.1.md's library and don't lower on any branch, main at 4ff4657 included. A GraphQL string's `\u` escapes need them: graphql-js cooks each escape into the character it names, and a value can name any of the 1,112,064 scalar values. No table of them is small enough to embed.
+The gitignore slice's gap 1 again: `String.fromCodePoint` and `String.fromCharCode` are in documentation/0.1.md's library and don't lower on any branch, main at 4ff4657 included. A GraphQL string's `\u` escapes need them: graphql-js cooks each escape into the character it names, and a value can name any of the 1,112,064 scalar values. No table of them is small enough to embed.
 
 **Around it:** every string the lexer gives, a token's value or an error's message, is in the output form the test compares: printable ASCII as itself but a backslash as two, and any other code point as `\u{HEX}` (lexer.ts, `escaped` and `written`). A cooked escape is written straight into that form from its code point, and a raw stretch of the source is put into it by `escaped`; the Go side writes Go cohere's cooked strings in the same form, so the comparison sees every character of every value. Names, numbers and keywords are ASCII letters, digits, `_`, `.`, `+` and `-`, which the form writes as themselves, so every comparison the parser makes on a token's value is unchanged. When `String.fromCodePoint` lowers, the values go back to being the text itself and only the driver writes the form.
 

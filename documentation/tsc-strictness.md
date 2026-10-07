@@ -293,12 +293,12 @@ import json, pathlib, sys
 root = pathlib.Path.cwd()
 json.dump({'Replace': {
     str(root / 'cmd/adamic-meter/survey_export_test.go'):
-    str(root / 'docs/tsc-strictness/export_test.go.txt')
+    str(root / 'documentation/tsc-strictness/export_test.go.txt')
 }}, open(sys.argv[1], 'w'))
 PY
 go test -overlay="$S/overlay.json" ./cmd/adamic-meter -run '^TestExportStrictnessSurvey$' -count=1 -v > "$S/export.log" 2>&1
-python3 docs/tsc-strictness/audit.py "$S/diagnostics.json" "$S/typescript" > "$S/audit.log" 2>&1
-TSC_SURVEY_TYPESCRIPT="$S/npm/node_modules/typescript/lib/typescript.js" node docs/tsc-strictness/probes.cjs > "$S/probes.log" 2>&1
+python3 documentation/tsc-strictness/audit.py "$S/diagnostics.json" "$S/typescript" > "$S/audit.log" 2>&1
+TSC_SURVEY_TYPESCRIPT="$S/npm/node_modules/typescript/lib/typescript.js" node documentation/tsc-strictness/probes.cjs > "$S/probes.log" 2>&1
 go test ./cmd/adamic-meter > "$S/meter-tests.log" 2>&1
 ```
 

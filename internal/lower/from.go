@@ -7,7 +7,7 @@ import (
 )
 
 // arrayFrom lowers Array.from({ length }, (_, index) => ...), the one form of Array.from 0.1 has
-// (docs/0.1.md): a new array of length elements, each what the callback returns for its index.
+// (documentation/0.1.md): a new array of length elements, each what the callback returns for its index.
 //
 // The object is never made. It has no elements, so what the callback receives first is always
 // undefined; the checker types that parameter unknown, and it's lowered as a reference that's always

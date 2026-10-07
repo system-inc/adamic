@@ -1,4 +1,4 @@
-// heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
+// heap.c: allocation, counting and freeing for every heap value (documentation/memory.md).
 
 #include "adamic.h"
 #include "count.h"

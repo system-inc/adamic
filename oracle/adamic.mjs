@@ -5,7 +5,7 @@
 // the program already printed. It throws to stop the program, and a catch in the source could take
 // that throw, where natively a panic ends the program on the spot; so from the panic on, everything
 // the program writes is dropped and the exit is 70 whatever it does, which makes what it does after
-// unseen, as it is natively (docs/memory.md, "Exceptions").
+// unseen, as it is natively (documentation/memory.md, "Exceptions").
 import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 
 class AdamicPanic extends Error {}

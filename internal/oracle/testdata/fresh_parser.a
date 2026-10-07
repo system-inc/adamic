@@ -1,5 +1,5 @@
 // The parser's pattern, which the cycle finder refused before its relaxation for fresh writes
-// (docs/memory.md): a tree whose nodes keep their children in a mutable array of nodes, built by
+// (documentation/memory.md): a tree whose nodes keep their children in a mutable array of nodes, built by
 // pushing each freshly parsed child into the node being parsed. A cycle needs a last write that
 // closes it, and none of these can: each node is made here and hasn't escaped when its children
 // are pushed, or what's pushed was made here and holds nothing old.

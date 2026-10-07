@@ -93,7 +93,7 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 }
 
 // condition lowers an expression that decides a branch or a loop. 0.1 requires a boolean there
-// (docs/0.1.md), so `if (name)` on a string is refused rather than given JavaScript's truthiness.
+// (documentation/0.1.md), so `if (name)` on a string is refused rather than given JavaScript's truthiness.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	condition, err := l.expression(node)
 	if err != nil {

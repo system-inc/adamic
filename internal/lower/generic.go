@@ -10,7 +10,7 @@ import (
 
 // maximumGenericDepth is how many instantiations of generic functions may be lowered inside one
 // another. Ordinary programs nest a few; a function that calls itself with an ever larger type
-// (polymorphic recursion) would instantiate without end, and 0.1 refuses it (docs/0.1.md).
+// (polymorphic recursion) would instantiate without end, and 0.1 refuses it (documentation/0.1.md).
 const maximumGenericDepth = 32
 
 // instantiateFunction lowers a generic module function for the type arguments of one call, once per

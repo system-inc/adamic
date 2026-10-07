@@ -179,7 +179,7 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	if javascriptError.Match(outcome.Node.Stderr) {
 		// Node threw where the library throws (repeat(-1)), or where the checker's types were wrong (a
 		// narrowing a call undid). Adamic panics there too, and the oracle holds it to stdout and the
-		// exit code, not to V8's words (docs/0.1.md).
+		// exit code, not to V8's words (documentation/0.1.md).
 		nativeDifference = differenceBesidesStderr(outcome.Node, outcome.Native)
 		backendDifference = differenceBesidesStderr(outcome.Node, outcome.Backend)
 	}

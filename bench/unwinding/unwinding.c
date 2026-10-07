@@ -1,4 +1,4 @@
-// unwinding.c: the two ways to unwind through reference counting (docs/memory.md, "Exceptions,
+// unwinding.c: the two ways to unwind through reference counting (documentation/memory.md, "Exceptions,
 // designed into counting"), measured on one workload in plain C, so the mechanisms are compared and
 // nothing else is.
 //

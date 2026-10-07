@@ -1,6 +1,6 @@
 // count.h: what a counted build counts (native.Options.Count, which defines ADAMIC_COUNT). Counts are
 // deterministic, unlike time, so they can be measured anywhere: the oracle's counts table holds every
-// fixture's, and borrow inference and reuse in place are measured against it (docs/memory.md).
+// fixture's, and borrow inference and reuse in place are measured against it (documentation/memory.md).
 //
 // An allocation is a heap value made (adamic_allocate) and a free is one freed; the buffers behind an
 // array's elements or a map's table aren't heap values and aren't counted. A retain or a release is

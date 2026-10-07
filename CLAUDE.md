@@ -2,7 +2,7 @@
 
 > In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra
 
-You're working on Adamic: TypeScript whose types are true, compiled to native code through C, on every core, with no garbage collector. Read `README.md`, `docs/0.1.md` (the language, approved by Kirk) and `docs/memory.md` (the memory model) before you change anything. The goals, in order: cohere compiled by Adamic, faster and leaner than Go cohere; TypeScript's own compiler compiled by Adamic, faster than typescript-go; Claude Code compiled by Adamic; and the code that runs Ahra's body.
+You're working on Adamic: TypeScript whose types are true, compiled to native code through C, on every core, with no garbage collector. Read `README.md`, `documentation/0.1.md` (the language, approved by Kirk) and `documentation/memory.md` (the memory model) before you change anything. The goals, in order: cohere compiled by Adamic, faster and leaner than Go cohere; TypeScript's own compiler compiled by Adamic, faster than typescript-go; Claude Code compiled by Adamic; and the code that runs Ahra's body.
 
 ## The layout
 
@@ -58,7 +58,7 @@ On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that j
 
 cohere checks and formats every Adamic program in this repository, `.ts` and `.a` alike. `tsconfig.json` carries the same compiler options stage 0 sets in `internal/load/load.go` (keep the two identical), the prelude as the one global declaration file, and `"sourceExtensions": [".a"]`, which cohere's TypeScript reads and stock tools ignore. `CohereSettings.json` turns on `cohere:typescript` (soundness, style and correctness) and ignores the files that are wrong on purpose, for these reasons:
 
-- `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
+- `internal/load/testdata/0.1/refuse/**`: documentation/0.1.md's five refused programs, whose job is to be refused.
 - `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
 - `review/**`: reviewers' probes, written to break things.
 

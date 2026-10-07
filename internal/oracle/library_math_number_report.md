@@ -52,7 +52,7 @@ Math.sign, Math.cbrt and the other transcendental functions were already impleme
 | error TS2339: Property '…' does not exist on type '…'. | 3 |
 | error TS2790: The operand of a '…' operator must be optional. | 3 |
 | error TS2322: Type '…' is not assignable to type '…'. | 2 |
-| not yet: a try around toString, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 2 |
+| not yet: a try around toString, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) | 2 |
 | not yet: reading Function | 2 |
 | not yet: reading isFinite | 2 |
 | refuses a method read as a value (toString would lose its object, and this with it) | 2 |
@@ -60,9 +60,9 @@ Math.sign, Math.cbrt and the other transcendental functions were already impleme
 | error TS2403: Subsequent variable declarations must have the same type.  Variable '…' must be of type '…', but here has type '…'. | 1 |
 | error TS2554: Expected 0 arguments, but got 1. | 1 |
 | not yet: a BinaryExpression with a string and a number | 1 |
-| not yet: a try around toExponential, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 1 |
-| not yet: a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 1 |
-| not yet: a try around toPrecision, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 1 |
+| not yet: a try around toExponential, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) | 1 |
+| not yet: a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) | 1 |
+| not yet: a try around toPrecision, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) | 1 |
 | not yet: a value argument to toExponential | 1 |
 | not yet: reading Object | 1 |
 | refuses == | 1 |

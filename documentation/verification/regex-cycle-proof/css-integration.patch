@@ -109,7 +109,7 @@ index 947e413..d70f4f1 100644
 +Current main lacks this branch's native regex lowering and emission. The scratch
 +merge also adapts the older regex shape initializers to main's shape layout.
 +These are integration dependencies, not remaining cycle-proof gaps. Evidence and
-+the integration patch are in `docs/regex-cycle-proof.md` on the proof branch.
++the integration patch are in `documentation/regex-cycle-proof.md` on the proof branch.
  
  ## 2. Array shift
  

@@ -1,4 +1,4 @@
-// weak.c: Weak<Target>, a reference that doesn't count (docs/memory.md).
+// weak.c: Weak<Target>, a reference that doesn't count (documentation/memory.md).
 //
 // A weak slot holds a counted handle, never the target: the handle is shared by every weak slot that
 // points at one target, and it points at the target until the target is freed, then at nothing. A

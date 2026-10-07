@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Regions, the arenas of docs/memory.md (#272q6cv): a statement that makes values nothing reaches
+// Regions, the arenas of documentation/memory.md (#272q6cv): a statement that makes values nothing reaches
 // after it gets a region, and they're allocated in it and let go of together when it ends
 // (runtime/region.c), instead of one malloc and one free each.
 //

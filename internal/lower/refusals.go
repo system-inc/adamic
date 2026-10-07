@@ -9,7 +9,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
-// refusal is one construct Adamic 0.1 doesn't allow (docs/0.1.md, "What's refused in 0.1"), and the
+// refusal is one construct Adamic 0.1 doesn't allow (documentation/0.1.md, "What's refused in 0.1"), and the
 // fix to offer for it.
 type refusal struct {
 	what string
@@ -97,7 +97,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			generator = node.AsMethodDeclaration().AsteriskToken != nil
 		}
 		if generator {
-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (documentation/user-iterators.md)"}
 			return true
 		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {

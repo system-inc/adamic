@@ -1,5 +1,5 @@
 // A chain a million links long, freed when the last reference to its head goes: freeing works from a
-// list, not by recursion, so it can't overflow the stack (docs/memory.md).
+// list, not by recursion, so it can't overflow the stack (documentation/memory.md).
 interface Link {
 	readonly value: number;
 	readonly next: Link | undefined;

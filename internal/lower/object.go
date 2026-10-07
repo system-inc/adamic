@@ -331,7 +331,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration && !isCallee(node) {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
-		// docs/0.1.md). A plain call never comes here, since callOrMethod lowers it; object?.method()
+		// documentation/0.1.md). A plain call never comes here, since callOrMethod lowers it; object?.method()
 		// reads it as its call's callee, through the object's methods, and keeps its this.
 		object := "object"
 		if receiver := ast.SkipParentheses(access.Expression); ast.IsIdentifier(receiver) {
@@ -552,7 +552,7 @@ func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
 	return symbol != nil && len(symbol.Declarations) > 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
-// mathFunctions are the Math functions 0.1 has (docs/0.1.md), with how many arguments each takes;
+// mathFunctions are the Math functions 0.1 has (documentation/0.1.md), with how many arguments each takes;
 // -1 is any number.
 var mathFunctions = map[string]int{
 	"abs": 1, "ceil": 1, "floor": 1, "round": 1, "trunc": 1, "sign": 1, "sqrt": 1,
@@ -564,7 +564,7 @@ var mathFunctions = map[string]int{
 }
 
 // refusedRandom refuses Math.random for good in 0.1: a program's output would no longer be a function
-// of its source, and the oracle compares it with Node's byte for byte (docs/0.1.md).
+// of its source, and the oracle compares it with Node's byte for byte (documentation/0.1.md).
 func refusedRandom(l *lowering, node *ast.Node) error {
 	return &Refused{Where: l.program.Where(node), What: "Math.random", Fix: "0.1 programs are deterministic, so the oracle can hold them to Node; compute the values you need, with a generator of your own seeded by a constant"}
 }
@@ -752,7 +752,7 @@ func (l *lowering) numberFormat(node *ast.Node, receiver *ast.Node, name string)
 	return format, true, nil
 }
 
-// numberFunctions are the functions of Number that 0.1 has (docs/0.1.md), with what each takes; the
+// numberFunctions are the functions of Number that 0.1 has (documentation/0.1.md), with what each takes; the
 // last of parseInt's, the radix, may be left out.
 var numberFunctions = map[string][]ir.Type{
 	"parseInt": {ir.String, ir.Number}, "parseFloat": {ir.String},
@@ -1235,7 +1235,7 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
 }
 
-// arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
+// arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (documentation/0.1.md):
 // without one, an empty array throws and a one-element array returns it without a call.
 func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes

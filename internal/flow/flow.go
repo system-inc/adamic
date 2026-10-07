@@ -1,6 +1,6 @@
 // Package flow is a control-flow graph of one Adamic function, built from the typed IR, for the
 // analyses that need to know which value reaches where: single assignment first, then the aliasing
-// and mutable ranges that reuse in place and arenas are built on (docs/memory.md, #5jck546).
+// and mutable ranges that reuse in place and arenas are built on (documentation/memory.md, #5jck546).
 //
 // It is not a second lowering. Every semantic decision (JavaScript's evaluation order, the snapshots,
 // the inserted checks) was made once, by internal/lower, and the oracle holds it there. A block here

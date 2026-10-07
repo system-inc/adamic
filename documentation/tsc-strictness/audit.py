@@ -1,5 +1,5 @@
 """Re-select and validate the committed survey against a fresh diagnostic export.
-Usage: python3 docs/tsc-strictness/audit.py DIAGNOSTICS_JSON TYPESCRIPT_CHECKOUT
+Usage: python3 documentation/tsc-strictness/audit.py DIAGNOSTICS_JSON TYPESCRIPT_CHECKOUT
 The checkout must be the pinned v6.0.3 source. No repository writes.
 """
 import collections

@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/fresh"
 )
 
-// The cycle finder's relaxation for fresh writes (docs/memory.md). The finder refuses every mutable
+// The cycle finder's relaxation for fresh writes (documentation/memory.md). The finder refuses every mutable
 // slot whose type can reach back to its holder; a slot stands undeclared when every write into it in
 // the whole program is proven not to close a cycle (fresh.ProveWrites). Lowering records, for each
 // write it makes, the type of what it writes into, so a write the proof can't vouch for keeps every

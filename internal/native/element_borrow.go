@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// A variable borrowed from an array (docs/memory.md, "A variable borrowed from an array"): a local
+// A variable borrowed from an array (documentation/memory.md, "A variable borrowed from an array"): a local
 // given an element, a[i] or a[i] ?? fallback, holds no count when nothing in the rest of its block can
 // take an element out of any array. The array stays alive because a names it for the whole function,
 // and the element stays in it, so the array's count is the variable's.

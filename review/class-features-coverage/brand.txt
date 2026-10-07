@@ -38,4 +38,4 @@ A subclass instance carries the base brand, and the derived class's own #secret 
 native:
 Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
 
-Exact private brands are part of the unimplemented constructor-object model (docs/class-features.md). What does run is same-spelled private fields and methods in a base and a derived class, accessed from arrows inside instance methods. That case is class_features_distinct.a and agrees with Node.
+Exact private brands are part of the unimplemented constructor-object model (documentation/class-features.md). What does run is same-spelled private fields and methods in a base and a derived class, accessed from arrows inside instance methods. That case is class_features_distinct.a and agrees with Node.

@@ -157,7 +157,7 @@ func TestToExponentialAndToPrecisionMatchNode(t *testing.T) {
 }
 
 // Out of range, Node throws a RangeError, and Adamic panics: exit 70 with stdout flushed
-// (docs/0.1.md, library calls that throw). Each case is its own process, since a panic ends it.
+// (documentation/0.1.md, library calls that throw). Each case is its own process, since a panic ends it.
 func TestToExponentialAndToPrecisionOutOfRangePanic(t *testing.T) {
 	t.Parallel()
 	const harness = `#include "adamic.h"

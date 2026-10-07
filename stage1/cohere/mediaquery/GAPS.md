@@ -22,7 +22,7 @@ programs compile and print natively what they print on Node. Their gaps-test ent
 expected stdout, which is how that test records a closed gap.
 
 Before this closed, stage 0 lowered a generic function only once, so a return or parameter typed by
-its type parameter was refused even though docs/0.1.md specifies monomorphization.
+its type parameter was refused even though documentation/0.1.md specifies monomorphization.
 
 ```ts
 function identity<Item>(item: Item): Item {
@@ -77,7 +77,7 @@ The emitted function is `adamic_object * adamic_temporary_1 = adamic_retain(NULL
 
 Closed: `?.length` on an array or a string that may be missing now lowers, and the gap program prints natively what it prints on Node. The port's workaround (gap 3) still stands; stream P2 undoes it.
 
-docs/0.1.md has `?.`. On an object it lowers; on an array or a string it's refused.
+documentation/0.1.md has `?.`. On an object it lowers; on an array or a string it's refused.
 
 ```ts
 function size(list: readonly string[] | undefined): number {
@@ -96,9 +96,9 @@ On a `string | undefined`, `text?.length` reads `stage 0 can't lower optional ch
 
 ## 4. A tree with mutable child arrays is refused as cycle-capable (closed by stream B3's fresh-write relaxation (8f30be5, 952ccbe), in integration 11)
 
-Closed: the cycle finder lets a cycle-capable slot stand when every write into it is proven not to reach its holder (docs/memory.md, "Relaxing the finder for fresh writes"), and this tree's are. The gap program prints natively what it prints on Node and leaks nothing. The port's workaround (gap 4) still stands; stream P2 undoes it.
+Closed: the cycle finder lets a cycle-capable slot stand when every write into it is proven not to reach its holder (documentation/memory.md, "Relaxing the finder for fresh writes"), and this tree's are. The gap program prints natively what it prints on Node and leaks nothing. The port's workaround (gap 4) still stands; stream P2 undoes it.
 
-Not a NotYet: a rule of 0.1, the cycle finder's (`internal/lower/cycles.go`, docs/memory.md "Cycles"), which landed on main at 4ddd17f and refused this port as first written. A node whose children are a mutable array of nodes can be given itself (`root.nodes.push(root)`), a cycle reference counting can't free:
+Not a NotYet: a rule of 0.1, the cycle finder's (`internal/lower/cycles.go`, documentation/memory.md "Cycles"), which landed on main at 4ddd17f and refused this port as first written. A node whose children are a mutable array of nodes can be given itself (`root.nodes.push(root)`), a cycle reference counting can't free:
 
 ```ts
 class TreeNode {
@@ -197,7 +197,7 @@ The port agrees with Go cohere and the library on every case; these are the numb
 Under callgrind, on 20,000 ASCII cases, the native run's instructions are allocation churn: `adamic_release` 17%, `adamic_string_concat` 13%, malloc and free 23% between them, `adamic_string_slice` 8%. Three shapes cause it, all in natural code the port shares with the Go:
 
 - **`text[index]` makes a new string every read.** The parser walks every params string with `text[i]` and compares the character with `'('` or `','`. Each read slices a one-unit string onto the heap and frees it after the comparison. V8 hands back a cached single-character string. A table of immortal one-unit strings (ASCII, or all 256 of Latin-1) would make the read a load and the comparison a pointer test.
-- **`value += character` copies.** The parser builds every element by appending one character at a time, as the Go does. Each `+=` allocates a new string and frees the old one. docs/memory.md's reuse in place (a string whose count is one, appended to in place) is the fix; V8 uses ropes.
+- **`value += character` copies.** The parser builds every element by appending one character at a time, as the Go does. Each `+=` allocates a new string and frees the old one. documentation/memory.md's reuse in place (a string whose count is one, appended to in place) is the fix; V8 uses ropes.
 - **A short non-ASCII string is walked from its start on every index.** string_index.c gives an index only to strings of 64 bytes or more, so below that `text[i]` and `charCodeAt(i)` walk the UTF-8 from the first byte each time. On the generated cases (mostly short and non-ASCII) `adamic_string_at` averages about 870 instructions a call, and is 37% of the run with `adamic_string_locate` under it. A cursor that a short string keeps without an index (the next index in a loop is one step from the last) would make a loop over one linear without the index's memory.
 
 The driver's printing, which is not the parser, cost more than the parse at first: `quote` read every string unit by unit and appended one at a time (the second shape). It now copies the runs between escapes whole. Even so, writing the trees takes the full run to 4.7 s natively and 2.4 s on Node, and 10% of the native run is converting integers to strings through `snprintf` (`adamic_number_format`), which an integer fast path would remove.

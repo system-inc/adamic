@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Borrowed reads (docs/memory.md, "Borrowed parameters", extended to reads).
+// Borrowed reads (documentation/memory.md, "Borrowed parameters", extended to reads).
 //
 // A reference read from somewhere a call could write (a global, a captured variable, a field) is
 // retained the moment JavaScript reads it, because something later in the statement might write

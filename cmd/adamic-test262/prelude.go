@@ -17,7 +17,7 @@ package main
 //     constructor is the one named: stage 0 only builds `new Error`, and only `instanceof Error`
 //     on a catch lowers. The name is what the failure says when nothing was thrown. This is weaker
 //     than the harness, on both sides equally. A library call that throws on Node panics natively
-//     (docs/0.1.md), and a panic is not caught, so those tests come out fail rather than pass.
+//     (documentation/0.1.md), and a panic is not caught, so those tests come out fail rather than pass.
 //   - compareArray is generic over string, number or boolean. An array of a union does not lower;
 //     one copy per element type does. SameValue is the element comparison, as in assert.js.
 //   - Test262Error is a class with a message, not a prototype assignment. `throw new Test262Error`

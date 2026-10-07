@@ -26,7 +26,7 @@
 //
 // C's libm is called here only where V8's code calls the C library too: sqrt and fabs, and scalbn and
 // floor in kernel_rem_pio2. All four are exact everywhere. libm's own sin, exp and the rest are never
-// called: they and V8 disagree in the last bit, and Node is the truth (docs/0.1.md).
+// called: they and V8 disagree in the last bit, and Node is the truth (documentation/0.1.md).
 
 #include "adamic.h"
 

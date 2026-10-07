@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Exceptions by cleanup paths (docs/memory.md, "Exceptions, designed into counting"). The runtime
+// Exceptions by cleanup paths (documentation/memory.md, "Exceptions, designed into counting"). The runtime
 // has one pending-exception word, adamic_thrown. A throw sets it and jumps to its handler: the
 // innermost try around it in this function, letting go of what the statement and every scope between
 // hold, or the function's way out, letting go of everything the frame holds and returning a zero

@@ -1,4 +1,4 @@
-// The holder proof across calls (docs/memory.md): a helper's push into a parameter can't be proven
+// The holder proof across calls (documentation/memory.md): a helper's push into a parameter can't be proven
 // inside the helper, so it's judged at each call, where the caller knows it made the parent and
 // hasn't let it escape.
 import type { Weak } from 'adamic';

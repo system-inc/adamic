@@ -35,7 +35,7 @@ The counts are what let Adamic mutate in place without anyone seeing:
 
 - When a value whose count is exactly 1 is consumed to build a new value of the same shape, the new value takes over the old memory. `{ ...tree, left: insert(tree.left, value) }` on a tree nobody else holds rewrites one node instead of copying it. That's Perceus, from Koka; Lean 4 does the same.
 - `push` on an array with count 1 grows it in place, and on a shared one copies first.
-- **Identity is never observable through reuse.** Reuse happens only when nothing else holds the old value, so nothing can compare against it. Program 9 in docs/0.1.md pins this: while `before` still holds the old tree, the path is copied and the shared subtree stays shared.
+- **Identity is never observable through reuse.** Reuse happens only when nothing else holds the old value, so nothing can compare against it. Program 9 in documentation/0.1.md pins this: while `before` still holds the old tree, the path is copied and the shared subtree stays shared.
 
 **What's built (#6zt3jmn).** In stage 0, the one place a value is consumed to build one of its own shape is the spread: `{ ...source, field: value }` always has the source's shape. When the source's count is exactly 1, the spread takes over its object: the literal's fields are written over its own, and nothing is allocated or freed. Uniqueness is checked at runtime, as Perceus does. What the compiler proves (`internal/native/reuse.go`) is that taking the object can't be seen:
 
@@ -720,7 +720,7 @@ On `nbody`, counted: retains 22,000,050 to 7,000,019. Releases stayed at 22,000,
 
 ## Strings, specifically
 
-UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.
+UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in documentation/0.1.md is the fixture for all of it.
 
 Long non-ASCII strings keep a byte checkpoint every 32 UTF-16 units and a cursor at the last code point found (`runtime/string_index.c`). Sequential reads walk from that cursor; nearby backward reads choose it when it is closer than the checkpoint and walk backward over UTF-8 continuation bytes. The cursor always names a code point's first unit, so either half of a supplementary point is found from the same bytes. `codePointAt` decodes the location once, and slices reuse their already located boundary halves.
 

@@ -29,7 +29,7 @@ values live at once; in regions is the values let go of with their region (runti
 finished program's allocations are its frees and its values in regions. A fixture that panics is counted where it stopped; an input
 fixture runs as TestInputAgreesWithNode runs it, a directory of its own to write in included, and must finish. Every run has an
 8 MiB stack (ulimit -s 8192), so a fixture's counts never depend on the stack of whoever runs it. This is the baseline borrow
-inference and reuse in place are measured against (docs/memory.md).
+inference and reuse in place are measured against (documentation/memory.md).
 
 Not counted, though the oracle runs it as it runs every fixture: internal/oracle/testdata/stack_overflow.a, which recurses until
 the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them.

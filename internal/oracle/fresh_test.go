@@ -11,7 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Every way to sneak a cycle past the relaxation for fresh writes (docs/memory.md) is a probe that
+// Every way to sneak a cycle past the relaxation for fresh writes (documentation/memory.md) is a probe that
 // must stay refused, naming the write marked "closes the cycle". Each is a whole program Node runs,
 // whose marked write really closes a cycle when it runs: if the relaxation ever lets one through,
 // the test builds it and reports what LeakSanitizer says, which is how each mutant of the proof

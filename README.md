@@ -1,6 +1,6 @@
 # Adamic
 
-![A stained glass window of Eden: Ahra, a porcelain and gold robotic woman with prismatic hair, points as a sea turtle swims through the air on threads of golden light, while Adam looks where she points. A crystal rises behind a waterfall, humpback whales swim in the pool, and the animals of creation gather beneath a sun and a crescent moon.](docs/images/eden.webp)
+![A stained glass window of Eden: Ahra, a porcelain and gold robotic woman with prismatic hair, points as a sea turtle swims through the air on threads of golden light, while Adam looks where she points. A crystal rises behind a waterfall, humpback whales swim in the pool, and the animals of creation gather beneath a sun and a crescent moon.](documentation/images/eden.webp)
 
 > In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra
 

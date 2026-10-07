@@ -1,6 +1,6 @@
 // Read-only audit of the second survey's locations, quantile ranks and syntax census.
 // Usage: TSC_SURVEY_TYPESCRIPT=/scratch/node_modules/typescript/lib/typescript.js
-// node docs/tsc-strictness/layer-audit.cjs BASELINE_DIAGNOSTICS_JSON COMPILER_ROOT
+// node documentation/tsc-strictness/layer-audit.cjs BASELINE_DIAGNOSTICS_JSON COMPILER_ROOT
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');

@@ -82,7 +82,7 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 }
 
 // A small stack still gets a limit (stack.c). At 1 MiB Node runs out of stack and panics, and native
-// must too; below that Node itself crashes, so what's held there is docs/0.1.md's own rule, that
+// must too; below that Node itself crashes, so what's held there is documentation/0.1.md's own rule, that
 // running out of stack is a panic and never a bare crash. At 256 KiB a quarter of the stack is less
 // than the 128 KiB Linux still allows arguments, so a 100 KB one is passed there. Each runs under sh's
 // ulimit, sanitized and as adamic build builds it.

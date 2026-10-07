@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Reuse in place (Perceus, docs/memory.md): a value whose count is 1, consumed to build one of the
+// Reuse in place (Perceus, documentation/memory.md): a value whose count is 1, consumed to build one of the
 // same shape, takes over its memory instead of being freed while a copy is allocated.
 //
 // In stage 0 the one place a value is consumed to build one of its own shape is the spread,

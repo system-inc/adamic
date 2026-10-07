@@ -1,4 +1,4 @@
-// A variable borrowed from an array (docs/memory.md, "A variable borrowed from an array"): a const
+// A variable borrowed from an array (documentation/memory.md, "A variable borrowed from an array"): a const
 // given an element holds no count when nothing can take the element out of the array while the
 // const lives. Each probe below does take it out, or would let reuse write into it, while the const
 // lives and is read after: each must keep its count, or it reads freed memory (or, for the spread,

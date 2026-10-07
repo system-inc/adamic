@@ -226,8 +226,8 @@ go run ./cmd/adamic-meter --adapt --json /tmp/adamic-tsc-strictness/typescript/s
 go test ./cmd/adamic-meter ./internal/load -count=1 > /tmp/adamic-tsc-strictness/returns-tests-final.log 2>&1
 go vet ./... > /tmp/adamic-tsc-strictness/returns-vet.log 2>&1
 go test -count=1 -timeout 30m ./... > /tmp/adamic-tsc-strictness/returns-gate.log 2>&1
-TSC_SURVEY_TYPESCRIPT=/tmp/adamic-tsc-strictness/npm/node_modules/typescript/lib/typescript.js node docs/tsc-strictness/layer-probes.cjs > /tmp/adamic-tsc-strictness/layer-probes.log 2>&1
-TSC_SURVEY_TYPESCRIPT=/tmp/adamic-tsc-strictness/npm/node_modules/typescript/lib/typescript.js node docs/tsc-strictness/layer-audit.cjs /tmp/adamic-tsc-strictness/diagnostics-optional-final.json /tmp/adamic-tsc-strictness/typescript/src/compiler > /tmp/adamic-tsc-strictness/layer-audit.log 2>&1
+TSC_SURVEY_TYPESCRIPT=/tmp/adamic-tsc-strictness/npm/node_modules/typescript/lib/typescript.js node documentation/tsc-strictness/layer-probes.cjs > /tmp/adamic-tsc-strictness/layer-probes.log 2>&1
+TSC_SURVEY_TYPESCRIPT=/tmp/adamic-tsc-strictness/npm/node_modules/typescript/lib/typescript.js node documentation/tsc-strictness/layer-audit.cjs /tmp/adamic-tsc-strictness/diagnostics-optional-final.json /tmp/adamic-tsc-strictness/typescript/src/compiler > /tmp/adamic-tsc-strictness/layer-audit.log 2>&1
 ```
 
 Vet, formatting, touched-package tests and the complete worker gate pass. The

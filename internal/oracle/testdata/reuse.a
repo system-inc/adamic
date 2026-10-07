@@ -1,4 +1,4 @@
-// Reuse in place (docs/memory.md, Perceus): a spread's object is taken over only when its count is 1
+// Reuse in place (documentation/memory.md, Perceus): a spread's object is taken over only when its count is 1
 // and nothing can tell. Each function here is a case where taking it would be seen: the source read
 // after, held by someone else, its replaced field read twice, or a moved global read by the callee.
 // Beside them, cases where it's taken and mustn't change what prints: a loop that reuses one object

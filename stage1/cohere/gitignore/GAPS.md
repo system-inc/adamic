@@ -12,7 +12,7 @@ Found while closing these, and closed since by this stream (with P2's list): gen
 
 ## 1. `String.fromCharCode` and `String.fromCodePoint` (closed by this stream)
 
-Both are in docs/0.1.md's library.
+Both are in documentation/0.1.md's library.
 
 ```ts
 console.log(String.fromCharCode(104));
@@ -206,7 +206,7 @@ When this port began, 0.1 had no input, so the Go's reads through `os` (`os.Lsta
 
 ## Bytes, read in place
 
-A Go string is its bytes, and git matches bytes: `?` against `é` is false, because `é` is two bytes. 0.1's strings are UTF-16 to a program. The port first spelled each pattern and each text as a "byte string", one character per byte (bytes.ts), which cost a conversion of every text the glob matched and was most of the distance to Go. Now `utf8Length(text)` and `utf8At(text, index)` from 'adamic' read a string's UTF-8 in place (runtime/utf8.c; docs/0.1.md's library), and the glob reads its pattern and its text byte by byte, as glob.go does; bytes.ts is gone. Natively nothing is copied, since a string is stored as UTF-8: a lone surrogate, stored as WTF-8, reads as U+FFFD's three bytes, as TextEncoder writes it, so both backends agree. Fixtures: `utf8_view.a` and `utf8_view_fails.a`. The test's `bytes` tree holds the glob's byte semantics to git.
+A Go string is its bytes, and git matches bytes: `?` against `é` is false, because `é` is two bytes. 0.1's strings are UTF-16 to a program. The port first spelled each pattern and each text as a "byte string", one character per byte (bytes.ts), which cost a conversion of every text the glob matched and was most of the distance to Go. Now `utf8Length(text)` and `utf8At(text, index)` from 'adamic' read a string's UTF-8 in place (runtime/utf8.c; documentation/0.1.md's library), and the glob reads its pattern and its text byte by byte, as glob.go does; bytes.ts is gone. Natively nothing is copied, since a string is stored as UTF-8: a lone surrogate, stored as WTF-8, reads as U+FFFD's three bytes, as TextEncoder writes it, so both backends agree. Fixtures: `utf8_view.a` and `utf8_view_fails.a`. The test's `bytes` tree holds the glob's byte semantics to git.
 
 ## What lowered as written
 
@@ -220,7 +220,7 @@ Concatenation now looks for a surrogate pair's halves only where two pieces meet
 
 ### At 15e0b5f, with shared slices, appends in place and indexOf in place
 
-Main 1d72913 merged. A slice of 64 bytes or more, and a quarter of its owner, reads its owner's bytes; `text += more` on a local appends in place when the local holds the only reference; `indexOf` from a position no longer slices (docs/memory.md, "Strings, specifically"). The same case set as below, best of seven at a load average under 1, all three outputs byte for byte the same:
+Main 1d72913 merged. A slice of 64 bytes or more, and a quarter of its owner, reads its owner's bytes; `text += more` on a local appends in place when the local holds the only reference; `indexOf` from a position no longer slices (documentation/memory.md, "Strings, specifically"). The same case set as below, best of seven at a load average under 1, all three outputs byte for byte the same:
 
 | | time | peak memory |
 |---|---|---|
@@ -259,7 +259,7 @@ Main now carries stream C's constant-time string index (integrate-2), and the po
 These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the test's case set, which includes cohere's own checkout as a real tree: 50 trees, about 6,200 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
 
 - **Go cohere is 20 times faster than the native port.** The same 50 trees, pattern lists and globs, answered byte for byte the same, take Go cohere 0.10 s (the whole `go test` of cohere_side_test.go's answer step, reading the trees' ignore files from disk and its cases as JSON). The native port takes 2.1 s, and Node 0.62 s. The rest of this section is where the native time goes.
-- **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind (run on the constants build), 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
+- **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind (run on the constants build), 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. documentation/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
 
   ```ts
   const text = 'a'.repeat(100000);

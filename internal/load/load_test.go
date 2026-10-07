@@ -202,7 +202,7 @@ func TestLoadRefusesWhatIsNotAdamic(t *testing.T) {
 	}
 }
 
-// Every program in docs/0.1.md typechecks under stage 0, as each did under tsc 6.0.3. The five
+// Every program in documentation/0.1.md typechecks under stage 0, as each did under tsc 6.0.3. The five
 // refusals load too: they're valid TypeScript, and refusing them is cohere:adamic's job, not the
 // checker's.
 func TestTheProgramsInTheSpecLoad(t *testing.T) {

@@ -108,7 +108,7 @@ The original territory is new files under internal/lower and internal/native, pl
 | stage1/cohere/values/gaps_test.go | Mark the private-method gap closed and exercise it. |
 | stage1/cohere/values/GAPS.md | Document closure and removed workaround. |
 | stage1/cohere/values/parser.ts | Replace private-method workaround and its calls with private identifiers. |
-| docs/class-features.md | Publish implementation, verification and remaining scope. |
+| documentation/class-features.md | Publish implementation, verification and remaining scope. |
 
 ## Static verification
 
@@ -140,7 +140,7 @@ Additional integration files in this step:
 | internal/oracle/testdata/class_features_static.a | Hold static semantics and ownership to Node. |
 | internal/oracle/testdata/class_features_static_private.a | Hold private brands, write order and Weak ownership to Node. |
 | internal/oracle/counts.md | Record measured costs. |
-| docs/class-features.md | Publish the static implementation and its limits. |
+| documentation/class-features.md | Publish the static implementation and its limits. |
 
 New implementation files: internal/lower/class_static.go, internal/lower/class_static_private.go and internal/native/runtime/class_static.c.
 

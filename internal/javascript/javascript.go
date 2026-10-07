@@ -731,7 +731,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "new Error(" + e.value(expression.Message) + ")"
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
-		// source on Node does too (docs/memory.md says where native differs).
+		// source on Node does too (documentation/memory.md says where native differs).
 		return e.value(expression.Value)
 	case ir.WeakTarget:
 		return e.value(expression.Value)

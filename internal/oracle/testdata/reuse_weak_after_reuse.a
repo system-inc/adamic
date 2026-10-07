@@ -1,7 +1,7 @@
 import type { Weak } from 'adamic';
 
 // After a spread takes over its source's object, a Weak that pointed at the source. Natively a Weak
-// to a source that's gone should read undefined (docs/memory.md); Node keeps the old target.
+// to a source that's gone should read undefined (documentation/memory.md); Node keeps the old target.
 // Natively, what does it read?
 interface Item {
 	label: string;

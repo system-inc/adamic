@@ -1,4 +1,4 @@
-// region.c: regions, the arenas of docs/memory.md. A region lives for one statement and holds the
+// region.c: regions, the arenas of documentation/memory.md. A region lives for one statement and holds the
 // objects that statement makes and nothing reaches after it: they're bump-allocated from the
 // region's blocks and let go of together when the statement ends, instead of one free at a time.
 //

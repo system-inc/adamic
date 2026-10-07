@@ -2,7 +2,7 @@ package lower
 
 import "github.com/system-inc/adamic/internal/ir"
 
-// borrow marks which reference parameters are borrowed (docs/memory.md, "Borrowed parameters").
+// borrow marks which reference parameters are borrowed (documentation/memory.md, "Borrowed parameters").
 //
 // The caller already keeps every argument alive to the end of its statement, and every place that
 // keeps a reference past its statement takes a count of its own. So a parameter needs its own count

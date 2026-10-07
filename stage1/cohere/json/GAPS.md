@@ -93,7 +93,7 @@ its refusal, then runs its source on Node and checks the stated output:
    Node prints `0`. Around it: comment-bearing inputs initialize all comment lists; indexed reads
    use a checked `panic` fallback instead of an untyped `[]`.
 3. `gaps/repeatInTry.ts`: `stage 0 can't lower a try around repeat, whose failure
-   is a panic natively but a throw a catch can take on Node (docs/memory.md) yet`.
+   is a panic natively but a throw a catch can take on Node (documentation/memory.md) yet`.
    Node prints `xxx` with three arguments. Around it: indentation caches string
    prefixes rather than calling dynamic `repeat` inside caught formatting code.
 

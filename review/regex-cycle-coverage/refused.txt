@@ -7,7 +7,7 @@ Scratch counts (ulimit -s 8192), not added to counts.md because the fixtures reg
 | internal/oracle/testdata/regexp_cycle_closures.a | 11 | 11 | 25 | 26 | 10 | 0 |
 | internal/oracle/testdata/regexp_cycle_weak.a | 4 | 4 | 11 | 13 | 4 | 0 |
 
-The merge also needs adamic_shape.methods on the regex runtime shapes (NULL). That compatibility fix is scratch-only, same as docs/regex-cycle-proof.md.
+The merge also needs adamic_shape.methods on the regex runtime shapes (NULL). That compatibility fix is scratch-only, same as documentation/regex-cycle-proof.md.
 
 Object cycle, regex field beside the back-edge:
 

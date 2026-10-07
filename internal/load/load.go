@@ -53,7 +53,7 @@ func (e *CheckError) Error() string {
 }
 
 // compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
-// rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+// rather than read from a tsconfig.json, which could leave any of them out (documentation/0.1.md).
 func compilerOptions() *core.CompilerOptions {
 	return &core.CompilerOptions{
 		Strict:                     core.TSTrue,

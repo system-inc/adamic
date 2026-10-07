@@ -1,4 +1,4 @@
-// stack.c: running out of stack is a panic, never a bare segfault (docs/0.1.md).
+// stack.c: running out of stack is a panic, never a bare segfault (documentation/0.1.md).
 //
 // Node gives up at about ten thousand frames with RangeError: Maximum call stack size exceeded. A
 // native stack goes much deeper, so the depth differs, but both sides must stop the same way. Every

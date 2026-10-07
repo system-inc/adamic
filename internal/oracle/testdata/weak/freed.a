@@ -2,7 +2,7 @@ import type { Weak } from 'adamic';
 
 // A Weak read after its target's last strong holder let go: natively the target is freed and the
 // Weak reads undefined; on Node the collector keeps it as long as anything points at it. This is
-// where the two differ by design (docs/memory.md), so it's held by weak_test.go, not the oracle.
+// where the two differ by design (documentation/memory.md), so it's held by weak_test.go, not the oracle.
 interface Box {
 	readonly label: string;
 }

@@ -2,7 +2,7 @@
 // already proven by the checker.
 //
 // It holds exactly what the programs stage 0 can compile need, and grows one program at a time
-// (docs/0.1.md). Nothing in it is speculative: an instruction exists because a fixture lowers to it
+// (documentation/0.1.md). Nothing in it is speculative: an instruction exists because a fixture lowers to it
 // and the oracle has checked what it prints.
 package ir
 
@@ -80,7 +80,7 @@ type Function struct {
 	Closure     bool
 	Environment []int
 
-	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
+	// MayThrow is a function a throw can leave (documentation/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
 }
@@ -120,7 +120,7 @@ const (
 	// be one, a boolean is one of two constant boxes, and undefined is a null reference.
 	Union
 
-	// Weak is where a Weak<Target> is kept (docs/memory.md): a reference that doesn't count, held as
+	// Weak is where a Weak<Target> is kept (documentation/memory.md): a reference that doesn't count, held as
 	// a counted handle the target is found through, which says undefined once the target is freed.
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
@@ -176,7 +176,7 @@ type Local struct {
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
-	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
+	// (documentation/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
 	Borrowed bool
 
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
@@ -305,7 +305,7 @@ type (
 		// class: an interface or an object type. The object may be a class's, whose methods aren't
 		// fields, so the call takes the object's own function value if it has one and otherwise its
 		// class's method, called with the object as this. A method can't be read any other way
-		// (docs/0.1.md), so only a callee is one.
+		// (documentation/0.1.md), so only a callee is one.
 		Method bool
 	}
 
@@ -429,7 +429,7 @@ type (
 
 	// WeakTarget is what a Weak value points to, as To: undefined once the target is freed. Present
 	// is a read the checker narrowed to present, which panics natively if the target was freed since
-	// (JavaScript would still have it; docs/memory.md).
+	// (JavaScript would still have it; documentation/memory.md).
 	WeakTarget struct {
 		Value   Expression
 		To      Type
@@ -478,7 +478,7 @@ type (
 
 	// CheckedCast is value as Member, where value is a discriminated union and Member some of its
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
-	// in both backends (docs/0.1.md, decision 5).
+	// in both backends (documentation/0.1.md, decision 5).
 	CheckedCast struct {
 		Value     Expression
 		Field     string

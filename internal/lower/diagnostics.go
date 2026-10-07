@@ -17,7 +17,7 @@ func (n *NotYet) Error() string {
 	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
 }
 
-// Refused is something Adamic 0.1 doesn't allow at all (docs/0.1.md), as opposed to something stage 0
+// Refused is something Adamic 0.1 doesn't allow at all (documentation/0.1.md), as opposed to something stage 0
 // hasn't learned yet. The difference is a promise, so the message keeps them apart.
 type Refused struct {
 	Where string

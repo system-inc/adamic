@@ -1,5 +1,5 @@
 // Package fresh proves writes can't close a cycle, for the cycle finder's relaxation for fresh
-// writes (docs/memory.md): over each function's control-flow graph (internal/flow), which objects a
+// writes (documentation/memory.md): over each function's control-flow graph (internal/flow), which objects a
 // value can reach, and which the function made and nobody else holds.
 package fresh
 
@@ -15,7 +15,7 @@ import (
 )
 
 // ProveWrites judges every write into a slot that can hold a reference: whether it's proven not to
-// close a cycle (docs/memory.md, "Relaxing the finder for fresh writes"). The cycle finder refuses
+// close a cycle (documentation/memory.md, "Relaxing the finder for fresh writes"). The cycle finder refuses
 // every mutable slot whose type can reach back to its holder; it lets one stand when every write into
 // it is proven here.
 //

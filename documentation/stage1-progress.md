@@ -120,8 +120,8 @@ own package/function completeness is not surveyed here.
 # Discover all refs, not only this checkout's original narrow fetch set.
 git fetch origin '+refs/heads/codex/stage1-*:refs/remotes/origin/codex/stage1-*' '+refs/heads/codex/typescript-scanner:refs/remotes/origin/codex/typescript-scanner'
 source /workspace/adamic-tools/env.sh
-go run ./cmd/adamic-stage1-progress --ref origin/main > docs/stage1-progress/main.txt 2> /tmp/stage1-progress-main.stderr
-go run ./cmd/adamic-stage1-progress --pending > docs/stage1-progress/pending.txt 2> /tmp/stage1-progress-pending.stderr
+go run ./cmd/adamic-stage1-progress --ref origin/main > documentation/stage1-progress/main.txt 2> /tmp/stage1-progress-main.stderr
+go run ./cmd/adamic-stage1-progress --pending > documentation/stage1-progress/pending.txt 2> /tmp/stage1-progress-pending.stderr
 go run ./cmd/adamic-stage1-progress --pending --json > /tmp/stage1-progress.json 2> /tmp/stage1-progress.stderr
 go vet ./... > /tmp/stage1-progress-vet.log 2>&1
 go test ./cmd/adamic-stage1-progress ./cmd/adamic-meter ./internal/load -count=1 > /tmp/stage1-progress-touched-final.log 2>&1

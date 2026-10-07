@@ -148,7 +148,7 @@
 === RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts
     gaps_test.go:41: Node prints "0\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/4_empty_array_union.ts:2:9: stage 0 can't lower an array of never yet
 === RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts
-    gaps_test.go:41: Node prints "a\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+    gaps_test.go:41: Node prints "a\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (documentation/memory.md) yet
 --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.84s)
     --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts (0.32s)
     --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts (0.12s)

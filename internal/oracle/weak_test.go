@@ -6,7 +6,7 @@ import (
 )
 
 // A Weak read after what it points to was freed is where native and Node differ by design
-// (docs/memory.md): natively the target is gone, and on Node the collector keeps it as long as the
+// (documentation/memory.md): natively the target is gone, and on Node the collector keeps it as long as the
 // Weak points at it. So these programs are held to what each side is meant to do, not to each other:
 // natively undefined, or a panic where the checker had proven the target present, and never a read
 // of freed memory (the sanitizers are on); on Node, and through the JavaScript backend, the target.

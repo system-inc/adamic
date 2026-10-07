@@ -32,7 +32,7 @@
 //
 // Where the port differs from the Go, and why:
 //
-//   - 0.1 has no input (docs/0.1.md, decision 7), so the Go's reads through os are reads of a
+//   - 0.1 has no input (documentation/0.1.md, decision 7), so the Go's reads through os are reads of a
 //     WorkingTree, which holds the entries the matcher looks at: ignore files, `.git` entries and
 //     symbolic links, keyed by their slash-separated path below the root. When Adamic can read files,
 //     a WorkingTree read from disk takes its place and nothing else changes.
