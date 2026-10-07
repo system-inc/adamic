@@ -8,7 +8,7 @@ Not covered: full repository test gate, whole-rule parity and cross-slot callbac
 
 The only branch pushed by this unit is codex/lint-helpers-01. Before this operation it was not on main and did not contain current main. The original local tip was 5992275e855dbe3a932dcde1f0350fcb33b1c44c, while the fetched remote tip was 5fd641ddb4fd5818c40c7d67eea8e77bdd926dd4. All local work, including the sixth batch report, was preserved by rebasing onto e8ba3d5d81de4d3773c723914fccd4c76248b965. All 57 commits replayed without conflicts. No implementation changes were required. Main was fetched again after validation and remained unchanged.
 
-The user's explicit landing instruction authorizes this rebase and the corresponding history update of this unit's own branch. Publication uses an exact force-with-lease against the fetched remote tip, protecting concurrent branch changes. Main and area branches are never pushed. This unit finishes the required landing work before any new claims.
+The user's explicit landing instruction authorizes this rebase and the corresponding history update of this unit's own branch. The first push lease against stale tracking tip 5fd641d was rejected. The origin fetch refspec fetches only main; direct git ls-remote confirmed the actual remote tip was 5992275e855dbe3a932dcde1f0350fcb33b1c44c, the original local tip already preserved by this rebase. The retry uses an exact force-with-lease against that verified tip, protecting concurrent branch changes. Main and area branches are never pushed. This unit finishes the required landing work before any new claims.
 
 ## Commands and observed outputs
 
