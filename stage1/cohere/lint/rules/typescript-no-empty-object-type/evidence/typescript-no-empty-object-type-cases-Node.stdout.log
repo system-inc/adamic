@@ -1,0 +1,339 @@
+case 0
+finding	18	22	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	25	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	25	type Base = unknown
+fixed	declare interface Base {}\u000aexport {};\u000a
+case 1
+finding	81	88	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	71	104	type Derived = Base
+fixed	declare namespace BaseAndDerived {\u000a  type Base = typeof base;\u000a  export interface Derived extends Base {}\u000a}\u000a
+case 2
+fixed	export const Result = JSON.stringify({});\u000a
+case 3
+fixed	export const Value = {};\u000a
+case 4
+finding	25	29	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	7	32	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	7	32	type Base = unknown
+fixed	export declare interface Base {}\u000a
+case 5
+finding	25	29	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+fixed	export default interface Base {}\u000a
+case 6
+finding	25	32	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+fixed	export default interface Derived extends Base {}\u000a
+case 7
+fixed	export function run({ a } = { a: 1 }) {\u000a    return a;\u000a}\u000a
+case 8
+finding	17	21	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	7	46	type Base = Array<number>
+fixed	export interface Base extends Array<number> {}\u000a
+case 9
+fixed	export interface Base {\u000a    name: string;\u000a}\u000a
+case 10
+finding	17	21	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	7	24	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	7	24	type Base = unknown
+fixed	export interface Base {}\u000a
+case 11
+finding	17	21	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	7	24	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	7	24	type Base = unknown
+fixed	export interface Base {}\u000a
+case 12
+fixed	export let value: { name: string };\u000a
+case 13
+finding	18	20	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	18	20	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	18	20	unknown
+fixed	export let value: {};\u000a
+case 14
+fixed	export type Base = { name: string };\u000a
+case 15
+finding	19	21	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	19	21	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	19	21	unknown
+fixed	export type Base = {} | null;\u000a
+case 16
+finding	19	21	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	19	21	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	19	21	unknown
+fixed	export type Base = {};\u000a
+case 17
+finding	29	31	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	29	31	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	29	31	unknown
+fixed	export type MyUnion<T> = T | {};\u000a
+case 18
+fixed	interface A {\u000a    a: string;\u000a}\u000ainterface B {\u000a    b: string;\u000a}\u000ainterface C {\u000a    c: string;\u000a}\u000aexport interface All extends A, B, C {}\u000a
+case 19
+fixed	interface A { a: 1 }\u000ainterface B { b: 1 }\u000ainterface C extends A, B {}\u000aexport {};\u000a
+case 20
+finding	10	14	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	0	44	type Base = Array<number | {}>
+finding	38	40	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	38	40	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	38	40	unknown
+fixed	interface Base extends Array<number | {}> {}\u000a
+case 21
+finding	10	14	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	0	39	type Base = Array<number>
+fixed	interface Base extends Array<number> {}\u000a
+case 22
+finding	54	61	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	44	77	type Derived = Base
+fixed	interface Base {\u000a    name: string;\u000a}\u000aexport interface Derived extends Base {}\u000a
+case 23
+fixed	interface Base {\u000a    name: string;\u000a}\u000aexport type Expanded = Base & {};\u000a
+case 24
+fixed	interface Base {\u000a    name: string;\u000a}\u000ainterface Derived {\u000a    age: number;\u000a}\u000aexport interface Both extends Base, Derived {}\u000a
+case 25
+fixed	interface Base {\u000a  name: string;\u000a}\u000a
+case 26
+finding	46	53	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	36	69	type Derived = Base
+fixed	interface Base {\u000a  name: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a
+case 27
+fixed	interface Base {\u000a  name: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a
+case 28
+fixed	interface Base {\u000a  name: string;\u000a}\u000a\u000ainterface Derived {\u000a  age: number;\u000a}\u000a\u000a// valid because extending multiple interfaces can be used instead of a union type\u000ainterface Both extends Base, Derived {}\u000a
+case 29
+finding	53	60	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	35	76	type Derived = Base
+fixed	interface Base {\u000a  name: string;\u000a}\u000adeclare interface Derived extends Base {}\u000aexport {};\u000a
+case 30
+finding	47	54	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+fixed	interface Base {\u000a  props: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a\u000aclass Derived {}\u000a
+case 31
+fixed	interface Base {\u000a  props: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a\u000aclass Derived {}\u000a
+case 32
+finding	47	54	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	37	70	type Derived = Base
+fixed	interface Base {\u000a  props: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a\u000aclass Other {}\u000a
+case 33
+finding	47	54	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	37	70	type Derived = Base
+fixed	interface Base {\u000a  props: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a\u000aconst derived = class Derived {};\u000a
+case 34
+finding	47	54	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+fixed	interface Base {\u000a  props: string;\u000a}\u000a\u000ainterface Derived extends Base {}\u000a\u000ainterface Derived {\u000a  name: string;\u000a}\u000a
+case 35
+fixed	interface Base {}\u000a
+case 36
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	17	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	17	type Base = unknown
+fixed	interface Base {}\u000a
+case 37
+fixed	interface Base {}\u000a
+case 38
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	17	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	17	type Base = unknown
+fixed	interface Base {}\u000a
+case 39
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	17	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	17	type Base = unknown
+fixed	interface Base {}\u000a\u000afunction foo() {\u000a  interface Base {\u000a    name: string;\u000a  }\u000a}\u000a
+case 40
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+fixed	interface Base {}\u000a\u000ainterface Base {\u000a  name: string;\u000a}\u000a
+case 41
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+finding	29	33	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+fixed	interface Base {}\u000a\u000ainterface Base {}\u000a
+case 42
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	17	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	17	type Base = unknown
+fixed	interface Base {}\u000anamespace Base {}\u000aexport {};\u000a
+case 43
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	17	type Base = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	17	type Base = unknown
+fixed	interface Base {}\u000a{\u000a  class Base {}\u000a}\u000aexport {};\u000a
+case 44
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	52	type Base<T extends string = 'a'> = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	52	type Base<T extends string = 'a'> = unknown
+fixed	interface Base<T extends string = 'a'> /* note */ {}\u000aexport {};\u000a
+case 45
+finding	10	14	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	0	39	type Base<T> = Derived<T>
+fixed	interface Base<T> extends Derived<T> {}\u000a
+case 46
+finding	59	66	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	41	88	type Derived<T> = Base<T>
+fixed	interface Base<T> {\u000a  value: T;\u000a}\u000aexport declare interface Derived<T> extends Base<T> {}\u000a
+case 47
+finding	10	14	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	20	type Base<T> = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	20	type Base<T> = unknown
+fixed	interface Base<T> {}\u000aclass Base<T> {}\u000aexport {};\u000a
+case 48
+fixed	interface BaseProps {}\u000a
+case 49
+finding	52	56	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	42	82	type Base = Array<Derived>
+fixed	interface Derived {\u000a  property: string;\u000a}\u000ainterface Base extends Array<Derived> {}\u000a
+case 50
+finding	56	60	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	46	85	type Base<T> = Derived<T>
+fixed	interface Derived<T> {\u000a    value: T;\u000a}\u000aexport interface Base<T> extends Derived<T> {}\u000a
+case 51
+finding	10	16	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	19	type Window = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	19	type Window = unknown
+fixed	interface Window {}\u000a
+case 52
+fixed	interface XBaseY {}\u000atype XBaseZ = {};\u000aexport {};\u000a
+case 53
+finding	17	19	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	17	19	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	17	19	unknown
+fixed	let value: Array<{}>;\u000aexport {};\u000a
+case 54
+fixed	let value: Object;\u000a
+case 55
+fixed	let value: object;\u000a
+case 56
+fixed	let value: { inner: true };\u000a
+case 57
+finding	11	22	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	11	22	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	11	22	unknown
+fixed	let value: {/* ... */};\u000a
+case 58
+finding	11	13	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	11	13	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	11	13	unknown
+fixed	let value: {};\u000a
+case 59
+finding	26	30	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+fixed	namespace N {\u000a  interface Base {}\u000a  class Base {}\u000a}\u000aexport {};\u000a
+case 60
+finding	47	51	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+fixed	switch (1 as number) {\u000a  case 1:\u000a    interface Base {}\u000a    break;\u000a  default:\u000a    class Base {}\u000a}\u000aexport {};\u000a
+case 61
+fixed	type A = B & ({});\u000atype B = { b: 1 };\u000aexport {};\u000a
+case 62
+finding	12	14	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	12	14	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	12	14	unknown
+fixed	type Base = {} | null;\u000a
+case 63
+fixed	type Base = {};\u000a
+case 64
+fixed	type Base = {};\u000a
+case 65
+finding	12	14	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	12	14	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	12	14	unknown
+fixed	type Base = {};\u000a
+case 66
+finding	12	14	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	12	14	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	12	14	unknown
+fixed	type Base = {};\u000a
+case 67
+fixed	type BaseProps = ({});\u000aexport {};\u000a
+case 68
+fixed	type BaseProps = {};\u000a
+case 69
+fixed	type Caf\u00e9 = {};\u000aexport {};\u000a
+case 70
+finding	23	25	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	23	25	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	23	25	unknown
+fixed	type M = { [K in 'a']: {} };\u000aexport {};\u000a
+case 71
+fixed	type MyNonNullable<T> = T & {};\u000a
+case 72
+finding	22	24	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	22	24	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	22	24	unknown
+fixed	type MyUnion<T> = T | {};\u000a
+case 73
+finding	44	48	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	34	61	type Base = R
+fixed	type R = Record<string, unknown>;\u000ainterface Base extends R {}\u000a
+case 74
+finding	10	11	noEmptyInterface	An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+suggestion	replaceEmptyInterface	Replace the empty interface with `object`, which means any non-primitive.
+edit	0	14	type A = object
+suggestion	replaceEmptyInterface	Replace the empty interface with `unknown`, which means any value at all.
+edit	0	14	type A = unknown
+finding	25	26	noEmptyInterfaceWithSuper	An interface that declares no members and extends one type is that type under a second name: every value of the supertype satisfies it, and it asks nothing more. It reads like a new shape and adds none. Use a type alias for the supertype, or give the interface members of its own.
+suggestion	replaceEmptyInterfaceWithSuper	Replace the empty interface with a type alias of the type it extends.
+edit	15	39	type B = A
+finding	49	51	noEmptyObject	`{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+suggestion	replaceEmptyObjectType	Replace `{}` with `object`, which means any non-primitive.
+edit	49	51	object
+suggestion	replaceEmptyObjectType	Replace `{}` with `unknown`, which means any value at all.
+edit	49	51	unknown
+fixed	interface A {}\u000ainterface B extends A {}\u000atype C = {};\u000atype D = A & {};\u000a

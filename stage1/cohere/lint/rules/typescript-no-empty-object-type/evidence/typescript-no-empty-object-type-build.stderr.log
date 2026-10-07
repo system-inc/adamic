@@ -1,0 +1,6 @@
+panic: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-empty-object-type/rule.ts:27:58: stage 0 can't lower RegExp with a nonconstant pattern yet
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/build_probe.go:22 +0x189
+exit status 2
