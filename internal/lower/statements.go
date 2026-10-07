@@ -43,8 +43,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")
 		}
-		// Lowered at each instantiation, by instantiate.
-		return nil, nil
+		return l.staticDeclaration(node)
 	case ast.KindReturnStatement:
 		return l.returnStatement(node)
 	case ast.KindExpressionStatement:
@@ -89,6 +88,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
+	if statements, handled, err := l.conditionalSuper(expression); handled {
+		return statements, err
+	}
 	switch expression.Kind {
 	case ast.KindCallExpression:
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {

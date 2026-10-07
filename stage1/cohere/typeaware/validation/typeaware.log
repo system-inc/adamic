@@ -1,0 +1,34 @@
+=== RUN   TestTypeAwareAgreementAndMutants
+    typeaware_test.go:232: generated: 7782 identical finding bytes; findings 36 queries 61
+    typeaware_test.go:241: generated coverage: 53 files
+    typeaware_test.go:284: wrong-node type mutant: cohere byte oracle catches byte 258; findings 0 queries 61
+    typeaware_test.go:293: released program queried: native panic 70 with invalid or released checker handle
+    typeaware_test.go:301: released registry deletion mutant: stale-query expectation catches exit 0 instead of 70
+    typeaware_test.go:317: empty-frame mutant: panic 70, checker returned no type parts
+    typeaware_test.go:317: missing-header mutant: panic 70, invalid checker type frame
+    typeaware_test.go:317: bad-length mutant: panic 70, invalid checker type length or flags
+    typeaware_test.go:340: exact kind guard mutant: mismatch-refusal expectation catches exit 0
+    typeaware_test.go:354: query cost round 1 native: tsgo: load_ns=12744375 query_ns=44613317 queries=10000 first_query_ns=3516359; direct Go: querycost: load_ns=8434761 query_ns=27414836 queries=10000 first_query_ns=179247; same output=90000
+    typeaware_test.go:354: query cost round 2 native: tsgo: load_ns=9734177 query_ns=45736753 queries=10000 first_query_ns=5700026; direct Go: querycost: load_ns=7617686 query_ns=26892592 queries=10000 first_query_ns=92373; same output=90000
+    typeaware_test.go:354: query cost round 3 native: tsgo: load_ns=12224329 query_ns=48887244 queries=10000 first_query_ns=4732882; direct Go: querycost: load_ns=10021978 query_ns=32612275 queries=10000 first_query_ns=180588; same output=90000
+    typeaware_test.go:386: compiler corpus: 77 files, original compiler tsconfig
+    typeaware_test.go:387: compiler: 4959 identical finding bytes; findings 2 queries 245
+    typeaware_test.go:409: compiler round 1 oracle: 0.342057s 5.85 findings/s findings=2 queries=245; cohere: load_ns=213411227 rule_ns=3425616 queries=245
+    typeaware_test.go:409: compiler round 1 native: 1.583088s 1.26 findings/s findings=2 queries=245; tsgo: load_ns=210104650 query_ns=97018038 queries=245 first_query_ns=86717353
+    typeaware_test.go:409: compiler round 2 native: 1.654008s 1.21 findings/s findings=2 queries=245; tsgo: load_ns=231624306 query_ns=163258070 queries=245 first_query_ns=147547125
+    typeaware_test.go:409: compiler round 2 oracle: 0.341144s 5.86 findings/s findings=2 queries=245; cohere: load_ns=210037734 rule_ns=3821298 queries=245
+    typeaware_test.go:409: compiler round 3 oracle: 0.383648s 5.21 findings/s findings=2 queries=245; cohere: load_ns=249280767 rule_ns=3486901 queries=245
+    typeaware_test.go:409: compiler round 3 native: 1.574672s 1.27 findings/s findings=2 queries=245; tsgo: load_ns=216974153 query_ns=86252102 queries=245 first_query_ns=76209871
+    typeaware_test.go:409: generated round 1 oracle: 0.022889s 1572.84 findings/s findings=36 queries=61; cohere: load_ns=9976951 rule_ns=1145578 queries=61
+    typeaware_test.go:409: generated round 1 native: 0.023015s 1564.18 findings/s findings=36 queries=61; tsgo: load_ns=13139163 query_ns=5236630 queries=61 first_query_ns=3602577
+    typeaware_test.go:409: generated round 2 native: 0.020457s 1759.79 findings/s findings=36 queries=61; tsgo: load_ns=11850468 query_ns=4142895 queries=61 first_query_ns=2765885
+    typeaware_test.go:409: generated round 2 oracle: 0.022775s 1580.71 findings/s findings=36 queries=61; cohere: load_ns=10110499 rule_ns=867497 queries=61
+    typeaware_test.go:409: generated round 3 oracle: 0.020474s 1758.31 findings/s findings=36 queries=61; cohere: load_ns=9180841 rule_ns=751738 queries=61
+    typeaware_test.go:409: generated round 3 native: 0.021393s 1682.76 findings/s findings=36 queries=61; tsgo: load_ns=12373294 query_ns=4833825 queries=61 first_query_ns=3404507
+--- PASS: TestTypeAwareAgreementAndMutants (96.30s)
+=== RUN   TestPinnedTypeFlags
+=== PAUSE TestPinnedTypeFlags
+=== CONT  TestPinnedTypeFlags
+--- PASS: TestPinnedTypeFlags (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	96.311s
