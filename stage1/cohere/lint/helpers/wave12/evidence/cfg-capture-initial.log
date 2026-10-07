@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/wave12/testdata/capture_control_flow.py", line 53, in <module>
+    arguments=sorted(set(json.loads(line) for line in (scratch/'arguments.jsonl').read_text().splitlines()))
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/adamic-gate/wave12-cfg-capture-76w_xxof/arguments.jsonl'

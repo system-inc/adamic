@@ -1,0 +1,14 @@
+{
+  "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
+  "consumer_rules": [
+    "array-callback-return",
+    "consistent-return",
+    "no-unreachable-loop",
+    "react-hooks/rules-of-hooks"
+  ],
+  "fixtures": 2119,
+  "observed_distinct_helper_arguments": 0,
+  "controls": 8864,
+  "cases": 10983,
+  "final_blockers_removed": 0
+}

@@ -1,0 +1,17 @@
+=== RUN   TestBigIntNormalizationMatchesGo
+    bigint_test.go:30: /tmp/adamic-gate/TestBigIntNormalizationMatchesGo2316028373/002/go-oracle [/workspace/adamic/stage1/cohere/lint/helpers/wave12/testdata/bigint_cases.json]: exit status 2 stderr panic: open /workspace/adamic/stage1/cohere/lint/helpers/wave12/testdata/bigint_cases.json: no such file or directory
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave12_control_flow_oracle.go:14 +0x231
+--- FAIL: TestBigIntNormalizationMatchesGo (3.46s)
+=== RUN   TestBigIntNormalizationMutants
+    bigint_test.go:40: /tmp/adamic-gate/TestBigIntNormalizationMutants2618346594/002/go-oracle [/workspace/adamic/stage1/cohere/lint/helpers/wave12/testdata/bigint_cases.json]: exit status 2 stderr panic: open /workspace/adamic/stage1/cohere/lint/helpers/wave12/testdata/bigint_cases.json: no such file or directory
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave12_control_flow_oracle.go:14 +0x231
+--- FAIL: TestBigIntNormalizationMutants (0.40s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	3.863s
+FAIL

@@ -1,0 +1,22 @@
+=== RUN   TestBigIntNormalizationMatchesGo
+    bigint_test.go:36: 10983 cases and 1003998 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestBigIntNormalizationMatchesGo (3.48s)
+=== RUN   TestBigIntNormalizationMutants
+=== RUN   TestBigIntNormalizationMutants/hex-digit-value
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2137
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2137
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2137
+=== RUN   TestBigIntNormalizationMutants/negative-zero
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2124
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2124
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2124
+=== RUN   TestBigIntNormalizationMutants/invalid-fallback
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2152
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2152
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2152
+--- PASS: TestBigIntNormalizationMutants (7.45s)
+    --- PASS: TestBigIntNormalizationMutants/hex-digit-value (2.07s)
+    --- PASS: TestBigIntNormalizationMutants/negative-zero (2.37s)
+    --- PASS: TestBigIntNormalizationMutants/invalid-fallback (2.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	10.944s

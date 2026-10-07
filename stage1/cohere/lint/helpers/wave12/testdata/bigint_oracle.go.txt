@@ -1,0 +1,26 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	cfg "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph"
+	"os"
+	"unicode/utf16"
+)
+
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var inputs []string
+	if err := json.Unmarshal(data, &inputs); err != nil {
+		panic(err)
+	}
+	for _, input := range inputs {
+		for _, unit := range utf16.Encode([]rune(cfg.AdamicNormalizeBigIntLiteral(input))) {
+			fmt.Printf("%d,", unit)
+		}
+		fmt.Println()
+	}
+}

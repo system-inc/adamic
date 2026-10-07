@@ -1,0 +1,14 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { normalizeBigIntLiteral } from './control_flow_normalize_bigint_literal.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(root).children) {
+    const result = normalizeBigIntLiteral(json.node(item).text);
+    let units = '';
+    for(let index = 0; index < result.length; index++) { units += `${result.charCodeAt(index)},`; }
+    console.log(units);
+}
