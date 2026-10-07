@@ -1,0 +1,2 @@
+declare const count:number;declare const flag:boolean;export const view=<p>{flag&&count&&'some'}</p>;
+export {};

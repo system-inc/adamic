@@ -1,0 +1,2 @@
+export function view<T extends number>(count:T){return <p>{count&&'some'}</p>;}export function other<T>(count:T){return <p>{count&&'some'}</p>;}
+export {};

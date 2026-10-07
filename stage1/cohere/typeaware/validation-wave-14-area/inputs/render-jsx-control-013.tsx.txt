@@ -1,0 +1,2 @@
+declare const count:number|null;declare const next:number;export const view=<p>{(count??next)&&'some'}{count??(next&&'some')}</p>;
+export {};

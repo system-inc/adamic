@@ -188,3 +188,16 @@ including inherited static-field reads, and vet pass. Named-kind clarification
 is accepted; numeric API absence is no longer a selection blocker. Existing
 regex, real JSX and undefined-label paths remain incomplete.
 See ../WAVE_14_EXHAUSTED_REPORT.md and validation-wave-14-exhausted.
+
+## Stage1-lint area integration and real JSX validation
+
+Rebased onto fetched origin/area/stage1-lint 7481e032, including harness
+41eb6eab2 and current main 39638d9e. At tested source c88028f3 all owned
+Go byte suites PASS 478.251 s, plus bridge, filtered uncached Node, registry
+and vet. Real JSX parsing is no longer the leaked-number-render blocker:
+16 real TSX controls match 13 findings and 5,657 bytes under sanitizers,
+with a compiled exit-0 comparison-only mutant. The continuation witness
+also matches its one finding under sanitizers. Existing regex validation
+and undefined-label gaps remain. No unclaimed ranked rules remain and no
+new reservations are taken. See ../WAVE_14_AREA_REPORT.md and
+validation-wave-14-area for exact inputs, complete streams and mutants.

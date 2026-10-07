@@ -1,0 +1,1 @@
+declare const count:number;export const view=<p>{count&&'some'}</p>;
