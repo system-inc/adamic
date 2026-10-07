@@ -1,3 +1,11 @@
+Built: landing refresh of all seven delivered helpers onto origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30; no ninth helper was claimed.
+Commits: pre-rebase pushed helper 2b917cbb24fa112ddf8537814e7790f91e4877a2; rebased implementation bcd3074e3c947519e99748f3becbaadde38fab72 before this evidence commit; rule sibling rebased 79ed6a17bc1a17f445cb4daad5c56471dbd73eb7 and being rechecked independently.
+Checks: complete owned helper package PASS 131.391s, vet clean; all seven contracts retain actual Go/source Node/emitted JS/sanitized-native parity. Main's inherited-static-field filtered oracle also PASS 0.918s uncached.
+Mutants: all 20 existing helper controls are caught again, including three literal-regex, six truthiness/label and the earlier bigint/predicate/allocator/segment/counter controls; semantic mutants compile/run before comparison catches them.
+Uncovered: exact counter bigint-return lowering remains blocked; full CFG/rule integration and repository-wide gate are not claimed; other unclaimed helpers remain.
+
+Current detailed report: B8FB-LANDING.md and evidence/b8fb-*.log. Earlier landing history follows.
+
 Built: supplied-node CFG truthiness and labels helpers in separate .a files, plus the shared-table literal rewrite of the earlier Tailwind normalizer.
 Commits: truthiness d6c77911d0cea8f28c4d3d52badc447ef065157d; labels 4b9465715c6c392fff27902ecc1580206f024b65; parked rules 7f99254378ee9fd8b50f4cfd9aa18cebe5291b2d, all on main c01907a7.
 Checks: owned package PASS 105.859s before isolated regex rewrite; changed normalizer PASS 9.358s afterward; final owned vet clean. Two new helpers match 60,686 observations / 246,314 bytes across Go, source Node, emitted JS and sanitized native.
