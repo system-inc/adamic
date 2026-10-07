@@ -8,7 +8,7 @@ if (ts.version !== '6.0.3') throw new Error('expected stock TypeScript 6.0.3');
 if (process.argv.length !== 4) throw new Error('usage: node mutant.cjs <tree> <mode>');
 const tree = path.resolve(process.argv[2]);
 const mode = process.argv[3];
-const name = path.join(tree, (mode.startsWith('inferred-local-') || mode === 'payload-writer') ? 'src/compiler/moduleNameResolver.ts' :
+const name = path.join(tree, mode === 'public-input-writer' ? 'src/compiler/factory/utilitiesPublic.ts' : (mode.startsWith('inferred-local-') || mode === 'payload-writer') ? 'src/compiler/moduleNameResolver.ts' :
     mode.startsWith('parameter-') ? 'src/compiler/utilities.ts' : 'src/compiler/types.ts');
 const text = fs.readFileSync(name, 'utf8');
 const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true);
@@ -52,6 +52,13 @@ if (process.argv[3] === 'writer-view') {
     const tag = declaration && ts.getJSDocTags(declaration).find(node => node.tagName.text === 'internal');
     if (!tag) throw new Error('missing internal tag');
     fs.writeFileSync(name, text.slice(0, tag.getStart(source)) + text.slice(tag.end));
+} else if (mode === 'public-input-writer') {
+    const fn = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'setTextRange' && n.body);
+    if (!fn) throw new Error('missing public input owner');
+    const fragment = ts.createSourceFile('mutant-input.a', 'if (location) location.pos = 0;', ts.ScriptTarget.Latest, true);
+    const printed = ts.createPrinter().printNode(ts.EmitHint.Unspecified, fragment.statements[0], fragment);
+    const at = fn.body.getStart(source) + 1;
+    fs.writeFileSync(name, text.slice(0, at) + '\n' + printed + '\n' + text.slice(at));
 } else if (mode === 'payload-writer') {
     const worker = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'nodeModuleNameResolverWorker');
     const matches = [];

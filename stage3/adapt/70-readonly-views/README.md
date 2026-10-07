@@ -3,7 +3,8 @@
 This is a partial unit. The first internal wave removed 22 measured refusals;
 the second removed four more, and the third removes 21 net, for 456 to 409
 cumulatively before wave 4. Wave 4 removes six more, for 456 to 403 overall.
-The other 403 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
+Wave 5 removes another 54 with one public owner: 456 to 349 cumulatively.
+The other 349 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
 I decline a blanket readonly conversion because the remaining mutation chains,
 generic views, inferred contracts and erased escapes have not all been proven.
 Public API readonly changes are now sanctioned by @system_adamic. Each public
@@ -91,10 +92,11 @@ as the controlled proof.
 
 ## Declines
 
-[PUBLIC_VIEWS.md](PUBLIC_VIEWS.md) lists 164 remaining sites whose wider target
+[PUBLIC_VIEWS.md](PUBLIC_VIEWS.md) preserves the initial 164-site public inventory,
+with 93 of those measured locations remaining after wave 5. Their wider target
 exactly matches an exported declaration or contract without `@internal`.
-The user has now supplied @system_adamic's sanction; these sites remain listed
-until their own proofs and API attribution pass. The initial other 270 were conservative declines,
+The user supplied @system_adamic's sanction; retained sites remain listed
+until their own proofs and API attribution pass. Wave 5 edits the first public owner. The initial other 270 were conservative declines,
 not an assertion that all of their declarations are internal. Four sites have
 no explicit contextual owner resolved. Every remaining site's reason is in
 `REMAINING.md`; the complete stock-checker owner inventory is in
@@ -234,7 +236,7 @@ the controlled census and regenerates the complete remaining-site list.
 Run mutants only in a disposable copy and restore its source after each run.
 
 Not covered: a transitive write/reachability proof for every retained target,
-proofs for the remaining owners, public API readonly edits, a reachable upstream bug,
+proofs for the remaining owners, additional public API readonly edits, complete internal reachability for every retained writer,
 an empty diff against all original upstream references, the full native Adamic
 gate or native compilation of tsc. This unit changes only
 stage 3 adaptation tooling and type declarations in the disposable input tree.
@@ -431,3 +433,72 @@ and callback chains; they do not certify every remaining site. Other unproved
 owners remain honest declines. No upstream candidate is inferred from a writer
 location alone. Public-owner edits and their API compatibility note follow in a
 separate proven wave.
+
+
+## Public wave 5
+
+The highest-yield public no-write owner is setTextRange.location, changed from
+TextRange | undefined to Readonly<TextRange> | undefined. Its three symbol-bound
+reads are the truthiness check and pos/end accesses. It is never retained,
+returned or passed to a writer. The input proof and every previously selected
+owner's repeated audit are in evidence/wave5/adapt.json. The writing destination
+range stays mutable. Readonly restricts this input view; it does not freeze the
+object or rule out another alias to it.
+
+**One owner edit removes 54 refusals: 403 to 349**, zero added. All 78 compiler
+files were measured. Normalized strict diagnostics are byte-identical, still
+2,168, and eligibility is unchanged. The before control matches all 78 hashes
+of wave 4's actually measured after tree. Every remaining reason is preserved
+in REMAINING.md. Of the initial conservative 164-site public inventory, 93
+locations remain; that retained subset is not a fresh exhaustive public census.
+
+Upstream full build exits 0. All ten emitted JavaScript files are byte-identical,
+rechecked after the oracle. Idempotence edits zero files and preserves all 710
+source hashes. The new stock-AST check-api.cjs reconstructs the original public
+snapshot from adaptation 20's owner ledger and this wave's public-owner proof.
+The actual emitted API is byte-for-byte exactly **189 sanctioned optional owner
+additions plus one readonly parameter addition**, 190 changed lines, and nothing
+else. All 60,930 other reference baselines are unchanged. Only this mechanically
+verified API snapshot is accepted in the disposable checkout before the oracle.
+
+The default oracle passes **106,367 tests, zero failures, zero pending, empty
+baseline diff**. Install/build/tests exit 0, wall time 253.217s. It uses adaptations
+10, 20 and all 70 edits. No test filter or native Adamic gate was run for this
+adaptation-only wave. All output is logged under evidence/wave5.
+
+Mutants and compatibility evidence:
+
+| Input | Observation |
+|---|---|
+| Add a write to the public location input | Audit exits 1 before edits; upstream compiler build exits 1 with TS2540 at factory/utilitiesPublic.ts(12,14). |
+| Downstream consumer derives View from the published location parameter and assigns pos/end | Before API: zero diagnostics. After API: two TS2540 diagnostics. This is the requested compatibility witness. |
+| Change unowned API version declaration from string to number in a scratch artifact | Exact API reconstruction rejects it, exit 1. |
+| Replace only a scratch compiled setTextRange body with return range | Reachable-hole Node assertion rejects [0,0] instead of observed [1,2], exit 1. The initial log-format check was corrected to Node's actual diff format; the mutation itself was caught. |
+
+UPSTREAM_NOTE.md is the requested public-API ledger-style compatibility entry,
+including a draft Microsoft could accept or refuse. The separate reachable
+setTextRange destination counterexample is in UPSTREAM_CANDIDATES.md. Stock 6.0.3
+accepts a readonly literal-zero destination, then pristine and adapted Node
+both observe [1,2] through variables typed [0,0]. Its real writer declarations
+are resolved in evidence/wave5/destination-writes.json. This destination is
+unchanged; no narrow instance among compiler-internal callers is claimed.
+Neither note was sent upstream, and the global ledger remains untouched.
+
+Final wave 5 commands (stdout/stderr captured in logs):
+
+```sh
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/adapt.cjs /tmp/adaptation70-before
+(cd /tmp/adaptation70-before && npm run build)
+LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation70-census /tmp/adaptation70-before/src/compiler /tmp/adaptation70-wave5-after.jsonl
+python3 stage3/adapt/70-readonly-views/summarize.py /tmp/adaptation70-wave5-reference /tmp/adaptation70-wave5-before.jsonl /tmp/adaptation70-before /tmp/adaptation70-wave5-after.jsonl stage3/adapt/70-readonly-views/evidence/wave5 stage3/adapt/70-readonly-views/REMAINING.md
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/check-api.cjs /tmp/adaptation70-pristine /tmp/adaptation70-before /tmp/adaptation70-optional-owners.json /tmp/adaptation70-wave5-adapt.json --accept-api
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/consumer.cjs /tmp/adaptation70-wave5-before.d.ts /tmp/adaptation70-before/built/local/typescript.d.ts
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/narrow-range.cjs /tmp/adaptation70-pristine/built/local/typescript.d.ts /tmp/adaptation70-pristine/built/local/typescript.js
+bash stage3/oracle/run.sh /tmp/adaptation70-before /tmp/adaptation70-wave5-oracle
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/adapt.cjs /tmp/adaptation70-before
+```
+
+The 349 retained reasons still include genuine writers, structural escapes,
+container-element and callback contracts, public diagnostic families and inferred
+views needing further owner proofs. This remains a partial unit with measured
+progress and explicit declines, rather than a claim all remaining views are safe.

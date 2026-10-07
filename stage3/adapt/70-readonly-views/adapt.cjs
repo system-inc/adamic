@@ -44,6 +44,7 @@ const parameters = require('./parameter-audit.cjs')(program, checker, tree, [
     { file: 'src/compiler/utilities.ts', function: 'emitNewLineBeforeLeadingComments', parameter: 'node' },
     { file: 'src/compiler/parser.ts', function: 'parseErrorAtRange', parameter: 'range' },
     { file: 'src/compiler/factory/utilities.ts', function: 'createMemberAccessForPropertyName', parameter: 'location' },
+    { file: 'src/compiler/factory/utilitiesPublic.ts', function: 'setTextRange', parameter: 'location', public: true },
 ]);
 function location(node) {
     const file = node.getSourceFile();
@@ -192,14 +193,18 @@ for (const owner of owners) {
 }
 for (const parameter of parameters) {
     const type = parameter.node.type;
-    if (ts.isTypeReferenceNode(type) && ts.isIdentifier(type.typeName) && type.typeName.text === 'Readonly' &&
-        type.typeArguments?.length === 1 && ts.isTypeReferenceNode(type.typeArguments[0]) &&
-        ts.isIdentifier(type.typeArguments[0].typeName) && type.typeArguments[0].typeName.text === 'TextRange') continue;
-    if (!ts.isTypeReferenceNode(type) || !ts.isIdentifier(type.typeName) || type.typeName.text !== 'TextRange')
+    const parts = ts.isUnionTypeNode(type) ? type.types : [type];
+    const isRange = n => ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && n.typeName.text === 'TextRange';
+    const readonlyRange = n => ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && n.typeName.text === 'Readonly' &&
+        n.typeArguments?.length === 1 && isRange(n.typeArguments[0]);
+    if (parts.filter(n => isRange(n) || readonlyRange(n)).length !== 1 ||
+        parts.some(n => !isRange(n) && !readonlyRange(n) && n.kind !== ts.SyntaxKind.UndefinedKeyword))
         throw new Error(`unexpected parameter type: ${parameter.function}.${parameter.parameter}`);
+    if (parts.some(readonlyRange)) continue;
+    const range = parts.find(isRange);
     const file = parameter.node.getSourceFile();
     if (!edits.has(file)) edits.set(file, []);
-    edits.get(file).push({ start: type.getStart(file), end: type.end, text: `Readonly<${type.getText(file)}>` });
+    edits.get(file).push({ start: range.getStart(file), end: range.end, text: `Readonly<${range.getText(file)}>` });
 }
 for (const [file, positions] of edits) {
     let text = file.text;
