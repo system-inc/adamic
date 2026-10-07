@@ -211,3 +211,4 @@
 {"Time":"2026-10-07T22:06:59.18272351Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownSourceDecoding","Elapsed":180.67}
 {"Time":"2026-10-07T22:06:59.182747556Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEvents"}
 {"Time":"2026-10-07T22:06:59.182753184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEvents","Output":"=== RUN   TestTokenizerEvents\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:08:01.111713448Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants","Output":"    profile_test.go:81: controls: 28293 identical finding bytes; findings 76\n"}
