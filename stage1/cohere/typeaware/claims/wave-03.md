@@ -16,3 +16,28 @@ compiler and repository findings with lexical ties:
 Fetched all origin heads and inspected claims and named stage1/cohere port files
 on 276 origin refs. No existing claim or named port was found. No rule skipped.
 New Adamic sources use .a. Production Go cohere is the independent byte oracle.
+
+## Continuation 1, October 7, 2026
+
+The original three ports and their comparison evidence were pushed through
+3882c806 before this reservation. Fetched all 325 origin refs without recursing
+submodules and inspected every Markdown claim under stage1/cohere/typeaware/claims.
+Compared the full VOLUME_REPORT.md checker-dependent ranking against the 26
+bridge ports, other native ports on origin/main and origin/codex/tsgo-c-library,
+and all rule names in origin claims, including incomplete reservations.
+
+First three eligible rules, reserved before implementation:
+
+| Rule | Compiler | Repository | Total |
+| --- | ---: | ---: | ---: |
+| nexus/correctness-no-process-exit-after-output | 0 | 0 | 0 |
+| nexus/correctness-no-uncleared-race-timeout | 0 | 0 | 0 |
+| nexus/correctness-require-blocking-standard-streams | 0 | 0 | 0 |
+
+No matching claim or native rule source occurs on the inspected origin heads.
+Existing .a/.ts source references, grouped base ports and oracle subject lists
+were checked separately from count/inventory records. Selection audit is saved
+in validation-wave-03/continuation-selection.json. Continue on this branch;
+new native rule sources use .a and positive controls plus per-rule byte mutants
+are required despite the zero-volume corpus counts. Shared harness and generator
+files remain untouched.
