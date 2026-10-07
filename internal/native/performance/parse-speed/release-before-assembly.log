@@ -1,0 +1,318 @@
+
+/workspace/scratch/parse-speed/runtime-parse:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000072970 <adamic_release>:
+   72970:	push   %rbp
+   72971:	push   %r15
+   72973:	push   %r14
+   72975:	push   %r13
+   72977:	push   %r12
+   72979:	push   %rbx
+   7297a:	push   %rax
+   7297b:	test   %rdi,%rdi
+   7297e:	je     72994 <adamic_release+0x24>
+   72980:	mov    (%rdi),%rax
+   72983:	test   %rax,%rax
+   72986:	je     72994 <adamic_release+0x24>
+   72988:	dec    %rax
+   7298b:	mov    %rax,(%rdi)
+   7298e:	je     72e19 <adamic_release+0x4a9>
+   72994:	cmpb   $0x0,0x6c6e5(%rip)        # df080 <draining>
+   7299b:	jne    72e0a <adamic_release+0x49a>
+   729a1:	movb   $0x1,0x6c6d8(%rip)        # df080 <draining>
+   729a8:	mov    0x6c6d9(%rip),%rbx        # df088 <freeing_count>
+   729af:	test   %rbx,%rbx
+   729b2:	je     72e03 <adamic_release+0x493>
+   729b8:	lea    0x1f32d(%rip),%r12        # 91cec <codes_add.message+0x11>
+   729bf:	jmp    729e8 <adamic_release+0x78>
+   729c1:	data16 data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   729d0:	mov    %r14,%rdi
+   729d3:	call   c040 <free@plt>
+   729d8:	mov    0x6c6a9(%rip),%rbx        # df088 <freeing_count>
+   729df:	test   %rbx,%rbx
+   729e2:	je     72e03 <adamic_release+0x493>
+   729e8:	mov    0x6c6a1(%rip),%rax        # df090 <freeing>
+   729ef:	lea    -0x1(%rbx),%rbp
+   729f3:	mov    %rbp,0x6c68e(%rip)        # df088 <freeing_count>
+   729fa:	mov    -0x8(%rax,%rbx,8),%r14
+   729ff:	mov    0x8(%r14),%ecx
+   72a03:	dec    %ecx
+   72a05:	cmp    $0x9,%ecx
+   72a08:	ja     72d30 <adamic_release+0x3c0>
+   72a0e:	movslq (%r12,%rcx,4),%rcx
+   72a12:	add    %r12,%rcx
+   72a15:	jmp    *%rcx
+   72a17:	mov    %r14,%rdi
+   72a1a:	call   88b40 <adamic_string_free_index>
+   72a1f:	mov    0x30(%r14),%rbx
+   72a23:	test   %rbx,%rbx
+   72a26:	je     72d30 <adamic_release+0x3c0>
+   72a2c:	mov    (%rbx),%rax
+   72a2f:	test   %rax,%rax
+   72a32:	je     72d30 <adamic_release+0x3c0>
+   72a38:	dec    %rax
+   72a3b:	mov    %rax,(%rbx)
+   72a3e:	jne    72d30 <adamic_release+0x3c0>
+   72a44:	mov    0x6c63d(%rip),%r15        # df088 <freeing_count>
+   72a4b:	mov    0x6c63e(%rip),%rax        # df090 <freeing>
+   72a52:	cmp    0x6c6e7(%rip),%r15        # df140 <freeing_capacity>
+   72a59:	jne    72a92 <adamic_release+0x122>
+   72a5b:	lea    (%r15,%r15,1),%r13
+   72a5f:	test   %r15,%r15
+   72a62:	mov    $0x40,%ecx
+   72a67:	cmove  %rcx,%r13
+   72a6b:	lea    0x0(,%r13,8),%rsi
+   72a73:	mov    %rax,%rdi
+   72a76:	call   c240 <realloc@plt>
+   72a7b:	test   %rax,%rax
+   72a7e:	je     72e88 <adamic_release+0x518>
+   72a84:	mov    %rax,0x6c605(%rip)        # df090 <freeing>
+   72a8b:	mov    %r13,0x6c6ae(%rip)        # df140 <freeing_capacity>
+   72a92:	lea    0x1(%r15),%rcx
+   72a96:	mov    %rcx,0x6c5eb(%rip)        # df088 <freeing_count>
+   72a9d:	mov    %rbx,(%rax,%r15,8)
+   72aa1:	jmp    72d30 <adamic_release+0x3c0>
+   72aa6:	cmpq   $0x0,0x18(%r14)
+   72aab:	je     72d30 <adamic_release+0x3c0>
+   72ab1:	mov    0x6c688(%rip),%rbx        # df140 <freeing_capacity>
+   72ab8:	xor    %r13d,%r13d
+   72abb:	jmp    72add <adamic_release+0x16d>
+   72abd:	lea    0x1(%rbp),%rcx
+   72ac1:	mov    %rcx,0x6c5c0(%rip)        # df088 <freeing_count>
+   72ac8:	mov    %r15,(%rax,%rbp,8)
+   72acc:	mov    %rcx,%rbp
+   72acf:	nop
+   72ad0:	inc    %r13
+   72ad3:	cmp    0x18(%r14),%r13
+   72ad7:	jae    72d30 <adamic_release+0x3c0>
+   72add:	mov    0x20(%r14,%r13,8),%r15
+   72ae2:	test   %r15,%r15
+   72ae5:	je     72ad0 <adamic_release+0x160>
+   72ae7:	mov    (%r15),%rcx
+   72aea:	test   %rcx,%rcx
+   72aed:	je     72ad0 <adamic_release+0x160>
+   72aef:	dec    %rcx
+   72af2:	mov    %rcx,(%r15)
+   72af5:	jne    72ad0 <adamic_release+0x160>
+   72af7:	cmp    %rbx,%rbp
+   72afa:	jne    72abd <adamic_release+0x14d>
+   72afc:	lea    0x0(,%rbp,2),%rbx
+   72b04:	test   %rbp,%rbp
+   72b07:	mov    $0x40,%ecx
+   72b0c:	cmove  %rcx,%rbx
+   72b10:	lea    0x0(,%rbx,8),%rsi
+   72b18:	mov    %rax,%rdi
+   72b1b:	call   c240 <realloc@plt>
+   72b20:	test   %rax,%rax
+   72b23:	je     72e88 <adamic_release+0x518>
+   72b29:	mov    %rax,0x6c560(%rip)        # df090 <freeing>
+   72b30:	mov    %rbx,0x6c609(%rip)        # df140 <freeing_capacity>
+   72b37:	jmp    72abd <adamic_release+0x14d>
+   72b39:	mov    %r14,%rdi
+   72b3c:	lea    0x35d(%rip),%rsi        # 72ea0 <let_go>
+   72b43:	call   6e460 <adamic_object_free_children>
+   72b48:	jmp    72d30 <adamic_release+0x3c0>
+   72b4d:	mov    0x10(%r14),%r15
+   72b51:	decq   0x48(%r15)
+   72b55:	jmp    72bb7 <adamic_release+0x247>
+   72b57:	mov    %r14,%rdi
+   72b5a:	call   89370 <adamic_weak_dropped>
+   72b5f:	jmp    72d30 <adamic_release+0x3c0>
+   72b64:	cmpb   $0x1,0x20(%r14)
+   72b69:	jne    72cac <adamic_release+0x33c>
+   72b6f:	mov    0x10(%r14),%rcx
+   72b73:	test   %rcx,%rcx
+   72b76:	je     72cac <adamic_release+0x33c>
+   72b7c:	mov    0x6c5bd(%rip),%rbx        # df140 <freeing_capacity>
+   72b83:	xor    %r13d,%r13d
+   72b86:	jmp    72c58 <adamic_release+0x2e8>
+   72b8b:	mov    %r14,%rdi
+   72b8e:	lea    0x30b(%rip),%rsi        # 72ea0 <let_go>
+   72b95:	call   7a790 <adamic_map_free_children>
+   72b9a:	jmp    72d30 <adamic_release+0x3c0>
+   72b9f:	cmpb   $0x1,0x10(%r14)
+   72ba4:	jne    72d30 <adamic_release+0x3c0>
+   72baa:	mov    0x18(%r14),%r15
+   72bae:	test   %r15,%r15
+   72bb1:	je     72d30 <adamic_release+0x3c0>
+   72bb7:	mov    (%r15),%rcx
+   72bba:	test   %rcx,%rcx
+   72bbd:	je     72d30 <adamic_release+0x3c0>
+   72bc3:	dec    %rcx
+   72bc6:	mov    %rcx,(%r15)
+   72bc9:	jne    72d30 <adamic_release+0x3c0>
+   72bcf:	cmp    0x6c56a(%rip),%rbp        # df140 <freeing_capacity>
+   72bd6:	jne    72c13 <adamic_release+0x2a3>
+   72bd8:	lea    0x0(,%rbp,2),%r13
+   72be0:	test   %rbp,%rbp
+   72be3:	mov    $0x40,%ecx
+   72be8:	cmove  %rcx,%r13
+   72bec:	lea    0x0(,%r13,8),%rsi
+   72bf4:	mov    %rax,%rdi
+   72bf7:	call   c240 <realloc@plt>
+   72bfc:	test   %rax,%rax
+   72bff:	je     72e88 <adamic_release+0x518>
+   72c05:	mov    %rax,0x6c484(%rip)        # df090 <freeing>
+   72c0c:	mov    %r13,0x6c52d(%rip)        # df140 <freeing_capacity>
+   72c13:	mov    %rbx,0x6c46e(%rip)        # df088 <freeing_count>
+   72c1a:	mov    %r15,-0x8(%rax,%rbx,8)
+   72c1f:	jmp    72d30 <adamic_release+0x3c0>
+   72c24:	mov    %rax,0x6c465(%rip)        # df090 <freeing>
+   72c2b:	mov    %rbx,0x6c50e(%rip)        # df140 <freeing_capacity>
+   72c32:	mov    0x10(%r14),%rcx
+   72c36:	lea    0x1(%rbp),%rdx
+   72c3a:	mov    %rdx,0x6c447(%rip)        # df088 <freeing_count>
+   72c41:	mov    %r15,(%rax,%rbp,8)
+   72c45:	mov    %rdx,%rbp
+   72c48:	nopl   0x0(%rax,%rax,1)
+   72c50:	inc    %r13
+   72c53:	cmp    %rcx,%r13
+   72c56:	jae    72cac <adamic_release+0x33c>
+   72c58:	mov    0x28(%r14),%rdx
+   72c5c:	mov    (%rdx,%r13,8),%r15
+   72c60:	test   %r15,%r15
+   72c63:	je     72c50 <adamic_release+0x2e0>
+   72c65:	mov    (%r15),%rdx
+   72c68:	test   %rdx,%rdx
+   72c6b:	je     72c50 <adamic_release+0x2e0>
+   72c6d:	dec    %rdx
+   72c70:	mov    %rdx,(%r15)
+   72c73:	jne    72c50 <adamic_release+0x2e0>
+   72c75:	cmp    %rbx,%rbp
+   72c78:	jne    72c36 <adamic_release+0x2c6>
+   72c7a:	lea    0x0(,%rbp,2),%rbx
+   72c82:	test   %rbp,%rbp
+   72c85:	mov    $0x40,%ecx
+   72c8a:	cmove  %rcx,%rbx
+   72c8e:	lea    0x0(,%rbx,8),%rsi
+   72c96:	mov    %rax,%rdi
+   72c99:	call   c240 <realloc@plt>
+   72c9e:	test   %rax,%rax
+   72ca1:	jne    72c24 <adamic_release+0x2b4>
+   72ca7:	jmp    72e88 <adamic_release+0x518>
+   72cac:	mov    0x30(%r14),%rbx
+   72cb0:	test   %rbx,%rbx
+   72cb3:	je     72d18 <adamic_release+0x3a8>
+   72cb5:	mov    (%rbx),%rcx
+   72cb8:	test   %rcx,%rcx
+   72cbb:	je     72d18 <adamic_release+0x3a8>
+   72cbd:	dec    %rcx
+   72cc0:	mov    %rcx,(%rbx)
+   72cc3:	jne    72d18 <adamic_release+0x3a8>
+   72cc5:	cmp    0x6c474(%rip),%rbp        # df140 <freeing_capacity>
+   72ccc:	jne    72d09 <adamic_release+0x399>
+   72cce:	lea    0x0(,%rbp,2),%r15
+   72cd6:	test   %rbp,%rbp
+   72cd9:	mov    $0x40,%ecx
+   72cde:	cmove  %rcx,%r15
+   72ce2:	lea    0x0(,%r15,8),%rsi
+   72cea:	mov    %rax,%rdi
+   72ced:	call   c240 <realloc@plt>
+   72cf2:	test   %rax,%rax
+   72cf5:	je     72e88 <adamic_release+0x518>
+   72cfb:	mov    %rax,0x6c38e(%rip)        # df090 <freeing>
+   72d02:	mov    %r15,0x6c437(%rip)        # df140 <freeing_capacity>
+   72d09:	lea    0x1(%rbp),%rcx
+   72d0d:	mov    %rcx,0x6c374(%rip)        # df088 <freeing_count>
+   72d14:	mov    %rbx,(%rax,%rbp,8)
+   72d18:	mov    0x28(%r14),%rdi
+   72d1c:	call   c040 <free@plt>
+   72d21:	data16 data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   72d30:	mov    %r14,%rdi
+   72d33:	call   892a0 <adamic_weak_forget>
+   72d38:	mov    0xc(%r14),%eax
+   72d3c:	test   %eax,%eax
+   72d3e:	je     729d0 <adamic_release+0x60>
+   72d44:	dec    %eax
+   72d46:	mov    0x6c3eb(%rip),%rcx        # df138 <chunks>
+   72d4d:	mov    (%rcx,%rax,8),%rax
+   72d51:	mov    0x18(%rax),%rdx
+   72d55:	mov    0x38(%rax),%rcx
+   72d59:	mov    %rdx,(%r14)
+   72d5c:	mov    %r14,0x18(%rax)
+   72d60:	mov    0x30(%rax),%rdx
+   72d64:	dec    %rdx
+   72d67:	mov    %rdx,0x30(%rax)
+   72d6b:	cmpb   $0x0,0x10(%rax)
+   72d6f:	jne    72d9e <adamic_release+0x42e>
+   72d71:	movq   $0x0,(%rax)
+   72d78:	lea    0x6c321(%rip),%rsi        # df0a0 <giving>
+   72d7f:	mov    (%rsi,%rcx,8),%rsi
+   72d83:	mov    %rsi,0x8(%rax)
+   72d87:	test   %rsi,%rsi
+   72d8a:	je     72d8f <adamic_release+0x41f>
+   72d8c:	mov    %rax,(%rsi)
+   72d8f:	lea    0x6c30a(%rip),%rsi        # df0a0 <giving>
+   72d96:	mov    %rax,(%rsi,%rcx,8)
+   72d9a:	movb   $0x1,0x10(%rax)
+   72d9e:	test   %rdx,%rdx
+   72da1:	jne    729d8 <adamic_release+0x68>
+   72da7:	lea    0x6c2f2(%rip),%rdx        # df0a0 <giving>
+   72dae:	mov    (%rdx,%rcx,8),%rsi
+   72db2:	xor    %rax,%rsi
+   72db5:	mov    0x8(%rax),%rdx
+   72db9:	or     %rdx,%rsi
+   72dbc:	je     729d8 <adamic_release+0x68>
+   72dc2:	mov    (%rax),%rsi
+   72dc5:	test   %rsi,%rsi
+   72dc8:	je     72df1 <adamic_release+0x481>
+   72dca:	mov    %rdx,0x8(%rsi)
+   72dce:	test   %rdx,%rdx
+   72dd1:	je     72dd6 <adamic_release+0x466>
+   72dd3:	mov    %rsi,(%rdx)
+   72dd6:	movb   $0x0,0x10(%rax)
+   72dda:	mov    0x6c33f(%rip),%rcx        # df120 <spares>
+   72de1:	mov    %rcx,0x8(%rax)
+   72de5:	mov    %rax,0x6c334(%rip)        # df120 <spares>
+   72dec:	jmp    729d8 <adamic_release+0x68>
+   72df1:	lea    0x6c2a8(%rip),%rdi        # df0a0 <giving>
+   72df8:	mov    %rdx,(%rdi,%rcx,8)
+   72dfc:	test   %rdx,%rdx
+   72dff:	jne    72dd3 <adamic_release+0x463>
+   72e01:	jmp    72dd6 <adamic_release+0x466>
+   72e03:	movb   $0x0,0x6c276(%rip)        # df080 <draining>
+   72e0a:	add    $0x8,%rsp
+   72e0e:	pop    %rbx
+   72e0f:	pop    %r12
+   72e11:	pop    %r13
+   72e13:	pop    %r14
+   72e15:	pop    %r15
+   72e17:	pop    %rbp
+   72e18:	ret
+   72e19:	mov    0x6c268(%rip),%rbx        # df088 <freeing_count>
+   72e20:	mov    0x6c269(%rip),%rax        # df090 <freeing>
+   72e27:	cmp    0x6c312(%rip),%rbx        # df140 <freeing_capacity>
+   72e2e:	jne    72e6a <adamic_release+0x4fa>
+   72e30:	mov    %rdi,%r14
+   72e33:	lea    (%rbx,%rbx,1),%rcx
+   72e37:	test   %rbx,%rbx
+   72e3a:	mov    $0x40,%r15d
+   72e40:	cmovne %rcx,%r15
+   72e44:	lea    0x0(,%r15,8),%rsi
+   72e4c:	mov    %rax,%rdi
+   72e4f:	call   c240 <realloc@plt>
+   72e54:	test   %rax,%rax
+   72e57:	je     72e88 <adamic_release+0x518>
+   72e59:	mov    %rax,0x6c230(%rip)        # df090 <freeing>
+   72e60:	mov    %r15,0x6c2d9(%rip)        # df140 <freeing_capacity>
+   72e67:	mov    %r14,%rdi
+   72e6a:	lea    0x1(%rbx),%rcx
+   72e6e:	mov    %rcx,0x6c213(%rip)        # df088 <freeing_count>
+   72e75:	mov    %rdi,(%rax,%rbx,8)
+   72e79:	cmpb   $0x0,0x6c200(%rip)        # df080 <draining>
+   72e80:	je     729a1 <adamic_release+0x31>
+   72e86:	jmp    72e0a <adamic_release+0x49a>
+   72e88:	lea    0x1eeaf(%rip),%rdi        # 91d3e <list.message>
+   72e8f:	mov    $0xd,%esi
+   72e94:	call   6b810 <adamic_panic>
+
+Disassembly of section .fini:

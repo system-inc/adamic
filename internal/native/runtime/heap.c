@@ -315,9 +315,11 @@ static void free_one(void *value) {
 	ADAMIC_COUNT_FREE();
 }
 
-void adamic_release(void *value) {
-	ADAMIC_COUNT_RELEASE();
-	let_go(value);
+// Keep the large destruction loop out of ordinary releases: its register saves and queue
+// bookkeeping are needed only when a reference reaches zero. noinline keeps that boundary
+// through clang's single-caller inlining, in release and sanitizer builds alike.
+static __attribute__((noinline)) void destroy_last_reference(void *value) {
+	list(value);
 	if (draining) {
 		// An outer release is already working through the list.
 		return;
@@ -327,4 +329,12 @@ void adamic_release(void *value) {
 		free_one(freeing[--freeing_count]);
 	}
 	draining = false;
+}
+
+void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	if (heap != NULL && heap->references != 0 && --heap->references == 0) {
+		destroy_last_reference(value);
+	}
 }

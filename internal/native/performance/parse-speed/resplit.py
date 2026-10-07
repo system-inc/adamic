@@ -44,7 +44,7 @@ for i, line in enumerate(source):
             if depth == 0:
                 break
 buckets = collections.Counter()
-release = {'adamic_release', 'let_go', 'free_one', 'adamic_object_free_children', 'release_field', 'adamic_map_free_children', 'adamic_weak_forget', 'adamic_string_free_index'}
+release = {'destroy_last_reference', 'adamic_release', 'let_go', 'free_one', 'adamic_object_free_children', 'release_field', 'adamic_map_free_children', 'adamic_weak_forget', 'adamic_string_free_index'}
 allocation = {'adamic_allocate', 'malloc', 'free', 'realloc', 'calloc', 'take', 'give', 'new_chunk', 'deallocate'}
 character = {'adamic_string_char_code', 'adamic_string_bmp_view', 'adamic_string_unit_view', 'adamic_string_units', 'adamic_string_locate', 'adamic_string_units_before', 'usable', 'build', 'width', 'decode', 'unit_at', 'sequence', 'adamic_string_code_point_at'}
 field = {'adamic_object_field', 'adamic_object_data_field', 'adamic_object_find', 'adamic_object_write_field', 'adamic_object_check_write', 'adamic_object_callee', 'adamic_static_field'}

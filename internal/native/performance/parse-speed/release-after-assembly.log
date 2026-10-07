@@ -1,0 +1,28 @@
+
+/workspace/scratch/parse-speed/release-parse:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000072970 <adamic_release>:
+   72970:	test   %rdi,%rdi
+   72973:	je     72985 <adamic_release+0x15>
+   72975:	mov    (%rdi),%rax
+   72978:	test   %rax,%rax
+   7297b:	je     72985 <adamic_release+0x15>
+   7297d:	dec    %rax
+   72980:	mov    %rax,(%rdi)
+   72983:	je     72986 <adamic_release+0x16>
+   72985:	ret
+   72986:	push   %rax
+   72987:	call   729a0 <destroy_last_reference>
+   7298c:	add    $0x8,%rsp
+   72990:	ret
+
+Disassembly of section .fini:
