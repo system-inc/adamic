@@ -1,0 +1,17 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 222 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 14365214 bytes
+--- PASS: TestCompilerAndStage1Agree (63.86s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 68548 bytes
+--- PASS: TestOwnedWitnesses (14.88s)
+=== RUN   TestWave05SecondCorpus
+    lint_test.go:324: cohere cases: 554 unique source/rule/options combinations
+    wave05_second_overlay_test.go:25: @typescript-eslint/no-non-null-asserted-optional-chain cases=24
+    wave05_second_overlay_test.go:25: @typescript-eslint/no-non-null-assertion cases=36
+    wave05_second_overlay_test.go:25: @typescript-eslint/no-this-alias cases=40
+    wave05_second_overlay_test.go:27: upstream total=100 exclusions=0
+    wave05_second_overlay_test.go:28: Go, Node, emitted JavaScript, native identical: 67426 bytes
+--- PASS: TestWave05SecondCorpus (20.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	99.267s

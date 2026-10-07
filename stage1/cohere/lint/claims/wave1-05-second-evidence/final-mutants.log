@@ -1,0 +1,118 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/parenthesized_chain_missed
+    lint_test.go:491: parenthesized chain missed caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18", Go "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 66 80 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	79:80:	Remove the non-null assertion.
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18
+    lint_test.go:491: parenthesized chain missed caught on emitted JavaScript: case 24 line 522: port "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18", Go "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 66 80 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	79:80:	Remove the non-null assertion.
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18
+    lint_test.go:491: parenthesized chain missed caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18", Go "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 66 80 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	79:80:	Remove the non-null assertion.
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed1872367020/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18
+=== RUN   TestMutants/postfix_assignment_suggestion
+    lint_test.go:491: postfix assignment suggestion caught on Node: case 24 line 545: port "range 220 229 noNonNull suggestion-edits:suggestOptionalChain\t228:229:|229:230:?.\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.", Go "range 220 229 noNonNull \t\t"
+        Go context:
+        
+        range 191 200 noNonNull 		
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion2509887162/007/typescript-no-non-null-assertion-0.ts:7:2
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 220 229 noNonNull 		
+        fixed	const emoji = '\ud83d\ude00';\u000aconst \u00e9 = receiver;\u000aconst result = \u00e9!.value;\u000aconst comment = receiver! /* . remains in the comment */ .value;\u000aconst nested = receiver?.value!!;\u000aconst assigned = ({ k: receiver!.value } = other);\u000a(receiver!.value as number)++;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion2509887162/008/typescript-no-non-null-assertion-1.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+    lint_test.go:491: postfix assignment suggestion caught on emitted JavaScript: case 24 line 545: port "range 220 229 noNonNull suggestion-edits:suggestOptionalChain\t228:229:|229:230:?.\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.", Go "range 220 229 noNonNull \t\t"
+        Go context:
+        
+        range 191 200 noNonNull 		
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion2509887162/007/typescript-no-non-null-assertion-0.ts:7:2
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 220 229 noNonNull 		
+        fixed	const emoji = '\ud83d\ude00';\u000aconst \u00e9 = receiver;\u000aconst result = \u00e9!.value;\u000aconst comment = receiver! /* . remains in the comment */ .value;\u000aconst nested = receiver?.value!!;\u000aconst assigned = ({ k: receiver!.value } = other);\u000a(receiver!.value as number)++;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion2509887162/008/typescript-no-non-null-assertion-1.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+    lint_test.go:491: postfix assignment suggestion caught on native: case 24 line 545: port "range 220 229 noNonNull suggestion-edits:suggestOptionalChain\t228:229:|229:230:?.\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.", Go "range 220 229 noNonNull \t\t"
+        Go context:
+        
+        range 191 200 noNonNull 		
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion2509887162/007/typescript-no-non-null-assertion-0.ts:7:2
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 220 229 noNonNull 		
+        fixed	const emoji = '\ud83d\ude00';\u000aconst \u00e9 = receiver;\u000aconst result = \u00e9!.value;\u000aconst comment = receiver! /* . remains in the comment */ .value;\u000aconst nested = receiver?.value!!;\u000aconst assigned = ({ k: receiver!.value } = other);\u000a(receiver!.value as number)++;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion2509887162/008/typescript-no-non-null-assertion-1.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+=== RUN   TestMutants/compound_this_alias_missed
+    lint_test.go:491: compound this alias missed caught on Node: case 25 line 540: port "/tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:2:7", Go "/tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:1:11"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 101 103 thisAssignment 		
+        fixed	const emoji = '\ud83d\ude00';\u000alet \u00e9;\u000a((\u00e9)) = this;\u000a(\u00e9 as unknown) = this;\u000a(\u00e9 satisfies unknown) = this;\u000a(\u00e9!) = this;\u000aconst derived = (this);\u000athis.member = this;\u000aconst { member } = this;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:1:11
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 10 14 thisAssignment 		
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:2:7
+    lint_test.go:491: compound this alias missed caught on emitted JavaScript: case 25 line 540: port "/tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:2:7", Go "/tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:1:11"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 101 103 thisAssignment 		
+        fixed	const emoji = '\ud83d\ude00';\u000alet \u00e9;\u000a((\u00e9)) = this;\u000a(\u00e9 as unknown) = this;\u000a(\u00e9 satisfies unknown) = this;\u000a(\u00e9!) = this;\u000aconst derived = (this);\u000athis.member = this;\u000aconst { member } = this;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:1:11
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 10 14 thisAssignment 		
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:2:7
+    lint_test.go:491: compound this alias missed caught on native: case 25 line 540: port "/tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:2:7", Go "/tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:1:11"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 101 103 thisAssignment 		
+        fixed	const emoji = '\ud83d\ude00';\u000alet \u00e9;\u000a((\u00e9)) = this;\u000a(\u00e9 as unknown) = this;\u000a(\u00e9 satisfies unknown) = this;\u000a(\u00e9!) = this;\u000aconst derived = (this);\u000athis.member = this;\u000aconst { member } = this;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:1:11
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 10 14 thisAssignment 		
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed2083458768/008/typescript-no-this-alias-1.ts:2:7
+--- PASS: TestMutants (42.08s)
+    --- PASS: TestMutants/parenthesized_chain_missed (13.55s)
+    --- PASS: TestMutants/postfix_assignment_suggestion (13.28s)
+    --- PASS: TestMutants/compound_this_alias_missed (13.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	42.091s

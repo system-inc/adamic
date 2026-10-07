@@ -1,0 +1,43 @@
+=== RUN   TestWave05SecondThroughput
+    wave05_second_overlay_test.go:45: @typescript-eslint/no-non-null-asserted-optional-chain compiler-only findings=7
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=1 side=Go seconds=0.180211 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=1 side=native seconds=1.174398 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=1 side=Node seconds=0.911615 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=2 side=Go seconds=0.182492 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=2 side=native seconds=1.229545 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=2 side=Node seconds=0.892528 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=3 side=Go seconds=0.181758 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=3 side=native seconds=1.192057 count=1007
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-asserted-optional-chain round=3 side=Node seconds=0.881288 count=1007
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-non-null-asserted-optional-chain best-of-3 Go 0.180211s 5587.91 findings/s (78 files 1007 findings)
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-non-null-asserted-optional-chain best-of-3 native 1.174398s 857.46 findings/s (78 files 1007 findings)
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-non-null-asserted-optional-chain best-of-3 Node 0.881288s 1142.65 findings/s (78 files 1007 findings)
+    wave05_second_overlay_test.go:45: @typescript-eslint/no-non-null-assertion compiler-only findings=1123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=1 side=Go seconds=0.197291 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=1 side=native seconds=1.238585 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=1 side=Node seconds=0.963003 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=2 side=Go seconds=0.174747 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=2 side=native seconds=1.187544 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=2 side=Node seconds=0.927212 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=3 side=Go seconds=0.170976 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=3 side=native seconds=1.185038 count=2123
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-non-null-assertion round=3 side=Node seconds=0.945094 count=2123
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-non-null-assertion best-of-3 Go 0.170976s 12416.97 findings/s (78 files 2123 findings)
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-non-null-assertion best-of-3 native 1.185038s 1791.50 findings/s (78 files 2123 findings)
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-non-null-assertion best-of-3 Node 0.927212s 2289.66 findings/s (78 files 2123 findings)
+    wave05_second_overlay_test.go:45: @typescript-eslint/no-this-alias compiler-only findings=0
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=1 side=Go seconds=0.177175 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=1 side=native seconds=1.235976 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=1 side=Node seconds=0.786702 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=2 side=Go seconds=0.177231 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=2 side=native seconds=1.098541 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=2 side=Node seconds=0.844994 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=3 side=Go seconds=0.172658 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=3 side=native seconds=1.101965 count=1000
+    wave05_second_overlay_test.go:56: @typescript-eslint/no-this-alias round=3 side=Node seconds=0.789207 count=1000
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-this-alias best-of-3 Go 0.172658s 5791.80 findings/s (78 files 1000 findings)
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-this-alias best-of-3 native 1.098541s 910.30 findings/s (78 files 1000 findings)
+    wave05_second_overlay_test.go:59: @typescript-eslint/no-this-alias best-of-3 Node 0.786702s 1271.13 findings/s (78 files 1000 findings)
+--- PASS: TestWave05SecondThroughput (26.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.180s

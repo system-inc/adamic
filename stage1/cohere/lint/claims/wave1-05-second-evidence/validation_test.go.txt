@@ -1,0 +1,61 @@
+package lint
+
+import (
+    "bytes"
+        "fmt"
+    "os"
+    "path/filepath"
+    "strings"
+    "testing"
+    "time"
+)
+
+// Not parallel: upstream capture uses process environment and shared generated files.
+func TestWave05SecondCorpus(t *testing.T) {
+    directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+    var rows []string
+    counts:=map[string]int{}
+    for _, row := range upstream(t) {
+        fields:=strings.Split(row,"\t")
+        switch fields[1] {
+        case "@typescript-eslint/no-non-null-asserted-optional-chain", "@typescript-eslint/no-non-null-assertion", "@typescript-eslint/no-this-alias": rows=append(rows,row);counts[fields[1]]++
+        }
+    }
+    for _,name:=range []string{"@typescript-eslint/no-non-null-asserted-optional-chain", "@typescript-eslint/no-non-null-assertion", "@typescript-eslint/no-this-alias"} {
+        if counts[name]==0 {t.Fatalf("missing cases for %s",name)}; t.Logf("%s cases=%d",name,counts[name])
+    }
+    t.Logf("upstream total=%d exclusions=0",len(rows))
+    compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: all rounds use one shared driver and interleave runtimes.
+func TestWave05SecondThroughput(t *testing.T) {
+    directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+    corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); if corpus == "" { t.Fatal("missing corpus") }
+    oracle := goOracle(t); binary := buildPort(t, directory, false)
+    for _, subject := range []struct{name, source string}{
+        {"@typescript-eslint/no-non-null-asserted-optional-chain", "const result%d = receiver?.value!;\n"},
+        {"@typescript-eslint/no-non-null-assertion", "const result%d = receiver!.value;\n"},
+        {"@typescript-eslint/no-this-alias", "const self%d = this;\n"},
+    } {
+        var rows []string
+        err := filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+            if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") { rows = append(rows, path+"\t"+subject.name) }; return err
+        }); if err != nil { t.Fatal(err) }
+        t.Logf("%s compiler-only findings=%s", subject.name, strings.TrimSpace(string(execute(t,"",oracle,"--manifest",manifest(t,rows),"--count").output)))
+        var text strings.Builder
+        for i:=0;i<1000;i++ { if subject.name=="no-cond-assign" { text.WriteString(subject.source) } else { fmt.Fprintf(&text,subject.source,i) } }
+        stress := filepath.Join(t.TempDir(), "stress.ts"); if err := os.WriteFile(stress,[]byte(text.String()),0644);err!=nil { t.Fatal(err) }
+        rows=append(rows,stress+"\t"+subject.name);path:=manifest(t,rows)
+        best:=map[string]time.Duration{};var want []byte
+        for round:=0;round<3;round++ { for _,side:=range []string{"Go","native","Node"} {
+            var result execution
+            switch side { case "Go":result=execute(t,"",oracle,"--manifest",path,"--count");case "native":result=execute(t,"",binary,"--manifest",path,"--count");case "Node":result=node(t,directory,path,true) }
+            if want==nil {want=result.output};if !bytes.Equal(want,result.output) {t.Fatalf("%s count differs on %s",subject.name,side)}
+            if best[side]==0 || result.duration<best[side] {best[side]=result.duration}
+            t.Logf("%s round=%d side=%s seconds=%.6f count=%s",subject.name,round+1,side,result.duration.Seconds(),strings.TrimSpace(string(result.output)))
+        } }
+        var count int;if _,err:=fmt.Sscan(string(want),&count);err!=nil {t.Fatal(err)}
+        for _,side:=range []string{"Go","native","Node"} {t.Logf("%s best-of-3 %s %.6fs %.2f findings/s (%d files %d findings)",subject.name,side,best[side].Seconds(),float64(count)/best[side].Seconds(),len(rows),count)}
+    }
+}
