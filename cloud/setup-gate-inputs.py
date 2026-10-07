@@ -19,8 +19,17 @@ npm = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(npm)
 TS_COMMIT = '050880ce59e30b356b686bd3144efe24f875ebc8'
 TS_URL = 'https://github.com/microsoft/TypeScript.git'
+CSS_COMMIT = 'cb4b33fba24a8428d00e54be85fc886288a374ea'
+CSS_URL = 'https://github.com/system-inc/prettier.git'
+CSS_SPARSE = ['tests/format/css', 'tests/format/scss', 'tests/format/less',
+              'tests/format/js/multiparser-css', 'tests/format/js/template-literals']
+CSS_COUNTS = {'.css': 157, '.scss': 90, '.less': 43}
+PRETTIER_VERSION = '3.9.6'
 SIZE = 100 << 20
-VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript', 'ADAMIC_CSS_LIBRARY': 'css',
+VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript', 'ADAMIC_CSS_FIXTURES': 'css-fixtures',
+             'ADAMIC_CSSNUMBERS_LIBRARY': 'css-printer', 'ADAMIC_CSSSTRINGS_LIBRARY': 'css-printer',
+             'ADAMIC_MARKDOWNINLINE_LIBRARY': 'css-printer/node_modules/prettier',
+             'ADAMIC_CSS_LIBRARY': 'css',
              'ADAMIC_GRAPHQL_LIBRARY': 'graphql', 'ADAMIC_MEDIA_QUERY_LIBRARY': 'media-query',
              'ADAMIC_SELECTOR_LIBRARY': 'selector', 'ADAMIC_VALUES_LIBRARY': 'values',
              'ADAMIC_GRAPHQL_PRETTIER': 'css-printer', 'ADAMIC_JSON_PRETTIER': 'json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': 'css-printer',
@@ -112,6 +121,77 @@ def typescript(root):
     return 'installed (depth-one exact commit, git object integrity checked)'
 
 
+
+def css_fixture_key():
+    return cache_key(kind='css-fixtures', commit=CSS_COMMIT, url=CSS_URL,
+                     sparse=CSS_SPARSE, counts=CSS_COUNTS, helper=source_hash())
+
+
+def css_counts(directory):
+    counts = {extension: 0 for extension in CSS_COUNTS}
+    for path in directory.rglob('*'):
+        if '.git' not in path.relative_to(directory).parts and path.is_file():
+            extension = path.suffix.lower()
+            if extension in counts:
+                counts[extension] += 1
+    if counts != CSS_COUNTS:
+        raise ValueError(f'CSS fixture counts differ: expected {CSS_COUNTS}, got {counts}')
+    return counts
+
+
+def validate_css_checkout(directory):
+    actual = command(['git', '-C', str(directory), 'rev-parse', 'HEAD'])
+    if actual != CSS_COMMIT:
+        raise ValueError(f'CSS fixture commit integrity mismatch: expected {CSS_COMMIT}, got {actual}')
+    sparse = command(['git', '-C', str(directory), 'sparse-checkout', 'list']).splitlines()
+    if sorted(sparse) != sorted(CSS_SPARSE):
+        raise ValueError(f'CSS sparse checkout differs: expected {CSS_SPARSE}, got {sparse}')
+    return css_counts(directory)
+
+
+def css_fixtures(root):
+    destination = root / 'css-fixtures'
+    key = css_fixture_key()
+    if hit(destination, key):
+        # Git metadata is excluded from the content stamp, so verify it explicitly.
+        validate_css_checkout(destination)
+        return 'skipped (validated exact commit, sparse set, counts and checkout bytes)'
+    with tempfile.TemporaryDirectory(prefix='css-fixtures-', dir=root) as temporary:
+        install = Path(temporary) / 'checkout'
+        subprocess.run(['git', 'init', str(install)], check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'remote', 'add', 'origin', CSS_URL], check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'fetch', '--depth=1', '--filter=blob:none',
+                        'origin', CSS_COMMIT], check=True, timeout=600)
+        subprocess.run(['git', '-C', str(install), 'sparse-checkout', 'init', '--cone'], check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'sparse-checkout', 'set', *CSS_SPARSE], check=True, timeout=60)
+        subprocess.run(['git', '-C', str(install), 'checkout', '--detach', 'FETCH_HEAD'], check=True, timeout=600)
+        validate_css_checkout(install)
+        subprocess.run(['git', '-C', str(install), 'fsck', '--full', '--no-reflogs'], check=True, timeout=120)
+        publish(install, destination, key)
+    return f'installed (exact commit, sparse checkout, Git integrity and counts verified: {CSS_COUNTS})'
+
+
+def shared_prettier(root, node):
+    # Match both createRequire(prefix/package.json) and direct package/plugin loads.
+    script = """
+const {createRequire} = require('node:module');
+const prefix = process.argv[1];
+const expected = process.argv[2];
+const resolve = createRequire(prefix + '/package.json');
+for (const name of ['ADAMIC_CSSNUMBERS_LIBRARY', 'ADAMIC_CSSSTRINGS_LIBRARY']) {
+    const actual = resolve('prettier/package.json').version;
+    if (actual !== expected) throw Error(`${name}: expected prettier ${expected}, got ${actual}`);
+    resolve('prettier/plugins/postcss');
+}
+const library = prefix + '/node_modules/prettier';
+const actual = require(library).version;
+if (actual !== expected) throw Error(`ADAMIC_MARKDOWNINLINE_LIBRARY: expected prettier ${expected}, got ${actual}`);
+require(library + '/plugins/markdown');
+console.log('shared prettier ' + actual + ': CSS numbers, CSS strings and Markdown inline paths verified');
+"""
+    return command([node, '-e', script, str(root / 'css-printer'), PRETTIER_VERSION])
+
+
 def ignore_contents(size):
     yield b'big\n#'
     remaining = size - len(b'big\n#') - 1
@@ -200,10 +280,12 @@ def main():
         for name, relative in VARIABLES.items():
             print('export ' + name + '=' + __import__('shlex').quote(str(root / relative)))
         return
-    tasks = {'corpora': [('TypeScript source', lambda: typescript(root)), ('100 MiB gitignore', lambda: gitignore(root))],
+    tasks = {'corpora': [('CSS fixtures', lambda: css_fixtures(root)), ('TypeScript source', lambda: typescript(root)), ('100 MiB gitignore', lambda: gitignore(root))],
              'archive': [('checker archive', lambda: archive(repository, root))],
              'npm': [(name, lambda name=name: npm.prepare(SOURCE / 'gate-inputs' / name, root / name, node))
                      for name in dict.fromkeys(VARIABLES.values()) if (SOURCE / 'gate-inputs' / name).is_dir()]}
+    if phase == 'npm':
+        tasks['npm'].append(('shared Prettier paths', lambda: shared_prettier(root, node)))
     for name, action in tasks[phase]:
         started = time.monotonic()
         answer = action()

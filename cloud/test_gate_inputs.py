@@ -54,7 +54,7 @@ class Inputs(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             with patch.object(sys, 'argv', ['setup', 'npm', temporary, temporary, 'node']), patch.object(
                 gate.npm, 'prepare', return_value='verified'
-            ) as install, contextlib.redirect_stdout(io.StringIO()):
+            ) as install, patch.object(gate, 'shared_prettier', return_value='verified'), contextlib.redirect_stdout(io.StringIO()):
                 gate.main()
             names = [call.args[0].name for call in install.call_args_list]
             self.assertEqual(names.count('css-printer'), 1)
