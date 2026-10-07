@@ -1,0 +1,5 @@
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:275: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout
+--- SKIP: TestCompilerExpressionsAgree (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	0.012s

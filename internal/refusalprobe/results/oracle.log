@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts (9.74s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.747s

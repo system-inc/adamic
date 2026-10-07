@@ -1,0 +1,7 @@
+--- FAIL: TestCatalogAuditCanFail (0.00s)
+    probe_test.go:48: missing entry was not caught: <nil>
+--- FAIL: TestDirectRefusalAuditCanFail (0.00s)
+    probe_test.go:128: new direct refusal escaped the catalog
+FAIL
+FAIL	github.com/system-inc/adamic/internal/refusalprobe	0.005s
+FAIL

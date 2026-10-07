@@ -1,0 +1,13 @@
+F.
+======================================================================
+FAIL: test_every_key_component (__main__.Inputs.test_every_key_component) (name='commit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 27, in test_every_key_component
+    self.assertNotEqual(before,gate.cache_key(**changed),name)
+AssertionError: 'd7a3b7c1558a8f4a340d7ead7feda6b5059f3e5751630dcdf5803757d7513bf3' == 'd7a3b7c1558a8f4a340d7ead7feda6b5059f3e5751630dcdf5803757d7513bf3' : commit
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)

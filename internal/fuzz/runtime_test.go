@@ -3,8 +3,6 @@ package fuzz
 import (
 	"path/filepath"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
@@ -14,7 +12,7 @@ func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	library, err := native.RuntimeLibrary("", native.Options{Sanitize: true})
+	library, err := boundedRuntimeLibrary("")
 	if err != nil {
 		t.Fatal(err)
 	}

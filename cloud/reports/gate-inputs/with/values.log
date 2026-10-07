@@ -1,0 +1,11 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    values_test.go:52: seed 20261005, 4000 generated values
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+--- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-values-parser (0.70s)
+--- PASS: TestThePortParsesAsGoCohereDoes (1.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/values	1.783s
