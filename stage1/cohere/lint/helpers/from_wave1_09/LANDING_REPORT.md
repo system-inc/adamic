@@ -46,4 +46,4 @@ python3 stage1/cohere/lint/helpers/from_wave1_09/testdata/capture_consumers.py /
 git fetch origin main > /tmp/wave109-landing-final-main-fetch.log 2>&1
 ```
 
-Setup timing: Go 0s, clang 0s, Node 0s, submodules 0s, cache warm 163s, total 163s; nproc 5. Go 1.27.1, clang 20.1.8, Node 24.19.0. Timing includes concurrent setup/test CPU contention and is not a throughput benchmark. Final fetch confirmed the same tested main SHA. Complete logs, conflict witness and machine-readable status are in evidence/landing/. The untracked shared .generated cache remains excluded from commits.
+Setup timing: Go 0s, clang 0s, Node 0s, submodules 0s, cache warm 163s, total 163s; nproc 5. Go 1.27.1, clang 20.1.8, Node 24.19.0. Timing includes concurrent setup/test CPU contention and is not a throughput benchmark. Final fetch confirmed the same tested main SHA. Complete logs, losslessly compressed conflict witness and machine-readable status are in evidence/landing/. The untracked shared .generated cache remains excluded from commits.
