@@ -39,3 +39,5 @@ All test output goes directly to logs. Setup succeeded: Go/clang/Node/submodules
 No new rule, rule dispatch, finding serialization, shared registration, shared harness or protected compiler file was changed. Exact regex instructions remain respected: this helper does no pattern matching; it compares identifier labels with array includes.
 
 Current-main landing gate completed: all thirteen actual earlier-helper packages PASS and all 110 prior variants caught. The command had one extra no-Go-files slot root argument and exited 1; no actual test failed. Corrected package pattern plus explicit-refusal check exited 0. Rebased vet/types and filtered oracle PASS 1.380s. See ../LANDING_REPORT_4.md for all commands, timings and the exact argument error.
+
+The two withdrawn slots were replaced by statements and makeContinue, completed at 76ff523314dc72ede98a80bbba2068b04849063a; their report is ../batch15/REPORT.md. This finishes the three-helper batch with twenty compiling semantic mutants caught and 56,102 distinct invocations. All owned helpers are complete on main b8fb957a.

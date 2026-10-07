@@ -62,3 +62,5 @@ The first private generator attempt had a missing newline; it was fixed. The nex
 # Limits
 
 No shared harness, registration generator, rule, regex matcher, finding model or protected compiler file was changed. Immutable dense parser lists, valid current blocks and contiguous distinct private jump records are assumed. Arbitrary callback mutation of parser lists, aliasing one mutable jump record into several slots, invalid UTF-8/lone surrogate labels and invalid AST/state shapes are outside coverage. No whole-rule findings/fixes/suggestions, full CFG/event parity, dependency implementation or full repository gate claim is made. The initial landing command's extra no-Go-files directory argument and the corrected successful discovery/refusal command are reported in ../LANDING_REPORT_4.md. Upstream MIT attribution stays in the owned ../batch14/NOTICE.md.
+
+Implementation and archived evidence commit: 76ff523314dc72ede98a80bbba2068b04849063a. The final claim/report completion commit is named in the final response.
