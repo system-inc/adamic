@@ -73,6 +73,9 @@ func TestWASIService(t *testing.T) {
 	command := exec.CommandContext(ctx, binary, requests)
 	output, err := command.Output()
 	if err != nil {
+		if failed, ok := err.(*exec.ExitError); ok {
+			t.Fatalf("native service: %v\n%s", err, failed.Stderr)
+		}
 		t.Fatalf("native service: %v", err)
 	}
 	expected, err := os.ReadFile(responses)
@@ -80,7 +83,17 @@ func TestWASIService(t *testing.T) {
 		t.Fatal(err)
 	}
 	if string(output) != string(expected) {
-		t.Fatal("native command responses differ from Node")
+		actualLines := strings.Split(string(output), "\n")
+		expectedLines := strings.Split(string(expected), "\n")
+		for index, line := range expectedLines {
+			if index >= len(actualLines) {
+				t.Fatalf("native command ended before response %d", index)
+			}
+			if actualLines[index] != line {
+				t.Fatalf("native response %d: got %q, want %q", index, actualLines[index], line)
+			}
+		}
+		t.Fatalf("native command emitted %d lines, want %d", len(actualLines), len(expectedLines))
 	}
 	t.Log("native sanitized command: all 100000 responses agree with Node")
 	mutants := []struct {

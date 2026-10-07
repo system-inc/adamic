@@ -25,7 +25,7 @@ function generate(index) {
 		case 8: return JSON.stringify({method:'POST',path:'/orders',body:{customer:name,items:[{sku:'unknown',quantity:2}]}});
 		case 9: return JSON.stringify({method:'POST',path:'/orders',body:{customer:name,items:[{sku:'tea',quantity:0.5}]}});
 		case 10: return '{"method":"POST","path":"/summary","body":{"text":"\\u4e16\\u754c \\ud83c\\udf0d \\n \\" \\\\"}}';
-		case 11: return ['{','{"x":01}','{"x":1e}','{"x":"\\q"}','[1,]','{"x":true,}', 'null trailing','{"x":"\n"}'][(n >>> 8)%8];
+		case 11: return ['{','{"x":01}','{"x":1e}','{"x":"\\q"}','[1,]','{"x":true,}', 'null trailing','{"x":"\t"}'][(n >>> 8)%8];
 		case 12: return JSON.stringify({method:'DELETE',path:'/orders',body:{}});
 		case 13: return JSON.stringify({method:'POST',path:'/listing',body:{names:[1,false,null]}});
 		case 14: return JSON.stringify({method:'POST',path:'/summary',body:{text:('世界 🌍 tea ').repeat(512+n%512)}});
@@ -45,6 +45,7 @@ const pins = [
 	['{"method":"POST","path":"/quote","body":{"amount":01}}', '{"status":400,"error":"invalid JSON"}'],
 ];
 for (const [request, expected] of pins) assert.equal(plain.handleRequest(request), expected, 'source semantic pin');
+assert.ok(requests.every(request=>!request.includes('\n') && !request.includes('\r')), 'each generated request must occupy one JSONL line');
 await writeFile(requestPath, requests.join('\n') + '\n');
 const expected = requests.map(request=>plain.handleRequest(request));
 for (let index=0;index<requests.length;index++) {
