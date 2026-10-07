@@ -404,3 +404,5 @@ The incoming shared RuleContext still has no checker program or source-path atta
 | await-upstream | 0.054693 | 0.066230 | 0.826x |
 
 These are three alternating whole-process medians under concurrent gate load, not evidence of a performance change.
+
+Post-landing audit: push 69b6932bd was confirmed by ls-remote. The fresh all-head fetch found 609 origin refs, 33 distinct claim blobs and no unclaimed rules among the 197 ranked names (25 existing ranked base ports, 172 claimed names). Main remains 39638d9e2 and the lint integration tip remains d65a8f931; both are ancestors of this green branch. No new claim is made, as instructed when the ranking is exhausted.
