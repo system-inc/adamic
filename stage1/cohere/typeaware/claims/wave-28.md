@@ -17,3 +17,13 @@ All three are claimed here before implementation. No matching rule source or
 claim was found across 268 fetched origin refs (64 distinct stage1 trees).
 Counts, catalogs and configuration references are not implementations.
 No rule was skipped. Zero-volume corpora require positive controls and mutants.
+
+## Continuation claim
+
+After the original three ports were tested and pushed at `24c600f017352ef3dd8d7c80f104a26099bc4b85`, origin was fetched again. The first three by combined volume, excluding the 26 base ports, main ports, and canonical rule names in claims across all 325 origin refs, are:
+
+1. `nexus/correctness-no-process-exit-after-output` (0 compiler, 0 repository).
+2. `nexus/correctness-no-uncleared-race-timeout` (0 compiler, 0 repository).
+3. `nexus/correctness-require-blocking-standard-streams` (0 compiler, 0 repository).
+
+There were 33 distinct Markdown claim blobs naming 96 ranked rules at this snapshot. None of these three is claimed or implemented on main or the bridge branch. This continuation claim is pushed before any implementation. Shared registration generators and shared test harness files remain outside this worker's territory.
