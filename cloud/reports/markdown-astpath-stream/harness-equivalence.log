@@ -1,0 +1,19 @@
+[
+  {
+    "case": "three-contexts",
+    "fork_bytes": 2257859,
+    "source_bytes": 2257859,
+    "identical_before_after": true
+  },
+  {
+    "case": "empty-input",
+    "fork_bytes": 1,
+    "source_bytes": 1,
+    "identical_before_after": true
+  },
+  {
+    "mutant": "extra newline after each context",
+    "exit": 0,
+    "caught_at_byte": 1058098
+  }
+]
