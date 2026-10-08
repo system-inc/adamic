@@ -1,0 +1,311 @@
+{
+  "sha": "0cb3bb51a3ff0fc7fe62f72114b2b33599e1ef13",
+  "branch": "codex/regex-string-methods-refused",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "d7d0b7da3e80df4dfbfb35d65bbb0cc9f924b3d9",
+  "base_name": "area/library",
+  "tools_sha": "5d8fa4e14c95323bc328425a433d0493540f7d6e",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "oracle_selection": {
+    "whole": true,
+    "reason": "not a registered fixture: internal/oracle/testdata/regex_refused_box_search.a, internal/oracle/testdata/regex_refused_concat.a, internal/oracle/testdata/regex_refused_conversion.a, internal/oracle/testdata/regex_refused_metadata.a"
+  },
+  "reads": [
+    {
+      "line": 122,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/regex_refused_box_search.a",
+        "internal/oracle/testdata/regex_refused_concat.a",
+        "internal/oracle/testdata/regex_refused_conversion.a",
+        "internal/oracle/testdata/regex_refused_metadata.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 146,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/regex_refused_box_search.a",
+        "internal/oracle/testdata/regex_refused_concat.a",
+        "internal/oracle/testdata/regex_refused_conversion.a",
+        "internal/oracle/testdata/regex_refused_metadata.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 170,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/expression.go",
+        "internal/lower/library_for_in.go",
+        "internal/lower/library_regex_string_refused.go",
+        "internal/lower/library_regex_string_refused_test.go",
+        "internal/lower/library_string.go",
+        "internal/lower/library_string_regex_box.go",
+        "internal/lower/library_string_test.go",
+        "internal/lower/object.go",
+        "internal/lower/regexp.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 545,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "internal/lower/library_regex_string_refused.go",
+        "internal/lower/library_regex_string_refused_test.go",
+        "internal/lower/library_string_regex_box.go",
+        "internal/oracle/regex_string_refused_test.go",
+        "internal/oracle/testdata/regex_refused_box_search.a",
+        "internal/oracle/testdata/regex_refused_concat.a",
+        "internal/oracle/testdata/regex_refused_conversion.a",
+        "internal/oracle/testdata/regex_refused_metadata.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1161,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "THIRD_PARTY_NOTICES.md",
+        "internal/oracle/counts.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 1
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "THIRD_PARTY_NOTICES.md",
+    "internal/lower/expression.go",
+    "internal/lower/library_for_in.go",
+    "internal/lower/library_regex_string_refused.go",
+    "internal/lower/library_regex_string_refused_test.go",
+    "internal/lower/library_string.go",
+    "internal/lower/library_string_regex_box.go",
+    "internal/lower/library_string_test.go",
+    "internal/lower/object.go",
+    "internal/lower/regexp.go",
+    "internal/oracle/counts.md",
+    "internal/oracle/regex_string_refused_test.go",
+    "internal/oracle/testdata/regex_refused_box_search.a",
+    "internal/oracle/testdata/regex_refused_concat.a",
+    "internal/oracle/testdata/regex_refused_conversion.a",
+    "internal/oracle/testdata/regex_refused_metadata.a"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline"
+  ],
+  "unowned_files": [
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools-4",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "undeclared_tools": [],
+  "catalog_apply": {
+    "checked": [
+      "08-narrowed-number-field.patch",
+      "09-literal-undefined-field.patch"
+    ],
+    "staled_by_this_change": [],
+    "already_stale": [
+      "08-narrowed-number-field.patch"
+    ]
+  },
+  "split_tests": {
+    "github.com/system-inc/adamic/internal/fresh": 9,
+    "github.com/system-inc/adamic/internal/flow": 4,
+    "github.com/system-inc/adamic/internal/ir": 3,
+    "github.com/system-inc/adamic/internal/lower": 160,
+    "github.com/system-inc/adamic/internal/oracle": 140,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2
+  },
+  "smoke_absent_lanes": [],
+  "split_tally": {
+    "packages": 7,
+    "planned": 321,
+    "passed": 321,
+    "touched": 7
+  },
+  "wall_seconds": 1625.7,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "catalog-apply": 0.1,
+    "vet": 22.3,
+    "build": 38.4,
+    "smoke": 85.4,
+    "tests": 1624.4,
+    "census": 0.5
+  },
+  "pass": 6439,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 60,
+  "required_input_skips": [],
+  "unclassified_skips": [
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_throw.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_three.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_typeof.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_plain.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_nested.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_values.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_unions.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_typeof.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_reject_nested.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_reject_empty.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_reject_eager.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_parameters.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_discard.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_typeof.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_throw.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_three.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_plain.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_nested.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_values.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_unions.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_typeof.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_reject_nested.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_reject_empty.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_reject_eager.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_parameters.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_discard.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_typeof.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_throw.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_three.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_plain.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_nested.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_values.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_unions.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_typeof.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_reject_nested.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_reject_empty.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_reject_eager.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_parameters.a",
+    "github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_discard.a",
+    "github.com/system-inc/adamic/internal/oracle TestEmbeddedNodeTypesPortableWorker",
+    "github.com/system-inc/adamic/internal/oracle TestRealPathPreservesCase",
+    "github.com/system-inc/adamic/internal/oracle TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a",
+    "github.com/system-inc/adamic/internal/oracle TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/open",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/write_file",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/stat",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/mkdir",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/utimes",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/system",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/write_buffer",
+    "github.com/system-inc/adamic/internal/oracle TestWASIFileAgreesWithNode/mkdtemp"
+  ],
+  "failure": {
+    "step": "census",
+    "detail": "nc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/write_file\nunknown\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/stat\nunknown\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/mkdir\nunknown\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/utimes\nunknown\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/system\nunknown\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/write_buffer\nunknown\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIFileAgreesWithNode/mkdtemp\nnot-applicable\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a\tTestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9\tThe fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).\nrequired-input\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a\tTestWASIAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9\tRequired WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.\nnot-applicable\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIEmission/internal/oracle/testdata/regexp_v8_refused/folding.a\tTestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9\tThe fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).\nnot-applicable\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIEmission/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a\tTestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9\tThe fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).\nnot-applicable\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIEmission/internal/oracle/testdata/regexp_surrogate_limit_refused.a\tTestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9\tThe fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).\nnot-applicable\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIEmission/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a\tTestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9\tThe fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).\nnot-applicable\tgithub.com/system-inc/adamic/internal/oracle\tTestWASIEmission/internal/oracle/testdata/regexp_native_refused/quantifier_bounds.a\tTestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9\tThe fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).\nskips=60 required-input=1 unknown=51\ngate skipped 1 required-input tests; 51 unclassified skips\nexit status 1\n",
+    "after_seconds": 1625.7
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "catalog-apply"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "catalog-apply": 0,
+    "vet": 0,
+    "build": 0,
+    "smoke": 0,
+    "tests": 0,
+    "census": 1
+  },
+  "finished": true
+}

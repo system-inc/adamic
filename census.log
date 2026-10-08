@@ -1,0 +1,63 @@
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_throw.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_three.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_typeof.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_plain.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_nested.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_values.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_unions.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_typeof.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_reject_nested.a
+measurement	github.com/system-inc/adamic/internal/lower	TestOptionalWideningCensus	TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e	Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_reject_empty.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_reject_eager.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_parameters.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/async_coverage_discard.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_typeof.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_throw.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_three.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_plain.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_nested.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_values.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_unions.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_typeof.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_reject_nested.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_reject_empty.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_reject_eager.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_parameters.a
+unknown	github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/async_coverage_discard.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_typeof.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_throw.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_three.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_plain.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_nested.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_values.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_unions.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_typeof.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_reject_nested.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_reject_empty.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_reject_eager.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_parameters.a
+unknown	github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/async_coverage_discard.a
+unknown	github.com/system-inc/adamic/internal/oracle	TestEmbeddedNodeTypesPortableWorker
+unknown	github.com/system-inc/adamic/internal/oracle	TestRealPathPreservesCase
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestStage3FixtureHook	TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d	Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/open
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/write_file
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/stat
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/mkdir
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/utimes
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/system
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/write_buffer
+unknown	github.com/system-inc/adamic/internal/oracle	TestWASIFileAgreesWithNode/mkdtemp
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+required-input	github.com/system-inc/adamic/internal/oracle	TestWASIAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a	TestWASIAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9	Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/regexp_v8_refused/folding.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/regexp_surrogate_limit_refused.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/regexp_native_refused/quantifier_bounds.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+skips=60 required-input=1 unknown=51
+gate skipped 1 required-input tests; 51 unclassified skips
+exit status 1
