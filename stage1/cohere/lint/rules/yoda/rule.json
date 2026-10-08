@@ -1,0 +1,14 @@
+{
+  "name": "yoda",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "prepare": "prepare",
+  "oracle": "oracleYoda",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestYoda",
+  "factory": "create",
+  "class": "Rule"
+}

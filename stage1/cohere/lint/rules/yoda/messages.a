@@ -1,0 +1,1 @@
+export function expectedMessage(side: string, operator: string): string { return `Expected literal to be on the ${side} side of ${operator}. The literal is on the side a reader does not expect. A condition reads as a question about the variable, so putting the constant first inverts the sentence and costs a beat on every read.`; }
