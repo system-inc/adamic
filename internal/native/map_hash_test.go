@@ -2,14 +2,14 @@ package native
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Compile the probe in map.c's own translation unit so it measures the private hash, the real
@@ -74,12 +74,10 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("link probe: %v\n%s", err, output)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.Command(binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err = command.Run()
+	err = childguard.Run(command, nativeGuardOptions)
 	return stderr.String() + stdout.String(), err
 }
 

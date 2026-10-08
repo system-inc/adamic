@@ -2,14 +2,14 @@ package native
 
 import (
 	"bufio"
-	"context"
+	"io"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // The sweep: native toUpperCase and toLowerCase against Node's, byte for byte, over every code point
@@ -277,32 +277,28 @@ func compareStreams(t *testing.T, want int, native []string, node []string) {
 
 func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	t.Helper()
-	// The normalization sweep streams every code point through Node and native. Alone it
-	// finishes well inside five minutes, but in a full parallel gate it does not.
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, arguments[0], arguments[1:]...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
+	// Forward stdout as it arrives; every line (and stderr output) refreshes the guard.
+	command := exec.Command(arguments[0], arguments[1:]...)
 	var stderr strings.Builder
 	command.Stderr = &stderr
-	stdout, err := command.StdoutPipe()
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := command.Start(); err != nil {
-		t.Fatal(err)
-	}
+	stdout, writer := io.Pipe()
+	command.Stdout = writer
+	done := make(chan error, 1)
+	go func() {
+		err := childguard.Run(command, nativeGuardOptions)
+		writer.Close()
+		done <- err
+	}()
+	t.Cleanup(func() { stdout.Close() })
 	scanner := bufio.NewScanner(stdout)
 	scanner.Buffer(make([]byte, 1<<16), 1<<20)
 	return scanner, func() {
 		// Drain what's left, so a side that stopped early can't block the other on a full pipe.
 		for scanner.Scan() {
 		}
-		if err := command.Wait(); err != nil {
+		// A scanner error can leave the forwarding goroutine blocked in Write.
+		stdout.Close()
+		if err := <-done; err != nil {
 			t.Errorf("%s: %v\n%s", arguments[0], err, stderr.String())
 		}
 	}

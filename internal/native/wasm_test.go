@@ -2,7 +2,6 @@ package native
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"os"
 	"os/exec"
@@ -10,7 +9,8 @@ import (
 	"regexp"
 	"strings"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
@@ -182,11 +182,9 @@ func writeWASIFile(t *testing.T, path, contents string) {
 
 func wasiCommand(t *testing.T, directory, name string, arguments ...string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.Command(name, arguments...)
 	command.Dir = directory
-	output, err := command.CombinedOutput()
+	output, err := childguard.CombinedOutput(command, nativeGuardOptions)
 	if err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, arguments, err, output)
 	}
@@ -200,17 +198,15 @@ type wasiObservation struct {
 
 func observeWASI(t *testing.T, directory, name string, arguments ...string) wasiObservation {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.Command(name, arguments...)
 	command.Dir = directory
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	err := childguard.Run(command, nativeGuardOptions)
 	exit := 0
 	if err != nil {
 		var failed *exec.ExitError
-		if !errors.As(err, &failed) || ctx.Err() != nil {
+		if !errors.As(err, &failed) {
 			t.Fatalf("%s %v: %v", name, arguments, err)
 		}
 		exit = failed.ExitCode()

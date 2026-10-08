@@ -17,6 +17,8 @@ import (
 	"testing"
 	"time"
 	"unicode/utf16"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type regexCase struct {
@@ -125,6 +127,7 @@ static bool pair_equal(adamic_object *pair,const ptrdiff_t *expected) {
 int main(int argc,char **argv) {
  adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);size_t disagreements=0;
  for(size_t index=0;index<sizeof probes/sizeof probes[0];index++) {
+  if(index%100==0) {fprintf(stderr,"regex progress: %zu\n",index);fflush(stderr);}
   const probe *p=&probes[index];double *codes=malloc((p->length+1)*sizeof *codes);if(codes==NULL) abort();
   for(size_t k=0;k<p->length;k++) codes[k]=input_units[p->input+k];
   adamic_string *input=adamic_string_from_char_codes(p->length,codes);free(codes);
@@ -157,12 +160,10 @@ int main(int argc,char **argv) {
 	if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
 	for _, arguments := range [][]string{nil, {"unlimited"}} {
-		command := exec.CommandContext(ctx, binary, arguments...)
+		command := exec.Command(binary, arguments...)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
-		output, err := command.CombinedOutput()
+		output, err := childguard.CombinedOutput(command, nativeGuardOptions)
 		if err != nil {
 			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
 		}
@@ -213,12 +214,13 @@ func TestRegExpBytecodeRandomNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
-const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
+	command := exec.Command("node", "-e", `
+const fs=require('fs');
+const cases=JSON.parse(fs.readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+let completed=0;
 for(const c of cases) {
+ if(completed++%100===0) fs.writeSync(2,'regex progress: '+completed+'\n');
  const r=new RegExp(c.pattern,c.flags.includes('d')?c.flags:c.flags+'d');
  r.lastIndex=c.lastIndex;
  const m=r.exec(String.fromCharCode(...c.input));
@@ -226,9 +228,12 @@ for(const c of cases) {
 }
 process.stdout.write(JSON.stringify(cases));`)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
+	var outputBuffer, progress bytes.Buffer
+	command.Stdout, command.Stderr = &outputBuffer, &progress
+	err = childguard.Run(command, nativeGuardOptions)
+	output := outputBuffer.Bytes()
 	if err != nil {
-		t.Fatalf("Node oracle: %v\\n%s", err, output)
+		t.Fatalf("Node oracle: %v\n%s", err, progress.Bytes())
 	}
 	if err = json.Unmarshal(output, &cases); err != nil {
 		t.Fatal(err)
@@ -256,6 +261,8 @@ int main(int argc,char **argv) {
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
+	// Deliberate wall-clock bound: this catastrophic-backtracking probe must hit
+	// the instruction step limit promptly, rather than survive by printing progress.
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)

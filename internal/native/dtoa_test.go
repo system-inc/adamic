@@ -2,7 +2,6 @@ package native
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"fmt"
 	"math"
@@ -11,7 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // dtoaHarness formats one number per line: which method, whether there's an argument, the argument
@@ -219,13 +219,11 @@ type ran struct {
 // outcome runs a program to the end, a nonzero exit included, which runWithInput takes as failure.
 func outcome(t *testing.T, name string, arguments ...string) ran {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.Command(name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, nativeGuardOptions)
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
 		t.Fatalf("%s: %v", name, err)
