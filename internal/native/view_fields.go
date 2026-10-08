@@ -26,7 +26,8 @@ func (e *emitter) viewField(property ir.Property) string {
 	if property.ViewType != "" && (property.Of != ir.Closure || property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult)) {
 		name = property.ViewType
 	}
-	if property.Absent || property.Optional || of == ir.MaybeNumber || of == ir.MaybeBoolean {
+	undefined := e.viewStringUndefined(property)
+	if property.Absent || property.Optional || undefined || of == ir.MaybeNumber || of == ir.MaybeBoolean {
 		e.line("adamic_value %s = adamic_object_optional_view(%s, %s, &%s, %d, %s, %s, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional)
 	} else {
 		e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View))
@@ -64,7 +65,7 @@ func (e *emitter) viewField(property ir.Property) string {
 			if of == ir.MaybeNumber || of == ir.MaybeBoolean {
 				return "!(" + value + ").present || (" + test + ")"
 			}
-			if property.Absent && of.IsReference() {
+			if (property.Absent || undefined) && of.IsReference() {
 				return value + " == NULL || (" + test + ")"
 			}
 			return test

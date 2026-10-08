@@ -556,7 +556,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		property.ViewTypeID = int(declared.Id())
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 		l.prepareViewCallableProperty(node, declared, &property)
-		if (l.includesNull(declared) || l.includesUndefined(declared)) && !l.objectPrimitiveViewType(declared) {
+		if (l.includesNull(declared) || l.includesUndefined(declared)) && !l.objectPrimitiveViewType(declared) && !l.viewBrandedStringUndefined(declared) {
 			property.Nullish = true
 			property.NullAllowed = l.includesNull(declared)
 			property.UndefinedAllowed = l.includesUndefined(declared)

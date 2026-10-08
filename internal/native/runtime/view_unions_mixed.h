@@ -37,6 +37,14 @@ typedef struct adamic_view_union_member {
 // Snapshots are borrowed; selection transfers no ownership or readiness proof.
 typedef bool (*adamic_view_union_match)(void *context, const adamic_view_union_member *member, const adamic_view_union_value *value);
 
+// Normalize a borrowed, source-certified heap value; NULL represents undefined.
+// Null storage must be classified separately by its owning slot probe.
+adamic_view_union_value adamic_view_union_heap(const adamic_heap *value);
+
+// Read through the shared readiness and static-owner resolver exactly once.
+// Optional absence does not permit an uninitialized present slot.
+adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent);
+
 const char *adamic_view_union_kind_name(adamic_view_union_kind kind);
 size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, const adamic_view_union_member *members, size_t count, adamic_view_union_match match, void *context, const char *expression, const char *declared);
 

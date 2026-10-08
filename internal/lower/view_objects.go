@@ -63,7 +63,7 @@ func (l *lowering) viewDataType(target *checker.Type) bool {
 		return true
 	}
 	if base := l.phantomBase(target); base != nil {
-		return interfaceScalar(base)
+		return interfaceScalar(base) || l.phantomUndefined(target)
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {

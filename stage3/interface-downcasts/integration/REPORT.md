@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-120 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+181 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -563,3 +563,60 @@ Final callable gates: lower 17.979s, native 41.340s, JavaScript 4.392s,
 full IR 37.933s, uncached filtered oracle 208.411s; vet exit 0.
 Original declaration controls ran. The sole array-callback baseline exclusion
 remains; no new failure or further exclusion. Evidence: callable-* logs.
+
+
+Priority lane 4, 67d34f3cfbb92c21a0986933c70a529969736a51
+
+Five conflict hunks resolved individually in four files. docs/checked-views-plan.md
+retains both appended hook/coordination sections. javascript.go adds declared
+undefined payload evidence, restricts object union dispatch to object values, and
+retains the owner's mapViewCertificate after dispatch. view_contracts.go keeps
+the ViewNull branch and extends only the undefined condition to phantomUndefined.
+object.c retains both includes and, separately, both the owner's
+adamic_object_read_contract and lane 4's snapshot probe through shared readiness
+and actual static-owner evidence. No whole-file pick or bulk resolution.
+
+Preflight exposed an automatic semantic overlap: the owner's broad undefined
+path intercepted approved __String string/phantom-void reads. An owned helper
+viewBrandedStringUndefined selects the existing scalar read only when the physical
+representation is string, null is excluded, and an approved phantom-undefined
+member is present. Ordinary nullish reads remain on the owner's path. Required
+missing fields still trap; explicit undefined is allowed. CompleteBrand and all
+12 BrandCandidatePairs retain their original exact diagnostics and Node controls.
+The first undefined-admission overlay was redundant under the intercepted path
+and survived; it is preserved, not credited. Both overlays are caught after the
+repair. A scratch-log relative-path error was corrected; not a mutant kill.
+
+FiniteStringKeyComponent retains every exit-70 wrong-member refusal, with the
+owner's nullable selector diagnostic now pinned. The owner already implements
+open string/number/undefined selection, so stale eager compile-gap assertions
+were replaced by TestCheckedViewOpenCompilerOptionKeySelection. Its twelve
+source controls hold string, number, undefined and absence to Node and pin
+boolean/null at value.skippedOn, expected keyof CompilerOptions | undefined.
+Eight backend omission mutants print uncheckedunchecked at exit 0. The first
+unboxed test replacement failed its ABI build; it was not counted. The corrected
+mutant uses ir.Box and executes valid release code. Finite-key and open-key
+controls pass 10.452s. Primitive mixed array admission remains refused.
+
+This is reduced open-key/component evidence, not full original CompilerOptions
+or dictionary extraction certification. Lane 4's dictionary queue is preserved
+as pending 11 pairs / 38 static candidate reads. The 14 __String candidate
+pairs / 511 reads have representative source witnesses; exact whole-tsc runtime
+reachability is unmeasured. Optional-boolean hold remains active.
+
+Executed runtime probe mutants: number-tag and boolean-payload caught by
+TestCheckedViewPrimitiveHeap; skip-readiness, ignore-owner, collapse-null,
+ignore-reference-storage and trust-unknown caught by PrimitiveProbe. Every
+failure is semantic native release output or exit status, not a warning or
+sanitizer-only failure. Source restored. Two backend undefined overlays caught
+by CompleteBrand/undefined. Additional incoming oracle mutations run in the
+final gate: twelve candidate-pair read bypasses (24 backend executions), six
+CompleteBrand refusal bypasses and two undefined first-member substitutions
+(16), two finite-key bypasses (4), and four open-key bypasses (8). Total 61 new
+executed check defects, plus prior 120. Evidence is mixed-* logs.
+
+Final lane 4 gates: lower 9.759s, native 32.670s, JavaScript 1.448s,
+full IR 19.061s, uncached filtered oracle 210.849s; vet exit 0.
+Original declaration controls enabled. All 52 new backend IR mutation executions
+logged their caught behavior; all nine source mutations caught independently.
+Sole array-callback baseline exclusion unchanged, no new failure remaining.

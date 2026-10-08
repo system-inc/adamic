@@ -75,6 +75,10 @@ func TestCheckedViewLane4UnsupportedHelper(t *testing.T) {
 }
 
 func dropLane4HelperView(program *ir.Program, replacement ...ir.Expression) int {
+	return dropLane4NamedHelperView(program, "unsupported", replacement...)
+}
+
+func dropLane4NamedHelperView(program *ir.Program, name string, replacement ...ir.Expression) int {
 	dropped := 0
 	var rewrite func(reflect.Value) reflect.Value
 	rewrite = func(v reflect.Value) reflect.Value {
@@ -91,7 +95,7 @@ func dropLane4HelperView(program *ir.Program, replacement ...ir.Expression) int 
 			for i := 0; i < v.NumField(); i++ {
 				out.Field(i).Set(rewrite(v.Field(i)))
 			}
-			if field, ok := out.Interface().(ir.Property); ok && field.Name == "unsupported" && field.View != "" {
+			if field, ok := out.Interface().(ir.Property); ok && field.Name == name && field.View != "" {
 				dropped++
 				if len(replacement) != 0 {
 					return reflect.ValueOf(replacement[0])
@@ -296,6 +300,74 @@ func TestCheckedViewBrandString(t *testing.T) {
 					}
 					t.Logf("brand read mutant caught: exit %d stdout %q", got.exitCode, got.stdout)
 				}
+			}
+		})
+	}
+}
+
+func TestCheckedViewCompleteBrand(t *testing.T) {
+	for _, fixture := range []string{"good", "undefined", "wrong", "null", "missing", "internal", "object", "symbol-good", "symbol-undefined", "symbol-wrong", "symbol-null"} {
+		t.Run(fixture, func(t *testing.T) {
+			prefix, variant, field := "brand-complete-", fixture, "escapedText"
+			if strings.HasPrefix(fixture, "symbol-") {
+				prefix, variant, field = "brand-symbol-", strings.TrimPrefix(fixture, "symbol-"), "escapedName"
+			}
+			program, path := interfaceFixture(t, "lane4/read-fixtures/"+prefix+variant)
+			text := map[string]string{"good": "word", "undefined": "undefined", "wrong": "42", "null": "null", "missing": "undefined", "internal": "__call", "object": "[object Object]"}[variant]
+			if difference := disagreement(run{stdout: []byte(text + "\n")}, onNode(t, path)); difference != "" {
+				t.Fatal(difference)
+			}
+			want := run{stdout: []byte(text + "\n")}
+			if variant == "wrong" || variant == "null" || variant == "object" {
+				found := map[string]string{"wrong": "number", "null": "null", "object": "object"}[variant]
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + field + " is not a __String; expected __String, found " + found + "\n")}
+			}
+			if variant == "missing" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + field + " is not initialized; expected __String, found missing\n")}
+			}
+			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s; got %#v", difference, got)
+				}
+			}
+			if want.exitCode == 0 {
+				got, _ := nativelyUncached(t, program)
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if want.exitCode != 0 {
+				index := len(program.Strings)
+				program.Strings = append(program.Strings, "unchecked")
+				if count := dropLane4NamedHelperView(program, field, ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: index}, ir.StringConstant{Index: index}}}); count != 1 {
+					t.Fatalf("expected one helper field mutation, got %d", count)
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 0 {
+						t.Fatalf("read-removal mutant must run valid release code: %#v", got)
+					}
+					if disagreement(want, got) == "" {
+						t.Fatal("brand read bypass escaped refusal pin")
+					}
+					t.Logf("member-check removal caught: exit %d stdout %q", got.exitCode, got.stdout)
+				}
+			}
+			if variant == "undefined" {
+				first := len(program.Strings)
+				program.Strings = append(program.Strings, "word")
+				if count := dropLane4NamedHelperView(program, field, ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: first}, ir.StringConstant{Index: first}}}); count != 1 {
+					t.Fatalf("expected one first-member mutation, got %d", count)
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 0 {
+						t.Fatalf("first-member mutant must execute valid release code: %#v", got)
+					}
+					if disagreement(want, got) == "" {
+						t.Fatal("untested first-member substitution escaped Node control")
+					}
+					t.Logf("first-member substitution caught: exit %d stdout %q", got.exitCode, got.stdout)
+				}
+				return
 			}
 		})
 	}
