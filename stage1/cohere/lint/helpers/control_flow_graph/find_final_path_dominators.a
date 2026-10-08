@@ -1,12 +1,12 @@
 import { panic } from 'adamic';
 import { PathAnalysis,pathFinal,pathOnEveryFinal } from './path_analysis.a';
 export function findFinalPathDominators(a: PathAnalysis): void {
- const count=a.graph.arena.length;if(!a.hasFinal){for(let i=0;i<count;i++)if(a.graph.arena.read(i).Reachable)a.add(i,pathOnEveryFinal);return;}
+ const count=a.graph.arena.length;if(!a.hasFinal){for(let i=0;i<count;i++)if(a.graph.arena.read(a.graph.arena.indexAtSlot(i)).Reachable)a.add(a.graph.arena.indexAtSlot(i),pathOnEveryFinal);return;}
  const exit=count;const reachable: boolean[]=[];const predecessors: number[][]=[];const dominators: boolean[][]=[];
  for(let i=0;i<=count;i++){reachable.push(false);const pred: number[]=[];predecessors.push(pred);const dom: boolean[]=[];dominators.push(dom);}
  const queue: number[]=[0];reachable[0]=true;
- for(let head=0;head<queue.length;head++){const index=queue[head] ?? panic('dom queue');if(index===exit)continue;const block=a.graph.arena.read(index);for(const successor of block.Successors){if(successor===-1||!a.graph.arena.read(successor).Reachable)continue;(predecessors[successor] ?? panic('dom pred')).push(index);if(!(reachable[successor] ?? false)){reachable[successor]=true;queue.push(successor);}}if((a.flag(index)&pathFinal)!==0){(predecessors[exit] ?? panic('exit pred')).push(index);if(!(reachable[exit] ?? false)){reachable[exit]=true;queue.push(exit);}}}
+ for(let head=0;head<queue.length;head++){const index=queue[head] ?? panic('dom queue');if(index===exit)continue;const block=a.graph.arena.read(a.graph.arena.indexAtSlot(index));for(const successor of block.Successors){if(successor===undefined||!a.graph.arena.read(successor).Reachable)continue;(predecessors[successor.slot] ?? panic('dom pred')).push(index);if(!(reachable[successor.slot] ?? false)){reachable[successor.slot]=true;queue.push(successor.slot);}}if((a.flag(a.graph.arena.indexAtSlot(index))&pathFinal)!==0){(predecessors[exit] ?? panic('exit pred')).push(index);if(!(reachable[exit] ?? false)){reachable[exit]=true;queue.push(exit);}}}
  for(let i=0;i<=count;i++){const dom=dominators[i] ?? panic('dom state');for(let j=0;j<=count;j++)dom.push(i===0?j===0:(reachable[j] ?? false));}
  let changed=true;while(changed){changed=false;for(let i=1;i<=count;i++){if(!(reachable[i] ?? false))continue;const pred=predecessors[i] ?? panic('pred');const old=dominators[i] ?? panic('dom');const next: boolean[]=[];for(let j=0;j<=count;j++){let value=true;for(const previous of pred){if(!((dominators[previous] ?? panic('pred dom'))[j] ?? false)){value=false;break;}}if(j===i)value=true;next.push(value);if(value!==old[j])changed=true;}dominators[i]=next;}}
- const final=dominators[exit] ?? panic('final dom');for(let i=0;i<count;i++)if(final[i] ?? false)a.add(i,pathOnEveryFinal);
+ const final=dominators[exit] ?? panic('final dom');for(let i=0;i<count;i++)if(final[i] ?? false)a.add(a.graph.arena.indexAtSlot(i),pathOnEveryFinal);
 }

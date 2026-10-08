@@ -1,5 +1,5 @@
 import { panic } from 'adamic';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 import { Graph } from './builder.a';
 import { countFinalPaths } from './count_final_paths.a';
 import { countToEnd } from './count_to_end.a';
@@ -9,8 +9,8 @@ export class PathAnalysis {
  readonly active: number[]=[]; readonly cycleKnown: boolean[]=[]; readonly cycleEnd: boolean[]=[]; readonly path: BlockIndex[]=[];
  hasFinal=false;hasExit=false;shortestExit=0;finalPaths=0;
  constructor(graph: Graph) {this.graph=graph;for(let i=0;i<graph.arena.length;i++){this.flags.push(0);this.paths.push(0);this.shortest.push(0);this.active.push(-1);this.cycleKnown.push(false);this.cycleEnd.push(false);}}
- flag(index: BlockIndex): number {this.graph.arena.read(index);return this.flags[index] ?? panic('missing path state');}
- add(index: BlockIndex, flag: number): void {this.flags[index]=this.flag(index)|flag;}
+ flag(index: BlockIndex): number {this.graph.arena.read(index);return this.flags[index.slot] ?? panic('missing path state');}
+ add(index: BlockIndex, flag: number): void {this.flags[index.slot]=this.flag(index)|flag;}
  countFinalPaths(index: BlockIndex): number {return countFinalPaths(this,index);}
  countToEnd(index: BlockIndex): boolean {return countToEnd(this,index);}
 }

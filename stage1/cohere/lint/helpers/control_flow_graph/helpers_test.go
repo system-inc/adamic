@@ -142,8 +142,8 @@ type cfgMutation struct{ Symbol, File, From, To string }
 func cfgCopy(t *testing.T) string {
 	t.Helper()
 	temp := t.TempDir()
-	dir := filepath.Join(temp, "control_flow_graph")
-	if e := os.Mkdir(dir, 0755); e != nil {
+	dir := filepath.Join(temp, "cohere", "lint", "helpers", "control_flow_graph")
+	if e := os.MkdirAll(dir, 0755); e != nil {
 		t.Fatal(e)
 	}
 	files, e := filepath.Glob("*.a")
@@ -161,7 +161,16 @@ func cfgCopy(t *testing.T) string {
 	if e != nil {
 		t.Fatal(e)
 	}
-	cfgWrite(t, filepath.Join(temp, "options_json.ts"), data)
+	cfgWrite(t, filepath.Join(dir, "..", "options_json.ts"), data)
+	shared := filepath.Join(temp, "cohere", "arena")
+	if e := os.MkdirAll(shared, 0755); e != nil {
+		t.Fatal(e)
+	}
+	index, e := os.ReadFile("../../../arena/arena_index.a")
+	if e != nil {
+		t.Fatal(e)
+	}
+	cfgWrite(t, filepath.Join(shared, "arena_index.a"), index)
 	return dir
 }
 func TestEveryHelperMutant(t *testing.T) {
@@ -216,13 +225,13 @@ func TestCorruptedIndexStopsOnBothRuntimes(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	anchor := "read(index: BlockIndex): Block {"
+	anchor := "const slot = index.slot;"
 	if !strings.Contains(string(data), anchor) {
 		t.Fatal("index mutant anchor")
 	}
-	cfgWrite(t, file, []byte(strings.Replace(string(data), anchor, anchor+"\n index=index+1;", 1)))
+	cfgWrite(t, file, []byte(strings.Replace(string(data), anchor, "const slot = index.slot+1;", 1)))
 	entry := filepath.Join(dir, "index_corruption.a")
-	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nconst arena=new BlockArena();const index=arena.allocate();console.log(`${arena.read(index).index}`);\n"))
+	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nconst arena=new BlockArena();const index=arena.allocate();console.log(`${arena.read(index).index.slot}`);\n"))
 	binary, _ := cfgBuild(t, entry)
 	root := cfgRoot(t)
 	for _, cmd := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), entry}, {binary}} {
@@ -236,7 +245,7 @@ func TestCorruptedIndexStopsOnBothRuntimes(t *testing.T) {
 func TestArenaLifetimeStopsOnBothRuntimes(t *testing.T) {
 	dir := cfgCopy(t)
 	entry := filepath.Join(dir, "freed_arena.a")
-	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nconst arena=new BlockArena();const index=arena.allocate();arena.dispose();console.log(`${arena.read(index).index}`);\n"))
+	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nconst arena=new BlockArena();const index=arena.allocate();arena.dispose();console.log(`${arena.read(index).index.slot}`);\n"))
 	binary, _ := cfgBuild(t, entry)
 	root := cfgRoot(t)
 	for _, cmd := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), entry}, {binary}} {
@@ -247,13 +256,52 @@ func TestArenaLifetimeStopsOnBothRuntimes(t *testing.T) {
 		}
 	}
 }
+func TestForeignIndexStopsOnBothRuntimes(t *testing.T) {
+	dir := cfgCopy(t)
+	entry := filepath.Join(dir, "foreign_arena.a")
+	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nconst owner=new BlockArena();const other=new BlockArena();owner.allocate();const foreign=other.allocate();console.log(`${owner.read(foreign).index.slot}`);\n"))
+	binary, _ := cfgBuild(t, entry)
+	root := cfgRoot(t)
+	for _, args := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), entry}, {binary}} {
+		out, e := exec.Command(args[0], args[1:]...).CombinedOutput()
+		if e == nil || !bytes.Contains(out, []byte("CfgBlockIndex belongs to another arena")) {
+			t.Fatalf("foreign index was not refused: %v %s", e, out)
+		}
+	}
+}
+
 func TestBlockAndNodeBrandsAreDistinct(t *testing.T) {
 	dir := cfgCopy(t)
 	entry := filepath.Join(dir, "bad_brand.a")
-	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nimport { NodeIndex } from './ast.a';\nconst arena=new BlockArena();const wrong:NodeIndex=0;arena.read(wrong);\n"))
-	_, e := load.Load([]string{entry})
-	if e == nil || !strings.Contains(e.Error(), "not assignable") {
+	cfgWrite(t, entry, []byte("import { BlockArena } from './arena.a';\nimport { AstArena } from './ast.a';\nconst arena=new BlockArena();const ast=new AstArena();const wrong=ast.allocate();arena.read(wrong);\n"))
+	program, e := load.Load([]string{entry})
+	if e == nil {
+		_, e = lower.Lower(context.Background(), program)
+	}
+	if e == nil || (!strings.Contains(e.Error(), "not assignable") && !strings.Contains(e.Error(), "nominal ancestry")) {
 		t.Fatalf("brands were interchangeable: %v", e)
+	}
+}
+func TestBlockIndexMintingIsPrivate(t *testing.T) {
+	dir := cfgCopy(t)
+	for name, source := range map[string]string{
+		"constructor": "import { CfgBlockIndex } from '../../../arena/arena_index.a';\nnew CfgBlockIndex(0);\n",
+		"bare_number": "import { BlockArena } from './arena.a';\nconst arena=new BlockArena();arena.read(0);\n",
+	} {
+		t.Run(name, func(t *testing.T) {
+			entry := filepath.Join(dir, name+".a")
+			cfgWrite(t, entry, []byte(source))
+			_, e := load.Load([]string{entry})
+			if e == nil {
+				t.Fatal("unchecked index mint/use accepted")
+			}
+			if name == "constructor" && !strings.Contains(e.Error(), "private") {
+				t.Fatal(e)
+			}
+			if name == "bare_number" && !strings.Contains(e.Error(), "not assignable") {
+				t.Fatal(e)
+			}
+		})
 	}
 }
 

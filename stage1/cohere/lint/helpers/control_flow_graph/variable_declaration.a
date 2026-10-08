@@ -1,7 +1,7 @@
 import { needNode, needList, at, filled, append } from './support.a';
 import type { AstNode } from './ast.a';
 import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 export function variableDeclaration(b: Builder, node: AstNode | undefined): void {
     if ((node === undefined)) {
         return;

@@ -1,5 +1,5 @@
 {
   "name": "ignore reachable back edges",
-  "from": "if(node!==undefined&&b.block(b.Current()).Reachable)this.iterates[node.index]=true;",
-  "to": "if(node!==undefined&&b.block(b.Current()).Reachable)this.iterates[node.index]=false;"
+  "from": "if(node!==undefined&&b.block(b.Current()).Reachable)this.iterates[node.index.slot]=true;",
+  "to": "if(node!==undefined&&b.block(b.Current()).Reachable)this.iterates[node.index.slot]=false;"
 }

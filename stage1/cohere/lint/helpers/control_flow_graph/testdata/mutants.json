@@ -2,14 +2,14 @@
   {
     "symbol": "*Block[E].Index",
     "file": "index.a",
-    "from": "return arena.read(index).index;",
-    "to": "return arena.read(index).index+1;"
+    "from": "return arena.read(index).index.slot;",
+    "to": "return arena.read(index).index.slot+1;"
   },
   {
     "symbol": "*Builder[E].Current",
     "file": "current.a",
-    "from": "return b.cur;",
-    "to": "const shifted: BlockIndex=b.cur+1;return b.cur === 0 && b.arena.length > 1 ? shifted : b.cur;"
+    "from": "return b.cur ?? panic('missing current CFG block');",
+    "to": "const current=b.cur ?? panic('missing current CFG block');return current.slot===0&&b.arena.length>1?b.arena.indexAtSlot(1):current;"
   },
   {
     "symbol": "*Builder[E].Emit",
@@ -50,8 +50,8 @@
   {
     "symbol": "*Builder[E].condition",
     "file": "condition.a",
-    "from": "export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex, whenFalse: BlockIndex): void {",
-    "to": "export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex, whenFalse: BlockIndex): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex | undefined, whenFalse: BlockIndex | undefined): void {",
+    "to": "export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex | undefined, whenFalse: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].conditionalExpression",
@@ -74,14 +74,14 @@
   {
     "symbol": "*Builder[E].enter",
     "file": "enter.a",
-    "from": "export function enter(b: Builder, blk: BlockIndex): void {",
-    "to": "export function enter(b: Builder, blk: BlockIndex): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function enter(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function enter(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].enterDisconnected",
     "file": "enter_disconnected.a",
-    "from": "export function enterDisconnected(b: Builder, blk: BlockIndex): void {",
-    "to": "export function enterDisconnected(b: Builder, blk: BlockIndex): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function enterDisconnected(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function enterDisconnected(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].expr",
@@ -128,8 +128,8 @@
   {
     "symbol": "*Builder[E].link",
     "file": "link.a",
-    "from": "export function link(b: Builder, from: BlockIndex, to: BlockIndex): void {",
-    "to": "export function link(b: Builder, from: BlockIndex, to: BlockIndex): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function link(b: Builder, from: BlockIndex | undefined, to: BlockIndex | undefined): void {",
+    "to": "export function link(b: Builder, from: BlockIndex | undefined, to: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].linkWithCycleBarrier",
@@ -182,14 +182,14 @@
   {
     "symbol": "*Builder[E].markFinal",
     "file": "mark_final.a",
-    "from": "export function markFinal(b: Builder, blk: BlockIndex): void {",
-    "to": "export function markFinal(b: Builder, blk: BlockIndex): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function markFinal(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function markFinal(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].markThrown",
     "file": "mark_thrown.a",
-    "from": "export function markThrown(b: Builder, blk: BlockIndex): void {",
-    "to": "export function markThrown(b: Builder, blk: BlockIndex): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function markThrown(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function markThrown(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].memberHeader",
@@ -207,7 +207,7 @@
     "symbol": "*Builder[E].newBlock",
     "file": "new_block.a",
     "from": "return b.arena.allocate();",
-    "to": "const index=b.arena.allocate();return index === 0 ? index : 0;"
+    "to": "const index=b.arena.allocate();return index.slot===0?index:b.arena.indexAtSlot(0);"
   },
   {
     "symbol": "*Builder[E].parameter",
@@ -272,8 +272,8 @@
   {
     "symbol": "*Builder[E].setCycleBarrier",
     "file": "set_cycle_barrier.a",
-    "from": "export function setCycleBarrier(b: Builder, from: BlockIndex, index: number, barrier: boolean): void {",
-    "to": "export function setCycleBarrier(b: Builder, from: BlockIndex, index: number, barrier: boolean): void {\n    if (b.arena.length >= 0) return;"
+    "from": "export function setCycleBarrier(b: Builder, from: BlockIndex | undefined, index: number, barrier: boolean): void {",
+    "to": "export function setCycleBarrier(b: Builder, from: BlockIndex | undefined, index: number, barrier: boolean): void {\n    if (b.arena.length >= 0) return;"
   },
   {
     "symbol": "*Builder[E].snapshotForks",
@@ -362,20 +362,20 @@
   {
     "symbol": "*PathAnalysis[E].IsCyclic",
     "file": "is_cyclic.a",
-    "from": "export function IsCyclic(a: PathAnalysis, block: BlockIndex): boolean {",
-    "to": "export function IsCyclic(a: PathAnalysis, block: BlockIndex): boolean {\n    return false;"
+    "from": "export function IsCyclic(a: PathAnalysis, block: BlockIndex | undefined): boolean {",
+    "to": "export function IsCyclic(a: PathAnalysis, block: BlockIndex | undefined): boolean {\n    if (a.graph.arena.length >= 0) return false;"
   },
   {
     "symbol": "*PathAnalysis[E].IsOnEveryFinalPath",
     "file": "is_on_every_final_path.a",
-    "from": "export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex): boolean {",
-    "to": "export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex): boolean {\n    return false;"
+    "from": "export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex | undefined): boolean {",
+    "to": "export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex | undefined): boolean {\n    if (a.graph.arena.length >= 0) return false;"
   },
   {
     "symbol": "*PathAnalysis[E].countFinalPaths",
     "file": "count_final_paths.a",
     "from": "export function countFinalPaths(a: PathAnalysis,index: BlockIndex): number {",
-    "to": "export function countFinalPaths(a: PathAnalysis,index: BlockIndex): number {\n    return 0;"
+    "to": "export function countFinalPaths(a: PathAnalysis,index: BlockIndex): number {\n    if (a.graph.arena.length >= 0) return 0;"
   },
   {
     "symbol": "*PathAnalysis[E].findFinalPathDominators",
@@ -404,8 +404,8 @@
   {
     "symbol": "AnalyzePaths",
     "file": "analyze_paths.a",
-    "from": "a.countToEnd(0);",
-    "to": "a.countToEnd(0);a.hasFinal=false;"
+    "from": "a.countToEnd(a.graph.arena.indexAtSlot(0));",
+    "to": "a.countToEnd(a.graph.arena.indexAtSlot(0));a.hasFinal=false;"
   },
   {
     "symbol": "Build",
@@ -416,8 +416,8 @@
   {
     "symbol": "IndexRoots",
     "file": "index_roots.a",
-    "from": "BareReturn:false",
-    "to": "BareReturn:true"
+    "from": "[{Node:sourceFile, BareReturn:false, Loops:[]}]",
+    "to": "[{Node:sourceFile, BareReturn:true, Loops:[]}]"
   },
   {
     "symbol": "IsRoot",
@@ -500,7 +500,7 @@
   {
     "symbol": "(arena) finalizePredecessors",
     "file": "finalize_predecessors.a",
-    "from": "arena.read(successor).Predecessors.push(i);",
-    "to": "arena.read(successor).Predecessors.push(0);"
+    "from": "arena.read(successor).Predecessors.push(from);",
+    "to": "arena.read(successor).Predecessors.push(arena.indexAtSlot(0));"
   }
 ]

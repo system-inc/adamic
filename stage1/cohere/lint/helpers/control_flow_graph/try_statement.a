@@ -1,13 +1,13 @@
 import { needNode, needList, at, filled, append } from './support.a';
 import type { AstNode } from './ast.a';
 import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 import { throwTarget } from './throw_target.a';
 export function tryStatement(b: Builder, node: AstNode | undefined): void {
     let stmt = node;
     let hasCatch = (b.ast.maybe(needNode(stmt).CatchClause) !== undefined);
     let hasFinally = (b.ast.maybe(needNode(stmt).FinallyBlock) !== undefined);
-    let frame: TryFrame = {catchEntry: -1, finallyEntry: -1, thrownForked: false, thrownAny: false, implicit: [], returnedAny: false, position: 'try', hasFinally: hasFinally};
+    let frame: TryFrame = {catchEntry: undefined, finallyEntry: undefined, thrownForked: false, thrownAny: false, implicit: [], returnedAny: false, position: 'try', hasFinally: hasFinally};
     if (hasCatch) {
         frame.catchEntry = b.newBlock();
     }
@@ -16,7 +16,7 @@ export function tryStatement(b: Builder, node: AstNode | undefined): void {
     }
     b.tryStack = append(b.tryStack, frame);
     b.statement(b.ast.maybe(needNode(stmt).TryBlock));
-    let normalEnds: (BlockIndex)[] = [];
+    let normalEnds: (BlockIndex | undefined)[] = [];
     if (hasCatch) {
         b.link(b.cur, frame.catchEntry);
         normalEnds = append(normalEnds, b.cur);

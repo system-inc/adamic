@@ -1,3 +1,3 @@
 import { PathAnalysis,pathCyclic,pathOnEveryFinal,pathExit } from './path_analysis.a';
-import { BlockIndex } from './arena.a';
-export function IsCyclic(a: PathAnalysis, block: BlockIndex): boolean { if(block===-1)return false;a.graph.arena.read(block);a.countToEnd(block);return (a.flag(block)&pathCyclic)!==0; }
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function IsCyclic(a: PathAnalysis, block: BlockIndex | undefined): boolean { if(block===undefined)return false;a.graph.arena.read(block);a.countToEnd(block);return (a.flag(block)&pathCyclic)!==0; }

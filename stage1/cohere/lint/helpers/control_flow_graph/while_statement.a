@@ -1,7 +1,7 @@
 import { needNode, needList, at, filled, append } from './support.a';
 import type { AstNode } from './ast.a';
 import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 import { isAlwaysTruthyTest } from './is_always_truthy_test.a';
 export function whileStatement(b: Builder, node: AstNode | undefined): void {
     let stmt = node;
@@ -10,9 +10,9 @@ export function whileStatement(b: Builder, node: AstNode | undefined): void {
     b.enter(test);
     let after = b.newBlock();
     let body = b.newBlock();
-    let falseEntry = after;
+    let falseEntry: BlockIndex | undefined = after;
     if (isAlwaysTruthyTest(b.ast, b.ast.maybe(needNode(stmt).Expression))) {
-        falseEntry = -1;
+        falseEntry = undefined;
     }
     b.condition(b.ast.maybe(needNode(stmt).Expression), body, falseEntry);
     b.pushJump(node, after, test, node);

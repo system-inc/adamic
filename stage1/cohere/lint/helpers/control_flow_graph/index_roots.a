@@ -8,7 +8,7 @@ function visit(ast: AstArena,node: AstNode, roots: RootSummary[], owner: number)
  let current=owner;
  if(IsRoot(child)) { roots.push({Node:child, BareReturn:false, Loops:[]}); current=roots.length-1; }
  const summary=roots[current]; if(summary === undefined) throw new Error('missing CFG root');
- if(child.Kind === 'ReturnStatement' && child.Expression === -1) summary.BareReturn=true;
+ if(child.Kind === 'ReturnStatement' && child.Expression === undefined) summary.BareReturn=true;
  if(child.Kind === 'WhileStatement' || child.Kind === 'DoStatement' || child.Kind === 'ForStatement' || child.Kind === 'ForInStatement' || child.Kind === 'ForOfStatement') { if(!summary.Loops.includes(child.Kind)) summary.Loops.push(child.Kind); }
  visit(ast,child,roots,current);
  }

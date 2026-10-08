@@ -1,7 +1,7 @@
 import { needNode, needList, at, filled, append } from './support.a';
 import type { AstNode } from './ast.a';
 import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 export function makeContinue(b: Builder, label: AstNode | undefined): void {
     if (!b.block(b.cur).Reachable) {
         return;
@@ -12,7 +12,7 @@ export function makeContinue(b: Builder, label: AstNode | undefined): void {
     }
     for (let i = ((b.jumps).length - 1); (i >= 0); i--) {
         let target = at(b.jumps, i);
-        if ((target.continueTo === -1)) {
+        if ((target.continueTo === undefined)) {
             continue;
         }
         if (((name === "") || target.labels.includes(name))) {

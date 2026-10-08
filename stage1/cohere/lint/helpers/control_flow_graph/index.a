@@ -1,2 +1,3 @@
-import { BlockArena,BlockIndex } from './arena.a';
-export function Index(arena: BlockArena,index: BlockIndex): number {return arena.read(index).index;}
+import { BlockArena } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function Index(arena: BlockArena,index: BlockIndex): number {return arena.read(index).index.slot;}

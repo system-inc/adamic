@@ -1,7 +1,7 @@
 import { needNode, needList, at, filled, append } from './support.a';
 import type { AstNode } from './ast.a';
 import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 export function switchStatement(b: Builder, node: AstNode | undefined): void {
     let stmt = node;
     b.expr(b.ast.maybe(needNode(stmt).Expression));
@@ -20,8 +20,8 @@ export function switchStatement(b: Builder, node: AstNode | undefined): void {
         b.enter(after);
         return;
     }
-    let bodies: BlockIndex[] = filled((clauses).length, -1);
-    let dispatchFrom: BlockIndex[] = filled((clauses).length, -1);
+    let bodies: (BlockIndex | undefined)[]=[];for(let slot=0;slot<clauses.length;slot++)bodies.push(undefined);
+    let dispatchFrom: (BlockIndex | undefined)[]=[];for(let slot=0;slot<clauses.length;slot++)dispatchFrom.push(undefined);
     let dispatchEdge = filled((clauses).length, 0);
     for (let i = 0; i < dispatchEdge.length; i++) {
         dispatchEdge[i] = -1;
@@ -56,17 +56,17 @@ export function switchStatement(b: Builder, node: AstNode | undefined): void {
     } else {
         b.link(testCur, after);
     }
-    b.pushJump(node, after, -1, undefined);
+    b.pushJump(node, after, undefined, undefined);
     let switchJump = ((b.jumps).length - 1);
     let hadSwitchBreak = false;
-    let fallthroughFrom: BlockIndex = -1;
+    let fallthroughFrom: BlockIndex | undefined = undefined;
     for (let i = 0; i < clauses.length; i++) {
         const clause = at(clauses, i);
         let beforeFirstCase = ((firstCaseIndex === -1) || ((needNode(clause).Kind === 'DefaultClause') && (i < firstCaseIndex)));
         let barrier = (hadSwitchBreak || beforeFirstCase);
         {
             let from = at(dispatchFrom, i);
-            if (((from !== -1) && (at(dispatchEdge, i) >= 0))) {
+            if (((from !== undefined) && (at(dispatchEdge, i) >= 0))) {
                 b.setCycleBarrier(from, at(dispatchEdge, i), barrier);
             }
         }

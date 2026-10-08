@@ -1,8 +1,8 @@
 import { panic } from 'adamic';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 import { PathAnalysis,pathExit } from './path_analysis.a';
 export function findShortestPaths(a: PathAnalysis): void {
- if(a.graph.arena.length===0)return;const queue: BlockIndex[]=[0];a.shortest[0]=1;
- for(let head=0;head<queue.length;head++){const index=queue[head] ?? panic('queue');const distance=(a.shortest[index] ?? panic('shortest'))+1;for(const successor of a.graph.arena.read(index).Successors){if(successor===-1||!a.graph.arena.read(successor).Reachable||(a.shortest[successor] ?? panic('shortest'))!==0)continue;a.shortest[successor]=distance;queue.push(successor);}}
- for(let i=0;i<a.graph.arena.length;i++){const distance=a.shortest[i] ?? panic('shortest');if(distance===0)continue;if((a.flag(i)&pathExit)!==0&&(a.shortestExit===0||distance<a.shortestExit))a.shortestExit=distance;}
+ if(a.graph.arena.length===0)return;const queue: BlockIndex[]=[a.graph.arena.indexAtSlot(0)];a.shortest[0]=1;
+ for(let head=0;head<queue.length;head++){const index=queue[head] ?? panic('queue');const distance=(a.shortest[index.slot] ?? panic('shortest'))+1;for(const successor of a.graph.arena.read(index).Successors){if(successor===undefined||!a.graph.arena.read(successor).Reachable||(a.shortest[successor.slot] ?? panic('shortest'))!==0)continue;a.shortest[successor.slot]=distance;queue.push(successor);}}
+ for(let i=0;i<a.graph.arena.length;i++){const distance=a.shortest[i] ?? panic('shortest');if(distance===0)continue;if((a.flag(a.graph.arena.indexAtSlot(i))&pathExit)!==0&&(a.shortestExit===0||distance<a.shortestExit))a.shortestExit=distance;}
 }

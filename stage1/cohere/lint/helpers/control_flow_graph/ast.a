@@ -1,71 +1,27 @@
 import { panic } from 'adamic';
-export const enum NodeIndex { None = -1, First = 0 }
-export interface AstNode {
- readonly index: NodeIndex;
- readonly Parent: NodeIndex;
- readonly Kind: string;
- readonly Text: string;
- readonly Operator: string;
- readonly isStatement: boolean;
- readonly optionalChain: boolean;
- readonly outermostChain: boolean;
- readonly optionalRoot: boolean;
- readonly functionLike: boolean;
- readonly jsxTag: boolean;
- readonly Left: NodeIndex;
- readonly Right: NodeIndex;
- readonly Expression: NodeIndex;
- readonly Operand: NodeIndex;
- readonly Name: NodeIndex;
- readonly Body: NodeIndex;
- readonly Type: NodeIndex;
- readonly Initializer: NodeIndex;
- readonly Condition: NodeIndex;
- readonly Incrementor: NodeIndex;
- readonly Statement: NodeIndex;
- readonly ThenStatement: NodeIndex;
- readonly ElseStatement: NodeIndex;
- readonly TryBlock: NodeIndex;
- readonly FinallyBlock: NodeIndex;
- readonly CatchClause: NodeIndex;
- readonly VariableDeclaration: NodeIndex;
- readonly Block: NodeIndex;
- readonly Label: NodeIndex;
- readonly CaseBlock: NodeIndex;
- readonly DeclarationList: NodeIndex;
- readonly WhenTrue: NodeIndex;
- readonly WhenFalse: NodeIndex;
- readonly ArgumentExpression: NodeIndex;
- readonly Tag: NodeIndex;
- readonly Template: NodeIndex;
- readonly Constraint: NodeIndex;
- readonly DefaultType: NodeIndex;
- readonly PropertyName: NodeIndex;
- readonly ObjectAssignmentInitializer: NodeIndex;
- readonly DotDotDotToken: NodeIndex;
- readonly OperatorToken: NodeIndex;
- readonly Statements: readonly NodeIndex[] | undefined;
- readonly Parameters: readonly NodeIndex[] | undefined;
- readonly Arguments: readonly NodeIndex[] | undefined;
- readonly Declarations: readonly NodeIndex[] | undefined;
- readonly Elements: readonly NodeIndex[] | undefined;
- readonly Properties: readonly NodeIndex[] | undefined;
- readonly Clauses: readonly NodeIndex[] | undefined;
- readonly Members: readonly NodeIndex[] | undefined;
- readonly Types: readonly NodeIndex[] | undefined;
- readonly HeritageClauses: readonly NodeIndex[] | undefined;
- readonly TypeArguments: readonly NodeIndex[] | undefined;
- readonly TypeParameters: readonly NodeIndex[] | undefined;
- readonly Decorators: readonly NodeIndex[] | undefined;
- readonly children: readonly NodeIndex[] | undefined;
-}
+import { CfgNodeIndex as NodeIndex } from '../../../arena/arena_index.a';
+import type { CfgNode } from '../../../arena/arena_index.a';
+export type AstNode = CfgNode;
 export class AstArena {
- readonly nodes: readonly AstNode[];
- maybe(i: NodeIndex): AstNode | undefined { return i === -1 ? undefined : this.read(i); }
- list(indices: readonly NodeIndex[] | undefined): readonly AstNode[] | undefined { if(indices === undefined) return undefined; const nodes: AstNode[]=[]; for(const index of indices) nodes.push(this.read(index)); return nodes; }
- constructor(nodes: readonly AstNode[]) { this.nodes = nodes; }
- read(i: NodeIndex): AstNode {
- if (i < 0 || i >= this.nodes.length || i !== Math.floor(i)) panic('invalid AST index');
- return this.nodes[i] ?? panic('missing AST index');
+ private alive=true;
+ nodes: AstNode[]=[];
+ allocate(): NodeIndex {
+ if(!this.alive) panic('freed AST arena');
+ return NodeIndex.push(this.nodes);
  }
+ indexAtSlot(slot: number): NodeIndex {
+ if(!this.alive) panic('freed AST arena');
+ if(slot < 0 || slot >= this.nodes.length || slot !== Math.floor(slot)) panic('invalid AST index');
+ return (this.nodes[slot] ?? panic('missing AST index')).index;
+ }
+ optionalIndexAtSlot(slot: number): NodeIndex | undefined {return slot===-1 ? undefined : this.indexAtSlot(slot);}
+ maybe(i: NodeIndex | undefined): AstNode | undefined {return i===undefined?undefined:this.read(i);}
+ list(indices: readonly NodeIndex[] | undefined): readonly AstNode[] | undefined {if(indices===undefined)return undefined;const nodes: AstNode[]=[];for(const index of indices)nodes.push(this.read(index));return nodes;}
+ read(index: NodeIndex | undefined): AstNode {
+ if(!this.alive) panic('freed AST arena');
+ if(index===undefined) panic('absent AST index');
+ const slot=NodeIndex.read(this.nodes,index);
+ return this.nodes[slot] ?? panic('missing AST node');
+ }
+ dispose(): void {this.nodes=[];this.alive=false;}
 }

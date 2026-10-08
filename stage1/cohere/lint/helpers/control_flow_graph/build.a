@@ -9,7 +9,7 @@ export function Build(ast: AstArena, root: AstNode, hooks: Hooks): Graph {
  case 'SourceFile': b.statements(ast.list(root.Statements)); break;
  case 'ClassStaticBlockDeclaration': b.statement(ast.maybe(root.Body)); break;
  case 'PropertyDeclaration': b.expr(ast.maybe(root.Initializer)); break;
- default: for(const parameter of ast.list(root.Parameters) ?? emptyNodes) b.parameter(parameter); b.expr(ast.maybe(root.Type)); if(root.Body !== -1) { if(ast.read(root.Body).Kind === 'Block') b.statement(ast.maybe(root.Body)); else b.expr(ast.maybe(root.Body)); } break;
+ default: for(const parameter of ast.list(root.Parameters) ?? emptyNodes) b.parameter(parameter); b.expr(ast.maybe(root.Type)); if(root.Body !== undefined) { if(ast.read(root.Body).Kind === 'Block') b.statement(ast.maybe(root.Body)); else b.expr(ast.maybe(root.Body)); } break;
  }
  const end=b.block(b.cur).Reachable; if(end) b.markFinal(b.cur);
  return new Graph(b.arena,b.finals,b.thrown,end);

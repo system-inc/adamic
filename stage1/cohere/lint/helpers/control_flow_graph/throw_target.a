@@ -1,9 +1,9 @@
 import { needNode, needList, at, filled, append } from './support.a';
 import type { AstNode } from './ast.a';
 import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
-import { BlockIndex } from './arena.a';
-export function throwTarget(f: TryFrame): BlockIndex {
-    if (((f.position === 'try') && (f.catchEntry !== -1))) {
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function throwTarget(f: TryFrame): BlockIndex | undefined {
+    if (((f.position === 'try') && (f.catchEntry !== undefined))) {
         return f.catchEntry;
     }
     return f.finallyEntry;

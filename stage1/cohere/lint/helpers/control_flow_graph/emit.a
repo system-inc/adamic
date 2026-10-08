@@ -1,4 +1,4 @@
 import type { Builder } from './builder.a';
-import { BlockIndex } from './arena.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
 export interface EventLocation { readonly block: BlockIndex; readonly index: number; }
-export function Emit(b: Builder,event: number): EventLocation { const index=b.block(b.cur).Events.length;b.block(b.cur).Events.push(event);return {block:b.cur,index:index}; }
+export function Emit(b: Builder,event: number): EventLocation { const current=b.Current();const index=b.block(current).Events.length;b.block(current).Events.push(event);return {block:current,index:index}; }

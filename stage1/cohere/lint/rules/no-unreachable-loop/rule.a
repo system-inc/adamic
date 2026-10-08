@@ -10,8 +10,8 @@ function loopName(kind: string): string {if(kind==='DoStatement')return 'DoWhile
 class LoopStates {
  readonly context: RuleContext;readonly ignore: readonly string[];readonly reachable: boolean[]=[];readonly iterates: boolean[]=[];
  constructor(context: RuleContext) {this.context=context;this.ignore=context.settings.list('ignore',emptyIgnore);for(const node of context.parser.nodes){this.reachable.push(false);this.iterates.push(false);}}
- statement(b: Builder,node: AstNode | undefined): void {if(node===undefined)return;const name=loopName(node.Kind);if(name===''||this.ignore.includes(name))return;if(b.block(b.Current()).Reachable)this.reachable[node.index]=true;}
- loop(b: Builder,node: AstNode | undefined): void {if(node!==undefined&&b.block(b.Current()).Reachable)this.iterates[node.index]=true;}
+ statement(b: Builder,node: AstNode | undefined): void {if(node===undefined)return;const name=loopName(node.Kind);if(name===''||this.ignore.includes(name))return;if(b.block(b.Current()).Reachable)this.reachable[node.index.slot]=true;}
+ loop(b: Builder,node: AstNode | undefined): void {if(node!==undefined&&b.block(b.Current()).Reachable)this.iterates[node.index.slot]=true;}
 }
 export class Rule {
  readonly context: RuleContext;
@@ -19,7 +19,8 @@ export class Rule {
  visit(index: number): void {
  const ast=fromContext(this.context);const states=new LoopStates(this.context);
  const hooks: Hooks={Expression:undefined,Read:undefined,Write:undefined,Statement:(b: Builder,node: AstNode | undefined): void=>states.statement(b,node),Loop:(b: Builder,node: AstNode | undefined): void=>states.loop(b,node)};
- for(const summary of IndexRoots(ast,ast.read(index))){if(!summary.Loops.some((kind)=>!states.ignore.includes(loopName(kind))))continue;const graph=Build(ast,summary.Node,hooks);graph.arena.dispose();}
+ for(const summary of IndexRoots(ast,ast.read(ast.indexAtSlot(index)))){if(!summary.Loops.some((kind)=>!states.ignore.includes(loopName(kind))))continue;const graph=Build(ast,summary.Node,hooks);graph.arena.dispose();}
+ ast.dispose();
  const findings: number[]=[];for(let i=0;i<states.reachable.length;i++)if((states.reachable[i] ?? false)&&!(states.iterates[i] ?? false))findings.push(i);
  findings.sort((a,b)=>this.context.node(a).pos-this.context.node(b).pos);
  for(const loop of findings)this.context.report(loop,'no-unreachable-loop','invalid',message,'','','');

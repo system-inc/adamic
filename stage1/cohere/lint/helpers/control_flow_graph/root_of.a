@@ -5,5 +5,5 @@ import { IsRoot } from './is_root.a';
 import { runsInsideRoot } from './runs_inside_root.a';
 export function RootOf(ast: AstArena,input: AstNode | undefined): AstNode | undefined {
  let previous=needNode(input);let decorator: AstNode | undefined=undefined;let parent=previous.Parent;
- while(parent!==-1){const current=ast.read(parent);if(current.Kind==='Decorator')decorator=current;if(current.Kind==='SourceFile')return current;if(IsRoot(current)&&runsInsideRoot(current,previous,decorator))return current;previous=current;parent=current.Parent;}return undefined;
+ while(parent!==undefined){const current=ast.read(parent);if(current.Kind==='Decorator')decorator=current;if(current.Kind==='SourceFile')return current;if(IsRoot(current)&&runsInsideRoot(current,previous,decorator))return current;previous=current;parent=current.Parent;}return undefined;
 }
