@@ -136,3 +136,13 @@ The prototype graph control also requires missing graph_regions.h. These are
 dependencies, not passed checks. The lowering still uses its existing IR conversion
 loop; wiring it to adamic_ordinary_to_primitive remains pending. No claim is made
 that the C runtime contract is yet used by generated conversion code.
+
+## Runtime base delivery
+
+The branch is moved onto runtime/area-on-next b74158d2 as explicitly requested.
+That base supplies shared leakcheck and graph regions. Neither step 22 runtime
+commit is already present, so both remain: a44503796 becomes 0936496c6,
+bd59c092c becomes 90ed82a59, and 6fb710351 becomes 37cc25cd6. Earlier cached
+intrinsic and conversion lowering commits are retained on the new base.
+Prototype operations stay refused. The earlier dependency block above describes
+the old base only. The C conversion adapter remains unfinished.
