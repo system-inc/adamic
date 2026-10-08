@@ -82,6 +82,10 @@ func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (i
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.StringConstant{Index: l.constant("null")}, nil
 	}
+	if text, known, err := l.dateStringConversion(node, value); known {
+		return text, err
+
+	}
 	switch value.Type() {
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil
