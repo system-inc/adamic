@@ -1,0 +1,105 @@
+=== RUN   TestCheckedViewDictionaryJoint
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/good
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/good-record
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/missing
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/missing-inferred
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-element
+    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
+    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-representation
+    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
+    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-class
+    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
+    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
+=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-value
+    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
+    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/good
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/good-record
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/missing
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/missing-inferred
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-element
+    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
+    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-representation
+    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
+    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-class
+    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
+    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
+=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-value
+    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
+    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/good
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/good-record
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/missing
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/missing-inferred
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-element
+    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
+    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-representation
+    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
+    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-class
+    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
+    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
+=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-value
+    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
+    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
+--- PASS: TestCheckedViewDictionaryJoint (26.68s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/good (0.89s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/good-record (0.52s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/missing (0.48s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/missing-inferred (0.51s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-element (0.73s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-representation (0.68s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-class (0.71s)
+    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-value (0.72s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/good (1.67s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/good-record (1.15s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/missing (1.08s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/missing-inferred (1.18s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-element (1.43s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-representation (1.35s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-class (1.28s)
+    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-value (1.39s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/good (1.64s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/good-record (1.12s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/missing (1.12s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/missing-inferred (1.13s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-element (1.45s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-representation (1.46s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-class (1.42s)
+    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-value (1.57s)
+=== RUN   TestCheckedViewDictionaryJointCounts
+--- PASS: TestCheckedViewDictionaryJointCounts (16.85s)
+=== RUN   TestCheckedViewDictionaryJointRecheck
+=== RUN   TestCheckedViewDictionaryJointRecheck/buildoptions/array
+=== RUN   TestCheckedViewDictionaryJointRecheck/buildoptions/map
+=== RUN   TestCheckedViewDictionaryJointRecheck/buildoptions/source
+=== RUN   TestCheckedViewDictionaryJointRecheck/compileroptions/array
+=== RUN   TestCheckedViewDictionaryJointRecheck/compileroptions/map
+=== RUN   TestCheckedViewDictionaryJointRecheck/compileroptions/source
+=== NAME  TestCheckedViewDictionaryJointRecheck
+    checked_view_dictionary_joint_test.go:302: any remains excluded by shared frontend: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/any.a:3:124: Adamic 0.1 refuses checked view read of field view.table['item'] with unsupported dictionary element any contract; prove or implement the dictionary element any contract before reading this field
+--- PASS: TestCheckedViewDictionaryJointRecheck (2.55s)
+    --- PASS: TestCheckedViewDictionaryJointRecheck/buildoptions/array (0.39s)
+    --- PASS: TestCheckedViewDictionaryJointRecheck/buildoptions/map (0.42s)
+    --- PASS: TestCheckedViewDictionaryJointRecheck/buildoptions/source (0.39s)
+    --- PASS: TestCheckedViewDictionaryJointRecheck/compileroptions/array (0.40s)
+    --- PASS: TestCheckedViewDictionaryJointRecheck/compileroptions/map (0.41s)
+    --- PASS: TestCheckedViewDictionaryJointRecheck/compileroptions/source (0.41s)
+=== RUN   TestCheckedViewDictionaryJointArrayWrite
+=== RUN   TestCheckedViewDictionaryJointArrayWrite/buildoptions
+=== RUN   TestCheckedViewDictionaryJointArrayWrite/compileroptions
+=== RUN   TestCheckedViewDictionaryJointArrayWrite/optionsbase
+--- PASS: TestCheckedViewDictionaryJointArrayWrite (4.37s)
+    --- PASS: TestCheckedViewDictionaryJointArrayWrite/buildoptions (0.65s)
+    --- PASS: TestCheckedViewDictionaryJointArrayWrite/compileroptions (1.80s)
+    --- PASS: TestCheckedViewDictionaryJointArrayWrite/optionsbase (1.91s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=79
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	50.460s
