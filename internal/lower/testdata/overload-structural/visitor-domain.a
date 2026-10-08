@@ -1,3 +1,4 @@
+// a-check: refused visitor argument path
 interface Node { readonly kind: number; }
 interface Modifier extends Node { readonly text: string; }
 function visitNodes<TIn extends Node>(nodes: readonly TIn[], visitor: (node: TIn) => Node | undefined): readonly Node[];

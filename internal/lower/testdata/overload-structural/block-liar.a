@@ -1,1 +1,2 @@
+// a-check: refused result.statements
 interface Block{readonly kind:'Block';readonly statements:readonly number[];}interface Expression{readonly kind:'Block';readonly text:string;}type ConciseBody=Block|Expression;function transform(body:Block):Block;function transform(body:ConciseBody):ConciseBody{return {kind:'Block',text:'liar'};}console.log(typeof transform({kind:'Block',statements:[1]}).statements);

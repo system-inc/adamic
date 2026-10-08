@@ -1,3 +1,4 @@
+// a-check: refused result.value
 interface Result<T> { readonly value: T; flag: boolean; }
 const shared: Result<string | number | undefined> = { value: 1, flag: false };
 function widerResult(): Result<string | number | undefined> { return shared; }

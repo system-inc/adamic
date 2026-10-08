@@ -1,3 +1,4 @@
+// a-check: refused result.value without a single storage representation
 interface Numeric { readonly value: number; }
 interface Textual { readonly value: string; }
 type Result = Numeric | Textual;

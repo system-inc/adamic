@@ -241,6 +241,11 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
+		// A result boundary cannot discharge the extra-binder witness required by
+		// main's rigid generic signature relation. Preserve that admission guard.
+		if len(servedTypes) > len(declaredTypes) {
+			return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "prove the result relation for every extra implementation binder"}
+		}
 		if l.overloadStructuralProof(implementation, overload) {
 			return l.overloadDirectUses(implementation)
 		}

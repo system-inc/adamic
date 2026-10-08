@@ -1,1 +1,2 @@
+// a-check: refused result.value
 interface EvaluatorResult<T>{readonly value:T;}function evaluate(input:EvaluatorResult<string|number|undefined>):EvaluatorResult<string|undefined>;function evaluate(input:EvaluatorResult<string|number|undefined>):EvaluatorResult<string|number|undefined>{return input;}console.log(evaluate({value:1}).value ?? 'missing');

@@ -1,3 +1,4 @@
+// a-check: refused result.kind
 interface Block { readonly kind: 'Block'; readonly statements: readonly number[]; }
 interface Expression { readonly kind: string; readonly text: string; }
 type Body = Block | Expression;

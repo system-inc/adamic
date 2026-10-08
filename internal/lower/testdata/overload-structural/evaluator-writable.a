@@ -1,1 +1,2 @@
+// a-check: refused parameter input
 interface EvaluatorResult<T>{value:T;}function evaluate(input:EvaluatorResult<string>):EvaluatorResult<string>;function evaluate(input:EvaluatorResult<string|number>):EvaluatorResult<string|number>{input.value=1;return input;}console.log(evaluate({value:'node'}).value);

@@ -1,3 +1,4 @@
+// a-check: refused result.value
 interface Result<T> { readonly value: T; flag: boolean; }
 const shared: Result<string> = { value: 'bad', flag: false };
 function widerResult(): Result<string> { return shared; }
