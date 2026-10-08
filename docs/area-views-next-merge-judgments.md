@@ -182,3 +182,13 @@ Fixtures and measured Node observations (exit 0, empty stderr):
 - `internal/oracle/testdata/census_overload_contracts.a`: stdout `"3\nname\n2:2:1\n2:2\n5\n"`.
 
 Required controls after approval: the named positive witnesses must agree with Node; existing negative boundaries must still refuse. No changed lowering is authorized by this ledger entry.
+
+## f0c6e6fc comparison
+
+f0c6e6fc passes internal/flow (200.385 seconds) and the full internal/oracle run (500.047 seconds, 2034 passing test frames, zero failures). TestCountsAreRecorded passes within that run. All seven TestNativeAgreesWithNode witnesses named in judgments 24 through 27 pass on this candidate. Those proposals remain unapplied.
+
+The e3440508 plus f0c6e6fc merge fails internal/flow with 162 failed test frames and TestCountsAreRecorded with 97 lowering leaves. The current full oracle aborts at TestArrayHolesMilestone/array-holes-boundaries/library_array_holes_length.a: internal/javascript/library_array_holes.go reflects into the candidate's private ir.Program.argumentFacts field and panics. That test and fixture are absent from f0c6e6fc. The abort leaves parallel oracle suites unrun; it does not clear the historical failures. No reflection fix is applied by this review unit.
+
+TestFixtures/host/09_realpath.a/stage0 remains red: current lowering stops at 13:134 on a namespace object used as a value, while the candidate record stops at 12:17 on Process.platform. f0c6e6fc's host group passes in 13.102 seconds. The other two formerly inherited host records pass after the merge. No expectation was changed to hide this mismatch. The complete failure names and per-file audit comparison are recorded in area-views-next-failure-comparison.json.
+
+The complete current .a audit covers 2983 files and fails 160 expectations: 2821 checked, 124 refused, 38 checker errors. All 160 failing paths are absent from f0c6e6fc, so none is an inherited fixture-test failure. Replaying those new sources with the baseline compiler yields 108 refusals, 38 checker errors, 13 checked/NotYet results and one panic (internal/lower/testdata/census_panics/generic_closure.a). The exact paths, expectations, diagnostics and replay results are committed in area-views-next-failure-comparison.json. The three approved new .a controls pass. The audit makes no blanket green claim.
