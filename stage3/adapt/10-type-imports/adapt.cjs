@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+throw new Error("deliberate break: the fast gate kill test for stage 3, second run");
 "use strict";
 
 // Use the checker's decisions, as cmd/adamic-meter does, but validate the
