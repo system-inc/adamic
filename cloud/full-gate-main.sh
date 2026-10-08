@@ -20,7 +20,7 @@ share=${ADAMIC_FULL_GATE_SHARE:-all}
 # The last main whose full gate finished green: a red names the landings since, for bisecting.
 state=${ADAMIC_FULL_GATE_STATE:-${HOME}/.adamic-full-gate}
 mkdir -p "${state}"
-here=$(cd "$(dirname "$0")/.." && pwd)
+here=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 once=${1:-}
 
 # The heartbeat (@system_adamic, Oct 8 03:36): one row when a run starts and one every 10 minutes
@@ -271,15 +271,91 @@ BOX
   done
 }
 
+# A record-only main (@system_adamic, Oct 8 22:48Z: 031a1259 took Home for 40 minutes to confirm a csv row) is
+# confirmed by the green whole gate of the commit it differs from only in push-main's record paths, the same three
+# cloud/integration/push-main.sh and record-paths-test.py hold: it is logged as confirmed and never run.
+recordOnly() {
+  local changed
+  changed=$(git -C "${here}" diff --name-only "$1" "$2") || return 1
+  ! printf '%s\n' "${changed}" | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep -q .
+}
+# A commit's newest finished whole gate: green, red or void; running while one is unfinished; none without a record.
+recordState() {
+  local sha=$1 ref status finished
+  ref=$(git -C "${here}" ls-remote origin "refs/heads/gate-logs/${sha:0:12}/*" | awk '$2 ~ /\/full-main$/ {print $2}' | sort | tail -1) || true
+  [ -n "${ref}" ] || { echo none; return; }
+  git -C "${here}" fetch -q origin "${ref}" || { echo none; return; }
+  status=$(git -C "${here}" show FETCH_HEAD:status.txt 2> /dev/null | head -1)
+  finished=$(git -C "${here}" show FETCH_HEAD:full.json 2> /dev/null | grep -c '"finished": true' || true)
+  case ${status} in
+    void:*) echo void ;;
+    green:*) [ "${finished}" -gt 0 ] && echo green || echo running ;;
+    red:*) [ "${finished}" -gt 0 ] && echo red || echo running ;;
+    *) echo running ;;
+  esac
+}
+# The commit among main's last 20 whose green whole gate confirms main, or nothing.
+confirmedBy() {
+  local main=$1 candidate
+  git -C "${here}" fetch -q origin "${main}" 2> /dev/null || true
+  for candidate in $(git -C "${here}" rev-list -n 20 "${main}"); do
+    [ "${candidate}" = "${main}" ] && continue
+    recordOnly "${candidate}" "${main}" || continue
+    [ "$(recordState "${candidate}")" = green ] && { echo "${candidate}"; return 0; }
+  done
+  return 1
+}
+# Integration's requests (cloud/integration/star-train.py, Kirk, Oct 8): the star's train slices, bottom first. The
+# loop takes the first whose whole gate hasn't finished green or red (a void runs again) between mains, and drops
+# a line once its record finishes.
+requests=${ADAMIC_FULL_GATE_REQUESTS:-${state}/requests}
+nextRequest() {
+  local sha
+  [ -s "${requests}" ] || return 1
+  while read -r sha; do
+    [ -n "${sha}" ] || continue
+    case $(recordState "${sha}") in
+      none | void) echo "${sha}"; return 0 ;;
+    esac
+  done < "${requests}"
+  return 1
+}
+dropRequest() {
+  local sha=$1
+  case $(recordState "${sha}") in
+    green | red) grep -vx "${sha}" "${requests}" > "${requests}.tmp"; mv "${requests}.tmp" "${requests}" ;;
+  esac
+}
+# A whole gate started by hand (cloud/full-gate-main.sh <sha>) owns the box: the loop neither runs nor lends.
+oneOffRunning() {
+  pgrep -f "full-gate-main\.sh [0-9a-f]{40}" > /dev/null 2>&1
+}
+
+[ "${ADAMIC_FULL_GATE_LIBRARY:-}" = 1 ] && return 0
 if [ -n "${once}" ]; then
   run "${once}"
   exit
 fi
 while true; do
+  if oneOffRunning; then
+    sleep 60
+    continue
+  fi
   # A network blip or one failed run never ends the loop: it says so and tries again next minute.
   main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1) || main=""
-  if [ -n "${main}" ] && ! git -C "${here}" ls-remote origin "refs/heads/gate-logs/${main:0:12}/*" | grep -q '/full-main$'; then
-    run "${main}" || echo "$(date -u +%H:%M:%S) run of ${main} failed (exit $?); trying again next minute"
+  # A main with no whole gate, or only a void one, is confirmed or run; one that is running or finished is done.
+  mainState=$( [ -n "${main}" ] && recordState "${main}" || echo unknown)
+  if [ "${mainState}" = none ] || [ "${mainState}" = void ] && ! grep -qx "${main}" "${state}/confirmed" 2> /dev/null; then
+    if confirmed=$(confirmedBy "${main}"); then
+      echo "${main}" >> "${state}/confirmed"
+      echo "$(date -u +%H:%M:%S) full gate of main ${main} confirmed by ${confirmed}'s green whole gate: they differ only in record paths, so it isn't run"
+    else
+      run "${main}" || echo "$(date -u +%H:%M:%S) run of ${main} failed (exit $?); trying again next minute"
+    fi
+  elif request=$(nextRequest); then
+    echo "$(date -u +%H:%M:%S) the star's request ${request} takes ${box} between mains"
+    run "${request}" || echo "$(date -u +%H:%M:%S) run of ${request} failed (exit $?); trying again next minute"
+    dropRequest "${request}"
   fi
   lend
   idle=$((${idle:-0} + 1)); [ $((idle % 10)) -eq 0 ] && (heartbeat idle "${main}" > /dev/null 2>&1 &)
