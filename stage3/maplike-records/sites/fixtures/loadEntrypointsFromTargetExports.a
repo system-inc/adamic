@@ -1,0 +1,11 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:2351:54
+interface MapLike<T> { [key: string]: T; }
+const target: unknown = {default: './index' + String(1), node: './node' + String(1)};
+if (typeof target === 'object' && target !== null) {
+    for (const key of Object.keys(target as MapLike<unknown>)) {
+        if (key === 'default' || key === 'node') {
+            const entry = (target as MapLike<unknown>)[key];
+            if (typeof entry === 'string') console.log(entry);
+        }
+    }
+}

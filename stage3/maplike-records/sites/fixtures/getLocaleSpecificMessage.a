@@ -1,0 +1,17 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: utilities.ts:8605:43
+interface MapLike<T> { [key: string]: T; }
+interface DiagnosticMessage { key: string; message: string; }
+let localizedDiagnosticMessages: MapLike<string> | undefined;
+function getLocaleSpecificMessage(message: DiagnosticMessage): string {
+    return localizedDiagnosticMessages && localizedDiagnosticMessages[message.key] || message.message;
+}
+const key = 'message' + String(1);
+const message = {key, message: 'fallback' + String(1)};
+console.log(getLocaleSpecificMessage(message));
+localizedDiagnosticMessages = {};
+localizedDiagnosticMessages[key] = 'translated' + String(1);
+console.log(getLocaleSpecificMessage(message));
+localizedDiagnosticMessages[key] = '';
+console.log(getLocaleSpecificMessage(message));
+delete localizedDiagnosticMessages[key];
+console.log(getLocaleSpecificMessage(message));

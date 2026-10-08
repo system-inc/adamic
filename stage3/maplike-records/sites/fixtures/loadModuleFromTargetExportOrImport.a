@@ -1,0 +1,10 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:2820:43
+interface MapLike<T> { [key: string]: T; }
+const target: unknown = {default: './default' + String(1), browser: './browser' + String(1)};
+const conditions = ['browser', 'default'];
+for (const condition of conditions) {
+    if (typeof target === 'object' && target !== null && !Array.isArray(target)) {
+        const subTarget = (target as MapLike<unknown>)[condition];
+        if (typeof subTarget === 'string') console.log(subTarget);
+    }
+}

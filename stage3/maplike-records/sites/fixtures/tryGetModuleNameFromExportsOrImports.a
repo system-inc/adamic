@@ -1,0 +1,12 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleSpecifiers.ts:1111:35
+interface MapLike<T> { [key: string]: T; }
+const exports: unknown = {default: './default' + String(1), types: './types' + String(1)};
+const conditions = ['types', 'default'];
+if (typeof exports === 'object' && exports !== null) {
+    for (const key of Object.keys(exports as MapLike<unknown>)) {
+        if (key === 'default' || conditions.indexOf(key) >= 0) {
+            const subTarget = (exports as MapLike<unknown>)[key];
+            if (typeof subTarget === 'string') console.log(key + ':' + subTarget);
+        }
+    }
+}

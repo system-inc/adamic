@@ -1,0 +1,10 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: core.ts:1267:12
+interface MapLike<T> { [key: string]: T; }
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+function hasProperty(map: MapLike<any>, key: string): boolean {
+    return hasOwnProperty.call(map, key);
+}
+const key = 'item' + String(1);
+const map: MapLike<string> = {'10': 'ten', '2': 'two', b: 'bee'};
+map[key] = 'made' + String(1);
+console.log(String(hasProperty(map, key)), String(hasProperty(map, 'missing')));

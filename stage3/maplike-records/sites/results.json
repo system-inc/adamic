@@ -1,0 +1,162 @@
+[
+  {
+    "rank": 1,
+    "batch": 1,
+    "source": "core.ts:1267:12",
+    "function": "hasProperty",
+    "static_calls": 36,
+    "fixture": "stage3/maplike-records/sites/fixtures/hasProperty.a",
+    "adaptation": "Original any parameter and cached intrinsic retained; inputs specialize to a string dictionary.",
+    "node": {
+      "stdout": "true false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/hasProperty.a:10:44: error TS2554: Expected 1 arguments, but got 2."
+  },
+  {
+    "rank": 2,
+    "batch": 1,
+    "source": "core.ts:1289:5",
+    "function": "getOwnKeys",
+    "static_calls": 13,
+    "fixture": "stage3/maplike-records/sites/fixtures/getOwnKeys.a",
+    "adaptation": "Original generic loop and cached intrinsic retained; dynamic string dictionary inputs.",
+    "node": {
+      "stdout": "2,10,b,item1\n2,10,item1,b\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 3,
+    "batch": 1,
+    "source": "core.ts:1290:13",
+    "function": "getOwnKeys",
+    "static_calls": 13,
+    "fixture": "stage3/maplike-records/sites/fixtures/getOwnKeys.a",
+    "adaptation": "Original generic loop and cached intrinsic retained; dynamic string dictionary inputs.",
+    "node": {
+      "stdout": "2,10,b,item1\n2,10,item1,b\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 4,
+    "batch": 1,
+    "source": "moduleNameResolver.ts:2820:43",
+    "function": "loadModuleFromTargetExportOrImport",
+    "static_calls": 7,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadModuleFromTargetExportOrImport.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./browser1\n./default1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadModuleFromTargetExportOrImport.a:7:28: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 5,
+    "batch": 1,
+    "source": "utilities.ts:8605:43",
+    "function": "getLocaleSpecificMessage",
+    "static_calls": 7,
+    "fixture": "stage3/maplike-records/sites/fixtures/getLocaleSpecificMessage.a",
+    "adaptation": "Original return expression retained; localization state and diagnostic host reduced to a mutable dictionary and a message.",
+    "node": {
+      "stdout": "fallback1\ntranslated1\nfallback1\nfallback1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "NotYet",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/getLocaleSpecificMessage.a:6:12: stage 0 can't lower a logical record operand converted to string without a proven result representation yet"
+  },
+  {
+    "rank": 6,
+    "batch": 1,
+    "source": "moduleNameResolver.ts:2351:54",
+    "function": "loadEntrypointsFromTargetExports",
+    "static_calls": 5,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadEntrypointsFromTargetExports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./index1\n./node1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadEntrypointsFromTargetExports.a:5:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 7,
+    "batch": 1,
+    "source": "moduleSpecifiers.ts:1111:35",
+    "function": "tryGetModuleNameFromExportsOrImports",
+    "static_calls": 5,
+    "fixture": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromExportsOrImports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "default:./default1\ntypes:./types1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromExportsOrImports.a:6:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 8,
+    "batch": 1,
+    "source": "core.ts:1314:5",
+    "function": "getOwnValues",
+    "static_calls": 4,
+    "fixture": "stage3/maplike-records/sites/fixtures/getOwnValues.a",
+    "adaptation": "Original generic dictionary-or-array signature, cast, loop and cached intrinsic retained; both receiver forms exercised.",
+    "node": {
+      "stdout": "two,ten,bee,made1\narray1,next\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 9,
+    "batch": 1,
+    "source": "core.ts:1315:13",
+    "function": "getOwnValues",
+    "static_calls": 4,
+    "fixture": "stage3/maplike-records/sites/fixtures/getOwnValues.a",
+    "adaptation": "Original generic dictionary-or-array signature, cast, loop and cached intrinsic retained; both receiver forms exercised.",
+    "node": {
+      "stdout": "two,ten,bee,made1\narray1,next\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 10,
+    "batch": 1,
+    "source": "core.ts:1316:25",
+    "function": "getOwnValues",
+    "static_calls": 4,
+    "fixture": "stage3/maplike-records/sites/fixtures/getOwnValues.a",
+    "adaptation": "Original generic dictionary-or-array signature, cast, loop and cached intrinsic retained; both receiver forms exercised.",
+    "node": {
+      "stdout": "two,ten,bee,made1\narray1,next\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/getOwnValues.a:7:63: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  }
+]

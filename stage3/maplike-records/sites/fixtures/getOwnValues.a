@@ -1,0 +1,15 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: core.ts:1314:5, core.ts:1315:13, core.ts:1316:25
+interface MapLike<T> { [key: string]: T; }
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+function getOwnValues<T>(collection: MapLike<T> | T[]): T[] {
+    const values: T[] = [];
+    for (const key in collection) {
+        if (hasOwnProperty.call(collection, key)) values.push((collection as MapLike<T>)[key]);
+    }
+    return values;
+}
+const key = 'item' + String(1);
+const map: MapLike<string> = {'10': 'ten', '2': 'two', b: 'bee'};
+map[key] = 'made' + String(1);
+console.log(getOwnValues(map).join(','));
+console.log(getOwnValues(['array' + String(1), 'next']).join(','));
