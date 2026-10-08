@@ -1,0 +1,22 @@
+=== RUN   TestLibraryLanguageBoundaries
+=== RUN   TestLibraryLanguageBoundaries/dynamic_receiver
+--- PASS: TestLibraryLanguageBoundaries (0.05s)
+    --- PASS: TestLibraryLanguageBoundaries/dynamic_receiver (0.05s)
+=== RUN   TestReceiverCaptureKeepsDynamicThisRefused
+=== PAUSE TestReceiverCaptureKeepsDynamicThisRefused
+=== RUN   TestReceiverCaptureDetachedMethodStaysRefused
+=== PAUSE TestReceiverCaptureDetachedMethodStaysRefused
+=== CONT  TestReceiverCaptureKeepsDynamicThisRefused
+=== CONT  TestReceiverCaptureDetachedMethodStaysRefused
+=== RUN   TestReceiverCaptureKeepsDynamicThisRefused/return_this.x;
+=== RUN   TestReceiverCaptureDetachedMethodStaysRefused/compare
+=== RUN   TestReceiverCaptureDetachedMethodStaysRefused/toString
+=== RUN   TestReceiverCaptureKeepsDynamicThisRefused/return_(()_=>_this.x)();
+--- PASS: TestReceiverCaptureDetachedMethodStaysRefused (0.10s)
+    --- PASS: TestReceiverCaptureDetachedMethodStaysRefused/compare (0.05s)
+    --- PASS: TestReceiverCaptureDetachedMethodStaysRefused/toString (0.05s)
+--- PASS: TestReceiverCaptureKeepsDynamicThisRefused (0.10s)
+    --- PASS: TestReceiverCaptureKeepsDynamicThisRefused/return_this.x; (0.05s)
+    --- PASS: TestReceiverCaptureKeepsDynamicThisRefused/return_(()_=>_this.x)(); (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.162s

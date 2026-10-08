@@ -1,0 +1,26 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestReceiverCaptureNullMutant
+=== PAUSE TestReceiverCaptureNullMutant
+=== RUN   TestReceiverCaptureRetainMutant
+=== PAUSE TestReceiverCaptureRetainMutant
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestReceiverCaptureRetainMutant
+=== CONT  TestReceiverCaptureNullMutant
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/receiver_captures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/receiver_captures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/receiver_captures.a
+=== NAME  TestReceiverCaptureRetainMutant
+    receiver_captures_test.go:96: receiver retain removal caught by ASan heap-use-after-free
+--- PASS: TestReceiverCaptureRetainMutant (0.44s)
+=== NAME  TestReceiverCaptureNullMutant
+    receiver_captures_test.go:63: native null receiver caught: exit=1 stderr="/tmp/adamic-gate/adamic-build-2870523366/main.c:278:64: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2870523366/main.c:278:64 \n"
+    receiver_captures_test.go:63: javascript null receiver caught: exit=70 stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'count')\n"
+--- PASS: TestReceiverCaptureNullMutant (0.47s)
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/receiver_captures.a (0.59s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.627s

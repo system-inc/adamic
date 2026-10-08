@@ -1,0 +1,2 @@
+adamic: /workspace/adamic/cloud/receiver-captures/core-2100-compare.a:7:17: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (left, right) => comparer.compare(left, right) (unbound-method)
+exit status 1
