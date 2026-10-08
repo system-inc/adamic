@@ -17,6 +17,11 @@ func namespaceStatements(declaration *ast.Node) []*ast.Node {
 }
 
 func namespaceRuntime(declaration *ast.Node) bool {
+	// Ambient declarations describe host values, not executable namespace bodies.
+	// The context flag includes nested declarations without their own declare token.
+	if declaration.Flags&ast.NodeFlagsAmbient != 0 || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) || ast.GetSourceFileOfNode(declaration).IsDeclarationFile {
+		return false
+	}
 	for _, member := range namespaceStatements(declaration) {
 		switch member.Kind {
 		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
