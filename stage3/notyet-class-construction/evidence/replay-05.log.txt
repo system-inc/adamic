@@ -1,0 +1,3 @@
+actual caller: github.com/system-inc/adamic/internal/lower.(*lowering).property /workspace/adamic/internal/lower/object.go:484 reason=a field of type AnyBuildOrder | undefined
+replay load/register/lower: 3.756163526s
+reproduced NotYet: a field of type AnyBuildOrder | undefined at /tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:656:12

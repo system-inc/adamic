@@ -1,0 +1,1007 @@
+[
+  {
+    "table_roots": 23,
+    "example": "binder.ts:2121:20",
+    "requested_reason": "a field of type string | NodeArray<JSDocComment> | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/binder.ts:2114:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/binder.ts:2116:13",
+        "reason": "a BinaryExpression with a boolean and a value",
+        "text": "/tmp/class-construction-census-source/src/compiler/binder.ts:2116:13: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/binder.ts:2114:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/binder.ts:2116:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/binder.ts:2116:13: stage 0 can't lower a BinaryExpression with a boolean and a value yet",
+        "start": 99138,
+        "end": 99430
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/binder.ts:2114:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/binder.ts:2121:20",
+        "reason": "a field of type string | NodeArray<JSDocComment> | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/binder.ts:2121:20: stage 0 can't lower a field of type string | NodeArray<JSDocComment> | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/binder.ts:2114:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/binder.ts:2121:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/binder.ts:2121:20: stage 0 can't lower a field of type string | NodeArray<JSDocComment> | undefined yet",
+        "start": 99430,
+        "end": 99527
+      }
+    ]
+  },
+  {
+    "table_roots": 4,
+    "example": "commandLineParser.ts:2599:13",
+    "requested_reason": "a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2598:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2599:13",
+        "reason": "a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2599:13: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2598:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2599:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2599:13: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet",
+        "start": 102971,
+        "end": 103203
+      }
+    ]
+  },
+  {
+    "table_roots": 4,
+    "example": "checker.ts:16202:62",
+    "requested_reason": "a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/core.ts:622:31",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/class-construction-census-source/src/compiler/core.ts:622:31: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/core.ts:622:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/core.ts:622:31: stage 0 can't lower a NonNullExpression yet",
+        "start": 20976,
+        "end": 21074
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16202:62",
+        "reason": "a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16202:62: stage 0 can't lower a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[] yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16202:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16202:62: stage 0 can't lower a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[] yet",
+        "start": 943396,
+        "end": 945476
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/class-construction-census-source/src/compiler/utilities.ts:630:24",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/class-construction-census-source/src/compiler/utilities.ts:630:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/utilities.ts:630:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/utilities.ts:630:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "start": 16921,
+        "end": 16963
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16250:17",
+        "reason": "a BinaryExpression with a value and a value",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16250:17: stage 0 can't lower a BinaryExpression with a value and a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16250:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16250:17: stage 0 can't lower a BinaryExpression with a value and a value yet",
+        "start": 946251,
+        "end": 946497
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16255:31",
+        "reason": "a BinaryExpression with a value and a boolean",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16255:31: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16255:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16255:31: stage 0 can't lower a BinaryExpression with a value and a boolean yet",
+        "start": 946618,
+        "end": 946863
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16258:36",
+        "reason": "reading classType",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16258:36: stage 0 can't lower reading classType yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16258:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16258:36: stage 0 can't lower reading classType yet",
+        "start": 946863,
+        "end": 946990
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16268:68",
+        "reason": "reading typeParameters",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16268:68: stage 0 can't lower reading typeParameters yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:16177:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:16268:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:16268:68: stage 0 can't lower reading typeParameters yet",
+        "start": 947542,
+        "end": 947750
+      }
+    ]
+  },
+  {
+    "table_roots": 3,
+    "example": "checker.ts:47945:13",
+    "requested_reason": "a field of type string | number | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47943:29",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47943:29: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47943:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47943:29: stage 0 can't lower a NonNullExpression yet",
+        "start": 2801521,
+        "end": 2801571
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47944:33",
+        "reason": "reading initializer",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47944:33: stage 0 can't lower reading initializer yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47944:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47944:33: stage 0 can't lower reading initializer yet",
+        "start": 2801571,
+        "end": 2801626
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47945:13",
+        "reason": "reading result",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47945:13: stage 0 can't lower reading result yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47945:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47945:13: stage 0 can't lower reading result yet",
+        "start": 2801626,
+        "end": 2803133
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47971:16",
+        "reason": "reading result",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47971:16: stage 0 can't lower reading result yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:47941:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:47971:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:47971:16: stage 0 can't lower reading result yet",
+        "start": 2803133,
+        "end": 2803157
+      }
+    ]
+  },
+  {
+    "table_roots": 2,
+    "example": "tsbuildPublic.ts:656:12",
+    "requested_reason": "a field of type AnyBuildOrder | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:655:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:656:12",
+        "reason": "a field of type AnyBuildOrder | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:656:12: stage 0 can't lower a field of type AnyBuildOrder | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:655:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:656:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/tsbuildPublic.ts:656:12: stage 0 can't lower a field of type AnyBuildOrder | undefined yet",
+        "start": 28229,
+        "end": 28291
+      }
+    ]
+  },
+  {
+    "table_roots": 2,
+    "example": "moduleNameResolver.ts:512:46",
+    "requested_reason": "a field of type boolean | (() => boolean) | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:511:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:512:46",
+        "reason": "a field of type boolean | (() => boolean) | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:512:46: stage 0 can't lower a field of type boolean | (() => boolean) | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:511:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:512:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:512:46: stage 0 can't lower a field of type boolean | (() => boolean) | undefined yet",
+        "start": 19604,
+        "end": 19765
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:511:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:513:40",
+        "reason": "reading useCaseSensitiveFileNames",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:513:40: stage 0 can't lower reading useCaseSensitiveFileNames yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:511:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:513:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:513:40: stage 0 can't lower reading useCaseSensitiveFileNames yet",
+        "start": 19765,
+        "end": 19856
+      }
+    ]
+  },
+  {
+    "table_roots": 2,
+    "example": "moduleNameResolver.ts:2235:23",
+    "requested_reason": "a field of type false | string[] | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2235:23",
+        "reason": "a field of type false | string[] | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2235:23: stage 0 can't lower a field of type false | string[] | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2235:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2235:23: stage 0 can't lower a field of type false | string[] | undefined yet",
+        "start": 111446,
+        "end": 111731
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2244:72",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2244:72: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2244:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2244:72: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 111949,
+        "end": 112071
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2245:5",
+        "reason": "reading loadPackageJsonMainState",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2245:5: stage 0 can't lower reading loadPackageJsonMainState yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2245:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2245:5: stage 0 can't lower reading loadPackageJsonMainState yet",
+        "start": 112071,
+        "end": 112138
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2246:5",
+        "reason": "reading loadPackageJsonMainState",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2246:5: stage 0 can't lower reading loadPackageJsonMainState yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2246:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2246:5: stage 0 can't lower reading loadPackageJsonMainState yet",
+        "start": 112138,
+        "end": 112231
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2251:9",
+        "reason": "reading loadPackageJsonMainState",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2251:9: stage 0 can't lower reading loadPackageJsonMainState yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2247:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2251:9: stage 0 can't lower reading loadPackageJsonMainState yet",
+        "start": 112231,
+        "end": 112466
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2254:39",
+        "reason": "reading mainResolution",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2254:39: stage 0 can't lower reading mainResolution yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2254:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2254:39: stage 0 can't lower reading mainResolution yet",
+        "start": 112466,
+        "end": 112528
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2256:54",
+        "reason": "a value of type object | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2256:54: stage 0 can't lower a value of type object | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2256:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2256:54: stage 0 can't lower a value of type object | undefined yet",
+        "start": 112528,
+        "end": 113503
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2277:12",
+        "reason": "a field of type false | string[] | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2277:12: stage 0 can't lower a field of type false | string[] | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2228:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2277:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2277:12: stage 0 can't lower a field of type false | string[] | undefined yet",
+        "start": 113503,
+        "end": 113586
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "executeCommandLine.ts:375:21",
+    "requested_reason": "a field of type \"boolean\" | \"list\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:373:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown",
+        "text": "/tmp/class-construction-census-source/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:373:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:374:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+        "start": 13019,
+        "end": 13079
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:373:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:375:21",
+        "reason": "a field of type \"boolean\" | \"list\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+        "text": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:375:21: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:373:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:375:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/executeCommandLine.ts:375:21: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet",
+        "start": 13079,
+        "end": 13505
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "commandLineParser.ts:1896:13",
+    "requested_reason": "a field of type \"boolean\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3038:28",
+        "reason": "a value of type any",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3038:28: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3853:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3038:28: stage 0 can't lower a value of type any yet",
+        "start": 162088,
+        "end": 162141
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3854:15",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3854:15: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3854:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3854:15: stage 0 can't lower a call through ?. (an optional call) yet",
+        "start": 162141,
+        "end": 162186
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3855:10",
+        "reason": "reading d",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3855:10: stage 0 can't lower reading d yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3855:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3855:10: stage 0 can't lower reading d yet",
+        "start": 162186,
+        "end": 162213
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3794:162",
+        "reason": "a rest array of DiagnosticArguments",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3794:162: stage 0 can't lower a rest array of DiagnosticArguments yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3856:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:3794:162: stage 0 can't lower a rest array of DiagnosticArguments yet",
+        "start": 162213,
+        "end": 162323
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1893:16",
+        "reason": "an array of never",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1893:16: stage 0 can't lower an array of never yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1893:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1893:16: stage 0 can't lower an array of never yet",
+        "start": 73066,
+        "end": 73086
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1896:13",
+        "reason": "a field of type \"boolean\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1896:13: stage 0 can't lower a field of type \"boolean\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1884:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1896:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/commandLineParser.ts:1896:13: stage 0 can't lower a field of type \"boolean\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet",
+        "start": 73131,
+        "end": 73700
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "checker.ts:39371:13",
+    "requested_reason": "a field of type 0 | boolean | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:39369:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:39371:13",
+        "reason": "a field of type 0 | boolean | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:39371:13: stage 0 can't lower a field of type 0 | boolean | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:39369:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:39371:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:39371:13: stage 0 can't lower a field of type 0 | boolean | undefined yet",
+        "start": 2330440,
+        "end": 2330886
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "watchUtilities.ts:741:23",
+    "requested_reason": "a field of type boolean | (() => boolean)",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/watchUtilities.ts:740:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/watchUtilities.ts:741:23",
+        "reason": "a field of type boolean | (() => boolean)",
+        "text": "/tmp/class-construction-census-source/src/compiler/watchUtilities.ts:741:23: stage 0 can't lower a field of type boolean | (() => boolean) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/watchUtilities.ts:740:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/watchUtilities.ts:741:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/watchUtilities.ts:741:23: stage 0 can't lower a field of type boolean | (() => boolean) yet",
+        "start": 30638,
+        "end": 30801
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "moduleNameResolver.ts:2418:12",
+    "requested_reason": "a field of type string | false",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:9",
+        "reason": "a field of type string | false | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:9: stage 0 can't lower a field of type string | false | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:9: stage 0 can't lower a field of type string | false | undefined yet",
+        "start": 119371,
+        "end": 119565
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:12",
+        "reason": "a field of type string | false",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:12: stage 0 can't lower a field of type string | false yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:12: stage 0 can't lower a field of type string | false yet",
+        "start": 119565,
+        "end": 119633
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "moduleNameResolver.ts:2415:9",
+    "requested_reason": "a field of type string | false | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:9",
+        "reason": "a field of type string | false | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:9: stage 0 can't lower a field of type string | false | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2415:9: stage 0 can't lower a field of type string | false | undefined yet",
+        "start": 119371,
+        "end": 119565
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:12",
+        "reason": "a field of type string | false",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:12: stage 0 can't lower a field of type string | false yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2414:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2418:12: stage 0 can't lower a field of type string | false yet",
+        "start": 119565,
+        "end": 119633
+      }
+    ]
+  },
+  {
+    "table_roots": 1,
+    "example": "transformers/utilities.ts:441:33",
+    "requested_reason": "a base that isn't a declared class",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:441:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:423:34",
+        "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+        "text": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:423:34: stage 0 can't lower a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:441:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:423:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:423:34: stage 0 can't lower a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }) yet",
+        "start": 17437,
+        "end": 17499
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:441:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:424:18",
+        "reason": "reading autoGenerate",
+        "text": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:424:18: stage 0 can't lower reading autoGenerate yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:441:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:424:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/transformers/utilities.ts:424:18: stage 0 can't lower reading autoGenerate yet",
+        "start": 17499,
+        "end": 18212
+      }
+    ]
+  },
+  {
+    "table_roots": 3,
+    "example": "checker.ts:51074:20",
+    "requested_reason": "a field of type string | number | undefined",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51074:20",
+        "reason": "a field of type string | number | undefined",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51074:20: stage 0 can't lower a field of type string | number | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51074:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51074:20: stage 0 can't lower a field of type string | number | undefined yet",
+        "start": 2969484,
+        "end": 2969536
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51078:13",
+        "reason": "a VoidExpression as a statement",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51078:13: stage 0 can't lower a VoidExpression as a statement yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51078:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51078:13: stage 0 can't lower a VoidExpression as a statement yet",
+        "start": 2969600,
+        "end": 2969647
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51080:24",
+        "reason": "a BinaryExpression with a value and a value",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51080:24: stage 0 can't lower a BinaryExpression with a value and a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51080:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51080:24: stage 0 can't lower a BinaryExpression with a value and a value yet",
+        "start": 2969698,
+        "end": 2969871
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51081:13",
+        "reason": "reading symbol",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51081:13: stage 0 can't lower reading symbol yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/class-construction-census-source/src/compiler/checker.ts:51072:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/class-construction-census-source/src/compiler/checker.ts:51081:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/class-construction-census-source/src/compiler/checker.ts:51081:13: stage 0 can't lower reading symbol yet",
+        "start": 2969871,
+        "end": 2970203
+      }
+    ]
+  }
+]

@@ -1,0 +1,3 @@
+actual caller: github.com/system-inc/adamic/internal/lower.(*lowering).property /workspace/adamic/internal/lower/object.go:484 reason=a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]
+replay load/register/lower: 4.62242673s
+reproduced NotYet: a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[] at /tmp/class-construction-census-source/src/compiler/checker.ts:16202:62

@@ -1,0 +1,7 @@
+initializers 1
+reference-bitmap 0
+Traceback (most recent call last):
+  File "/tmp/class-construction-mutants.py", line 14, in <module>
+    if run.returncode==0: raise RuntimeError('mutant survived: '+name)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: mutant survived: reference-bitmap
