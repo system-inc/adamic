@@ -19,7 +19,7 @@ An IR uses it the way cohere's high-level IR uses the Go: implement `GraphInterf
 go test -v -count=1 -timeout 30m ./stage1/cohere/static_single_assignment > "$TMPDIR/ssa.log" 2>&1; echo "exit=$?"
 ```
 
-It needs the cohere submodule at a commit that holds the module (7945d10 or later) and `go`, `node` and clang on the path, as the rest of the gate does. The test runs `testdata/cohere_side_test.go` inside cohere's module by overlay (with `GOWORK=off`, since the module is one of its own), which writes the cases and Go's answers. Then it runs the port on the same cases natively under ASan and UBSan, on Node and through the JavaScript backend, compares all three with Go byte for byte, checks the native port for leaks, and runs twelve mutants, each of which must be caught. `gaps_test.go` holds GAPS.md's programs where GAPS.md says they stand.
+It needs the cohere submodule at a commit that holds the module with its dominance fix (cohere 0cba6cd or later) and `go`, `node` and clang on the path, as the rest of the gate does. The test runs `testdata/cohere_side_test.go` inside cohere's module by overlay (with `GOWORK=off`, since the module is one of its own), which writes the cases and Go's answers. Then it runs the port on the same cases natively under ASan and UBSan, on Node and through the JavaScript backend, compares all three with Go byte for byte, checks the native port for leaks, and runs fourteen mutants, each of which must be caught. `TestConstructRefusesAnEntryWithPredecessors` holds construct's refusal of an entry some edge enters. `gaps_test.go` holds GAPS.md's programs where GAPS.md says they stand.
 
 | Variable | What it does |
 | --- | --- |

@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-const CohereCommit = "7945d102a6c18dd36adf9114a758ce646e8b2359"
+const CohereCommit = "f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7"
 const TypeScriptCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 const TypeScriptGoCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 const PrettierCommit = "cb4b33fba24a8428d00e54be85fc886288a374ea"

@@ -95,6 +95,23 @@ export function numericValue(raw: string): number {
     }
     return Number.parseFloat(text);
 }
+// Go cohere's separatorsBetweenDigits: inspect neighbours in the whole text.
+function separatorsBetweenDigits(text: string, start: number, end: number, radix: number): boolean {
+    const forbidden = radix === 16 ? '.X_x' : '.BEO_beo';
+    for(let index = start; index < end; index++) {
+        if(text.charCodeAt(index) !== 95) {
+            continue;
+        }
+        if(index + 1 >= text.length || digit(text.charCodeAt(index + 1)) >= radix ||
+            forbidden.includes(text.slice(index + 1, index + 2))) {
+            return false;
+        }
+        if(index > 0 && forbidden.includes(text.slice(index - 1, index))) {
+            return false;
+        }
+    }
+    return true;
+}
 export class Reader {
     position = 0;
     readonly nodes: JsonNodeInterface[] = [];
@@ -217,6 +234,9 @@ export class Reader {
                     position++;
                 }
             }
+        }
+        if(!separatorsBetweenDigits(this.text, base === 10 ? start : start + 2, position, base)) {
+            throw new Error(this.message('A numeric separator is only allowed between two digits.'));
         }
         const raw = this.text.slice(start, position);
         const literal = raw.includes('_') ? raw.split('_').join('') : raw;

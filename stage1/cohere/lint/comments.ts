@@ -1,7 +1,7 @@
-// Matching uses Go's ASCII word boundaries and Unicode simple-fold equivalence.
+// Matching follows cohere's JavaScript iu pattern with literal terms and decorations.
 // Quoting counts UTF-8 bytes, as cohere does, rather than JS code units.
 import { utf8Length } from 'adamic';
-import { foldPoint, foldedRange, printable } from './unicode.ts';
+import { foldPoint, printable } from './unicode.ts';
 
 export function word(character: string): boolean {
     return (
@@ -17,7 +17,6 @@ export function space(character: string): boolean {
     return (
         (code >= 9 && code <= 13) ||
         code === 32 ||
-        code === 133 ||
         code === 160 ||
         code === 5760 ||
         (code >= 8192 && code <= 8202) ||
@@ -25,7 +24,8 @@ export function space(character: string): boolean {
         code === 8233 ||
         code === 8239 ||
         code === 8287 ||
-        code === 12288
+        code === 12288 ||
+        code === 65279
     );
 }
 export function selfDirective(value: string): boolean {
@@ -62,43 +62,26 @@ export function selfDirective(value: string): boolean {
     }
     return false;
 }
-function validDecoration(decoration: string[]): boolean {
-    for(let index = 0; index < decoration.length; index++) {
-        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
-            if(((decoration[index] ?? '').codePointAt(0) ?? 0) > ((decoration[index + 2] ?? '').codePointAt(0) ?? 0)) {
-                return false;
-            }
-            index += 2;
-        }
-    }
-    return true;
-}
 function decorated(character: string, decoration: string[]): boolean {
-    for(let index = 0; index < decoration.length; index++) {
-        const first = (decoration[index] ?? '').codePointAt(0) ?? 0;
-        let last = first;
-        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
-            last = (decoration[index + 2] ?? '').codePointAt(0) ?? 0;
-            index += 2;
-        }
-        if(foldedRange(character, first, last)) {
+    for(const entry of decoration) {
+        if(foldPoint(character.codePointAt(0) ?? -1) === foldPoint(entry.codePointAt(0) ?? -2)) {
             return true;
         }
     }
     return false;
 }
+// JavaScript iu boundaries include the long s and Kelvin sign through their ASCII folds.
+function patternWord(character: string): boolean {
+    return character !== '' && word(String.fromCodePoint(foldPoint(character.codePointAt(0) ?? 0)));
+}
 export function matches(value: string, term: string, location: string, decoration: string[]): boolean {
-    // Go applies (?i) to decoration too. Unescaped '-' creates character ranges;
-    // a reversed range makes compilation fail and the matcher is omitted.
-    if(location === 'start' && !validDecoration(decoration)) {
-        return false;
-    }
+    // Cohere escapes every decoration, including '-' as \x2d, so none spells a range.
     let prefix = 0;
     if(location === 'start') {
         while(prefix < value.length) {
             const point = value.codePointAt(prefix) ?? 0;
             const character = String.fromCodePoint(point);
-            if(![' ', '\t', '\n', '\r', '\f'].includes(character) && !decorated(character, decoration)) {
+            if(!space(character) && !decorated(character, decoration)) {
                 break;
             }
             prefix += point > 65535 ? 2 : 1;
@@ -122,8 +105,8 @@ export function matches(value: string, term: string, location: string, decoratio
             equal &&
             (location === 'start' ||
                 !word(term[0] ?? '') ||
-                word(value[index - 1] ?? '') !== word(value[index] ?? '')) &&
-            (!word(term[term.length - 1] ?? '') || word(value[end - 1] ?? '') !== word(value[end] ?? ''))
+                patternWord(value[index - 1] ?? '') !== patternWord(value[index] ?? '')) &&
+            (!word(term[term.length - 1] ?? '') || patternWord(value[end - 1] ?? '') !== patternWord(value[end] ?? ''))
         ) {
             return true;
         }
