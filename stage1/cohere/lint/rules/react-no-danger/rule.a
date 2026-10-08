@@ -1,0 +1,31 @@
+import type { RuleContext } from '../../context.ts';
+import { glob } from './glob.a';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) {this.context=context;}
+ render(index: number): string {
+  if(index<0) {return '';}const node=this.context.node(index);
+  if(node.kind==='Identifier') {return node.text;}
+  if(node.kind==='JsxNamespacedName' || node.kind==='PropertyAccessExpression') {
+   const left=node.children[0] ?? -1;const right=node.children[node.children.length-1] ?? -1;
+   if(left<0 || right<0 || this.context.node(right).kind!=='Identifier') {return '';}
+   return this.render(left)+(node.kind==='JsxNamespacedName' ? ':' : '.')+this.context.node(right).text;
+  }
+  return '';
+ }
+ visit(index: number): void {
+  const ctx=this.context;const node=ctx.node(index);const tag=node.children[0] ?? -1;const name=this.render(tag);
+  if(name==='') {return;}const first=name.charCodeAt(0);let matches=first>=97 && first<=122;
+  if(!matches) {for(const pattern of ctx.settings.list('customcomponentnames',[])) {if(glob(pattern,name)) {matches=true;break;}}}
+  if(!matches) {return;}
+  let attrs=-1;for(const child of node.children) {if(ctx.node(child).kind==='JsxAttributes') {attrs=child;}}
+  if(attrs<0) {return;}
+  for(const property of ctx.node(attrs).children) {
+   const prop=ctx.node(property);const ni=prop.children[0] ?? -1;
+   if(prop.kind!=='JsxAttribute' || ni<0 || ctx.node(ni).kind!=='Identifier' || ctx.node(ni).text!=='dangerouslySetInnerHTML') {continue;}
+   ctx.report(property,'react/no-danger','dangerousProp',message,'','','');
+  }
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}
