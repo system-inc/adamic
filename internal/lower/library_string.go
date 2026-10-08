@@ -200,7 +200,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed":
+		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed", "repeat":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -218,6 +218,9 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 }
 
 func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression, name string, written []*ast.Node, provided []ir.Expression) (ir.Expression, bool, error) {
+	if name == "repeat" {
+		return l.stringRepeatCall(node, value, written, provided)
+	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, name+" with arguments")
