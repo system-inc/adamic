@@ -1,0 +1,31 @@
+"""Add type observations at combine's failing node in an existing scratch census overlay."""
+import csv
+import json
+import pathlib
+import sys
+repository, scratch = map(lambda name:pathlib.Path(name).resolve(),sys.argv[1:3])
+source=scratch/'internal_lower_expression.go'
+text=source.read_text()
+needle='return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))'
+assert text.count(needle)==1
+source.write_text(text.replace(needle,'l.binaryAnalysis(node, operator, left, right)\n\t'+needle))
+overlay=json.loads((scratch/'overlay.json').read_text())
+overlay['Replace'][str(repository/'internal/lower/binary_analysis.go')]=str(pathlib.Path(__file__).resolve().parent.parent/'failure-types.go.txt')
+(scratch/'overlay.json').write_text(json.dumps(overlay))
+
+# Select the exact original attempting units, retaining their complete project context.
+if len(sys.argv) == 4:
+ rows=list(csv.DictReader(open(sys.argv[3])))
+ expected={'a BinaryExpression with a boolean and a number','a BinaryExpression with a value and a number','a BinaryExpression with a string and a string'}
+ units={row['unit'] for row in rows if row['reason'] in expected}
+ helper=(pathlib.Path(__file__).resolve().parent.parent/'failure-types.go.txt').read_text()
+ helper+='\nvar binaryAnalysisUnits = map[string]bool{\n'+''.join(json.dumps('/tmp/notyet-binary-adapted/'+unit)+':true,\n' for unit in sorted(units))+'}\n'
+ target=scratch/'binary_analysis.go'
+ target.write_text(helper)
+ overlay['Replace'][str(repository/'internal/lower/binary_analysis.go')]=str(target)
+ source=scratch/'internal_lower_latent_units.go'
+ text=source.read_text()
+ needle='if selection != nil && node != selection.node {'
+ assert text.count(needle)==1
+ source.write_text(text.replace(needle,'if !binaryAnalysisUnits[program.Where(node)] { continue }\n\t\t\t'+needle))
+ (scratch/'overlay.json').write_text(json.dumps(overlay))

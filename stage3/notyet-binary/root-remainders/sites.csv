@@ -1,0 +1,222 @@
+where,reason,operator,left,right,whole,expression
+src/compiler/binder.ts:1031:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!(currentFlow.flags & FlowFlags.Unreachable) && containerFlags & ContainerFlags.IsFunctionLike
+src/compiler/binder.ts:1388:14,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,expression.kind === SyntaxKind.TrueKeyword && flags & FlowFlags.FalseCondition
+src/compiler/binder.ts:2587:22,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,originalKeywordKind === SyntaxKind.YieldKeyword && node.flags & NodeFlags.YieldContext
+src/compiler/binder.ts:915:44,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,hasExportModifier || container.flags & NodeFlags.ExportContext
+src/compiler/binder.ts:944:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isDeclaration(declName.parent) && getCombinedModifierFlags(declName.parent) & ModifierFlags.Export
+src/compiler/checker.ts:11195:61,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!expandingEnum && (t.flags | TypeFlags.EnumLike)
+src/compiler/checker.ts:11225:13,a BinaryExpression with a value and a number,&&,Symbol,number,number,type.symbol && type.symbol.flags & SymbolFlags.TypeLiteral
+src/compiler/checker.ts:11285:13,a BinaryExpression with a value and a number,&&,Declaration[] | undefined,number,number | undefined,symbol.declarations && symbol.declarations.length
+src/compiler/checker.ts:11753:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && declaration.flags & NodeFlags.Ambient
+src/compiler/checker.ts:12077:21,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!isAutoTypedProperty(prop) || getEffectiveModifierFlags(prop.valueDeclaration) & ModifierFlags.Ambient
+src/compiler/checker.ts:12160:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!isInJSFile(decl) || !init || !isObjectLiteralExpression(init) || init.properties.length
+src/compiler/checker.ts:12835:20,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && symbol.flags & SymbolFlags.Optional
+src/compiler/checker.ts:13327:13,a BinaryExpression with a value and a number,&&,Symbol,number,number,baseConstructorType.symbol && baseConstructorType.symbol.flags & SymbolFlags.Class
+src/compiler/checker.ts:13901:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!(parent.flags & SymbolFlags.Class) && lateSymbol.flags & getExcludedSymbolFlags(symbolFlags)
+src/compiler/checker.ts:14195:22,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!skipUnionExpanding && restType.flags & TypeFlags.Union
+src/compiler/checker.ts:14430:17,a BinaryExpression with a string and a string,||,__String | undefined,__String,__String,paramName || `arg${i}` as __String
+src/compiler/checker.ts:14803:21,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!stringsOnly || info.keyType.flags & (TypeFlags.String | TypeFlags.TemplateLiteral)
+src/compiler/checker.ts:14873:22,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,isValidIndexKeyType(propNameType) || propNameType.flags & (TypeFlags.Any | TypeFlags.Enum)
+src/compiler/checker.ts:14900:24,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && symbol.flags & SymbolFlags.Optional
+src/compiler/checker.ts:14959:44,a BinaryExpression with a value and a number,&&,Type,number,number,constraint && constraint.flags & TypeFlags.TypeParameter
+src/compiler/checker.ts:15265:24,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,constraint && constraint.flags & (TypeFlags.TypeParameter | TypeFlags.Index | TypeFlags.Conditional)
+src/compiler/checker.ts:17855:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,elementFlags.length === 1 && elementFlags[0]! & ElementFlags.Rest
+src/compiler/checker.ts:18090:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!strictNullChecks && flags & TypeFlags.Nullable
+src/compiler/checker.ts:18452:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,types.length === 2 && types[0]!.flags & TypeFlags.BooleanLiteral
+src/compiler/checker.ts:18623:29,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,t === undefinedType && result.length
+src/compiler/checker.ts:18626:29,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,t === missingType && result.length
+src/compiler/checker.ts:18956:17,a BinaryExpression with a value and a number,&&,Type,number,number,type && type.flags & include
+src/compiler/checker.ts:19080:29,a BinaryExpression with a string and a string,||,string | undefined,"""""",string,"getTemplateStringForType(t) || """""
+src/compiler/checker.ts:19407:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,indexNode.kind !== SyntaxKind.BigIntLiteral && indexType.flags & (TypeFlags.StringLiteral | TypeFlags.NumberLiteral)
+src/compiler/checker.ts:19558:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isGenericTupleType(objectType) && indexType.flags & TypeFlags.NumberLike
+src/compiler/checker.ts:20541:13,a BinaryExpression with a value and a number,&&,readonly T[] | undefined,number,number | undefined,items && items.length
+src/compiler/checker.ts:20960:16,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && modifiers & MappedTypeModifiers.IncludeOptional
+src/compiler/checker.ts:21078:27,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,origin && origin.flags & TypeFlags.UnionOrIntersection
+src/compiler/checker.ts:21085:54,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,origin && origin.flags & TypeFlags.Intersection
+src/compiler/checker.ts:22137:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && type.flags & TypeFlags.Union
+src/compiler/checker.ts:22232:40,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,relation === strictSubtypeRelation && s & TypeFlags.Any
+src/compiler/checker.ts:22262:41,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!strictNullChecks && !(t & TypeFlags.UnionOrIntersection) || t & (TypeFlags.Undefined | TypeFlags.Void)
+src/compiler/checker.ts:22263:36,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!strictNullChecks && !(t & TypeFlags.UnionOrIntersection) || t & TypeFlags.Null
+src/compiler/checker.ts:22981:57,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!noImplicitAny && getObjectFlags(target) & ObjectFlags.JSLiteral
+src/compiler/checker.ts:23077:25,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,sourceOrigin && sourceOrigin.flags & TypeFlags.Intersection
+src/compiler/checker.ts:23083:25,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,targetOrigin && targetOrigin.flags & TypeFlags.Union
+src/compiler/checker.ts:23102:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,relation === comparableRelation && target.flags & TypeFlags.Primitive
+src/compiler/checker.ts:23142:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,relation !== comparableRelation && getObjectFlags(target) & ObjectFlags.PrimitiveUnion
+src/compiler/checker.ts:23276:29,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,inVarianceComputation && varianceFlags & VarianceFlags.Unreliable
+src/compiler/checker.ts:23326:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,reportErrors && entry & RelationComparisonResult.Failed
+src/compiler/checker.ts:23671:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,relation === comparableRelation && sourceFlags & TypeFlags.TypeParameter
+src/compiler/checker.ts:23790:25,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!keysRemapped && templateType.flags & TypeFlags.IndexedAccess
+src/compiler/checker.ts:23818:33,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!keysRemapped && nonNullComponent.flags & TypeFlags.IndexedAccess
+src/compiler/checker.ts:23920:47,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"shouldDeferIndexType((source as IndexType).type, (source as IndexType).indexFlags) && getObjectFlags((source as IndexType).type) & ObjectFlags.Mapped"
+src/compiler/checker.ts:24362:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!skipOptional && sourceProp.flags & SymbolFlags.Optional
+src/compiler/checker.ts:24564:143,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!optionalsOnly || targetProp.flags & SymbolFlags.Optional
+src/compiler/checker.ts:2456:32,a BinaryExpression with a string and a string,=,__String,__String,__String,file.localJsxFragmentNamespace = getFirstIdentifier(entity).escapedText
+src/compiler/checker.ts:2462:32,a BinaryExpression with a string and a string,=,__String,InternalSymbolName | (string & { __escapedIdentifier: void; }),InternalSymbolName | (string & { __escapedIdentifier: void; }),file.localJsxNamespace = localJsxNamespace
+src/compiler/checker.ts:24847:69,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,relation !== strictSubtypeRelation || getObjectFlags(source) & ObjectFlags.FreshLiteral
+src/compiler/checker.ts:24864:23,a BinaryExpression with a value and a number,&&,IndexInfo | undefined,Ternary,Ternary | undefined,"sourceInfo && isRelatedTo(sourceInfo.type, targetInfo.type, RecursionFlags.Both)"
+src/compiler/checker.ts:25008:16,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,type === globalArrayType || type === globalReadonlyArrayType || type.objectFlags & ObjectFlags.Tuple
+src/compiler/checker.ts:25105:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,(variances[i]! & VarianceFlags.VarianceMask) === VarianceFlags.Covariant && typeArguments[i]!.flags & TypeFlags.Void
+src/compiler/checker.ts:25194:16,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,prop.parent && prop.parent.flags & SymbolFlags.Class
+src/compiler/checker.ts:25777:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"type === regularFalseType ||
+                type === falseType ||
+                type.flags & (TypeFlags.Void | TypeFlags.Undefined | TypeFlags.Null | TypeFlags.AnyOrUnknown)"
+src/compiler/checker.ts:25923:15,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isObjectLiteralType(type) && getObjectFlags(type) & ObjectFlags.FreshLiteral
+src/compiler/checker.ts:26211:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,noImplicitAny && getObjectFlags(type) & ObjectFlags.ContainsWideningType
+src/compiler/checker.ts:26811:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,source === target && source.flags & TypeFlags.UnionOrIntersection
+src/compiler/checker.ts:26915:29,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!(priority & InferencePriority.ReturnType) && target.flags & TypeFlags.TypeParameter
+src/compiler/checker.ts:2700:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"!(target.flags & getExcludedSymbolFlags(source.flags)) ||
+            (source.flags | target.flags) & SymbolFlags.Assignment"
+src/compiler/checker.ts:27107:17,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,strictFunctionTypes || priority & InferencePriority.AlwaysStrict
+src/compiler/checker.ts:27398:53,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,sourceArity - startLength - endLength === 1 && source.target.elementFlags[startLength]! & ElementFlags.Rest
+src/compiler/checker.ts:27670:36,a BinaryExpression with a value and a number,&&,Type | undefined,Ternary,Ternary | undefined,"fallbackType && context.compareTypes(fallbackType, getTypeWithThisArgument(instantiatedConstraint, fallbackType))"
+src/compiler/checker.ts:27968:13,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,type && type.flags & TypeFlags.Union
+src/compiler/checker.ts:28033:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,types.length < 10 || getObjectFlags(unionType) & ObjectFlags.PrimitiveUnion
+src/compiler/checker.ts:28252:19,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,ignoreObjects && t.flags & TypeFlags.Object
+src/compiler/checker.ts:28269:63,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && type.flags & TypeFlags.Unknown
+src/compiler/checker.ts:28492:19,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,source === target || source.flags & TypeFlags.Never
+src/compiler/checker.ts:28535:17,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,origin && origin.flags & TypeFlags.Union
+src/compiler/checker.ts:28578:23,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,origin && origin.flags & TypeFlags.Union
+src/compiler/checker.ts:29033:20,a BinaryExpression with a string and a string,=,string | undefined,string | undefined,string | undefined,"key = getFlowCacheKey(reference, declaredType, initialType, flowContainer)"
+src/compiler/checker.ts:29325:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!bypassFlow && antecedent.flags & FlowFlags.SwitchClause
+src/compiler/checker.ts:29395:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,flowLoopNodes[i] === flow && flowLoopKeys[i] === key && flowLoopTypes[i]!.length
+src/compiler/checker.ts:29553:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,(operator === SyntaxKind.EqualsEqualsEqualsToken || operator === SyntaxKind.ExclamationEqualsEqualsToken) && type.flags & TypeFlags.Union
+src/compiler/checker.ts:29568:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,data.clauseStart < data.clauseEnd && type.flags & TypeFlags.Union
+src/compiler/checker.ts:30703:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,canCollectSymbolAliasAccessabilityData && jsxFactorySym.flags & SymbolFlags.Alias
+src/compiler/checker.ts:30953:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,rootDeclaration.kind === SyntaxKind.VariableDeclaration && getCombinedNodeFlagsCached(rootDeclaration) & NodeFlags.Constant
+src/compiler/checker.ts:31060:13,a BinaryExpression with a value and a number,&&,Declaration | undefined,number,number | undefined,declaration && localOrExportSymbol.flags & SymbolFlags.Class
+src/compiler/checker.ts:31121:19,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isInJSFile(node) && localOrExportSymbol.flags & SymbolFlags.ValueModule
+src/compiler/checker.ts:31197:35,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,isParameter || isAlias
+src/compiler/checker.ts:32078:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!node.asteriskToken && contextualReturnType.flags & TypeFlags.Union
+src/compiler/checker.ts:32536:40,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,offset > 0 && (t.target.combinedFlags & ElementFlags.Variable)
+src/compiler/checker.ts:33138:17,a BinaryExpression with a string and a string,||,__String | undefined,__String,__String,paramName || `arg${i}` as __String
+src/compiler/checker.ts:3352:17,a BinaryExpression with a value and a number,&&,Node | undefined,number,number | undefined,errorLocation && meaning & SymbolFlags.Value
+src/compiler/checker.ts:34195:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,signatures.length === 0 && apparentElemType.flags & TypeFlags.Union
+src/compiler/checker.ts:34697:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && type.flags & TypeFlags.Unknown
+src/compiler/checker.ts:35036:51,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,prop && prop.flags & SymbolFlags.Optional
+src/compiler/checker.ts:35096:18,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isMethodDeclaration(valueDeclaration) && getCombinedModifierFlagsCached(valueDeclaration) & ModifierFlags.Static
+src/compiler/checker.ts:35139:13,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,prop.parent && prop.parent.flags & SymbolFlags.Class
+src/compiler/checker.ts:35159:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!isPrivateIdentifier(propNode) && containingType.flags & TypeFlags.Union
+src/compiler/checker.ts:35365:21,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,alias && alias.flags & meaning
+src/compiler/checker.ts:35375:34,a BinaryExpression with a value and a number,&&,Symbol,number,number,prop && (prop.flags & SymbolFlags.ClassMember)
+src/compiler/checker.ts:35795:45,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,restType && restType.flags & TypeFlags.TypeParameter
+src/compiler/checker.ts:35892:13,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,restType && restType.flags & TypeFlags.TypeParameter
+src/compiler/checker.ts:37264:17,a BinaryExpression with a value and a number,&&,ClassLikeDeclaration | undefined,number,number | undefined,containingClass && modifiers & ModifierFlags.Protected
+src/compiler/checker.ts:37357:17,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,resolvedSymbol && resolvedSymbol.flags & SymbolFlags.GetAccessor
+src/compiler/checker.ts:37858:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"node.kind === SyntaxKind.CallExpression && !node.questionDotToken && node.parent.kind === SyntaxKind.ExpressionStatement &&
+            returnType.flags & TypeFlags.Void"
+src/compiler/checker.ts:37884:13,a BinaryExpression with a value and a number,&&,JSDocSignature | SignatureDeclaration | undefined,number,number | undefined,signature.declaration && signature.declaration.flags & NodeFlags.Deprecated
+src/compiler/checker.ts:38515:17,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!isTupleType(restType) || restType.target.combinedFlags & ElementFlags.Variable
+src/compiler/checker.ts:39461:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,strictNullChecks && aggregatedTypes.length
+src/compiler/checker.ts:40996:25,a BinaryExpression with a value and a number,&&,Symbol,number,number,propType.symbol && propType.symbol.flags & SymbolFlags.Class
+src/compiler/checker.ts:41222:13,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,returnType && returnType.flags & TypeFlags.Union
+src/compiler/checker.ts:42621:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!(node.flags & NodeFlags.Ambient) && nodeIsPresent(node.body) && (node.flags & NodeFlags.HasImplicitReturn)
+src/compiler/checker.ts:42931:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"accessNode.kind === SyntaxKind.ElementAccessExpression && isAssignmentTarget(accessNode) &&
+                getObjectFlags(objectType) & ObjectFlags.Mapped"
+src/compiler/checker.ts:43067:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"n.parent.kind !== SyntaxKind.InterfaceDeclaration &&
+            n.parent.kind !== SyntaxKind.ClassDeclaration &&
+            n.parent.kind !== SyntaxKind.ClassExpression &&
+            n.flags & NodeFlags.Ambient"
+src/compiler/checker.ts:43306:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,hasNonAmbientClass && !isConstructor && symbol.flags & SymbolFlags.Function
+src/compiler/checker.ts:44783:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,languageVersion >= ScriptTarget.ES2015 || !hasRestParameter(node) || node.flags & NodeFlags.Ambient
+src/compiler/checker.ts:44906:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,parent.kind === SyntaxKind.SourceFile && isExternalOrCommonJsModule(parent as SourceFile) && parent.flags & NodeFlags.HasAsyncFunctions
+src/compiler/checker.ts:44957:17,a BinaryExpression with a value and a number,&&,Node,number,number,container && getNodeCheckFlags(container) & NodeCheckFlags.ContainsSuperPropertyInStaticInitializer
+src/compiler/checker.ts:4576:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!symbol && (namespace.flags & SymbolFlags.Alias)
+src/compiler/checker.ts:4591:46,a BinaryExpression with a value and a number,&&,ObjectType,number,number,"globalObjectType // <-- can't pull on types if global types aren't initialized yet
+                        && (meaning & SymbolFlags.Type)"
+src/compiler/checker.ts:46356:40,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"methodName === ""next"" && (method.flags & SymbolFlags.Optional)"
+src/compiler/checker.ts:46524:28,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"maybeTypeOfKind(type, TypeFlags.Void) || type.flags & (TypeFlags.Any | TypeFlags.Undefined)"
+src/compiler/checker.ts:4704:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!decl || !isInJSFile(decl) || symbol.flags & SymbolFlags.TypeAlias
+src/compiler/checker.ts:47173:27,a BinaryExpression with a value and a number,&&,Symbol,number,number,staticBaseType.symbol && staticBaseType.symbol.flags & SymbolFlags.Class
+src/compiler/checker.ts:47211:45,a BinaryExpression with a value and a number,&&,Symbol,number,number,t.symbol && t.symbol.flags & SymbolFlags.Class
+src/compiler/checker.ts:47760:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!strictNullChecks || !strictPropertyInitialization || node.flags & NodeFlags.Ambient
+src/compiler/checker.ts:48013:17,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,rootSymbol && rootSymbol.flags & SymbolFlags.Enum
+src/compiler/checker.ts:48242:39,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,isGlobalAugmentation || (getSymbolOfDeclaration(node).flags & SymbolFlags.Transient)
+src/compiler/checker.ts:4997:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!exported || exported === unknownSymbol || exported === moduleSymbol || moduleSymbol.exports!.size === 1 || exported.flags & SymbolFlags.Alias
+src/compiler/checker.ts:50817:17,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,target && getEffectiveModifierFlags(node) & ModifierFlags.Export
+src/compiler/checker.ts:52200:18,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,(node.kind === SyntaxKind.ImportDeclaration || node.kind === SyntaxKind.ImportEqualsDeclaration) && flags & ModifierFlags.Ambient
+src/compiler/checker.ts:52475:13,a BinaryExpression with a value and a number,||,QuestionDotToken | undefined,number,number | QuestionDotToken,node.questionDotToken || node.flags & NodeFlags.OptionalChain
+src/compiler/checker.ts:5311:16,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,symbol && symbol.mergeId
+src/compiler/checker.ts:53538:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,isFractional || isScientific
+src/compiler/checker.ts:53714:30,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,isUnitType(overlap) || overlap.flags & TypeFlags.Union
+src/compiler/checker.ts:5424:17,a BinaryExpression with a value and a number,&&,Node | undefined,number,number | undefined,"enclosingDeclaration &&
+                container.flags & getQualifiedLeftMeaning(meaning)"
+src/compiler/checker.ts:5432:40,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"!(container.flags & getQualifiedLeftMeaning(meaning))
+                    && container.flags & SymbolFlags.Type"
+src/compiler/checker.ts:5602:13,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,container && container.flags & (SymbolFlags.Class | SymbolFlags.Interface)
+src/compiler/checker.ts:5873:13,a BinaryExpression with a value and a number,&&,Declaration[] | undefined,number,number | undefined,symbol.declarations && symbol.declarations.length
+src/compiler/checker.ts:6547:21,a BinaryExpression with a value and a number,&&,Type | undefined,number,number | undefined,nameType && nameType.flags & (TypeFlags.EnumLiteral | TypeFlags.UniqueESSymbol)
+src/compiler/checker.ts:7119:56,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,"!isMappedTypeWithKeyofConstraintDeclaration(type)
+                    && !(getModifiersTypeFromMappedType(type).flags & TypeFlags.Unknown)
+                    && context.flags & NodeBuilderFlags.GenerateNamesForShadowedTypeParams"
+src/compiler/checker.ts:7126:25,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isHomomorphicMappedTypeWithNonHomomorphicInstantiation(type) && context.flags & NodeBuilderFlags.GenerateNamesForShadowedTypeParams
+src/compiler/checker.ts:7160:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isHomomorphicMappedTypeWithNonHomomorphicInstantiation(type) && context.flags & NodeBuilderFlags.GenerateNamesForShadowedTypeParams
+src/compiler/checker.ts:7461:25,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,context.encounteredError || (context.flags & NodeBuilderFlags.AllowEmptyTuple)
+src/compiler/checker.ts:7676:25,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isExpanding(context) && propertySymbol.flags & SymbolFlags.Prototype
+src/compiler/checker.ts:7978:26,a BinaryExpression with a string and a string,||,string | undefined,"""x""",string,"getNameFromIndexInfo(indexInfo) || ""x"""
+src/compiler/checker.ts:8037:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,(kind === SyntaxKind.ConstructorType) && signature.flags & SignatureFlags.Abstract
+src/compiler/checker.ts:8464:38,a BinaryExpression with a value and a number,||,Node | undefined,number,number | Node,context.enclosingDeclaration || context.flags & NodeBuilderFlags.UseFullyQualifiedType
+src/compiler/checker.ts:8530:25,a BinaryExpression with a string and a string,&&,string | undefined,string | undefined,string | undefined,specifierA && specifierB
+src/compiler/commandLineParser.ts:3138:17,a BinaryExpression with a string and a string,||,string | undefined,string | undefined,string | undefined,outDir || declarationDir
+src/compiler/debug.ts:208:16,a BinaryExpression with a string and a string,||,string | undefined,"""Unexpected node.""",string,"message || ""Unexpected node."""
+src/compiler/debug.ts:232:43,a BinaryExpression with a string and a string,||,string | undefined,"""""",string,"msg || """""
+src/compiler/debug.ts:401:21,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,enumValue !== 0 && enumValue & value
+src/compiler/emitter.ts:1077:45,a BinaryExpression with a string and a string,||,string | undefined,"""""",string,"mapOptions.sourceRoot || """""
+src/compiler/emitter.ts:3042:24,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,forceSingleLine || getEmitFlags(node) & EmitFlags.SingleLine
+src/compiler/emitter.ts:4570:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"isBlock(node) ||
+            getEmitFlags(parent) & EmitFlags.SingleLine"
+src/compiler/emitter.ts:4824:35,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,hasTrailingComma && (format & ListFormat.AllowTrailingComma)
+src/compiler/emitter.ts:509:31,a BinaryExpression with a string and a string,&&,string | undefined,string | undefined,string | undefined,"jsFilePath && getSourceMapFilePath(jsFilePath, options)"
+src/compiler/emitter.ts:5299:13,a BinaryExpression with a value and a number,&&,Node | undefined,number,number | undefined,node && getEmitFlags(node) & EmitFlags.ReuseTempVariableScope
+src/compiler/emitter.ts:5317:13,a BinaryExpression with a value and a number,&&,Node | undefined,number,number | undefined,node && getEmitFlags(node) & EmitFlags.ReuseTempVariableScope
+src/compiler/emitter.ts:5474:34,a BinaryExpression with a string and a string,=,string,string,string,"cache[nodeId] = generateNameForNode(node, privateName, flags ?? GeneratedIdentifierFlags.None, formatGeneratedNamePart(prefix, generateName), formatGeneratedNamePart(suffix))"
+src/compiler/moduleNameResolver.ts:1045:48,a BinaryExpression with a string and a string,=,RedirectsCacheKey | undefined,RedirectsCacheKey,RedirectsCacheKey,"result = getKeyForCompilerOptions(options, moduleResolutionOptionDeclarations) as RedirectsCacheKey"
+src/compiler/moduleNameResolver.ts:1158:38,a BinaryExpression with a string and a string,||,string | undefined,string,string,result.resolvedModule.originalPath || result.resolvedModule.resolvedFileName
+src/compiler/moduleNameResolver.ts:1163:10,a BinaryExpression with a string and a string,||,string | undefined,string | undefined,string | undefined,result.resolvedTypeReferenceDirective.originalPath || result.resolvedTypeReferenceDirective.resolvedFileName
+src/compiler/moduleNameResolver.ts:2885:21,a BinaryExpression with a string and a string,||,string | undefined,string | undefined,string | undefined,state.compilerOptions.declarationDir || state.compilerOptions.outDir
+src/compiler/moduleNameResolver.ts:664:13,a BinaryExpression with a value and a number,&&,string[] | undefined,number,number | undefined,typeRoots && typeRoots.length
+src/compiler/moduleNameResolver.ts:696:51,a BinaryExpression with a string and a string,&&,string | undefined,string,string | undefined,containingFile && getDirectoryPath(containingFile)
+src/compiler/parser.ts:2640:35,a BinaryExpression with a string and a string,=,string | undefined,string,string,identifier = text
+src/compiler/parser.ts:6513:13,a BinaryExpression with a value and a number,||,QuestionDotToken | undefined,number,number | QuestionDotToken,questionDotToken || tag.flags & NodeFlags.OptionalChain
+src/compiler/path.ts:400:16,a BinaryExpression with a string and a string,||,string | undefined,"""""",string,"tryGetExtensionFromPath(path, extensions, stringEqualityComparer) || """""
+src/compiler/program.ts:4450:47,a BinaryExpression with a string and a string,||,string | undefined,"""6.0""",string,typeScriptVersion || versionMajorMinor
+src/compiler/resolutionCache.ts:1713:9,a BinaryExpression with a string and a string,||,string | undefined,string | undefined,string | undefined,"(resolution as ResolvedModuleWithFailedLookupLocations).resolvedModule?.originalPath ||
+        (resolution as ResolvedTypeReferenceDirectiveWithFailedLookupLocations).resolvedTypeReferenceDirective?.originalPath"
+src/compiler/scanner.ts:1313:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,decimalFragment !== undefined || tokenFlags & TokenFlags.Scientific
+src/compiler/scanner.ts:2546:30,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,ch === CharacterCodes.closeBracket && characterClassDepth
+src/compiler/scanner.ts:3996:16,a BinaryExpression with a string and a string,||,string | undefined,"""""",string,"newText || """""
+src/compiler/semver.ts:444:12,a BinaryExpression with a string and a string,||,string,"""*""",string,"map(alternatives, formatAlternative).join("" || "") || ""*"""
+src/compiler/sys.ts:1841:49,a BinaryExpression with a string and a string,||,string,""".""",string,"path || ""."""
+src/compiler/sys.ts:310:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,!queue.pollScheduled && changedFilesInLastPoll.length
+src/compiler/sys.ts:400:25,a BinaryExpression with a string and a string,||,string,""".""",string,"getDirectoryPath(filePath) || ""."""
+src/compiler/transformers/classFields.ts:1080:17,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,hasStaticModifier(node) && getInternalEmitFlags(node) & InternalEmitFlags.TransformPrivateStaticElements
+src/compiler/transformers/classFields.ts:1907:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,shouldTransformInitializersUsingSet || shouldTransformPrivateElementsOrClassStaticBlocks || getInternalEmitFlags(node) & InternalEmitFlags.TransformPrivateStaticElements
+src/compiler/transformers/classFields.ts:2016:42,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,shouldTransformPrivateElementsOrClassStaticBlocks || getInternalEmitFlags(node) & InternalEmitFlags.TransformPrivateStaticElements
+src/compiler/transformers/classFields.ts:829:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,hasStaticModifier(node) && getInternalEmitFlags(node) & InternalEmitFlags.TransformPrivateStaticElements
+src/compiler/transformers/es2015.ts:3568:13,a BinaryExpression with a value and a number,&&,VariableDeclarationList | undefined,number,number | undefined,loopInitializer && (getCombinedNodeFlags(loopInitializer) & NodeFlags.BlockScoped)
+src/compiler/transformers/es2015.ts:3710:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,containsYield && hierarchyFacts & HierarchyFacts.AsyncFunctionBody
+src/compiler/transformers/es2017.ts:958:13,a BinaryExpression with a boolean and a number,&&,boolean,NodeCheckFlags,false | NodeCheckFlags,hint === EmitHint.Expression && enclosingSuperContainerFlags
+src/compiler/transformers/es2018.ts:1393:13,a BinaryExpression with a boolean and a number,&&,boolean,NodeCheckFlags,false | NodeCheckFlags,hint === EmitHint.Expression && enclosingSuperContainerFlags
+src/compiler/transformers/es2018.ts:697:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isBindingPattern(node.name) && node.name.transformFlags & TransformFlags.ContainsObjectRestOrSpread
+src/compiler/transformers/generators.ts:2089:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,isGeneratedIdentifier(node) || getEmitFlags(node) & EmitFlags.HelperName
+src/compiler/transformers/generators.ts:2176:16,a BinaryExpression with a value and a number,&&,CodeBlock | undefined,CodeBlockKind,CodeBlockKind | undefined,block && block.kind
+src/compiler/transformers/jsx.ts:318:30,a BinaryExpression with a value and a number,&&,readonly JsxChild[] | undefined,number,number | undefined,children && children.length
+src/compiler/transformers/jsx.ts:415:13,a BinaryExpression with a value and a number,&&,readonly JsxChild[],number,number,children && children.length
+src/compiler/transformers/module/esnextAnd2015.ts:416:13,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,isIdentifier(node) && getEmitFlags(node) & EmitFlags.HelperName
+src/compiler/transformers/module/module.ts:1410:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!getESModuleInterop(compilerOptions) || getInternalEmitFlags(node) & InternalEmitFlags.NeverApplyImportHelper
+src/compiler/transformers/module/module.ts:1420:13,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,!getESModuleInterop(compilerOptions) || getInternalEmitFlags(node) & InternalEmitFlags.NeverApplyImportHelper
+src/compiler/transformers/module/module.ts:234:15,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"isEffectiveExternalModule(node, compilerOptions) ||
+                node.transformFlags & TransformFlags.ContainsDynamicImport"
+src/compiler/transformers/module/system.ts:184:41,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"isEffectiveExternalModule(node, compilerOptions) || node.transformFlags & TransformFlags.ContainsDynamicImport"
+src/compiler/transformers/ts.ts:904:31,a BinaryExpression with a boolean and a number,||,boolean,number,number | true,"promoteToIIFE ||
+            facts & ClassFacts.IsExportOfNamespace"
+src/compiler/utilities.ts:1362:12,a BinaryExpression with a value and a number,&&,EmitNode | undefined,EmitFlags,EmitFlags | undefined,emitNode && emitNode.flags
+src/compiler/utilities.ts:1372:12,a BinaryExpression with a value and a number,&&,EmitNode | undefined,InternalEmitFlags,InternalEmitFlags | undefined,emitNode && emitNode.internalFlags
+src/compiler/utilities.ts:3107:9,a BinaryExpression with a value and a number,&&,TsConfigSourceFile | undefined,number,number | undefined,tsConfigSourceFile && tsConfigSourceFile.statements.length
+src/compiler/utilities.ts:6197:12,a BinaryExpression with a string and a string,||,string | undefined,string,string,escapedCharsMap.get(c) || encodeUtf16EscapeSequence(c.charCodeAt(0))
+src/compiler/utilities.ts:6245:12,a BinaryExpression with a string and a string,||,string | undefined,string,string,jsxEscapedCharsMap.get(c) || encodeJsxCharacterEntity(c.charCodeAt(0))
+src/compiler/utilities.ts:6560:23,a BinaryExpression with a string and a string,||,string | undefined,string | undefined,string | undefined,options.declarationDir || options.outDir
+src/compiler/utilities.ts:6945:9,a BinaryExpression with a value and a number,&&,readonly CommentRange[] | undefined,number,number | undefined,leadingComments && leadingComments.length
+src/compiler/utilities.ts:7346:51,a BinaryExpression with a boolean and a number,&&,boolean,number,number | false,node.kind === SyntaxKind.Identifier && node.flags & NodeFlags.IdentifierIsInJSDocNamespace
+src/compiler/utilities.ts:8050:16,a BinaryExpression with a value and a number,&&,Symbol | undefined,number,number | undefined,s.parent && s.parent.flags & SymbolFlags.Class
+src/compiler/utilities.ts:8642:22,a BinaryExpression with a string and a string,||,string,"""""",string,"file.fileName || """""
+src/compiler/utilitiesPublic.ts:1322:17,a BinaryExpression with a value and a number,&&,JSDoc | undefined,number,number | undefined,jsDoc && length(jsDoc.tags)
