@@ -277,8 +277,18 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.kept(element)
-	if !isKnown || slotless(valueType) {
-		// An element is one adamic_value, and number | undefined needs two words.
+	if concrete := l.concrete(element); !isKnown && concrete.Flags()&checker.TypeFlagsIntersection != 0 {
+		// A scalar brand changes the static contract, not the value's storage. Never infer
+		// storage from an object-only intersection or an unresolved generic parameter.
+		for _, member := range concrete.Types() {
+			if member.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 {
+				valueType, isKnown = l.kept(member)
+				break
+			}
+		}
+	}
+	if !isKnown || (slotless(valueType) && valueType != ir.MaybeBoolean) {
+		// Optional booleans have a tagged byte; boxed heterogeneous elements still need a storage rule.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
 	return valueType, nil

@@ -378,8 +378,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
 		if expression.Type().IsMaybe() {
 			popped := fmt.Sprintf("%s->elements[--%s->length].%s", array, array, member(expression.Element))
-			if expression.Element == ir.MaybeNumber {
-				popped = unslotted(ir.MaybeNumber, popped)
+			if expression.Element.IsMaybe() {
+				popped = unslotted(expression.Element, popped)
 			} else {
 				popped = maybe(expression.Type(), popped)
 			}
@@ -402,6 +402,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		sort := "adamic_array_sort"
 		if expression.Element == ir.MaybeNumber {
 			sort = "adamic_array_sort_undefined_last"
+		} else if expression.Element == ir.MaybeBoolean {
+			sort = "adamic_array_sort_maybe_boolean"
+			e.declarations = append(e.declarations, `#include "array_maybe_boolean.h"`)
 		}
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
 		// (sort.c), and the throw goes on from here.

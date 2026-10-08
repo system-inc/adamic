@@ -91,8 +91,8 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("if (%s.boolean) {", answer)
 		if visit.Type().IsMaybe() {
 			found := element + "." + member(visit.Element)
-			if visit.Element == ir.MaybeNumber {
-				found = unslotted(ir.MaybeNumber, found)
+			if visit.Element.IsMaybe() {
+				found = unslotted(visit.Element, found)
 			} else {
 				found = maybe(visit.Type(), found)
 			}
