@@ -58,6 +58,8 @@ driver, run `go run ./cmd/lint-registry`; tests regenerate and validate every
 descriptor automatically. Generated `.generated/` registries stay out of Git.
 See `docs/lint-registration.md` for the descriptor and adapter contracts.
 
+A worker on a cloud box doesn't run the whole gate before it pushes. It runs what its change touches: the new or changed fixtures (`go test ./internal/oracle -run 'TestNativeAgreesWithNode/<fixture>'`), the tests it added or changed, and each of its mutants, which must fail. It also refreshes `counts.md` for a new fixture, then pushes. Every push is fast-gated on the gate box within minutes (build, vet, the touched packages' tests, the smoke fixtures, the census), and a red comes back with its first failure. So a whole-package run on a 4-core box only repeats what the gate does 13 times faster after the push. This file is also `AGENTS.md`, so Codex reads the same rules.
+
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 
 On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job. On macOS the leak check is the counted build, whose allocations must be its frees and its values in regions, then `leaks --atExit` on the same binary for malloc memory outside the counts; `leaks` alone can't see a leaked value, since the size-class allocator's chunks stay reachable.
