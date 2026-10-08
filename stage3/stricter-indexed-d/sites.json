@@ -24,7 +24,8 @@
     "present": "{ entry: [\"7\"] }",
     "absent": "{ entry: [] }",
     "blocked": false,
-    "guards": 2
+    "checks": 2,
+    "hole": "{ entry: new Array<string>(1) }"
   },
   {
     "id": "D130",
@@ -38,7 +39,8 @@
     "present": "{ entry: [\"7\"] }",
     "absent": "{ entry: [] }",
     "blocked": false,
-    "guards": 2
+    "checks": 2,
+    "hole": "{ entry: new Array<string>(1) }"
   },
   {
     "id": "D131",
@@ -52,7 +54,8 @@
     "present": "{ entry: [\"7\"] }",
     "absent": "{ entry: [] }",
     "blocked": false,
-    "guards": 2
+    "checks": 2,
+    "hole": "{ entry: new Array<string>(1) }"
   },
   {
     "id": "D171",

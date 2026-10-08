@@ -441,3 +441,31 @@ worker cache; release and sanitized native and backend observations agree.
 Census retains exact metadata for 27 rows with zero missing/extra. Vet and diff
 check are clean. The whole repository gate remains unrun. Final logs are
 preserved under evidence/nullable-final*.log.
+
+## Published representation merges and first witness group
+
+Merged c132be26 (sparse and numeric typed-array support) as 09180ec8 and
+28d30cd3 (readonly records) as f7c17f3b. The one expression-entry conflict
+preserves both typedArrayExpression and recordUse checks. D151 and nullable
+representation controls, including both mutants, pass after both merges
+(merged-nullable.log, 18.009s).
+
+D129, D130 and D131 now pass present, absent, hole, outer-present and
+outer-absent controls (merged-records.log, 14.816s). Chained reads require two
+IR checks and two CLI checked entries, even though both share a source position.
+The inner erased-guard mutant preserves the outer check. Separate outer-key
+controls observe the record lookup directly, since Node throws if an absent
+record key is immediately indexed. Their independently erased outer guard is
+caught. All ordinary controls run in JS and native release and ASan/UBSan;
+mutants build successfully under sanitizers before their output/exit differs.
+
+D119 still refuses its nested record payload at D119.ts:1:24:
+`stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet`.
+Observed in both present and absent programs after merging the implementation.
+It waits on nested record payload representation, explicitly outside the
+records worker's supported scalar/array payload scope. No flattening or new
+record representation is attempted here.
+
+First five hole variants D107, D171, D172, D173 and D174 pass with exact named
+exit-70 stderr, source Node undefined, checked explain entries and individually
+erased guards caught (holes-group1.log, 6.102s). Further hole groups follow.
