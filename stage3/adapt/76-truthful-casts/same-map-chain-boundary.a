@@ -1,0 +1,69 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:342-366 (sameMap).
+// From TypeScript 6.0.3, src/compiler/builder.ts:545,551,555,558-564 (next construction and array helper).
+// Private type model: public DiagnosticMessageChain stays unchanged.
+interface DiagnosticMessageChain { messageText: string; category: number; code: number; next?: DiagnosticMessageChain[] | undefined; }
+interface ReusableRepopulateInfoChain { info: true; }
+type ReusableDiagnosticMessageChain = DiagnosticMessageChain | ReusableRepopulateInfoChain;
+type InternalNext = (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[];
+type InternalChain = Omit<DiagnosticMessageChain, "next"> & { next?: InternalNext | undefined };
+type SourceFile = { name: string };
+type Program = { name: string };
+type RepopulateDiagnosticChainInfo = true;
+export function sameMap<T, U = T>(array: T[], f: (x: T, i: number) => U): (T | U)[];
+/** @internal */
+export function sameMap<T, U = T>(array: readonly T[], f: (x: T, i: number) => U): readonly (T | U)[];
+/** @internal */
+export function sameMap<T, U = T>(array: T[] | undefined, f: (x: T, i: number) => U): (T | U)[] | undefined;
+/** @internal */
+export function sameMap<T, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly (T | U)[] | undefined;
+/** @internal */
+export function sameMap<T, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly (T | U)[] | undefined {
+    if (array !== undefined) {
+        for (let i = 0; i < array.length; i++) {
+            const item = array[i]!;
+            const mapped = f(item, i);
+            if (item as unknown !== mapped) {
+                const result: (T | U)[] = array.slice(0, i);
+                result.push(mapped);
+                for (i++; i < array.length; i++) {
+                    result.push(f(array[i]!, i));
+                }
+                return result;
+            }
+        }
+    }
+    return array;
+}
+function convertOrRepopulateDiagnosticMessageChain<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(chain: T, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined): DiagnosticMessageChain {
+    const info = repopulateInfo(chain);
+    if ("messageText" in chain) return chain;
+    return { messageText: info ? "converted" : "empty", category: 0, code: 0 };
+}
+function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(array: T[] | undefined, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined): (DiagnosticMessageChain | T)[] | undefined {
+    return sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));
+}
+function site545<T extends ReusableDiagnosticMessageChain>(chain: {next: T[]}, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined): InternalChain {
+    return { messageText: "mode", category: 0, code: 0, next: convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo) };
+}
+function site551<T extends ReusableDiagnosticMessageChain>(chain: {next: T[]}, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined): InternalChain {
+    return { messageText: "module", category: 0, code: 0, next: convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo) };
+}
+function site555<T extends ReusableDiagnosticMessageChain>(chain: {next: T[]}, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined): InternalChain {
+    const next = convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo);
+    return { messageText: "unchanged head", category: 0, code: 0, next };
+}
+function inputs(): ReusableDiagnosticMessageChain[] {
+    const array: ReusableDiagnosticMessageChain[] = [{messageText:"first",category:0,code:0}];
+    array.push({get info(): true { array[0] = {info:true}; return true; }});
+    return array;
+}
+function info(chain: ReusableDiagnosticMessageChain): true | undefined { return "info" in chain ? chain.info : undefined; }
+const program: Program = { name: "fixture" };
+const result564 = convertOrRepopulateDiagnosticMessageChainArray(inputs(), undefined, program, info);
+const result545 = site545({next:inputs()}, undefined, program, info);
+const result551 = site551({next:inputs()}, undefined, program, info);
+const result555 = site555({next:inputs()}, undefined, program, info);
+console.log(`564:${result564?.[0] !== undefined && "messageText" in result564[0]}`);
+console.log(`545:${result545.next?.[0] !== undefined && "messageText" in result545.next[0]}`);
+console.log(`551:${result551.next?.[0] !== undefined && "messageText" in result551.next[0]}`);
+console.log(`555:${result555.next?.[0] !== undefined && "messageText" in result555.next[0]}`);
