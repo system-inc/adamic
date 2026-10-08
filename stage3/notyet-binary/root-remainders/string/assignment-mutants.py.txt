@@ -1,0 +1,17 @@
+from pathlib import Path
+import subprocess,os
+p=Path('internal/native/assignment_value.go');original=p.read_text()
+for name in ['double-right','old-string']:
+ try:
+  if name=='double-right':
+   before='value := e.snapshot(raw.Type(), e.value(raw))';assert original.count(before)==1;changed=original.replace(before,'e.value(raw)\n'+before)
+  else:
+   before='case ir.Assign:\n\t\tvalue, stored :=';assert original.count(before)==1
+   changed=original.replace(before,'case ir.Assign:\n old := ""\n if expression.Type() == ir.String && store.Value.Type() == ir.String { old = e.snapshot(ir.String,e.read(ir.Read{Local:store.Local,Of:ir.String})) }\n\t\tvalue, stored :=')
+   start=changed.index('case ir.Assign:');end=changed.index('\n\tcase ',start+1);part=changed[start:end];assert part.count('return value')==1;changed=changed[:start]+part.replace('return value','if old != "" { return old }; return value')+changed[end:]
+  p.write_text(changed)
+  log=Path('/tmp/remainder-string-mutant-'+name+'.log')
+  with log.open('w') as f:r=subprocess.run(['go','test','./internal/oracle','-run','TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_string','-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+  text=log.read_text();assert r.returncode and 'stdout differs' in text and '[build failed]' not in text,(name,text)
+  print(name,'caught by Node stdout',flush=True)
+ finally:p.write_text(original)

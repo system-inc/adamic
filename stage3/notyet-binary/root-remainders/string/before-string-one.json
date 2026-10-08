@@ -1,0 +1,141 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 836856,
+      "body_end": 839618,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "combineUnionParameters",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14414:36",
+      "reason": "a BinaryExpression with a value and a value",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14414:36: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14414:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14414:36: stage 0 can't lower a BinaryExpression with a value and a value yet",
+      "start": 837715,
+      "end": 837800
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14416:17",
+      "reason": "assigning to an Identifier",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14416:17: stage 0 can't lower assigning to an Identifier yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14416:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14416:17: stage 0 can't lower assigning to an Identifier yet",
+      "start": 837838,
+      "end": 837917
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14418:75",
+      "reason": "reading shorterParamType",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14418:75: stage 0 can't lower reading shorterParamType yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14418:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14418:75: stage 0 can't lower reading shorterParamType yet",
+      "start": 837932,
+      "end": 838027
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14430:17",
+      "reason": "a BinaryExpression with a string and a string",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14430:17: stage 0 can't lower a BinaryExpression with a string and a string yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14428:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14430:17: stage 0 can't lower a BinaryExpression with a string and a string yet",
+      "start": 838616,
+      "end": 838948
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14433:13",
+      "reason": "reading paramSymbol",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14433:13: stage 0 can't lower reading paramSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14433:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14433:13: stage 0 can't lower reading paramSymbol yet",
+      "start": 838948,
+      "end": 839050
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14434:25",
+      "reason": "reading paramSymbol",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14434:25: stage 0 can't lower reading paramSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14400:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14434:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:14434:25: stage 0 can't lower reading paramSymbol yet",
+      "start": 839050,
+      "end": 839088
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_string.a (0.42s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "and:undefined:undefined:0\nor:undefined:undefined:1\nand:undefined:undefined:1\nor::string:2\nand:undefined:undefined:2\nor:right:string:3\nand::string:3\nor:undefined:undefined:4\nand::string:4\nor::string:5\nand::string:5\nor:right:string:6\nand:undefined:undefined:7\nor:0:string:7\nand::string:8\nor:0:string:8\nand:right:string:9\nor:0:string:9\nand:undefined:undefined:10\nor:left/built:string:10\nand::string:11\nor:left/built:string:11\nand:right:string:12\nor:left/built:string:12\nassigned:new/built:string:new/built:13\nsaved:new/built\nassigned::string::14\nsaved:\nassigned:undefined:undefined:undefined:15\nsaved:undefined\n", stderr ""
+            native: exit 0, stdout "and:undefined:undefined:0\nor:undefined:undefined:1\nand:undefined:undefined:1\nor::string:2\nand:undefined:undefined:2\nor:right:string:3\nand::string:3\nor:undefined:undefined:4\nand::string:4\nor::string:5\nand::string:5\nor:right:string:6\nand:undefined:undefined:7\nor:0:string:7\nand::string:8\nor:0:string:8\nand:right:string:9\nor:0:string:9\nand:undefined:undefined:10\nor:left/built:string:10\nand::string:11\nor:left/built:string:11\nand:right:string:12\nor:left/built:string:12\nassigned:old/built:string:new/built:13\nsaved:old/built\nassigned:later:string::14\nsaved:later\nassigned:later:string:undefined:15\nsaved:later\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.438s
+FAIL

@@ -1,0 +1,18 @@
+let calls = 0;
+function right(value: string | undefined): string | undefined { calls += 1; return value; }
+function choose(left: string | undefined, value: string | undefined): void {
+ const and = left && right(value);
+ console.log(`and:${and}:${typeof and}:${calls}`);
+ const or = left || right(value);
+ console.log(`or:${or}:${typeof or}:${calls}`);
+}
+function exercise(left: string | undefined): void { choose(left, undefined); choose(left, ''); choose(left, ['right'].join('')); }
+exercise(undefined); exercise(''); exercise('0'); exercise(['left', 'built'].join('/'));
+let target: string | undefined = ['old', 'built'].join('/');
+function assign(value: string | undefined): void {
+ const assigned = (target = right(value));
+ console.log(`assigned:${assigned}:${typeof assigned}:${target}:${calls}`);
+ target = ['later'].join('');
+ console.log(`saved:${assigned}`);
+}
+assign(['new', 'built'].join('/')); assign(''); assign(undefined);

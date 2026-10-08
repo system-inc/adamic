@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19076:9",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 1111655,
+      "body_end": 1112644,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "addSpans",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19040:5",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 2
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19076:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19080:29",
+      "reason": "a BinaryExpression with a string and a string",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19080:29: stage 0 can't lower a BinaryExpression with a string and a string yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19076:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19080:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:19080:29: stage 0 can't lower a BinaryExpression with a string and a string yet",
+      "start": 1111842,
+      "end": 1111906
+    }
+  ]
+}
