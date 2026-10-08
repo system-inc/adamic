@@ -35,7 +35,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 		t.Fatal(err)
 	}
 	directory := filepath.Dir(configPath)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, osvfs.FS(), nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, osvfs.FS(), nil)
 	if config == nil || len(diagnostics) != 0 || len(config.Errors) != 0 {
 		t.Fatalf("config diagnostics: %v %v", diagnostics, config)
 	}

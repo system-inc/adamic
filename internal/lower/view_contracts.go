@@ -43,7 +43,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	}
 	if l.includesUndefined(target) {
 		present := l.checker.GetNonNullableType(target)
-		if of, known := l.representation(present); known && of == ir.Object {
+		if of, known := l.representation(present); known && (of == ir.Object || of == ir.Record) {
 			id, err := build(present)
 			if err != nil {
 				return 0, err

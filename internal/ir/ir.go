@@ -153,6 +153,10 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
+	// 12 and 13 are reserved runtime slot tags for null and undefined.
+	Record Type = 14
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -185,7 +189,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.

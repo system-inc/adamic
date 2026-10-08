@@ -4,6 +4,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"strings"
 )
 
 // Lazy classification calls this named dictionary adapter. It describes read
@@ -24,6 +26,9 @@ func internDictionaryViewContract(l *lowering, node *ast.Node, target *checker.T
 		}
 	}
 	if element == nil {
+		element = l.finitePartialRecordElement(target)
+	}
+	if element == nil {
 		return 0, l.notYet(node, "a dictionary without a string index contract")
 	}
 	if l.result.ViewContractTypes == nil {
@@ -34,7 +39,11 @@ func internDictionaryViewContract(l *lowering, node *ast.Node, target *checker.T
 	}
 	before := len(l.result.ViewContracts)
 	id := ir.ViewContractID(before + 1)
-	contract := ir.ViewContract{Kind: ir.ViewDictionary, Of: ir.Object, Name: l.checker.TypeToString(target)}
+	of := ir.Object
+	if l.recordElement(target) != nil {
+		of = ir.Record
+	}
+	contract := ir.ViewContract{Kind: ir.ViewDictionary, Of: of, Name: l.checker.TypeToString(target)}
 	// Reserve before building children: recursive record/object graphs share ids.
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
@@ -72,6 +81,9 @@ func internDictionaryViewContract(l *lowering, node *ast.Node, target *checker.T
 // stringDictionary selects only the ordinary string index contract. Other key
 // domains remain deferred obligations and are never silently widened.
 func (l *lowering) stringDictionary(target *checker.Type) bool {
+	if l.regexDictionaryReceiver(target) {
+		return false
+	}
 	if target.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(target) || checker.IsTupleType(target) {
 		return false
 	}
@@ -91,7 +103,7 @@ func (l *lowering) dictionaryRead(node *ast.Node, object, key ir.Expression) (ir
 	if _, ok := ir.DictionaryReadKinds(l.result, id); !ok {
 		return nil, l.lazyReadRefusal(node, sourceExpression(node), "dictionary element "+l.checker.TypeToString(declared))
 	}
-	if l.includesUndefined(declared) && len(l.viewLiterals(declared)) != 0 {
+	if l.includesUndefined(declared) && len(l.viewLiterals(declared)) != 0 && !dictionaryWholeBoolean(l.viewLiterals(declared)) {
 		return nil, l.lazyReadRefusal(node, sourceExpression(node), "optional finite dictionary element")
 	}
 	fields, err := l.viewSchema(node, declared)
@@ -104,13 +116,12 @@ func (l *lowering) dictionaryRead(node *ast.Node, object, key ir.Expression) (ir
 	for field := range fields {
 		l.result.CheckedFields[field] = true
 	}
-	// Demand propagates through the dictionary allocation and its existing stores.
-	l.result.ViewOrigins = append(l.result.ViewOrigins, object)
+	// Actual cast origins govern demand; a record read is not itself a cast.
 	of, err := l.typeOf(node)
 	if err != nil {
 		return nil, err
 	}
-	return ir.Property{Object: object, DictionaryKey: key, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: l.viewLiterals(declared)}, nil
+	return ir.Property{Object: object, DictionaryKey: key, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
 }
 
 // Resolved string-index signatures carry generic arguments that have no named
@@ -144,11 +155,66 @@ func (l *lowering) dictionaryWriteRefusal(node *ast.Node) error {
 	default:
 		return nil
 	}
+	if l.regexDictionaryReceiver(l.checker.GetTypeAtLocation(receiver)) {
+		return nil
+	}
 	if l.processPath(receiver) == "process.env" {
+		return nil
+	}
+	if symbol := l.checker.GetSymbolAtLocation(receiver); symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindVariableDeclaration {
+				initializer := declaration.AsVariableDeclaration().Initializer
+				if initializer != nil && initializer.Kind == ast.KindAsExpression && l.recordElement(l.checker.GetTypeAtLocation(initializer.AsAsExpression().Expression)) == nil && l.recordElement(l.checker.GetTypeAtLocation(initializer)) != nil {
+					return l.notYet(node, "a dictionary write without a producer storage certificate")
+				}
+			}
+		}
+	}
+	if l.recordElement(l.checker.GetTypeAtLocation(receiver)) != nil {
 		return nil
 	}
 	if l.stringDictionary(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(receiver)))) {
 		return l.notYet(node, "a dictionary write without a producer storage certificate")
 	}
 	return nil
+}
+
+func dictionaryWholeBoolean(values []ir.Expression) bool {
+	if len(values) != 2 {
+		return false
+	}
+	a, ok := values[0].(ir.BooleanConstant)
+	b, other := values[1].(ir.BooleanConstant)
+	return ok && other && a.Value != b.Value
+}
+func dictionaryReadLiterals(values []ir.Expression) []ir.Expression {
+	if dictionaryWholeBoolean(values) {
+		return nil
+	}
+	return values
+}
+
+// Unsupported storage refuses at the producer, independently of lazy cast admission.
+func (l *lowering) dictionaryProducerRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindObjectLiteralExpression {
+		return nil
+	}
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && contextual.Flags()&checker.TypeFlagsObject != 0 && enumObjectSymbol(contextual) == nil && len(l.checker.GetIndexInfosOfType(contextual)) != 0 && l.recordElement(contextual) == nil {
+		return l.notYet(node, "a value of type "+l.checker.TypeToString(contextual)+" with an unsupported index signature or named dictionary members")
+	}
+	return nil
+}
+
+// RegExp named groups retain the regex lane's write refusal and storage adapter.
+func (l *lowering) regexDictionaryReceiver(t *checker.Type) bool {
+	for _, info := range l.checker.GetIndexInfosOfType(l.checker.GetNonNullableType(t)) {
+		if declaration := info.Declaration(); declaration != nil {
+			file := ast.GetSourceFileOfNode(declaration)
+			if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+				return true
+			}
+		}
+	}
+	return false
 }

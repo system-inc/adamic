@@ -75,7 +75,20 @@ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_ob
     if (object->heap.kind != adamic_kind_object) dictionary_failure(expression, declared, dictionary_boxed_value(&object->heap).kind);
     if (adamic_record_is(object)) {
         const adamic_map *storage = object->slots[0].reference;
-        return adamic_view_dictionary_read(object, storage->reference_values, key, kinds, child_contract, expression, declared);
+        unsigned char element = (unsigned char)object->slots[1].number;
+        if (storage->reference_values) return adamic_view_dictionary_read(object, true, key, kinds, child_contract, expression, declared);
+        const adamic_value *slot = adamic_record_get(object, key);
+        adamic_view_union_value value = {adamic_view_union_undefined, {.reference = NULL}};
+        if (slot != NULL) {
+            if (element == 1) value = (adamic_view_union_value){adamic_view_union_number, *slot};
+            else if (element == 2) value = (adamic_view_union_value){adamic_view_union_boolean, *slot};
+            else if (element == 7) {
+                adamic_maybe_number maybe = adamic_maybe_number_unpack(slot->number);
+                if (maybe.present) value = (adamic_view_union_value){adamic_view_union_number, {.number = maybe.number}};
+            } else value.kind = adamic_view_union_unknown;
+        }
+        if (value.kind == adamic_view_union_unknown || (kinds & (1u << value.kind)) == 0) dictionary_failure(expression, declared, value.kind);
+        return (adamic_view_dictionary_result){value, 0};
     }
     // Class getters and live inherited static storage need their owning adapter.
     if (object->class != NULL) dictionary_failure(expression, declared, adamic_view_union_unknown);
@@ -100,7 +113,7 @@ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_ob
             adamic_maybe_number maybe = adamic_maybe_number_unpack(slot->number);
             if (maybe.present) value = (adamic_view_union_value){adamic_view_union_number, {.number = maybe.number}};
         } else if (actual == 12) value.kind = adamic_view_union_null;
-        else if ((actual >= 3 && actual <= 6) || actual == 8 || actual == 9 || actual == 10) value = dictionary_boxed_value(slot->reference);
+        else if ((actual >= 3 && actual <= 6) || actual == 8 || actual == 9 || actual == 10 || actual == 14) value = dictionary_boxed_value(slot->reference);
         else value.kind = adamic_view_union_unknown;
         break;
     }

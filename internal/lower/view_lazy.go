@@ -15,7 +15,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if l.stringDictionary(target) {
+	if l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil {
 		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
 	}
 	family := l.unsupportedViewFamily(target)
@@ -142,10 +142,25 @@ func (l *lowering) checkLazyViewReads() error {
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
 		var field, where string
+		operationFamily := ""
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
 		}
 		switch read := node.(type) {
+		case ir.RecordCall:
+			if read.Method != "get" && read.Method != "values" && read.Method != "entries" {
+				return true
+			}
+			receiver, typeID, field, where = read.Arguments[0], read.ViewTypeID, "[dictionary element]", read.ViewWhere
+			if read.Method == "values" || read.Method == "entries" {
+				operationFamily = "dictionary enumeration"
+			} else if read.DictionaryRead == nil {
+				operationFamily = "dictionary read without a supported contract"
+			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+					operationFamily = "dictionary element"
+				}
+			}
 		case ir.Property:
 			if !program.CheckedFields[read.Name] {
 				return true
@@ -170,9 +185,11 @@ func (l *lowering) checkLazyViewReads() error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
-		family := ""
+		family := operationFamily
 		if contract != 0 {
-			family = program.ViewContracts[contract-1].Unsupported
+			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
+				family = unsupported
+			}
 		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
@@ -205,7 +222,7 @@ func viewAggregate(value ir.Expression) bool {
 		return false
 	}
 	switch value.Type() {
-	case ir.Object, ir.Array, ir.Map, ir.Union, ir.Closure:
+	case ir.Object, ir.Record, ir.Array, ir.Map, ir.Union, ir.Closure:
 		return true
 	}
 	return false

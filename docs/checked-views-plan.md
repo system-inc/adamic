@@ -1081,3 +1081,51 @@ Seven compiler-source controls and six source semantic mutants supplement the
 original component tests. Rich element adapters remain demanded-read refusals.
 The accepted measurement is 29 pairs / 228 reads, labeled static candidates.
 No production candidate pair is credited from representative fixtures alone.
+
+### Dictionary shared storage and propagation hooks, October 8
+
+This lane merges records-lowering 456c981b at the user's explicit request. It
+supersedes the earlier handoff for record production; other lane changes still
+arrive through views-integration. No parallel table representation is introduced.
+
+Owned minimal shared hunks in this group:
+
+- `lower/generic.go`: inferDictionaryIndexTypes carries instantiated string-index
+  element arguments into generic helper bodies.
+- `lower/view_objects.go`: structural dictionary views use the existing view path.
+- `ir/ir.go`: Record uses storage tag 14, preserving reserved null/undefined tags
+  12 and 13 already used by checked field writes.
+- `ir/records.go`: read demand metadata and an optional DictionaryRead descriptor.
+- `lower/records.go`: prepare checked record reads, reuse finite-partial storage,
+  permit boxed primitive unions, and defer structural casts to checked admission.
+- `lower/view_dictionaries.go`: internDictionaryViewContract describes Record
+  producers; dictionaryProducerRefusal checks unsupported actual producers;
+  dictionaryWriteRefusal separates ordinary records from uncertified view writes;
+  regexDictionaryReceiver keeps named RegExp groups on their owning adapter.
+- `lower/view_lazy.go`: finite-partial dictionary descriptors, Record aggregate
+  reachability, and demanded refusals for unsupported reads/enumeration.
+- `lower/view_contracts.go` and `lower/interface_cast.go`: Record-valued optional
+  fields retain their dictionary contracts and lazy admission.
+- `native/emit_records.go` and `javascript/records.go`: select the checked read
+  descriptor conservatively when the program has view origins; plain programs
+  retain the original record operations. Native producers call record_new_typed.
+- `runtime/record.c` and `adamic.h`: record_new_typed stores an independent
+  element representation certificate in the existing wrapper's numeric slot 1;
+  record_storage_check rejects operations through mismatched storage.
+- `runtime/view_dictionaries.c`: scalar/maybe-number reads decode that source
+  certificate; reference tables still classify existing heap values and boxes.
+- `runtime/object.c`, `native/view_fields.go`, `javascript/readiness.go`: Record
+  container reads check the ordinary object heap kind before read dispatch.
+- `fresh/fresh.go`: dynamic dictionary reads use the existing element edge.
+- `lower/cycles.go`: unsafe writes into counted record tables retain cycle
+  refusals until the graph ownership lane supplies record cleanup.
+- Merge compatibility: callableDataDeclaration in `lower/view_callables.go`
+  prevents a destructuring BindingPattern from reaching Node.Text; the existing
+  flow oracle for require_node_perf_hooks exercises the repaired path.
+- `native/record_test.go`: preserve semantic mutants after the exported missing
+  member helper rename; `oracle/records_test.go`: use the current leak checker.
+
+Group 3's MapLike<string[]> candidate has source reads over both fixed objects
+and genuine record producers, with transitive array checks. It credits 1 pair / 6
+candidate reads; 28 pairs / 222 reads remain. Enumeration and uncertified writes
+remain demanded refusals. Rich CompilerOptions element unions are unfinished.

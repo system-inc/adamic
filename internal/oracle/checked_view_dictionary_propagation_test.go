@@ -117,11 +117,15 @@ func TestCheckedViewDictionaryRoot(t *testing.T) {
 
 func TestCheckedViewDictionaryWriteGuard(t *testing.T) {
 	path := filepath.Join(repository, "stage3/interface-downcasts/dictionaries/source/write-guard.a")
+	path, err := filepath.Abs(path)
+	if err != nil {
+		t.Fatal(err)
+	}
 	truth := onNode(t, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "42\n" {
 		t.Fatalf("source Node: %#v", truth)
 	}
-	_, err := lowered(t, path)
+	_, err = lowered(t, path)
 	if err == nil || !strings.Contains(err.Error(), "dictionary write without a producer storage certificate") {
 		t.Fatalf("uncertified write was admitted: %v", err)
 	}

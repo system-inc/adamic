@@ -4,8 +4,20 @@
     "field": "<dynamic-key>",
     "type": "MapLike<string[]>",
     "status": "checked source reads",
-    "tests": ["TestCheckedViewDictionaryArrays", "TestCheckedViewDictionaryPropagation"],
-    "fixtures": ["source/paths-good.a", "source/paths-wrong.a", "source/paths-element-wrong.a", "source/paths-key-missing.a"],
-    "scope": "Per-pair read contract and transitive array extraction in both compiler backends. Dynamic record producers and writes remain separate work."
+    "tests": [
+      "TestCheckedViewDictionaryArrays",
+      "TestCheckedViewDictionaryPropagation",
+      "TestCheckedViewDictionaryStorage"
+    ],
+    "fixtures": [
+      "source/paths-good.a",
+      "source/paths-wrong.a",
+      "source/paths-element-wrong.a",
+      "source/paths-key-missing.a",
+      "source/storage-mutable-good.a",
+      "source/storage-mutable-wrong.a",
+      "source/storage-array-wrong.a"
+    ],
+    "scope": "Per-pair read contract over fixed source objects and the shared MapLike record producer, with transitive array extraction in both backends. Enumeration and uncertified writes remain demanded refusals."
   }
 ]
