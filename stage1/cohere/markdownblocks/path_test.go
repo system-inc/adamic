@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -71,8 +72,8 @@ func TestMarkdownAstPath(t *testing.T) {
 		t.Fatalf("Go path %v %s", err, output)
 	}
 	nativeCases := filepath.Join(dir, "native.txt")
-	want := execute(t, nil, goBinary, cases, nativeCases)
-	clean(t, "actual Go AstPath", want)
+	want := pathExecute(t, nil, goBinary, cases, nativeCases)
+	clean(t, "actual Go AstPath", want.run)
 	if keep := os.Getenv("ADAMIC_PATH_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
 			t.Fatal(err)
@@ -82,7 +83,7 @@ func TestMarkdownAstPath(t *testing.T) {
 			t.Fatal(err)
 		}
 		write(t, filepath.Join(keep, "native.txt"), data)
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		copyPathOutput(t, want.file, filepath.Join(keep, "want.txt"))
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
@@ -108,32 +109,30 @@ func TestMarkdownAstPath(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, main)
-	answer, binary := natively(t, program, nativeCases)
+	binary := nativeBinary(t, native.C(program), true)
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	answer := pathExecute(t, environment, binary, nativeCases)
+	// Compare runners sequentially so their complete outputs do not accumulate together.
 	for _, side := range []struct {
-		name   string
-		result run
+		name string
+		run  func() pathOutput
 	}{
-		{"actual Go AstPath from transport", execute(t, nil, goBinary, "--facts", nativeCases)},
-		{"actual original AstPath", execute(t, nil, "node", "testdata/path_library.mjs", fork, nativeCases)}, {"native", answer}, {"source Node", onNode(t, main, nativeCases)}, {"backend", onJavaScriptBackend(t, program, nativeCases)},
+		{"actual Go AstPath from transport", func() pathOutput { return pathExecute(t, nil, goBinary, "--facts", nativeCases) }},
+		{"actual original AstPath", func() pathOutput { return pathExecute(t, nil, "node", "testdata/path_library.mjs", fork, nativeCases) }},
+		{"native", func() pathOutput { return answer }},
+		{"source Node", func() pathOutput { return pathNode(t, main, nativeCases) }},
+		{"backend", func() pathOutput { return pathBackend(t, program, nativeCases) }},
 	} {
-		clean(t, side.name, side.result)
-		if !bytes.Equal(side.result.stdout, want.stdout) {
-			a := strings.Split(string(side.result.stdout), "\n")
-			b := strings.Split(string(want.stdout), "\n")
-			if len(a) != len(b) {
-				t.Fatalf("%s result count %d/%d", side.name, len(a), len(b))
-			}
-			for i, line := range b {
-				if a[i] != line {
-					offset := firstDifference(a[i], line)
-					t.Fatalf("%s %s byte%d got %q want %q", side.name, inputs[i].Name, offset, a[i][max(0, offset-100):min(len(a[i]), offset+100)], line[max(0, offset-100):min(len(line), offset+100)])
-				}
-			}
-		}
+		result := side.run()
+		clean(t, side.name, result.run)
+		pathEqual(t, side.name, result.file, want.file, inputs)
+		removePathOutput(t, result.file)
 	}
-	if report := leaks(t, program, binary, nativeCases); report != "" {
-		t.Fatal(report)
-	}
+	pathLeaks(t, program, binary, nativeCases)
+
 	for _, m := range []struct{ name, from, to string }{
 		{"map callback result", "results.push(callback(path, index, array));", "results.push(callback(path, index, array) + 1);"},
 		{"array frame", "this.at(-3)", "this.at(-5)"},
@@ -158,12 +157,14 @@ func TestMarkdownAstPath(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), data)
 			}
-			result := onNode(t, filepath.Join(scratch, "testdata/path_probe.ts"), nativeCases)
-			clean(t, m.name, result)
-			if bytes.Equal(result.stdout, want.stdout) {
+			result := pathNode(t, filepath.Join(scratch, "testdata/path_probe.ts"), nativeCases)
+			clean(t, m.name, result.run)
+			offset, _, equal := pathDifference(t, result.file, want.file)
+			if equal {
 				t.Fatal("survived")
 			}
-			t.Logf("caught by path bytes, first difference%d", firstDifference(string(result.stdout), string(want.stdout)))
+			t.Logf("caught by path bytes, first difference%d", offset)
+			removePathOutput(t, result.file)
 		})
 	}
 	fast := filepath.Join(dir, "fast")
@@ -180,11 +181,12 @@ func TestMarkdownAstPath(t *testing.T) {
 	} {
 		start := time.Now()
 		for i := 0; i < 3; i++ {
-			result := execute(t, nil, side.command, side.args...)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+			result := pathExecute(t, nil, side.command, side.args...)
+			clean(t, side.name, result.run)
+			pathEqual(t, side.name, result.file, want.file, inputs)
+			removePathOutput(t, result.file)
 		}
 		t.Logf("%s %.1f documents/s, three runs, full path observation I/O, AST parsing excluded", side.name, float64(3*len(inputs))/time.Since(start).Seconds())
 	}
-	t.Logf("%d contexts, %d physical files, all per-node getter bytes and parent-node call/map/each/parent restore bytes agree; %d output bytes", len(inputs), files, len(want.stdout))
+	t.Logf("%d contexts, %d physical files, all per-node getter bytes and parent-node call/map/each/parent restore bytes agree; %d output bytes", len(inputs), files, pathOutputSize(t, want.file))
 }

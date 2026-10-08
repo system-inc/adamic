@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/testdata/path_library.mjs
++++ b/stage1/cohere/markdownblocks/testdata/path_library.mjs
+@@ -40,7 +40,7 @@
+   for(let i=0;i<nodes.length;i++)if(nodes[i].children){nodes[i].children=children[i].map(i=>nodes[i]);arrays.set(nodes[i].children,i)}
+   const path=new Original(nodes[0]),rows=[];
+   const walk=path=>{rows.push((path.node.children?.length??0)>0||path.isRoot?observe(path):snapshot(path));if(path.node.children)path.each(walk,'children')};walk(path);
+-  fs.writeSync(1,encode(rows.join('\n'))+'\n');
++  fs.writeSync(1,encode(rows.join('\n'))+'\n\n');
+   wrote=true;
+  }else if(line!=='')throw new Error('unknown path fixture');
+ }

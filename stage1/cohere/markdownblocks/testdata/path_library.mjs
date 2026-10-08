@@ -27,7 +27,8 @@ if(process.argv[3]==='--key-gap'){
  path.call(p=>process.stdout.write('key='+p.key+' type='+typeof p.key+'\n'),'absent','children',0);
  process.exit(0);
 }
-const output=[];
+// Each context keeps its existing encoded row, without a corpus-sized V8 string.
+let wrote=false;
 for(const line of fs.readFileSync(process.argv[3],'utf8').split('\n')) {
  const fields=line.split('\t');
  if(fields[0]==='A'){nodes=[];children=[];ids=new Map();arrays=new Map()}
@@ -39,7 +40,8 @@ for(const line of fs.readFileSync(process.argv[3],'utf8').split('\n')) {
   for(let i=0;i<nodes.length;i++)if(nodes[i].children){nodes[i].children=children[i].map(i=>nodes[i]);arrays.set(nodes[i].children,i)}
   const path=new Original(nodes[0]),rows=[];
   const walk=path=>{rows.push((path.node.children?.length??0)>0||path.isRoot?observe(path):snapshot(path));if(path.node.children)path.each(walk,'children')};walk(path);
-  output.push(encode(rows.join('\n')));
+  fs.writeSync(1,encode(rows.join('\n'))+'\n');
+  wrote=true;
  }else if(line!=='')throw new Error('unknown path fixture');
 }
-process.stdout.write(output.join('\n')+'\n');
+if(!wrote)fs.writeSync(1,'\n');
