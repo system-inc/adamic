@@ -1012,6 +1012,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if branch := l.literalCallableBranch(node); branch != nil {
+		return l.expression(branch)
+	}
 	conditional := node.AsConditionalExpression()
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
