@@ -1,0 +1,29 @@
+let argumentsRun = 0;
+let calleesRead = 0;
+function argument(): number { argumentsRun += 1; return 7; }
+function callee(value: ((value: number) => number) | undefined): ((value: number) => number) | undefined {
+    calleesRead += 1;
+    return value;
+}
+function invoke(value: ((value: number) => number) | undefined): number | undefined {
+    return callee(value)?.(argument());
+}
+console.log(`${invoke(undefined) ?? -1}`);
+console.log(`${invoke((value) => value + 1) ?? -2}`);
+function member(object: { readonly run: ((value: number) => string) | undefined }): string | undefined {
+    return object.run?.(argument());
+}
+console.log(member({ run: undefined }) ?? 'missing');
+console.log(member({ run: (value) => ['built', `${value}`].join(':') }) ?? 'missing');
+function effect(value: (() => void) | undefined): void { value?.(); }
+effect(undefined);
+effect(() => { console.log('effect'); });
+console.log(`${argumentsRun} ${calleesRead}`);
+function localCapture(): number {
+    let value = 3;
+    const run = (): number => value;
+    functionCaller(run);
+    return value;
+}
+function functionCaller(run: (() => number) | undefined): void { console.log(`${run?.() ?? 0}`); }
+console.log(`${localCapture()}`);

@@ -219,9 +219,20 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		} else {
 			method = e.temporary()
 			e.line("adamic_method %s = NULL;", method)
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			lookup := "adamic_object_callee"
+			if expression.Optional {
+				lookup = "adamic_object_optional_callee"
+			}
+			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s))", lookup, receiver, cString(property.Name), e.cache(), method))
 		}
 	}
+	if expression.Optional {
+		return e.optionalClosureCall(expression, closure, receiver, method)
+	}
+	return e.invokeClosure(expression, closure, receiver, method)
+}
+
+func (e *emitter) invokeClosure(expression ir.CallClosure, closure, receiver, method string) string {
 	arguments := []string{}
 	for _, argument := range expression.Arguments {
 		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))

@@ -1,0 +1,21 @@
+interface Runner { readonly name: string; run?(value: number): string; }
+let reads = 0;
+let argumentsRun = 0;
+function argument(): number { argumentsRun += 1; return 4; }
+function receiver(value: Runner | undefined): Runner | undefined { reads += 1; return value; }
+function invoke(value: Runner | undefined): string | undefined { return receiver(value)?.run?.(argument()); }
+console.log(invoke(undefined) ?? 'absent object');
+console.log(invoke({ name: 'missing' }) ?? 'absent method');
+const object: Runner = { name: 'literal', run(value: number): string { return `${this.name}:${value}`; } };
+console.log(invoke(object) ?? 'missing');
+class NamedRunner {
+    readonly name: string;
+    constructor(name: string) { this.name = name; }
+    run(value: number): string { return `${this.name}:${value}`; }
+}
+console.log(invoke(new NamedRunner('class')) ?? 'missing');
+console.log(`${reads} ${argumentsRun}`);
+let callable: ((value: number) => number) | undefined = (value) => value + 1;
+function replace(): number { callable = (value) => value + 100; return 5; }
+console.log(`${callable?.(replace()) ?? 0}`);
+console.log(`${callable?.(1) ?? 0}`);

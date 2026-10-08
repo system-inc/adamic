@@ -386,6 +386,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, handled, err := l.lowerOptionalCall(node, false); handled {
+		return value, err
+	}
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}

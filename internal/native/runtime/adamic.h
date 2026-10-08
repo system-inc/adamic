@@ -204,6 +204,8 @@ struct adamic_methods {
 // interface: its own field of that name, a function value, which it returns; or else its class's
 // method of that name, which it puts in *method, returning NULL. The checker proved one is there.
 adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
+// Optional calls also admit a missing field or method.
+adamic_closure *adamic_object_optional_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
 
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
 // stored in a field belongs to the object.

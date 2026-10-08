@@ -1,0 +1,12 @@
+interface SymbolTable { readonly exports: ReadonlyMap<string, number> | undefined; }
+interface Container { readonly symbol: SymbolTable | undefined; }
+let keys = 0;
+function key(): string { keys += 1; return 'name'; }
+function lookup(container: Container): number | undefined {
+    return container.symbol?.exports?.get(key());
+}
+console.log(`${lookup({ symbol: undefined }) ?? -1}`);
+console.log(`${lookup({ symbol: { exports: undefined } }) ?? -2}`);
+console.log(`${lookup({ symbol: { exports: new Map([['name', 0]]) } }) ?? -3}`);
+console.log(`${lookup({ symbol: { exports: new Map<string, number>() } }) ?? -4}`);
+console.log(`${keys}`);

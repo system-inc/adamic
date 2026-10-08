@@ -246,21 +246,21 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// where the object is undefined, as JavaScript's chain stops there.
 		text, value, owned := e.asideWith(func() string { return e.callThrough(expression, "", receiver) })
 		result := "0"
-		if expression.Returns != 0 {
+		if expression.Type() != 0 {
 			// Undefined: NULL for a reference, which zero isn't for a string.
 			undefined := "NULL"
-			if !expression.Returns.IsReference() {
-				undefined = zero(expression.Returns)
+			if !expression.Type().IsReference() {
+				undefined = zero(expression.Type())
 			}
 			result = e.temporary()
-			e.line("%s %s = %s;", cType(expression.Returns), result, undefined)
+			e.line("%s %s = %s;", cType(expression.Type()), result, undefined)
 		}
 		e.line("if (%s != NULL) {", receiver)
 		e.out.WriteString(text)
 		e.indent++
 		switch {
-		case expression.Returns == 0:
-		case expression.Returns.IsReference():
+		case expression.Type() == 0:
+		case expression.Type().IsReference():
 			e.line("%s = %s;", result, retained(value))
 		default:
 			e.line("%s = %s;", result, value)
@@ -270,7 +270,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		e.indent--
 		e.line("}")
-		if expression.Returns.IsReference() {
+		if expression.Type().IsReference() {
 			e.owned = append(e.owned, result)
 		}
 		return result
