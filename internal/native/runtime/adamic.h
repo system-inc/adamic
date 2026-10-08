@@ -264,6 +264,7 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	return adamic_object_data_field(object, name, cache);
 }
 #include "object_integrity.h"
+#include "object_descriptors.h"
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
 bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);

@@ -1,0 +1,22 @@
+const object = {};
+Object.defineProperty(object, -20, { value: 1, enumerable: true });
+Object.defineProperty(object, -0, { value: 2, enumerable: true });
+Object.defineProperty(object, NaN, { value: 3, enumerable: true });
+Object.defineProperty(object, Infinity, { value: 4, enumerable: true });
+Object.defineProperty(object, 1e20, { value: 5, enumerable: true });
+Object.defineProperty(object, 1e21, { value: 6, enumerable: true });
+Object.defineProperty(object, 1e-6, { value: 7, enumerable: true });
+Object.defineProperty(object, 1e-7, { value: 8, enumerable: true });
+console.log(Object.keys(object).join(','));
+console.log(`${object.hasOwnProperty('-20')} ${object.hasOwnProperty('0')} ${Object.hasOwn(object, 'NaN')}`);
+let index = -2;
+Object.defineProperty(object, index, { value: 9, enumerable: true });
+console.log(Object.getOwnPropertyNames(object).join(','));
+const ordered = {};
+let key = 1;
+function descriptorValue(): number {
+ key = 2;
+ return 9;
+}
+Object.defineProperty(ordered, key, { value: descriptorValue(), enumerable: true });
+console.log(`${Object.keys(ordered).join(',')} ${key}`);

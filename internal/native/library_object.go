@@ -2,6 +2,7 @@ package native
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -12,6 +13,12 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "definePropertyError":
+		return e.own(ir.String, fmt.Sprintf("adamic_object_define_data(%s)", strings.Join(arguments, ", ")))
+	case "typeError":
+		return e.own(ir.Object, fmt.Sprintf("adamic_object_type_error(%s)", arguments[0]))
+	case "propertyIsEnumerable":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_enumerable(%s, %s)", arguments[0], arguments[1]))
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
 	case "isFrozen":
@@ -21,6 +28,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "isExtensible":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is_extensible(%s)", arguments[0]))
 	case "seal", "preventExtensions":
+		if call.Returns == ir.Map {
+			return e.own(ir.Map, fmt.Sprintf("(adamic_map *)adamic_object_set_collection_integrity(%s, %t)", arguments[0], call.Method == "seal"))
+		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_object_set_integrity(%s, %t)", arguments[0], call.Method == "seal"))
 	case "freeze":
 		return e.own(ir.Object, fmt.Sprintf("adamic_object_freeze(%s)", arguments[0]))

@@ -121,9 +121,14 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
 			return nil, true, l.notYet(node, name+" on a tuple (its representation includes absent optional slots and no length descriptor)")
 		}
-		// Every own field of a plain object or a class instance is enumerable. Methods are on its
-		// prototype, absent from its shape, and defineProperty is refused.
+		// Own-property presence and enumerability differ after a data descriptor change.
+		// Class methods remain on the prototype and absent from the public shape.
 		own, handled, err := l.hasOwnProperty(node, receiver)
+		if err == nil && name == "propertyIsEnumerable" {
+			if read, ok := own.(ir.HasOwn); ok {
+				own = ir.ObjectCall{Method: "propertyIsEnumerable", Arguments: []ir.Expression{read.Object, read.Key}, Returns: ir.Boolean}
+			}
+		}
 		if err == nil && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "MapIterator", "SetIterator") {
 			// Iterator slots are implementation details. Even next is inherited in JavaScript.
 			// Evaluate receiver and key once, in order, without exposing any native slots.
@@ -188,6 +193,12 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 // Until prototype dispatch and presence descriptors exist, refuse any compatible runtime shape
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
 func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
+	// An unchanged literal binding has a real plain-object receiver, including
+	// let bindings already proven by the Object library. Descriptor additions
+	// are represented by the same own-property metadata as its declared fields.
+	if l.exactObject(receiver, 0) {
+		return ""
+	}
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {

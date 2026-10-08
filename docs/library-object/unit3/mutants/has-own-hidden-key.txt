@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_descriptor_errors.a (0.43s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "TypeError: Property description must be an object: 12\nTypeError: Property description must be an object: true\nTypeError: Property description must be an object: abc\nTypeError: Object.defineProperty called on non-object\nfalse\ntrue false\nTypeError: Object.defineProperty called on non-object\nTypeError: Object.defineProperties called on non-object\n", stderr ""
+            native: exit 0, stdout "TypeError: Property description must be an object: 12\nTypeError: Property description must be an object: true\nTypeError: Property description must be an object: abc\nTypeError: Object.defineProperty called on non-object\nfalse\nfalse false\nTypeError: Object.defineProperty called on non-object\nTypeError: Object.defineProperties called on non-object\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.445s
+FAIL

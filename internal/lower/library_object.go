@@ -12,8 +12,11 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
+	if value, handled, err := l.objectDescriptorCall(node, name); handled {
+		return value, handled, err
+	}
 	switch name {
-	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
+	case "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
 		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
 	case "getPrototypeOf", "setPrototypeOf", "create":
 		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
@@ -92,8 +95,8 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		switch name {
 		case "hasOwn":
 			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
-				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
+			if key.Kind != ast.KindStringLiteral || len(key.Text()) > 0 && key.Text()[0] == '#' {
+				return refused("hasOwn requires a public string literal; dynamic or coercing keys require representation proofs")
 			}
 			keyValue, err := l.expression(key)
 			if err != nil {
@@ -223,14 +226,14 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 func (l *lowering) objectCanFreeze() bool {
 	found := false
 	walk(l.result.Main, func(node any) bool {
-		if call, ok := node.(ir.ObjectCall); ok && call.Method == "freeze" {
+		if call, ok := node.(ir.ObjectCall); ok && (call.Method == "freeze" || call.Method == "definePropertyError") {
 			found = true
 		}
 		return !found
 	})
 	for _, function := range l.result.Functions {
 		walk(function.Body, func(node any) bool {
-			if call, ok := node.(ir.ObjectCall); ok && call.Method == "freeze" {
+			if call, ok := node.(ir.ObjectCall); ok && (call.Method == "freeze" || call.Method == "definePropertyError") {
 				found = true
 			}
 			return !found

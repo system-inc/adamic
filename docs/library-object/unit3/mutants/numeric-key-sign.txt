@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_numeric_keys.a (0.48s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "0,-20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7\ntrue true true\n0,-20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7,-2\n1 2\n", stderr ""
+            native: exit 0, stdout "0,20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7\nfalse true true\n0,2,20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7\n1 2\n", stderr ""
+        oracle_test.go:586: JavaScript backend: stdout differs
+            node:    exit 0, stdout "0,-20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7\ntrue true true\n0,-20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7,-2\n1 2\n", stderr ""
+            backend: exit 0, stdout "0,20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7\nfalse true true\n0,2,20,NaN,Infinity,100000000000000000000,1e+21,0.000001,1e-7\n1 2\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.490s
+FAIL

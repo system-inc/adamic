@@ -1,0 +1,1079 @@
+{
+  "test262": "/workspace/scratch/test262",
+  "commit": "5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81",
+  "adapt": true,
+  "typescript": {
+    "version": "6.0.3",
+    "checks": 1675,
+    "cacheHits": 4,
+    "milliseconds": 95901
+  },
+  "filters": [
+    {
+      "path": "built-ins/Object",
+      "pass": 58,
+      "fail": 0,
+      "notTypescript": 1679,
+      "refused": 598,
+      "crashed": 0,
+      "skipped": 1076,
+      "total": 3411,
+      "directories": [
+        {
+          "path": "built-ins/Object",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 51,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 61
+        },
+        {
+          "path": "built-ins/Object/assign",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 6,
+          "refused": 11,
+          "crashed": 0,
+          "skipped": 21,
+          "total": 38
+        },
+        {
+          "path": "built-ins/Object/create",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 230,
+          "refused": 50,
+          "crashed": 0,
+          "skipped": 40,
+          "total": 320
+        },
+        {
+          "path": "built-ins/Object/defineProperties",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 306,
+          "refused": 55,
+          "crashed": 0,
+          "skipped": 271,
+          "total": 632
+        },
+        {
+          "path": "built-ins/Object/defineProperty",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 611,
+          "refused": 111,
+          "crashed": 0,
+          "skipped": 409,
+          "total": 1131
+        },
+        {
+          "path": "built-ins/Object/entries",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 8,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 21
+        },
+        {
+          "path": "built-ins/Object/freeze",
+          "pass": 6,
+          "fail": 0,
+          "notTypescript": 7,
+          "refused": 10,
+          "crashed": 0,
+          "skipped": 30,
+          "total": 53
+        },
+        {
+          "path": "built-ins/Object/fromEntries",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 4,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 17,
+          "total": 25
+        },
+        {
+          "path": "built-ins/Object/getOwnPropertyDescriptor",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 292,
+          "refused": 14,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 310
+        },
+        {
+          "path": "built-ins/Object/getOwnPropertyDescriptors",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 5,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 10,
+          "total": 18
+        },
+        {
+          "path": "built-ins/Object/getOwnPropertyNames",
+          "pass": 6,
+          "fail": 0,
+          "notTypescript": 11,
+          "refused": 20,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 45
+        },
+        {
+          "path": "built-ins/Object/getOwnPropertySymbols",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Object/getPrototypeOf",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 33,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 39
+        },
+        {
+          "path": "built-ins/Object/groupBy",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 9,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 14
+        },
+        {
+          "path": "built-ins/Object/hasOwn",
+          "pass": 1,
+          "fail": 0,
+          "notTypescript": 2,
+          "refused": 44,
+          "crashed": 0,
+          "skipped": 15,
+          "total": 62
+        },
+        {
+          "path": "built-ins/Object/internals/DefineOwnProperty",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 6
+        },
+        {
+          "path": "built-ins/Object/is",
+          "pass": 7,
+          "fail": 0,
+          "notTypescript": 5,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 21
+        },
+        {
+          "path": "built-ins/Object/isExtensible",
+          "pass": 9,
+          "fail": 0,
+          "notTypescript": 4,
+          "refused": 23,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 38
+        },
+        {
+          "path": "built-ins/Object/isFrozen",
+          "pass": 6,
+          "fail": 0,
+          "notTypescript": 11,
+          "refused": 39,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 59
+        },
+        {
+          "path": "built-ins/Object/isSealed",
+          "pass": 1,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 29,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 33
+        },
+        {
+          "path": "built-ins/Object/keys",
+          "pass": 8,
+          "fail": 0,
+          "notTypescript": 20,
+          "refused": 24,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 59
+        },
+        {
+          "path": "built-ins/Object/preventExtensions",
+          "pass": 7,
+          "fail": 0,
+          "notTypescript": 3,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 26,
+          "total": 40
+        },
+        {
+          "path": "built-ins/Object/prototype",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 7,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 15
+        },
+        {
+          "path": "built-ins/Object/prototype/__defineGetter__",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 4,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 11
+        },
+        {
+          "path": "built-ins/Object/prototype/__defineSetter__",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 4,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 11
+        },
+        {
+          "path": "built-ins/Object/prototype/__lookupGetter__",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 4,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 16
+        },
+        {
+          "path": "built-ins/Object/prototype/__lookupSetter__",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 4,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 16
+        },
+        {
+          "path": "built-ins/Object/prototype/__proto__",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 7,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 15
+        },
+        {
+          "path": "built-ins/Object/prototype/constructor",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 2,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 2
+        },
+        {
+          "path": "built-ins/Object/prototype/hasOwnProperty",
+          "pass": 1,
+          "fail": 0,
+          "notTypescript": 1,
+          "refused": 47,
+          "crashed": 0,
+          "skipped": 14,
+          "total": 63
+        },
+        {
+          "path": "built-ins/Object/prototype/isPrototypeOf",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 1,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 10
+        },
+        {
+          "path": "built-ins/Object/prototype/propertyIsEnumerable",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 2,
+          "refused": 7,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 16
+        },
+        {
+          "path": "built-ins/Object/prototype/toLocaleString",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 1,
+          "refused": 8,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Object/prototype/toString",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 1,
+          "refused": 12,
+          "crashed": 0,
+          "skipped": 28,
+          "total": 41
+        },
+        {
+          "path": "built-ins/Object/prototype/valueOf",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 9,
+          "refused": 8,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 20
+        },
+        {
+          "path": "built-ins/Object/seal",
+          "pass": 6,
+          "fail": 0,
+          "notTypescript": 7,
+          "refused": 43,
+          "crashed": 0,
+          "skipped": 38,
+          "total": 94
+        },
+        {
+          "path": "built-ins/Object/setPrototypeOf",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 2,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Object/values",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 5,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 20
+        }
+      ],
+      "notTypescriptReasons": [
+        {
+          "reason": "TS18048",
+          "count": 343
+        },
+        {
+          "reason": "TS2339",
+          "count": 311
+        },
+        {
+          "reason": "TS2345",
+          "count": 216
+        },
+        {
+          "reason": "TS2322",
+          "count": 181
+        },
+        {
+          "reason": "TS7009",
+          "count": 166
+        },
+        {
+          "reason": "TS7006",
+          "count": 133
+        },
+        {
+          "reason": "TS7005",
+          "count": 114
+        },
+        {
+          "reason": "TS2379",
+          "count": 60
+        },
+        {
+          "reason": "TS2554",
+          "count": 41
+        },
+        {
+          "reason": "TS2551",
+          "count": 23
+        },
+        {
+          "reason": "TS2559",
+          "count": 18
+        },
+        {
+          "reason": "TS2532",
+          "count": 16
+        },
+        {
+          "reason": "TS7034",
+          "count": 14
+        },
+        {
+          "reason": "TS2375",
+          "count": 12
+        },
+        {
+          "reason": "TS2769",
+          "count": 8
+        },
+        {
+          "reason": "TS7053",
+          "count": 6
+        },
+        {
+          "reason": "TS2683",
+          "count": 3
+        },
+        {
+          "reason": "TS2704",
+          "count": 3
+        },
+        {
+          "reason": "TS2351",
+          "count": 2
+        },
+        {
+          "reason": "TS2790",
+          "count": 2
+        },
+        {
+          "reason": "TS2349",
+          "count": 1
+        },
+        {
+          "reason": "TS2538",
+          "count": 1
+        },
+        {
+          "reason": "TS2542",
+          "count": 1
+        },
+        {
+          "reason": "TS2584",
+          "count": 1
+        },
+        {
+          "reason": "TS2695",
+          "count": 1
+        },
+        {
+          "reason": "TS2739",
+          "count": 1
+        },
+        {
+          "reason": "TS4104",
+          "count": 1
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "refuses Object.defineProperty",
+          "count": 186
+        },
+        {
+          "reason": "not yet: a value of type any",
+          "count": 99
+        },
+        {
+          "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+          "count": 37
+        },
+        {
+          "reason": "refuses Object.defineProperties",
+          "count": 25
+        },
+        {
+          "reason": "refuses inherited library member prototype read as an own field",
+          "count": 25
+        },
+        {
+          "reason": "not yet: new an Identifier",
+          "count": 15
+        },
+        {
+          "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+          "count": 14
+        },
+        {
+          "reason": "refuses Object.getOwnPropertyDescriptor",
+          "count": 11
+        },
+        {
+          "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+          "count": 8
+        },
+        {
+          "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+          "count": 7
+        },
+        {
+          "reason": "not yet: an OmittedExpression in an array literal",
+          "count": 6
+        },
+        {
+          "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+          "count": 6
+        },
+        {
+          "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+          "count": 6
+        },
+        {
+          "reason": "refuses arguments",
+          "count": 6
+        },
+        {
+          "reason": "not yet: Object.getOwnPropertyNames without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+          "count": 5
+        },
+        {
+          "reason": "refuses Object.create",
+          "count": 5
+        },
+        {
+          "reason": "not yet: Object.freeze on a shape not proven by a plain literal or its const binding",
+          "count": 4
+        },
+        {
+          "reason": "refuses delete",
+          "count": 4
+        },
+        {
+          "reason": "not yet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: Number as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: Number.prototype",
+          "count": 3
+        },
+        {
+          "reason": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: Object.keys without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: Object.values on a shape not proven by a plain literal or its const binding",
+          "count": 3
+        },
+        {
+          "reason": "not yet: String as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading Boolean",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading Date",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading Error",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading Math",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading RegExp",
+          "count": 3
+        },
+        {
+          "reason": "not yet: this outside a method",
+          "count": 3
+        },
+        {
+          "reason": "refuses isPrototypeOf",
+          "count": 3
+        },
+        {
+          "reason": "refuses var",
+          "count": 3
+        },
+        {
+          "reason": "not yet: Object.entries on a shape not proven by a plain literal or its const binding",
+          "count": 2
+        },
+        {
+          "reason": "not yet: an array of never",
+          "count": 2
+        },
+        {
+          "reason": "not yet: instanceof against a value that isn't a declared class",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading EvalError",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading Function",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading RangeError",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading ReferenceError",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading SyntaxError",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading TypeError",
+          "count": 2
+        },
+        {
+          "reason": "not yet: reading URIError",
+          "count": 2
+        },
+        {
+          "reason": "not yet: toString through an object view (a value with a different native representation may be hidden by the view)",
+          "count": 2
+        },
+        {
+          "reason": "refuses Object.fromEntries",
+          "count": 2
+        },
+        {
+          "reason": "refuses Object.setPrototypeOf",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (create would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (defineProperties would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (defineProperty would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (freeze would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (getOwnPropertyNames would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (getPrototypeOf would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (hasOwn would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (isExtensible would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (isFrozen would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (isSealed would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (keys would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (preventExtensions would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a value of type { enumerable: boolean",
+          "count": 2
+        },
+        {
+          "reason": "refuses inherited library member isArray read as an own field",
+          "count": 2
+        },
+        {
+          "reason": "not yet: Object.assign adding a field to its target's fixed shape",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Object.assign on a shape not proven by a plain literal or its const binding",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Object.hasOwnProperty",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Object.preventExtensions on a shape not proven by a plain literal or its const binding",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Object.propertyIsEnumerable",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type \"test\" & { a: number; }",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type 1 & { a: number; }",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type Object & \"123\"",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type boolean & { [x: string]: PropertyDescriptor; }",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type never",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type true & { a: number; }",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type { a: number; } & { a: number; } & { a: string; }",
+          "count": 1
+        },
+        {
+          "reason": "not yet: assigning a field of a value",
+          "count": 1
+        },
+        {
+          "reason": "not yet: hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)",
+          "count": 1
+        },
+        {
+          "reason": "not yet: hasOwnProperty with a key that isn't a string",
+          "count": 1
+        },
+        {
+          "reason": "refuses Object.getOwnPropertyDescriptors",
+          "count": 1
+        },
+        {
+          "reason": "refuses Object.getPrototypeOf",
+          "count": 1
+        },
+        {
+          "reason": "refuses Object.hasOwn",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getOwnPropertyDescriptor would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (seal would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a value of type { get: () => number",
+          "count": 1
+        },
+        {
+          "reason": "refuses a value of type { set: () => void",
+          "count": 1
+        },
+        {
+          "reason": "refuses inherited library member constructor read as an own field",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 834
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 49
+        },
+        {
+          "reason": "feature Proxy",
+          "count": 30
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 29
+        },
+        {
+          "reason": "getters",
+          "count": 17
+        },
+        {
+          "reason": "feature Symbol.iterator",
+          "count": 12
+        },
+        {
+          "reason": "noStrict (sloppy mode only; Adamic modules are always strict)",
+          "count": 11
+        },
+        {
+          "reason": "Proxy",
+          "count": 7
+        },
+        {
+          "reason": "feature Symbol.toStringTag",
+          "count": 7
+        },
+        {
+          "reason": "features Proxy, Symbol",
+          "count": 7
+        },
+        {
+          "reason": "feature BigInt",
+          "count": 6
+        },
+        {
+          "reason": "feature Symbol.toPrimitive",
+          "count": 6
+        },
+        {
+          "reason": "features Proxy, Reflect, Symbol",
+          "count": 6
+        },
+        {
+          "reason": "harness include proxyTrapsHelper.js",
+          "count": 5
+        },
+        {
+          "reason": "harness include resizableArrayBufferUtils.js",
+          "count": 5
+        },
+        {
+          "reason": "setters",
+          "count": 5
+        },
+        {
+          "reason": "Reflect",
+          "count": 4
+        },
+        {
+          "reason": "Symbol",
+          "count": 4
+        },
+        {
+          "reason": "feature Reflect.setPrototypeOf",
+          "count": 4
+        },
+        {
+          "reason": "features Symbol.iterator, Symbol.toStringTag",
+          "count": 4
+        },
+        {
+          "reason": "async",
+          "count": 3
+        },
+        {
+          "reason": "features Reflect, Symbol",
+          "count": 3
+        },
+        {
+          "reason": "eval",
+          "count": 2
+        },
+        {
+          "reason": "features BigInt, Symbol.toStringTag",
+          "count": 2
+        },
+        {
+          "reason": "features Proxy, Symbol.toStringTag, async-functions, generators",
+          "count": 2
+        },
+        {
+          "reason": "harness include nans.js",
+          "count": 2
+        },
+        {
+          "reason": "feature FinalizationRegistry",
+          "count": 1
+        },
+        {
+          "reason": "feature Reflect.construct",
+          "count": 1
+        },
+        {
+          "reason": "feature SharedArrayBuffer",
+          "count": 1
+        },
+        {
+          "reason": "feature WeakRef",
+          "count": 1
+        },
+        {
+          "reason": "features Proxy, Symbol.toStringTag, async-functions",
+          "count": 1
+        },
+        {
+          "reason": "features Reflect, Reflect.construct",
+          "count": 1
+        },
+        {
+          "reason": "features Reflect, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.iterator, Symbol.toStringTag, generators",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.toStringTag, WeakMap",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.toStringTag, WeakSet",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": [],
+      "passes": [
+        "built-ins/Object/freeze/15.2.3.9-1-1.js",
+        "built-ins/Object/freeze/15.2.3.9-1-3.js",
+        "built-ins/Object/freeze/15.2.3.9-1-4.js",
+        "built-ins/Object/freeze/15.2.3.9-1.js",
+        "built-ins/Object/freeze/15.2.3.9-2-1.js",
+        "built-ins/Object/freeze/15.2.3.9-3-1.js",
+        "built-ins/Object/getOwnPropertyNames/15.2.3.4-1-4.js",
+        "built-ins/Object/getOwnPropertyNames/15.2.3.4-1-5.js",
+        "built-ins/Object/getOwnPropertyNames/15.2.3.4-1.js",
+        "built-ins/Object/getOwnPropertyNames/15.2.3.4-2-3.js",
+        "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-38.js",
+        "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-b-4.js",
+        "built-ins/Object/hasOwn/hasown_own_property_exists.js",
+        "built-ins/Object/is/not-same-value-x-y-string.js",
+        "built-ins/Object/is/not-same-value-x-y-type.js",
+        "built-ins/Object/is/not-same-value-x-y-undefined.js",
+        "built-ins/Object/is/same-value-x-y-boolean.js",
+        "built-ins/Object/is/same-value-x-y-null.js",
+        "built-ins/Object/is/same-value-x-y-number.js",
+        "built-ins/Object/is/same-value-x-y-string.js",
+        "built-ins/Object/isExtensible/15.2.3.13-1-1.js",
+        "built-ins/Object/isExtensible/15.2.3.13-1-2.js",
+        "built-ins/Object/isExtensible/15.2.3.13-1-3.js",
+        "built-ins/Object/isExtensible/15.2.3.13-1-4.js",
+        "built-ins/Object/isExtensible/15.2.3.13-1.js",
+        "built-ins/Object/isExtensible/15.2.3.13-2-2.js",
+        "built-ins/Object/isExtensible/15.2.3.13-2-22.js",
+        "built-ins/Object/isExtensible/15.2.3.13-2-23.js",
+        "built-ins/Object/isExtensible/15.2.3.13-2-3.js",
+        "built-ins/Object/isFrozen/15.2.3.12-1-1.js",
+        "built-ins/Object/isFrozen/15.2.3.12-1-2.js",
+        "built-ins/Object/isFrozen/15.2.3.12-1-3.js",
+        "built-ins/Object/isFrozen/15.2.3.12-1-4.js",
+        "built-ins/Object/isFrozen/15.2.3.12-1.js",
+        "built-ins/Object/isFrozen/15.2.3.12-4-1.js",
+        "built-ins/Object/isSealed/15.2.3.11-1.js",
+        "built-ins/Object/keys/15.2.3.14-1-1.js",
+        "built-ins/Object/keys/15.2.3.14-1-2.js",
+        "built-ins/Object/keys/15.2.3.14-1-3.js",
+        "built-ins/Object/keys/15.2.3.14-2-4.js",
+        "built-ins/Object/keys/15.2.3.14-2-5.js",
+        "built-ins/Object/keys/15.2.3.14-2-6.js",
+        "built-ins/Object/keys/15.2.3.14-3-1.js",
+        "built-ins/Object/keys/15.2.3.14-3-5.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-1-1.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-1-2.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-1-3.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-1-4.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-1.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-2-1.js",
+        "built-ins/Object/preventExtensions/15.2.3.10-3-1.js",
+        "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_2.js",
+        "built-ins/Object/seal/object-seal-extensible-of-o-is-set-as-false-even-if-o-has-no-own-property.js",
+        "built-ins/Object/seal/object-seal-returned-object-is-not-extensible.js",
+        "built-ins/Object/seal/seal-boolean-literal.js",
+        "built-ins/Object/seal/seal-infinity.js",
+        "built-ins/Object/seal/seal-nan.js",
+        "built-ins/Object/seal/seal-undefined.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 5153
+        },
+        {
+          "reason": "throw-error",
+          "count": 19
+        }
+      ]
+    }
+  ]
+}

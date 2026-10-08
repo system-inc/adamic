@@ -44,7 +44,7 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 			return true;
 		}
 	}
-	return false;
+	return adamic_object_descriptor_has(object, name);
 }
 
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
