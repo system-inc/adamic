@@ -14,6 +14,7 @@ const (
 	ViewCallable
 	ViewNull
 	ViewUndefined
+	ViewDictionary
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.

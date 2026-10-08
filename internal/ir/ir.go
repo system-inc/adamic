@@ -340,6 +340,8 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// DictionaryKey selects an own string key; its read always validates storage.
+		DictionaryKey Expression
 		// View names a required field read whose presence, readiness and representation are checked.
 		ViewReceiverTypeID int
 		ViewWhere          string

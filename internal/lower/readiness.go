@@ -355,7 +355,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] {
+				if expression.DictionaryKey == nil && !program.CheckedFields[expression.Name] {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil

@@ -6,8 +6,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// The integrator wires this hook into lazy dictionary classification. Descriptors
-// remain unsupported until producer and indexed-read dispatch exist together.
+// Lazy classification calls this named dictionary adapter. It describes read
+// obligations independently of a producer or writable-slot certificate.
 var viewDictionaryContractHook viewContractHook = internDictionaryViewContract
 
 func internDictionaryViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (ir.ViewContractID, error) {
@@ -34,7 +34,7 @@ func internDictionaryViewContract(l *lowering, node *ast.Node, target *checker.T
 	}
 	before := len(l.result.ViewContracts)
 	id := ir.ViewContractID(before + 1)
-	contract := ir.ViewContract{Kind: ir.ViewUnknown, Of: ir.Object, Name: l.checker.TypeToString(target), Unsupported: "dictionary source dispatch"}
+	contract := ir.ViewContract{Kind: ir.ViewDictionary, Of: ir.Object, Name: l.checker.TypeToString(target)}
 	// Reserve before building children: recursive record/object graphs share ids.
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
@@ -67,4 +67,48 @@ func internDictionaryViewContract(l *lowering, node *ast.Node, target *checker.T
 	}
 	l.result.ViewContracts[id-1] = contract
 	return id, nil
+}
+
+// stringDictionary selects only the ordinary string index contract. Other key
+// domains remain deferred obligations and are never silently widened.
+func (l *lowering) stringDictionary(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(target) || checker.IsTupleType(target) {
+		return false
+	}
+	infos := l.checker.GetIndexInfosOfType(target)
+	return len(infos) == 1 && infos[0].KeyType().Flags()&checker.TypeFlagsString != 0
+}
+
+func (l *lowering) dictionaryRead(node *ast.Node, object, key ir.Expression) (ir.Expression, error) {
+	if key.Type() != ir.String {
+		return nil, l.notYet(node, "a dictionary key that is not a string")
+	}
+	declared := l.concrete(l.checker.GetTypeAtLocation(node))
+	id, err := l.viewContract(node, declared)
+	if err != nil {
+		return nil, err
+	}
+	if _, ok := ir.DictionaryReadKinds(l.result, id); !ok {
+		return nil, l.lazyReadRefusal(node, sourceExpression(node), "dictionary element "+l.checker.TypeToString(declared))
+	}
+	if l.includesUndefined(declared) && len(l.viewLiterals(declared)) != 0 {
+		return nil, l.lazyReadRefusal(node, sourceExpression(node), "optional finite dictionary element")
+	}
+	fields, err := l.viewSchema(node, declared)
+	if err != nil {
+		return nil, err
+	}
+	if l.result.CheckedFields == nil {
+		l.result.CheckedFields = map[string]bool{}
+	}
+	for field := range fields {
+		l.result.CheckedFields[field] = true
+	}
+	// Demand propagates through the dictionary allocation and its existing stores.
+	l.result.ViewOrigins = append(l.result.ViewOrigins, object)
+	of, err := l.typeOf(node)
+	if err != nil {
+		return nil, err
+	}
+	return ir.Property{Object: object, DictionaryKey: key, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: l.viewLiterals(declared)}, nil
 }

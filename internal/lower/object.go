@@ -333,6 +333,16 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
+	if l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
+		if access.QuestionDotToken != nil {
+			return nil, l.notYet(node, "an optional dictionary receiver")
+		}
+		object, err := l.expression(access.Expression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, ir.StringConstant{Index: l.constant(name)})
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
@@ -1717,6 +1727,16 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if object.Type() == ir.Object && l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
+		if optional {
+			return nil, l.notYet(node, "an optional dictionary receiver")
+		}
+		key, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, key)
 	}
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		if index.Kind != ast.KindStringLiteral {

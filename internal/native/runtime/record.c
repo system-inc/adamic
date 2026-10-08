@@ -15,6 +15,10 @@ static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL};
 
+bool adamic_record_is(const adamic_object *object) {
+	return object != NULL && object->heap.kind == adamic_kind_object && object->shape == &record_shape;
+}
+
 static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;
 }
@@ -67,7 +71,7 @@ static bool prototype_member(const adamic_string *key) {
 	}
 }
 
-static void check_missing_member(const adamic_string *key) {
+void adamic_record_check_missing_member(const adamic_string *key) {
 	if (prototype_member(key)) {
 		static const char prefix[] = "record member '";
 		static const char suffix[] = "' is missing; records hold own keys only";
@@ -83,7 +87,7 @@ static void check_missing_member(const adamic_string *key) {
 adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key) {
 	adamic_value *value = adamic_record_get_own(record, key);
 	if (value == NULL) {
-		check_missing_member(key);
+		adamic_record_check_missing_member(key);
 	}
 	return value;
 }

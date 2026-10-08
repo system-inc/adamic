@@ -1049,3 +1049,35 @@ Revised whole-family working date: October 19, 2026 at 23:00 UTC, conditional
 on source producer and shared dispatch handoffs by October 9. Group1.md records
 the proven helper paths and all unimplemented source obligations. Candidate
 progress remains 29 / 228, with exact production reachability unmeasured.
+
+### Dictionary source hooks, October 8 rule change
+
+The user now authorizes minimal named shared hooks. This supersedes the waiting
+on owner handoffs above. Dictionary source read group owns these shared hunks:
+
+- `ir/views.go`: ViewDictionary, a read descriptor, never a writable-slot proof.
+- `ir/ir.go`: Property.DictionaryKey, evaluated after the receiver exactly once.
+- `ir/view_dictionaries.go`: DictionaryReadKinds, common fail-closed adapter boundary.
+- `lower/view_lazy.go`: stringDictionary dispatch to viewDictionaryContractHook.
+- `lower/refusals.go`: defer index-signature obligations to producer/read lowering.
+- `lower/object.go`: named and indexed dictionaryRead hooks before tuple dispatch.
+- `lower/readiness.go`: preserve DictionaryKey guards through final rewriting.
+- `lower/shape_conformance.go`: exclude dynamic dictionary reads from scalar erasure.
+- `lower/view_writes.go`: dictionary read descriptors cannot certify writes.
+- `flow/infer.go`: visit dictionary key effects after receiver effects.
+- `native/emit_expressions.go` and `javascript/javascript.go`: dictionaryRead dispatch.
+- JavaScript assembly includes DictionaryRuntime after shared readiness metadata.
+- `runtime/record.c` and `adamic.h`: adamic_record_is checks the actual producer
+  shape; adamic_record_check_missing_member reuses the existing own-key policy.
+
+The new native source adapter probes actual fixed-shape slot type/readiness before
+normalizing a selected value. It preserves identity and does not copy or reinterpret
+an ordinary object as a table. Actual record wrappers route through existing record.c
+and independently check the table's reference-value representation. No second record
+representation is introduced. Source dictionary literals currently retain their
+existing fixed shapes; dynamic record producers/writes are the next owned group.
+
+Seven compiler-source controls and six source semantic mutants supplement the
+original component tests. Rich element adapters remain demanded-read refusals.
+The accepted measurement is 29 pairs / 228 reads, labeled static candidates.
+No production candidate pair is credited from representative fixtures alone.

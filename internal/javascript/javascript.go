@@ -51,6 +51,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(fieldReadinessRuntime)
+	builder.WriteString(DictionaryRuntime())
 	builder.WriteString(viewArraysRuntime)
 	builder.WriteString(viewArrayElementsRuntime)
 	builder.WriteString(viewArrayOperationsRuntime)
@@ -821,6 +822,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			return e.dictionaryRead(expression)
+		}
 		if expression.View != "" {
 			if expression.Of == ir.Closure {
 				return e.emitViewCallableProperty(expression)

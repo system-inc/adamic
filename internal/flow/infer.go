@@ -344,7 +344,11 @@ func (n *inference) value(expression ir.Expression) shape {
 		}
 		return result
 	case ir.Property:
-		return shape{part: n.value(expression.Object).roots()}
+		object := n.value(expression.Object)
+		if expression.DictionaryKey != nil {
+			n.value(expression.DictionaryKey)
+		}
+		return shape{part: object.roots()}
 	case ir.ArrayIndex:
 		array := n.value(expression.Array)
 		n.value(expression.Index)

@@ -122,6 +122,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			return e.dictionaryRead(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}

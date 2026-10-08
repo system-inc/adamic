@@ -15,6 +15,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
+	if l.stringDictionary(target) {
+		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
