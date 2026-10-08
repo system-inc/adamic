@@ -25,7 +25,10 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 		return l.notYet(parameter, "a rest parameter other than an array")
 	}
 	element, known := l.kept(l.checker.GetElementTypeOfArrayType(proven))
-	if !known || slotless(element) {
+	// Rest calls fit every scalar to the element representation before packing.
+	// A mixed union is therefore already boxed into the array's reference slot.
+	// Other array operations retain their own representation guards.
+	if !known || (slotless(element) && element != ir.Union) {
 		return l.notYet(parameter, "a rest array of "+l.checker.TypeToString(proven))
 	}
 	return nil
