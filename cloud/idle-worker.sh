@@ -21,7 +21,11 @@ cd ~/idle/tree
 go build -o "$out/adamic-fuzz" ./cmd/adamic-fuzz
 go build -o "$out/adamic-reduce" ./cmd/adamic-reduce
 code=0
-"$out/adamic-fuzz" -seed "$seed" -count "$count" -parallel 1 -v -work "$out/work" -findings "$out/raw" > "$out/fuzz.log" 2>&1 || code=$?
+# Half the box's CPUs (8 on Chonchon): -parallel 1 fuzzed 942 programs in 40 minutes there, and 14 at
+# once was where Chonchon's clang crashed under load (Oct 8). ADAMIC_IDLE_PARALLEL overrides it.
+parallel=${ADAMIC_IDLE_PARALLEL:-$(( $(nproc) / 2 ))}
+[ "$parallel" -ge 1 ] || parallel=1
+"$out/adamic-fuzz" -seed "$seed" -count "$count" -parallel "$parallel" -v -work "$out/work" -findings "$out/raw" > "$out/fuzz.log" 2>&1 || code=$?
 # Exit 1 also means findings; the summary proves the entire range ran.
 grep -q "^$count programs from seed $seed " "$out/fuzz.log" || exit 1
 [ "$code" -le 1 ] || exit "$code"
