@@ -1,0 +1,5 @@
+required-input	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The ADAMIC_ORACLE_WASI lane must support every selected emission fixture; an opted-in fixture that does not lower is missing required compiler support.
+skips=1 required-input=1 unknown=0
+gate skipped 1 required-input tests; 0 unclassified skips
+exit status 1
+exit=1

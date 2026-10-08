@@ -1,0 +1,10 @@
+Log: /workspace/wasi-rerun.jsonl
+Test events: pass=49 fail=0 skip=0
+
+Gate cache lines:
+
+Skipped tests:
+Failed tests:
+Package results:
+github.com/system-inc/adamic/internal/worker/wasm: pass (44.875s)
+github.com/system-inc/adamic/internal/native: pass (75.507s)

@@ -1,0 +1,14 @@
+{"Time":"2026-10-08T01:36:05.433825775Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-08T01:36:05.442701702Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeAgreesWithNode"}
+{"Time":"2026-10-08T01:36:05.442788182Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeAgreesWithNode","Output":"=== RUN   TestWasmtimeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:36:05.442861262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeAgreesWithNode","Output":"    wasi_engines_test.go:66: native: wasm32-wasi requires WASI_SYSROOT\n","OutputType":"error"}
+{"Time":"2026-10-08T01:36:05.442876194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeAgreesWithNode","Output":"--- FAIL: TestWasmtimeAgreesWithNode (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:36:05.44287987Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeAgreesWithNode","Elapsed":0}
+{"Time":"2026-10-08T01:36:05.442891738Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeOracleCatchesMutants"}
+{"Time":"2026-10-08T01:36:05.442893651Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeOracleCatchesMutants","Output":"=== RUN   TestWasmtimeOracleCatchesMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:36:05.442896235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeOracleCatchesMutants","Output":"    wasi_engines_test.go:145: native: wasm32-wasi requires WASI_SYSROOT\n","OutputType":"error"}
+{"Time":"2026-10-08T01:36:05.442898838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeOracleCatchesMutants","Output":"--- FAIL: TestWasmtimeOracleCatchesMutants (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:36:05.442900591Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWasmtimeOracleCatchesMutants","Elapsed":0}
+{"Time":"2026-10-08T01:36:05.442902824Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:36:05.443120181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:36:05.443142274Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.009}

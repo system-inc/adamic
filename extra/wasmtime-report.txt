@@ -1,0 +1,15 @@
+Log: /workspace/wasmtime.jsonl
+Test events: pass=0 fail=2 skip=0
+
+Gate cache lines:
+
+Skipped tests:
+Failed tests:
+github.com/system-inc/adamic/internal/oracle::TestWasmtimeAgreesWithNode
+    wasi_engines_test.go:66: native: wasm32-wasi requires WASI_SYSROOT
+
+github.com/system-inc/adamic/internal/oracle::TestWasmtimeOracleCatchesMutants
+    wasi_engines_test.go:145: native: wasm32-wasi requires WASI_SYSROOT
+
+Package results:
+github.com/system-inc/adamic/internal/oracle: fail (0.009s)
