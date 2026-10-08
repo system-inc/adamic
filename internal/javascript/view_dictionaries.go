@@ -6,6 +6,14 @@ package javascript
 func DictionaryRuntime() string { return viewDictionariesRuntime }
 
 const viewDictionariesRuntime = `
+const adamicViewDictionarySource = (value, expression, declared) => {
+ const kind = value === JSON ? 'unsupported representation' : value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof adamicTypeOf === 'function' ? adamicTypeOf(value) : typeof value;
+ const fail = found => panic('field read failed: ' + expression + '; expected ' + declared + ', found ' + found);
+ if (kind !== 'object') fail(kind);
+ if (typeof adamicClassIdentities !== 'undefined' && adamicClassIdentities.has(value)) fail('unsupported representation');
+ return value;
+};
+
 const adamicViewDictionaryRead = (record, key, kinds, childContract, expression, declared) => {
  const fail = found => panic('field read failed: ' + expression + '; expected ' + declared + ', found ' + found);
  if (record === null || typeof record !== 'object' || Array.isArray(record) || record instanceof Map) fail(record === null ? 'null' : Array.isArray(record) ? 'array' : record instanceof Map ? 'Map' : typeof record);
@@ -15,7 +23,7 @@ const adamicViewDictionaryRead = (record, key, kinds, childContract, expression,
  if (slot !== undefined && !Object.hasOwn(slot, 'value')) fail('accessor');
  if (typeof adamicFieldReadiness !== 'undefined' && adamicFieldReadiness.get(record)?.has(key)) fail('uninitialized');
  const value = slot === undefined ? undefined : slot.value;
- const kind = value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof adamicTypeOf === 'function' ? adamicTypeOf(value) : typeof value;
+ const kind = value === JSON ? 'unsupported representation' : value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof adamicTypeOf === 'function' ? adamicTypeOf(value) : typeof value;
  if (!kinds.includes(kind)) fail(kind);
  const reference = ['object','array','Map','function'].includes(kind);
  if (reference && !childContract) fail('unsupported representation');

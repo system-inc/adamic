@@ -35,7 +35,12 @@ adamic_view_dictionary_result adamic_view_dictionary_read(const adamic_record *r
             break;
         case adamic_kind_null: value.kind = adamic_view_union_null; break;
         case adamic_kind_string: value.kind = adamic_view_union_string; break;
-        case adamic_kind_object: value.kind = adamic_view_union_object; break;
+        case adamic_kind_object: {
+            if (boxed == adamic_library_identity(4)) { value.kind = adamic_view_union_unknown; break; }
+            const adamic_object *object = (const adamic_object *)boxed;
+            value.kind = object->class != NULL && object->class->is_static ? adamic_view_union_function : adamic_view_union_object;
+            break;
+        }
         case adamic_kind_array: value.kind = adamic_view_union_array; break;
         case adamic_kind_map: value.kind = adamic_view_union_map; break;
         case adamic_kind_closure: value.kind = adamic_view_union_function; break;
@@ -61,13 +66,28 @@ static adamic_view_union_value dictionary_boxed_value(const adamic_heap *boxed) 
     case adamic_kind_boolean: value.kind = adamic_view_union_boolean; value.payload.boolean = ((const adamic_boolean_box *)boxed)->boolean; break;
     case adamic_kind_null: value.kind = adamic_view_union_null; break;
     case adamic_kind_string: value.kind = adamic_view_union_string; break;
-    case adamic_kind_object: value.kind = adamic_view_union_object; break;
+    case adamic_kind_object: {
+            if (boxed == adamic_library_identity(4)) { value.kind = adamic_view_union_unknown; break; }
+            const adamic_object *object = (const adamic_object *)boxed;
+            value.kind = object->class != NULL && object->class->is_static ? adamic_view_union_function : adamic_view_union_object;
+            break;
+        }
     case adamic_kind_array: value.kind = adamic_view_union_array; break;
     case adamic_kind_map: value.kind = adamic_view_union_map; break;
     case adamic_kind_closure: value.kind = adamic_view_union_function; break;
     default: value.kind = adamic_view_union_unknown; break;
     }
     return value;
+}
+
+// Conversion checks representation at the read that consumes the selected
+// reference. Record identity and element storage remain lookup obligations.
+adamic_object *adamic_view_dictionary_source_conversion(const adamic_heap *value, const char *expression, const char *declared) {
+    adamic_view_union_value selected = dictionary_boxed_value(value);
+    if (selected.kind != adamic_view_union_object) dictionary_failure(expression, declared, selected.kind);
+    adamic_object *object = (adamic_object *)value;
+    if (object->class != NULL) dictionary_failure(expression, declared, adamic_view_union_unknown);
+    return object;
 }
 
 // Fixed-shape source objects keep their identity and existing storage. A target

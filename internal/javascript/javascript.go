@@ -964,7 +964,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Narrow:
 		if expression.Dictionary {
-			return e.value(expression.Value)
+			return fmt.Sprintf("adamicViewDictionarySource(%s, %s, %s)", e.value(expression.Value), quote(expression.DictionaryExpression), quote(expression.DictionaryType))
 		}
 		if expression.Undefined {
 			return "((value) => value === undefined ? undefined : panic(" + quote("undefined storage conversion failed: "+expression.UndefinedWhere+" expected undefined, found present reference") + "))(" + e.value(expression.Value) + ")"

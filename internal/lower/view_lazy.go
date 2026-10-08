@@ -111,6 +111,9 @@ func (l *lowering) checkLazyViewReads() error {
 	}
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
+	if err := dictionaryConversionRecordOperations(program, graph); err != nil {
+		return err
+	}
 	viewed := map[int]bool{}
 	unknown := false
 	queue := []int{}

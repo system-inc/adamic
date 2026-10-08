@@ -56,7 +56,8 @@ func (e *emitter) box(value ir.Expression) string {
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
 func (e *emitter) narrow(narrow ir.Narrow) string {
 	if narrow.Dictionary {
-		return fmt.Sprintf("((adamic_object *)%s)", e.value(narrow.Value))
+		e.declarations = append(e.declarations, "#include \"view_dictionaries.h\"")
+		return fmt.Sprintf("adamic_view_dictionary_source_conversion((const adamic_heap *)%s, %s, %s)", e.value(narrow.Value), cString(narrow.DictionaryExpression), cString(narrow.DictionaryType))
 	}
 	if narrow.Undefined {
 		value := e.snapshot(ir.Object, fmt.Sprintf("((adamic_object *)%s)", e.value(narrow.Value)))
