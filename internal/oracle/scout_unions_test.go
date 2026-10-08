@@ -10,8 +10,8 @@ import (
 // Historical port programs are remeasured without claiming to undo their corpus workarounds.
 func TestScoutUnionSourceOutcomes(t *testing.T) {
 	for _, probe := range []struct{ name, output, stop string }{
-		{"selector-optional-boolean.a", "true\n", "a field of type boolean | undefined"},
-		{"values-optional-boolean.a", "true\n", "a field of type boolean | undefined"},
+		{"selector-optional-boolean.a", "true\n", ""},
+		{"values-optional-boolean.a", "true\n", ""},
 		{"hir-optional-boolean.a", "true\n", ""},
 		{"tsc-source-content.a", "source\nmissing\n", ""},
 		{"tsc-nullish-content.a", "string\nsource\nobject\nnull\nundefined\nundefined\n", ""},
@@ -55,6 +55,9 @@ func TestScoutUnionSourceOutcomes(t *testing.T) {
 func init() {
 	for _, path := range []string{
 		"docs/step-17-unions/probes/hir-optional-boolean.a",
+		"docs/step-17-unions/probes/selector-optional-boolean.a",
+		"docs/step-17-unions/probes/values-optional-boolean.a",
+		"internal/oracle/testdata/scout_class_boolean_fields.a",
 		"docs/step-17-unions/probes/tsc-source-content.a",
 		"docs/step-17-unions/probes/tsc-nullish-content.a",
 		"internal/oracle/testdata/scout_nullable_strings.a",

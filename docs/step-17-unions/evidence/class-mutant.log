@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_class_boolean_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_class_boolean_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_class_boolean_fields.a
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "undefined|false|true|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|false|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|undefined|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|true\n", stderr ""
+        native: exit 0, stdout "false|false|true|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nfalse|false|false|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nfalse|false|undefined|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|true\n", stderr ""
+    oracle_test.go:776: JavaScript backend: stdout differs
+        node:    exit 0, stdout "undefined|false|true|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|false|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|undefined|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|true\n", stderr ""
+        backend: exit 0, stdout "false|false|true|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nfalse|false|false|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nfalse|false|undefined|undefined|true\ntrue|true\nfalse|false\nundefined|undefined\nundefined|false\nundefined|false|true\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_class_boolean_fields.a (1.06s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.164s
+FAIL

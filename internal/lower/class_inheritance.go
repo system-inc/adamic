@@ -247,7 +247,9 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if err != nil {
 			return err
 		}
-		if slotless(of) {
+		// Required boolean-or-undefined fields have a packed scalar slot.
+		// Optional presence and boxed union class layouts remain separate work.
+		if slotless(of) && (of != ir.MaybeBoolean || member.PostfixToken() != nil) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
 		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || (member.Kind == ast.KindPropertyDeclaration && assertionInitializer(member.AsPropertyDeclaration().Initializer))}

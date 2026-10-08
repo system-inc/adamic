@@ -1,0 +1,76 @@
+=== RUN   TestInheritanceRefusesUnsoundOverrides
+=== PAUSE TestInheritanceRefusesUnsoundOverrides
+=== RUN   TestInheritanceKeepsCheckerConstructorRules
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules
+=== RUN   TestInheritanceNativeSignatureLimits
+=== PAUSE TestInheritanceNativeSignatureLimits
+=== RUN   TestScoutClassBooleanKeepsUnsafeViewsRefused
+--- PASS: TestScoutClassBooleanKeepsUnsafeViewsRefused (0.08s)
+=== CONT  TestInheritanceRefusesUnsoundOverrides
+=== CONT  TestInheritanceNativeSignatureLimits
+=== RUN   TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== RUN   TestInheritanceNativeSignatureLimits/optional_added
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== PAUSE TestInheritanceNativeSignatureLimits/optional_added
+=== CONT  TestInheritanceKeepsCheckerConstructorRules
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== RUN   TestInheritanceNativeSignatureLimits/boolean_default_added
+=== PAUSE TestInheritanceNativeSignatureLimits/boolean_default_added
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== CONT  TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== RUN   TestInheritanceNativeSignatureLimits/generic_default_added
+=== PAUSE TestInheritanceNativeSignatureLimits/generic_default_added
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== RUN   TestInheritanceNativeSignatureLimits/parameter_count
+=== PAUSE TestInheritanceNativeSignatureLimits/parameter_count
+=== RUN   TestInheritanceNativeSignatureLimits/void_to_number_result
+=== PAUSE TestInheritanceNativeSignatureLimits/void_to_number_result
+=== RUN   TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== PAUSE TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== CONT  TestInheritanceNativeSignatureLimits/optional_added
+=== CONT  TestInheritanceNativeSignatureLimits/void_to_number_result
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== CONT  TestInheritanceNativeSignatureLimits/parameter_count
+=== CONT  TestInheritanceNativeSignatureLimits/generic_default_added
+=== CONT  TestInheritanceNativeSignatureLimits/boolean_default_added
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+--- PASS: TestInheritanceRefusesUnsoundOverrides (0.00s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents (0.06s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents (0.07s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/parameter_bivariance (0.07s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing (0.07s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_cycle (0.11s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle (0.12s)
+=== CONT  TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/this_before_super
+--- PASS: TestInheritanceNativeSignatureLimits (0.00s)
+    --- PASS: TestInheritanceNativeSignatureLimits/optional_added (0.07s)
+    --- PASS: TestInheritanceNativeSignatureLimits/void_to_number_result (0.10s)
+    --- PASS: TestInheritanceNativeSignatureLimits/parameter_count (0.07s)
+    --- PASS: TestInheritanceNativeSignatureLimits/boolean_default_added (0.06s)
+    --- PASS: TestInheritanceNativeSignatureLimits/number_to_optional_result (0.06s)
+    --- PASS: TestInheritanceNativeSignatureLimits/generic_default_added (0.10s)
+--- PASS: TestInheritanceKeepsCheckerConstructorRules (0.00s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/abstract_construction (0.09s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing (0.07s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/this_before_super (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.348s

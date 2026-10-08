@@ -23,7 +23,9 @@ stage 0 can't lower indexOf with these arguments yet        (Node prints 3)
 
 **Around it:** `indexOfFrom` (tokenize.ts) slices from the position and searches the rest. The tokenizer looks for a closing quote, the end of a comment and the end of a line that way, as upstream does with `css.indexOf(search, from)`. It copies the rest of the value each time, which upstream doesn't.
 
-## 2. A `boolean | undefined` field
+## 2. A `boolean | undefined` field (closed by step 17)
+
+Closed: the required class field now lowers and agrees with Node. The following describes the historical stop. Optional own presence and removal of the corpus workaround remain separate work.
 
 A field that holds a boolean or nothing is refused, in a class or an object type. A field of `number | undefined`, `string | undefined` or `T[] | undefined` lowers.
 

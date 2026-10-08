@@ -26,7 +26,7 @@ exact `lower.NotYet.What` refusal. A gap closing therefore fails the gap test.
 | --------------------------------------------------------- | ----------- | ------------------------------------------------------ | ---------------------------------------------- |
 | [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | `push with other than one value`                       | One push per value.                            |
 | [2_mixed_field.ts](gaps/2_mixed_field.ts)                 | `true`      | `a field of type string \| boolean \| undefined`       | Namespace string and separate true bit.        |
-| [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | `a field of type boolean \| undefined`                 | Quoted value and presence bit.                 |
+| [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | Closed by step 17: matches Node                        | Quoted value and presence bit.                 |
 | [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback` | Explicit map-key collection loop.              |
 | [5_conditional_panic.ts](gaps/5_conditional_panic.ts)     | `a`         | Closed by compiler/area-next: lowers, must match Node  | Guard helper calls panic in its own statement. |
 | [6_undefined_case.ts](gaps/6_undefined_case.ts)           | `a`         | `a case whose type differs from the switch's`          | Narrow undefined before the switch.            |
@@ -73,3 +73,5 @@ JSON null and unpaired surrogate code units to replacement characters, matching
 Go's tree representation. This does not establish raw UTF-16 fidelity outside
 that representation. Nondefault upstream options, mutation APIs, rendering,
 arbitrary invalid UTF-8 and exhaustive grammar coverage are outside this slice.
+
+Step 17 closes gap 3 with required boolean-or-undefined class field storage. The gap program is held to Node and leak checks. The corpus workaround remains until a separate port change proves its removal.
