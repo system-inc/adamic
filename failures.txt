@@ -49,3 +49,8 @@
     wasi_shim_test.go:53: file access import fd_filestat_get
 --- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (0.67s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_shim_test.go:27: fixture does not lower
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.00s)
+
