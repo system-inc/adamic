@@ -1,0 +1,14 @@
+{
+  "adamic_base": "ef3141e9b1152ab51b51497f8ce3a2799449c8a3",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "build_command": "npx hereby tsc --no-typecheck",
+  "node": "v24.19.0",
+  "artifacts": {
+    "built/local/tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "built/local/_tsc.js": "76f97f74ac16b8986caba14369cb2feeb7b46b77d752f5d9571dd7acb92636a8",
+    "built/local/lib.d.ts": "0e6477e5049e579cc5de741a70ac91235252edc0468b2e569f22de9db3357786"
+  },
+  "nproc": 5,
+  "setup_seconds": 227.917,
+  "environment_file": "/workspace/adamic-tools/env.sh"
+}
