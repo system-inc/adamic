@@ -1,0 +1,249 @@
+{
+  "status": "failed",
+  "stage": "latent census build",
+  "meter_exit": 1,
+  "compiler_mode": "single",
+  "compiler_sha": "acdf5c109a3f13bb58ff89905bf6f968926f35e6",
+  "compiler_merge_parents": [
+    "3b25512566206bc603b93264e8d072c55e075d64",
+    "41231d514cf0090d1a7ec103326858b7eb34b6e3"
+  ],
+  "compiler_tree": "7817e059a5ae48260ab8b77ead64b60c54fe39bf",
+  "pinned_refs": {
+    "main": "f4efdd2369311d1420aa53fdf5c1a55bdda811d4",
+    "area": "3b25512566206bc603b93264e8d072c55e075d64"
+  },
+  "baseline_run": "20261007T230852Z.jzKzWs",
+  "baseline": {
+    "main": {
+      "totals": {
+        "NotYet": 1560,
+        "Refused": 3735,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 2
+      },
+      "checked_enum_object_view_count": 90,
+      "checked_enum_object_view_reasons": [
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent",
+          "owner": "OWNER BLANK",
+          "NotYet": 24,
+          "Refused": 0,
+          "count": 24
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 20,
+          "Refused": 0,
+          "count": 20
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 16,
+          "Refused": 0,
+          "count": 16
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left",
+          "owner": "OWNER BLANK",
+          "NotYet": 6,
+          "Refused": 0,
+          "count": 6
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements",
+          "owner": "OWNER BLANK",
+          "NotYet": 4,
+          "Refused": 0,
+          "count": 4
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 2,
+          "Refused": 0,
+          "count": 2
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field tag",
+          "owner": "OWNER BLANK",
+          "NotYet": 2,
+          "Refused": 0,
+          "count": 2
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode",
+          "owner": "OWNER BLANK",
+          "NotYet": 2,
+          "Refused": 0,
+          "count": 2
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field elements",
+          "owner": "OWNER BLANK",
+          "NotYet": 1,
+          "Refused": 0,
+          "count": 1
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field multiLine",
+          "owner": "OWNER BLANK",
+          "NotYet": 1,
+          "Refused": 0,
+          "count": 1
+        }
+      ]
+    },
+    "area": {
+      "totals": {
+        "NotYet": 1558,
+        "Refused": 3894,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 2
+      },
+      "checked_enum_object_view_count": 90,
+      "checked_enum_object_view_reasons": [
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent",
+          "owner": "OWNER BLANK",
+          "NotYet": 24,
+          "Refused": 0,
+          "count": 24
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 20,
+          "Refused": 0,
+          "count": 20
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 16,
+          "Refused": 0,
+          "count": 16
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left",
+          "owner": "OWNER BLANK",
+          "NotYet": 6,
+          "Refused": 0,
+          "count": 6
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements",
+          "owner": "OWNER BLANK",
+          "NotYet": 4,
+          "Refused": 0,
+          "count": 4
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name",
+          "owner": "OWNER BLANK",
+          "NotYet": 3,
+          "Refused": 0,
+          "count": 3
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand",
+          "owner": "OWNER BLANK",
+          "NotYet": 2,
+          "Refused": 0,
+          "count": 2
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field tag",
+          "owner": "OWNER BLANK",
+          "NotYet": 2,
+          "Refused": 0,
+          "count": 2
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode",
+          "owner": "OWNER BLANK",
+          "NotYet": 2,
+          "Refused": 0,
+          "count": 2
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field elements",
+          "owner": "OWNER BLANK",
+          "NotYet": 1,
+          "Refused": 0,
+          "count": 1
+        },
+        {
+          "reason": "a checked numeric enum object view with an incompatible structured or optional payload field multiLine",
+          "owner": "OWNER BLANK",
+          "NotYet": 1,
+          "Refused": 0,
+          "count": 1
+        }
+      ]
+    }
+  },
+  "current_measurements": null,
+  "pass_to_fail": null,
+  "error": "# github.com/system-inc/adamic/internal/lower\n../stage3-meter-tmp/stage3-meter.5cQeNo/latent-overlay/internal_lower_refusals.go:256:17: undefined: found\n../stage3-meter-tmp/stage3-meter.5cQeNo/latent-overlay/internal_lower_refusals.go:257:4: undefined: found\n../stage3-meter-tmp/stage3-meter.5cQeNo/latent-overlay/internal_lower_refusals.go:258:22: undefined: visit\n",
+  "setup_retry_exit": 0,
+  "tests": {
+    "ran": 23,
+    "passed": 22,
+    "skipped": 1,
+    "exit": 0
+  }
+}
