@@ -1,5 +1,5 @@
 Built direct-write and fresh-construction presence guards and a recorded implements representation relation.
-Commits: integration d335b9b1; direct-write batch 58e743bf; construction batch recorded in git history on codex/stricter-optional-writes.
+Commits: integration d335b9b1; direct-write batch 58e743bf; construction batch 9af86993; CLI verification commit recorded in git history on codex/stricter-optional-writes.
 Focused loader/lower/command tests pass; runtime Node/native/JavaScript proofs pass; production schedules 50, emits 0.
 Numeric, reference and class absent-write mutants stop at the guard, exit 70; fresh-construction absence mutant stops at the guard; required-field absence mutant disagrees with Node.
 Not covered: 17 other optional-site contracts, whole-program lowering, full repository gate, indexed/catch/JSON work.
@@ -62,3 +62,39 @@ explicit data property to be own-present before returning it to its target
 contract. A sanitizer-enabled mutant marks the allocation's slots absent; the
 construction guard catches it with exit 70. The loader test separately proves
 that acceptance records a pending contract without claiming an emitted check.
+
+Final verification: `go test ./internal/load ./internal/lower ./internal/native
+./internal/javascript ./cmd/adamic -count=1 -timeout 10m` passes: loader 20.482s,
+lowerer 37.417s, native 125.077s, commands 4.454s; JavaScript has no package tests.
+After the trailing build flag fix, commands pass again in 1.232s. The focused
+oracle passes in 4.412s. Native build with trailing --explain-checks prints the
+TS2375 construction check and the sanitizer binary prints
+`true|slot|true|undefined`. C emission prints the same explanation to stderr.
+WASI explanations are explicitly unsupported; native and JavaScript lowering
+explanations are implemented.
+
+All run mutants, including merged presence regression controls:
+
+| Mutant | Catcher |
+| --- | --- |
+| Numeric write stores absent | New presence guard, exit 70 |
+| Reference write stores absent | New presence guard, exit 70 |
+| Class write stores absent | New presence guard, exit 70 |
+| Fresh construction stores absent | New presence guard, exit 70 |
+| Required implements field stores absent | Node stdout disagreement |
+| Drop absent slot reservation | Missing-field stop, exit 70; Node disagreement |
+| Drop spread reservation | Missing-field stop, exit 70; Node disagreement |
+| Treat initially absent fields as present | Node stdout disagreement |
+| Use layout order instead of write order | Node stdout disagreement |
+| Delete leaves the property present | Node stdout disagreement |
+| Enumerate interface alias with static class keys | Node stdout disagreement, sanitizer off/on |
+| Checked copy drops presence | Independent state assertions, sanitizer off/on |
+| Checked copy drops readiness | Checked read stops, sanitizer off/on |
+| Presence and readiness storage overlap | Independent state assertions, sanitizer off/on |
+
+This remains an incomplete unit. The remaining 17 sites need checks for spreads,
+nested callback/collection contracts, and diagnostics propagated from rejected
+exact-optional relations. Merely checking outer object presence would miss nested
+writes; those sites have not been waived. The 90 ordinary production errors are
+an additional block on whole-program emission, outside this unit's requested
+optional-write scope. There is no verified completion date for all 67.

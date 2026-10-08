@@ -15,6 +15,7 @@ func build(path, output string, arguments []string) int {
 func buildInput(paths []string, project, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
+	explain := false
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -24,6 +25,8 @@ func buildInput(paths []string, project, output string, arguments []string) int 
 				return 2
 			}
 			options.Target = arguments[index]
+		case "--explain-checks":
+			explain = true
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -47,6 +50,13 @@ func buildInput(paths []string, project, output string, arguments []string) int 
 	if options.Target != "" && archive != "" {
 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
 		return 1
+	}
+	if explain {
+		if options.Target != "" {
+			fmt.Fprintln(os.Stderr, "adamic: --explain-checks currently requires a native target")
+			return 1
+		}
+		paths = append(append([]string{}, paths...), "--explain-checks")
 	}
 	var program *ir.Program
 	var code int
