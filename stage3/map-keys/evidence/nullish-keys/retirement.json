@@ -1,0 +1,19 @@
+{
+  "compiler_before": "eb156dc6a28b9c9491f9b3722a32e35e973625ba",
+  "probes": 159,
+  "before_reproduced": 33,
+  "after_reproduced": 33,
+  "retired_diagnostic_signatures": [],
+  "total_retired_since_merged_baseline": 104,
+  "whole_tsc_entry_roots_compiling": 0,
+  "hidden_byte_recovery_measured": false,
+  "checker_rejected": true,
+  "compiler_source_sha256": {
+    "internal/lower/expression.go": "6d9d6c70f07eafe27f66fcc9d950eedbe2bbc90ce95c298f5c6fdd6e7983b697",
+    "internal/lower/collection_keys.go": "107e3ffb37da6060eb5726cea10d212b17cb150d130a71d225415137acd52fb9",
+    "internal/lower/collections.go": "c9d4f091f7c78acde43a2ff5fdf98e02e6077c45ca74e6c43de4cc47d4de8d55",
+    "internal/native/emit_maps.go": "f40687f9e02113618ef9847d91b6845a399867863f3c62415d520fc81667b5ae",
+    "internal/native/runtime/map.c": "bed405d8dd6fdde119042eee995e30b03b474f33311219011f3d12ae30ec2db4",
+    "internal/native/runtime/adamic.h": "78d7c20b0c27735f97634cb4e4635807326e8a99728ae4b212f73d1bc276ec15"
+  }
+}

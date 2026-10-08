@@ -455,3 +455,36 @@ The source Node oracle, generated JavaScript, sanitized native, release native a
 The frozen 159-probe replay decreases reproduced diagnostics from 34 to 33. One additional signature retires at tracing.ts:224:38, the Map<object, number> key representation. The original merged-baseline total is now 104 retired signatures. Complete tsc entry roots compiling remains zero; hidden-byte recovery is not measured. The other dependencies exposed by that selected unit remain recorded in after.jsonl.gz. Nullish keys are the next piece. createSet, full MultiMap and MapLike remain assigned to steps 20, 06 and 22.
 
 Commands: go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^scout_union_keys.a$' -v -count=1 -timeout 30m; the same test with /stage3/map-keys/^mixed_map.a$; go test ./internal/oracle -run '^TestScoutUnionKeyMutants$' -v -count=1; go test ./internal/lower -run '^TestScoutMapKeyOutcomes$' -count=1; go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts; go vet ./internal/lower ./internal/native ./internal/oracle; python3 stage3/map-keys/replay.py /tmp/scout-map-keys-adapted /tmp/step19-union-replay.jsonl. Oracle fixture runs use ADAMIC_GATE_UNCACHED=1; all outputs go to logs.
+
+
+### Nullish keys
+
+Map and Set now keep null and undefined as distinct keys in tagged unions, alongside numbers, strings, booleans and references. Pure null uses the existing immortal null sentinel; undefined uses NULL. Nullable scalar unions and reference unions containing both null and undefined use the tagged representation. Existing nullable object references retain their representation, with an explicit conversion when entering a union key parameter. That conversion saves its operand once before choosing the null sentinel. Null literals remain recognizable to host receiver protocols.
+
+Conditional key selectors box each arm before joining it, even when both arms initially have the same pointer representation. Without that step, flag ? null : undefined would erase the distinction. typeof on a tagged union reads the runtime tag; it never interprets an undefined pointer as null based only on the declared type.
+
+The fixtures reduce core.ts:600-609 mapEntries's generic K2, builder.ts:1342-1344 seenFiles membership and utilities.ts:12152 Set construction. The drivers instantiate those key domains with unions and nullish members; they are not claims that upstream declares these exact instantiations. The union fixture's source comments now name those precise Set witnesses. scout_nullish_keys.a covers constructors, overwrite order, lookups, membership, iteration, deletion, reinsertion, clear, pure null and pure undefined domains, nullable reference parameters, direct unknown intrinsic key parameters, standalone null/undefined comparisons and conditional selectors. nullish_set.a now lowers and is an acceptance fixture.
+
+Both generated backends agree with original-source Node for the fixtures. Sanitized native, release native and leak accounting pass. The nullish fixture records 64 allocations, 64 frees, 105 retains, 162 releases, peak 10 and zero regions. The union fixture records 116 allocations, 116 frees, 139 retains, 219 releases, peak 21 and zero regions. Fifty-two affected collection and host-method fixtures pass uncached, including the host null receiver controls. The final direct fixture runs and the nullish reduction also pass. Counts are refreshed and vet has no findings. No whole package test or full gate was run.
+
+Seven nullish mutants were executed. Three replace null with undefined, undefined with its string spelling, or typeof undefined with object; each native mutant runs cleanly and Node stdout catches it. Removing nullable-reference conversion also runs cleanly and disagrees with source Node, while generated JavaScript preserves its native null value. Replacing the null conditional arm with the undefined arm disagrees with Node in both generated backends, with clean native sanitizers and leaks. Two compiler guard mutants admit unsupported representation conversions; the corresponding gap assertions fail with got <nil>. These are admission failures, not warning failures. Production sources are restored and the controls pass. Together with the three union mutants, this adds ten executed mutants to the eighteen previously recorded.
+
+Remaining representation gaps are loud: number | null coalesced to an unboxed number; nullable object references entering unknown through constructor tuple views; and a lookup of an object-or-null value boxed into a union without preserving its separate presence slot. The last case must distinguish a missing key from a present null payload. The regression tests retain the refused programs for each gap. Optional boolean-only key packing, arbitrary nullable array storage and unproven views are not implemented by this piece. createSet, full MultiMap and MapLike remain dependencies of steps 20, 06 and 22; no weak edges or Program-region allocation are introduced.
+
+The same 159-probe census replay retains 33 reproduced signatures, with zero additional frozen diagnostic retirements in the nullish piece. The combined total remains 104 retired signatures since the merged baseline; one additional signature came from union keys at tracing.ts:224:38. Complete tsc entry roots compiling remains zero, and hidden-byte recovery is not measured. Source hashes, complete findings and scoped logs are preserved in stage3/map-keys/evidence/nullish-keys.
+
+Exact scoped commands, after sourcing /workspace/adamic-tools/env.sh and redirecting all output:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^(scout_union_keys|scout_nullish_keys|method_coverage_.*|library_method_values|scout_map_.*)[.]a$' -v -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^scout_(union|nullish)_keys[.]a$' -v -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/stage3/map-keys/^nullish_set[.]a$' -v -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestScout(UnionKeyMutants|NullishKeyMutants|NullableKeyConversionMutant|NullishConditionalMutant)$' -v -count=1 -timeout 30m
+go test ./internal/lower -run '^(TestScout.*|TestUnknownReflectionRefusals|TestLibraryMapSet.*|TestNonNull.*|TestNullishPrototype.*)$' -v -count=1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts
+go vet ./internal/lower ./internal/native ./internal/oracle
+python3 stage3/map-keys/replay.py /tmp/scout-map-keys-adapted /tmp/step19-nullish-replay-delivery.jsonl
+# With each relevant guard disabled, these fail; sources are then restored:
+go test ./internal/lower -run '^TestScoutNullishCoalesceRepresentationGap$' -v -count=1
+go test ./internal/lower -run '^TestScoutNullishLookupPresenceGap$' -v -count=1
+```

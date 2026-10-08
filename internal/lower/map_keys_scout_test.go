@@ -16,7 +16,6 @@ func TestScoutMapKeyOutcomes(t *testing.T) {
 	}{
 		{"branded_map", "a value of type Path", false},
 		{"branded_set", "a value of type Path", false},
-		{"nullish_set", "a Set of null | undefined", false},
 		{"maplike", "an index signature", true},
 		{"reused_pair_mutation", "assigning an element of a value", false},
 	} {

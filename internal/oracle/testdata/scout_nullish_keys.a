@@ -1,0 +1,57 @@
+// Reduced from core.ts:600-609 mapEntries, builder.ts:1342-1344 seenFiles,
+// and utilities.ts:12152 Set construction, with nullish key instantiations.
+// Expanded driver distinguishes stored null/undefined from missing keys.
+type Key = string | number | boolean | null | undefined;
+const map = new Map<Key, string>([[null, 'null'], [undefined, 'undefined'], ['undefined', 'text'], [NaN, 'nan'], [-0, 'zero']]);
+map.set(null, 'null-update');
+map.set(undefined, 'undefined-update');
+console.log(`${map.size}:${map.get(null)}:${map.get(undefined)}:${map.get('undefined')}:${map.get(NaN)}:${map.get(0)}`);
+for (const [key, value] of map) console.log(`${key === null}:${key === undefined}:${typeof key}:${value}`);
+const set = new Set<Key>([null, undefined, null, undefined, 'undefined', 0, -0, NaN, 0 / 0, false]);
+console.log(`${set.size}:${set.has(null)}:${set.has(undefined)}:${set.has('undefined')}`);
+for (const key of set) console.log(`${key === null}:${key === undefined}:${typeof key}`);
+function use(key: null | undefined): void {
+    console.log(`${map.has(key)}:${map.get(key)}:${set.has(key)}:${typeof key}`);
+}
+use(null);
+use(undefined);
+map.delete(null);
+set.delete(undefined);
+console.log(`${map.has(null)}:${map.has(undefined)}:${set.has(null)}:${set.has(undefined)}`);
+map.set(null, 'reinsert');
+set.add(undefined);
+for (const [key, value] of map) console.log(`${key === null}:${key === undefined}:${value}`);
+map.clear();
+set.clear();
+console.log(`${map.size}:${set.size}`);
+const onlyNull = new Set<null>([null, null]);
+const onlyUndefined = new Map<undefined, number>([[undefined, 1]]);
+console.log(`${onlyNull.size}:${onlyNull.has(null)}:${onlyUndefined.get(undefined)}`);
+function nullable(key: {readonly name: string} | null): void {
+    const objects = new Map<{readonly name: string} | null | undefined, number>();
+    objects.set(key, 1);
+    objects.set(undefined, 2);
+    console.log(`${objects.size}:${objects.get(null)}:${objects.get(undefined)}:${objects.has(key)}`);
+}
+nullable(null);
+
+// Direct intrinsic unknown-key parameters preserve nullable reference sources.
+function unknownKey(key: {readonly name: string} | null): void {
+    const unknownMap = new Map<unknown, number>();
+    unknownMap.set(key, 1);
+    unknownMap.set(undefined, 2);
+    console.log(`${unknownMap.size}:${unknownMap.get(null)}:${unknownMap.get(undefined)}`);
+}
+unknownKey(null);
+const nullValue: null = null;
+const undefinedValue: undefined = undefined;
+console.log(`${nullValue === undefinedValue}:${nullValue === null}:${typeof nullValue}`);
+
+// Conditional key selectors must box each nullish arm before merging them.
+function chooseNullish(flag: boolean): null | undefined {
+    return flag ? null : undefined;
+}
+const selectedKeys = new Map<null | undefined, number>();
+selectedKeys.set(chooseNullish(true), 1);
+selectedKeys.set(chooseNullish(false), 2);
+console.log(`${selectedKeys.size}:${selectedKeys.get(null)}:${selectedKeys.get(undefined)}`);

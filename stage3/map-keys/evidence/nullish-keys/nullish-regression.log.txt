@@ -1,0 +1,217 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_strong_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_strong_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullish_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullish_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_union_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_union_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_alias_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_alias_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_mutations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_mutations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_bound_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_bound_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_codes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_codes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_conversions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_conversions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_format_failure.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_format_failure.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_parsers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_parsers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_math.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_math.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_formats.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_formats.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_statics.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_statics.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_statics.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_statics.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_receiver_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_receiver_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_at.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_at.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charcodeat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charcodeat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_concat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_concat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_endswith.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_endswith.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_includes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_includes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_indexof.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_indexof.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_normalize.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_normalize.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_overloads.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_overloads.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padend.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padend.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padstart.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padstart.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_repeat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_repeat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_slice.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_slice.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_startswith.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_startswith.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_substring.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_substring.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tolowercase.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tolowercase.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tostring.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tostring.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trim.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trim.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimend.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimend.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimstart.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimstart.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_valueof.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_valueof.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_strong_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_receiver_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_bound_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_parsers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_format_failure.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_conversions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_codes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padend.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_valueof.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimstart.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimend.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trim.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tostring.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tolowercase.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_substring.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_startswith.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_slice.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_repeat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padstart.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_mutations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_alias_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_union_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullish_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_statics.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_statics.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_formats.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_math.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_endswith.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_overloads.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_normalize.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_indexof.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_includes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charcodeat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_concat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_at.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charat.a
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_receiver_order.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_strong_edges.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_bound_strings.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a (1.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_format_failure.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_strings.a (0.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_empty_alias_tdz.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_map_parsers.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_conversions.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_codes.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_valueof.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padend.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimstart.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trimend.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_trim.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tostring.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_touppercase.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_tolowercase.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_startswith.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_substring.a (0.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_slice.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_repeat.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_padstart.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_values.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_alias_order.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_array_mutations.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_union_keys.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_statics.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullish_keys.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_statics.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a (0.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_number_formats.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a (0.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_math.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_endswith.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_overloads.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_normalize.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_lastindexof.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_indexof.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_includes.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charcodeat.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_concat.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_codepointat.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_at.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_string_charat.a (0.44s)
+PASS
+gate cache: native hits=0 misses=152
+gate cache: node hits=0 misses=104
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.136s

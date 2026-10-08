@@ -1,0 +1,6 @@
+=== RUN   TestScoutNullishCoalesceRepresentationGap
+    map_nullish_keys_test.go:24: want loud conversion gap, got <nil>
+--- FAIL: TestScoutNullishCoalesceRepresentationGap (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.054s
+FAIL

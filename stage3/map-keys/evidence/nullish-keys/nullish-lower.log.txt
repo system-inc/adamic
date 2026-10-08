@@ -1,0 +1,209 @@
+=== RUN   TestLibraryMapSetGapsStayRefused
+=== RUN   TestLibraryMapSetGapsStayRefused/set-like_object
+=== RUN   TestLibraryMapSetGapsStayRefused/different_representations
+=== RUN   TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== RUN   TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+--- PASS: TestLibraryMapSetGapsStayRefused (0.13s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/set-like_object (0.04s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/different_representations (0.03s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/dynamic_thisArg (0.03s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/groupBy_optional_widening (0.03s)
+=== RUN   TestLibraryMapSetIteratorCopyTypesRefused
+--- PASS: TestLibraryMapSetIteratorCopyTypesRefused (0.12s)
+=== RUN   TestScoutMapKeyOutcomes
+=== RUN   TestScoutMapKeyOutcomes/branded_map
+    map_keys_scout_test.go:33: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_map2978027492/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/branded_set
+    map_keys_scout_test.go:33: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_set1736382696/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/maplike
+    map_keys_scout_test.go:33: /tmp/adamic-gate/TestScoutMapKeyOutcomesmaplike594177054/001/main.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+=== RUN   TestScoutMapKeyOutcomes/reused_pair_mutation
+    map_keys_scout_test.go:33: /tmp/adamic-gate/TestScoutMapKeyOutcomesreused_pair_mutation1375857630/001/main.a:10:21: stage 0 can't lower assigning an element of a value yet
+--- PASS: TestScoutMapKeyOutcomes (0.10s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_map (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_set (0.02s)
+    --- PASS: TestScoutMapKeyOutcomes/maplike (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/reused_pair_mutation (0.03s)
+=== RUN   TestScoutMapIteratorPairsLower
+--- PASS: TestScoutMapIteratorPairsLower (0.03s)
+=== RUN   TestScoutMapIteratorPairRepresentationGap
+--- PASS: TestScoutMapIteratorPairRepresentationGap (0.03s)
+=== RUN   TestScoutMapBrandBoundary
+=== RUN   TestScoutMapBrandBoundary/42
+=== RUN   TestScoutMapBrandBoundary/undefined
+=== RUN   TestScoutMapBrandBoundary/false
+=== RUN   TestScoutMapBrandBoundary/null
+--- PASS: TestScoutMapBrandBoundary (0.12s)
+    --- PASS: TestScoutMapBrandBoundary/42 (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/undefined (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/false (0.04s)
+    --- PASS: TestScoutMapBrandBoundary/null (0.03s)
+=== RUN   TestScoutMapBrandRefinementRefused
+--- PASS: TestScoutMapBrandRefinementRefused (0.03s)
+=== RUN   TestScoutMapPresenceRules
+=== RUN   TestScoutMapPresenceRules/early_missing_return
+=== RUN   TestScoutMapPresenceRules/early_return_then_alias_write
+=== RUN   TestScoutMapPresenceRules/same_map/key
+=== RUN   TestScoutMapPresenceRules/different_key
+=== RUN   TestScoutMapPresenceRules/different_map
+=== RUN   TestScoutMapPresenceRules/alias_write
+=== RUN   TestScoutMapPresenceRules/unknown_call
+=== RUN   TestScoutMapPresenceRules/key_update
+=== RUN   TestScoutMapPresenceRules/optional_stored_undefined
+--- PASS: TestScoutMapPresenceRules (0.24s)
+    --- PASS: TestScoutMapPresenceRules/early_missing_return (0.03s)
+    --- PASS: TestScoutMapPresenceRules/early_return_then_alias_write (0.02s)
+    --- PASS: TestScoutMapPresenceRules/same_map/key (0.03s)
+    --- PASS: TestScoutMapPresenceRules/different_key (0.03s)
+    --- PASS: TestScoutMapPresenceRules/different_map (0.03s)
+    --- PASS: TestScoutMapPresenceRules/alias_write (0.02s)
+    --- PASS: TestScoutMapPresenceRules/unknown_call (0.03s)
+    --- PASS: TestScoutMapPresenceRules/key_update (0.03s)
+    --- PASS: TestScoutMapPresenceRules/optional_stored_undefined (0.03s)
+=== RUN   TestScoutArrayRangeRules
+=== RUN   TestScoutArrayRangeRules/range
+=== RUN   TestScoutArrayRangeRules/alias_mutation_before_read
+=== RUN   TestScoutArrayRangeRules/index_mutation_after_read
+=== RUN   TestScoutArrayRangeRules/hoisted_index
+=== RUN   TestScoutArrayRangeRules/negative_start
+=== RUN   TestScoutArrayRangeRules/different_array
+=== RUN   TestScoutArrayRangeRules/undefined_payload
+--- PASS: TestScoutArrayRangeRules (0.19s)
+    --- PASS: TestScoutArrayRangeRules/range (0.03s)
+    --- PASS: TestScoutArrayRangeRules/alias_mutation_before_read (0.03s)
+    --- PASS: TestScoutArrayRangeRules/index_mutation_after_read (0.03s)
+    --- PASS: TestScoutArrayRangeRules/hoisted_index (0.03s)
+    --- PASS: TestScoutArrayRangeRules/negative_start (0.03s)
+    --- PASS: TestScoutArrayRangeRules/different_array (0.03s)
+    --- PASS: TestScoutArrayRangeRules/undefined_payload (0.03s)
+=== RUN   TestScoutMultiMapFactoryNativeGap
+    map_keys_scout_test.go:193: /tmp/adamic-gate/TestScoutMultiMapFactoryNativeGap4294600145/001/main.a:6:5: stage 0 can't lower a method with a computed name yet
+--- PASS: TestScoutMultiMapFactoryNativeGap (0.03s)
+=== RUN   TestScoutMultiMapExpandoStaysRefused
+    map_keys_scout_test.go:203: /tmp/adamic-gate/TestScoutMultiMapExpandoStaysRefused4106784167/001/main.a:1:100: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- PASS: TestScoutMultiMapExpandoStaysRefused (0.03s)
+=== RUN   TestScoutOriginalCustomSetOutcome
+    map_keys_scout_test.go:216: /tmp/adamic-gate/TestScoutOriginalCustomSetOutcome3097066181/001/main.a:26:5: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)
+--- PASS: TestScoutOriginalCustomSetOutcome (0.03s)
+=== RUN   TestScoutNullishKeyRepresentations
+=== PAUSE TestScoutNullishKeyRepresentations
+=== RUN   TestScoutNullishCoalesceRepresentationGap
+=== PAUSE TestScoutNullishCoalesceRepresentationGap
+=== RUN   TestScoutNullableUnknownKeyGap
+=== PAUSE TestScoutNullableUnknownKeyGap
+=== RUN   TestScoutNullishLookupPresenceGap
+=== PAUSE TestScoutNullishLookupPresenceGap
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestNonNullAssertionOnPresentTypeIsErased
+=== PAUSE TestNonNullAssertionOnPresentTypeIsErased
+=== RUN   TestNullishPrototypeReadsAreRejectedByChecker
+=== PAUSE TestNullishPrototypeReadsAreRejectedByChecker
+=== RUN   TestUnknownReflectionRefusals
+=== PAUSE TestUnknownReflectionRefusals
+=== CONT  TestScoutNullishKeyRepresentations
+=== RUN   TestScoutNullishKeyRepresentations/null
+=== CONT  TestNonNullAssertionOnPresentTypeIsErased
+=== CONT  TestNullishPrototypeReadsAreRejectedByChecker
+=== CONT  TestScoutNullableUnknownKeyGap
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestScoutNullishKeyRepresentations/undefined
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.09s)
+=== CONT  TestUnknownReflectionRefusals
+=== RUN   TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== PAUSE TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== PAUSE TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== RUN   TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== PAUSE TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== PAUSE TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== RUN   TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== PAUSE TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== RUN   TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== PAUSE TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== RUN   TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== PAUSE TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== RUN   TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== PAUSE TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== RUN   TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== PAUSE TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== RUN   TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== PAUSE TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestScoutNullishLookupPresenceGap
+--- PASS: TestScoutNullableUnknownKeyGap (0.10s)
+=== CONT  TestScoutNullishCoalesceRepresentationGap
+--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.11s)
+=== CONT  TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+--- PASS: TestScoutNullishCoalesceRepresentationGap (0.08s)
+=== CONT  TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestScoutNullishKeyRepresentations/null_|_undefined
+=== CONT  TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== RUN   TestScoutNullishKeyRepresentations/number_|_null
+=== CONT  TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+--- PASS: TestScoutNullishLookupPresenceGap (0.17s)
+=== CONT  TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== RUN   TestScoutNullishKeyRepresentations/string_|_null_|_undefined
+=== CONT  TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== CONT  TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== RUN   TestScoutNullishKeyRepresentations/number_|_string_|_boolean_|_null_|_undefined
+=== CONT  TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+--- PASS: TestScoutNullishKeyRepresentations (0.41s)
+    --- PASS: TestScoutNullishKeyRepresentations/null (0.09s)
+    --- PASS: TestScoutNullishKeyRepresentations/undefined (0.10s)
+    --- PASS: TestScoutNullishKeyRepresentations/null_|_undefined (0.05s)
+    --- PASS: TestScoutNullishKeyRepresentations/number_|_null (0.06s)
+    --- PASS: TestScoutNullishKeyRepresentations/string_|_null_|_undefined (0.04s)
+    --- PASS: TestScoutNullishKeyRepresentations/number_|_string_|_boolean_|_null_|_undefined (0.07s)
+=== CONT  TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== CONT  TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== CONT  TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== CONT  TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+--- PASS: TestUnknownReflectionRefusals (0.00s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_} (0.08s)
+    --- PASS: TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_} (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code()); (0.08s)
+    --- PASS: TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code)); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code())); (0.08s)
+    --- PASS: TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON); (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_} (0.08s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_} (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>()); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_} (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null}); (0.09s)
+    --- PASS: TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_} (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{})); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_} (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_} (0.04s)
+--- PASS: TestNullishPrototypeReadsAreRejectedByChecker (1.01s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.100s

@@ -17,6 +17,7 @@ func init() {
 }
 
 func TestScoutUnionKeyMutants(t *testing.T) {
+	t.Parallel()
 	for _, rule := range []struct{ name, body string }{
 		{"number_string", `if (boxed != NULL && boxed->kind == adamic_kind_number && ((adamic_number_box *)boxed)->number == 1) {adamic_release(key.reference); key.reference = adamic_string_from_number(1);}`},
 		{"NaN", `if (boxed != NULL && boxed->kind == adamic_kind_number && isnan(((adamic_number_box *)boxed)->number)) {adamic_release(key.reference); if (map->reference_values) adamic_release(value.reference); return;}`},

@@ -1,0 +1,6 @@
+=== RUN   TestScoutNullishLookupPresenceGap
+    map_nullish_keys_test.go:45: want presence conversion gap, got <nil>
+--- FAIL: TestScoutNullishLookupPresenceGap (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.042s
+FAIL

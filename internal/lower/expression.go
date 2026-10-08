@@ -75,6 +75,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsNull != 0:
+		return ir.Union, true
 	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
@@ -99,17 +101,22 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+			// Preserve existing nullable reference slots. All other nullish domains need tags.
+			tagged := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 {
-					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
-						return 0, false
-					}
+				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+					continue
 				}
+				of, known := l.representation(member)
+				if !known || of == ir.Weak {
+					return 0, false
+				}
+				if !of.IsReference() || of == ir.String || of == ir.Union {
+					tagged = true
+				}
+			}
+			if tagged {
+				return ir.Union, true
 			}
 		}
 		var shared ir.Type
@@ -253,6 +260,21 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if skipped := ast.SkipParentheses(node); err == nil && skipped.Kind != ast.KindSpreadElement {
 		if contextual := l.checker.GetContextualType(skipped, checker.ContextFlagsNone); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
+		}
+	}
+	if err == nil && value.Type().IsReference() && value.Type() != ir.Union {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if to, known := l.representation(contextual); known && to == ir.Union {
+				own := l.concrete(l.checker.GetTypeAtLocation(node))
+				if l.includesNull(own) && l.includesUndefined(own) {
+					return nil, l.notYet(node, "a nullable lookup boxed as a union without its presence slot")
+				}
+				if contextual.Flags()&checker.TypeFlagsUnion != 0 || l.collectionKeyContext(node) {
+					if _, literal := value.(ir.Null); !literal && l.includesNull(l.concrete(l.checker.GetTypeAtLocation(node))) {
+						value, err = l.unionMember(node, value)
+					}
+				}
+			}
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
@@ -606,7 +628,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		written := node.AsTypeOfExpression().Expression
-		null := l.typeOfNull(written)
+		null := operand.Type() != ir.Union && l.typeOfNull(written)
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
@@ -994,6 +1016,18 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if of, err := l.typeOf(node); err == nil && of == ir.Union {
+		// Equal pointer representations can still carry different nullish meanings.
+		whenTrue, err = l.unionMember(conditional.WhenTrue, whenTrue)
+		if err != nil {
+			return nil, err
+		}
+		whenNot, err = l.unionMember(conditional.WhenFalse, whenNot)
+		if err != nil {
+			return nil, err
+		}
+		return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot, Of: ir.Union}, nil
+	}
 	if whenTrue.Type() != whenNot.Type() && l.acceptsUndefined(node) {
 		// A stale narrowing in either branch may still hold undefined. Keep that representation
 		// when the whole conditional is observed or written into a slot that accepts it.
@@ -1153,6 +1187,11 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 	value, err := l.expression(binary.Left)
 	if err != nil {
 		return nil, err
+	}
+	if value.Type() == ir.Union && l.includesNull(l.concrete(l.checker.GetTypeAtLocation(binary.Left))) {
+		if result, known := l.representation(l.checker.GetTypeAtLocation(node)); known && result != ir.Union {
+			return nil, l.notYet(node, "a tagged nullable union coalesced into a different representation")
+		}
 	}
 	// What ?? makes is the checker's: the left side's present members and the right side's, which
 	// may be held differently (text ?? count is string | number, a Union).

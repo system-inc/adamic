@@ -1,5 +1,6 @@
-// Reduced from core.ts mapEntries (K2 = string | number | boolean),
-// and deduplicate's Set path. Driver exposes SameValueZero and insertion order.
+// Reduced from core.ts:600-609 mapEntries (K2 = string | number | boolean),
+// builder.ts:1342-1344 seenFiles, and utilities.ts:12152 Set construction.
+// Driver exposes SameValueZero and insertion order.
 const map = new Map<string | number | boolean, string>();
 map.set(1, `number-${1}`);
 map.set(`${1}`, `string-${1}`);

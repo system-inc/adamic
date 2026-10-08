@@ -1,0 +1,33 @@
+=== RUN   TestScoutNullishKeyMutants
+=== PAUSE TestScoutNullishKeyMutants
+=== RUN   TestScoutNullableKeyConversionMutant
+=== PAUSE TestScoutNullableKeyConversionMutant
+=== RUN   TestScoutNullishConditionalMutant
+=== PAUSE TestScoutNullishConditionalMutant
+=== RUN   TestScoutUnionKeyMutants
+=== PAUSE TestScoutUnionKeyMutants
+=== CONT  TestScoutNullishKeyMutants
+=== CONT  TestScoutNullishConditionalMutant
+=== RUN   TestScoutNullishKeyMutants/null_undefined
+=== CONT  TestScoutNullableKeyConversionMutant
+=== CONT  TestScoutUnionKeyMutants
+=== RUN   TestScoutUnionKeyMutants/number_string
+=== RUN   TestScoutUnionKeyMutants/NaN
+=== RUN   TestScoutNullishKeyMutants/typeof_undefined
+--- PASS: TestScoutNullishConditionalMutant (0.49s)
+--- PASS: TestScoutNullableKeyConversionMutant (0.51s)
+=== RUN   TestScoutNullishKeyMutants/undefined_string
+=== RUN   TestScoutUnionKeyMutants/negative_zero
+--- PASS: TestScoutNullishKeyMutants (1.17s)
+    --- PASS: TestScoutNullishKeyMutants/null_undefined (0.43s)
+    --- PASS: TestScoutNullishKeyMutants/typeof_undefined (0.36s)
+    --- PASS: TestScoutNullishKeyMutants/undefined_string (0.38s)
+--- PASS: TestScoutUnionKeyMutants (1.19s)
+    --- PASS: TestScoutUnionKeyMutants/number_string (0.42s)
+    --- PASS: TestScoutUnionKeyMutants/NaN (0.37s)
+    --- PASS: TestScoutUnionKeyMutants/negative_zero (0.40s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.202s
