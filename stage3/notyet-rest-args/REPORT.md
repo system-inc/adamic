@@ -1,5 +1,3 @@
-# Proven rest arguments
-
 Admit boxed union rest arrays, callable/generic rest, named closure expressions and proven fixed tuple dispatch.
 Commits: replay 8b0db31c, union acc99382, callable 6415c4cf, named 563fe969; tuple implementation carries this report.
 Focused Node, JavaScript, release native and sanitized native oracles pass; seven new positive count rows.
@@ -69,7 +67,7 @@ No PR was opened and no whole package or full gate was run.
 The six table roots have six raw observations. The supported rule now packs array
 rest arguments for arrows, ordinary function values, and specialized named generic
 functions. Both call paths share packing; fixed overloads retain implementation
-rest packing. Named closures remain reserved for the following step.
+rest packing. Named closures were reserved for the following step.
 
 Fixtures rest_callable_generic.a and rest_callable_write.a run through the existing
 Node, JavaScript, native release and sanitized native oracle. Source-only probes
@@ -87,9 +85,11 @@ signature). These are next stops, not claims that the source bodies compile.
 Mutants, each restored: bypass closure packing makes writer forwarding stop at
 SpreadElement; remove generic declaration discovery makes generic relay forwarding
 stop at SpreadElement; bypass rest-convention equality accepts rest_callable_view.a
-and fails its expected adapter boundary; bypass lexical contextual-convention check
-makes rest_callable_context.a fail its expected named boundary. Logs are
-/tmp/rest-mutant-{closure-pack,generic-discovery,callable-view,context-view}.log.
+and fails its expected adapter boundary; the final sole rest-convention guard mutant makes both explicit and contextual
+view probes incorrectly lower. Its log is /tmp/rest-mutant-callable-view-final.log;
+packing logs are /tmp/rest-mutant-{closure-pack,generic-discovery}.log.
+The redundant lexical contextual check was removed after review; its earlier
+reason-only mutant is not counted as proof of a safety check.
 
 Focused commands: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
 'TestRestCallableViewsNeedAdapters|TestRestNotKeepsCycleRefusal|TestNativeAgreesWithNode/internal/oracle/testdata/(rest_(union|callable)_|census_overload_contracts)'
@@ -174,3 +174,21 @@ Worker branch histories were checked across 20 codex/notyet-* refs before shared
 lowering edits. Other recent expression changes touched enumNeverValue, prefix
 updates, logical/equality combination and void-call handling, not the rest helpers,
 sameKeeping, callClosure or callFunction edited here.
+
+## Current main and final guard review
+
+Merged current origin/main 749a69adbfae2a7bf22c1f0436d9ef73345c3070 cleanly
+(merge d54df698). Its changes concern corpus selection and fuzz timing, not lowering.
+Post-merge focused all-rest oracle ok 2.436s; lower ok 1.654s; updated counts ok
+38.130s. Logs /tmp/rest-landed-{oracle,lower,counts}.log.
+
+The redundant lexical contextual-callable guard was removed: sameRestConvention
+is sufficient and its final bypass mutant alone makes both adapter probes lower
+incorrectly. This mutant builds and the two expected-boundary assertions catch it.
+After restoration, focused rest positives and callable/refusal probes ok 2.120s;
+lower checks ok 0.908s; TestCountsAreRecorded without update ok 26.534s.
+Final exact outside-family replays both now reach 'a rest parameter other than
+an array' at the original parameters: core's unresolved generic constraint and
+program's optional tuple rest shape. The earlier contextual stop above describes
+the intermediate commit. /tmp/rest-single-adapter-{final,lower,counts}.log and
+/tmp/rest-mutant-callable-view-final.log preserve final validation.

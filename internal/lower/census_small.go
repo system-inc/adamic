@@ -15,13 +15,7 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
 	}
 	parameters := declaration.Parameters()
-	if contextual := l.checker.GetContextualType(declaration, checker.ContextFlagsNone); contextual != nil {
-		for _, signature := range l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall) {
-			if restParameterIndex(signature) != len(parameters)-1 {
-				return l.notYet(parameter, "a rest callable seen through a different calling convention")
-			}
-		}
-	}
+
 	if parameters[len(parameters)-1] != parameter {
 		return l.notYet(parameter, "a rest parameter before another parameter")
 	}

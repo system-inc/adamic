@@ -45,7 +45,7 @@ func TestRestCallableViewsNeedAdapters(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, reason string }{
 		{"rest_callable_view.a", "one keeps something weakly that the other keeps strongly"},
-		{"rest_callable_context.a", "a rest callable seen through a different calling convention"},
+		{"rest_callable_context.a", "one keeps something weakly that the other keeps strongly"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.file))
