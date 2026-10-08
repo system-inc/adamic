@@ -13,6 +13,7 @@ import (
 )
 
 func TestIncompleteCheckerAgrees(t *testing.T) {
+	t.Parallel()
 	compilerManifest(t)
 	directory, _ := filepath.Abs(".")
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

@@ -7,6 +7,7 @@ import (
 )
 
 func TestWholeMutants(t *testing.T) {
+	t.Parallel()
 	manifest := wholeManifest(t, []string{`for (const x of xs) f(x); import type {X} from "x"; type T = keyof X;`})
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
@@ -42,6 +43,7 @@ func TestWholeMutants(t *testing.T) {
 }
 
 func TestWholeCountCheckCatchesMutant(t *testing.T) {
+	t.Parallel()
 	manifest := wholeManifest(t, []string{`const x = 1; type T = keyof X;`})
 	oracle := goOracle(t)
 	wantTree := execute(t, "", oracle, "--manifest", manifest, "--whole").output

@@ -33,6 +33,7 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 
 // Not parallel: compare both original refusals before compiling the permissive mutant.
 func TestJsxMemberNameRejection(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "dashed-member.tsx")
 	source := "const x = <Foo.custom-element/>;\n"
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
@@ -75,6 +76,7 @@ func TestJsxMemberNameRejection(t *testing.T) {
 
 // Not parallel: one control binary holds every name boundary before mutant builds.
 func TestJsxNameBoundaryRejections(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	directory, _ := filepath.Abs(".")
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

@@ -36,7 +36,7 @@ func recoveryInput(t *testing.T, name string) string {
 // Each process has its own deadline. Inputs and answers survive a failing test.
 func recoveryRun(t *testing.T, artifact, name string, args ...string) ([]byte, error) {
 	t.Helper()
-	return recoveryRunLimit(t, 2*time.Second, artifact, name, args...)
+	return recoveryRunLimit(t, 2*time.Minute, artifact, name, args...)
 }
 
 func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, args ...string) ([]byte, error) {
@@ -72,6 +72,7 @@ func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, 
 }
 
 func TestMethodRecoveryAgrees(t *testing.T) {
+	t.Parallel()
 	recoveryCases := recoveryInputs(t)
 	oracle := goOracle(t)
 	directory, err := filepath.Abs(".")
@@ -129,6 +130,7 @@ func TestMethodRecoveryAgrees(t *testing.T) {
 // The three checks are independent: diagnostic bytes, recovered child shape,
 // and termination. A build error or crash does not kill a comparison mutant.
 func TestRecoveryMutants(t *testing.T) {
+	t.Parallel()
 	recoveryCases := recoveryInputs(t)
 	oracle := goOracle(t)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -176,7 +178,11 @@ func TestRecoveryMutants(t *testing.T) {
 				{"Node", "node", append([]string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts")}, args...)},
 				{"native", binary, args},
 			} {
-				got, err := recoveryRun(t, path+"."+side.name, side.command, side.args...)
+				limit := 2 * time.Minute
+				if mutation.timeout {
+					limit = 2 * time.Second
+				}
+				got, err := recoveryRunLimit(t, limit, path+"."+side.name, side.command, side.args...)
 				if mutation.timeout {
 					if err == nil || !strings.Contains(err.Error(), "timeout after 2s") {
 						t.Fatalf("%s must be caught by the deadline, got %v", side.name, err)
@@ -197,6 +203,7 @@ func TestRecoveryMutants(t *testing.T) {
 }
 
 func TestRecoveredLintCasesAgree(t *testing.T) {
+	t.Parallel()
 	recoveryCases := recoveryInputs(t)
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {

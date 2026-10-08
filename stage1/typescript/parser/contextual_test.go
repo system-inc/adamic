@@ -8,6 +8,7 @@ import (
 )
 
 func TestContextualNamesAgree(t *testing.T) {
+	t.Parallel()
 	paths, err := filepath.Glob("testdata/contextual/*.ts.txt")
 	if err != nil || len(paths) != 19 {
 		t.Fatalf("keyword fixtures: %d, %v", len(paths), err)

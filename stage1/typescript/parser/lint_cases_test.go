@@ -159,6 +159,7 @@ func lintCaseReadExpectation(t *testing.T, file string) *lintCaseExpectation {
 }
 
 func TestLintCases(t *testing.T) {
+	t.Parallel()
 	files, err := os.ReadDir("testdata/lint_cases")
 	if err != nil {
 		t.Fatal(err)
@@ -215,6 +216,7 @@ func TestLintCases(t *testing.T) {
 }
 
 func TestLintCasesControls(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	path := filepath.Join(t.TempDir(), "precedence.ts")
 	if err := os.WriteFile(path, []byte("a + b * c;\n"), 0644); err != nil {
