@@ -1,0 +1,624 @@
+=== RUN   TestRulesAgree
+    lint_test.go:367: checker compilation phases: load=158.302175ms lower=2.48983688s C=466.347106ms JavaScript=22.207304ms
+    lint_test.go:367: checker native build: 45.445886438s
+    lint_test.go:290: cohere cases: 4049 unique source/rule/options combinations
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-278/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-278/repository/source/Thing.ts
+    lint_test.go:385: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-278/repository/source/Thing.ts
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-280/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=true: signal: killed: 
+    lint_test.go:385: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-284/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-284/repository/source/Thing.ts
+    lint_test.go:385: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-284/repository/source/Thing.ts
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-285/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-285/repository/source/Thing.ts
+    lint_test.go:385: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-285/repository/source/Thing.ts
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-294/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-294/repository/source/Thing.ts
+    lint_test.go:385: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-294/repository/source/Thing.ts
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-296/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-296/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=true: signal: killed: 
+    lint_test.go:385: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-298/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-298/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-298/repository/source/Thing.ts
+    lint_test.go:385: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-298/repository/source/Thing.ts
+    lint_test.go:384: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-299/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:385: Go recovered output: case 0
+        /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-299/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:385: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1125112014/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-299/repository/source/Thing.ts
+    lint_test.go:385: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/lint-shared-735053687/upstream-3212263085/case-299/repository/source/Thing.ts
+    lint_test.go:382: typed runtime time: Go program and lint=49.871698ms native program, lint and recording=64.723923ms
+    lint_test.go:382: typed runtime time: native=64.723923ms
+    lint_test.go:382: typed runtime time: Node=247.309571ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.031898ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 37 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.423965ms native program, lint and recording=61.418109ms
+    lint_test.go:382: typed runtime time: native=61.418109ms
+    lint_test.go:382: typed runtime time: Node=230.894232ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=51.885314ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 37 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=43.21217ms native program, lint and recording=62.474816ms
+    lint_test.go:382: typed runtime time: native=62.474816ms
+    lint_test.go:382: typed runtime time: Node=214.563747ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=52.717882ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 177 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.689737ms native program, lint and recording=67.185102ms
+    lint_test.go:382: typed runtime time: native=67.185102ms
+    lint_test.go:382: typed runtime time: Node=234.684932ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=54.778857ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 510 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.147025ms native program, lint and recording=60.963297ms
+    lint_test.go:382: typed runtime time: native=60.963297ms
+    lint_test.go:382: typed runtime time: Node=245.484707ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.889343ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 490 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=43.356558ms native program, lint and recording=62.922689ms
+    lint_test.go:382: typed runtime time: native=62.922689ms
+    lint_test.go:382: typed runtime time: Node=222.709816ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.745075ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 483 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=45.009429ms native program, lint and recording=62.522822ms
+    lint_test.go:382: typed runtime time: native=62.522822ms
+    lint_test.go:382: typed runtime time: Node=229.684531ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.452179ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 136 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.04245ms native program, lint and recording=65.98515ms
+    lint_test.go:382: typed runtime time: native=65.98515ms
+    lint_test.go:382: typed runtime time: Node=224.258665ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=52.510732ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 151 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=56.212722ms native program, lint and recording=62.161767ms
+    lint_test.go:382: typed runtime time: native=62.161767ms
+    lint_test.go:382: typed runtime time: Node=221.712137ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.27141ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 145 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.188003ms native program, lint and recording=66.041447ms
+    lint_test.go:382: typed runtime time: native=66.041447ms
+    lint_test.go:382: typed runtime time: Node=231.816051ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=52.65547ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 365 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=45.024863ms native program, lint and recording=67.053002ms
+    lint_test.go:382: typed runtime time: native=67.053002ms
+    lint_test.go:382: typed runtime time: Node=240.396913ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=57.4608ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 460 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.381631ms native program, lint and recording=64.971997ms
+    lint_test.go:382: typed runtime time: native=64.971997ms
+    lint_test.go:382: typed runtime time: Node=253.28832ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=59.767746ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 473 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=56.211586ms native program, lint and recording=67.496709ms
+    lint_test.go:382: typed runtime time: native=67.496709ms
+    lint_test.go:382: typed runtime time: Node=261.902987ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.828175ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 68 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.596326ms native program, lint and recording=61.430818ms
+    lint_test.go:382: typed runtime time: native=61.430818ms
+    lint_test.go:382: typed runtime time: Node=238.864975ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=71.137279ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 81 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.438456ms native program, lint and recording=71.998182ms
+    lint_test.go:382: typed runtime time: native=71.998182ms
+    lint_test.go:382: typed runtime time: Node=261.285245ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.634408ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 85 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=54.304135ms native program, lint and recording=69.050305ms
+    lint_test.go:382: typed runtime time: native=69.050305ms
+    lint_test.go:382: typed runtime time: Node=249.360497ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.560758ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 84 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.713825ms native program, lint and recording=66.055628ms
+    lint_test.go:382: typed runtime time: native=66.055628ms
+    lint_test.go:382: typed runtime time: Node=252.416759ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.691576ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 404 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.979682ms native program, lint and recording=72.413006ms
+    lint_test.go:382: typed runtime time: native=72.413006ms
+    lint_test.go:382: typed runtime time: Node=239.466668ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.644621ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 390 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.739078ms native program, lint and recording=78.836001ms
+    lint_test.go:382: typed runtime time: native=78.836001ms
+    lint_test.go:382: typed runtime time: Node=263.866011ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=73.92002ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 426 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=57.672394ms native program, lint and recording=77.66944ms
+    lint_test.go:382: typed runtime time: native=77.66944ms
+    lint_test.go:382: typed runtime time: Node=273.617004ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.27632ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 398 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.916676ms native program, lint and recording=69.589827ms
+    lint_test.go:382: typed runtime time: native=69.589827ms
+    lint_test.go:382: typed runtime time: Node=264.818555ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=62.241337ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 390 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.55188ms native program, lint and recording=64.497489ms
+    lint_test.go:382: typed runtime time: native=64.497489ms
+    lint_test.go:382: typed runtime time: Node=264.687727ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=72.725891ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 384 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.678094ms native program, lint and recording=82.304245ms
+    lint_test.go:382: typed runtime time: native=82.304245ms
+    lint_test.go:382: typed runtime time: Node=268.347771ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=64.898469ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 390 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.267696ms native program, lint and recording=69.904064ms
+    lint_test.go:382: typed runtime time: native=69.904064ms
+    lint_test.go:382: typed runtime time: Node=300.212528ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=61.805397ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 71 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=57.547751ms native program, lint and recording=67.356983ms
+    lint_test.go:382: typed runtime time: native=67.356983ms
+    lint_test.go:382: typed runtime time: Node=251.651422ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=57.395777ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 390 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.614911ms native program, lint and recording=81.037406ms
+    lint_test.go:382: typed runtime time: native=81.037406ms
+    lint_test.go:382: typed runtime time: Node=265.282225ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=61.157165ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 426 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.364227ms native program, lint and recording=75.555545ms
+    lint_test.go:382: typed runtime time: native=75.555545ms
+    lint_test.go:382: typed runtime time: Node=239.76526ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.148423ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 388 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.992132ms native program, lint and recording=71.048303ms
+    lint_test.go:382: typed runtime time: native=71.048303ms
+    lint_test.go:382: typed runtime time: Node=282.621665ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.933394ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 81 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.612881ms native program, lint and recording=79.609553ms
+    lint_test.go:382: typed runtime time: native=79.609553ms
+    lint_test.go:382: typed runtime time: Node=268.923918ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.561353ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 405 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.192144ms native program, lint and recording=69.309731ms
+    lint_test.go:382: typed runtime time: native=69.309731ms
+    lint_test.go:382: typed runtime time: Node=251.409181ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=60.816064ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 68 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.794415ms native program, lint and recording=70.029893ms
+    lint_test.go:382: typed runtime time: native=70.029893ms
+    lint_test.go:382: typed runtime time: Node=245.067064ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.247198ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 68 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=71.378718ms native program, lint and recording=72.430663ms
+    lint_test.go:382: typed runtime time: native=72.430663ms
+    lint_test.go:382: typed runtime time: Node=254.196284ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.299624ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 448 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.398886ms native program, lint and recording=64.653394ms
+    lint_test.go:382: typed runtime time: native=64.653394ms
+    lint_test.go:382: typed runtime time: Node=256.138486ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.194985ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 437 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.549908ms native program, lint and recording=66.806356ms
+    lint_test.go:382: typed runtime time: native=66.806356ms
+    lint_test.go:382: typed runtime time: Node=259.937002ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=62.794847ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 446 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.986655ms native program, lint and recording=77.334727ms
+    lint_test.go:382: typed runtime time: native=77.334727ms
+    lint_test.go:382: typed runtime time: Node=234.218029ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.063415ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 426 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.25532ms native program, lint and recording=65.004881ms
+    lint_test.go:382: typed runtime time: native=65.004881ms
+    lint_test.go:382: typed runtime time: Node=241.55059ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=54.955062ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 419 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=54.843587ms native program, lint and recording=64.18751ms
+    lint_test.go:382: typed runtime time: native=64.18751ms
+    lint_test.go:382: typed runtime time: Node=244.12182ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.732289ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 453 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.375447ms native program, lint and recording=64.205028ms
+    lint_test.go:382: typed runtime time: native=64.205028ms
+    lint_test.go:382: typed runtime time: Node=258.812017ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.276261ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 424 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.951369ms native program, lint and recording=62.991361ms
+    lint_test.go:382: typed runtime time: native=62.991361ms
+    lint_test.go:382: typed runtime time: Node=238.137008ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=52.041717ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 426 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.952478ms native program, lint and recording=65.086993ms
+    lint_test.go:382: typed runtime time: native=65.086993ms
+    lint_test.go:382: typed runtime time: Node=250.071947ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.209795ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 424 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.797086ms native program, lint and recording=66.741342ms
+    lint_test.go:382: typed runtime time: native=66.741342ms
+    lint_test.go:382: typed runtime time: Node=243.462357ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=61.640342ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 459 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.00417ms native program, lint and recording=78.196963ms
+    lint_test.go:382: typed runtime time: native=78.196963ms
+    lint_test.go:382: typed runtime time: Node=243.313177ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.00343ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 104 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=55.719989ms native program, lint and recording=68.174977ms
+    lint_test.go:382: typed runtime time: native=68.174977ms
+    lint_test.go:382: typed runtime time: Node=277.080747ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=57.904486ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 106 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.253553ms native program, lint and recording=63.689526ms
+    lint_test.go:382: typed runtime time: native=63.689526ms
+    lint_test.go:382: typed runtime time: Node=256.730896ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=57.952156ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 114 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=50.941392ms native program, lint and recording=67.333482ms
+    lint_test.go:382: typed runtime time: native=67.333482ms
+    lint_test.go:382: typed runtime time: Node=264.64714ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=64.320443ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 106 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.73466ms native program, lint and recording=66.670489ms
+    lint_test.go:382: typed runtime time: native=66.670489ms
+    lint_test.go:382: typed runtime time: Node=231.793748ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=61.18626ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 73 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.595542ms native program, lint and recording=65.605895ms
+    lint_test.go:382: typed runtime time: native=65.605895ms
+    lint_test.go:382: typed runtime time: Node=273.75576ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=67.165255ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 73 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=70.084364ms native program, lint and recording=74.245124ms
+    lint_test.go:382: typed runtime time: native=74.245124ms
+    lint_test.go:382: typed runtime time: Node=295.005699ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=66.00674ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 78 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=59.27444ms native program, lint and recording=72.084432ms
+    lint_test.go:382: typed runtime time: native=72.084432ms
+    lint_test.go:382: typed runtime time: Node=260.38511ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.432608ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 77 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=54.734099ms native program, lint and recording=66.96048ms
+    lint_test.go:382: typed runtime time: native=66.96048ms
+    lint_test.go:382: typed runtime time: Node=244.384027ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=62.789677ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 414 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=50.810934ms native program, lint and recording=71.960885ms
+    lint_test.go:382: typed runtime time: native=71.960885ms
+    lint_test.go:382: typed runtime time: Node=265.449385ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=95.209714ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 129 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=63.663328ms native program, lint and recording=73.605ms
+    lint_test.go:382: typed runtime time: native=73.605ms
+    lint_test.go:382: typed runtime time: Node=337.077788ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=62.501201ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 412 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.849139ms native program, lint and recording=76.248241ms
+    lint_test.go:382: typed runtime time: native=76.248241ms
+    lint_test.go:382: typed runtime time: Node=278.584199ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.660852ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 440 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=55.346973ms native program, lint and recording=68.133381ms
+    lint_test.go:382: typed runtime time: native=68.133381ms
+    lint_test.go:382: typed runtime time: Node=251.011883ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=66.545661ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 440 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=58.473574ms native program, lint and recording=64.4388ms
+    lint_test.go:382: typed runtime time: native=64.4388ms
+    lint_test.go:382: typed runtime time: Node=257.287828ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=59.952102ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 440 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.312699ms native program, lint and recording=67.156695ms
+    lint_test.go:382: typed runtime time: native=67.156695ms
+    lint_test.go:382: typed runtime time: Node=237.852884ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=66.961152ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 446 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=50.012742ms native program, lint and recording=65.992786ms
+    lint_test.go:382: typed runtime time: native=65.992786ms
+    lint_test.go:382: typed runtime time: Node=253.38926ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=61.453175ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 440 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=56.61043ms native program, lint and recording=66.125189ms
+    lint_test.go:382: typed runtime time: native=66.125189ms
+    lint_test.go:382: typed runtime time: Node=260.776521ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=61.29665ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 423 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=61.663314ms native program, lint and recording=74.674122ms
+    lint_test.go:382: typed runtime time: native=74.674122ms
+    lint_test.go:382: typed runtime time: Node=283.527195ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=62.409189ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 418 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=54.57772ms native program, lint and recording=78.159215ms
+    lint_test.go:382: typed runtime time: native=78.159215ms
+    lint_test.go:382: typed runtime time: Node=266.655058ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.527458ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 451 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.351647ms native program, lint and recording=63.78871ms
+    lint_test.go:382: typed runtime time: native=63.78871ms
+    lint_test.go:382: typed runtime time: Node=244.161611ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.507533ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 361 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=54.362759ms native program, lint and recording=70.219316ms
+    lint_test.go:382: typed runtime time: native=70.219316ms
+    lint_test.go:382: typed runtime time: Node=261.404363ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=54.431685ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 396 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.632744ms native program, lint and recording=69.01985ms
+    lint_test.go:382: typed runtime time: native=69.01985ms
+    lint_test.go:382: typed runtime time: Node=262.528069ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=52.840144ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 62 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.518798ms native program, lint and recording=64.121073ms
+    lint_test.go:382: typed runtime time: native=64.121073ms
+    lint_test.go:382: typed runtime time: Node=237.474081ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=57.980782ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 352 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.430712ms native program, lint and recording=62.677688ms
+    lint_test.go:382: typed runtime time: native=62.677688ms
+    lint_test.go:382: typed runtime time: Node=251.204216ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=67.254217ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 76 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=56.744768ms native program, lint and recording=70.318066ms
+    lint_test.go:382: typed runtime time: native=70.318066ms
+    lint_test.go:382: typed runtime time: Node=261.4326ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=64.121968ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 93 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=59.931636ms native program, lint and recording=82.00475ms
+    lint_test.go:382: typed runtime time: native=82.00475ms
+    lint_test.go:382: typed runtime time: Node=256.807464ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=67.188661ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 555 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=51.279303ms native program, lint and recording=65.349391ms
+    lint_test.go:382: typed runtime time: native=65.349391ms
+    lint_test.go:382: typed runtime time: Node=289.849779ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=59.667548ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 81 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.023293ms native program, lint and recording=62.99889ms
+    lint_test.go:382: typed runtime time: native=62.99889ms
+    lint_test.go:382: typed runtime time: Node=245.268396ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=52.704975ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 62 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.309347ms native program, lint and recording=71.034663ms
+    lint_test.go:382: typed runtime time: native=71.034663ms
+    lint_test.go:382: typed runtime time: Node=241.484595ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.480921ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 179 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.975799ms native program, lint and recording=71.657382ms
+    lint_test.go:382: typed runtime time: native=71.657382ms
+    lint_test.go:382: typed runtime time: Node=254.640782ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=54.00273ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 639 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=43.360085ms native program, lint and recording=63.963171ms
+    lint_test.go:382: typed runtime time: native=63.963171ms
+    lint_test.go:382: typed runtime time: Node=237.935888ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.575286ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 641 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.288116ms native program, lint and recording=60.532648ms
+    lint_test.go:382: typed runtime time: native=60.532648ms
+    lint_test.go:382: typed runtime time: Node=256.265383ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.159522ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 114 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.979534ms native program, lint and recording=62.271663ms
+    lint_test.go:382: typed runtime time: native=62.271663ms
+    lint_test.go:382: typed runtime time: Node=246.167228ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.393764ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 679 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.340905ms native program, lint and recording=61.522047ms
+    lint_test.go:382: typed runtime time: native=61.522047ms
+    lint_test.go:382: typed runtime time: Node=245.26377ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.837846ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 617 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.041897ms native program, lint and recording=62.007414ms
+    lint_test.go:382: typed runtime time: native=62.007414ms
+    lint_test.go:382: typed runtime time: Node=229.486747ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.324336ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 576 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=50.265077ms native program, lint and recording=74.263831ms
+    lint_test.go:382: typed runtime time: native=74.263831ms
+    lint_test.go:382: typed runtime time: Node=240.838025ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=53.136059ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 541 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.540637ms native program, lint and recording=66.611042ms
+    lint_test.go:382: typed runtime time: native=66.611042ms
+    lint_test.go:382: typed runtime time: Node=239.74553ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=59.420994ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 554 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.540898ms native program, lint and recording=71.185741ms
+    lint_test.go:382: typed runtime time: native=71.185741ms
+    lint_test.go:382: typed runtime time: Node=255.44254ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=60.482214ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 180 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.27396ms native program, lint and recording=71.167563ms
+    lint_test.go:382: typed runtime time: native=71.167563ms
+    lint_test.go:382: typed runtime time: Node=239.038523ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=57.401814ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 630 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.196031ms native program, lint and recording=64.541022ms
+    lint_test.go:382: typed runtime time: native=64.541022ms
+    lint_test.go:382: typed runtime time: Node=233.970875ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=59.508307ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 115 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=48.658151ms native program, lint and recording=63.196277ms
+    lint_test.go:382: typed runtime time: native=63.196277ms
+    lint_test.go:382: typed runtime time: Node=242.204514ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.274636ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 544 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.997523ms native program, lint and recording=77.668785ms
+    lint_test.go:382: typed runtime time: native=77.668785ms
+    lint_test.go:382: typed runtime time: Node=249.574945ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.079655ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 587 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.983911ms native program, lint and recording=69.145622ms
+    lint_test.go:382: typed runtime time: native=69.145622ms
+    lint_test.go:382: typed runtime time: Node=249.454547ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=67.097555ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 566 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=46.57975ms native program, lint and recording=80.212241ms
+    lint_test.go:382: typed runtime time: native=80.212241ms
+    lint_test.go:382: typed runtime time: Node=251.52665ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.95788ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 545 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.540821ms native program, lint and recording=64.983882ms
+    lint_test.go:382: typed runtime time: native=64.983882ms
+    lint_test.go:382: typed runtime time: Node=246.653365ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.157276ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 558 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=58.775772ms native program, lint and recording=66.833282ms
+    lint_test.go:382: typed runtime time: native=66.833282ms
+    lint_test.go:382: typed runtime time: Node=249.530069ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.190481ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 574 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.82225ms native program, lint and recording=70.503606ms
+    lint_test.go:382: typed runtime time: native=70.503606ms
+    lint_test.go:382: typed runtime time: Node=275.610075ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=82.702031ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 529 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=58.231753ms native program, lint and recording=67.647243ms
+    lint_test.go:382: typed runtime time: native=67.647243ms
+    lint_test.go:382: typed runtime time: Node=263.891064ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=75.670031ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 529 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=58.235819ms native program, lint and recording=85.5558ms
+    lint_test.go:382: typed runtime time: native=85.5558ms
+    lint_test.go:382: typed runtime time: Node=259.29755ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=63.402089ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 547 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=55.163993ms native program, lint and recording=69.424461ms
+    lint_test.go:382: typed runtime time: native=69.424461ms
+    lint_test.go:382: typed runtime time: Node=253.655205ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=64.291325ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 543 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=49.356942ms native program, lint and recording=65.080775ms
+    lint_test.go:382: typed runtime time: native=65.080775ms
+    lint_test.go:382: typed runtime time: Node=263.522626ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=55.586416ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 545 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.278276ms native program, lint and recording=68.722438ms
+    lint_test.go:382: typed runtime time: native=68.722438ms
+    lint_test.go:382: typed runtime time: Node=245.368696ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.702816ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 542 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.456841ms native program, lint and recording=69.993363ms
+    lint_test.go:382: typed runtime time: native=69.993363ms
+    lint_test.go:382: typed runtime time: Node=265.324712ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=82.202065ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 568 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=53.220907ms native program, lint and recording=69.632118ms
+    lint_test.go:382: typed runtime time: native=69.632118ms
+    lint_test.go:382: typed runtime time: Node=260.398154ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.222167ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 633 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.043884ms native program, lint and recording=67.540847ms
+    lint_test.go:382: typed runtime time: native=67.540847ms
+    lint_test.go:382: typed runtime time: Node=244.188713ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=68.89811ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 626 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=56.776093ms native program, lint and recording=72.422951ms
+    lint_test.go:382: typed runtime time: native=72.422951ms
+    lint_test.go:382: typed runtime time: Node=242.183374ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.006133ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 590 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=52.844875ms native program, lint and recording=67.851979ms
+    lint_test.go:382: typed runtime time: native=67.851979ms
+    lint_test.go:382: typed runtime time: Node=254.170494ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=60.038703ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 601 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.851779ms native program, lint and recording=68.75468ms
+    lint_test.go:382: typed runtime time: native=68.75468ms
+    lint_test.go:382: typed runtime time: Node=243.483072ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=60.007457ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 631 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.419138ms native program, lint and recording=63.594378ms
+    lint_test.go:382: typed runtime time: native=63.594378ms
+    lint_test.go:382: typed runtime time: Node=245.376017ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=58.596805ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 544 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.432854ms native program, lint and recording=64.378795ms
+    lint_test.go:382: typed runtime time: native=64.378795ms
+    lint_test.go:382: typed runtime time: Node=250.589231ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=65.112011ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 574 bytes
+    lint_test.go:382: typed runtime time: Go program and lint=47.044474ms native program, lint and recording=66.545221ms
+    lint_test.go:382: typed runtime time: native=66.545221ms
+    lint_test.go:382: typed runtime time: Node=251.580647ms
+    lint_test.go:382: typed runtime time: emitted JavaScript=56.114144ms
+    lint_test.go:382: live Go, native, Node and emitted JavaScript replay identical: 60 bytes
+    lint_test.go:390: Go, Node, emitted JavaScript, native identical: 13825288 bytes
+--- PASS: TestRulesAgree (130.84s)
+=== RUN   TestMutants
+=== RUN   TestMutants/no-useless-rename-import-side
+=== PAUSE TestMutants/no-useless-rename-import-side
+=== CONT  TestMutants/no-useless-rename-import-side
+    lint_test.go:832: checker compilation phases: load=149.794341ms lower=2.624144354s C=455.513399ms JavaScript=28.012608ms
+    lint_test.go:832: checker native mutant build: 3.550909747s
+    lint_test.go:855: no-useless-rename-import-side caught on Node: case 87 line 4394: port "range 38 50 unnecessarilyRenamed fix\t'bar'\t\t38 50", Go "range 38 50 unnecessarilyRenamed fix\tbar\t\t38 50"
+        Go context:
+        
+        range 7 21 unnecessarilyRenamed fix	foo = 1		7 21
+        /tmp/adamic-gate/TestMutantsno-useless-rename-import-side2063040954/018/no-useless-rename-2.ts:2:9
+          no-useless-rename  This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.
+        
+        range 38 50 unnecessarilyRenamed fix	bar		38 50
+        /tmp/adamic-gate/TestMutantsno-useless-rename-import-side2063040954/018/no-useless-rename-2.ts:3:9
+          no-useless-rename  This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.
+        
+        range 72 84 unnecessarilyRenamed fix	'baz'		72 84
+    lint_test.go:855: no-useless-rename-import-side caught on emitted JavaScript: case 87 line 4394: port "range 38 50 unnecessarilyRenamed fix\t'bar'\t\t38 50", Go "range 38 50 unnecessarilyRenamed fix\tbar\t\t38 50"
+        Go context:
+        
+        range 7 21 unnecessarilyRenamed fix	foo = 1		7 21
+        /tmp/adamic-gate/TestMutantsno-useless-rename-import-side2063040954/018/no-useless-rename-2.ts:2:9
+          no-useless-rename  This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.
+        
+        range 38 50 unnecessarilyRenamed fix	bar		38 50
+        /tmp/adamic-gate/TestMutantsno-useless-rename-import-side2063040954/018/no-useless-rename-2.ts:3:9
+          no-useless-rename  This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.
+        
+        range 72 84 unnecessarilyRenamed fix	'baz'		72 84
+    lint_test.go:855: no-useless-rename-import-side caught on native: case 87 line 4394: port "range 38 50 unnecessarilyRenamed fix\t'bar'\t\t38 50", Go "range 38 50 unnecessarilyRenamed fix\tbar\t\t38 50"
+        Go context:
+        
+        range 7 21 unnecessarilyRenamed fix	foo = 1		7 21
+        /tmp/adamic-gate/TestMutantsno-useless-rename-import-side2063040954/018/no-useless-rename-2.ts:2:9
+          no-useless-rename  This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.
+        
+        range 38 50 unnecessarilyRenamed fix	bar		38 50
+        /tmp/adamic-gate/TestMutantsno-useless-rename-import-side2063040954/018/no-useless-rename-2.ts:3:9
+          no-useless-rename  This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.
+        
+        range 72 84 unnecessarilyRenamed fix	'baz'		72 84
+--- PASS: TestMutants (0.01s)
+    --- PASS: TestMutants/no-useless-rename-import-side (8.00s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:54: checker native build: 6.594282ms
+    registration_test.go:54: typed runtime time: Go program and lint=54.236698ms native program, lint and recording=80.76473ms
+    registration_test.go:54: typed runtime time: native=80.76473ms
+    registration_test.go:54: typed runtime time: Node=256.208643ms
+    registration_test.go:54: typed runtime time: emitted JavaScript=67.60191ms
+    registration_test.go:54: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:70: checker native build: 5.749451ms
+    registration_test.go:70: Go, Node, emitted JavaScript, native identical: 320927 bytes
+--- PASS: TestOwnedWitnesses (3.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	142.099s

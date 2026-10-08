@@ -24,7 +24,7 @@ against preserved results, run `python3 stage3/lane/check.py RESULTS`.
 `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`.
 Both the reporter title and `baseline_diffs == ["api/typescript.d.ts"]` must match.
 Apply, install and build must exit zero; upstream tests and oracle must exit
-one. All runners, one worker per CPU (at least four) and no test filter are
+one. All runners, eight workers and no test filter are
 required. A timeout,
 another single failure, missing evidence, or an unexpected exit fails the lane.
 Counts are checked against both oracle JSON and the final reporter summary.
