@@ -19,9 +19,13 @@ func TestCheckedViewIntersectionOriginalRankedImport(t *testing.T) {
 }
 
 func TestCheckedViewIntersectionOriginalRankedOperands(t *testing.T) {
-	for _, id := range []int{8920, 40931} {
+	for _, id := range []int{8920, 40931, 8923} {
 		t.Run(fmt.Sprint(id), func(t *testing.T) {
-			checkIntersectionRankedRead(t, fmt.Sprintf("ranked-intersection-%d-manifest.json", id), id, 3, fmt.Sprintf("numeric-operand-%d-good.a", id), "operand")
+			reads := 3
+			if id == 8923 {
+				reads = 2
+			}
+			checkIntersectionRankedRead(t, fmt.Sprintf("ranked-intersection-%d-manifest.json", id), id, reads, fmt.Sprintf("numeric-operand-%d-good.a", id), "operand")
 		})
 	}
 }
@@ -42,6 +46,7 @@ func checkIntersectionRankedRead(t *testing.T, manifestFile string, id, reads in
 		SitesSHA       string            `json:"sites_sha256"`
 		ReceiverFields []string          `json:"receiver_fields"`
 		PresentFields  []string          `json:"present_fields"`
+		PresentArms    [][]string        `json:"present_arms"`
 	}
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
@@ -58,15 +63,23 @@ func checkIntersectionRankedRead(t *testing.T, manifestFile string, id, reads in
 			t.Fatal("frozen inventory drift: " + name)
 		}
 	}
-	for _, variant := range []string{"good", "wrong"} {
+	variants := []string{"good", "wrong"}
+	if id == 8923 {
+		variants = append(variants, "good-bigint", "wrong-bigint")
+	}
+	for _, variant := range variants {
 		t.Run(variant, func(t *testing.T) {
 			source, err := os.ReadFile("../../stage3/interface-downcasts/lane7/original/" + input)
 			if err != nil {
 				t.Fatal(err)
 			}
 			bound := strings.Replace(string(source), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
-			if variant == "wrong" {
+			if strings.HasPrefix(variant, "wrong") {
 				bound = strings.Replace(bound, "const "+field+"={pos:0,", "const "+field+"={pos:'wrong',", 1)
+			}
+			if strings.HasSuffix(variant, "bigint") {
+				bound = strings.Replace(bound, "end:10,kind:9,", "end:10,kind:10,", 1)
+				bound = strings.Replace(bound, "text:'1'", "text:'1n'", 1)
 			}
 			fixture := filepath.Join(t.TempDir(), "ranked-import-"+variant+".a")
 			if err := os.WriteFile(fixture, []byte(bound), 0600); err != nil {
@@ -118,7 +131,33 @@ func checkIntersectionRankedRead(t *testing.T, manifestFile string, id, reads in
 						t.Fatal("original member contract missing")
 					}
 					contract := program.ViewContracts[property.ViewContract-1]
-					if !contract.IntersectionBounded || contract.Unsupported != "" || !slices.Equal(fields(contract), manifest.PresentFields) {
+					if contract.Unsupported != "" {
+						t.Fatal("unsupported original member contract")
+					}
+					if len(manifest.PresentArms) > 1 {
+						tag, arms := ir.IntersectionUnionArms(program, property.ViewContract)
+						if tag != "kind" || len(arms) != len(manifest.PresentArms) {
+							t.Fatal("complete original tagged intersection arms missing")
+						}
+						used := make([]bool, len(manifest.PresentArms))
+						for _, armID := range arms {
+							arm := program.ViewContracts[armID-1]
+							matched := false
+							if !arm.IntersectionBounded || arm.Unsupported != "" {
+								t.Fatal("unbounded original intersection arm")
+							}
+							for k, wanted := range manifest.PresentArms {
+								if !used[k] && slices.Equal(fields(arm), wanted) {
+									used[k] = true
+									matched = true
+									break
+								}
+							}
+							if !matched {
+								t.Fatal("original intersection arm field set changed")
+							}
+						}
+					} else if !contract.IntersectionBounded || !slices.Equal(fields(contract), manifest.PresentFields) {
 						t.Fatal("complete original intersection member obligations missing")
 					}
 					if os.Getenv("ADAMIC_INTERSECTION_RANKED_MUTANT") == "1" || os.Getenv("ADAMIC_INTERSECTION_RANKED_MUTANT") == fmt.Sprint(id) {
@@ -132,13 +171,13 @@ func checkIntersectionRankedRead(t *testing.T, manifestFile string, id, reads in
 				t.Fatal("original helper read missing")
 			}
 			actual, binary := nativelyUncached(t, program)
-			if variant == "good" {
+			if strings.HasPrefix(variant, "good") {
 				if report := leaks(t, program, binary); report != "" {
 					t.Fatal(report)
 				}
 			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if variant == "good" {
+				if strings.HasPrefix(variant, "good") {
 					if difference := disagreement(run{stdout: []byte("true\n")}, got); difference != "" {
 						t.Errorf("%s: exit %d stdout %q stderr %q", difference, got.exitCode, got.stdout, got.stderr)
 					}

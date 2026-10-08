@@ -24,7 +24,7 @@ const program = ts.createProgram([sourceFile,utilities], {target:ts.ScriptTarget
 const checker = program.getTypeChecker();
 const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(program.getSourceFile(sourceFile)));
 const fields = type => checker.getPropertiesOfType(type).map(x => x.name).sort();
-for (const [id,field,count] of [[9245,'argument',14],[8920,'operand',3],[40931,'operand',3]]) {
+for (const [id,field,count] of [[9245,'argument',14],[8920,'operand',3],[40931,'operand',3],[8923,'operand',2]]) {
  const pair = inventory.find(x => x.receiver_type_id === id && x.field === field);
  if (!pair || pair.reads !== count) throw Error('inventory drift '+id);
  const sites = demand.filter(x => x.receiver_type_id === id && x.field === field).map(x => {
@@ -49,7 +49,7 @@ for (const [id,field,count] of [[9245,'argument',14],[8920,'operand',3],[40931,'
   if (!checker.typeToString(receiver).includes('PrefixUnaryExpression')) throw Error('original receiver drift '+id);
  }
  const member=checker.getTypeOfSymbol(checker.getPropertyOfType(receiver,field));
- const result={upstream_commit:pin,inventory_sha256:hash(inventoryPath),sites_sha256:hash(sitePath),type_id:id,type:pair.type,field,read_count:count,sites,receiver_fields:fields(receiver),present_fields:fields(member)};
+ const result={upstream_commit:pin,inventory_sha256:hash(inventoryPath),sites_sha256:hash(sitePath),type_id:id,type:pair.type,field,read_count:count,sites,receiver_fields:fields(receiver),present_fields:fields(member),present_arms:member.isUnion()?member.types.map(fields):[]};
  const outputFile=id===9245?'ranked-intersection-manifest.json':`ranked-intersection-${id}-manifest.json`;
  fs.writeFileSync(path.join(output,outputFile),JSON.stringify(result,null,2)+'\n');
  console.log(`${id}.${field}: ${count} original spans; complete original receiver and member field sets; 78 declarations verified`);
