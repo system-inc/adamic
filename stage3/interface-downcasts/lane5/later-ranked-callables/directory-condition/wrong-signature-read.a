@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly fileExists:(path:string)=>boolean;readonly directoryExists:unknown;}
+interface Target {fileExists(path: string): boolean;directoryExists?(path: string): boolean;}
+function probe(value:Base):void {const host=value as Target;function directoryExists(path:string):boolean{return path.length===3;}const wrapped={directoryExists:host.directoryExists && directoryExists};console.log(wrapped.directoryExists===undefined?"none":"present");}
+probe({fileExists:(path:string):boolean=>true,directoryExists:(path:string):number=>42});

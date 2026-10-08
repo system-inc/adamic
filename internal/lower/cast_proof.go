@@ -108,6 +108,15 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
+	// A plain Error certificate covers its declared fields only. Optional host
+	// fields require a host producer certificate, never structural invention.
+	if l.isLibraryType(source, "Error") {
+		for _, property := range l.checker.GetPropertiesOfType(target) {
+			if property.Flags&ast.SymbolFlagsOptional != 0 && l.checker.GetPropertyOfType(source, property.Name) == nil {
+				return castProof{}, refused
+			}
+		}
+	}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
 		return castProof{}, refused

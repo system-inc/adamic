@@ -78,7 +78,7 @@ func (l *lowering) viewCastCandidate(source, target *checker.Type) bool {
 	if l.checker.IsArrayType(source) && l.checker.IsArrayType(target) {
 		return true
 	}
-	return source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !l.callableViewContract(source) && !l.callableViewContract(target) && l.checker.IsTypeAssignableTo(target, source)
+	return source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !l.callableViewContract(source) && !l.callableViewContract(target) && (l.checker.IsTypeAssignableTo(target, source) || l.optionalHostViewRelation(source, target))
 }
 
 func (l *lowering) deferredViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {

@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly getCurrentDirectory:()=>string;readonly realpath:unknown;}
+interface Target {getCurrentDirectory(): string;realpath?(path: string): string;}
+function probe(value:Base):void {const viewed=value as Target;const host=viewed;const wrapped={realpath:host.realpath?.bind(host)};console.log(wrapped.realpath===undefined?"none":wrapped.realpath("abc"));}
+probe({getCurrentDirectory:():string=>"root",realpath:(path:string):string=>path+"/3"});

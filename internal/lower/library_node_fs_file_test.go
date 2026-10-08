@@ -63,14 +63,14 @@ func TestNodeFSFileNamespaceImport(t *testing.T) {
 }
 
 func TestNodeFSFileQualifiedErrorType(t *testing.T) {
-	// The area proves optional-field views. A compatible qualified type lowers;
-	// absent optional errno fields on a viewed plain Error read as undefined.
+	// Explicitly typed producers retain their optional field contract. Plain
+	// Error cannot invent host fields through an assertion (October 8 ruling).
 	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error.code ?? 'missing');`); err != nil {
 		t.Fatal(err)
 	}
 	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const code=(error as NodeJS.ErrnoException).code; console.log(code??'missing');`)
-	if err != nil {
-		t.Fatalf("want lazy optional-field view admission, got %v", err)
+	if err == nil || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
+		t.Fatalf("want plain Error host-field refusal, got %v", err)
 	}
 }
 

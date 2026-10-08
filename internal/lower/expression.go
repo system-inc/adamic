@@ -621,6 +621,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
+		if value, handled, err := l.optionalHostCondition(node); handled {
+			return value, err
+		}
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
@@ -683,6 +686,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if value, handled, err := l.optionalHostBindCall(node); handled {
+			return value, err
+		}
 		if err := l.optionalCall(node); err != nil {
 			return nil, err
 		}
