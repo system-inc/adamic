@@ -1,0 +1,15 @@
+interface PrimesBody { readonly limit: number; readonly count: number; readonly last: number; }
+export function primes(limit: number): PrimesBody {
+	const composite = new Uint8Array(limit + 1);
+	for (let prime = 2; prime * prime <= limit; prime += 1) {
+		if (composite[prime] === 0) {
+			for (let multiple = prime * prime; multiple <= limit; multiple += prime) composite[multiple] = 1;
+		}
+	}
+	let count = 0;
+	let last = 0;
+	for (let value = 2; value <= limit; value += 1) {
+		if (composite[value] === 0) { count += 1; last = value; }
+	}
+	return { limit, count, last };
+}
