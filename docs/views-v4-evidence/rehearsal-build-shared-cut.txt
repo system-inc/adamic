@@ -1,0 +1,36 @@
+# github.com/system-inc/adamic/internal/javascript
+internal/javascript/javascript.go:480:16: statement.WriteContract undefined (type ir.SetProperty has no field or method WriteContract)
+internal/javascript/javascript.go:482:26: undefined: ir.ScalarWriteContracts
+internal/javascript/javascript.go:482:68: statement.WriteContract undefined (type ir.SetProperty has no field or method WriteContract)
+internal/javascript/javascript.go:485:17: statement.WriteProven undefined (type ir.SetProperty has no field or method WriteProven)
+internal/javascript/javascript.go:486:97: e.mapEntryNominalCertificate undefined (type *emitter has no field or method mapEntryNominalCertificate)
+internal/javascript/javascript.go:486:134: statement.WriteContract undefined (type ir.SetProperty has no field or method WriteContract)
+internal/javascript/javascript.go:486:185: statement.WriteWhere undefined (type ir.SetProperty has no field or method WriteWhere)
+internal/javascript/javascript.go:489:108: e.mapEntryNominalCertificate undefined (type *emitter has no field or method mapEntryNominalCertificate)
+internal/javascript/javascript.go:489:145: statement.WriteContract undefined (type ir.SetProperty has no field or method WriteContract)
+internal/javascript/javascript.go:489:196: statement.WriteWhere undefined (type ir.SetProperty has no field or method WriteWhere)
+internal/javascript/javascript.go:489:196: too many errors
+# github.com/system-inc/adamic/internal/native
+internal/native/emit_arrays.go:23:14: e.graphArray undefined (type *emitter has no field or method graphArray)
+internal/native/emit_arrays.go:23:83: visit.GraphTypes undefined (type ir.ArrayVisit has no field or method GraphTypes)
+internal/native/emit_arrays.go:35:2: declared and not used: owner
+internal/native/emit_arrays.go:35:13: e.viewArrayReadOwner undefined (type *emitter has no field or method viewArrayReadOwner)
+internal/native/emit_arrays.go:73:13: visit.ViewRead undefined (type ir.ArrayVisit has no field or method ViewRead)
+internal/native/emit_arrays.go:88:22: e.graphTypes undefined (type *emitter has no field or method graphTypes)
+internal/native/emit_arrays.go:88:39: visit.GraphTypes undefined (type ir.ArrayVisit has no field or method GraphTypes)
+internal/native/emit_arrays.go:146:2: declared and not used: owner
+internal/native/emit_arrays.go:146:13: e.viewArrayReadOwner undefined (type *emitter has no field or method viewArrayReadOwner)
+internal/native/emit_arrays.go:235:27: e.heldIn undefined (type *emitter has no field or method heldIn)
+internal/native/emit_arrays.go:235:27: too many errors
+# github.com/system-inc/adamic/internal/lower
+internal/lower/cast_proof.go:118:7: l.dictionaryCastNeedsView undefined (type *lowering has no field or method dictionaryCastNeedsView)
+internal/lower/cast_proof.go:125:20: unknown field view in struct literal of type castProof
+internal/lower/census_small.go:239:8: l.phantomOverloadResult undefined (type *lowering has no field or method phantomOverloadResult)
+internal/lower/census_small.go:246:13: l.overloadResults undefined (type *lowering has no field or method overloadResults)
+internal/lower/collections.go:140:11: l.mapProducer undefined (type *lowering has no field or method mapProducer)
+internal/lower/expression.go:63:7: l.finitePartialRecordElement undefined (type *lowering has no field or method finitePartialRecordElement)
+internal/lower/expression.go:64:13: undefined: ir.Record
+internal/lower/expression.go:67:8: l.recordElement undefined (type *lowering has no field or method recordElement)
+internal/lower/expression.go:68:14: undefined: ir.Record
+internal/lower/expression.go:80:9: l.stringDictionary undefined (type *lowering has no field or method stringDictionary)
+internal/lower/expression.go:80:9: too many errors

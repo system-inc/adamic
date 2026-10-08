@@ -1,0 +1,43 @@
+# github.com/system-inc/adamic/internal/javascript
+internal/javascript/view_callables_discard.go:8:37: call.DiscardView undefined (type ir.CallClosure has no field or method DiscardView)
+internal/javascript/view_callables_discard.go:8:69: call.DiscardContract undefined (type ir.CallClosure has no field or method DiscardContract)
+internal/javascript/view_callables_signature.go:12:15: e.untaggedCallableUnionExpected undefined (type *emitter has no field or method untaggedCallableUnionExpected)
+internal/javascript/view_callables_signature.go:13:15: e.untaggedCallableRecorded undefined (type *emitter has no field or method untaggedCallableRecorded)
+internal/javascript/view_callables_signature.go:14:141: property.UndefinedAllowed undefined (type ir.Property has no field or method UndefinedAllowed)
+internal/javascript/view_callables_signature.go:76:21: function.CallableMasks undefined (type ir.Function has no field or method CallableMasks)
+internal/javascript/view_callables_signature.go:94:50: function.CallableMasks undefined (type ir.Function has no field or method CallableMasks)
+# github.com/system-inc/adamic/internal/native
+internal/native/view_callables_discard.go:29: undefined: ir.Record
+internal/native/view_callables_methods.go:29:51: function.CallableMasks undefined (type ir.Function has no field or method CallableMasks)
+internal/native/view_callables_signature.go:20:15: e.untaggedCallableUnionExpected undefined (type *emitter has no field or method untaggedCallableUnionExpected)
+internal/native/view_callables_signature.go:21:4: e.certifyUntaggedCallableRecorded undefined (type *emitter has no field or method certifyUntaggedCallableRecorded)
+internal/native/view_callables_signature.go:22:122: property.UndefinedAllowed undefined (type ir.Property has no field or method UndefinedAllowed)
+internal/native/view_callables_signature.go:97:50: function.CallableMasks undefined (type ir.Function has no field or method CallableMasks)
+internal/native/view_callables_signature.go:101:167: function.CallableMasks undefined (type ir.Function has no field or method CallableMasks)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/view_callables_aggregate.go:19:7: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:20:5: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:23:4: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:28:7: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:29:5: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:36:4: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:66:24: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:79:29: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:103:7: l.optionalViewWriteField undefined (type *lowering has no field or method optionalViewWriteField)
+internal/lower/view_callables_aggregate.go:140:15: undefined: ir.ClosureOperands
+internal/lower/view_callables_aggregate.go:140:15: too many errors
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/ir.test]
+internal/lower/view_callables_aggregate.go:19:7: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:20:5: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:23:4: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:28:7: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:29:5: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:36:4: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:66:24: l.viewCallablePayloadTypes undefined (type *lowering has no field or method viewCallablePayloadTypes)
+internal/lower/view_callables_aggregate.go:79:29: l.viewCallableProducerPayloads undefined (type *lowering has no field or method viewCallableProducerPayloads)
+internal/lower/view_callables_aggregate.go:103:7: l.optionalViewWriteField undefined (type *lowering has no field or method optionalViewWriteField)
+internal/lower/view_callables_aggregate.go:140:15: undefined: ir.ClosureOperands
+internal/lower/view_callables_aggregate.go:140:15: too many errors
+# github.com/system-inc/adamic/internal/javascript
+# [github.com/system-inc/adamic/internal/javascript]
+vet: internal/javascript/view_callables_discard.go:8:37: call.DiscardView undefined (type ir.CallClosure has no field or method DiscardView)
