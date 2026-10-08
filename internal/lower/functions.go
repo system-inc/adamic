@@ -58,6 +58,12 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 // signature writes the function at index's parameters and result, from the checker, without lowering
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
 func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+	return l.signatureReturn(index, declaration, this, nil)
+}
+
+// signatureReturn uses a call's resolved return contract when instantiating a generic.
+// Other declarations keep their own checker signature and the active class mapper.
+func (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error {
 	if implementation := l.censusImplementation(declaration); implementation != nil {
 		declaration = implementation
 	}
@@ -71,8 +77,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Receiver = true
 	}
 	if declaration.Kind != ast.KindConstructor {
-		signature := l.checker.GetSignatureFromDeclaration(declaration)
-		returns := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
+		if returns == nil {
+			signature := l.checker.GetSignatureFromDeclaration(declaration)
+			if signature == nil {
+				return l.notYet(declaration, "a function whose signature the checker didn't resolve")
+			}
+			returns = l.concrete(l.checker.GetReturnTypeOfSignature(signature))
+		}
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
