@@ -1,3 +1,4 @@
+import type { Weak } from 'adamic';
 function matchText(value: RegExpExecArray | null): string { return value === null ? 'null' : value[0] ?? 'none'; }
 let objects = 0;
 let indices = 0;
@@ -209,3 +210,44 @@ console.log(`null field: ${matchText((matchObject().value ??= matchRight()))} ${
 console.log(`null field skip: ${matchText((matchObject().value ??= matchRight()))} ${objects} ${rights}`);
 console.log(`null element: ${matchText((matchArray()[index()] ??= matchRight()))} ${objects} ${indices} ${rights}`);
 console.log(`null element skip: ${matchText((matchArray()[index()] ??= matchRight()))} ${objects} ${indices} ${rights}`);
+
+function nullableTruth(value: RegExpExecArray | null): void {
+ const result = (value ??= /x/.exec("x"));
+ console.log(`${result === null ? "null" : result[0]} ${value === null ? "null" : value[0]}`);
+}
+nullableTruth(null);
+nullableTruth(/x/.exec("x"));
+const weakOwner = {value: 41};
+let weakLocal: Weak<{value: number}> = undefined;
+const weakField: {value: Weak<{value: number}>} = {value: undefined};
+const weakElements: Weak<{value: number}>[] = [weakOwner, undefined];
+function weakRight(): {value: number} { rights += 1; return weakOwner; }
+console.log(`${weakValue((weakLocal ??= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakLocal ??= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakField.value ??= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakElements[0] ??= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakElements[1] ??= weakRight()))} ${rights}`);
+
+function weakValue(value: {value: number} | undefined): number | undefined { return value?.value; }
+
+let getterReads = 0;
+let setterWrites = 0;
+class AssignmentAccessor {
+ stored: string | undefined = undefined;
+ get logicalAccessor(): string | undefined { getterReads += 1; return this.stored; }
+ set logicalAccessor(next: string | undefined) { setterWrites += 1; this.stored = (next ?? "undefined") + " stored"; }
+}
+const accessor = new AssignmentAccessor();
+function accessorBase(): AssignmentAccessor { objects += 1; return accessor; }
+console.log(`${(accessorBase().logicalAccessor ??= "seven")} ${accessor.stored} ${getterReads} ${setterWrites} ${objects}`);
+console.log(`${(accessorBase().logicalAccessor ??= "eight")} ${accessor.stored} ${getterReads} ${setterWrites} ${objects}`);
+let changedObject: {value: number | undefined} = {value: undefined};
+const originalObject = changedObject;
+function replaceObject(): number { changedObject = {value: 99}; return 9; }
+console.log(`${(changedObject.value ??= replaceObject())} ${originalObject.value} ${changedObject.value}`);
+let changedArray: (number | undefined)[] = [0];
+changedArray[0] = undefined;
+const originalArray = changedArray;
+let changedIndex = 0;
+function replaceArray(): number { changedArray = [99]; changedIndex = 1; return 9; }
+console.log(`${(changedArray[changedIndex] ??= replaceArray())} ${originalArray[0]} ${changedArray[0]} ${changedIndex}`);

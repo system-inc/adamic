@@ -920,7 +920,8 @@ func (l *lowering) writable(proven *checker.Type) bool {
 }
 
 // slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
-// map's value, a cell, or a function value's argument or result. number | undefined is packed into
+// map's value, or a function value's argument or result. Generated expression closures can use
+// packed maybe booleans and boxed unions in cells and results. number | undefined is packed into
 // one (a reserved NaN is undefined); boolean | undefined is two words that aren't packed yet, and a
 // Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
 // result takes one.

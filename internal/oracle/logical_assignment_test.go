@@ -29,7 +29,7 @@ func init() {
 // with source Node in both backends on the side-effect counters or expression value.
 func TestLogicalAssignmentMutants(t *testing.T) {
 	for _, operator := range []string{"or", "and", "nullish"} {
-		mutations := []string{"target_twice", "right_always"}
+		mutations := []string{"target_twice", "array_twice", "read_twice", "right_always"}
 		if operator == "nullish" {
 			mutations = append(mutations, "zero_nullish", "empty_nullish")
 		}
@@ -51,9 +51,22 @@ func TestLogicalAssignmentMutants(t *testing.T) {
 					}
 					body := function.Body
 					for at, statement := range body {
-						if mutation == "target_twice" {
+						if mutation == "read_twice" {
 							declaration, ok := statement.(ir.Declare)
-							if !ok || (program.Locals[declaration.Local].Name != "assignment_object" && program.Locals[declaration.Local].Name != "assignment_index") {
+							if !ok || program.Locals[declaration.Local].Name != "assignment_current" {
+								continue
+							}
+							function.Body = append(append(append([]ir.Statement{}, body[:at]...), ir.Evaluate{Value: declaration.Value}), body[at:]...)
+							changed++
+							break
+						}
+						if mutation == "target_twice" || mutation == "array_twice" {
+							declaration, ok := statement.(ir.Declare)
+							if !ok {
+								continue
+							}
+							name := program.Locals[declaration.Local].Name
+							if (mutation == "target_twice" && name != "assignment_object" && name != "assignment_index") || (mutation == "array_twice" && name != "assignment_array") {
 								continue
 							}
 							function.Body = append(append(append([]ir.Statement{}, body[:at]...), ir.Evaluate{Value: declaration.Value}), body[at:]...)
@@ -152,7 +165,9 @@ func TestCommaMutants(t *testing.T) {
 				case "drop_left":
 					f.Body = f.Body[1:]
 				case "return_left":
-					f.Body = []ir.Statement{ir.Evaluate{Value: ret.Value}, ir.Return{Value: left.Value}}
+					local := len(program.Locals)
+					program.Locals = append(program.Locals, ir.Local{Name: "comma_mutant_left", Type: ir.Number, Function: i})
+					f.Body = []ir.Statement{ir.Declare{Local: local, Value: left.Value}, ir.Evaluate{Value: ret.Value}, ir.Return{Value: ir.Read{Local: local, Of: ir.Number}}}
 				case "reverse_order":
 					local := len(program.Locals)
 					program.Locals = append(program.Locals, ir.Local{Name: "comma_mutant_right", Type: ir.Number, Function: i})

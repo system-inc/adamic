@@ -123,6 +123,23 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if current.Type() == ir.Weak {
+			declared := l.assignmentDeclaredType(binary.Left)
+			members := declared.Types()
+			if declared.Flags()&checker.TypeFlagsUnion == 0 {
+				members = []*checker.Type{declared}
+			}
+			var target ir.Type
+			for _, member := range members {
+				if weak := l.weakTarget(member); weak != nil {
+					target, _ = l.representation(weak)
+				}
+			}
+			if !target.IsReference() {
+				return nil, l.notYet(binary.Left, "a logical assignment of an unknown Weak target")
+			}
+			current = ir.WeakTarget{Value: current, To: target, Present: false}
+		}
 		held := b.declare("assignment_current", current)
 		current = b.read(held)
 		right, err := l.expression(binary.Right)
@@ -132,6 +149,9 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		resultType, err := l.typeOf(node)
 		if err != nil {
 			return nil, err
+		}
+		if resultType == ir.Weak {
+			resultType = current.Type()
 		}
 		result := b.local("assignment_right", right.Type())
 		taken := []ir.Statement{ir.Declare{Local: result, Value: right}, store(b.read(result)), ir.Return{Value: assignmentResult(b.read(result), resultType)}}
@@ -145,17 +165,7 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 			take = ir.BooleanConstant{Value: false}
 			if current.Type().IsMaybe() || current.Type().IsReference() {
 				take = ir.IsUndefined{Value: current}
-				declared := l.checker.GetTypeAtLocation(binary.Left)
-				target := ast.SkipParentheses(binary.Left)
-				if symbol := l.symbol(target); symbol != nil {
-					declared = l.checker.GetTypeOfSymbol(symbol)
-				}
-				if target.Kind == ast.KindElementAccessExpression {
-					holder := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(target.AsElementAccessExpression().Expression))
-					if l.checker.IsArrayType(holder) {
-						declared = l.checker.GetElementTypeOfArrayType(holder)
-					}
-				}
+				declared := l.assignmentDeclaredType(binary.Left)
 				if declared != nil && declared.Flags()&checker.TypeFlagsNever == 0 && l.includesNull(l.concrete(declared)) {
 					take = ir.Binary{Operator: ir.Or, Left: take, Right: ir.IsNull{Value: current}}
 				}
@@ -188,7 +198,7 @@ func (l *lowering) assignmentTruthy(value ir.Expression) ir.Expression {
 	case ir.String:
 		return and(not(ir.IsUndefined{Value: value}), ir.Binary{Operator: ir.NotEqual, Left: ir.StringLength{Value: value}, Right: ir.NumberConstant{Value: 0}})
 	case ir.Union:
-		answer := ir.Expression(not(ir.IsUndefined{Value: value}))
+		answer := ir.Expression(and(not(ir.IsUndefined{Value: value}), not(ir.IsNull{Value: value})))
 		for _, member := range []struct {
 			name string
 			of   ir.Type
@@ -197,6 +207,21 @@ func (l *lowering) assignmentTruthy(value ir.Expression) ir.Expression {
 		}
 		return answer
 	default:
-		return not(ir.IsUndefined{Value: value})
+		return and(not(ir.IsUndefined{Value: value}), not(ir.IsNull{Value: value}))
 	}
+}
+
+func (l *lowering) assignmentDeclaredType(node *ast.Node) *checker.Type {
+	target := ast.SkipParentheses(node)
+	declared := l.checker.GetTypeAtLocation(target)
+	if symbol := l.symbol(target); symbol != nil {
+		declared = l.checker.GetTypeOfSymbol(symbol)
+	}
+	if target.Kind == ast.KindElementAccessExpression {
+		holder := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(target.AsElementAccessExpression().Expression))
+		if l.checker.IsArrayType(holder) {
+			declared = l.checker.GetElementTypeOfArrayType(holder)
+		}
+	}
+	return l.concrete(declared)
 }

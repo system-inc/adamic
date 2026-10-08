@@ -38,3 +38,11 @@ console.log(`${closure(9)}`);
 function effect(): void { order += "V"; }
 console.log(`${typeof (left(), effect())} ${order}`);
 (left(), right());
+
+console.log(`${(left(), local = 11)} ${local}`);
+console.log(`${(left(), local += 2)} ${local}`);
+console.log(`${(left(), local++)} ${local}`);
+console.log(`${(left(), ++local)} ${local}`);
+console.log(`${(left(), object().value = right())} ${field.value} ${order}`);
+console.log(`${(left(), array()[index()] = right())} ${elements[0]} ${order}`);
+console.log(`${(left(), true ? 1 : 2)}`);
