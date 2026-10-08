@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 func printerCases(t *testing.T, mode string) (string, string) {
@@ -15,28 +17,11 @@ func printerCases(t *testing.T, mode string) (string, string) {
 		t.Fatal(err)
 	}
 	var sources []string
-	files := 0
-	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.IsDir() && entry.Name() == ".git" {
-			return filepath.SkipDir
-		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".graphql") {
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			sources = append(sources, string(data))
-			files++
-		}
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("repository and submodules: %d .graphql files", files)
+	// No .graphql documents exist in this checkout. Cases come from these
+	// pinned Go test sources and the generator's explicit controls instead.
+	corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
+		[]string{"internal/format/graphql"}, []string{"*_test.go"})
+	t.Log("GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls")
 	directory := t.TempDir()
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
