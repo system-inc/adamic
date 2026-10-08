@@ -143,7 +143,7 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 				}
 			}
 		}
-		if links != 1 || (stable && compiles != 48) {
+		if links != 1 || (stable && compiles != len(expectedRuntime)) {
 			t.Fatalf("incomplete actual command audit: compile=%d link=%d", compiles, links)
 		}
 	}
@@ -192,7 +192,7 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 	if bytes.Equal(a, b) {
 		t.Fatal("one-byte binary determinism mutant survived")
 	}
-	t.Logf("two profile builds are byte-identical: %s; all 48 runtime compiles and link retain both semantic flags", profileHash(a))
+	t.Logf("two profile builds are byte-identical: %s; all %d runtime compiles and the link retain both semantic flags", profileHash(a), len(expectedRuntime))
 	capture := func(buildSource string) string {
 		t.Helper()
 		reset()
