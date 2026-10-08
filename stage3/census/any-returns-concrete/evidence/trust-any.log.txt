@@ -1,0 +1,6 @@
+=== RUN   TestGenericResolvedReturnContracts
+    any_returns_test.go:55: any return must stay refused: <nil>
+--- FAIL: TestGenericResolvedReturnContracts (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.047s
+FAIL
