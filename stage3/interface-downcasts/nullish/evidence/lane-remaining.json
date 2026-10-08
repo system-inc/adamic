@@ -1,0 +1,41 @@
+{
+  "measurement": "Conservative demand inventory; production support and exact reaching-view discharge are unmeasured",
+  "pairs": 2018,
+  "reads": 9101,
+  "certified_remaining_pairs": null,
+  "certified_remaining_reads": null,
+  "fixture_gaps": [
+    {
+      "family": "nested boxed union storage",
+      "read": "node.value",
+      "outcome": "runtime exit 70"
+    },
+    {
+      "family": "nested packed boolean storage",
+      "read": "node.value",
+      "outcome": "runtime exit 70"
+    },
+    {
+      "family": "boxed key domain conversion",
+      "read": "node.value",
+      "outcome": "runtime exit 70"
+    },
+    {
+      "family": "callable-bearing nominal class producer",
+      "read": "node.value",
+      "outcome": "named compile refusal",
+      "coordination": "broader callable conventions remain with lane 5"
+    },
+    {
+      "family": "nominal class beneath an entry aggregate",
+      "read": "node.value",
+      "outcome": "named compile refusal"
+    },
+    {
+      "family": "required primitive brand",
+      "read": "type declaration, both read and unread controls",
+      "outcome": "existing language refusal: brand member must be void"
+    }
+  ],
+  "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share"
+}

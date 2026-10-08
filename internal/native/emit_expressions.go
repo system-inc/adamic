@@ -515,10 +515,13 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		}()))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
+			e.mapEntryNominalCertificate(expression.KeyContract, entry[0], "Map constructor key")
+			e.mapEntryNominalCertificate(expression.ValueContract, entry[1], "Map constructor entry")
 			e.mapEntryCallableCertificate(expression.ValueContract, entry[1], "Map constructor entry")
 			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
 		}
 		if expression.Pairs != nil {
+			e.mapPairNominalCertificates(expression.KeyContract, expression.ValueContract, pairs)
 			e.mapPairCallableCertificates(expression.ValueContract, pairs)
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
 		}
@@ -561,6 +564,8 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
 		value := e.value(expression.Value)
+		e.mapEntryNominalCertificate(expression.KeyContract, key, expression.ValueWhere)
+		e.mapEntryNominalCertificate(expression.ValueContract, value, expression.ValueWhere)
 		e.mapEntryCallableCertificate(expression.ValueContract, value, expression.ValueWhere)
 		e.line("adamic_map_set(%s, %s, %s);", object, e.heldIn(object, expression.KeyType, key), e.heldIn(object, expression.ValueType, value))
 		return object

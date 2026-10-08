@@ -64,6 +64,9 @@ func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewCon
 		}
 		return id
 	}
+	if isClassInstance(l.checker.GetNonNullableType(target)) {
+		return l.mapNominalEntrySlot(node, target)
+	}
 	if checker.IsTupleType(l.checker.GetNonNullableType(target)) {
 		return l.mapNullableTupleEntrySlot(node, target)
 	}
@@ -96,7 +99,10 @@ func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Ty
 	if base := l.phantomArrayBase(target); base != nil {
 		return l.mapEntryTypeProven(base, seen)
 	}
-	if target.Flags()&checker.TypeFlagsIntersection != 0 || isClassInstance(target) {
+	if isClassInstance(l.checker.GetNonNullableType(target)) {
+		return l.mapNominalEntryTypeProven(target, seen)
+	}
+	if target.Flags()&checker.TypeFlagsIntersection != 0 {
 		return false
 	}
 	if seen[target] {

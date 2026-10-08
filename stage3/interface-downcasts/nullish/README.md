@@ -528,3 +528,44 @@ key domains, all stopping at node.value. Optional/rest tuples stay with lane 4c.
 Nominal witnesses are next. Production reachability remains unmeasured for the
 conservative 2,018 pairs / 9,101 reads; this group does not subtract fixture
 controls from those production totals or claim a full repository gate.
+
+## Nominal data-class Map witnesses (October 8)
+
+Private entry descriptors now reuse existing erased class identities. Guards at
+constructor, .set and copied-entry stores verify nominal key and value producers
+before a Map receives its declared certificate. Structural lookalikes cannot
+acquire that certificate. Private descriptors do not enable unrelated nominal
+view paths. Data-class fields still carry their logical constraints and checked
+reads. Parent/child identity uses existing class ancestry; generic data-class
+controls retain their concrete field contracts. No callable convention changes.
+
+Node and both backends agree for nominal keys/values, derived-to-base covariance,
+generic data classes, null/undefined widening, actual nullish entries, clones and
+single evaluation (two constructor calls stay two). Six IR mutants substitute a
+structural lookalike at key/value constructor, .set and copy sites: both backends
+stop with exit 70, naming the store and expected class identity. Disabling each
+backend's guard independently makes all six mutants run on; both implementation
+mutations are caught by behavior without compiler warnings. Reproduce them with
+run-map-storage-mutants.py nominal-native nominal-javascript.
+
+Callable-bearing classes and nominal classes beneath entry aggregates remain
+named refusals at node.value. Their unread fixtures print box and match Node.
+Required primitive brands are a separate existing language boundary: both read
+and unread controls refuse the non-void brand at its type declaration, before a
+view read. This is not claimed as lazy contract support. Optional/rest tuples
+belong to lane 4c; broader callable conventions remain with lane 5.
+
+Uncached Map|Nullish|NullableSelection selection passes in 160.824s; all nominal
+controls, six producer mutants and gap controls pass in 8.562s. Scoped
+View|Map|Contract|Callable|Tuple packages pass: IR 0.018s, lower 5.162s,
+native 42.069s, JavaScript 0.908s; vet passes. Evidence is in map-nominal-*.
+No full repository gate pass is claimed.
+
+The lane's conservative demand inventory remains 2,018 pairs / 9,101 reads.
+Exact production support, reaching-view proof and discharged rows are unmeasured;
+these totals are not counts of remaining compile refusals. The overlapping
+intersection family has 15 pairs / 42 reads. Array/tuple rows are combined in the
+inventory, so transferring tuples does not justify subtracting every array row.
+The current executable gap table and these measurement limits are in
+lane-remaining.json. Remaining storage gaps are nested boxed unions, nested
+packed booleans and boxed key domains; each stops at node.value in its fixture.

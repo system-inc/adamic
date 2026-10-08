@@ -33,6 +33,8 @@ type ViewContract struct {
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string
 
+	// NominalClass is an existing erased class identity, used by Map stores.
+	NominalClass  int
 	NominalBases  []string
 	Nominal       string
 	Undefined     bool

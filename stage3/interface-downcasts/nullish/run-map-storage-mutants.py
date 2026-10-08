@@ -11,6 +11,8 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('nominal-native', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNominalProducerMutants$'),
+ ('nominal-javascript', 'internal/javascript/view_maps_nominal.go', '"((entry) => (" + strings.Join', '"((entry) => (true || " + strings.Join', '^TestCheckedViewMapNominalProducerMutants$'),
  ('key-presence', runtime, 'if (!query.present) { return NULL; }', 'if (false && !query.present) { return NULL; }', 'entry-convert-key'),
  ('key-read-presence', runtime, '(adamic_maybe_number){true, key.number}', '(adamic_maybe_number){false, key.number}', 'entry-convert-key'),
  ('nested-read-guard', 'internal/native/runtime/view_arrays.c', 'if (actual != wanted &&', 'if (false && actual != wanted &&', '^TestCheckedViewMapNestedPayloadMutant$'),

@@ -801,6 +801,7 @@ type (
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
 		Site          int
+		KeyContract   ViewContractID
 		ValueContract ViewContractID
 		ValueWhere    string
 	}

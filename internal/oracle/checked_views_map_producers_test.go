@@ -213,3 +213,85 @@ func TestCheckedViewMapKeyMetadataMutant(t *testing.T) {
 	}
 	t.Logf("Boolean storage with a Number producer certificate stops before lookup; Node=%q", truth.stdout)
 }
+
+func TestCheckedViewMapNominalProducerMutants(t *testing.T) {
+	for _, key := range []bool{false, true} {
+		for _, site := range []string{"constructor", "set", "copy"} {
+			name := site
+			if key {
+				name = "key-" + site
+			}
+			t.Run(name, func(t *testing.T) {
+				fixture := "entry-nominal"
+				if key {
+					fixture = "entry-nominal-key"
+				}
+				program, path := interfaceFixture(t, "nullish/maps/"+fixture)
+				truth := onNode(t, path)
+				fake := -1
+				for index, local := range program.Locals {
+					if local.Name == "fake" {
+						fake = index
+					}
+				}
+				if fake < 0 {
+					t.Fatal("missing lookalike producer")
+				}
+				position := 1
+				if key {
+					position = 0
+				}
+				replacement := ir.Read{Local: fake, Of: ir.Object}
+				changed := false
+				for index, statement := range program.Main {
+					if declaration, ok := statement.(ir.Declare); ok {
+						creation, ok := declaration.Value.(ir.MapNew)
+						if !ok {
+							continue
+						}
+						if site == "constructor" && program.Locals[declaration.Local].Name == "source" {
+							creation.Entries[0][position] = replacement
+						} else if site == "copy" && program.Locals[declaration.Local].Name == "copy" {
+							elements := []ir.Expression{ir.StringConstant{Index: 0}, ir.NumberConstant{Value: 7}}
+							if key {
+								elements[0] = replacement
+							} else {
+								elements[1] = replacement
+							}
+							pair := ir.ObjectLiteral{Fields: []ir.Field{{Name: "0", Value: elements[0]}, {Name: "1", Value: elements[1]}}}
+							creation.Pairs = ir.ArrayLiteral{Element: ir.Object, Elements: []ir.Expression{pair}}
+						} else {
+							continue
+						}
+						declaration.Value = creation
+						program.Main[index] = declaration
+						changed = true
+						break
+					} else if evaluation, ok := statement.(ir.Evaluate); ok && site == "set" {
+						if store, ok := evaluation.Value.(ir.MapSet); ok {
+							if key {
+								store.Key = replacement
+							} else {
+								store.Value = replacement
+							}
+							evaluation.Value = store
+							program.Main[index] = evaluation
+							changed = true
+							break
+						}
+					}
+				}
+				if !changed {
+					t.Fatal("nominal producer mutation missed")
+				}
+				native, _ := nativelyUncached(t, program)
+				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 70 || !strings.Contains(string(got.stderr), "Map nominal producer failed:") || !strings.Contains(string(got.stderr), "class identity") {
+						t.Fatalf("structural lookalike acquired a nominal certificate: %#v", got)
+					}
+				}
+				t.Logf("Node=%q; structural lookalike caught at %s", truth.stdout, name)
+			})
+		}
+	}
+}
