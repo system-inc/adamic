@@ -183,5 +183,8 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	if l.function.Returns == 0 {
+		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
+	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
 }

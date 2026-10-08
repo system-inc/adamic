@@ -596,8 +596,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			if err == nil && lowered.Type() == 0 {
-				// forEach is void; as a value it's undefined, which only places 0.1 refuses would use.
-				return nil, l.notYet(node, "a void call used as a value")
+				return l.voidValue(node, lowered)
 			}
 			return lowered, err
 		}
@@ -606,9 +605,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if call.Type() == 0 {
-			// The checker allows a void call where a value goes only in places 0.1 refuses anyway
-			// (a template of void prints "undefined"); stage 0 says so rather than guess.
-			return nil, l.notYet(node, "a void call used as a value")
+			return l.voidValue(node, call)
 		}
 		return call, nil
 	}
