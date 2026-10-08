@@ -1,86 +1,123 @@
-Built: full-match regex replacement callbacks, optional string bounds, and string lastIndexOf positions.
-Commits: 7865fefb (regex), 98f0e6a6 (strings); current main 749a69ad merged in baaa2587.
-Validation: Node backend oracles PASS 12.608s; focused lower checks PASS 0.845s; counts PASS 35.606s.
-Mutants: six regex IR rules, two regex source rules, and three string IR rules caught by stdout comparison.
-Incomplete: nine kinds remain; no runtime C changes, and no completed fixture or mutant is claimed for those kinds.
+4b5ecb35: Built regex callbacks, optional string bounds, string lastIndexOf positions, and const-asserted Object.entries; 11 selected roots now clear.
+Commits: 7865fefb, 98f0e6a6, 6e91e9d1, 4b5ecb35; views reverted in 34f68c3b, c41 merge repaired in 925fb70d and b094c331.
+Validation: four Node fixtures in both backends with sanitizers PASS 12.975s; focused lower PASS 1.435s; latest counts refresh PASS 39.111s.
+Mutants: 12 IR mutants caught by Node stdout comparison; three source mutants caught by stdout or the capture-refusal assertion.
+Incomplete: remaining kinds need runtime support or design rulings; no passing fixture, mutant or eliminated root is claimed for those kinds.
 
 The worker branch is `codex/notyet-library-small`. Compiler base resolved to
 `b410340dc8f889b5799c3bc519117c63def3aa24`; replay base is
-`9a1f14c5d994aa855625e7cfa295677060348fec`. The table base is
+`9a1f14c5d994aa855625e7cfa295677060348fec`. Table base is
 `57b9777c8eb4ee28b1f50220e8c8fb51a2dfadf7`.
 
-Counts below are the assigned cluster counts, not independently demonstrated eliminated roots.
-Only three sample sites were demonstrated clear by replay: core.ts:1877:9,
-core.ts:2433:11, and builder.ts:1617:68. Earlier stops prevent other example
-replays from establishing elimination. None are cancelled as census echoes.
+The user correction supersedes the earlier prerequisite request. The pushed views
+merge e0fb1a53 was reverted, without rewriting history, in 34f68c3b. Its follow-up
+compatibility changes were reverted in 3f675803. c41c0e06 remains as requested.
+Conflict repairs restored its explain option and removed a duplicate unconditional
+refusal check. `.a` continues to refuse every non-null assertion; checked assertions
+are available only for `.ts`. All earlier views-dependent replay certifications are
+withdrawn. No further unlanded worker branch will be merged.
 
-| Kind | Assigned roots | Status and evidence |
-| --- | ---: | --- |
-| Regex replacement other than a string | 8 | Lowered zero/one-parameter string callbacks. core.ts:1877:9 clears; checker.ts:8943:45 is blocked by earlier NonNullExpression/missing bindings. Callbacks needing captures, offset or source parameters remain NotYet. |
-| lastIndexOf with these arguments | 4 | Lowered string position arguments with NaN, infinities, truncation, clamping, overlaps and UTF-16 semantics. core.ts:2433:11 clears. moduleNameResolver.ts:1262:25 is blocked by its Path parameter. No change to array lastIndexOf is claimed. |
-| RegExp with a nonconstant pattern | 3 | Skipped: commandLineParser.ts:4127:56 and parser.ts:10707:31 reproduce. Native regex descriptors are compiled by Go before execution; there is no runtime pattern compiler. A dynamic dispatch among constant patterns would not cover these arbitrary string sites. Requires a native runtime regex compiler, including syntax errors and flags. |
-| JSON.stringify object references | 3 | Skipped: watchPublic.ts:686:47 and 687:80 reproduce; emitter is blocked earlier. Runtime shapes carry reference bits, not complete scalar/container types. Removing the guard can serialize hidden booleans as numbers or omit hidden fields/toJSON. Full support needs allocation metadata and dynamic conversion dispatch. Those changes include existing shared runtime records, beyond the separate-new-helper limit. |
-| number or undefined slice argument | 3 | Lowered undefined start as zero and undefined end as positive infinity, preserving explicit NaN. Fixture covers both; example replays are blocked earlier and do not prove these roots gone. |
-| Object.entries unproven shape | 3 | Refused for a ruling: scanner uses MapLike index-signature objects, including a spread. Adamic explicitly refuses index signatures in refusals.go; removing the exact-shape guard does not prove homogeneous runtime values. No new refusal fixture/mutant was completed. |
-| number or undefined substring argument | 2 | Lowered optional end with the same undefined/NaN distinction. builder.ts:1617:68 replay clears; sourcemap is blocked earlier. |
-| Non-intrinsic tagged template | 2 | Skipped: both emitHelpers sites reproduce. They call helperString with TemplateStringsArray, rest substitutions and a returned closure. Correct support needs per-site cached frozen cooked/raw arrays and indexing of TemplateStringsArray. elementAccess is owned by codex/notyet-element-access (63f7ae5b); current representation treats this view as Object. No partial tag implementation was committed. |
-| Set of ResolvedConfigFilePath | 2 | Refused for a ruling: the brand is an intersection of string with required phantom object fields. representation delegates intersections to objectIntersection, which rejects primitive constituents. Actual upstream values are manufactured with casts. Supporting only setElement would leave construction, arguments and iteration inconsistently represented. Required primitive brand promises need a representation/design ruling; no unsafe erasure was added. |
-| Numeric coercion requiring dynamic ToPrimitive | 2 | Skipped: both sys sites use Stats.mtime (Date). Both replays stop first at an any-typed Stats parameter at sys.ts:1747:34. There is no existing Date lowering/runtime representation in this baseline. General ToPrimitive also needs Symbol.toPrimitive and dynamic callable dispatch. No Date shortcut based only on a structural view was added. |
-| JSON union containing containers | 1 | Skipped: commandLineParser.ts:2960:31 reproduces. Arrays carry only a reference bit; a boxed array loses its numeric/boolean and nested element schema. Same runtime-metadata dependency as object JSON. |
-| fs.writeSync wrapping JSON object references | 1 | Skipped: tracing replay reaches earlier unsupported performance/property calls, not the wrapped signature. Shares the JSON runtime metadata dependency; not cancelled as an echo. |
-| Object.assign unproven shape | 1 | Refused for a ruling: utilities.ts:8578:19 reproduces on a parameter/global allocator structural view. Hidden overwriting fields and function fields are not proved by the current shape/scalar checks. Current Object.assign deliberately refuses widened sources and reference cycles. No unchecked shape assumption was added. |
+Every one of the 35 assigned root sites was replayed again on the corrected compiler
+baseline. The findings are in `corrected-replay-findings.json`; scanner 4075 was
+replayed once more after the const assertion fix. A missing requested signature is
+not by itself proof that the selected unit lowers: only empty findings are counted
+clear. These are selected census units measured on the checker-rejected upstream
+program, not certification that the entire compiler builds.
 
-Implementation is confined to regexBuiltin and libraryStringMethod, with one shared
-hook in internal/lower/object.go (stringCall) routing slice/lastIndexOf. The follow-up
-refusal probe changes internal/lower/regexp_test.go to a two-parameter callback:
-one-parameter callbacks now lower. IR, JavaScript, native and runtime files were
-not changed. The expanded territory was reviewed; remaining skips above are
-implementation/ownership dependencies, not the superseded blanket territory rule.
+The following table is ranked in the requested order. Counts are assigned cluster
+counts, and the evidence column separates fixture coverage from cleared roots.
 
-Fixtures:
-- internal/oracle/testdata/notyet_library_regex_callback.a
-- internal/oracle/testdata/notyet_library_string_bounds.a
+| SHA first | Kind | Assigned roots | Status and evidence |
+| --- | --- | ---: | --- |
+| 7865fefb, 6e91e9d1 | Regex replacement other than a string | 8 | Lowered full-match string callbacks, plus offset/input callbacks for proven capture-free literal, immutable-alias and conditional producers. Seven roots clear: core 1877, sys 1734, utilities 6211/6221/6252/9598/10916. checker 8943 stops earlier at structural method calls in a program with statics. Captures and unknown producers remain conservatively refused. |
+| 98f0e6a6 | lastIndexOf with these arguments | 4 | Lowered string positions with NaN, infinities, truncation, clamping, overlaps and UTF-16 semantics. All four table roots are String calls; no array lowering change is claimed. core 2433 clears. moduleNameResolver 1262 stops on Path; parser 8922 on a closure; utilities 9930 on a Path overload result. |
+| No lowering commit | RegExp with a nonconstant pattern | 3 | Skipped: all three signatures still reproduce. Native regex descriptors are compiled by Go before execution. Arbitrary runtime patterns require a runtime ECMAScript parser/compiler, including flag and syntax-error behavior. Dispatch among constant patterns would not cover these sites. Dependency: runtime regex compiler. |
+| No lowering commit | JSON.stringify object references | 3 | Skipped: emitter 1138 and watchPublic 686/687 reproduce. Structural views can hide differently represented fields and toJSON. Runtime objects lack complete value metadata; loosening the guard would miscompile. Dependency: complete allocation/value metadata and conversion dispatch, landed through the compiler area. The rejected views integration is not used. |
+| 98f0e6a6 | number or undefined slice argument | 3 | Lowered undefined start as zero and undefined end as positive infinity, preserving explicit NaN. Fixture passes. Selected roots remain blocked before the call: emitter 4979 by an unchecked cast, program 751 by number/string binary arithmetic, program 2981 by structural method calls. No cleared roots claimed. |
+| 4b5ecb35 | Object.entries unproven shape | 3 | Partly lowered: scanner 4075 is a complete literal under `as const` and now clears. Numeric-key order, Unicode names, values, evaluation order and Map construction match Node. scanner 222/224 still use MapLike index signatures, including a spread; retained for a ruling because `.a` explicitly refuses index signatures and complete runtime values are unproven. No new refusal fixture is claimed for those two roots. |
+| 98f0e6a6 | number or undefined substring argument | 2 | Lowered optional end with the undefined/NaN distinction. Both builder 1617 and sourcemap 380 now clear. |
+| No lowering commit | Non-intrinsic tagged template | 2 | Skipped: both emitHelpers signatures reproduce. helperString needs per-site cached frozen cooked/raw arrays, rest substitutions and TemplateStringsArray indexing. elementAccess belongs to codex/notyet-element-access; this baseline treats TemplateStringsArray as Object. Dependency: array representation/indexing support landed through area/compiler. No partial tag implementation is claimed. |
+| No lowering commit | Set of ResolvedConfigFilePath | 2 | Retained for a ruling: required phantom object fields on a primitive intersection cannot be erased as true `.a` promises. representation rejects primitive constituents; changing only setElement would disagree with construction, arguments and iteration. The 666 signature still reproduces; the 693 replay also encounters the earlier 666 stop. No census echo is cancelled. |
+| No lowering commit | Numeric coercion requiring dynamic ToPrimitive | 2 | Skipped: both sys replays stop first on an any-typed Stats parameter at 1747. The operands are Stats.mtime Date objects, but this baseline has no represented Date/Stats runtime path. General coercion also needs Symbol.toPrimitive and callable dispatch. Dependencies: typed host Stats/Date support and dynamic conversion metadata. |
+| No lowering commit | JSON union containing containers | 1 | Skipped: commandLineParser 2960 still reproduces the exact signature, after an earlier CompilerOptionsValue representation stop. Arrays carry a reference bit, not their runtime numeric/boolean/nested schema. Dependency: runtime container element metadata. |
+| No lowering commit | fs.writeSync wrapping JSON object references | 1 | Skipped: tracing 194 reaches earlier performance/property-call stops. Shares the object JSON metadata dependency; not cancelled as an echo. |
+| No lowering commit | Object.assign unproven shape | 1 | Retained for a ruling: utilities 8578 reproduces on a parameter/global allocator structural view. Hidden overwriting fields and function fields are unproven. Existing shape, scalar and cycle restrictions are retained. No unchecked shape assumption or new refusal fixture is claimed. |
 
-The regex fixture checks literal callback results, global reset, nonglobal and
-sticky matching, collection before callbacks, mutation of lastIndex, empty matches
-with astral code points, and no matches. String bounds cover omitted/undefined,
-NaN, infinities, negative/fractional positions, overlap and argument evaluation order.
+Four completed fixtures, each registered from its own `_test.go` file:
 
-Mutants and intended failure:
-- regex match: wrong full-match argument -> Node stdout mismatch.
-- regex literal: apply replacement-string expansion to callback return -> stdout mismatch.
-- regex unicode: advance all empty matches by two UTF-16 units -> stdout mismatch.
-- regex global: disable global gathering -> stdout mismatch.
-- regex offset: replace match offset with zero -> stdout mismatch.
-- regex reset: initialize global lastIndex to one -> stdout mismatch.
-- collection-before-callbacks source mutant: invoke during gathering -> stdout mismatch in both backends.
-- nonglobal-single-match source mutant: always stop after first match -> stdout mismatch in both backends.
-- slice: undefined end becomes zero -> stdout mismatch.
-- substring: undefined end becomes zero -> stdout mismatch.
-- position: ignore lastIndexOf's bounded search prefix -> stdout mismatch.
+- `internal/oracle/testdata/notyet_library_regex_callback.a`
+- `internal/oracle/testdata/notyet_library_regex_offset.a`
+- `internal/oracle/testdata/notyet_library_string_bounds.a`
+- `internal/oracle/testdata/notyet_library_object_entries_const.a`
 
-IR mutants execute native output with sanitizers and leak checks; source mutants
-run the fixture oracle in both backends. Source mutations were restored. The first
-final lower run caught an obsolete refusal probe; after updating it, the rerun passes.
-An execution-server disconnect interrupted one source mutant; it was restored and
-the source mutant runner was rerun successfully. No compile error counts as a kill.
+Owned lowering changes are confined to regexBuiltin, libraryStringMethod and
+objectCallArguments. Minimal shared hooks are stringCall in
+`internal/lower/object.go` and refuseWidening in `internal/lower/invariance.go`.
+The latter bypasses lib.d.ts's any[] rest view only for an intrinsic replacement
+argument whose receiver, producer, exact primitive callback parameters and string
+return are proven. The new proof helper is
+`internal/lower/library_regex_callback_shape.go`. These outside-function files are
+named in their commits. Merge repairs also touched `cmd/adamic/tsgo.go` and
+`internal/lower/refusals.go`, as named in their commits. No IR, JavaScript, native
+emitter or runtime C changes were needed for these features. Runtime C helpers to
+review: none.
 
-Commands (all test output redirected to log files, no full package/gate runs):
+Every implemented rule has a mutant that was run and caught:
+
+| Mutant | Intended failure |
+| --- | --- |
+| Regex full-match argument | Node stdout differs |
+| Regex replacement-string expansion applied to callback result | Node stdout differs |
+| Regex empty-match Unicode advancement | Node stdout differs |
+| Regex global collection disabled | Node stdout differs |
+| Regex match splice offset replaced with zero | Node stdout differs |
+| Regex global lastIndex reset changed | Node stdout differs |
+| Offset callback argument replaced with zero | Node stdout differs |
+| Callback input argument replaced with an empty string | Node stdout differs |
+| slice undefined end replaced with zero | Node stdout differs |
+| substring undefined end replaced with zero | Node stdout differs |
+| lastIndexOf bounded search prefix ignored | Node stdout differs |
+| Const-asserted object field order swapped | Node stdout differs |
+| Callback invoked during match collection (source mutant) | Node stdout differs in the fixture oracle |
+| Every regex replacement stops after one match (source mutant) | Node stdout differs in the fixture oracle |
+| Capturing-group proof removed (Go overlay mutant) | Capture-refusal assertion reports incorrectly accepted source |
+
+The 12 IR mutants execute native output with sanitizers and leak checks; both source
+behavior mutants run the fixture oracle in both backends. The proof mutant compiles
+Go successfully and is caught by the intended refusal assertion. No compile error
+is counted as a kill. Source mutations were restored; the proof mutant uses an
+overlay without modifying the tracked source.
+
+c41 prerequisite checks also pass: focused lower 0.089s, CLI 5.122s, its oracle
+checks 1.512s. Its no-check mutant was caught by the expected panic/output assertion;
+its look-through mutant was caught by the return representation assertion. These
+are inherited prerequisite checks, separate from the 15 library-small mutants.
+
+Exact commands, with test output redirected to logs in `corrected-logs/`:
+
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_(regex_callback|string_bounds)|TestNotYetLibrary(RegexCallback|StringBounds)Mutants' -count=1 -timeout 10m -v
-go test ./internal/lower -run 'TestLibraryStringRefusals|TestRegExpNativeRefusals|TestLibraryLanguageBoundaries' -count=1 -timeout 5m -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_(regex_callback|regex_offset|string_bounds|object_entries_const)|TestNotYetLibrary(RegexCallback|RegexOffset|StringBounds|ObjectEntriesConst)Mutant' -count=1 -timeout 10m -v
+go test ./internal/lower -run 'TestLibraryRegexOffset|TestRegExpNativeRefusals|TestLibraryStringRefusals|TestLibraryLanguageBoundaries|TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestNonNullAssertion' -count=1 -v
 python3 internal/oracle/testdata/run-library-small-regex-mutants.py
-go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
-go run ./stage3/census/latent/replay -project /tmp/library-small-adapted/src/tsc/tsc.ts -where /tmp/library-small-adapted/src/compiler/core.ts:1877:9 -kind NotYet -reason 'regex replacement other than a string'
+python3 internal/oracle/testdata/run-library-small-regex-proof-mutant.py
+go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts
+go test ./internal/lower -run 'TestNonNull|TestRefus'
+go test ./cmd/adamic -run 'TestNonNull|TestExplainChecks'
+go test ./internal/oracle -run 'TestCheckedNonNull(TypeScript|AdamicRefusal|Counts)$|TestPossibleNonNullAdamicAssertionsAreRefused$' -v
+/tmp/library-small-replay -project /tmp/library-small-adapted/src/tsc/tsc.ts -where /tmp/library-small-adapted/src/compiler/scanner.ts:4075:59 -kind NotYet -reason 'Object.entries on a shape not proven by a plain literal or its const binding'
 ```
-Replay used the same command shape for all listed examples; exact findings are in
-replay-findings.json. A cleared requested signature makes replay exit 1, so the
-findings, rather than an assumed successful exit, determine the result.
 
-Setup: exported GOPROXY=https://proxy.golang.org|direct before cloud/setup.sh.
-The first setup build overlapped the merge and saw missing lowering declarations;
-retry after the merge passed. Retry timing lines: go ready 0.037s; node 0.046s;
-submodules 0.169s; markdown skipped 0.018s / ready 0.179s; clang 0.411s;
-go build 69.489s; test binaries deferred 69.852s; build cache 69.876s;
-done 69.935s. nproc=5 (quota 4). Environment sourced from
-/workspace/adamic-tools/env.sh. Go 1.27.1, clang 20.1.8, Node 24.19.0.
+All 35 roots used that replay command shape with their exact recorded reasons.
+Replay exits 1 when the requested signature disappears; parsed findings determine
+the reported result. Mandatory counts updates passed after both new fixtures
+(61.346s for regex offset, 39.111s for const entries). No whole package or full gate
+was run. The latest standing rule governs: the final unit evidence is committed
+before one push; any shared gate red will be fixed and followed by one further push.
+
+Setup was completed earlier with GOPROXY=https://proxy.golang.org|direct before
+cloud/setup.sh. The first build overlapped the merge and saw missing declarations;
+retry after the merge passed. Timing lines: go 0.037s; node 0.046s; submodules
+0.169s; markdown skipped 0.018s / ready 0.179s; clang 0.411s; go build 69.489s;
+test binaries deferred 69.852s; build cache 69.876s; done 69.935s.
+`nproc=5` (quota 4); environment `/workspace/adamic-tools/env.sh`;
+Go 1.27.1, clang 20.1.8, Node 24.19.0.
