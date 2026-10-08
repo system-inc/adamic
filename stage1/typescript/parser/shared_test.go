@@ -152,7 +152,13 @@ func buildParserC(source, binary string, sanitize bool) error {
 // outer 60-minute backstop covers the complete runtime and program build.
 func parserCompileC(request parserCheckerRequest) error {
 	options := native.Options{Sanitize: request.Sanitize}
-	library, err := native.RuntimeLibrary("", options)
+	source, err := os.ReadFile(request.Source)
+	if err != nil {
+		return err
+	}
+	// The runtime is compiled with the features the emitted C turns on, or its
+	// layouts disagree with the program's (a closure-convention closure is larger).
+	library, err := native.RuntimeLibraryForSource("", string(source), options)
 	if err != nil {
 		return err
 	}

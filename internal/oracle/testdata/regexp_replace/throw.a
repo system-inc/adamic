@@ -1,0 +1,7 @@
+const regex = /a/g;
+try {
+ console.log('aa'.replace(regex, (match: string) => { throw new Error(match); }));
+} catch (error) {
+ if (error instanceof Error) console.log(error.message);
+}
+console.log(`${regex.lastIndex}`);

@@ -1,0 +1,39 @@
+{
+  "main": "efe9f4042049234e5a52639fe77b47c311fd530c",
+  "scratch_head": "29933a3ebcadec234060b9e4b5100be7aca28412",
+  "binary_sha256": "e26b717e52e4d42175bfc000674b1e27f10253a28392ee9a76ada2d09b3d1091",
+  "uncommitted_c09_selected_paths": {
+    "internal/flow/infer.go": "20109caa473e92e192987d9133c83e3009304ccc285e0e0d46af444d30b24bc0",
+    "internal/fresh/typed_arrays.go": null,
+    "internal/javascript/typed_arrays.go": null,
+    "internal/lower/assignments.go": "3eda0299ac6570f32650bdf36d4e9c8950dd37d489d2cb9c30a35ce6412b58a7",
+    "internal/lower/class.go": "d556d7f7233b95c1e08d64973261b75081cddfac243146f1f7ab674d0b897de0",
+    "internal/lower/class_accessors.go": "537f415418fbebc39a4725388fe50d180500ff55f1324cd3ddc5ec96f66d982d",
+    "internal/lower/class_features.go": "3ca135708646b275033ba4eae84567852ea4e1046fa9abddfff10c79af625266",
+    "internal/lower/class_inheritance.go": "6f866c56f0e3bdff96a79189bd95b7b6a54d9ddff39ecd32d7fde550eaa19147",
+    "internal/lower/class_static.go": "51f9398301bc543e563229aa9e00e8ce4c1db18ccb4d1fdac75b6b7ef7599afc",
+    "internal/lower/exceptions.go": "471cb8e2dbc3343c0c4633cafb25f76fe3fde1fcf592cc3a879bb2a1fb44c113",
+    "internal/lower/expression.go": "544d16ab2ccc5445b428c60707b740af15967cf3b68ee8b9963c6be04491bb9c",
+    "internal/lower/functions.go": "c8a9db975482ed61a49f67176a545176ce735d70c5aa95acd109ab8dc1305bfc",
+    "internal/lower/iteration.go": "d2ad63df88edc4a8dc27422030c54efaf0e5118957b218276dad6f2aacb039c8",
+    "internal/lower/library_method_values.go": null,
+    "internal/lower/library_object.go": "b8d4facf1e33e4b182c9970bfe9e4a0376a6e5d89f6b01d52087e29b41961d8f",
+    "internal/lower/object.go": "6177450305e9355c01efcce5bad796b3b44aecf39b48f25a2ac444712fb67c03",
+    "internal/lower/prototype.go": "ffada1b2bf75b408a0ea35fd9a627e44cf69229e75902590b5c1c4b1be252d0f",
+    "internal/lower/records.go": "7c0eda2aebad9cbca8aa806cee169ce86dedb570b02350ca8b88e3d81b5b2ad3",
+    "internal/lower/refusals.go": "c67ceddfe385a7a17ac564cc6eb3b7979579becbb5f6422d93a2d8153f7acf9a",
+    "internal/lower/statements.go": "b7aa35f003a26e54cd4deee38f4b2259896c14f128314365e460198d18dbab63",
+    "internal/native/emit_expressions.go": "ae558f0f9818ce60f61e118c5390782e2e32927b9095315cea3d4a2bf5341c72",
+    "internal/native/emit_statements.go": "751291c21524dd46eb6d104a160dfa2e0a1d3aa74e7b0f9154fc75d6f982f79d",
+    "internal/native/emit_values.go": "c66f8092dfdde8a154fded59d830f4e6723249b2b7451d4383e1b99795a4c235",
+    "internal/native/typed_arrays.go": null
+  },
+  "pins": {
+    "origin/area/compiler": "b68b2fe1af2dd6ad369ad8dfbfedf66be5a42861",
+    "c09c22b8": "c09c22b8ebf4c2818ef62aa34a4889faac43e531",
+    "origin/codex/stricter-records": "b150f83ceb6dc7eecfd29bcc92f3c8ac5bc6b9f7",
+    "origin/codex/stricter-indexed-all": "aee98c837f787319262cf643021cb8b7c97efae1",
+    "origin/codex/stricter-catch-variables": "ded85b2d80f408d6aa59d2d81aceea89adabe872"
+  },
+  "ledger_count": 79
+}

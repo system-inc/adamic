@@ -11,10 +11,11 @@ func (RegExpNew) Type() Type { return Object }
 
 // RegExpCall covers both RegExp and String methods. Value is evaluated first.
 type RegExpCall struct {
-	Value     Expression
-	Arguments []Expression
-	Method    string
-	Returns   Type
+	Value       Expression
+	Arguments   []Expression
+	Method      string
+	Returns     Type
+	Replacement *RegExpReplacement
 }
 
 func (r RegExpCall) Type() Type { return r.Returns }
@@ -60,3 +61,21 @@ type RegExpGroup struct {
 }
 
 func (r RegExpGroup) Type() Type { return r.Of }
+
+// RegExpReplacement describes the closure ABI; Rest is its final array element type.
+type RegExpReplacement struct {
+	Groups []RegExpReplacementGroup
+
+	Parameters []Type
+	Kinds      []int
+	RestKind   int
+	Rest       Type
+	Returns    Type
+}
+
+type RegExpReplacementGroup struct {
+	Argument int
+	Rest     bool
+	Name     string
+	Optional bool
+}

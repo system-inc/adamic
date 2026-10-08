@@ -1,0 +1,108 @@
+{
+  "compiler": "/workspace/scratch/parser-front8-adamic",
+  "scratch": "/tmp/parser-front7-scratch",
+  "entry": "/tmp/parser-front-driver-slice/parser-proof-main.a",
+  "corpus": "/tmp/parser-adapted10",
+  "oracle": {
+    "bytes": 36429231,
+    "sha256": "686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615"
+  },
+  "dump_schema": "parser-preorder-with-jsdoc-v2",
+  "build": {
+    "exit": 1,
+    "user_seconds": 1.122801
+  },
+  "node_runs": [
+    {
+      "exit": 0,
+      "user_seconds": 6.159802,
+      "comparison": 0
+    },
+    {
+      "exit": 0,
+      "user_seconds": 6.109186000000001,
+      "comparison": 0
+    },
+    {
+      "exit": 0,
+      "user_seconds": 6.735887,
+      "comparison": 0
+    }
+  ],
+  "node_best_user_seconds": 6.109186000000001,
+  "native_runs": [],
+  "native_binary_bytes": null,
+  "native_best_user_seconds": null,
+  "native_byte_mutant_cmp": null,
+  "instructions": "not measured: build failed; perf executable not installed",
+  "case_acceptance": null,
+  "status": "red",
+  "scratch_head": "b729fadd78fafb52c190f44d8bd89cbc3bfffd22",
+  "feature_inputs": {
+    "non_null_check": "a02613eff851e07f567ab9934adfc8a2dc98eeca",
+    "census_small_families": "33a90f4b0763d797d33ed41eb9db79ef12ff6609"
+  },
+  "first_failure": "adamic: /tmp/parser-front-driver-slice/src/compiler/core.ts:54:101: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+  "final_build_exit": 1,
+  "case_reference": {
+    "cases": 10406,
+    "nodes": 1323111,
+    "parse_diagnostic_rows": 1996,
+    "jsdoc_diagnostic_rows": 34,
+    "native_status": "unreached: no parser binary"
+  },
+  "nproc": 5,
+  "build_modes": {
+    "jobs": 5,
+    "cache": "/workspace/scratch/parser-front8-build-modes/cache",
+    "generated_c": null,
+    "attempts": [
+      {
+        "mode": "unsplit",
+        "exit": 1,
+        "attempt_wall_seconds": 0.9111880869968445,
+        "generated_c": null,
+        "clang_wall_seconds": null,
+        "binary_bytes": null,
+        "clang_status": "unreached: checking/lowering failed before C emission",
+        "cache_files_after": 0
+      },
+      {
+        "mode": "split",
+        "exit": 1,
+        "attempt_wall_seconds": 0.9118170399960945,
+        "generated_c": null,
+        "clang_wall_seconds": null,
+        "binary_bytes": null,
+        "clang_status": "unreached: checking/lowering failed before C emission",
+        "cache_files_after": 0
+      },
+      {
+        "mode": "split-repeat",
+        "exit": 1,
+        "attempt_wall_seconds": 0.9662405049966765,
+        "generated_c": null,
+        "clang_wall_seconds": null,
+        "binary_bytes": null,
+        "clang_status": "unreached: checking/lowering failed before C emission",
+        "cache_files_after": 0
+      }
+    ],
+    "emit_exit": 1,
+    "split_repeat_is_warm": false
+  },
+  "checks": {
+    "targeted_lower_exit": 0,
+    "targeted_lower_output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t2.914s\n",
+    "broader_lower_exit": 1,
+    "broader_failure": "TestCensusOverloadRelation/result_covariance expected an overload-result refusal but phantom-brand refusal precedes it",
+    "nonnull_valid_native_exit": 0,
+    "nonnull_valid_stdout": "1\n",
+    "nonnull_valid_node_cmp": 0,
+    "nonnull_invalid_native_exit": 70,
+    "nonnull_invalid_stderr": "adamic: panic: non-null assertion failed: array[index]! is null or undefined\n",
+    "predicate_callback_minimal_build_exit": 1,
+    "predicate_callback_node_exit": 0,
+    "predicate_callback_node_stdout": "true\n"
+  }
+}

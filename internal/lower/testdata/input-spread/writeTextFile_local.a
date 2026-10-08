@@ -1,0 +1,5 @@
+function writeTextFile(text: string): string {
+	return text;
+}
+const args: [string] = ['local'];
+console.log(writeTextFile(...args));

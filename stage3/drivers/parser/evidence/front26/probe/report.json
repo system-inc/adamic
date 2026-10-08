@@ -1,0 +1,48 @@
+{
+  "probes": [
+    {
+      "file": "native-partial-record-view.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front26-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a",
+          "-o",
+          "/workspace/scratch/parser-front26-partial-record-probe/native-partial-record-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front26-partial-record-probe/native-partial-record-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 360312,
+      "native_byte_mutant_cmp": 1
+    }
+  ],
+  "passing": 1,
+  "total": 1,
+  "full_slice": "Single partial-record witness only; no parser or arguments-length acceptance run"
+}
