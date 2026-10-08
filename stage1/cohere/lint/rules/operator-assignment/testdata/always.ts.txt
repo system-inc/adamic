@@ -1,0 +1,12 @@
+x = x + y;
+x = y * x;
+x[y] = x[y] + 1;
+x.y = x['y'] + 1;
+obj.a = obj?.a + b;
+x = /* keep */ x + y;
+const label = '🦀';
+β = ((β + 1));
+x[0x10] = x[16] + 1;
+x = y & x;
+x = y ^ x;
+x = y | x;

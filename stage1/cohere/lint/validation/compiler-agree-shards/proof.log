@@ -1,0 +1,32 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:417: compiler and stage1: 868 files
+    lint_test.go:448: Node shard 0/5: 16501.558805 ms
+    lint_test.go:448: Node shard 1/5: 16322.086476 ms
+    lint_test.go:448: Node shard 2/5: 16124.402278 ms
+    lint_test.go:448: Node shard 3/5: 29534.981598 ms
+    lint_test.go:448: Node shard 4/5: 14856.448198 ms
+    lint_test.go:450: Node: 5 shards in 29.767457814s
+    lint_test.go:448: emitted JavaScript shard 0/5: 29386.561661 ms
+    lint_test.go:448: emitted JavaScript shard 1/5: 28984.783379 ms
+    lint_test.go:448: emitted JavaScript shard 2/5: 24707.128168 ms
+    lint_test.go:448: emitted JavaScript shard 3/5: 55998.817005 ms
+    lint_test.go:448: emitted JavaScript shard 4/5: 20971.594185 ms
+    lint_test.go:450: emitted JavaScript: 5 shards in 56.382672484s
+    lint_test.go:448: sanitized native shard 0/5: 152155.61964 ms
+    lint_test.go:448: sanitized native shard 1/5: 209712.13922 ms
+    lint_test.go:448: sanitized native shard 2/5: 143095.323524 ms
+    lint_test.go:448: sanitized native shard 3/5: 365923.568942 ms
+    lint_test.go:448: sanitized native shard 4/5: 103949.10542 ms
+    lint_test.go:450: sanitized native: 5 shards in 6m6.580349984s
+    lint_test.go:452: sanitized native: case 0 line 2: port "gixed\t/* Generated file to emulate the ts.moduleSpecifiers namespace. */\\u000d\\u000a\\u000d\\u000aexport * from \"../moduleSpecifiers.js\";\\u000d\\u000a", Go "fixed\t/* Generated file to emulate the ts.moduleSpecifiers namespace. */\\u000d\\u000a\\u000d\\u000aexport * from \"../moduleSpecifiers.js\";\\u000d\\u000a"
+        Go context:
+        case 0
+        fixed	/* Generated file to emulate the ts.moduleSpecifiers namespace. */\u000d\u000a\u000d\u000aexport * from "../moduleSpecifiers.js";\u000d\u000a
+        case 1
+        fixed	/* Generated file to emulate the ts.performance namespace. */\u000d\u000a\u000d\u000aexport * from "../performance.js";\u000d\u000a
+        case 2
+        fixed	/* Generated file to emulate the ts namespace. */\u000d\u000a\u000d\u000aexport * from "../corePublic.js";\u000d\u000aexport * from "../core.js";\u000d\u000aexport * from "../debug.js";\u000d\u000aexport * from "../semver.js";\u000d\u000aexport * from "../performanceCore.js";\u000d\u000aexport * from "../tracing.js";\u000d\u000aexport * from "../types.js";\u000d\u000aexport * from "../sys.js";\u000d\u000aexport * from "../path.js";\u000d\u000aexport * from "../diagnosticInformationMap.generated.js";\u000d\u000aexport * from "../scanner.js";\u000d\u000aexport * from "../utilitiesPublic.js";\u000d\u000aexport * from "../utilities.js";\u000d\u000aexport * from "../factory/baseNodeFactory.js";\u000d\u000aexport * from "../factory/parenthesizerRules.js";\u000d\u000aexport * from "../factory/nodeConverters.js";\u000d\u000aexport * from "../factory/nodeFactory.js";\u000d\u000aexport * from "../factory/emitNode.js";\u000d\u000aexport * from "../factory/emitHelpers.js";\u000d\u000aexport * from "../factory/nodeTests.js";\u000d\u000aexport * from "../factory/nodeChildren.js";\u000d\u000aexport * from "../factory/utilities.js";\u000d\u000aexport * from "../factory/utilitiesPublic.js";\u000d\u000aexport * from "../parser.js";\u000d\u000aexport * from "../commandLineParser.js";\u000d\u000aexport * from "../moduleNameResolver.js";\u000d\u000aexport * from "../binder.js";\u000d\u000aexport * from "../symbolWalker.js";\u000d\u000aexport * from "../checker.js";\u000d\u000aexport * from "../visitorPublic.js";\u000d\u000aexport * from "../sourcemap.js";\u000d\u000aexport * from "../transformers/utilities.js";\u000d\u000aexport * from "../transformers/destructuring.js";\u000d\u000aexport * from "../transformers/classThis.js";\u000d\u000aexport * from "../transformers/namedEvaluation.js";\u000d\u000aexport * from "../transformers/taggedTemplate.js";\u000d\u000aexport * from "../transformers/ts.js";\u000d\u000aexport * from "../transformers/classFields.js";\u000d\u000aexport * from "../transformers/typeSerializer.js";\u000d\u000aexport * from "../transformers/legacyDecorators.js";\u000d\u000aexport * from "../transformers/esDecorators.js";\u000d\u000aexport * from "../transformers/es2017.js";\u000d\u000aexport * from "../transformers/es2018.js";\u000d\u000aexport * from "../transformers/es2019.js";\u000d\u000aexport * from "../transformers/es2020.js";\u000d\u000aexport * from "../transformers/es2021.js";\u000d\u000aexport * from "../transformers/esnext.js";\u000d\u000aexport * from "../transformers/jsx.js";\u000d\u000aexport * from "../transformers/es2016.js";\u000d\u000aexport * from "../transformers/es2015.js";\u000d\u000aexport * from "../transformers/generators.js";\u000d\u000aexport * from "../transformers/module/module.js";\u000d\u000aexport * from "../transformers/module/system.js";\u000d\u000aexport * from "../transformers/module/esnextAnd2015.js";\u000d\u000aexport * from "../transformers/module/impliedNodeFormatDependent.js";\u000d\u000aexport * from "../transformers/declarations/diagnostics.js";\u000d\u000aexport * from "../transformers/declarations.js";\u000d\u000aexport * from "../transformer.js";\u000d\u000aexport * from "../emitter.js";\u000d\u000aexport * from "../watchUtilities.js";\u000d\u000aexport * from "../program.js";\u000d\u000aexport * from "../programDiagnostics.js";\u000d\u000aexport * from "../builderStatePublic.js";\u000d\u000aexport * from "../builderState.js";\u000d\u000aexport * from "../builder.js";\u000d\u000aexport * from "../builderPublic.js";\u000d\u000aexport * from "../resolutionCache.js";\u000d\u000aexport * from "../watch.js";\u000d\u000aexport * from "../watchPublic.js";\u000d\u000aexport * from "../tsbuild.js";\u000d\u000aexport * from "../tsbuildPublic.js";\u000d\u000aexport * from "../executeCommandLine.js";\u000d\u000aexport * from "../expressionToTypeNode.js";\u000d\u000aimport * as moduleSpecifiers from "./ts.moduleSpecifiers.js";\u000d\u000aexport { moduleSpecifiers };\u000d\u000aimport * as performance from "./ts.performance.js";\u000d\u000aexport { performance };\u000d\u000a
+--- FAIL: TestCompilerAndStage1Agree (594.73s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	594.819s
+FAIL

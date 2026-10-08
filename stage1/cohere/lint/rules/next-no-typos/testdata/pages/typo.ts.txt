@@ -1,0 +1,4 @@
+export const getStaticpaths = () => ({ props: {} });
+export function getServurSideProps() { return {}; }
+export const getStaticProps = () => ({ props: {} });
+export default function getStaticPropss() { return {}; }

@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -260,9 +261,7 @@ func matchesGapRefusal(err error, stderr string) bool {
 }
 func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, command[0], command[1:]...)
+	cmd := exec.Command(command[0], command[1:]...)
 	out, err := os.CreateTemp(t.TempDir(), "gap-output-")
 	if err != nil {
 		t.Fatal(err)
@@ -270,7 +269,7 @@ func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	cmd.Stdout = out
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	runErr := cmd.Run()
+	runErr := testguard.Run(cmd, time.Minute, testguard.Ceiling)
 	if err := out.Close(); err != nil {
 		t.Fatal(err)
 	}

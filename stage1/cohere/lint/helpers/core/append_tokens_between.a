@@ -1,0 +1,10 @@
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+export function appendTokensBetween(source: string, start: number, end: number, prefix = ''): string {
+    if(start >= end) { return prefix; }
+    const scanner = new Scanner(source); scanner.pos = start; scanner.scan();
+    let result = prefix;
+    while(scanner.kind !== 'EndOfFile' && scanner.start < end) {
+        result += source.slice(scanner.start, scanner.pos) + ' '; scanner.scan();
+    }
+    return result;
+}

@@ -1,0 +1,48 @@
+=== RUN   TestNonprogressingFix
+    nonprogressing_fix_test.go:55: checker compilation phases: load=163.885106ms lower=3.137787566s C=515.575857ms JavaScript=24.032761ms
+    nonprogressing_fix_test.go:55: checker native build: 49.32613504s
+    nonprogressing_fix_test.go:55: Go, Node, emitted JavaScript, native identical: 706 bytes
+    nonprogressing_fix_test.go:65: no-progress sibling refused; the other automatic edits apply byte-identically on all runtimes
+--- PASS: TestNonprogressingFix (58.41s)
+=== RUN   TestNonprogressingFixPanicMutant
+    nonprogressing_fix_test.go:92: checker compilation phases: load=167.353605ms lower=3.075516938s C=444.351526ms JavaScript=24.452174ms
+    nonprogressing_fix_test.go:93: checker native build: 48.53217754s
+=== RUN   TestNonprogressingFixPanicMutant/Node
+    nonprogressing_fix_test.go:116: restored panic caught at runtime on Node: case 0
+        /tmp/adamic-gate/TestNonprogressingFixPanicMutant2707018671/002/Shape.ts:1:6
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        fix-edit	10 13	 
+        fix-edit	30 30	
+        adamic: panic: nonprogressing fix
+=== RUN   TestNonprogressingFixPanicMutant/emitted_JavaScript
+    nonprogressing_fix_test.go:116: restored panic caught at runtime on emitted JavaScript: case 0
+        /tmp/adamic-gate/TestNonprogressingFixPanicMutant2707018671/002/Shape.ts:1:6
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        fix-edit	10 13	 
+        fix-edit	30 30	
+        adamic: panic: nonprogressing fix
+=== RUN   TestNonprogressingFixPanicMutant/sanitized_native
+    nonprogressing_fix_test.go:116: restored panic caught at runtime on sanitized native: case 0
+        /tmp/adamic-gate/TestNonprogressingFixPanicMutant2707018671/002/Shape.ts:1:6
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        fix-edit	10 13	 
+        fix-edit	30 30	
+        adamic: panic: nonprogressing fix
+--- PASS: TestNonprogressingFixPanicMutant (52.68s)
+    --- PASS: TestNonprogressingFixPanicMutant/Node (0.23s)
+    --- PASS: TestNonprogressingFixPanicMutant/emitted_JavaScript (0.06s)
+    --- PASS: TestNonprogressingFixPanicMutant/sanitized_native (0.01s)
+=== RUN   TestNonprogressingFixPlanOrder
+    nonprogressing_fix_test.go:141: checker compilation phases: load=149.724347ms lower=2.602305542s C=421.201001ms JavaScript=27.532063ms
+    nonprogressing_fix_test.go:141: checker native build: 3.175613674s
+    nonprogressing_fix_test.go:141: Go, Node, emitted JavaScript, native identical: 730 bytes
+    nonprogressing_fix_test.go:149: overlap refusals precede no-progress refusals; rejected survivor reserves its span; independent edit applies
+--- PASS: TestNonprogressingFixPlanOrder (9.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	120.587s

@@ -1,0 +1,14 @@
+{
+  "name": "no-dupe-else-if",
+  "kinds": [
+    "IfStatement"
+  ],
+  "node": true,
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDupeElseIf",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoDupeElseIf"
+}

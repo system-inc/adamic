@@ -1,0 +1,5 @@
+{
+  "name": "require-optimization-accept-class-field",
+  "from": "this.context.kind(member) === 'MethodDeclaration'",
+  "to": "(this.context.kind(member) === 'MethodDeclaration' || this.context.kind(member) === 'PropertyDeclaration')"
+}

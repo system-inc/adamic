@@ -1,0 +1,15 @@
+import type {RuleContext} from '../../context.ts';
+import {isTopLevelCompilationCandidate} from './is_top_level_compilation_candidate.a';
+import {reactFunctionNameOf} from './react_function_name_of.a';
+import {isHookIdentifierName} from './is_hook_identifier_name.a';
+import {isComponentIdentifierName} from './is_component_identifier_name.a';
+import {hasValidComponentParameters} from './has_valid_component_parameters.a';
+import {returnsNonNode} from './returns_non_node.a';
+export function isReactCompiledFunction(context:RuleContext,index:number):boolean {
+    if(!isTopLevelCompilationCandidate(context,index)){return false;}
+    const name=reactFunctionNameOf(context,index);
+    if(!name.found){return false;}
+    if(isHookIdentifierName(name.name)){return true;}
+    if(!isComponentIdentifierName(name.name)){return false;}
+    return hasValidComponentParameters(context,index) && !returnsNonNode(context,index);
+}

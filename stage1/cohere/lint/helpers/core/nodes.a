@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+// Identity-preserving projection of Go AST facts. All links are arena indexes.
+export class CoreNode {
+    kind = ''; kindNumber = 0; start = 0; end = 0; text = ''; parent = -1;
+    children: number[] = []; expression = -1; left = -1; right = -1; operator = '';
+    name = -1; initializer = -1; thenNode = -1; elseNode = -1; body = -1;
+    tryBlock = -1; catchBlock = -1; finallyBlock = -1; statement = -1;
+    clauses: number[] = []; statements: number[] = []; elements: number[] = []; args: number[] = [];
+    generator = false;
+}
+export class CoreArena {
+    readonly source: string; readonly nodes: CoreNode[];
+    constructor(source: string, nodes: CoreNode[]) { this.source = source; this.nodes = nodes; }
+    node(index: number): CoreNode { return this.nodes[index] ?? panic('missing core node'); }
+    unwrap(index: number): number {
+        let current = index;
+        while(current >= 0 && this.node(current).kind === 'ParenthesizedExpression') { current = this.node(current).expression; }
+        return current;
+    }
+}

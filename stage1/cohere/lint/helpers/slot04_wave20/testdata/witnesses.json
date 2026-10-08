@@ -1,0 +1,1954 @@
+[
+  {
+    "Name": "source-0",
+    "Source": ""
+  },
+  {
+    "Name": "source-1",
+    "Source": "const value=1"
+  },
+  {
+    "Name": "source-2",
+    "Source": "<div/>"
+  },
+  {
+    "Name": "source-3",
+    "Source": "<div><span/></div>"
+  },
+  {
+    "Name": "source-4",
+    "Source": "<><span/></>"
+  },
+  {
+    "Name": "source-5",
+    "Source": "useState(0)"
+  },
+  {
+    "Name": "source-6",
+    "Source": "usea()"
+  },
+  {
+    "Name": "source-7",
+    "Source": "use1()"
+  },
+  {
+    "Name": "source-8",
+    "Source": "React.useState(0)"
+  },
+  {
+    "Name": "source-9",
+    "Source": "react.useState(0)"
+  },
+  {
+    "Name": "source-10",
+    "Source": "obj.useState()"
+  },
+  {
+    "Name": "source-11",
+    "Source": "use_state()"
+  },
+  {
+    "Name": "source-12",
+    "Source": "function A(){if(flag){return <a/>;}else{return <b/>;}}"
+  },
+  {
+    "Name": "source-13",
+    "Source": "function A(){switch(x){case 1:return <a/>;default:return 1;}}"
+  },
+  {
+    "Name": "source-14",
+    "Source": "function A(){for(const x of xs){return <a/>;}}"
+  },
+  {
+    "Name": "source-15",
+    "Source": "function A(){try{return <a/>;}catch(e){return 1;}}"
+  },
+  {
+    "Name": "source-16",
+    "Source": "function A(){return <a/>; function B(){useState(0)}}"
+  },
+  {
+    "Name": "source-17",
+    "Source": "foo(1,2,<a/>)"
+  },
+  {
+    "Name": "source-18",
+    "Source": "const x=<><A/>{useState(0)}</>"
+  },
+  {
+    "Name": "source-19",
+    "Source": "const x=()=>()=> <a/>"
+  },
+  {
+    "Name": "source-20",
+    "Source": "class A {method(){return <a/>}}"
+  },
+  {
+    "Name": "source-21",
+    "Source": "const x=useSomething?.()"
+  },
+  {
+    "Name": "source-22",
+    "Source": "(useState)(0)"
+  },
+  {
+    "Name": "source-23",
+    "Source": "obj[\"useState\"](0)"
+  },
+  {
+    "Name": "source-24",
+    "Source": "use\ud83d\udca1()"
+  },
+  {
+    "Name": "boundary-0-<div/>",
+    "Source": "const x=<div/>;",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-0-<><div/></>",
+    "Source": "const x=<><div/></>;",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-0-useState(0)",
+    "Source": "const x=useState(0);",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-0-foo()",
+    "Source": "const x=foo();",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-1-<div/>",
+    "Source": "const x=(<div/>);",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-1-<><div/></>",
+    "Source": "const x=(<><div/></>);",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-1-useState(0)",
+    "Source": "const x=(useState(0));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-1-foo()",
+    "Source": "const x=(foo());",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-2-<div/>",
+    "Source": "const x=((<div/>));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-2-<><div/></>",
+    "Source": "const x=((<><div/></>));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-2-useState(0)",
+    "Source": "const x=((useState(0)));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-2-foo()",
+    "Source": "const x=((foo()));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-3-<div/>",
+    "Source": "const x=(((<div/>)));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-3-<><div/></>",
+    "Source": "const x=(((<><div/></>)));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-3-useState(0)",
+    "Source": "const x=(((useState(0))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-3-foo()",
+    "Source": "const x=(((foo())));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-4-<div/>",
+    "Source": "const x=((((<div/>))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-4-<><div/></>",
+    "Source": "const x=((((<><div/></>))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-4-useState(0)",
+    "Source": "const x=((((useState(0)))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-4-foo()",
+    "Source": "const x=((((foo()))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-5-<div/>",
+    "Source": "const x=(((((<div/>)))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-5-<><div/></>",
+    "Source": "const x=(((((<><div/></>)))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-5-useState(0)",
+    "Source": "const x=(((((useState(0))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-5-foo()",
+    "Source": "const x=(((((foo())))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-6-<div/>",
+    "Source": "const x=((((((<div/>))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-6-<><div/></>",
+    "Source": "const x=((((((<><div/></>))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-6-useState(0)",
+    "Source": "const x=((((((useState(0)))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-6-foo()",
+    "Source": "const x=((((((foo()))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-7-<div/>",
+    "Source": "const x=(((((((<div/>)))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-7-<><div/></>",
+    "Source": "const x=(((((((<><div/></>)))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-7-useState(0)",
+    "Source": "const x=(((((((useState(0))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-7-foo()",
+    "Source": "const x=(((((((foo())))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-8-<div/>",
+    "Source": "const x=((((((((<div/>))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-8-<><div/></>",
+    "Source": "const x=((((((((<><div/></>))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-8-useState(0)",
+    "Source": "const x=((((((((useState(0)))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-8-foo()",
+    "Source": "const x=((((((((foo()))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-9-<div/>",
+    "Source": "const x=(((((((((<div/>)))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-9-<><div/></>",
+    "Source": "const x=(((((((((<><div/></>)))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-9-useState(0)",
+    "Source": "const x=(((((((((useState(0))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-9-foo()",
+    "Source": "const x=(((((((((foo())))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-10-<div/>",
+    "Source": "const x=((((((((((<div/>))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-10-<><div/></>",
+    "Source": "const x=((((((((((<><div/></>))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-10-useState(0)",
+    "Source": "const x=((((((((((useState(0)))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-10-foo()",
+    "Source": "const x=((((((((((foo()))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-11-<div/>",
+    "Source": "const x=(((((((((((<div/>)))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-11-<><div/></>",
+    "Source": "const x=(((((((((((<><div/></>)))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-11-useState(0)",
+    "Source": "const x=(((((((((((useState(0))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-11-foo()",
+    "Source": "const x=(((((((((((foo())))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-12-<div/>",
+    "Source": "const x=((((((((((((<div/>))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-12-<><div/></>",
+    "Source": "const x=((((((((((((<><div/></>))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-12-useState(0)",
+    "Source": "const x=((((((((((((useState(0)))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-12-foo()",
+    "Source": "const x=((((((((((((foo()))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-13-<div/>",
+    "Source": "const x=(((((((((((((<div/>)))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-13-<><div/></>",
+    "Source": "const x=(((((((((((((<><div/></>)))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-13-useState(0)",
+    "Source": "const x=(((((((((((((useState(0))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-13-foo()",
+    "Source": "const x=(((((((((((((foo())))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-14-<div/>",
+    "Source": "const x=((((((((((((((<div/>))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-14-<><div/></>",
+    "Source": "const x=((((((((((((((<><div/></>))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-14-useState(0)",
+    "Source": "const x=((((((((((((((useState(0)))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-14-foo()",
+    "Source": "const x=((((((((((((((foo()))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-15-<div/>",
+    "Source": "const x=(((((((((((((((<div/>)))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-15-<><div/></>",
+    "Source": "const x=(((((((((((((((<><div/></>)))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-15-useState(0)",
+    "Source": "const x=(((((((((((((((useState(0))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-15-foo()",
+    "Source": "const x=(((((((((((((((foo())))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-16-<div/>",
+    "Source": "const x=((((((((((((((((<div/>))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-16-<><div/></>",
+    "Source": "const x=((((((((((((((((<><div/></>))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-16-useState(0)",
+    "Source": "const x=((((((((((((((((useState(0)))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-16-foo()",
+    "Source": "const x=((((((((((((((((foo()))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-17-<div/>",
+    "Source": "const x=(((((((((((((((((<div/>)))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-17-<><div/></>",
+    "Source": "const x=(((((((((((((((((<><div/></>)))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-17-useState(0)",
+    "Source": "const x=(((((((((((((((((useState(0))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-17-foo()",
+    "Source": "const x=(((((((((((((((((foo())))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-18-<div/>",
+    "Source": "const x=((((((((((((((((((<div/>))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-18-<><div/></>",
+    "Source": "const x=((((((((((((((((((<><div/></>))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-18-useState(0)",
+    "Source": "const x=((((((((((((((((((useState(0)))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-18-foo()",
+    "Source": "const x=((((((((((((((((((foo()))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-19-<div/>",
+    "Source": "const x=(((((((((((((((((((<div/>)))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-19-<><div/></>",
+    "Source": "const x=(((((((((((((((((((<><div/></>)))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-19-useState(0)",
+    "Source": "const x=(((((((((((((((((((useState(0))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-19-foo()",
+    "Source": "const x=(((((((((((((((((((foo())))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-20-<div/>",
+    "Source": "const x=((((((((((((((((((((<div/>))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-20-<><div/></>",
+    "Source": "const x=((((((((((((((((((((<><div/></>))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-20-useState(0)",
+    "Source": "const x=((((((((((((((((((((useState(0)))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-20-foo()",
+    "Source": "const x=((((((((((((((((((((foo()))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-21-<div/>",
+    "Source": "const x=(((((((((((((((((((((<div/>)))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-21-<><div/></>",
+    "Source": "const x=(((((((((((((((((((((<><div/></>)))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-21-useState(0)",
+    "Source": "const x=(((((((((((((((((((((useState(0))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-21-foo()",
+    "Source": "const x=(((((((((((((((((((((foo())))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-22-<div/>",
+    "Source": "const x=((((((((((((((((((((((<div/>))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-22-<><div/></>",
+    "Source": "const x=((((((((((((((((((((((<><div/></>))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-22-useState(0)",
+    "Source": "const x=((((((((((((((((((((((useState(0)))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-22-foo()",
+    "Source": "const x=((((((((((((((((((((((foo()))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-23-<div/>",
+    "Source": "const x=(((((((((((((((((((((((<div/>)))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-23-<><div/></>",
+    "Source": "const x=(((((((((((((((((((((((<><div/></>)))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-23-useState(0)",
+    "Source": "const x=(((((((((((((((((((((((useState(0))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-23-foo()",
+    "Source": "const x=(((((((((((((((((((((((foo())))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-24-<div/>",
+    "Source": "const x=((((((((((((((((((((((((<div/>))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-24-<><div/></>",
+    "Source": "const x=((((((((((((((((((((((((<><div/></>))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-24-useState(0)",
+    "Source": "const x=((((((((((((((((((((((((useState(0)))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-24-foo()",
+    "Source": "const x=((((((((((((((((((((((((foo()))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-25-<div/>",
+    "Source": "const x=(((((((((((((((((((((((((<div/>)))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-25-<><div/></>",
+    "Source": "const x=(((((((((((((((((((((((((<><div/></>)))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-25-useState(0)",
+    "Source": "const x=(((((((((((((((((((((((((useState(0))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-25-foo()",
+    "Source": "const x=(((((((((((((((((((((((((foo())))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-26-<div/>",
+    "Source": "const x=((((((((((((((((((((((((((<div/>))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-26-<><div/></>",
+    "Source": "const x=((((((((((((((((((((((((((<><div/></>))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-26-useState(0)",
+    "Source": "const x=((((((((((((((((((((((((((useState(0)))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-26-foo()",
+    "Source": "const x=((((((((((((((((((((((((((foo()))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-27-<div/>",
+    "Source": "const x=(((((((((((((((((((((((((((<div/>)))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-27-<><div/></>",
+    "Source": "const x=(((((((((((((((((((((((((((<><div/></>)))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-27-useState(0)",
+    "Source": "const x=(((((((((((((((((((((((((((useState(0))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-27-foo()",
+    "Source": "const x=(((((((((((((((((((((((((((foo())))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-28-<div/>",
+    "Source": "const x=((((((((((((((((((((((((((((<div/>))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-28-<><div/></>",
+    "Source": "const x=((((((((((((((((((((((((((((<><div/></>))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-28-useState(0)",
+    "Source": "const x=((((((((((((((((((((((((((((useState(0)))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-28-foo()",
+    "Source": "const x=((((((((((((((((((((((((((((foo()))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-29-<div/>",
+    "Source": "const x=(((((((((((((((((((((((((((((<div/>)))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-29-<><div/></>",
+    "Source": "const x=(((((((((((((((((((((((((((((<><div/></>)))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-29-useState(0)",
+    "Source": "const x=(((((((((((((((((((((((((((((useState(0))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-29-foo()",
+    "Source": "const x=(((((((((((((((((((((((((((((foo())))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-30-<div/>",
+    "Source": "const x=((((((((((((((((((((((((((((((<div/>))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-30-<><div/></>",
+    "Source": "const x=((((((((((((((((((((((((((((((<><div/></>))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-30-useState(0)",
+    "Source": "const x=((((((((((((((((((((((((((((((useState(0)))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-30-foo()",
+    "Source": "const x=((((((((((((((((((((((((((((((foo()))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-31-<div/>",
+    "Source": "const x=(((((((((((((((((((((((((((((((<div/>)))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-31-<><div/></>",
+    "Source": "const x=(((((((((((((((((((((((((((((((<><div/></>)))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-31-useState(0)",
+    "Source": "const x=(((((((((((((((((((((((((((((((useState(0))))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-31-foo()",
+    "Source": "const x=(((((((((((((((((((((((((((((((foo())))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-32-<div/>",
+    "Source": "const x=((((((((((((((((((((((((((((((((<div/>))))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-32-<><div/></>",
+    "Source": "const x=((((((((((((((((((((((((((((((((<><div/></>))))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-32-useState(0)",
+    "Source": "const x=((((((((((((((((((((((((((((((((useState(0)))))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "boundary-32-foo()",
+    "Source": "const x=((((((((((((((((((((((((((((((((foo()))))))))))))))))))))))))))))))));",
+    "RootOnly": true,
+    "Depths": [
+      -1,
+      0,
+      1,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "Name": "nil",
+    "Nil": true
+  }
+]

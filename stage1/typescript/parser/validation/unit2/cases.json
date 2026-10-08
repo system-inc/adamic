@@ -1,0 +1,117 @@
+{
+  "branch": "codex/parser-recovery-land",
+  "starting_sha": "bd05b959",
+  "merge_sha": "609661e23935b5b707b6f6b2a3957fb4a2669c79",
+  "merged_area_sha": "79f3e286",
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status_porcelain_ignored": "",
+  "oracle_commit": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "oracle_status_porcelain_ignored": "",
+  "setup_seconds": 684.275,
+  "keywords": {
+    "files": 19,
+    "test": "TestContextualNamesAgree",
+    "directory": "stage1/typescript/parser/testdata/contextual",
+    "mutant": "TestRecoveryMutants/unconditional-declare",
+    "caught_by": [
+      "Node",
+      "sanitized native"
+    ],
+    "fixes": [
+      "statement declaration and contextual modifier lookahead",
+      "async function-expression same-line lookahead",
+      "same-line declaration lookahead for module and namespace string names"
+    ],
+    "final_comparison_log": "parser-final.log"
+  },
+  "cut_1": {
+    "repository_input": "stage1/typescript/parser/testdata/recovery/ts.moduleSpecifiers.ts-cut-1.ts.txt",
+    "upstream_input": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "token": 1,
+    "area_result": "exit 70, missing expression at EOF",
+    "merged_result": "matches typescript-go, diagnostic 1128 and EOF",
+    "fix": "existing merged source-list recovery; named fixture added"
+  },
+  "checker_cut": {
+    "upstream_input": "src/compiler/checker.ts",
+    "token": 189457,
+    "line": 28075,
+    "input_bytes": 1672865,
+    "output_bytes": 8519744,
+    "output_sha256": "5bf4575f73b74e8d32838d032777215b6ef9cf0aa80ddb52bc36166dff0269b2",
+    "isolated_native_seconds": 1.555430199,
+    "normal_four_native_max_seconds": 2.015778174,
+    "controlled_contention_file": "contention.json",
+    "deadline_seconds": 30,
+    "fix": "size-scaled parse-and-print deadline; no parser slow path found",
+    "final_native_seconds": 1.898617984,
+    "final_four_native_max_seconds": 3.664824584
+  },
+  "checker_duplicate": {
+    "upstream_input": "src/compiler/checker.ts",
+    "token": 196255,
+    "line": 29033,
+    "input_bytes": 3151776,
+    "output_bytes": 15681672,
+    "output_sha256": "2b842e20fb35c80e907f3b1f584b779b5027eeea1663d39e07610a7fcb0d4729",
+    "area_result": "exit 70, unsupported primary CommaToken",
+    "merged_result": "matches typescript-go, including diagnostic 1135",
+    "isolated_native_seconds": 3.158239638,
+    "deadline_seconds": 50,
+    "fix": "existing merged argument-list recovery; named full-input regression added",
+    "final_native_seconds": 3.980527731
+  },
+  "deadline": "10 seconds + 10 seconds per started MiB, applied independently to each Go/Node/native subprocess",
+  "instruction_measurement": "instructions.json",
+  "lint": {
+    "test": "TestRulesAgree",
+    "cases": 3777,
+    "identical_bytes": 13741217,
+    "seconds": 147.142,
+    "log": "lint-final.log",
+    "result": "PASS"
+  },
+  "commands": {
+    "parser": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_PARSER_BENCH=1 ADAMIC_PARSER_ARTIFACTS=/workspace/scratch/parser-unit2/release-final ADAMIC_RECOVERY_ARTIFACTS=/workspace/scratch/parser-unit2/final go test ./stage1/typescript/parser -skip ^TestIncompleteCompilerAgrees$ -count=1 -v -timeout=90m",
+    "lint": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/cohere/lint -run ^TestRulesAgree$ -count=1 -v -parallel=1 -timeout=60m",
+    "incomplete": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_RECOVERY_ARTIFACTS=/workspace/scratch/parser-unit2/incomplete-final go test ./stage1/typescript/parser -run ^TestIncompleteCompilerAgrees$ -count=1 -v -timeout=6h"
+  },
+  "incomplete": {
+    "test": "TestIncompleteCompilerAgrees",
+    "result": "FAIL",
+    "seconds": 730.96,
+    "planned": 22497,
+    "checked": 2638,
+    "log": "incomplete-final.log",
+    "requested_cases_pass": true,
+    "remaining_failure": {
+      "upstream_input": "src/compiler/corePublic.ts",
+      "line": 18,
+      "token": 37,
+      "repository_input": "stage1/typescript/parser/validation/unit2/corePublic.ts-cut-37.ts.txt",
+      "input_sha256": "82a1a9c9642b20ad43e7d038918e061542d89fe1076f3aa72c7368a7052d17b3",
+      "preexisting_on_merge_sha": "609661e23935b5b707b6f6b2a3957fb4a2669c79",
+      "preexisting_output_equal_to_current": true,
+      "cause": "At EOF after interface extends, the port inserts an empty TypeReference and reports identifier expected (1003). Go keeps an empty HeritageClause and reports brace expected (1005).",
+      "slowest_native_seconds": 6.890008211
+    }
+  },
+  "parser": {
+    "result": "PASS",
+    "seconds": 936.03,
+    "log": "parser-final.log",
+    "skipped_tests": 0,
+    "benchmark_tests_enabled": true,
+    "whole_files": 77,
+    "whole_tree_bytes": 44766682,
+    "keyword_fixture_count": 19,
+    "unconditional_declare_mutant_caught_by": [
+      "Node",
+      "native"
+    ]
+  },
+  "vet": {
+    "result": "PASS",
+    "log": "vet-final.log"
+  }
+}

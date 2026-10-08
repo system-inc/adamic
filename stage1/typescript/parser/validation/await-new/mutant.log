@@ -1,0 +1,17 @@
+=== RUN   TestAwaitNewRegressionMutantProbe
+=== RUN   TestAwaitNewRegressionMutantProbe/wave13_top_level_await_new.ts
+    await_new_mutant_probe_test.go:24: Node old await lookahead caught: unlisted mismatch wave13_top_level_await_new.ts: {Line:1 Port:diagnostic 1434 0 5 1	Unexpected keyword or identifier. TypeScriptGo:file}
+    await_new_mutant_probe_test.go:24: sanitized native old await lookahead caught: unlisted mismatch wave13_top_level_await_new.ts: {Line:1 Port:diagnostic 1434 0 5 1	Unexpected keyword or identifier. TypeScriptGo:file}
+=== RUN   TestAwaitNewRegressionMutantProbe/top_level_await_new_script.ts
+    await_new_mutant_probe_test.go:24: Node old await lookahead caught: unlisted mismatch top_level_await_new_script.ts: {Line:1 Port:diagnostic 1434 0 5 1	Unexpected keyword or identifier. TypeScriptGo:file}
+    await_new_mutant_probe_test.go:24: sanitized native old await lookahead caught: unlisted mismatch top_level_await_new_script.ts: {Line:1 Port:diagnostic 1434 0 5 1	Unexpected keyword or identifier. TypeScriptGo:file}
+=== RUN   TestAwaitNewRegressionMutantProbe/top_level_await_new_module.ts
+    await_new_mutant_probe_test.go:24: Node old await lookahead caught: unlisted mismatch top_level_await_new_module.ts: {Line:1 Port:diagnostic 1434 0 5 1	Unexpected keyword or identifier. TypeScriptGo:file}
+    await_new_mutant_probe_test.go:24: sanitized native old await lookahead caught: unlisted mismatch top_level_await_new_module.ts: {Line:1 Port:diagnostic 1434 0 5 1	Unexpected keyword or identifier. TypeScriptGo:file}
+--- PASS: TestAwaitNewRegressionMutantProbe (12.43s)
+    --- PASS: TestAwaitNewRegressionMutantProbe/wave13_top_level_await_new.ts (0.17s)
+    --- PASS: TestAwaitNewRegressionMutantProbe/top_level_await_new_script.ts (0.19s)
+    --- PASS: TestAwaitNewRegressionMutantProbe/top_level_await_new_module.ts (0.17s)
+PASS
+parser longest native build child: 10.376175627s; build CPU budget: 10m0s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	12.440s

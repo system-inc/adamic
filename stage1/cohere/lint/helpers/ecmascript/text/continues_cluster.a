@@ -1,0 +1,16 @@
+import { category } from './unicode_tables.a';
+import { isGraphemeControl } from './is_grapheme_control.a';
+import { isGraphemeExtend } from './is_grapheme_extend.a';
+import { isPictograph } from './is_pictograph.a';
+import { isRegionalIndicator } from './is_regional_indicator.a';
+import { isIndicLinker } from './is_indic_linker.a';
+import { hangulJoins } from './hangul_joins.a';
+export function continuesCluster(previous: number, c: number, pictograph: boolean, regional: number): boolean {
+ if(previous === 13 && c === 10) { return true; }
+ if(isGraphemeControl(previous)) { return false; }
+ if(isGraphemeExtend(c)) { return true; }
+ if(previous === 0x200d && pictograph && isPictograph(c)) { return true; }
+ if(isRegionalIndicator(previous) && isRegionalIndicator(c)) { return regional % 2 === 1; }
+ if(isIndicLinker(previous) && category(c, 'Lo') && (previous >> 7) === (c >> 7)) { return true; }
+ return hangulJoins(previous, c);
+}

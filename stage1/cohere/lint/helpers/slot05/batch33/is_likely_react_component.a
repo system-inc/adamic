@@ -1,0 +1,25 @@
+import { panic } from 'adamic';
+import type { AnalysisNode, JsxReturnPredicate } from './model.a';
+export function isLikelyReactComponent(nodes: readonly AnalysisNode[], index: number, looksLikeJsx: JsxReturnPredicate): boolean {
+    if (index < 0) { return false; }
+    const node = nodes[index] ?? panic('missing AST node');
+    if (!node.functionLike) { return false; }
+    const first = node.parameters[0] ?? -1;
+    if (first >= 0) {
+        const parameter = nodes[first] ?? panic('missing parameter');
+        if (parameter.name >= 0) {
+            const name = nodes[parameter.name] ?? panic('missing parameter name');
+            if (name.identifier && (name.text === 'properties' || name.text === 'props')) { return true; }
+        }
+    }
+    if (node.body < 0) { return false; }
+    const body = nodes[node.body] ?? panic('missing function body');
+    if (body.block) {
+        for (const statementIndex of body.statements) {
+            const statement = nodes[statementIndex] ?? panic('missing statement');
+            if (statement.returnStatement && looksLikeJsx(statement.expression)) { return true; }
+        }
+        return false;
+    }
+    return looksLikeJsx(node.body);
+}

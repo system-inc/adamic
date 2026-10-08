@@ -1,0 +1,12 @@
+import type {RuleContext} from '../../context.ts';
+export interface FunctionName {readonly name:string;readonly found:boolean;}
+export function reactFunctionNameOf(context:RuleContext,index:number):FunctionName {
+    const name=context.kind(index)==='ArrowFunction' ? -1 : context.name(index);
+    if(name>=0 && context.kind(name)==='Identifier'){return {name:context.node(name).text,found:true};}
+    if(context.kind(index)==='FunctionDeclaration'){return {name:'',found:false};}
+    const parent=context.parent(index);
+    if(parent<0 || context.kind(parent)!=='VariableDeclaration'){return {name:'',found:false};}
+    const target=context.name(parent);
+    if(target<0 || context.kind(target)!=='Identifier'){return {name:'',found:false};}
+    return {name:context.node(target).text,found:true};
+}

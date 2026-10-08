@@ -1,0 +1,8 @@
+import type { CoreArena } from './nodes.a';
+export function isNullOrUndefined(arena: CoreArena, index: number): boolean {
+    const current = arena.unwrap(index); if(current < 0) { return false; } const node = arena.node(current);
+    if(node.kind === 'NullKeyword') { return true; }
+    if(node.kind === 'Identifier') { return node.text === 'undefined'; }
+    if(node.kind === 'VoidExpression' && node.expression >= 0) { return arena.node(arena.unwrap(node.expression)).kind === 'NumericLiteral'; }
+    return false;
+}

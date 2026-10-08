@@ -1,0 +1,99 @@
+{
+  "pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "helpers": [
+    {
+      "symbol": "rules/core.appendNodeSignature",
+      "file": "stage1/cohere/lint/helpers/core/append_node_signature.a",
+      "go_calls": 522
+    },
+    {
+      "symbol": "rules/core.appendTokensBetween",
+      "file": "stage1/cohere/lint/helpers/core/append_tokens_between.a",
+      "go_calls": 368
+    },
+    {
+      "symbol": "rules/core.bodyDefinitelyExits",
+      "file": "stage1/cohere/lint/helpers/core/body_definitely_exits.a",
+      "go_calls": 435
+    },
+    {
+      "symbol": "rules/core.consistentReturnIsGenerator",
+      "file": "stage1/cohere/lint/helpers/core/consistent_return_is_generator.a",
+      "go_calls": 2657
+    },
+    {
+      "symbol": "rules/core.hasSameTokens",
+      "file": "stage1/cohere/lint/helpers/core/has_same_tokens.a",
+      "go_calls": 139
+    },
+    {
+      "symbol": "rules/core.idDenylistIsDestructuringTarget",
+      "file": "stage1/cohere/lint/helpers/core/id_denylist_is_destructuring_target.a",
+      "go_calls": 40
+    },
+    {
+      "symbol": "rules/core.idDenylistIsImportAttributeKey",
+      "file": "stage1/cohere/lint/helpers/core/id_denylist_is_import_attribute_key.a",
+      "go_calls": 223
+    },
+    {
+      "symbol": "rules/core.idDenylistIsImportOptionsObject",
+      "file": "stage1/cohere/lint/helpers/core/id_denylist_is_import_options_object.a",
+      "go_calls": 40
+    },
+    {
+      "symbol": "rules/core.isEmptyBracketLiteral",
+      "file": "stage1/cohere/lint/helpers/core/is_empty_bracket_literal.a",
+      "go_calls": 143
+    },
+    {
+      "symbol": "rules/core.isNullOrUndefined",
+      "file": "stage1/cohere/lint/helpers/core/is_null_or_undefined.a",
+      "go_calls": 29
+    },
+    {
+      "symbol": "rules/core.isSeparateEvaluationContext",
+      "file": "stage1/cohere/lint/helpers/core/is_separate_evaluation_context.a",
+      "go_calls": 2743
+    },
+    {
+      "symbol": "rules/core.memberAccessObject",
+      "file": "stage1/cohere/lint/helpers/core/member_access_object.a",
+      "go_calls": 168
+    },
+    {
+      "symbol": "rules/core.noRestrictedExportsNameText",
+      "file": "stage1/cohere/lint/helpers/core/no_restricted_exports_name_text.a",
+      "go_calls": 422
+    },
+    {
+      "symbol": "rules/core.numericLiteralSign",
+      "file": "stage1/cohere/lint/helpers/core/numeric_literal_sign.a",
+      "go_calls": 11
+    },
+    {
+      "symbol": "rules/core.switchStatementExits",
+      "file": "stage1/cohere/lint/helpers/core/switch_statement_exits.a",
+      "go_calls": 11
+    },
+    {
+      "symbol": "rules/core.tokenSignature",
+      "file": "stage1/cohere/lint/helpers/core/token_signature.a",
+      "go_calls": 270
+    },
+    {
+      "symbol": "rules/core.tryStatementExits",
+      "file": "stage1/cohere/lint/helpers/core/try_statement_exits.a",
+      "go_calls": 9
+    }
+  ],
+  "stopped": [
+    {
+      "symbol": "rules/core.codePathRoots",
+      "go_file": "cohere/internal/lint/rules/core/code_path_roots.go",
+      "go_line": 17,
+      "dependency": "ecmascript/control_flow_graph.IndexRoots",
+      "reason": "No complete port exists; CFG package is larger than this package. Stop on this helper rather than supply Go answers or a substitute graph."
+    }
+  ]
+}
