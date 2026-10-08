@@ -1,0 +1,43 @@
+node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module '/home/cloud/fast-gate/tree-2-stage3-cache/stage3-lane-tests/api/node_modules/typescript'
+Require stack:
+- /home/cloud/fast-gate/tree-2/stage3/lane/normalize-api.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at Object.<anonymous> (/home/cloud/fast-gate/tree-2/stage3/lane/normalize-api.cjs:8:12)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/home/cloud/fast-gate/tree-2/stage3/lane/normalize-api.cjs' ]
+}
+
+Node.js v24.19.0
+E../tmp/adamic-gate/lane-table-pgmftc6m/results
+PASS stage3 landing lane
+.
+======================================================================
+ERROR: setUpClass (test_check.LandingLaneTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cloud/fast-gate/tree-2/stage3/lane/test_check.py", line 52, in setUpClass
+    changes = json.loads(subprocess.check_output(['node', str(LANE / 'normalize-api.cjs'),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['node', '/home/cloud/fast-gate/tree-2/stage3/lane/normalize-api.cjs', '/tmp/adamic-gate/stage3-lane-api-fixture-jbl7uv6p/original.d.ts', '/tmp/adamic-gate/stage3-lane-api-fixture-jbl7uv6p/adapted.d.ts']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.331s
+
+FAILED (errors=1)
