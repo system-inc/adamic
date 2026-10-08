@@ -1,0 +1,1 @@
+<B onClick={() => void f()} />;

@@ -1,0 +1,35 @@
+diagnostic 1005 696 0 1	'{' expected.
+file
+0 SourceFile 0 696 0 0 -1 0 0				
+1 VariableStatement 0 214 0 0 -1 0 0				
+2 ExportKeyword 0 181 0 0 -1 0 0				
+2 VariableDeclarationList 181 213 0 0 -1 0 0				2
+3 VariableDeclaration 187 213 0 0 -1 0 0				
+4 Identifier 187 205 0 0 -1 0 0		versionMajorMinor		
+4 StringLiteral 207 213 0 0 -1 0 0		6.0		
+1 VariableStatement 214 391 0 0 -1 0 0				
+2 ExportKeyword 214 356 0 0 -1 0 0				
+2 VariableDeclarationList 356 390 0 0 -1 0 0				2
+3 VariableDeclaration 362 390 0 0 -1 0 0				
+4 Identifier 362 370 0 0 -1 0 0		version		
+4 AsExpression 372 390 0 0 -1 0 0				
+5 StringLiteral 372 380 0 0 -1 0 0		6.0.3		
+5 StringKeyword 383 390 0 0 -1 0 0				
+1 InterfaceDeclaration 391 645 0 0 -1 0 0				
+2 ExportKeyword 391 594 0 0 -1 0 0				
+2 Identifier 604 612 0 0 -1 0 0		MapLike		
+2 TypeParameter 613 614 0 0 -1 0 0				
+3 Identifier 613 614 0 0 -1 0 0		T		
+2 IndexSignature 617 642 0 0 -1 0 0				
+3 Parameter 624 637 0 0 -1 0 0				
+4 Identifier 624 629 0 0 -1 0 0		index		
+4 StringKeyword 630 637 0 0 -1 0 0				
+3 TypeReference 639 641 0 0 -1 0 0				
+4 Identifier 639 641 0 0 -1 0 0		T		
+1 InterfaceDeclaration 645 696 0 0 -1 0 0				
+2 ExportKeyword 645 655 0 0 -1 0 0				
+2 Identifier 665 685 0 0 -1 0 0		SortedReadonlyArray		
+2 TypeParameter 686 687 0 0 -1 0 0				
+3 Identifier 686 687 0 0 -1 0 0		T		
+2 HeritageClause 688 696 0 0 -1 0 0	ExtendsKeyword			
+1 EndOfFile 696 696 0 0 -1 0 0				

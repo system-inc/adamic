@@ -1,0 +1,54 @@
+{
+  "added_before": [
+    {
+      "function": "adamic_array_index_of",
+      "base": 60858,
+      "before": 259899741,
+      "after": 11888472,
+      "before_minus_base": 259838883,
+      "after_minus_base": 11827614
+    },
+    {
+      "function": "release_last",
+      "base": 182772684,
+      "before": 348520310,
+      "after": 220208271,
+      "before_minus_base": 165747626,
+      "after_minus_base": 37435587
+    },
+    {
+      "function": "adamic_string_equal",
+      "base": 345204698,
+      "before": 494725132,
+      "after": 453688116,
+      "before_minus_base": 149520434,
+      "after_minus_base": 108483418
+    }
+  ],
+  "total_after": [
+    {
+      "function": "Scanner_code",
+      "base": 710089228,
+      "before": 717994114,
+      "after": 717994114,
+      "before_minus_base": 7904886,
+      "after_minus_base": 7904886
+    },
+    {
+      "function": "Scanner_scan",
+      "base": 502679473,
+      "before": 501989837,
+      "after": 501989837,
+      "before_minus_base": -689636,
+      "after_minus_base": -689636
+    },
+    {
+      "function": "adamic_string_equal",
+      "base": 345204698,
+      "before": 494725132,
+      "after": 453688116,
+      "before_minus_base": 149520434,
+      "after_minus_base": 108483418
+    }
+  ]
+}

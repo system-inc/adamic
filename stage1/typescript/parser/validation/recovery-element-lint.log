@@ -1,0 +1,2 @@
+/workspace/adamic/stage1/typescript/parser/parser.ts:2001:1 error max-lines File has too many lines (2002). Maximum allowed is 2000. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+✗ ☠️ 0.1s • 1 finding (276 rules • 14 checked) • 100% Adamic-ready (13 of 13) • ⚠ only 14 of 114 files
