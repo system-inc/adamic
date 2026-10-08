@@ -1,0 +1,54 @@
+[
+  {
+    "symbol": "ecmascript/regexsyntax.IsHexDigit",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/is_hex_digit.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.AllHexDigits",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/all_hex_digits.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.ParseHexUint",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/parse_hex_uint.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.hexValue",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/hex_value.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.ParseRegexFlags",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/parse_regex_flags.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.PatternAndFlags",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/pattern_and_flags.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.RegexFlags.UV",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/regex_flags_uv.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.ClassEnd",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/class_end.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.SkipPatternEscape",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/skip_pattern_escape.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.readRawClassChar",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/read_raw_class_char.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.readClassEscape",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/read_class_escape.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.parseRegexCharacterClass",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/parse_regex_character_class.a"
+  },
+  {
+    "symbol": "ecmascript/regexsyntax.ParseRegexCharacterClassWithEnd",
+    "file": "stage1/cohere/lint/helpers/regexsyntax/parse_regex_character_class_with_end.a"
+  }
+]

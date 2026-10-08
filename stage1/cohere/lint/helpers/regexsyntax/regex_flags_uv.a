@@ -1,0 +1,4 @@
+import type { RegexFlags } from './flags.a';
+export function regexFlagsUV(flags: RegexFlags): boolean {
+    return flags.unicode || flags.unicodeSets;
+}

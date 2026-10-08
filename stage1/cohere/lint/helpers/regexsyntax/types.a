@@ -1,0 +1,3 @@
+export interface Element { Kind: number; Value: number; IsUBrace: boolean; IsLoneSurrogate: boolean; Max: number; MaxIsUBrace: boolean; Start: number; End: number; }
+export interface ElementResult { element: Element; step: number; ok: boolean; }
+export interface ClassResult { elements: Element[]; nil: boolean; end: number; ok: boolean; }

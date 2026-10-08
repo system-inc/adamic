@@ -1,0 +1,6 @@
+import { hexValue } from './hex_value.a';
+export function parseHexUint(bytes: readonly number[]): number {
+ let value = 0;
+ for(const b of bytes) { value = ((value << 4) | hexValue(b)) >>> 0; }
+ return value;
+}

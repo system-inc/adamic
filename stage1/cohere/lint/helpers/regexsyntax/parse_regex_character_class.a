@@ -1,0 +1,45 @@
+import { classEnd } from './class_end.a';
+import { decode } from './utf8.a';
+import { readClassEscape } from './read_class_escape.a';
+import { readRawClassChar } from './read_raw_class_char.a';
+import type { RegexFlags } from './flags.a';
+import type { Element, ElementResult, ClassResult } from './types.a';
+export function parseRegexCharacterClass(bytes: readonly number[], start: number, flags: RegexFlags, elementCapacity: number): ClassResult {
+ const out: Element[] = [];
+ if(start >= bytes.length || bytes[start] !== 91) { return {elements:[],nil:true,end:start,ok:false}; }
+ let i = start+1; if(i < bytes.length && bytes[i] === 94) { i++; }
+ let pending = -1;
+ while(i < bytes.length) {
+  const c = bytes[i] ?? 0;
+  if(c === 93) { return {elements:out,nil:out.length === 0 && elementCapacity <= 0,end:i+1,ok:true}; }
+  if(c === 92) {
+   const r = readClassEscape(bytes,i,flags);
+   if(!r.ok) { return {elements:[],nil:true,end:start,ok:false}; }
+   out.push(r.element); pending = r.element.Kind === 2 ? -1 : out.length-1; i += r.step;
+  }
+  else if(c === 91 && flags.unicodeSets) {
+   const r = classEnd(bytes,i,flags,(at: number): number => decode(bytes,at)[1] ?? 0);
+   if(!r.ok) { return {elements:[],nil:true,end:start,ok:false}; }
+   out.push({Kind:2,Value:0,IsUBrace:false,IsLoneSurrogate:false,Max:0,MaxIsUBrace:false,Start:i,End:r.value}); i = r.value; pending = -1;
+  }
+  else if((c === 45 || c === 38) && flags.unicodeSets && i+1 < bytes.length && bytes[i+1] === c) {
+   out.push({Kind:2,Value:0,IsUBrace:false,IsLoneSurrogate:false,Max:0,MaxIsUBrace:false,Start:i,End:i+2}); i += 2; pending = -1;
+  }
+  else if(c === 45 && pending >= 0 && i+1 < bytes.length && bytes[i+1] !== 93) {
+   i++;
+   const r = bytes[i] === 92 ? readClassEscape(bytes,i,flags) : readRawClassChar(bytes,i,flags);
+   if(!r.ok || r.element.Kind !== 0) { return {elements:[],nil:true,end:start,ok:false}; }
+   const min = out[pending];
+   if(min === undefined) { return {elements:[],nil:true,end:start,ok:false}; }
+   out[pending] = {Kind:1,Value:min.Value,IsUBrace:min.IsUBrace,IsLoneSurrogate:false,Max:r.element.Value,MaxIsUBrace:r.element.IsUBrace,Start:min.Start,End:r.element.End};
+   i += r.step; pending = -1;
+  }
+  else {
+   const r = readRawClassChar(bytes,i,flags);
+   if(!r.ok) { return {elements:[],nil:true,end:start,ok:false}; }
+   if(r.element.Kind === 0) { out.push(r.element); pending = out.length-1; }
+   i += r.step;
+  }
+ }
+ return {elements:[],nil:true,end:start,ok:false};
+}
