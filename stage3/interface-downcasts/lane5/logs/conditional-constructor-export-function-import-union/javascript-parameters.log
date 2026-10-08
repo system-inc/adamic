@@ -1,0 +1,31 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.43s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/conditional-type/wrong-members (0.41s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "10\n" stderr "" want "createConditionalTypeNode" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createConditionalTypeNode expected (checkType: TypeNode, extendsType: TypeNode, trueType: TypeNode, falseType: TypeNode) => ConditionalTypeNode, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-declaration/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "6\n" stderr "" want "createConstructorDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createConstructorDeclaration expected (modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-assignment/wrong-members (0.36s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "5\n" stderr "" want "createExportAssignment" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExportAssignment expected (modifiers: readonly ModifierLike[] | undefined, isExportEquals: boolean | undefined, expression: Expression) => ExportAssignment, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-type/wrong-members (0.42s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "6\n" stderr "" want "createFunctionTypeNode" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionTypeNode expected (typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode) => FunctionTypeNode, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-specifier/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "8\n" stderr "" want "createImportSpecifier" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: nodeFactory.createImportSpecifier expected (isTypeOnly: boolean, propertyName: ModuleExportName | undefined, name: Identifier) => ImportSpecifier, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/union-type/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "3\n" stderr "" want "createUnionTypeNode" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createUnionTypeNode expected (types: readonly TypeNode[]) => UnionTypeNode, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=6 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.442s
+FAIL

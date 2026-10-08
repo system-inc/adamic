@@ -8,6 +8,13 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"conditional-type", "createConditionalTypeNode", "10\n", "", "0", "checkType.value", "1\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"constructor-declaration", "createConstructorDeclaration", "6\n", "0\n2\n6\n", "0", "parameter.value", "2\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"export-assignment", "createExportAssignment", "5\n", "3\n3\n4\n5\n", "0", "modifier.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"function-type", "createFunctionTypeNode", "6\n", "3\n5\n6\n", "0", "typeParameter.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"import-specifier", "createImportSpecifier", "8\n", "4\n7\n8\n", "0", "propertyName.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"omitted-expression", "createOmittedExpression", "3\n", "", "1", "", "", "undefined\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"union-type", "createUnionTypeNode", "3\n", "0\n3\n", "0", "type.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"canonical-file-name", "getCanonicalFileName", "abc/3\n", "", "0", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},
 		{"emit-host-options", "getCompilerOptions", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"package-cache", "getPackageJsonInfoCache", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},

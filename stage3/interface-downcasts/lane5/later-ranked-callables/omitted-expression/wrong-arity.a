@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface OmittedExpression {readonly value:number;}
+interface Base {readonly createOmittedExpression:unknown;}
+interface Target {createOmittedExpression(): OmittedExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createOmittedExpression().value}`);}
+probe({createOmittedExpression:(unused:number):OmittedExpression=>({value:9})});

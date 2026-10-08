@@ -1,0 +1,35 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.66s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/conditional-type/wrong-result (0.55s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createConditionalTypeNode({value:1},{value:2},{value:3},{value:4}).value is not initialized; expected number, found missing\n" want "createConditionalTypeNode" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createConditionalTypeNode({value:1},{value:2},{value:3},{value:4}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-declaration/wrong-result (0.54s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createConstructorDeclaration([{value:1}],[{value:2}],{value:3}).value is not initialized; expected number, found missing\n" want "createConstructorDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createConstructorDeclaration([{value:1}],[{value:2}],{value:3}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-assignment/wrong-result (0.45s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createExportAssignment([{value:1}],true,{value:3}).value is not initialized; expected number, found missing\n" want "createExportAssignment" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExportAssignment([{value:1}],true,{value:3}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-type/wrong-result (0.48s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createFunctionTypeNode([{value:1}],[{value:2}],{value:3}).value is not initialized; expected number, found missing\n" want "createFunctionTypeNode" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionTypeNode([{value:1}],[{value:2}],{value:3}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-specifier/wrong-result (0.53s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: nodeFactory.createImportSpecifier(true,{kind:11,value:3},{kind:80,value:4}).value is not initialized; expected number, found missing\n" want "createImportSpecifier" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: nodeFactory.createImportSpecifier(true,{kind:11,value:3},{kind:80,value:4}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/omitted-expression/wrong-result (0.52s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createOmittedExpression().value is not initialized; expected number, found missing\n" want "createOmittedExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createOmittedExpression().value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/union-type/wrong-result (0.54s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createUnionTypeNode([{value:3}]).value is not initialized; expected number, found missing\n" want "createUnionTypeNode" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createUnionTypeNode([{value:3}]).value is not initialized; expected number, found missing\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.672s
+FAIL

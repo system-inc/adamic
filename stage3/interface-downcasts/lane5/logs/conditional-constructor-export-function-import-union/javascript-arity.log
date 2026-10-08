@@ -1,0 +1,35 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.69s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/conditional-type/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createConditionalTypeNode" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createConditionalTypeNode expected (checkType: TypeNode, extendsType: TypeNode, trueType: TypeNode, falseType: TypeNode) => ConditionalTypeNode, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-declaration/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createConstructorDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createConstructorDeclaration expected (modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-assignment/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createExportAssignment" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createExportAssignment expected (modifiers: readonly ModifierLike[] | undefined, isExportEquals: boolean | undefined, expression: Expression) => ExportAssignment, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-type/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createFunctionTypeNode" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionTypeNode expected (typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode) => FunctionTypeNode, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-specifier/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createImportSpecifier" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: nodeFactory.createImportSpecifier expected (isTypeOnly: boolean, propertyName: ModuleExportName | undefined, name: Identifier) => ImportSpecifier, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/omitted-expression/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createOmittedExpression" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createOmittedExpression expected () => OmittedExpression, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/union-type/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node hit
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend2 exit 0 stdout "9\n" stderr "" want "createUnionTypeNode" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createUnionTypeNode expected (types: readonly TypeNode[]) => UnionTypeNode, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=7 misses=7
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.694s
+FAIL

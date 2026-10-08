@@ -1,0 +1,35 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.21s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/conditional-type/wrong-arity (0.50s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createConditionalTypeNode" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-declaration/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createConstructorDeclaration" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/export-assignment/wrong-arity (0.46s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createExportAssignment" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-type/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createFunctionTypeNode" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-specifier/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createImportSpecifier" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/omitted-expression/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createOmittedExpression" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/union-type/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:115: gate cache node miss
+        checked_views_callable_later_ranked_test.go:135: gate cache node miss
+        checked_views_callable_later_ranked_test.go:155: backend0 exit 0 stdout "9\n" stderr "" want "createUnionTypeNode" and "found function with arity 0"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.218s
+FAIL

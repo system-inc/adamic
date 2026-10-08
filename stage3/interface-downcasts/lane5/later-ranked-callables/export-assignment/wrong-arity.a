@@ -1,0 +1,12 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ExportAssignment {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface Block {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;}
+interface Base {readonly createExportAssignment:unknown;}
+interface Target {createExportAssignment(modifiers: readonly ModifierLike[] | undefined, isExportEquals: boolean | undefined, expression: Expression): ExportAssignment;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createExportAssignment([{value:1}],true,{value:3}).value}`);}
+probe({createExportAssignment:():ExportAssignment=>({value:9})});

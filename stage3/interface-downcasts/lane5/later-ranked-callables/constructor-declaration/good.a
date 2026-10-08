@@ -1,0 +1,12 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ConstructorDeclaration {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface Block {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;}
+interface Base {readonly createConstructorDeclaration:unknown;}
+interface Target {createConstructorDeclaration(modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined): ConstructorDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createConstructorDeclaration([{value:1}],[{value:2}],{value:3}).value}`);}
+probe({createConstructorDeclaration:(modifiers:readonly ModifierLike[]|undefined,parameters:readonly ParameterDeclaration[],body:Block|undefined):ConstructorDeclaration=>{const modifier=modifiers===undefined?undefined:modifiers[0];const parameter=parameters[0];return {value:(modifier===undefined?0:modifier.value)+(parameter===undefined?0:parameter.value)+(body===undefined?0:body.value)};}});

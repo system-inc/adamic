@@ -2587,6 +2587,153 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "conditional-constructor-export-function-import-union",
+      "pairs": 7,
+      "candidateReads": 49,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createConditionalTypeNode",
+          "declared_types": [
+            "(checkType: TypeNode, extendsType: TypeNode, trueType: TypeNode, falseType: TypeNode) => ConditionalTypeNode"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 4956,
+            "column": 31
+          },
+          "rank": 237,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createConstructorDeclaration",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 7772,
+            "column": 30
+          },
+          "rank": 238,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createExportAssignment",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, isExportEquals: boolean | undefined, expression: Expression) => ExportAssignment"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 8749,
+            "column": 22
+          },
+          "rank": 239,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createFunctionTypeNode",
+          "declared_types": [
+            "(typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode) => FunctionTypeNode"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 4519,
+            "column": 15
+          },
+          "rank": 240,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createImportSpecifier",
+          "declared_types": [
+            "(isTypeOnly: boolean, propertyName: ModuleExportName | undefined, name: Identifier) => ImportSpecifier"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 725,
+            "column": 35
+          },
+          "rank": 241,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createOmittedExpression",
+          "declared_types": [
+            "() => OmittedExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 6681,
+            "column": 60
+          },
+          "rank": 242,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createUnionTypeNode",
+          "declared_types": [
+            "(types: readonly TypeNode[]) => UnionTypeNode"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 4844,
+            "column": 97
+          },
+          "rank": 243,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
