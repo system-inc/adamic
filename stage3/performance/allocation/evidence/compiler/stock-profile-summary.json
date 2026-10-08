@@ -1,0 +1,19 @@
+{
+  "estimated_bytes_by_stack": {
+    "unclassified": 407854336,
+    "Node-associated stack": 8266360,
+    "Signature-associated stack": 2003552,
+    "Symbol-associated stack": 6702920,
+    "Type-associated stack": 3877120
+  },
+  "sample_records_by_stack": {
+    "unclassified": 22744,
+    "Node-associated stack": 502,
+    "Signature-associated stack": 122,
+    "Symbol-associated stack": 407,
+    "Type-associated stack": 232
+  },
+  "total_estimated_bytes": 428704288,
+  "call_tree_estimated_bytes": 428596680,
+  "sample_records": 24007
+}
