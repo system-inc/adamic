@@ -1,0 +1,1092 @@
+{
+  "cold": {
+    "builds": {
+      "stage0": {
+        "function": "h.must",
+        "seconds": 138.960036
+      },
+      "checker": {
+        "function": "h.archive",
+        "seconds": 125.116995
+      },
+      "checker-asan": {
+        "function": "h.archive",
+        "seconds": 7.139654
+      },
+      "suite-asan": {
+        "function": "h.build",
+        "seconds": 28.906739
+      },
+      "suite": {
+        "function": "h.build",
+        "seconds": 16.789377
+      },
+      "oracle-build": {
+        "function": "h.must",
+        "seconds": 21.780325
+      },
+      "declaration-source-checker": {
+        "function": "h.archive",
+        "seconds": 9.484566
+      },
+      "declaration-source-suite": {
+        "function": "h.build",
+        "seconds": 16.216412
+      },
+      "wrong-node": {
+        "function": "h.build",
+        "seconds": 16.671989
+      },
+      "last-declaration": {
+        "function": "h.build",
+        "seconds": 16.973922
+      },
+      "nullable-default": {
+        "function": "h.build",
+        "seconds": 17.244676
+      },
+      "union-members": {
+        "function": "h.build",
+        "seconds": 16.859678
+      },
+      "type-name-checker": {
+        "function": "h.archive",
+        "seconds": 10.567892
+      },
+      "type-name-suite": {
+        "function": "h.build",
+        "seconds": 16.458876
+      },
+      "raw-shape-constraint-checker": {
+        "function": "h.archive",
+        "seconds": 10.259095
+      },
+      "raw-shape-constraint-suite": {
+        "function": "h.build",
+        "seconds": 16.355839
+      },
+      "assignability-direction-checker": {
+        "function": "h.archive",
+        "seconds": 9.694253
+      },
+      "assignability-direction-suite": {
+        "function": "h.build",
+        "seconds": 16.541043
+      },
+      "resolved-signature-checker": {
+        "function": "h.archive",
+        "seconds": 10.0943
+      },
+      "resolved-signature-suite": {
+        "function": "h.build",
+        "seconds": 16.10295
+      },
+      "released-inspect": {
+        "function": "h.build",
+        "seconds": 3.42368
+      },
+      "retained-handle-checker": {
+        "function": "h.archive",
+        "seconds": 5.015442
+      },
+      "retained-handle": {
+        "function": "h.build",
+        "seconds": 3.275933
+      },
+      "facts-length-checker": {
+        "function": "h.archive",
+        "seconds": 5.617241
+      },
+      "facts-length": {
+        "function": "h.build",
+        "seconds": 28.046141
+      },
+      "facts-empty-bad-checker": {
+        "function": "h.archive",
+        "seconds": 5.517386
+      },
+      "facts-empty-bad": {
+        "function": "h.build",
+        "seconds": 16.186413
+      },
+      "facts-integer-bad-checker": {
+        "function": "h.archive",
+        "seconds": 5.575582
+      },
+      "facts-integer-bad": {
+        "function": "h.build",
+        "seconds": 16.252754
+      },
+      "facts-length-bad-checker": {
+        "function": "h.archive",
+        "seconds": 5.136559
+      },
+      "facts-length-bad": {
+        "function": "h.build",
+        "seconds": 16.312353
+      },
+      "facts-version-bad-checker": {
+        "function": "h.archive",
+        "seconds": 6.162858
+      },
+      "facts-version-bad": {
+        "function": "h.build",
+        "seconds": 16.531477
+      },
+      "facts-cost": {
+        "function": "h.build",
+        "seconds": 3.518064
+      },
+      "facts-cost-go-build": {
+        "function": "h.must",
+        "seconds": 11.587678
+      }
+    },
+    "shards": {
+      "mutant/assignability-direction": {
+        "cases": 409,
+        "seconds": 0.154263
+      },
+      "mutant/wrong-node": {
+        "cases": 409,
+        "seconds": 0.187737
+      },
+      "agreement/generated-00": {
+        "cases": 32,
+        "seconds": 0.282861
+      },
+      "agreement/generated-12": {
+        "cases": 25,
+        "seconds": 0.308302
+      },
+      "cost/union-1": {
+        "cases": 1,
+        "seconds": 0.516443
+      },
+      "bench/compiler-07-3": {
+        "cases": 11,
+        "seconds": 2.539933
+      },
+      "bench/compiler-07-2": {
+        "cases": 11,
+        "seconds": 3.447947
+      },
+      "bench/compiler-06-3": {
+        "cases": 11,
+        "seconds": 3.516609
+      },
+      "bench/compiler-07-1": {
+        "cases": 11,
+        "seconds": 3.761766
+      },
+      "bench/compiler-06-2": {
+        "cases": 11,
+        "seconds": 2.433338
+      },
+      "agreement/compiler-07": {
+        "cases": 11,
+        "seconds": 5.500325
+      },
+      "bench/compiler-06-1": {
+        "cases": 11,
+        "seconds": 2.781282
+      },
+      "bench/compiler-05-3": {
+        "cases": 11,
+        "seconds": 3.125576
+      },
+      "bench/compiler-05-2": {
+        "cases": 11,
+        "seconds": 2.544221
+      },
+      "agreement/compiler-06": {
+        "cases": 11,
+        "seconds": 5.14372
+      },
+      "bench/compiler-05-1": {
+        "cases": 11,
+        "seconds": 3.674037
+      },
+      "bench/compiler-04-3": {
+        "cases": 13,
+        "seconds": 2.417378
+      },
+      "bench/compiler-04-2": {
+        "cases": 13,
+        "seconds": 3.045138
+      },
+      "agreement/compiler-05": {
+        "cases": 11,
+        "seconds": 4.854047
+      },
+      "bench/compiler-03-3": {
+        "cases": 10,
+        "seconds": 1.910625
+      },
+      "bench/compiler-04-1": {
+        "cases": 13,
+        "seconds": 2.426304
+      },
+      "bench/compiler-03-2": {
+        "cases": 10,
+        "seconds": 2.074832
+      },
+      "bench/compiler-03-1": {
+        "cases": 10,
+        "seconds": 2.121557
+      },
+      "bench/compiler-02-3": {
+        "cases": 10,
+        "seconds": 2.045364
+      },
+      "agreement/compiler-04": {
+        "cases": 13,
+        "seconds": 4.169692
+      },
+      "agreement/compiler-03": {
+        "cases": 10,
+        "seconds": 3.071724
+      },
+      "bench/compiler-02-1": {
+        "cases": 10,
+        "seconds": 1.601117
+      },
+      "bench/compiler-02-2": {
+        "cases": 10,
+        "seconds": 2.480125
+      },
+      "bench/compiler-01-3": {
+        "cases": 10,
+        "seconds": 3.45097
+      },
+      "bench/compiler-01-1": {
+        "cases": 10,
+        "seconds": 2.692682
+      },
+      "agreement/compiler-02": {
+        "cases": 10,
+        "seconds": 4.258597
+      },
+      "bench/compiler-01-2": {
+        "cases": 10,
+        "seconds": 3.44061
+      },
+      "agreement/compiler-01": {
+        "cases": 10,
+        "seconds": 4.171302
+      },
+      "cost/options-3": {
+        "cases": 1,
+        "seconds": 0.091786
+      },
+      "cost/options-2": {
+        "cases": 1,
+        "seconds": 0.094857
+      },
+      "cost/options-1": {
+        "cases": 1,
+        "seconds": 0.103229
+      },
+      "cost/type-shape-3": {
+        "cases": 1,
+        "seconds": 0.383703
+      },
+      "cost/type-shape-2": {
+        "cases": 1,
+        "seconds": 0.207691
+      },
+      "cost/type-shape-1": {
+        "cases": 1,
+        "seconds": 0.567306
+      },
+      "cost/raw-shape-3": {
+        "cases": 1,
+        "seconds": 0.294451
+      },
+      "cost/raw-shape-2": {
+        "cases": 1,
+        "seconds": 0.235906
+      },
+      "cost/raw-shape-1": {
+        "cases": 1,
+        "seconds": 0.311477
+      },
+      "cost/signature-shape-3": {
+        "cases": 1,
+        "seconds": 0.410843
+      },
+      "cost/signature-shape-2": {
+        "cases": 1,
+        "seconds": 0.263993
+      },
+      "cost/signature-shape-1": {
+        "cases": 1,
+        "seconds": 0.631715
+      },
+      "cost/union-3": {
+        "cases": 1,
+        "seconds": 1.036488
+      },
+      "bench/compiler-00-2": {
+        "cases": 1,
+        "seconds": 6.545224
+      },
+      "agreement/cross-file": {
+        "cases": 2,
+        "seconds": 0.163607
+      },
+      "refusal/unlinked": {
+        "cases": 1,
+        "seconds": 0.09258
+      },
+      "mutant/declaration-source": {
+        "cases": 2,
+        "seconds": 0.085071
+      },
+      "cost/union-2": {
+        "cases": 1,
+        "seconds": 0.502001
+      },
+      "agreement/nonstrict": {
+        "cases": 1,
+        "seconds": 0.10872
+      },
+      "agreement/generated-06": {
+        "cases": 32,
+        "seconds": 0.175441
+      },
+      "agreement/generated-10": {
+        "cases": 32,
+        "seconds": 0.145002
+      },
+      "agreement/generated-11": {
+        "cases": 32,
+        "seconds": 0.226382
+      },
+      "agreement/generated-08": {
+        "cases": 32,
+        "seconds": 0.435188
+      },
+      "agreement/generated-09": {
+        "cases": 32,
+        "seconds": 0.469598
+      },
+      "controls/reporting": {
+        "cases": 6,
+        "seconds": 0.000501
+      },
+      "agreement/generated-07": {
+        "cases": 32,
+        "seconds": 0.533159
+      },
+      "bench/compiler-00-3": {
+        "cases": 1,
+        "seconds": 8.791677
+      },
+      "cost/declarations-1": {
+        "cases": 1,
+        "seconds": 0.70914
+      },
+      "bench/compiler-00-1": {
+        "cases": 1,
+        "seconds": 8.262397
+      },
+      "cost/raw-type-3": {
+        "cases": 1,
+        "seconds": 0.921827
+      },
+      "cost/nullable-2": {
+        "cases": 1,
+        "seconds": 1.354345
+      },
+      "cost/nullable-3": {
+        "cases": 1,
+        "seconds": 1.380219
+      },
+      "cost/raw-type-2": {
+        "cases": 1,
+        "seconds": 0.324983
+      },
+      "cost/nullable-1": {
+        "cases": 1,
+        "seconds": 1.599255
+      },
+      "cost/raw-type-1": {
+        "cases": 1,
+        "seconds": 0.582286
+      },
+      "cost/declarations-3": {
+        "cases": 1,
+        "seconds": 0.356886
+      },
+      "cost/signature-1": {
+        "cases": 1,
+        "seconds": 0.673168
+      },
+      "cost/signature-3": {
+        "cases": 1,
+        "seconds": 1.140023
+      },
+      "cost/declarations-2": {
+        "cases": 1,
+        "seconds": 0.241801
+      },
+      "cost/signature-2": {
+        "cases": 1,
+        "seconds": 1.028955
+      },
+      "mutant/facts-integer-bad": {
+        "cases": 409,
+        "seconds": 0.238653
+      },
+      "cost/assignable-3": {
+        "cases": 1,
+        "seconds": 0.240309
+      },
+      "mutant/facts-version-bad": {
+        "cases": 409,
+        "seconds": 0.060788
+      },
+      "cost/assignable-2": {
+        "cases": 1,
+        "seconds": 0.311418
+      },
+      "cost/assignable-1": {
+        "cases": 1,
+        "seconds": 0.315547
+      },
+      "mutant/facts-length-bad": {
+        "cases": 409,
+        "seconds": 0.159925
+      },
+      "mutant/retained-handle": {
+        "cases": 1,
+        "seconds": 0.063981
+      },
+      "agreement/generated-04": {
+        "cases": 32,
+        "seconds": 0.19269
+      },
+      "agreement/generated-03": {
+        "cases": 32,
+        "seconds": 0.362441
+      },
+      "mutant/facts-empty-bad": {
+        "cases": 409,
+        "seconds": 0.157727
+      },
+      "agreement/generated-05": {
+        "cases": 32,
+        "seconds": 0.435167
+      },
+      "mutant/facts-length-asan": {
+        "cases": 409,
+        "seconds": 0.303117
+      },
+      "mutant/raw-shape-constraint": {
+        "cases": 409,
+        "seconds": 0.289764
+      },
+      "mutant/type-name": {
+        "cases": 409,
+        "seconds": 0.197574
+      },
+      "mutant/union-members": {
+        "cases": 409,
+        "seconds": 0.377136
+      },
+      "mutant/nullable-default": {
+        "cases": 409,
+        "seconds": 0.186156
+      },
+      "control/released-handle": {
+        "cases": 1,
+        "seconds": 0.08012
+      },
+      "agreement/generated-02": {
+        "cases": 32,
+        "seconds": 0.363011
+      },
+      "agreement/generated-01": {
+        "cases": 32,
+        "seconds": 0.287553
+      },
+      "mutant/last-declaration": {
+        "cases": 409,
+        "seconds": 0.281007
+      },
+      "mutant/resolved-signature": {
+        "cases": 409,
+        "seconds": 0.2682
+      },
+      "agreement/compiler-00": {
+        "cases": 1,
+        "seconds": 14.15823
+      }
+    },
+    "parent_wall": 718.794153,
+    "checks_wall": 32.165556,
+    "counts": {
+      "pass": 102
+    },
+    "time": {
+      "wall": 869.0465352930003,
+      "load_start": [
+        0.0390625,
+        0.16650390625,
+        1.07275390625
+      ],
+      "load_end": [
+        3.7158203125,
+        3.025390625,
+        2.9306640625
+      ],
+      "exit": 0
+    }
+  },
+  "warm": {
+    "builds": {
+      "stage0": {
+        "function": "sixCommandBuild",
+        "seconds": 4.742922
+      },
+      "checker": {
+        "function": "sixCommandBuild",
+        "seconds": 3.06666
+      },
+      "checker-asan": {
+        "function": "sixCommandBuild",
+        "seconds": 1.933106
+      },
+      "suite-asan": {
+        "function": "sixCommandBuild",
+        "seconds": 28.439454
+      },
+      "suite": {
+        "function": "sixCommandBuild",
+        "seconds": 16.243576
+      },
+      "oracle-build": {
+        "function": "sixCommandBuild",
+        "seconds": 2.335726
+      },
+      "declaration-source-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 1.958448
+      },
+      "declaration-source-suite": {
+        "function": "sixCommandBuild",
+        "seconds": 16.283754
+      },
+      "wrong-node": {
+        "function": "sixCommandBuild",
+        "seconds": 16.345002
+      },
+      "last-declaration": {
+        "function": "sixCommandBuild",
+        "seconds": 16.462289
+      },
+      "nullable-default": {
+        "function": "sixCommandBuild",
+        "seconds": 16.36963
+      },
+      "union-members": {
+        "function": "sixCommandBuild",
+        "seconds": 16.565909
+      },
+      "type-name-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 3.805353
+      },
+      "type-name-suite": {
+        "function": "sixCommandBuild",
+        "seconds": 16.589289
+      },
+      "raw-shape-constraint-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.907191
+      },
+      "raw-shape-constraint-suite": {
+        "function": "sixCommandBuild",
+        "seconds": 16.487445
+      },
+      "assignability-direction-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.509869
+      },
+      "assignability-direction-suite": {
+        "function": "sixCommandBuild",
+        "seconds": 16.256037
+      },
+      "resolved-signature-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 1.972979
+      },
+      "resolved-signature-suite": {
+        "function": "sixCommandBuild",
+        "seconds": 16.154344
+      },
+      "released-inspect": {
+        "function": "sixCommandBuild",
+        "seconds": 3.381819
+      },
+      "retained-handle-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.087314
+      },
+      "retained-handle": {
+        "function": "sixCommandBuild",
+        "seconds": 3.437283
+      },
+      "facts-length-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.131071
+      },
+      "facts-length": {
+        "function": "sixCommandBuild",
+        "seconds": 28.191915
+      },
+      "facts-empty-bad-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.122747
+      },
+      "facts-empty-bad": {
+        "function": "sixCommandBuild",
+        "seconds": 16.204153
+      },
+      "facts-integer-bad-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.149789
+      },
+      "facts-integer-bad": {
+        "function": "sixCommandBuild",
+        "seconds": 16.793936
+      },
+      "facts-length-bad-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.840032
+      },
+      "facts-length-bad": {
+        "function": "sixCommandBuild",
+        "seconds": 17.467152
+      },
+      "facts-version-bad-checker": {
+        "function": "sixCommandBuild",
+        "seconds": 2.647229
+      },
+      "facts-version-bad": {
+        "function": "sixCommandBuild",
+        "seconds": 16.159485
+      },
+      "facts-cost": {
+        "function": "sixCommandBuild",
+        "seconds": 3.38791
+      },
+      "facts-cost-go-build": {
+        "function": "sixCommandBuild",
+        "seconds": 3.480309
+      }
+    },
+    "shards": {
+      "mutant/resolved-signature": {
+        "cases": 409,
+        "seconds": 0.131146
+      },
+      "agreement/generated-12": {
+        "cases": 25,
+        "seconds": 0.304809
+      },
+      "agreement/generated-00": {
+        "cases": 32,
+        "seconds": 0.303001
+      },
+      "agreement/generated-11": {
+        "cases": 32,
+        "seconds": 0.341161
+      },
+      "agreement/generated-10": {
+        "cases": 32,
+        "seconds": 0.267331
+      },
+      "agreement/generated-09": {
+        "cases": 32,
+        "seconds": 0.291538
+      },
+      "agreement/generated-08": {
+        "cases": 32,
+        "seconds": 0.179946
+      },
+      "cost/union-2": {
+        "cases": 1,
+        "seconds": 0.656001
+      },
+      "agreement/generated-07": {
+        "cases": 32,
+        "seconds": 0.182972
+      },
+      "agreement/generated-06": {
+        "cases": 32,
+        "seconds": 0.16397
+      },
+      "agreement/generated-04": {
+        "cases": 32,
+        "seconds": 0.166569
+      },
+      "agreement/generated-05": {
+        "cases": 32,
+        "seconds": 0.200805
+      },
+      "agreement/generated-03": {
+        "cases": 32,
+        "seconds": 0.166198
+      },
+      "agreement/generated-02": {
+        "cases": 32,
+        "seconds": 0.162796
+      },
+      "agreement/generated-01": {
+        "cases": 32,
+        "seconds": 0.174015
+      },
+      "cost/declarations-2": {
+        "cases": 1,
+        "seconds": 0.249128
+      },
+      "cost/union-1": {
+        "cases": 1,
+        "seconds": 0.427926
+      },
+      "cost/raw-type-3": {
+        "cases": 1,
+        "seconds": 0.180509
+      },
+      "cost/nullable-3": {
+        "cases": 1,
+        "seconds": 0.658276
+      },
+      "cost/nullable-2": {
+        "cases": 1,
+        "seconds": 0.658464
+      },
+      "cost/nullable-1": {
+        "cases": 1,
+        "seconds": 0.579896
+      },
+      "cost/raw-type-2": {
+        "cases": 1,
+        "seconds": 0.229807
+      },
+      "cost/raw-type-1": {
+        "cases": 1,
+        "seconds": 0.249944
+      },
+      "cost/declarations-3": {
+        "cases": 1,
+        "seconds": 0.213267
+      },
+      "mutant/facts-length-bad": {
+        "cases": 409,
+        "seconds": 0.066248
+      },
+      "cost/signature-3": {
+        "cases": 1,
+        "seconds": 0.595551
+      },
+      "cost/signature-2": {
+        "cases": 1,
+        "seconds": 0.577937
+      },
+      "cost/signature-1": {
+        "cases": 1,
+        "seconds": 0.55443
+      },
+      "cost/declarations-1": {
+        "cases": 1,
+        "seconds": 0.256424
+      },
+      "cost/assignable-3": {
+        "cases": 1,
+        "seconds": 0.135816
+      },
+      "cost/assignable-2": {
+        "cases": 1,
+        "seconds": 0.155839
+      },
+      "mutant/facts-version-bad": {
+        "cases": 409,
+        "seconds": 0.051182
+      },
+      "cost/assignable-1": {
+        "cases": 1,
+        "seconds": 0.148269
+      },
+      "refusal/unlinked": {
+        "cases": 1,
+        "seconds": 0.061303
+      },
+      "controls/reporting": {
+        "cases": 6,
+        "seconds": 0.000323
+      },
+      "agreement/cross-file": {
+        "cases": 2,
+        "seconds": 0.171208
+      },
+      "mutant/wrong-node": {
+        "cases": 409,
+        "seconds": 0.217788
+      },
+      "agreement/nonstrict": {
+        "cases": 1,
+        "seconds": 0.18746
+      },
+      "bench/compiler-02-1": {
+        "cases": 10,
+        "seconds": 2.702499
+      },
+      "bench/compiler-07-2": {
+        "cases": 11,
+        "seconds": 3.252229
+      },
+      "bench/compiler-07-3": {
+        "cases": 11,
+        "seconds": 3.829604
+      },
+      "bench/compiler-07-1": {
+        "cases": 11,
+        "seconds": 3.89125
+      },
+      "bench/compiler-05-1": {
+        "cases": 11,
+        "seconds": 4.194706
+      },
+      "bench/compiler-06-3": {
+        "cases": 11,
+        "seconds": 2.388478
+      },
+      "agreement/compiler-07": {
+        "cases": 11,
+        "seconds": 6.243835
+      },
+      "bench/compiler-06-2": {
+        "cases": 11,
+        "seconds": 3.013645
+      },
+      "cost/options-1": {
+        "cases": 1,
+        "seconds": 0.123962
+      },
+      "bench/compiler-06-1": {
+        "cases": 11,
+        "seconds": 3.153275
+      },
+      "bench/compiler-05-3": {
+        "cases": 11,
+        "seconds": 2.719284
+      },
+      "bench/compiler-05-2": {
+        "cases": 11,
+        "seconds": 3.579987
+      },
+      "agreement/compiler-06": {
+        "cases": 11,
+        "seconds": 5.925348
+      },
+      "bench/compiler-01-3": {
+        "cases": 10,
+        "seconds": 3.650807
+      },
+      "agreement/compiler-02": {
+        "cases": 10,
+        "seconds": 3.837421
+      },
+      "bench/compiler-01-2": {
+        "cases": 10,
+        "seconds": 3.309476
+      },
+      "bench/compiler-01-1": {
+        "cases": 10,
+        "seconds": 3.297414
+      },
+      "bench/compiler-00-2": {
+        "cases": 1,
+        "seconds": 5.145259
+      },
+      "cost/options-3": {
+        "cases": 1,
+        "seconds": 0.390607
+      },
+      "cost/options-2": {
+        "cases": 1,
+        "seconds": 0.113231
+      },
+      "cost/raw-shape-1": {
+        "cases": 1,
+        "seconds": 0.193371
+      },
+      "agreement/compiler-01": {
+        "cases": 10,
+        "seconds": 6.697246
+      },
+      "cost/type-shape-2": {
+        "cases": 1,
+        "seconds": 0.262519
+      },
+      "cost/type-shape-3": {
+        "cases": 1,
+        "seconds": 0.372892
+      },
+      "cost/raw-shape-3": {
+        "cases": 1,
+        "seconds": 0.213138
+      },
+      "cost/type-shape-1": {
+        "cases": 1,
+        "seconds": 0.277185
+      },
+      "cost/raw-shape-2": {
+        "cases": 1,
+        "seconds": 0.217156
+      },
+      "bench/compiler-00-3": {
+        "cases": 1,
+        "seconds": 7.306434
+      },
+      "bench/compiler-00-1": {
+        "cases": 1,
+        "seconds": 7.167871
+      },
+      "bench/compiler-03-3": {
+        "cases": 10,
+        "seconds": 1.660034
+      },
+      "bench/compiler-04-3": {
+        "cases": 13,
+        "seconds": 2.187001
+      },
+      "bench/compiler-04-2": {
+        "cases": 13,
+        "seconds": 2.353573
+      },
+      "bench/compiler-04-1": {
+        "cases": 13,
+        "seconds": 2.315155
+      },
+      "mutant/declaration-source": {
+        "cases": 2,
+        "seconds": 0.091514
+      },
+      "cost/signature-shape-2": {
+        "cases": 1,
+        "seconds": 0.21564
+      },
+      "cost/signature-shape-3": {
+        "cases": 1,
+        "seconds": 0.213693
+      },
+      "cost/signature-shape-1": {
+        "cases": 1,
+        "seconds": 0.20669
+      },
+      "mutant/type-name": {
+        "cases": 409,
+        "seconds": 0.136029
+      },
+      "mutant/assignability-direction": {
+        "cases": 409,
+        "seconds": 0.143398
+      },
+      "mutant/raw-shape-constraint": {
+        "cases": 409,
+        "seconds": 0.16704
+      },
+      "agreement/compiler-05": {
+        "cases": 11,
+        "seconds": 4.632906
+      },
+      "cost/union-3": {
+        "cases": 1,
+        "seconds": 0.55966
+      },
+      "mutant/union-members": {
+        "cases": 409,
+        "seconds": 0.202759
+      },
+      "bench/compiler-03-2": {
+        "cases": 10,
+        "seconds": 2.062825
+      },
+      "agreement/compiler-03": {
+        "cases": 10,
+        "seconds": 2.152329
+      },
+      "mutant/nullable-default": {
+        "cases": 409,
+        "seconds": 0.12067
+      },
+      "mutant/facts-integer-bad": {
+        "cases": 409,
+        "seconds": 0.060509
+      },
+      "mutant/facts-empty-bad": {
+        "cases": 409,
+        "seconds": 0.079181
+      },
+      "mutant/facts-length-asan": {
+        "cases": 409,
+        "seconds": 0.213231
+      },
+      "bench/compiler-03-1": {
+        "cases": 10,
+        "seconds": 2.229012
+      },
+      "mutant/retained-handle": {
+        "cases": 1,
+        "seconds": 0.064351
+      },
+      "agreement/compiler-04": {
+        "cases": 13,
+        "seconds": 4.323653
+      },
+      "control/released-handle": {
+        "cases": 1,
+        "seconds": 0.068526
+      },
+      "mutant/last-declaration": {
+        "cases": 409,
+        "seconds": 0.141132
+      },
+      "bench/compiler-02-2": {
+        "cases": 10,
+        "seconds": 1.261899
+      },
+      "agreement/compiler-00": {
+        "cases": 1,
+        "seconds": 12.800842
+      },
+      "bench/compiler-02-3": {
+        "cases": 10,
+        "seconds": 1.661209
+      }
+    },
+    "parent_wall": 375.538885,
+    "checks_wall": 28.660848,
+    "counts": {
+      "pass": 127
+    },
+    "time": {
+      "wall": 1943.3379107320006,
+      "load_start": [
+        0.560546875,
+        0.2119140625,
+        0.48583984375
+      ],
+      "load_end": [
+        1.0205078125,
+        1.17724609375,
+        1.2060546875
+      ],
+      "exit": 0
+    }
+  }
+}

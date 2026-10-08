@@ -1,0 +1,197 @@
+TestSixRuleAgreementAndMutants: completed parallel split
+
+Base: origin/main 54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8.
+nproc: 5; cgroup cpu.max: 400000 100000 (4 CPU quota).
+Go: go1.27.1 linux/amd64; clang: 20.1.8.
+Inputs: cohere 7945d102a6c18dd36adf9114a758ce646e8b2359; nested TypeScript Go
+d92d9bfee114c80be2c375d72edae966176e3a4f; TypeScript source
+050880ce59e30b356b686bd3144efe24f875ebc8. All 77 compiler files and all
+287 repository-manifest files enabled; ADAMIC_TYPEAWARE_BENCH=1. No sampling.
+
+Before: own wall 648.980 s; command wall 731.204 s; one unsplit unit.
+Before load: start 8.0596/5.0679/2.1006; end 1.9990/2.7769/2.7769.
+Before build windows 608.974 s; generated agreement/filter 0.368 s;
+mutant/guard runs 0.775 s; two-side costs 3.716 s; compiler agreement
+14.304 s; compiler benchmarks 20.849 s. Comparisons included in windows.
+Baseline detailed side timings and monitor limitations: ../split-six-wip/REPORT.txt.
+Historical STOPPED report there describes the earlier measurement-only commit.
+
+After cold command: fresh initially empty GOCACHE, fresh native/oracle products.
+OS page caches were not flushed. Cold run preceded callback extraction; the
+underlying build commands and flags were preserved, with products now in dir.
+Warm: full-package run, same populated GOCACHE, fresh native/oracle products.
+Thus warm means compiler cache warm, not reuse from a package-owned disk cache.
+The developer-tools hash cache is not on main yet; no package cache was added.
+Check clocks start after preparation and parallel admission. Shared build
+times are reported independently and are not charged to the first shard.
+Parent wall below is timestamp-to-timestamp, including preparation and children;
+Go parent Elapsed omits time waiting for parallel children and is not used.
+Native build callbacks: sixCommandBuild, called once per unique product through
+harness.sixBuildProduct -> harness.sixBuildRecipe -> harness.sixBuildOnce.
+Each callback writes product and compiler logs only into its supplied dir.
+Adjacent sixBuildInputs declares repository-relative Go/embed/C/TS/module
+inputs, generated/overlay content, flags, effective Go configuration/environment,
+VCS metadata, runtime.Version(), go version, clang --version and CC version.
+Ready for buildcache.Product with the documented one-line replacement.
+A brief scratch-overlay compile ran during warm preparation, before any shard.
+Every production sanitizer/leak/error expectation and each-side comparison
+is preserved. Compiler selections keep the entire original root set.
+All 13 corpus mutants retain the whole original 409-file generated corpus.
+
+ADAMIC_TEST_SHARD=i/n is zero based; shard position modulo n equals i.
+Unset runs every shard. Both planned and executed unions are checked.
+Union: 6078 case instances, 6078 unique ids, 95 check shards.
+Independent unsplit enumeration rejects missing, repeated and unexpected ids.
+Planted failure: case-5 is caught only by s-02 (selection 2/4). The other
+three selections pass; failure text names TestSixShardPlantedDisagreement/s-02.
+The negative child uses the production comparator and actual shard scheduler.
+Union mutation, callback output confinement and planted-disagreement tests pass.
+gofmt and go vet ./stage1/cohere/typeaware: PASS.
+
+Cold: command wall 869.046535 s; Six parent wall 718.794153 s;
+parallel check phase wall 32.165556 s; longest shard 14.158230 s.
+Load start [0.0390625, 0.16650390625, 1.07275390625]; end [3.7158203125, 3.025390625, 2.9306640625].
+Test event counts (parents and subtests): {'pass': 102}.
+
+Warm full package: command wall 1943.337911 s; Six parent wall 375.538885 s;
+parallel check phase wall 28.660848 s; longest shard 12.800842 s.
+Load start [0.560546875, 0.2119140625, 0.48583984375]; end [1.0205078125, 1.17724609375, 1.2060546875].
+Test event counts (parents and subtests): {'pass': 127}.
+
+Build products: cold seconds | warm seconds | callback (all sixCommandBuild)
+stage0: 138.960036 | 4.742922 | sixCommandBuild
+checker: 125.116995 | 3.066660 | sixCommandBuild
+checker-asan: 7.139654 | 1.933106 | sixCommandBuild
+suite-asan: 28.906739 | 28.439454 | sixCommandBuild
+suite: 16.789377 | 16.243576 | sixCommandBuild
+oracle-build: 21.780325 | 2.335726 | sixCommandBuild
+declaration-source-checker: 9.484566 | 1.958448 | sixCommandBuild
+declaration-source-suite: 16.216412 | 16.283754 | sixCommandBuild
+wrong-node: 16.671989 | 16.345002 | sixCommandBuild
+last-declaration: 16.973922 | 16.462289 | sixCommandBuild
+nullable-default: 17.244676 | 16.369630 | sixCommandBuild
+union-members: 16.859678 | 16.565909 | sixCommandBuild
+type-name-checker: 10.567892 | 3.805353 | sixCommandBuild
+type-name-suite: 16.458876 | 16.589289 | sixCommandBuild
+raw-shape-constraint-checker: 10.259095 | 2.907191 | sixCommandBuild
+raw-shape-constraint-suite: 16.355839 | 16.487445 | sixCommandBuild
+assignability-direction-checker: 9.694253 | 2.509869 | sixCommandBuild
+assignability-direction-suite: 16.541043 | 16.256037 | sixCommandBuild
+resolved-signature-checker: 10.094300 | 1.972979 | sixCommandBuild
+resolved-signature-suite: 16.102950 | 16.154344 | sixCommandBuild
+released-inspect: 3.423680 | 3.381819 | sixCommandBuild
+retained-handle-checker: 5.015442 | 2.087314 | sixCommandBuild
+retained-handle: 3.275933 | 3.437283 | sixCommandBuild
+facts-length-checker: 5.617241 | 2.131071 | sixCommandBuild
+facts-length: 28.046141 | 28.191915 | sixCommandBuild
+facts-empty-bad-checker: 5.517386 | 2.122747 | sixCommandBuild
+facts-empty-bad: 16.186413 | 16.204153 | sixCommandBuild
+facts-integer-bad-checker: 5.575582 | 2.149789 | sixCommandBuild
+facts-integer-bad: 16.252754 | 16.793936 | sixCommandBuild
+facts-length-bad-checker: 5.136559 | 2.840032 | sixCommandBuild
+facts-length-bad: 16.312353 | 17.467152 | sixCommandBuild
+facts-version-bad-checker: 6.162858 | 2.647229 | sixCommandBuild
+facts-version-bad: 16.531477 | 16.159485 | sixCommandBuild
+facts-cost: 3.518064 | 3.387910 | sixCommandBuild
+facts-cost-go-build: 11.587678 | 3.480309 | sixCommandBuild
+
+Every shard: cases | cold-prepared seconds | warm-prepared seconds
+agreement/compiler-00: 1 | 14.158230 | 12.800842
+agreement/compiler-01: 10 | 4.171302 | 6.697246
+agreement/compiler-02: 10 | 4.258597 | 3.837421
+agreement/compiler-03: 10 | 3.071724 | 2.152329
+agreement/compiler-04: 13 | 4.169692 | 4.323653
+agreement/compiler-05: 11 | 4.854047 | 4.632906
+agreement/compiler-06: 11 | 5.143720 | 5.925348
+agreement/compiler-07: 11 | 5.500325 | 6.243835
+agreement/cross-file: 2 | 0.163607 | 0.171208
+agreement/generated-00: 32 | 0.282861 | 0.303001
+agreement/generated-01: 32 | 0.287553 | 0.174015
+agreement/generated-02: 32 | 0.363011 | 0.162796
+agreement/generated-03: 32 | 0.362441 | 0.166198
+agreement/generated-04: 32 | 0.192690 | 0.166569
+agreement/generated-05: 32 | 0.435167 | 0.200805
+agreement/generated-06: 32 | 0.175441 | 0.163970
+agreement/generated-07: 32 | 0.533159 | 0.182972
+agreement/generated-08: 32 | 0.435188 | 0.179946
+agreement/generated-09: 32 | 0.469598 | 0.291538
+agreement/generated-10: 32 | 0.145002 | 0.267331
+agreement/generated-11: 32 | 0.226382 | 0.341161
+agreement/generated-12: 25 | 0.308302 | 0.304809
+agreement/nonstrict: 1 | 0.108720 | 0.187460
+bench/compiler-00-1: 1 | 8.262397 | 7.167871
+bench/compiler-00-2: 1 | 6.545224 | 5.145259
+bench/compiler-00-3: 1 | 8.791677 | 7.306434
+bench/compiler-01-1: 10 | 2.692682 | 3.297414
+bench/compiler-01-2: 10 | 3.440610 | 3.309476
+bench/compiler-01-3: 10 | 3.450970 | 3.650807
+bench/compiler-02-1: 10 | 1.601117 | 2.702499
+bench/compiler-02-2: 10 | 2.480125 | 1.261899
+bench/compiler-02-3: 10 | 2.045364 | 1.661209
+bench/compiler-03-1: 10 | 2.121557 | 2.229012
+bench/compiler-03-2: 10 | 2.074832 | 2.062825
+bench/compiler-03-3: 10 | 1.910625 | 1.660034
+bench/compiler-04-1: 13 | 2.426304 | 2.315155
+bench/compiler-04-2: 13 | 3.045138 | 2.353573
+bench/compiler-04-3: 13 | 2.417378 | 2.187001
+bench/compiler-05-1: 11 | 3.674037 | 4.194706
+bench/compiler-05-2: 11 | 2.544221 | 3.579987
+bench/compiler-05-3: 11 | 3.125576 | 2.719284
+bench/compiler-06-1: 11 | 2.781282 | 3.153275
+bench/compiler-06-2: 11 | 2.433338 | 3.013645
+bench/compiler-06-3: 11 | 3.516609 | 2.388478
+bench/compiler-07-1: 11 | 3.761766 | 3.891250
+bench/compiler-07-2: 11 | 3.447947 | 3.252229
+bench/compiler-07-3: 11 | 2.539933 | 3.829604
+control/released-handle: 1 | 0.080120 | 0.068526
+controls/reporting: 6 | 0.000501 | 0.000323
+cost/assignable-1: 1 | 0.315547 | 0.148269
+cost/assignable-2: 1 | 0.311418 | 0.155839
+cost/assignable-3: 1 | 0.240309 | 0.135816
+cost/declarations-1: 1 | 0.709140 | 0.256424
+cost/declarations-2: 1 | 0.241801 | 0.249128
+cost/declarations-3: 1 | 0.356886 | 0.213267
+cost/nullable-1: 1 | 1.599255 | 0.579896
+cost/nullable-2: 1 | 1.354345 | 0.658464
+cost/nullable-3: 1 | 1.380219 | 0.658276
+cost/options-1: 1 | 0.103229 | 0.123962
+cost/options-2: 1 | 0.094857 | 0.113231
+cost/options-3: 1 | 0.091786 | 0.390607
+cost/raw-shape-1: 1 | 0.311477 | 0.193371
+cost/raw-shape-2: 1 | 0.235906 | 0.217156
+cost/raw-shape-3: 1 | 0.294451 | 0.213138
+cost/raw-type-1: 1 | 0.582286 | 0.249944
+cost/raw-type-2: 1 | 0.324983 | 0.229807
+cost/raw-type-3: 1 | 0.921827 | 0.180509
+cost/signature-1: 1 | 0.673168 | 0.554430
+cost/signature-2: 1 | 1.028955 | 0.577937
+cost/signature-3: 1 | 1.140023 | 0.595551
+cost/signature-shape-1: 1 | 0.631715 | 0.206690
+cost/signature-shape-2: 1 | 0.263993 | 0.215640
+cost/signature-shape-3: 1 | 0.410843 | 0.213693
+cost/type-shape-1: 1 | 0.567306 | 0.277185
+cost/type-shape-2: 1 | 0.207691 | 0.262519
+cost/type-shape-3: 1 | 0.383703 | 0.372892
+cost/union-1: 1 | 0.516443 | 0.427926
+cost/union-2: 1 | 0.502001 | 0.656001
+cost/union-3: 1 | 1.036488 | 0.559660
+mutant/assignability-direction: 409 | 0.154263 | 0.143398
+mutant/declaration-source: 2 | 0.085071 | 0.091514
+mutant/facts-empty-bad: 409 | 0.157727 | 0.079181
+mutant/facts-integer-bad: 409 | 0.238653 | 0.060509
+mutant/facts-length-asan: 409 | 0.303117 | 0.213231
+mutant/facts-length-bad: 409 | 0.159925 | 0.066248
+mutant/facts-version-bad: 409 | 0.060788 | 0.051182
+mutant/last-declaration: 409 | 0.281007 | 0.141132
+mutant/nullable-default: 409 | 0.186156 | 0.120670
+mutant/raw-shape-constraint: 409 | 0.289764 | 0.167040
+mutant/resolved-signature: 409 | 0.268200 | 0.131146
+mutant/retained-handle: 1 | 0.063981 | 0.064351
+mutant/type-name: 409 | 0.197574 | 0.136029
+mutant/union-members: 409 | 0.377136 | 0.202759
+mutant/wrong-node: 409 | 0.187737 | 0.217788
+refusal/unlinked: 1 | 0.092580 | 0.061303
+
+Evidence: measurements.json and complete compressed Go JSON/stderr streams.
+Full package command: go test -json -count=1 -timeout 3h ./stage1/cohere/typeaware.
+All four input/benchmark environment variables above were set; selector unset.

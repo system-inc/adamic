@@ -31,6 +31,10 @@ type harness struct {
 	t                     *testing.T
 	repository, directory string
 	next                  int
+	sixBuilds             bool
+	sixFiles              []string
+	sixVersions           []string
+	sixProducts           map[string]sixBuildInputs
 }
 
 func (h *harness) run(name string, command *exec.Cmd) result {
@@ -55,6 +59,7 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 	started := time.Now()
 	runError := command.Run()
 	elapsed := time.Since(started)
+
 	stdout, err := os.ReadFile(out.Name())
 	if err != nil {
 		h.t.Fatal(err)
@@ -110,6 +115,9 @@ func (h *harness) archive(name, overlay string, sanitize bool) string {
 	if sanitize {
 		cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 	}
+	if h.sixBuilds {
+		return h.sixBuildProduct(name, cmd)
+	}
 	h.must(name, cmd)
 	return path
 }
@@ -119,6 +127,9 @@ func (h *harness) build(stage0, name, entry, archive string, sanitize bool) stri
 	args := []string{"build", entry, "-o", path, "--tsgo", archive}
 	if sanitize {
 		args = append(args, "--sanitize")
+	}
+	if h.sixBuilds {
+		return h.sixBuildProduct(name, exec.Command(stage0, args...))
 	}
 	h.must(name, exec.Command(stage0, args...))
 	return path
