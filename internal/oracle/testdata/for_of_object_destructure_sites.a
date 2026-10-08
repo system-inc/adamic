@@ -1,0 +1,31 @@
+interface Site {
+    readonly node: { readonly kind: number };
+    readonly type: number;
+}
+interface Context { readonly sites?: readonly Site[]; }
+function infer(context: Context): number {
+    let total = 0;
+    if (context.sites) {
+        for (const { node, type } of context.sites) {
+            total += node.kind * type;
+        }
+    }
+    return total;
+}
+let calls = 0;
+function sites(): readonly Site[] {
+    calls++;
+    return [{ node: { kind: 2 }, type: 3 }, { node: { kind: 5 }, type: 7 }];
+}
+console.log(`${infer({ sites: sites() })} ${calls} ${infer({})}`);
+for (const { node: renamed, type: weight } of sites()) {
+    console.log(`${renamed.kind} ${weight}`);
+}
+console.log(`${calls}`);
+// Object bindings use the existing descriptor dispatch, including structural views.
+class Descriptor {
+    get weight(): number { console.log('get weight'); return 11; }
+}
+interface Weighted { readonly weight: number; }
+const descriptors: readonly Weighted[] = [new Descriptor(), { weight: 13 }];
+for (const { weight } of descriptors) { console.log(`${weight}`); }

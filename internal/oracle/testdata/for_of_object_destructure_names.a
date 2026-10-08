@@ -1,0 +1,32 @@
+interface Parameter { readonly name: string; readonly flag: boolean; }
+interface Parent { readonly parameters: readonly Parameter[]; }
+function find(parent: Parent): boolean {
+    for (const { name } of parent.parameters) {
+        if (name === 'p2') {
+            return true;
+        }
+    }
+    return false;
+}
+const parameters: Parameter[] = [];
+for (let index = 0; index < 3; index++) {
+    parameters.push({ name: 'p' + index.toFixed(0), flag: index === 1 });
+}
+console.log(`${find({ parameters })} ${find({ parameters: [] })}`);
+const captured: (() => string)[] = [];
+for (const { name, flag } of parameters) {
+    captured.push((): string => name);
+    if (flag) {
+        continue;
+    }
+    console.log(name);
+}
+for (const read of captured) {
+    console.log(read());
+}
+for (const { name } of parameters) {
+    parameters.splice(0, parameters.length);
+    console.log(name);
+    break;
+}
+console.log(`${parameters.length}`);

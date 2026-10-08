@@ -825,7 +825,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(initializer, "a for...of declaring more than one variable")
 	}
 	name := declarations[0].Name()
-	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
+	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern && name.Kind != ast.KindObjectBindingPattern {
 		return nil, l.notYet(initializer, "a for...of destructuring an object")
 	}
 	if plan, err := l.planIteration(statement.Expression); err != nil {
@@ -856,6 +856,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	if element, iterator := l.libraryIteratorElement(iterated); iterator {
+		if name.Kind == ast.KindObjectBindingPattern {
+			return nil, l.notYet(name, "object destructuring over a stored collection iterator")
+		}
 		return l.libraryForOfIterator(node, iterable, element, name)
 	}
 	var element ir.Type
@@ -892,7 +895,19 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
 	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
-	if ast.IsIdentifier(name) {
+	if name.Kind == ast.KindObjectBindingPattern {
+		if iterable.Type() != ir.Array || element != ir.Object {
+			return nil, l.notYet(name, "object destructuring over an iterable without represented object elements")
+		}
+		// Hold each element before reading the fields, using the same checks as an ordinary
+		// object binding. The declarations run inside the loop, so captured names stay fresh.
+		proven := l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(iterated))
+		lowered.Local = l.iterationLocal("iteration_value", element, l.functionIndex)
+		l.noteLocal(lowered.Local, proven, name)
+		if lowered.Body, err = l.destructureFrom(name, proven, element, lowered.Local); err != nil {
+			return nil, err
+		}
+	} else if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
 		}
@@ -924,9 +939,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
 		}
 	}
-	if lowered.Body, err = l.statement(statement.Statement); err != nil {
+	body, err := l.statement(statement.Statement)
+	if err != nil {
 		return nil, err
 	}
+	lowered.Body = append(lowered.Body, body...)
 	return []ir.Statement{lowered}, nil
 }
 

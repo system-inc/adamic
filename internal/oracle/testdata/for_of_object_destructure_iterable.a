@@ -1,0 +1,43 @@
+class Cursor {
+    index = 0;
+    next(): { value: { readonly name: string; readonly score: number }; done: boolean } {
+        this.index++;
+        return { value: { name: 'item' + this.index.toFixed(0), score: this.index }, done: this.index > 3 };
+    }
+    return(): { value: { readonly name: string; readonly score: number }; done: boolean } {
+        console.log('close' + this.index.toFixed(0));
+        return { value: { name: '', score: 0 }, done: true };
+    }
+}
+class Source {
+    [Symbol.iterator](): Cursor {
+        console.log('start');
+        return new Cursor();
+    }
+}
+function first(source: Source): string {
+    for (const { name } of source) {
+        return name;
+    }
+    return 'empty';
+}
+for (const { name: label, score } of new Source()) {
+    if (score === 1) {
+        continue;
+    }
+    console.log(label);
+    break;
+}
+console.log(first(new Source()));
+for (const { name } of new Source()) {
+    console.log(name);
+}
+try {
+    for (const { name } of new Source()) {
+        throw new Error(name);
+    }
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message);
+    }
+}
