@@ -1,0 +1,11 @@
+interface NumberView { readonly member: string | number; }
+class Box { #hidden = 1; readonly member = 42; }
+const copy = { ...new Box() };
+function showNumber(view: NumberView): void { console.log(`${view.member}`); }
+showNumber(copy);
+interface RegexView { readonly global: string | boolean; readonly lastIndex: string | number; }
+function showRegex(view: RegexView): void { console.log(`${view.global} ${view.lastIndex}`); }
+const expression = new RegExp('x', 'g');
+showRegex(expression);
+expression.lastIndex = 2;
+showRegex(expression);

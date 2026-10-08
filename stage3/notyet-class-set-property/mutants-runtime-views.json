@@ -1,0 +1,42 @@
+[
+  {
+    "mutant": "union-write-fit",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-write-fit.log"
+  },
+  {
+    "mutant": "runtime-retain",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-runtime-retain.log"
+  },
+  {
+    "mutant": "runtime-boolean",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-runtime-boolean.log"
+  },
+  {
+    "mutant": "static-owner",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-static-owner.log"
+  },
+  {
+    "mutant": "class-public-shape",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-class-public-shape.log"
+  },
+  {
+    "mutant": "runtime-unknown-scalar",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-runtime-unknown-scalar.log"
+  },
+  {
+    "mutant": "runtime-foreign-slot",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-runtime-foreign-slot.log"
+  },
+  {
+    "mutant": "accessor-own-method",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-accessor-own-method.log"
+  }
+]

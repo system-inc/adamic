@@ -227,12 +227,12 @@ func (l *lowering) finishAccessors() error {
 	}
 	dispatchers := map[string]int{}
 	var failure error
-	dispatch := func(name string, of ir.Type, setter bool, site int) int {
+	dispatch := func(name string, of ir.Type, setter bool, site int, ownMethod bool) int {
 		kind := "get:"
 		if setter {
 			kind = "set:"
 		}
-		key := fmt.Sprintf("%s%s:%d:%d", kind, name, of, site)
+		key := fmt.Sprintf("%s%s:%d:%d:%t", kind, name, of, site, ownMethod)
 		if index, exists := dispatchers[key]; exists {
 			return index
 		}
@@ -275,7 +275,7 @@ func (l *lowering) finishAccessors() error {
 			function.Parameters = append(function.Parameters, incoming)
 			value := ir.Read{Local: incoming, Of: of}
 			call.Arguments = append(call.Arguments, value)
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Site: site}}}}
+			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Site: site, OwnMethod: ownMethod}}}}
 		} else {
 			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: call}}}, ir.Return{Value: ir.Property{Object: object, Name: name, Of: of}}}
 		}
@@ -305,12 +305,12 @@ func (l *lowering) finishAccessors() error {
 						failure = &NotYet{Where: l.result.Source, What: "an optional accessor read"}
 						return value
 					}
-					index := dispatch(expression.Name, expression.Of, false, 0)
+					index := dispatch(expression.Name, expression.Of, false, 0, false)
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
 			case ir.SetProperty:
 				if names[expression.Name] && !expression.Define {
-					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
+					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site, expression.OwnMethod)
 					node = ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{expression.Object, expression.Value}}}
 				}
 			}

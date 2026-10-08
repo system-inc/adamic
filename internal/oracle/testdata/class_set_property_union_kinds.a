@@ -1,0 +1,36 @@
+interface Type { readonly name: string; }
+interface VersionPaths { readonly path: string; }
+interface PseudoBigInt { readonly negative: boolean; readonly base10Value: string; }
+interface CompilerOptions { readonly 0: number; readonly target: number; readonly name: string; }
+interface Holder {
+    type: false | Type;
+    paths: false | VersionPaths | undefined;
+    option: keyof CompilerOptions | undefined;
+    scalar: string | number;
+    literal: string | number | PseudoBigInt;
+}
+function show(holder: Holder): void {
+    const type = holder.type;
+    const paths = holder.paths;
+    const literal = holder.literal;
+    console.log(`${type === false ? 'false' : type.name} ${paths === undefined ? 'missing' : paths === false ? 'false' : paths.path} ${holder.option} ${holder.scalar}`);
+    console.log(typeof literal === 'object' ? `${literal.negative} ${literal.base10Value}` : `${literal}`);
+}
+const holder: Holder = { type: false, paths: undefined, option: undefined, scalar: 1, literal: 2 };
+show(holder);
+holder.type = { name: 'type'.repeat(2) };
+holder.paths = { path: 'path'.repeat(2) };
+holder.option = 'target';
+holder.scalar = 'scalar'.repeat(2);
+holder.literal = { negative: false, base10Value: '123'.repeat(2) };
+show(holder);
+holder.type = false;
+holder.paths = false;
+holder.option = 0;
+holder.scalar = -0;
+holder.literal = 'text'.repeat(2);
+show(holder);
+holder.paths = undefined;
+holder.option = undefined;
+holder.literal = 3;
+show(holder);

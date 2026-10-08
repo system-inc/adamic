@@ -1,0 +1,17 @@
+interface Host { value(): number; }
+class Descriptor {
+    callback: () => number = () => 4;
+    get value(): () => number { return this.callback; }
+    set value(next: () => number) { this.callback = next; }
+}
+class Counter implements Host { value(): number { return 1; } }
+function replace(host: Host): void { host.value = () => 2; }
+const descriptor = new Descriptor();
+replace(descriptor);
+console.log(`descriptor ${descriptor.value()}`);
+const own: Host = { value: () => 1 };
+replace(own);
+console.log(`own ${own.value()}`);
+const inherited = new Counter();
+replace(inherited);
+console.log(`inherited ${inherited.value()}`);

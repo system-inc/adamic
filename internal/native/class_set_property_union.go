@@ -21,18 +21,13 @@ func (e *emitter) unionField(property ir.Property) string {
 	result := e.own(ir.Union, "NULL")
 	e.line("if (%s != NULL) {", slot)
 	e.indent++
+	e.declarations = append(e.declarations, "const adamic_object *adamic_union_slot_owner(const adamic_object *, const adamic_value *);", "adamic_heap *adamic_union_runtime_field(const adamic_object *, const adamic_value *);")
+	owner := e.temporary()
+	e.line("const adamic_object *%s = adamic_union_slot_owner(%s, %s);", owner, object, slot)
 	seen := map[string]bool{}
-	walkExpressions(e.program, func(expression ir.Expression) {
-		literal, ok := expression.(ir.ObjectLiteral)
-		if !ok || literal.Spread != nil {
-			return
-		}
-		for _, field := range literal.Fields {
-			if field.Name != property.Name || field.Value.Type().IsReference() {
-				continue
-			}
-			shape := e.literalShape(literal)
-			if seen[shape] {
+	emit := func(fields []ir.Field, shape string) {
+		for _, field := range fields {
+			if field.Name != property.Name || field.Value.Type().IsReference() || seen[shape] {
 				continue
 			}
 			seen[shape] = true
@@ -41,10 +36,35 @@ func (e *emitter) unionField(property ir.Property) string {
 			if !fresh {
 				boxed = retained(boxed)
 			}
-			e.line("if (%s->shape == &%s) { %s = %s; } else", object, shape, result, boxed)
+			e.line("if (%s->shape == &%s) { %s = %s; } else", owner, shape, result, boxed)
+		}
+	}
+	for _, class := range e.program.Classes {
+		fields := class.PublicFields
+		if !class.Literal {
+			fields = nil
+			for _, field := range class.Fields {
+				if !field.Private {
+					fields = append(fields, field)
+				}
+			}
+		}
+		emit(fields, e.publicClassShape(class))
+	}
+	walkExpressions(e.program, func(expression ir.Expression) {
+		literal, ok := expression.(ir.ObjectLiteral)
+		if !ok {
+			return
+		}
+		if literal.Spread == nil {
+			emit(literal.Fields, e.literalShape(literal))
+		}
+		if literal.SpreadMaybeUndefined {
+			fields := emptyFields(literal)
+			emit(fields, e.shape(fields))
 		}
 	})
-	e.line("{ %s = adamic_retain(%s->reference); }", result, slot)
+	e.line("{ %s = adamic_union_runtime_field(%s, %s); }", result, owner, slot)
 	e.indent--
 	e.line("}")
 	return result
