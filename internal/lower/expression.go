@@ -163,7 +163,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
-	value, err := l.value(node)
+	value, handled, err := l.classInterfaceValue(node)
+	if !handled {
+		value, err = l.value(node)
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -188,8 +191,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
 		}
 	}
-	if err != nil || value.Type() != ir.Weak {
-		return value, err
+	if err != nil {
+		return nil, err
+	}
+	if value.Type() != ir.Weak {
+		return l.classInterfaceRead(node, value)
 	}
 	read := l.checker.GetTypeAtLocation(node)
 	to, present := ir.Object, false

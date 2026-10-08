@@ -1,0 +1,23 @@
+class A { readonly tag: string = 'a'; bark(): string { return 'woof'; } }
+interface Named { bark(): string }
+const either: A | Named = { tag: 'literal', bark: () => 'literal' };
+function read(value: A | Named): string {
+ if ('bark' in value) { return value.bark(); }
+ return 'absent';
+}
+console.log(read(either)); console.log(read(new A()));
+class Base { get label(): string { console.log('getter'); return 'base'; } bark(): string { return 'base'; } }
+class Child extends Base { override bark(): string { return 'child'; } }
+function hasLabel(value: Child | Named): void { console.log(('label' in value) ? 'present' : 'absent'); }
+hasLabel(new Child()); hasLabel({ bark: () => 'plain' });
+
+class Speaker { readonly tag: string = 'speaker'; bark(): string { console.log('speaker'); return this.tag; } }
+interface Speaks { bark(): string }
+const plain: Speaker | Speaks = { tag: 'plain', bark: () => { console.log('plain'); return 'plain'; } };
+function speak(value: Speaker | Speaks): void { if ('tag' in value) { value.bark(); } }
+speak(plain); speak(new Speaker());
+
+function aliasRead(value: A | Named): string { if ('tag' in value) { const alias = value; return alias.bark(); } return value.bark(); }
+console.log(aliasRead(either)); console.log(aliasRead(new A()));
+function forward(value: A | Named) { if ('tag' in value) { return value; } return new A(); }
+console.log(forward(either).bark()); console.log(forward(new A()).bark());

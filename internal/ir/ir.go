@@ -725,8 +725,10 @@ type (
 	// The method lives on Object's prototype, which a shape does not store, so it is not a read of a
 	// field named hasOwnProperty.
 	HasOwn struct {
-		Object Expression
-		Key    Expression
+		// Prototype includes public class methods and accessors for the in operator.
+		Prototype bool
+		Object    Expression
+		Key       Expression
 	}
 
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.

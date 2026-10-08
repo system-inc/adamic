@@ -526,9 +526,12 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 				spread = true
 			}
 		}
-		if !spread && !l.nominalLiteralTarget(target) {
+		if !spread && (!l.nominalLiteralTarget(target) || l.classInterfaceLiteral(node, target)) {
 			return nil
 		}
+	}
+	if l.classInterfaceTarget(l.classInterfaceSource(node), target) {
+		return nil
 	}
 	source := l.checker.GetTypeAtLocation(node)
 	mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{})

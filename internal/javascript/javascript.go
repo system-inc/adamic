@@ -900,6 +900,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
+		if expression.Prototype {
+			return "((object, key) => (key in object) || (typeof adamicFindAccessor === 'function' && adamicFindAccessor(object, key) !== undefined))(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
+		}
 		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
 	case ir.ReadTextFile:
 		return "readTextFile(" + e.value(expression.Path) + ")"
