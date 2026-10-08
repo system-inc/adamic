@@ -2,7 +2,7 @@
 
 Built boxed callable unions, registered class constructor values and closed lexical constructor caches, and library-small operations through the existing regex callback protocol.
 Commits: own function-values, new-expression and library-small commits replayed individually after 0a167e089; the void-value topic was withdrawn after a base-fixture regression.
-Checks: required package results and refreshed counts are in evidence/group3-ruled; the focused Node oracle passed in both backends (9.263s), and counts refreshed successfully (75.720s).
+Checks: lower 48.477s, IR 27.634s, flow 164.577s, JavaScript has no tests; required results and refreshed counts are in evidence/group3-ruled; the focused Node oracle passed in both backends (9.263s), and counts refreshed successfully (75.720s).
 Mutants: five function boundary/source mutants, eleven constructor mutants and thirteen library proof/runtime/IR checks were caught; catches and commands follow.
 Not delivered: topics failing a retained refusal, checked-view dependencies, and resolutions held by automatic approval review.
 
