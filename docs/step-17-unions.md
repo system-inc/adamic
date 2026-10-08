@@ -192,3 +192,110 @@ that port's original witness. Current outcomes will be measured separately.
 No compiler change, native fixture, counts change, or retired root is claimed
 by this census document. Ranking compiler 69501280 already differs from this
 base; no total in this table is advertised as today's remaining bytes.
+
+## Tagged representation design
+
+Observation: `ir.Union` already stores one counted-reference word. The word is
+NULL for undefined, the immortal `adamic_null` sentinel for null, an immortal
+boolean box for false/true, an owned number box for numbers, or the original
+string/object/array/Map/closure pointer. `adamic_heap.kind` discriminates live
+pointers; identity is the payload pointer, not a wrapper identity. This is the
+proposed canonical mixed-union representation, reusing the existing runtime.
+A zero pointer and the null sentinel must never be interchangeable within it.
+NaN and signed zero retain numeric equality and conversion semantics.
+
+All union slots use the reference ownership protocol, including scalar boxes.
+Retain/release ignore NULL and immortal boxes/sentinels, count number boxes,
+and count references through their existing heap kind. Scalar payloads have no
+outgoing counted edges. Container destruction and cycle traversal inspect the
+actual heap kind, not a static guess that all union arms are objects. Assignment
+retains the incoming arm before releasing an aliased outgoing arm; replacing
+object with number/undefined must release exactly the old owner. Number-to-union
+boxing may allocate; no claim of allocation-free scalar union storage is made.
+
+Fields store that same pointer in `adamic_value.reference`, and shape metadata
+marks the slot as counted. Arrays, Map values, captured cells, parameters and
+results need the same arm-preserving conversions. Lowering must load the stored
+representation before narrowing to an observed scalar/reference arm. A flow
+annotation cannot change the physical slot's representation. Checked views must
+validate the observed tag and refinements and convert rather than reinterpret.
+The JavaScript backend keeps the actual JS value; native representation details
+must not create JS wrappers observable through equality, keys or JSON.
+
+Optional presence is separate from the union's value tag and from initialization
+readiness. Each property has physical own presence; absent reads as undefined,
+while a present undefined retains its key. Writing undefined to `x?: T` remains
+checker-refused under exactOptionalPropertyTypes unless T includes undefined.
+An admitted write to `x?: T | undefined` establishes own presence; delete clears
+presence and releases the old owner. Readiness distinguishes staged uninitialized
+fields from initialized undefined. Object.keys/entries, hasOwn, in, spread and
+JSON must observe the same shared physical presence through every alias and view.
+JSON omits undefined object values but emits null for undefined array elements;
+spread copies present undefined and skips absence. Fixed shapes may reserve slots
+for optional fields but may not advertise them as own keys before a write.
+
+This design does not take the held optional-field branch as a dependency merge.
+Its alias enumeration and bounded hasOwn proofs remain dependencies to reconcile,
+not reasons to weaken their admission checks.
+
+## Silent miscompile audit
+
+- Static union-arm metadata substituted for a dynamic tag can retain/release a
+  scalar as a pointer, leak replaced references, or dereference the null sentinel.
+- Dropping null/undefined discrimination changes strict equality, typeof,
+  short-circuiting, optional calls, defaults, ??, String and JSON independently.
+- Reading a narrowed field in its observed representation reinterprets a number
+  box pointer as a double; stale alias/callback writes invalidate flow evidence.
+- Object, array, Map and closure all look object-like to some JS predicates.
+  A typeof object check alone does not establish their native layouts or types.
+- Mutable widening and optional hidden fields remain type lies regardless of
+  how accurately the union is stored; tags do not certify payload contracts.
+- Captured cells, closure adapters, rest/default arguments and overload results
+  can silently disagree about boxing even when direct calls work.
+- Spread/reuse/region copies must preserve value tags, presence and readiness;
+  retaining the same payload must preserve object identity and mutation visibility.
+- Cycles through a union reference arm must reach the cycle finder; scalar arms
+  cannot erase ownership obligations or be mistaken for an outgoing edge.
+- Falsy zero, negative zero, NaN, false and empty strings are present values;
+  truthiness cannot stand in for optional presence or initialization.
+- Exception cleanup, early returns and panic paths must use actual ownership;
+  single evaluation and retain-before-release matter for aliasing assignments.
+- NaN packing optimizations require an independent collision proof and must not
+  silently canonicalize user NaNs into undefined. Performance is unmeasured.
+
+## Questions for @system_adamic, with held programs
+
+No answer is assumed, and these refusals will remain in place.
+
+1. May representation work discharge optional compatibility or writable variance?
+   Example: `interface A { value: string } interface B { value: string | number }
+   const a: A = {value: 'ok'}; const b: B = a; b.value = 1;`
+   The existing invariant-mutable refusal is necessary: a.value is no longer a
+   string. Recommendation: keep this refused; canonical tags alone prove nothing.
+2. May a differently held object union narrow using typeof alone?
+   Example: `function f(x: {a: number} | number[]): number {
+   if (typeof x === 'object') return x instanceof Array ? x.length : x.a; }`
+   Existing unsupported tag paths must remain NotYet until the predicate/layout
+   evidence is implemented. This unit will not treat typeof object as Array proof.
+3. Do optional writes expand all fixed-shape aliases, or only an origin-proven
+   storage family? Example: `interface A { x?: number | undefined }
+   const a: A = {}; a.x = undefined; console.log(Object.keys(a).join(','));`
+   It must print x if admitted. The held branch supplies bounded origin proofs;
+   this unit will not extend them to opaque/accessor/prototype-bearing objects.
+4. Do union conversions authorize arbitrary source coercion protocols?
+   Example: `const x: number | {toString: () => string} =
+   {toString: () => 'x'}; console.log(`${x}`);`
+   Existing object interpolation/conversion restrictions remain. Built-in scalar
+   union storage does not decide acceptance of observable user conversion code.
+5. May a union representation alone admit broader overload boundaries?
+   Example: `function f(x: number): string; function f(x: number): string | number
+   { return x; } console.log(f(1));` The implementation violates the overload's
+   result promise. Per-overload specialization/checks belong to overload-results;
+   visitNode remains on that unit's list.
+
+Unresolved generic T | undefined stops need concrete specialization or constraint
+proof before arm classification. The leading concrete storage shape in this
+inventory is string | null (6,421 historically attributed bytes), followed by
+string | null | undefined (1,382). Preserving these ordinary JS values requires
+no new coercion, mutation, overload or widening permission. They are the proposed
+focused implementation target, after recording current source outcomes.
