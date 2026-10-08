@@ -21,6 +21,12 @@ func finishWriteContracts(program *ir.Program) {
 				}
 			case ir.SetIndex:
 				origin = write.WriteOrigin
+			case ir.MapSet:
+				origin = write.WriteOrigin
+			case ir.ArrayFill:
+				if write.Array != nil {
+					origin = write.WriteOrigin
+				}
 			}
 			if origin.Expression != "" {
 				program.WriteChecks = append(program.WriteChecks, origin)
@@ -32,8 +38,11 @@ func finishWriteContracts(program *ir.Program) {
 			walk(function.Body, note)
 		}
 	}
-	if len(program.CheckedWrites) == 0 {
+	if len(program.CheckedWrites) == 0 && !program.CheckedElements {
 		return
+	}
+	if program.CheckedWrites == nil {
+		program.CheckedWrites = map[string]bool{}
 	}
 	note := func(node any) bool {
 		if literal, ok := node.(ir.ObjectLiteral); ok {

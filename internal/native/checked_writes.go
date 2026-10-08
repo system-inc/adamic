@@ -48,7 +48,7 @@ func (e *emitter) contractDeclaration(name string, contract *ir.FieldContract) s
 		children = name + "_fields"
 		e.declarations = append(e.declarations, fmt.Sprintf("static const char *const %s[] = {%s};", fieldNames, strings.Join(names, ", ")), fmt.Sprintf("static const bool %s[] = {%s};", optional, strings.Join(flags, ", ")), fmt.Sprintf("static const adamic_field_contract %s[] = {%s};", children, strings.Join(rows, ", ")))
 	}
-	return fmt.Sprintf("{.kind=%d, .nullable=%t, .declared=%s, .count=%d, .allowed=%s, .type_id=%d, .reference=%t, .structural=%t, .write_proof_count=%d, .write_proofs=%s, .field_proof_count=%d, .field_proofs=%s, .field_count=%d, .field_names=%s, .field_optional=%s, .field_contracts=%s}", contract.Kind, contract.Nullable, cString(contract.Declared), len(contract.Allowed), allowed, contract.TypeID, contract.Reference, contract.Structural, len(contract.ProvenWrites), writeProofs, len(contract.ProvenFields), fieldProofs, len(contract.Fields), fieldNames, optional, children)
+	return fmt.Sprintf("{.nullish_only=%t, .kind=%d, .nullable=%t, .declared=%s, .count=%d, .allowed=%s, .type_id=%d, .reference=%t, .structural=%t, .write_proof_count=%d, .write_proofs=%s, .field_proof_count=%d, .field_proofs=%s, .field_count=%d, .field_names=%s, .field_optional=%s, .field_contracts=%s}", contract.NullishOnly, contract.Kind, contract.Nullable, cString(contract.Declared), len(contract.Allowed), allowed, contract.TypeID, contract.Reference, contract.Structural, len(contract.ProvenWrites), writeProofs, len(contract.ProvenFields), fieldProofs, len(contract.Fields), fieldNames, optional, children)
 }
 
 func (e *emitter) contractProofs(name string, proofs []int) string {
@@ -61,4 +61,18 @@ func (e *emitter) contractProofs(name string, proofs []int) string {
 	}
 	e.declarations = append(e.declarations, fmt.Sprintf("static const int %s[] = {%s};", name, strings.Join(values, ", ")))
 	return name
+}
+
+func (e *emitter) contractContainer(expression ir.ContractContainer) string {
+	value := e.value(expression.Value)
+	contract := "NULL"
+	if expression.Contract != nil {
+		name := e.temporary() + "_element_contract"
+		declaration := e.contractDeclaration(name, expression.Contract)
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_field_contract %s = %s;", name, declaration))
+		contract = "&" + name
+	}
+	e.line("%s->element_contract = %s;", value, contract)
+	e.line("%s->allocation_type = %d;", value, expression.AllocationType)
+	return value
 }

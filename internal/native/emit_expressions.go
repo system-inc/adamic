@@ -394,6 +394,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.own(ir.Array, fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()))
 		}
 		array := e.value(expression.Array)
+		if e.program.CheckedElements {
+			array = e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", array))
+		}
 		value := e.value(expression.Value)
 		start, end := "0.0", "0.0"
 		if expression.Start != nil {
@@ -402,7 +405,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.End != nil {
 			end = e.value(expression.End)
 		}
-		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
+		if e.program.CheckedElements {
+			e.line("adamic_array_fill_checked(%s, %s, %s, %s, %t, %t, %d, %s);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil, expression.Value.Type(), cString(expression.WriteOrigin.Expression))
+		} else {
+			e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
+		}
 		return array
 	case ir.ArraySplice:
 		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)))
@@ -557,8 +564,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->%s)", slot, slot, member(expression.ValueType)))
 	case ir.MapSet:
 		object := e.value(expression.Map)
+		if e.program.CheckedElements {
+			object = e.own(ir.Map, fmt.Sprintf("adamic_retain(%s)", object))
+		}
 		key := e.value(expression.Key)
 		value := e.value(expression.Value)
+		if e.program.CheckedElements {
+			e.line("adamic_map_check_contract(%s, %d, %s, %s);", object, expression.ValueType, borrowed(expression.ValueType, value), cString(expression.WriteOrigin.Expression))
+		}
 		e.line("adamic_map_set(%s, %s, %s);", object, held(expression.KeyType, key), held(expression.ValueType, value))
 		return object
 	case ir.MapHas:
@@ -613,6 +626,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		array := e.value(expression.Array)
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+	case ir.ContractContainer:
+		return e.contractContainer(expression)
 	case ir.ArrayLiteral:
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread

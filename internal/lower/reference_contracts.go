@@ -95,7 +95,7 @@ func (l *lowering) referenceFields(declared *checker.Type, seen map[*checker.Typ
 }
 
 func (l *lowering) checkedWriteType(target, value *ast.Node) int {
-	if len(l.result.CheckedWrites) == 0 {
+	if len(l.result.CheckedWrites) == 0 && !l.result.CheckedElements {
 		return 0
 	}
 	declared := l.contractType(l.checker.GetTypeAtLocation(value))

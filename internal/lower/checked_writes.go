@@ -23,7 +23,7 @@ func (l *lowering) checkedWidening(node *ast.Node, from, to *checker.Type) bool 
 	if !l.checkedFieldRelation(from, to, fields, map[[2]*checker.Type]bool{}) {
 		return false
 	}
-	if len(fields) == 0 {
+	if len(fields) == 0 && !l.result.CheckedElements {
 		return false
 	}
 	if l.result.CheckedWrites == nil {
@@ -51,6 +51,30 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 		return false
 	}
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
+	if members := l.definedMembers(from); len(members) > 1 {
+		for _, member := range members {
+			if !l.checkedFieldRelation(member, to, fields, seen) {
+				return false
+			}
+		}
+		return true
+	}
+	if members := l.definedMembers(to); len(members) > 1 {
+		for _, member := range members {
+			if l.checker.IsTypeAssignableTo(from, member) && !l.checkedFieldRelation(from, member, fields, seen) {
+				return false
+			}
+		}
+		return true
+	}
+
+	if own, view := l.containerRelation(from, to); own != nil {
+		if l.widened(own, view, map[[2]*checker.Type]bool{}) != nil && !interfaceScalar(l.checker.GetNonNullableType(own)) && !l.checkedFieldRelation(own, view, fields, seen) {
+			return false
+		}
+		l.result.CheckedElements = true
+		return true
+	}
 	if len(l.containers(from)) != 0 || len(l.containers(to)) != 0 || !l.structured(from) || !l.structured(to) || l.callableViewContract(from) || l.callableViewContract(to) || isClassInstance(to) {
 		return false
 	}
@@ -66,17 +90,17 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 		if !l.checker.IsReadonlySymbol(target) && (l.checker.IsReadonlySymbol(source) || !l.checker.IsTypeAssignableTo(viewed, own) || !l.enumAssignable(viewed, own)) {
 			contract := l.fieldContract(own)
 			viewKind, viewKnown := l.representation(viewed)
-			if contract == nil || !viewKnown || (viewKind != contract.Kind && !(contract.Kind == ir.Number && viewKind == ir.MaybeNumber)) {
+			if contract == nil || !viewKnown || (viewKind != contract.Kind && !(contract.Kind == ir.Number && viewKind == ir.MaybeNumber) && !(contract.NullishOnly && viewKind >= ir.String && viewKind <= ir.Map)) {
 				return false
 			}
 			a, b := l.checker.GetNonNullableType(own), l.checker.GetNonNullableType(viewed)
 			// A present reference needs a directional type proof or a reifiable allocation shape.
-			if !interfaceScalar(a) && !identicalTypes(l.checker, a, b) && !contract.Structural {
+			if !interfaceScalar(a) && !identicalTypes(l.checker, a, b) && !contract.Structural && !(contract.Kind == ir.Object && contract.Reference) {
 				return false
 			}
 			fields[target.Name] = true
 		}
-		if l.widened(own, viewed, map[[2]*checker.Type]bool{}) != nil && l.structured(l.withoutUndefined(own)) {
+		if l.widened(own, viewed, map[[2]*checker.Type]bool{}) != nil && (l.structured(l.withoutUndefined(own)) || len(l.definedMembers(own)) > 1 && !interfaceScalar(l.checker.GetNonNullableType(own))) {
 			if !l.checkedFieldRelation(own, viewed, fields, seen) {
 				return false
 			}
@@ -91,7 +115,7 @@ func (l *lowering) fieldContract(declared *checker.Type) *ir.FieldContract {
 	if !known || kind < ir.Number || kind > ir.MaybeNumber {
 		return nil
 	}
-	contract := &ir.FieldContract{Kind: kind, Declared: l.checker.TypeToString(declared), Nullable: l.includesUndefined(declared) || l.includesNull(declared)}
+	contract := &ir.FieldContract{NullishOnly: declared.Flags()&checker.TypeFlagsUndefined != 0, Kind: kind, Declared: l.checker.TypeToString(declared), Nullable: l.includesUndefined(declared) || l.includesNull(declared)}
 	present := l.checker.GetNonNullableType(declared)
 	if interfaceScalar(present) && l.checker.TypeToString(present) != "boolean" && !l.openNumericEnumType(present) {
 		contract.Allowed = l.viewLiterals(present)

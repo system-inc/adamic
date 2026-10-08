@@ -18,5 +18,5 @@ func (e *emitter) writeContract(contract *ir.FieldContract) string {
 	for _, field := range contract.Fields {
 		fields = append(fields, fmt.Sprintf("{name: %s, optional: %t, contract: %s}", quote(field.Name), field.Optional, e.writeContract(field.Contract)))
 	}
-	return fmt.Sprintf("{kind: %d, declared: %s, nullable: %t, allowed: [%s], typeID: %d, reference: %t, structural: %t, provenWrites: [%s], provenFields: [%s], fields: [%s]}", contract.Kind, quote(contract.Declared), contract.Nullable, e.values(contract.Allowed), contract.TypeID, contract.Reference, contract.Structural, integers(contract.ProvenWrites), integers(contract.ProvenFields), strings.Join(fields, ", "))
+	return fmt.Sprintf("{nullishOnly: %t, kind: %d, declared: %s, nullable: %t, allowed: [%s], typeID: %d, reference: %t, structural: %t, provenWrites: [%s], provenFields: [%s], fields: [%s]}", contract.NullishOnly, contract.Kind, quote(contract.Declared), contract.Nullable, e.values(contract.Allowed), contract.TypeID, contract.Reference, contract.Structural, integers(contract.ProvenWrites), integers(contract.ProvenFields), strings.Join(fields, ", "))
 }

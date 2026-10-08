@@ -4,10 +4,16 @@ import "fmt"
 
 // Hidden readiness state leaves own keys and object spread unchanged.
 const fieldReadinessRuntime = `const adamicNeverArrays = new WeakSet();
-const adamicArrayNeverCheck = (array, value, expression) => { if (adamicNeverArrays.has(array)) panic("write failed: " + expression + " expects never, got " + (value == null ? "undefined" : typeof value === "object" ? "object" : String(value))); };
+const adamicElementContracts = new WeakMap();
+const adamicArrayNeverCheck = (array, value, expression) => { const contract = adamicElementContracts.get(array); if (contract) adamicCheckValue(contract, value, contract.kind, 0, expression); if (adamicNeverArrays.has(array)) panic("write failed: " + expression + " expects never, got " + (value == null ? "undefined" : typeof value === "object" ? "object" : String(value))); };
 const adamicNeverArray = (array) => { const result = new Proxy(array, {set(target, name, value) { if (name === "length") { if (value > 0) adamicArrayNeverCheck(result, undefined, "array[]"); } else if (/^(0|[1-9][0-9]*)$/.test(name)) adamicArrayNeverCheck(result, value, "array[]"); return Reflect.set(target, name, value); }}); adamicNeverArrays.add(result); return result; };
+const adamicArrayCheckedFill = (array, expression, value, start = 0, end = array.length) => {
+ const relative = (index) => { index = Math.trunc(index) || 0; return index < 0 ? Math.max(array.length + index, 0) : Math.min(index, array.length); };
+ if (relative(start) < relative(end)) adamicArrayNeverCheck(array, value, expression);
+ return array.fill(value, start, end);
+};
 const adamicArrayCheckedPush = (array, value, expression) => { adamicArrayNeverCheck(array, value, expression); return array.push(value); };
-const adamicArrayCheckedSplice = (array, expression, ...args) => { if (args.length > 2) adamicArrayNeverCheck(array, args[2], expression); return array.splice(...args); };
+const adamicArrayCheckedSplice = (array, expression, ...args) => { for (const value of args.slice(2)) adamicArrayNeverCheck(array, value, expression); return array.splice(...args); };
 const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicFieldContracts = new WeakMap();
@@ -25,13 +31,25 @@ const adamicContractObject = (contract, value) => {
  }
  return true;
 };
+const adamicCheckValue = (contract, value, kind, sourceType, expression) => {
+ const present = value != null;
+ let valid = contract && (contract.kind === kind || contract.kind === 1 && kind === 7 || !present && contract.nullable && contract.kind >= 3 && contract.kind <= 6 && kind >= 3 && kind <= 6) && (present || contract.nullable) && (!contract.nullishOnly || !present) && (!present || !contract.allowed.length || contract.allowed.includes(value));
+ if (valid && present && contract.reference) valid = contract.provenWrites.includes(sourceType) || kind === 4 && adamicContractObject(contract, value) || (kind === 5 || kind === 6) && contract.provenFields.includes(adamicAllocationContracts.get(value));
+ if (!valid) panic("write failed: " + expression + " expects " + (contract?.declared || "unavailable field contract") + ", got " + (!present ? "undefined" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value === "object" ? "object" : String(value)));
+};
 const adamicCheckedWrite = (object, name, value, kind, sourceType, expression) => {
- const contract = adamicFieldContracts.get(object)?.[name];
- let valid = Object.hasOwn(object, name) && contract && (contract.kind === kind || contract.kind === 1 && kind === 7) && (value != null || contract.nullable) && (value == null || !contract.allowed.length || contract.allowed.includes(value));
- if (valid && value != null && contract.reference) valid = contract.provenWrites.includes(sourceType) || kind === 4 && adamicContractObject(contract, value);
- if (!valid) panic("write failed: " + expression + " expects " + (contract?.declared || "unavailable field contract") + ", got " + (value === undefined ? "undefined" : value === null ? "undefined" : typeof value === "object" ? "object" : String(value)));
+ const contract = Object.hasOwn(object, name) && adamicFieldContracts.get(object)?.[name];
+ adamicCheckValue(contract, value, kind, sourceType, expression);
  adamicWriteField(object, name, value);
 };
+const adamicContractContainer = (value, contract, allocationType) => {
+ let result = value;
+ if (contract && Array.isArray(value)) result = new Proxy(value, {set(target, name, item) { if (/^(0|[1-9][0-9]*)$/.test(name)) adamicArrayNeverCheck(result, item, "array[]"); return Reflect.set(target, name, item); }});
+ adamicAllocationContracts.set(result, allocationType);
+ if (contract) adamicElementContracts.set(result, contract);
+ return result;
+};
+const adamicMapCheckedSet = (map, key, value, expression) => { const contract = adamicElementContracts.get(map); if (contract) adamicCheckValue(contract, value, contract.kind, 0, expression); return map.set(key, value); };
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
 const adamicViewWrite = (object, name, value, type) => { if (!Object.hasOwn(object, name) || adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
 const adamicUninitializedFields = (object, names) => { adamicFieldReadiness.set(object, new Set(names)); return object; };

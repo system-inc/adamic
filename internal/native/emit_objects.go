@@ -257,7 +257,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		layout = kinds
 	}
 	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
-	if len(e.program.CheckedWrites) != 0 && contracts != nil {
+	if (len(e.program.CheckedWrites) != 0 || e.program.CheckedElements) && contracts != nil {
 		for _, field := range contracts {
 			if c := field.Contract; c != nil {
 				key += fmt.Sprintf("|%d:%s:%t:%#v", c.Kind, c.Declared, c.Nullable, c.Allowed)
@@ -267,7 +267,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			}
 		}
 	}
-	if len(e.program.CheckedWrites) != 0 {
+	if len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
 		key += fmt.Sprintf("|allocation=%d", allocationType)
 	}
 	for _, method := range methods {
@@ -283,7 +283,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	e.shapes[key] = name
 	table := "NULL"
 	contractTable := "NULL"
-	if len(e.program.CheckedWrites) != 0 && (contracts != nil || allocationType != 0) {
+	if (len(e.program.CheckedWrites) != 0 || e.program.CheckedElements) && (contracts != nil || allocationType != 0) {
 		contractTable = e.shapeContracts(name, contracts, allocationType)
 	}
 	methodNames, thunks := []string{}, []string{}

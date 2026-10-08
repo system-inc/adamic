@@ -672,6 +672,11 @@ func (e *emitter) handedOver(arguments []string) {
 // elements replaced as it went) and its results are held as the elements are; and the array a
 // literal spreads first.
 func arraysTaken(program *ir.Program, node any) []int {
+	// A new allocation has its own element declaration. Reusing an old container
+	// would expose the old contract while its replacement is being constructed.
+	if program.CheckedElements {
+		return nil
+	}
 	var sources []int
 	walk(node, func(expression ir.Expression) {
 		switch expression := expression.(type) {

@@ -271,7 +271,7 @@ void adamic_check_contract(const adamic_field_contract *contract, unsigned char 
  bool present = true;
  if (kind >= 3 && kind <= 6) { present = value.reference != NULL; }
  if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
- bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7)) && (present || contract->nullable);
+ bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7) || (!present && contract->nullable && contract->kind>=3 && contract->kind<=6 && kind>=3 && kind<=6)) && (present || contract->nullable) && (!contract->nullish_only || !present);
  if (valid && present && contract->count != 0) {
   valid = false;
   for (size_t index = 0; index < contract->count; index++) {
@@ -283,7 +283,9 @@ void adamic_check_contract(const adamic_field_contract *contract, unsigned char 
  }
  if (valid && present && contract->reference) {
   valid = adamic_contract_proven(contract->write_proof_count, contract->write_proofs, source_type);
-  if (!valid && kind == 4) { valid = adamic_contract_object(contract, value.reference); }
+  if (!valid && kind == 4 && ((const adamic_heap *)value.reference)->kind == adamic_kind_object) { valid = adamic_contract_object(contract, value.reference); }
+  if (!valid && kind == 5 && ((const adamic_heap *)value.reference)->kind == adamic_kind_array) { valid = adamic_contract_proven(contract->field_proof_count,contract->field_proofs,((const adamic_array *)value.reference)->allocation_type); }
+  if (!valid && kind == 6 && ((const adamic_heap *)value.reference)->kind == adamic_kind_map) { valid = adamic_contract_proven(contract->field_proof_count,contract->field_proofs,((const adamic_map *)value.reference)->allocation_type); }
  }
  if (valid) { return; }
  const char *expected = contract == NULL || contract->declared == NULL ? "unavailable field contract" : contract->declared;

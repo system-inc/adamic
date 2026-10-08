@@ -915,6 +915,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+	case ir.ContractContainer:
+		contract := "null"
+		if expression.Contract != nil {
+			contract = e.writeContract(expression.Contract)
+		}
+		return fmt.Sprintf("adamicContractContainer(%s, %s, %d)", e.value(expression.Value), contract, expression.AllocationType)
 	case ir.ArrayLiteral:
 		elements := []string{}
 		for index, element := range expression.Elements {
@@ -1081,6 +1087,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.End != nil {
 			arguments = append(arguments, expression.End)
 		}
+		if e.program.CheckedElements {
+			return "adamicArrayCheckedFill(" + e.value(expression.Array) + ", " + quote(expression.WriteOrigin.Expression) + ", " + e.values(arguments) + ")"
+		}
 		return e.value(expression.Array) + ".fill(" + e.values(arguments) + ")"
 	case ir.ArraySplice:
 		arguments := []ir.Expression{expression.Start}
@@ -1164,6 +1173,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapGet:
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
+		if e.program.CheckedElements {
+			return fmt.Sprintf("adamicMapCheckedSet(%s, %s, %s, %s)", e.value(expression.Map), e.value(expression.Key), e.value(expression.Value), quote(expression.WriteOrigin.Expression))
+		}
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
 	case ir.SetNew:
 		if expression.Values == nil {

@@ -1,0 +1,12 @@
+interface Expression { readonly kind: string }
+interface BinaryExpression { readonly kind: 'binary' }
+interface CallExpression { readonly kind: 'call' }
+interface FlowMutation { node: BinaryExpression | CallExpression }
+interface FlowAssignment { node: Expression }
+type FlowNode = FlowMutation | FlowAssignment;
+const narrow: FlowMutation = { node: { kind: 'binary' } };
+const good: CallExpression = { kind: 'call' };
+const bad: Expression = { kind: 'identifier' };
+function store(view: FlowNode, value: Expression): void { view.node = value; }
+store(narrow, bad);
+console.log(narrow.node.kind);

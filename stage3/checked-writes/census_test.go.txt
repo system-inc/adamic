@@ -45,8 +45,8 @@ func TestCheckedWritesCensus(t *testing.T) {
 		}
 	}
 	var records []struct {
-		ID                                                                           int
-		Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere string
+		ID                                                                                                    int
+		Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere, Receiving, SourceFamily string
 	}
 	paths := []string{}
 	seen := map[string]bool{}
@@ -59,9 +59,9 @@ func TestCheckedWritesCensus(t *testing.T) {
 		var id int
 		json.Unmarshal(r["id"], &id)
 		records = append(records, struct {
-			ID                                                                           int
-			Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere string
-		}{id, get("where"), get("reason"), get("classification"), get("family"), get("original_type"), get("source_expression"), get("source_expression_where")})
+			ID                                                                                                    int
+			Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere, Receiving, SourceFamily string
+		}{id, get("where"), get("reason"), get("classification"), get("family"), get("original_type"), get("source_expression"), get("source_expression_where"), get("receiving_syntax"), get("source_family")})
 		file := strings.Split(get("where"), ":")[0]
 		if !seen[file] {
 			seen[file] = true
@@ -111,6 +111,38 @@ func TestCheckedWritesCensus(t *testing.T) {
 		}
 		status, reason := "unmatched", "pinned source expression could not be matched in the reproduced checker program"
 		fields := []string{}
+		if matched != nil && r.Receiving == "AsExpression" {
+			for matched.Parent != nil && matched.Parent.Kind == ast.KindParenthesizedExpression {
+				matched = matched.Parent
+			}
+			if matched.Parent != nil && matched.Parent.Kind == ast.KindAsExpression {
+				matched = matched.Parent
+			} else {
+				matched = nil
+			}
+		}
+		if r.OriginalType == "" && r.Expression == "" {
+			matched = nil
+			canonical := func(name string) string {
+				parts := strings.Split(name, " | ")
+				sort.Strings(parts)
+				return strings.Join(parts, " | ")
+			}
+			matches := []*ast.Node{}
+			for _, candidate := range candidates {
+				if l := (&lowering{}); !l.isExpression(candidate) {
+					continue
+				}
+				if canonical(checker.TypeToString(checker.GetTypeAtLocation(candidate))) == canonical(r.SourceFamily) {
+					matches = append(matches, candidate)
+				}
+			}
+			if len(matches) == 1 {
+				matched = matches[0]
+			} else {
+				reason = "pinned census source type did not map uniquely to a stock-checker expression; no proof or checked admission measured"
+			}
+		}
 		if matched != nil {
 			l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
 			failure := l.refuseWidening(matched)
@@ -124,8 +156,22 @@ func TestCheckedWritesCensus(t *testing.T) {
 					fields = append(fields, name)
 				}
 			} else {
-				status = "no current relation refusal"
-				reason = "no runtime-check admission recorded"
+				contextual := checker.GetContextualType(matched, 0)
+				if contextual == nil {
+					contextual = l.impliedTarget(matched)
+				}
+				own := checker.GetTypeAtLocation(matched)
+				if matched.Kind == ast.KindAsExpression {
+					own = checker.GetTypeAtLocation(matched.AsAsExpression().Expression)
+					contextual = checker.GetTypeAtLocation(matched)
+				}
+				if contextual != nil && l.freshOrWidened(matched, own, contextual) == nil {
+					status = "proven relation"
+					reason = "fresh or invariant relation: " + checker.TypeToString(own) + " into " + checker.TypeToString(contextual)
+				} else {
+					status = "unmatched"
+					reason = "no runtime-check admission or static relation proof recorded"
+				}
 			}
 		}
 		sort.Strings(fields)
@@ -133,7 +179,7 @@ func TestCheckedWritesCensus(t *testing.T) {
 		if r.Classification == "d" {
 			counts[status]++
 		}
-		rows = append(rows, map[string]any{"id": r.ID, "where": r.Where, "class": r.Classification, "family": r.Family, "status": status, "first_reason": reason, "fields": fields})
+		rows = append(rows, map[string]any{"id": r.ID, "where": r.Where, "class": r.Classification, "family": r.Family, "source_family": r.SourceFamily, "original_reason": r.Reason, "status": status, "first_reason": reason, "fields": fields})
 	}
 	report := map[string]any{"measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced", "class_d_counts": counts, "records": rows}
 	data, err := json.MarshalIndent(report, "", "  ")

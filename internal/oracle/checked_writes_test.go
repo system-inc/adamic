@@ -13,6 +13,36 @@ import (
 )
 
 var checkedWriteFixtures = []struct{ name, stdout, message string }{
+	{"container-slice-fit", "2\n", ""},
+	{"container-slice-misfit", "", "write failed: values[0] expects 1 | 2, got 3"},
+	{"container-map-values-fit", "2\n", ""},
+	{"container-map-values-misfit", "", "write failed: values[0] expects 1 | 2, got 3"},
+	{"container-boolean-fit", "true\n", ""},
+	{"container-boolean-misfit", "", "write failed: values[] expects true, got false"},
+	{"container-fill-fit", "2\n", ""},
+	{"container-fill-misfit", "", "write failed: values[] expects 1 | 2, got 3"},
+	{"container-map-object-fit", "1\n", ""},
+	{"container-map-object-misfit", "", "write failed: values[value] expects DiagnosticWithLocation, got object"},
+	{"container-alias-fit", "2\n", ""},
+	{"container-alias-misfit", "", "write failed: item.count expects number, got undefined"},
+	{"container-number-fit", "2\n", ""},
+	{"container-number-misfit", "", "write failed: values[0] expects 1 | 2, got 3"},
+	{"container-string-fit", "right\n", ""},
+	{"container-string-misfit", "", "write failed: values[] expects \"left\" | \"right\", got outside"},
+	{"container-map-fit", "2\n", ""},
+	{"container-map-misfit", "", "write failed: values[value] expects 1 | 2, got 3"},
+	{"container-splice-fit", "2\n", ""},
+	{"container-splice-misfit", "", "write failed: values[] expects 1 | 2, got 3"},
+	{"container-object-fit", "1\n", ""},
+	{"container-object-misfit", "", "write failed: values[] expects DiagnosticWithLocation, got object"},
+	{"container-nested-fit", "1\n", ""},
+	{"container-nested-misfit", "", "write failed: values[] expects (1 | 2)[], got array"},
+	{"flow-node-fit", "call\n", ""},
+	{"flow-node-misfit", "", "write failed: view.node expects BinaryExpression | CallExpression, got object"},
+	{"flow-undefined-fit", "true\n", ""},
+	{"flow-undefined-misfit", "", "write failed: view.node expects undefined, got object"},
+	{"flow-array-fit", "true\n", ""},
+	{"flow-array-misfit", "", "write failed: view.antecedents expects undefined, got array"},
 	{"never-nullable-fit", "0\n", ""},
 	{"never-nullable-misfit", "", "write failed: view[] expects never, got object"},
 	{"never-index-misfit", "", "write failed: values[0] expects never, got 0"},
@@ -188,12 +218,12 @@ func checkedWriteCounts(t *testing.T) []string {
 		}
 		rows = append(rows, fmt.Sprintf("| stage3/checked-writes/%s.ts | %s | %s | %s | %s | %s | %s |", fixture.name, match[1], match[2], match[3], match[4], match[5], match[6]))
 	}
-	rows = append(rows, counted(t, "stage3/checked-writes/proven-number.a", false, nil, false, false))
+	rows = append(rows, counted(t, "stage3/checked-writes/proven-number.a", false, nil, false, false), counted(t, "stage3/checked-writes/proven-containers.a", false, nil, false, false))
 	return rows
 }
 
 func TestCheckedWiderWritesAdamicRefuses(t *testing.T) {
-	for _, name := range []string{"flags-refused", "string-refused", "shared-never"} {
+	for _, name := range []string{"flags-refused", "string-refused", "shared-never", "flow-refused", "array-refused", "map-refused"} {
 		path := filepath.Join(repository, "stage3/checked-writes", name+".a")
 		expected, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
 		if err != nil {
@@ -368,6 +398,88 @@ func TestCheckedDiagnosticReferenceMutants(t *testing.T) {
 				t.Fatal(report)
 			}
 			t.Logf("caught %s: expected exit 70, mutant exit %d stdout %q", mutant.name, got.exitCode, got.stdout)
+		})
+	}
+}
+
+func TestCheckedWiderWritesProvenContainers(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/checked-writes/proven-containers.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(program.WriteChecks) != 0 {
+		t.Fatal("proven container stores inserted checks")
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "2 1\n" {
+		t.Fatalf("Node: %#v", truth)
+	}
+	got, binary := nativelyUncached(t, program)
+	for name, result := range map[string]run{"native sanitized": got, "native release": releasedUncached(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+		if d := disagreement(truth, result); d != "" {
+			t.Fatalf("%s: %s", name, d)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+func TestCheckedFlowContainerContractMutants(t *testing.T) {
+	for _, fixture := range []string{"flow-node-misfit", "flow-undefined-misfit", "flow-array-misfit", "container-number-misfit", "container-string-misfit", "container-map-misfit", "container-splice-misfit", "container-object-misfit", "container-nested-misfit", "container-boolean-misfit", "container-fill-misfit", "container-map-object-misfit", "container-alias-misfit"} {
+		t.Run(fixture, func(t *testing.T) {
+			program, path := checkedWriteFixture(t, fixture)
+
+			changes := 0
+			change := func(value ir.Expression) ir.Expression {
+				if container, ok := value.(ir.ContractContainer); ok && container.Contract != nil && fixture != "container-alias-misfit" {
+					container.Contract = nil
+					changes++
+					return container
+				}
+				if strings.HasPrefix(fixture, "flow-") || fixture == "container-alias-misfit" {
+					if object, ok := value.(ir.ObjectLiteral); ok {
+						for i, field := range object.Fields {
+							if field.Contract != nil && (field.Name == "node" || field.Name == "antecedents" || field.Name == "count") {
+								copy := *field.Contract
+								copy.Reference = false
+								copy.NullishOnly = false
+								if fixture == "container-alias-misfit" {
+									copy.Nullable = true
+								}
+								if fixture == "flow-array-misfit" {
+									copy.Kind = ir.Array
+								}
+								object.Fields[i].Contract = &copy
+								changes++
+							}
+						}
+						return object
+					}
+				}
+				return value
+			}
+			mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), change)
+			mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), change)
+			if changes == 0 {
+				t.Fatal("mutant changed no allocation contract")
+			}
+			truth := onNode(t, path)
+			got, binary := nativelyUncached(t, program)
+			if d := disagreement(truth, got); d != "" {
+				t.Fatalf("mutant must match Node: %s; got %#v", d, got)
+			}
+			if d := disagreement(truth, onJavaScriptBackend(t, program)); d != "" {
+				t.Fatal(d)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("caught drop allocation contract: expected exit 70; mutant exit %d stdout %q", got.exitCode, got.stdout)
 		})
 	}
 }

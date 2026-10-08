@@ -642,6 +642,7 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		WriteOrigin                      WriteCheck
 		Array, Length, Value, Start, End Expression
 		Element                          Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -793,6 +794,7 @@ type (
 
 	// MapSet is map.set(Key, Value), which is the map.
 	MapSet struct {
+		WriteOrigin     WriteCheck
 		Map, Key, Value Expression
 		KeyType         Type
 		ValueType       Type
@@ -891,6 +893,7 @@ type ContractField struct {
 
 // FieldContract preserves a declared domain and directional proofs independently of its payload.
 type FieldContract struct {
+	NullishOnly  bool
 	TypeID       int
 	Reference    bool
 	Structural   bool
@@ -1320,3 +1323,13 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+// ContractContainer attaches an immutable slot declaration to a fresh allocation.
+// It never changes an existing alias's declaration.
+type ContractContainer struct {
+	Value          Expression
+	Contract       *FieldContract
+	AllocationType int
+}
+
+func (value ContractContainer) Type() Type { return value.Value.Type() }

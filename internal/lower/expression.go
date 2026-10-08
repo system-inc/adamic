@@ -247,6 +247,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
+		if err == nil {
+			value = l.containerAllocation(node, value)
+		}
 		return value, err
 	}
 	read := l.checker.GetTypeAtLocation(node)

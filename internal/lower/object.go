@@ -1262,7 +1262,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) == 0 || len(arguments) > 3 || arguments[0].Type() != element {
 			return nil, true, l.notYet(node, "fill with other than a value of the elements' type")
 		}
-		fill := ir.ArrayFill{Array: array, Value: arguments[0], Element: element, Site: l.writeSite(receiver)}
+		fill := ir.ArrayFill{WriteOrigin: l.elementWriteOrigin(receiver), Array: array, Value: arguments[0], Element: element, Site: l.writeSite(receiver)}
 		for index, bound := range arguments[1:] {
 			if bound.Type() != ir.Number {
 				return nil, true, l.notYet(node, "fill with a bound that isn't a number")
@@ -1557,7 +1557,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	case "get":
 		return ir.MapGet{Map: object, Key: arguments[0], KeyType: key, ValueType: value}, true, nil
 	case "set":
-		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
+		return ir.MapSet{WriteOrigin: ir.WriteCheck{Where: l.program.Where(receiver), Expression: sourceExpression(receiver) + "[value]"}, Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
 	case "has":
 		return ir.MapHas{Map: object, Key: arguments[0], KeyType: key}, true, nil
 	}

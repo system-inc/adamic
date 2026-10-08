@@ -1,0 +1,11 @@
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/checked-flow-container-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic ./internal/native ./internal/lower -run 'TestCheckedWider|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestCheckedFlowContainerContractMutants|TestExplainCheckedWritesOutput|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestProvenRelations|TestCEndsInNewline' -count=1 -v -timeout 10m > /tmp/flow-container-final.log 2>&1
+python3 stage3/checked-writes/a-check.py --out /tmp/flow-container-a-check > /tmp/flow-container-a-check.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts > /tmp/flow-container-counts.log 2>&1
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/flow-container-census.log > /tmp/flow-container-census-driver.log 2>&1
+go test ./internal/oracle -run '^TestCheckedWiderWrites/(container|flow)|^TestCheckedFlowContainerContractMutants$' -count=1 -v > /tmp/flow-container-slot-final.log 2>&1
+python3 stage3/checked-writes/census-groups.py /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/flow-container-groups-final > /tmp/flow-container-groups-final.log 2>&1
+python3 stage3/checked-writes/latent-controls.py --typescript "$HOME/.cache/adamic-stage3/api/node_modules/typescript" --out /tmp/flow-container-latent > /tmp/flow-container-latent.log 2>&1
