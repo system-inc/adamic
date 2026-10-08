@@ -213,6 +213,9 @@ func TestNodeFSFileMutants(t *testing.T) {
 			} else {
 				code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
 			}
+			if one.operation == "date_time" {
+				code = strings.ReplaceAll(code, "adamic_date_value(", "fs_file_mutant(")
+			}
 			if code == original {
 				t.Fatal("mutant changed nothing")
 			}

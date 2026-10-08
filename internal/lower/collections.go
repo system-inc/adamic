@@ -225,7 +225,7 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 		return nil, true, l.notYet(arguments[0], "forEach with an overloaded callback")
 	}
 	var returns ir.Type
-	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown || slotless(returns) {
 			return nil, true, l.notYet(arguments[0], "forEach with a callback returning "+l.checker.TypeToString(result))

@@ -74,6 +74,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if err := l.dateRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.nodeLibraryRefusal(node); err != nil {
 			found = err
 			return true
@@ -158,7 +162,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) && !l.errorCaptureRead(node) && !truthinessUse(node) && !l.methodComparisonUse(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.libraryDateBoundMethod(node) && !l.libraryDateObservedMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) && !l.errorCaptureRead(node) && !truthinessUse(node) && !l.methodComparisonUse(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
@@ -189,6 +193,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
+		}
+		if err := l.stringBoxViewRefusal(node); err != nil {
+			found = err
+			return true
 		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
 		// A checked cast relates only members selected by its tag, not excluded source members.

@@ -1,0 +1,51 @@
+function show(match: RegExpMatchArray | null): string {
+ if (match === null) return 'null';
+ return `${match.index}:${match[0]}:${match[1]}`;
+}
+console.log(show(String.prototype.match.call('za', /(a)/d)));
+console.log(show(new String('za').match(/(a)/d)));
+console.log(`${String.prototype.search.call('za', /a/)}`);
+console.log(String.prototype.replace.call('aba', /a/g, (whole: string): string => whole + '!'));
+console.log(String.prototype.replaceAll.call('aba', /a/g, (): string => 'x'));
+console.log(String.prototype.split.call('za!a', /(a)/, 3).join('|'));
+console.log(new String('za!a').split(/(a)/, 3).join('|'));
+const matches = String.prototype.matchAll.call('🌍x', /(?:)/gu);
+for (const found of matches) { console.log(`${found.index}:${found[0]}`); }
+console.log(String.prototype.replace.call('aba', /a/g, (whole: string): string => whole.toUpperCase()));
+console.log(new String('aba').replaceAll(/a/g, (): string => 'x'));
+const regex = /a/g;
+regex.lastIndex = -0;
+console.log(`${String.prototype.search.call('za', regex)} ${1 / regex.lastIndex}`);
+try { String.prototype.matchAll.call('a', /a/); } catch (error) {
+ if (error instanceof Error) { console.log(`${error.constructor === TypeError}:${error.message}`); }
+}
+try { String.prototype.replaceAll.call('a', /a/, (): string => 'b'); } catch (error) {
+ if (error instanceof Error) { console.log(`${error.constructor === TypeError}:${error.message}`); }
+}
+let order = '';
+function pattern(): RegExp { order = order + 'p'; return /a/g; }
+function replacement(): (whole: string) => string { order = order + 'r'; return (_whole: string): string => 'x'; }
+const object = { toString: () => { order = order + 't'; return 'aba'; } };
+console.log(String.prototype.replace.call(object, pattern(), replacement()));
+console.log(order);
+
+console.log(`${new String('za').search('a')} ${'za'.search('a')}`);
+console.log(show('za'.match('(a)')));
+
+function splitUnits(parts: (string | undefined)[]): string {
+ let result = '';
+ for (const part of parts) {
+  if (part === undefined) { result += 'undefined|'; }
+  else {
+   for (let index = 0; index < part.length; index++) result += `${part.charCodeAt(index)},`;
+   result += '|';
+  }
+ }
+ return result;
+}
+console.log(splitUnits(String.prototype.split.call('🌍', /(?!\W)/u)));
+console.log(splitUnits(String.prototype.split.call('🌍', /(?!\W)/u, undefined)));
+console.log(splitUnits(String.prototype.split.call('🌍', /(?!\W)/u, 4)));
+console.log(splitUnits(String.prototype.split.call('🌍', /(?!\W)/u, 4.5)));
+console.log(splitUnits(new String('🌍').split(/(?!\W)/u)));
+console.log(splitUnits(new String('🌍').split(/(?!\W)/u, 4.5)));

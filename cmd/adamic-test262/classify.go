@@ -101,6 +101,11 @@ func classify(path string, source string, adapt bool) classified {
 			}
 		}
 	}
+	if result.Adaptations["throw-error-constructor"] > 0 {
+		result.Original = bodyAfterFrontmatter(source)
+		result.Includes = meta.Includes
+		result.ConstructorAssertion = true
+	}
 	result.Program = program(rewriteHarnessCalls(body))
 	for _, include := range meta.Includes {
 		if include == "regExpUtils.js" {

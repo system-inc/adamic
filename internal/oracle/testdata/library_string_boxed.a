@@ -1,0 +1,30 @@
+const empty = new String();
+console.log(`${typeof empty} ${empty.length} ${empty.valueOf()}`);
+const text = new String('a🌍b');
+const alias = text;
+const other = new String('a🌍b');
+console.log(`${text === alias} ${text === other} ${text.length}`);
+console.log(String(text));
+console.log(String.prototype.toString.call(text));
+console.log(String.prototype.valueOf.call(text));
+for (const index of [-1, -0, 0, 1, 2, 3, 4, 0.5, NaN, Infinity]) {
+ const unit = text[index];
+ console.log(`${index} ${unit === undefined ? 'absent' : unit.charCodeAt(0)}`);
+}
+console.log(`${text['0']}`);
+console.log(`${text.charAt(1).charCodeAt(0)}`);
+console.log(text.slice(1, 3));
+console.log(text.substring(3, 1));
+console.log(`${text.startsWith('🌍', 1)} ${text.endsWith('🌍', 3)}`);
+const trim = new String(' x ');
+console.log(trim.trim());
+console.log(new String(42).valueOf());
+console.log(new String(null).valueOf());
+console.log(new String(undefined).valueOf());
+let order = '';
+const primitive = { toString: () => { order = order + 't'; return 'boxed'; } };
+const converted = new String(primitive);
+console.log(`${converted.valueOf()} ${order}`);
+
+console.log(`${text.hasOwnProperty('length')} ${text.hasOwnProperty('0')} ${text.hasOwnProperty('3')} ${text.hasOwnProperty('4')}`);
+console.log(`${text.hasOwnProperty('01')} ${text.hasOwnProperty('-0')} ${text.hasOwnProperty('toString')} ${text.hasOwnProperty('#StringData')}`);

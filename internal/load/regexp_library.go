@@ -17,6 +17,7 @@ func (s *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 		// ECMAScript permits an omitted pattern; the stock declaration omits
 		// these overloads although lowering already compiles the empty pattern.
 		text = strings.ReplaceAll(text, "interface RegExpConstructor {", "interface RegExpConstructor {\n    new (): RegExp;\n    (): RegExp;\n    new (pattern: undefined, flags?: string): RegExp;\n    (pattern: undefined, flags?: string): RegExp;")
+		text = dateLibrary(text)
 		text = strings.ReplaceAll(text, "interface RegExpExecArray extends Array<string>", "interface RegExpExecArray extends Array<string | undefined>")
 		text = strings.ReplaceAll(text, "interface RegExpMatchArray extends Array<string>", "interface RegExpMatchArray extends Array<string | undefined>")
 		text = strings.ReplaceAll(text, "split(separator: string | RegExp, limit?: number): string[];", "split(separator: string, limit?: number): string[];\n    split(separator: RegExp, limit?: number): (string | undefined)[];")
@@ -33,6 +34,9 @@ func (s *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 			declaration := "interface " + name + "<T> extends IteratorObject<T, BuiltinIteratorReturn, unknown> {"
 			text = strings.ReplaceAll(text, declaration, declaration+"\n    next(): IteratorResult<T, undefined>;")
 		}
+	}
+	if strings.HasSuffix(path.AsString(), "/lib.es2022.regexp.d.ts") {
+		text = strings.ReplaceAll(text, "[key: string]: [number, number]", "[key: string]: [number, number] | undefined")
 	}
 	return text, ok
 }

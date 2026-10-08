@@ -50,6 +50,8 @@ IN THE SOFTWARE.
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
   - Object sealing and extensibility (`runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - catchable String range validation (`internal/lower/library_string_ranges.go`, after
+    src/builtins/builtins-string.cc StringFromCodePoint and src/builtins/string-repeat.tq);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
@@ -59,6 +61,26 @@ IN THE SOFTWARE.
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
     GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - dense Array construction (`internal/lower/library_array_construct.go`, after
+    ArrayConstructInitializeElements in src/objects/elements.cc, V8 13.6.233.17);
+  - Array reduce and reduceRight (`internal/lower/library_array_reduce.go`, after
+    src/builtins/array-reduce.tq and src/builtins/array-reduce-right.tq, V8 13.6.233.17);
+  - Array.from string iteration (`internal/lower/library_array_from.go`, after
+    src/builtins/array-from.tq, V8 13.6.233.17);
+  - immutable string receivers of Array mutations (`internal/lower/library_array_call_string.go`,
+    after GenericArrayPush / GenericArrayPop in src/builtins/builtins-array.cc,
+    src/builtins/array-shift.tq and src/builtins/array-unshift.tq, V8 13.6.233.17);
+  - optional elements at removed indexes in Array find methods (`internal/native/emit_arrays.go`
+    and `internal/javascript/javascript.go`, after src/builtins/array-find.tq,
+    array-findindex.tq, array-findlast.tq and array-findlastindex.tq, V8 13.6.233.17);
+  - oversized non-array map allocation and fresh-function shift failures
+    (`internal/lower/library_array_call_map.go` and `library_array_call_function.go`,
+    after src/builtins/array-map.tq and src/builtins/array-shift.tq, V8 13.6.233.17);
+  - never-returning Array comparators (`internal/lower/library_array_sort.go` and
+    `runtime/array.c`, after SortCompareUserFn in
+    third_party/v8/builtins/array-sort.tq, V8 13.6.233.17);
+  - JSON parsing and diagnostics (`runtime/json_parse.c`, after src/json/json-parser.cc,
+    src/json/json-parser.h and src/common/message-template.h, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
@@ -391,3 +413,5 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ````
+
+The scalar data-descriptor validation in `internal/native/runtime/object_descriptors.c` ports the data-property part of `ValidateAndApplyPropertyDescriptor` from V8 13.6.233 `src/objects/js-objects.cc`, under the V8 BSD license reproduced above. Accessors and proxies are refused by lowering.

@@ -1,0 +1,7 @@
+for (const time of [-8640000000000001, -8640000000000000, -62167219200000, -1.9, -0, 0, 1.9, 253402300800000, 8640000000000000, 8640000000000001, NaN, Infinity, -Infinity]) {
+ const date = new Date(time);
+ const copy = new Date(date);
+ console.log(`${date.getTime()} ${copy.valueOf()} ${1 / date.getTime()}`);
+}
+console.log(`${new Date(20, 13, 0, 25, -70, 62, -1).getTime()}`);
+console.log(`${new Date(99.9, 0).getTime()}`);

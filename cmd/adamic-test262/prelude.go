@@ -11,13 +11,11 @@ package main
 //     so a function cannot carry properties. rewriteHarnessCalls renames the calls in the test body.
 //     Both Node and the native binary run that one rewritten program.
 //   - SameValue covers string, number (NaN equals NaN, and -0 is not 0), boolean and undefined.
-//     Anything else is not a member of that union, so the checker refuses the call instead of the
-//     runner comparing it wrong.
-//   - assert.throws is assertThrows(name, fn). It checks that an Error was caught, not that the
-//     constructor is the one named: stage 0 only builds `new Error`, and only `instanceof Error`
-//     on a catch lowers. The name is what the failure says when nothing was thrown. This is weaker
-//     than the harness, on both sides equally. A library call that throws on Node panics natively
-//     (docs/0.1.md), and a panic is not caught, so those tests come out fail rather than pass.
+//     rewriteHarnessCalls uses strict equality when null, unshadowed undefined, or the
+//     intrinsic Date.prototype makes SameValue equivalent to strict equality. Other operands
+//     outside the primitive union are still checked and refused rather than compared wrong.
+//   - assert.throws is assertThrows(name, fn), with exact builtin constructor
+//     identity checks. Unknown constructor names fail explicitly.
 //   - compareArray is generic over string, number or boolean. An array of a union does not lower;
 //     one copy per element type does. SameValue is the element comparison, as in assert.js.
 //   - Test262Error is a class with a message, not a prototype assignment. `throw new Test262Error`
@@ -79,6 +77,13 @@ function assert(mustBeTrue: boolean, message?: string): void {
 	throw new Error(message ?? "Expected true but got a non-true value");
 }
 
+function assertIdentity(mustBeTrue: boolean, fallback: string, message?: string): void {
+	if (mustBeTrue) {
+		return;
+	}
+	throw new Error(message ?? fallback);
+}
+
 function assertSameValue(actual: string | number | boolean | undefined, expected: string | number | boolean | undefined, message?: string): void {
 	if (sameValue(actual, expected)) {
 		return;
@@ -126,6 +131,16 @@ function assertThrows(expectedName: string, func: () => void, message?: string):
 		if (!(caught instanceof Error)) {
 			throw new Error((message ?? "") + "thrown value was not an Error");
 		}
+		const correct =
+			expectedName === "Error" ? caught.constructor === Error :
+			expectedName === "TypeError" ? caught.constructor === TypeError :
+			expectedName === "SyntaxError" ? caught.constructor === SyntaxError :
+			expectedName === "RangeError" ? caught.constructor === RangeError :
+			expectedName === "ReferenceError" ? caught.constructor === ReferenceError :
+			expectedName === "EvalError" ? caught.constructor === EvalError :
+			expectedName === "URIError" ? caught.constructor === URIError : false;
+		if (!correct) { throw new Error((message ?? "") + "wrong exception constructor"); }
+
 	}
 	if (!threw) {
 		throw new Error((message ?? "") + "Expected " + expectedName + " to be thrown but no exception was thrown at all");

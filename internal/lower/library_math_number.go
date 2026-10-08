@@ -17,6 +17,14 @@ var libraryMathConstants = map[string]float64{
 
 func (l *lowering) libraryMathNumberProperty(node *ast.Node) (ir.Expression, bool) {
 	access := node.AsPropertyAccessExpression()
+	if name, arity, intrinsic := l.libraryMathNumberFunction(access.Expression); intrinsic {
+		switch node.Name().Text() {
+		case "length":
+			return ir.NumberConstant{Value: float64(arity)}, true
+		case "name":
+			return ir.StringConstant{Index: l.constant(name)}, true
+		}
+	}
 	if l.isLibraryGlobal(access.Expression, "Math") {
 		if value, known := libraryMathConstants[node.Name().Text()]; known {
 			return ir.NumberConstant{Value: value}, true
@@ -63,6 +71,9 @@ func (l *lowering) libraryNumberSlot(node *ast.Node) (ir.Expression, error) {
 // libraryNumber converts only proven primitives. Objects can run arbitrary valueOf/toString code,
 // so they stay NotYet rather than being guessed at. The runtime handles missing primitive values.
 func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
+	if l.numberPrototype(node) || l.libraryNumberConstruction(node) {
+		return l.libraryNumberSlot(node)
+	}
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.NumberConstant{}, nil
 	}
@@ -86,6 +97,11 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 			return ir.NumberCall{Function: "convert", Arguments: []ir.Expression{read}}
 		}), nil
 	}
+	// Date is a proven intrinsic: its numeric valueOf reads the internal slot.
+	// Generic objects still require user-defined coercion and remain NotYet.
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") {
+		return ir.DateCall{Method: "valueOf", Receiver: value, Returns: ir.Number}, nil
+	}
 	switch value.Type() {
 	case ir.Number:
 		return value, nil
@@ -103,6 +119,20 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	written := node.AsCallExpression().Arguments.Nodes
+	if l.isLibraryGlobal(callee, "isFinite") || l.isLibraryGlobal(callee, "isNaN") {
+		if len(written) > 1 || hasSpread(node) {
+			return nil, true, l.notYet(node, "global numeric predicate with spread or extra arguments")
+		}
+		value := ir.Expression(ir.NumberConstant{Value: math.NaN()})
+		if len(written) == 1 {
+			var err error
+			value, err = l.libraryNumber(written[0])
+			if err != nil {
+				return nil, true, err
+			}
+		}
+		return ir.NumberCall{Function: callee.Text(), Arguments: []ir.Expression{value}}, true, nil
+	}
 	if l.isLibraryGlobal(callee, "Number") {
 		if len(written) == 0 {
 			return ir.NumberConstant{}, true, nil
@@ -117,6 +147,18 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
+	if name == "hasOwnProperty" {
+		if _, _, intrinsic := l.libraryMathNumberFunction(receiver); intrinsic {
+			if len(written) != 1 || hasSpread(node) {
+				return nil, true, l.notYet(node, "numeric intrinsic hasOwnProperty with spread or other than one key")
+			}
+			key, err := l.stringConversion(written[0])
+			if err != nil {
+				return nil, true, err
+			}
+			return l.libraryNumberFunctionOwnProperty(key), true, nil
+		}
+	}
 	if l.isLibraryGlobal(receiver, "Math") && (name == "clz32" || name == "fround" || name == "imul") {
 		count := 1
 		if name == "imul" {
@@ -189,6 +231,17 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 			}
 		}
 		written = written[1:]
+	} else if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.Number && l.libraryMember(callee) {
+		switch name {
+		case "toString", "toFixed", "toExponential", "toPrecision", "valueOf":
+		default:
+			return nil, false, nil
+		}
+		var err error
+		value, err = l.expression(receiver)
+		if err != nil {
+			return nil, true, err
+		}
 	} else {
 		return nil, false, nil
 	}
@@ -223,14 +276,101 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 	return ir.NumberFormat{Method: name, Value: value, Argument: argument}, true, nil
 }
 
-// A .call with an explicit this is bound, even though its method expression isn't the callee.
-func (l *lowering) libraryNumberBoundMethod(node *ast.Node) bool {
-	if !l.numberPrototype(node.AsPropertyAccessExpression().Expression) {
-		return false
+// Intrinsic method observation reads metadata without detaching a receiver. The same named
+// member of a user object is never specialized, and taking an intrinsic as a value stays refused.
+func (l *lowering) libraryMathNumberFunction(node *ast.Node) (string, int, bool) {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return "", 0, false
 	}
+	receiver, name := node.AsPropertyAccessExpression().Expression, node.Name().Text()
+	if !l.libraryMember(node) || len(l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)) == 0 {
+		return "", 0, false
+	}
+	if l.isLibraryGlobal(receiver, "Math") {
+		arity, known := mathFunctions[name]
+		if name == "clz32" || name == "fround" {
+			arity, known = 1, true
+		}
+		if name == "imul" {
+			arity, known = 2, true
+		}
+		if name == "random" {
+			arity, known = 0, true
+		}
+		if arity < 0 {
+			arity = 2
+		}
+		return name, arity, known
+	}
+	if l.numberPrototype(receiver) {
+		switch name {
+		case "valueOf", "toLocaleString":
+			return name, 0, true
+		case "toString", "toFixed", "toExponential", "toPrecision":
+			return name, 1, true
+		}
+	}
+	if l.isLibraryGlobal(receiver, "Number") {
+		switch name {
+		case "isFinite", "isNaN", "isInteger", "isSafeInteger", "parseFloat":
+			return name, 1, true
+		case "parseInt":
+			return name, 2, true
+		}
+	}
+	return "", 0, false
+}
+
+func (l *lowering) libraryMathNumberTypeOf(node *ast.Node) (ir.Expression, bool) {
+	operand := ast.SkipParentheses(node.AsTypeOfExpression().Expression)
+	text := ""
+	if l.isLibraryGlobal(operand, "Math") || l.numberPrototype(operand) {
+		text = "object"
+	}
+	if _, _, intrinsic := l.libraryMathNumberFunction(operand); intrinsic {
+		text = "function"
+	}
+	if text == "" {
+		return nil, false
+	}
+	return ir.StringConstant{Index: l.constant(text)}, true
+}
+
+// A .call with an explicit this is bound. typeof and name/length observations do not call it.
+func (l *lowering) libraryNumberBoundMethod(node *ast.Node) bool {
 	parent := node.Parent
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 		parent = parent.Parent
 	}
+	if _, _, intrinsic := l.libraryMathNumberFunction(node); intrinsic {
+		if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "hasOwnProperty" && called(parent) {
+			return true
+		}
+		if parent != nil && parent.Kind == ast.KindTypeOfExpression {
+			return true
+		}
+		if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && (parent.Name().Text() == "length" || parent.Name().Text() == "name") {
+			return true
+		}
+	}
+	if !l.numberPrototype(node.AsPropertyAccessExpression().Expression) {
+		return false
+	}
 	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "call" && called(parent)
+}
+
+// Numeric builtin functions own just their name and length. The helper evaluates and converts
+// the key once; ordinary IR keeps both backends and the ownership analyses on the same path.
+func (l *lowering) libraryNumberFunctionOwnProperty(key ir.Expression) ir.Expression {
+	function := len(l.result.Functions)
+	parameter := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "key", Type: ir.String, Function: function})
+	read := ir.Read{Local: parameter, Of: ir.String}
+	result := ir.Binary{Operator: ir.Or,
+		Left:  ir.Binary{Operator: ir.Equal, Left: read, Right: ir.StringConstant{Index: l.constant("length")}},
+		Right: ir.Binary{Operator: ir.Equal, Left: read, Right: ir.StringConstant{Index: l.constant("name")}},
+	}
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "library_number_function_own_property", Parameters: []int{parameter}, Returns: ir.Boolean, Body: []ir.Statement{ir.Return{Value: result}}})
+	return ir.Call{Function: function, Arguments: []ir.Expression{key}, Returns: ir.Boolean}
 }

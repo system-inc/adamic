@@ -54,8 +54,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
+	builder.WriteString(objectDescriptorRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
+	builder.WriteString("const adamicHasOwn = (object, name) => !name.startsWith('#') && Object.hasOwn(object, name);\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
@@ -68,8 +70,8 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// which 0.1 has no way to hold, so it's a panic, the same one native's map has.
 	builder.WriteString("const adamicMap = (array, callback) => {\n\tconst count = array.length;\n\tconst mapped = [];\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic('map: the array shrank while it was being mapped');\n\t\tmapped.push(adamicCall(callback, [array[index], index, array]));\n\t}\n\treturn mapped;\n};\n")
 	// find and findIndex call the callback even at an index the callback took away, with undefined,
-	// which the element's type can't hold: a panic there, the same one native has.
-	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tconst last = method === 'findLast' || method === 'findLastIndex';\n\tconst valueResult = method === 'find' || method === 'findLast';\n\tfor (let step = 0; step < count; step++) {\n\t\tconst index = last ? count - 1 - step : step;\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return valueResult ? element : index;\n\t}\n\treturn valueResult ? undefined : -1;\n};\n")
+	// accepted when the element type permits it; otherwise a panic, as native has.
+	builder.WriteString("const adamicFind = (array, method, callback, allowsUndefined) => {\n\tconst count = array.length;\n\tconst last = method === 'findLast' || method === 'findLastIndex';\n\tconst valueResult = method === 'find' || method === 'findLast';\n\tfor (let step = 0; step < count; step++) {\n\t\tconst index = last ? count - 1 - step : step;\n\t\tif (!allowsUndefined && index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return valueResult ? element : index;\n\t}\n\treturn valueResult ? undefined : -1;\n};\n")
 	// A Map's forEach gives value, key and the map; a Set's gives its element twice and the set.
 	builder.WriteString("const adamicCollectionVisit = (collection, callback) => collection.forEach((value, key, all) => adamicCall(callback, [value, key, all]));\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
@@ -586,8 +588,17 @@ func (e *emitter) value(expression ir.Expression) string {
 		r := e.program.Regexps[expression.Index]
 		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
 	case ir.RegExpCall:
+		if strings.HasPrefix(expression.Method, "symbol:") {
+			if strings.HasSuffix(expression.Method, "Callback") {
+				return e.value(expression.Value) + "[Symbol.replace](" + e.value(expression.Arguments[0]) + ", ((callback) => (whole) => adamicCall(callback, [whole]))(" + e.value(expression.Arguments[1]) + "))"
+			}
+			return e.value(expression.Value) + "[Symbol." + strings.TrimSuffix(strings.TrimPrefix(expression.Method, "symbol:"), "Callback") + "](" + e.values(expression.Arguments) + ")"
+		}
 		if expression.Method == "iteratorDone" {
 			return e.value(expression.Value) + ".done"
+		}
+		if strings.HasSuffix(expression.Method, "Callback") {
+			return e.value(expression.Value) + "." + strings.TrimSuffix(expression.Method, "Callback") + "(" + e.value(expression.Arguments[0]) + ", ((callback) => (whole) => adamicCall(callback, [whole]))(" + e.value(expression.Arguments[1]) + "))"
 		}
 		return e.value(expression.Value) + "." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.RegExpGroup:
@@ -720,6 +731,16 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Value) + "?.length"
 		}
 		return e.value(expression.Value) + ".length"
+	case ir.JSONParse:
+		callback := "undefined"
+		if expression.Reviver != nil {
+			callback = e.value(expression.Reviver)
+		}
+		ignored := "undefined"
+		if expression.IgnoredReviver != nil {
+			ignored = e.value(expression.IgnoredReviver)
+		}
+		return "adamicJSONParse(" + e.value(expression.Text) + ", " + callback + ", " + ignored + ", " + quote(expression.Mode) + ")"
 	case ir.JSONStringify:
 		value := e.value(expression.Value)
 		replacer, space := "undefined", "undefined"
@@ -748,12 +769,23 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		if expression.Method == "errorCaptureStack" {
 			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
 		}
 		if expression.Method == "errorReadStack" {
 			return "(" + e.value(expression.Arguments[0]) + ")['stack']"
+		}
+		if expression.Method == "definePropertyError" {
+			return "adamicDefinePropertyError(" + e.values(expression.Arguments) + ")"
+		}
+		if expression.Method == "typeError" {
+			return "new TypeError(" + e.values(expression.Arguments) + ")"
+		}
+		if expression.Method == "propertyIsEnumerable" {
+			return "adamicObjectEnumerable(" + e.values(expression.Arguments) + ")"
 		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
@@ -791,6 +823,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Box:
 		return e.value(expression.Value)
+	case ir.BuiltinError:
+		name := []string{"Error", "TypeError", "SyntaxError", "RangeError", "ReferenceError", "EvalError", "URIError"}[expression.Kind]
+		return "new " + name + "(" + e.value(expression.Message) + ")"
+	case ir.ErrorIs:
+		name := []string{"Error", "TypeError", "SyntaxError", "RangeError", "ReferenceError", "EvalError", "URIError"}[expression.Kind]
+		if expression.Exact {
+			return "(" + e.value(expression.Value) + ".constructor === " + name + ")"
+		}
+		return "(" + e.value(expression.Value) + " instanceof " + name + ")"
 	case ir.MakeError:
 		if expression.Name != nil {
 			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
@@ -903,7 +944,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
 		if expression.Method == "find" || expression.Method == "findIndex" || expression.Method == "findLast" || expression.Method == "findLastIndex" {
-			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
+			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ", " + strconv.FormatBool(expression.AllowsUndefined) + ")"
 		}
 		return "adamicVisit(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
 	case ir.CollectionIterator:
@@ -945,7 +986,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
-		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+		return "adamicHasOwn(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.ParallelMap:
 		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
 	case ir.ReadTextFile:

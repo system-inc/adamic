@@ -3,6 +3,7 @@ package lower
 import (
 	"math"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
@@ -22,7 +23,10 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
+	isNewError := false
+	if thrown.Kind == ast.KindNewExpression {
+		_, isNewError = l.errorKind(thrown.AsNewExpression().Expression)
+	}
 	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
 	if !isNewError && !isCaught {
 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
@@ -141,7 +145,7 @@ func (l *lowering) exceptions() error {
 			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
 	}
-	return nil
+	return l.regexpDiagnostics()
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
@@ -158,19 +162,23 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				return false
 			}
 		case ir.RegExpNew:
-			if node.Index < 0 {
+			if node.Index < 0 || node.Invalid {
 				found = true
 			}
 		case ir.StringFromCodes:
 			found = found || node.CodePoints
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
-		case ir.Throw:
+		case ir.Throw, ir.JSONParse:
 			found = true
 		case ir.NodeHostCall:
 			found = found || node.Throws
 		case ir.ProcessCall:
 			found = found || node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
+		case ir.RegExpCall:
+			found = found || node.Method == "matchAll" || node.Method == "replaceAll" || strings.HasSuffix(node.Method, "Callback")
+		case ir.JSONStringify:
+			found = found || (node.Schema.CallsUserCode() || node.ReplacerSchema.CallsUserCode())
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -225,17 +233,19 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if node.Function == "hash_update" || node.Function == "hash_digest" {
 				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
+		case ir.DateCall:
+			if node.Method == "toISOString" {
+				failing = "Date.toISOString validation"
+			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
-			if node.Method == "replaceAll" || node.Method == "matchAll" {
-				failing = "RegExp global-flag validation"
-			}
+			callsClosures = callsClosures || strings.HasSuffix(node.Method, "Callback")
 		case ir.StringCall:
 			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
+			case node.Method == "repeat" && !node.Validated && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
 				failing = "repeat"
 			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
 				failing = "normalize"

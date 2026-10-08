@@ -1,0 +1,30 @@
+function show(label: string, date: Date): void {
+    const time = date.getTime();
+    console.log(`${label} ${time} ${date.getUTCFullYear()} ${date.getUTCMonth()} ${date.getUTCDate()} ${date.getUTCDay()} ${date.getUTCHours()} ${date.getUTCMinutes()} ${date.getUTCSeconds()} ${date.getUTCMilliseconds()}`);
+    if (time === time) console.log(date.toISOString());
+    else console.log('invalid');
+}
+const years = [-1000, -400, -1, 0, 99, 100, 1900, 2000, 2100, 2400, 3000];
+for (const year of years) {
+    show(`m13 ${year}`, new Date(year, 13, 1, 0, 0, 0, 0));
+    show(`m13t ${year}`, new Date(year, 13, 1, 23, 59, 59, 999));
+    show(`d0 ${year}`, new Date(year, 1, 0, 0, 0, 0, 0));
+    show(`d0mar ${year}`, new Date(year, 2, 0, 12, 0, 0, 0));
+    show(`d-1 ${year}`, new Date(year, 1, -1, 0, 0, 0, 1));
+    show(`d-1jan ${year}`, new Date(year, 0, -1, 0, 0, 0, 0));
+    const utc29 = Date.UTC(year, 1, 29, 0, 0, 0, 0);
+    const utc28 = Date.UTC(year, 1, 28, 23, 59, 59, 999);
+    const mar1 = Date.UTC(year, 2, 1, 0, 0, 0, 0);
+    console.log(`utc ${year} ${utc28} ${utc29} ${mar1}`);
+    show(`feb28 ${year}`, new Date(utc28));
+    show(`feb29 ${year}`, new Date(utc29));
+    show(`mar1 ${year}`, new Date(mar1));
+}
+const civil = new Date(0);
+for (const year of [0, 4, 100, 400, 1900, 2000, 2100]) {
+    civil.setUTCFullYear(year, 1, 29);
+    civil.setUTCHours(0, 0, 0, 0);
+    show(`civil29 ${year}`, civil);
+    civil.setUTCFullYear(year, 2, 0);
+    show(`civil0 ${year}`, civil);
+}

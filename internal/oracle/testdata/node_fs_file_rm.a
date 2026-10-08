@@ -19,6 +19,6 @@ rmSync(root + '/missing', { force: true }); console.log('forced missing');
 const options = { recursive: true, force: true };
 rmSync(root + '/missing', options);
 for (const path of [root + '/missing', root + '/directory', root + '/locked/file', root + '/closed', root + '/bad\0']) {
-    try { rmSync(path); } catch (error) { if (error instanceof Error) { failure(error); } }
+    try { rmSync(path); } catch (error) { if (error instanceof Error) { console.log(`identity ${error.constructor === Error} ${error.constructor === TypeError} ${error instanceof TypeError}`); failure(error); } }
 }
-try { rmSync(root + '/closed', { recursive: true, force: true }); } catch (error) { if (error instanceof Error) { failure(error); } }
+try { rmSync(root + '/closed', { recursive: true, force: true }); } catch (error) { if (error instanceof Error) { console.log(`identity ${error.constructor === Error} ${error.constructor === TypeError} ${error instanceof TypeError}`); failure(error); } }

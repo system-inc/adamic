@@ -47,16 +47,30 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 	if split {
 		arguments = append(arguments, defaultLimit)
 	}
-	method := map[string]string{"test": "test", "exec": "exec", "match": "match", "matchAll": "match_all", "next": "next", "replace": "replace", "replaceAll": "replace", "split": "split", "search": "search"}[call.Method]
-	if method == "replace" {
-		arguments = append(arguments, fmt.Sprint(call.Method == "replaceAll"))
-
+	name := call.Method
+	symbol := strings.HasPrefix(name, "symbol:")
+	if symbol {
+		name = strings.TrimPrefix(name, "symbol:")
+		arguments[0], arguments[1] = arguments[1], arguments[0]
+	}
+	method := map[string]string{"test": "test", "exec": "exec", "toString": "to_string", "match": "match", "matchAll": "match_all", "next": "next", "replace": "replace", "replaceAll": "replace", "replaceCallback": "replace_callback", "replaceAllCallback": "replace_callback", "split": "split", "search": "search"}[name]
+	if symbol && name == "matchAll" {
+		method = "symbol_match_all"
+	}
+	if method == "replace" || method == "replace_callback" {
+		arguments = append(arguments, fmt.Sprint(call.Method == "replaceAll" || call.Method == "replaceAllCallback"))
 	}
 	invocation := "adamic_regex_" + method + "(" + strings.Join(arguments, ", ") + ")"
+	var result string
 	if call.Returns.IsReference() {
-		return e.own(call.Returns, invocation)
+		result = e.own(call.Returns, invocation)
+	} else {
+		result = e.snapshot(call.Returns, invocation)
 	}
-	return e.snapshot(call.Returns, invocation)
+	if call.Method == "replaceAll" || call.Method == "matchAll" || strings.HasSuffix(call.Method, "Callback") {
+		e.checkThrown()
+	}
+	return result
 }
 func (e *emitter) regexProperty(property ir.RegExpProperty) string {
 	array := e.value(property.Array)

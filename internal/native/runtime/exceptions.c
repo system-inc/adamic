@@ -11,26 +11,48 @@ _Thread_local adamic_object *adamic_thrown;
 
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_references[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_names, error_references, NULL};
-static adamic_string error_name = ADAMIC_STRING("Error");
+// Distinct immutable shapes carry constructor identity; name remains writable.
+// The last two are host SystemError and DOMException, both inheriting Error.
+static const adamic_shape error_shapes[] = {
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL},
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL},
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL},
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL}, {3, error_names, error_references, NULL}
+};
+static adamic_string error_labels[] = {
+	ADAMIC_STRING("Error"), ADAMIC_STRING("TypeError"), ADAMIC_STRING("SyntaxError"),
+	ADAMIC_STRING("RangeError"), ADAMIC_STRING("ReferenceError"), ADAMIC_STRING("EvalError"), ADAMIC_STRING("URIError"), ADAMIC_STRING("SystemError"), ADAMIC_STRING("SyntaxError")
+};
 
 // Reserve the built-in Error identities used by the compiler. Keep the host's
 // own code-bearing shape and ownership layout while sharing nominal identity.
 void adamic_error_tag(adamic_object *error) {
-    static const adamic_class error_class = {NULL, 0, 3, NULL, 1u << 30, &error_shape, NULL, 0, false, 0, NULL};
-    static const adamic_class type_error_class = {&error_class, 3, 3, NULL, (1u << 30) + 1, &error_shape, NULL, 0, false, 0, NULL};
-    static const adamic_class range_error_class = {&error_class, 3, 3, NULL, (1u << 30) + 2, &error_shape, NULL, 0, false, 0, NULL};
+    static const adamic_class error_class = {NULL, 0, 3, NULL, 1u << 30, &error_shapes[0], NULL, 0, false, 0, NULL};
+    static const adamic_class type_error_class = {&error_class, 3, 3, NULL, (1u << 30) + 1, &error_shapes[0], NULL, 0, false, 0, NULL};
+    static const adamic_class range_error_class = {&error_class, 3, 3, NULL, (1u << 30) + 2, &error_shapes[0], NULL, 0, false, 0, NULL};
     const adamic_string *name = error->slots[0].reference;
     error->class = name->length == 9 && memcmp(name->bytes, "TypeError", 9) == 0 ? &type_error_class :
                    name->length == 10 && memcmp(name->bytes, "RangeError", 10) == 0 ? &range_error_class : &error_class;
 }
 
-adamic_object *adamic_error_new(adamic_string *message) {
-	adamic_object *error = adamic_object_new(&error_shape);
-	error->slots[0].reference = adamic_retain(&error_name);
+bool adamic_error_is(const adamic_object *error, int kind, bool exact) {
+	if (error == NULL) return false;
+	for (int actual = 0; actual < 9; actual++) {
+		if (error->shape == &error_shapes[actual]) return actual == kind || (!exact && kind == 0);
+	}
+	return false;
+}
+
+adamic_object *adamic_builtin_error_new(int kind, adamic_string *message) {
+	adamic_object *error = adamic_object_new(&error_shapes[kind]);
+	error->slots[0].reference = adamic_retain(&error_labels[kind]);
 	error->slots[1].reference = adamic_retain(message);
 	adamic_error_tag(error);
 	return error;
+}
+
+adamic_object *adamic_error_new(adamic_string *message) {
+	return adamic_builtin_error_new(0, message);
 }
 
 _Noreturn void adamic_uncaught(void) {

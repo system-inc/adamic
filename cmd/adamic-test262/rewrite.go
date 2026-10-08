@@ -23,6 +23,10 @@ var harnessCalls = []struct {
 // assert.throws(TypeError, fn) becomes assertThrows("TypeError", fn). A first argument that isn't a
 // plain name (or a dotted name) is left as written, and the checker then refuses the call.
 func rewriteHarnessCalls(source string) string {
+	return rewriteHarnessCallsWithSentinels(source, globalUndefinedUnshadowed(source), globalIntrinsicUnshadowed(source, "Date"))
+}
+
+func rewriteHarnessCallsWithSentinels(source string, undefinedSafe, dateSafe bool) string {
 	var builder strings.Builder
 	builder.Grow(len(source))
 	for index := 0; index < len(source); {
@@ -53,7 +57,7 @@ func rewriteHarnessCalls(source string) string {
 			continue
 		}
 		if source[index] == '`' {
-			index = writeTemplate(&builder, source, index)
+			index = writeTemplate(&builder, source, index, undefinedSafe, dateSafe)
 			continue
 		}
 		if !identifierBoundary(source, index) {
@@ -68,6 +72,14 @@ func rewriteHarnessCalls(source string) string {
 		replaced := false
 		for _, call := range harnessCalls {
 			if strings.HasPrefix(source[index:], call.from) && identifierEnded(source, index+len(call.from)) {
+				if call.from == "assert.sameValue" || call.from == "assert.notSameValue" {
+					if rewritten, next, safe := rewriteSentinelAssertion(source, index, call.from, undefinedSafe, dateSafe); safe {
+						builder.WriteString(rewritten)
+						index = next
+						replaced = true
+						break
+					}
+				}
 				builder.WriteString(call.to)
 				index += len(call.from)
 				replaced = true
@@ -186,7 +198,7 @@ func endOfString(source string, index int) int {
 }
 
 // writeTemplate copies a template literal, rewriting harness calls inside each ${ } expression.
-func writeTemplate(builder *strings.Builder, source string, index int) int {
+func writeTemplate(builder *strings.Builder, source string, index int, undefinedSafe, dateSafe bool) int {
 	builder.WriteByte('`')
 	index++
 	for index < len(source) {
@@ -206,7 +218,7 @@ func writeTemplate(builder *strings.Builder, source string, index int) int {
 				return len(source)
 			}
 			builder.WriteString("${")
-			builder.WriteString(rewriteHarnessCalls(expression))
+			builder.WriteString(rewriteHarnessCallsWithSentinels(expression, undefinedSafe, dateSafe))
 			builder.WriteByte('}')
 			index = next
 			continue

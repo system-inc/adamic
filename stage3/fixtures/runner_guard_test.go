@@ -34,6 +34,10 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 	}{
 		{"erasable", erasable + ";" + runtimeURL, true},
 		{"transformed", transformed + ";" + runtimeURL, true},
+		{"reviewed adaptive", adaptiveNodeConversion + ";" + runtimeURL, true},
+		{"unguarded strip fallback", "stripTypeScriptTypes(source, { mode: 'strip' });" + transformed + ";" + runtimeURL, false},
+		{"adaptive wrong error boundary", strings.Replace(adaptiveNodeConversion, "ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX", "ERR_OTHER", 1) + ";" + runtimeURL, false},
+		{"adaptive extra call", adaptiveNodeConversion + ";" + transformed + ";" + runtimeURL, false},
 		{"missing call", runtimeURL, false},
 		{"unknown call", "stripTypeScriptTypes(source, { mode: 'unknown' });" + runtimeURL, false},
 		{"duplicate erasable", erasable + ";" + erasable + ";" + runtimeURL, false},

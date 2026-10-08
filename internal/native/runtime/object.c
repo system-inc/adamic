@@ -40,12 +40,16 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 	if (object->has_captured_stack && name->length == 5 && memcmp(name->bytes, "stack", 5) == 0) { return true; }
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
+		// Private slots use mangled shape names, but are not JavaScript properties.
+		if (field[0] == '#') {
+			continue;
+		}
 		size_t length = strlen(field);
 		if (length == name->length && memcmp(field, name->bytes, length) == 0) {
 			return true;
 		}
 	}
-	return false;
+	return adamic_object_descriptor_has(object, name);
 }
 
 void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index) {

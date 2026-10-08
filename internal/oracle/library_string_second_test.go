@@ -14,10 +14,10 @@ func init() {
 		name   string
 		lowers bool
 	}{
-		{"range_catch", true}, {"typeof_conversion", true}, {"primitive", true}, {"affixes", true}, {"wellformed", true}, {"null_receiver", true}, {"raw_primitive", true},
+		{"range_catch", true}, {"typeof_conversion", true}, {"primitive", true}, {"affixes", true}, {"wellformed", true}, {"null_receiver", true}, {"raw_primitive", true}, {"boxed", true}, {"regex_dispatch", true}, {"ranges", true}, {"range_refused", true},
 	} {
 		path := "internal/oracle/testdata/library_string_" + entry.name + ".a"
-		if !entry.lowers {
+		if !entry.lowers || entry.name == "range_refused" {
 			// The flow gate globs runnable top-level fixtures; refusal probes live separately.
 			path = "internal/oracle/testdata/library_string_refusals/library_string_" + entry.name + ".a"
 		}
@@ -74,11 +74,13 @@ func TestLibraryStringSecondMutants(t *testing.T) {
 						changed = true
 						return node
 					}
-				case ir.StringConstant:
-					if test.name == "nullReceiver" && program.Strings[node.Index] == "TypeError" {
-						program.Strings[node.Index] = "RangeError"
+				case ir.BuiltinError:
+					if test.name == "nullReceiver" && node.Kind == 1 {
+						node.Kind = 3
 						changed = true
+						return node
 					}
+				case ir.StringConstant:
 					if test.name == "mapConversion" && program.Strings[node.Index] == "[object Map]" {
 						program.Strings[node.Index] = "[object Set]"
 						changed = true

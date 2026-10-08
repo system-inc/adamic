@@ -407,14 +407,6 @@ func (e *engine) attempt(test classified) result {
 	})
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
-	// The existing generic harness checks Error ancestry, not constructor
-	// identity. Independent Node success cannot prove that missing native check.
-	// Do not award a RegExp pass until exact constructor checks are supported.
-	if base.Kind == outcomePass && test.ConstructorAssertion {
-		base.Kind = outcomeRefused
-		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
-		return base
-	}
 	if base.Kind == outcomePass && test.Original != "" {
 		original := e.originalRegExp(test)
 		if crashedExecution(original) {
@@ -466,7 +458,7 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
-	command.Env = append(os.Environ(), extra...)
+	command.Env = append(append(os.Environ(), "TZ=UTC"), extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit

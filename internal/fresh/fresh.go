@@ -1039,6 +1039,12 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Left)
 		a.value(expression.Right)
 		return value{}
+	case ir.ErrorIs:
+		a.value(expression.Value)
+		return value{}
+	case ir.BuiltinError:
+		a.value(expression.Message)
+		return a.fresh(anyField, value{})
 	case ir.IsNull:
 		a.value(expression.Value)
 		return value{}
@@ -1064,8 +1070,14 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return value{}
+	case ir.JSONParse:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.JSONStringify:
-		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
+		// JSON callbacks can mutate captured objects. Expose their operands;
+		// other serialization reads values without calling user code.
+		if expression.Schema.CallsUserCode() || expression.ReplacerSchema.CallsUserCode() {
+			return a.call(a.operands(expression), expression.Type())
+		}
 		a.value(expression.Value)
 		a.value(expression.Replacer)
 		a.value(expression.Space)
@@ -1134,6 +1146,15 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MathCall:
 		for _, argument := range expression.Arguments {
 			a.value(argument)
+		}
+		return value{}
+	case ir.DateCall:
+		a.value(expression.Receiver)
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		if expression.Returns == ir.Object {
+			return a.fresh("", value{})
 		}
 		return value{}
 	case ir.ObjectCall:

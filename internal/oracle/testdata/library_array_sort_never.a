@@ -1,0 +1,49 @@
+function stop(left: number, right: number): never {
+	console.log(`${left} ${right}`);
+	throw new Error('stop'.repeat(2));
+}
+const values = [2, 1];
+try {
+	values.sort(stop);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(values.join(','));
+let calls = 0;
+const words = ['b'.repeat(2), 'a'.repeat(2)];
+const compare = (left: string, right: string): never => {
+	calls += 1;
+	words.pop();
+	throw new Error(`${left}:${right}`);
+};
+try {
+	words.sort(compare);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(`${words.join(',')} ${calls}`);
+const empty: number[] = [];
+console.log(`${empty.sort(stop).length}`);
+const singleton = [1];
+console.log(singleton.sort(stop).join(','));
+function factory(): (left: number, right: number) => never {
+	console.log('factory');
+	values.push(3);
+	return stop;
+}
+try {
+	values.sort(factory());
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(values.join(','));
+const optional: (number | undefined)[] = [undefined, 1];
+optional.sort((): never => { throw new Error('unused'); });
+console.log(optional.join(','));
+const optionalCompared: (number | undefined)[] = [undefined, 2, 1];
+try {
+	optionalCompared.sort((): never => { throw new Error('optional'.repeat(1)); });
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(optionalCompared.join(','));

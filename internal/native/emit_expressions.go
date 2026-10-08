@@ -33,6 +33,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, argument := range expression.Arguments {
 			e.value(argument)
 		}
+		if expression.Invalid {
+			e.line("adamic_thrown = adamic_builtin_error_new(2, &adamic_string_%d);", expression.Failure)
+			e.checkThrown()
+			return "NULL"
+		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_regex_new(&adamic_regex_%d, &adamic_string_%d, &adamic_string_%d)", expression.Index, expression.Source, expression.Flags))
 	case ir.RegExpCall:
 		return e.regexCall(expression)
@@ -212,6 +217,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.maybeToString(expression.Value)
 	case ir.Box:
 		return e.box(expression.Value)
+	case ir.BuiltinError:
+		return e.own(ir.Object, fmt.Sprintf("adamic_builtin_error_new(%d, %s)", expression.Kind, e.value(expression.Message)))
+	case ir.ErrorIs:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_error_is(%s, %d, %t)", e.value(expression.Value), expression.Kind, expression.Exact))
 	case ir.MakeError:
 		return e.makeError(expression)
 	case ir.WeakOf:
@@ -415,7 +424,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
 		// (sort.c), and the throw goes on from here.
 		if expression.Callback != nil {
-			e.line("%s(%s, adamic_compare_closure, %s);", sort, array, e.value(expression.Callback))
+			comparator := "adamic_compare_closure"
+			if expression.CallbackNever {
+				comparator = "adamic_compare_never"
+			}
+			e.line("%s(%s, %s, %s);", sort, array, comparator, e.value(expression.Callback))
 			e.closureThrown()
 			return array
 		}
@@ -584,6 +597,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
 		}
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
+	case ir.JSONParse:
+		return e.jsonParse(expression)
 	case ir.JSONStringify:
 		return e.jsonStringify(expression)
 	case ir.JSONNull:
@@ -613,6 +628,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

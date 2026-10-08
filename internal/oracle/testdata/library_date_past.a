@@ -1,0 +1,4 @@
+const after = new Date(8640000000000001);
+const before = new Date(-8640000000000001);
+console.log(`${before.getTime()} ${after.getTime()}`);
+console.log(after.toISOString());

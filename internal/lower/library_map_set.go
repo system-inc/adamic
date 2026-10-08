@@ -17,14 +17,22 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 		return nil, false, nil
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
-	if len(arguments) != 1 || !l.isSet(arguments[0]) {
-		return nil, true, l.notYet(node, name+" with anything but a concrete library Set")
+	if len(arguments) != 1 || (!l.isSet(arguments[0]) && !l.isLibraryType(l.checker.GetTypeAtLocation(arguments[0]), "Map", "ReadonlyMap")) {
+		return nil, true, l.notYet(node, name+" with anything but a concrete library Set or Map")
 	}
 	element, err := l.setElement(receiver)
 	if err != nil {
 		return nil, true, err
 	}
-	otherElement, err := l.setElement(arguments[0])
+	// A Map implements the set-like protocol through size, has and keys. Its values
+	// are never compared or copied into the result.
+	otherValue := ir.Number
+	var otherElement ir.Type
+	if l.isSet(arguments[0]) {
+		otherElement, err = l.setElement(arguments[0])
+	} else {
+		otherElement, otherValue, err = l.mapTypes(arguments[0])
+	}
 	if err != nil {
 		return nil, true, err
 	}
@@ -52,7 +60,11 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 	has := func(set ir.Expression) ir.Expression { return ir.MapHas{Map: set, Key: item, KeyType: element} }
 	not := func(value ir.Expression) ir.Expression { return ir.Unary{Operator: ir.Not, Operand: value} }
 	walk := func(set ir.Expression, body ...ir.Statement) ir.Statement {
-		return ir.ForOf{Iterable: set, MapPart: "keys", Key: element, Value: ir.Number, Local: item.Local, Body: body}
+		value := ir.Number
+		if set == b {
+			value = otherValue
+		}
+		return ir.ForOf{Iterable: set, MapPart: "keys", Key: element, Value: value, Local: item.Local, Body: body}
 	}
 	smaller := ir.Binary{Operator: ir.LessOrEqual, Left: ir.MapSize{Map: a}, Right: ir.MapSize{Map: b}}
 	switch name {

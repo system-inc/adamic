@@ -82,6 +82,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+				if l.libraryArrayAliasDeclaration(declaration) {
+					continue
+				}
 				// A module's const [a, b] = tuple, or { x, y } = object, declares globals too, each name
 				// its own.
 				if declaration.Name().Kind == ast.KindArrayBindingPattern || declaration.Name().Kind == ast.KindObjectBindingPattern {

@@ -23,6 +23,116 @@ func TestLibraryArrayNewFamilyMutants(t *testing.T) {
 		mutate        func(*ir.Program) bool
 		mutateC       func(string) string
 	}{
+		{name: "constructor argument order", fixture: "library_array_dense_construction.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			walk(program.Main, func(node any) bool {
+				if literal, ok := node.(ir.ArrayLiteral); ok && len(literal.Elements) > 1 {
+					literal.Elements[0], literal.Elements[1] = literal.Elements[1], literal.Elements[0]
+					changed = true
+					return false
+				}
+				return true
+			})
+			return changed
+		}},
+		{name: "reduceRight index stride", fixture: "library_array_reductions.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_reduceRight" {
+					continue
+				}
+				for _, statement := range function.Body {
+					loop, ok := statement.(ir.Loop)
+					if !ok {
+						continue
+					}
+					advance := loop.Update[0].(ir.Assign)
+					value := advance.Value.(ir.Binary)
+					value.Right = ir.NumberConstant{Value: 2}
+					advance.Value = value
+					loop.Update[0] = advance
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "reduce saved length boundary", fixture: "library_array_reductions.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_reduce" {
+					continue
+				}
+				for index, statement := range function.Body {
+					loop, ok := statement.(ir.Loop)
+					if !ok {
+						continue
+					}
+					bound := loop.Condition.(ir.Binary)
+					bound.Right = ir.Binary{Operator: ir.Subtract, Left: bound.Right, Right: ir.NumberConstant{Value: 1}}
+					loop.Condition = bound
+					function.Body[index] = loop
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "reduce empty TypeError message", fixture: "library_array_reductions.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Reduce of empty array with no initial value" {
+					program.Strings[index] = "wrong empty reduction"
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "generic nullish TypeError message", fixture: "library_array_receiver_calls.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Cannot convert undefined or null to object" {
+					program.Strings[index] = "wrong nullish receiver"
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "generic primitive every result", fixture: "library_array_receiver_calls.a", mutate: func(program *ir.Program) bool {
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_primitive_every" {
+					continue
+				}
+				last := len(function.Body) - 1
+				returned := function.Body[last].(ir.Return)
+				returned.Value = ir.BooleanConstant{Value: false}
+				function.Body[last] = returned
+				return true
+			}
+			return false
+		}},
+		{name: "from string iteration order", fixture: "library_array_from_string.a", mutate: func(program *ir.Program) bool {
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_from_string" {
+					continue
+				}
+				last := len(function.Body) - 1
+				returned := function.Body[last].(ir.Return)
+				returned.Value = ir.ArrayReverse{Array: returned.Value}
+				function.Body[last] = returned
+				return true
+			}
+			return false
+		}},
+		{name: "string mutation readonly error", fixture: "library_array_string_mutations.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Cannot assign to read only property 'length' of object '[object String]'" {
+					program.Strings[index] = "wrong readonly string error"
+					return true
+				}
+			}
+			return false
+		}},
 		{name: "generic forward boundary", fixture: "library_array_search.a", mutate: func(program *ir.Program) bool {
 			changed := false
 			for index := range program.Functions {
@@ -92,6 +202,119 @@ func TestLibraryArrayNewFamilyMutants(t *testing.T) {
 		{name: "copyWithin undefined end", fixture: "library_array_copy_within.a", mutateC: func(source string) string {
 			return strings.ReplaceAll(source, "HUGE_VAL", "0.0")
 		}},
+
+		{name: "aliased isArray classification", fixture: "library_array_alias_is_array.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name == "array_is_array" {
+					last := len(function.Body) - 1
+					returned := function.Body[last].(ir.Return)
+					value := returned.Value.(ir.BooleanConstant)
+					value.Value = !value.Value
+					returned.Value = value
+					function.Body[last] = returned
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "aliased every result", fixture: "library_array_alias_every.a", mutate: func(program *ir.Program) bool {
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name == "array_primitive_every" {
+					last := len(function.Body) - 1
+					returned := function.Body[last].(ir.Return)
+					returned.Value = ir.BooleanConstant{Value: false}
+					function.Body[last] = returned
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "join intrinsic own prototype", fixture: "library_array_alias_join.a", mutateC: func(source string) string {
+			return strings.ReplaceAll(source, "NULL == NULL", "NULL != NULL")
+		}},
+		{name: "aliased includes nullish error", fixture: "library_array_alias_includes.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Cannot convert undefined or null to object" {
+					program.Strings[index] = "wrong includes receiver"
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "aliased indexOf boundary", fixture: "library_array_alias_search.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_generic_indexOf" {
+					continue
+				}
+				for index, statement := range function.Body {
+					branch, ok := statement.(ir.If)
+					if !ok {
+						continue
+					}
+					eligible, ok := branch.Condition.(ir.Binary)
+					if !ok || eligible.Operator != ir.And {
+						continue
+					}
+					bound := eligible.Right.(ir.Binary)
+					bound.Operator = ir.LessOrEqual
+					eligible.Right = bound
+					branch.Condition = eligible
+					function.Body[index] = branch
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "aliased lastIndexOf negative bound", fixture: "library_array_alias_search.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_generic_lastIndexOf" {
+					continue
+				}
+				for index, statement := range function.Body {
+					declaration, ok := statement.(ir.Declare)
+					if !ok || program.Locals[declaration.Local].Name != "from" {
+						continue
+					}
+					value := declaration.Value.(ir.Conditional)
+					negative := value.WhenTrue.(ir.Binary)
+					negative.Operator = ir.Subtract
+					value.WhenTrue = negative
+					declaration.Value = value
+					function.Body[index] = declaration
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "map oversized RangeError message", fixture: "library_array_map_oversized.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Invalid array length" {
+					program.Strings[index] = "wrong map length"
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "shift function readonly message", fixture: "library_array_shift_function.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index, text := range program.Strings {
+				if strings.HasPrefix(text, "Cannot assign to read only property 'length' of function '") {
+					program.Strings[index] = "wrong function length"
+					changed = true
+				}
+			}
+			return changed
+		}},
+
+		{name: "sort never callback skipped", fixture: "library_array_sort_never.a", mutateC: libraryArraySkipNeverComparator},
+		{name: "toSorted never callback skipped", fixture: "library_array_to_sorted_never.a", mutateC: libraryArraySkipNeverComparator},
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
@@ -154,4 +377,13 @@ func TestLibraryArrayNewFamilyMutants(t *testing.T) {
 			t.Log("caught only by stdout comparison with Node; exit 0, no sanitizer or leak report")
 		})
 	}
+}
+
+func libraryArraySkipNeverComparator(source string) string {
+	mutant := strings.ReplaceAll(source, "adamic_compare_never", "array_mutant_skip_never")
+	if mutant == source {
+		return source
+	}
+	return strings.Replace(mutant, `#include "adamic.h"`, `#include "adamic.h"
+static int array_mutant_skip_never(adamic_value left, adamic_value right, void *context) { (void)left; (void)right; (void)context; return 0; }`, 1)
 }

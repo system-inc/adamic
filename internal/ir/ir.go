@@ -335,6 +335,8 @@ type (
 	// StringFromCodes is String.fromCharCode(...Codes), or String.fromCodePoint when CodePoints is
 	// set: a string of the UTF-16 units, or of the code points, the numbers name.
 	StringFromCodes struct {
+		// Validated means lowering installed cleanup-aware RangeError guards.
+		Validated  bool
 		Codes      []Expression
 		CodePoints bool
 
@@ -479,6 +481,8 @@ type (
 	// trimStart, trimEnd, at (a string, or undefined: a null reference), replace and replaceAll
 	// with a string pattern, toUpperCase and toLowerCase, and normalize (its form filled in). Arguments are as written; lowering filled in any default.
 	StringCall struct {
+		// Validated means a repeat has cleanup-aware count and length guards.
+		Validated bool
 		Method    string
 		Value     Expression
 		Arguments []Expression
@@ -596,16 +600,19 @@ type (
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
-	// element, its index and the array: forEach, filter, some, every, find and findIndex. The length
+	// element, its index and the array: forEach, filter, some, every, and the four find methods. The length
 	// is read once, before the first call, and an index the array no longer has when its turn comes
-	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
+	// is skipped except for the find methods, which visit it with undefined. AllowsUndefined
+	// records the checker's element type proof, since reference slots alone do not distinguish
+	// Leaf from Leaf | undefined. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		Method   string
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Returns  Type
+		Method          string
+		Array           Expression
+		Callback        Expression
+		Element         Type
+		Returns         Type
+		AllowsUndefined bool
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
@@ -628,6 +635,10 @@ type (
 		Comparator int
 		Callback   Expression
 		Element    Type
+
+		// CallbackNever proves the callback cannot produce a result. Native
+		// comparison propagates its throw without inspecting a numeric slot.
+		CallbackNever bool
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.

@@ -28,3 +28,37 @@ func (JSONStringify) Type() Type { return String }
 type JSONNull struct{}
 
 func (JSONNull) Type() Type { return Object }
+
+// JSON descriptors are finite lowering-built trees. Parsed JSON contains no callable values.
+func (schema *JSONSchema) CallsUserCode() bool {
+	if schema == nil {
+		return false
+	}
+	if schema.Kind == "toJSON" || schema.Kind == "root_replacer" {
+		return true
+	}
+	if schema.Element.CallsUserCode() {
+		return true
+	}
+	for _, field := range schema.Fields {
+		if field.Schema.CallsUserCode() {
+			return true
+		}
+	}
+	return false
+}
+
+func (schema *JSONSchema) ContainsParsed() bool {
+	if schema == nil {
+		return false
+	}
+	if schema.Kind == "parsed" || schema.Element.ContainsParsed() {
+		return true
+	}
+	for _, field := range schema.Fields {
+		if field.Schema.ContainsParsed() {
+			return true
+		}
+	}
+	return false
+}

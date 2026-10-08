@@ -113,6 +113,15 @@ func validFixturePath(name string) bool {
 	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
 }
 
+// This reviewed shape preserves source text and transforms only runtime TS syntax.
+const adaptiveNodeConversion = `			let stripped;
+			try {
+				stripped = stripTypeScriptTypes(source, { mode: 'strip' });
+			} catch (error) {
+				if (error.code !== 'ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX') throw error;
+				stripped = stripTypeScriptTypes(source, { mode: 'transform' });
+			}`
+
 // The enum and namespace branches use Node's transform mode. Derive that runner
 // from the current source oracle, preserving its runtime and import hooks while
 // accepting either source mode without changing the original runner.
@@ -126,7 +135,10 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	text := string(source)
 	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
 	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
-	if erasable+transformedCalls != 1 || strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+	calls := strings.Count(text, "stripTypeScriptTypes(source")
+	singleMode := erasable+transformedCalls == 1 && calls == 1
+	adaptiveMode := erasable == 0 && transformedCalls == 1 && calls == 2 && strings.Count(text, adaptiveNodeConversion) == 1
+	if (!singleMode && !adaptiveMode) || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
 	if erasable == 1 {

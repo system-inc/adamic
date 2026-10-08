@@ -14,6 +14,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") || (l.checker.GetContextualType(node, checker.ContextFlagsNone) != nil && l.isLibraryType(l.checker.GetContextualType(node, checker.ContextFlagsNone), "Date")) {
+		return nil, l.notYet(node, "a structural object supplying Date internal slots")
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
@@ -307,6 +310,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		// The rest of a chain after a ?., which short-circuits with it.
 		return nil, l.notYet(node, "an optional chain longer than one step")
 	}
+	if value, known := l.libraryDateProperty(node); known {
+		return value, nil
+	}
 	if value, known := l.libraryMathNumberProperty(node); known {
 		return value, nil
 	}
@@ -583,6 +589,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryDateCall(node); known {
+		return value, true, err
+	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
 	}
@@ -1302,7 +1311,7 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
+	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, AllowsUndefined: l.libraryArrayVisitAllowsUndefined(node)}, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1358,11 +1367,17 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "Date") {
+		return l.newDate(node)
+	}
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
-		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
+		return l.newStringBox(node)
+	}
+	if value, known, err := l.libraryArrayConstruct(node); known {
+		return value, err
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
@@ -1644,6 +1659,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 // tuple's field of that name.
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
+	if l.stringBoxType(access.Expression) {
+		return l.stringBoxIndex(node)
+	}
 	index := ast.SkipParentheses(access.ArgumentExpression)
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
 		return nil, l.prototypeRead(node, index.Text())
@@ -1767,7 +1785,10 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 			return nil, true, err
 		}
 		lowered.Spread = spread
-		return lowered, true, nil
+		return l.stringCodePointsChecked(lowered), true, nil
+	}
+	if len(node.AsCallExpression().Arguments.Nodes) > 65536 {
+		return nil, true, l.notYet(node, "String code arguments beyond the proven Node stack limit")
 	}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
@@ -1782,7 +1803,7 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 		}
 		lowered.Codes = append(lowered.Codes, value)
 	}
-	return lowered, true, nil
+	return l.stringCodePointsChecked(lowered), true, nil
 }
 
 // tupleType is the tuple type an array literal makes, from the checker or from where it's written

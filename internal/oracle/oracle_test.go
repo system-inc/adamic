@@ -113,6 +113,23 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_three.a", true, false},
 	{"internal/oracle/testdata/async_nested.a", true, false},
 	{"internal/oracle/testdata/async_throw.a", true, false},
+	{"internal/oracle/testdata/library_date_metadata.a", true, false},
+	{"internal/oracle/testdata/library_date_number.a", true, false},
+	{"internal/oracle/testdata/library_date_json.a", true, false},
+	{"internal/oracle/testdata/library_date_dynamic_parse.a", true, false},
+	{"internal/oracle/testdata/library_date_format.a", true, false},
+	{"internal/oracle/testdata/library_date_construct.a", true, false},
+	{"internal/oracle/testdata/library_date_utc.a", true, false},
+	{"internal/oracle/testdata/library_date_get.a", true, false},
+	{"internal/oracle/testdata/library_date_set.a", true, false},
+	{"internal/oracle/testdata/library_date_iso.a", true, false},
+	{"internal/oracle/testdata/library_date_parse.a", true, false},
+	{"internal/oracle/testdata/library_date_invalid_iso.a", true, false},
+	{"internal/oracle/testdata/library_date_days.a", true, false},
+	{"internal/oracle/testdata/library_date_calendar.a", true, false},
+	{"internal/oracle/testdata/library_date_limits.a", true, false},
+	{"internal/oracle/testdata/library_date_past.a", true, false},
+	{"internal/oracle/testdata/library_date_parse_frac.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -519,8 +536,9 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 		}
 	}
 	command := bounded(t, name, arguments...)
+	command.Env = append(os.Environ(), "TZ=UTC")
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		command.Env = append(command.Env, environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

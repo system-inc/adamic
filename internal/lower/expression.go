@@ -213,6 +213,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if own := l.checker.GetTypeAtLocation(node); !l.dateViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(node, "a Date internal slot supplied or erased by a structural view")
+			}
 			skipKeeping, viewErr := l.nodeBufferContextualView(node, contextual)
 			if viewErr != nil {
 				return nil, viewErr
@@ -263,7 +266,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	if !l.nodeBufferView(from, to) {
+	if !l.nodeBufferView(from, to) || l.isLibraryType(from, "Date") != l.isLibraryType(to, "Date") {
 		return false
 	}
 	same := func(inside, viewed *checker.Type) bool {
@@ -453,6 +456,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
+	if value, known, err := l.errorBuiltin(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -552,6 +558,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, known := l.asyncTypeOf(node); known {
 			return value, nil
 		}
+		if value, intrinsic := l.libraryMathNumberTypeOf(node); intrinsic {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -597,6 +606,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
+			// The default intrinsic RegExp coercion has no user callbacks;
+			// unsupported exec/prototype/property overrides are refused elsewhere.
+			if left.Type() == ir.String {
+				right = l.regexStringValue(binary.Right, right)
+			}
+			if right.Type() == ir.String {
+				left = l.regexStringValue(binary.Left, left)
+			}
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
 	case ast.KindTaggedTemplateExpression:

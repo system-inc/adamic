@@ -21,7 +21,16 @@ registerHooks({
 	load(url, context, nextLoad) {
 		if (url.endsWith('.a') || url.endsWith('.ts')) {
 			const source = readFileSync(fileURLToPath(url), 'utf8');
-			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform' }), shortCircuit: true };
+			// Preserve source text that V8 exposes in function errors. Runtime
+			// TypeScript syntax (such as enums) still needs Node's transformation.
+			let stripped;
+			try {
+				stripped = stripTypeScriptTypes(source, { mode: 'strip' });
+			} catch (error) {
+				if (error.code !== 'ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX') throw error;
+				stripped = stripTypeScriptTypes(source, { mode: 'transform' });
+			}
+			return { format: 'module', source: stripped, shortCircuit: true };
 		}
 		return nextLoad(url, context);
 	},

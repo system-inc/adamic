@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"slices"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -461,6 +462,16 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
+			case reflect.TypeOf(ir.RegExpCall{}):
+				method := value.Interface().(ir.RegExpCall).Method
+				throws = throws || method == "matchAll" || method == "replaceAll" || strings.HasSuffix(method, "Callback")
+			case reflect.TypeOf(ir.RegExpNew{}):
+				throws = throws || value.Interface().(ir.RegExpNew).Invalid
+			case reflect.TypeOf(ir.JSONStringify{}):
+				call := value.Interface().(ir.JSONStringify)
+				throws = throws || (call.Schema.CallsUserCode() || call.ReplacerSchema.CallsUserCode())
+			case reflect.TypeOf(ir.JSONParse{}):
+				throws = true
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

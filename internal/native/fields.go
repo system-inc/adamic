@@ -52,6 +52,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"name", "message", "code"}, {"heapUsed"},
 		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
+		{"adamicJSONParsed"}, // JSON.parse's private canonical serialization carrier.
 	} {
 		for index, name := range names {
 			if before, found := offsets[name]; found && before != index {

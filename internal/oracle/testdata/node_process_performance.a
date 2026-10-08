@@ -25,3 +25,9 @@ performance.clearMarks('duplicate');
 performance.clearMeasures('work');
 performance.clearMarks();
 performance.clearMeasures();
+
+try { clock.measure('missing', 'missing'); } catch (error) {
+    if (error instanceof Error) {
+        console.log(`missing ${error.name} ${error.constructor === Error} ${error.constructor === SyntaxError} ${error instanceof SyntaxError}`);
+    }
+}

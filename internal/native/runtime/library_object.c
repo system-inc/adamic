@@ -30,7 +30,7 @@ adamic_object *adamic_object_freeze(adamic_object *object) {
 
 void adamic_object_check_write(const adamic_object *object, const char *name) {
  // Private fields are internal slots, unaffected by Object.freeze in JavaScript.
- if (!object->frozen || name[0] == '#') return;
+ if (name[0] == '#' || (!object->frozen && adamic_object_descriptor_writable(object, name))) return;
  const char prefix[] = "TypeError: Cannot assign to read only property '";
  const char suffix[] = "' of object '#<Object>'";
  size_t length = sizeof prefix - 1 + strlen(name) + sizeof suffix - 1;
@@ -42,11 +42,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
  if (object->has_captured_stack && key->length == 5 && memcmp(key->bytes, "stack", 5) == 0) return true;
- for (size_t index = 0; index < object->shape->count; index++) {
-  const char *name = object->shape->names[index];
-  if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
- }
- return false;
+ return adamic_object_has(object, key);
 }
 
 // Array indices are canonical decimal strings from 0 to 2^32 - 2, not general integers.
@@ -97,6 +93,8 @@ static adamic_string *key_string(const char *name) {
 adamic_array *adamic_object_keys(const adamic_object *object) {
  // Class descriptors hide private storage and track static own-property presence.
  if (object->class != NULL) return adamic_class_object_keys(object);
+ adamic_array *altered = adamic_object_descriptor_names(object, false);
+ if (altered != NULL) return altered;
  size_t *indices = ordered(object);
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {

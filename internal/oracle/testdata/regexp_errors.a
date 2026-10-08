@@ -1,0 +1,54 @@
+// Constructor identity is independent of writable diagnostic names.
+try {
+ throw new TypeError('wrong kind');
+} catch (error) {
+ if (error instanceof Error) {
+  error.name = 'SyntaxError';
+  console.log(`${error.constructor === TypeError}:${error.constructor === SyntaxError}:${error.constructor === Error}`);
+  console.log(`${error instanceof TypeError}:${error instanceof SyntaxError}:${error instanceof Error}`);
+ }
+}
+function invalid(): RegExp { return new RegExp('(', 'u'); }
+let finallyCount = 0;
+try {
+ try { invalid(); } finally { finallyCount += 1; }
+} catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === SyntaxError}:${error.constructor === TypeError}:${finallyCount}`);
+}
+try { throw new SyntaxError('syntax'); } catch (error) {
+ if (error instanceof Error) console.log(`${SyntaxError === error.constructor}:${error.constructor !== Error}`);
+}
+
+try { throw new RangeError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === RangeError}:${error.constructor === Error}:${error.name}`);
+}
+try { throw new ReferenceError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === ReferenceError}:${error.constructor === Error}:${error.name}`);
+}
+try { throw new EvalError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === EvalError}:${error.constructor === Error}:${error.name}`);
+}
+try { throw new URIError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === URIError}:${error.constructor === Error}:${error.name}`);
+}
+
+// Existing library failures must carry the builtin identity, too.
+try { String.fromCodePoint(-1); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === RangeError}:${error instanceof RangeError}`);
+}
+const emptyValues: number[] = [];
+try { emptyValues.reduce((left: number, right: number): number => left + right); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === TypeError}:${error instanceof TypeError}`);
+}
+try { Array.prototype.map.call({length: 4294967296, 0: 1}, (value: number): number => value); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === RangeError}:${error instanceof RangeError}`);
+}
+const fixedValue = {value: 1};
+Object.freeze(fixedValue);
+try { Object.defineProperty(fixedValue, 'value', {value: 2}); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === TypeError}:${error instanceof TypeError}`);
+}
+
+try { [1].with(3, 4); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === RangeError}:${error instanceof RangeError}`);
+}

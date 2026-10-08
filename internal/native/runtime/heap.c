@@ -255,6 +255,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 
 // deallocate gives a value's memory back: to its chunk, or to free.
 static void deallocate(adamic_heap *heap) {
+	adamic_object_collection_integrity_forget(heap);
 	uint32_t slab = heap->slab & ~ADAMIC_SHARED_HEADER;
 	if (slab == 0) {
 		free(heap);

@@ -1,0 +1,13 @@
+const join = Array.prototype.join;
+console.log(`${typeof join} ${join.name} ${join.length} ${join.prototype === undefined}`);
+console.log(`${Array.prototype.join.prototype === undefined}`);
+console.log(`[${join.call(true, "|")}]`);
+function separator(): string {
+	console.log('separator'.repeat(1));
+	return '|'.repeat(2);
+}
+try {
+	join.call(null, separator());
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}

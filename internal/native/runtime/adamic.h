@@ -337,6 +337,7 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	return adamic_object_data_field(object, name, cache);
 }
 #include "object_integrity.h"
+#include "object_descriptors.h"
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
 bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
@@ -582,6 +583,7 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
+#include "array_sort.h"
 // adamic_timsort sorts count values in place by V8's algorithm (sort.c). It says false, the values
 // in some order of the sort's half done, when the comparator threw (adamic_thrown set).
 bool adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
@@ -831,6 +833,8 @@ extern _Thread_local adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
 // Host errors have three owning slots (name, message, code) and built-in nominal identity.
 void adamic_error_tag(adamic_object *error);
+adamic_object *adamic_builtin_error_new(int kind, adamic_string *message);
+bool adamic_error_is(const adamic_object *error, int kind, bool exact);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
@@ -1010,6 +1014,17 @@ _Noreturn void adamic_process_exit_now(int code);
 int adamic_process_status(void);
 adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
 adamic_string *adamic_process_environment(const adamic_string *name);
+// Deterministic Date operations, stored with no enumerable fields.
+bool adamic_date_has_own(int target, const adamic_string *key);
+adamic_object *adamic_date_new(double time);
+double adamic_date_value(const adamic_object *date);
+double adamic_date_utc(size_t count, const double *arguments);
+double adamic_date_get(const adamic_object *date, int field);
+double adamic_date_set(adamic_object *date, int field, size_t count, const double *arguments);
+double adamic_date_parse_iso(const adamic_string *text);
+adamic_string *adamic_date_iso(const adamic_object *date);
+adamic_string *adamic_date_json(const adamic_object *date);
+adamic_string *adamic_date_format(const adamic_object *date, int style);
 
 #endif
 

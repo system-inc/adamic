@@ -1,0 +1,25 @@
+const invalid: readonly string[] = ['', ' ', '\t\r\n', '-', '-x', '00', '-01', '1.', '1.e2', '1e', '1e+', '1e-', '0x1', 'NaN', 'Infinity', 'undefined', '[object Object]', '+1', '.', 'TRUE', 'False', 'nul', 'nall', 'trXe', 'falsex', '1 2', '"a" 2', '{', '{ ', '{x:1}', '{"x"}', '{"x" 1}', '{"x":}', '{"x":1', '{"x":1,}', '{"x":1 "y":2}', '[', '[ ', '[,]', '[1', '[1,]', '[1 2]', '[1}', '"', '"abc', '"a\\', '"a\\x"', '"a\\u"', '"a\\u1"', '"a\\u12"', '"a\\u123"', '"a\\u1x34"', '"a\n"', '"a\u0000"', '"a\\\u0100"', '"a\\😀"', '"a\\\ud800"', '"😀" x', '\r\n{\r\n"x":\r\n1,\r\n}', '\r{\n"x":\r\n[1\r\n2]}', 'abcdefghijklmnopqrstuvw', 'true          xxxxxxxxxxxxxxxxxxxxx', 'true               x', '\u000b1', '\ufeff1', '\u20281', '\u00a01'];
+for (const text of invalid) {
+ try { JSON.parse(text); console.log('accepted'); }
+ catch (error) {
+  if (error instanceof Error) console.log(`${error.name}: ${JSON.stringify(error.message) ?? 'u'}`);
+  else console.log('not an Error');
+ }
+}
+const badEscapes: readonly string[] = ['a', 'v', '0', '1', ' ', '\t', '\r', '\n', '\u0080', '\u00ff', '\u0100', '\ud800', '\udfff'];
+for (const escape of badEscapes) {
+ const text = '"012345678901234567890123456789\\' + escape + 'endingabcdefghij"';
+ try { JSON.parse(text); console.log('accepted'); }
+ catch (error) { if (error instanceof Error) console.log(JSON.stringify(error.message) ?? 'u'); }
+}
+
+for (let unit = 0; unit < 256; unit += 1) {
+ const raw = String.fromCharCode(unit);
+ const sources: string[] = ['"' + raw + '"', '"prefix012345678901234567890\\' + raw + 'endingabcdefghij"', 'tru' + raw + 'e'];
+ for (const source of sources) {
+  try { JSON.parse(source); console.log('accepted'); }
+  catch (error) { if (error instanceof Error) console.log(JSON.stringify(error.message) ?? 'u'); }
+ }
+}
+
+try { JSON.parse('['); } catch (error) { if (error instanceof Error) console.log(`syntax identity: ${error.constructor === SyntaxError}, ${error instanceof SyntaxError}`); }

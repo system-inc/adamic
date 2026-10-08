@@ -84,6 +84,9 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	default:
 		return nil, false, nil
 	}
+	if l.regexGroups(receiver) {
+		return nil, true, l.notYet(node, name+" on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node)")
+	}
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
 	}
@@ -118,9 +121,20 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
 			return nil, true, l.notYet(node, name+" on a tuple (its representation includes absent optional slots and no length descriptor)")
 		}
-		// Every own field of a plain object or a class instance is enumerable. Methods are on its
-		// prototype, absent from its shape, and defineProperty is refused.
-		return l.hasOwnProperty(node, receiver)
+		// Own-property presence and enumerability differ after a data descriptor change.
+		// Class methods remain on the prototype and absent from the public shape.
+		own, handled, err := l.hasOwnProperty(node, receiver)
+		if err == nil && name == "propertyIsEnumerable" {
+			if read, ok := own.(ir.HasOwn); ok {
+				own = ir.ObjectCall{Method: "propertyIsEnumerable", Arguments: []ir.Expression{read.Object, read.Key}, Returns: ir.Boolean}
+			}
+		}
+		if err == nil && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "MapIterator", "SetIterator") {
+			// Iterator slots are implementation details. Even next is inherited in JavaScript.
+			// Evaluate receiver and key once, in order, without exposing any native slots.
+			return ir.Conditional{Condition: own, WhenTrue: ir.BooleanConstant{Value: false}, WhenNot: ir.BooleanConstant{Value: false}}, true, nil
+		}
+		return own, handled, err
 	}
 	if len(node.AsCallExpression().Arguments.Nodes) != 0 {
 		return nil, true, l.notYet(node, name+" with arguments")
@@ -162,6 +176,11 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 				tag = "[object Set]"
 			}
 		}
+		if l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "MapIterator") {
+			tag = "[object Map Iterator]"
+		} else if l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "SetIterator") {
+			tag = "[object Set Iterator]"
+		}
 		text := ir.StringConstant{Index: l.constant(tag)}
 		// Both arms are the same, but the test evaluates the receiver exactly once, preserving its
 		// side effects and any narrowed-read check. No field is read to produce the constant tag.
@@ -174,6 +193,12 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 // Until prototype dispatch and presence descriptors exist, refuse any compatible runtime shape
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
 func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
+	// An unchanged literal binding has a real plain-object receiver, including
+	// let bindings already proven by the Object library. Descriptor additions
+	// are represented by the same own-property metadata as its declared fields.
+	if l.exactObject(receiver, 0) {
+		return ""
+	}
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -185,9 +210,13 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 		if reason != "" {
 			return true
 		}
-		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
+		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator", "MapIterator", "SetIterator")) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
 			shape := l.checker.GetTypeAtLocation(node)
 			if l.checker.IsTypeAssignableTo(shape, view) {
+				if l.isLibraryType(shape, "MapIterator", "SetIterator") && !l.isLibraryType(view, "MapIterator", "SetIterator") && !l.exactPlainObject(receiver) {
+					reason = "a collection iterator may be hidden by the view"
+					return true
+				}
 				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) {
 					// Regex objects have intrinsic prototype behavior and metadata slots. A structural
 					// view cannot make those plain-object methods or own-property descriptors.
@@ -216,6 +245,10 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 				}
 				if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 					for _, field := range l.checker.GetPropertiesOfType(shape) {
+						if strings.HasPrefix(field.Name, "#") {
+							reason = "a public # name collides with private native slot names"
+							return true
+						}
 						if strings.ContainsRune(field.Name, 0) {
 							reason = "a field name contains NUL, which native shape names cannot represent"
 							return true

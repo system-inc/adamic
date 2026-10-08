@@ -1,0 +1,32 @@
+let calls = 0;
+function next(): number { calls += 1; return calls; }
+const value = { z: next(), '2': 2, '1': 1, a: 'x'.repeat(2) };
+value.z = 5;
+const alias = value;
+console.log(JSON.stringify(alias) ?? 'u');
+console.log(`${calls}`);
+console.log(JSON.stringify([, 1, , undefined, [,,]]) ?? 'u');
+console.log(JSON.stringify({ a: 1, b: 2 }, [, 'b']) ?? 'u');
+console.log(JSON.stringify(new Number('0B11')) ?? 'u');
+console.log(JSON.stringify(new String(42)) ?? 'u');
+console.log(JSON.stringify(new Boolean(true)) ?? 'u');
+console.log(JSON.stringify({ a: 1 }, new Number(3), new String('x')) ?? 'u');
+console.log(JSON.stringify({ a: 1 }, null, new Number(2)) ?? 'u');
+console.log(JSON.stringify({ a: 1 }, () => 'x'.repeat(2), 1) ?? 'u');
+console.log(JSON.stringify(3, (key: string, value: number) => value * 2) ?? 'u');
+console.log(JSON.stringify(3, (): void => {}) ?? 'u');
+try { JSON.stringify({}, () => { throw new Error('replacer stopped'); }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+let ordinary = { a: 1, b: 'x' };
+console.log(JSON.stringify(ordinary) ?? 'u');
+console.log(JSON.stringify({ toJSON: () => [false] }) ?? 'u');
+console.log(JSON.stringify({ a: { toJSON: () => 'x'.repeat(2) }, b: [{ toJSON: () => 3 }] }) ?? 'u');
+console.log(JSON.stringify({ toJSON: () => { console.log('toJSON before replacer'); return 2; } }, () => { console.log('root replacer'); return 7; }) ?? 'u');
+try { JSON.stringify({ a: { toJSON: () => { throw new Error('toJSON stopped'); } } }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log(JSON.stringify({ a: { toJSON: (): void => {} }, b: 2 }) ?? 'u');
+console.log(JSON.stringify([{ toJSON: (): void => {} }, 1]) ?? 'u');
+console.log(JSON.stringify({ toJSON: null }) ?? 'u');
+console.log(JSON.stringify({ toJSON: false }) ?? 'u');
+console.log(JSON.stringify({ toJSON: [] }) ?? 'u');
+console.log(JSON.stringify({ toJSON: /re/ }) ?? 'u');
+let localTree = { a1: { b1: [1, 2], b2: { c1: 1, c2: 2 } }, a2: 'a2' };
+console.log(JSON.stringify(localTree, null, 2) ?? 'u');
