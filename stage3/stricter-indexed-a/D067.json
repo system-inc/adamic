@@ -1,0 +1,8 @@
+{
+  "ids": [
+    "D067"
+  ],
+  "read": "tupleType.elementFlags[index]",
+  "receiver": "object field containing number array, subtraction index",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nconst tupleType: { readonly elementFlags: readonly number[] } = { elementFlags: absent ? [] : [7] };\nconst pos = 1;\nconst paramCount = 1;\nconst index = pos - paramCount;\nconst value: number = tupleType.elementFlags[index];\nconsole.log(value === undefined ? \"undefined\" : `${value}`);\n"
+}
