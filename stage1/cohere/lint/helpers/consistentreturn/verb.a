@@ -1,0 +1,4 @@
+export function Verb(messageId: string): string {
+ if(messageId==='missingReturnValue') return 'expected a return value.';
+ return 'expected no return value.';
+}

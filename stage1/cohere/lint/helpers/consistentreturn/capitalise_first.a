@@ -1,0 +1,5 @@
+export function capitaliseFirst(text: string, capitalise: boolean): string {
+ if(!capitalise || text==='') return text;
+ // Every call in Name has an ASCII scope/kind word at its head.
+ return text.slice(0,1).toUpperCase()+text.slice(1);
+}

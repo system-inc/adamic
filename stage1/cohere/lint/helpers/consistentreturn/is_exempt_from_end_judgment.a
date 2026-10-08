@@ -1,0 +1,14 @@
+import { getNode } from './nodes.a';
+import type { ReturnNode } from './nodes.a';
+export function isExemptFromEndJudgment(nodes: readonly ReturnNode[], index: number): boolean {
+ const node=getNode(nodes,index);
+ if(node.kind==='Constructor') return true;
+ if(node.kind!=='FunctionDeclaration' && node.kind!=='FunctionExpression') return false;
+ if(node.name<0) return false;
+ const text=getNode(nodes,node.name).text;
+ if(text==='') return false;
+ // Go slices ONE UTF-8 BYTE, even for non-ASCII names. Lowering an invalid
+ // first byte replaces it, so every non-ASCII leading rune is exempt in Go.
+ const first=text.charCodeAt(0);
+ return first>=128 || (first>=65 && first<=90);
+}

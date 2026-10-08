@@ -1,0 +1,13 @@
+import { getNode } from './nodes.a';
+import type { ReturnNode } from './nodes.a';
+export function HasValue(nodes: readonly ReturnNode[], index: number, treatUndefined: boolean,
+ hasHook: boolean, hook: (argument: number) => boolean): boolean {
+ const argument=getNode(nodes,index).expression;
+ if(argument<0) return false;
+ if(!treatUndefined) return true;
+ const node=getNode(nodes,argument);
+ if(node.kind==='VoidExpression') return false;
+ if(node.kind==='Identifier' && node.text==='undefined') return false;
+ if(hasHook && hook(argument)) return false;
+ return true;
+}

@@ -1,0 +1,44 @@
+import { getNode } from './nodes.a';
+import { panic, programArguments, readTextFile, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import type { ReturnNode, ReturnRange } from './nodes.a';
+import { IsScope } from './is_scope.a';
+import { IsGenerator } from './is_generator.a';
+import { HasValue } from './has_value.a';
+import { isExemptFromEndJudgment } from './is_exempt_from_end_judgment.a';
+import { capitaliseFirst } from './capitalise_first.a';
+import { Verb } from './verb.a';
+import { staticName } from './static_name.a';
+import { Name } from './name.a';
+import { ReportRange } from './report_range.a';
+function bytes(text: string): string {const parts:string[]=[];for(let i=0;i<utf8Length(text);i++)parts.push(`${utf8At(text,i)}`);return parts.join(',');}
+const args=programArguments();const input=readTextFile(args[0] ?? panic('cases'));if(input.kind==='Error')panic(input.message);
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0)panic(json.error);
+function text(index:number,key:string):string{return json.node(json.field(index,key)).text;}
+function number(index:number,key:string):number{return json.node(json.field(index,key)).number;}
+function bit(index:number,key:string):boolean{return text(index,key)==='true';}
+for(const row of json.node(root).children) {
+ const nodes:ReturnNode[]=[];
+ const list=json.field(row,'Nodes');
+ if(list>=0) for(const n of json.node(list).children) {
+  nodes.push({kind:text(n,'Kind'),text:text(n,'Text'),expression:number(n,'Expression'),name:number(n,'Name'),parent:number(n,'Parent'),arrow:number(n,'Arrow'),pos:number(n,'Pos'),end:number(n,'End'),generator:bit(n,'Generator'),staticModifier:bit(n,'StaticModifier'),asyncModifier:bit(n,'AsyncModifier')});
+ }
+ const index=number(row,'Index');const kind=text(row,'Kind');
+ if(kind==='IsScope')console.log(`${IsScope(getNode(nodes,index).kind)}`);
+ else if(kind==='IsGenerator')console.log(`${IsGenerator(getNode(nodes,index))}`);
+ else if(kind==='HasValue') {
+  let calls=0;
+  const result=HasValue(nodes,index,bit(row,'TreatUndefined'),bit(row,'HasHook'),(argument:number):boolean=>{calls++;return bit(row,'HookValue');});
+  console.log(`${result}:${calls}`);
+ }
+ else if(kind==='isExemptFromEndJudgment')console.log(`${isExemptFromEndJudgment(nodes,index)}`);
+ else if(kind==='capitaliseFirst')console.log(bytes(capitaliseFirst(text(row,'Text'),bit(row,'Capitalise'))));
+ else if(kind==='Verb')console.log(bytes(Verb(text(row,'Text'))));
+ else if(kind==='staticName')console.log(bytes(staticName(nodes,index)));
+ else if(kind==='Name')console.log(bytes(Name(nodes,index,bit(row,'Capitalise'))));
+ else if(kind==='ReportRange') {
+  const range=ReportRange(nodes,index,(n:number):ReturnRange=>{return {pos:getNode(nodes,n).pos,end:getNode(nodes,n).end};});
+  console.log(`${range.pos}:${range.end}`);
+ }
+ else panic(kind);
+}

@@ -1,0 +1,7 @@
+export function IsScope(kind: string): boolean {
+ switch(kind) {
+ case 'FunctionDeclaration': case 'FunctionExpression': case 'ArrowFunction':
+ case 'MethodDeclaration': case 'GetAccessor': case 'SetAccessor': case 'Constructor': return true;
+ }
+ return false;
+}

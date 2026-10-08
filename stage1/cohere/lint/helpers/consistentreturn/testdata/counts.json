@@ -1,0 +1,28 @@
+{
+  "upstreamCases": {
+    "consistent-return": 75,
+    "@typescript-eslint/consistent-return": 56
+  },
+  "consumerCalls": {
+    "HasValue": 203,
+    "IsGenerator": 171,
+    "IsScope": 2072,
+    "Name": 175,
+    "ReportRange": 36,
+    "Verb": 42,
+    "capitaliseFirst": 171,
+    "isExemptFromEndJudgment": 106,
+    "staticName": 160
+  },
+  "allCalls": {
+    "HasValue": 287,
+    "IsGenerator": 295,
+    "IsScope": 2168,
+    "Name": 209,
+    "ReportRange": 53,
+    "Verb": 47,
+    "capitaliseFirst": 456,
+    "isExemptFromEndJudgment": 202,
+    "staticName": 201
+  }
+}

@@ -1,0 +1,35 @@
+import { getNode } from './nodes.a';
+import type { ReturnNode } from './nodes.a';
+import { IsGenerator } from './is_generator.a';
+import { staticName } from './static_name.a';
+import { capitaliseFirst } from './capitalise_first.a';
+export function Name(nodes: readonly ReturnNode[], index: number, capitalise: boolean): string {
+ const node=getNode(nodes,index);
+ if(node.kind==='SourceFile') return capitalise ? 'Program' : 'program';
+ const tokens: string[]=[];
+ if(node.staticModifier) tokens.push('static');
+ let privateName='';
+ if(node.name>=0 && getNode(nodes,node.name).kind==='PrivateIdentifier') {
+  tokens.push('private'); privateName=getNode(nodes,node.name).text;
+ }
+ if(node.asyncModifier) tokens.push('async');
+ if(IsGenerator(node)) tokens.push('generator');
+ switch(node.kind) {
+ case 'Constructor': return capitaliseFirst('constructor',capitalise);
+ case 'GetAccessor': tokens.push('getter'); break;
+ case 'SetAccessor': tokens.push('setter'); break;
+ case 'MethodDeclaration': tokens.push('method'); break;
+ default: {
+  if(node.kind==='ArrowFunction') tokens.push('arrow');
+  let noun='function';
+  if(node.kind==='FunctionExpression' && node.parent>=0) {
+   const parent=getNode(nodes,node.parent);
+   if(parent.kind==='PropertyAssignment' || parent.kind==='PropertyDeclaration') noun='method';
+  }
+  tokens.push(noun);
+ }
+ }
+ if(privateName!=='') tokens.push(privateName);
+ else { const name=staticName(nodes,index); if(name!=='') tokens.push("'"+name+"'"); }
+ return capitaliseFirst(tokens.join(' '),capitalise);
+}

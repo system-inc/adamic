@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+import type { HelperNode } from '../slot02_ast.a';
+// Numeric edges preserve nil (-1), identity and parents without ownership cycles.
+export interface ReturnNode extends HelperNode {
+ readonly parent: number;
+ readonly arrow: number;
+ readonly generator: boolean;
+ readonly staticModifier: boolean;
+ readonly asyncModifier: boolean;
+ readonly pos: number;
+ readonly end: number;
+}
+export interface ReturnRange { readonly pos: number; readonly end: number; }
+
+export function getNode(nodes: readonly ReturnNode[], index: number): ReturnNode { return nodes[index] ?? panic('missing return node'); }

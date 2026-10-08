@@ -1,0 +1,7 @@
+import type { ReturnNode } from './nodes.a';
+export function IsGenerator(node: ReturnNode): boolean {
+ switch(node.kind) {
+ case 'FunctionDeclaration': case 'FunctionExpression': case 'MethodDeclaration': return node.generator;
+ }
+ return false;
+}

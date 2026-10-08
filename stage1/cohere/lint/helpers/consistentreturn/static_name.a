@@ -1,0 +1,15 @@
+import { getNode } from './nodes.a';
+import { propertyName, Static } from '../property_name.a';
+import type { ReturnNode } from './nodes.a';
+export function staticName(nodes: readonly ReturnNode[], index: number): string {
+ const node=getNode(nodes,index);
+ if(node.kind==='FunctionExpression' && node.parent>=0) {
+  const parent=getNode(nodes,node.parent);
+  if(parent.kind==='PropertyAssignment' || parent.kind==='PropertyDeclaration') {
+   const named=propertyName(nodes,parent.name,Static);
+   if(named.named) return named.name;
+  }
+ }
+ const result=propertyName(nodes,node.name,Static);
+ return result.named ? result.name : '';
+}

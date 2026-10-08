@@ -1,0 +1,14 @@
+import { getNode } from './nodes.a';
+import type { ReturnNode, ReturnRange } from './nodes.a';
+export function ReportRange(nodes: readonly ReturnNode[], index: number,
+ tokenRange: (node: number) => ReturnRange): ReturnRange {
+ const node=getNode(nodes,index);
+ if(node.kind==='SourceFile') return {pos:0,end:0};
+ if(node.kind==='ArrowFunction') return tokenRange(node.arrow>=0 ? node.arrow : index);
+ if(node.kind==='FunctionExpression' && node.parent>=0) {
+  const parent=getNode(nodes,node.parent);
+  if((parent.kind==='PropertyAssignment' || parent.kind==='PropertyDeclaration') && parent.name>=0)
+   return tokenRange(parent.name);
+ }
+ return tokenRange(node.name>=0 ? node.name : index);
+}
