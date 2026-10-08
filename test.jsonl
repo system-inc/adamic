@@ -46198,3 +46198,7 @@
 {"Time":"2026-10-08T01:01:58.702084273Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressionMutant","Elapsed":32.73}
 {"Time":"2026-10-08T01:01:58.702104503Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator"}
 {"Time":"2026-10-08T01:01:58.702107818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"=== RUN   TestUnattachedDecorator\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:02:53.830277765Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"--- PASS: TestUnattachedDecorator (55.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:02:53.830521472Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Elapsed":55.13}
+{"Time":"2026-10-08T01:02:53.830571007Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecoratorControl"}
+{"Time":"2026-10-08T01:02:53.830578047Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecoratorControl","Output":"=== RUN   TestUnattachedDecoratorControl\n","OutputType":"frame"}
