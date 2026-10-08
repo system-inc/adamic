@@ -18,6 +18,6 @@ with tempfile.TemporaryDirectory(prefix="regex-proof-mutant-") as directory:
     with log.open("w") as output:
         result = subprocess.run(["go", "test", "-overlay", str(overlay), "./internal/lower", "-run", "^TestLibraryRegexOffsetRequiresNoCaptures$", "-count=1", "-v"], cwd=root, stdout=output, stderr=subprocess.STDOUT)
     text = log.read_text()
-    assert result.returncode != 0 and "want capture-free producer stop, got <nil>" in text, text[-4000:]
+    assert result.returncode != 0 and "capture-free producer proof admitted an unproven pattern" in text, text[-4000:]
     assert "build failed" not in text, text[-4000:]
     print("capture-proof: caught by refusal assertion; " + str(log))

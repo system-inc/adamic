@@ -25,13 +25,14 @@ func librarySmallRuntimeMutant(t *testing.T, fixture, rule string) {
 		t.Fatal(err)
 	}
 	mutations := map[string][2]string{
-		"match":   {"value = match->elements[j];", "value = match->elements[j]; if (j == 0) value.reference = &adamic_string_empty;"},
-		"literal": {"adamic_array_push(pieces, (adamic_value){.reference = replacement});", "if (adamic_string_length(replacement) == 2 && memcmp(replacement->bytes, \"$&\", 2) == 0) { adamic_release(replacement); replacement = adamic_retain(match->elements[0].reference); } adamic_array_push(pieces, (adamic_value){.reference = replacement});"},
-		"unicode": {"(regex->slots[7].boolean || regex->slots[10].boolean) && first >= 0xd800", "first >= 0xd800"},
-		"global":  {"if (!global)", "if (true)"},
-		"offset":  {"value.number = (double)offset;", "value.number = (double)offset + 1;"},
-		"reset":   {"regex->slots[1].number = 0;", "regex->slots[1].number = 1;"},
-		"input":   {"value.reference = input;", "value.reference = &adamic_string_empty;"},
+		"collection-order": {"adamic_array *match = matches->elements[k].reference;", "adamic_array *match = matches->elements[k].reference; regex->slots[1].number = match->properties->slots[0].number + adamic_string_length(match->elements[0].reference);"},
+		"match":            {"value = match->elements[j];", "value = match->elements[j]; if (j == 0) value.reference = &adamic_string_empty;"},
+		"literal":          {"adamic_array_push(pieces, (adamic_value){.reference = replacement});", "if (adamic_string_length(replacement) == 2 && memcmp(replacement->bytes, \"$&\", 2) == 0) { adamic_release(replacement); replacement = adamic_retain(match->elements[0].reference); } adamic_array_push(pieces, (adamic_value){.reference = replacement});"},
+		"unicode":          {"(regex->slots[7].boolean || regex->slots[10].boolean) && first >= 0xd800", "first >= 0xd800"},
+		"global":           {"if (!global)", "if (true)"},
+		"offset":           {"size_t offset = (size_t)match->properties->slots[0].number;", "size_t offset = (size_t)match->properties->slots[0].number + 1;"},
+		"reset":            {"regex->slots[1].number = 0;", "regex->slots[1].number = 1;"},
+		"input":            {"value.reference = input;", "value.reference = &adamic_string_empty;"},
 	}
 	mutation := mutations[rule]
 	if bytes.Count(runtime, []byte(mutation[0])) != 1 {
