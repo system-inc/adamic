@@ -296,7 +296,14 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		if method.name == "toString" {
 			value, err = l.objectTagCall(node, receiver, written)
 			handled = true
-		} else if method.name == "hasOwnProperty" || method.name == "propertyIsEnumerable" || method.name == "isPrototypeOf" {
+		} else if method.name == "hasOwnProperty" {
+			if l.exactObject(receiver, 0) {
+				value, err = l.borrowedHasOwn(node, receiver, written)
+				handled = true
+			} else {
+				value, handled, err = l.objectPrototypeCallArguments(node, receiver, method.name, written)
+			}
+		} else if method.name == "propertyIsEnumerable" || method.name == "isPrototypeOf" {
 			value, handled, err = l.objectPrototypeCallArguments(node, receiver, method.name, written)
 		}
 	case "Number":
@@ -352,6 +359,33 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		value = l.methodSequence(append(prefix, value))
 	}
 	return value, true, nil
+}
+
+// The callee's provenance is already proven by libraryMethod. A borrowed intrinsic does
+// not look up receiver.hasOwnProperty; an own override is therefore irrelevant. Keep the
+// complete-shape proof: synthetic absent slots and hidden private fields are not JS own keys.
+func (l *lowering) borrowedHasOwn(node, receiver *ast.Node, written []*ast.Node) (ir.Expression, error) {
+	if len(written) != 1 {
+		return nil, l.notYet(node, "borrowed hasOwnProperty with other than one argument")
+	}
+	if !l.exactObject(receiver, 0) || l.includesUndefined(l.checker.GetTypeAtLocation(receiver)) {
+		return nil, l.notYet(receiver, "borrowed hasOwnProperty on a shape not proven by a plain literal or its const binding")
+	}
+	if of, _ := l.representation(l.checker.GetTypeAtLocation(written[0])); of != ir.String {
+		return nil, l.notYet(written[0], "borrowed hasOwnProperty with a key that is not a string")
+	}
+	object, err := l.expression(receiver)
+	if err != nil {
+		return nil, err
+	}
+	if object.Type() != ir.Object {
+		return nil, l.notYet(receiver, "borrowed hasOwnProperty on other than a plain object")
+	}
+	key, err := l.expression(written[0])
+	if err != nil {
+		return nil, err
+	}
+	return ir.HasOwn{Object: object, Key: key}, nil
 }
 
 func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) (ir.Expression, error) {

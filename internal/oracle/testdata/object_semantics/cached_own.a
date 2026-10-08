@@ -1,0 +1,11 @@
+// Reduced from TypeScript core.ts own-key helpers. Keep the inferred intrinsic.
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+const cached = hasOwnProperty;
+const map = { '2': 'two', z: 'runtime'.repeat(2), missing: undefined, hasOwnProperty: false };
+for (const key of ['2', 'z', 'missing', 'hasOwnProperty', 'constructor', 'absent']) {
+    console.log(`${key}: ${cached.call(map, key)}`);
+}
+let order = '';
+function receiver(): string { order += 'object '; return 'held'.repeat(2); }
+function key(): string { order += 'key '; return 'value'; }
+console.log(`${hasOwnProperty.call({value: receiver()}, key())} ${order}`);
