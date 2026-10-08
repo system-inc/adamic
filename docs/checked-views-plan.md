@@ -2773,3 +2773,7 @@ Four original array pairs / twelve reads are certified with fifty-six fixtures a
 ### Lane 2 ranked group 27 function-like and JSX child arrays
 
 Three original array pairs / nine reads are certified with fifty-three fixtures and three executed mutants. Complete original receiver arms and JSX child arms are verified. Finishing controls and mutants pass leak checks. Lane 2 totals are 199 pairs / 2948 reads, remaining 135 / 241. See stage3/interface-downcasts/lane2/RANKED27-ARRAYS-REPORT.md.
+
+### Lane 2 ranked group 28 configuration arrays
+
+Two original array pairs / six reads are certified with sixteen fixtures and two executed mutants. Complete ConfigFileSpecs and CompilerOptions declarations are retained; finishing controls and mutants pass leak checks. Lane 2 totals are 201 pairs / 2954 reads, remaining 133 / 235. See stage3/interface-downcasts/lane2/RANKED28-ARRAYS-REPORT.md.

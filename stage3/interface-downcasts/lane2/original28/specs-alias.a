@@ -1,0 +1,10 @@
+import type { ConfigFileSpecs } from 'original-tsc-types';
+interface Base { readonly isDefaultIncludeSpec: boolean; }
+function read(base: Base, alias: string[]): void {
+ const viewed = base as ConfigFileSpecs;
+ const items = viewed.validatedIncludeSpecs;
+ if (items === undefined) return;
+ alias[0] = 'new'; console.log(items.join(';'));
+}
+const raw = {isDefaultIncludeSpec: false, validatedIncludeSpecs: ['a', 'b']};
+read(raw, raw.validatedIncludeSpecs);

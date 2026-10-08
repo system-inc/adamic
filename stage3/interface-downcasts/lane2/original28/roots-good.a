@@ -1,0 +1,10 @@
+import type { CompilerOptions } from 'original-tsc-types';
+interface Base { readonly allowJs?: boolean; }
+function read(base: Base, alias: string[]): void {
+ const viewed = base as CompilerOptions;
+ const items = viewed.rootDirs;
+ if (items === undefined) return;
+ console.log(items.join(';'));
+}
+const raw = {allowJs: false, rootDirs: ['a', 'b']};
+read(raw, []);

@@ -1,0 +1,130 @@
+[
+  {
+    "name": "specs-good",
+    "source": "a;b\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-lazy",
+    "source": "unread\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.validatedIncludeSpecs matches no member of readonly string[] | undefined; expected readonly string[] | undefined, found number",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected string, found number",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-lazy-element",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-map",
+    "source": "a!;b!\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-alias",
+    "source": "new;b\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "specs-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ]
+  },
+  {
+    "name": "roots-good",
+    "source": "a;b\n",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-lazy",
+    "source": "unread\n",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.rootDirs; expected string[] | undefined, found number",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected string, found number",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-lazy-element",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-map",
+    "source": "a!;b!\n",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-alias",
+    "source": "new;b\n",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  },
+  {
+    "name": "roots-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ]
+  }
+]
