@@ -157,7 +157,7 @@ func checkedAnyCounts(t *testing.T) []string {
 }
 
 func TestCheckedAnyUnsupportedContracts(t *testing.T) {
-	for _, name := range []string{"callable", "prototype", "array_view", "field_view", "staged_field", "json_alias_write", "json_alias_update", "json_iteration", "json_reflection", "json_array_method", "json_unprepared"} {
+	for _, name := range []string{"callable", "prototype", "array_view", "field_view", "json_alias_write", "json_alias_update", "json_iteration", "json_reflection", "json_array_method", "json_unprepared"} {
 		t.Run(name, func(t *testing.T) {
 			path := filepath.Join(repository, "internal/load/testdata/0.1/refuse/checked_any", name+".a")
 			source, err := os.ReadFile(path)

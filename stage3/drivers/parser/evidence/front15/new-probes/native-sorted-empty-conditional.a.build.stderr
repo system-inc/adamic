@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/stage3/drivers/parser/native-sorted-empty-conditional.a:5:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)

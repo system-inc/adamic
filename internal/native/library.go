@@ -33,6 +33,13 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 	return runtimeLibrary(directory, options, featureFlags(source))
 }
 
+// sourceFlags compiles anything built for one program's emitted C: its runtime library, a split
+// unit, the checker-archive build. It is the one home for those flags, so a new build path that
+// starts from Flags(options) alone meets adamic.h's layouts without the program's features.
+func sourceFlags(source string, options Options) []string {
+	return append(Flags(options), featureFlags(source)...)
+}
+
 // featureFlags are the runtime features emitted C turns on with its leading #defines, as -D flags,
 // so every unit compiled with that C (the runtime's own .c files, and a header included before
 // those #defines) sees the same layouts.

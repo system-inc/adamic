@@ -1,0 +1,7 @@
+// a-check: type error TS2591
+// From TypeScript 6.0.3, src/compiler/core.ts:2591-2592
+// The truthiness read within isNodeLikeSystem, typed by the Node loader.
+import * as fs from "node:fs";
+// The otherwise unused Node import activates the pinned Node-types loader.
+declare const process: NodeJS.Process;
+console.log(`${typeof process !== "undefined" && !!process.nextTick}`);
