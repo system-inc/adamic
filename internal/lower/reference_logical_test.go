@@ -47,3 +47,12 @@ func TestNullableReferenceLookupNeedsTag(t *testing.T) {
 		t.Fatalf("want untagged nullable lookup refused, got %v", err)
 	}
 }
+
+func TestReferenceLogicalStructuralPrimitivesStayOnExistingPaths(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `function pick(value: {} | undefined): {} { return value || {}; } console.log(typeof pick(0));`)
+	var notYet *NotYet
+	if !errors.As(err, &notYet) {
+		t.Fatalf("want structural primitive truthiness left to existing paths, got %v", err)
+	}
+}
