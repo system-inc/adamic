@@ -1,218 +1,157 @@
-Built: partial adaptation 41 removes 11 explicit-any tokens and all 15 void expressions in nine source files; no compiler edits.
-Commits: any 07aacdf9; debugger decision 79674909; return handoff a4978dfd; void 760ccaa6; call handoff d96ef1e0; dropped kinds ffc600a8.
-Commands/results: apply and builds exit 0; main/final oracle 106,366 passing, one sanctioned failure, zero pending; lane PASS; tokens 135 to 124, direct any 37 to 36, void refusals four to zero.
-Mutants: restored scanner any and restored source void caught by census; wrong scanner state, callback return, deleted debugger, any-return control artifact mutations and a real fixture-input mutation caught by their dedicated checks.
-Not completed: 124 explicit-any tokens, 36 observed any blockers, complete return/call owner work and its call-specific mutant; debugger retained; variance untouched; other refusal fixes listed as candidates.
+Built: adaptation 41 removes 39 explicit-any tokens, types five untyped locals and adapts 15 void expressions; no compiler edits.
+Commits: timer 613159a5, constructors 53216ca4, copies a10a1321, JSON 38a54ffe, locals a2df3565, data d6e5cff9; JSON owner repair/evidence 97d79455.
+Commands/results: fresh apply exit 0; stock tsc zero diagnostics; full oracle 106366 passing/one sanctioned API failure/zero pending, lane PASS; any 135 ->96 tokens and 37 ->20 direct observations.
+Mutants: real restored any/void, missing constructor/copy fields, changed validator/comparer, drift/duplicate guards, private JSON owners, debugger deletion and real fixture-input changes all fail their stated checks in MUTANTS.md.
+Not completed: 96 explicit tokens and 20 direct observations remain, with exact decisions in RESIDUE.md; debugger retained, array storage dropped as supported, with absent, variance and ranked source fixes untouched.
 
-## Scope and pins
+## Scope, inputs and measurements
 
-Started from fetched origin/main ef3141e9b1152ab51b51497f8ce3a2799449c8a3 on
-codex/stage3-explicit-any-2. The requested dc6b1529 table is capitalized
-stage3/notyet-table/TABLE.md. It has seven adaptation rows including variance;
-variance is excluded by the addition. With is mentioned in the instruction but
-has no compiler-source syntax site or table row. No compiler files, shared lane,
-shared census, oracle harness, baseline reference or counts.md are changed.
+Branch codex/stage3-explicit-any-2 began at ef3141e9, resumed the accepted
+c6ea4131 and merged current origin/main 5fda2d26 at 68a6f7db. The supplied
+notyet TABLE.md is dc6b1529. Main changed scheduling/docs/worker policy, with
+no compiler, adaptation or census-input change. Provenance and exact changed
+paths are in evidence/finished/main-provenance.json. The original main census
+and oracle therefore remain the unchanged-input comparison. Main’s oracle used
+five workers; the final oracle uses the now-required eight, with identical
+counts and the same sole sanctioned API failure.
 
-The final patch table records 41 as nine files, 25 lines added and 25 removed.
-Total composition remains 78 modified upstream files, 5,153 added and 5,127
-removed lines. New source-tooling files follow adaptation 40's CJS/Python pattern;
-no new TypeScript or Adamic fixture is introduced.
+Main’s direct census is 37 NotYet: 30 values, six returns, one field store; zero
+array-any or call-return-any rows. Files/counts:
 
-## Measurements
+| File under src/compiler | Main | Final |
+| --- | ---: | ---: |
+| commandLineParser.ts |21|15|
+| utilities.ts |4|2|
+| sourcemap.ts |3|0|
+| sys.ts |3|2|
+| emitter.ts |1|0|
+| moduleNameResolver.ts |1|0|
+| moduleSpecifiers.ts |1|0|
+| resolutionCache.ts |1|0|
+| scanner.ts |1|0|
+| tsbuildPublic.ts |1|1|
 
-All latent observations are **measured on a checker-rejected program**. The tool
-skips diagnosed bodies and returns the first lowering error per eligible unit.
-It does not produce usable IR or establish whole-program acceptance. The table's
-historical 85 any-value observations are not reproduced on this main/tool pair.
-The source census independently parses every AnyKeyword, including skipped code.
+Final is 20 observations: 16 value-any, three return-any, one field store.
+Nineteen still have source any contracts. sys.ts:52:31 is already explicitly
+NodeJS.Timeout|undefined; stock TypeScript resolves two non-any constituents,
+while latent still calls it any. Its cause is not diagnosed.
 
-| Measurement | Main | Any-only | Final |
-| --- | ---: | ---: | ---: |
-| Explicit any tokens | 135 | 124 | 124 |
-| Files containing explicit any | 23 | 22 | 22 |
-| Direct any lowering blockers | 37 | 36 | 36 |
-| Void syntax expressions | 15 | 15 | 0 |
-| Void refusals observed | 4 | 4 | 0 |
-| All NotYet | 1468 | 1468 | 1468 |
-| All Refused | 5162 | 5161 | 5157 |
+The stock parser counts 135 explicit AnyKeyword tokens in 23 files on main and 96
+in 21 files after41. These are different from latent counts: the measurement
+skips checker-diagnosed bodies and stops at each eligible unit’s first error.
+The historical table’s85 value sites are not the reproduced current-main 37.
+All counts remain labelled measured on a checker-rejected program.
 
-Direct any means exact reasons a value of type any, an array of any, a function
-returning any, a call returning any, and storing any in a field. It excludes
-variance rows merely containing the word any. Main has 30 value observations,
-six function-return observations and one store. Direct any is reported as
-NotYet, not Refused, by current main. No direct any Refused row is observed.
+## Family receipts
 
-Main's direct-any files and counts:
+| Family | Explicit tokens removed | Direct any before -> after -> mutant | Other census observation |
+| --- | ---: | --- | --- |
+| Initial accepted source owners |11|37 ->36 ->37|Actual scanner-state restoration|
+| Node timer globals |3|36 ->35 ->36|True Node handle at captured globals; public hosts deferred|
+| Complete allocator stages |4|35 ->35 ->35|Refused5157 ->5156 ->5157, restored links cast|
+| Shallow copies |8|35 ->35 ->35|Refused5156 ->5151 ->5152, restored clone source cast|
+| JSON/config |11|35 ->26 ->27|Refused5151 ->5159; NotYet1468 ->1470 exposes union/generic lessons|
+| Untyped locals |0|26 ->21 ->22|Refused5159 ->5161; NotYet1470 ->1468|
+| Settings comparison |2|21 ->20 ->21|Original two-any parameter mutant; body unchanged|
 
-| File | Sites |
-| --- | ---: |
-| commandLineParser.ts | 21 |
-| utilities.ts | 4 |
-| sourcemap.ts | 3 |
-| sys.ts | 3 |
-| emitter.ts | 1 |
-| moduleNameResolver.ts | 1 |
-| moduleSpecifiers.ts | 1 |
-| resolutionCache.ts | 1 |
-| scanner.ts | 1 |
-| tsbuildPublic.ts | 1 |
+The 53 exact type-owner rules include staged fields and completion steps ; 15 void
+owners are separately guarded. The generated incremental row is16 files,81
+lines added/67 removed. Only that row and Total are refreshed in patch-set.md.
+No compiler source, shared lane/oracle/census harness or counts.md is changed.
+There are no new fixtures.
 
-Only scanner's direct-any observation disappears. Other edited tokens are behind
-prior blockers, type-only declarations or casts. A one-token reduction in a
-source annotation is not equated with a one-site lowering reduction.
+Overall Refused5162 ->5161 and NotYet1468 ->1468. Any removals expose other
+lessons; this is not a native-tsc completion claim. JSON uses a recursive actual
+value union, not a top-type alias. Copies use partial construction and actual
+own-enumerable caller records; constructor headers are partial until completion.
+Actual bodies/callers and discarded proposals are documented per family.
 
-All before/after sites, reason rankings, source hashes and raw compressed streams
-are in evidence/. REMAINING.md lists each of the 124 current token locations with
-its historical owner analysis. These are unfinished proofs, not 124 impossibility
-claims. The unresolved groups include JSON/config 38, timers 16, staged
-constructors 11, enumerable copies 10 and correlated AST/callback/generic owners.
+## Behavior proof and the declaration repair
 
-## Behavior and artifacts
+Every touched continuation family file emits byte-identical standalone JavaScript.
+Actual Symbol, Signature and SourceMapSource construction, filesystem-entry
+creation/copying, config recovery, map validation and settings comparison run
+on Node. Actual missing-field/version/comparison mutants fail those proofs.
+Idempotence and LF reconstruction pass with real guard mutants.
 
-The any-only upstream build and stock TypeScript 6.0.3 check have zero diagnostics.
-The independent proof reconstructs all 79 compiler source files, compares each
-whole-file JavaScript emission for six changed files, compares all ten built
-JavaScript artifacts exactly, and independently projects all 715 declarations.
-Only four internal declaration artifacts change through the recorded owner types.
-The public API is byte-identical. No unknown substitution or new cast is added.
+The final lane is /workspace/adaptation41-finished-repaired-lane: fresh apply
+exit 0, oracle exit 1 solely for the existing API exception,106366 passing/one
+failing/zero pending, and PASS with exactly 222 sanctioned declarations. It
+took502.648 seconds; oracle alone385.443 seconds. All79 census source files
+match the lane’s fresh apply tree byte for byte. All ten built JavaScript files
+and public API are byte-identical to the preceding constructor control. Public
+API is also byte-identical to main. Three JavaScript bundles differ from main
+because of the already proved void source rewrites; their runtime observations
+and full oracle remain identical. The byte comparisons explicitly retain this
+difference instead of claiming all final JS bytes identical to main.
 
-The void proof checks eight call statements and seven arrow bodies against Node,
-including call order, object writes and undefined callback results. A complete
-upstream oracle then compares the final compiler to main through its actual
-regression, conformance, project, fourslash, transpile and unit suites.
+The first final lane was a real failure: private JsonConfigObject was omitted
+from the internal bundle, yielding APILibCheck plus the API exception,106365
+passing/two failing. Private declarations also changed namespace export printing.
+The repair exports both shared declarations with @internal. A concrete rebuild
+restores public API byte identity; the fresh full lane proves the repaired
+internal API fixture passes. The failed run is retained as the ownership mutant.
+The final lane execution records d6e5cff9 plus the then-working owner-export
+repair; final rules/source hashes identify those exact tested bytes.
 
-Both full oracle runs use five workers, all runners and no filter on Node
-v24.19.0. Main takes 438.809 seconds, including install/build; its tests take
-412.495 seconds. The final report retains its own measured timing. Both have
-106,366 passing, one failing and zero pending. Only the existing sanctioned
-api/typescript.d.ts acknowledgement differs, with identical baseline.diff bytes.
-The standalone oracle correctly exits 1 for that failure; it is not called green.
-The landing lane recognizes exactly this sanctioned result and exits 0 with PASS.
-It takes 531.884 seconds and records all 222 sanctioned declarations, with 28
-already accepted reference declarations. Its adapted compiler sources are
-byte-identical to the independently measured final tree, all 79 files.
+A proposed API-fixture command used eight workers; upstream’s parallel host
+ignores --tests, so it started the full suite and was cancelled. It is not a
+reported fixture pass. No full Go-package gate or confirmation run was made.
+The initial composed-constructor guard failures and partial comparer mutant
+are also retained as discarded probes. See MUTANTS.md for every actual check.
 
-The lane started while void was present in the worktree before its separate
-commit, so execution.json records 07aacdf9. The preserved final source hashes and
-patch table establish which bytes it tested. No subsequent adapter change was
-made; later changes strengthen evidence and document limits.
+## Remaining decisions and ranked routes
 
-## Every mutant and check
+RESIDUE.md lists all20 final observed rows with file:line:column, why and minimal
+programs. JSON has a truthful recursive domain, but public result/input changes
+need additional lane sanctions and raw/validated-owner work. The actual option
+predicate accepts an array of objects without validating string elements, and
+readJson promises object but returns7. Host timers need H across public host,
+storage and cancellation contracts; an alias of their any return is rejected.
+Node/Type/NodeLinks headers still omit required fields or have undefined parent;
+SourceFile copying preserves external enumerable extensions. These are unfinished
+owner/consumer or API decisions, not proofs of impossibility.
 
-| Mutation actually run | Dedicated observation |
-| --- | --- |
-| Restore _state: any in an isolated real scanner.ts | Direct any 36 to 37, exactly scanner.ts:952:103 |
-| Change scanner's state to string through the stock checker host | TS2345 at existing callers scanner.ts:958 and :962; adapted check has zero errors |
-| Restore the real void arrow at moduleNameResolver.ts:1838:35 | Zero to exactly one void census refusal |
-| Make the actual extracted diagnostics callback return push's result | Node comparison detects a numeric result instead of undefined |
-| Delete debugger from the actual extracted Debug.fail body | Attached Node inspector pauses once before and zero times after; error message unchanged |
-| Restore any in the otherwise compiled number-return scratch control | Current compiler rejects a function returning any; this is not a completed tsc owner proof |
-| Add bytes to a real copied emitted JavaScript artifact | Exact artifact byte comparison fails |
-| Remove a build artifact from the compared file set | Exact artifact file-set comparison fails |
-| Append an unrelated declaration to a real copied public API artifact | Exact declaration byte comparison fails |
-| Append number = string to actual forInStatement1.ts test input | Filtered control six passing; mutant three passing/three failing, four baseline differences; exact restoration six passing with zero differences |
-| Existing census audit's signature/body-range, extra-NotYet and attribution mutants | All caught by the unchanged census audit, whose log is retained |
+The 96 syntax tokens include JSON 27, timer 13, constructors 7, SourceFile copy 2 and
+47 other historical owner sites not completed in this continuation. All exact
+locations/snippets and classes are in evidence/finished-sites.json.
+Debug.fail’s debugger is retained: removing it loses an attached-inspector pause.
+Any-array storage/length already compiles on main, so that kind is dropped;
+element reading is not claimed supported. With has no disposition row/source
+site and fails checking. The historical timer any-call row is reviewed and
+deferred with H; no completed call-specific adaptation mutant is claimed.
 
-Adapter second passes change zero source bytes. An initial wrong Array.at contract
-and broad ProgramHost<BuilderProgram> contract produce four stock diagnostics;
-those edits are rejected. The final host helper carries T extends BuilderProgram
-and no caller statement changes. An initial VM proof lacked its result binding;
-that harness mistake was corrected before recording the passing result.
-One premature census raced with tree preparation and measured pre-void code;
-only the stable rerun is retained as final evidence.
+RANKED.md lists every other source-edit candidate row and current sites:
+197 receiver captures, 81 boolean conditions, 11 candidate index signatures,11 definite
+assignment assertions,11 namespaces, six parameter properties, six var, five
+generator functions, five yield. Main has 124 exact candidate rows/328 sites;
+final 126 rows/333 sites. No ranked candidate fix or variance fix was made.
+Two new unbounded JSON dictionary signatures are compiler lessons, excluded from
+the source-candidate ranking; the raw census keeps all13 index-signature rows.
+Distinct expando-field and missing-return-annotation rows are absent (zero),
+without a claim that the source lacks those issues. The 1389 unchecked casts
+are mixed source contracts/dynamic boundaries, not all source-only fixes.
 
-## Commands actually run
+## Commands, toolchain and retained output
 
-All measurement and test output was redirected to named logs. Full reports and
-important logs are committed under evidence/. Scratch trees and full build logs
-remain at /workspace/adaptation41-* and /tmp/adaptation41-*.
+Before setup: export GOPROXY='https://proxy.golang.org|direct'. Setup succeeds;
+source /workspace/adamic-tools/env.sh. Its cumulative timing lines are Node
+0.035s, Go 0.054s, markdown 0.097s, submodules 0.141s, clang 0.287s, go build 38.077s,
+done 38.204s. nproc 5, cpu.max 400000 100000, Node 24.19.0, Go 1.27.1, clang 20.1.8.
+Raw setup output is evidence/finished/setup.log.gz.
 
-```sh
-export GOPROXY='https://proxy.golang.org|direct'
-bash cloud/setup.sh > /tmp/adaptation41-setup.log 2>&1
-source /workspace/adamic-tools/env.sh
-bash stage3/apply.sh /tmp/adaptation41-main > /tmp/adaptation41-main-apply.log 2>&1
-python3 stage3/census/latent/make_overlay.py "$PWD" /tmp/adaptation41-overlay > /tmp/adaptation41-overlay.log 2>&1
-gofmt -w /tmp/adaptation41-overlay/*.go
-go build -buildvcs=false -overlay=/tmp/adaptation41-overlay/overlay.json -o /tmp/adaptation41-census ./stage3/census/latent/tool > /tmp/adaptation41-census-build.log 2>&1
-python3 stage3/census/latent/audit.py /tmp/adaptation41-census > /tmp/adaptation41-census-audit.log 2>&1
-LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation41-census /tmp/adaptation41-main/src/compiler /tmp/adaptation41-before.jsonl > /tmp/adaptation41-before-census.log 2>&1
-bash stage3/apply.sh /workspace/adaptation41-any-tree > /tmp/adaptation41-any-apply.log 2>&1
-npm ci --prefix /workspace/adaptation41-any-tree --no-audit --no-fund > /tmp/adaptation41-any-install.log 2>&1
-npm run build --prefix /workspace/adaptation41-any-tree > /tmp/adaptation41-any-build.log 2>&1
-NODE_PATH="$HOME/.cache/adamic-stage3/api/node_modules" node stage3/adapt/41-explicit-any-remaining/prove.cjs /tmp/adaptation41-main /workspace/adaptation41-any-tree stage3/adapt/41-explicit-any-remaining/evidence/any-proof.json > /tmp/adaptation41-any-proof-final.log 2>&1
-LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation41-census /workspace/adaptation41-any-tree/src/compiler /tmp/adaptation41-any-after.jsonl > /tmp/adaptation41-any-after-census.log 2>&1
-LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation41-census /workspace/adaptation41-any-mutant/src/compiler /tmp/adaptation41-any-mutant.jsonl > /tmp/adaptation41-any-mutant-census.log 2>&1
-NODE_PATH="$HOME/.cache/adamic-stage3/api/node_modules" node stage3/adapt/41-explicit-any-remaining/void-proof.cjs /workspace/adaptation41-final-tree > /tmp/adaptation41-void-proof.log 2>&1
-LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation41-census /workspace/adaptation41-final-tree/src/compiler /tmp/adaptation41-final-stable.jsonl > /tmp/adaptation41-final-stable-census.log 2>&1
-LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation41-census /workspace/adaptation41-void-mutant/src/compiler /tmp/adaptation41-void-mutant.jsonl > /tmp/adaptation41-void-mutant-census.log 2>&1
-NODE_PATH="$HOME/.cache/adamic-stage3/api/node_modules" node stage3/adapt/41-explicit-any-remaining/debugger-proof.cjs /tmp/adaptation41-main > /tmp/adaptation41-debugger-proof.log 2>&1
-NODE_OPTIONS=--max-old-space-size=2048 bash stage3/oracle/run.sh /tmp/adaptation41-main /workspace/adaptation41-main-oracle > /tmp/adaptation41-main-oracle.log 2>&1
-NODE_OPTIONS=--max-old-space-size=2048 bash stage3/oracle/run.sh /workspace/adaptation41-final-tree /workspace/adaptation41-final-oracle > /tmp/adaptation41-final-oracle.log 2>&1
-NODE_OPTIONS=--max-old-space-size=2048 bash stage3/lane/run.sh /workspace/adaptation41-lane > /tmp/adaptation41-lane.log 2>&1
-```
+Ran stock tsc.js -p TREE/src/compiler --noEmit per family and final;
+family-proof.cjs, constructor-proof.cjs, copy-proof.cjs, json-proof.cjs,
+data-proof.cjs, guard-proof.cjs, inventory.cjs, residue-proof.cjs and
+timer-type-proof.cjs with their recorded tree inputs; full latent census plus
+census-report.py on each control/restored-any source; npm run build for the
+JSON ownership repair; bash stage3/lane/run.sh for the final fresh apply and
+full oracle. Earlier any/void/debugger/oracle-fixture checks remain in their
+original evidence and c6ea4131 history. All test/measurement output goes to
+logs, never a pipe. Family docs and README give exact replay commands.
 
-The independent real-input oracle control and mutant use one worker and only
-compiler tests matching forInStatement1. The original and restored control have
-six passing tests and no baseline differences. The input mutant has three
-passing and three failing tests, with errors, JavaScript, symbols and types
-baseline mismatches. Install/build exit zero, and only the oracle kills it.
-The fixture is restored byte for byte. Its SHA-256 and phase reports are retained.
-
-```sh
-NODE_OPTIONS=--max-old-space-size=2048 bash stage3/oracle/run.sh /workspace/adaptation41-final-tree /workspace/adaptation41-oracle-control --runners=compiler --tests=forInStatement1 > /tmp/adaptation41-oracle-control.log 2>&1
-NODE_OPTIONS=--max-old-space-size=2048 node stage3/adapt/41-explicit-any-remaining/oracle-proof.cjs /workspace/adaptation41-final-tree /workspace/adaptation41-oracle-control /workspace/adamic/stage3/oracle/run.sh /workspace/adaptation41-oracle-mutant > /tmp/adaptation41-oracle-mutant-proof.log 2>&1
-```
-
-The stock checker probes run through inline Node scripts with the compiler's
-complete config and actual callers; their diagnostics are in stock-check.log.txt
-and rejected-stock-check.log.txt. Each minimal kind probe uses
-`go run ./cmd/adamic c /tmp/adaptation41-kind-probes/KIND.a`, with its own log.
-Python census-report.py independently deduplicates each raw stream and records
-exact reason/file/site ledgers. Targeted node --check and final git diff --check pass. Raw upstream log whitespace
-initially fails the diff check; readable log copies are normalized and their
-original bytes are preserved in .raw.gz archives. The mutant diff is retained
-compressed without changing its CRLF bytes.
-
-Setup succeeds without a workaround: Node 0.022s; Go 0.034s; clang 0.277s;
-markdown dependencies ready 1.013s; submodules 15.065s; Go build 258.949s;
-cache warm 259.050s; done 259.086s. nproc=5; CPU quota=4. The printed environment
-/workspace/adamic-tools/env.sh is sourced in build/test shells.
-
-## Ranked other source edit candidates
-
-The complete 124 exact refusal rows representing 328 observed sites, including
-all locations, are in RANKED.md. These are source-level adaptation candidates;
-this unit does not establish a completed owner/caller proof for any of them.
-
-1. Method receiver captures: 195.
-2. Explicit boolean conditions: 78.
-3. Definite assignment assertions: 11.
-4. Namespaces: 11.
-5. Index signatures: 11.
-6. Parameter properties: 6.
-7. var declarations: 6.
-8. Generator functions: 5.
-9. Yield expressions: 5.
-
-There are no distinct observed declared-expando-field or missing-return-type
-refusal reasons. The 1,396 unchecked casts are mixed and require per-site review;
-they are not all presented as source-only fixes. Variance is left untouched.
-Non-null, comma, logical-assignment and predicate-verification rows remain
-compiler lessons under the supplied table rulings.
-
-## Remaining boundary decisions and limits
-
-DEBUGGER.md gives the actual source behavior counterexample and a minimal program
-for @system_adamic_typescript. ANY-RETURNS.md and ANY-CALLS.md give minimal JSON,
-staged initialization and generic timer contract programs, while explicitly
-identifying unfinished work. DROPPED.md retains actual main compilation receipts
-for any-array storage and the checker-rejected, absent with statement.
-
-This is not completion of the requested remaining-any adaptation. No claim is
-made that the 124 remaining tokens have no truthful static type. Thirty-six
-observed any blockers remain, including all six return owners; no dedicated
-call-return mutant or completed call-return owner is provided. Native tsc
-execution, source-map/build-metadata identity, Windows host behavior, arbitrary
-custom-host inputs and the full Go gate are not covered. No fixture is added,
-so counts.md is unchanged. No pull request is opened.
+Evidence is under evidence/{timers,constructors,copies,json-config,locals,data,
+finished}. Full raw census streams and large/ANSI outputs are compressed;
+small JSON receipts remain directly readable. No additional per-family push
+follows the user’s rule change. The finished evidence is committed and then
+pushed once to the assigned branch; no PR, force push or main push.

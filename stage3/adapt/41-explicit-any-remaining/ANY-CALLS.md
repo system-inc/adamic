@@ -1,29 +1,21 @@
-# Any-call coverage is incomplete
+# Any-call coverage
 
-The additional table records one `a call returning any` site at sys.ts:378:63.
-Current main's latent census observes zero rows with that exact reason, before
-and after 41. The historical call is timer registration in
-scheduleNextPoll, storing host.setTimeout's handle on its matching polling queue.
-The host handle must be correlated with clearTimeout; an arbitrary concrete
-host return type would lose supported host implementations.
+The disposition table has one historical call-returning-any row, sys.ts:378:63,
+in scheduleNextPoll. Main and final census both have zero rows with that exact
+reason. The body stores host.setTimeout's handle in its polling queue.
+This owner is examined but remains with the shared host timer contract:
+System and WatchHost erase H; numeric test hosts, Node handles and custom handles
+all occur. The queue's actual pollScheduled value is H | false, despite the old
+boolean annotation. Writing NodeJS.Timeout everywhere would exclude hosts;
+ReturnType of the existing any-returning host would only rename any.
 
-Zero call-return owners are adapted. Zero observations are not proof that main
-supports every any call: this census stops at each eligible unit's first error
-and skips checker-diagnosed bodies. The small ambient-call probe still fails,
-reported as `a value of type any` at the receiving declaration. It is retained
-as a cross-kind control, not claimed to be a call-return-specific mutant.
-No successful call-kind adaptation or dedicated call-return mutant is claimed.
+The Node ambient timer declaration is typed separately because getNodeSystem
+captures the real Node global. Its actual return-any mutant is caught, but it is
+not claimed to be a call-kind-specific mutant. No call-return owner adaptation
+or dedicated call-return mutant is claimed. Zero observations do not establish
+that any calls compile: the census stops early and skips diagnosed bodies.
 
-Minimal contract program for @system_adamic_typescript:
-
-```a
-function keepHandle<H>(start: () => H, stop: (handle: H) => void): void {
-    const handle = start();
-    stop(handle);
-}
-```
-
-This illustrates the intended owner correlation without any. Applying it to
-System and WatchHost requires carrying H through all timer storage and public
-host contracts. That work is unfinished; a truthfully correlated generic is
-possible and has not received its owner/caller proof here.
+The correlated TimerHost<H> minimal program and all declaration/storage locations
+are in RESIDUE.md. Public handle correlation requires additional API sanction
+and owner/consumer proof. With has no disposition-table row or compiler-source
+AST site and is checker-rejected; nothing was silently removed.

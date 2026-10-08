@@ -13,7 +13,7 @@
   "final": {
     "Explicit boolean conditions": 81,
     "Method receiver captures": 197,
-    "an index signature": 13,
+    "an index signature": 11,
     "a definite assignment assertion !": 11,
     "a namespace": 11,
     "a parameter property": 6,
@@ -157,17 +157,15 @@
     {
       "kind": "Refused",
       "reason": "an index signature",
-      "count": 13,
+      "count": 11,
       "disposition": "source edit candidate: needs owner and behavior proof",
       "sites": [
         "src/compiler/commandLineParser.ts:1911:5",
-        "src/compiler/commandLineParser.ts:2428:37",
         "src/compiler/corePublic.ts:14:5",
         "src/compiler/executeCommandLine.ts:405:39",
         "src/compiler/parser.ts:10723:31",
         "src/compiler/parser.ts:10781:89",
         "src/compiler/parser.ts:10785:21",
-        "src/compiler/sourcemap.ts:408:67",
         "src/compiler/tracing.ts:55:9",
         "src/compiler/tsbuildPublic.ts:166:5",
         "src/compiler/types.ts:7582:5",
@@ -1367,5 +1365,21 @@
         "src/compiler/executeCommandLine.ts:166:14"
       ]
     }
-  ]
+  ],
+  "final_syntactic_families": {
+    "Explicit boolean conditions": 81,
+    "Method receiver captures": 197,
+    "an index signature": 13,
+    "a definite assignment assertion !": 11,
+    "a namespace": 11,
+    "a parameter property": 6,
+    "var": 6,
+    "a generator function": 5,
+    "yield (generators)": 5
+  },
+  "dynamic_json_index_rows": [
+    "src/compiler/commandLineParser.ts:2428:37",
+    "src/compiler/sourcemap.ts:408:67"
+  ],
+  "interpretation": "Historical source-edit candidates are conditional; the two new unbounded JSON dictionaries are compiler lessons and excluded from source candidate ranking."
 }
