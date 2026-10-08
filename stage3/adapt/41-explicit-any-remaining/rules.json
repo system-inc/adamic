@@ -414,5 +414,13 @@
     "before": "function compareMessageChainContent(\n    c1: DiagnosticMessageChain[],\n    c2: DiagnosticMessageChain[],\n): Comparison {\n    let res;",
     "after": "function compareMessageChainContent(\n    c1: DiagnosticMessageChain[],\n    c2: DiagnosticMessageChain[],\n): Comparison {\n    let res: Comparison | undefined;",
     "reason": "Only string comparison and recursive Comparison results are assigned. The initially absent variable is tested/read only after assignment."
+  },
+  {
+    "id": 55,
+    "kind": "data comparison",
+    "file": "src/compiler/utilities.ts",
+    "before": "export function compareDataObjects(dst: any, src: any): boolean {",
+    "after": "export function compareDataObjects<T>(dst: T, src: T): boolean {",
+    "reason": "The only nonrecursive compiler caller compares current and new CompilerOptions. Recursive indexed members preserve the same T; existing runtime classification and comparison are unchanged."
   }
 ]

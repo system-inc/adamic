@@ -1,0 +1,19 @@
+{
+  "actualCaller": "program compares currentOptions with newOptions",
+  "sameT": true,
+  "observations": [
+    true,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false
+  ],
+  "mutants": [
+    {
+      "change": "reverse actual scalar inequality",
+      "caughtBy": "Node compiler-settings comparison assertions"
+    }
+  ]
+}

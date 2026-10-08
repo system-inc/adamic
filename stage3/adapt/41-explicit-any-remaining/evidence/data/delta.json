@@ -1,0 +1,26 @@
+{
+  "any_before": 21,
+  "any_after": 20,
+  "any_mutant": 21,
+  "totals_before": {
+    "Refused": 5161,
+    "NotYet": 1468
+  },
+  "totals_after": {
+    "Refused": 5161,
+    "NotYet": 1468
+  },
+  "totals_mutant": {
+    "Refused": 5161,
+    "NotYet": 1468
+  },
+  "latent_mutant_extra": [
+    [
+      "NotYet",
+      "a value of type any",
+      "src/compiler/utilities.ts:8147:36"
+    ]
+  ],
+  "tokens_removed": 2,
+  "mutant": "restore the original two any parameter annotations"
+}

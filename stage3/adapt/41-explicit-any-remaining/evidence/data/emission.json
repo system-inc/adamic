@@ -1,0 +1,21 @@
+{
+  "family": "data comparison",
+  "typescript": "6.0.3",
+  "files": {
+    "src/compiler/utilities.ts": {
+      "before": "7e7b3702a07f6d348229fc2e5eeae668d5d756058324d5d6ae421ebe4b7b818e",
+      "after": "089af1134f8486826c1d9c06c3ef47afd2c5bfa98e21f3791dc910d3fc8ba52f",
+      "tokensRemoved": 2,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    }
+  },
+  "tokensRemoved": 2,
+  "mutants": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    }
+  ]
+}

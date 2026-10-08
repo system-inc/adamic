@@ -1,0 +1,10 @@
+"use strict";
+const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict"),vm=require("node:vm"),ts=require("typescript");
+const [beforeTree,afterTree,output]=process.argv.slice(2);
+const extract=tree=>{const s=ts.createSourceFile("utilities.ts",fs.readFileSync(path.join(tree,"src/compiler/utilities.ts"),"utf8"),ts.ScriptTarget.Latest,true);const n=s.statements.filter(n=>ts.isFunctionDeclaration(n)&&n.name?.text==="compareDataObjects");assert.equal(n.length,1);return n[0].getText(s).replace(/^export /,"");};
+const load=s=>vm.runInNewContext(ts.transpileModule(s+"\ncompareDataObjects;",{compilerOptions:{target:ts.ScriptTarget.ESNext}}).outputText);
+const cases=[[{strict:true},{strict:true},true],[{strict:true},{strict:false},false],[{paths:{x:["a"]}},{paths:{x:["a"]}},true],[{paths:{x:["a"]}},{paths:{x:["b"]}},false],[{trace:()=>1},{trace:()=>2},true],[{strict:true},{},false],[{value:null},{value:null},false]];
+const run=fn=>cases.map(([a,b,expected])=>{const actual=fn(a,b);assert.equal(actual,expected);return actual;});
+const before=run(load(extract(beforeTree))),after=run(load(extract(afterTree)));assert.deepEqual(after,before);
+const actual=extract(afterTree),needle="dst[e] !== src[e]";assert.equal(actual.split(needle).length,2);assert.throws(()=>run(load(actual.replace(needle,"dst[e] === src[e]"))),assert.AssertionError);
+const evidence={actualCaller:"program compares currentOptions with newOptions",sameT:true,observations:after,mutants:[{change:"reverse actual scalar inequality",caughtBy:"Node compiler-settings comparison assertions"}]};fs.writeFileSync(output,JSON.stringify(evidence,null,2)+"\n");console.log(JSON.stringify(evidence));
