@@ -47,6 +47,9 @@ codex/grok-	hold	@system_adamic_library: date coverage, written by a Grok worker
 # Stage 3
 codex/stage3-	stage3
 codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
+codex/step12-	hold	@system_adamic_typescript: step 12, the native scanner proof; typescript decides where each lands
+codex/tsc-cycle-	hold	@system_adamic_runtime: step 06, the census of tsc's cycle slots
+codex/tsc-census-	hold	@system_adamic_compiler: compiler library call census and numeric predicate lowering; compiler decides where it lands
 codex/host29-	hold	@system_adamic_library: step 29, the Node host surface tsc touches (#7fsgdcn); cut from area/stage3, so library merges each into its area by hand
 codex/hidden-	hold	@system_adamic_compiler: step 05's overload fixtures, waiting on codex/overload-results; compiler sends one landing candidate on area-next's line, so none merges into area/compiler
 codex/views-	hold	@system_adamic_compiler: the views are compiler's area-views, integrated by hand (typescript asked to come off, Oct 8)
@@ -64,8 +67,8 @@ codex/wasm	platforms
 codex/workers-	platforms
 codex/apple-	platforms
 # Developer tools
-codex/developer-tools-	developer-tools
-codex/gate-	developer-tools
-codex/fuzz-	developer-tools
-codex/fleet-	developer-tools	the fleet floor (#vd03kz9)
-codex/stale-	developer-tools	the watcher stopping superseded reds
+codex/developer-tools-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/gate-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/fuzz-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/fleet-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/stale-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
