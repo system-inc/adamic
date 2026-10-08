@@ -232,3 +232,89 @@ refusal control also uses ask. No change to those calls was needed.
 
 Evidence: checker-proof/area-whole-lint.txt, area-whole-time.txt,
 area-whole-inputs.txt, area-typescript-clean.json, and area-jsdoc-{go,node}.txt.
+
+## Scalar bridge adapter and renewed package gate
+
+`checker_bridge.a` is the single compatibility boundary for today's raw
+bridge returns. It wraps open and inspect values in `{kind: 'Ok', value}`
+and release in `{kind: 'Ok'}`. Checker and the driver retain the existing
+Answer-or-TSGoError handling above it. Today's bridge still panics on an
+error; this adapter does not claim to convert those panics into refusals.
+Library 6131c4c remains absent from this branch.
+
+When library's returned-result builtins land, replace this one import in
+checker.a:
+
+```ts
+import { openBridge as tsgoProgram, inspectBridge as tsgoInspect, releaseBridge as tsgoRelease } from './checker_bridge.a';
+```
+
+with:
+
+```ts
+import { tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
+```
+
+Scratch merge b2eed32f631e2e17e4d323270085578b60a219ca includes library
+6131c4c, the harness test corrections, and exactly that import change.
+`TestCheckerBridgeRefusalPending` passes there in 171.629s. The forced
+unsupported checker question reaches the refused wire line on native,
+Node and emitted JavaScript. Removing refusal handling builds and runs on
+all three but fails their wire comparisons. Restoring it passes all three.
+The control on this branch still names its pending dependency:
+`awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer`.
+
+The first full adapter run found a test setup defect: the registered typed
+mutant was given a syntax-only manifest and silently skipped. A focused
+reproducer failed in 84.864s because the boolean verdict mutant survived on
+Node. Typed mutant runs now use actual strict projects, the real Go oracle,
+and native recordings replayed by Node and emitted JavaScript. The same
+mutant is caught only by findings comparison on all three; the focused
+corrected run passes in 67.774s. The initial full run was interrupted after
+this finding and is explicitly retained as incomplete, not green.
+
+The native binary cache still keys by generated C hash, bridge archive and
+instrumentation. Identical builds share a completion signal; different
+sources compile independently under the existing bounded mutant workers.
+Previously its global lock serialized all compilations. No comparison or
+mutant was removed to shorten the gate.
+
+Evidence for these changes is under checker-proof/adapter-*.txt, including
+the one-line scratch pass-through patch, the typed mutant before and after,
+and the scratch refusal control's removal and restoration.
+
+The renewed full package gate passed, exit 0, on harness code 542ecf7c2.
+Go package time was 4662.856s; Python monotonic wall time was 4671.349
+seconds (77 minutes 51 seconds). No test filter was used:
+
+```sh
+source /workspace/adamic-tools/env.sh
+export GOPROXY='https://proxy.golang.org|direct'
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-wave08-corpus
+export ADAMIC_LINT_PROFILE_DIR=/workspace/checker-adapter-final.iAVfPc
+export ADAMIC_LINT_PROFILE_SNAPSHOTS="$ADAMIC_LINT_PROFILE_DIR"
+GOMAXPROCS=4 go test -count=1 -v -timeout 90m ./stage1/cohere/lint
+```
+
+The TypeScript checkout was clean before and after, at 6.0.3 commit
+050880ce59e30b356b686bd3144efe24f875ebc8. The shared profile directory was
+fresh at the start. The longer package timeout accommodates the complete
+native mutant builds; it changes no correctness condition.
+
+TestRulesAgree passed in 136.50s with 102 typed cases and 13,743,110 bytes
+identical across live Go, native, Node and emitted JavaScript. The compiler
+and stage-1 corpus comparison passed on 719 files and 28,685,583 bytes.
+All 75 registered mutants passed, including the typed pilot on all three
+port runtimes. Shards, owned witnesses, registration, factory hooks, option
+decoding and its mutant, and profile comparisons passed. Native sanitized
+builds used ASan, UBSan and LeakSanitizer without findings. Counted profile
+compilation reported 336 allocations and 336 frees.
+
+The named bridge refusal control remains a pending skip on this branch.
+Optional throughput checks were not requested. Existing explicit parser
+recovery limits are retained in the complete log; none were relaxed.
+This is the whole lint package, not a claim of the repository-wide gate.
+Question registration and fleet migration remain outside this unit.
+
+Final evidence: checker-proof/adapter-final-lint.txt,
+checker-proof/adapter-final-inputs.txt and checker-proof/adapter-final-time.txt.
