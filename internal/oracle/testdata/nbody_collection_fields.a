@@ -1,0 +1,21 @@
+// One field access site alternates class, literal and reordered literal shapes.
+interface Item { count: number; label: string; }
+class Entry { count = 1; label = `class${1}`; }
+function bump(item: Item): string {
+    item.count += 2;
+    item.label = `${item.label}:${item.count}`;
+    return item.label;
+}
+const items: Item[] = [new Entry(), { label: `literal${2}`, count: 2 }, { count: 3, label: `third${3}` }];
+const map = new Map<string, Item>();
+for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    if (item !== undefined) {
+        map.set(`${i}`, item);
+        console.log(bump(item));
+    }
+}
+for (const item of map.values()) console.log(bump(item));
+const first = map.get('0');
+if (first !== undefined) first.count = first.count + (items[1]?.count ?? 0);
+console.log(items.map((item) => `${item.count}/${item.label}`).join(','));

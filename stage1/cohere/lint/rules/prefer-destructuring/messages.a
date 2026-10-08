@@ -1,0 +1,1 @@
+export const explanation = 'Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.';

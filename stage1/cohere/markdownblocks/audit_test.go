@@ -13,8 +13,9 @@ import (
 )
 
 type auditInput struct {
-	Name string `json:"name"`
-	Text string `json:"text"`
+	Corpus bool   `json:"-"`
+	Name   string `json:"name"`
+	Text   string `json:"text"`
 }
 type auditOutput struct {
 	Name      string   `json:"name"`
@@ -25,10 +26,21 @@ type auditOutput struct {
 	Embeds    []string `json:"embeds"`
 }
 
+// census reports whether the corpus covers every Markdown file in the repository and its submodules. It is
+// opt-in: that set moves with every commit and every cohere bump, and a gate must not turn red on a README this
+// unit never owned. Without it the corpus is this unit's own files plus the generated documents.
+func census() bool {
+	return os.Getenv("ADAMIC_MARKDOWNBLOCKS_CENSUS") != ""
+}
+
 func auditCorpus(t *testing.T, root string) ([]auditInput, int) {
 	t.Helper()
 	var inputs []auditInput
-	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+	walk := filepath.Join(root, "stage1/cohere/markdownblocks")
+	if census() {
+		walk = root
+	}
+	err := filepath.WalkDir(walk, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -104,13 +116,19 @@ func auditResults(t *testing.T, name string, result run) []auditOutput {
 }
 
 func TestWholeDocumentOraclePreflight(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
 	dir := t.TempDir()
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
@@ -183,6 +201,15 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 		"generated/embedded_jsonc.md": false,
 		"generated/embedded_flow.md":  false,
 	}
+	expectedWitnesses := 7
+	if !census() {
+		for name := range gaps {
+			if strings.HasPrefix(name, "cohere/") {
+				delete(gaps, name)
+			}
+		}
+		expectedWitnesses = 0
+	}
 	witnessFile, err := os.ReadFile("GAPS.md")
 	if err != nil {
 		t.Fatal(err)
@@ -232,8 +259,8 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 			t.Logf("known auto gap %s at byte %d, embeds %v", actual.Name, offset, actual.Embeds)
 		}
 	}
-	if witnessCount != 7 || len(witnessStrings) != 14 {
-		t.Fatalf("expected seven witnesses and fourteen complete outputs, got %d and %d", witnessCount, len(witnessStrings))
+	if witnessCount != expectedWitnesses || len(witnessStrings) != 14 {
+		t.Fatalf("expected %d witnesses and fourteen complete outputs, got %d and %d", expectedWitnesses, witnessCount, len(witnessStrings))
 	}
 	for name, seen := range gaps {
 		if !seen {

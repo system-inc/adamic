@@ -1,0 +1,10 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+=== PAUSE TestMutants/debugger_fix_suppressed
+=== CONT  TestMutants/debugger_fix_suppressed
+    lint_test.go:747: debugger fix suppressed mutant survived on Node
+--- FAIL: TestMutants (3.28s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (3.81s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	7.118s
+FAIL

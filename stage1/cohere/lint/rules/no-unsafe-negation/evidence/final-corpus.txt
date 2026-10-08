@@ -1,0 +1,9 @@
+['/tmp/wave07-negation/oracle', '/tmp/wave07-final-corpus-manifest.txt']
+exit 0, stdout 13278673 bytes, stderr 0 bytes
+['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-final-corpus-manifest.txt']
+exit 0, stdout 13278673 bytes, stderr 0 bytes
+['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', '/tmp/wave07-negation/baseline/emitted.mjs', '/tmp/wave07-final-corpus-manifest.txt']
+exit 0, stdout 13278673 bytes, stderr 0 bytes
+['/tmp/wave07-negation/baseline/native', '/tmp/wave07-final-corpus-manifest.txt']
+exit 0, stdout 13278673 bytes, stderr 0 bytes
+PASS final corpus 351 file rows; 13278673 identical bytes including all newly added .a sources

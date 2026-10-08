@@ -1,0 +1,14 @@
+=== RUN   TestJsxLintReleaseAndThroughput
+    lint_test.go:290: cohere cases: 3879 unique source/rule/options combinations
+    jsx_integration_test.go:97: checker native build: 3.719273542s
+    jsx_integration_test.go:99: /tmp/adamic-gate/lint-shared-268677166/oracle-1110526820/oracle [--manifest /tmp/adamic-gate/TestJsxLintReleaseAndThroughput330223134/3882/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/lint-shared-268677166/upstream-2991490113/case-3597/repository/source/JsxNoCommentTextnodes.tsx: [Expected corresponding closing tag for JSX fragment. Expression expected.]; source="\n        <></* valid *//>\n      "
+        
+        goroutine 1 [running]:
+        main.collect({0x3a59cf90e3fd, 0x70}, {0x3a59cf4c63c0, 0x20}, {0x3a59cf8b7e80, 0x7, 0x8}, 0x0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe
+        main.run({0x3a59cf90e3fd?, 0x3a59cf7c39c0?}, 0x0, 0x3a59cf7c39c0, 0x0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595
+--- FAIL: TestJsxLintReleaseAndThroughput (37.21s)

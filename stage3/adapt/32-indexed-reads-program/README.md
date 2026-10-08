@@ -1,6 +1,88 @@
 # Required indexed reads in the program partition
 
-## Current coverage after final wave 7
+Current ruling: the ten public method conversions are revoked and restored.
+**watch.ts is 0 -> 2 and honestly leaves zero**; both omission rewrites are
+declined by public key-presence counterexamples. The method-restoration section
+and [current frontier](closure-frontier.md) supersede historical watch-zero proofs.
+
+## Whole-file closure unit (October 7)
+
+The new unit starts from integration 634ef061fc72c061e2de1606d5c8faebec4411f6.
+builderState.ts, executeCommandLine.ts and moduleSpecifiers.ts are now at zero. Builder’s two iterator-inference
+findings are addressed by explicit erased generic arguments, not new runtime
+reads: `mapDefinedIterator<Path, string>` and `arrayFrom<Path>`.
+[closure-sites.json](closure-sites.json) records each exact call, owning function,
+argument shape and invariant. The adapter parses current stock 6.0.3 syntax,
+requires one occurrence per owner, rejects changed arguments or type arguments,
+and plans every file before writing. Insertion preserves CRLF and evaluation.
+
+Cumulative compatibility guards also recognize adaptation 40's erased
+`FileIncludeKind as Record<number, string>` cast, and adaptation 45's two
+`const major = match[1]!` reads in `tryParseComponents` and `parsePartial`.
+Those mandatory regex captures remain owned by adaptation 45; both reads must
+be present together, asserted, and initialize the named local. They are excluded
+from this partition's original occurrence inventory rather than asserted again.
+
+The isolated 78-root census measures **builderState.ts at zero: 2 to 0**;
+whole-tree diagnostics are 382 to 380. All 78 input hashes and baseline per-file
+counts match run 0 of latent report 176a496. Only builderState.ts changes in that first wave.
+The first auxiliary census retained main's stricter style checks; the primary
+census uses the recorded feature commit's configuration on both sides.
+Upstream's build regenerates its diagnostic map, so the primary census uses a
+source-only snapshot and does not credit that regeneration to this unit.
+See [closure proof](closure-builderState/proof.json).
+Removing the first generic argument restores TS2345; replacing a ledgered `!`
+with `?? 0` fails both emitted-byte and site-contract checks. An unexpected
+indexed read in the last planned file fails before any source write. An extra
+API declaration fails the composed API allowlist. All 26 files have
+byte-identical stock JavaScript, unchanged CRLF, and zero second-run edits.
+The default oracle is **106,367 passing, zero failing, zero pending**, with an
+empty baseline diff. Install 5.248s, build 3.27s, tests 423.501s, total 432.082s.
+Older proof totals below describe the previous unit.
+The October 7 22:32 ruling sanctions adaptation 40's exact 28 API lines
+(27 brands and ErrorCallback.arg0), alongside adaptation 20's 189 lines and any
+mechanically proven adaptation 70 readonly lines. Adaptation 70 is not present
+in this integration. [api-exceptions.cjs](api-exceptions.cjs) composes adaptation
+20's parsed-owner reconstruction with [api40-sites.json](api40-sites.json),
+requires the exact 27/1 owner counts, and rejects all other API edits or
+reference baseline edits. Adaptation 40's pre-applied 28-line reference is also
+verified. No additional baseline is accepted. The initial default oracle had
+106,360 passes, an API mismatch for 20's lines and one 40-second timeout in
+relationComplexityError.ts while Go builds competed for CPU. The default rerun
+with only the proven API reference changes passed.
+
+The second wave closes **executeCommandLine.ts at zero: 3 to 0**, using
+`arrayFrom<[string, string | number]>` and `reduceLeftIterator<number, number>`.
+The shared iterator implementations visit only yielded values; the reduction
+starts at 0 and replaces its accumulator only with numeric sums. Whole-tree
+census is 380 to 377. The removed arrayFrom argument mutant restores both
+TS2488 destructuring errors. The first commandLineArgs[0] assertion replaced
+with `?? 0` fails both the stock emitter and the specific occurrence contract.
+All 26 emitted files remain byte-identical and the second run has zero edits.
+[Execute proof](closure-executeCommandLine/proof.json) records the default oracle:
+106,367 passing, zero failing, empty baseline diff.
+
+watch.ts remains at two TS2375 findings, both reviewed and declined in
+[closure-declined.json](closure-declined.json): the optional host methods can
+legitimately be absent, and their truthful owning declarations require further
+public API changes outside the exact sanctioned set. No source changed during
+that review; the already-green default oracle for the identical source tree
+covers it, with the reuse and fresh census documented in
+[watch proof](closure-watch/proof.json).
+
+The third wave closes **moduleSpecifiers.ts at zero: 3 to 0**. Its private
+nonempty ending protocol, cache tuple absence unions and map iterator contract
+are detailed in [module proof](closure-moduleSpecifiers/README.md). Whole-tree
+census is 377 to 374. All changes erase to identical JavaScript, and the default
+oracle passes 106,367 tests with an empty baseline diff. The twelve audited
+producer/forwarder bodies and unchanged exported interface are guarded; empty
+producer, missing tuple union, runtime zero-default and external-interface
+mutants all fail. The second adapter run makes zero edits.
+
+Setup: Go 0s, clang 1s, Node 1s, submodules 1s, build cache 203s, total 203s;
+`nproc` is 5 (4 effective CPUs).
+
+## Previous unit: coverage after final wave 7
 
 All 26 assigned compiler files are reviewed. This wave reviews corePublic.ts,
 performanceCore.ts and types.ts in full and adds one U-typed required-read
@@ -666,9 +748,9 @@ are not run for this source-adaptation-only wave.
 | watch.ts:544:151 | `options.lib[reason.index]` | U-position | assert | A LibFile include reason with an index records the populated compilerOptions.lib entry that introduced this library. |
 | watchUtilities.ts:736:13 | `factory[key]` | U-table | decline | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence. |
 | watchUtilities.ts:811:14 | `plainInvokeFactory[key]` | U-table | decline | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence. |
-| watchUtilities.ts:815:120 | `args[0]` | U-position | decline | Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument. |
-| watchUtilities.ts:815:131 | `args[1]` | U-position | decline | Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument. |
-| watchUtilities.ts:815:155 | `args[1]` | U-position | decline | Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument. |
+| watchUtilities.ts:815:120 | `args[0]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| watchUtilities.ts:815:131 | `args[1]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| watchUtilities.ts:815:155 | `args[1]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
 | resolutionCache.ts:273:22 | `pathComponents[0]` | U-endpoint | assert | The preceding length-at-most-one return guarantees a populated root component at position zero. |
 | resolutionCache.ts:275:9 | `pathComponents[0]` | U-endpoint | decline | The root-character equality comparison accepts absence without dereferencing the indexed result. |
 | resolutionCache.ts:277:9 | `pathComponents[1]` | U-position | assert | The earlier length-at-most-one return guarantees a populated second path component. |
@@ -700,3 +782,100 @@ are not run for this source-adaptation-only wave.
 | executeCommandLine.ts:746:39 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
 | executeCommandLine.ts:747:29 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
 | executeCommandLine.ts:747:54 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
+
+## Whole-file closure: watchUtilities.ts
+
+Four findings become zero; the fair census is 374 to 370 with no shifted errors.
+The same 78-root census now counts 40 whole files at zero. See
+[the watcher proof](closure-watchUtilities/README.md) and its ledger entries in
+closure-sites.json. Default oracle: 106,367 passing, zero failing, empty baseline
+diff; all 26 emitted outputs and CRLF counts unchanged, second run zero edits.
+All eight type contract removal guards, the key-flow mutant and the ! to ?? 0
+emission/occurrence mutant fail as required.
+
+## Whole-file closure: tracing.ts remainder
+
+The private typesPath undefined contract removes one finding, 6 to 5; the fair
+whole-tree census is 370 to 369, still 40 whole files at zero. This file is not
+counted as zero. [The tracing proof](closure-tracing/README.md) lists every
+remaining finding and its reason, as does closure-declined.json. Default oracle:
+106,367 passing, zero failing, empty baseline diff. All 26 emitted outputs and
+CRLF counts remain unchanged; second run zero edits; declaration/census and
+! to ?? 0 mutants fail. The requested six-file pass closes builderState.ts,
+executeCommandLine.ts, moduleSpecifiers.ts and watchUtilities.ts completely;
+watch.ts retains two unsanctioned public-host declaration findings. See the
+[remaining-file roadmap](closure-frontier.md) and closure-frontier.json for every
+remaining owned diagnostic on the current all-code meter. The final emitted
+proof compares directly with untouched input, independent of the adapter.
+
+## Owner handoffs: parser, decorator utilities and comment emitter at zero
+
+The merged 86cc9b7 tree has parser.ts **1 -> 0**,
+transformers/utilities.ts **3 -> 0** and factory/emitNode.ts **2 -> 0**,
+with truthful types.ts owner unions. AutoGenerateInfo reduces nodeFactory **4 -> 2**.
+Fair all-code count **329 -> 321**, original whole files **50 -> 53 of 78**,
+no new findings, byte-identical JavaScript, CRLF/idempotence and a green default
+oracle. [Complete handoff proof](owner-handoffs/README.md) records the exact
+two new AmdDependency.name and CommentRange.hasTrailingNewLine API unions,
+existing sanctions, all mutants and upstream notes. RawSourceMap.sourcesContent
+is deferred: its union alone fails the stock build until partition 33 widens its
+private storage and setter parameter. Sourcemap.ts is still one TS2345;
+no zero is claimed for it or nodeFactory.ts.
+
+## Resumed closure: sanctioned watch host owners
+
+On the pushed handoff batch, watch.ts is **2 -> 0**, whole-tree findings
+**321 -> 314** with no new findings, and original whole files **53 -> 54 of 78**.
+[The resumed proof](resumed-watch/README.md) records the 15 owning declarations,
+15 erased local helper views, 11 exact public host owners, and all mutants.
+Default oracle: **106,367 passing, empty baseline diff**. Both newly sanctioned
+handoff API lines and the existing 20/40/70 exceptions are checked mechanically.
+Tracing already uses adaptation 47 and retains exactly four Node host bindings;
+performanceCore remains skipped. closure-declined.json is current and
+resumed-resolved.json records the resolved historical declines.
+
+## Public method restoration, 06:35 ruling
+
+The current method-restoration wave supersedes the historical watch.ts closure.
+Ten public owners are restored byte for byte to their original MethodSignature:
+CompilerHost.getDefaultLibLocation, createHash and readDirectory;
+ModuleResolutionHost.trace, directoryExists, getDirectories and realpath;
+ProgramHost.createHash, realpath and getEnvironmentVariable. The ledger records
+each restoration and the adapter accepts only the original method or the exact
+previous property spelling; it plans every file before any write.
+
+BuilderProgramHost.createHash was a **property upstream**, not a method. Its
+sanctioned property union remains, as do all property-form handoffs. The four
+internal host owner edits are outside the ten public-method restorations.
+
+Both watch.ts object-literal findings are declined. createProgramHost returns
+the same object through createWatchCompilerHostOfConfigFile /
+createWatchCompilerHostOfFilesAndCompilerOptions and through the public
+createSolutionBuilderHost / createSolutionBuilderWithWatchHost factories.
+createCompilerHostFromProgramHost is consumed by createWatchProgram and
+createSolutionBuilderState; both pass its compilerHost to an injected
+CreateProgram callback. Neither boundary restricts reflection by the caller.
+Following every arbitrary callback consumer is impossible, so presence cannot
+be proved unobservable. An actual public Node consumer is a counterexample:
+with System.createHash absent, both returned/injected objects own createHash
+with value undefined. Omitting it changes in, hasOwnProperty, Object.keys,
+spread, for...in and Object.assign. No object-literal rewrite is made.
+
+presence-review.cjs resolves producer and forwarding-function references by
+stock 6.0.3 symbols across src, inventories related host locals and potential
+reflection/forwarding statements, then runs that counterexample against the
+built compiler. This is evidence for **declining**, not a claim that escaped
+objects have a closed, fully enumerated consumer set. The absence assertions
+in previous waves are unchanged.
+
+The API proof reconstructs only sanctioned property/type edits from pristine
+API owners, including adaptation 75's sole JsonSourceFile property. It validates
+all ten restored source methods against their original signatures; none is an
+allowed API edit. Proof results and the lane verdict are recorded in
+proof/method-restoration/.
+
+Method-restoration proof: [full report](proof/method-restoration/README.md).
+Default oracle passes 106,367 tests with an empty baseline diff. The explicit
+three-property lane manifest passes; the supplied default lane manifest still
+rejects exactly those retained sanctioned owners. watch.ts is 0 -> 2, the only
+file leaving zero; original zero files are 55 -> 54 of 78. All 13 mutants pass.

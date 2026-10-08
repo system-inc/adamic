@@ -1,0 +1,7 @@
+export function initializedMessage(name: string): string {
+    return `Variable '${name}' should be initialized on declaration.`;
+}
+
+export function notInitializedMessage(name: string): string {
+    return `Variable '${name}' should not be initialized on declaration.`;
+}

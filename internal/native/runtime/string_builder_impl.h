@@ -46,10 +46,14 @@ static void builder_unit(builder *build, unsigned unit) {
 	}
 }
 
-static adamic_string *builder_finish(builder *build) {
-	adamic_string piece = {{0, adamic_kind_string, 0}, build->length, build->bytes, 0, NULL, NULL, 0};
+static adamic_string *builder_finish_units(builder *build, size_t units) {
+	adamic_string piece = {{0, adamic_kind_string, 0}, build->length, build->bytes, units, NULL, NULL, 0};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(build->bytes);
 	return string;
 }
 
+
+static adamic_string *builder_finish(builder *build) {
+	return builder_finish_units(build, 0);
+}

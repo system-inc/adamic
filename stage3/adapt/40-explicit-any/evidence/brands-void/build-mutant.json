@@ -1,0 +1,7 @@
+{
+  "mutant": "checker SymbolLinks declare _symbolLinksBrand: string against interface _symbolLinksBrand: void",
+  "command": "npm run build",
+  "exit": 1,
+  "caught": "upstream own build TS2322",
+  "log": "/tmp/any-brands-string-mutant.log"
+}

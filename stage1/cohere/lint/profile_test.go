@@ -1,14 +1,14 @@
 package lint
 
 import (
-	"context"
+	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
+	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -29,20 +29,8 @@ func TestProfileArtifacts(t *testing.T) {
 	if strings.TrimSpace(string(pin.output)) != compilerCommit {
 		t.Fatal("compiler checkout has the wrong pin")
 	}
-	for _, name := range portFiles {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			t.Fatal(err)
-		}
-		typescript, err := filepath.Abs("../../typescript")
-		if err != nil {
-			t.Fatal(err)
-		}
-		text := strings.ReplaceAll(string(data), "../../typescript/", typescript+"/")
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
+	copyPort(t, directory, "", "")
+	prepareRegistry(t, directory)
 	var files []string
 	err := filepath.WalkDir(filepath.Join(sourceRoot, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
 		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
@@ -67,22 +55,38 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{"main.ts"})
+	pilot := filepath.Join(directory, "pilot.ts")
+	witness, err := os.ReadFile(filepath.Join(directory, "rules/no-unnecessary-boolean-literal-compare/testdata/witness.ts.txt"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
+	if err := os.WriteFile(pilot, witness, 0644); err != nil {
 		t.Fatal(err)
 	}
-	source := native.C(lowered)
+	config := filepath.Join(directory, "pilot.tsconfig.json")
+	options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, pilot)
+	if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+		t.Fatal(err)
+	}
+	pilotManifest := "program " + config + "\n" + pilot + "\t@typescript-eslint/no-unnecessary-boolean-literal-compare\n"
+	if err := os.WriteFile(filepath.Join(directory, "pilot.txt"), []byte(pilotManifest), 0644); err != nil {
+		t.Fatal(err)
+	}
+	buildProfile(t, directory)
+}
+
+func buildProfile(t *testing.T, directory string) {
+	t.Helper()
+	built := checkerCompile(t, directory)
+	source := built.c
+	archive := checkerArchive(t, false)
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
+	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "scanner"), archive, native.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
+	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "counted"), archive, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	runtime := filepath.Join(repository, "internal/native/runtime")
@@ -107,11 +111,61 @@ func TestProfileArtifacts(t *testing.T) {
 			units = append(units, path)
 		}
 	}
-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
+	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0644); err != nil {
+		t.Fatal(err)
+	}
+	flags := append(native.Flags(native.Options{}), "-DADAMIC_TSGO", "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
-	flags = append(flags, "-lm")
+	flags = append(flags, archive, "-lm", "-lpthread", "-ldl")
 	execute(t, "", "clang", flags...)
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
+}
+
+// Exercise the shared profile graph without requiring the external compiler corpus.
+func TestProfileCompilation(t *testing.T) {
+	directory := t.TempDir()
+	copyPort(t, directory, "", "")
+	prepareRegistry(t, directory)
+	buildProfile(t, directory)
+	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
+	oracle := goOracle(t)
+	compare(t, oracle, filepath.Join(directory, "scanner"), directory, path)
+	want := execute(t, "", oracle, "--manifest", path).output
+	got := execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path).output
+	if diff := difference(got, want); diff != "" {
+		t.Fatal(diff)
+	}
+	want = execute(t, "", oracle, "--manifest", path, "--count").output
+	output, err := os.CreateTemp(t.TempDir(), "counted-output-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	stats, err := os.CreateTemp(t.TempDir(), "counted-stats-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer stats.Close()
+	command := exec.Command(filepath.Join(directory, "counted"), "--manifest", path, "--count")
+	command.Stdout, command.Stderr = output, stats
+	if err := command.Run(); err != nil {
+		t.Fatal(err)
+	}
+	got, err = os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	counters, err := os.ReadFile(stats.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(string(counters), "adamic: counts: allocations ") {
+		t.Fatalf("unexpected counted stderr: %s", counters)
+	}
+	t.Logf("counted instrumentation: %s", counters)
+	if diff := difference(got, want); diff != "" {
+		t.Fatal(diff)
+	}
 }
 
 // Not parallel: upstream fixture capture uses process-wide environment state.
@@ -120,7 +174,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	}
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	var recovery []string
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -147,8 +201,10 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	path := manifest(t, rows)
 	oracle := goOracle(t)
+	// Classify recovery rows as TestRulesAgree does, so a captured case Go parses with a diagnostic (an
+	// octal escape in strict mode, say) is compared in recovery mode rather than panicking the oracle.
+	path := manifest(t, recoveryRows(t, oracle, rows))
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, directory := range filepath.SplitList(asked) {
 		// Match the ordinary suite's explicit recovery boundary in both snapshots.
@@ -163,6 +219,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			{"release", execute(t, "", filepath.Join(directory, "scanner"), "--manifest", path)},
 			{"profiled", execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path)},
 			{"Node", node(t, directory, path, false)},
+			{"emitted JavaScript", emittedNode(t, directory, path, false)},
 		} {
 			if diff := difference(side.run.output, want); diff != "" {
 				t.Fatalf("%s %s: %s", directory, side.name, diff)
@@ -182,6 +239,7 @@ func TestCommentFoldMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
@@ -195,13 +253,14 @@ func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;")
+	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
 	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {

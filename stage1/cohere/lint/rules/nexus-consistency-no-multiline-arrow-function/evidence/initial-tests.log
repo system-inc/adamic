@@ -1,0 +1,101 @@
+=== RUN   TestRulesAgree
+    lint_test.go:399: cohere cases: 2057 unique source/rule/options combinations
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-079/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-079/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-085/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-085/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-086/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-086/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-095/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-095/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1492070660/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1492070660/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-099/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-099/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1492070660/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1492070660/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1492070660/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-100/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1492070660/019/case-100/Thing.ts
+    lint_test.go:438: Go, Node, emitted JavaScript, native identical: 13071239 bytes
+--- PASS: TestRulesAgree (186.36s)
+=== RUN   TestMutants
+=== RUN   TestMutants/multiline-arrow-single-line-exemption-removed
+    lint_test.go:755: multiline-arrow-single-line-exemption-removed caught on Node: case 145 line 2742: port "/tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:4:14", Go "/tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:5:17"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:1:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 16 52 multilineArrow fix	function(input) {\u000a    return input * 2;\u000a}		16 52
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:5:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of an arrow function with React.useEffect. A named function shows up in a stack trace and in the React devtools as itself.
+        
+        range 93 114 reactHookArrow 			93 114
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:6:35
+    lint_test.go:755: multiline-arrow-single-line-exemption-removed caught on emitted JavaScript: case 145 line 2742: port "/tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:4:14", Go "/tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:5:17"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:1:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 16 52 multilineArrow fix	function(input) {\u000a    return input * 2;\u000a}		16 52
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:5:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of an arrow function with React.useEffect. A named function shows up in a stack trace and in the React devtools as itself.
+        
+        range 93 114 reactHookArrow 			93 114
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:6:35
+    lint_test.go:755: multiline-arrow-single-line-exemption-removed caught on native: case 145 line 2742: port "/tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:4:14", Go "/tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:5:17"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:1:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 16 52 multilineArrow fix	function(input) {\u000a    return input * 2;\u000a}		16 52
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:5:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of an arrow function with React.useEffect. A named function shows up in a stack trace and in the React devtools as itself.
+        
+        range 93 114 reactHookArrow 			93 114
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed2385038870/016/nexus-consistency-no-multiline-arrow-function-0.ts:6:35
+--- PASS: TestMutants (21.50s)
+    --- PASS: TestMutants/multiline-arrow-single-line-exemption-removed (18.56s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 94176 bytes
+--- PASS: TestOwnedWitnesses (22.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	229.955s

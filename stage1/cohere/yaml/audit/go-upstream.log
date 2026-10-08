@@ -1,0 +1,162 @@
+=== RUN   TestCorpusFormatMatchesOracle
+=== PAUSE TestCorpusFormatMatchesOracle
+=== RUN   TestFormatFixturesMatchOracle
+=== PAUSE TestFormatFixturesMatchOracle
+=== RUN   TestFormatOracleCanFail
+=== PAUSE TestFormatOracleCanFail
+=== RUN   TestPrintDocLeavesTheTrailingHardline
+=== PAUSE TestPrintDocLeavesTheTrailingHardline
+=== RUN   TestYamlTestSuiteMatchesOracle
+=== PAUSE TestYamlTestSuiteMatchesOracle
+=== RUN   TestProseWrapMatchesOracle
+=== PAUSE TestProseWrapMatchesOracle
+=== RUN   TestPrettierRcEmbedsJSON
+=== PAUSE TestPrettierRcEmbedsJSON
+=== RUN   TestPrettierRcWithoutTextToDocPrintsYAML
+=== PAUSE TestPrettierRcWithoutTextToDocPrintsYAML
+=== RUN   TestLoaderConvertsOffsets
+=== PAUSE TestLoaderConvertsOffsets
+=== CONT  TestCorpusFormatMatchesOracle
+=== CONT  TestProseWrapMatchesOracle
+=== CONT  TestYamlTestSuiteMatchesOracle
+=== CONT  TestPrintDocLeavesTheTrailingHardline
+=== CONT  TestFormatOracleCanFail
+=== NAME  TestYamlTestSuiteMatchesOracle
+    format_test.go:311: the yaml-test-suite is not loadable: exit status 1
+--- SKIP: TestYamlTestSuiteMatchesOracle (0.13s)
+=== CONT  TestFormatFixturesMatchOracle
+=== NAME  TestProseWrapMatchesOracle
+    oracle_options_test.go:119: the yaml-test-suite is not loadable: exit status 1
+--- SKIP: TestProseWrapMatchesOracle (0.33s)
+=== CONT  TestPrettierRcWithoutTextToDocPrintsYAML
+--- PASS: TestPrintDocLeavesTheTrailingHardline (0.43s)
+=== CONT  TestLoaderConvertsOffsets
+--- PASS: TestPrettierRcWithoutTextToDocPrintsYAML (0.31s)
+=== CONT  TestPrettierRcEmbedsJSON
+--- PASS: TestFormatOracleCanFail (0.75s)
+--- PASS: TestLoaderConvertsOffsets (0.49s)
+--- PASS: TestPrettierRcEmbedsJSON (0.55s)
+=== NAME  TestFormatFixturesMatchOracle
+    format_test.go:224: 1240 comparisons over 314 fixtures and 4 option sets: full stack 0 differ, tree loader 0 differ; 16 oracle failures (syntax errors)
+--- PASS: TestFormatFixturesMatchOracle (1.33s)
+=== NAME  TestCorpusFormatMatchesOracle
+    corpus_test.go:262: yaml corpora: 3
+          /workspace/adamic (0 yaml, 42 md)
+          /workspace/adamic/cohere (1 yaml, 783 md)
+          /workspace/adamic/cohere/TypeScript (35 yaml, 67 md)
+    corpus_test.go:396: yaml files, full stack: 36/36 identical (100.00%), rewrite subset 35/35 (100.00%), refused 0, oracle failed 0
+    corpus_test.go:396: yaml files, tree loader: 36/36 identical (100.00%), rewrite subset 35/35 (100.00%), refused 0, oracle failed 0
+    corpus_test.go:396: front matter, full stack: 6/6 identical (100.00%), rewrite subset 6/6 (100.00%), refused 0, oracle failed 0
+    corpus_test.go:396: front matter, tree loader: 6/6 identical (100.00%), rewrite subset 6/6 (100.00%), refused 0, oracle failed 0
+    corpus_test.go:401: front matter not measured, a YAML syntax error: 0 (the Go parser disagrees on 0); yaml files not measured, over 1048576 bytes: 0
+--- PASS: TestCorpusFormatMatchesOracle (11.18s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/yaml	11.202s
+=== RUN   TestDocumentsMatchUpstream
+=== PAUSE TestDocumentsMatchUpstream
+=== RUN   TestGeneratedDocumentsMatchUpstream
+=== PAUSE TestGeneratedDocumentsMatchUpstream
+=== RUN   TestOracleCanFail
+=== PAUSE TestOracleCanFail
+=== RUN   TestYamlTestSuiteMatchesUpstream
+=== PAUSE TestYamlTestSuiteMatchesUpstream
+=== RUN   TestCorpusMatchesUpstream
+=== PAUSE TestCorpusMatchesUpstream
+=== CONT  TestDocumentsMatchUpstream
+=== CONT  TestYamlTestSuiteMatchesUpstream
+    oracle_test.go:609: the fork has no yaml-test-suite package
+--- SKIP: TestYamlTestSuiteMatchesUpstream (0.00s)
+=== CONT  TestCorpusMatchesUpstream
+=== CONT  TestOracleCanFail
+=== CONT  TestGeneratedDocumentsMatchUpstream
+--- PASS: TestOracleCanFail (0.38s)
+=== NAME  TestDocumentsMatchUpstream
+    oracle_test.go:571: fixture: of 735 inputs, upstream threw on 0, reported errors on 176 and warnings on 53
+    oracle_test.go:572: 735 of 735 fixtures match upstream
+--- PASS: TestDocumentsMatchUpstream (0.86s)
+=== NAME  TestCorpusMatchesUpstream
+    oracle_test.go:673: 36 of 36 files match upstream's documents (0 of them with errors)
+--- PASS: TestCorpusMatchesUpstream (1.46s)
+=== NAME  TestGeneratedDocumentsMatchUpstream
+    oracle_test.go:583: generated: of 30000 inputs, upstream threw on 0, reported errors on 18680 and warnings on 6457
+    oracle_test.go:584: 30000 of 30000 generated inputs match upstream
+--- PASS: TestGeneratedDocumentsMatchUpstream (5.26s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/yaml/compose	5.278s
+=== RUN   TestTokensMatchUpstream
+=== PAUSE TestTokensMatchUpstream
+=== RUN   TestChunkedTokensMatchUpstream
+=== PAUSE TestChunkedTokensMatchUpstream
+=== RUN   TestGeneratedTokensMatchUpstream
+=== PAUSE TestGeneratedTokensMatchUpstream
+=== RUN   TestOracleCanFail
+=== PAUSE TestOracleCanFail
+=== RUN   TestYamlTestSuiteMatchesUpstream
+=== PAUSE TestYamlTestSuiteMatchesUpstream
+=== RUN   TestCorpusMatchesUpstream
+=== PAUSE TestCorpusMatchesUpstream
+=== CONT  TestTokensMatchUpstream
+=== CONT  TestOracleCanFail
+=== CONT  TestCorpusMatchesUpstream
+=== CONT  TestYamlTestSuiteMatchesUpstream
+=== CONT  TestGeneratedTokensMatchUpstream
+=== NAME  TestYamlTestSuiteMatchesUpstream
+    oracle_test.go:446: the fork has no yaml-test-suite package
+--- SKIP: TestYamlTestSuiteMatchesUpstream (0.00s)
+=== CONT  TestChunkedTokensMatchUpstream
+--- PASS: TestOracleCanFail (0.29s)
+=== NAME  TestTokensMatchUpstream
+    oracle_test.go:392: fixture: upstream threw on 0 of 586 and yielded error tokens on 19
+    oracle_test.go:393: 586 of 586 fixtures match upstream
+--- PASS: TestTokensMatchUpstream (0.58s)
+=== NAME  TestCorpusMatchesUpstream
+    oracle_test.go:513: 36 of 36 files match upstream's tokens
+--- PASS: TestCorpusMatchesUpstream (1.04s)
+=== NAME  TestChunkedTokensMatchUpstream
+    oracle_test.go:406: fixture: upstream threw on 0 of 2930 and yielded error tokens on 79
+    oracle_test.go:407: 2930 of 2930 chunked parses match upstream
+--- PASS: TestChunkedTokensMatchUpstream (1.36s)
+=== NAME  TestGeneratedTokensMatchUpstream
+    oracle_test.go:422: generated: upstream threw on 0 of 20000 and yielded error tokens on 4014
+    oracle_test.go:423: 20000 of 20000 generated inputs match upstream
+--- PASS: TestGeneratedTokensMatchUpstream (2.18s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/yaml/cst	2.191s
+=== RUN   TestParseMatchesUpstream
+=== PAUSE TestParseMatchesUpstream
+=== RUN   TestGeneratedParseMatchesUpstream
+=== PAUSE TestGeneratedParseMatchesUpstream
+=== RUN   TestOracleCanFail
+=== PAUSE TestOracleCanFail
+=== RUN   TestYamlTestSuiteParseMatchesUpstream
+=== PAUSE TestYamlTestSuiteParseMatchesUpstream
+=== RUN   TestCorpusParseMatchesUpstream
+=== PAUSE TestCorpusParseMatchesUpstream
+=== RUN   TestComparisonSeesEveryField
+=== PAUSE TestComparisonSeesEveryField
+=== CONT  TestParseMatchesUpstream
+=== CONT  TestComparisonSeesEveryField
+=== CONT  TestYamlTestSuiteParseMatchesUpstream
+=== CONT  TestCorpusParseMatchesUpstream
+=== CONT  TestOracleCanFail
+=== NAME  TestYamlTestSuiteParseMatchesUpstream
+    parse_test.go:205: the yaml-test-suite is not loadable: exit status 1
+--- SKIP: TestYamlTestSuiteParseMatchesUpstream (0.13s)
+=== CONT  TestGeneratedParseMatchesUpstream
+--- PASS: TestOracleCanFail (0.54s)
+--- PASS: TestComparisonSeesEveryField (1.09s)
+=== NAME  TestParseMatchesUpstream
+    parse_test.go:144: 444 of 444 fixtures match upstream (48 of them errors)
+--- PASS: TestParseMatchesUpstream (1.18s)
+=== NAME  TestCorpusParseMatchesUpstream
+    parse_test.go:308: corpora walked: 3
+          /workspace/adamic (168)
+          /workspace/adamic/cohere (2092)
+          /workspace/adamic/cohere/TypeScript (26702)
+    parse_test.go:310: 42 of 42 inputs match upstream (36 yaml files, 6 front matter values; 0 of them errors); 0 files over 1048576 bytes not measured
+--- PASS: TestCorpusParseMatchesUpstream (4.55s)
+=== NAME  TestGeneratedParseMatchesUpstream
+    parse_test.go:154: 20000 of 20000 generated inputs match upstream (13114 of them errors)
+--- PASS: TestGeneratedParseMatchesUpstream (4.97s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/yaml/unist	5.110s

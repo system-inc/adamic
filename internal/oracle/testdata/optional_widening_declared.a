@@ -1,0 +1,6 @@
+const source: { x: number; y?: number } = { x: 1, y: 2 };
+const wider: { x: number; y?: number } = source;
+console.log(`${wider.y ?? 0}`);
+const present = { x: 1, y: 3 };
+const compatible: { readonly x: number; readonly y?: number } = present;
+console.log(`${compatible.y ?? 0}`);
