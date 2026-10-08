@@ -1,0 +1,983 @@
+{
+  "sha": "a0c9a20f195730015a40e274f425c7dc31a72d44",
+  "branch": "codex/typeaware-wave-24",
+  "branch_source": "given",
+  "session": "01a113ba-4ad3-7158-883a-f1ad34de002a",
+  "session_source": "ai.db reply naming the branch",
+  "base": "c966d4c4509ecaf37ae275dbaafae33291367ac8",
+  "tools_sha": "a8fa2fc206fa1a7ad5e77b40a6965f7503e5bafe",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "reads": [
+    {
+      "line": 132,
+      "package": "internal/flow",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 161,
+      "package": "internal/fuzz",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 188,
+      "package": "internal/lower",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 295,
+      "package": "internal/native",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 347,
+      "package": "internal/oracle",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 393,
+      "package": "stage1/cohere/css",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 462,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 482,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 499,
+      "package": "stage1/cohere/estree",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 526,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 545,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "bridge/tsgo/checker/symbol_identity.go",
+        "bridge/tsgo/checker/symbol_provenance.go",
+        "stage1/cohere/lint/CHECKER_REPORT.md",
+        "stage1/cohere/lint/checker-proof/adapter-final-inputs.txt",
+        "stage1/cohere/lint/checker-proof/adapter-final-lint.txt",
+        "stage1/cohere/lint/checker-proof/adapter-final-time.txt",
+        "stage1/cohere/lint/checker-proof/adapter-first-run-interrupted.txt",
+        "stage1/cohere/lint/checker-proof/adapter-library-final-refusal.txt",
+        "stage1/cohere/lint/checker-proof/adapter-library-refusal.txt",
+        "stage1/cohere/lint/checker-proof/adapter-pass-through.patch.txt",
+        "stage1/cohere/lint/checker-proof/adapter-typed-mutant-after.txt",
+        "stage1/cohere/lint/checker-proof/adapter-typed-mutant-before.txt",
+        "stage1/cohere/lint/checker-proof/area-jsdoc-go.txt",
+        "stage1/cohere/lint/checker-proof/area-jsdoc-node.txt",
+        "stage1/cohere/lint/checker-proof/area-typescript-clean.json",
+        "stage1/cohere/lint/checker-proof/area-whole-inputs.txt",
+        "stage1/cohere/lint/checker-proof/area-whole-lint.txt",
+        "stage1/cohere/lint/checker-proof/area-whole-time.txt",
+        "stage1/cohere/lint/checker-proof/build-cost-probe.go.txt",
+        "stage1/cohere/lint/checker-proof/compiler-corpus.txt",
+        "stage1/cohere/lint/checker-proof/generic-constraint.txt",
+        "stage1/cohere/lint/checker-proof/jsdoc-go.txt",
+        "stage1/cohere/lint/checker-proof/jsdoc-native.txt",
+        "stage1/cohere/lint/checker-proof/jsdoc-nel.repro.txt",
+        "stage1/cohere/lint/checker-proof/jsdoc-node.txt",
+        "stage1/cohere/lint/checker-proof/lint-unit.txt",
+        "stage1/cohere/lint/checker-proof/merge-all-inputs-time.json",
+        "stage1/cohere/lint/checker-proof/merge-all-inputs.jsonl.gz",
+        "stage1/cohere/lint/checker-proof/merge-jsx-throughput-after.txt",
+        "stage1/cohere/lint/checker-proof/merge-jsx-throughput-before.txt",
+        "stage1/cohere/lint/checker-proof/merge-runner.py.txt",
+        "stage1/cohere/lint/checker-proof/merge-setup.txt",
+        "stage1/cohere/lint/checker-proof/merge-source-byte.txt",
+        "stage1/cohere/lint/checker-proof/nullable-for-before.txt",
+        "stage1/cohere/lint/checker-proof/own-controls.txt",
+        "stage1/cohere/lint/checker-proof/performance-after-events.txt",
+        "stage1/cohere/lint/checker-proof/performance-after-time.txt",
+        "stage1/cohere/lint/checker-proof/performance-area-60m-events.txt",
+        "stage1/cohere/lint/checker-proof/performance-area-60m-time.txt",
+        "stage1/cohere/lint/checker-proof/performance-area-events.txt",
+        "stage1/cohere/lint/checker-proof/performance-area-time.txt",
+        "stage1/cohere/lint/checker-proof/performance-build-cost-probe-time.txt",
+        "stage1/cohere/lint/checker-proof/performance-build-cost-probe.txt",
+        "stage1/cohere/lint/checker-proof/performance-library-refusal.txt",
+        "stage1/cohere/lint/checker-proof/performance-package-timed.py.txt",
+        "stage1/cohere/lint/checker-proof/performance-tables.py.txt",
+        "stage1/cohere/lint/checker-proof/performance-test-times.py.txt",
+        "stage1/cohere/lint/checker-proof/performance-typed-costs.txt",
+        "stage1/cohere/lint/checker-proof/pilot-go.valgrind.txt",
+        "stage1/cohere/lint/checker-proof/pilot-native.valgrind.txt",
+        "stage1/cohere/lint/checker-proof/pilot-timing-quiet.json",
+        "stage1/cohere/lint/checker-proof/pilot-timing.json",
+        "stage1/cohere/lint/checker-proof/registry.txt",
+        "stage1/cohere/lint/checker-proof/rules-agree.txt",
+        "stage1/cohere/lint/checker-proof/timing-area-detached-summary.txt",
+        "stage1/cohere/lint/checker-proof/timing-area-detached-table.txt",
+        "stage1/cohere/lint/checker-proof/timing-harness-after-summary.txt",
+        "stage1/cohere/lint/checker-proof/timing-harness-after-table.txt",
+        "stage1/cohere/lint/checker-proof/timing-original-table.txt",
+        "stage1/cohere/lint/checker.a",
+        "stage1/cohere/lint/checker_bridge.a",
+        "stage1/cohere/lint/checker_build_test.go",
+        "stage1/cohere/lint/checker_cache_test.go",
+        "stage1/cohere/lint/checker_compile_test.go",
+        "stage1/cohere/lint/checker_hash.a",
+        "stage1/cohere/lint/checker_pending_test.go",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/mutant.json",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/oracle.go",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.json",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/testdata/witness.ts.txt",
+        "stage1/cohere/lint/rules/symbol-description/LANDING_REPORT.md",
+        "stage1/cohere/lint/rules/symbol-description/README.md",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Go.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Go.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Node.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Node.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-before-array-fix-stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-before-array-fix-summary.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-summary.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-summary.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-lint-summary.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-lint.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-run-lint.py",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/no-this-alias-reproducer.a.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/previous-report.md",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.a.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/run-lint.py",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/scope.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/wave24-area-one-test.jsonl",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/wave24-area-one-test.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-Go.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-Go.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-native.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-native.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-timing.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-Go.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-Go.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-native.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-native.stdout",
+        "stage1/cohere/lint/rules/symbol-description/messages.a",
+        "stage1/cohere/lint/rules/symbol-description/mutant.json",
+        "stage1/cohere/lint/rules/symbol-description/oracle.go",
+        "stage1/cohere/lint/rules/symbol-description/rule.a",
+        "stage1/cohere/lint/rules/symbol-description/rule.json",
+        "stage1/cohere/lint/rules/symbol-description/testdata/witness.ts.txt",
+        "stage1/cohere/lint/rules/valid-typeof/README.md",
+        "stage1/cohere/lint/rules/valid-typeof/messages.a",
+        "stage1/cohere/lint/rules/valid-typeof/mutant.json",
+        "stage1/cohere/lint/rules/valid-typeof/oracle.go",
+        "stage1/cohere/lint/rules/valid-typeof/rule.a",
+        "stage1/cohere/lint/rules/valid-typeof/rule.json",
+        "stage1/cohere/lint/rules/valid-typeof/testdata/witness.options.json",
+        "stage1/cohere/lint/rules/valid-typeof/testdata/witness.ts.txt"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 553,
+      "package": "stage1/cohere/gitignore",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 561,
+      "package": "stage1/cohere/graphql",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 579,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 617,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage1/cohere/lint/checker-proof/area-typescript-clean.json",
+        "stage1/cohere/lint/checker-proof/merge-all-inputs-time.json",
+        "stage1/cohere/lint/checker-proof/pilot-timing-quiet.json",
+        "stage1/cohere/lint/checker-proof/pilot-timing.json",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/mutant.json",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-summary.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/scope.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-timing.json",
+        "stage1/cohere/lint/rules/symbol-description/mutant.json",
+        "stage1/cohere/lint/rules/symbol-description/rule.json",
+        "stage1/cohere/lint/rules/valid-typeof/mutant.json",
+        "stage1/cohere/lint/rules/valid-typeof/rule.json",
+        "stage1/cohere/lint/rules/valid-typeof/testdata/witness.options.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 629,
+      "package": "stage1/cohere/json",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 644,
+      "package": "stage1/cohere/lint",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 654,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/*.a",
+      "paths": [
+        "stage1/cohere/lint/checker.a",
+        "stage1/cohere/lint/checker_bridge.a",
+        "stage1/cohere/lint/checker_hash.a",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a",
+        "stage1/cohere/lint/rules/symbol-description/messages.a",
+        "stage1/cohere/lint/rules/symbol-description/rule.a",
+        "stage1/cohere/lint/rules/valid-typeof/messages.a",
+        "stage1/cohere/lint/rules/valid-typeof/rule.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 657,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/*.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts",
+        "stage1/cohere/lint/lint.ts",
+        "stage1/cohere/lint/main.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 720,
+      "package": "stage1/cohere/lint/helpers",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 730,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 783,
+      "package": "stage1/cohere/lint/regex",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 792,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 796,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/rules/*",
+      "paths": [
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/mutant.json",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/oracle.go",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.json",
+        "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/testdata/witness.ts.txt",
+        "stage1/cohere/lint/rules/symbol-description/LANDING_REPORT.md",
+        "stage1/cohere/lint/rules/symbol-description/README.md",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Go.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Go.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Node.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Node.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-before-array-fix-stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-before-array-fix-summary.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-summary.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-summary.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-lint-summary.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-lint.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-run-lint.py",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/no-this-alias-reproducer.a.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/previous-report.md",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.a.txt",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/run-lint.py",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/scope.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/wave24-area-one-test.jsonl",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/wave24-area-one-test.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-Go.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-Go.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-native.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-native.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-timing.json",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-Go.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-Go.stdout",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-native.stderr",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-native.stdout",
+        "stage1/cohere/lint/rules/symbol-description/messages.a",
+        "stage1/cohere/lint/rules/symbol-description/mutant.json",
+        "stage1/cohere/lint/rules/symbol-description/oracle.go",
+        "stage1/cohere/lint/rules/symbol-description/rule.a",
+        "stage1/cohere/lint/rules/symbol-description/rule.json",
+        "stage1/cohere/lint/rules/symbol-description/testdata/witness.ts.txt",
+        "stage1/cohere/lint/rules/valid-typeof/README.md",
+        "stage1/cohere/lint/rules/valid-typeof/messages.a",
+        "stage1/cohere/lint/rules/valid-typeof/mutant.json",
+        "stage1/cohere/lint/rules/valid-typeof/oracle.go",
+        "stage1/cohere/lint/rules/valid-typeof/rule.a",
+        "stage1/cohere/lint/rules/valid-typeof/rule.json",
+        "stage1/cohere/lint/rules/valid-typeof/testdata/witness.options.json",
+        "stage1/cohere/lint/rules/valid-typeof/testdata/witness.ts.txt"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 822,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 884,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 946,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1008,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1144,
+      "package": "stage1/cohere/markdownblocks",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1161,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "stage1/cohere/lint/CHECKER_REPORT.md",
+        "stage1/cohere/lint/rules/symbol-description/LANDING_REPORT.md",
+        "stage1/cohere/lint/rules/symbol-description/README.md",
+        "stage1/cohere/lint/rules/symbol-description/evidence/landing/previous-report.md",
+        "stage1/cohere/lint/rules/valid-typeof/README.md"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1173,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1182,
+      "package": "stage1/cohere/mediaquery",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1194,
+      "package": "stage1/cohere/selector",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1202,
+      "package": "stage1/cohere/static_single_assignment",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1210,
+      "package": "stage1/cohere/suppression",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1215,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "*.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts",
+        "stage1/cohere/lint/lint.ts",
+        "stage1/cohere/lint/main.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1223,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1273,
+      "package": "stage1/cohere/typeaware",
+      "glob": "bridge/tsgo/checker/facts.go",
+      "paths": [
+        "bridge/tsgo/checker/facts.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1275,
+      "package": "stage1/cohere/typeaware",
+      "glob": "bridge/tsgo/checker/program.go",
+      "paths": [
+        "bridge/tsgo/checker/program.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1326,
+      "package": "stage1/cohere/values",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1378,
+      "package": "stage1/cohere/yaml",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1416,
+      "package": "stage1/typescript/parser",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1456,
+      "package": "stage1/typescript/scanner",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1462,
+      "package": "stage1/typescript/scanner",
+      "glob": "stage1/*.ts",
+      "paths": [
+        "stage1/cohere/lint/context.ts",
+        "stage1/cohere/lint/lint.ts",
+        "stage1/cohere/lint/main.ts"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1468,
+      "package": "stage3/fixtures",
+      "glob": "oracle/adamic.mjs",
+      "paths": [
+        "oracle/adamic.mjs"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "package:internal/oracle": 1
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "bridge/tsgo/checker/facts.go",
+    "bridge/tsgo/checker/program.go",
+    "bridge/tsgo/checker/symbol_identity.go",
+    "bridge/tsgo/checker/symbol_provenance.go",
+    "oracle/adamic.mjs",
+    "stage1/cohere/lint/CHECKER_REPORT.md",
+    "stage1/cohere/lint/checker-proof/adapter-final-inputs.txt",
+    "stage1/cohere/lint/checker-proof/adapter-final-lint.txt",
+    "stage1/cohere/lint/checker-proof/adapter-final-time.txt",
+    "stage1/cohere/lint/checker-proof/adapter-first-run-interrupted.txt",
+    "stage1/cohere/lint/checker-proof/adapter-library-final-refusal.txt",
+    "stage1/cohere/lint/checker-proof/adapter-library-refusal.txt",
+    "stage1/cohere/lint/checker-proof/adapter-pass-through.patch.txt",
+    "stage1/cohere/lint/checker-proof/adapter-typed-mutant-after.txt",
+    "stage1/cohere/lint/checker-proof/adapter-typed-mutant-before.txt",
+    "stage1/cohere/lint/checker-proof/area-jsdoc-go.txt",
+    "stage1/cohere/lint/checker-proof/area-jsdoc-node.txt",
+    "stage1/cohere/lint/checker-proof/area-typescript-clean.json",
+    "stage1/cohere/lint/checker-proof/area-whole-inputs.txt",
+    "stage1/cohere/lint/checker-proof/area-whole-lint.txt",
+    "stage1/cohere/lint/checker-proof/area-whole-time.txt",
+    "stage1/cohere/lint/checker-proof/build-cost-probe.go.txt",
+    "stage1/cohere/lint/checker-proof/compiler-corpus.txt",
+    "stage1/cohere/lint/checker-proof/generic-constraint.txt",
+    "stage1/cohere/lint/checker-proof/jsdoc-go.txt",
+    "stage1/cohere/lint/checker-proof/jsdoc-native.txt",
+    "stage1/cohere/lint/checker-proof/jsdoc-nel.repro.txt",
+    "stage1/cohere/lint/checker-proof/jsdoc-node.txt",
+    "stage1/cohere/lint/checker-proof/lint-unit.txt",
+    "stage1/cohere/lint/checker-proof/merge-all-inputs-time.json",
+    "stage1/cohere/lint/checker-proof/merge-all-inputs.jsonl.gz",
+    "stage1/cohere/lint/checker-proof/merge-jsx-throughput-after.txt",
+    "stage1/cohere/lint/checker-proof/merge-jsx-throughput-before.txt",
+    "stage1/cohere/lint/checker-proof/merge-runner.py.txt",
+    "stage1/cohere/lint/checker-proof/merge-setup.txt",
+    "stage1/cohere/lint/checker-proof/merge-source-byte.txt",
+    "stage1/cohere/lint/checker-proof/nullable-for-before.txt",
+    "stage1/cohere/lint/checker-proof/own-controls.txt",
+    "stage1/cohere/lint/checker-proof/performance-after-events.txt",
+    "stage1/cohere/lint/checker-proof/performance-after-time.txt",
+    "stage1/cohere/lint/checker-proof/performance-area-60m-events.txt",
+    "stage1/cohere/lint/checker-proof/performance-area-60m-time.txt",
+    "stage1/cohere/lint/checker-proof/performance-area-events.txt",
+    "stage1/cohere/lint/checker-proof/performance-area-time.txt",
+    "stage1/cohere/lint/checker-proof/performance-build-cost-probe-time.txt",
+    "stage1/cohere/lint/checker-proof/performance-build-cost-probe.txt",
+    "stage1/cohere/lint/checker-proof/performance-library-refusal.txt",
+    "stage1/cohere/lint/checker-proof/performance-package-timed.py.txt",
+    "stage1/cohere/lint/checker-proof/performance-tables.py.txt",
+    "stage1/cohere/lint/checker-proof/performance-test-times.py.txt",
+    "stage1/cohere/lint/checker-proof/performance-typed-costs.txt",
+    "stage1/cohere/lint/checker-proof/pilot-go.valgrind.txt",
+    "stage1/cohere/lint/checker-proof/pilot-native.valgrind.txt",
+    "stage1/cohere/lint/checker-proof/pilot-timing-quiet.json",
+    "stage1/cohere/lint/checker-proof/pilot-timing.json",
+    "stage1/cohere/lint/checker-proof/registry.txt",
+    "stage1/cohere/lint/checker-proof/rules-agree.txt",
+    "stage1/cohere/lint/checker-proof/timing-area-detached-summary.txt",
+    "stage1/cohere/lint/checker-proof/timing-area-detached-table.txt",
+    "stage1/cohere/lint/checker-proof/timing-harness-after-summary.txt",
+    "stage1/cohere/lint/checker-proof/timing-harness-after-table.txt",
+    "stage1/cohere/lint/checker-proof/timing-original-table.txt",
+    "stage1/cohere/lint/checker.a",
+    "stage1/cohere/lint/checker_bridge.a",
+    "stage1/cohere/lint/checker_build_test.go",
+    "stage1/cohere/lint/checker_cache_test.go",
+    "stage1/cohere/lint/checker_compile_test.go",
+    "stage1/cohere/lint/checker_hash.a",
+    "stage1/cohere/lint/checker_pending_test.go",
+    "stage1/cohere/lint/context.ts",
+    "stage1/cohere/lint/jsx_integration_test.go",
+    "stage1/cohere/lint/lint.ts",
+    "stage1/cohere/lint/lint_test.go",
+    "stage1/cohere/lint/main.ts",
+    "stage1/cohere/lint/profile_test.go",
+    "stage1/cohere/lint/registration_test.go",
+    "stage1/cohere/lint/registry/registry.go",
+    "stage1/cohere/lint/registry/registry_test.go",
+    "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/mutant.json",
+    "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/oracle.go",
+    "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a",
+    "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.json",
+    "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/testdata/witness.ts.txt",
+    "stage1/cohere/lint/rules/symbol-description/LANDING_REPORT.md",
+    "stage1/cohere/lint/rules/symbol-description/README.md",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Go.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Go.stdout",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Node.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/area-reproducer-Node.stdout",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-before-array-fix-stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-before-array-fix-summary.txt",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-initial-summary.json",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint-summary.txt",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/lint.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-lint-summary.txt",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-lint.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/narrow-run-lint.py",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/no-this-alias-reproducer.a.txt",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/previous-report.md",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.a.txt",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/root-program-reproducer.json",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/run-lint.py",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/scope.json",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/wave24-area-one-test.jsonl",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/wave24-area-one-test.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-Go.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-Go.stdout",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-native.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-symbol-description-native.stdout",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-timing.json",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-Go.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-Go.stdout",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-native.stderr",
+    "stage1/cohere/lint/rules/symbol-description/evidence/landing/witness-valid-typeof-native.stdout",
+    "stage1/cohere/lint/rules/symbol-description/messages.a",
+    "stage1/cohere/lint/rules/symbol-description/mutant.json",
+    "stage1/cohere/lint/rules/symbol-description/oracle.go",
+    "stage1/cohere/lint/rules/symbol-description/rule.a",
+    "stage1/cohere/lint/rules/symbol-description/rule.json",
+    "stage1/cohere/lint/rules/symbol-description/testdata/witness.ts.txt",
+    "stage1/cohere/lint/rules/valid-typeof/README.md",
+    "stage1/cohere/lint/rules/valid-typeof/messages.a",
+    "stage1/cohere/lint/rules/valid-typeof/mutant.json",
+    "stage1/cohere/lint/rules/valid-typeof/oracle.go",
+    "stage1/cohere/lint/rules/valid-typeof/rule.a",
+    "stage1/cohere/lint/rules/valid-typeof/rule.json",
+    "stage1/cohere/lint/rules/valid-typeof/testdata/witness.options.json",
+    "stage1/cohere/lint/rules/valid-typeof/testdata/witness.ts.txt",
+    "stage1/cohere/lint/shared_test.go",
+    "stage1/cohere/lint/testdata/oracle.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/bridge/tsgo/checker",
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/css",
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "github.com/system-inc/adamic/stage1/cohere/estree",
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "github.com/system-inc/adamic/stage1/cohere/selector",
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "github.com/system-inc/adamic/stage1/cohere/values",
+    "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "github.com/system-inc/adamic/stage1/typescript/parser",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/fixtures"
+  ],
+  "unowned_files": [
+    "oracle/adamic.mjs"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/internal/flow": 4,
+    "github.com/system-inc/adamic/bridge/tsgo/checker": 4,
+    "github.com/system-inc/adamic/internal/fuzz": 15,
+    "github.com/system-inc/adamic/internal/lower": 109,
+    "github.com/system-inc/adamic/internal/native": 64,
+    "github.com/system-inc/adamic/internal/oracle": 66,
+    "github.com/system-inc/adamic/stage1/cohere/css": 16,
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers": 1,
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings": 2,
+    "github.com/system-inc/adamic/stage1/cohere/estree": 47,
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles": 1,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/stage1/cohere/graphql": 2,
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer": 7,
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex": 5,
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry": 4,
+    "github.com/system-inc/adamic/stage1/cohere/lint": 35,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation": 1,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining": 1,
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks": 29,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery": 2,
+    "github.com/system-inc/adamic/stage1/cohere/selector": 5,
+    "github.com/system-inc/adamic/stage1/cohere/suppression": 2,
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment": 2,
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter": 12,
+    "github.com/system-inc/adamic/stage1/cohere/typeaware": 10,
+    "github.com/system-inc/adamic/stage1/cohere/values": 2,
+    "github.com/system-inc/adamic/stage1/cohere/yaml": 23,
+    "github.com/system-inc/adamic/stage1/typescript/parser": 25,
+    "github.com/system-inc/adamic/stage1/typescript/scanner": 6,
+    "github.com/system-inc/adamic/stage3/fixtures": 4,
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers": 4,
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments": 5,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle": 1,
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias": 1
+  },
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "deferred_to_full_gate": [
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees",
+    "github.com/system-inc/adamic/internal/native TestWASI"
+  ],
+  "gate_samples": [
+    "TestMarkdownASTPreprocessing 4070/4070 files, stride 1, offset 0",
+    "TestWholeDocumentOraclePreflight 80/80 files, stride 1, offset 0",
+    "TestMicromarkInputChunks 557/4070 files, stride 9, offset 6",
+    "TestTokenizerEvents 557/4070 files, stride 9, offset 6",
+    "TestFrontMatterStage 80/80 files, stride 1, offset 0",
+    "TestMarkdownListLayout 557/4070 files, stride 9, offset 6",
+    "TestMarkdownQuoteLayout 557/4070 files, stride 9, offset 6",
+    "TestMarkdownTableLayout 557/4070 files, stride 9, offset 6",
+    "TestMarkdownCodeBlockLayout 557/4070 files, stride 9, offset 6",
+    "TestNativeMdastConstruction 4135/4135 files, stride 1, offset 0",
+    "TestMarkdownHTMLBlockLayout 557/4070 files, stride 9, offset 6",
+    "TestMarkdownWhitespaceLayout 557/4070 files, stride 9, offset 6",
+    "TestMarkdownAstPath 4070/4070 files, stride 1, offset 0",
+    "TestMarkdownParserPrefixes 80/80 files, stride 1, offset 0",
+    "TestMarkdownLeafComposition 557/4070 files, stride 9, offset 6",
+    "TestMarkdownRootLayout 557/4070 files, stride 9, offset 6",
+    "TestMarkdownStructureLayout 557/4070 files, stride 9, offset 6",
+    "TestUpstreamRepositoryCorpusParity 340/2606 files, stride 8, offset 4",
+    "TestPortMatchesGoCohere 97/2606 files, stride 32, offset 4",
+    "TestCorpusPinBeforeSampling 84/2606 files, stride 32, offset 8"
+  ],
+  "split_tally": {
+    "packages": 37,
+    "planned": 541,
+    "passed": 540,
+    "touched": 37
+  },
+  "wall_seconds": 2288.8,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 9.2,
+    "smoke": 9.3,
+    "build": 16.0,
+    "tests": 2288.3
+  },
+  "pass": 6110,
+  "fail": 1,
+  "skip": 27,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "tests",
+    "detail": "github.com/system-inc/adamic/stage1/cohere/lint TestMutants/no-multi-assign-option-reversed\nc-tools/go/src/os/file.go:273 +0x9c\nio.copyBuffer({0x1ca6010, 0x1164c82ddd70}, {0x1ca5f70, 0x1164c7f262c0}, {0x0, 0x0, 0x0})\n\t/home/cloud/adamic-tools/go/src/io/io.go:411 +0x9d\nio.Copy(...)\n\t/home/cloud/adamic-tools/go/src/io/io.go:388\nos/exec.(*Cmd).writerDescriptor.func1()\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:613 +0x34\nos/exec.(*Cmd).Start.func2(0x1164cb1abc70?)\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:768 +0x2c\ncreated by os/exec.(*Cmd).Start in goroutine 13518\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:767 +0x92b\n\ngoroutine 13608 [syscall]:\nsyscall.Syscall6(0xf7, 0x3, 0xc, 0x1164c84ad778, 0x4, 0x1164c809f290, 0x0)\n\t/home/cloud/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39\ninternal/syscall/unix.Waitid(0x1164c84ad7a6?, 0x1164c84ad8d0?, 0x56adcb?, 0x18?, 0x1c4ab98?)\n\t/home/cloud/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39\nos.(*Process).pidfdWait.func1(...)\n\t/home/cloud/adamic-tools/go/src/os/pidfd_linux.go:108\nos.ignoringEINTR(...)\n\t/home/cloud/adamic-tools/go/src/os/file_posix.go:263\nos.(*Process).pidfdWait(0x1164ce2eb240)\n\t/home/cloud/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf\nos.(*Process).wait(0x422125?)\n\t/home/cloud/adamic-tools/go/src/os/exec_unix.go:25 +0x1a\nos.(*Process).Wait(...)\n\t/home/cloud/adamic-tools/go/src/os/exec.go:347\nos/exec.(*Cmd).Wait(0x1164cac88d00)\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:944 +0x45\nos/exec.(*Cmd).Run(0x1164cac88d00)\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:643 +0x2d\nos/exec.(*Cmd).CombinedOutput(0x1164cac88d00)\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f\ngithub.com/system-inc/adamic/internal/native.compileUnit({{0x1164d115bf70?, 0x1164c8700e70?}, {0x1164d3a7c000?, 0x1164fa1b4148?}}, {0x1164c8270a88, 0x14, 0x1164fa1b4120?}, {0x1164cc858280, 0x10, 0x14}, ...)\n\t/home/cloud/fast-gate/tree/internal/native/units.go:336 +0xdd0\ngithub.com/system-inc/adamic/internal/native.buildUnitsWithLibrary.func1()\n\t/home/cloud/fast-gate/tree/internal/native/units.go:438 +0x43b\ncreated by github.com/system-inc/adamic/internal/native.buildUnitsWithLibrary in goroutine 133\n\t/home/cloud/fast-gate/tree/internal/native/units.go:433 +0x9dc\n\ngoroutine 13998 [IO wait]:\ninternal/poll.runtime_pollWait(0x778fcac71400, 0x72)\n\t/home/cloud/adamic-tools/go/src/runtime/netpoll.go:351 +0x85\ninternal/poll.(*pollDesc).wait(0x1164cbe0eba0?, 0x1164caa29000?, 0x1)\n\t/home/cloud/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27\ninternal/poll.(*pollDesc).waitRead(...)\n\t/home/cloud/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89\ninternal/poll.(*FD).Read(0x1164cbe0eba0, {0x1164caa29000, 0x200, 0x200})\n\t/home/cloud/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8\nos.(*File).read(...)\n\t/home/cloud/adamic-tools/go/src/os/file_posix.go:30\nos.(*File).Read(0x1164cdc1b0a8, {0x1164caa29000?, 0x4c7550?, 0x0?})\n\t/home/cloud/adamic-tools/go/src/os/file.go:144 +0x4f\nbytes.(*Buffer).ReadFrom(0x1164d49f9380, {0x1ca5ef0, 0x1164cdc1b0a8})\n\t/home/cloud/adamic-tools/go/src/bytes/buffer.go:229 +0x98\nio.copyBuffer({0x1ca6010, 0x1164d49f9380}, {0x1ca5ef0, 0x1164cdc1b0a8}, {0x0, 0x0, 0x0})\n\t/home/cloud/adamic-tools/go/src/io/io.go:415 +0x151\nio.Copy(...)\n\t/home/cloud/adamic-tools/go/src/io/io.go:388\nos.genericWriteTo(0x1164cdc1b0a8?, {0x1ca6010?, 0x1164d49f9380?})\n\t/home/cloud/adamic-tools/go/src/os/file.go:295 +0x35\nos.(*File).WriteTo(0x1164cdc1b0a8, {0x1ca6010, 0x1164d49f9380})\n\t/home/cloud/adamic-tools/go/src/os/file.go:273 +0x9c\nio.copyBuffer({0x1ca6010, 0x1164d49f9380}, {0x1ca5f70, 0x1164cdc1b0a8}, {0x0, 0x0, 0x0})\n\t/home/cloud/adamic-tools/go/src/io/io.go:411 +0x9d\nio.Copy(...)\n\t/home/cloud/adamic-tools/go/src/io/io.go:388\nos/exec.(*Cmd).writerDescriptor.func1()\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:613 +0x34\nos/exec.(*Cmd).Start.func2(0x1164d5163960?)\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:768 +0x2c\ncreated by os/exec.(*Cmd).Start in goroutine 13608\n\t/home/cloud/adamic-tools/go/src/os/exec/exec.go:767 +0x92b\n",
+    "after_seconds": 2288.7
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "tests": 1
+  },
+  "finished": true
+}
