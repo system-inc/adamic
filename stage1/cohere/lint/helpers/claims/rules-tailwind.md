@@ -1,3 +1,20 @@
+# rules/tailwind — PARKED
+
+Status: parked; no completed package or rule port is claimed. Local helper work is retained only on local `lint-helpers/rules-tailwind` at `5b3f4e1d91f8b88578c8cfd38f753d9258579152`; it is not part of this remote branch.
+
+## Exact blockers
+
+- Runtime regular-expression compilation: `cohere/internal/lint/rules/tailwind/class_literals.go:205` calls `esregexp.Compile(pattern, "")`; `NewClassLiteralReader` invokes this reader path. Native lowering reports `stage 0 can't lower RegExp with a nonconstant pattern yet`. Wait for the native runtime regex compiler on the library's `codex/regex-runtime-compiler`, landing through the library area.
+- Unported dependency `ecmascript/text.WhitespaceFields`: `cohere/internal/lint/rules/tailwind/class_literals.go:721` (`SplitClasses`). The older ASCII splitter does not implement ECMAScript whitespace.
+- Missing private corpus: 33 upstream tests/subtests skip. The local capture evidence is `stage1/cohere/lint/helpers/tailwind/testdata/capture_results.json`; the owned coverage check intentionally fails on those skips rather than certifying an incomplete corpus.
+- `TestCanonicalClassesPlacementIsAccountedFor` needs the shipped `cohere/internal/lint/rules/tailwind/collapse/testdata/variant_fixtures.json` class lists (2,396 lists / 11,314 occurrences) **and live design systems**, not merely the JSON. Its `entryPath` inputs are `ahra:app/_theme/styles/theme.css` and `connected:app/_theme/styles/theme.css`. `livePlacementLiterals` reads that fixture; `livePlacementSystem` resolves the paths using `cohere/internal/corpus/corpus.go`, then loads the stylesheet and installed Tailwind package. Set `COHERE_CORPUS_AHRA` to a private **ahra** checkout and `COHERE_CORPUS_CONNECTED` to a private **www-connected-app** checkout, including the stylesheets, imports and installed packages. The observed first skip is `live_placement_test.go:215: ahra: set COHERE_CORPUS_AHRA to a checkout of ahra (private) to cover this test`.
+
+## Local evidence only
+
+Four leaf helpers agree for 8,194 available upstream calls plus 28 controls (89 distinct inputs) on Node, emitted JavaScript and sanitized native. Four semantic mutants are caught on all three. No rule has been ported and no rule is declared unblocked. Helpers remain local until all blockers and the missing corpus are resolved.
+
+## Original claim and consuming rules
+
 # rules/tailwind package claim
 
 Branch: lint-helpers/rules-tailwind. Base: origin/area/stage1-lint.
