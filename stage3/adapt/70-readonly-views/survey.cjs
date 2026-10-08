@@ -15,8 +15,7 @@ const sites = [...new Map(raw.slice(1).flatMap(row => row.findings)
 const roots = ts.sys.readDirectory(path.join(tree, 'src'), ['.ts'], ['**/lib/**']);
 const program = ts.createProgram(roots, {
     strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-    noImplicitReturns: true, noFallthroughCasesInSwitch: true,
-    verbatimModuleSyntax: true, erasableSyntaxOnly: true, noEmit: true,
+    verbatimModuleSyntax: true, erasableSyntaxOnly: false, noEmit: true,
     allowImportingTsExtensions: true, module: ts.ModuleKind.ESNext,
     moduleDetection: ts.ModuleDetectionKind.Force, moduleResolution: ts.ModuleResolutionKind.Bundler,
     target: ts.ScriptTarget.ES2024, lib: ['lib.es2024.d.ts'], types: [],
