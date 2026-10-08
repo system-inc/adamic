@@ -214,6 +214,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
+		if _, checked := l.checkedOverloadFields(overload, produced, promised); checked {
+			return nil
+		}
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
 		}
@@ -249,20 +252,11 @@ func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*
 // implementation proves a narrower result. A plain false must become a present
 // boolean | undefined, and a scalar result must be boxed when the caller sees a union.
 func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
-	symbol := l.symbol(ast.SkipParentheses(call.Expression))
-	overloaded := false
-	if symbol != nil {
-		for _, declaration := range symbol.Declarations {
-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				overloaded = true
-				break
-			}
-		}
-	}
-	if !overloaded {
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	if resolved == nil || resolved.Declaration() == nil || l.censusImplementation(resolved.Declaration()) == nil {
 		return value, nil
 	}
-	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	symbol := l.symbol(resolved.Declaration().Name())
 	if resolved != nil && resolved.Declaration() != nil {
 		overload := resolved.Declaration()
 		implementation := l.censusImplementation(overload)
@@ -282,6 +276,9 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 			if !l.censusProveOverloadResult(implementation, overload) {
 				promised := l.checker.GetReturnTypeOfSignature(resolved)
 				produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
+				if checked, admitted := l.checkedOverloadResult(call, value, produced, promised); admitted {
+					value = checked
+				}
 				if l.censusHasUndefined(produced) && !l.censusHasUndefined(promised) {
 					of, err := l.typeOf(call.AsNode())
 					if err != nil {

@@ -174,6 +174,10 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 			if (boxed->kind == kind) { return *slot; }
 		}
 	}
+	if (actual == 9 && wanted == 2) {
+		adamic_maybe_boolean unpacked = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+		if (unpacked.present) { return (adamic_value){.boolean = unpacked.boolean}; }
+	}
 	if (actual == 7 && wanted == 1) {
 		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
 		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
@@ -217,7 +221,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
 		unsigned char actual = adamic_object_field_types(object)[cache->index];
-		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
+		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1) || (actual == 9 && wanted == 2)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
 }
@@ -231,6 +235,7 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 		}
 		return (adamic_maybe_boolean){false, false};
 	}
+	if (adamic_object_field_types(object)[cache->index] == 2) { return (adamic_maybe_boolean){true, slot->boolean}; }
 	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
 }
 
@@ -271,13 +276,14 @@ void adamic_check_contract(const adamic_field_contract *contract, unsigned char 
  bool present = true;
  if (kind >= 3 && kind <= 6) { present = value.reference != NULL; }
  if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
- bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7) || (!present && contract->nullable && contract->kind>=3 && contract->kind<=6 && kind>=3 && kind<=6)) && (present || contract->nullable) && (!contract->nullish_only || !present);
+ if (kind == 9) { present = adamic_maybe_boolean_unpack(value.maybe_boolean).present; }
+ bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7) || ((contract->kind == 2 || contract->kind == 9) && (kind == 2 || kind == 9)) || (!present && contract->nullable && contract->kind>=3 && contract->kind<=6 && kind>=3 && kind<=6)) && (present || contract->nullable) && (!contract->nullish_only || !present);
  if (valid && present && contract->count != 0) {
   valid = false;
   for (size_t index = 0; index < contract->count; index++) {
    adamic_value allowed = contract->allowed[index];
    if ((kind == 1 || kind == 7) && (kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number) == allowed.number) { valid = true; }
-   if (kind == 2 && value.boolean == allowed.boolean) { valid = true; }
+   if ((kind == 2 || kind == 9) && (kind == 9 ? adamic_maybe_boolean_unpack(value.maybe_boolean).boolean : value.boolean) == allowed.boolean) { valid = true; }
    if (kind == 3 && adamic_string_equal(value.reference, allowed.reference)) { valid = true; }
   }
  }
@@ -293,7 +299,7 @@ void adamic_check_contract(const adamic_field_contract *contract, unsigned char 
  const adamic_string *text = NULL;
  if (!present) { got = "undefined"; }
  else if (kind == 1 || kind == 7) { text = adamic_string_from_number(kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number); }
- else if (kind == 2) { got = value.boolean ? "true" : "false"; }
+ else if (kind == 2 || kind == 9) { got = (kind == 9 ? adamic_maybe_boolean_unpack(value.maybe_boolean).boolean : value.boolean) ? "true" : "false"; }
  else if (kind == 3) { text = value.reference; }
  size_t capacity = strlen(expression) + strlen(expected) + strlen(got) + (text == NULL ? 0 : text->length) + 100;
  char *message = malloc(capacity);

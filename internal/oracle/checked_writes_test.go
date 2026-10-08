@@ -13,6 +13,29 @@ import (
 )
 
 var checkedWriteFixtures = []struct{ name, stdout, message string }{
+	{"overload-callback-fit", "false\n", ""},
+	{"overload-callback-misfit", "", "write failed: factory(true).emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object"},
+	{"optional-boolean-fit", "undefined\ntrue\n", ""},
+	{"optional-boolean-misfit", "", "write failed: view.multiLine expects true | undefined, got false"},
+	{"required-boolean-fit", "true\n", ""},
+	{"required-boolean-misfit", "", "write failed: view.multiLine expects true, got undefined"},
+	{"optional-false-fit", "false\n", ""},
+	{"optional-false-misfit", "", "write failed: view.multiLine expects false | undefined, got true"},
+	{"branch-file-fit", "inputinput\n", ""},
+	{"branch-file-misfit", "", "write failed: view.file expects SourceFile, got undefined"},
+	{"branch-start-fit", "3\n", ""},
+	{"branch-start-misfit", "", "write failed: view.start expects number, got undefined"},
+	{"branch-length-fit", "3\n", ""},
+	{"branch-length-misfit", "", "write failed: view.length expects number, got undefined"},
+	{"branch-bottom-number-fit", "0\n2\n", ""},
+	{"branch-bottom-number-misfit", "", "write failed: values[] expects never, got 1"},
+	{"branch-bottom-string-fit", "0\n2\n", ""},
+	{"branch-bottom-string-misfit", "", "write failed: values[] expects never, got outsideoutside"},
+	{"generic-site-fit", "16\n", ""},
+	{"generic-site-misfit", "", "write failed: view.flags expects 16, got 0"},
+	{"overload-result-fit", "false\n", ""},
+	{"overload-result-misfit", "", "write failed: createTempVariable(true).emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object"},
+
 	{"emit-comment-fit", "true\n", ""},
 	{"emit-comment-misfit", "", "write failed: view.pos expects -1, got 0"},
 	{"emit-resolution-fit", "false\n", ""},
@@ -228,6 +251,7 @@ func checkedWriteCounts(t *testing.T) []string {
 		}
 		rows = append(rows, fmt.Sprintf("| stage3/checked-writes/%s.ts | %s | %s | %s | %s | %s | %s |", fixture.name, match[1], match[2], match[3], match[4], match[5], match[6]))
 	}
+	rows = append(rows, counted(t, "stage3/checked-writes/proven-generic.a", false, nil, false, false))
 	rows = append(rows, counted(t, "stage3/checked-writes/proven-emit.a", false, nil, false, false), counted(t, "stage3/checked-writes/proven-number.a", false, nil, false, false), counted(t, "stage3/checked-writes/proven-containers.a", false, nil, false, false))
 	return rows
 }

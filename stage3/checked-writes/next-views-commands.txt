@@ -1,0 +1,45 @@
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/next-views-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc
+# Both merges printed Already up to date. origin/main is 54cbc125.
+git fetch origin > /tmp/next-views-fetch.log 2>&1
+git merge origin/main > /tmp/next-views-merge.log 2>&1
+# Each census verifies 603 source hashes and excludes backend IR.
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/next-views-short-census.log
+# Output: 462 checked, 6 proven, 47 stopped.
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/next-views-generic-census.log
+# Output: 462 checked, 15 proven, 38 stopped.
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/next-views-branch-census.log
+# Output: 470 checked, 18 proven, 27 stopped.
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/next-views-census-final.log
+# Output: 471 checked, 18 proven, 26 stopped, zero unmatched.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic ./internal/lower ./internal/native -run 'TestCheckedWider|TestCheckedViewsNext|TestCheckedSignatureInstantiation|TestOptionalFunctionValueRelation|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusOverload|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestCheckedFlowContainerContractMutants|TestCheckedEmit|TestExplainCheckedWritesOutput|TestProvenRelations|TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestRuntimeFieldLayoutsAreIncluded|TestUniformFieldsMatchNode|TestCEndsInNewline' -count=1 -v -timeout 10m > /tmp/next-views-final-validation.log 2>&1
+# PASS: oracle, driver, lowering, native; 36 runtime-check mutants caught.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedWiderWrites/(optional-|required-|boolean-)|^TestCheckedViewsNextMutants/(optional-|required-)' -count=1 -v -timeout 10m > /tmp/next-views-boolean-conversion.log 2>&1
+# PASS after final native boolean slot conversion.
+go test ./internal/oracle -run '^TestCheckedViewsNextAdamicRefusals$' -count=1 -v > /tmp/next-views-refusal-pins.log 2>&1
+# PASS: four exact refusal paths/reasons/fixes.
+go test ./cmd/adamic -run '^TestExplainCheckedWritesOutput/(optional-|overload-)' -count=1 -v > /tmp/next-views-explain.log 2>&1
+# PASS: C, JS and sanitized build explain the three new check paths.
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts > /tmp/next-views-counts.log 2>&1
+# PASS; exactly 23 new count rows.
+python3 stage3/checked-writes/a-check.py --out /tmp/next-views-a-check-final > /tmp/next-views-a-check-final.log 2>&1
+# Exit 0: 11 refused controls, 4 proven controls, no failures.
+python3 stage3/checked-writes/latent-controls.py --typescript /home/agent/.cache/adamic-stage3/api/node_modules/typescript --out /tmp/next-views-latent > /tmp/next-views-latent.log 2>&1
+# PASS: 301/301 CLI cases; flags 61, parent 0; both small programs exit 70.
+python3 stage3/checked-writes/next-views-ledger.py > /tmp/next-views-ledger.log 2>&1
+git fetch origin > /tmp/next-views-fetch-final.log 2>&1
+git merge origin/main > /tmp/next-views-merge-final.log 2>&1
+git diff --check
+# Final traversal walks every receiving overload, including a missing optional input.
+go test ./internal/lower ./internal/oracle -run 'TestCheckedSignatureInstantiation|TestOptionalFunctionValueRelation|TestCensusOverload|TestOverloadedShorthandFunctionValueStaysNotYet|TestProvenRelations|^TestCheckedWiderWrites/(overload-|generic-site-|emit-callback-)|^TestCheckedViewsNextMutants/(overload-|generic-site-)' -count=1 -v -timeout 10m > /tmp/next-views-overload-relations-final.log 2>&1
+# PASS: lower and oracle.
+go test ./internal/lower -run '^TestCheckedSignature' -count=1 -v > /tmp/next-views-signature-overloads.log 2>&1
+# PASS: instantiation, mapped identity and unsafe second-overload counterexample.
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/next-views-census-all-overloads.log
+# PASS: 471 checked, 18 proven, 26 stopped, zero unmatched.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestCheckedWider|TestCheckedViewsNext|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestCheckedFlowContainerContractMutants|TestCheckedEmit' -count=1 -v -timeout 10m > /tmp/next-views-delivery-oracle.log 2>&1
+# PASS: all 105 checked TypeScript witnesses and 36 runtime-check mutants.
+python3 stage3/checked-writes/a-check.py --out /tmp/next-views-a-check-delivery > /tmp/next-views-a-check-delivery.log 2>&1
+# Exit 0: 11 refused, 4 proven, no failures.

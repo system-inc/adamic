@@ -33,10 +33,11 @@ const adamicContractObject = (contract, value) => {
 };
 const adamicCheckValue = (contract, value, kind, sourceType, expression) => {
  const present = value != null;
- let valid = contract && (contract.kind === kind || contract.kind === 1 && kind === 7 || !present && contract.nullable && contract.kind >= 3 && contract.kind <= 6 && kind >= 3 && kind <= 6) && (present || contract.nullable) && (!contract.nullishOnly || !present) && (!present || !contract.allowed.length || contract.allowed.includes(value));
+ let valid = contract && (contract.kind === kind || contract.kind === 1 && kind === 7 || (contract.kind === 2 || contract.kind === 9) && (kind === 2 || kind === 9) || !present && contract.nullable && contract.kind >= 3 && contract.kind <= 6 && kind >= 3 && kind <= 6) && (present || contract.nullable) && (!contract.nullishOnly || !present) && (!present || !contract.allowed.length || contract.allowed.includes(value));
  if (valid && present && contract.reference) valid = contract.provenWrites.includes(sourceType) || kind === 4 && adamicContractObject(contract, value) || (kind === 5 || kind === 6) && contract.provenFields.includes(adamicAllocationContracts.get(value));
  if (!valid) panic("write failed: " + expression + " expects " + (contract?.declared || "unavailable field contract") + ", got " + (!present ? "undefined" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value === "object" ? "object" : String(value)));
 };
+const adamicContractResult = (object, fields, expression) => { for (const [name, contract] of Object.entries(fields)) { const value = adamicReadField(object, name, expression + "." + name); const kind = adamicFieldRepresentations.get(object)?.[name]; adamicCheckValue(contract, value, kind, 0, expression + "." + name); } return object; };
 const adamicCheckedWrite = (object, name, value, kind, sourceType, expression) => {
  const contract = Object.hasOwn(object, name) && adamicFieldContracts.get(object)?.[name];
  adamicCheckValue(contract, value, kind, sourceType, expression);

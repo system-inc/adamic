@@ -217,7 +217,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if e.fieldTypesNeeded() {
 			cache = e.cache()
 		}
-		if e.program.CheckedFields[statement.Name] {
+		if e.program.CheckedFields[statement.Name] && !(statement.WriteCheck != "" && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean)) {
 			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
@@ -243,10 +243,18 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("void *%s = %s->reference;", old, slot)
 			e.line("%s->reference = %s;", slot, e.kept(value))
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+		} else if (statement.WriteCheck != "" || e.program.CheckedFields[statement.Name]) && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean) {
+			actual := fmt.Sprintf("adamic_object_field_types(%s)[%s.index]", object, cache)
+			plain, packed := value, fmt.Sprintf("adamic_maybe_boolean_pack((adamic_maybe_boolean){true, %s})", value)
+			if statement.Value.Type() == ir.MaybeBoolean {
+				plain, packed = "("+value+").boolean", slotted(ir.MaybeBoolean, value)
+			}
+			e.line("if (%s == %d) { %s->boolean = %s; } else { %s->maybe_boolean = %s; }", actual, ir.Boolean, slot, plain, slot, packed)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		if e.fieldTypesNeeded() {
+		// Checked boolean stores retain the actual slot representation.
+		if e.fieldTypesNeeded() && !((statement.WriteCheck != "" || e.program.CheckedFields[statement.Name]) && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean)) {
 			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
 		}
 		if converted {

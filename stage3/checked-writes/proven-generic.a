@@ -1,0 +1,6 @@
+// a-check: compile
+interface Node { readonly flags: number }
+type Mutable<T> = { -readonly [K in keyof T]: T[K] };
+function update<T extends Node>(node: Mutable<T>): T { return node; }
+const original: { flags: 16 } = { flags: 16 };
+console.log(update(original).flags.toString());

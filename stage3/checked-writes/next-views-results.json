@@ -1,0 +1,760 @@
+{
+  "source_pin": "9b8ebd77",
+  "baseline_pin": "674b68b5",
+  "merged_main": "54cbc125",
+  "measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced",
+  "coverage": {
+    "checked": 471,
+    "proven": 18,
+    "refused": 26,
+    "unmatched": 0,
+    "total": 515
+  },
+  "slices": {
+    "short_circuit": [
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
+        "id": 112,
+        "original_reason": "a value of type ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "getSymbolOfNode(host)",
+        "resolved_receiving_type": "Symbol | undefined",
+        "source_family": "ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined",
+        "status": "proven relation",
+        "where": "src/compiler/checker.ts:16869:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
+        "id": 233,
+        "original_reason": "a value of type JSDocSignature | SignatureDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "getSymbolOfDeclaration(signature.declaration)",
+        "resolved_receiving_type": "Symbol",
+        "source_family": "JSDocSignature | SignatureDeclaration | undefined",
+        "status": "proven relation",
+        "where": "src/compiler/checker.ts:35619:28"
+      }
+    ],
+    "generic_relations": [
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: T | undefined into T | undefined",
+        "id": 177,
+        "original_reason": "a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "forEachProperty(prop, p =>\r\n                getDeclarationModifierFlagsFromSymbol(p, writing) & ModifierFlags.Protected ?\r\n                    !hasBaseType(checkClass, getDeclaringClass(p)) : false) ? undefined : checkClass",
+        "resolved_receiving_type": "T | undefined",
+        "source_family": "undefined",
+        "status": "proven relation",
+        "where": "src/compiler/checker.ts:25223:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: undefined into T | undefined",
+        "id": 178,
+        "original_reason": "a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold",
+        "source_family": "undefined",
+        "status": "proven relation",
+        "where": "src/compiler/checker.ts:25225:79"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: T into T",
+        "id": 386,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold",
+        "source_family": "T",
+        "status": "proven relation",
+        "where": "src/compiler/checker.ts:6408:24"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: { introducesError: boolean; node: T; sym?: never; } | { introducesError: boolean; node: T; sym: Symbol | undefined; } into { introducesError: boolean; node: T; }",
+        "id": 387,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint EntityNameOrEntityNameExpression can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "trackExistingEntityName(node, context as NodeBuilderContext)",
+        "resolved_receiving_type": "{ introducesError: boolean; node: T; sym?: never; } | { introducesError: boolean; node: T; sym: Symbol | undefined; }",
+        "source_family": "T",
+        "status": "proven relation",
+        "where": "src/compiler/checker.ts:6411:24"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "src/compiler/emitter.ts:1483:36: Adamic 0.1 refuses any seen as T has no proven type (no-unsafe-assignment); keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use",
+        "id": 413,
+        "original_reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "parenthesizerRule",
+        "resolved_receiving_type": "((node: T) => T) | undefined",
+        "source_family": "any",
+        "status": "stopped",
+        "where": "src/compiler/emitter.ts:1483:36"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: <T extends Node | undefined>(node: T) => T into <T extends Node | undefined>(node: T) => T",
+        "id": 428,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint Node | undefined can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "cloneNode",
+        "resolved_receiving_type": "<T extends Node | undefined>(node: T) => T",
+        "source_family": "T",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:1019:9"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "src/compiler/factory/nodeFactory.ts:1159:9: Adamic 0.1 refuses a function taking readonly Modifier[] | ModifierFlags seen as one taking readonly Modifier[] | ModifierFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+        "id": 429,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint HasModifiers can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "replaceModifiers",
+        "resolved_receiving_type": "<T extends HasModifiers>(node: T, modifiers: readonly Modifier[] | ModifierFlags) => T",
+        "source_family": "T",
+        "status": "stopped",
+        "where": "src/compiler/factory/nodeFactory.ts:1159:9"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "src/compiler/factory/nodeFactory.ts:1160:9: Adamic 0.1 refuses a function taking readonly ModifierLike[] seen as one taking readonly ModifierLike[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+        "id": 430,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "replaceDecoratorsAndModifiers",
+        "resolved_receiving_type": "<T extends HasModifiers & HasDecorators>(node: T, modifiers: readonly ModifierLike[]) => T",
+        "source_family": "T",
+        "status": "stopped",
+        "where": "src/compiler/factory/nodeFactory.ts:1160:9"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: <T extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment>(node: T, name: T[\"name\"]) => T into <T extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment>(node: T, name: T[\"name\"]) => T",
+        "id": 431,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint MethodDeclaration | MethodSignature | PropertyAssignment | PropertyDeclaration | PropertySignature | AccessorDeclaration can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "replacePropertyName",
+        "resolved_receiving_type": "<T extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment>(node: T, name: T[\"name\"]) => T",
+        "source_family": "T",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:1161:9"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: Mutable<T> into T",
+        "id": 470,
+        "original_reason": "a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable<T> can't hold",
+        "source_family": "Mutable<T>",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:5084:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: Mutable<T> into T",
+        "id": 471,
+        "original_reason": "a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable<T> can't hold",
+        "source_family": "Mutable<T>",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:5094:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: <T extends ModifierSyntaxKind>(kind: T) => ModifierToken<T> into <T extends ModifierSyntaxKind>(kind: T) => ModifierToken<T>",
+        "id": 490,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint ModifierSyntaxKind can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "createModifier",
+        "resolved_receiving_type": "<T extends ModifierSyntaxKind>(kind: T) => ModifierToken<T>",
+        "source_family": "T",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:543:9"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: <TKind extends KeywordTypeSyntaxKind>(kind: TKind) => KeywordTypeNode<TKind> into <TKind extends KeywordTypeSyntaxKind>(kind: TKind) => KeywordTypeNode<TKind>",
+        "id": 496,
+        "original_reason": "a value of type TKind seen as TKind, a type parameter whose constraint KeywordTypeSyntaxKind can be written, so it can write what TKind can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "createKeywordTypeNode",
+        "resolved_receiving_type": "<TKind extends KeywordTypeSyntaxKind>(kind: TKind) => KeywordTypeNode<TKind>",
+        "source_family": "TKind",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:579:9"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: Mutable<T> into T",
+        "id": 504,
+        "original_reason": "a value of type Mutable<T> seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable<T> can't hold",
+        "source_family": "Mutable<T>",
+        "status": "proven relation",
+        "where": "src/compiler/factory/nodeFactory.ts:7184:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "fresh or invariant relation: (<T extends Node | undefined>(node: T, includeTrivia?: boolean) => T) | (<T extends Node>(n: T) => T) into <T extends Node>(n: T) => T",
+        "id": 605,
+        "original_reason": "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "replaceNode\r\n        ? n => getSynthesizedDeepCloneWithReplacements(n, /*includeTrivia*/ true, replaceNode)\r\n        : getSynthesizedDeepClone",
+        "resolved_receiving_type": "(<T extends Node | undefined>(node: T, includeTrivia?: boolean) => T) | (<T extends Node>(n: T) => T)",
+        "source_family": "T",
+        "status": "proven relation",
+        "where": "src/compiler/utilities.ts:12346:52"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "src/compiler/visitorPublic.ts:604:12: Adamic 0.1 refuses any seen as T has no proven type (no-unsafe-assignment); keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use",
+        "id": 613,
+        "original_reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+        "source_family": "any",
+        "status": "stopped",
+        "where": "src/compiler/visitorPublic.ts:604:12"
+      }
+    ],
+    "optional_boolean": [
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "elements",
+          "end",
+          "flags",
+          "kind",
+          "multiLine",
+          "parent",
+          "pos",
+          "token",
+          "transformFlags"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 461,
+        "original_reason": "a value of type AssertClause seen as Mutable<AssertClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "source_family": "AssertClause",
+        "status": "checked relation",
+        "where": "src/compiler/factory/nodeFactory.ts:4771:22"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "assertClause",
+          "end",
+          "flags",
+          "kind",
+          "multiLine",
+          "parent",
+          "pos",
+          "transformFlags"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 463,
+        "original_reason": "a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "source_family": "ImportTypeAssertionContainer",
+        "status": "checked relation",
+        "where": "src/compiler/factory/nodeFactory.ts:4804:22"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "elements",
+          "end",
+          "flags",
+          "kind",
+          "multiLine",
+          "parent",
+          "pos",
+          "token",
+          "transformFlags"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 464,
+        "original_reason": "a value of type ImportAttributes seen as Mutable<ImportAttributes>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "source_family": "ImportAttributes",
+        "status": "checked relation",
+        "where": "src/compiler/factory/nodeFactory.ts:4824:22"
+      }
+    ],
+    "diagnostic_branches": [
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "file",
+          "length",
+          "start"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 179,
+        "original_reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "source_family": "Diagnostic",
+        "status": "checked relation",
+        "where": "src/compiler/checker.ts:2534:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "file",
+          "length",
+          "start"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 411,
+        "original_reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "source_family": "Diagnostic",
+        "status": "checked relation",
+        "where": "src/compiler/commandLineParser.ts:3795:12"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "file",
+          "length",
+          "start"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 548,
+        "original_reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "source_family": "Diagnostic",
+        "status": "checked relation",
+        "where": "src/compiler/programDiagnostics.ts:296:16"
+      }
+    ],
+    "bottom_array_branches": [
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "actual-shape field contract",
+        "id": 110,
+        "original_reason": "a value of type IndexInfo[] seen as IndexInfo[], which can write IndexInfo where never is read",
+        "source_family": "IndexInfo[]",
+        "status": "checked relation",
+        "where": "src/compiler/checker.ts:16689:16"
+      },
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [],
+        "first_reason": "actual-shape field contract",
+        "id": 218,
+        "original_reason": "a value of type Symbol[] seen as Symbol[], which can write Symbol where never is read",
+        "source_family": "Symbol[]",
+        "status": "checked relation",
+        "where": "src/compiler/checker.ts:34326:16"
+      }
+    ],
+    "overloaded_callback_result": [
+      {
+        "class": "d",
+        "family": "other",
+        "fields": [
+          "autoGenerate",
+          "emitNode"
+        ],
+        "first_reason": "actual-shape field contract",
+        "id": 482,
+        "original_reason": "a value of type (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
+        "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+        "resolved_receiving_expression": "createTempVariable",
+        "resolved_receiving_type": "(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier",
+        "source_family": "(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier",
+        "status": "checked relation",
+        "where": "src/compiler/factory/nodeFactory.ts:530:9"
+      }
+    ]
+  },
+  "remaining_groups": [
+    {
+      "reason": "Boxed-union fields and elements",
+      "count": 14,
+      "category": "contract gap",
+      "waits_on": "views V2 and V5: tagged union slot contracts and safe representation conversion",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:21691:66: Adamic 0.1 refuses a value of type NumberLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 165,
+          "original_reason": "a value of type NumberLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where number is read",
+          "source_family": "NumberLiteralType",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:21691:66"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:21778:74: Adamic 0.1 refuses a value of type StringLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 166,
+          "original_reason": "a value of type StringLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where string is read",
+          "source_family": "StringLiteralType",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:21778:74"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5227:22: Adamic 0.1 refuses a value of type JSDocTemplateTag seen as Mutable<JSDocTemplateTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 478,
+          "original_reason": "a value of type JSDocTemplateTag seen as Mutable<JSDocTemplateTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocTemplateTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5227:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5249:22: Adamic 0.1 refuses a value of type JSDocTypedefTag seen as Mutable<JSDocTypedefTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 479,
+          "original_reason": "a value of type JSDocTypedefTag seen as Mutable<JSDocTypedefTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocTypedefTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5249:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5271:22: Adamic 0.1 refuses a value of type JSDocParameterTag seen as Mutable<JSDocParameterTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 480,
+          "original_reason": "a value of type JSDocParameterTag seen as Mutable<JSDocParameterTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocParameterTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5271:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5293:22: Adamic 0.1 refuses a value of type JSDocPropertyTag seen as Mutable<JSDocPropertyTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 481,
+          "original_reason": "a value of type JSDocPropertyTag seen as Mutable<JSDocPropertyTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocPropertyTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5293:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5315:22: Adamic 0.1 refuses a value of type JSDocCallbackTag seen as Mutable<JSDocCallbackTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 483,
+          "original_reason": "a value of type JSDocCallbackTag seen as Mutable<JSDocCallbackTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocCallbackTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5315:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5331:22: Adamic 0.1 refuses a value of type JSDocOverloadTag seen as Mutable<JSDocOverloadTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 484,
+          "original_reason": "a value of type JSDocOverloadTag seen as Mutable<JSDocOverloadTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocOverloadTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5331:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5347:22: Adamic 0.1 refuses a value of type JSDocAugmentsTag seen as Mutable<JSDocAugmentsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 485,
+          "original_reason": "a value of type JSDocAugmentsTag seen as Mutable<JSDocAugmentsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocAugmentsTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5347:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5370:22: Adamic 0.1 refuses a value of type JSDocSeeTag seen as Mutable<JSDocSeeTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 486,
+          "original_reason": "a value of type JSDocSeeTag seen as Mutable<JSDocSeeTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocSeeTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5370:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5456:22: Adamic 0.1 refuses a value of type JSDocImplementsTag seen as Mutable<JSDocImplementsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 492,
+          "original_reason": "a value of type JSDocImplementsTag seen as Mutable<JSDocImplementsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocImplementsTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5456:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5524:22: Adamic 0.1 refuses a value of type JSDocUnknownTag seen as Mutable<JSDocUnknownTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 493,
+          "original_reason": "a value of type JSDocUnknownTag seen as Mutable<JSDocUnknownTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocUnknownTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5524:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:5563:22: Adamic 0.1 refuses a value of type JSDocImportTag seen as Mutable<JSDocImportTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+          "id": 494,
+          "original_reason": "a value of type JSDocImportTag seen as Mutable<JSDocImportTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+          "source_family": "JSDocImportTag",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:5563:22"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/program.ts:3490:123: Adamic 0.1 refuses a value of type string[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 537,
+          "original_reason": "a value of type string[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where string is read",
+          "source_family": "string[]",
+          "status": "stopped",
+          "where": "src/compiler/program.ts:3490:123"
+        }
+      ]
+    },
+    {
+      "reason": "Tuple slots",
+      "count": 4,
+      "category": "contract gap",
+      "waits_on": "views V3: positional slot and callable element contracts",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:32650:21: Adamic 0.1 refuses a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 207,
+          "original_reason": "a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read",
+          "source_family": "(readonly [() => IntrinsicType, __String])[]",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:32650:21"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:32674:21: Adamic 0.1 refuses a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 208,
+          "original_reason": "a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read",
+          "source_family": "(readonly [() => IntrinsicType, __String])[]",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:32674:21"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:44643:40: Adamic 0.1 refuses a value of type Map<string, [VariableDeclarationList, VariableDeclaration[]]> seen as Map<string, [CatchClause | VariableDeclarationList, VariableDeclaration[]]>, which can write [CatchClause | VariableDeclarationList, VariableDeclaration[]] where [VariableDeclarationList, VariableDeclaration[]] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 313,
+          "original_reason": "a value of type Map<string, [VariableDeclarationList, VariableDeclaration[]]> seen as Map<string, [CatchClause | VariableDeclarationList, VariableDeclaration[]]>, which can write [CatchClause | VariableDeclarationList, VariableDeclaration[]] where [VariableDeclarationList, VariableDeclaration[]] is read",
+          "source_family": "Map<string, [VariableDeclarationList, VariableDeclaration[]]>",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:44643:40"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:53751:101: Adamic 0.1 refuses a value of type [() => Type, __String][] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where [() => Type, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 373,
+          "original_reason": "a value of type [() => Type, __String][] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where [() => Type, __String] is read",
+          "source_family": "[() => Type, __String][]",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:53751:101"
+        }
+      ]
+    },
+    {
+      "reason": "Recursive structural references",
+      "count": 2,
+      "category": "contract gap",
+      "waits_on": "views V5/V6: recursive contracts preserving allocation identity",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:20745:13: Adamic 0.1 refuses a value of type AnonymousType seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 151,
+          "original_reason": "a value of type AnonymousType seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read",
+          "source_family": "AnonymousType",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:20745:13"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:20745:74: Adamic 0.1 refuses a value of type AnonymousType | DeferredTypeReference seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 152,
+          "original_reason": "a value of type AnonymousType | DeferredTypeReference seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read",
+          "source_family": "AnonymousType | DeferredTypeReference",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:20745:74"
+        }
+      ]
+    },
+    {
+      "reason": "Set element",
+      "count": 1,
+      "category": "contract gap",
+      "waits_on": "views V2 and V5: nullable Set element contracts at insertion",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:14225:38: Adamic 0.1 refuses a value of type Set<__String> seen as Set<__String | undefined>, which can write __String | undefined where __String is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 89,
+          "original_reason": "a value of type Set<__String> seen as Set<__String | undefined>, which can write __String | undefined where __String is read",
+          "source_family": "Set<__String>",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:14225:38"
+        }
+      ]
+    },
+    {
+      "reason": "Constrained generic array",
+      "count": 1,
+      "category": "contract gap",
+      "waits_on": "views V3: concrete member and element contracts for the constrained generic array union",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/checker.ts:10893:32: Adamic 0.1 refuses a value of type AccessorDeclaration[] seen as T | (T | AccessorDeclaration)[] | AccessorDeclaration, which can write T | AccessorDeclaration where AccessorDeclaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "id": 53,
+          "original_reason": "a value of type AccessorDeclaration[] seen as T | (T | AccessorDeclaration)[] | AccessorDeclaration, which can write T | AccessorDeclaration where AccessorDeclaration is read",
+          "source_family": "AccessorDeclaration[]",
+          "status": "stopped",
+          "where": "src/compiler/checker.ts:10893:32"
+        }
+      ]
+    },
+    {
+      "reason": "Method parameter variance",
+      "count": 2,
+      "category": "independent rule",
+      "waits_on": "producer signatures accepting undefined; method-signature-style refuses inputs the implementation cannot take",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:1159:9: Adamic 0.1 refuses a function taking readonly Modifier[] | ModifierFlags seen as one taking readonly Modifier[] | ModifierFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+          "id": 429,
+          "original_reason": "a value of type T seen as T, a type parameter whose constraint HasModifiers can be written, so it can write what T can't hold",
+          "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+          "resolved_receiving_expression": "replaceModifiers",
+          "resolved_receiving_type": "<T extends HasModifiers>(node: T, modifiers: readonly Modifier[] | ModifierFlags) => T",
+          "source_family": "T",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:1159:9"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/factory/nodeFactory.ts:1160:9: Adamic 0.1 refuses a function taking readonly ModifierLike[] seen as one taking readonly ModifierLike[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+          "id": 430,
+          "original_reason": "a value of type T seen as T, a type parameter whose constraint ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration can be written, so it can write what T can't hold",
+          "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+          "resolved_receiving_expression": "replaceDecoratorsAndModifiers",
+          "resolved_receiving_type": "<T extends HasModifiers & HasDecorators>(node: T, modifiers: readonly ModifierLike[]) => T",
+          "source_family": "T",
+          "status": "stopped",
+          "where": "src/compiler/factory/nodeFactory.ts:1160:9"
+        }
+      ]
+    },
+    {
+      "reason": "Erased any-to-generic callback relation",
+      "count": 2,
+      "category": "independent rule",
+      "waits_on": "typed callback/table relations replacing value-level any; no-unsafe-assignment stays enforced",
+      "records": [
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/emitter.ts:1483:36: Adamic 0.1 refuses any seen as T has no proven type (no-unsafe-assignment); keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use",
+          "id": 413,
+          "original_reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+          "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+          "resolved_receiving_expression": "parenthesizerRule",
+          "resolved_receiving_type": "((node: T) => T) | undefined",
+          "source_family": "any",
+          "status": "stopped",
+          "where": "src/compiler/emitter.ts:1483:36"
+        },
+        {
+          "class": "d",
+          "family": "other",
+          "fields": [],
+          "first_reason": "src/compiler/visitorPublic.ts:604:12: Adamic 0.1 refuses any seen as T has no proven type (no-unsafe-assignment); keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use",
+          "id": 613,
+          "original_reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+          "source_family": "any",
+          "status": "stopped",
+          "where": "src/compiler/visitorPublic.ts:604:12"
+        }
+      ]
+    }
+  ]
+}

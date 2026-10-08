@@ -450,7 +450,7 @@ func (e *emitter) methodEntryType() string {
 }
 
 func (e *emitter) fieldTypesNeeded() bool {
-	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
+	if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 || e.dynamicProperties() {
 		return true
 	}
 	needed := false

@@ -43,6 +43,10 @@ type widening struct {
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+	from, to = l.concrete(from), l.concrete(to)
+	if from.Flags()&checker.TypeFlagsUndefined != 0 && l.includesUndefined(to) {
+		return nil
+	}
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
 	if from == to || visited[[2]*checker.Type{from, to}] {
 		return nil
@@ -82,7 +86,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	if to.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		if l.narrowedFrom(from, to) {
+		if l.narrowedFrom(from, to) || l.checkedMutableIdentity(from, to) {
 			return nil
 		}
 		if constraint := l.checker.GetBaseConstraintOfType(to); constraint != nil && l.canWrite(constraint, map[*checker.Type]bool{}) {
@@ -109,32 +113,43 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
-		// A function seen as another is handed the other's arguments, and its results are seen as
-		// the other's: each a view of its own.
-		if l.censusNeverRestSignature(toSignatures[0]) {
-			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
-				return nil
+		// A function receives each overload's arguments and exposes its result
+		// through that overload. Every receiving signature must be walked.
+		for _, receiving := range toSignatures {
+			producing := fromSignatures[0]
+			if l.censusNeverRestSignature(receiving) {
+				if l.censusDiscardedMarkerPredicate(producing, receiving) {
+					continue
+				}
+				source, target := l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving)
+				if !l.checker.IsTypeAssignableTo(source, target) {
+					return &widening{source: source, target: target}
+				}
+				if found := l.widened(source, target, visited); found != nil {
+					return found
+				}
+				continue
 			}
-			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
-			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
-			if !l.checker.IsTypeAssignableTo(source, target) {
-				return &widening{source: source, target: target}
+			producing, receiving = l.checkedSignaturePair(producing, receiving)
+			fromParameters, toParameters := producing.Parameters(), receiving.Parameters()
+			for index, parameter := range fromParameters {
+				takes := l.censusCallableParameterType(parameter)
+				given := l.checker.GetUndefinedType()
+				if index < len(toParameters) {
+					given = l.censusCallableParameterType(toParameters[index])
+				}
+				if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
+					return &widening{source: takes, target: given, parameter: true}
+				}
+				if found := l.widened(given, takes, visited); found != nil {
+					return found
+				}
 			}
-			return l.widened(source, target, visited)
-		}
-		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
-		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
-			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
-				// tsc relates a method's parameters both ways (method bivariance), so a method taking
-				// a Dog can be seen as one taking any Animal, and handed a Cat.
-				return &widening{source: takes, target: given, parameter: true}
-			}
-			if found := l.widened(given, takes, visited); found != nil {
+			if found := l.widened(l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving), visited); found != nil {
 				return found
 			}
 		}
-		return l.widened(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]), visited)
+		return nil
 	}
 	fromContainers := l.containers(from)
 	for _, viewed := range l.containers(to) {
@@ -402,6 +417,11 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	outerMapper := l.typeMapper
+	if outerMapper == nil {
+		l.typeMapper = l.checkedSiteMapper(node)
+	}
+	defer func() { l.typeMapper = outerMapper }()
 	if l.nodeFSFileReadOnlyArgument(node) {
 		return nil
 	}
@@ -457,11 +477,6 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
 			return nil
 		}
-		if l.genericFunction(node) {
-			// same<Item> written where a (value: number) => number goes is instantiated to exactly
-			// that type, Item = number, so there's no wider view of it to judge.
-			return nil
-		}
 		if pattern := destructuringTarget(node); pattern != nil {
 			// [a, b] = tuple keeps nothing of the pattern: each element is read out and stored into
 			// its name, so each element is the view, seen as its name's type, and the pattern isn't one.
@@ -489,7 +504,10 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
-	if !found.parameter && l.checkedWidening(node, own, contextual) {
+	if found.source.Flags()&checker.TypeFlagsAny != 0 && found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return &Refused{Where: l.program.Where(node), What: "any seen as " + l.checker.TypeToString(found.target) + " has no proven type (no-unsafe-assignment)", Fix: "keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use"}
+	}
+	if !found.parameter && l.checkedBranchWidening(node, own, contextual) {
 		return nil
 	}
 	if found.enum {
@@ -623,8 +641,15 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:
-		switch parent.AsBinaryExpression().OperatorToken.Kind {
-		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandToken:
+			// The left operand contributes only a falsy value, never its object
+			// view. Its truth-tested shape is not the right operand's result.
+			if binary.Right == child {
+				return l.checker.GetTypeAtLocation(parent)
+			}
+		case ast.KindQuestionQuestionToken, ast.KindBarBarToken:
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindArrayLiteralExpression:

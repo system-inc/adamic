@@ -71,3 +71,26 @@ zero unmatched. There are 83 checked .ts witnesses, seven refused .a controls an
 three proven .a controls. Twenty-five mutants are caught. emit-report.md and
 emit-results.json record the old 78 refusal groups, all recovered sites, the new
 remaining groups and the contract capability each requires.
+
+Next views slice: the short-circuit walker measures the result of the right operand
+of &&. Producing generic signatures instantiate in the receiving signature's context;
+rigid receiving binders retain their identity. Removing readonly in an otherwise
+unchanged homomorphic mapped type preserves each original slot. Optional boolean
+contracts check both presence and their boolean literal domain. Native boolean
+writes retain the allocation's plain or tagged slot representation. Each conditional
+branch retains its own allocation contract, including diagnostics and bottom arrays.
+Narrower object-result overloads check unproved fields at resolved calls, including
+calls through compatible function values, without replacing allocation contracts.
+
+The current split is 471 checked, 18 proven and 26 refused, with no unmatched
+records. Twelve of the sixteen generic relations prove; four retain independent
+parameter-variance or unsafe-any refusals. Twenty-two further rows wait on views
+V2/V5, V3 or V5/V6 contracts. Every remaining site, its exact first refusal and its
+waits-on dependency or independent rule is in next-views-results.json. The census
+continues to measure relation admission rather than whole compiler backend lowering.
+
+There are 105 checked TypeScript witnesses, eleven refused Adamic controls and
+four proven Adamic controls. Thirty-six runtime-check mutants are caught, including
+eleven for the new slice. next-views-report.md records commands, observations and
+limits. The stock tsc controls still have 61 fitting flags stores and no parent
+stores; both original small counterexamples stop with exit 70.

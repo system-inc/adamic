@@ -9,8 +9,8 @@ import (
 )
 
 // Admit only field contracts that have a runtime representation. Compatible callbacks
-// follow parameter and result field views; uninstantiated and overloaded signatures
-// retain their refusals. The name summary follows aliases and calls.
+// follow instantiated parameter and result field views. Every receiving overload
+// must fit the producer. The name summary follows aliases and calls.
 func (l *lowering) checkedWidening(node *ast.Node, from, to *checker.Type) bool {
 	module := ast.GetSourceFileOfNode(node)
 	if !strings.HasSuffix(l.program.FileName(module), ".ts") {
@@ -38,6 +38,9 @@ func (l *lowering) checkedWidening(node *ast.Node, from, to *checker.Type) bool 
 
 func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[string]bool, seen map[[2]*checker.Type]bool) bool {
 	from, to = l.concrete(from), l.concrete(to)
+	if from.Flags()&checker.TypeFlagsUndefined != 0 && l.includesUndefined(to) {
+		return true
+	}
 	if from == to || seen[[2]*checker.Type{from, to}] {
 		return true
 	}
@@ -74,20 +77,27 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 	fromCalls := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toCalls := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromCalls) != 0 || len(toCalls) != 0 {
-		if len(fromCalls) != 1 || len(toCalls) != 1 || len(fromCalls[0].TypeParameters()) != 0 || len(toCalls[0].TypeParameters()) != 0 {
+		if len(fromCalls) != 1 || len(toCalls) == 0 {
 			return false
 		}
-		a, b := fromCalls[0].Parameters(), toCalls[0].Parameters()
-		if len(a) != len(b) {
-			return false
-		}
-		for i := range a {
-			takes, given := l.censusCallableParameterType(a[i]), l.censusCallableParameterType(b[i])
-			if !l.checker.IsTypeAssignableTo(given, takes) || !l.enumAssignable(given, takes) || !l.checkedFieldRelation(given, takes, fields, seen) {
+		for _, receiving := range toCalls {
+			producing, receiving := l.checkedSignaturePair(fromCalls[0], receiving)
+			a, b := producing.Parameters(), receiving.Parameters()
+			for i, parameter := range a {
+				takes := l.censusCallableParameterType(parameter)
+				given := l.checker.GetUndefinedType()
+				if i < len(b) {
+					given = l.censusCallableParameterType(b[i])
+				}
+				if !l.checker.IsTypeAssignableTo(given, takes) || !l.enumAssignable(given, takes) || !l.checkedFieldRelation(given, takes, fields, seen) {
+					return false
+				}
+			}
+			if !l.checkedFieldRelation(l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving), fields, seen) {
 				return false
 			}
 		}
-		return l.checkedFieldRelation(l.checker.GetReturnTypeOfSignature(fromCalls[0]), l.checker.GetReturnTypeOfSignature(toCalls[0]), fields, seen)
+		return true
 	}
 
 	if own, view := l.containerRelation(from, to); own != nil {
@@ -112,7 +122,7 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 		if !l.checker.IsReadonlySymbol(target) && (l.checker.IsReadonlySymbol(source) || !l.checker.IsTypeAssignableTo(viewed, own) || !l.enumAssignable(viewed, own)) {
 			contract := l.fieldContract(own)
 			viewKind, viewKnown := l.representation(viewed)
-			if contract == nil || !viewKnown || (viewKind != contract.Kind && !(contract.Kind == ir.Number && viewKind == ir.MaybeNumber) && !(contract.NullishOnly && viewKind >= ir.String && viewKind <= ir.Map)) {
+			if contract == nil || !viewKnown || (viewKind != contract.Kind && !(contract.Kind == ir.Number && viewKind == ir.MaybeNumber) && !((contract.Kind == ir.Boolean || contract.Kind == ir.MaybeBoolean) && (viewKind == ir.Boolean || viewKind == ir.MaybeBoolean)) && !(contract.NullishOnly && viewKind >= ir.String && viewKind <= ir.Map)) {
 				return false
 			}
 			a, b := l.checker.GetNonNullableType(own), l.checker.GetNonNullableType(viewed)
@@ -134,7 +144,7 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 func (l *lowering) fieldContract(declared *checker.Type) *ir.FieldContract {
 	declared = l.contractType(declared)
 	kind, known := l.representation(declared)
-	if !known || kind < ir.Number || kind > ir.MaybeNumber {
+	if !known || kind < ir.Number || (kind > ir.MaybeNumber && kind != ir.MaybeBoolean) {
 		return nil
 	}
 	contract := &ir.FieldContract{NullishOnly: declared.Flags()&checker.TypeFlagsUndefined != 0, Kind: kind, Declared: l.checker.TypeToString(declared), Nullable: l.includesUndefined(declared) || l.includesNull(declared)}
@@ -191,4 +201,21 @@ func (l *lowering) checkedNeverArray(from, to *checker.Type) bool {
 
 func (l *lowering) elementWriteOrigin(node *ast.Node) ir.WriteCheck {
 	return ir.WriteCheck{Where: l.program.Where(node), Expression: sourceExpression(node) + "[]"}
+}
+
+// Each branch keeps the contract attached to its original allocation. A reduced
+// conditional type is a receiving view, not evidence about either allocation.
+func (l *lowering) checkedBranchWidening(node *ast.Node, own, target *checker.Type) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindConditionalExpression {
+		return l.checkedWidening(node, own, target)
+	}
+	conditional := node.AsConditionalExpression()
+	for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
+		source := l.checker.GetTypeAtLocation(branch)
+		if l.freshOrWidened(branch, source, target) != nil && !l.checkedBranchWidening(branch, source, target) {
+			return false
+		}
+	}
+	return true
 }

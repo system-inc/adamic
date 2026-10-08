@@ -371,6 +371,8 @@ func (n *inference) value(expression ir.Expression) shape {
 			result.holds = append(result.holds, n.value(field.Value).roots()...)
 		}
 		return result
+	case ir.ContractResult:
+		return n.value(expression.Value)
 	case ir.ContractContainer:
 		return n.value(expression.Value)
 	case ir.ArrayLiteral:

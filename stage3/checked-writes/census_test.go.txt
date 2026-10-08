@@ -163,7 +163,21 @@ func TestCheckedWritesCensus(t *testing.T) {
 			recovered = true
 		}
 		if matched != nil {
+			child := matched
+			for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+				child = child.Parent
+			}
+			if parent := child.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
+				binary := parent.AsBinaryExpression()
+				if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && binary.Left == child {
+					matched = binary.Right
+					recovered = true
+				}
+			}
+		}
+		if matched != nil {
 			l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			l.typeMapper = l.checkedSiteMapper(matched)
 			failure := l.refuseWidening(matched)
 			if failure != nil {
 				status = "stopped"

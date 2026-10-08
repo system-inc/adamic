@@ -70,7 +70,7 @@ func (l *lowering) referenceFields(declared *checker.Type, seen map[*checker.Typ
 	for _, field := range l.checker.GetPropertiesOfType(declared) {
 		own := l.contractType(l.checker.GetTypeOfSymbol(field))
 		kind, known := l.representation(own)
-		if !known || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 || (kind != ir.Number && kind != ir.Boolean && kind != ir.String && kind != ir.MaybeNumber && kind != ir.Object) {
+		if !known || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 || (kind != ir.Number && kind != ir.Boolean && kind != ir.String && kind != ir.MaybeNumber && kind != ir.MaybeBoolean && kind != ir.Object) {
 			return nil, false
 		}
 		child := &ir.FieldContract{Kind: kind, Declared: l.checker.TypeToString(own), Nullable: l.includesUndefined(own) || l.includesNull(own), TypeID: l.contractTypeID(own)}

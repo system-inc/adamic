@@ -66,6 +66,9 @@ func TestExplainCheckedWritesOutput(t *testing.T) {
 		{"emit-node-misfit", "view.emitNode"}, {"number-misfit", "view.count"}, {"flow-node-misfit", "view.node"},
 		{"container-number-misfit", "values[0]"}, {"container-map-misfit", "values[value]"},
 		{"container-fill-misfit", "values[]"},
+		{"optional-boolean-misfit", "view.multiLine"},
+		{"overload-result-misfit", "createTempVariable(true).emitNode"},
+		{"overload-callback-misfit", "factory(true).emitNode"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
 			source, err := os.ReadFile("../../stage3/checked-writes/" + fixture.name + ".ts")

@@ -1,7 +1,8 @@
 {
   "class_d_counts": {
-    "checked relation": 466,
-    "stopped": 49
+    "checked relation": 471,
+    "proven relation": 18,
+    "stopped": 26
   },
   "measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced",
   "records": [
@@ -432,27 +433,29 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Declaration | undefined",
       "id": 30,
       "original_reason": "a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "constructorSymbol.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/binder.ts:3288:21"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Declaration | undefined",
       "id": 31,
       "original_reason": "a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "namespaceSymbol.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/binder.ts:3373:13"
     },
     {
@@ -597,15 +600,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 43,
       "original_reason": "a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTargetOfAliasDeclaration(aliasDecl, /*dontRecursivelyResolve*/ true)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:10069:44"
     },
     {
@@ -683,42 +686,43 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 50,
       "original_reason": "a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTargetOfAliasDeclaration(aliasDecl, /*dontRecursivelyResolve*/ true)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:10661:32"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 51,
       "original_reason": "a value of type Identifier | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveEntityName(first, SymbolFlags.All, /*ignoreErrors*/ true, /*dontResolveAlias*/ true, enclosingDeclaration)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Identifier | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:10669:40"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 52,
       "original_reason": "a value of type Type | undefined seen as Symbol | undefined, which can write SymbolFlags where TypeFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getPropertyOfType(baseType, p.escapedName)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:10830:26"
     },
     {
@@ -735,14 +739,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 54,
       "original_reason": "a value of type Symbol seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolLinks(symbol).type",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Symbol",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:11608:16"
     },
     {
@@ -776,14 +781,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 57,
       "original_reason": "a value of type Declaration | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getJSContainerObjectType(symbol.valueDeclaration, symbol, container)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:12091:41"
     },
     {
@@ -830,65 +836,71 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 61,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeFromTypeNode(node)",
+      "resolved_receiving_type": "Type",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:12694:16"
     },
     {
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:12699:16: Adamic 0.1 refuses a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 62,
       "original_reason": "a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "parameter.symbol",
+      "resolved_receiving_type": "Symbol",
       "source_family": "ParameterDeclaration | undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:12699:16"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 63,
       "original_reason": "a value of type Block | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getReturnTypeFromBody(getter)",
+      "resolved_receiving_type": "Type",
       "source_family": "Block | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:12722:17"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 64,
       "original_reason": "a value of type AutoAccessorPropertyDeclaration | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getWidenedTypeForVariableLikeDeclaration(accessor, /*reportErrors*/ true)",
+      "resolved_receiving_type": "Type",
       "source_family": "AutoAccessorPropertyDeclaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:12723:17"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 65,
       "original_reason": "a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfExpando(symbol.valueDeclaration, /*allowDeclaration*/ false)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:12789:29"
     },
     {
@@ -1089,15 +1101,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 83,
       "original_reason": "a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getAssignedClassSymbol(symbol.valueDeclaration)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:13468:51"
     },
     {
@@ -1169,14 +1181,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 90,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfSymbol(sig.thisParameter)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:14332:105"
     },
     {
@@ -1281,14 +1294,15 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 100,
       "original_reason": "a value of type BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "(isJsxNamespacedName(property.name) ? getStringLiteralType(getTextOfJsxAttributeName(property.name)) : getLiteralTypeFromPropertyName(property.name))",
+      "resolved_receiving_type": "Type",
       "source_family": "BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:15122:30"
     },
     {
@@ -1309,27 +1323,29 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Signature | undefined into Signature | undefined",
       "id": 102,
       "original_reason": "a value of type JSDocTypeExpression | undefined seen as Signature | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SignatureFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSingleCallSignature(getTypeFromTypeNode(typeTag.typeExpression))",
+      "resolved_receiving_type": "Signature | undefined",
       "source_family": "JSDocTypeExpression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:16313:16"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 103,
       "original_reason": "a value of type Signature | undefined seen as Type | undefined, which can write TypeFlags where SignatureFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getReturnTypeOfSignature(signature)",
+      "resolved_receiving_type": "Type",
       "source_family": "Signature | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:16325:16"
     },
     {
@@ -1346,14 +1362,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 105,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeFromTypeNode(node.type)",
+      "resolved_receiving_type": "Type",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:16463:22"
     },
     {
@@ -1404,11 +1421,11 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:16689:16: Adamic 0.1 refuses a value of type IndexInfo[] seen as IndexInfo[], which can write IndexInfo where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "actual-shape field contract",
       "id": 110,
       "original_reason": "a value of type IndexInfo[] seen as IndexInfo[], which can write IndexInfo where never is read",
       "source_family": "IndexInfo[]",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:16689:16"
     },
     {
@@ -1426,11 +1443,14 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:16869:16: Adamic 0.1 refuses a value of type ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 112,
       "original_reason": "a value of type ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfNode(host)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:16869:16"
     },
     {
@@ -1480,14 +1500,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type",
       "id": 117,
       "original_reason": "a value of type AssignmentPattern | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfAssignmentPattern(node)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "AssignmentPattern | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:1720:20"
     },
     {
@@ -1719,14 +1740,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: ObjectType into GenericType",
       "id": 132,
       "original_reason": "a value of type Symbol | undefined seen as GenericType | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfGlobalSymbol(symbol, arity) as GenericType",
+      "resolved_receiving_type": "GenericType",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:17641:16"
     },
     {
@@ -1749,14 +1771,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 134,
       "original_reason": "a value of type CallLikeExpression | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getContextualTypeForArgumentAtIndex(node, argIndex)",
+      "resolved_receiving_type": "Type",
       "source_family": "CallLikeExpression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:1769:20"
     },
     {
@@ -1779,14 +1802,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 136,
       "original_reason": "a value of type JsxAttributeLike | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getContextualTypeForJsxAttribute(node, /*contextFlags*/ undefined)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "JsxAttributeLike | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:1773:20"
     },
     {
@@ -1836,14 +1860,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 141,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getRegularTypeOfLiteralType(getTypeOfSymbol(keyProperty))",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:18161:41"
     },
     {
@@ -1860,54 +1885,57 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 143,
       "original_reason": "a value of type Expression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveExternalModuleName(moduleSpecifier, moduleSpecifier, /*ignoreErrors*/ true)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Expression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:1894:20"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 144,
       "original_reason": "a value of type BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral seen as Type, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getLiteralTypeFromPropertyName(name)",
+      "resolved_receiving_type": "Type",
       "source_family": "BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:18954:21"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 145,
       "original_reason": "a value of type Node | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "tryGetThisTypeAt(node, includeGlobalThis, container)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Node | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:1899:20"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 146,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeArgumentConstraint(node)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:1903:20"
     },
     {
@@ -2090,14 +2118,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: IndexSignatureDeclaration | undefined into IndexSignatureDeclaration | undefined",
       "id": 160,
       "original_reason": "a value of type IndexInfo | undefined seen as IndexSignatureDeclaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "indexInfo.declaration",
+      "resolved_receiving_type": "IndexSignatureDeclaration | undefined",
       "source_family": "IndexInfo | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:21589:33"
     },
     {
@@ -2245,14 +2274,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 171,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfSymbol(prop)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:22974:34"
     },
     {
@@ -2322,36 +2352,40 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:25223:16: Adamic 0.1 refuses a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold; take it as undefined, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: T | undefined into T | undefined",
       "id": 177,
       "original_reason": "a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "forEachProperty(prop, p =\u003e\r\n                getDeclarationModifierFlagsFromSymbol(p, writing) \u0026 ModifierFlags.Protected ?\r\n                    !hasBaseType(checkClass, getDeclaringClass(p)) : false) ? undefined : checkClass",
       "resolved_receiving_type": "T | undefined",
       "source_family": "undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:25223:16"
     },
     {
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:25225:79: Adamic 0.1 refuses a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold; take it as undefined, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: undefined into T | undefined",
       "id": 178,
       "original_reason": "a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold",
       "source_family": "undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:25225:79"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2534:16: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 179,
       "original_reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
       "source_family": "Diagnostic",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2534:16"
     },
     {
@@ -2458,14 +2492,15 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 187,
       "original_reason": "a value of type GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getContextFreeTypeOfExpression((propNode as PropertyAssignment).initializer)",
+      "resolved_receiving_type": "Type",
       "source_family": "GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:28070:26"
     },
     {
@@ -2516,14 +2551,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 191,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getExplicitTypeOfSymbol(origin)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:28730:21"
     },
     {
@@ -2544,14 +2580,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 193,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getExplicitTypeOfSymbol(prop, diagnostic)",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:28782:32"
     },
     {
@@ -2670,64 +2707,71 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 202,
       "original_reason": "a value of type Symbol seen as Type, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfSymbol(fileSymbol)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:31526:24"
     },
     {
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:31943:13: Adamic 0.1 refuses a value of type CallExpression | undefined seen as NodeArray\u003cExpression\u003e | undefined, whose readonly field transformFlags becomes writable: a readonly field may hold something narrower than TransformFlags, which a write of TransformFlags would replace; keep transformFlags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: NodeArray\u003cExpression\u003e into NodeArray\u003cExpression\u003e | undefined",
       "id": 203,
       "original_reason": "a value of type CallExpression | undefined seen as NodeArray\u003cExpression\u003e | undefined, whose readonly field transformFlags becomes writable: a readonly field may hold something narrower than TransformFlags, which a write of TransformFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "iife.arguments",
+      "resolved_receiving_type": "NodeArray\u003cExpression\u003e",
       "source_family": "CallExpression | undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:31943:13"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Declaration | undefined",
       "id": 204,
       "original_reason": "a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "lhsSymbol.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:32265:30"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 205,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "instantiateType(getTypeFromTypeNode(overallAnnotation), getSymbolLinks(lhsSymbol).mapper)",
+      "resolved_receiving_type": "Type",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:32270:29"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 206,
       "original_reason": "a value of type Expression | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfExpression(binaryExpression.left)",
+      "resolved_receiving_type": "Type",
       "source_family": "Expression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:32271:56"
     },
     {
@@ -2841,51 +2885,54 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: NodeLinks into NodeLinks | undefined",
       "id": 215,
       "original_reason": "a value of type SourceFile | undefined seen as NodeLinks | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of NodeCheckFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getNodeLinks(file)",
+      "resolved_receiving_type": "NodeLinks",
       "source_family": "SourceFile | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:34056:23"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: NodeLinks into NodeLinks | undefined",
       "id": 216,
       "original_reason": "a value of type Node | undefined seen as NodeLinks | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of NodeCheckFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getNodeLinks(location)",
+      "resolved_receiving_type": "NodeLinks",
       "source_family": "Node | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:34081:23"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 217,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getDeclaredTypeOfSymbol(jsxElementAttribPropInterfaceSym)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:34125:51"
     },
     {
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:34326:16: Adamic 0.1 refuses a value of type Symbol[] seen as Symbol[], which can write Symbol where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first_reason": "actual-shape field contract",
       "id": 218,
       "original_reason": "a value of type Symbol[] seen as Symbol[], which can write Symbol where never is read",
       "source_family": "Symbol[]",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:34326:16"
     },
     {
@@ -2902,28 +2949,29 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 220,
       "original_reason": "a value of type EntityNameExpression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveEntityName(expression, SymbolFlags.Interface, /*ignoreErrors*/ true)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "EntityNameExpression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:3439:13"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 221,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeFromTypeNode(thisParameter.type)",
+      "resolved_receiving_type": "Type",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:34610:24"
     },
     {
@@ -2970,14 +3018,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Declaration | undefined",
       "id": 225,
       "original_reason": "a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "prop.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:35056:33"
     },
     {
@@ -2998,27 +3047,29 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Declaration | undefined",
       "id": 227,
       "original_reason": "a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "superProperty.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:35143:27"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 228,
       "original_reason": "a value of type Type | undefined seen as Symbol | undefined, which can write SymbolFlags where TypeFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getPropertyOfType(promisedType, propNode.escapedText)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:35174:17"
     },
     {
@@ -3081,24 +3132,28 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:35619:28: Adamic 0.1 refuses a value of type JSDocSignature | SignatureDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 233,
       "original_reason": "a value of type JSDocSignature | SignatureDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfDeclaration(signature.declaration)",
+      "resolved_receiving_type": "Symbol",
       "source_family": "JSDocSignature | SignatureDeclaration | undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:35619:28"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 234,
       "original_reason": "a value of type Signature | undefined seen as Type | undefined, which can write TypeFlags where SignatureFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "(type = tryGetTypeAtPosition(signature.target, pos))",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Signature | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:35760:19"
     },
     {
@@ -3594,14 +3649,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 269,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfSymbol(typeSymbol)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:37540:22"
     },
     {
@@ -3622,28 +3678,29 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 271,
       "original_reason": "a value of type Declaration seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfExpando(decl, /*allowDeclaration*/ true)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Declaration",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:37739:34"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: SourceFile | undefined into SourceFile | undefined",
       "id": 272,
       "original_reason": "a value of type Symbol | undefined seen as SourceFile | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSourceFileOfModule(resolvedModule)",
+      "resolved_receiving_type": "SourceFile | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:3784:36"
     },
     {
@@ -3679,14 +3736,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Expression | undefined into Expression | undefined",
       "id": 275,
       "original_reason": "a value of type Type | undefined seen as Expression | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "declaration.initializer",
+      "resolved_receiving_type": "Expression | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:38683:21"
     },
     {
@@ -3862,55 +3920,57 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 288,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfSymbol(writableProp)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:39751:34"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Declaration | undefined",
       "id": 289,
       "original_reason": "a value of type Symbol seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "writableProp.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:39758:17"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 290,
       "original_reason": "a value of type Expression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveExternalModuleName(node, moduleSpecifier)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Expression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:3989:27"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 291,
       "original_reason": "a value of type Expression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveESModuleSymbol(immediate, moduleSpecifier, dontResolveAlias, /*suppressInteropError*/ false)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Expression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:3990:26"
     },
     {
@@ -4051,70 +4111,71 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 301,
       "original_reason": "a value of type Signature | undefined seen as Type | undefined, which can write TypeFlags where SignatureFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getReturnTypeOfSignature(context.signature)",
+      "resolved_receiving_type": "Type",
       "source_family": "Signature | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:41550:44"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "checker",
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Signature | undefined into Signature | undefined",
       "id": 302,
       "original_reason": "a value of type Type | undefined seen as Signature | undefined, which can write SignatureFlags where TypeFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSingleCallOrConstructSignature(returnType)",
+      "resolved_receiving_type": "Signature | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:41551:49"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 303,
       "original_reason": "a value of type Expression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveExternalModuleName(node, specifier)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Expression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:4176:34"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 304,
       "original_reason": "a value of type PropertyAccessExpression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolved",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "PropertyAccessExpression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:4185:13"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 305,
       "original_reason": "a value of type Expression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "resolveExternalModuleName(node, specifier)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Expression | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:4210:34"
     },
     {
@@ -4234,15 +4295,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 314,
       "original_reason": "a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getImmediateAliasedSymbol(symbol)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:4465:78"
     },
     {
@@ -4293,15 +4354,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 318,
       "original_reason": "a value of type MemberName | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolAtLocation(testedNode)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "MemberName | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:45377:34"
     },
     {
@@ -4318,14 +4379,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type | undefined into Type | undefined",
       "id": 320,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeOfPropertyOfType(getTypeOfSymbol(ctorType), escapeLeadingUnderscores(symbolName))",
+      "resolved_receiving_type": "Type | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:46134:28"
     },
     {
@@ -4390,68 +4452,71 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Declaration | undefined into Node | undefined",
       "id": 325,
       "original_reason": "a value of type Symbol seen as Declaration | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "symbol.valueDeclaration",
+      "resolved_receiving_type": "Declaration | undefined",
       "source_family": "Symbol",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:4681:20"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 326,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeFromTypeNode(constraint)",
+      "resolved_receiving_type": "Type",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:47007:42"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 327,
       "original_reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getTypeFromTypeNode(source.default)",
+      "resolved_receiving_type": "Type",
       "source_family": "TypeNode | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:47017:39"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 328,
       "original_reason": "a value of type BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolAtLocation(member.name)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:47282:30"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 329,
       "original_reason": "a value of type PropertyName | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolAtLocation(member.name)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "PropertyName | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:47418:34"
     },
     {
@@ -4655,11 +4720,14 @@
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:50064:20: Adamic 0.1 refuses a value of type TypeParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 344,
       "original_reason": "a value of type TypeParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "typeParameter.symbol",
+      "resolved_receiving_type": "Symbol",
       "source_family": "TypeParameterDeclaration | undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:50064:20"
     },
     {
@@ -4676,41 +4744,43 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 346,
       "original_reason": "a value of type Type | undefined seen as Symbol | undefined, which can write SymbolFlags where TypeFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getPropertyOfType(objectType, escapeLeadingUnderscores((node as StringLiteral | NumericLiteral).text))",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:50310:24"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol | undefined into Symbol | undefined",
       "id": 347,
       "original_reason": "a value of type Type | undefined seen as Symbol | undefined, which can write SymbolFlags where TypeFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getPropertyOfType(typeOfObjectLiteral, location.escapedText)",
+      "resolved_receiving_type": "Symbol | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:50508:16"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 348,
       "original_reason": "a value of type SourceFile | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfDeclaration(container)",
+      "resolved_receiving_type": "Symbol",
       "source_family": "SourceFile | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:50788:28"
     },
     {
@@ -4738,15 +4808,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 351,
       "original_reason": "a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfDeclaration(node)",
+      "resolved_receiving_type": "Symbol",
       "source_family": "Declaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:51439:32"
     },
     {
@@ -4866,15 +4936,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 359,
       "original_reason": "a value of type ExportDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "targetSymbol",
+      "resolved_receiving_type": "Symbol",
       "source_family": "ExportDeclaration | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:5217:22"
     },
     {
@@ -5211,66 +5281,68 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Node | undefined into Node | undefined",
       "id": 383,
       "original_reason": "a value of type Symbol | undefined seen as Node | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "enclosingDeclaration",
+      "resolved_receiving_type": "Node | undefined",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:5985:13"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags",
-        "parent"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 384,
       "original_reason": "a value of type Node | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getSymbolOfDeclaration(node as AmbientModuleDeclaration | SourceFile)",
+      "resolved_receiving_type": "Symbol",
       "source_family": "Node | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:6019:16"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: JSDocTypeExpression | undefined into JSDocTypeExpression | undefined",
       "id": 385,
       "original_reason": "a value of type Type | undefined seen as JSDocTypeExpression | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "jsDocProperty.typeExpression",
+      "resolved_receiving_type": "JSDocTypeExpression | undefined",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:6393:42"
     },
     {
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:6408:24: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: T into T",
       "id": 386,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold",
       "source_family": "T",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:6408:24"
     },
     {
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/checker.ts:6411:24: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint EntityNameOrEntityNameExpression can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: { introducesError: boolean; node: T; sym?: never; } | { introducesError: boolean; node: T; sym: Symbol | undefined; } into { introducesError: boolean; node: T; }",
       "id": 387,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint EntityNameOrEntityNameExpression can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "trackExistingEntityName(node, context as NodeBuilderContext)",
       "resolved_receiving_type": "{ introducesError: boolean; node: T; sym?: never; } | { introducesError: boolean; node: T; sym: Symbol | undefined; }",
       "source_family": "T",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:6411:24"
     },
     {
@@ -5315,14 +5387,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: TypeNode into TypeNode | undefined",
       "id": 391,
       "original_reason": "a value of type Type seen as TypeNode, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "typeToTypeNodeHelper(constraint, context)",
+      "resolved_receiving_type": "TypeNode",
       "source_family": "Type",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:6951:46"
     },
     {
@@ -5341,14 +5414,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: NodeLinks into NodeLinks | undefined",
       "id": 393,
       "original_reason": "a value of type Node | undefined seen as NodeLinks | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of NodeCheckFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getNodeLinks(context.enclosingDeclaration)",
+      "resolved_receiving_type": "NodeLinks",
       "source_family": "Node | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:7289:76"
     },
     {
@@ -5368,27 +5442,29 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: TypeParameterDeclaration[] into TypeParameterDeclaration[] | undefined",
       "id": 395,
       "original_reason": "a value of type readonly TypeParameter[] | undefined seen as TypeParameterDeclaration[] | undefined, which can write TypeParameterDeclaration where TypeParameter is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "signature.typeParameters.map(parameter =\u003e typeParameterToDeclaration(parameter, context))",
+      "resolved_receiving_type": "TypeParameterDeclaration[]",
       "source_family": "readonly TypeParameter[] | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:8021:34"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: TypeNode into TypeNode | undefined",
       "id": 396,
       "original_reason": "a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "typeToTypeNodeHelper(defaultParameter, context)",
+      "resolved_receiving_type": "TypeNode",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:8346:42"
     },
     {
@@ -5407,40 +5483,43 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: TypeNode into TypeNode | undefined",
       "id": 398,
       "original_reason": "a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "typeToTypeNodeHelperWithPossibleReusableTypeNode(constraint, getConstraintDeclaration(type), context)",
+      "resolved_receiving_type": "TypeNode",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:8357:36"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "id"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: TypeNode into TypeNode | undefined",
       "id": 399,
       "original_reason": "a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "typeToTypeNodeHelper(typePredicate.type, context)",
+      "resolved_receiving_type": "TypeNode",
       "source_family": "Type | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:8368:30"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: Type into Type | undefined",
       "id": 400,
       "original_reason": "a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "getDeclaredTypeOfSymbol(symbol)",
+      "resolved_receiving_type": "Type",
       "source_family": "Symbol | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/checker.ts:9064:36"
     },
     {
@@ -5586,12 +5665,16 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:3795:12: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 411,
       "original_reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
       "source_family": "Diagnostic",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:3795:12"
     },
     {
@@ -5613,7 +5696,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/emitter.ts:1483:36: Adamic 0.1 refuses a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/emitter.ts:1483:36: Adamic 0.1 refuses any seen as T has no proven type (no-unsafe-assignment); keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use",
       "id": 413,
       "original_reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
@@ -5791,14 +5874,15 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [
-        "flags"
-      ],
-      "first_reason": "actual-shape field contract",
+      "fields": [],
+      "first_reason": "fresh or invariant relation: EmitNode | undefined into EmitNode | undefined",
       "id": 426,
       "original_reason": "a value of type Node | undefined seen as EmitNode | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of EmitFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "node.emitNode",
+      "resolved_receiving_type": "EmitNode | undefined",
       "source_family": "Node | undefined",
-      "status": "checked relation",
+      "status": "proven relation",
       "where": "src/compiler/emitter.ts:6270:26"
     },
     {
@@ -5820,21 +5904,21 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1019:9: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint Node | undefined can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: \u003cT extends Node | undefined\u003e(node: T) =\u003e T into \u003cT extends Node | undefined\u003e(node: T) =\u003e T",
       "id": 428,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint Node | undefined can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "cloneNode",
       "resolved_receiving_type": "\u003cT extends Node | undefined\u003e(node: T) =\u003e T",
       "source_family": "T",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:1019:9"
     },
     {
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1159:9: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint HasModifiers can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1159:9: Adamic 0.1 refuses a function taking readonly Modifier[] | ModifierFlags seen as one taking readonly Modifier[] | ModifierFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) =\u003e void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
       "id": 429,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint HasModifiers can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
@@ -5848,7 +5932,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1160:9: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/factory/nodeFactory.ts:1160:9: Adamic 0.1 refuses a function taking readonly ModifierLike[] seen as one taking readonly ModifierLike[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) =\u003e void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
       "id": 430,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
@@ -5862,14 +5946,14 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1161:9: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint MethodDeclaration | MethodSignature | PropertyAssignment | PropertyDeclaration | PropertySignature | AccessorDeclaration can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: \u003cT extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment\u003e(node: T, name: T[\"name\"]) =\u003e T into \u003cT extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment\u003e(node: T, name: T[\"name\"]) =\u003e T",
       "id": 431,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint MethodDeclaration | MethodSignature | PropertyAssignment | PropertyDeclaration | PropertySignature | AccessorDeclaration can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "replacePropertyName",
       "resolved_receiving_type": "\u003cT extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment\u003e(node: T, name: T[\"name\"]) =\u003e T",
       "source_family": "T",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:1161:9"
     },
     {
@@ -6141,12 +6225,21 @@
     {
       "class": "b",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2646:14: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable\u003cImportTypeAssertionContainer\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "assertClause",
+        "end",
+        "flags",
+        "kind",
+        "multiLine",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 446,
       "original_reason": "a value of type ImportTypeAssertionContainer seen as Mutable\u003cImportTypeAssertionContainer\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
       "source_family": "ImportTypeAssertionContainer",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2646:14"
     },
     {
@@ -6432,12 +6525,22 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4771:22: Adamic 0.1 refuses a value of type AssertClause seen as Mutable\u003cAssertClause\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "elements",
+        "end",
+        "flags",
+        "kind",
+        "multiLine",
+        "parent",
+        "pos",
+        "token",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 461,
       "original_reason": "a value of type AssertClause seen as Mutable\u003cAssertClause\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
       "source_family": "AssertClause",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4771:22"
     },
     {
@@ -6463,23 +6566,42 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4804:22: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable\u003cImportTypeAssertionContainer\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "assertClause",
+        "end",
+        "flags",
+        "kind",
+        "multiLine",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 463,
       "original_reason": "a value of type ImportTypeAssertionContainer seen as Mutable\u003cImportTypeAssertionContainer\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
       "source_family": "ImportTypeAssertionContainer",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4804:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4824:22: Adamic 0.1 refuses a value of type ImportAttributes seen as Mutable\u003cImportAttributes\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "elements",
+        "end",
+        "flags",
+        "kind",
+        "multiLine",
+        "parent",
+        "pos",
+        "token",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 464,
       "original_reason": "a value of type ImportAttributes seen as Mutable\u003cImportAttributes\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
       "source_family": "ImportAttributes",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4824:22"
     },
     {
@@ -6583,22 +6705,22 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5084:16: Adamic 0.1 refuses a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint JSDocType \u0026 { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable\u003cT\u003e can't hold; take it as Mutable\u003cT\u003e, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Mutable\u003cT\u003e into T",
       "id": 470,
       "original_reason": "a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint JSDocType \u0026 { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable\u003cT\u003e can't hold",
       "source_family": "Mutable\u003cT\u003e",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:5084:16"
     },
     {
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5094:16: Adamic 0.1 refuses a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint JSDocType \u0026 { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable\u003cT\u003e can't hold; take it as Mutable\u003cT\u003e, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Mutable\u003cT\u003e into T",
       "id": 471,
       "original_reason": "a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint JSDocType \u0026 { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable\u003cT\u003e can't hold",
       "source_family": "Mutable\u003cT\u003e",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:5094:16"
     },
     {
@@ -6769,15 +6891,18 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:530:9: Adamic 0.1 refuses a value of type (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) =\u003e GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "autoGenerate",
+        "emitNode"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 482,
       "original_reason": "a value of type (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) =\u003e GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode \u0026 { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "createTempVariable",
       "resolved_receiving_type": "(recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) =\u003e GeneratedIdentifier",
       "source_family": "(recordTempVariable: ((node: Identifier) =\u003e void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) =\u003e GeneratedIdentifier",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:530:9"
     },
     {
@@ -6885,14 +7010,14 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:543:9: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint ModifierSyntaxKind can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: \u003cT extends ModifierSyntaxKind\u003e(kind: T) =\u003e ModifierToken\u003cT\u003e into \u003cT extends ModifierSyntaxKind\u003e(kind: T) =\u003e ModifierToken\u003cT\u003e",
       "id": 490,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint ModifierSyntaxKind can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "createModifier",
       "resolved_receiving_type": "\u003cT extends ModifierSyntaxKind\u003e(kind: T) =\u003e ModifierToken\u003cT\u003e",
       "source_family": "T",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:543:9"
     },
     {
@@ -6969,14 +7094,14 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:579:9: Adamic 0.1 refuses a value of type TKind seen as TKind, a type parameter whose constraint KeywordTypeSyntaxKind can be written, so it can write what TKind can't hold; take it as TKind, or constrain TKind to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: \u003cTKind extends KeywordTypeSyntaxKind\u003e(kind: TKind) =\u003e KeywordTypeNode\u003cTKind\u003e into \u003cTKind extends KeywordTypeSyntaxKind\u003e(kind: TKind) =\u003e KeywordTypeNode\u003cTKind\u003e",
       "id": 496,
       "original_reason": "a value of type TKind seen as TKind, a type parameter whose constraint KeywordTypeSyntaxKind can be written, so it can write what TKind can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "createKeywordTypeNode",
       "resolved_receiving_type": "\u003cTKind extends KeywordTypeSyntaxKind\u003e(kind: TKind) =\u003e KeywordTypeNode\u003cTKind\u003e",
       "source_family": "TKind",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:579:9"
     },
     {
@@ -7095,11 +7220,11 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:7184:16: Adamic 0.1 refuses a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable\u003cT\u003e can't hold; take it as Mutable\u003cT\u003e, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Mutable\u003cT\u003e into T",
       "id": 504,
       "original_reason": "a value of type Mutable\u003cT\u003e seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable\u003cT\u003e can't hold",
       "source_family": "Mutable\u003cT\u003e",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/factory/nodeFactory.ts:7184:16"
     },
     {
@@ -7747,12 +7872,16 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/programDiagnostics.ts:296:16: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 548,
       "original_reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
       "source_family": "Diagnostic",
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/programDiagnostics.ts:296:16"
     },
     {
@@ -8549,14 +8678,14 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/utilities.ts:12346:52: Adamic 0.1 refuses a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: (\u003cT extends Node | undefined\u003e(node: T, includeTrivia?: boolean) =\u003e T) | (\u003cT extends Node\u003e(n: T) =\u003e T) into \u003cT extends Node\u003e(n: T) =\u003e T",
       "id": 605,
       "original_reason": "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold",
       "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
       "resolved_receiving_expression": "replaceNode\r\n        ? n =\u003e getSynthesizedDeepCloneWithReplacements(n, /*includeTrivia*/ true, replaceNode)\r\n        : getSynthesizedDeepClone",
       "resolved_receiving_type": "(\u003cT extends Node | undefined\u003e(node: T, includeTrivia?: boolean) =\u003e T) | (\u003cT extends Node\u003e(n: T) =\u003e T)",
       "source_family": "T",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/utilities.ts:12346:52"
     },
     {
@@ -8581,11 +8710,14 @@
       "class": "a",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/utilities.ts:4763:12: Adamic 0.1 refuses a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "first_reason": "fresh or invariant relation: Symbol into Symbol | undefined",
       "id": 607,
       "original_reason": "a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",
+      "resolution": "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation",
+      "resolved_receiving_expression": "parameter.symbol",
+      "resolved_receiving_type": "Symbol",
       "source_family": "ParameterDeclaration | undefined",
-      "status": "stopped",
+      "status": "proven relation",
       "where": "src/compiler/utilities.ts:4763:12"
     },
     {
@@ -8669,7 +8801,7 @@
       "class": "d",
       "family": "other",
       "fields": [],
-      "first_reason": "src/compiler/visitorPublic.ts:604:12: Adamic 0.1 refuses a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "first_reason": "src/compiler/visitorPublic.ts:604:12: Adamic 0.1 refuses any seen as T has no proven type (no-unsafe-assignment); keep the concrete generic callback relation instead of erasing it to any, or use unknown and narrow it before use",
       "id": 613,
       "original_reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
       "source_family": "any",

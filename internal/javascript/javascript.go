@@ -915,6 +915,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+	case ir.ContractResult:
+		fields := []string{}
+		for _, field := range expression.Fields {
+			fields = append(fields, quote(field.Name)+": "+e.writeContract(field.Contract))
+		}
+		return fmt.Sprintf("adamicContractResult(%s, {%s}, %s)", e.value(expression.Value), strings.Join(fields, ", "), quote(expression.Expression))
 	case ir.ContractContainer:
 		contract := "null"
 		if expression.Contract != nil {
