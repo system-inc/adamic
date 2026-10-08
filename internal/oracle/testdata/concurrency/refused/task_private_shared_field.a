@@ -1,0 +1,27 @@
+import { parallelMap } from 'adamic';
+
+interface Shared {
+  readonly x: number;
+}
+
+class PrivateBox {
+  field: { x: number } = { x: 0 };
+
+  constructor(shared: Shared) {
+    this.field = shared;
+  }
+
+  writeSharedField(): number {
+    this.field.x = 1;
+    return this.field.x;
+  }
+}
+
+function task(item: Shared): number {
+  const box = new PrivateBox(item);
+  return box.writeSharedField();
+}
+
+const shared: Shared = { x: 0 };
+const items: readonly Shared[] = [shared, shared];
+console.log(parallelMap(items, task).join(','));

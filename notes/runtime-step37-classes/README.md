@@ -361,3 +361,61 @@ The exploratory broad gate including TestParallel schedules is recorded in
 above). It is not claimed green. The final gate above intentionally omits the
 large existing parallel schedule benchmark suite. No full repository/stage1
 uncached gate, full-oracle run or macOS verification is claimed for this unit.
+
+## runtime-step37-field-test
+
+Roadmap step 37 (#xfpyaj8), compiler-approved base 6316bc8e. The new refused
+fixture task_private_shared_field.a constructs a PrivateBox inside task from a
+shared item. Its constructor stores that item in field; writeSharedField then
+executes this.field.x = 1. The exact .what pin requires:
+
+```text
+parallelMap work writes state another task can reach: task -> writeSharedField cannot prove worker-private ownership: writes or publishes into a shared receiver
+```
+
+The field starts with a private object before the constructor replaces it with
+the shared argument. The monotone proof therefore retains both origins. This
+makes the shared-bit mutant meaningful: dropping that bit leaves a private
+allocation origin that could wrongly authorize the write, instead of merely
+failing the independent no-private-allocation check.
+
+Run `source /workspace/adamic-tools/env.sh` then
+`python3 notes/runtime-step37-classes/field_read_mutant.py`. The runner first
+checks the healthy pin, temporarily drops result.shared after reading a field
+of a private receiver, runs only that exact pin, restores parallel_private.go
+in finally, and checks the healthy pin again. A build failure or unrelated test
+failure cannot certify the mutant. In this run, the mutant lost the task-chain
+refusal and reached the independent readonly-to-writable conversion refusal
+in the constructor instead. The exact What assertion caught that regression;
+no TSan catch or admission of the unsafe whole program is claimed for this
+compiler mutant. Baseline and restored checks both passed. Compiler source is
+unchanged in this addition.
+
+Observed validation, all output redirected to logs:
+
+- New exact refusal pin passed in 0.177s: /tmp/step37-field-pin.log.
+- Field-read shared-bit mutant caught by the refusal pin:
+  /tmp/step37-field-mutant.log and
+  /tmp/adamic-gate/step37-field-mutant-omsz_6sn/{baseline,drop-shared-field-mark,restored}.log.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run
+  'TestWorkerPrivate|TestTask|TestConcurrency|TestParallelReadonlyCheckerRepresentation|TestParallelGlobalMarkingRoots|TestNativeAgreesWithNode/internal/oracle/testdata/concurrency|TestCountsAreRecorded'
+  -count=1 -v -timeout 20m` passed: lower 2.131s, oracle 210.371s;
+  /tmp/step37-field-concurrency.log. This includes existing readonly/private
+  class TSan fixtures, three executions each at 1, 4 and 16 threads, the
+  existing shared-receiver race mutants, all concurrency fixtures/refusals,
+  their native variants, and unchanged recorded counts. A refused fixture
+  does not add an accepted-program count row.
+- `go test ./internal/native -run '^TestParallel' -count=1 -v -timeout 30m`
+  passed in 266.614s: /tmp/step37-field-native-parallel.log. Existing parallel
+  memory, map, lifecycle, scaling, cache-publication and race mutants passed.
+- `gofmt -l cmd internal`, `go vet ./internal/lower ./internal/oracle
+  ./internal/native`, Python syntax and diff checks passed:
+  /tmp/step37-field-format.log and /tmp/step37-field-vet.log.
+
+The optional recursive TypeScript history fetch stalled and only that fetch
+process tree was stopped. The approved root branch was already fetched, and
+setup checked out its exact submodule commits successfully. Setup passed:
+Go ready 0.336s, Node 0.360s, clang 0.868s, submodules 5.271s, cache warm
+547.967s, total 548.049s. nproc=5, quota=4 CPUs; Go 1.27.1, clang 20.1.8,
+Node 24.19.0. No full repository, full oracle, full native package or macOS
+run is claimed for this test-only follow-up.
