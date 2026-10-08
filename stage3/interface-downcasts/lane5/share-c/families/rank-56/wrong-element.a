@@ -1,0 +1,7 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:number[];}
+function probe(value:Base):void {const deduplicated=(value as Target).items;const incoming:number=3;const witnessResult=deduplicated.push(incoming);console.log(String(witnessResult));}
+const restricted:1[]=[1];probe({items:restricted});

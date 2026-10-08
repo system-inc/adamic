@@ -1,0 +1,13 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+type CommandLineOption = CommandLineOptionOfCustomType | CommandLineOptionOfStringType | CommandLineOptionOfNumberType | CommandLineOptionOfBooleanType | TsConfigOnlyOption | CommandLineOptionOfListType;
+interface CommandLineOptionOfCustomType {readonly value:number;}
+interface CommandLineOptionOfStringType {readonly value:number;}
+interface CommandLineOptionOfNumberType {readonly value:number;}
+interface CommandLineOptionOfBooleanType {readonly value:number;}
+interface TsConfigOnlyOption {readonly value:number;}
+interface CommandLineOptionOfListType {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:CommandLineOption[];}
+function probe(value:Base):void {const optionsOfCurCategory=(value as Target).items;const incoming:CommandLineOptionOfCustomType={value:1};const witnessResult=optionsOfCurCategory.push(incoming);console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

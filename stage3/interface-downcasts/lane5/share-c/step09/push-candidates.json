@@ -1,0 +1,90 @@
+[
+  {
+    "rank": 56,
+    "reads": 29,
+    "type": "number[]",
+    "read": "deduplicated.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 161,
+    "reads": 11,
+    "type": "ObjectLiteralElementLike[]",
+    "read": "properties.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 326,
+    "reads": 5,
+    "type": "(ClassElement | TypeElement)[]",
+    "read": "elements.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 704,
+    "reads": 2,
+    "type": "AccessorDeclaration[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 707,
+    "reads": 2,
+    "type": "BaseType[]",
+    "read": "resolvedImplementsTypes.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 884,
+    "reads": 2,
+    "type": "ModuleExportName[]",
+    "read": "exportedNames.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 1235,
+    "reads": 1,
+    "type": "(MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment)[]",
+    "read": "props.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 1238,
+    "reads": 1,
+    "type": "(ParameterDeclaration | NamedTupleMember | undefined)[]",
+    "read": "expandedDeclarations.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 1250,
+    "reads": 1,
+    "type": "(WatchedFileWithIsClosed | undefined)[]",
+    "read": "watchedFiles.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 1307,
+    "reads": 1,
+    "type": "CommandLineOption[]",
+    "read": "optionsOfCurCategory.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  },
+  {
+    "rank": 2798,
+    "reads": 1,
+    "type": "{ nodePos: number; detachedCommentEndPos: number; }[]",
+    "read": "detachedCommentsInfo.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "UNPINNED"
+  }
+]

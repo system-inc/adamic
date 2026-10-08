@@ -1,0 +1,714 @@
+[
+  {
+    "rank": 59,
+    "reads": 28,
+    "type": "Set<Path>",
+    "field": "add",
+    "read": "(seenResolvedRefs ||= new Set()).add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 12278,
+      "column": 17
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 89,
+    "reads": 19,
+    "type": "Set<string>",
+    "field": "add",
+    "read": "(directoryWatcher.links ??= new Set()).add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/sys.ts",
+      "line": 671,
+      "column": 19
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 134,
+    "reads": 13,
+    "type": "Set<Path>",
+    "field": "has",
+    "read": "libFiles.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 2681,
+      "column": 16
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 311,
+    "reads": 6,
+    "type": "Set<number> | undefined",
+    "field": "has",
+    "read": "notParenthesizedArrow?.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 5383,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 479,
+    "reads": 4,
+    "type": "Set<ResolutionWithFailedLookupLocations>",
+    "field": "add",
+    "read": "nonRelativeExternalModuleResolutions.add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1115,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 506,
+    "reads": 3,
+    "type": "(Set<string> | undefined)[]",
+    "field": "pop",
+    "read": "namedCapturingGroupsScopeStack.pop",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "pop(): T | undefined;",
+        "file": "lib/lib.es5.d.ts",
+        "sha256": "bcd24271a113971ba9eb71ff8cb01bc6b0f872a85c23fdbe5d93065b375933cd"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/scanner.ts",
+      "line": 2648,
+      "column": 48
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 551,
+    "reads": 3,
+    "type": "Map<Path, ReadonlySet<Path>>",
+    "field": "get",
+    "read": "forward.get",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "get(key: K): V | undefined;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 127,
+      "column": 33
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 629,
+    "reads": 3,
+    "type": "ReadonlySet<Path>",
+    "field": "keys",
+    "read": "references.keys",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "keys(): SetIterator<T>;",
+        "file": "lib/lib.es2015.iterable.d.ts",
+        "sha256": "ebd9f816d4002697cb2864bea1f0b70a103124e18a8cd9645eeccc09bdf80ab4"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 486,
+      "column": 39
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 638,
+    "reads": 3,
+    "type": "Set<Path>",
+    "field": "keys",
+    "read": "seenMap.keys",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "keys(): SetIterator<T>;",
+        "file": "lib/lib.es2015.iterable.d.ts",
+        "sha256": "ebd9f816d4002697cb2864bea1f0b70a103124e18a8cd9645eeccc09bdf80ab4"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 493,
+      "column": 45
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 1073,
+    "reads": 2,
+    "type": "Set<Node>",
+    "field": "forEach",
+    "read": "commonDeclarations.forEach",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): void;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 15787,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 1076,
+    "reads": 2,
+    "type": "Set<Path> | undefined",
+    "field": "keys",
+    "read": "startsWithPathChecks?.keys",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "keys(): SetIterator<T>;",
+        "file": "lib/lib.es2015.iterable.d.ts",
+        "sha256": "ebd9f816d4002697cb2864bea1f0b70a103124e18a8cd9645eeccc09bdf80ab4"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1616,
+      "column": 34
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 1079,
+    "reads": 2,
+    "type": "Set<Symbol>",
+    "field": "add",
+    "read": "seenSymbols.add",
+    "declarations": [],
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 4381,
+      "column": 21
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 1499,
+    "reads": 1,
+    "type": "Map<K, Set<V>>",
+    "field": "get",
+    "read": "map.get",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "get(key: K): V | undefined;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 181,
+      "column": 21
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 1580,
+    "reads": 1,
+    "type": "Map<Path, ReadonlySet<Path>>",
+    "field": "keys",
+    "read": "forward.keys",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "keys(): MapIterator<K>;",
+        "file": "lib/lib.es2015.iterable.d.ts",
+        "sha256": "ebd9f816d4002697cb2864bea1f0b70a103124e18a8cd9645eeccc09bdf80ab4"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 128,
+      "column": 29
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 1586,
+    "reads": 1,
+    "type": "Map<Path, Set<ResolutionWithFailedLookupLocations>>",
+    "field": "clear",
+    "read": "resolvedFileToResolution.clear",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "clear(): void;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 690,
+      "column": 9
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2234,
+    "reads": 1,
+    "type": "ReadonlySet<Path>",
+    "field": "has",
+    "read": "vSet.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 150,
+      "column": 30
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2237,
+    "reads": 1,
+    "type": "ReadonlySet<string> | undefined",
+    "field": "has",
+    "read": "matchableStringSet?.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 10327,
+      "column": 9
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2315,
+    "reads": 1,
+    "type": "Set<FileIncludeReason> | undefined",
+    "field": "has",
+    "read": "seenReasons?.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 301,
+      "column": 17
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2318,
+    "reads": 1,
+    "type": "Set<FlowNode>",
+    "field": "has",
+    "read": "seen.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 997,
+      "column": 30
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2321,
+    "reads": 1,
+    "type": "Set<K>",
+    "field": "add",
+    "read": "seen.add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 8320,
+      "column": 5
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2324,
+    "reads": 1,
+    "type": "Set<Node> | undefined",
+    "field": "has",
+    "read": "reportedUnreachableNodes?.has",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "has(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 49283,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2327,
+    "reads": 1,
+    "type": "Set<Path> | undefined",
+    "field": "delete",
+    "read": "deleted?.delete",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "delete(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 144,
+      "column": 21
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2330,
+    "reads": 1,
+    "type": "Set<ResolutionWithFailedLookupLocations> | Map<string, ResolutionWithFailedLookupLocations>",
+    "field": "forEach",
+    "read": "resolutions.forEach",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): void;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      },
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1478,
+      "column": 9
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2333,
+    "reads": 1,
+    "type": "Set<ResolvedConfigFilePath>",
+    "field": "forEach",
+    "read": "watcher.projects.forEach",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): void;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 693,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2336,
+    "reads": 1,
+    "type": "Set<ResolvedProjectReference>",
+    "field": "add",
+    "read": "(skipChildren ??= new Set()).add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 12272,
+      "column": 21
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2339,
+    "reads": 1,
+    "type": "Set<T>",
+    "field": "add",
+    "read": "set.add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 531,
+      "column": 9
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2342,
+    "reads": 1,
+    "type": "Set<T>",
+    "field": "delete",
+    "read": "watcher.projects.delete",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "delete(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 454,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2345,
+    "reads": 1,
+    "type": "Set<V> | undefined",
+    "field": "delete",
+    "read": "set?.delete",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "delete(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 183,
+      "column": 13
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2348,
+    "reads": 1,
+    "type": "Set<number>",
+    "field": "delete",
+    "read": "context.visitedTypes.delete",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "delete(value: T): boolean;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 7334,
+      "column": 17
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2351,
+    "reads": 1,
+    "type": "Set<string> | undefined",
+    "field": "add",
+    "read": "context.usedSymbolNames?.add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 11112,
+      "column": 17
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  },
+  {
+    "rank": 2615,
+    "reads": 1,
+    "type": "WeakSet<SourceFile>",
+    "field": "add",
+    "read": "incrementallyParsedFiles.add",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "add(value: T): this;",
+        "file": "lib/lib.es2015.collection.d.ts",
+        "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+      }
+    ],
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 9933,
+      "column": 5
+    },
+    "codeWorkerReference": "058635b9",
+    "status": "delegated Set receiver pair; not reprobed or certified in step09"
+  }
+]

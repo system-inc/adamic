@@ -1,0 +1,7 @@
+// Original namespace function header; body and adjacent object carriers reduced.
+type AnyFunction = (...args: never[]) => void;
+function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T{if(value===undefined || value===null){throw new Error("missing control");}return value;}
+interface Base {readonly checkDefined:unknown;}
+interface Target {readonly checkDefined:typeof checkDefined;}
+function probe(value:Base):void {const Debug=value as Target;Debug.checkDefined(3);console.log("completed");}
+probe({checkDefined:checkDefined});

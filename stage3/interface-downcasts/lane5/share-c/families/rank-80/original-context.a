@@ -1,0 +1,7 @@
+// Original namespace function header; body and adjacent object carriers reduced.
+type AnyFunction = (...args: never[]) => void;
+function assertEqual<T>(a: T, b: T, msg?: string, msg2?: string, stackCrawlMark?: AnyFunction): void{}
+interface Base {readonly assertEqual:unknown;}
+interface Target {readonly assertEqual:typeof assertEqual;}
+function probe(value:Base):void {const Debug=value as Target;Debug.assertEqual(3,3,"message","message",undefined);console.log("completed");}
+probe({assertEqual:assertEqual});

@@ -1,0 +1,12 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+interface MethodDeclaration {readonly value:number;readonly kind:175;}
+interface GetAccessorDeclaration {readonly value:number;readonly kind:178;}
+interface SetAccessorDeclaration {readonly value:number;readonly kind:179;}
+interface PropertyAssignment {readonly value:number;readonly kind:304;}
+interface ShorthandPropertyAssignment {readonly value:number;readonly kind:305;}
+interface SpreadAssignment {readonly value:number;readonly kind:306;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:(MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment)[];}
+function probe(value:Base):void {const props=(value as Target).items;const incoming:MethodDeclaration={value:1,kind:175};const witnessResult=props.push(incoming);console.log(String(witnessResult));}
+const seed:MethodDeclaration={value:1,kind:175};probe({items:[seed]});

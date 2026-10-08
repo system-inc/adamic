@@ -1,0 +1,12 @@
+[
+  {
+    "rank": 56,
+    "reads": 29,
+    "read": "deduplicated.push",
+    "type": "number[]",
+    "variant": "wrong-element",
+    "observation": "A producer explicitly typed 1[] accepts push(3) through a checked number[] view; native and JavaScript print 2 with exit 0 instead of rejecting a write outside the producer contract.",
+    "neededChange": "Preserve and enforce the literal element contract of the producer array during checked-view mutations.",
+    "certified": false
+  }
+]

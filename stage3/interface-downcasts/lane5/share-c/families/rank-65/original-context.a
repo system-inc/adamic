@@ -1,0 +1,8 @@
+// Original namespace function header; body and adjacent object carriers reduced.
+interface Node {readonly value:number;}
+type AnyFunction = (...args: never[]) => void;
+function failBadSyntaxKind(node: Node, message?: string, stackCrawlMark?: AnyFunction): never{throw new Error("original failure control");}
+interface Base {readonly failBadSyntaxKind:unknown;}
+interface Target {readonly failBadSyntaxKind:typeof failBadSyntaxKind;}
+function probe(value:Base):void {const Debug=value as Target;try {Debug.failBadSyntaxKind({value:3},undefined,undefined);} catch {console.log("completed");}}
+probe({failBadSyntaxKind:failBadSyntaxKind});

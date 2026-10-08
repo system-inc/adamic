@@ -1,0 +1,9 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+type ModuleExportName = Identifier | StringLiteral;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface StringLiteral {readonly value:number;readonly kind:11;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:ModuleExportName[];}
+function probe(value:Base):void {const exportedNames=(value as Target).items;const incoming:Identifier={value:1,kind:80};const witnessResult=exportedNames.push(incoming);console.log(String(witnessResult));}
+const seed:Identifier={value:1,kind:80};probe({items:[seed]});

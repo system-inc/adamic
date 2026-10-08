@@ -134,5 +134,95 @@
     "read": "result.push",
     "declaration": "push(...items: T[]): number;",
     "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; }, found { value: number; }\n"
+  },
+  {
+    "rank": 161,
+    "reads": 11,
+    "type": "ObjectLiteralElementLike[]",
+    "read": "properties.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: 304; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 326,
+    "reads": 5,
+    "type": "(ClassElement | TypeElement)[]",
+    "read": "elements.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; }, found { value: number; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 704,
+    "reads": 2,
+    "type": "AccessorDeclaration[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: 178; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 707,
+    "reads": 2,
+    "type": "BaseType[]",
+    "read": "resolvedImplementsTypes.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; }, found { value: number; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 884,
+    "reads": 2,
+    "type": "ModuleExportName[]",
+    "read": "exportedNames.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: 80; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 1235,
+    "reads": 1,
+    "type": "(MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment)[]",
+    "read": "props.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: 175; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 1238,
+    "reads": 1,
+    "type": "(ParameterDeclaration | NamedTupleMember | undefined)[]",
+    "read": "expandedDeclarations.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: 170; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 1250,
+    "reads": 1,
+    "type": "(WatchedFileWithIsClosed | undefined)[]",
+    "read": "watchedFiles.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; }, found { value: number; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 1307,
+    "reads": 1,
+    "type": "CommandLineOption[]",
+    "read": "optionsOfCurCategory.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; }, found { value: number; }\n",
+    "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 2798,
+    "reads": 1,
+    "type": "{ nodePos: number; detachedCommentEndPos: number; }[]",
+    "read": "detachedCommentsInfo.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { nodePos: string; detachedCommentEndPos: number; }, found { nodePos: number; detachedCommentEndPos: number; }\n",
+    "status": "certified original Array.push receiver"
   }
 ]

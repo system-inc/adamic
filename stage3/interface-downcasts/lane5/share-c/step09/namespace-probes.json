@@ -1,0 +1,52 @@
+[
+  {
+    "rank": 2,
+    "reads": 313,
+    "type": "typeof Debug",
+    "read": "Debug.checkDefined",
+    "originalHeader": "export function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T;",
+    "status": "original namespace control prepared",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-2/original-context.a:7:21: stage 0 can't lower a generic function as a value yet\n"
+  },
+  {
+    "rank": 8,
+    "reads": 110,
+    "type": "typeof Debug",
+    "read": "Debug.fail",
+    "originalHeader": "export function fail(message?: string, stackCrawlMark?: AnyFunction): never;",
+    "status": "original namespace control prepared",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-8/original-context.a:6:67: Adamic 0.1 refuses checked view read of field fail with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+  },
+  {
+    "rank": 65,
+    "reads": 24,
+    "type": "typeof Debug",
+    "read": "Debug.failBadSyntaxKind",
+    "originalHeader": "export function failBadSyntaxKind(node: Node, message?: string, stackCrawlMark?: AnyFunction): never;",
+    "status": "original namespace control prepared",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-65/original-context.a:7:67: Adamic 0.1 refuses checked view read of field failBadSyntaxKind with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+  },
+  {
+    "rank": 80,
+    "reads": 21,
+    "type": "typeof Debug",
+    "read": "Debug.assertEqual",
+    "originalHeader": "export function assertEqual<T>(a: T, b: T, msg?: string, msg2?: string, stackCrawlMark?: AnyFunction): void;",
+    "status": "original namespace control prepared",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-80/original-context.a:7:20: stage 0 can't lower a generic function as a value yet\n"
+  },
+  {
+    "rank": 389,
+    "reads": 5,
+    "type": "typeof Debug",
+    "read": "Debug.assertGreaterThanOrEqual",
+    "originalHeader": "export function assertGreaterThanOrEqual(a: number, b: number, stackCrawlMark?: AnyFunction): void;",
+    "status": "original namespace control prepared",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-389/original-context.a:6:62: Adamic 0.1 refuses checked view read of field assertGreaterThanOrEqual with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+  }
+]

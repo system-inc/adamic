@@ -1,3 +1,11 @@
+Built: step 09 adds 10 certified pairs / 27 ranked reads; cumulative share c is 256 pairs / 700 reads. Fixtures, tests, evidence and own counts only.
+Commits: prior delivery 6e2e4878; this batch is committed and pushed only to codex/views-callables-c. Delivery SHA is in the final response.
+Commands and outputs: scoped oracle PASS 10.987s, source verifier PASS 256 pairs / 512 fixtures, context verifier PASS five headers, own counts PASS. Required global updater still fails 60 inherited fixtures.
+Mutants: ten Array.push write-certificate omissions caught in native and JavaScript, 20 executed backend comparisons; every mutant exits 0 with stdout 2 instead of the pinned exit 70.
+Uncovered: six new code-needing pairs, ranks 2, 8, 56, 65, 80, 389; 31 Set pairs / 107 reads remain handed off under 058635b9. No compiler/runtime code changed.
+
+Current step: see step09/REPORT.md for full commands, mutants and new boundary list. The following is the historical prior-delivery report and validation evidence.
+
 Built: 246 pairs / 673 ranked candidate reads certified: 229 member families and 17 native Array.push receiver families. Fixtures/tests/evidence only.
 Commits: base 926a1d39; delivery codex/views-callables-c. Certificate commits and final evidence commit are listed below.
 Commands and outputs: final scoped oracle suite PASS in 343.197s; independent source verifier PASS for 246 pairs / 492 fixtures; scoped counts PASS. Required global counts updater failed on 60 inherited fixtures.

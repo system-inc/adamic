@@ -17,3 +17,15 @@ Observed compiler boundaries for 15 pairs. These are not certifications. Origina
 | 2387 | `SolutionBuilderState<T>.watchDirectory`; `state.watchDirectory` | Adamic 0.1 refuses checked view read of field watchDirectory with unsupported callable contract; prove or implement the callable contract before reading this field | Implement a checked producer certificate and invocation adapter for the complete original callable signature. |
 | 2546 | `TypeCheckerHost.getFileIncludeReasons`; `host.getFileIncludeReasons` | Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom | Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void. |
 | 2594 | `WatchFactoryHost.watchDirectory`; `host.watchDirectory` | Adamic 0.1 refuses checked view read of field watchDirectory with unsupported callable contract; prove or implement the callable contract before reading this field | Implement a checked producer certificate and invocation adapter for the complete original callable signature. |
+
+Step 09 adds five compile boundaries, pinned by Node controls and lowering refusal assertions:
+
+- Rank 2, `Debug.checkDefined`, 313 reads: `stage 0 can't lower a generic function as a value yet`. Needed: support generic function values through checked views.
+- Rank 8, `Debug.fail`, 110 reads: `Adamic 0.1 refuses checked view read of field fail with unsupported callable contract; prove or implement the callable contract before reading this field`. Needed: support the complete original callable contract, including optional AnyFunction and declared never returns.
+- Rank 65, `Debug.failBadSyntaxKind`, 24 reads: `Adamic 0.1 refuses checked view read of field failBadSyntaxKind with unsupported callable contract; prove or implement the callable contract before reading this field`. Needed: support the complete original callable contract, including optional AnyFunction and declared never returns.
+- Rank 80, `Debug.assertEqual`, 21 reads: `stage 0 can't lower a generic function as a value yet`. Needed: support generic function values through checked views.
+- Rank 389, `Debug.assertGreaterThanOrEqual`, 5 reads: `Adamic 0.1 refuses checked view read of field assertGreaterThanOrEqual with unsupported callable contract; prove or implement the callable contract before reading this field`. Needed: support the complete original callable contract, including optional AnyFunction and declared never returns.
+
+Rank 56, `deduplicated.push`, 29 reads: native and JavaScript accept push(3) into a producer explicitly typed 1[] through a number[] view (exit 0, stdout 2). Needs preservation and enforcement of literal producer element write contracts. This is an observed uncured runtime boundary, not a certificate; see step09/runtime-blocked.json and its scoped reproduction test.
+
+Set handoff: all 31 share-c Set pairs / 107 reads remain delegated under 058635b9; original declarations and read witnesses are in step09/SET_HANDOFF_058635b9.json. No Set receiver was recertified or changed.

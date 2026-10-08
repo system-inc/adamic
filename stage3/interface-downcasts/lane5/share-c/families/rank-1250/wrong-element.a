@@ -1,0 +1,7 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+interface WatchedFileWithIsClosed {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:(WatchedFileWithIsClosed | undefined)[];}
+function probe(value:Base):void {const watchedFiles=(value as Target).items;const incoming:WatchedFileWithIsClosed={value:1};const witnessResult=watchedFiles.push(incoming);console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

@@ -1,0 +1,8 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+interface ClassElement {readonly value:number;}
+interface TypeElement {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:(ClassElement | TypeElement)[];}
+function probe(value:Base):void {const elements=(value as Target).items;const incoming:ClassElement={value:1};const witnessResult=elements.push(incoming);console.log(String(witnessResult));}
+probe({items:[{value:"bad"}]});

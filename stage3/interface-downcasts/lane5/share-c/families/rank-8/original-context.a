@@ -1,0 +1,7 @@
+// Original namespace function header; body and adjacent object carriers reduced.
+type AnyFunction = (...args: never[]) => void;
+function fail(message?: string, stackCrawlMark?: AnyFunction): never{throw new Error("original failure control");}
+interface Base {readonly fail:unknown;}
+interface Target {readonly fail:typeof fail;}
+function probe(value:Base):void {const Debug=value as Target;try {Debug.fail("message",undefined);} catch {console.log("completed");}}
+probe({fail:fail});

@@ -1,0 +1,12 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+type BaseType = ObjectType | IntersectionType | TypeVariable;
+interface ObjectType {readonly value:number;}
+interface IntersectionType {readonly value:number;}
+type TypeVariable = TypeParameter | IndexedAccessType;
+interface TypeParameter {readonly value:number;}
+interface IndexedAccessType {readonly value:number;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:BaseType[];}
+function probe(value:Base):void {const resolvedImplementsTypes=(value as Target).items;const incoming:ObjectType={value:1};const witnessResult=resolvedImplementsTypes.push(incoming);console.log(String(witnessResult));}
+const seed:ObjectType={value:1};probe({items:[seed]});

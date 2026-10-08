@@ -1,10 +1,10 @@
 {
-  "certifiedPairs": 246,
-  "certifiedCandidateReads": 673,
-  "mutantBackendComparisons": 492,
-  "sourceVerifiedFixtures": 492,
-  "codeBoundaryPairs": 15,
-  "uncoveredPairs": 639,
+  "certifiedPairs": 256,
+  "certifiedCandidateReads": 700,
+  "mutantBackendComparisons": 512,
+  "sourceVerifiedFixtures": 512,
+  "codeBoundaryPairs": 21,
+  "uncoveredPairs": 629,
   "finalOracle": {
     "command": "go test ./internal/oracle -run '^TestCheckedViewCallableShareC($|Mutants$|Array(Intrinsics|Mutants)$|CodeBoundaries$|Counts$)' -count=1 -timeout=30m -v",
     "result": "PASS",
@@ -16,5 +16,52 @@
     "inheritedFixtureFailures": 60,
     "seconds": 41.403,
     "log": "/tmp/lane5-c-required-counts.log"
+  },
+  "priorDelivery": {
+    "certifiedPairs": 246,
+    "certifiedCandidateReads": 673,
+    "mutantBackendComparisons": 492,
+    "sourceVerifiedFixtures": 492,
+    "codeBoundaryPairs": 15,
+    "uncoveredPairs": 639,
+    "finalOracle": {
+      "command": "go test ./internal/oracle -run '^TestCheckedViewCallableShareC($|Mutants$|Array(Intrinsics|Mutants)$|CodeBoundaries$|Counts$)' -count=1 -timeout=30m -v",
+      "result": "PASS",
+      "seconds": 343.197,
+      "log": "/tmp/lane5-c-final-validation.log"
+    },
+    "requiredCounts": {
+      "result": "FAIL",
+      "inheritedFixtureFailures": 60,
+      "seconds": 41.403,
+      "log": "/tmp/lane5-c-required-counts.log"
+    }
+  },
+  "step09": {
+    "newCertifiedPairs": 10,
+    "newCertifiedCandidateReads": 27,
+    "newMutantBackendComparisons": 20,
+    "newCompileBoundaryRanks": [
+      2,
+      8,
+      65,
+      80,
+      389
+    ],
+    "newRuntimeBoundaryRanks": [
+      56
+    ],
+    "setHandoffReference": "058635b9",
+    "setPairs": 31,
+    "setReads": 107,
+    "requiredCountsInheritedFailures": 60,
+    "finalOracle": {
+      "result": "PASS",
+      "seconds": 10.987,
+      "log": "/tmp/lane5-c-step09-final.log"
+    },
+    "countsUpdateSeconds": 2.32,
+    "countsVerifySeconds": 2.381,
+    "requiredCountsSeconds": 45.387
   }
 }

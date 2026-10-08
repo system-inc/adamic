@@ -1,0 +1,7 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:{ nodePos: number; detachedCommentEndPos: number; }[];}
+function probe(value:Base):void {const detachedCommentsInfo=(value as Target).items;const incoming:{ nodePos: number; detachedCommentEndPos: number; }={nodePos:1,detachedCommentEndPos:1};const witnessResult=detachedCommentsInfo.push(incoming);console.log(String(witnessResult));}
+const seed:{ nodePos: number; detachedCommentEndPos: number; }={nodePos:1,detachedCommentEndPos:1};probe({items:[seed]});

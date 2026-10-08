@@ -1,0 +1,8 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface NamedTupleMember {readonly value:number;readonly kind:203;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:(ParameterDeclaration | NamedTupleMember | undefined)[];}
+function probe(value:Base):void {const expandedDeclarations=(value as Target).items;const incoming:ParameterDeclaration={value:1,kind:170};const witnessResult=expandedDeclarations.push(incoming);console.log(String(witnessResult));}
+const seed:ParameterDeclaration={value:1,kind:170};probe({items:[seed]});

@@ -1,0 +1,9 @@
+// Original Array member and receiver; adjacent payload carriers reduced.
+type AccessorDeclaration = GetAccessorDeclaration | SetAccessorDeclaration;
+interface GetAccessorDeclaration {readonly value:number;readonly kind:178;}
+interface SetAccessorDeclaration {readonly value:number;readonly kind:179;}
+interface OriginalMember<T> {push(...items: T[]): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:AccessorDeclaration[];}
+function probe(value:Base):void {const result=(value as Target).items;const incoming:GetAccessorDeclaration={value:1,kind:178};const witnessResult=result.push(incoming);console.log(String(witnessResult));}
+const seed:GetAccessorDeclaration={value:1,kind:178};probe({items:[seed]});

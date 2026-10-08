@@ -1,0 +1,7 @@
+// Original namespace function header; body and adjacent object carriers reduced.
+type AnyFunction = (...args: never[]) => void;
+function assertGreaterThanOrEqual(a: number, b: number, stackCrawlMark?: AnyFunction): void{}
+interface Base {readonly assertGreaterThanOrEqual:unknown;}
+interface Target {readonly assertGreaterThanOrEqual:typeof assertGreaterThanOrEqual;}
+function probe(value:Base):void {const Debug=value as Target;Debug.assertGreaterThanOrEqual(3,3,undefined);console.log("completed");}
+probe({assertGreaterThanOrEqual:assertGreaterThanOrEqual});
