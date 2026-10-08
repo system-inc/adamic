@@ -28,7 +28,9 @@ type Program struct {
 	CheckedFields      map[string]bool
 	ViewContracts      []ViewContract
 	ViewContractTypes  map[int]ViewContractID
-	GraphTypes         map[int]bool
+	// NominalReadContracts are private Map producer witnesses, checked again at reads.
+	NominalReadContracts map[int]ViewContractID
+	GraphTypes           map[int]bool
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -519,8 +521,11 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
-		Value Expression
-		To    Type
+		Value          Expression
+		Tuple          bool
+		Undefined      bool
+		UndefinedWhere string
+		To             Type
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -809,7 +814,10 @@ type (
 		ValueType       Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site int
+		Site          int
+		KeyContract   ViewContractID
+		ValueContract ViewContractID
+		ValueWhere    string
 	}
 
 	// MapHas is map.has(Key), and MapDelete map.delete(Key).

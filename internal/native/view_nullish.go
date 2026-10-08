@@ -8,7 +8,7 @@ import (
 
 func (e *emitter) nullishViewField(property ir.Property) string {
 	e.declarations = append(e.declarations, "#include \"view_nullish.h\"")
-	value := e.own(ir.Union, fmt.Sprintf("adamic_object_nullish_view(%s, %s, &%s, %d, %t, %t, %t, %t, %s, %s)", e.value(property.Object), cString(property.Name), e.cache(), property.NullishKinds, property.NullAllowed, property.UndefinedAllowed, property.Absent, property.Optional, cString(property.View), cString(property.ViewType)))
+	value := e.own(ir.Union, fmt.Sprintf("adamic_object_nullish_view(%s, %s, &%s, %d, %t, %t, %t, %t, %s, %s)", e.nominalViewReceiver(property), cString(property.Name), e.cache(), property.NullishKinds, property.NullAllowed, property.UndefinedAllowed, property.Absent, property.Optional, cString(property.View), cString(property.ViewType)))
 	if len(property.ViewAllowed) != 0 {
 		var tests []string
 		for _, literal := range property.ViewAllowed {
@@ -18,6 +18,7 @@ func (e *emitter) nullishViewField(property ir.Property) string {
 		}
 		e.line("if (%s != NULL && %s != &adamic_null && !(%s)) adamic_nullish_failure(%s, %s, %s);", value, value, strings.Join(tests, " || "), cString(property.View), cString(property.ViewType), value)
 	}
+	e.nominalViewRead(e.program.NominalReadContracts[property.ViewTypeID], value, property.View, property.Absent)
 	e.nullishMemberSelection(property, value)
 	e.mapViewCertificate(property, value)
 	e.viewCallableNullishCertificate(property, value)

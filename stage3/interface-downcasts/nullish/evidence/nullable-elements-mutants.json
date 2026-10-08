@@ -1,0 +1,51 @@
+[
+  {
+    "name": "nullable-elements-storage",
+    "test": "^TestCheckedViewMapCertificates$/entry-nominal-elements-.*-widen$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-storage.log"
+  },
+  {
+    "name": "nullable-elements-native-read",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-read$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-native-read.log"
+  },
+  {
+    "name": "nullable-elements-js-read",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-read$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-js-read.log"
+  },
+  {
+    "name": "nullable-elements-native-write",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-(write|widen)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-native-write.log"
+  },
+  {
+    "name": "nullable-elements-js-write",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-(write|widen)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-js-write.log"
+  },
+  {
+    "name": "nullable-elements-native-producer",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-producer$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-native-producer.log"
+  },
+  {
+    "name": "nullable-elements-js-producer",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-producer$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-js-producer.log"
+  }
+]

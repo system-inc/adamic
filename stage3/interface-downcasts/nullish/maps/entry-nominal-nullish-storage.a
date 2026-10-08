@@ -1,0 +1,8 @@
+class Named {private readonly identity:number=1;readonly count:number=7;}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Named|null|undefined>|null}
+let calls:number=0;function create():Named{calls++;return new Named();}
+const source=new Map<string,Named|null|undefined>([['key',create()],['null',null],['undefined',undefined]]);source.set('set',create());
+const copy=new Map<string,Named|null|undefined>(source);const raw={kind:'box',value:copy};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){for(const value of map.values()){console.log(typeof value);if(value!==null&&value!==undefined){console.log(String(value instanceof Named));console.log(String(value.count));}}console.log(String(map.has('undefined')));console.log(String(map.get('null')===null));console.log(String(calls));}}
+read(base as Target);

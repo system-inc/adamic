@@ -40,7 +40,7 @@ const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, re
 };
 const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
     if (value === undefined) { if (required) panic("element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
-    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : false;
+    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 || type === 9 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? adamicTypeOf(value) === "function" : type === 10 ? value === null || typeof value === "number" || typeof value === "boolean" || typeof value === "string" : false;
     if (!valid) panic("element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
@@ -49,9 +49,14 @@ const adamicViewArrayElement = (value, expression, type, expected, allowed, requ
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	if read.Element == ir.Union {
-		return e.emitPrimitiveArrayIndex(read)
+		if _, primitive := ir.PrimitiveViewMembers(e.program, read.ViewContract); primitive {
+			return e.emitPrimitiveArrayIndex(read)
+		}
 	}
 	array, index := e.value(read.Array), e.value(read.Index)
+	if read.Element == ir.Union && e.nominalArrayContract(read.ViewContract) {
+		return fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s)", array, index, read.Relative, e.nominalViewRead(read.ViewContract, "value", read.View, false))
+	}
 	allowed := []string{}
 	for _, literal := range read.ViewAllowed {
 		switch literal.Of {
@@ -67,20 +72,26 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
 	}
+	if read.Element == ir.Object && read.ViewContract != 0 {
+		checked = "((element) => element === undefined ? undefined : " + e.nominalViewRead(read.ViewContract, "element", read.View, false) + ")(" + checked + ")"
+	}
+	if read.Element == ir.Union {
+		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)
+	}
 	return checked
 }
 
 const viewArrayOperationsRuntime = `const adamicArrayStorage = new WeakMap();
-const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage === 1 || storage === 2 || storage === 7 ? storage : 10); return array; };
+const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage === 1 || storage === 2 || storage === 7 || storage === 9 ? storage : 10); return array; };
 const adamicViewSlice = (array, arguments_) => adamicArrayElementCertificate(adamicArrayStorageValue(array.slice(...arguments_), adamicArrayStorage.get(array)), adamicArrayElementContracts.get(array) || 0);
-const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== (storage === 1 || storage === 2 || storage === 7 ? storage : 10)) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : actual === 10 ? "heap pointers" : adamicViewTypeNames[actual] || "uncertified storage")); if (storage === 4 || storage === 5 || storage === 6 || storage === 8 || storage === 9 || storage === 10) panic("element read failed: <array write> expected " + (adamicViewTypeNames[storage] || "uncertified storage") + ", found uncertified source element contract"); };
+const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== (storage === 1 || storage === 2 || storage === 7 || storage === 9 ? storage : 10)) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : actual === 10 ? "heap pointers" : adamicViewTypeNames[actual] || "uncertified storage")); if (storage === 4 || storage === 5 || storage === 6 || storage === 8 || storage === 10) panic("element read failed: <array write> expected " + (adamicViewTypeNames[storage] || "uncertified storage") + ", found uncertified source element contract"); };
 const adamicViewMap = (array, callback, check) => array.map((value, index, all) => adamicCall(callback, [check(value), index, all]));
 const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewReduce = (array, callback, initial, check) => adamicReduce(array, new AdamicClosure((self, values) => adamicCall(callback, [values[0], check(values[1]), values[2], values[3]]), []), initial);
 const adamicViewPop = (array, check) => { if (array.length === 0) return undefined; const index = array.length - 1; const value = index in array ? check(array[index]) : undefined; array.pop(); return value; };
-const adamicViewPush = (array, value, storage) => { if (storage === 4) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); return array.push(value); };
-const adamicViewSetIndex = (array, index, value, storage, holes) => { if (storage === 4) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
+const adamicViewPush = (array, value, storage) => { if (storage === 4 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); return array.push(value); };
+const adamicViewSetIndex = (array, index, value, storage, holes) => { if (storage === 4 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
 const adamicViewJoin = (array, separator, check) => array.map(value => check(value)).join(separator);
 `
 
@@ -136,6 +147,9 @@ func (e *emitter) value(expression ir.Expression) string {
 }
 
 func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) string {
+	if read.Element == ir.Union && e.nominalArrayContract(read.ViewContract) {
+		return e.nominalViewRead(read.ViewContract, value, read.View, false)
+	}
 	literals := []string{}
 	for _, literal := range read.ViewAllowed {
 		switch literal.Of {
@@ -150,6 +164,12 @@ func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) str
 	checked := fmt.Sprintf("adamicViewArrayElement(%s, %s, %d, %s, [%s], %t)", value, quote(read.View), read.Element, quote(read.ViewType), strings.Join(literals, ", "), !read.UndefinedAllowed)
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
+	}
+	if read.Element == ir.Object && read.ViewContract != 0 {
+		checked = "((element) => element === undefined ? undefined : " + e.nominalViewRead(read.ViewContract, "element", read.View, false) + ")(" + checked + ")"
+	}
+	if read.Element == ir.Union {
+		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)
 	}
 	return checked
 }

@@ -136,3 +136,35 @@ func TestCheckedViewDictionaryIntegrationCounts(t *testing.T) {
 		}
 	}
 }
+
+// The owner fixture was rewritten to narrow its first element explicitly.
+func TestCheckedViewOwnerIntegrationCounts(t *testing.T) {
+	row := counted(t, "stage3/interface-downcasts/nullish/maps/entry-nominal-array.a", false, nil, false, false)
+	path := filepath.Join(repository, "internal/oracle/counts.md")
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if *updateCounts {
+		text := string(data)
+		key := strings.Split(row, " | ")[0] + " | "
+		lines := strings.Split(text, "\n")
+		found := false
+		for i, line := range lines {
+			if strings.HasPrefix(line, key) {
+				lines[i] = row
+				found = true
+				break
+			}
+		}
+		text = strings.Join(lines, "\n")
+		if !found {
+			text = strings.Replace(text, "\n## Predicate direction counts", row+"\n\n## Predicate direction counts", 1)
+		}
+		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
+			t.Fatal(err)
+		}
+	} else if !strings.Contains(string(data), row+"\n") {
+		t.Errorf("unrecorded owner counts: %s", row)
+	}
+}

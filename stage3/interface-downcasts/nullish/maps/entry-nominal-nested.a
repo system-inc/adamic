@@ -1,0 +1,19 @@
+class Named {readonly count:number=7;}
+interface Entry {readonly child:Named}
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,Entry>|null}
+const fake={count:7};const forged={child:fake};
+const item:Entry={child:new Named()};
+const source=new Map<string,Entry>([['key',item]]);source.set('second',item);
+const copy=new Map<string,Entry>(source);
+const raw={kind:'box',value:source};const base:Base=raw;
+function inspectNamed(value:Named):void{console.log(String(value.count));}
+function inspectGeneric<T extends Named>(value:T):void{console.log(String(value.count));}
+function inspect(entry:Entry):void{inspectNamed(entry.child);}
+function read(node:Target):void{const map=node.value;if(map!==null){
+const entry=map.get('key');if(entry!==undefined){inspect(entry);const held={entry};inspect(held.entry);}
+map.forEach((entry,key)=>{console.log(key);inspect(entry);});
+for(const [key,entry] of map){console.log(key);inspect(entry);}
+}}
+read(base as Target);source.clear();const entry=copy.get('key');if(entry!==undefined){inspect(entry);}
+inspectNamed(new Named());inspectGeneric<Named>(new Named());console.log(String(fake.count));console.log(typeof forged);

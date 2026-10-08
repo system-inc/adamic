@@ -1,0 +1,44 @@
+[
+  {
+    "name": "packed-array-presence",
+    "test": "^TestCheckedViewMapCertificates$/^entry-convert-nested-boolean-optional$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/packed-array-presence.log"
+  },
+  {
+    "name": "packed-array-pack",
+    "test": "^TestCheckedViewMapCertificates$/^entry-convert-nested-boolean$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/packed-array-pack.log"
+  },
+  {
+    "name": "packed-array-fallback",
+    "test": "^TestCheckedViewMapCertificates$/^entry-convert-nested-boolean-optional$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/packed-array-fallback.log"
+  },
+  {
+    "name": "packed-array-native-literal",
+    "test": "^TestCheckedViewMapNestedUnionLiteralMutant$/^entry-convert-nested-boolean-finite$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/packed-array-native-literal.log"
+  },
+  {
+    "name": "packed-array-javascript-literal",
+    "test": "^TestCheckedViewMapNestedUnionLiteralMutant$/^entry-convert-nested-boolean-finite$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/packed-array-javascript-literal.log"
+  },
+  {
+    "name": "packed-json-boundary",
+    "test": "^TestCheckedViewArrayJSONStorageRefusal$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/packed-json-boundary.log"
+  }
+]
