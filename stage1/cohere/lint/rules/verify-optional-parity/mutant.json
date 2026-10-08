@@ -1,0 +1,5 @@
+{
+  "name": "Only root nullability accepted",
+  "from": "facts.has(facts.root(), 1 | 2 | 4 | 8 | 16)",
+  "to": "(facts.root().flags & (1 | 2 | 4 | 8 | 16)) !== 0"
+}
