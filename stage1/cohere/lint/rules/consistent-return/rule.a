@@ -20,6 +20,7 @@ export class Rule {
  visit(index: number): void {
   const c=this.context;const ast=fromContext(c);const treat=c.settings.read('treatundefinedasunspecified','false')==='true';
   for(let i=0;i<c.parser.nodes.length;i++){
+   if(i!==index&&c.parent(i)<0)continue;
    if(c.kind(i)!=='SourceFile'&&!scope(c,i))continue;const returns: number[]=[];returnsIn(c,i,returns);const first=returns[0];if(first===undefined)continue;const valued=hasValue(c,first,treat);
    for(const r of returns.slice(1))if(hasValue(c,r,treat)!==valued){const id=valued?'missingReturnValue':'unexpectedReturnValue';const verb=valued?'expected a return value.':'expected no return value.';c.reportNode(r,'consistent-return',id,display(c,this.names,i,true)+' '+verb+' '+(valued?missingReturnValue:unexpectedReturnValue));}
    if(!valued||c.kind(i)==='Constructor')continue;const own=c.name(i);const text=own<0?'':c.node(own).text;const firstByte=text.slice(0,1);if(['FunctionDeclaration','FunctionExpression'].includes(c.kind(i))&&firstByte!==firstByte.toLowerCase())continue;
