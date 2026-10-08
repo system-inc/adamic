@@ -1129,3 +1129,16 @@ Group 3's MapLike<string[]> candidate has source reads over both fixed objects
 and genuine record producers, with transitive array checks. It credits 1 pair / 6
 candidate reads; 28 pairs / 222 reads remain. Enumeration and uncertified writes
 remain demanded refusals. Rich CompilerOptions element unions are unfinished.
+
+### Dictionary group 4: lazy rich container read
+
+New lane files: `internal/oracle/checked_view_dictionary_container_test.go` and
+`dictionaries/source/command-options-{good,wrong,missing}.a`. No shared code hook
+was needed. The required ParsedCommandLine.options container read checks object
+kind and presence without demanding unread rich union elements. This credits
+the 111-read candidate container pair only, not CompilerOptions dynamic reads.
+
+Union selection overlap proposed to lane 4: scalar and nullish alternatives at
+dictionary element extraction. Lane 4b: object/array alternatives in
+CompilerOptionsValue and TsConfigSourceFile unions. Dictionary storage, lookup,
+absence and enumeration adapters remain this lane's responsibility.

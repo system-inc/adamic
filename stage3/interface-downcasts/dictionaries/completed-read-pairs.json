@@ -19,5 +19,20 @@
       "source/storage-array-wrong.a"
     ],
     "scope": "Per-pair read contract over fixed source objects and the shared MapLike record producer, with transitive array extraction in both backends. Enumeration and uncertified writes remain demanded refusals."
+  },
+  {
+    "type_id": 10107,
+    "field": "options",
+    "type": "ParsedCommandLine",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryCommandOptions"
+    ],
+    "fixtures": [
+      "source/command-options-good.a",
+      "source/command-options-wrong.a",
+      "source/command-options-missing.a"
+    ],
+    "scope": "Required dictionary container read with unread rich union elements, including null and object/array alternatives. Representative read-contract fixture, not a copied CompilerOptions definition or certification of its dynamic element reads."
   }
 ]
