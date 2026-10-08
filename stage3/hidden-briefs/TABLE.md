@@ -546,3 +546,14 @@ change remains separate. The structural result group is not delivered.
 Evidence: [counts](../../docs/overload-results/groups/callback/regions.json),
 [tests and limitations](../../docs/overload-results/groups/callback/REPORT.md),
 [compiler mutants](../../docs/overload-results/groups/callback/mutants.json).
+
+## Structural result stops
+
+The requested compiler area commit `f0c6e6fc` is merged. The
+[current stop table](OVERLOAD-STOPS.md) records the first failed boundary for
+all seven intervals, exact diagnostics, raising functions and checker ownership.
+The structural compiler `8c7a0d84` admits proved Block and EvaluatorResult results
+without copying them, and refuses unproved structural results with their path.
+Node, both backends, sanitizers, counts and four structural mutants pass; a fifth
+mutant protects the measurement snapshot copier. Re-measurement still reveals
+zero bytes. Hidden-13 remains unproved at result.kind and hidden-14 at result.value.

@@ -25,6 +25,13 @@ transformers/declarations.ts:1678:110: error TS2345: Argument of type 'Expressio
   Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.
 ```
 
+The hidden-01 error comes from `clause.types[0]` at line 1678. Under
+noUncheckedIndexedAccess the indexed value includes undefined, and strictNullChecks
+rejects passing it to the required node parameter. Hidden-13's checker errors
+similarly follow indexed reads of node.parameters[i] and outerParameters[i].
+These are checker stops under the stricter options, #k881crd, rather than new
+lowering result refusals.
+
 There is no observed lowering boundary inside hidden-01's excluded body. Its
 outer transformDeclarations also stops at declarations.ts:612:90 on
 `an indirect value of an overload requiring a checked implementation boundary`;
@@ -34,12 +41,13 @@ must not be conflated.
 Hidden-13 additionally has a checker-excluded implementation body. Its first
 checker diagnostic is es2017.ts:764:38: `error TS18048: 'outerParameter' is possibly
 'undefined'.` Further diagnostics occur at 765:25, 765:58, 767:76 and 770:44.
-The checker raises these through `checkNonNullTypeWithReporter`; the census
+The checker raises these through `reportObjectPossiblyNullOrUndefinedError`,
+called by `checkNonNullTypeWithReporter`; the census
 excludes the body through `latentFullSelected` / `LatentOwnDiagnosticsIn`.
 Fixing the overload signature alone would not prove this checker-excluded body.
 
 Hidden-14's enclosing createEvaluator independently refuses object destructuring
-at utilities.ts:11316:35 through `objectBindings`: `Adamic 0.1 refuses a method in
+at utilities.ts:11316:35 through `destructureFrom`: `Adamic 0.1 refuses a method in
 object destructuring; call it on its receiver or wrap that call in an arrow;
 destructuring would lose this`. This is outside the assigned interval.
 
@@ -51,3 +59,35 @@ those initial instrumentation panics. No checker option was weakened.
 
 [Raw baseline](../../docs/overload-results/groups/structural/before.jsonl.gz)
 contains all units, exact diagnostics, checker exclusions and boundary spans.
+
+## After the structural result group
+
+Compiler `8c7a0d8466268f2c1b61b235c701947d00fa13a3` admits a structural result
+when the existing return proof proves every return under the overload's admitted
+arguments. Readonly covariance permits widening; it never permits unchecked
+narrowing of a wider result. Unproved results identify their failing component.
+
+| Region | Revealed bytes | Next stop | Owner |
+|---|---:|---|---|
+| 01 large | 0 | declarations.ts:1387:5 body excluded by TS2345 at declarations.ts:1678:110, outside this interval | Checker |
+| 01 small | 0 | declarations.ts:1678:110 TS2345 in that same excluded body | Checker |
+| 05 large | 0 | es2018.ts:828:9 calls visitNode; visitorPublic.ts:123:5 parameter node refusal | Lowering, censusOverload |
+| 05 small | 0 | es2015.ts:3193:9 calls visitNode; visitorPublic.ts:123:5 parameter node refusal | Lowering, censusOverload |
+| 06 | 0 | esDecorators.ts:1242:6 body entry; esDecorators.ts:1239:9 TNode parameter representation | Lowering, typeOf |
+| 13 | 0 | es2017.ts:736:5 Block result refusal at result.kind; implementation also checker-excluded | Lowering, censusOverload |
+| 14 | 0 | utilities.ts:11322:81 body entry; utilities.ts:11320:5 EvaluatorResult refusal at result.value | Lowering, censusOverload |
+
+Changed exact result diagnostics:
+
+```text
+transformers/es2017.ts:736:5: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody at result.kind; prove every return for this overload's admitted arguments, preserving result variance
+utilities.ts:11320:5: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; prove every return for this overload's admitted arguments, preserving result variance
+```
+
+The other exact diagnostics in the baseline table are unchanged. The complete
+[comparison](../../docs/overload-results/groups/structural/regions.json) and
+[next-stop records](../../docs/overload-results/groups/structural/next-stops.json)
+retain compiler pin, source hashes, spans, raising functions and exact text.
+All seven intervals remain fully hidden, totaling 58,158 bytes. The original full
+compiler result bodies are still unproved; the accepted fixtures are the cases
+whose admitted-argument return proof succeeds. No hidden-byte reveal is claimed.
