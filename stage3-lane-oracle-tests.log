@@ -1,0 +1,1278 @@
+
+> typescript@6.0.3 test
+> hereby runtests-parallel --light=false --workers=8 --lint=false --no-colors
+
+Using ~/fast-gate/tree-stage3-lane/adapted-tree/Herebyfile.mjs to run runtests-parallel
+Starting lib
+Starting generate-diagnostics
+> /home/ahra/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting generate-types-map
+Finished generate-types-map in 18ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 179ms
+Starting bundle-tests
+Starting build-tests
+Starting build-services
+Finished lib in 424ms
+Finished build-tests in 491ms
+Finished build-services in 490ms
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 3ms
+Finished bundle-tests in 1.2s
+Starting do-runtests-parallel
+Running tests with config: {"light":false,"workerCount":8,"taskConfigsFolder":"/tmp/adamic-gate/ts-tests23","noColor":true,"timeout":40000,"keepFailed":false}
+> /home/ahra/adamic-tools/bin/node ./built/local/run.js
+Discovered 327 unittest suites.
+Discovering runner-based tests...
+Discovered 19676 test files in 266ms.
+Starting to run tests using 8 threads...
+Batching initial test lists...
+Suboptimal packing detected: no tests remain to be stolen. Reduce packing fraction from 0.9 to fix.
+Batched into 8 groups with approximate total file sizes of 2556828 bytes in each group. (100.0% of total tests batched)
+
+
+
+  106366 passing (12m)
+  1 failing
+
+  1) 
+       
+         unittests:: Public APIs
+           for typescript.d.ts
+             should be acknowledged when they change:
+     Error: The baseline file api/typescript.d.ts has changed. (Run "hereby baseline-accept" if the new baseline is correct.)[90m
+
+===================================================================
+--- Expected	The current baseline
++++ Actual	The new version
+@@ -4489,12 +4489,12 @@
+     interface Declaration extends Node {
+         _declarationBrand: void;
+     }
+     interface NamedDeclaration extends Declaration {
+-        readonly name?: DeclarationName;
++        readonly name?: DeclarationName | undefined;
+     }
+     interface DeclarationStatement extends NamedDeclaration, Statement {
+-        readonly name?: Identifier | StringLiteral | NumericLiteral;
++        readonly name?: Identifier | StringLiteral | NumericLiteral | undefined;
+     }
+     interface ComputedPropertyName extends Node {
+         readonly kind: SyntaxKind.ComputedPropertyName;
+         readonly parent: Declaration;
+@@ -4514,18 +4514,18 @@
+     }
+     interface TypeParameterDeclaration extends NamedDeclaration, JSDocContainer {
+         readonly kind: SyntaxKind.TypeParameter;
+         readonly parent: DeclarationWithTypeParameterChildren | InferTypeNode;
+-        readonly modifiers?: NodeArray<Modifier>;
++        readonly modifiers?: NodeArray<Modifier> | undefined;
+         readonly name: Identifier;
+         /** Note: Consider calling `getEffectiveConstraintOfTypeParameter` */
+-        readonly constraint?: TypeNode;
+-        readonly default?: TypeNode;
+-        expression?: Expression;
++        readonly constraint?: TypeNode | undefined;
++        readonly default?: TypeNode | undefined;
++        expression?: Expression | undefined;
+     }
+     interface SignatureDeclarationBase extends NamedDeclaration, JSDocContainer {
+         readonly kind: SignatureDeclaration["kind"];
+-        readonly name?: PropertyName;
++        readonly name?: PropertyName | undefined;
+         readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined;
+         readonly parameters: NodeArray<ParameterDeclaration>;
+         readonly type?: TypeNode | undefined;
+     }
+@@ -4540,11 +4540,11 @@
+     interface VariableDeclaration extends NamedDeclaration, JSDocContainer {
+         readonly kind: SyntaxKind.VariableDeclaration;
+         readonly parent: VariableDeclarationList | CatchClause;
+         readonly name: BindingName;
+-        readonly exclamationToken?: ExclamationToken;
+-        readonly type?: TypeNode;
+-        readonly initializer?: Expression;
++        readonly exclamationToken?: ExclamationToken | undefined;
++        readonly type?: TypeNode | undefined;
++        readonly initializer?: Expression | undefined;
+     }
+     interface VariableDeclarationList extends Node {
+         readonly kind: SyntaxKind.VariableDeclarationList;
+         readonly parent: VariableStatement | ForStatement | ForOfStatement | ForInStatement;
+@@ -4552,47 +4552,47 @@
+     }
+     interface ParameterDeclaration extends NamedDeclaration, JSDocContainer {
+         readonly kind: SyntaxKind.Parameter;
+         readonly parent: SignatureDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
+-        readonly dotDotDotToken?: DotDotDotToken;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
++        readonly dotDotDotToken?: DotDotDotToken | undefined;
+         readonly name: BindingName;
+-        readonly questionToken?: QuestionToken;
+-        readonly type?: TypeNode;
+-        readonly initializer?: Expression;
++        readonly questionToken?: QuestionToken | undefined;
++        readonly type?: TypeNode | undefined;
++        readonly initializer?: Expression | undefined;
+     }
+     interface BindingElement extends NamedDeclaration, FlowContainer {
+         readonly kind: SyntaxKind.BindingElement;
+         readonly parent: BindingPattern;
+-        readonly propertyName?: PropertyName;
+-        readonly dotDotDotToken?: DotDotDotToken;
++        readonly propertyName?: PropertyName | undefined;
++        readonly dotDotDotToken?: DotDotDotToken | undefined;
+         readonly name: BindingName;
+-        readonly initializer?: Expression;
++        readonly initializer?: Expression | undefined;
+     }
+     interface PropertySignature extends TypeElement, JSDocContainer {
+         readonly kind: SyntaxKind.PropertySignature;
+         readonly parent: TypeLiteralNode | InterfaceDeclaration;
+-        readonly modifiers?: NodeArray<Modifier>;
++        readonly modifiers?: NodeArray<Modifier> | undefined;
+         readonly name: PropertyName;
+-        readonly questionToken?: QuestionToken;
+-        readonly type?: TypeNode;
++        readonly questionToken?: QuestionToken | undefined;
++        readonly type?: TypeNode | undefined;
+     }
+     interface PropertyDeclaration extends ClassElement, JSDocContainer {
+         readonly kind: SyntaxKind.PropertyDeclaration;
+         readonly parent: ClassLikeDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: PropertyName;
+-        readonly questionToken?: QuestionToken;
+-        readonly exclamationToken?: ExclamationToken;
+-        readonly type?: TypeNode;
+-        readonly initializer?: Expression;
++        readonly questionToken?: QuestionToken | undefined;
++        readonly exclamationToken?: ExclamationToken | undefined;
++        readonly type?: TypeNode | undefined;
++        readonly initializer?: Expression | undefined;
+     }
+     interface AutoAccessorPropertyDeclaration extends PropertyDeclaration {
+         _autoAccessorBrand: void;
+     }
+     interface ObjectLiteralElement extends NamedDeclaration {
+         _objectLiteralBrand: void;
+-        readonly name?: PropertyName;
++        readonly name?: PropertyName | undefined;
+     }
+     /** Unlike ObjectLiteralElement, excludes JSXAttribute and JSXSpreadAttribute. */
+     type ObjectLiteralElementLike = PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | AccessorDeclaration;
+     interface PropertyAssignment extends ObjectLiteralElement, JSDocContainer {
+@@ -4604,10 +4604,10 @@
+     interface ShorthandPropertyAssignment extends ObjectLiteralElement, JSDocContainer {
+         readonly kind: SyntaxKind.ShorthandPropertyAssignment;
+         readonly parent: ObjectLiteralExpression;
+         readonly name: Identifier;
+-        readonly equalsToken?: EqualsToken;
+-        readonly objectAssignmentInitializer?: Expression;
++        readonly equalsToken?: EqualsToken | undefined;
++        readonly objectAssignmentInitializer?: Expression | undefined;
+     }
+     interface SpreadAssignment extends ObjectLiteralElement, JSDocContainer {
+         readonly kind: SyntaxKind.SpreadAssignment;
+         readonly parent: ObjectLiteralExpression;
+@@ -4645,16 +4645,16 @@
+     /** @deprecated Use SignatureDeclaration */
+     type FunctionLike = SignatureDeclaration;
+     interface FunctionDeclaration extends FunctionLikeDeclarationBase, DeclarationStatement, LocalsContainer {
+         readonly kind: SyntaxKind.FunctionDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
+-        readonly name?: Identifier;
+-        readonly body?: FunctionBody;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
++        readonly name?: Identifier | undefined;
++        readonly body?: FunctionBody | undefined;
+     }
+     interface MethodSignature extends SignatureDeclarationBase, TypeElement, LocalsContainer {
+         readonly kind: SyntaxKind.MethodSignature;
+         readonly parent: TypeLiteralNode | InterfaceDeclaration;
+-        readonly modifiers?: NodeArray<Modifier>;
++        readonly modifiers?: NodeArray<Modifier> | undefined;
+         readonly name: PropertyName;
+     }
+     interface MethodDeclaration extends FunctionLikeDeclarationBase, ClassElement, ObjectLiteralElement, JSDocContainer, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.MethodDeclaration;
+@@ -4676,24 +4676,24 @@
+     }
+     interface GetAccessorDeclaration extends FunctionLikeDeclarationBase, ClassElement, TypeElement, ObjectLiteralElement, JSDocContainer, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.GetAccessor;
+         readonly parent: ClassLikeDeclaration | ObjectLiteralExpression | TypeLiteralNode | InterfaceDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: PropertyName;
+-        readonly body?: FunctionBody;
++        readonly body?: FunctionBody | undefined;
+     }
+     interface SetAccessorDeclaration extends FunctionLikeDeclarationBase, ClassElement, TypeElement, ObjectLiteralElement, JSDocContainer, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.SetAccessor;
+         readonly parent: ClassLikeDeclaration | ObjectLiteralExpression | TypeLiteralNode | InterfaceDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: PropertyName;
+-        readonly body?: FunctionBody;
++        readonly body?: FunctionBody | undefined;
+     }
+     type AccessorDeclaration = GetAccessorDeclaration | SetAccessorDeclaration;
+     interface IndexSignatureDeclaration extends SignatureDeclarationBase, ClassElement, TypeElement, LocalsContainer {
+         readonly kind: SyntaxKind.IndexSignature;
+         readonly parent: ObjectTypeDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly type: TypeNode;
+     }
+     interface ClassStaticBlockDeclaration extends ClassElement, JSDocContainer, LocalsContainer {
+         readonly kind: SyntaxKind.ClassStaticBlockDeclaration;
+@@ -4710,17 +4710,17 @@
+     interface ImportTypeAssertionContainer extends Node {
+         readonly kind: SyntaxKind.ImportTypeAssertionContainer;
+         readonly parent: ImportTypeNode;
+         /** @deprecated */ readonly assertClause: AssertClause;
+-        readonly multiLine?: boolean;
++        readonly multiLine?: boolean | undefined;
+     }
+     interface ImportTypeNode extends NodeWithTypeArguments {
+         readonly kind: SyntaxKind.ImportType;
+         readonly isTypeOf: boolean;
+         readonly argument: TypeNode;
+         /** @deprecated */ readonly assertions?: ImportTypeAssertionContainer;
+-        readonly attributes?: ImportAttributes;
+-        readonly qualifier?: EntityName;
++        readonly attributes?: ImportAttributes | undefined;
++        readonly qualifier?: EntityName | undefined;
+     }
+     interface ThisTypeNode extends TypeNode {
+         readonly kind: SyntaxKind.ThisType;
+     }
+@@ -4733,12 +4733,12 @@
+         readonly kind: SyntaxKind.FunctionType;
+     }
+     interface ConstructorTypeNode extends FunctionOrConstructorTypeNodeBase, LocalsContainer {
+         readonly kind: SyntaxKind.ConstructorType;
+-        readonly modifiers?: NodeArray<Modifier>;
++        readonly modifiers?: NodeArray<Modifier> | undefined;
+     }
+     interface NodeWithTypeArguments extends TypeNode {
+-        readonly typeArguments?: NodeArray<TypeNode>;
++        readonly typeArguments?: NodeArray<TypeNode> | undefined;
+     }
+     type TypeReferenceType = TypeReferenceNode | ExpressionWithTypeArguments;
+     interface TypeReferenceNode extends NodeWithTypeArguments {
+         readonly kind: SyntaxKind.TypeReference;
+@@ -4746,11 +4746,11 @@
+     }
+     interface TypePredicateNode extends TypeNode {
+         readonly kind: SyntaxKind.TypePredicate;
+         readonly parent: SignatureDeclaration | JSDocTypeExpression;
+-        readonly assertsModifier?: AssertsKeyword;
++        readonly assertsModifier?: AssertsKeyword | undefined;
+         readonly parameterName: Identifier | ThisTypeNode;
+-        readonly type?: TypeNode;
++        readonly type?: TypeNode | undefined;
+     }
+     interface TypeQueryNode extends NodeWithTypeArguments {
+         readonly kind: SyntaxKind.TypeQuery;
+         readonly exprName: EntityName;
+@@ -4768,11 +4768,11 @@
+         readonly elements: NodeArray<TypeNode | NamedTupleMember>;
+     }
+     interface NamedTupleMember extends TypeNode, Declaration, JSDocContainer {
+         readonly kind: SyntaxKind.NamedTupleMember;
+-        readonly dotDotDotToken?: Token<SyntaxKind.DotDotDotToken>;
++        readonly dotDotDotToken?: Token<SyntaxKind.DotDotDotToken> | undefined;
+         readonly name: Identifier;
+-        readonly questionToken?: Token<SyntaxKind.QuestionToken>;
++        readonly questionToken?: Token<SyntaxKind.QuestionToken> | undefined;
+         readonly type: TypeNode;
+     }
+     interface OptionalTypeNode extends TypeNode {
+         readonly kind: SyntaxKind.OptionalType;
+@@ -4817,15 +4817,15 @@
+         readonly indexType: TypeNode;
+     }
+     interface MappedTypeNode extends TypeNode, Declaration, LocalsContainer {
+         readonly kind: SyntaxKind.MappedType;
+-        readonly readonlyToken?: ReadonlyKeyword | PlusToken | MinusToken;
++        readonly readonlyToken?: ReadonlyKeyword | PlusToken | MinusToken | undefined;
+         readonly typeParameter: TypeParameterDeclaration;
+-        readonly nameType?: TypeNode;
+-        readonly questionToken?: QuestionToken | PlusToken | MinusToken;
+-        readonly type?: TypeNode;
++        readonly nameType?: TypeNode | undefined;
++        readonly questionToken?: QuestionToken | PlusToken | MinusToken | undefined;
++        readonly type?: TypeNode | undefined;
+         /** Used only to produce grammar errors */
+-        readonly members?: NodeArray<TypeElement>;
++        readonly members?: NodeArray<TypeElement> | undefined;
+     }
+     interface LiteralTypeNode extends TypeNode {
+         readonly kind: SyntaxKind.LiteralType;
+         readonly literal: NullLiteral | BooleanLiteral | LiteralExpression | PrefixUnaryExpression;
+@@ -4921,16 +4921,16 @@
+         readonly expression: UnaryExpression;
+     }
+     interface YieldExpression extends Expression {
+         readonly kind: SyntaxKind.YieldExpression;
+-        readonly asteriskToken?: AsteriskToken;
+-        readonly expression?: Expression;
++        readonly asteriskToken?: AsteriskToken | undefined;
++        readonly expression?: Expression | undefined;
+     }
+     interface SyntheticExpression extends Expression {
+         readonly kind: SyntaxKind.SyntheticExpression;
+         readonly isSpread: boolean;
+         readonly type: Type;
+-        readonly tupleNameSource?: ParameterDeclaration | NamedTupleMember;
++        readonly tupleNameSource?: ParameterDeclaration | NamedTupleMember | undefined;
+     }
+     type ExponentiationOperator = SyntaxKind.AsteriskAsteriskToken;
+     type MultiplicativeOperator = SyntaxKind.AsteriskToken | SyntaxKind.SlashToken | SyntaxKind.PercentToken;
+     type MultiplicativeOperatorOrHigher = ExponentiationOperator | MultiplicativeOperator;
+@@ -4990,26 +4990,26 @@
+     type FunctionBody = Block;
+     type ConciseBody = FunctionBody | Expression;
+     interface FunctionExpression extends PrimaryExpression, FunctionLikeDeclarationBase, JSDocContainer, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.FunctionExpression;
+-        readonly modifiers?: NodeArray<Modifier>;
+-        readonly name?: Identifier;
++        readonly modifiers?: NodeArray<Modifier> | undefined;
++        readonly name?: Identifier | undefined;
+         readonly body: FunctionBody;
+     }
+     interface ArrowFunction extends Expression, FunctionLikeDeclarationBase, JSDocContainer, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.ArrowFunction;
+-        readonly modifiers?: NodeArray<Modifier>;
++        readonly modifiers?: NodeArray<Modifier> | undefined;
+         readonly equalsGreaterThanToken: EqualsGreaterThanToken;
+         readonly body: ConciseBody;
+         readonly name: never;
+     }
+     interface LiteralLikeNode extends Node {
+         text: string;
+         isUnterminated?: boolean;
+-        hasExtendedUnicodeEscape?: boolean;
++        hasExtendedUnicodeEscape?: boolean | undefined;
+     }
+     interface TemplateLiteralLikeNode extends LiteralLikeNode {
+-        rawText?: string;
++        rawText?: string | undefined;
+     }
+     interface LiteralExpression extends LiteralLikeNode, PrimaryExpression {
+         _literalExpressionBrand: void;
+     }
+@@ -5090,9 +5090,9 @@
+     type AccessExpression = PropertyAccessExpression | ElementAccessExpression;
+     interface PropertyAccessExpression extends MemberExpression, NamedDeclaration, JSDocContainer, FlowContainer {
+         readonly kind: SyntaxKind.PropertyAccessExpression;
+         readonly expression: LeftHandSideExpression;
+-        readonly questionDotToken?: QuestionDotToken;
++        readonly questionDotToken?: QuestionDotToken | undefined;
+         readonly name: MemberName;
+     }
+     interface PropertyAccessChain extends PropertyAccessExpression {
+         _optionalChainBrand: void;
+@@ -5109,9 +5109,9 @@
+     }
+     interface ElementAccessExpression extends MemberExpression, Declaration, JSDocContainer, FlowContainer {
+         readonly kind: SyntaxKind.ElementAccessExpression;
+         readonly expression: LeftHandSideExpression;
+-        readonly questionDotToken?: QuestionDotToken;
++        readonly questionDotToken?: QuestionDotToken | undefined;
+         readonly argumentExpression: Expression;
+     }
+     interface ElementAccessChain extends ElementAccessExpression {
+         _optionalChainBrand: void;
+@@ -5122,10 +5122,10 @@
+     type SuperProperty = SuperPropertyAccessExpression | SuperElementAccessExpression;
+     interface CallExpression extends LeftHandSideExpression, Declaration {
+         readonly kind: SyntaxKind.CallExpression;
+         readonly expression: LeftHandSideExpression;
+-        readonly questionDotToken?: QuestionDotToken;
+-        readonly typeArguments?: NodeArray<TypeNode>;
++        readonly questionDotToken?: QuestionDotToken | undefined;
++        readonly typeArguments?: NodeArray<TypeNode> | undefined;
+         readonly arguments: NodeArray<Expression>;
+     }
+     interface CallChain extends CallExpression {
+         _optionalChainBrand: void;
+@@ -5143,15 +5143,15 @@
+     }
+     interface NewExpression extends PrimaryExpression, Declaration {
+         readonly kind: SyntaxKind.NewExpression;
+         readonly expression: LeftHandSideExpression;
+-        readonly typeArguments?: NodeArray<TypeNode>;
+-        readonly arguments?: NodeArray<Expression>;
++        readonly typeArguments?: NodeArray<TypeNode> | undefined;
++        readonly arguments?: NodeArray<Expression> | undefined;
+     }
+     interface TaggedTemplateExpression extends MemberExpression {
+         readonly kind: SyntaxKind.TaggedTemplateExpression;
+         readonly tag: LeftHandSideExpression;
+-        readonly typeArguments?: NodeArray<TypeNode>;
++        readonly typeArguments?: NodeArray<TypeNode> | undefined;
+         readonly template: TemplateLiteral;
+     }
+     interface InstanceofExpression extends BinaryExpression {
+         readonly operatorToken: Token<SyntaxKind.InstanceOfKeyword>;
+@@ -5218,15 +5218,15 @@
+     interface JsxOpeningElement extends Expression {
+         readonly kind: SyntaxKind.JsxOpeningElement;
+         readonly parent: JsxElement;
+         readonly tagName: JsxTagNameExpression;
+-        readonly typeArguments?: NodeArray<TypeNode>;
++        readonly typeArguments?: NodeArray<TypeNode> | undefined;
+         readonly attributes: JsxAttributes;
+     }
+     interface JsxSelfClosingElement extends PrimaryExpression {
+         readonly kind: SyntaxKind.JsxSelfClosingElement;
+         readonly tagName: JsxTagNameExpression;
+-        readonly typeArguments?: NodeArray<TypeNode>;
++        readonly typeArguments?: NodeArray<TypeNode> | undefined;
+         readonly attributes: JsxAttributes;
+     }
+     interface JsxFragment extends PrimaryExpression {
+         readonly kind: SyntaxKind.JsxFragment;
+@@ -5245,9 +5245,9 @@
+     interface JsxAttribute extends Declaration {
+         readonly kind: SyntaxKind.JsxAttribute;
+         readonly parent: JsxAttributes;
+         readonly name: JsxAttributeName;
+-        readonly initializer?: JsxAttributeValue;
++        readonly initializer?: JsxAttributeValue | undefined;
+     }
+     type JsxAttributeValue = StringLiteral | JsxExpression | JsxElement | JsxSelfClosingElement | JsxFragment;
+     interface JsxSpreadAttribute extends ObjectLiteralElement {
+         readonly kind: SyntaxKind.JsxSpreadAttribute;
+@@ -5261,10 +5261,10 @@
+     }
+     interface JsxExpression extends Expression {
+         readonly kind: SyntaxKind.JsxExpression;
+         readonly parent: JsxElement | JsxFragment | JsxAttributeLike;
+-        readonly dotDotDotToken?: Token<SyntaxKind.DotDotDotToken>;
+-        readonly expression?: Expression;
++        readonly dotDotDotToken?: Token<SyntaxKind.DotDotDotToken> | undefined;
++        readonly expression?: Expression | undefined;
+     }
+     interface JsxText extends LiteralLikeNode {
+         readonly kind: SyntaxKind.JsxText;
+         readonly parent: JsxElement | JsxFragment;
+@@ -5303,9 +5303,9 @@
+         readonly statements: NodeArray<Statement>;
+     }
+     interface VariableStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.VariableStatement;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly declarationList: VariableDeclarationList;
+     }
+     interface ExpressionStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.ExpressionStatement;
+@@ -5314,9 +5314,9 @@
+     interface IfStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.IfStatement;
+         readonly expression: Expression;
+         readonly thenStatement: Statement;
+-        readonly elseStatement?: Statement;
++        readonly elseStatement?: Statement | undefined;
+     }
+     interface IterationStatement extends Statement {
+         readonly statement: Statement;
+     }
+@@ -5330,11 +5330,11 @@
+     }
+     type ForInitializer = VariableDeclarationList | Expression;
+     interface ForStatement extends IterationStatement, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.ForStatement;
+-        readonly initializer?: ForInitializer;
+-        readonly condition?: Expression;
+-        readonly incrementor?: Expression;
++        readonly initializer?: ForInitializer | undefined;
++        readonly condition?: Expression | undefined;
++        readonly incrementor?: Expression | undefined;
+     }
+     type ForInOrOfStatement = ForInStatement | ForOfStatement;
+     interface ForInStatement extends IterationStatement, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.ForInStatement;
+@@ -5342,24 +5342,24 @@
+         readonly expression: Expression;
+     }
+     interface ForOfStatement extends IterationStatement, LocalsContainer, FlowContainer {
+         readonly kind: SyntaxKind.ForOfStatement;
+-        readonly awaitModifier?: AwaitKeyword;
++        readonly awaitModifier?: AwaitKeyword | undefined;
+         readonly initializer: ForInitializer;
+         readonly expression: Expression;
+     }
+     interface BreakStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.BreakStatement;
+-        readonly label?: Identifier;
++        readonly label?: Identifier | undefined;
+     }
+     interface ContinueStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.ContinueStatement;
+-        readonly label?: Identifier;
++        readonly label?: Identifier | undefined;
+     }
+     type BreakOrContinueStatement = BreakStatement | ContinueStatement;
+     interface ReturnStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.ReturnStatement;
+-        readonly expression?: Expression;
++        readonly expression?: Expression | undefined;
+     }
+     interface WithStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.WithStatement;
+         readonly expression: Expression;
+@@ -5399,53 +5399,53 @@
+     }
+     interface TryStatement extends Statement, FlowContainer {
+         readonly kind: SyntaxKind.TryStatement;
+         readonly tryBlock: Block;
+-        readonly catchClause?: CatchClause;
+-        readonly finallyBlock?: Block;
++        readonly catchClause?: CatchClause | undefined;
++        readonly finallyBlock?: Block | undefined;
+     }
+     interface CatchClause extends Node, LocalsContainer {
+         readonly kind: SyntaxKind.CatchClause;
+         readonly parent: TryStatement;
+-        readonly variableDeclaration?: VariableDeclaration;
++        readonly variableDeclaration?: VariableDeclaration | undefined;
+         readonly block: Block;
+     }
+     type ObjectTypeDeclaration = ClassLikeDeclaration | InterfaceDeclaration | TypeLiteralNode;
+     type DeclarationWithTypeParameters = DeclarationWithTypeParameterChildren | JSDocTypedefTag | JSDocCallbackTag | JSDocSignature;
+     type DeclarationWithTypeParameterChildren = SignatureDeclaration | ClassLikeDeclaration | InterfaceDeclaration | TypeAliasDeclaration | JSDocTemplateTag;
+     interface ClassLikeDeclarationBase extends NamedDeclaration, JSDocContainer {
+         readonly kind: SyntaxKind.ClassDeclaration | SyntaxKind.ClassExpression;
+-        readonly name?: Identifier;
+-        readonly typeParameters?: NodeArray<TypeParameterDeclaration>;
+-        readonly heritageClauses?: NodeArray<HeritageClause>;
++        readonly name?: Identifier | undefined;
++        readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined;
++        readonly heritageClauses?: NodeArray<HeritageClause> | undefined;
+         readonly members: NodeArray<ClassElement>;
+     }
+     interface ClassDeclaration extends ClassLikeDeclarationBase, DeclarationStatement {
+         readonly kind: SyntaxKind.ClassDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         /** May be undefined in `export default class { ... }`. */
+-        readonly name?: Identifier;
++        readonly name?: Identifier | undefined;
+     }
+     interface ClassExpression extends ClassLikeDeclarationBase, PrimaryExpression {
+         readonly kind: SyntaxKind.ClassExpression;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+     }
+     type ClassLikeDeclaration = ClassDeclaration | ClassExpression;
+     interface ClassElement extends NamedDeclaration {
+         _classElementBrand: void;
+-        readonly name?: PropertyName;
++        readonly name?: PropertyName | undefined;
+     }
+     interface TypeElement extends NamedDeclaration {
+         _typeElementBrand: void;
+-        readonly name?: PropertyName;
++        readonly name?: PropertyName | undefined;
+         readonly questionToken?: QuestionToken | undefined;
+     }
+     interface InterfaceDeclaration extends DeclarationStatement, JSDocContainer {
+         readonly kind: SyntaxKind.InterfaceDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: Identifier;
+-        readonly typeParameters?: NodeArray<TypeParameterDeclaration>;
+-        readonly heritageClauses?: NodeArray<HeritageClause>;
++        readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined;
++        readonly heritageClauses?: NodeArray<HeritageClause> | undefined;
+         readonly members: NodeArray<TypeElement>;
+     }
+     interface HeritageClause extends Node {
+         readonly kind: SyntaxKind.HeritageClause;
+@@ -5454,33 +5454,33 @@
+         readonly types: NodeArray<ExpressionWithTypeArguments>;
+     }
+     interface TypeAliasDeclaration extends DeclarationStatement, JSDocContainer, LocalsContainer {
+         readonly kind: SyntaxKind.TypeAliasDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: Identifier;
+-        readonly typeParameters?: NodeArray<TypeParameterDeclaration>;
++        readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined;
+         readonly type: TypeNode;
+     }
+     interface EnumMember extends NamedDeclaration, JSDocContainer {
+         readonly kind: SyntaxKind.EnumMember;
+         readonly parent: EnumDeclaration;
+         readonly name: PropertyName;
+-        readonly initializer?: Expression;
++        readonly initializer?: Expression | undefined;
+     }
+     interface EnumDeclaration extends DeclarationStatement, JSDocContainer {
+         readonly kind: SyntaxKind.EnumDeclaration;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: Identifier;
+         readonly members: NodeArray<EnumMember>;
+     }
+     type ModuleName = Identifier | StringLiteral;
+     type ModuleBody = NamespaceBody | JSDocNamespaceBody;
+     interface ModuleDeclaration extends DeclarationStatement, JSDocContainer, LocalsContainer {
+         readonly kind: SyntaxKind.ModuleDeclaration;
+         readonly parent: ModuleBody | SourceFile;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: ModuleName;
+-        readonly body?: ModuleBody | JSDocNamespaceDeclaration;
++        readonly body?: ModuleBody | JSDocNamespaceDeclaration | undefined;
+     }
+     type NamespaceBody = ModuleBlock | NamespaceDeclaration;
+     interface NamespaceDeclaration extends ModuleDeclaration {
+         readonly name: Identifier;
+@@ -5504,9 +5504,9 @@
+      */
+     interface ImportEqualsDeclaration extends DeclarationStatement, JSDocContainer {
+         readonly kind: SyntaxKind.ImportEqualsDeclaration;
+         readonly parent: SourceFile | ModuleBlock;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly name: Identifier;
+         readonly isTypeOnly: boolean;
+         readonly moduleReference: ModuleReference;
+     }
+@@ -5517,14 +5517,14 @@
+     }
+     interface ImportDeclaration extends Statement {
+         readonly kind: SyntaxKind.ImportDeclaration;
+         readonly parent: SourceFile | ModuleBlock;
+-        readonly modifiers?: NodeArray<ModifierLike>;
+-        readonly importClause?: ImportClause;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
++        readonly importClause?: ImportClause | undefined;
+         /** If this is not a StringLiteral it will be a grammar error. */
+         readonly moduleSpecifier: Expression;
+-        /** @deprecated */ readonly assertClause?: AssertClause;
+-        readonly attributes?: ImportAttributes;
++        /** @deprecated */ readonly assertClause?: AssertClause | undefined;
++        readonly attributes?: ImportAttributes | undefined;
+     }
+     type NamedImportBindings = NamespaceImport | NamedImports;
+     type NamedExportBindings = NamespaceExport | NamedExports;
+     interface ImportClause extends NamedDeclaration {
+@@ -5532,10 +5532,10 @@
+         readonly parent: ImportDeclaration | JSDocImportTag;
+         /** @deprecated Use `phaseModifier` instead */
+         readonly isTypeOnly: boolean;
+         readonly phaseModifier: undefined | ImportPhaseModifierSyntaxKind;
+-        readonly name?: Identifier;
+-        readonly namedBindings?: NamedImportBindings;
++        readonly name?: Identifier | undefined;
++        readonly namedBindings?: NamedImportBindings | undefined;
+     }
+     type ImportPhaseModifierSyntaxKind = SyntaxKind.TypeKeyword | SyntaxKind.DeferKeyword;
+     /** @deprecated */
+     type AssertionKey = ImportAttributeName;
+@@ -5556,9 +5556,9 @@
+         readonly token: SyntaxKind.WithKeyword | SyntaxKind.AssertKeyword;
+         readonly kind: SyntaxKind.ImportAttributes;
+         readonly parent: ImportDeclaration | ExportDeclaration;
+         readonly elements: NodeArray<ImportAttribute>;
+-        readonly multiLine?: boolean;
++        readonly multiLine?: boolean | undefined;
+     }
+     interface NamespaceImport extends NamedDeclaration {
+         readonly kind: SyntaxKind.NamespaceImport;
+         readonly parent: ImportClause;
+@@ -5575,16 +5575,16 @@
+     }
+     interface ExportDeclaration extends DeclarationStatement, JSDocContainer {
+         readonly kind: SyntaxKind.ExportDeclaration;
+         readonly parent: SourceFile | ModuleBlock;
+-        readonly modifiers?: NodeArray<ModifierLike>;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
+         readonly isTypeOnly: boolean;
+         /** Will not be assigned in the case of `export * from "foo";` */
+-        readonly exportClause?: NamedExportBindings;
++        readonly exportClause?: NamedExportBindings | undefined;
+         /** If this is not a StringLiteral it will be a grammar error. */
+-        readonly moduleSpecifier?: Expression;
+-        /** @deprecated */ readonly assertClause?: AssertClause;
+-        readonly attributes?: ImportAttributes;
++        readonly moduleSpecifier?: Expression | undefined;
++        /** @deprecated */ readonly assertClause?: AssertClause | undefined;
++        readonly attributes?: ImportAttributes | undefined;
+     }
+     interface NamedImports extends Node {
+         readonly kind: SyntaxKind.NamedImports;
+         readonly parent: ImportClause;
+@@ -5598,17 +5598,17 @@
+     type NamedImportsOrExports = NamedImports | NamedExports;
+     interface ImportSpecifier extends NamedDeclaration {
+         readonly kind: SyntaxKind.ImportSpecifier;
+         readonly parent: NamedImports;
+-        readonly propertyName?: ModuleExportName;
++        readonly propertyName?: ModuleExportName | undefined;
+         readonly name: Identifier;
+         readonly isTypeOnly: boolean;
+     }
+     interface ExportSpecifier extends NamedDeclaration, JSDocContainer {
+         readonly kind: SyntaxKind.ExportSpecifier;
+         readonly parent: NamedExports;
+         readonly isTypeOnly: boolean;
+-        readonly propertyName?: ModuleExportName;
++        readonly propertyName?: ModuleExportName | undefined;
+         readonly name: ModuleExportName;
+     }
+     type ModuleExportName = Identifier | StringLiteral;
+     type ImportOrExportSpecifier = ImportSpecifier | ExportSpecifier;
+@@ -5664,10 +5664,10 @@
+      */
+     interface ExportAssignment extends DeclarationStatement, JSDocContainer {
+         readonly kind: SyntaxKind.ExportAssignment;
+         readonly parent: SourceFile;
+-        readonly modifiers?: NodeArray<ModifierLike>;
+-        readonly isExportEquals?: boolean;
++        readonly modifiers?: NodeArray<ModifierLike> | undefined;
++        readonly isExportEquals?: boolean | undefined;
+         readonly expression: Expression;
+     }
+     interface FileReference extends TextRange {
+         fileName: string;
+@@ -5678,9 +5678,9 @@
+         enabled: boolean;
+     }
+     type CommentKind = SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia;
+     interface CommentRange extends TextRange {
+-        hasTrailingNewLine?: boolean;
++        hasTrailingNewLine?: boolean | undefined;
+         kind: CommentKind;
+     }
+     interface SynthesizedComment extends CommentRange {
+         text: string;
+@@ -5739,29 +5739,29 @@
+     type JSDocTypeReferencingNode = JSDocVariadicType | JSDocOptionalType | JSDocNullableType | JSDocNonNullableType;
+     interface JSDoc extends Node {
+         readonly kind: SyntaxKind.JSDoc;
+         readonly parent: HasJSDoc;
+-        readonly tags?: NodeArray<JSDocTag>;
+-        readonly comment?: string | NodeArray<JSDocComment>;
++        readonly tags?: NodeArray<JSDocTag> | undefined;
++        readonly comment?: string | NodeArray<JSDocComment> | undefined;
+     }
+     interface JSDocTag extends Node {
+         readonly parent: JSDoc | JSDocTypeLiteral;
+         readonly tagName: Identifier;
+-        readonly comment?: string | NodeArray<JSDocComment>;
++        readonly comment?: string | NodeArray<JSDocComment> | undefined;
+     }
+     interface JSDocLink extends Node {
+         readonly kind: SyntaxKind.JSDocLink;
+-        readonly name?: EntityName | JSDocMemberName;
++        readonly name?: EntityName | JSDocMemberName | undefined;
+         text: string;
+     }
+     interface JSDocLinkCode extends Node {
+         readonly kind: SyntaxKind.JSDocLinkCode;
+-        readonly name?: EntityName | JSDocMemberName;
++        readonly name?: EntityName | JSDocMemberName | undefined;
+         text: string;
+     }
+     interface JSDocLinkPlain extends Node {
+         readonly kind: SyntaxKind.JSDocLinkPlain;
+-        readonly name?: EntityName | JSDocMemberName;
++        readonly name?: EntityName | JSDocMemberName | undefined;
+         text: string;
+     }
+     type JSDocComment = JSDocText | JSDocLink | JSDocLinkCode | JSDocLinkPlain;
+     interface JSDocText extends Node {
+@@ -5826,9 +5826,9 @@
+         readonly typeParameters: NodeArray<TypeParameterDeclaration>;
+     }
+     interface JSDocSeeTag extends JSDocTag {
+         readonly kind: SyntaxKind.JSDocSeeTag;
+-        readonly name?: JSDocNameReference;
++        readonly name?: JSDocNameReference | undefined;
+     }
+     interface JSDocReturnTag extends JSDocTag {
+         readonly kind: SyntaxKind.JSDocReturnTag;
+         readonly typeExpression?: JSDocTypeExpression;
+@@ -5839,17 +5839,17 @@
+     }
+     interface JSDocTypedefTag extends JSDocTag, NamedDeclaration, LocalsContainer {
+         readonly kind: SyntaxKind.JSDocTypedefTag;
+         readonly parent: JSDoc;
+-        readonly fullName?: JSDocNamespaceDeclaration | Identifier;
+-        readonly name?: Identifier;
+-        readonly typeExpression?: JSDocTypeExpression | JSDocTypeLiteral;
++        readonly fullName?: JSDocNamespaceDeclaration | Identifier | undefined;
++        readonly name?: Identifier | undefined;
++        readonly typeExpression?: JSDocTypeExpression | JSDocTypeLiteral | undefined;
+     }
+     interface JSDocCallbackTag extends JSDocTag, NamedDeclaration, LocalsContainer {
+         readonly kind: SyntaxKind.JSDocCallbackTag;
+         readonly parent: JSDoc;
+-        readonly fullName?: JSDocNamespaceDeclaration | Identifier;
+-        readonly name?: Identifier;
++        readonly fullName?: JSDocNamespaceDeclaration | Identifier | undefined;
++        readonly name?: Identifier | undefined;
+         readonly typeExpression: JSDocSignature;
+     }
+     interface JSDocOverloadTag extends JSDocTag {
+         readonly kind: SyntaxKind.JSDocOverloadTag;
+@@ -5861,16 +5861,16 @@
+         readonly typeExpression?: JSDocTypeExpression;
+     }
+     interface JSDocSignature extends JSDocType, Declaration, JSDocContainer, LocalsContainer {
+         readonly kind: SyntaxKind.JSDocSignature;
+-        readonly typeParameters?: readonly JSDocTemplateTag[];
++        readonly typeParameters?: readonly JSDocTemplateTag[] | undefined;
+         readonly parameters: readonly JSDocParameterTag[];
+         readonly type: JSDocReturnTag | undefined;
+     }
+     interface JSDocPropertyLikeTag extends JSDocTag, Declaration {
+         readonly parent: JSDoc;
+         readonly name: EntityName;
+-        readonly typeExpression?: JSDocTypeExpression;
++        readonly typeExpression?: JSDocTypeExpression | undefined;
+         /** Whether the property name came before the type -- non-standard for JSDoc, but Typescript-like */
+         readonly isNameFirst: boolean;
+         readonly isBracketed: boolean;
+     }
+@@ -5881,9 +5881,9 @@
+         readonly kind: SyntaxKind.JSDocParameterTag;
+     }
+     interface JSDocTypeLiteral extends JSDocType, Declaration {
+         readonly kind: SyntaxKind.JSDocTypeLiteral;
+-        readonly jsDocPropertyTags?: readonly JSDocPropertyLikeTag[];
++        readonly jsDocPropertyTags?: readonly JSDocPropertyLikeTag[] | undefined;
+         /** If true, then this type literal represents an *array* of its type. */
+         readonly isArrayType: boolean;
+     }
+     interface JSDocSatisfiesTag extends JSDocTag {
+@@ -5892,20 +5892,20 @@
+     }
+     interface JSDocImportTag extends JSDocTag {
+         readonly kind: SyntaxKind.JSDocImportTag;
+         readonly parent: JSDoc;
+-        readonly importClause?: ImportClause;
++        readonly importClause?: ImportClause | undefined;
+         readonly moduleSpecifier: Expression;
+-        readonly attributes?: ImportAttributes;
++        readonly attributes?: ImportAttributes | undefined;
+     }
+     type FlowType = Type | IncompleteType;
+     interface IncompleteType {
+         flags: TypeFlags | 0;
+         type: Type;
+     }
+     interface AmdDependency {
+         path: string;
+-        name?: string;
++        name?: string | undefined;
+     }
+     /**
+      * Subset of properties from SourceFile that are used in multiple utility functions
+      */
+@@ -5963,8 +5963,9 @@
+         readonly sourceFiles: readonly SourceFile[];
+     }
+     interface JsonSourceFile extends SourceFile {
+         readonly statements: NodeArray<JsonObjectExpressionStatement>;
++        extendedSourceFiles?: string[];
+     }
+     interface TsConfigSourceFile extends JsonSourceFile {
+         extendedSourceFiles?: string[];
+     }
+@@ -6167,9 +6168,9 @@
+     interface EmitResult {
+         emitSkipped: boolean;
+         /** Contains declaration emit diagnostics */
+         diagnostics: readonly Diagnostic[];
+-        emittedFiles?: string[];
++        emittedFiles?: string[] | undefined;
+     }
+     interface TypeChecker {
+         getTypeOfSymbolAtLocation(symbol: Symbol, node: Node): Type;
+         getTypeOfSymbol(symbol: Symbol): Type;
+@@ -6532,12 +6533,12 @@
+     }
+     interface Symbol {
+         flags: SymbolFlags;
+         escapedName: __String;
+-        declarations?: Declaration[];
+-        valueDeclaration?: Declaration;
+-        members?: SymbolTable;
+-        exports?: SymbolTable;
++        declarations?: Declaration[] | undefined;
++        valueDeclaration?: Declaration | undefined;
++        members?: SymbolTable | undefined;
++        exports?: SymbolTable | undefined;
+         globalExports?: SymbolTable;
+     }
+     interface Symbol {
+         readonly name: string;
+@@ -6646,10 +6647,10 @@
+     interface Type {
+         flags: TypeFlags;
+         symbol: Symbol;
+         pattern?: DestructuringPattern;
+-        aliasSymbol?: Symbol;
+-        aliasTypeArguments?: readonly Type[];
++        aliasSymbol?: Symbol | undefined;
++        aliasTypeArguments?: readonly Type[] | undefined;
+     }
+     interface Type {
+         getFlags(): TypeFlags;
+         getSymbol(): Symbol | undefined;
+@@ -6818,13 +6819,13 @@
+         node: ConditionalTypeNode;
+         checkType: Type;
+         extendsType: Type;
+         isDistributive: boolean;
+-        inferTypeParameters?: TypeParameter[];
+-        outerTypeParameters?: TypeParameter[];
+-        instantiations?: Map<string, Type>;
+-        aliasSymbol?: Symbol;
+-        aliasTypeArguments?: Type[];
++        inferTypeParameters?: TypeParameter[] | undefined;
++        outerTypeParameters?: TypeParameter[] | undefined;
++        instantiations?: Map<string, Type> | undefined;
++        aliasSymbol?: Symbol | undefined;
++        aliasTypeArguments?: Type[] | undefined;
+     }
+     interface ConditionalType extends InstantiableType {
+         root: ConditionalRoot;
+         checkType: Type;
+@@ -6849,12 +6850,12 @@
+         Call = 0,
+         Construct = 1,
+     }
+     interface Signature {
+-        declaration?: SignatureDeclaration | JSDocSignature;
+-        typeParameters?: readonly TypeParameter[];
++        declaration?: SignatureDeclaration | JSDocSignature | undefined;
++        typeParameters?: readonly TypeParameter[] | undefined;
+         parameters: readonly Symbol[];
+-        thisParameter?: Symbol;
++        thisParameter?: Symbol | undefined;
+     }
+     interface Signature {
+         getDeclaration(): SignatureDeclaration;
+         getTypeParameters(): TypeParameter[] | undefined;
+@@ -6874,10 +6875,10 @@
+     interface IndexInfo {
+         keyType: Type;
+         type: Type;
+         isReadonly: boolean;
+-        declaration?: IndexSignatureDeclaration;
+-        components?: ElementWithComputedPropertyName[];
++        declaration?: IndexSignatureDeclaration | undefined;
++        components?: ElementWithComputedPropertyName[] | undefined;
+     }
+     enum InferencePriority {
+         None = 0,
+         NakedTypeVariable = 1,
+@@ -6904,10 +6905,10 @@
+         key: string;
+         category: DiagnosticCategory;
+         code: number;
+         message: string;
+-        reportsUnnecessary?: {};
+-        reportsDeprecated?: {};
++        reportsUnnecessary?: {} | undefined;
++        reportsDeprecated?: {} | undefined;
+     }
+     /**
+      * A linked list of formatted diagnostic messages to be used as part of a multiline message.
+      * It is built from the bottom up, leaving the head to be the "main" diagnostic.
+@@ -6917,16 +6918,16 @@
+     interface DiagnosticMessageChain {
+         messageText: string;
+         category: DiagnosticCategory;
+         code: number;
+-        next?: DiagnosticMessageChain[];
++        next?: DiagnosticMessageChain[] | undefined;
+     }
+     interface Diagnostic extends DiagnosticRelatedInformation {
+         /** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */
+-        reportsUnnecessary?: {};
+-        reportsDeprecated?: {};
+-        source?: string;
+-        relatedInformation?: DiagnosticRelatedInformation[];
++        reportsUnnecessary?: {} | undefined;
++        reportsDeprecated?: {} | undefined;
++        source?: string | undefined;
++        relatedInformation?: DiagnosticRelatedInformation[] | undefined;
+     }
+     interface DiagnosticRelatedInformation {
+         category: DiagnosticCategory;
+         code: number;
+@@ -6985,11 +6986,11 @@
+         path: string;
+         /** The path as the user originally wrote it */
+         originalPath?: string;
+         /** @deprecated */
+-        prepend?: boolean;
++        prepend?: boolean | undefined;
+         /** True if it is intended that this reference form a circularity */
+-        circular?: boolean;
++        circular?: boolean | undefined;
+     }
+     enum WatchFileKind {
+         FixedPollingInterval = 0,
+         PriorityPollingInterval = 1,
+@@ -7056,9 +7057,9 @@
+         libReplacement?: boolean;
+         locale?: string;
+         mapRoot?: string;
+         maxNodeModuleJsDepth?: number;
+-        module?: ModuleKind;
++        module?: ModuleKind | undefined;
+         moduleResolution?: ModuleResolutionKind;
+         moduleSuffixes?: string[];
+         moduleDetection?: ModuleDetectionKind;
+         newLine?: NewLineKind;
+@@ -7120,10 +7121,10 @@
+         /** @deprecated */
+         suppressExcessPropertyErrors?: boolean;
+         /** @deprecated */
+         suppressImplicitAnyIndexErrors?: boolean;
+-        target?: ScriptTarget;
+-        traceResolution?: boolean;
++        target?: ScriptTarget | undefined;
++        traceResolution?: boolean | undefined;
+         useUnknownInCatchVariables?: boolean;
+         noUncheckedSideEffectImports?: boolean;
+         resolveJsonModule?: boolean;
+         types?: string[];
+@@ -7137,9 +7138,9 @@
+     }
+     interface WatchOptions {
+         watchFile?: WatchFileKind;
+         watchDirectory?: WatchDirectoryKind;
+-        fallbackPolling?: PollingWatchKind;
++        fallbackPolling?: PollingWatchKind | undefined;
+         synchronousWatchDirectory?: boolean;
+         excludeDirectories?: string[];
+         excludeFiles?: string[];
+         [option: string]: CompilerOptionsValue | undefined;
+@@ -7237,10 +7238,10 @@
+     interface ParsedCommandLine {
+         options: CompilerOptions;
+         typeAcquisition?: TypeAcquisition;
+         fileNames: string[];
+-        projectReferences?: readonly ProjectReference[];
+-        watchOptions?: WatchOptions;
++        projectReferences?: readonly ProjectReference[] | undefined;
++        watchOptions?: WatchOptions | undefined;
+         raw?: any;
+         errors: Diagnostic[];
+         wildcardDirectories?: MapLike<WatchDirectoryFlags>;
+         compileOnSave?: boolean;
+@@ -7251,12 +7252,12 @@
+     }
+     interface CreateProgramOptions {
+         rootNames: readonly string[];
+         options: CompilerOptions;
+-        projectReferences?: readonly ProjectReference[];
+-        host?: CompilerHost;
+-        oldProgram?: Program;
+-        configFileParsingDiagnostics?: readonly Diagnostic[];
++        projectReferences?: readonly ProjectReference[] | undefined;
++        host?: CompilerHost | undefined;
++        oldProgram?: Program | undefined;
++        configFileParsingDiagnostics?: readonly Diagnostic[] | undefined;
+     }
+     interface ModuleResolutionHost {
+         fileExists(fileName: string): boolean;
+         readFile(fileName: string): string | undefined;
+@@ -7386,9 +7387,9 @@
+         /** If provided along with custom resolveModuleNames or resolveTypeReferenceDirectives, used to determine if unchanged file path needs to re-resolve modules/type reference directives */
+         hasInvalidatedResolutions?(filePath: Path): boolean;
+         createHash?(data: string): string;
+         getParsedCommandLine?(fileName: string): ParsedCommandLine | undefined;
+-        jsDocParsingMode?: JSDocParsingMode;
++        jsDocParsingMode?: JSDocParsingMode | undefined;
+     }
+     interface SourceMapRange extends TextRange {
+         source?: SourceMapSource;
+     }
+@@ -8176,12 +8177,12 @@
+          */
+         substituteNode?(hint: EmitHint, node: Node): Node;
+     }
+     interface PrinterOptions {
+-        removeComments?: boolean;
+-        newLine?: NewLineKind;
++        removeComments?: boolean | undefined;
++        newLine?: NewLineKind | undefined;
+         omitTrailingSemicolon?: boolean;
+-        noEmitHelpers?: boolean;
++        noEmitHelpers?: boolean | undefined;
+     }
+     interface GetEffectiveTypeRootsHost {
+         getCurrentDirectory?(): string;
+     }
+@@ -8343,9 +8344,9 @@
+         readonly useLabelDetailsInCompletionEntries?: boolean;
+         readonly allowIncompleteCompletions?: boolean;
+         readonly importModuleSpecifierPreference?: "shortest" | "project-relative" | "relative" | "non-relative";
+         /** Determines whether we import `foo/index.ts` as "foo", "foo/index", or "foo/index.js" */
+-        readonly importModuleSpecifierEnding?: "auto" | "minimal" | "index" | "js";
++        readonly importModuleSpecifierEnding?: "auto" | "minimal" | "index" | "js" | undefined;
+         readonly allowTextChangesInNewFiles?: boolean;
+         readonly providePrefixAndSuffixTextForRename?: boolean;
+         readonly includePackageJsonAutoImports?: "auto" | "on" | "off";
+         readonly provideRefactorNotApplicableReason?: boolean;
+@@ -9181,9 +9182,9 @@
+     function isReadonlyKeywordOrPlusOrMinusToken(node: Node): node is ReadonlyKeyword | PlusToken | MinusToken;
+     function isQuestionOrPlusOrMinusToken(node: Node): node is QuestionToken | PlusToken | MinusToken;
+     function isModuleName(node: Node): node is ModuleName;
+     function isBinaryOperatorToken(node: Node): node is BinaryOperatorToken;
+-    function setTextRange<T extends TextRange>(range: T, location: TextRange | undefined): T;
++    function setTextRange<T extends TextRange>(range: T, location: Readonly<TextRange> | undefined): T;
+     function canHaveModifiers(node: Node): node is HasModifiers;
+     function canHaveDecorators(node: Node): node is HasDecorators;
+     /**
+      * Invokes a callback for each child of the given node. The 'cbNode' callback is invoked for all child nodes
+@@ -9222,9 +9223,9 @@
+          * `getSetExternalModuleIndicator` on a valid `CompilerOptions` object. If not present, the default
+          * check specified by `isFileProbablyExternalModule` will be used to set the field.
+          */
+         setExternalModuleIndicator?: (file: SourceFile) => void;
+-        jsDocParsingMode?: JSDocParsingMode;
++        jsDocParsingMode?: JSDocParsingMode | undefined;
+     }
+     function parseCommandLine(commandLine: readonly string[], readFile?: (path: string) => string | undefined): ParsedCommandLine;
+     function parseBuildCommand(commandLine: readonly string[]): ParsedBuildCommand;
+     /**
+@@ -9236,18 +9237,18 @@
+      * @param fileName The path to the config file
+      */
+     function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): {
+         config?: any;
+-        error?: Diagnostic;
++        error?: Diagnostic | undefined;
+     };
+     /**
+      * Parse the text of the tsconfig.json file
+      * @param fileName The path to the config file
+      * @param jsonText The text of the config file
+      */
+     function parseConfigFileTextToJson(fileName: string, jsonText: string): {
+         config?: any;
+-        error?: Diagnostic;
++        error?: Diagnostic | undefined;
+     };
+     /**
+      * Read tsconfig.json file
+      * @param fileName The path to the config file
+@@ -9306,14 +9307,14 @@
+     }
+     interface ParsedTsconfig {
+         raw: any;
+         options?: CompilerOptions;
+-        watchOptions?: WatchOptions;
++        watchOptions?: WatchOptions | undefined;
+         typeAcquisition?: TypeAcquisition;
+         /**
+          * Note that the case of the config path has not yet been normalized, as no files have been imported into the project yet
+          */
+-        extendedConfigPath?: string | string[];
++        extendedConfigPath?: string | string[] | undefined;
+     }
+     interface ExtendedConfigCacheEntry {
+         extendedResult: TsConfigSourceFile;
+         extendedConfig: ParsedTsconfig | undefined;
+@@ -9670,9 +9671,9 @@
+     interface BuilderProgramHost {
+         /**
+          * If provided this would be used this hash instead of actual file shape text for detecting changes
+          */
+-        createHash?: (data: string) => string;
++        createHash?: ((data: string) => string) | undefined;
+         /**
+          * When emit or emitNextAffectedFile are called without writeFile,
+          * this callback if present would be used to write files
+          */
+@@ -9794,9 +9795,9 @@
+     interface IncrementalProgramOptions<T extends BuilderProgram> {
+         rootNames: readonly string[];
+         options: CompilerOptions;
+         configFileParsingDiagnostics?: readonly Diagnostic[];
+-        projectReferences?: readonly ProjectReference[];
++        projectReferences?: readonly ProjectReference[] | undefined;
+         host?: CompilerHost;
+         createProgram?: CreateProgram<T>;
+     }
+     type WatchStatusReporter = (diagnostic: Diagnostic, newLine: string, options: CompilerOptions, errorCount?: number) => void;
+@@ -9813,9 +9814,9 @@
+         /** If provided, will be used to set delayed compilation, so that multiple changes in short span are compiled together */
+         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
+         /** If provided, will be used to reset existing delayed compilation */
+         clearTimeout?(timeoutId: any): void;
+-        preferNonRecursiveWatch?: boolean;
++        preferNonRecursiveWatch?: boolean | undefined;
+     }
+     interface ProgramHost<T extends BuilderProgram> {
+         /**
+          * Used to create the program when need for program creation or recreation detected
+@@ -9886,22 +9887,22 @@
+         /** root files to use to generate program */
+         rootFiles: string[];
+         /** Compiler options */
+         options: CompilerOptions;
+-        watchOptions?: WatchOptions;
++        watchOptions?: WatchOptions | undefined;
+         /** Project References */
+-        projectReferences?: readonly ProjectReference[];
++        projectReferences?: readonly ProjectReference[] | undefined;
+     }
+     /**
+      * Host to create watch with config file
+      */
+     interface WatchCompilerHostOfConfigFile<T extends BuilderProgram> extends WatchCompilerHost<T>, ConfigFileDiagnosticsReporter {
+         /** Name of the config file to compile */
+         configFileName: string;
+         /** Options to extend */
+-        optionsToExtend?: CompilerOptions;
+-        watchOptionsToExtend?: WatchOptions;
+-        extraFileExtensions?: readonly FileExtensionInfo[];
++        optionsToExtend?: CompilerOptions | undefined;
++        watchOptionsToExtend?: WatchOptions | undefined;
++        extraFileExtensions?: readonly FileExtensionInfo[] | undefined;
+         /**
+          * Used to generate source file names from the config file and its include, exclude, files rules
+          * and also to cache the directory stucture
+          */
+@@ -9969,9 +9970,9 @@
+         reportSolutionBuilderStatus: DiagnosticReporter;
+         afterProgramEmitAndDiagnostics?(program: T): void;
+     }
+     interface SolutionBuilderHost<T extends BuilderProgram> extends SolutionBuilderHostBase<T> {
+-        reportErrorSummary?: ReportEmitErrorSummary;
++        reportErrorSummary?: ReportEmitErrorSummary | undefined;
+     }
+     interface SolutionBuilderWithWatchHost<T extends BuilderProgram> extends SolutionBuilderHostBase<T>, WatchHost {
+     }
+     interface SolutionBuilder<T extends BuilderProgram> {
+
+      at writeComparison (src/harness/harnessIO.ts:1486:23)
+      at Object.runBaseline2 [as runBaseline] (src/harness/harnessIO.ts:1509:9)
+      at Context.<anonymous> (src/testRunner/unittests/publicApi.ts:21:30)
+      at processImmediate (node:internal/timers:534:21)
+
+
+
+Error in do-runtests-parallel in 11m 44.8s
+Error: Process exited with code: 1
+Completed runtests-parallel with errors in 11m 46.2s
+Failed tasks: do-runtests-parallel
