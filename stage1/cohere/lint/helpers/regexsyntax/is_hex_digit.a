@@ -1,0 +1,4 @@
+// Input is one Go byte, represented as a number in 0..255.
+export function isHexDigit(byte: number): boolean {
+ return (byte >= 48 && byte <= 57) || (byte >= 97 && byte <= 102) || (byte >= 65 && byte <= 70);
+}

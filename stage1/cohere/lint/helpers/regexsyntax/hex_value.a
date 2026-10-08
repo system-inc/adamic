@@ -1,0 +1,6 @@
+export function hexValue(b: number): number {
+ if(b >= 48 && b <= 57) { return b - 48; }
+ if(b >= 97 && b <= 102) { return b - 97 + 10; }
+ if(b >= 65 && b <= 70) { return b - 65 + 10; }
+ return 0;
+}

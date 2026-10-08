@@ -1,0 +1,72 @@
+=== RUN   TestRegexsyntaxCapture
+    helpers_test.go:98: every actual Go use: {
+          "AllHexDigits": 839,
+          "ClassEnd": 1120,
+          "IsHexDigit": 3673,
+          "ParseHexUint": 410,
+          "ParseRegexCharacterClassWithEnd": 529,
+          "ParseRegexFlags": 2340,
+          "PatternAndFlags": 1090,
+          "SkipPatternEscape": 1796,
+          "UV": 2692,
+          "hexValue": 1923,
+          "parseRegexCharacterClass": 590,
+          "readClassEscape": 431,
+          "readRawClassChar": 881
+        }
+    helpers_test.go:113: Node/emitted/native byte agreement: 3275 rows, 97572 bytes
+=== RUN   TestRegexsyntaxCapture/is_hex_digit.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/all_hex_digits.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/hex_value.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/parse_hex_uint.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/parse_regex_flags.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/pattern_and_flags.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/regex_flags_uv.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/skip_pattern_escape.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/class_end.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/read_raw_class_char.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/read_class_escape.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/parse_regex_character_class.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+=== RUN   TestRegexsyntaxCapture/parse_regex_character_class_with_end.a
+    helpers_test.go:162: Node compiled and ran; output disagrees with Go
+    helpers_test.go:162: native compiled and ran; output disagrees with Go
+--- PASS: TestRegexsyntaxCapture (76.48s)
+    --- PASS: TestRegexsyntaxCapture/is_hex_digit.a (9.31s)
+    --- PASS: TestRegexsyntaxCapture/all_hex_digits.a (4.29s)
+    --- PASS: TestRegexsyntaxCapture/hex_value.a (5.45s)
+    --- PASS: TestRegexsyntaxCapture/parse_hex_uint.a (4.05s)
+    --- PASS: TestRegexsyntaxCapture/parse_regex_flags.a (4.38s)
+    --- PASS: TestRegexsyntaxCapture/pattern_and_flags.a (5.39s)
+    --- PASS: TestRegexsyntaxCapture/regex_flags_uv.a (4.01s)
+    --- PASS: TestRegexsyntaxCapture/skip_pattern_escape.a (5.85s)
+    --- PASS: TestRegexsyntaxCapture/class_end.a (3.77s)
+    --- PASS: TestRegexsyntaxCapture/read_raw_class_char.a (6.15s)
+    --- PASS: TestRegexsyntaxCapture/read_class_escape.a (6.99s)
+    --- PASS: TestRegexsyntaxCapture/parse_regex_character_class.a (6.26s)
+    --- PASS: TestRegexsyntaxCapture/parse_regex_character_class_with_end.a (4.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/regexsyntax	76.514s

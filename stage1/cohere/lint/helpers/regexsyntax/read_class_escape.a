@@ -1,0 +1,51 @@
+import { decode } from './utf8.a';
+import { isHexDigit } from './is_hex_digit.a';
+import { allHexDigits } from './all_hex_digits.a';
+import { parseHexUint } from './parse_hex_uint.a';
+import { regexFlagsUV } from './regex_flags_uv.a';
+import type { ElementResult } from './types.a';
+import type { RegexFlags } from './flags.a';
+export function readClassEscape(bytes: readonly number[], i: number, flags: RegexFlags): ElementResult {
+ let value = 0; let kind = 0; let brace = false; let step = 0; let ok = true;
+ const next = bytes[i+1] ?? 0;
+ if(i+1 >= bytes.length) { ok = false; }
+ else if(next === 100 || next === 68 || next === 119 || next === 87 || next === 115 || next === 83 || next === 98 || next === 66) {
+  step = 2;
+  if(next === 98) { value = 8; }
+  else if(next === 66) { if(regexFlagsUV(flags)) { ok = false; } else { value = 66; } }
+  else { kind = 2; }
+ }
+ else if(next === 112 || next === 80 || next === 113) {
+  if(regexFlagsUV(flags) && i+2 < bytes.length && bytes[i+2] === 123) {
+   const close = bytes.indexOf(125,i+3);
+   if(close < 0) { ok = false; } else { step = close+1-i; kind = 2; }
+  } else { value = next; step = 2; }
+ }
+ else if(next === 120) {
+  step = 2; value = 120;
+  if(i+3 < bytes.length && isHexDigit(bytes[i+2] ?? 0) && isHexDigit(bytes[i+3] ?? 0)) { value = parseHexUint(bytes.slice(i+2,i+4)); step = 4; }
+ }
+ else if(next === 117) {
+  step = 2; value = 117;
+  if(i+2 < bytes.length && bytes[i+2] === 123) {
+   if(regexFlagsUV(flags)) {
+    const close = bytes.indexOf(125,i+3);
+    if(close < 0) { ok = false; }
+    else { const hex = bytes.slice(i+3,close); if(!allHexDigits(hex)) { ok = false; } else { value = parseHexUint(hex); brace = true; step = close+1-i; } }
+   }
+  } else if(i+5 < bytes.length && allHexDigits(bytes.slice(i+2,i+6))) {
+   value = parseHexUint(bytes.slice(i+2,i+6)); step = 6;
+   if(regexFlagsUV(flags) && value >= 55296 && value <= 56319 && i+11 < bytes.length && bytes[i+6] === 92 && bytes[i+7] === 117 && allHexDigits(bytes.slice(i+8,i+12))) {
+    const low = parseHexUint(bytes.slice(i+8,i+12));
+    if(low >= 56320 && low <= 57343) { value = 65536 + (value-55296)*1024 + low-56320; step = 12; }
+   }
+  }
+ }
+ else if(next === 110 || next === 116 || next === 114 || next === 118 || next === 102 || next === 48) {
+  step = 2; value = next === 110 ? 10 : next === 116 ? 9 : next === 114 ? 13 : next === 118 ? 11 : next === 102 ? 12 : 0;
+ }
+ else if(next === 99) { if(i+2 < bytes.length) { value = (bytes[i+2] ?? 0) & 31; step = 3; } else { ok = false; } }
+ else { const rune = decode(bytes,i+1); value = rune[0] ?? 0; step = 1+(rune[1] ?? 0); if(step === 1) { ok = false; } }
+ if(!ok) { value = 0; kind = 0; brace = false; step = 0; }
+ return {element: {Kind:kind, Value:value, IsUBrace:brace, IsLoneSurrogate:false, Max:0, MaxIsUBrace:false, Start:ok ? i : 0, End:ok ? i+step : 0}, step:step, ok:ok};
+}
