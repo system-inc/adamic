@@ -6,3 +6,4 @@ github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/..
     trace_test.go:36: Lower: /home/cloud/full-gate/tree/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
 --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super.a (0.35s)
 
+red: b39d8146901f3cab86f4595af07ce95db0e875e4 full gate, first failure at tests after 679.6 s (coverage=0.0s build=16.8s vet=10.5s wasi=156.6s catalog=189.7s stage3=1448.6s tests=2674.1s census=3.5s), 31 fail, 6351 pass
