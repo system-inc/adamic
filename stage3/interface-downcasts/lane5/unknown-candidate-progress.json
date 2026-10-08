@@ -1175,6 +1175,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "writer-line-watcher-close",
+      "pairs": 2,
+      "candidateReads": 30,
+      "members": [
+        {
+          "receiver_type_id": 10351,
+          "type": "EmitTextWriter",
+          "field": "writeLine",
+          "declared_types": [
+            "(force?: boolean | undefined) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 15,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 6469,
+            "column": 13
+          },
+          "rank": 109,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 13423,
+          "type": "FileWatcher",
+          "field": "close",
+          "declared_types": [
+            "() => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 15,
+          "witness": {
+            "file": "src/compiler/sys.ts",
+            "line": 1237,
+            "column": 21
+          },
+          "rank": 110,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

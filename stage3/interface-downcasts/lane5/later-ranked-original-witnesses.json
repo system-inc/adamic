@@ -847,6 +847,27 @@
       "declarationFile": "src/compiler/scanner.ts",
       "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
       "declarationLine": 63
+    },
+    {
+      "rank": 120,
+      "type": "NodeFactory",
+      "field": "createArrowFunction",
+      "candidateReads": 14,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 274,
+        "column": 13
+      },
+      "read": "factory.createArrowFunction",
+      "readKind": "property",
+      "call": "factory.createArrowFunction(\r\n                /*modifiers*/ undefined,\r\n                /*typeParameters*/ undefined,\r\n                [factory.createParameterDeclaration(\r\n                    /*modifiers*/ undefined,\r\n                    /*dotDotDotToken*/ undefined,\r\n                    factory.createIdentifier(\"obj\"),\r\n                )],\r\n                /*type*/ undefined,\r\n                /*equalsGreaterThanToken*/ undefined,\r\n                accessor,\r\n            )",
+      "utf16Start": 10608,
+      "utf16End": 10635,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createArrowFunction(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken | undefined, body: ConciseBody): ArrowFunction;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8967
     }
   ]
 }
