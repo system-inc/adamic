@@ -1,0 +1,4 @@
+interface Holder { member: any; }
+const holder: Holder = { member: 1 };
+holder.member = 2;
+console.log('stored');

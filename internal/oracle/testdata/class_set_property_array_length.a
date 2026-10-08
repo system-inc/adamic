@@ -1,0 +1,15 @@
+interface Entry { readonly name: string; }
+const events: Entry[] = [{ name: 'first'.repeat(2) }, { name: 'last'.repeat(2) }];
+const alias = events;
+function stack(): Entry[] { console.log('receiver'); return events; }
+stack().length--;
+console.log(`${events.length} ${alias.length}`);
+events.length = 0;
+console.log(`${events.length} ${alias.length}`);
+try { events.length--; } catch (error) {
+    if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+console.log(`${events.length}`);
+const numbers = [1, 2, 3];
+numbers.length--;
+console.log(`${numbers.join(',')}`);

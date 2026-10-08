@@ -1,0 +1,27 @@
+[
+  {
+    "mutant": "any-accepted",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-any-accepted.log"
+  },
+  {
+    "mutant": "array-empty-range",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-array-empty-range.log"
+  },
+  {
+    "mutant": "array-decrement",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-array-decrement.log"
+  },
+  {
+    "mutant": "array-clear",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-array-clear.log"
+  },
+  {
+    "mutant": "array-receiver-once",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-array-receiver-once.log"
+  }
+]
