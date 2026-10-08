@@ -26,13 +26,13 @@ Reproducer for @system_adamic_library: testdata/split_gap.a and TestNativeSplitA
 
 ## Canonical checker-linked native constructor: closed
 
-The library-only 6c5b7f03 fix is merged. TestNativeCheckerRegexLinkGap now requires the unchanged dynamic_gap.a to build with the sanitized checker archive and print true. All three production finding graphs pass the canonical BuildTSGo backend: 204 id-length, 58 no-inline-comments and 88 no-warning-comments cases; 216 total findings agree with Go, source Node and emitted JavaScript. Evidence and exact commands are in CAPTURE_LINK_RERUN.md. This establishes the canonical native backend; the shared split backend still waits on the conflicted compiler merge described below.
+The library-only 6c5b7f03 fix is merged. TestNativeCheckerRegexLinkGap now requires the unchanged dynamic_gap.a to build with the sanitized checker archive and print true. All three production finding graphs pass the canonical BuildTSGo backend: 204 id-length, 58 no-inline-comments and 88 no-warning-comments cases; 216 total findings agree with Go, source Node and emitted JavaScript. Evidence and exact commands belong to the step-07 task. This establishes the canonical native backend; the shared split backend still waits on the conflicted compiler merge described below.
 
 ## Shared legacy mutant anchors and interrupted package run
 
 The unchanged shared package's legacy mutations look for removed/retired matcher text: `this.anchors[0] = true;`, `!space(character)`, and `for(const entry of decoration) {`. These anchors now return a count of zero; owned runtime-RegExp mutants replace their relevant comparison coverage. The shared mutant definitions are unchanged.
 
-The package's pinned stage1 corpus check rejected the initially dirty tree; the implementation is now committed. The single all-input package run was interrupted with SIGKILL after the environment reconnect and has no final summary. Partial counts, exact command, timestamps and every completed test name are in evidence/scout/package-summary.json. No second full-package run or stage1 corpus parity is claimed.
+The package's pinned stage1 corpus check rejected the initially dirty tree; the implementation is now committed. The single all-input package run was interrupted with SIGKILL after the environment reconnect and has no final summary. Partial counts, exact command, timestamps and every completed test name are in the step-07 task evidence. No second full-package run or stage1 corpus parity is claimed.
 
 ## Split fix integration blocker
 

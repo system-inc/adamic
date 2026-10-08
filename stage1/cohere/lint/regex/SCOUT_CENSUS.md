@@ -6,4 +6,4 @@ The option engine migration is cohere c2e39b75 (#7mztrdd), explicitly named by t
 
 Combined table: 123 rows, plain 80, dynamic 39, (?i) 2, (?s) 1, (?m) 1. The 89 Go shapes all pass their concrete string fixtures on source Node, emitted JavaScript and runtime sanitized native; no selected row is outside the library's shapes or one of its five V8-divergence refusals. Infinite future option strings are not claimed to have a finite fixture census.
 
-Exact source changes: 19 Go rows removed by c2e39b755570a15c8c2bd39aec64314142003a34 (17 option Compile calls plus two default-comment MustCompile fallbacks), one Go row added by 0b892cc9055d6a584f7974ad5dcfadcbda35bb91 (Tailwind objectPathIdentifier). Introducing and replacement diffs are retained under evidence/scout. No unexplained disappearance.
+Exact source changes: 19 Go rows removed by c2e39b755570a15c8c2bd39aec64314142003a34 (17 option Compile calls plus two default-comment MustCompile fallbacks), one Go row added by 0b892cc9055d6a584f7974ad5dcfadcbda35bb91 (Tailwind objectPathIdentifier). Introducing and replacement diffs are retained in the step-07 task evidence. No unexplained disappearance.

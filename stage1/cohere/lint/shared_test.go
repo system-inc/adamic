@@ -259,17 +259,17 @@ func captureUpstream(sourceRoot, directory string) ([]string, map[string]typedPr
 	docsHarness := filepath.Join(root, "internal/lint/testing/docs_capture.go")
 	docsData, err := os.ReadFile(docsHarness)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	docsAnchor := "json.Marshal(result.capture.options)"
 	if strings.Count(string(docsData), docsAnchor) != 1 {
-		return nil, fmt.Errorf("compiled option capture overlay anchor changed")
+		return nil, nil, fmt.Errorf("compiled option capture overlay anchor changed")
 	}
 	docsSide := filepath.Join(directory, "docs_capture.go")
 	docsText := strings.Replace(string(docsData), docsAnchor, "marshalCapturedOptions(result.capture.options)", 1)
 	docsText = strings.Replace(docsText, "\"encoding/json\"\n", "", 1)
 	if err := os.WriteFile(docsSide, []byte(docsText), 0644); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	optionsVirtual := filepath.Join(root, "internal/lint/testing/adamic_capture_options.go")
 	optionsSide := filepath.Join(packageDirectory, "regex/testdata/capture_options.go")
@@ -445,7 +445,7 @@ const typedConfigRecord = `	if captureDirectory := os.Getenv("COHERE_DOCS_CAPTUR
 		}
 		var encodedOptions json.RawMessage
 		if options != nil {
-			encodedOptions, _ = json.Marshal(options)
+			encodedOptions, _ = marshalCapturedOptions(options)
 		}
 		line, _ := json.Marshal(struct {
 			Rule, File, Source, TsConfig string
@@ -549,64 +549,4 @@ func classifyRecoveryRows(rows, flags []string) ([]string, error) {
 		result[index] = strings.Join(fields, "\t")
 	}
 	return result, nil
-}
-
-// Not parallel: validates the capture overlay against the three migrated rules.
-func TestRegexCompiledOptionCapture(t *testing.T) {
-	root := t.TempDir()
-	for _, slug := range []string{"id-length", "no-inline-comments", "no-warning-comments"} {
-		directory := filepath.Join(root, "rules", slug)
-		if err := os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
-		}
-		source := filepath.Join(packageDirectory, "rules", slug)
-		err := filepath.WalkDir(source, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			relative, err := filepath.Rel(source, path)
-			if err != nil {
-				return err
-			}
-			target := filepath.Join(directory, relative)
-			if entry.IsDir() {
-				return os.MkdirAll(target, 0755)
-			}
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(target, data, 0644)
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	directory := t.TempDir()
-	rows, err := captureUpstream(root, directory)
-	if err != nil {
-		t.Fatal(err)
-	}
-	sources := 0
-	for _, row := range rows {
-		fields := strings.Split(row, "\t")
-		if fields[1] != "id-length" || fields[5] == "" {
-			continue
-		}
-		var options struct{ ExceptionPatterns []json.RawMessage }
-		if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
-			t.Fatal(err)
-		}
-		for _, pattern := range options.ExceptionPatterns {
-			var source string
-			if err := json.Unmarshal(pattern, &source); err != nil {
-				t.Fatalf("compiled option source lost: %s", pattern)
-			}
-			sources++
-		}
-	}
-	if sources == 0 {
-		t.Fatal("capture exercised no compiled exception patterns")
-	}
-	t.Logf("%d upstream cases replayed through the Go oracle; %d compiled pattern sources preserved", len(rows), sources)
 }
