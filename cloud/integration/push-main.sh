@@ -171,8 +171,10 @@ if fast.get("scoped_env"):
 import subprocess
 message = subprocess.run(["git", "log", "-1", "--format=%B", sha], capture_output=True, text=True).stdout
 changed = subprocess.run(["git", "diff", "--name-only", fast.get("base", sha), sha], capture_output=True, text=True).stdout.split()
+# Tests and their fixtures don't change emitted C, so a test-only change there isn't covered.
 covered = "Gate-runs: deferred" in message or any(
-    path.startswith(("internal/native/", "internal/lower/", "internal/ir/", "internal/javascript/")) for path in changed)
+    path.startswith(("internal/native/", "internal/lower/", "internal/ir/", "internal/javascript/"))
+    and not path.endswith("_test.go") and "/testdata/" not in path for path in changed)
 if covered:
     results = fast.get("deferred_run_results") or {}
     if fast.get("deferred_all_requested") is not True:
