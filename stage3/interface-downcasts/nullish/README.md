@@ -1368,3 +1368,51 @@ were caught. After restoring them, the new array fixtures, payload mutants and
 recorded count check pass together in 6.101s with ADAMIC_GATE_UNCACHED=1 go test
 ./internal/oracle -run '^TestCheckedViewRecursiveMutableArray' -v -count=1
 -timeout 5m. Final scoped vet passes.
+
+## Integration recheck and remaining lane dependency
+
+Merged the newest fetched integration tip,
+432d4913d31daaa49d8ca4eb46f30f21f90da5ee, in
+7433b265fcfa01cb596c9ac93c7e2529f1044552. The one conflict in
+interface_cast_counts_test.go retains integration's fixture-path routing plus
+both recursive count groups. No other worker branch was merged independently.
+
+The existing recursive and nullable group passes in 33.991s, including payload
+mutants, both native modes, JavaScript, leak checks, and the five measured array
+count rows. A separate boundary run passes in 7.533s: all 47 callback refusals
+remain, including entry-live-mutation.a:5:69; callable producer and nullable-slot
+refusals remain; required primitive brands remain refused on read and unread
+controls. Scoped IR/lower/native/JavaScript compiler checks pass in
+0.012s / 5.209s / 39.519s / 1.494s, retaining the inherited Phantom exclusion.
+Exact commands and compressed outputs are in evidence/morning-integration.json.
+
+The recursive class candidate was rechecked using only a Go overlay and four
+existing controls. It still fails in both native modes before output at
+<write>.children, expected array, found nullish. JavaScript still agrees with
+Node. The expected red run finishes in 1.931s. No admission candidate is shipped.
+The failed class initialization remains a separate shared runtime prerequisite.
+
+Stop on lane 5: the remaining callable-bearing nominal producer, nullable
+unboxed callable value and boxed/packed Map callback boundaries require its ABI
+work. The current integration tip keeps these refusals, so merging it does not
+close those pairs. Primitive-brand refusals remain the language rule. Optional
+and rest tuples are now integrated, but their representative fixture coverage
+does not certify production pairs from this inventory.
+
+Read priority retains the overlapping demand order: array/tuple 1,195 reads,
+tagged union 883, dictionary 868, callable 392, object-plus-primitive union 181,
+mixed primitive union 124, intersection 42, untagged union 17, generic 4. These
+are demand counts, not remaining blocked runtime counts. The declaration audit
+still leaves 115 pairs / 340 reads unresolved. Production reaching-view discharge
+remains unmeasured over 2,018 pairs / 9,101 reads. This merge recheck certifies no
+new original production pair and adds no fixture or count row. The toolchain
+from the preceding setup is reused through /workspace/adamic-tools/env.sh.
+
+The four array implementation mutants were rerun after the merge. Native write
+guard removal and JavaScript write guard removal let forged push/index values
+finish with exit 0; the boundary assertions catch them. Removing the source
+certificate fails the valid write control; restoring readonly-only admission
+fails the valid mutable control. All four test invocations exit 1 and are caught.
+After restoration, ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewRecursiveMutableArray' -v -count=1 -timeout 5m passes in 5.048s.
+Scoped vet over IR, lower, native, JavaScript and oracle passes.

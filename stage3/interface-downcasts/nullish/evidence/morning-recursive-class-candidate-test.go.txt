@@ -1,0 +1,17 @@
+package oracle
+import "testing"
+func TestMorningRecursiveClassCandidate(t *testing.T) {
+ for _, site := range []string{"control","producer","read","write"} {
+  t.Run(site,func(t *testing.T) {
+   program,path := interfaceFixture(t,"nullish/maps/entry-nominal-gap-recursive-class-"+site)
+   truth := onNode(t,path)
+   t.Logf("Node exit=%d stdout=%q stderr=%q",truth.exitCode,truth.stdout,truth.stderr)
+   native,binary := nativelyUncached(t,program)
+   for backend,result := range []run{native,releasedUncached(t,program),onJavaScriptBackend(t,program)} {
+    t.Logf("backend=%d exit=%d stdout=%q stderr=%q",backend,result.exitCode,result.stdout,result.stderr)
+    if diff := disagreement(truth,result); diff != "" {t.Errorf("backend=%d: %s",backend,diff)}
+   }
+   if report:=leaks(t,program,binary); report!="" {t.Error(report)}
+  })
+ }
+}

@@ -134,7 +134,7 @@
       "production_reaching_view_counts": "unmeasured"
     }
   ],
-  "integration_base": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
+  "integration_base": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
   "original_declaration_observations": {
     "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
     "observed_pairs": 1903,
@@ -144,5 +144,12 @@
     "adapted_type_differences": 35,
     "measurement": "Exact original witness and property declaration observations; runtime discharge unmeasured",
     "evidence": "original-declaration-observations.json.gz"
+  },
+  "integration_recheck": {
+    "merge_commit": "7433b265fcfa01cb596c9ac93c7e2529f1044552",
+    "recursive_class_candidate": "same native initializer failure in sanitized and release; JavaScript agrees with Node",
+    "callback_refusals_retained": 47,
+    "stop_dependency": "lane 5 callable producer and nullable value ABI; primitive brands remain refused by rule",
+    "new_runtime_pair_certifications": 0
   }
 }

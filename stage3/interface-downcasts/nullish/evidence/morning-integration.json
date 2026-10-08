@@ -1,0 +1,146 @@
+{
+  "integration_tip": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
+  "merge_commit": "7433b265fcfa01cb596c9ac93c7e2529f1044552",
+  "conflict": "interface_cast_counts_test.go: retained integration fixture path routing and both recursive count groups",
+  "recheck_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewRecursive|^TestCheckedViewNullableAggregateLink|^TestCheckedViewNominalArray|^TestCheckedViewMapNominalGaps$|^TestCheckedViewNullableNominalSlotBoundaryRefusals$|^TestCheckedViewMapForEach' -v -count=1 -timeout 10m",
+  "recheck_result": "pass 33.991s",
+  "boundary_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewMapCallbackRefusals$|^TestCheckedViewMapRequiredBrandRefusal$|^TestCheckedViewMapNominalGaps$|^TestCheckedViewNullableNominalSlotBoundaryRefusals$|^TestCheckedViewCallableRetainsNeverWiderHelper$' -v -count=1 -timeout 5m",
+  "boundary_result": "pass 7.533s; all 47 callback sites retained; two required-brand controls retained",
+  "compiler_command": "go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Map|Contract|Callable|Tuple|Nullish|Nullable' -skip Phantom -count=1 -timeout 10m",
+  "compiler_result": "pass: IR 0.012s, lower 5.209s, native 39.519s, JavaScript 1.494s",
+  "class_candidate_command": "ADAMIC_GATE_UNCACHED=1 go test -overlay /tmp/views-morning-class-overlay.json ./internal/oracle -run ^TestMorningRecursiveClassCandidate$ -v -count=1 -timeout 5m",
+  "class_candidate_result": "expected red 1.931s; all four controls match Node on JavaScript and exit 70 before output in both native modes at <write>.children",
+  "class_candidate_scope": "overlay only; no recursive class admission change shipped",
+  "stop_dependency": "remaining callback, callable-bearing nominal producer, and unboxed nullable callable value refusals require lane 5 ABI work",
+  "new_fixtures": 0,
+  "counts": "merged five-row count check passes in recheck; no new rows required; previous global update baseline failure retained",
+  "remaining": {
+    "production_runtime_certification": "unmeasured",
+    "pairs": 2018,
+    "reads": 9101,
+    "original_declaration_unresolved_pairs": 115,
+    "original_declaration_unresolved_reads": 340
+  },
+  "overlapping_family_demand_by_reads": [
+    {
+      "family": "array or tuple contracts",
+      "pairs": 219,
+      "reads": 1195
+    },
+    {
+      "family": "tagged object union",
+      "pairs": 131,
+      "reads": 883
+    },
+    {
+      "family": "dictionary contracts",
+      "pairs": 221,
+      "reads": 868
+    },
+    {
+      "family": "callable contracts",
+      "pairs": 224,
+      "reads": 392
+    },
+    {
+      "family": "object plus primitive union",
+      "pairs": 60,
+      "reads": 181
+    },
+    {
+      "family": "mixed primitive union",
+      "pairs": 27,
+      "reads": 124
+    },
+    {
+      "family": "intersection field contract",
+      "pairs": 15,
+      "reads": 42
+    },
+    {
+      "family": "untagged object union",
+      "pairs": 8,
+      "reads": 17
+    },
+    {
+      "family": "generic field contract",
+      "pairs": 3,
+      "reads": 4
+    }
+  ],
+  "family_limit": "Demand overlaps are not blocked runtime counts; existing representative fixture groups are not original pair discharge",
+  "implementation_mutants": [
+    {
+      "name": "native-write",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrayMutants$/(push|index)$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/native-write.log"
+    },
+    {
+      "name": "javascript-write",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrayMutants$/(push|index)$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/javascript-write.log"
+    },
+    {
+      "name": "source-certificate",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrays$/write$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/source-certificate.log"
+    },
+    {
+      "name": "mutable-admission",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCheckedViewRecursiveMutableArrays$/control$",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "5m"
+      ],
+      "exit": 1,
+      "caught": true,
+      "log": "/tmp/views-lazy-array-mutants/mutable-admission.log"
+    }
+  ],
+  "final_array_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewRecursiveMutableArray' -v -count=1 -timeout 5m",
+  "final_array_result": "pass 5.048s; restored implementation; five positive controls, four payload mutants, measured count rows",
+  "vet_command": "go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle",
+  "vet_result": "pass"
+}
