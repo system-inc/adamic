@@ -97,3 +97,18 @@ and disappear with this qualification fix. This is a five-site replay result,
 not a claim that all 557 Debug or 51 performance roots lower. Exact sites, other
 blockers, Node fixtures and real readiness mutants are recorded in
 [the namespace-reads report](../stage3/notyet-namespace-reads/REPORT.md).
+
+## Nested receiver scopes in parser Debug (October 8)
+
+The parser proof's debug.ts:429 and 526 receiver probe contains an object method
+inside a namespace function. That method owns its receiver; it does not use the
+namespace receiver. The namespace scope check now follows lexical arrows but
+stops at nested ordinary functions, object methods and classes. Their existing
+lowering paths check their receivers. ESM-qualified functions use the same scope
+boundary. Actual namespace-owned `this` retains its named receiver refusal.
+
+The unchanged parser probe lowers in both backends. An executed returned method
+reads and then mutates its object's flags, separately from Debug's flags. A mutant
+substituting Debug's flags for the method receiver is caught by Node stdout in
+both backends. [Parser-stop evidence](../stage3/namespace-parser-stops/REPORT.md)
+records the exact programs, baseline refusals, validation and remaining scope.
