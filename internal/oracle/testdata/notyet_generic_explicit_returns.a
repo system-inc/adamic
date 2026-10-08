@@ -1,0 +1,19 @@
+interface Options { name: string; count: number; }
+function nonNull<T>(value: NonNullable<T>): NonNullable<T> { return value; }
+function field<K extends keyof Options>(value: Options[K], absent: boolean): Options[K] | undefined {
+    if (absent) return undefined;
+    return value;
+}
+function nonNullDefault<T = number>(value: NonNullable<T>): NonNullable<T> { return value; }
+function forwarded<T>(value: NonNullable<T>): NonNullable<T> { return nonNull<T>(value); }
+interface WatchFactory<X, Y> { start: (arg: X) => Y; }
+function watcher<X, Y, T extends keyof WatchFactory<X, Y>>(value: WatchFactory<X, Y>[T]): WatchFactory<X, Y>[T] { return value; }
+console.log(`${nonNull<number | undefined>(12)} ${nonNull<string | undefined>(["non", "null"].join(""))}`);
+console.log(`${field<"count">(17, false)} ${field<"count">(17, true)}`);
+console.log(`${field<"name">(["field", "name"].join(" "), false)} ${field<"name">("unused", true)}`);
+const action = watcher<number, string, "start">((arg: number): string => `watched${arg}`);
+console.log(action(23));
+console.log(`${nonNullDefault(29)}`);
+console.log(`${forwarded<number | undefined>(31)}`);
+function nullableIdentity<T>(value: T | undefined): T | undefined { return value; }
+console.log(`${nullableIdentity<number>(37)} ${nullableIdentity<number | undefined>(41)}`);
