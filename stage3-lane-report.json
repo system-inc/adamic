@@ -1,0 +1,49 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106362, 'failing': 5, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106362, 'failing': 5, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['projects tests Compiling project for Verify when different named .ts and .js file exists in the folder and tsconfig.json doesnt specify any files: testcase tests/cases/project/jsFileCompilationDifferentNamesNotSpecified.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/jsFileCompilationDifferentNamesNotSpecified.json', 'projects tests Compiling project for declarations_MultipleTimesImport: testcase tests/cases/project/declarationsMultipleTimesImport.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/declarationsMultipleTimesImport.json', 'projects tests Compiling project for Quotes in file and directory names: testcase tests/cases/project/quotesInFileAndDirectoryNames.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/quotesInFileAndDirectoryNames.json', 'projects tests Compiling project for privacy Check on imported module - simple reference: testcase tests/cases/project/privacyCheckOnImportedModuleSimpleReference.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/privacyCheckOnImportedModuleSimpleReference.json', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']",
+    "number of reported failure titles: expected 1, observed 5"
+  ],
+  "counts": {
+    "passing": 106362,
+    "failing": 5,
+    "pending": 0
+  },
+  "failed_tests": [
+    "projects tests Compiling project for Verify when different named .ts and .js file exists in the folder and tsconfig.json doesnt specify any files: testcase tests/cases/project/jsFileCompilationDifferentNamesNotSpecified.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/jsFileCompilationDifferentNamesNotSpecified.json",
+    "projects tests Compiling project for declarations_MultipleTimesImport: testcase tests/cases/project/declarationsMultipleTimesImport.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/declarationsMultipleTimesImport.json",
+    "projects tests Compiling project for Quotes in file and directory names: testcase tests/cases/project/quotesInFileAndDirectoryNames.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/quotesInFileAndDirectoryNames.json",
+    "projects tests Compiling project for privacy Check on imported module - simple reference: testcase tests/cases/project/privacyCheckOnImportedModuleSimpleReference.json (@module: commonjs) Correct module resolution tracing for tests/cases/project/privacyCheckOnImportedModuleSimpleReference.json",
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "ca59a31af5d649eedb39d9f060c3498727fa6959",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 1559.704
+  },
+  "results": "/home/ahra/fast-gate/tree-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106362, 'failing': 5, 'pending': 0}"
+}
