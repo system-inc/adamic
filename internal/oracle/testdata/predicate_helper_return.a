@@ -1,0 +1,15 @@
+type Expression = { readonly kind: 'expression'; readonly label: string };
+type Statement = { readonly kind: 'statement'; readonly label: string };
+type Node = Expression | Statement;
+function isExpression(node: Node): node is Expression {
+    return node.kind === 'expression';
+}
+function isExpressionReturn(node: Node): node is Expression {
+    return isExpression(node);
+}
+function describe(node: Node): string {
+    if (isExpressionReturn(node)) { return 'expression:' + node.label; }
+    return 'statement:' + node.label;
+}
+console.log(describe({ kind: 'expression', label: ['helper', 'true'].join(' ') }));
+console.log(describe({ kind: 'statement', label: ['helper', 'false'].join(' ') }));

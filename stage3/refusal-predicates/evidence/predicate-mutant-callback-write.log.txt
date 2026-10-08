@@ -1,0 +1,6 @@
+--- FAIL: TestPredicateContractRefusals (0.05s)
+    --- FAIL: TestPredicateContractRefusals/reassigned_callback_parameter (0.05s)
+        predicate_contracts_test.go:20: want predicate refusal, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.067s
+FAIL

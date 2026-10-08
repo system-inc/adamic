@@ -1,0 +1,9 @@
+type Expression = { readonly kind: 'expression'; readonly label: string };
+type Statement = { readonly kind: 'statement'; readonly label: string };
+type Node = Expression | Statement;
+function isExpression(node: Node): node is Expression { return true; }
+function describe(node: Node): void {
+    if (isExpression(node)) { console.log(node.label); }
+}
+const node: Node = { kind: 'statement', label: ['hatch', 'true'].join(' ') };
+describe(node);
