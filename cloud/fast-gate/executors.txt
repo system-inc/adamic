@@ -13,9 +13,6 @@ mode enforce
 # "needs darwin leg" and is never green until integration attaches the Mac's result.
 darwin      internal/apple/*
 darwin      examples/apple/*
-# An .a file promises proven types, so one outside a package is loaded by stage 0's front end with
-# its refusal pass (a-check, due 23:00; until it is live the status line lists it as unchecked).
-a-check     *.a
 # Not executed by anything: prose, evidence and records.
 inert       *.md
 inert       *.log
@@ -62,3 +59,9 @@ bench-workers  bench/workers/*.mjs
 # the full gate on every main, a syntax check in the fast gate. Coverage measurement is records.
 catalog        verify/catalog/*
 inert          verify/coverage/*
+# An .a file promises proven types wherever it sits: every changed .a outside a package (stage3's
+# probes included, beside the lane) is loaded by stage 0's front end, its types must check and its
+# refusal pass find nothing, or it fails exactly as a first-line header says
+# (// a-check: refused <rule> | // a-check: type error <code>). This line covers .a files no other
+# line does; a-check runs for the others too.
+a-check        *.a

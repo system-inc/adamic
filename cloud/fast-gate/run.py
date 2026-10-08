@@ -160,6 +160,9 @@ class Gate:
         if executors & {"workers", "bench-workers"}:
             self.planned.append("workers")
             threads.append(self.guarded("workers", self.workers, executors))
+        if "a-check" in executors and self.result.get("unchecked_a_files"):
+            self.planned.append("a-check")
+            threads.append(self.guarded("a-check", self.aCheck, self.result["unchecked_a_files"]))
         if "catalog" in executors:
             self.planned.append("catalog")
             threads.append(self.guarded("catalog", self.step, "catalog", ["bash", "-n", "verify/catalog/check.sh"]))
@@ -241,10 +244,14 @@ class Gate:
             else:
                 executors.add(executor)
                 covered[executor] = covered.get(executor, 0) + 1
-                if executor == "a-check":
-                    unchecked.append(path)
+
                 if executor == "darwin" and path not in self.result.get("needs_darwin", []):
                     self.result.setdefault("needs_darwin", []).append(path)
+        # Every changed .a outside a package gets a-check, beside whatever else runs for it (stage3's
+        # probes too): the extension promises proven types wherever the file sits.
+        unchecked = [path for path in unowned if path.endswith(".a")]
+        if unchecked:
+            executors.add("a-check")
         self.result["unchecked_a_files"] = unchecked
         # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
         self.extraPackages = sorted(module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:"))
@@ -341,6 +348,48 @@ class Gate:
         self.exits["workers"] = 1 if failed else 0
         if failed:
             self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
+
+    def aCheck(self, paths):
+        """Each changed .a outside a package through stage 0's front end (adamic c: the checker's proven
+        types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
+        passes, since nothing was refused. A file whose first line is "// a-check: refused <rule>" or
+        "// a-check: type error <code>" must fail exactly that way instead."""
+        started = time.monotonic()
+        adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic-acheck"
+        if self.step("a-check-build", ["go", "build", "-o", adamic, "./cmd/adamic"]) is False:
+            self.exits["a-check"] = 1
+            return
+        results, failed = {}, []
+        for path in paths:
+            with open(os.path.join(self.arguments.tree, path), errors="replace") as handle:
+                header = handle.readline().strip()
+            expect = header[len("// a-check:"):].strip() if header.startswith("// a-check:") else ""
+            process = self.spawn([adamic, "c", path], subprocess.PIPE, subprocess.PIPE)
+            _, errors = process.communicate()
+            if process.returncode == 0 or ("can't lower" in errors and " yet" in errors):
+                outcome = "checked"
+            elif "Adamic 0.1 refuses" in errors:
+                outcome = "refused"
+            elif " error TS" in errors:
+                outcome = "type error"
+            else:
+                outcome = "failed"
+            first = errors.strip().splitlines()[0] if errors.strip() else ""
+            if expect.startswith("refused"):
+                ok = outcome == "refused" and expect[len("refused"):].strip() in errors
+            elif expect.startswith("type error"):
+                code = expect[len("type error"):].strip()
+                ok = outcome == "type error" and (not code or ("error " + code) in errors)
+            else:
+                ok = outcome == "checked"
+            results[path] = {"outcome": outcome, "expected": expect or "checked", "first": first[:300]}
+            if not ok:
+                failed.append("%s: %s, expected %s (%s)" % (path, outcome, expect or "checked", first[:200]))
+        self.result["a_check"] = results
+        self.steps["a-check"] = round(time.monotonic() - started, 1)
+        self.exits["a-check"] = 1 if failed else 0
+        if failed:
+            self.fail("a-check", "a-check failed for %d file%s:\n%s" % (len(failed), "" if len(failed) == 1 else "s", "\n".join(failed[:50])))
 
     def catalogFull(self):
         if not os.path.exists(os.path.join(self.arguments.tree, "verify/catalog/check.sh")):
@@ -841,7 +890,7 @@ class Gate:
             steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
             if self.result.get("gate_samples"):
                 steps += "; sampled: %s" % "; ".join(sorted(set(self.result["gate_samples"]))[:10])
-            if self.result.get("unchecked_a_files"):
+            if self.result.get("unchecked_a_files") and "a_check" not in self.result:
                 steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
         if green:
             self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
