@@ -6,13 +6,16 @@
 #
 # It polls origin every 15 s. Branch tips it sees on its first poll are the backlog and are left
 # alone; every tip that appears or moves after that is gated once (a sha already gated under another
-# branch isn't gated again), three at a time, one per slot on the box. The queue is by priority, decided
+# branch isn't gated again), one per slot, on every box in the slot table. The queue is by priority, decided
 # when a gate starts: what integration is landing first (cloud/land-*, then area/* and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
 # codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
 # big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
-# small. A big gate runs in the area slot (24 CPUs), a small one in either small slot (12 each), so a
-# worker's tip never waits behind an area. The gating line names how long a tip waited. Each gate publishes
+# small. A big gate runs in an area slot (24 CPUs), a small one in a small slot (12 each), so a
+# worker's tip never waits behind an area. The slot table (${state}/slots, one "box class" per line,
+# re-read every poll) says which boxes serve and how many slots of each class each has; a tip goes to
+# the first box in the table with a free slot of its class, and the box picks the slot itself
+# (cloud/fast-gate.sh). The gating line names the box and how long a tip waited. Each gate publishes
 # gate-logs/<sha12>/<UTC stamp>/fast like any other, with the branch and, when an ai.db reply names
 # the branch, the worker's session.
 set -uo pipefail
@@ -20,7 +23,9 @@ set -uo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 state=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}
 mkdir -p "${state}"
-slots=3
+# Cloud: one area slot and two small (@system_adamic, Oct 8 00:10). Workshop the same and Chonchon one
+# small slot on all 16 CPUs (@system_adamic, Oct 8 04:40: 69 live tips behind two slots).
+[ -s "${state}/slots" ] || printf '%s\n' "threadripper B" "threadripper S" "threadripper S" > "${state}/slots"
 git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
@@ -28,7 +33,7 @@ export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
 . "${here}/cloud/fast-gate-classify.sh"
 
 # Every gate start, appended to documentation/velocity/fast-gate-waits.csv on records/fast-gate-waits
-# (sha, branch, class, queued, started, waited seconds), so slot wait is charted from an artifact.
+# (sha, branch, class, queued, started, waited seconds, outcome, box), so slot wait is charted from an artifact.
 recordWait() {
   local row=$1 records=${state}/waits-records file=documentation/velocity/fast-gate-waits.csv
   if [ ! -d "${records}" ]; then
@@ -42,7 +47,8 @@ recordWait() {
   [ -f "${records}/${file}" ] || echo "sha,branch,class,queued_utc,started_utc,waited_seconds,outcome" > "${records}/${file}"
   # outcome: "started" when a gate begins, and a second row "void:<cause>" when it ended with no real
   # verdict, so the chart never counts a void gate as served. Older rows (no column) were starts.
-  head -1 "${records}/${file}" | grep -q ',outcome$' || sed -i '' '1s/$/,outcome/' "${records}/${file}"
+  head -1 "${records}/${file}" | grep -qE ',outcome(,box)?$' || sed -i '' '1s/$/,outcome/' "${records}/${file}"
+  head -1 "${records}/${file}" | grep -q ',box$' || sed -i '' '1s/$/,box/' "${records}/${file}"
   echo "${row}" >> "${records}/${file}"
   git -C "${records}" add "${file}"
   git -C "${records}" -c user.name=kirkouimet -c user.email=kirk@kirkouimet.com commit -q -m "Slot wait: ${row}" -m "Co-Authored-By: Ahra <ahra@ahra.ai>"
@@ -82,7 +88,7 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    read -r branch sha class < "${file}"
+    read -r branch sha class box < "${file}"
     rm "${file}"
     cause=$(voidCause "${state}/logs/${sha:0:12}.log")
     if [ -z "${cause}" ]; then
@@ -93,7 +99,7 @@ while true; do
     # isn't served: un-mark it, queue it again, at most three tries, then tell integration it's the box.
     echo "${sha}" >> "${state}/void-tries"
     tries=$(grep -cx "${sha}" "${state}/void-tries")
-    (recordWait "${sha},${branch},${class},,$(date -u +%FT%TZ),,void:${cause// /_}" > /dev/null 2>&1 &)
+    (recordWait "${sha},${branch},${class},,$(date -u +%FT%TZ),,void:${cause// /_},${box:-threadripper}" > /dev/null 2>&1 &)
     if [ "${tries}" -le 3 ]; then
       grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
       echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
@@ -103,17 +109,17 @@ while true; do
       (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
     fi
   done
-  while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
+  while [ -s "${state}/queue" ]; do
     touch "${state}/priority"
-    big=$(cat "${state}"/running/* 2>/dev/null | awk '$3 == "B"' | wc -l)
-    small=$(cat "${state}"/running/* 2>/dev/null | awk '$3 == "S"' | wc -l)
-    # One area slot (big) and two small-change slots (@system_adamic, Oct 8 00:10): a worker's tip
-    # never waits behind areas, and areas keep their 24 CPUs.
-    only=""
-    if [ "${big}" -ge 1 ]; then only=S; fi
-    if [ "${small}" -ge 2 ]; then only=B; fi
+    # Free slots per box and class: the table's count less the gates running there (an entry from
+    # before the table names no box: it was Cloud's).
+    free=$(awk 'FILENAME == ARGV[1] { total[$1 " " $2]++; if (!($1 " " $2 in order)) { order[$1 " " $2] = ++n; keys[n] = $1 " " $2 }; next }
+                { used[($4 == "" ? "threadripper" : $4) " " $3]++ }
+                END { for (i = 1; i <= n; i++) if (total[keys[i]] > used[keys[i]]) print keys[i] }' "${state}/slots" <(cat "${state}"/running/* 2>/dev/null))
+    [ -n "${free}" ] || break
+    classes=$(echo "${free}" | awk '{print $2}' | sort -u | tr '\n' ' ')
     next=$(while read -r class queued branch sha; do
-      [ -n "${only}" ] && [ "${class}" != "${only}" ] && continue
+      [[ " ${classes}" == *" ${class} "* ]] || continue
       if [[ ${branch} == cloud/land-* ]]; then rank=0
       elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
       elif [[ ${branch} == devtools/* ]]; then rank=2
@@ -127,12 +133,13 @@ while true; do
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
     echo "${sha}" >> "${state}/gated"
+    box=$(echo "${free}" | awk -v class="${class}" '$2 == class {print $1; exit}')
     log=${state}/logs/${sha:0:12}.log
-    bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${class}" > "${log}" 2>&1 &
-    echo "${branch} ${sha} ${class}" > "${state}/running/$!"
+    ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${class}" > "${log}" 2>&1 &
+    echo "${branch} ${sha} ${class} ${box}" > "${state}/running/$!"
     now=$(date -u +%s)
-    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}, waited $(( now - queued )) s, log ${log})"
-    (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started" > /dev/null 2>&1 &)
+    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class} on ${box}, waited $(( now - queued )) s, log ${log})"
+    (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started,${box}" > /dev/null 2>&1 &)
   done
   sleep 15
 done

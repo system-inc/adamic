@@ -71,6 +71,8 @@ while [ -z "${slot}" ]; do
   # Slot 1 is the area slot (landings and anything big); slots 2 and 3 take small changes only
   # (@system_adamic, Oct 8 00:10), so a worker's tip never waits behind an area.
   candidates=$([ "${class}" = S ] && echo "2 3" || echo "1")
+  # A box under 32 CPUs (Chonchon, 16) is one slot on all its CPUs, whatever the class.
+  [ "$(nproc --all)" -lt 32 ] && candidates=1
   for candidate in ${candidates}; do
     exec 9> ~/fast-gate/lock$([ "${candidate}" = 1 ] && echo "" || echo "-${candidate}")
     if flock -n 9; then slot=${candidate}; break; fi
@@ -108,7 +110,7 @@ cpus=$(nproc --all)
 area=$((cpus * 3 / 8))
 small=$((cpus * 3 / 16))
 case ${slot} in
-  1) first=0 share=${area} ;;
+  1) first=0 share=${area}; [ "${cpus}" -lt 32 ] && share=${cpus} ;;
   2) first=${area} share=${small} ;;
   *) first=$((area + small)) share=${small} ;;
 esac
