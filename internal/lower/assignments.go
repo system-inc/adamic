@@ -107,6 +107,14 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		if element.Kind == ast.KindOmittedExpression {
 			continue
 		}
+		if element.Kind == ast.KindElementAccessExpression {
+			target, err := l.destructuredTupleTarget(element, held, elements, index)
+			if err != nil {
+				return nil, err
+			}
+			statements = append(statements, target)
+			continue
+		}
 		local, isLocal := l.local(element)
 		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
 			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")

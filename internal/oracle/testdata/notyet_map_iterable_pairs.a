@@ -1,0 +1,28 @@
+interface PairStep { readonly done: boolean; readonly value: [string, number]; }
+class PairIterator {
+ index = 0;
+ readonly failAt: number;
+ constructor(failAt: number = 99) { this.failAt = failAt; }
+ pair: [string, number] = ['start'.repeat(2), 0];
+ [Symbol.iterator](): PairIterator { return this; }
+ next(): PairStep {
+  if (this.index === this.failAt) throw new Error('next failed');
+  if (this.index >= 3) {
+   const final: [string, number] = ['done'.repeat(2), this.index + 96];
+   [this.pair[0], this.pair[1]] = final;
+   return { done: true, value: this.pair };
+  }
+  const key = this.index === 2 ? 'key0'.repeat(2) : `key${this.index}`.repeat(2);
+  const entry: [string, number] = [key, this.index + 1];
+  [this.pair[0], this.pair[1]] = entry;
+  this.index += 1;
+  return { done: false, value: this.pair };
+ }
+ return(): PairStep { console.log('closed'); return { done: true, value: this.pair }; }
+}
+let sources = 0;
+function source(): PairIterator { sources += 1; return new PairIterator(); }
+const map = new Map<string, number>(source());
+console.log(`${sources} ${map.size} ${map.get('key0'.repeat(2))} ${map.get('key1'.repeat(2))} ${map.get('done'.repeat(2))}`);
+console.log([...map.keys()].join(','));
+try { const failed = new Map<string, number>(new PairIterator(1)); console.log(`wrong:${failed.size}`); } catch (error) { console.log('caught'); }

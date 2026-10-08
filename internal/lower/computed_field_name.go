@@ -3,6 +3,7 @@ package lower
 import (
 	"math"
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -12,7 +13,12 @@ import (
 // constantFieldName accepts only keys with no runtime evaluation: literals,
 // literal string concatenations, and const enum members. A singleton type alone
 // is insufficient: a call returning that type still has to run before its value.
-func (l *lowering) constantFieldName(node *ast.Node) (string, bool) {
+func (l *lowering) constantFieldName(node *ast.Node) (name string, known bool) {
+	defer func() {
+		if known && !nativeDataFieldName(name) {
+			known = false
+		}
+	}()
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindStringLiteral || node.Kind == ast.KindNoSubstitutionTemplateLiteral {
 		return node.Text(), true
@@ -75,6 +81,15 @@ func (l *lowering) runtimeEnumFieldName(node *ast.Node) (string, ir.Expression, 
 	default:
 		return "", nil, nil, false, nil
 	}
+	if !nativeDataFieldName(name) {
+		return "", nil, nil, false, nil
+	}
 	key, err := l.expression(node)
 	return name, key, constant, true, err
+}
+
+// Native shapes use C string names. Reject embedded NUL before a computed
+// key can alias a different public data field.
+func nativeDataFieldName(name string) bool {
+	return !strings.ContainsRune(name, 0)
 }

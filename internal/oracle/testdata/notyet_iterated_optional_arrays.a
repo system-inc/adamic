@@ -1,0 +1,8 @@
+function makeSet(values: string[] | undefined): Set<string> { return new Set<string>(values); }
+const values = ['a'.repeat(2), 'b'.repeat(2), 'a'.repeat(2)];
+const present = makeSet(values);
+const absent = makeSet(undefined);
+console.log(`${present.size} ${absent.size}`);
+console.log([...present].join(','));
+function stringSet(value: string | undefined): Set<string> { return new Set<string>(value); }
+console.log(`${stringSet('😀😀x').size} ${stringSet(undefined).size}`);

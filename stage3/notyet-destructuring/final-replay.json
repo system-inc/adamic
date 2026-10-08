@@ -1,0 +1,1511 @@
+[
+  {
+    "where": "src/compiler/parser.ts:506:5",
+    "reason": "a computed field name",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/parser.ts:506:33",
+        "reason": "a generic function expression"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/scanner.ts:150:5",
+    "reason": "a computed field name",
+    "exit": 1,
+    "findings": []
+  },
+  {
+    "where": "src/compiler/sys.ts:123:9",
+    "reason": "a computed field name",
+    "exit": 1,
+    "findings": []
+  },
+  {
+    "where": "src/compiler/transformers/declarations/diagnostics.ts:608:9",
+    "reason": "a computed field name",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:607:5",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:622:5",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:707:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:719:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:733:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:741:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:746:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:751:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:757:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:760:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:766:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:782:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:785:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:790:5",
+        "reason": "a function inside a function (a closure)"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/transformers/declarations/diagnostics.ts:623:9",
+    "reason": "a computed field name",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:607:5",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:622:5",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:707:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:719:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:733:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:741:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:746:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:751:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:757:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:760:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:766:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:782:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:785:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:790:5",
+        "reason": "a function inside a function (a closure)"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/visitorPublic.ts:624:5",
+    "reason": "a computed field name",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:625:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:633:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:641:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:651:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:663:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:671:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:681:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:693:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:705:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:719:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:728:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:739:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:749:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:750:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:751:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:758:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:767:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:776:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:786:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:795:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:803:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:812:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:822:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:830:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:837:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:844:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:851:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:858:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:865:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:872:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:879:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:889:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:896:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:907:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:915:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:925:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:932:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:939:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:947:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:959:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:966:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:974:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:983:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:990:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:997:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1008:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1015:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1023:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1038:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1053:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1069:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1078:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1087:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1095:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1102:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1115:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1127:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1134:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1141:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1148:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1155:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1162:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1169:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1178:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1189:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1197:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1205:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1212:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1223:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1231:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1239:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1248:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1259:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1267:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1276:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1283:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1291:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1298:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1307:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1315:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1323:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1333:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1342:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1352:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1359:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1366:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1373:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1381:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1389:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1397:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1404:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1413:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1423:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1430:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1443:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1454:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1465:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1475:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1484:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1493:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1500:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1507:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1514:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1524:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1534:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1542:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1550:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1559:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1566:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1573:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1580:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1589:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1597:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1608:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1615:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1625:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1633:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1642:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1651:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1660:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1667:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1675:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1684:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1692:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1699:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1706:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1714:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1722:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1729:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1736:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1745:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1753:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1761:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1769:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1778:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1786:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1793:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/checker.ts:46259:19",
+    "reason": "destructuring anything but a tuple into [names]",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46259:72",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46260:98",
+        "reason": "reading yieldType"
+      },
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46271:50",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46274:98",
+        "reason": "reading yieldType"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/checker.ts:46271:19",
+    "reason": "destructuring anything but a tuple into [names]",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46259:72",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46260:98",
+        "reason": "reading yieldType"
+      },
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46271:50",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:46274:98",
+        "reason": "reading yieldType"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/checker.ts:5412:19",
+    "reason": "destructuring anything but a tuple into [names]",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:5381:13",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:5385:17",
+        "reason": "a BinaryExpression with a boolean and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:987:34",
+        "reason": "slice with an index that isn't a number"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:988:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:989:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:991:9",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:656:1",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:5419:9",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:5449:9",
+        "reason": "a function inside a function (a closure)"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/semver.ts:146:11",
+    "reason": "destructuring anything but a tuple into [names]",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:147:9",
+        "reason": "a BinaryExpression with a string and a boolean"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:148:9",
+        "reason": "a BinaryExpression with a string and a boolean"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/semver.ts:302:11",
+    "reason": "destructuring anything but a tuple into [names]",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/debug.ts:255:37",
+        "reason": "a value of type T | null | undefined"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:60:14",
+        "reason": "assigning to an ObjectLiteralExpression"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:1750:25",
+        "reason": "a value of type unknown"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:76:27",
+        "reason": "reading prereleaseArray"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:77:22",
+        "reason": "reading buildArray"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:103:16",
+        "reason": "a BinaryExpression with a number and a number"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/debug.ts:273:33",
+        "reason": "a value of type never"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/builder.ts:601:13",
+    "reason": "a destructured name held otherwise than its field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:597:5",
+        "reason": "a value of type Path"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/factory/nodeFactory.ts:7440:9",
+    "reason": "a destructured name held otherwise than its field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/factory/nodeFactory.ts:7447:39",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:987:34",
+        "reason": "slice with an index that isn't a number"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:988:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:989:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:991:9",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/factory/nodeFactory.ts:7493:9",
+        "reason": "storing string | number in a field"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:220:112",
+        "reason": "a generic function as a value"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/moduleSpecifiers.ts:1206:55",
+    "reason": "a destructured name held otherwise than its field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/moduleSpecifiers.ts:1198:28",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/moduleSpecifiers.ts:1225:65",
+        "reason": "reading allowedEndings"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/moduleSpecifiers.ts:1235:78",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/moduleSpecifiers.ts:1239:78",
+        "reason": "reading globalTypingsCacheLocation"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/moduleSpecifiers.ts:1249:5",
+        "reason": "a function inside a function (a closure)"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/watchUtilities.ts:578:5",
+    "reason": "a destructured name held otherwise than its field",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watchUtilities.ts:573:5",
+        "reason": "a destructured name held otherwise than its field"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/checker.ts:16773:28",
+    "reason": "a destructured name that isn't plain",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:16775:47",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:16776:90",
+        "reason": "reading typeReference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:16777:29",
+        "reason": "reading typeParameters"
+      },
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:16805:71",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:16837:16",
+        "reason": "a BinaryExpression with a value and a value"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/checker.ts:50576:21",
+    "reason": "a destructured name that isn't plain",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:15893:44",
+        "reason": "a value of type __String"
+      },
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:50576:77",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/checker.ts:50577:20",
+        "reason": "reading leftSpread"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/semver.ts:124:13",
+    "reason": "a destructured name that isn't plain",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/debug.ts:255:37",
+        "reason": "a value of type T | null | undefined"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:60:14",
+        "reason": "assigning to an ObjectLiteralExpression"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:1750:25",
+        "reason": "a value of type unknown"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:76:27",
+        "reason": "reading prereleaseArray"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:77:22",
+        "reason": "reading buildArray"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:103:16",
+        "reason": "a BinaryExpression with a number and a number"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/debug.ts:273:33",
+        "reason": "a value of type never"
+      },
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/semver.ts:47:41",
+        "reason": "a constructor object escaping before static fields are initialized"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:11499:5",
+    "reason": "a destructured name that isn't plain",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:1819:17",
+        "reason": "a function returning undefined"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/checker.ts:11491:19",
+    "reason": "destructuring a value",
+    "exit": 1,
+    "findings": []
+  },
+  {
+    "where": "src/compiler/tsbuildPublic.ts:2295:49",
+    "reason": "destructuring a value",
+    "exit": 1,
+    "findings": []
+  },
+  {
+    "where": "src/compiler/watch.ts:291:91",
+    "reason": "a tuple element of type string | number | boolean | readonly string[] | SourceFile | undefined",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:287:89",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:291:91",
+        "reason": "reading firstFileReference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:295:55",
+        "reason": "a tuple literal with more values than its tuple has elements"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/utilities.ts:8716:70",
+        "reason": "a rest array of DiagnosticArguments"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:301:54",
+        "reason": "reading d"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/watch.ts:294:97",
+    "reason": "a tuple element of type string | number | boolean | readonly string[] | SourceFile | undefined",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:287:89",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:291:91",
+        "reason": "reading firstFileReference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:295:55",
+        "reason": "a tuple literal with more values than its tuple has elements"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/utilities.ts:8716:70",
+        "reason": "a rest array of DiagnosticArguments"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/watch.ts:301:54",
+        "reason": "reading d"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/builder.ts:2406:35",
+    "reason": "new Map from something that isn't [key, value] pairs",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "/tmp/destructuring-adapted/src/compiler/path.ts:278:1",
+        "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2401:61",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2402:23",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2405:19",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2406:27",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2407:5",
+        "reason": "a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2426:14",
+        "reason": "reading fileInfos"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/builder.ts:2428:5",
+        "reason": "a function inside a function (a closure)"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/commandLineParser.ts:141:65",
+    "reason": "new Map from something that isn't [key, value] pairs",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/core.ts:333:21",
+        "reason": "for...of over an object"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/commandLineParser.ts:141:139",
+        "reason": "a BinaryExpression with a string and a number"
+      }
+    ]
+  },
+  {
+    "where": "src/compiler/scanner.ts:1333:15",
+    "reason": "destructuring a string",
+    "exit": 1,
+    "findings": []
+  },
+  {
+    "where": "src/compiler/programDiagnostics.ts:219:39",
+    "reason": "iterating a value",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:214:33",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:216:35",
+        "reason": "a call through ?. (an optional call)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:217:13",
+        "reason": "reading cachedChain"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:233:38",
+        "reason": "optional chaining to .size on a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:236:31",
+        "reason": "optional chaining to .size on a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:238:28",
+        "reason": "reading cachedChain"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/utilities.ts:8751:141",
+        "reason": "a rest array of DiagnosticArguments"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:281:17",
+        "reason": "reading cachedChain"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:292:18",
+        "reason": "reading cachedChain"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:295:26",
+        "reason": "a BinaryExpression with a value and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:296:16",
+        "reason": "reading location"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:300:9",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:307:9",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/programDiagnostics.ts:317:9",
+        "reason": "a function inside a function (a closure)"
+      }
+    ]
+  }
+]
