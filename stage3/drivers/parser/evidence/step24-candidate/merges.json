@@ -1,0 +1,23 @@
+[
+  {
+    "ref": "origin/codex/records-maplike-next",
+    "tip": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c",
+    "before": "0c99fc545e0f49d8407467321355fd45e2934c21",
+    "exit": 0,
+    "conflicts": [],
+    "skipped": false,
+    "after": "9d09100b623ce6923c74da78eed81f1a99d28f70"
+  },
+  {
+    "ref": "origin/compiler/area-stack",
+    "tip": "c6ae12df474d5ab0d750f2c0119e217e5de3cf8d",
+    "before": "9d09100b623ce6923c74da78eed81f1a99d28f70",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/counts.md",
+      "stage3/fixtures/nested-functions/09_checker_constituent_recursion.a"
+    ],
+    "skipped": true,
+    "after": "9d09100b623ce6923c74da78eed81f1a99d28f70"
+  }
+]

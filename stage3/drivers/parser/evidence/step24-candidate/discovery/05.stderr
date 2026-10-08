@@ -1,0 +1,7 @@
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:65:10: error TS1345: An expression of type 'void' cannot be tested for truthiness.
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:74:28: error TS2339: Property 'timeOrigin' does not exist on type 'never'.
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:74:74: error TS2339: Property 'now' does not exist on type 'never'.
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:80:28: error TS2339: Property 'mark' does not exist on type 'never'.
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:81:28: error TS2339: Property 'measure' does not exist on type 'never'.
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:82:28: error TS2339: Property 'clearMarks' does not exist on type 'never'.
+/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:83:28: error TS2339: Property 'clearMeasures' does not exist on type 'never'.

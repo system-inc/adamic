@@ -1,0 +1,22 @@
+{
+  "source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation_pin": "a3ef0dc93d5b2a6cf58f74669c763dc83a1aad0e",
+  "adapters": {
+    "stage3/adapt/00-setup/adapt.cjs": "a706c5afe1b5ab97e46345535950c1614138dcf06a347d28f1b4da6ecd542d2a",
+    "stage3/adapt/10-type-imports/adapt.cjs": "f6b2c76abb17d70ddd02e9a742da2e68c152a345300a93fb5c69bf929d388507"
+  },
+  "files": 81,
+  "reference": {
+    "bytes": 36429231,
+    "sha256": "686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615"
+  },
+  "mutant": {
+    "file": "src/compiler/diagnosticInformationMap.generated.ts",
+    "offset_zero_based": 92,
+    "before_hex": "44",
+    "after_hex": "58",
+    "changed_bytes": 1,
+    "caught": "parser dump drift: expected {'bytes': 36429231, 'sha256': '686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615'}, actual {'bytes': 36429231, 'sha256': '3fa7cfd50c6f80dc57e1d9dfd1b429598f9dfa00bcf02c3ed3615f047b986ad9'}",
+    "input_hash_guard": "caught"
+  }
+}

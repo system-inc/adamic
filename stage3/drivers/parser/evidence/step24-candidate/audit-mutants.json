@@ -1,0 +1,12 @@
+[
+  {
+    "mutant": "--drop-stop",
+    "exit": 1,
+    "caught_by": "ordered stop coverage"
+  },
+  {
+    "mutant": "--wrong-hash",
+    "exit": 1,
+    "caught_by": "fixed Node reference"
+  }
+]
