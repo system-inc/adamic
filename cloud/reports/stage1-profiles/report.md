@@ -562,3 +562,139 @@ followup-regeneration artifacts, with the same release test filter above.
 
 No Apple profile was built or measured. The user will regenerate those profiles
 when Kirk's Mac is available; this worker has no work on that machine.
+
+
+## Linux refresh against the current runtime — 2026-10-08
+
+Base: `2837accc21415d235c7f5483011334ba26dea2fd` from
+`origin/runtime/area-take-night`. The four regenerated Linux profile files
+are committed at `376a06fa9f117ba4de1cd4b6df24fbef14440092` on
+`runtime/stage1-profiles-refresh`.
+
+Both old Linux profiles reproduced the `stage 1 profile unavailable` plain
+ThinLTO fallback. The approved regeneration script trained both replacements
+on the same 38 service files at TypeScript
+`050880ce59e30b356b686bd3144efe24f875ebc8`. The fixed 77 compiler files remain
+excluded from training by path and content hash. Both regenerated profile
+builds completed successfully with empty build logs, proving no fallback.
+The manifests now bind the current runtime, emitted C and complete flags,
+including `-pthread`. No runtime, test, fixture or corpus source was edited.
+Darwin-arm64 profiles are unchanged and need a Mac regeneration run.
+
+Setup used `export GOPROXY='https://proxy.golang.org|direct'`,
+`bash cloud/setup.sh --wasi-sdk`, and the printed
+`source /workspace/adamic-tools/env.sh`. Tools were Go 1.27.1,
+Node 24.19.0, clang/LLVM/llvm-profdata 20.1.8, Hyperfine 1.19.0 and
+Cachegrind 3.27.1. The generated lint registry was produced with
+`go run ./cmd/lint-registry` and remains ignored by Git.
+
+Regeneration command:
+
+```
+python3 stage1/profiles/regenerate.py \
+  --typescript /workspace/scratch/stage1-refresh/typescript-pinned \
+  --work /workspace/scratch/stage1-refresh/regeneration \
+  --llvm-profdata /workspace/adamic-tools/llvm/bin/llvm-profdata
+```
+
+### Parse measurements on all 77 files
+
+The exact ThinLTO and profile binaries both matched the independent Go AST
+oracle: 44,766,682 bytes, SHA256
+`8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe`.
+The measured profile binary is byte-identical to the regenerated shipping
+parse binary. Both variants returned `0` with empty stderr during preflight,
+timing and simulated counting. Corpus and binary hashes were rechecked after
+measurement.
+
+This repeats the report's measurement method for the two requested parse
+variants: ten interleaved rounds with order alternating each round, one
+Hyperfine run per variant per round, pinned with `taskset -c 3` and
+`GOMAXPROCS=1`. User and wall times are separate minima. No build, gate or
+training workload ran during measurement. Cachegrind 3.27.1 used the same
+fixed simulation model: I1/D1 32 KiB, eight ways, 64-byte lines; LL 256 MiB,
+direct mapped; cache and branch simulation enabled. Instruction totals are
+simulated, not hardware counters. All 13 event totals reconciled with their
+cost records; existing +1 instruction-summary and +1 I1-cost accounting
+mutants were rejected for both variants.
+
+| Parse build | Simulated instructions | Best user, s | Best wall, s |
+|---|---:|---:|---:|
+| ThinLTO | 6,627,754,308 | 0.842147 | 0.866422 |
+| ThinLTO + profile | 5,059,714,292 | 0.589898 | 0.622749 |
+
+The profile reduces instructions by 23.7% and best user time by 30.0%.
+The new runtime's profile result is above the historical 5.0G instruction
+bar and below the historical 0.6s user-time bar; it does not meet both.
+These rows replace neither the old binaries nor their historical results.
+
+Machine: AMD EPYC 9V74 KVM guest, Linux 6.18.44 x86-64, five exposed CPUs,
+a four-CPU cgroup quota (`400000 100000`) and 16 GiB memory limit.
+During timing, one/five/fifteen-minute load ranges were
+0.179688–0.361816 / 0.433105–0.461426 / 1.030273–1.031738.
+Each sample retains its order and before/after loads in
+`/workspace/scratch/stage1-refresh/parse-timings.json`.
+Machine details are in `/workspace/scratch/stage1-refresh/machine.log`.
+
+| Artifact | SHA256 |
+|---|---|
+| Timed plain ThinLTO parse | `573621bc0f6f9ce078c77555860341663c53cf9cd1212ff0c254f7665e22146f` |
+| Timed shipping profile parse | `e34dd44a9e3b3ff43bd68dcbade65a01c76711df5b9e7c8f1d6e65b5d2722df6` |
+| Shipping profile lint | `72ad76ed884079685b5e48ba7457b4b30d8d41bf9560790359669f5a26d9dbac` |
+
+Runtime binding: `e4305da16e43de62ddc45de86c5c5038f4651a6adfc027ce00113b8925aa12fd`.
+Text profile hashes: parse `44a930e4414029280e6b55324b4112f6e916485f494f3fc590c975f038843410`,
+lint `3807eb3812de5f5d7ec743a35f446c5603b2718c70ac4dda1a8964e919189482`.
+
+### Focused validation and the accepted lint-oracle blocker
+
+The focused tests passed:
+
+```
+go test -v -count=1 -timeout 5m \
+  ./internal/native ./cmd/adamic-stage1 ./stage1/profiles \
+  -run '^Test(Stage1ProfileStalenessAndDeterminism|RuntimeFingerprintCoversEveryFile|NonShippingFlagsStayIdentical|ChangedTrainingByteCannotReachProfileFlags|TrainingNeverIncludesBenchmarks)$'
+```
+
+`TestReleaseStage1ProfilesAgree` was run with
+`ADAMIC_ORACLE_RELEASE=1 ADAMIC_GATE_UNCACHED=1`, the pinned TypeScript
+checkout, and `ADAMIC_STAGE1_PARSE_BINARY` / `ADAMIC_STAGE1_LINT_BINARY`
+selecting the exact regenerated binaries. Shipping parse passed its independent
+cold rebuild and Go/Node identity on 44,767,604 AST bytes, including its extra
+fixture, and caught the existing byte mutant. Shipping lint also matched its
+independent cold rebuild. Its Go oracle subsequently panicked on the upstream
+`no-octal-escape` corpus input `' \01'` because the oracle rejects that parser
+diagnostic. This happens in Go's corpus collection before output comparison;
+it is not a claimed lint-oracle pass. The user identified this as a cohere lint
+blocker and explicitly directed recording it and proceeding with this refresh.
+The failure log is
+`/workspace/scratch/stage1-refresh/shipping-oracle-rerun.log`.
+An earlier attempt failed the empty-stderr check on successful Go dependency
+download chatter; its log is
+`/workspace/scratch/stage1-refresh/shipping-oracle.log`.
+
+No new mutants or fixtures were added or changed, so `counts.md` regeneration
+was not applicable. No whole-package gate was run; the fast gate follows push.
+
+Reproduction and retained local evidence:
+
+- Two-variant measurement runner:
+  `/workspace/scratch/stage1-refresh/measure-parse.py` (same timing/counter
+  logic as `stage1/profiles/measure.py`, restricted to thin/profile, with the
+  independent Go AST preflight from `compare.py`).
+- Measurement invocation, after sourcing the tool environment:
+  `python3 /workspace/scratch/stage1-refresh/measure-parse.py`.
+- Commands and validated hashes:
+  `/workspace/scratch/stage1-refresh/parse-commands.json` and
+  `/workspace/scratch/stage1-refresh/parse-builds.json`.
+- Timing and counter summaries:
+  `/workspace/scratch/stage1-refresh/parse-timings.json` and
+  `/workspace/scratch/stage1-refresh/parse-instructions.json`.
+- Raw simulation records: `/workspace/scratch/stage1-refresh/thin.cachegrind`
+  and `/workspace/scratch/stage1-refresh/profile.cachegrind`.
+- Full measurement and regeneration logs:
+  `/workspace/scratch/stage1-refresh/parse-measurement.log` and
+  `/workspace/scratch/stage1-refresh/regeneration.log`.
+- Focused test log: `/workspace/scratch/stage1-refresh/focused-tests.log`.
+
+The final raw artifacts remain local; this refresh adds no raw-artifact upload.
