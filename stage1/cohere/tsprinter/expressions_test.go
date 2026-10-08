@@ -29,7 +29,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicExpressionCorpus$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json")
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go expression corpus %v\n%s", err, output)
 	} else {
 		t.Log(string(output))

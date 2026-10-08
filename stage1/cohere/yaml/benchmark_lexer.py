@@ -2,9 +2,16 @@
 """Time complete YAML layer drivers; every measured output must equal Go's bytes."""
 import argparse
 from pathlib import Path
+import resource
 import statistics
 import subprocess
 import time
+
+# An inherited CPU-time hang guard does not charge time spent waiting for a loaded box.
+# These drivers may buffer until exit, so allow thirty minutes of CPU before stopping.
+def cpu_hang_guard():
+    resource.setrlimit(resource.RLIMIT_CPU, (30 * 60, 30 * 60 + 1))
+
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('artifacts', type=Path)
@@ -35,7 +42,7 @@ for round_number in range(args.rounds):
         stderr = artifacts / (name + '.timed.stderr')
         with stdout.open('wb') as out, stderr.open('wb') as err:
             start = time.perf_counter()
-            subprocess.run(command, stdout=out, stderr=err, check=True, timeout=300)
+            subprocess.run(command, stdout=out, stderr=err, check=True, preexec_fn=cpu_hang_guard)
             elapsed = time.perf_counter() - start
         if stdout.read_bytes() != expected or stderr.stat().st_size:
             raise RuntimeError(f'{name}: bytes or stderr differ from Go')
