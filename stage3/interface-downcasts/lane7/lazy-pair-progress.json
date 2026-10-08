@@ -4,7 +4,7 @@
   "candidate_reads": 769,
   "exact_pairs_remaining": null,
   "exact_reads_remaining": null,
-  "production_pairs_completed": 0,
+  "production_pairs_completed": 1,
   "pairs": [
     {
       "type_id": 6997,
@@ -7478,5 +7478,10 @@
     }
   ],
   "primitive_or_array_candidates_delegated_pairs": 28,
-  "primitive_or_array_candidates_delegated_reads": 703
+  "primitive_or_array_candidates_delegated_reads": 703,
+  "certified_original_pairs": 1,
+  "certified_original_reads": 1,
+  "lane7_object_candidates_remaining_pairs": 16,
+  "lane7_object_candidates_remaining_reads": 65,
+  "certification_basis": "Complete pinned upstream declarations, original read-site provenance and representative runtime fixtures; exact allocation reachability remains unmeasured"
 }

@@ -30,7 +30,7 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 		}
 		child := e.program.ViewContracts[field.Contract-1]
 		// Unsupported descendants are refused by lazy demand at their own reads.
-		if child.Unsupported != "" || child.Kind == ir.ViewUnknown || child.Kind == ir.ViewCallable || child.Kind == ir.ViewUndefined || child.Of == ir.Union {
+		if child.Unsupported != "" || child.Kind == ir.ViewUnknown || child.Kind == ir.ViewUndefined || child.Of == ir.Union {
 			continue
 		}
 		slot := e.temporary()

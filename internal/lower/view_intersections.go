@@ -183,6 +183,8 @@ func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID, target *chec
 					return family
 				}
 			}
+		case ir.ViewCallable:
+			return "" // Kind now; the shared callable proof is demanded by member reads.
 		case ir.ViewUnknown:
 			return "" // Lazy demand never treats Unknown as a read certificate.
 		default:
@@ -374,4 +376,21 @@ func (l *lowering) recursiveIntersectionSupported(id ir.ViewContractID, seen map
 		}
 	}
 	return true
+}
+
+// A resolved intersection read emits its own runtime checks. A same-named
+// unsupported field in a wider source carrier cannot replace that obligation.
+// Unknown or unsupported read contracts still use the conservative fallback.
+func (l *lowering) viewIntersectionReadChecks(id ir.ViewContractID) bool {
+	if id == 0 {
+		return false
+	}
+	c := l.result.ViewContracts[id-1]
+	if c.Unsupported != "" {
+		return false
+	}
+	if c.Kind == ir.ViewNullable {
+		return l.viewIntersectionReadChecks(c.Element)
+	}
+	return c.Intersection || c.IntersectionTag != ""
 }

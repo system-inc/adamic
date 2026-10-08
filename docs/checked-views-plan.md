@@ -1315,3 +1315,23 @@ writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.
 Lane 7 latest integration reconciliation: viewDataType retains both structural
 intersection recognition and viewArrayBase ancestry recognition; plan appends
 from both lanes are preserved. Central tip d50c1d37 is merged, never a peer tip.
+
+
+Lane 7 original-certification group: new files are
+internal/oracle/checked_views_intersections_original_test.go and
+stage3/interface-downcasts/lane7/original/*.a, prepare.cjs and run-mutants.py.
+They reference complete declarations emitted outside Adamic from pristine
+microsoft/TypeScript at 050880ce, using the integrated lane4b emission adapter.
+All emitted files are hash checked; complete original receiver, component and
+combined intersection field sets are asserted. No cohere file is copied.
+
+Named minimal hooks for this group: the owned intersection classifier admits
+ViewCallable child kind checks, and both owned field walkers retain callable
+presence/kind checks. Shared javascript/readiness.go adamicViewField recognizes
+representation 8 as a real function or AdamicClosure. Signature/body proof stays
+at the owning callable read/call boundary; a function tag is never that proof.
+Shared lower/view_lazy.go consults viewIntersectionReadChecks before the
+field-name fallback. A resolved supported conjunctive read keeps its emitted
+checks instead of inheriting a different wider carrier's unsupported descriptor.
+Unsupported or unresolved reads retain the existing conservative fallback.
+The original missing-optional control caught that fallback collision.

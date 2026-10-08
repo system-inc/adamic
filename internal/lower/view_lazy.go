@@ -186,7 +186,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" {
+		if family == "" && !l.viewIntersectionReadChecks(contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {

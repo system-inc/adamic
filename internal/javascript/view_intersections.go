@@ -47,7 +47,7 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 			continue
 		}
 		child := e.program.ViewContracts[field.Contract-1]
-		if child.Unsupported != "" || child.Kind == ir.ViewUnknown || child.Kind == ir.ViewCallable || child.Kind == ir.ViewUndefined || child.Of == ir.Union {
+		if child.Unsupported != "" || child.Kind == ir.ViewUnknown || child.Kind == ir.ViewUndefined || child.Of == ir.Union {
 			continue
 		}
 		path := expression + "." + field.Name
