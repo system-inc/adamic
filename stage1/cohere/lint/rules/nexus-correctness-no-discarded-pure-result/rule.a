@@ -1,0 +1,61 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { types } from '../../../typeaware/facts.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+const message = "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.";
+const stringMethods: readonly string[] = ['at', 'charAt', 'charCodeAt', 'codePointAt', 'concat', 'endsWith', 'includes', 'indexOf', 'isWellFormed', 'lastIndexOf', 'match', 'matchAll', 'padEnd', 'padStart', 'replace', 'replaceAll', 'search', 'slice', 'split', 'startsWith', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase', 'toLowerCase', 'toString', 'toUpperCase', 'toWellFormed', 'trim', 'trimEnd', 'trimLeft', 'trimRight', 'trimStart', 'valueOf'];
+const arrayMethods: readonly string[] = ['at', 'concat', 'entries', 'flat', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'slice', 'toReversed', 'toSorted', 'toSpliced', 'values', 'with'];
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        const checker = context.checker;
+        if(checker === undefined) { return; }
+        const expression = node.children[0] ?? -1;
+        if(expression < 0) { return; }
+        const call = context.unwrap(expression);
+        const called = context.node(call);
+        if(called.kind !== 'CallExpression') { return; }
+        const target = called.children[0] ?? -1;
+        if(target < 0) { return; }
+        const callee = context.unwrap(target);
+        const accessed = context.node(callee);
+        if(accessed.kind !== 'PropertyAccessExpression') { return; }
+        const name = accessed.children[accessed.children.length - 1] ?? -1;
+        if(name < 0) { return; }
+        const named = context.node(name);
+        if(named.kind !== 'Identifier') { return; }
+        const answer = checker.ask(name, 'node-symbol-details');
+        if(answer.value === undefined) { return; }
+        const facts = new SymbolDetails(answer.value);
+        if(!facts.present || facts.declarations.length === 0) { return; }
+        for(const declaration of facts.declarations) {
+            if(declaration.declarationKind !== 'MethodSignature' || declaration.parentKind !== 'InterfaceDeclaration' || !declaration.defaultLibrary) { return; }
+            if(declaration.parentName === 'String') { if(!stringMethods.includes(named.text)) { return; } }
+            else if(declaration.parentName === 'Array' || declaration.parentName === 'ReadonlyArray') { if(!arrayMethods.includes(named.text)) { return; } }
+            else { return; }
+        }
+        for(const argument of context.arguments(call)) {
+            const value = context.unwrap(argument);
+            const argumentNode = context.node(value);
+            if(argumentNode.kind === 'ArrowFunction' || argumentNode.kind === 'FunctionExpression') { return; }
+            const typeAnswer = checker.ask(value, 'type-shape');
+            if(typeAnswer.value === undefined) { return; }
+            const graph = types(typeAnswer.value, 'type-shape');
+            if(!graph.present || graph.roots.length === 0) { return; }
+            for(const part of graph.parts(graph.root())) {
+                if((graph.type(part).flags & 3) !== 0) { return; }
+                const countAnswer = checker.ask(value, `call-count\n${part}`);
+                if(countAnswer.value === undefined) { return; }
+                const frames = new Frames(countAnswer.value);
+                header(frames, 'call-count');
+                const count = frames.natural(); frames.end();
+                if(count > 0) { return; }
+            }
+        }
+        context.reportRange(context.start(call), called.end, 'nexus/correctness-no-discarded-pure-result', 'discardedPureResult', message);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

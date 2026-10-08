@@ -1,0 +1,18 @@
+{
+  "name": "nexus/correctness-no-discarded-pure-result",
+  "typed": true,
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ],
+  "node": true,
+  "kinds": [
+    "ExpressionStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave21PureResult",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessNoDiscardedPureResult"
+}
