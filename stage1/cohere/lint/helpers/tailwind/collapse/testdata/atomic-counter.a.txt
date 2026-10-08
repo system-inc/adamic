@@ -1,0 +1,10 @@
+// Exact signed 64-bit increment with a process-scoped synchronization primitive.
+// This is a support probe, not a published helper or a compiler workaround.
+const builds = new BigInt64Array(new SharedArrayBuffer(8));
+function nextBuildCount(): bigint {
+    return BigInt.asIntN(64, Atomics.add(builds, 0, 1n) + 1n);
+}
+for(const start of [0n, 9007199254740991n, 9223372036854775806n]) {
+    builds[0] = start;
+    for(let index = 0; index < 3; index++) { console.log(nextBuildCount().toString()); }
+}
