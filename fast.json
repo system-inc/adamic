@@ -1,0 +1,490 @@
+{
+  "sha": "855bcfaacb8919a0d61ec34eda785fce9fde8ba2",
+  "branch": "codex/stage3-step09-ledger",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "73352e874ddbda5a78c95c5c670860d43275e4d0",
+  "base_name": "main",
+  "tools_sha": "3e339bbf06e0695f1b1223065ee8d4eef4813ba8",
+  "machine": {
+    "hostname": "Server",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "stage3/step09-ledger/FILES.md",
+        "stage3/step09-ledger/PROVENANCE.json",
+        "stage3/step09-ledger/README.md",
+        "stage3/step09-ledger/SUMMARY.json",
+        "stage3/step09-ledger/adapted-additions.json",
+        "stage3/step09-ledger/cast_probe.go.txt",
+        "stage3/step09-ledger/composition.json",
+        "stage3/step09-ledger/enumerate.cjs",
+        "stage3/step09-ledger/evidence/adapted-inventory.txt",
+        "stage3/step09-ledger/evidence/fixture.txt",
+        "stage3/step09-ledger/evidence/loader-tests.txt",
+        "stage3/step09-ledger/evidence/oracle.txt",
+        "stage3/step09-ledger/evidence/prepare-resumed.txt",
+        "stage3/step09-ledger/evidence/prepare-through-71-rejection.raw.gz",
+        "stage3/step09-ledger/evidence/prepare-through-71-rejection.txt",
+        "stage3/step09-ledger/evidence/probe-vet.txt",
+        "stage3/step09-ledger/evidence/reconcile.txt",
+        "stage3/step09-ledger/evidence/run.txt",
+        "stage3/step09-ledger/evidence/runner-fixture.txt",
+        "stage3/step09-ledger/evidence/setup.txt",
+        "stage3/step09-ledger/evidence/stock-inventory.txt",
+        "stage3/step09-ledger/evidence/timer-overlap.txt",
+        "stage3/step09-ledger/evidence/vet.txt",
+        "stage3/step09-ledger/files.json",
+        "stage3/step09-ledger/fixture/main.a",
+        "stage3/step09-ledger/fixture/nested.a",
+        "stage3/step09-ledger/ledger.json",
+        "stage3/step09-ledger/ledger.py",
+        "stage3/step09-ledger/make_overlay.py",
+        "stage3/step09-ledger/open.json",
+        "stage3/step09-ledger/prepare.py",
+        "stage3/step09-ledger/probe/main.go.txt",
+        "stage3/step09-ledger/run.py",
+        "stage3/step09-ledger/test_fixture.py",
+        "stage3/step09-ledger/test_overlap.cjs"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage3/step09-ledger/PROVENANCE.json",
+        "stage3/step09-ledger/SUMMARY.json",
+        "stage3/step09-ledger/adapted-additions.json",
+        "stage3/step09-ledger/composition.json",
+        "stage3/step09-ledger/files.json",
+        "stage3/step09-ledger/ledger.json",
+        "stage3/step09-ledger/open.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "stage3/step09-ledger/FILES.md",
+        "stage3/step09-ledger/README.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [
+    "stage3/step09-ledger/fixture/main.a",
+    "stage3/step09-ledger/fixture/nested.a"
+  ],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 17,
+    "stage3": 18
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "stage3/step09-ledger/FILES.md",
+    "stage3/step09-ledger/PROVENANCE.json",
+    "stage3/step09-ledger/README.md",
+    "stage3/step09-ledger/SUMMARY.json",
+    "stage3/step09-ledger/adapted-additions.json",
+    "stage3/step09-ledger/cast_probe.go.txt",
+    "stage3/step09-ledger/composition.json",
+    "stage3/step09-ledger/enumerate.cjs",
+    "stage3/step09-ledger/evidence/adapted-inventory.txt",
+    "stage3/step09-ledger/evidence/fixture.txt",
+    "stage3/step09-ledger/evidence/loader-tests.txt",
+    "stage3/step09-ledger/evidence/oracle.txt",
+    "stage3/step09-ledger/evidence/prepare-resumed.txt",
+    "stage3/step09-ledger/evidence/prepare-through-71-rejection.raw.gz",
+    "stage3/step09-ledger/evidence/prepare-through-71-rejection.txt",
+    "stage3/step09-ledger/evidence/probe-vet.txt",
+    "stage3/step09-ledger/evidence/reconcile.txt",
+    "stage3/step09-ledger/evidence/run.txt",
+    "stage3/step09-ledger/evidence/runner-fixture.txt",
+    "stage3/step09-ledger/evidence/setup.txt",
+    "stage3/step09-ledger/evidence/stock-inventory.txt",
+    "stage3/step09-ledger/evidence/timer-overlap.txt",
+    "stage3/step09-ledger/evidence/vet.txt",
+    "stage3/step09-ledger/files.json",
+    "stage3/step09-ledger/fixture/main.a",
+    "stage3/step09-ledger/fixture/nested.a",
+    "stage3/step09-ledger/ledger.json",
+    "stage3/step09-ledger/ledger.py",
+    "stage3/step09-ledger/make_overlay.py",
+    "stage3/step09-ledger/open.json",
+    "stage3/step09-ledger/prepare.py",
+    "stage3/step09-ledger/probe/main.go.txt",
+    "stage3/step09-ledger/run.py",
+    "stage3/step09-ledger/test_fixture.py",
+    "stage3/step09-ledger/test_overlap.cjs"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "stage3/step09-ledger/FILES.md",
+    "stage3/step09-ledger/PROVENANCE.json",
+    "stage3/step09-ledger/README.md",
+    "stage3/step09-ledger/SUMMARY.json",
+    "stage3/step09-ledger/adapted-additions.json",
+    "stage3/step09-ledger/cast_probe.go.txt",
+    "stage3/step09-ledger/composition.json",
+    "stage3/step09-ledger/enumerate.cjs",
+    "stage3/step09-ledger/evidence/adapted-inventory.txt",
+    "stage3/step09-ledger/evidence/fixture.txt",
+    "stage3/step09-ledger/evidence/loader-tests.txt",
+    "stage3/step09-ledger/evidence/oracle.txt",
+    "stage3/step09-ledger/evidence/prepare-resumed.txt",
+    "stage3/step09-ledger/evidence/prepare-through-71-rejection.raw.gz",
+    "stage3/step09-ledger/evidence/prepare-through-71-rejection.txt",
+    "stage3/step09-ledger/evidence/probe-vet.txt",
+    "stage3/step09-ledger/evidence/reconcile.txt",
+    "stage3/step09-ledger/evidence/run.txt",
+    "stage3/step09-ledger/evidence/runner-fixture.txt",
+    "stage3/step09-ledger/evidence/setup.txt",
+    "stage3/step09-ledger/evidence/stock-inventory.txt",
+    "stage3/step09-ledger/evidence/timer-overlap.txt",
+    "stage3/step09-ledger/evidence/vet.txt",
+    "stage3/step09-ledger/files.json",
+    "stage3/step09-ledger/fixture/main.a",
+    "stage3/step09-ledger/fixture/nested.a",
+    "stage3/step09-ledger/ledger.json",
+    "stage3/step09-ledger/ledger.py",
+    "stage3/step09-ledger/make_overlay.py",
+    "stage3/step09-ledger/open.json",
+    "stage3/step09-ledger/prepare.py",
+    "stage3/step09-ledger/probe/main.go.txt",
+    "stage3/step09-ledger/run.py",
+    "stage3/step09-ledger/test_fixture.py",
+    "stage3/step09-ledger/test_overlap.cjs"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools-2",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "not run"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "expected_seconds": 178.45,
+      "slots": 1,
+      "after_seconds": 10.132
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "expected_seconds": 76.35,
+      "slots": 1,
+      "after_seconds": 10.147
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "expected_seconds": 32.896,
+      "slots": 1,
+      "after_seconds": 10.153
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "expected_seconds": 29.584,
+      "slots": 1,
+      "after_seconds": 10.163
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "expected_seconds": 28.648,
+      "slots": 1,
+      "after_seconds": 10.183
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "expected_seconds": 6.19,
+      "slots": 1,
+      "after_seconds": 10.204
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/tool": 0,
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage": 0,
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": 0,
+    "github.com/system-inc/adamic/stage3/census/tool": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08": 0
+  },
+  "gate_samples": [
+    "TestPortMatchesGoCohere 110/3257 files, stride 32, offset 7",
+    "TestUpstreamRepositoryCorpusParity 414/3257 files, stride 8, offset 7"
+  ],
+  "a_check": {
+    "stage3/step09-ledger/fixture/main.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /home/ahra/fast-gate/tree-2/stage3/step09-ledger/fixture/main.a:1:12: stage 0 can't lower a value of type any yet"
+    },
+    "stage3/step09-ledger/fixture/nested.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /home/ahra/fast-gate/tree-2/stage3/step09-ledger/fixture/nested.a:1:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-un"
+    }
+  },
+  "stage3_exits": {
+    "stage3-apply-tests": -9,
+    "stage3-lane-tests": -9,
+    "stage3-lane": -9
+  },
+  "split_tally": {
+    "packages": 9,
+    "planned": 21,
+    "passed": 0,
+    "touched": 12
+  },
+  "wall_seconds": 21.6,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 1.1,
+    "a-check-build": 19.7,
+    "a-check": 20.1,
+    "build": 20.1,
+    "stage3": 20.1,
+    "smoke": 20.1,
+    "tests": 20.2
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "a-check",
+    "detail": "a-check failed for 1 file:\nstage3/step09-ledger/fixture/nested.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree-2/stage3/step09-ledger/fixture/nested.a:1:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique li)",
+    "after_seconds": 21.5
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3",
+    "a-check"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "a-check-build": 0,
+    "a-check": 1,
+    "build": -9,
+    "stage3": 1,
+    "smoke": 1,
+    "tests": 1
+  },
+  "finished": true,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 21
+  }
+}
