@@ -93,12 +93,18 @@ while true; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
     read -r branch sha class box original < "${file}"
+    entry=$(cat "${file}")
     # A void gate goes back to the queue as the class it was queued with, not the slot it borrowed.
     class=${original:-${class}}
     rm "${file}"
     cause=$(voidCause "${state}/logs/${sha:0:12}.log")
     if [ -z "${cause}" ]; then
-      echo "$(date -u +%H:%M:%S) done ${branch}: $(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)"
+      verdict=$(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)
+      echo "$(date -u +%H:%M:%S) done ${branch}: ${verdict}"
+      if [[ ${branch} == codex/* && ${verdict} == "green: ${sha} "* ]] && [ -f "${state}/auto-area-merge" ]; then
+        # Keep the completed gate available for reaping if durable enqueue fails.
+        bash "${here}/cloud/auto-area-merge.sh" --enqueue "${branch}" "${sha}" || echo "${entry}" > "${file}"
+      fi
       continue
     fi
     # A void gate (it died before a real verdict, like the 33 a WSL restart killed at 08:23Z on Oct 8)
@@ -177,5 +183,13 @@ while true; do
     echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}$([ "${slot}" = "${class}" ] || echo " in an ${slot} slot") on ${box}, waited $(( now - queued )) s, log ${log})"
     (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started,${box}" > /dev/null 2>&1 &)
   done
+  # A durable queue survives restarts. The dispatcher and area-merge's own locks serialize merges;
+  # a locked area stays queued, and removing the switch prevents the next attempt.
+  if [ -f "${state}/auto-area-merge" ]; then
+    if [ -z "${areaMergePid:-}" ] || ! kill -0 "${areaMergePid}" 2>/dev/null; then
+      bash "${here}/cloud/auto-area-merge.sh" --drain >> "${state}/logs/auto-area-merge.log" 2>&1 &
+      areaMergePid=$!
+    fi
+  fi
   sleep 15
 done
