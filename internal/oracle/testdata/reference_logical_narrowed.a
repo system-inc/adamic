@@ -1,0 +1,7 @@
+// A scalar result cannot hold the absence restored after the checker narrowed it away.
+let arr: number[] | undefined = [1];
+function drop(): void { arr = undefined; }
+if (arr !== undefined) {
+ drop();
+ console.log(`${arr && arr.length}`);
+}

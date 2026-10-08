@@ -120,8 +120,19 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 			return true
 		case ast.KindBinaryExpression:
 			binary := parent.AsBinaryExpression()
-			if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken && binary.Left == node {
-				return true
+			if binary.Left == node {
+				if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+					return true
+				}
+				if l.truthyReference(l.checker.GetTypeAtLocation(node)) {
+					if binary.OperatorToken.Kind == ast.KindBarBarToken {
+						return true
+					}
+					whole := l.concrete(l.checker.GetTypeAtLocation(parent))
+					if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && (l.includesUndefined(whole) || l.includesNull(whole)) {
+						return true
+					}
+				}
 			}
 		case ast.KindConditionalExpression:
 			conditional := parent.AsConditionalExpression()

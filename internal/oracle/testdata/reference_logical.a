@@ -1,0 +1,90 @@
+const emptyStrings: string[] = [];
+const emptyNumbers: number[] = [];
+function mapped(arr: readonly string[] | undefined): number[] | undefined {
+ return arr && arr.map(text => text.length);
+}
+function show(arr: number[] | undefined): void {
+ console.log(arr === undefined ? 'absent' : `present:${arr.join(',')}`);
+}
+show(mapped(['Kirk', 'Ahra']));
+show(mapped(undefined));
+show(mapped(emptyStrings));
+function objectOr(obj: { value: string } | undefined): { value: string } {
+ return obj || { value: 'fallback' };
+}
+console.log(objectOr({ value: 'given' }).value);
+console.log(objectOr(undefined).value);
+function chain(arr: readonly string[] | undefined): number[] {
+ return (arr && arr.map(text => text.length)) || [99];
+}
+console.log(chain(undefined).join(','));
+console.log(chain(emptyStrings).join(','));
+console.log(chain(['native']).join(','));
+let leftCalls = 0;
+let rightCalls = 0;
+function observed(present: boolean): number[] | undefined {
+ leftCalls++;
+ const arr: number[] = [];
+ return present ? arr : undefined;
+}
+function right(): number[] {
+ rightCalls++;
+ return [rightCalls];
+}
+show(observed(true) && right());
+show(observed(false) && right());
+show(observed(true) || right());
+show(observed(false) || right());
+console.log(`${leftCalls},${rightCalls}`);
+function nullable(arr: number[] | null): number[] | null { return arr && arr.map(n => n + 1); }
+function nullOr(obj: { value: string } | null): { value: string } { return obj || { value: 'null fallback' }; }
+const nullResult = nullable(null);
+const populated = nullable([4]);
+const empty = nullable(emptyNumbers);
+console.log(nullResult === null ? 'null' : 'wrong');
+console.log(populated === null ? 'null' : populated.join(','));
+console.log(empty === null ? 'null' : `empty:${empty.length}`);
+console.log(nullOr(null).value);
+console.log(nullOr({value: 'null given'}).value);
+function mapOr(map: Map<string, number> | undefined): Map<string, number> { return map || new Map<string, number>([['fallback', 2]]); }
+console.log(`${mapOr(undefined).size},${mapOr(new Map<string, number>()).size}`);
+function closureAnd(fn: (() => number) | null): (() => number) | null { return fn && (() => 7); }
+const noFn = closureAnd(null);
+const yesFn = closureAnd(() => 3);
+console.log(noFn === null ? 'no closure' : `${noFn()}`);
+console.log(yesFn === null ? 'no closure' : `${yesFn()}`);
+// The result representation belongs to the whole, not to its array left operand.
+function lengthAnd(arr: number[] | undefined): number | undefined { return arr && arr.length; }
+console.log(`${lengthAnd(undefined)},${lengthAnd(emptyNumbers)},${lengthAnd([1,2])}`);
+function textAnd(arr: number[] | undefined): string | undefined { return arr && 'text'; }
+console.log(`${textAnd(undefined)},${textAnd(emptyNumbers)}`);
+function arrayOrText(arr: number[] | undefined): number[] | string { return arr || 'fallback'; }
+console.log(typeof arrayOrText(emptyNumbers));
+console.log(typeof arrayOrText(undefined));
+function objectAnd(obj: { value: string } | null): number[] | null { return obj && [obj.value.length]; }
+const noObject = objectAnd(null);
+const yesObject = objectAnd({value: 'Kirk'});
+console.log(noObject === null ? 'absent object' : noObject.join(','));
+console.log(yesObject === null ? 'absent object' : yesObject.join(','));
+function genericMap<T, U>(arr: readonly T[] | undefined, callback: (value: T) => U): U[] | undefined {
+ return arr && arr.map(callback);
+}
+show(genericMap(['Kirk'], text => text.length));
+show(genericMap<string, number>(undefined, text => text.length));
+const objects = genericMap([3], n => ({value: n + 1}));
+console.log(objects === undefined ? 'missing objects' : objects.map(obj => obj.value).join(','));
+function indexedAnd(slots: readonly number[][], index: number): number[] | undefined {
+ const result = slots[index] && [7];
+ return result;
+}
+show(indexedAnd([emptyNumbers], 0));
+show(indexedAnd([emptyNumbers], 1));
+function textMap(arr: readonly string[] | undefined): string[] | undefined {
+ return arr && arr.map(text => `${text}:${leftCalls}`);
+}
+const ownedText = textMap(['owned']);
+console.log(ownedText === undefined ? 'missing text' : ownedText.join(','));
+const nullableSlots: (number[] | null)[] = [];
+nullableSlots.push(null);
+console.log(`${typeof nullableSlots.pop()},${typeof nullableSlots.pop()}`);
+console.log((nullableSlots.pop() || [8]).join(','));

@@ -401,6 +401,9 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.referenceAndTest(node) {
+		return nil
+	}
 	if l.typeMapper == nil {
 		if err := l.explicitGenericArrayViews(node); err != nil {
 			return err
@@ -556,6 +559,11 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && l.truthyReference(l.checker.GetTypeAtLocation(binary.Left)) {
+			return l.freshOrWidened(binary.Right, l.checker.GetTypeAtLocation(binary.Right), contextual)
+		}
 	case ast.KindConditionalExpression:
 		// Either branch is the value: each judged as it is.
 		conditional := node.AsConditionalExpression()

@@ -120,6 +120,9 @@ func unwrap(expression string) string {
 // value ?? panic(message), which ends the program there.
 func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	value := e.value(coalesce.Value)
+	if coalesce.ReferenceAnd {
+		return e.referenceAnd(coalesce, value)
+	}
 	present, unwrapped := value+" != NULL", value
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
@@ -168,6 +171,35 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	e.indent--
 	e.line("}")
 	if coalesce.Of.IsReference() {
+		e.owned = append(e.owned, result)
+	}
+	return result
+}
+
+// referenceAnd keeps the absent pointer and evaluates the right operand only
+// when the left reference is present. Neither the test nor the result rereads it.
+func (e *emitter) referenceAnd(expression ir.Coalesce, value string) string {
+	result := e.temporary()
+	absent := zero(expression.Of)
+	if expression.Of.IsReference() {
+		absent = "NULL"
+	}
+	e.line("%s %s = %s;", cType(expression.Of), result, absent)
+	text, right, owned := e.aside(expression.Fallback)
+	e.line("if (%s != NULL) {", value)
+	e.out.WriteString(text)
+	e.indent++
+	if expression.Of.IsReference() {
+		e.line("%s = %s;", result, retained(right))
+	} else {
+		e.line("%s = %s;", result, right)
+	}
+	for index := len(owned) - 1; index >= 0; index-- {
+		e.line("adamic_release(%s);", owned[index])
+	}
+	e.indent--
+	e.line("}")
+	if expression.Of.IsReference() {
 		e.owned = append(e.owned, result)
 	}
 	return result
