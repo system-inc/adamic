@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+    oracle_test.go:740: gate cache node miss
+    oracle_test.go:740: gate cache node miss
+    oracle_test.go:587: gate cache native miss
+    oracle_test.go:580: gate cache native miss
+    oracle_test.go:761: stdout differs
+        node:   exit 0, stdout "0|1|index|input|groups\n0|1|index|input|groups|indices\n0|1|groups\n", stderr ""
+        native: exit 0, stdout "0|1|index|input|groups|indices\n0|1|index|input|groups|indices\n0|1|groups\n", stderr ""
+    oracle_test.go:594: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a (10.75s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.766s
+FAIL

@@ -1,0 +1,14 @@
+function names(value: {}): string {
+ const keys: string[] = [];
+ for (const key in value) keys.push(key);
+ return keys.join('|');
+}
+function maybe(present: boolean): { '\u0001': string; b: number } | undefined {
+ return present ? { '\u0001': 'real', b: 1 } : undefined;
+}
+const absent = { ...maybe(false), b: 2 };
+const copied = { ...absent, b: 3 };
+console.log(names(copied));
+const added = { ...copied, '\u0001': 'yes' };
+console.log(names(added));
+console.log(names(copied));

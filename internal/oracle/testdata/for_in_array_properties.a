@@ -1,0 +1,12 @@
+function names(value: {}): string {
+ const keys: string[] = [];
+ for (const key in value) keys.push(key);
+ return keys.join('|');
+}
+const plain = /(a)?b/.exec('b');
+if (plain !== null) console.log(names(plain));
+const indexed = /(a)?b/d.exec('b');
+if (indexed !== null) {
+ console.log(names(indexed));
+ if (indexed.indices !== undefined) console.log(names(indexed.indices));
+}

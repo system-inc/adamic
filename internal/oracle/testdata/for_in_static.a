@@ -1,0 +1,8 @@
+function names(value: {}): string {
+ const keys: string[] = [];
+ for (const key in value) keys.push(key);
+ return keys.join('|');
+}
+class Base { static readonly base = 1; }
+class Derived extends Base { static readonly own = 2; }
+console.log(names(Derived));

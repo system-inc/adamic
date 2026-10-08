@@ -1,0 +1,12 @@
+function names(value: {}): string {
+ const keys: string[] = [];
+ for (const key in value) keys.push(key);
+ return keys.join('|');
+}
+console.log(names(42));
+console.log(names(true));
+console.log(names('🌍x'));
+let value: {} = 42;
+console.log(names(value));
+value = false;
+console.log(names(value));

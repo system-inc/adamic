@@ -1,0 +1,5 @@
+--- FAIL: TestForInStructuralSlotVirtualTargets (0.00s)
+    for_in_test.go:38: an override reads object fields, so the slot must keep object storage
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.035s
+FAIL

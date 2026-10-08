@@ -168,7 +168,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)
-			arguments = append(arguments, value)
+			arguments = append(arguments, e.enumerationArgument(parameters[index], argument.Type(), value))
 			continue
 		}
 		value := ""
@@ -198,7 +198,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 			}
 			value = boxed
 		}
-		arguments = append(arguments, value)
+		arguments = append(arguments, e.enumerationArgument(parameters[index], argument.Type(), value))
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
 		if of := e.program.Locals[parameter].Type; of.IsMaybe() {

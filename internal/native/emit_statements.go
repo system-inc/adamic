@@ -76,6 +76,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := zero(local.Type)
 		if statement.Value != nil {
 			value = e.value(statement.Value)
+			value = e.enumerationArgument(statement.Local, statement.Value.Type(), value)
 		}
 		// The declaration is the statement's last write: what it owns, the variable can take.
 		owned := e.taken(value)
@@ -109,6 +110,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		value := e.value(statement.Value)
+		value = e.enumerationArgument(statement.Local, statement.Value.Type(), value)
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			e.checkReady(statement.Local)
@@ -166,6 +168,10 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+		if e.enumeratesKeys() {
+			e.forInDeclarations()
+			e.line("adamic_for_in_write(%s, %s);", object, cString(statement.Name))
+		}
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()

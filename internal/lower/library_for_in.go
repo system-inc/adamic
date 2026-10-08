@@ -4,32 +4,25 @@ import (
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// forIn takes a snapshot of a fixed plain object's actual keys. Shapes cannot gain or lose fields,
-// and prototypes cannot be mutated, so this is JavaScript's enumeration throughout the loop.
+// forIn snapshots runtime keys and skips keys removed before their turn.
+// Prototype mutation remains refused, so supported objects have no changing prototype chain.
 func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForInOrOfStatement()
-	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	if l.checker.IsArrayType(proven) || checker.IsTupleType(proven) {
-		return nil, l.notYet(statement.Expression, "for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)")
-	}
-	// Structural types can hide an array, and synthetic undefined spread fields are not real keys.
-	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
-	// calls until their possible shapes and property presence can be proved.
-	if !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
-		return nil, l.notYet(statement.Expression, "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)")
-	}
 	object, err := l.expression(statement.Expression)
 	if err != nil {
 		return nil, err
 	}
-	if object.Type() != ir.Object {
-		return nil, l.notYet(statement.Expression, "for...in over a value that is not a plain object")
+	if object.Type() != ir.Object && object.Type() != ir.Array && object.Type() != ir.Union {
+		return nil, l.notYet(statement.Expression, "for...in over a value without an enumerable runtime representation")
 	}
-	loop := ir.ForOf{Iterable: ir.ObjectKeys{Object: object}, Element: ir.String}
+	// Hold the original receiver even when the body reassigns its source binding.
+	receiver := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "for_in_receiver", Type: object.Type(), Function: l.functionIndex})
+	read := ir.Read{Local: receiver, Of: object.Type()}
+	loop := ir.ForOf{Iterable: ir.ObjectKeys{Object: read, Enumeration: true}, Element: ir.String}
 	initializer := statement.Initializer
 	var assignment ir.Statement
 	if initializer.Kind == ast.KindVariableDeclarationList {
@@ -62,7 +55,8 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 		loop.Body = append(loop.Body, assignment)
 	}
 	loop.Body = append(loop.Body, body...)
-	return []ir.Statement{loop}, nil
+	loop.Body = []ir.Statement{ir.If{Condition: ir.ForInOwn{Object: read, Key: ir.Read{Local: loop.Local, Of: ir.String}}, Then: loop.Body}}
+	return []ir.Statement{ir.Declare{Local: receiver, Value: object}, loop}, nil
 }
 
 func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {

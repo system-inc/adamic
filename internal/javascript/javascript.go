@@ -833,7 +833,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"
+	case ir.ForInOwn:
+		return "(" + e.value(expression.Key) + " in Object(" + e.value(expression.Object) + "))"
 	case ir.ObjectKeys:
+		if expression.Enumeration {
+			return "((object) => { const keys = []; for (const key in object) keys.push(key); return keys; })(" + e.value(expression.Object) + ")"
+		}
 		return "Object.keys(" + e.value(expression.Object) + ")"
 	case ir.ClosureSelf:
 		return "self"

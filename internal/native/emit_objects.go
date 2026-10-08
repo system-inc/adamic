@@ -137,6 +137,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		for index, field := range literal.Fields {
 			slot := e.temporary()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			if e.enumeratesKeys() {
+				e.forInDeclarations()
+				e.line("adamic_for_in_write(%s, %s);", object, cString(field.Name))
+			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))

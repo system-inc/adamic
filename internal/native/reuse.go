@@ -543,6 +543,10 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	for index, field := range literal.Fields {
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+		if e.enumeratesKeys() {
+			e.forInDeclarations()
+			e.line("adamic_for_in_write(%s, %s);", object, cString(field.Name))
+		}
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)
@@ -560,10 +564,21 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 // the source may be undefined and is, a new object with the source type's other fields and the
 // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
 func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
-	if !literal.SpreadMaybeUndefined {
-		return fmt.Sprintf("adamic_object_copy(%s)", source)
+	copy := "adamic_object_copy"
+	shape := ""
+	if e.enumeratesKeys() {
+		e.forInDeclarations()
+		copy = "adamic_for_in_copy"
 	}
-	return fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(emptyFields(literal)))
+	if !literal.SpreadMaybeUndefined {
+		return fmt.Sprintf("%s(%s)", copy, source)
+	}
+	if e.enumeratesKeys() {
+		shape = e.forInEmptyShape(literal)
+	} else {
+		shape = e.shape(emptyFields(literal))
+	}
+	return fmt.Sprintf("(%s != NULL ? %s(%s) : adamic_object_new(&%s))", source, copy, source, shape)
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
@@ -573,6 +588,10 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 		return
 	}
 	lines := []string{}
+	if e.enumeratesKeys() {
+		e.forInDeclarations()
+		lines = append(lines, fmt.Sprintf("\tadamic_for_in_initialize(%s, %d);", object, len(literal.Empty)))
+	}
 	for index, field := range literal.Empty {
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))

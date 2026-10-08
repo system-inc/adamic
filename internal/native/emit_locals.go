@@ -26,6 +26,7 @@ var cIdentifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
 // store gives a local a value; a string's new reference is taken before the old one is let go,
 // since they may be the same string.
 func (e *emitter) store(local int, value string, owned bool) {
+	value = e.enumerationSlot(local, value)
 	if e.program.Locals[local].Borrowed {
 		// Storing would release the old value, which is the caller's. Lowering never borrows a
 		// parameter anything assigns, so reaching this is a compiler bug, said out loud.
@@ -115,6 +116,7 @@ func (e *emitter) read(read ir.Read) string {
 // declareLocal declares a local with its first value. A reference is retained unless owned says the
 // value is already the local's. A captured local is declared straight into a cell.
 func (e *emitter) declareLocal(local int, value string, owned bool) {
+	value = e.enumerationSlot(local, value)
 	declared := e.program.Locals[local]
 	if declared.Counter {
 		// A whole-number constant within 2^53, which an integer holds exactly (lower/counters.go).

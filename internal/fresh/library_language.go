@@ -10,7 +10,7 @@ func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
 		return value, true
 	}
 	switch expression.(type) {
-	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
+	case ir.ObjectKeys, ir.ForInOwn, ir.ClosureSelf, ir.LibraryGlobal:
 		return a.call(a.operands(expression), expression.Type()), true
 	}
 	return value{}, false

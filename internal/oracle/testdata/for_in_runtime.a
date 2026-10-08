@@ -1,0 +1,43 @@
+function names(value: {}): string {
+	const keys: string[] = [];
+	for (const key in value) keys.push(key);
+	return keys.join('|');
+}
+function maybe(present: boolean): { a: string; b: number; '2': number } | undefined {
+	return present ? { a: 'a', b: 1, '2': 2 } : undefined;
+}
+const absent = { ...maybe(false), b: 10 };
+const copied = { ...absent, b: 20 };
+console.log(names(absent));
+console.log(names(copied));
+absent.a = 'added';
+console.log(names(absent));
+console.log(names(copied));
+const indexed = { ...copied, '2': 22 };
+console.log(names(indexed));
+const recopied = { ...indexed, a: 'last' };
+console.log(names(recopied));
+console.log(names({ ...maybe(true), b: 30 }));
+const rich = { stable: 'x', extra: undefined, '10': 10, '2': 2 };
+const narrow: { readonly stable: string } = rich;
+console.log(names(narrow));
+console.log(names([10, undefined, 30]));
+const array = [10, 20, 30];
+const visited: string[] = [];
+for (const key in array) {
+	visited.push(key);
+	if (key === '0') array.pop();
+}
+console.log(visited.join('|'));
+let calls = 0;
+function receiver(): { first: number; second: number } {
+	calls += 1;
+	return { first: 1, second: 2 };
+}
+for (const key in receiver()) console.log(key);
+console.log(`${calls}`);
+let value: {} = [1, 2];
+for (const key in value) {
+	value = {};
+	console.log(key);
+}

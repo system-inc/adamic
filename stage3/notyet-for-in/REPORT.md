@@ -1,137 +1,59 @@
-Preserved both for-in guards and added Node-held property-presence and array-hole witnesses.
-Base b410340dc8f889b5799c3bc519117c63def3aa24; kind commits bb393fb8 and a730a3bc; main merge bdacb1b8.
-All three examples replay; final focused oracle passes in 0.697s and counts refresh in 22.431s.
-Both guard mutants fail exact-stop assertions: origin bypass accepts; array bypass reaches the origin stop.
-No root site is newly lowered: 10 origin sites and 1 array site retained for a ruling; refused witnesses cannot run through backends.
+Built runtime for-in enumeration for both assigned kinds; the earlier ruling-only result is superseded.
+Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf4; implementation SHA recorded in the delivery report.
+All touched package tests, Node-held backend fixtures, sanitizers, leak checks and counts refresh are recorded in evidence/.
+Nine semantic mutants produce wrong stdout; two representation-proof mutants fail their negative assertions.
+Ten origin roots and one array root lose these guards; three representative replays reach named next stops. Sparse array construction remains unsupported.
 
-## Origin kind: refused for a ruling, 10 root sites
+## Results
 
-The diagnostic remains NotYet, not Refused: this unit does not decide the language ruling.
-The conservative assumption is that a structural type is not proof of the runtime
-property set. docs/0.1.md refuses shape mutation, expandos and prototype mutation,
-and leaves reflection as a later question. The existing fixed-literal reflection
-is retained. No production compiler source or shared hook changes.
+| Kind | Status | Assigned roots | Replayed next stop |
+| --- | --- | ---: | --- |
+| Unproven fixed plain-object origin | Lowered | 10 | commandLineParser.ts:2788:24 and :2975:24 reach core.ts:1266:29, `a value of type object` |
+| Array enumeration | Lowered | 1 | factory/nodeFactory.ts:7538:23 reaches :7539:9, `an array index that isn't a number` |
 
-Reviewed every assigned origin site in the exact adapted source:
+These are selected-unit observations on the checker-rejected census project, not a claim that tsc compiles. The other eight origin roots were source-reviewed, not replayed. Replays use the exact adapted source: all 81 sizes and SHA-256 values match the census manifest. The replay command retains the old reason, so exit 1 means that signature no longer occurs; the JSON records the new stops.
 
-| Site | Required evidence beyond a structural type |
+The receiver is evaluated and retained once. Both backends snapshot enumerable keys and check presence before each turn. Native snapshots distinguish absent synthetic storage from present undefined, preserve string insertion order, sort canonical indices, include represented array properties and inherited static fields, and handle scalar and string values hidden behind structural object parameters. A conservative all-call-target use proof permits heterogeneous structural slots only when every use forwards to enumeration; field reads do not acquire an unsafe representation cast.
+
+Nullable spread objects receive a tagged hidden native slot containing their actual ordered keys. Copying makes this metadata independent; writes append only newly present names. The slot is not a JavaScript property, including when a real property uses its storage name. Supported dense arrays enumerate live indices and RegExp own fields; sparse literals still reach `an OmittedExpression in an array literal`. No other worker's lower function was changed. Prototype mutation and arbitrary expandos retain their existing language restrictions.
+
+Runtime-owner review: **internal/native/runtime/for_in.c** is a new separate helper file; no existing C runtime file or header was edited. Its helpers provide key snapshots, presence checks, independent metadata copies and metadata writes. The RegExp array storage shape's disabled fields are excluded from enumeration.
+
+## Fixtures and mutants
+
+All new fixtures are .a and registered from for_in_ruling_test.go. for_in_options_refused.a now lowers despite its historical filename; for_in_array_refused.a still holds Node's sparse-array behavior and asserts the next construction stop. for_in_runtime.a covers missing fields, present undefined, copy independence, insertion/numeric order, hidden arrays, popping during iteration, one receiver call and source-binding reassignment. for_in_static.a covers inherited static fields; for_in_primitives.a covers numeric/boolean boxing and UTF-16 string indices; for_in_storage_name.a covers hidden-slot name collisions; for_in_array_properties.a covers ordinary match versus /d indices and indices.groups.
+
+| Mutant | Catcher |
 | --- | --- |
-| core.ts:1289:23 | MapLike parameter, arbitrary own keys |
-| core.ts:1314:23 | MapLike or array parameter, including array holes |
-| debug.ts:432:28 | enum object passed as a structural parameter |
-| factory/nodeFactory.ts:6137:25 | SourceFile parameter, copies extra properties into another object |
-| commandLineParser.ts:2788:24 | OptionsBase parameter, actual optional property presence |
-| commandLineParser.ts:2975:24 | CompilerOptions parameter, actual optional property presence |
-| commandLineParser.ts:4265:23 | CompilerOptions parameter, actual optional property presence |
-| moduleNameResolver.ts:432:27 | package JSON dictionary keys |
-| moduleNameResolver.ts:2428:23 | peerDependencies dictionary keys |
-| moduleSpecifiers.ts:927:23 | MapLike paths parameter, arbitrary own keys |
+| synthetic_keys | Runtime fixture stdout differs from Node |
+| shared_presence | Copied object's new key incorrectly appears in original |
+| missing_write | Newly added synthetic property absent from snapshot |
+| numeric_order | Runtime snapshot has insertion order instead of canonical index order |
+| removed_key | Popped array index executes; native and JS stdout differ |
+| receiver_twice | Receiver called twice; native and JS stdout differ |
+| own-only inherited keys | Static fixture omits inherited base key |
+| scalar string boxing | Primitive fixture erroneously enumerates number's string characters |
+| disabled RegExp indices present | Array-property fixture adds indices without /d; exit 0 and stdout mismatch |
+| ignored structural property read | TestForInStructuralSlotProof wrongly accepts field use |
+| first virtual target only | TestForInStructuralSlotVirtualTargets wrongly accepts a target with field use |
 
-Ruling requested: permit dynamic dictionaries/property presence and sparse-array
-reflection with a representation contract, or adapt these uses to explicit Maps
-and explicit field copies. A local guard bypass does not supply that contract.
-Interprocedural origin proof for safe parameters is also possible future work;
-this unit neither establishes such a proof nor rejects it by design.
+The first eight semantic mutants are executable tests in for_in_mutant_test.go. The RegExp mutation and two proof mutations use scratch Go overlays; their diffs and logs accompany this report. All semantic mutants build and exit normally with clean sanitizer stderr; stdout alone kills them. Proof mutants fail explicit negative assertions.
 
-The new .a fixture prints `stable` for a missing property and `stable|missing`
-for a present undefined property. TestForInOptionsRuling independently pins Node's
-output and the exact origin diagnostic. It is registered from its own _test.go.
-It cannot run through the backends while lowering intentionally stops. Existing
-library_for_in.a, library_for_in_keys.a and library_for_in_live.a pass source Node,
-backend Node, release native, ASan/UBSan and the leak check, uncached.
+## Validation commands
 
-## Exact commands and observations
-
-Source preparation used `git archive 9a1f14c5 stage3` into a scratch snapshot,
-then its `bash stage3/apply.sh /tmp/notyet-for-in-census-input`. All 81 source
-byte lengths and SHA-256 hashes match the replay census manifest. Installed
-lockfile-pinned dependencies with `npm ci --prefix stage3/api --ignore-scripts
---no-audit --no-fund`. Compiler branch base is the newest fetched area/compiler;
-the unit-specific base overrides the generic main-base instruction. Main is
-already an ancestor of this branch at the first push.
-
-Every build/test shell sources `/workspace/adamic-tools/env.sh`. Output goes
-directly to logs. Commands:
+Every shell sources /workspace/adamic-tools/env.sh. Output goes directly to logs, never a pipe.
 
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestForInOptionsRuling|TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in' -count=1 -v
-ADAMIC_GATE_UNCACHED=1 go test -overlay=/tmp/notyet-for-in-origin-mutant/overlay.json ./internal/oracle -run '^TestForInOptionsRuling$' -count=1 -v
+go test ./internal/lower ./internal/native ./internal/javascript ./internal/ir ./internal/fresh ./internal/oracle -count=1
 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+go test ./internal/native -overlay=/tmp/notyet-for-in-proof-field-use/overlay.json -run '^TestForInStructuralSlotProof$' -count=1
+go test ./internal/native -overlay=/tmp/notyet-for-in-proof-virtual-targets/overlay.json -run '^TestForInStructuralSlotVirtualTargets$' -count=1
+go test ./internal/oracle -overlay=/tmp/notyet-for-in-property-mutant/overlay.json -run 'TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties' -count=1 -v
+go run ./stage3/census/latent/replay -project /tmp/notyet-for-in-census-input/src/tsc/tsc.ts -where /tmp/notyet-for-in-census-input/src/compiler/commandLineParser.ts:2788:24 -kind NotYet -reason 'for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)'
 ```
 
-Positive oracle: exit 0, 10.894s. Origin mutant: exit 1, 0.178s,
-`want exact origin stop ..., got <nil>`. The mutant changes only forIn's
-plainEnumerableObject guard to `if false && ...` through a scratch Go overlay;
-no compilation/sanitizer failure counts as its kill. Counts: exit 0, 21.378s,
-counts.md unchanged because the added fixture intentionally does not lower.
+Repeat replay with commandLineParser.ts:2975:24, and factory/nodeFactory.ts:7538:23 with the old array reason. Evidence JSON gives exact observations. Fixture oracles compare source Node, JavaScript backend, release native, ASan/UBSan and leak checks. No full repository gate was run.
 
-Each replay uses `go run ./stage3/census/latent/replay -project
-/tmp/notyet-for-in-census-input/src/tsc/tsc.ts -where
-/tmp/notyet-for-in-census-input/src/compiler/commandLineParser.ts:LINE:24
--kind NotYet -reason 'for...in without a proven fixed plain-object origin
-(arrays, prototypes and absent synthetic fields cannot be enumerated soundly)'`.
-2788 before, 2975 and 2788 after all exit 0 and reproduce that exact stop.
-Full command timings: 14.959s, 2.506s and 2.496s respectively.
-These are selected-unit observations on a checker-rejected project, not native
-tsc compilation. The other eight origin sites were source-reviewed, not replayed.
+Setup succeeded: Node 0.027s, Go 0.040s, clang 0.249s, markdown ready 1.077s, submodules 16.447s, Go build 221.748s, done 221.886s; nproc=5, CPU quota=4. Go 1.27.1, clang 20.1.8, Node 24.19.0. GOPROXY used https://proxy.golang.org|direct.
 
-Setup succeeded without workaround. Timing lines: Node 0.027s, Go 0.040s,
-clang 0.249s, markdown dependency install step 0.994s and ready 1.077s,
-submodules 16.447s, Go build 221.748s, tests deferred 221.858s, cache warm
-221.859s, done 221.886s. nproc=5; cgroup CPU quota 400000/100000.
-Go 1.27.1, clang 20.1.8, Node 24.19.0.
-
-No whole package test or full gate was run. Evidence logs are in evidence/.
-
-## Array kind: refused for a ruling, 1 root site
-
-factory/nodeFactory.ts:7538:23 in mergeTokenSourceMapRanges copies present
-properties from sourceRanges to destRanges. Replacing it with an element loop
-would copy a hole as undefined and may change the destination's existing entry.
-The fixture distinguishes present undefined from a hole: Node prints `0|1|2`
-then `0|2`. TestForInArrayRuling pins that output and the exact array diagnostic.
-This is a sparse-property representation question, not a choice of loop syntax.
-No expansion of the language's fixed-shape contract is made in this unit.
-The stop remains NotYet while the ruling is pending; arrays with a proven dense
-origin could be future proof work, but the census site's parameter is not proved dense.
-
-Before and after replay commands use the same project as above, with `-where
-/tmp/notyet-for-in-census-input/src/compiler/factory/nodeFactory.ts:7538:23
--kind NotYet -reason 'for...in over an array (holes and own enumerable properties
-are not represented; use for...of for elements)'`. Both exit 0 and reproduce the
-exact array stop. Total times: 2.274s before, 3.043s after.
-
-Array mutant uses a scratch Go overlay replacing only forIn's array test with
-`if false && (l.checker.IsArrayType(proven) || checker.IsTupleType(proven))`.
-Command: `ADAMIC_GATE_UNCACHED=1 go test
--overlay=/tmp/notyet-for-in-array-mutant/overlay.json ./internal/oracle
--run '^TestForInArrayRuling$' -count=1 -v`. Exit 1, 0.305s; the test expected
-the array stop and got the origin stop. This proves diagnostic classification,
-not an unsound acceptance: the second guard still protects the program.
-The unmutated array witness passed in 0.178s.
-
-Final commands before landing:
-
-```sh
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestForIn(Options|Array)Ruling|TestNativeAgreesWithNode/internal/oracle/testdata/(library_for_in|for_in_.*_refused)' -count=1 -v
-go vet ./internal/oracle
-go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
-git diff --check
-```
-
-All exit 0. Oracle 0.697s, counts 22.431s, vet and diff check no output.
-counts.md is unchanged. The first-kind push succeeded. Current main advanced
-from d65e2d5e to ef3141e9 during work; landing validation follows its merge.
-
-## Landing
-
-Merged fetched current origin/main ef3141e9 into the worker branch in
-bdacb1b8f27b3c98542e04331401fd2a5a7a6834. Merge is clean and changes no
-lowering, native, JavaScript or oracle input. The second-kind push a730a3bc
-succeeded before this merge.
-
-Repeated the final focused uncached oracle command above after the merge:
-exit 0, 0.686s. Repeated the full required TestCountsAreRecorded update:
-exit 0, 22.591s, counts.md unchanged. gofmt for the new test and git diff --check
-produce no output. Saved landing logs accompany the earlier evidence.
-No PR, full package tests, full gate, or edits to production functions were made.
+The two kinds share the runtime dispatch and structural-slot proof, so they form one minimal functional implementation group. The largest-kind witness was implemented first. Outside-function production changes are limited to IR, fresh analysis, both emitters and native ownership/copy hooks; the commit body names every changed file.

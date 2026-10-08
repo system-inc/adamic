@@ -8,7 +8,14 @@ import (
 
 func (e *emitter) libraryLanguageValue(value ir.Expression) string {
 	switch value := value.(type) {
+	case ir.ForInOwn:
+		e.forInDeclarations()
+		return fmt.Sprintf("adamic_for_in_own((const adamic_heap *)%s, %s)", e.value(value.Object), e.value(value.Key))
 	case ir.ObjectKeys:
+		if value.Enumeration {
+			e.forInDeclarations()
+			return e.own(ir.Array, fmt.Sprintf("adamic_for_in_keys((const adamic_heap *)%s)", e.value(value.Object)))
+		}
 		return e.own(ir.Array, fmt.Sprintf("adamic_class_object_keys(%s)", e.value(value.Object)))
 	case ir.ClosureSelf:
 		return e.own(ir.Closure, "adamic_retain(self)")

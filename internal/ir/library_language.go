@@ -1,8 +1,12 @@
 package ir
 
 // ObjectKeys reflects the actual object's shape, rather than its possibly narrower static type.
-// Lowering admits only fixed plain objects whose fields are all own enumerable string keys.
-type ObjectKeys struct{ Object Expression }
+// Enumeration also handles runtime arrays, synthetic absence and inherited constructor fields.
+type ObjectKeys struct {
+	Object Expression
+	// Enumeration snapshots for-in keys and uses the runtime value, including hidden arrays.
+	Enumeration bool
+}
 
 func (ObjectKeys) Type() Type { return Array }
 
@@ -22,3 +26,8 @@ func (g LibraryGlobal) Type() Type {
 	}
 	return Closure
 }
+
+// ForInOwn checks that a snapshotted key still exists before visiting it.
+type ForInOwn struct{ Object, Key Expression }
+
+func (ForInOwn) Type() Type { return Boolean }

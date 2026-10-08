@@ -225,7 +225,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		index := e.value(expression.Index)
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
-	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
+	case ir.ObjectKeys, ir.ForInOwn, ir.ClosureSelf, ir.LibraryGlobal:
 		return e.libraryLanguageValue(expression)
 	case ir.MakeClosure:
 		environment := e.program.Functions[expression.Function].Environment
