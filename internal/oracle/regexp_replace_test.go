@@ -18,7 +18,7 @@ func init() {
 			lowers, checked bool
 		}{"internal/oracle/testdata/regexp_replace/" + name + ".a", true, true})
 	}
-	for _, name := range []string{"callback", "throw", "arguments", "effects", "move_effect"} {
+	for _, name := range []string{"callback", "throw", "arguments", "effects", "move_effect", "reentrant"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
