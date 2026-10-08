@@ -51,11 +51,10 @@ export function abbreviation(text: string): Abbreviation | undefined {
     // regex below sits behind a substring test it cannot match without: a prefix pattern needs the
     // word at the start, the millisecond pattern needs 'Ms', and a segment pattern needs the
     // capitalized word. Skipping a test that cannot match changes no finding. The segment phase's
-    // allowed-segment check is the exception: it returns at the first segment entry whatever that
-    // entry's word, so the first one always runs it. Measured on Sun2 over TypeScript's 77 compiler
-    // files, the gates and the precomputed capitals take this rule from 86.6G instructions to 18.4G
-    // over the parse floor, with its output byte-identical (#tj6d455).
-    let segmentChecked = false;
+    // allowed-segment check can sit behind its gate too: the phase is the last one and the function
+    // ends in undefined, so where that check returns undefined changes nothing. Measured on Sun2 over
+    // TypeScript's 77 compiler files, the gates and the precomputed capitals take this rule from 86.6G
+    // instructions to 18.4G over the parse floor, with its output byte-identical (#tj6d455).
     for(const phase of ['early', 'suffix', 'late', 'segment']) {
         for(let index = 0; index < vocabulary.length; index++) {
             const entry = vocabulary[index] ?? panic('entry');
@@ -105,11 +104,9 @@ export function abbreviation(text: string): Abbreviation | undefined {
                 }
             }
             if(phase === 'segment' && entry[10] === 'true') {
-                const segment = capital;
-                if(segmentChecked && !text.includes(segment)) {
+                if(!text.includes(capital)) {
                     continue;
                 }
-                segmentChecked = true;
                 let allowed = false;
                 for(const segment of allowedSegments) {
                     if(text.includes(segment)) {
@@ -119,16 +116,13 @@ export function abbreviation(text: string): Abbreviation | undefined {
                 if(allowed) {
                     return undefined;
                 }
-                if(!text.includes(segment)) {
-                    continue;
-                }
                 const suggestion = replaceSegment(word, text, capitalized(expansion));
                 if(segmentMatches(word, text) && suggestion !== text) {
                     return new Abbreviation('segment', word, 'abbreviatedWordSegment', [
                         'name',
                         text,
                         'word',
-                        segment,
+                        capital,
                         'suggestion',
                         suggestion,
                     ]);
