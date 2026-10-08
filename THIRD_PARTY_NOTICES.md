@@ -233,6 +233,12 @@ Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchai
 [cohere/NOTICE](cohere/NOTICE) and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md), and they travel with
 any build of the compiler.
 
+`internal/regexp/testdata/capture-tsc.json` and the callback patterns in
+`internal/regexp/capture_facts_test.go` are derived from the pinned compiler
+source in `cohere/TypeScript/tsc/testdata/fixtures/compiler` (Microsoft
+Corporation, Apache License 2.0). The participation analysis is original code
+following ECMA-262, rather than a V8 or Node implementation port.
+
 `internal/flow` lifts its single-assignment construction, redundant-phi elimination, verifier and graph
 maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_level_intermediate_representation`),
 which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
