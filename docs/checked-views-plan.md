@@ -1402,6 +1402,23 @@ outside the flat scalar subset, remain named exit-70 refusals. Fixtures are
 `lane2/ranked4-*.a`, held by TestCheckedViewRanked4ArrayContracts; the report is
 `lane2/RANKED4_ARRAYS_REPORT.md`.
 
+### Lane 2 fifth ranked arrays
+
+The fifth ranked group (ResolvedType.constructSignatures, ClassDeclaration.modifiers,
+ExpressionWithTypeArguments.typeArguments, TupleTypeNode.elements, JSDoc.tags,
+FunctionLikeDeclaration.parameters) needed no new hook and changed no shared file.
+Whole-array assignment through a mutable field keeps the original alias checked:
+an assigned array whose elements break the alias's contract is refused at that
+alias's next read in both backends.
+
+FunctionLikeDeclaration.parameters is read through the union after member casts;
+a direct cast to the union is refused by cast_proof.go and pinned as a frontier
+until lane 4 routes union targets to the shared view entry. That pair is not
+credited. Tuples moved to lane 4c; TupleTypeNode.elements stays here because the
+census files it under array contracts. Fixtures are `lane2/ranked5-*.a`, held by
+TestCheckedViewRanked5ArrayContracts and TestCheckedViewRanked5UnionCastFrontier;
+the report is `lane2/RANKED5_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
