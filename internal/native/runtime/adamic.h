@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 
 #include <math.h>
 
@@ -177,8 +178,14 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	// captureStackTrace owns one non-enumerable string outside the fixed shape.
+	bool has_captured_stack;
+	adamic_value captured_stack;
 	adamic_value slots[];
 } adamic_object;
+
+void adamic_error_capture_stack(adamic_object *target);
+adamic_string *adamic_error_read_stack(const adamic_object *target);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
@@ -250,6 +257,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->has_captured_stack && strcmp(name, "stack") == 0) { return &((adamic_object *)object)->captured_stack; }
 	if (cache->shape != object->shape) {
 		return adamic_object_optional_find(object, name, cache);
 	}
@@ -262,6 +270,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
 // layout. That whole-program proof excludes inherited constructor storage, so the cache
 // hit needs only the shape comparison, without loading a class descriptor.
 static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->has_captured_stack && strcmp(name, "stack") == 0) { return &((adamic_object *)object)->captured_stack; }
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
@@ -269,6 +278,7 @@ static inline adamic_value *adamic_object_data_field(const adamic_object *object
 }
 
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->has_captured_stack && strcmp(name, "stack") == 0) { return &((adamic_object *)object)->captured_stack; }
 	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
 	return adamic_object_data_field(object, name, cache);
 }

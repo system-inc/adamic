@@ -54,3 +54,9 @@ declare module 'adamic' {
 interface JSON {
 	stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;
 }
+
+// V8 runtime facts, with the same signatures as the pinned @types/node.
+interface ErrorConstructor {
+	captureStackTrace(targetObject: object, constructorOpt?: Function): void;
+	stackTraceLimit: number;
+}

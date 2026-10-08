@@ -28,6 +28,10 @@ static void release_field(adamic_object *object, size_t index, void (*release)(v
 }
 
 void adamic_object_free_children(adamic_object *object, void (*release)(void *)) {
+	if (object->has_captured_stack) {
+		adamic_heap *stack = object->captured_stack.reference;
+		if (stack != NULL && stack->references != 0) { release(stack); }
+	}
 	if (object->class == NULL) {
 		for (size_t index = 0; index < object->shape->count; index++) {
 			release_field(object, index, release);

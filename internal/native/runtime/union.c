@@ -126,6 +126,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 	}
 	if (value->kind == adamic_kind_object) {
 		const adamic_object *object = (const adamic_object *)value;
+		if (object->has_captured_stack && strcmp(name, "stack") == 0) return true;
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) != 0) continue;
 			if (object->class == NULL || name[0] != '#') return true;
@@ -176,6 +177,7 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 	}
 	if (value->kind == adamic_kind_object) {
 		const adamic_object *object = (const adamic_object *)value;
+		if (object->has_captured_stack && strcmp(name, "stack") == 0) return adamic_retain(object->captured_stack.reference);
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) == 0) return dynamic_slot(object, index);
 		}
