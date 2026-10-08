@@ -1,0 +1,58 @@
+[
+  {
+    "name": "fresh-error-initializer-proof-removed",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/57f2d04_with_frozen.a$",
+    "catcher": "a write to a potentially frozen object",
+    "log": "mutants/runtime/fresh-error-initializer-proof-removed.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "concat-bound-ignored",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/runtime/concat-bound-ignored.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "unprotected-finally-guarded",
+    "status": "caught",
+    "test": "TestProtectedStringGuardPrecision$",
+    "catcher": "cannot throw on this bounded protected path",
+    "log": "mutants/runtime/unprotected-finally-guarded.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "unknown-object-bound-ignored",
+    "status": "caught",
+    "test": "TestStringLengthBoundsIncludeUnknownObjects$",
+    "catcher": "unknown object must retain the full string bound",
+    "log": "mutants/runtime/unknown-object-bound-ignored.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "repeat-constant-length-ignored",
+    "status": "caught",
+    "test": "TestRepeatRefusalChecksResultLength$",
+    "catcher": "oversized constant repeat must remain a named refusal",
+    "log": "mutants/runtime/repeat-constant-length-ignored.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "protected-catch-root-omitted",
+    "status": "caught",
+    "test": "TestRuntimeStackCatchFinally$",
+    "catcher": "stdout differs",
+    "log": "mutants/runtime/protected-catch-root-omitted.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "javascript-stack-error-identity-omitted",
+    "status": "caught",
+    "test": "TestRuntimeStackCleanup$",
+    "catcher": "stdout differs",
+    "log": "mutants/runtime/javascript-stack-error-identity-omitted.log",
+    "suite": "runtime"
+  }
+]

@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/mutable_unknown_alias
+=== PAUSE TestErrorBoundariesAreExplicit/mutable_unknown_alias
+=== CONT  TestErrorBoundariesAreExplicit/mutable_unknown_alias
+    error_classes_test.go:37: want refusal containing "a value of type unknown", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/mutable_unknown_alias (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.183s
+FAIL

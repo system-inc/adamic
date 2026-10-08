@@ -1,0 +1,34 @@
+[
+  {
+    "name": "closed-input-builtin-initializer-not-exempt",
+    "status": "invalid or unexpected failure",
+    "test": "TestClosedFrameInputRejectsMutation$",
+    "catcher": "closed literal input was not proven",
+    "log": "mutants/fix/closed-input-builtin-initializer-not-exempt.log",
+    "suite": "fix"
+  },
+  {
+    "name": "closed-input-ordinary-write-admitted",
+    "status": "caught",
+    "test": "TestClosedFrameInputRejectsMutation$",
+    "catcher": "mutable graph accepted as closed",
+    "log": "mutants/fix/closed-input-ordinary-write-admitted.log",
+    "suite": "fix"
+  },
+  {
+    "name": "code-point-list-omitted",
+    "status": "caught",
+    "test": "TestCodePointCatchabilityBoundary/9984394_lib_codepoint.a$",
+    "catcher": "want String.fromCodePoint catchability refusal",
+    "log": "mutants/fix/code-point-list-omitted.log",
+    "suite": "fix"
+  },
+  {
+    "name": "interface-method-targets-omitted",
+    "status": "caught",
+    "test": "TestCodePointCatchabilityBoundary/9984394_lib_dispatch_codepoint.a$",
+    "catcher": "want String.fromCodePoint catchability refusal",
+    "log": "mutants/fix/interface-method-targets-omitted.log",
+    "suite": "fix"
+  }
+]

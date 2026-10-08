@@ -1,0 +1,13 @@
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a
+    trace_test.go:38: function 0: the call ended after instruction 2, in the middle of bb1
+    trace_test.go:50: 178 points walked, 301 events
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.03s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	0.223s
+FAIL

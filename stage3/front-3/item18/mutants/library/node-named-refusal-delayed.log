@@ -1,0 +1,11 @@
+=== RUN   TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+    library_node_test.go:29: want named NotYet node:fs.readFile, got /tmp/adamic-gate/TestNodeLibraryNamesUnimplementedMembersnodefs.readFile195306318/001/main.a:1:32: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+    library_node_test.go:29: want named NotYet node:fs.readFile, got /tmp/adamic-gate/TestNodeLibraryNamesUnimplementedMembersnodefs.readFile#01264644287/001/main.a:1:47: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+--- FAIL: TestNodeLibraryNamesUnimplementedMembers (0.96s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.50s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.46s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.984s
+FAIL

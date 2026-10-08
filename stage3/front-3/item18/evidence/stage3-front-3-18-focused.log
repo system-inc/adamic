@@ -1,0 +1,19 @@
+ok  	github.com/system-inc/adamic/internal/load	1.724s
+--- FAIL: TestNodeLibraryNamesUnimplementedMembers (3.07s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.42s)
+        library_node_test.go:29: want named NotYet node:fs.readFile, got /tmp/adamic-gate/TestNodeLibraryNamesUnimplementedMembersnodefs.readFile322318957/001/main.a:1:32: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.38s)
+        library_node_test.go:29: want named NotYet node:fs.readFile, got /tmp/adamic-gate/TestNodeLibraryNamesUnimplementedMembersnodefs.readFile#01970253982/001/main.a:1:47: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet
+--- FAIL: TestNodeLibraryQualifiedTypeAssertion (0.26s)
+    library_node_test.go:78: /tmp/adamic-gate/TestNodeLibraryQualifiedTypeAssertion2685579241/001/main.a:1:50: Adamic 0.1 refuses an unproven relation from Error to ErrnoException: optional field errno has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	6.205s
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_error_original_probe.a (0.22s)
+        oracle_test.go:736: Lower: /workspace/adamic/internal/oracle/testdata/library_error_original_probe.a:2:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+FAIL
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.805s
+FAIL

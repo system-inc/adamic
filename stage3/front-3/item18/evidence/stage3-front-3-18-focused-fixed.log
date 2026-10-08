@@ -1,0 +1,64 @@
+ok  	github.com/system-inc/adamic/internal/load	1.515s
+ok  	github.com/system-inc/adamic/internal/lower	11.761s
+--- FAIL: TestCallTargetReaders (39.57s)
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision.go:preciseChecks:ArraySort.Comparator at /workspace/adamic/internal/lower/exception_precision.go:57:12; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision.go:preciseChecks:Call.Function at /workspace/adamic/internal/lower/exception_precision.go:154:92; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision.go:preciseChecks:Call.Function at /workspace/adamic/internal/lower/exception_precision.go:155:32; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision.go:preciseChecks:Call.Function at /workspace/adamic/internal/lower/exception_precision.go:162:52; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision.go:preciseChecks:Call.Function at /workspace/adamic/internal/lower/exception_precision.go:169:30; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision_test.go:TestMayThrowPrecision:Call.Function at /workspace/adamic/internal/lower/exception_precision_test.go:45:59; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/exception_precision_test.go:TestLoopPresenceSurvivesRuntimeMutation:Call.Function at /workspace/adamic/internal/lower/exception_precision_test.go:238:58; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:168: unapproved call-target read internal/lower/iteration_test.go:TestCallbackTypedClassMethodCallBindsReceiver:CallClosure.Closure at /workspace/adamic/internal/lower/iteration_test.go:216:23; use CallTargets or ClosureTargets
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	39.598s
+--- FAIL: TestNativeAgreesWithNode (0.73s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a (0.55s)
+panic: ir: virtual call has no target set [recovered, repanicked]
+
+goroutine 34 [running]:
+testing.tRunner.func1.2({0x1cc2ee0, 0x1311200})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cc2ee0?, 0x1311200?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)
+	/workspace/adamic/internal/ir/call_targets.go:13
+github.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)
+	/workspace/adamic/internal/ir/call_targets.go:21
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1d55718?, 0x18f5e08d1680?})
+	/workspace/adamic/internal/lower/exceptions.go:204 +0x3f8
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d55718?, 0x18f5e08d1680?, 0x18f5de655810?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:393 +0x13f
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf668?, 0x18f5de655810?, 0x1cdf6d0?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d0d230?, 0x18f5de655810?, 0x1cdf668?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:398 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf6d0?, 0x18f5de655780?, 0x18f5dd97fbc0?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c43548?, 0x18f5dd97fbd0?, 0x1cdf6d0?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:385 +0x1b6
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d36c98?, 0x18f5dd97fbc0?, 0x18f5dd200008?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:398 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf6d0?, 0x18f5dd463880?, 0x7ffb340bcf60?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c43548?, 0x18f5e08e4828?, 0x489845?}, 0x18f5e0de1888)
+	/workspace/adamic/internal/lower/exceptions.go:385 +0x1b6
+github.com/system-inc/adamic/internal/lower.walk({0x1c43548?, 0x18f5e08e4828?}, 0x2?)
+	/workspace/adamic/internal/lower/exceptions.go:369 +0x67
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x18f5e02b1600, {0x18f5dd463880?, 0xd?, 0x3?})
+	/workspace/adamic/internal/lower/exceptions.go:187 +0x5f
+github.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x18f5e02b1600)
+	/workspace/adamic/internal/lower/exceptions.go:168 +0x365
+github.com/system-inc/adamic/internal/lower.Lower({0x1d7bd00?, 0x1e69f40?}, 0x18f5de0fdb30)
+	/workspace/adamic/internal/lower/lower.go:73 +0x85b
+github.com/system-inc/adamic/internal/oracle.lowered(0x18f5dce52488, {0x18f5dd2ac870, 0x45})
+	/workspace/adamic/internal/oracle/oracle_test.go:563 +0x18b
+github.com/system-inc/adamic/internal/oracle.TestNativeAgreesWithNode.func1(0x18f5dce52488)
+	/workspace/adamic/internal/oracle/oracle_test.go:726 +0x114
+testing.tRunner(0x18f5dce52488, 0x18f5dcda0860)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 5
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.692s
+FAIL

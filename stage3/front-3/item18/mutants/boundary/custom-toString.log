@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/override
+=== PAUSE TestErrorBoundariesAreExplicit/override
+=== CONT  TestErrorBoundariesAreExplicit/override
+    error_classes_test.go:37: want refusal containing "an Error.toString override", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/override (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.153s
+FAIL

@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/spread
+=== PAUSE TestErrorBoundariesAreExplicit/spread
+=== CONT  TestErrorBoundariesAreExplicit/spread
+    error_classes_test.go:37: want refusal containing "spreading an Error", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.02s)
+    --- FAIL: TestErrorBoundariesAreExplicit/spread (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.437s
+FAIL

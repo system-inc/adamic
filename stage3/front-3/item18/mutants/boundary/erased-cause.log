@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/erased_cause
+=== PAUSE TestErrorBoundariesAreExplicit/erased_cause
+=== CONT  TestErrorBoundariesAreExplicit/erased_cause
+    error_classes_test.go:37: want refusal containing "an erased unknown cause", got /tmp/adamic-gate/TestErrorBoundariesAreExpliciterased_cause169377805/001/main.a:1:92: stage 0 can't lower a field from a union of differently held members variable yet
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/erased_cause (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.139s
+FAIL

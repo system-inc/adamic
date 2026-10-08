@@ -1,0 +1,168 @@
+[
+  {
+    "name": "mayThrow-overwritten",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/error_checks.a$",
+    "catcher": "differs",
+    "log": "mutants/boundary/mayThrow-overwritten.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "derived-error-descriptors",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/derived_error_(hasOwn|enumerable|locale|static_own)$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/derived-error-descriptors.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "ready-read-flow-edge",
+    "status": "caught",
+    "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a$",
+    "catcher": "the call ended",
+    "log": "mutants/boundary/ready-read-flow-edge.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "ready-write-flow-edge",
+    "status": "caught",
+    "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a$",
+    "catcher": "the call ended",
+    "log": "mutants/boundary/ready-write-flow-edge.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "inherited-constructor-field",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/inherited_constructor_value$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/inherited-constructor-field.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "nullable-generic-receiver",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/nullable_generic_receiver$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/nullable-generic-receiver.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "stack-read",
+    "status": "SURVIVED",
+    "test": "TestErrorBoundariesAreExplicit/stack_read$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/stack-read.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "stack-write",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/stack_write$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/stack-write.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "cause-cycle",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/cause_closes_a_cycle$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/cause-cycle.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "custom-toString",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/override$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/custom-toString.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "optional-generic-field",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/optional_generic_field$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/optional-generic-field.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "erased-cause",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/erased_cause$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/erased-cause.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "nonliteral-options",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/nonliteral_options$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/nonliteral-options.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "normalization-expansion",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/normalization_expansion$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/normalization-expansion.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "structural-view",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/(structural_view|nested_structural_view)$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/structural-view.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "fake-error",
+    "status": "excluded: stale diagnostic also fails without the mutant; adapted control survives",
+    "test": "TestErrorBoundariesAreExplicit/fake_error$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/fake-error.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "spread-error",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/spread$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/spread-error.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "inherited-own-field",
+    "status": "needs adaptation",
+    "anchor": "&& !isRandom && !l.errorPrototypeRead(node) {",
+    "suite": "boundary"
+  },
+  {
+    "name": "mutable-unknown-alias",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/mutable_unknown_alias$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/mutable-unknown-alias.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "unrecorded-initializer",
+    "status": "caught",
+    "test": "TestEveryWriteIsRecordedAndKnown$",
+    "catcher": "a write lowering didn't record",
+    "log": "mutants/boundary/unrecorded-initializer.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "mutable-cause",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/mutable_cause$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/mutable-cause.log",
+    "suite": "boundary"
+  }
+]

@@ -1,0 +1,8 @@
+import type { Stats } from 'node:fs';
+const target = Object.freeze({label: 'frozen'});
+try {
+    Error.captureStackTrace(target);
+    console.log('completed');
+} catch (error) {
+    if (error instanceof Error) { console.log('caught'); }
+}

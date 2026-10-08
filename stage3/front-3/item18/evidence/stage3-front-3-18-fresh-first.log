@@ -1,0 +1,18 @@
+--- FAIL: TestEveryWriteIsRecordedAndKnown (205.06s)
+    fresh_test.go:58: ../oracle/testdata/phantom_array_brands.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_array_brands.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_brands.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_overload_results.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_overload_results.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/phantom_undefined.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:65: 3397 writes in 760 programs, 3238 proven not to close a cycle
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	205.116s
+FAIL

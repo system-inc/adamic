@@ -1,0 +1,13 @@
+=== RUN   TestFront3CaptureFrozenProbe
+    library_error_test.go:50: Node stdout="caught\n" stderr="" exit=0
+    library_error_test.go:56: backend 0 stdout="completed\n" stderr="" exit=0
+    library_error_test.go:57: backend 0: stdout differs
+    library_error_test.go:56: backend 1 stdout="completed\n" stderr="" exit=0
+    library_error_test.go:57: backend 1: stdout differs
+--- FAIL: TestFront3CaptureFrozenProbe (3.71s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.784s
+FAIL

@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/inherited_constructor_value
+=== PAUSE TestErrorBoundariesAreExplicit/inherited_constructor_value
+=== CONT  TestErrorBoundariesAreExplicit/inherited_constructor_value
+    error_classes_test.go:37: want refusal containing "inherited library member constructor", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/inherited_constructor_value (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.104s
+FAIL

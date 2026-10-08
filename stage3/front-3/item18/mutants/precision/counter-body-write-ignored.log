@@ -1,0 +1,8 @@
+=== RUN   TestGeneratedGuardCounterWritesRemainThrowing
+=== PAUSE TestGeneratedGuardCounterWritesRemainThrowing
+=== CONT  TestGeneratedGuardCounterWritesRemainThrowing
+    exception_precision_test.go:148: counter modified in body must remain throwing
+--- FAIL: TestGeneratedGuardCounterWritesRemainThrowing (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.074s
+FAIL

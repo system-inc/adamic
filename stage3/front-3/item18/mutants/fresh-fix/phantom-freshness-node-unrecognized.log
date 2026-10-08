@@ -1,0 +1,11 @@
+=== RUN   TestPhantomMemberFreshness
+=== RUN   TestPhantomMemberFreshness/absent_member_holds_no_receiver
+    phantom_member_test.go:30: phantom receiver writes: got 2, want 1: [{Kind:5 Site:0 Name: Function:-1 Proven:false Why:ir.PhantomMember is a node the cycle finder doesn't know} {Kind:2 Site:1 Name: Function:-1 Proven:false Why:the value written reaches something this function didn't make or let escape, and what it's written into has escaped by then}]
+=== RUN   TestPhantomMemberFreshness/receiver_effects_remain
+    phantom_member_test.go:30: phantom receiver writes: got 3, want 2: [{Kind:5 Site:0 Name: Function:-1 Proven:false Why:ir.PhantomMember is a node the cycle finder doesn't know} {Kind:2 Site:2 Name: Function:-1 Proven:true Why:} {Kind:2 Site:1 Name: Function:-1 Proven:true Why:}]
+--- FAIL: TestPhantomMemberFreshness (0.00s)
+    --- FAIL: TestPhantomMemberFreshness/absent_member_holds_no_receiver (0.00s)
+    --- FAIL: TestPhantomMemberFreshness/receiver_effects_remain (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.047s
+FAIL

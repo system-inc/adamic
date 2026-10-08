@@ -1,0 +1,10 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/fake_error
+=== PAUSE TestErrorBoundariesAreExplicit/fake_error
+=== CONT  TestErrorBoundariesAreExplicit/fake_error
+--- PASS: TestErrorBoundariesAreExplicit (0.00s)
+    --- PASS: TestErrorBoundariesAreExplicit/fake_error (0.59s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.683s

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "phantom-freshness-receiver-effects-erased",
+    "status": "caught",
+    "test": "TestPhantomMemberFreshness$/receiver_effects_remain$",
+    "catcher": "phantom receiver writes",
+    "log": "mutants/fresh-fix/phantom-freshness-receiver-effects-erased.log",
+    "suite": "fresh-fix"
+  },
+  {
+    "name": "phantom-freshness-retains-receiver",
+    "status": "caught",
+    "test": "TestPhantomMemberFreshness$/absent_member_holds_no_receiver$",
+    "catcher": "hold no receiver",
+    "log": "mutants/fresh-fix/phantom-freshness-retains-receiver.log",
+    "suite": "fresh-fix"
+  },
+  {
+    "name": "phantom-freshness-node-unrecognized",
+    "status": "caught",
+    "test": "TestPhantomMemberFreshness$",
+    "catcher": "phantom receiver writes",
+    "log": "mutants/fresh-fix/phantom-freshness-node-unrecognized.log",
+    "suite": "fresh-fix"
+  }
+]

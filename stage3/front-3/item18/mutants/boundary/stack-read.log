@@ -1,0 +1,10 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/stack_read
+=== PAUSE TestErrorBoundariesAreExplicit/stack_read
+=== CONT  TestErrorBoundariesAreExplicit/stack_read
+--- PASS: TestErrorBoundariesAreExplicit (0.00s)
+    --- PASS: TestErrorBoundariesAreExplicit/stack_read (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.228s

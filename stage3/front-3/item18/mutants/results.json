@@ -1,0 +1,454 @@
+[
+  {
+    "name": "callback-method-receiver-unbound",
+    "status": "caught",
+    "test": "TestCallbackTypedClassMethodCallBindsReceiver$",
+    "catcher": "must bind its receiver",
+    "log": "mutants/precision/callback-method-receiver-unbound.log",
+    "suite": "precision"
+  },
+  {
+    "name": "loop-presence-unproved",
+    "status": "caught",
+    "test": "TestLoopPresenceSurvivesRuntimeMutation$",
+    "catcher": "loop condition proves cursor present",
+    "log": "mutants/precision/loop-presence-unproved.log",
+    "suite": "precision"
+  },
+  {
+    "name": "unknown-store-ignored",
+    "status": "caught",
+    "test": "TestGeneratedGuardFactsIncludeUnknownStores$",
+    "catcher": "must remain throwing",
+    "log": "mutants/precision/unknown-store-ignored.log",
+    "suite": "precision"
+  },
+  {
+    "name": "counter-body-write-ignored",
+    "status": "caught",
+    "test": "TestGeneratedGuardCounterWritesRemainThrowing$",
+    "catcher": "must remain throwing",
+    "log": "mutants/precision/counter-body-write-ignored.log",
+    "suite": "precision"
+  },
+  {
+    "name": "presence-call-mutation-ignored",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/error_checks.a$",
+    "catcher": "exit codes differ",
+    "log": "mutants/precision/presence-call-mutation-ignored.log",
+    "suite": "precision"
+  },
+  {
+    "name": "all-calls-pure",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a$",
+    "catcher": "heap-use-after-free",
+    "log": "mutants/precision/all-calls-pure.log",
+    "suite": "precision"
+  },
+  {
+    "name": "all-calls-throw",
+    "status": "caught",
+    "test": "TestMayThrowPrecision$",
+    "catcher": "cannot throw",
+    "log": "mutants/precision/all-calls-throw.log",
+    "suite": "precision"
+  },
+  {
+    "name": "all-functions-throw",
+    "status": "caught",
+    "test": "TestMayThrowPrecision$",
+    "catcher": "cannot throw",
+    "log": "mutants/precision/all-functions-throw.log",
+    "suite": "precision"
+  },
+  {
+    "name": "readiness-unproved",
+    "status": "caught",
+    "test": "TestMayThrowPrecision$",
+    "catcher": "cannot throw",
+    "log": "mutants/precision/readiness-unproved.log",
+    "suite": "precision"
+  },
+  {
+    "name": "capture-feature-false",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_probe.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-feature-false.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-throws",
+    "status": "invalid or unexpected failure",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_debug_fail.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-throws.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-stack-hook-removed",
+    "status": "caught",
+    "test": "TestLibraryErrorRefusals$/plain_target_stack$",
+    "catcher": "got <nil>",
+    "log": "mutants/library/capture-stack-hook-removed.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-destructuring-refusal-removed",
+    "status": "caught",
+    "test": "TestLibraryErrorRefusals$/destructured_stack$",
+    "catcher": "got <nil>",
+    "log": "mutants/library/capture-destructuring-refusal-removed.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-typeof-object",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_typeof.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-typeof-object.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-identity-fresh",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_probe.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/library/capture-identity-fresh.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-intrinsic-cast-not-recognized",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_original_probe.a$",
+    "catcher": "no-unchecked-cast",
+    "log": "mutants/library/capture-intrinsic-cast-not-recognized.log",
+    "suite": "library"
+  },
+  {
+    "name": "accessor-targets-cleared",
+    "status": "needs adaptation",
+    "matches": 0,
+    "suite": "library"
+  },
+  {
+    "name": "node-named-refusal-delayed",
+    "status": "caught",
+    "test": "TestNodeLibraryNamesUnimplementedMembers$/node:fs.readFile",
+    "catcher": "want named NotYet",
+    "log": "mutants/library/node-named-refusal-delayed.log",
+    "suite": "library"
+  },
+  {
+    "name": "capture-throws",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_debug_fail.a$",
+    "catcher": "exit codes differ",
+    "log": "mutants/adapted/capture-throws.log",
+    "suite": "adapted"
+  },
+  {
+    "name": "accessor-targets-cleared",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/class_features_accessors.a$",
+    "catcher": "virtual call has no target set",
+    "log": "mutants/adapted/accessor-targets-cleared.log",
+    "suite": "adapted"
+  },
+  {
+    "name": "fresh-error-initializer-proof-removed",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/57f2d04_with_frozen.a$",
+    "catcher": "a write to a potentially frozen object",
+    "log": "mutants/runtime/fresh-error-initializer-proof-removed.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "concat-bound-ignored",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a$",
+    "catcher": "stdout differs",
+    "log": "mutants/runtime/concat-bound-ignored.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "unprotected-finally-guarded",
+    "status": "caught",
+    "test": "TestProtectedStringGuardPrecision$",
+    "catcher": "cannot throw on this bounded protected path",
+    "log": "mutants/runtime/unprotected-finally-guarded.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "unknown-object-bound-ignored",
+    "status": "caught",
+    "test": "TestStringLengthBoundsIncludeUnknownObjects$",
+    "catcher": "unknown object must retain the full string bound",
+    "log": "mutants/runtime/unknown-object-bound-ignored.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "repeat-constant-length-ignored",
+    "status": "caught",
+    "test": "TestRepeatRefusalChecksResultLength$",
+    "catcher": "oversized constant repeat must remain a named refusal",
+    "log": "mutants/runtime/repeat-constant-length-ignored.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "protected-catch-root-omitted",
+    "status": "caught",
+    "test": "TestRuntimeStackCatchFinally$",
+    "catcher": "stdout differs",
+    "log": "mutants/runtime/protected-catch-root-omitted.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "javascript-stack-error-identity-omitted",
+    "status": "caught",
+    "test": "TestRuntimeStackCleanup$",
+    "catcher": "stdout differs",
+    "log": "mutants/runtime/javascript-stack-error-identity-omitted.log",
+    "suite": "runtime"
+  },
+  {
+    "name": "closed-input-builtin-initializer-not-exempt",
+    "status": "invalid or unexpected failure",
+    "test": "TestClosedFrameInputRejectsMutation$",
+    "catcher": "closed literal input was not proven",
+    "log": "mutants/fix/closed-input-builtin-initializer-not-exempt.log",
+    "suite": "fix"
+  },
+  {
+    "name": "closed-input-ordinary-write-admitted",
+    "status": "caught",
+    "test": "TestClosedFrameInputRejectsMutation$",
+    "catcher": "mutable graph accepted as closed",
+    "log": "mutants/fix/closed-input-ordinary-write-admitted.log",
+    "suite": "fix"
+  },
+  {
+    "name": "code-point-list-omitted",
+    "status": "caught",
+    "test": "TestCodePointCatchabilityBoundary/9984394_lib_codepoint.a$",
+    "catcher": "want String.fromCodePoint catchability refusal",
+    "log": "mutants/fix/code-point-list-omitted.log",
+    "suite": "fix"
+  },
+  {
+    "name": "interface-method-targets-omitted",
+    "status": "caught",
+    "test": "TestCodePointCatchabilityBoundary/9984394_lib_dispatch_codepoint.a$",
+    "catcher": "want String.fromCodePoint catchability refusal",
+    "log": "mutants/fix/interface-method-targets-omitted.log",
+    "suite": "fix"
+  },
+  {
+    "name": "closed-input-builtin-initializer-not-exempt",
+    "status": "caught",
+    "test": "TestClosedFrameInputRejectsMutation$",
+    "catcher": "adamic/cycle-capable",
+    "log": "mutants/closed-adapted/closed-input-builtin-initializer-not-exempt.log",
+    "suite": "closed-adapted"
+  },
+  {
+    "name": "mayThrow-overwritten",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/error_checks.a$",
+    "catcher": "differs",
+    "log": "mutants/boundary/mayThrow-overwritten.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "derived-error-descriptors",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/derived_error_(hasOwn|enumerable|locale|static_own)$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/derived-error-descriptors.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "ready-read-flow-edge",
+    "status": "caught",
+    "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a$",
+    "catcher": "the call ended",
+    "log": "mutants/boundary/ready-read-flow-edge.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "ready-write-flow-edge",
+    "status": "caught",
+    "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/error_checks.a$",
+    "catcher": "the call ended",
+    "log": "mutants/boundary/ready-write-flow-edge.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "inherited-constructor-field",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/inherited_constructor_value$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/inherited-constructor-field.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "nullable-generic-receiver",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/nullable_generic_receiver$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/nullable-generic-receiver.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "stack-read",
+    "status": "SURVIVED",
+    "test": "TestErrorBoundariesAreExplicit/stack_read$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/stack-read.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "stack-write",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/stack_write$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/stack-write.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "cause-cycle",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/cause_closes_a_cycle$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/cause-cycle.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "custom-toString",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/override$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/custom-toString.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "optional-generic-field",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/optional_generic_field$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/optional-generic-field.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "erased-cause",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/erased_cause$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/erased-cause.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "nonliteral-options",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/nonliteral_options$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/nonliteral-options.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "normalization-expansion",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/normalization_expansion$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/normalization-expansion.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "structural-view",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/(structural_view|nested_structural_view)$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/structural-view.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "fake-error",
+    "status": "excluded: stale diagnostic also fails without the mutant; adapted control survives",
+    "test": "TestErrorBoundariesAreExplicit/fake_error$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/fake-error.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "spread-error",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/spread$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/spread-error.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "inherited-own-field",
+    "status": "needs adaptation",
+    "anchor": "&& !isRandom && !l.errorPrototypeRead(node) {",
+    "suite": "boundary"
+  },
+  {
+    "name": "mutable-unknown-alias",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/mutable_unknown_alias$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/mutable-unknown-alias.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "unrecorded-initializer",
+    "status": "caught",
+    "test": "TestEveryWriteIsRecordedAndKnown$",
+    "catcher": "a write lowering didn't record",
+    "log": "mutants/boundary/unrecorded-initializer.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "mutable-cause",
+    "status": "caught",
+    "test": "TestErrorBoundariesAreExplicit/mutable_cause$",
+    "catcher": "want refusal",
+    "log": "mutants/boundary/mutable-cause.log",
+    "suite": "boundary"
+  },
+  {
+    "name": "phantom-freshness-receiver-effects-erased",
+    "status": "caught",
+    "test": "TestPhantomMemberFreshness$/receiver_effects_remain$",
+    "catcher": "phantom receiver writes",
+    "log": "mutants/fresh-fix/phantom-freshness-receiver-effects-erased.log",
+    "suite": "fresh-fix"
+  },
+  {
+    "name": "phantom-freshness-retains-receiver",
+    "status": "caught",
+    "test": "TestPhantomMemberFreshness$/absent_member_holds_no_receiver$",
+    "catcher": "hold no receiver",
+    "log": "mutants/fresh-fix/phantom-freshness-retains-receiver.log",
+    "suite": "fresh-fix"
+  },
+  {
+    "name": "phantom-freshness-node-unrecognized",
+    "status": "caught",
+    "test": "TestPhantomMemberFreshness$",
+    "catcher": "phantom receiver writes",
+    "log": "mutants/fresh-fix/phantom-freshness-node-unrecognized.log",
+    "suite": "fresh-fix"
+  },
+  {
+    "name": "fake-error-nominal-guard-removed",
+    "status": "SURVIVED",
+    "test": "TestErrorBoundariesAreExplicit/fake_error$",
+    "catcher": "want refusal",
+    "log": "mutants/fake-control/fake-error-nominal-guard-removed.log",
+    "suite": "fake-control"
+  }
+]

@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/mutable_cause
+=== PAUSE TestErrorBoundariesAreExplicit/mutable_cause
+=== CONT  TestErrorBoundariesAreExplicit/mutable_cause
+    error_classes_test.go:37: want refusal containing "assigning Error.cause after construction", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/mutable_cause (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.282s
+FAIL

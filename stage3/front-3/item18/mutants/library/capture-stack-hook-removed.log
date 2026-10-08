@@ -1,0 +1,8 @@
+=== RUN   TestLibraryErrorRefusals
+=== RUN   TestLibraryErrorRefusals/plain_target_stack
+    library_error_test.go:21: want "Error.stack: native frames", got <nil>
+--- FAIL: TestLibraryErrorRefusals (0.36s)
+    --- FAIL: TestLibraryErrorRefusals/plain_target_stack (0.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.384s
+FAIL

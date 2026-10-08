@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/normalization_expansion
+=== PAUSE TestErrorBoundariesAreExplicit/normalization_expansion
+=== CONT  TestErrorBoundariesAreExplicit/normalization_expansion
+    error_classes_test.go:37: want refusal containing "native runtime failure cannot unwind", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/normalization_expansion (0.39s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.481s
+FAIL

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "fake-error-nominal-guard-removed",
+    "status": "SURVIVED",
+    "test": "TestErrorBoundariesAreExplicit/fake_error$",
+    "catcher": "want refusal",
+    "log": "mutants/fake-control/fake-error-nominal-guard-removed.log",
+    "suite": "fake-control"
+  }
+]

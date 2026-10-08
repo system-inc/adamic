@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a
+    oracle_test.go:759: stdout differs
+        node:   exit 70, stdout "finally ran\n", stderr "adamic: panic: RangeError: Invalid string length\n"
+        native: exit 70, stdout "", stderr "adamic: panic: RangeError: Invalid string length\n"
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a (5.73s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.774s
+FAIL

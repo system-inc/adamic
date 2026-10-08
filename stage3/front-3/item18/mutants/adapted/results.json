@@ -1,0 +1,18 @@
+[
+  {
+    "name": "capture-throws",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/library_error_debug_fail.a$",
+    "catcher": "exit codes differ",
+    "log": "mutants/adapted/capture-throws.log",
+    "suite": "adapted"
+  },
+  {
+    "name": "accessor-targets-cleared",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode$/internal/oracle/testdata/class_features_accessors.a$",
+    "catcher": "virtual call has no target set",
+    "log": "mutants/adapted/accessor-targets-cleared.log",
+    "suite": "adapted"
+  }
+]

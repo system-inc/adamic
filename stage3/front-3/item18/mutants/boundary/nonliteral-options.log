@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/nonliteral_options
+=== PAUSE TestErrorBoundariesAreExplicit/nonliteral_options
+=== CONT  TestErrorBoundariesAreExplicit/nonliteral_options
+    error_classes_test.go:37: want refusal containing "ErrorOptions not written as a literal", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/nonliteral_options (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.194s
+FAIL

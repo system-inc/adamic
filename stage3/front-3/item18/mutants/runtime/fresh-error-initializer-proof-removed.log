@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/57f2d04_with_frozen.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/57f2d04_with_frozen.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/57f2d04_with_frozen.a
+    oracle_test.go:736: Lower: /workspace/adamic/internal/oracle/testdata/57f2d04_with_frozen.a:5:1: stage 0 can't lower a try around a write to a potentially frozen object, whose native runtime failure cannot unwind to a catch yet (docs/memory.md) yet
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/57f2d04_with_frozen.a (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.097s
+FAIL

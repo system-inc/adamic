@@ -1,0 +1,12 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/fake_error
+=== PAUSE TestErrorBoundariesAreExplicit/fake_error
+=== CONT  TestErrorBoundariesAreExplicit/fake_error
+    error_classes_test.go:37: want refusal containing "without nominal ancestry", got /tmp/adamic-gate/TestErrorBoundariesAreExplicitfake_error3136370272/001/main.a:1:73: Adamic 0.1 refuses optional property stack in Error absent from structural source { name: string; message: string; toString: () => string; }, which can hide fields; declare stack on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/fake_error (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.186s
+FAIL

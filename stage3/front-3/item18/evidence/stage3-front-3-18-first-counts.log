@@ -1,0 +1,54 @@
+--- FAIL: TestCountsAreRecorded (8.18s)
+    --- FAIL: TestCountsAreRecorded/fixtures (8.24s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_accessors.a (0.09s)
+panic: ir: virtual call has no target set [recovered, repanicked]
+
+goroutine 438 [running]:
+testing.tRunner.func1.2({0x1cc2ee0, 0x1311200})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cc2ee0?, 0x1311200?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/ir.(*Program).CallTargets(...)
+	/workspace/adamic/internal/ir/call_targets.go:13
+github.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(...)
+	/workspace/adamic/internal/ir/call_targets.go:21
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1d55718?, 0x3fca179d88c0?})
+	/workspace/adamic/internal/lower/exceptions.go:204 +0x3f8
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d55718?, 0x3fca179d88c0?, 0x3fca179daab0?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:393 +0x13f
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf668?, 0x3fca179daab0?, 0x1cdf6d0?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d0d230?, 0x3fca179daab0?, 0x1cdf668?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:398 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf6d0?, 0x3fca179daa50?, 0x3fca179b8ec0?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c43548?, 0x3fca179b8ed0?, 0x1cdf6d0?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:385 +0x1b6
+github.com/system-inc/adamic/internal/lower.walkValue({0x1d36c98?, 0x3fca179b8ec0?, 0x3fca179e4150?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:398 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cdf6d0?, 0x3fca179ccda0?, 0x3fca17a1f728?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:381 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c43548?, 0x3fca179e4150?, 0x48986d?}, 0x3fca17a1f778)
+	/workspace/adamic/internal/lower/exceptions.go:385 +0x1b6
+github.com/system-inc/adamic/internal/lower.walk({0x1c43548?, 0x3fca179e4150?}, 0x2?)
+	/workspace/adamic/internal/lower/exceptions.go:369 +0x67
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x3fca159ee400, {0x3fca179ccda0?, 0xd?, 0x3?})
+	/workspace/adamic/internal/lower/exceptions.go:187 +0x5f
+github.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x3fca159ee400)
+	/workspace/adamic/internal/lower/exceptions.go:168 +0x365
+github.com/system-inc/adamic/internal/lower.Lower({0x1d7bd00?, 0x1e69f40?}, 0x3fca15940e40)
+	/workspace/adamic/internal/lower/lower.go:73 +0x85b
+github.com/system-inc/adamic/internal/oracle.lowered(0x3fca153e8248, {0x3fca16fd8140, 0x45})
+	/workspace/adamic/internal/oracle/oracle_test.go:563 +0x18b
+github.com/system-inc/adamic/internal/oracle.counted(0x3fca153e8248, {0xd11ad8, 0x33}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:71 +0x132
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x3fca153e8248)
+	/workspace/adamic/internal/oracle/counts_test.go:143 +0x73
+testing.tRunner(0x3fca153e8248, 0x3fca151ab800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	8.263s
+FAIL

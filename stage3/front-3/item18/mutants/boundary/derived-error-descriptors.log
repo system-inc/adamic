@@ -1,0 +1,31 @@
+=== RUN   TestErrorBoundariesAreExplicit
+=== PAUSE TestErrorBoundariesAreExplicit
+=== CONT  TestErrorBoundariesAreExplicit
+=== RUN   TestErrorBoundariesAreExplicit/derived_error_static_own
+=== PAUSE TestErrorBoundariesAreExplicit/derived_error_static_own
+=== RUN   TestErrorBoundariesAreExplicit/derived_error_hasOwn
+=== PAUSE TestErrorBoundariesAreExplicit/derived_error_hasOwn
+=== RUN   TestErrorBoundariesAreExplicit/derived_error_enumerable
+=== PAUSE TestErrorBoundariesAreExplicit/derived_error_enumerable
+=== RUN   TestErrorBoundariesAreExplicit/derived_error_locale
+=== PAUSE TestErrorBoundariesAreExplicit/derived_error_locale
+=== CONT  TestErrorBoundariesAreExplicit/derived_error_static_own
+=== CONT  TestErrorBoundariesAreExplicit/derived_error_enumerable
+=== CONT  TestErrorBoundariesAreExplicit/derived_error_hasOwn
+=== CONT  TestErrorBoundariesAreExplicit/derived_error_locale
+=== NAME  TestErrorBoundariesAreExplicit/derived_error_static_own
+    error_classes_test.go:37: want refusal containing "on Error", got <nil>
+=== NAME  TestErrorBoundariesAreExplicit/derived_error_enumerable
+    error_classes_test.go:37: want refusal containing "on Error", got <nil>
+=== NAME  TestErrorBoundariesAreExplicit/derived_error_hasOwn
+    error_classes_test.go:37: want refusal containing "on Error", got <nil>
+=== NAME  TestErrorBoundariesAreExplicit/derived_error_locale
+    error_classes_test.go:37: want refusal containing "on Error", got <nil>
+--- FAIL: TestErrorBoundariesAreExplicit (0.00s)
+    --- FAIL: TestErrorBoundariesAreExplicit/derived_error_static_own (0.17s)
+    --- FAIL: TestErrorBoundariesAreExplicit/derived_error_enumerable (0.19s)
+    --- FAIL: TestErrorBoundariesAreExplicit/derived_error_hasOwn (0.23s)
+    --- FAIL: TestErrorBoundariesAreExplicit/derived_error_locale (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.257s
+FAIL
