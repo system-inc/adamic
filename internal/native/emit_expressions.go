@@ -281,7 +281,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.StringLength:
 		if expression.Optional {
 			text := e.value(expression.Value)
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, adamic_string_length(%s)})", text, zero(ir.MaybeNumber), text))
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s ? %s : (adamic_maybe_number){true, adamic_string_length(%s)})", nullTest(expression.Value.Type(), text, true), zero(ir.MaybeNumber), text))
 		}
 		return fmt.Sprintf("adamic_string_length(%s)", e.value(expression.Value))
 	case ir.CharCodeAt:

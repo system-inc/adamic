@@ -3,6 +3,7 @@ package indexed_d
 import (
 	"context"
 	"fmt"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -69,13 +70,21 @@ func TestNullableStringRepresentation(t *testing.T) {
  console.log(String(value === null));
  console.log(String(value === undefined));
  console.log(String(value == null));
+ console.log(String(null == value));
+ console.log(String(value != null));
+ console.log(String(value !== null));
+ console.log(String(value !== undefined));
  console.log(typeof value);
  console.log(String(value));
  console.log(value);
  console.log(String(value === ""));
  console.log(String(value === "null"));
  console.log(String(value ?? "fallback"));
+ console.log(String(value?.length));
 }
+console.log(String(null == null));
+console.log(String(undefined == null));
+console.log(String(null != null));
 function pass(value: string | null): string | null { return value; }
 const values: (string | null)[] = [null, "ma" + "de", "", "null"];
 observe(pass(values[0] ?? null));
@@ -86,15 +95,7 @@ observe(values[3]);
 `
 	program, _, node := nullableProgram(t, source, true)
 	c := nullableBackends(t, program, node)
-	sentinel := "adamic_reference_null(adamic_kind_string)"
-	if !strings.Contains(c, sentinel) {
-		t.Fatal("sentinel mutation has no target")
-	}
-	mutant := strings.ReplaceAll(c, sentinel, "NULL")
-	binary := filepath.Join(t.TempDir(), "sentinel-null")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatalf("mutant build is not a kill: %v", err)
-	}
+	binary := nullableSentinelMutant(t, c)
 	got := run(binary)
 	if got == node {
 		t.Fatal("NULL sentinel mutant survived")
@@ -148,4 +149,51 @@ console.log(value);
 			t.Logf("Node %q; JS, release and sanitized agree with expected exit=%d stderr=%q", node.stdout, want.code, want.stderr)
 		})
 	}
+}
+
+// Recompile the actual runtime identity helper with null returning NULL. The archive
+// copy and replacement object live only in this test's temporary directory.
+func nullableSentinelMutant(t *testing.T, c string) string {
+	t.Helper()
+	options := native.Options{Sanitize: true}
+	library, err := native.RuntimeLibrary("", options)
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	archive := filepath.Join(directory, "libmutant.a")
+	original, err := os.ReadFile(library)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(archive, original, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	members := run("ar", "t", archive)
+	if members.code != 0 || !strings.Contains("\n"+members.stdout, "\nnullable.o\n") {
+		t.Fatalf("nullable runtime member: %+v", members)
+	}
+	if got := run("ar", "d", archive, "nullable.o"); got.code != 0 {
+		t.Fatalf("remove original runtime object: %+v", got)
+	}
+	runtimeSource, err := os.ReadFile("../../internal/native/runtime/nullable.c")
+	if err != nil {
+		t.Fatal(err)
+	}
+	target := "case adamic_kind_string: return &adamic_null_string;"
+	if strings.Count(string(runtimeSource), target) != 1 {
+		t.Fatal("runtime sentinel mutation must have one target")
+	}
+	mutant := filepath.Join(directory, "nullable.c")
+	write(t, mutant, strings.Replace(string(runtimeSource), target, "case adamic_kind_string: return NULL;", 1))
+	main := filepath.Join(directory, "main.c")
+	write(t, main, c)
+	binary := filepath.Join(directory, "sentinel-null")
+	arguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", binary, main, mutant)
+	arguments = append(arguments, native.RuntimeLinkFlags(archive)...)
+	arguments = append(arguments, "-lm")
+	if got := run("clang", arguments...); got.code != 0 {
+		t.Fatalf("runtime sentinel mutant build is not a kill: %+v", got)
+	}
+	return binary
 }
