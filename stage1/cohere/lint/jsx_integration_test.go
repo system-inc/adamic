@@ -51,7 +51,6 @@ func jsxSources(t *testing.T) []string {
 	// rather than shrinking the parser check silently, and a new rule that brings JSX cases adds its row.
 	// Batch 8's three rules held the original 54.
 	want := map[string]int{
-		"@next/next/no-sync-scripts":                  11,
 		"react/jsx-no-comment-textnodes":              40,
 		"react/no-find-dom-node":                      9,
 		"react/no-is-mounted":                         5,
