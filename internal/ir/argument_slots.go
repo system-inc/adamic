@@ -105,8 +105,47 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 	return layout
 }
 
+// argumentFacts is what PackedCountNeeded and ClosureConventionNeeded derive from the whole program,
+// computed once: the emitter asks for every function, and for every closure call, so deriving it per
+// question walked every function-type target set each time (quadratic in a program the size of a port).
+// It's keyed to the sizes of what it reads, so a program that changes after the first question gets
+// fresh facts rather than stale ones.
+type argumentFacts struct {
+	functions, sets int
+	packed          []bool
+	convention      bool
+}
+
+func (p *Program) argumentFactsOf() *argumentFacts {
+	if facts := p.argumentFacts; facts != nil && facts.functions == len(p.Functions) && facts.sets == len(p.FunctionTypeTargets) {
+		return facts
+	}
+	// Each function's containing sets, found in one pass over every set.
+	containing := make([][][]int, len(p.Functions))
+	for _, targets := range p.FunctionTypeTargets {
+		seen := map[int]bool{}
+		for _, target := range targets {
+			if !seen[target] {
+				seen[target] = true
+				containing[target] = append(containing[target], targets)
+			}
+		}
+	}
+	facts := &argumentFacts{functions: len(p.Functions), sets: len(p.FunctionTypeTargets), packed: make([]bool, len(p.Functions))}
+	for function := range p.Functions {
+		facts.packed[function] = p.packedCountNeeded(function, containing[function])
+		facts.convention = facts.convention || facts.packed[function]
+	}
+	p.argumentFacts = facts
+	return facts
+}
+
 // PackedCountNeeded is a callee observation, not a property of all function values.
 func (p *Program) PackedCountNeeded(function int) bool {
+	return p.argumentFactsOf().packed[function]
+}
+
+func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
 	f := p.Functions[function]
 	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
 		return true
@@ -115,14 +154,7 @@ func (p *Program) PackedCountNeeded(function int) bool {
 	// A zero-argument view can reach optional parameters held differently. One
 	// padding word cannot be absent in both representations, so those callees
 	// distinguish presence with the count instead of interpreting that word.
-	for _, targets := range p.FunctionTypeTargets {
-		contains := false
-		for _, target := range targets {
-			contains = contains || target == function
-		}
-		if !contains {
-			continue
-		}
+	for _, targets := range containing {
 		parameters := f.Parameters
 		if f.Receiver {
 			parameters = parameters[1:]
@@ -166,12 +198,7 @@ func absentRepresentation(of Type) int {
 }
 
 func (p *Program) ClosureConventionNeeded() bool {
-	for index := range p.Functions {
-		if p.PackedCountNeeded(index) {
-			return true
-		}
-	}
-	return false
+	return p.argumentFactsOf().convention
 }
 
 func (p *Program) PackedCountNeededFromCall(call CallClosure) bool {
