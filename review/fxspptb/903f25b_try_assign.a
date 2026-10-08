@@ -1,0 +1,8 @@
+const object = { value: 1 };
+Object.freeze(object);
+try {
+	Object.assign(object, { value: 2 });
+} catch {
+	console.log('caught');
+}
+console.log(`${object.value}`);

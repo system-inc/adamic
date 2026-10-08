@@ -1,0 +1,9 @@
+import { Buffer } from 'node:buffer';
+import { readSync } from 'node:fs';
+const buffer = Buffer.from('xx');
+try { readSync(-1, buffer, 9007199254740992, 0, null); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+try { readSync(-1, buffer, 0, 0, 9007199254740992); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+try { readSync(-1, buffer, 0, 2147483647, null); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
