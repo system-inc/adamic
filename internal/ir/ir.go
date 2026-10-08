@@ -100,6 +100,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// CallableMasks records producer signature members independently of any view.
+	CallableMasks []uint16
+
 	// GraphClosure joins its environment instead of counting captured graph cells.
 	GraphClosure bool
 

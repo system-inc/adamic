@@ -2113,3 +2113,83 @@ union-target oracle and original FunctionLikeDeclaration/ClassDeclaration union
 fixtures. The integrator reconciles this small cast-proof dispatch hook.
 The existing certifiedCheckedCast hook also retains the union target contract
 on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.
+
+## Lane 5 scalar and boxed callable adapters (October 8)
+
+Lane 5 owns new native/view_callables_boxing.go and lower/view_callables_boxing.go,
+plus oracle/checked_views_callable_boxing_test.go and lane5/boxing fixtures.
+Minimal shared hook: native/emit_functions.go routes closure invocation through
+the named boxed adapter. The existing callable slot guard already admits Union.
+The adapter selects actual producer code, converts borrowed parameters, releases
+new parameter boxes on normal and exceptional returns, and converts owned results.
+No closure calling convention or callable identity is replaced. Read certification
+will use independently recorded representation member masks for union variance.
+
+Callable union metadata hooks: ir.Function.CallableMasks is recorded by the
+function signature producer; ir.ViewContract.RepresentationMask records requested
+members. Native and JavaScript helpers compare result subsets and reversed
+parameter subsets before admitting a read. Scalars retain their previous checks.
+
+Callback adapter hooks use the same named helper in native emit_expressions.go,
+emit_arrays.go, emit_maps.go, from.go, library_array_holes.go, and reuse.go. Both
+normal and reused array maps, visits, reduce, from, Map/Set visits carry explicit
+runtime input and result representations. Sort's existing direct-function
+comparator is distinct and remains outside this closure adapter.
+
+Sort callback hooks: native/view_arrays.go and emit_expressions.go use the
+owned boxed comparator adapter; direct named-function comparators retain their
+existing exact-element admission. lower/expression.go copies producer masks into
+named function forwarders. The former mixed-result boundary is now an oracle
+positive in its existing lane-owned test; counts adds the boxing directory.
+
+JavaScript adds view_callables_boxing.go and a named call-dispatch hook in
+javascript.go. It shares native unknown-producer refusal when union conversion
+would require metadata; JavaScript otherwise preserves its normal values.
+
+## Lane 5 aggregate callable demand (October 8)
+
+New lower/view_callables_aggregate.go owns deferred payload schema collection and
+registration. Minimal shared hooks: lower.go stores checker payload references;
+view_callables_read.go records payload type IDs while comparing representations;
+functions.go records producer payload types; view_lazy.go completes aggregate
+schemas before demand and follows aggregate call results. interface_cast.go's
+schema visitor follows signature payloads, parameters and results. collections.go
+fills callable and type metadata on destructured reads. ir.ViewContract adds
+Payload/PayloadTypeID metadata. Payload schemas are descriptors and are built
+only when a checked callable can demand them, never as signature proof at cast.
+
+The named concrete-read predicate in view_lazy.go keeps a checked scalar or
+completed callable read from being poisoned by an unrelated wider producer member
+with the same name. Direct unsupported descriptors and unsupported receivers
+still refuse. Unknown nominal/dictionary producer parameters have no certificate.
+
+Class method certificates keep boxed result/parameter variance unsupported until
+their thunk invocation uses an adapter. Native view_callables_methods.go and
+JavaScript view_callables_signature.go preserve the same read refusal. Aggregate
+return demand reads evaluation operands via ir.ClosureOperands, and result targets
+remain resolved by the shared graph and ir.Program.ClosureTargets.
+
+Lane 5 optional callable hook: view_callables_contract.go and
+view_callables_read.go admit represented optional parameters while preserving
+exact recorded parameter count. Missing numeric optional arguments use the
+existing closure argument count and MaybeNumber representation. A producer
+requiring the omitted parameter still fails its representation/member check.
+
+Lane 5 long-signature refusal hook: native/runtime/object.c allocates space for
+both copies of the declared type in adamic_object_view's failure message. Rank 53's
+wrong-value fixture pins its complete long signature on sanitized and release
+native, preventing truncated diagnostics and reads beyond the message buffer.
+
+Lane 5 boxed argument field-production hook: lower/object.go calls the named
+viewCallableBoxedRecordField in view_callables_boxing.go. A supported contextual
+scalar/object union field stores the initializer in the declared boxed form.
+This fixes rank 50's scalar argument field being retained as a pointer before
+callable dispatch. Unknown, nominal and dictionary members remain unsupported.
+
+## Lane 5 callable array payloads (October 8)
+
+Owned hooks in lower/view_callables_boxing.go and view_callables_aggregate.go
+recognize represented array parameters/results and complete their deferred
+element schemas before lazy demand. Array extraction continues through lane 2's
+named metadata hooks; no callback ABI guard or owner-mutation refusal is removed.
+Schema creation certifies neither array contents nor descendant object fields.

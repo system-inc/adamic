@@ -467,32 +467,96 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 	}
 }
 
-// These receipts keep remaining adapter boundaries distinct from completed
-// candidates. Their valid Node controls do not certify Adamic support.
-func TestCheckedViewUntaggedRemainingBoundaries(t *testing.T) {
+// Lane 5's aggregate callable contracts close these reduced required-checker
+// boundaries. Keep the original source and require all backends and leak checks.
+func TestCheckedViewUntaggedCompletedBoundaries(t *testing.T) {
 	for _, fixture := range []string{"type-contract-boundary", "base-type-boundary"} {
 		t.Run(fixture, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + fixture + ".a")
-			if err != nil {
-				t.Fatal(err)
-			}
-			node := onNode(t, path)
-			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+			program, path := interfaceFixture(t, "untagged/fixtures/"+fixture)
+			truth := onNode(t, path)
+			if difference := disagreement(run{stdout: []byte("true\n")}, truth); difference != "" {
 				t.Fatal(difference)
 			}
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Fatal(difference)
+				}
 			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if err == nil {
-				t.Fatal("boundary changed: replace this refusal receipt with both-backend positive coverage")
-			}
-			t.Logf("lowering refusal: %s", err)
-			if !strings.Contains(err.Error(), "refuses checked view read") || !strings.Contains(err.Error(), "unsupported") {
-				t.Fatal(err)
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
 			}
 		})
+	}
+}
+
+func TestCheckedViewUntaggedCompletedBoundaryMutants(t *testing.T) {
+	for _, fixture := range []string{"type-contract-boundary", "base-type-boundary"} {
+		source, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures", fixture+".a"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, probe := range []struct{ name, before, after string }{
+			{"callable-kind", "check:(value:Type):boolean=>true", "check:7"},
+			{"callable-parameter", "check:(value:Type):boolean=>true", "check:(value:number):boolean=>true"},
+			{"nested-field", "symbol:{name:'s'}", "symbol:{name:7}"},
+		} {
+			t.Run(fixture+"/"+probe.name, func(t *testing.T) {
+				if strings.Count(string(source), probe.before) != 1 {
+					t.Fatal("mutation must match once")
+				}
+				path := filepath.Join(t.TempDir(), "boundary.a")
+				if err := os.WriteFile(path, []byte(strings.Replace(string(source), probe.before, probe.after, 1)), 0600); err != nil {
+					t.Fatal(err)
+				}
+				truth := onNode(t, path)
+				if difference := disagreement(run{stdout: []byte("true\n")}, truth); difference != "" {
+					t.Fatal(difference)
+				}
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				sanitized, _ := nativelyUncached(t, program)
+				for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+					if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "field read failed:") || !strings.Contains(string(got.stderr), "matches no member of Type") {
+						t.Fatalf("malformed boundary exit %d stdout %q stderr %q", got.exitCode, got.stdout, got.stderr)
+					}
+				}
+				changed := 0
+				mutate := func(expression ir.Expression) ir.Expression {
+					switch read := expression.(type) {
+					case ir.Property:
+						if read.Name == "value" && read.ViewContract != 0 {
+							read.ViewContract = 0
+							read.View = ""
+							changed++
+							return read
+						}
+					case ir.ArrayIndex:
+						if read.ViewContract != 0 {
+							read.ViewContract = 0
+							read.View = ""
+							changed++
+							return read
+						}
+					}
+					return expression
+				}
+				for pass := 0; pass < 3; pass++ {
+					mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
+				}
+				if changed != 1 {
+					t.Fatalf("expected one guarded Type read, changed %d", changed)
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if difference := disagreement(truth, got); difference != "" {
+						t.Fatalf("bypass must execute valid counterfactual: %s stderr %q", difference, got.stderr)
+					}
+					t.Log("Type read bypass caught: malformed callable or descendant executed with exit 0")
+				}
+			})
+		}
 	}
 }
 

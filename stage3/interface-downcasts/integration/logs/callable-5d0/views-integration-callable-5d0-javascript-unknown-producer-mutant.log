@@ -1,0 +1,6 @@
+=== RUN   TestViewCallableBoxingUnknownProducer
+    view_callables_boxing_boundary_test.go:12: exit 0, stdout "7\n", stderr ""; want 70, "", "adamic: panic: callable ABI adapter: unknown producer signature\n"
+--- FAIL: TestViewCallableBoxingUnknownProducer (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/javascript	0.035s
+FAIL

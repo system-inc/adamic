@@ -8,7 +8,7 @@ import (
 
 func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
 	expected := e.viewCallableExpected(property)
-	recorded := e.viewCallableRecorded("value")
+	recorded := e.viewCallableRecorded("value", property)
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	recorded = e.untaggedCallableRecorded(property, recorded, expected)
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed) + ")(" + value + ")"
@@ -27,18 +27,29 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 		return viewCallableSignature(nil, ir.Type(255), contract.Name)
 	}
 	parameters := make([]ir.Type, len(contract.Parameters))
+	masks := make([]uint16, len(contract.Parameters)+1)
 	for i, child := range contract.Parameters {
 		parameters[i] = e.program.ViewContracts[child-1].Of
+		masks[i] = e.program.ViewContracts[child-1].RepresentationMask
 	}
-	return viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name)
+	masks[len(masks)-1] = e.program.ViewContracts[contract.Result-1].RepresentationMask
+	return viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks)
 }
 
-func viewCallableSignature(parameters []ir.Type, result ir.Type, name string) string {
+func viewCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
 	values := make([]string, len(parameters))
 	for i, of := range parameters {
 		values[i] = fmt.Sprint(of)
 	}
-	return fmt.Sprintf("{parameters: [%s], result: %d, name: %s}", strings.Join(values, ", "), result, quote(name))
+	maskValues := []string{}
+	resultMask := uint16(0)
+	if len(members) != 0 && len(members[0]) == len(parameters)+1 {
+		resultMask = members[0][len(parameters)]
+		for _, mask := range members[0][:len(parameters)] {
+			maskValues = append(maskValues, fmt.Sprint(mask))
+		}
+	}
+	return fmt.Sprintf("{parameters: [%s], result: %d, name: %s, parameterMasks: [%s], resultMask: %d}", strings.Join(values, ", "), result, quote(name), strings.Join(maskValues, ", "), resultMask)
 }
 
 func viewCallableProducerResult(result ir.Type) ir.Type {
@@ -48,7 +59,7 @@ func viewCallableProducerResult(result ir.Type) ir.Type {
 	return result
 }
 
-func (e *emitter) viewCallableRecorded(value string) string {
+func (e *emitter) viewCallableRecorded(value string, properties ...ir.Property) string {
 	choices := []string{}
 	methods := map[int]bool{}
 	for _, class := range e.program.Classes {
@@ -61,14 +72,30 @@ func (e *emitter) viewCallableRecorded(value string) string {
 			continue
 		}
 		locals := function.Parameters
+		offset := 0
+		masks := function.CallableMasks
+		result := viewCallableProducerResult(function.Returns)
 		if !function.Closure {
 			locals = locals[1:]
+			offset = 1
+			masks = nil
+			for _, property := range properties {
+				if property.ViewContract != 0 {
+					callable := e.program.ViewContracts[property.ViewContract-1]
+					if callable.Result != 0 && e.program.ViewContracts[callable.Result-1].Of == ir.Union && !function.Returns.IsReference() {
+						result = 0
+					}
+				}
+			}
 		}
 		parameters := make([]ir.Type, len(locals))
 		for i, local := range locals {
 			parameters[i] = e.program.Locals[local].Type
+			if parameters[i] == ir.Object && len(function.CallableMasks) == len(function.Parameters)+1 && function.CallableMasks[i+offset] == 0 {
+				parameters[i] = 0
+			}
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), fmt.Sprintf("({...%s, function: %d})", viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name), index)))
+		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), fmt.Sprintf("({...%s, function: %d})", viewCallableSignature(parameters, result, function.Name, masks), index)))
 	}
 	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(" + value + " instanceof AdamicClosure ? " + value + ".code : " + value + ")"
 	return recorded

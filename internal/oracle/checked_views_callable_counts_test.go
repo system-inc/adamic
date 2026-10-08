@@ -10,7 +10,7 @@ import (
 func viewCallableCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
-	for _, directory := range []string{"group1", "marker", "probes", "stored-marker", "canonical", "watcher", "scanner", "performance"} {
+	for _, directory := range []string{"optional-aggregates/variable-statement", "optional-aggregates/parameter-declaration", "group1", "marker", "probes", "stored-marker", "canonical", "watcher", "scanner", "performance", "boxing", "numeric-literal", "array-callables/call-expression", "array-callables/inline-expressions", "element-access", "property-access", "property-assignment", "aggregate/expression-statement", "aggregate/diagnostic-add", "aggregate/void-zero", "aggregate/this", "aggregate/emit-helper", "aggregate/node-check-flag"} {
 		paths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5", directory, "*.a"))
 		if err != nil {
 			t.Fatal(err)
@@ -25,6 +25,14 @@ func viewCallableCounts(t *testing.T) []string {
 			}
 			rows = append(rows, counted(t, relative, false, nil, false, false))
 		}
+	}
+	for _, path := range []string{
+		"stage3/interface-downcasts/untagged/fixtures/type-contract-boundary.a",
+		"stage3/interface-downcasts/untagged/fixtures/base-type-boundary.a",
+		"internal/lower/testdata/predicates/mixed_union_callback.a",
+		"internal/lower/testdata/predicates/mixed_union_callback_variance.a",
+	} {
+		rows = append(rows, counted(t, path, false, nil, false, false))
 	}
 	return rows
 }

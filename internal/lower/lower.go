@@ -83,6 +83,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	viewCallablePayloadTypes     map[int]viewCallablePayloadType
+	viewCallableProducerPayloads map[int][]viewCallablePayloadType
+
 	program *load.Program
 	checker *checker.Checker
 	result  *ir.Program

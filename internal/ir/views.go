@@ -29,6 +29,10 @@ type ViewContract struct {
 	IntersectionRecursive bool
 	// ObjectPresent retains the canonical descriptor behind optional copies.
 	ObjectPresent ViewContractID
+	// RepresentationMask preserves members of a boxed callable signature union.
+	RepresentationMask uint16
+	Payload            ViewContractID
+	PayloadTypeID      int
 
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string

@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Final checkpoint gates cover focused packages, full IR, filtered Node oracle and vet; the rejected-owner publication was immediately corrected.
-495 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+Prior checkpoints record 495 implementation/component mutant receipts; the callable batch below records new source and IR cases, repeated guards and one uncredited survivor.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -1353,3 +1353,109 @@ repository green gate or area/main push is claimed. Nullable object storage,
 class maybe-boolean fields, string self-assignment, full tsc execution and exact
 reachability remain outside this fix's evidence. Lane 5/owner ABI reconciliation
 and newly queued lane 4, 4b and 7 tips remain integration work.
+
+
+## Callable boxing, payload demand and original ABI boundaries
+
+Merged codex/views-callables 5d0ad15863bbff16aa651cb0fa68dede5a41f0f7 on
+867eca739085a7275e46021b5e4c22c3737924b2. This supersedes ebb1f8a6 and
+164dac2c. No unresolved older hunk was selected wholesale. Eleven conflicted
+hunks were resolved individually; the merge message records all choices.
+
+| File and hunk | Choice and proving fixture |
+| --- | --- |
+| docs/checked-views-plan.md | Keep both accumulated lane inventories and every incoming callable hook. |
+| internal/ir/views.go | Keep intersection/recursion/ObjectPresent and add independent member masks and payload IDs. |
+| internal/javascript/view_callables_contract.go, first | Keep the pure selector API; directional result/parameter masks are held by BoxingRefusals membership and variance mutants. |
+| internal/javascript/view_callables_contract.go, second | Keep named result/parameter refusals and use the same matcher as untagged selection; UntaggedCallableUnion remains held. |
+| internal/javascript/view_callables_signature.go | Keep producer function identity, both untagged hooks and UndefinedAllowed; add masks, unknown nominal parameters and the unadapted method-result refusal (CallableMethods). |
+| internal/lower/view_callables.go | Compare only implementation property names, treating computed names as opaque; DestructuredSiblingRefusal catches the restored binding-pattern panic. |
+| internal/lower/view_callables_contract_test.go | Both sides accept the same three shapes; retain existing order, with no semantic change. |
+| internal/lower/view_lazy.go | Keep existing untagged/intersection hooks and add shared-graph payload/result demand. Allow only concrete callable fallback; RetainsNeverWiderHelper catches the broader scalar bypass. |
+| internal/native/runtime/view_callables_contract.h | Keep the pure selector predicate and directional logical masks; unknown, arity and parameter/result refusals remain (BoxingRefusals, UntaggedCallableUnion). |
+| internal/native/view_callables_signature.go | Keep extracted immutable producers and both untagged hooks; add masks and unknown nominal parameters. |
+| internal/oracle/counts.md | Keep prior rows and predicate EOF; retain 106 incoming rows, exactly two measured retain/release corrections and four new frontier rows. |
+
+For lane 1: the unchanged mixed_union_callback.a and
+mixed_union_callback_variance.a now match Node across release native, sanitized
+native and JavaScript, with leak checks. This is a real producer-specific boxing
+adapter, not an erased ABI guard. Only these two obsolete pending expectations
+were promoted. Unknown boxed producers still stop in both backends; bypassing
+either guard executes a foreign callback and prints 7. The original
+ArrowFunction.name: never read through a wider string helper still refuses at
+line 4. Restoring the incoming broad scalar exemption admits it; both backends
+then execute ordinary/forged. Owner entry-live-mutation.a remains pending the
+explicit restoration of the previously reverted Map item and newest owner tip.
+
+The two unchanged reduced untagged required-checker programs,
+type-contract-boundary.a and base-type-boundary.a, also close with aggregate
+callable support. Their obsolete receipts are replaced by full Node, sanitized
+native, release native, JavaScript and leak coverage. Six malformed cases (wrong
+callable kind, wrong parameter representation, wrong descendant field, for both
+source programs) stop at the reached Type read. Six IR read-bypass cases execute
+true in both backends; twelve backend observations prove the selector checks.
+These reduced programs are not complete original compiler interface certificates.
+
+Validation and failures: initial preflight refused aggregate fields under the
+old global unknown-name fallback; the callable-only exception fixes those while
+retaining scalar refusals. Original callback controls PASS 25.200s initially and
+1.408s in the final boundary control group. The first complete filtered oracle
+finished in 881.746s and failed only two ranked-array count rows and the two
+obsolete untagged boundary receipts. Ranked4 runtime controls PASS 33/33 in
+9.680s; exactly one balanced retain/release per affected label fixture is measured.
+Ranked-array/predicate counts PASS 64.293s. Four frontier count rows are measured
+by the scoped callable updater (26.006s); no other row changes are accepted.
+Untagged positive and six omission-mutant cases PASS 4.194s.
+
+Final restored gates: lower 15.903s, native 37.139s, JavaScript 2.449s,
+full IR 3.519s; go vet ./... exit 0. Complete uncached filtered oracle PASS
+946.185s, Node misses 3869, native misses 1144, no configured exclusions.
+Original brand, object-primitive and intersection declarations enabled; required
+untagged source dispatch enabled. The command is the integration gate helper's
+existing selection, with all three original-declaration paths set to the pinned
+prepared directory. No production source changed during final gates.
+
+Source-mutant evidence, restored sequentially before the gates:
+- Boxing: result-value, parameter-value, parameter-release, native-members,
+  javascript-members, native-contravariance and javascript-contravariance caught.
+- Arrays: native and JavaScript arity admissions and array payload-descriptor
+  omission caught for both original callable member fixtures.
+- Aggregates: both arity admissions, descendant registration omission and shared
+  graph result-demand omission caught. The disjoint ordinary-return control stays
+  admitted when the callable result-demand mutant loses its refusal.
+- Numeric literals: both arity admissions, missing-argument substitution and
+  insufficient diagnostic capacity caught.
+- Mixed aggregates: both arity admissions, both parameter-check omissions and
+  missing boxed-field storage caught. The storage omission reaches a runtime
+  failure, not a build failure.
+- Optional aggregates: both arity admissions, both result-diagnostic omissions
+  and both parameter-check omissions caught; restoring the unsafe implementation
+  name traversal reproduces the AST panic. Result-diagnostic erasures remain
+  blocked by the shared matcher but lose the required named diagnostic; these
+  are diagnostic kills, not claims of invalid callable admission.
+- Integration boundary: both unknown-producer omissions and the broad scalar
+  fallback exemption caught. The scalar counterfactual executes in both backends.
+- Independent original-declaration mutations: shortening ParameterDeclaration
+  modifiers and removing VariableStatement's array alternative both rejected.
+
+This is 33 successful source-mutant runs, including repeated arity/parameter
+checks in several fixture groups; repeats are not new unique checks. Six distinct
+IR cases above also fail in both backends. One optional payload-registration
+omission survives because that fixture group already has its checks through
+another path; it receives no credit. The aggregate fixtures catch registration
+omission separately. No compiler warning or build failure is counted as a kill.
+
+All six original declaration/read-span manifests independently match unchanged
+TypeScript pin 050880ce59e30b356b686bd3144efe24f875ebc8. The 14 direct optional
+fixtures and two still-refused original binding fixtures retain exact original
+member declarations and reads. Initial verifier rank invocation was corrected
+using the manifests themselves; no lane evidence file was rewritten.
+
+Limits: generic/overloaded/rest callable shapes, nominal parameter contracts and
+unadapted method boxing remain conservative. Full repository gate, full original
+tsc execution and exact reaching-view census are unmeasured. The optional-boolean
+storage hold remains resolved. Newest queued tips fetched during this gate are
+owner 2f6ed528661d936308646cbb6f4a2787335b5166, lane 4
+a4df9433fc51cda09fec804d77335e5211fdbf3c, lane 4b
+8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 and lane 7 (now reported
+01a1eda4, to be fetched before its merge). Only codex/views-integration is pushed.

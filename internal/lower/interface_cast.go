@@ -358,6 +358,11 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		}
 		visit(contract.Key)
 		visit(contract.Element)
+		visit(contract.Payload)
+		for _, parameter := range contract.Parameters {
+			visit(parameter)
+		}
+		visit(contract.Result)
 	}
 	visit(id)
 	if ir.HasArrayViews(l.result) {
