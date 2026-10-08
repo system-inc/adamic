@@ -151,7 +151,7 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 	listTask := startFixtureTask(&workers, func() (run, error) {
 		command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
+		if output, err := combinedOutput(command); err != nil {
 			return run{}, fmt.Errorf("Go bridge: %v\n%s", err, output)
 		}
 		if selection.Sample {
@@ -179,7 +179,7 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 	docBuild := startFixtureTask(&workers, func() (struct{}, error) {
 		command := bounded(t, "go", "build", "-overlay="+layoutOverlayPath, "-o", goLayout, layoutPath)
 		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
+		if output, err := combinedOutput(command); err != nil {
 			return struct{}{}, fmt.Errorf("Go layout: %v\n%s", err, output)
 		}
 		return struct{}{}, nil

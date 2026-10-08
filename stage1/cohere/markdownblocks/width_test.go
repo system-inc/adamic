@@ -70,7 +70,7 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-width")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, e := command.CombinedOutput(); e != nil {
+	if output, e := combinedOutput(command); e != nil {
 		t.Fatalf("Go width: %v\n%s", e, output)
 	}
 	want := execute(t, nil, goBinary, cases)
@@ -160,7 +160,7 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 	}
 	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_width", "-check", "-formatter", cohereFormatter(t))
 	command.Dir = root
-	if output, e := command.CombinedOutput(); e != nil {
+	if output, e := combinedOutput(command); e != nil {
 		t.Fatalf("regeneration %v %s", e, output)
 	}
 	t.Logf("%d widths: %d repository files, source lines, every Unicode scalar and generated sequences", len(inputs), files)
