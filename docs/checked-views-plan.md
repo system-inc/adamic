@@ -1442,6 +1442,16 @@ a field of a Diagnostic read from a viewed element is a pinned NotYet. Fixtures 
 `lane2/ranked7-*.a`, held by TestCheckedViewRanked7ArrayContracts and
 TestCheckedViewRanked7Frontiers; the report is `lane2/RANKED7_ARRAYS_REPORT.md`.
 
+### Lane 2 eighth ranked arrays
+
+The eighth ranked group (JsxElement.children, Method and Function declaration
+parameters, ParameterDeclaration.modifiers, EnumDeclaration.members,
+Bundle.sourceFiles, SourceFile.imports, Signature.compositeSignatures,
+GenericType.typeParameters) needed no new hook. A recursive union element type is
+read through its members, and a flat record push is checked against the original
+element contract. Fixtures are `lane2/ranked8-*.a`, held by
+TestCheckedViewRanked8ArrayContracts; the report is `lane2/RANKED8_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
