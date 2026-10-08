@@ -549,8 +549,8 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 }
 
 func TestCompilerAndStage1Agree(t *testing.T) {
-	skipWhenRuleScoped(t)
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
@@ -588,8 +588,6 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 		t.Fatalf("invalid -test.parallel: %d (%v)", count, err)
 	}
 	count = min(count, len(rows))
-	t.Logf("compiler workers: %d (-test.parallel), CPUs: %d", count, runtime.NumCPU())
-	assignments := compilerShardAssignments(t, rows, count)
 	for _, side := range []struct {
 		name    string
 		command string
@@ -599,23 +597,33 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 		{"emitted JavaScript", "node", []string{"--disable-warning=ExperimentalWarning", runner, module}},
 		{"sanitized native", binary, nil},
 	} {
+		workers := count
+		if side.name == "sanitized native" {
+			// Preserve the previous eight-process native ceiling: sanitizers hold
+			// substantial memory per process, even on a 32-slot gate. A smaller
+			// -test.parallel still bounds this pool; Node keeps the requested limit.
+			workers = min(workers, 8)
+		}
+		t.Logf("%s workers: %d (-test.parallel=%d), CPUs: %d", side.name, workers, count, runtime.NumCPU())
+		assignments := compilerShardAssignments(t, rows, workers)
 		launcher, timings := compilerShardLauncher(t, side.command, side.args, rows, assignments)
 		started := time.Now()
-		got, err := shards.Run(launcher, path, count, false)
+		got, err := shards.Run(launcher, path, workers, false)
 		if err != nil {
 			t.Fatalf("%s: %s", side.name, compilerCasePath(rows, err.Error()))
 		}
-		for index := 0; index < count; index++ {
-			elapsed, err := os.ReadFile(filepath.Join(timings, fmt.Sprintf("%d-%d.time", index, count)))
+		for index := 0; index < workers; index++ {
+			elapsed, err := os.ReadFile(filepath.Join(timings, fmt.Sprintf("%d-%d.time", index, workers)))
 			if err != nil {
 				t.Fatal(err)
 			}
-			t.Logf("%s shard %d/%d: %s ms", side.name, index, count, bytes.TrimSpace(elapsed))
+			t.Logf("%s shard %d/%d: %s ms", side.name, index, workers, bytes.TrimSpace(elapsed))
 		}
-		t.Logf("%s: %d shards in %s", side.name, count, time.Since(started))
+		t.Logf("%s: %d shards in %s", side.name, workers, time.Since(started))
 		if diff := difference(got, want.output); diff != "" {
 			t.Fatalf("%s: %s", side.name, compilerCasePath(rows, diff))
 		}
+		t.Logf("%s identical: %d files, %d bytes", side.name, len(rows), len(got))
 	}
 	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
 }
