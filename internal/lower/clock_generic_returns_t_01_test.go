@@ -87,3 +87,40 @@ console.log(typeof make());`
 		t.Fatal("missing checked make signature")
 	}
 }
+
+// An index signature must be rejected by this proof even when the body returns
+// undefined and later passes independently refuse the erased index shape.
+func TestClockGenericReturnsT01RejectsIndexBeforeBody(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "probe.a")
+	source := `interface Base<T> { readonly token: T; }
+function make(): (Base<"="> & { readonly [key: string]: unknown; readonly left: { readonly text: string } }) | undefined { return undefined; }
+console.log(typeof make());`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checked, release := program.Checker(context.Background(), file)
+	defer release()
+	l := &lowering{program: program, checker: checked}
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == "make" {
+			found = true
+			result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(node))
+			if held, known := l.clockGenericReturnsT01(result); known {
+				t.Errorf("indexed object admitted by the finite-shape proof: %v", held)
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	file.AsNode().ForEachChild(visit)
+	if !found {
+		t.Fatal("missing checked make signature")
+	}
+}
