@@ -1,0 +1,56 @@
+=== RUN   TestRulesAgree
+    lint_test.go:367: checker compilation phases: load=216.730429ms lower=3.77100403s C=615.118623ms JavaScript=32.015368ms
+    lint_test.go:367: checker native build: 4.593933868s
+    lint_test.go:290: cohere cases: 126 unique source/rule/options combinations
+    lint_test.go:390: Go, Node, emitted JavaScript, native identical: 525360 bytes
+--- PASS: TestRulesAgree (25.48s)
+=== RUN   TestMutants
+=== RUN   TestMutants/operator-assignment-reversed-fix
+=== PAUSE TestMutants/operator-assignment-reversed-fix
+=== CONT  TestMutants/operator-assignment-reversed-fix
+    lint_test.go:832: checker compilation phases: load=203.960624ms lower=3.954334533s C=669.632133ms JavaScript=30.927303ms
+    lint_test.go:832: checker native mutant build: 4.586312678s
+    lint_test.go:855: operator-assignment-reversed-fix caught on Node: case 85 line 4374: port "range 11 20 replaced fix\tx *= x\t\t11 20", Go "range 11 20 replaced \t\t\t11 20"
+        Go context:
+        
+        range 0 9 replaced fix	x += y		0 9
+        /tmp/adamic-gate/TestMutantsoperator-assignment-reversed-fix868185011/016/operator-assignment-0.ts:2:1
+          operator-assignment  Assignment (=) can be replaced with operator assignment (*=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+        
+        range 11 20 replaced 			11 20
+        /tmp/adamic-gate/TestMutantsoperator-assignment-reversed-fix868185011/016/operator-assignment-0.ts:3:1
+          operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+        
+        range 22 37 replaced 			22 37
+    lint_test.go:855: operator-assignment-reversed-fix caught on emitted JavaScript: case 85 line 4374: port "range 11 20 replaced fix\tx *= x\t\t11 20", Go "range 11 20 replaced \t\t\t11 20"
+        Go context:
+        
+        range 0 9 replaced fix	x += y		0 9
+        /tmp/adamic-gate/TestMutantsoperator-assignment-reversed-fix868185011/016/operator-assignment-0.ts:2:1
+          operator-assignment  Assignment (=) can be replaced with operator assignment (*=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+        
+        range 11 20 replaced 			11 20
+        /tmp/adamic-gate/TestMutantsoperator-assignment-reversed-fix868185011/016/operator-assignment-0.ts:3:1
+          operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+        
+        range 22 37 replaced 			22 37
+    lint_test.go:855: operator-assignment-reversed-fix caught on native: case 85 line 4374: port "range 11 20 replaced fix\tx *= x\t\t11 20", Go "range 11 20 replaced \t\t\t11 20"
+        Go context:
+        
+        range 0 9 replaced fix	x += y		0 9
+        /tmp/adamic-gate/TestMutantsoperator-assignment-reversed-fix868185011/016/operator-assignment-0.ts:2:1
+          operator-assignment  Assignment (=) can be replaced with operator assignment (*=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+        
+        range 11 20 replaced 			11 20
+        /tmp/adamic-gate/TestMutantsoperator-assignment-reversed-fix868185011/016/operator-assignment-0.ts:3:1
+          operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+        
+        range 22 37 replaced 			22 37
+--- PASS: TestMutants (0.05s)
+    --- PASS: TestMutants/operator-assignment-reversed-fix (11.28s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:71: checker native build: 18.417972ms
+    registration_test.go:71: Go, Node, emitted JavaScript, native identical: 12814 bytes
+--- PASS: TestOwnedWitnesses (0.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	37.723s
