@@ -33,6 +33,25 @@ func TestIndexedPresenceRuntime(t *testing.T) {
 		name, typed, node, want string
 		absent                  bool
 	}{
+		{"typed-zero-Int8Array", `const values = new Int8Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Int8Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Uint8Array", `const values = new Uint8Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Uint8Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Uint8ClampedArray", `const values = new Uint8ClampedArray(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Uint8ClampedArray(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Int16Array", `const values = new Int16Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Int16Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Uint16Array", `const values = new Uint16Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Uint16Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Int32Array", `const values = new Int32Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Int32Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Uint32Array", `const values = new Uint32Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Uint32Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Float32Array", `const values = new Float32Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Float32Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"typed-zero-Float64Array", `const values = new Float64Array(2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Float64Array(2); console.log(String(values[1]));`, "0\n", false},
+		{"observed-typed-metadata", `const values = new Uint8Array(2); console.log(` + "`${values[0]}:${values.length}:${typeof values}`" + `);`, `const values = new Uint8Array(2); console.log(String(values[0])+':'+values.length+':'+typeof values);`, "0:2:object\n", false},
+		{"typed-return", `function make(): Uint8Array {return new Uint8Array(2);} const values = make(); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `function make() {return new Uint8Array(2);} const values = make(); console.log(String(values[1]));`, "0\n", false},
+		{"typed-identity", `const values = new Uint8Array(2); const alias = values; const value: number = values[0]; console.log(` + "`${value}:${values === alias}`" + `);`, `const values = new Uint8Array(2); const alias = values; console.log(String(values[0])+':'+(values === alias));`, "0:true\n", false},
+		{"typed-parameter", `function read(values: Uint8Array): number {return values[0];} const value = read(new Uint8Array(2)); console.log(` + "`${value}`" + `);`, `function read(values) {return values[0];} console.log(String(read(new Uint8Array(2))));`, "0\n", false},
+		{"typed-enum-length", `enum Size {Count = 2} const values = new Uint8Array(Size.Count); const value: number = values[0]; console.log(` + "`${value}:${values.length}`" + `);`, `const values = new Uint8Array(2); console.log(String(values[0])+':'+values.length);`, "0:2\n", false},
+		{"typed-empty", `const values = new Uint8Array(0); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `const values = new Uint8Array(0); const value = values[0]; console.log(String(value));`, "undefined\n", true},
+		{"typed-outside", `const values = new Float64Array(2); const value: number = values[2]; console.log(` + "`${value}`" + `);`, `const values = new Float64Array(2); const value = values[2]; console.log(String(value));`, "undefined\n", true},
+		{"typed-fractional", `const values = new Int16Array(2); const value: number = values[0.5]; console.log(` + "`${value}`" + `);`, `const values = new Int16Array(2); const value = values[0.5]; console.log(String(value));`, "undefined\n", true},
+		{"typed-present", `const values = new Uint32Array(2); const alias = values; const value: number = alias[1]; console.log(` + "`${value}:${values.length}`" + `);`, `const values = new Uint32Array(2); const alias = values; const value = alias[1]; console.log(String(value)+':'+values.length);`, "0:2\n", false},
+		{"observed-typed", `const values = new Uint8Array(0); console.log(` + "`${values[0]}`" + `);`, `const values = new Uint8Array(0); console.log(String(values[0]));`, "undefined\n", false},
 		{"hole-enum-effects", `enum Size { Count = 2 } function size(): typeof Size { console.log('size'); return Size; } const values: number[] = new Array<number>(size().Count); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `function size() {console.log('size'); return {Count:2};} const values = new Array(size().Count); console.log(String(values[0]));`, "size\nundefined\n", true},
 		{"hole-enum-length", `enum Size { Count = 2 } const values: number[] = new Array<number>(Size.Count); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `const values = new Array(2); console.log(String(values[0]));`, "undefined\n", true},
 		{"hole-compound", `const values: number[] = new Array<number>(2); values[0] |= 1; console.log('done');`, `const values = new Array(2); console.log(String(values[0]));`, "undefined\n", true},
@@ -89,7 +108,7 @@ func TestIndexedPresenceRuntime(t *testing.T) {
 			}
 			c := native.C(program)
 			lookup := "adamic_string_at("
-			if strings.Contains(fixture.typed, "[]") {
+			if strings.Contains(fixture.typed, "[]") || strings.Contains(fixture.name, "typed") {
 				lookup = "adamic_array_at("
 			}
 			count := strings.Count(c, lookup)
