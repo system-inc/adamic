@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
+	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
 	UninitializedFields map[string]bool
 	// PrimitiveArrayReads requires producer metadata even without a cast.

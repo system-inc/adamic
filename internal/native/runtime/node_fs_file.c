@@ -526,6 +526,24 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
 }
 
 #ifdef ADAMIC_NODE_HOST
+#ifdef ADAMIC_TARGET_WASI
+#include <sys/random.h>
+// wasi-libc leaves mkdtemp out, so do what musl's does: six random characters over
+// the template's XXXXXX, then mkdir 0700, trying again only while the name is taken.
+static char *mkdtemp(char *name) {
+    static const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    char *suffix = name + strlen(name) - 6;
+    for (int attempt = 0; attempt < 100; attempt++) {
+        unsigned char random[6];
+        if (getentropy(random, sizeof random) != 0) { return NULL; }
+        for (int index = 0; index < 6; index++) { suffix[index] = alphabet[random[index] % (sizeof alphabet - 1)]; }
+        if (mkdir(name, 0700) == 0) { return name; }
+        if (errno != EEXIST) { return NULL; }
+    }
+    return NULL;
+}
+#endif
+
 // libc mkdtemp atomically creates a private directory with a six-byte suffix.
 adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
 #ifdef ADAMIC_TARGET_WASI
