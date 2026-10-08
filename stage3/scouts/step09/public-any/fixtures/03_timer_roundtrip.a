@@ -1,3 +1,4 @@
+// a-check: type error TS2304
 // Census reason: public host timer handle erased to any
 // From TypeScript 6.0.3, src/compiler/tsbuildPublic.ts:2060
 interface BuilderProgram {}

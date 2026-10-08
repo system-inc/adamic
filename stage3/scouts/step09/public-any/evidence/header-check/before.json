@@ -1,0 +1,26 @@
+{
+  "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a": {
+    "outcome": "type error",
+    "expected": "checked",
+    "first": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a:3:84: error TS2307: Cannot find module 'public-any-ts' or its corresponding type declarations.",
+    "exit": 1,
+    "stderr": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a:3:84: error TS2307: Cannot find module 'public-any-ts' or its corresponding type declarations.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a": {
+    "outcome": "refused",
+    "expected": "checked",
+    "first": "adamic: /workspace/adamic/stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a:9:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a:9:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+    "stdout_bytes": 0
+  },
+  "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a": {
+    "outcome": "type error",
+    "expected": "checked",
+    "first": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a:21:48: error TS2304: Cannot find name 'setTimeout'.",
+    "exit": 1,
+    "stderr": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a:21:48: error TS2304: Cannot find name 'setTimeout'.\nstage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a:27:34: error TS2304: Cannot find name 'clearTimeout'.\n",
+    "stdout_bytes": 0
+  }
+}

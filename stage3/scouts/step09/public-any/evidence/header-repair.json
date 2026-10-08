@@ -1,0 +1,58 @@
+{
+  "gate": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "files": [
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+      "header": "// a-check: type error TS2307",
+      "body_sha256": "f8cb7cf5482b3b44e03b01107259790909e195d3363de69bae251a06c690dffd"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+      "header": "// a-check: refused a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "body_sha256": "89a5cd0dbe3757638806127e764ffb07ed72226c66a48563cd2982aba763943c"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a",
+      "header": "// a-check: type error TS2304",
+      "body_sha256": "d49fb4fc4bdc3fe8e46b38fafffeaac062ea13a4ef675e22c0791aa6d49f400e"
+    }
+  ],
+  "mutants": [
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+      "mutant": "missing header",
+      "exit": 1,
+      "caught_by": "Gate.aCheck expected-result predicate"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+      "mutant": "wrong header",
+      "exit": 1,
+      "caught_by": "Gate.aCheck expected-result predicate"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+      "mutant": "missing header",
+      "exit": 1,
+      "caught_by": "Gate.aCheck expected-result predicate"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+      "mutant": "wrong header",
+      "exit": 1,
+      "caught_by": "Gate.aCheck expected-result predicate"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a",
+      "mutant": "missing header",
+      "exit": 1,
+      "caught_by": "Gate.aCheck expected-result predicate"
+    },
+    {
+      "file": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a",
+      "mutant": "wrong header",
+      "exit": 1,
+      "caught_by": "Gate.aCheck expected-result predicate"
+    }
+  ]
+}

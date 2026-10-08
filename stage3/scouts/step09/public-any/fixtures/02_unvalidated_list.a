@@ -1,3 +1,4 @@
+// a-check: refused a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
 // Census reason: public raw config accepted before validation
 // From TypeScript 6.0.3, src/compiler/commandLineParser.ts:2611
 type CompilerOptionsValue = unknown;

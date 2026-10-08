@@ -1,3 +1,4 @@
+// a-check: type error TS2307
 // Census reason: public convertToObject any return
 // From TypeScript 6.0.3, src/compiler/commandLineParser.ts:2472
 import { convertToJson, parseJsonText, type JsonSourceFile, type Diagnostic } from "public-any-ts";
