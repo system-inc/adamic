@@ -1,0 +1,24 @@
+declare function external(): number;
+export function three(text: string, count: number): void {
+    if (text) { }
+    if (count) { }
+    var old = 1;
+    const okay: number = 2;
+}
+export function diagnosed(): void {
+    const impossible: number = "wrong";
+    function cleanNested(): void { var x = 2; }
+    function badNested(): number { return "wrong"; }
+}
+export function rollback(): void {
+    const poison: number = external();
+    if (poison) { }
+}
+export function outerOnly(): void {
+    function middle(text: string, count: number): void {
+        function grandBad(): number { return "wrong"; }
+        if (text) { }
+        if (count) { }
+        var x = 1;
+    }
+}

@@ -155,8 +155,15 @@ func Rewrite(source []byte) ([]byte, error) {
 		eraseWalks(walker.Body)
 		walker.Type.Results.List[0].Names = []*ast.Ident{ast.NewIdent("latentStop")}
 		prefix := statements(`
-if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }
-if node.Kind == ast.KindFunctionDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && len(l.program.LatentDiagnosticsIn(node.Body())) > 0 { return false }
+if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+    outerOwner := latentFindingOwner
+    latentFindingOwner = l.program.Where(node)
+    defer func(){ latentFindingOwner = outerOwner }()
+    if len(l.latentBodyDiagnostics(node.Body())) > 0 { latentNestedDeclarations(node.Body(), ` + name + `); return false }
+} else {
+    if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }
+    if node.Kind == ast.KindFunctionDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && len(l.program.LatentDiagnosticsIn(node.Body())) > 0 { return false }
+}
 ` + fmt.Sprintf(`defer func(){ latentRecord(%s); %s = nil; node.ForEachChild(%s); latentStop = false }()`, binding, binding, name))
 		walker.Body.List = append(prefix, walker.Body.List...)
 	}
