@@ -10,9 +10,11 @@ import (
 )
 
 var libraryArrayMethods = map[string]bool{
-	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"push": true, "join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"filter": true, "some": true, "every": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
+	"sort": true, "reduceRight": true,
 }
 
 // libraryArrayMethod keeps this slice's additions out of the shared method dispatch.
@@ -20,6 +22,9 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	element, err := l.elementType(receiver)
 	if err != nil {
 		return nil, true, err
+	}
+	if name == "push" && len(node.AsCallExpression().Arguments.Nodes) == 1 && node.AsCallExpression().Arguments.Nodes[0].Kind != ast.KindSpreadElement {
+		return l.arrayMethod(node, receiver, name)
 	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
@@ -35,6 +40,10 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	}
 	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
+	case "filter", "some", "every":
+		return l.libraryArrayPredicate(node, array, element, name)
+	case "push":
+		return l.libraryArrayPush(node, receiver, array, element)
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
 	case "with":
@@ -83,6 +92,10 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 			return nil, true, l.notYet(node, "toSorted with an effectful comparator expression")
 		}
 		return l.arraySort(node, copy, element)
+	case "reduceRight":
+		return l.libraryArrayReduceRight(node, array, element)
+	case "sort":
+		return l.libraryArrayDefaultSort(node, receiver, array, element)
 	}
 	if len(written) < 1 || len(written) > 2 {
 		return nil, true, l.notYet(node, name+" with these arguments")

@@ -4,6 +4,7 @@ package javascript
 // hide mutations made by the space argument. A closure's C-like backend wrapper is represented as
 // an actual function for JSON, which omits it from objects and writes null in arrays.
 const jsonStringifyRuntime = `const adamicJSONValue = (value) => {
+ if (value instanceof Date) return value;
  if (value instanceof AdamicClosure) return () => undefined;
  if (Array.isArray(value)) return value.map(adamicJSONValue);
  if (value !== null && typeof value === 'object' && !(value instanceof Map) && !(value instanceof Set)) {

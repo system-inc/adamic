@@ -159,6 +159,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+		e.checkThrown()
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
 		if statement.Value.Type().IsReference() {

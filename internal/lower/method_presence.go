@@ -54,6 +54,9 @@ func (l *lowering) methodRead(node *ast.Node) bool {
 }
 
 func (l *lowering) methodObservation(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known := l.libraryObjectObservation(node); known {
+		return value, true, nil
+	}
 	node = ast.SkipParentheses(node)
 	if truthinessUse(node) {
 		if value, known := l.nodeProcessMethodPresence(node); known {

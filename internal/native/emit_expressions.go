@@ -128,7 +128,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, part := range expression.Parts {
 			parts = append(parts, e.value(part))
 		}
-		return e.own(ir.String, fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		e.declarations = append(e.declarations, "#include \"library_errors.h\"")
+		result := e.own(ir.String, fmt.Sprintf("adamic_library_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		e.checkThrown()
+		return result
 	case ir.Conditional:
 		return e.conditional(expression)
 	case ir.ObjectLiteral:
@@ -613,6 +616,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:
@@ -644,7 +649,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ToFixed:
 		value := e.value(expression.Value)
 		digits := e.value(expression.Digits)
-		return e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+		result := e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+		e.checkThrown()
+		return result
 	case ir.NumberFormat:
 		return e.numberFormat(expression)
 	}

@@ -17,7 +17,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Unknown narrowing removes the in blocker; retain the exact later unbound-method refusal.
+// The explicit Object prototype call now lowers. Unknown object receivers still need
+// dispatch across their differently held runtime members; retain that exact later blocker.
 func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
 	adapter, err := os.ReadFile(filepath.Join(repository, "stage3/adapt/47-host-errors/adapt.cjs"))
 	if err != nil {
@@ -37,9 +38,9 @@ func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = lowered(t, path)
-	want := path + ":21:32: Adamic 0.1 refuses a method read as a value (hasOwnProperty would lose its object, and this with it); call it in an arrow that keeps the object: (v) => its object.hasOwnProperty(v) (unbound-method)"
-	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.Error() != want {
+	want := path + ":21:32: stage 0 can't lower hasOwnProperty on a union of differently held members (mixed value descriptors are not represented) yet"
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || notYet.Error() != want {
 		t.Fatalf("recorded blocker changed:\nwant %s\ngot %v", want, err)
 	}
 }

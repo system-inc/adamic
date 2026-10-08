@@ -471,3 +471,40 @@ Additional storage inherited from area/library, audited during the runtime compi
 - `from_codes.c:name_cache:1`: name slot cache. The merged packed cache publishes and reads with atomic operations, including concurrent error construction.
 - `node_fs_directory.c:target_before:1`, `node_fs_directory.c:arrow:1`, and `node_fs_directory.c:quote:2`: immortal error-message strings initialized statically. No literal cache writes or registration.
 - `union.c:shape_types:1`: area/library's process-wide shape-type metadata registry, written by adamic_register_shape_types during generated object construction and read by dynamic_slot. Preserved from the area, not added by the regex compiler. Unsafe today for concurrent registration/dynamic reads: neither this head nor metadata next links are protected. Requires the area's registry owner to arrange registration before the pool or synchronized publication; this merge does not certify that inherited concurrency behavior.
+
+Descriptor runtime inventory: `runtime-file:library_object_descriptors.c` and
+`runtime-file:library_object_descriptors.h` were reviewed. The descriptor field
+names, reference flags and shape (`descriptor_names`, `descriptor_references`,
+`descriptor_shape`) are const storage initialized before any pool, with no writers.
+The header adds only a type and function declarations.
+
+- `library_object_descriptors.c:type_error:1`: function-local immortal TypeError
+  string, initialized statically by ADAMIC_STRING before any pool. Its zero count
+  makes retain/release skip writes; the literal-index sentinel prevents string
+  cache mutation. No other writers, lazy registration or shared mutable state.
+
+## Date storage in the library landing stack
+
+Reviewed `runtime-file:date.c`, `runtime-file:date.h`,
+`runtime-file:date_iso_parse_impl.h`, `runtime-file:date_parse_impl.h`,
+`runtime-file:date_string.c` and `runtime-file:date_string.h`.
+The arithmetic and parser scratch state is call-local; calendar tables and shapes
+are const. Ruling 10 refuses source local-time conversion at compile time, including
+the legacy parser and zone formatter inherited from the Date area branch.
+
+- `date.c:date_now_closure:1`: statically initialized immortal closure with no
+  environment or writers. Its invocation reads CLOCK_REALTIME into call-local storage.
+- `date.c:invalid:1`: statically initialized immortal string. Retain/release skip
+  its zero count; the literal-index sentinel prevents string cache writes.
+- `date_string.c:name:1`: statically initialized immortal error-name string with
+  the same zero-count and literal-index protection; no writers.
+Library error files reviewed: `runtime-file:library_errors.c` and
+`runtime-file:library_errors.h`. All error strings are automatic constants or
+owned heap copies. There are no mutable statics or lazy registries; the pending
+error uses the existing thread-local adamic_thrown protocol.
+
+
+Prototype files: `runtime-file:library_prototypes.c`, `runtime-file:library_prototypes.h`.
+`library_prototypes.c:object_prototype:1` is a statically initialized immortal
+empty intrinsic with no writers. Lowering prevents it from being a mutation
+receiver. `empty_shape` is const; all counted links live on heap or region objects.

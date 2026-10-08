@@ -43,13 +43,53 @@ IN THE SOFTWARE.
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - Date parsing (`internal/native/runtime/date_parse_impl.h`, after
+    `src/date/dateparser.h`, `src/date/dateparser.cc` and `src/date/dateparser-inl.h`);
+  - Date MakeDay bounds and UTC formatting (`internal/native/runtime/date.c`, after
+    `src/date/date.cc` and `src/builtins/builtins-date.cc`), and Date own-name queries
+    in that file, after the Date installation in `src/init/bootstrapper.cc` as
+    vendored by Node.js v24.19.0;
+  - Strict ISO Date parsing (`internal/native/runtime/date_iso_parse_impl.h`, after
+    V8 src/date/dateparser-inl.h, src/date/dateparser.cc and src/date/dateparser.h
+    as vendored in Node v24.19.0);
+  - Array and String iterator next (`runtime/map_set.c`, after
+    `deps/v8/src/builtins/builtins-array-gen.cc` ArrayIteratorPrototypeNext and
+    `deps/v8/src/builtins/string-iterator.tq`, Node.js v24.19.0; dense Array path);
+  - dense Array reduceRight lowering (`internal/lower/library_array_tail.go`, after
+    src/builtins/array-reduce-right.tq), and default-sort dispatch in that file
+    reusing the existing UTF-16 comparator in `internal/lower/library_array.go`
+    (after SortCompareDefault in third_party/v8/builtins/array-sort.tq), from
+    Node v24.19.0's V8 13.6.233.17-node.51;
+  - OrdinaryToPrimitive with statically proven conversion members
+    (`internal/lower/library_object_conversion.go`, after src/objects/objects.cc,
+    V8 13.6.233); catchable library errors and string length guards
+    (`internal/native/runtime/library_errors.c`, `library_errors.h`, `library_object.c`,
+    `string_repeat_impl.h`, `normalize.c`, `number.c`, `dtoa.c`, `radix.c`, after
+    src/builtins/builtins-number.cc, string-repeat.tq, string-pad.tq and
+    src/common/message-template.h, V8 13.6.233);
+  - Proven counted prototype links (`internal/native/runtime/library_prototypes.c`,
+    `library_prototypes.h`, `internal/lower/library_prototype_links.go`, after
+    JSObject::SetPrototype in src/objects/js-objects.cc, V8 13.6.233);
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
+  - Object primitive conversion (`internal/lower/library_object_coercion.go`, after
+    JSReceiver::OrdinaryToPrimitive in src/objects/js-objects.cc, Node 24.19.0);
   - Object primitive own-name reflection (`runtime/object_names.c`, after
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
-  - Object sealing and extensibility (`runtime/object_integrity.c`, after
+  - Plain data-property descriptors (`runtime/library_object_descriptors.c`), restricted from
+    PropertyDescriptor::ToObject in src/objects/property-descriptor.cc and
+    JSReceiver::ValidateAndApplyPropertyDescriptor / DefineProperties in src/objects/js-objects.cc,
+    V8 13.6.233; lowering proves existing slots and refuses accessors and individual attribute changes;
+  - Object sealing, freezing and extensibility, including constructor-proven internal-slot receivers
+    (`internal/native/runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - String substr (`internal/lower/library_string_substr.go`, after
+    src/builtins/string-substr.tq);
+  - variadic Array push (`internal/lower/library_array_push.go`, after
+    GenericArrayPush in src/builtins/builtins-array.cc, Node.js v24.19.0);
+  - catchable String repeat (`internal/lower/library_string_repeat.go`, after
+    src/builtins/string-repeat.tq, V8 13.6.233.17);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
@@ -59,6 +99,14 @@ IN THE SOFTWARE.
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
     GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - Array filter, every and some callback truthiness lowering
+    (`internal/lower/library_array_predicate.go`, after ArrayFilterLoopContinuation,
+    ArrayEveryLoopContinuation and ArraySomeLoopContinuation in Node.js v24.19.0's
+    `deps/v8/src/builtins/array-filter.tq`, `array-every.tq` and `array-some.tq`;
+    dense arrays only, using represented values for ToBoolean);
+  - mixed Map and Set key dispatch (`internal/native/runtime/map.c`, after
+    SameValueZeroHeapNumber, SameValueZeroString, FindOrderedHashTableEntryForOtherKey
+    and NormalizeNumberKey in src/builtins/builtins-collections-gen.cc, Node v24.19.0);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
@@ -222,6 +270,18 @@ SOFTWARE.
 
 ## In the compiler
 
+The collection helper bodies in `stage1/typescript/collections/core.a` and their
+six `internal/oracle/testdata/scout19_*.a` witnesses, plus the ruled composition
+in `stage1/typescript/collections/multimap.a`, the source input
+`stage3/adapt/multimap-composition/original.a`, and the
+`internal/oracle/testdata/scout19_slice2_*.a` witnesses are excerpts adapted from
+Microsoft TypeScript at `d92d9bfee114c80be2c375d72edae966176e3a4f`,
+`tsc/testdata/fixtures/compiler/core.ts`, `checker.ts`, `builder.ts`,
+`types.ts`, `path.ts`, `utilitiesPublic.ts`, and `transformers/classFields.ts`. Copyright (c) Microsoft Corporation, licensed
+under Apache License 2.0; the source notice and license are retained in
+[cohere/TypeScript/NOTICE.txt](cohere/TypeScript/NOTICE.txt) and
+[cohere/TypeScript/LICENSE.txt](cohere/TypeScript/LICENSE.txt).
+
 The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`
 are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
 `cmd/adamic-test262/regexp_prelude.go` adapts that checkout's `regExpUtils.js`
@@ -237,6 +297,12 @@ any build of the compiler.
 maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_level_intermediate_representation`),
 which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
 cohere's THIRD_PARTY_NOTICES.md.
+
+The reductions in `internal/oracle/testdata/library_tsc_census_*.a` adapt calls
+from the pinned TypeScript compiler sources under
+`cohere/TypeScript/tsc/testdata/fixtures/compiler` (Copyright Microsoft Corporation,
+Apache-2.0). Their source file and line are recorded in each fixture. The Apache
+license is reproduced in [LICENSE-APACHE](LICENSE-APACHE).
 
 ### @types/node
 
@@ -391,3 +457,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ````
+
+The numeric helper witness `internal/oracle/testdata/library_iterator_tsc_helpers.a` adapts
+TypeScript 6.0.3 `src/compiler/utilities.ts` (`forEachEntry`) and `src/compiler/core.ts`
+(`firstDefinedIterator`, `reduceLeftIterator`), commit `050880ce59e30b356b686bd3144efe24f875ebc8`.
+Copyright (c) Microsoft Corporation, Apache License 2.0; see [cohere/NOTICE](cohere/NOTICE)
+and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md) for the license.

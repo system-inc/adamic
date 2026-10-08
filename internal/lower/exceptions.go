@@ -100,11 +100,22 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] {
 		return nil, false
 	}
-	l.local(left)
-	return ir.BooleanConstant{Value: true}, true
+	local, known := l.local(left)
+	if !known {
+		return nil, false
+	}
+	if l.isLibraryGlobal(binary.Right, "Error") {
+		return ir.BooleanConstant{Value: true}, true
+	}
+	for _, name := range []string{"TypeError", "RangeError"} {
+		if l.isLibraryGlobal(binary.Right, name) {
+			return ir.ObjectCall{Method: "errorIsType", Arguments: []ir.Expression{ir.Read{Local: local, Of: ir.Object}, ir.StringConstant{Index: l.constant(name)}}, Returns: ir.Boolean}, true
+		}
+	}
+	return nil, false
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
@@ -150,6 +161,7 @@ func (l *lowering) exceptions() error {
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
+		found = found || ir.LibraryMayThrow(node)
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
@@ -217,36 +229,23 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Comparator] = true
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
-		case ir.SetProperty:
-			if l.objectCanFreeze() {
-				failing = "a write to a potentially frozen object"
-			}
 		case ir.NodeBufferCall:
 			if node.Function == "hash_update" || node.Function == "hash_digest" {
 				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
-		case ir.ObjectCall:
-			if node.Method == "assign" && l.objectCanFreeze() {
-				failing = "Object.assign into a potentially frozen object"
+		case ir.DateCall:
+			if node.Method == "toISOString" {
+				failing = "Date.toISOString validation"
+
+			}
+		case ir.NodeFSFile:
+			if node.Operation == "date_toISOString" {
+				failing = "Date.toISOString validation (catchable RangeError descriptors are not represented)"
+
 			}
 		case ir.RegExpCall:
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
-			}
-		case ir.StringCall:
-			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
-				failing = "repeat"
-			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
-				failing = "normalize"
-			}
-		case ir.ToFixed:
-			if !constantWithin(node.Digits, 0, 100) {
-				failing = "toFixed"
-			}
-		case ir.NumberFormat:
-			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
-				failing = node.Method
 			}
 		case ir.ArrayFill:
 			if node.Array == nil && !constantWithin(node.Length, 0, 4294967295) {

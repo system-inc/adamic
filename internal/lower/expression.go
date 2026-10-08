@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.descriptorMapResult(node, 0) {
+		return ir.Object, nil
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -33,6 +36,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	parameter := proven.Flags()&checker.TypeFlagsTypeParameter != 0
 	proven = l.concrete(proven)
+	if of, known := l.dateStringRepresentation(proven); known {
+		return of, true
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
@@ -214,8 +220,12 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			skipKeeping, viewErr := l.nodeBufferContextualView(node, contextual)
+			skipKeeping = skipKeeping || l.dateContextBorrow(node)
 			if viewErr != nil {
 				return nil, viewErr
+			}
+			if own := l.checker.GetTypeAtLocation(node); !l.dateContextBorrow(node) && !l.dateViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(node, "a Date internal slot supplied or erased by a structural view")
 			}
 			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
@@ -263,7 +273,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	if !l.nodeBufferView(from, to) {
+	if !l.nodeBufferView(from, to) || l.isLibraryType(from, "Date") != l.isLibraryType(to, "Date") {
 		return false
 	}
 	same := func(inside, viewed *checker.Type) bool {
@@ -437,6 +447,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.borrowedOwnCall(node); handled {
+		return value, err
+	}
+	if value, handled, err := l.borrowedOwnValue(node); handled {
+		return value, err
+	}
 	if value, known, err := l.nodeCryptoNamespaceValue(node); known {
 		return value, err
 	}
@@ -596,6 +612,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
+			if text, known, err := l.dateStringAddition(node, left, right); known {
+				return text, err
+			}
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
@@ -610,8 +629,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
+		if value, handled, err := l.objectDescriptorRead(node); handled {
+			return value, err
+		}
 		return l.property(node)
 	case ast.KindElementAccessExpression:
+		if value, handled, err := l.objectDescriptorElement(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		return l.newExpression(node)
@@ -771,7 +796,13 @@ var comparisons = map[ast.Kind]ir.Operator{
 
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+	if value, known, err := l.dateBinary(node, operator, left, right); known {
+		return value, err
+	}
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) {
+		return l.objectStringAddition(node, left, right)
+	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
@@ -896,29 +927,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		switch value.Type() {
-		case ir.Number:
-			value = ir.NumberToString{Value: value}
-		case ir.Boolean:
-			value = ir.BooleanToString{Value: value}
-		case ir.MaybeNumber, ir.MaybeBoolean:
-			value = ir.MaybeToString{Value: value}
-		case ir.Union:
-			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
-				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
-			}
-			value = ir.UnionToString{Value: value}
-		case ir.String:
-			value = l.spelled(span.AsTemplateSpan().Expression, value)
-		default:
-			proven := l.concrete(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression))
-			if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
-				value = l.spelled(span.AsTemplateSpan().Expression, value)
-				break
-			}
-			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
-			// its source; 0.1 has no use for any of it.
-			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
+		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
+		if err != nil {
+			return nil, err
 		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {

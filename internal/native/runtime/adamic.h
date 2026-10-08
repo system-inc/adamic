@@ -224,6 +224,8 @@ typedef struct adamic_object {
 	adamic_heap heap;
 	const adamic_shape *shape;
 	const adamic_class *class;
+	// An ordinary counted graph edge; never exempt from ownership proofs.
+	adamic_object *prototype;
 	bool frozen;
 	bool sealed;
 	bool nonextensible;
@@ -404,6 +406,7 @@ typedef struct adamic_map {
 	// from the canonical present NaN, while present numbers use SameValueZero (map.c).
 	bool maybe_number_keys;
 	bool reference_values;
+	_Atomic bool nonextensible;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	_Atomic size_t iterating;
@@ -425,7 +428,7 @@ typedef struct adamic_map_iterator {
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 // Ends an active iteration once and returns a small map to inline storage when safe.
 void adamic_map_iterator_close(adamic_map_iterator *iterator);
-adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+adamic_object *adamic_collection_iterator(void *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
@@ -999,6 +1002,7 @@ _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
 #include "node_fs_file.h"
+#include "date.h"
 #include "node_buffer.h"
 #include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
@@ -1013,6 +1017,17 @@ _Noreturn void adamic_process_exit_now(int code);
 int adamic_process_status(void);
 adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
 adamic_string *adamic_process_environment(const adamic_string *name);
+// Deterministic Date operations, stored with no enumerable fields.
+adamic_object *adamic_date_new(double time);
+double adamic_date_value(const adamic_object *date);
+bool adamic_date_has_own(const adamic_string *key, bool prototype);
+double adamic_date_utc(size_t count, const double *arguments);
+double adamic_date_get(const adamic_object *date, int field);
+double adamic_date_set(adamic_object *date, int field, size_t count, const double *arguments);
+double adamic_date_parse_iso(const adamic_string *text);
+adamic_string *adamic_date_iso(const adamic_object *date);
+adamic_string *adamic_date_json(const adamic_object *date);
+adamic_string *adamic_date_format(const adamic_object *date, int style);
 
 #endif
 

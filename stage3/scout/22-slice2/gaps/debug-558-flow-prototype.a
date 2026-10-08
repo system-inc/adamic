@@ -1,0 +1,4 @@
+// debug.ts:558. Fresh allocation is ownership-safe. FlowNode assertion and debug accessors require their separate proofs.
+interface FlowNode { flags: number; }
+const flowNodeProto = Object.create(Object.prototype) as FlowNode;
+console.log(`${typeof flowNodeProto}`);

@@ -177,7 +177,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
-	code := builder.String()
+	code := dateRuntime(builder.String())
 	if strings.Contains(code, "adamicNodeFSFile.") {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}
@@ -748,7 +748,18 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
+		if value, handled := e.objectDescriptorCall(expression); handled {
+			return value
+		}
+		if expression.Method == "intrinsicObjectPrototype" {
+			return "Object.prototype"
+		}
+		if expression.Method == "errorIsType" {
+			return "(" + e.value(expression.Arguments[0]) + " instanceof globalThis[" + e.value(expression.Arguments[1]) + "])"
+		}
 		if expression.Method == "errorCaptureStack" {
 			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
 		}
@@ -792,6 +803,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
+		if name, ok := expression.Name.(ir.StringConstant); ok && (e.program.Strings[name.Index] == "TypeError" || e.program.Strings[name.Index] == "RangeError") {
+			return "new globalThis." + e.program.Strings[name.Index] + "(" + e.value(expression.Message) + ")"
+		}
 		if expression.Name != nil {
 			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
 		}
@@ -945,7 +959,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
-		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+		return "Object.prototype.hasOwnProperty.call(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.ParallelMap:
 		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
 	case ir.ReadTextFile:

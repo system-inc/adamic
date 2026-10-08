@@ -8,6 +8,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	adamic_object *object = adamic_allocate(sizeof *object + shape->count * sizeof object->slots[0], adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
+	object->prototype = NULL;
 	object->frozen = false;
 	object->sealed = false;
 	object->nonextensible = false;

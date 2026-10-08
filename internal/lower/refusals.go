@@ -70,6 +70,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.dateRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "toPrimitive" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol") {
+			found = l.notYet(node, "Symbol.toPrimitive hooks need verified intrinsic provenance and tagged callable dispatch")
+			return true
+		}
 		if err := l.errorStackSyntaxRefusal(node); err != nil {
 			found = err
 			return true
@@ -158,7 +166,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) && !l.errorCaptureRead(node) && !truthinessUse(node) && !l.methodComparisonUse(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.borrowedOwnReadAllowed(node) && !l.libraryNumberBoundMethod(node) && !l.dateMethodRead(node) && !l.libraryObjectBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) && !l.errorCaptureRead(node) && !truthinessUse(node) && !l.methodComparisonUse(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

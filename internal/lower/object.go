@@ -17,6 +17,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") || (l.checker.GetContextualType(node, checker.ContextFlagsNone) != nil && l.isLibraryType(l.checker.GetContextualType(node, checker.ContextFlagsNone), "Date")) {
+		return nil, l.notYet(node, "a structural object supplying Date internal slots")
+	}
 	literal := ir.ObjectLiteral{}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
@@ -292,6 +295,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if node.Name().Text() == "now" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Date") {
+		return ir.NodeFSFile{Operation: "date_now_function", Of: ir.Closure}, nil
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -583,6 +589,21 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryDateCall(node); known {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectStaticCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectCoercionCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectIntrinsicCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.librarySequenceIterator(node); handled {
+		return value, true, err
+	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
 	}
@@ -596,6 +617,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, known, err := l.libraryArrayGenericCall(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryDateCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
@@ -1348,6 +1372,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
+	if err := l.libraryCollectionKeySlots(node, key); err != nil {
+		return 0, 0, err
+	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
 	if !valueKnown || slotless(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
@@ -1358,6 +1385,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "Date") {
+		return l.newDate(node)
+	}
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
 	}

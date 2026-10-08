@@ -9,14 +9,30 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.objectDescriptorCall(node, name); handled {
+		return value, handled, err
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
 	switch name {
-	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
-		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
 	case "getPrototypeOf", "setPrototypeOf", "create":
-		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
+		if name != "getPrototypeOf" {
+			arguments := node.AsCallExpression().Arguments.Nodes
+			index := 0
+			if name == "setPrototypeOf" {
+				index = 1
+			}
+			if len(arguments) > index {
+				for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(arguments[index])) {
+					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+					if !known || of == ir.Object || of == ir.Array || of == ir.Map || of == ir.Closure || of == ir.Union {
+						return nil, true, l.notYet(node, "field '"+field.Name+"' plus [[Prototype]] link can close a counted cycle; compiler graph-region proof is the way out")
+					}
+				}
+			}
+		}
+		return l.objectPrototypeLink(node, name)
 	case "fromEntries":
 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
 	case "groupBy":
@@ -91,13 +107,16 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		call.Arguments = []ir.Expression{value}
 		switch name {
 		case "hasOwn":
-			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
-				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
-			}
-			keyValue, err := l.expression(key)
+			keyValue, err := l.expression(written[1])
 			if err != nil {
 				return nil, true, err
+			}
+			switch keyValue.Type() {
+			case ir.String:
+			case ir.Number:
+				keyValue = ir.NumberToString{Value: keyValue}
+			default:
+				return nil, true, l.notYet(written[1], "Object.hasOwn with a key requiring unrepresented ToPropertyKey coercion")
 			}
 			call.Arguments = append(call.Arguments, keyValue)
 		case "freeze":
@@ -191,7 +210,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 			if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment {
 				return false
 			}
-			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral {
+			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral && field.Name().Kind != ast.KindNumericLiteral {
 				return false
 			}
 			if strings.ContainsRune(field.Name().Text(), 0) || field.Name().Text() == "__proto__" || len(field.Name().Text()) > 0 && field.Name().Text()[0] == '#' {

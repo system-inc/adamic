@@ -1,0 +1,6 @@
+// A parameter may arrive from a statement region. Do not retain across its lifetime.
+function attach(receiver: {}): {} {
+ const prototype = {};
+ return Object.setPrototypeOf(receiver,prototype);
+}
+console.log(`${Object.is(attach({}),{})}`);

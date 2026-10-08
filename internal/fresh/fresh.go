@@ -1136,6 +1136,15 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.DateCall:
+		a.value(expression.Receiver)
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		if expression.Returns == ir.Object {
+			return a.fresh("", value{})
+		}
+		return value{}
 	case ir.ObjectCall:
 		return a.objectCall(expression)
 	case ir.NumberCall:
