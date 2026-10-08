@@ -1,6 +1,4 @@
 // Run from the adapted tree root. run.sh stages this driver there.
-// Activate the loader's pinned Node declarations; erased on Node.
-import type {} from 'node:fs';
 import { panic, programArguments, readTextFile } from 'adamic';
 import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
 import { flattenDiagnosticMessageText } from './src/compiler/program.ts';
