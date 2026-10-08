@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly isUnterminated:unknown;}
+interface Target {isUnterminated(): boolean;}
+function probe(value:Base):void {const rawTextScanner=value as Target;console.log(`${rawTextScanner.isUnterminated()}`);}
+probe({isUnterminated:7});

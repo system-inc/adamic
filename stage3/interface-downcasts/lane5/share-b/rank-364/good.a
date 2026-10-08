@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface PartiallyEmittedExpression { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Base {readonly updatePartiallyEmittedExpression:unknown;}
+interface Target {updatePartiallyEmittedExpression(node: PartiallyEmittedExpression, expression: Expression): PartiallyEmittedExpression;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updatePartiallyEmittedExpression({value:3},{value:3}).value}`);}
+probe({updatePartiallyEmittedExpression:(node: PartiallyEmittedExpression, expression: Expression):PartiallyEmittedExpression=>{console.log(`${node.value}`);console.log(`${expression.value}`);return {value:3};}});

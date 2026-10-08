@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SourceFile { readonly value: number; }
+interface Base {readonly isSourceFileDefaultLibrary:unknown;}
+interface Target {isSourceFileDefaultLibrary(file: SourceFile): boolean;}
+function probe(value:Base):void {const oldProgram=value as Target;console.log(`${oldProgram.isSourceFileDefaultLibrary({value:3})}`);}
+probe({isSourceFileDefaultLibrary:7});

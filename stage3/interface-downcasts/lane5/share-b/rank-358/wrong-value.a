@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface BinaryExpression { readonly value: number; }
+interface Base {readonly createStrictEquality:unknown;}
+interface Target {createStrictEquality(left: Expression, right: Expression): BinaryExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createStrictEquality({value:3},{value:3}).value}`);}
+probe({createStrictEquality:7});

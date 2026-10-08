@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly getCurrentDirectory:unknown;}
+interface Target {getCurrentDirectory(): string;}
+function probe(value:Base):void {const host=value as Target;console.log(host.getCurrentDirectory());}
+probe({getCurrentDirectory:7});

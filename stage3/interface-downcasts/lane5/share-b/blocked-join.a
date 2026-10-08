@@ -1,0 +1,8 @@
+// Original Array<T>.join declaration and result.join read.
+interface Base {readonly join:unknown;}
+interface Target {join(separator?: string): string;}
+function probe(value:Base):void {
+ const result=value as Target;
+ console.log(result.join("|"));
+}
+probe(["first","second"]);

@@ -1,0 +1,513 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "complete original member declarations and reads; adjacent data carriers reduced",
+  "members": [
+    {
+      "rank": 61,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createStringLiteralFromNode",
+      "candidateReads": 27,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12356,
+        "column": 63
+      },
+      "read": "factory.createStringLiteralFromNode",
+      "call": "factory.createStringLiteralFromNode(node)",
+      "utf16Start": 509390,
+      "utf16End": 509425,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "createStringLiteralFromNode(sourceNode: PropertyNameLiteral | PrivateIdentifier, isSingleQuote?: boolean): StringLiteral;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 331,
+      "receiver_type_id": 11678,
+      "type": "EmitHost",
+      "field": "getCurrentDirectory",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6692,
+        "column": 66
+      },
+      "read": "host.getCurrentDirectory",
+      "call": "host.getCurrentDirectory()",
+      "utf16Start": 262219,
+      "utf16End": 262243,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "getCurrentDirectory(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "EmitHost"
+      ]
+    },
+    {
+      "rank": 334,
+      "receiver_type_id": 10351,
+      "type": "EmitTextWriter",
+      "field": "writeComment",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6465,
+        "column": 13
+      },
+      "read": "writer.writeComment",
+      "call": "writer.writeComment(s)",
+      "utf16Start": 251495,
+      "utf16End": 251514,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "writeComment(text: string): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "EmitTextWriter"
+      ]
+    },
+    {
+      "rank": 349,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createDecorator",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7977,
+        "column": 27
+      },
+      "read": "factory.createDecorator",
+      "call": "factory.createDecorator(expression)",
+      "utf16Start": 393105,
+      "utf16End": 393128,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createDecorator(expression: Expression): Decorator;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 352,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createFunctionApplyCall",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1831,
+        "column": 17
+      },
+      "read": "factory.createFunctionApplyCall",
+      "call": "factory.createFunctionApplyCall(\r\n                    createSyntheticSuper(),\r\n                    createActualThis(),\r\n                    factory.createIdentifier(\"arguments\"),\r\n                )",
+      "utf16Start": 79057,
+      "utf16End": 79088,
+      "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+      "declaration": "createFunctionApplyCall(target: Expression, thisArg: Expression, argumentsExpression: Expression): CallExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 355,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createLogicalOr",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/transformers/taggedTemplate.ts",
+        "line": 86,
+        "column": 32
+      },
+      "read": "factory.createLogicalOr",
+      "call": "factory.createLogicalOr(\r\n            tempVar,\r\n            factory.createAssignment(\r\n                tempVar,\r\n                helperCall,\r\n            ),\r\n        )",
+      "utf16Start": 3211,
+      "utf16End": 3234,
+      "fileSha256": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9",
+      "declaration": "createLogicalOr(left: Expression, right: Expression): BinaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 358,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createStrictEquality",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6473,
+        "column": 33
+      },
+      "read": "factory.createStrictEquality",
+      "call": "factory.createStrictEquality(value, createNull())",
+      "utf16Start": 280691,
+      "utf16End": 280719,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "createStrictEquality(left: Expression, right: Expression): BinaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 361,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateHeritageClause",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1729,
+        "column": 16
+      },
+      "read": "context.factory.updateHeritageClause",
+      "call": "context.factory.updateHeritageClause(\r\n            node,\r\n            nodesVisitor(node.types, visitor, isExpressionWithTypeArguments),\r\n        )",
+      "utf16Start": 84578,
+      "utf16End": 84614,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateHeritageClause(node: HeritageClause, types: readonly ExpressionWithTypeArguments[]): HeritageClause;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 364,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updatePartiallyEmittedExpression",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1786,
+        "column": 16
+      },
+      "read": "context.factory.updatePartiallyEmittedExpression",
+      "call": "context.factory.updatePartiallyEmittedExpression(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n        )",
+      "utf16Start": 87267,
+      "utf16End": 87315,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updatePartiallyEmittedExpression(node: PartiallyEmittedExpression, expression: Expression): PartiallyEmittedExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 367,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateVariableStatement",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1283,
+        "column": 16
+      },
+      "read": "context.factory.updateVariableStatement",
+      "call": "context.factory.updateVariableStatement(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifierLike),\r\n            Debug.checkDefined(nodeVisitor(node.declarationList, visitor, isVariableDeclarationList)),\r\n        )",
+      "utf16Start": 62104,
+      "utf16End": 62143,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateVariableStatement(node: VariableStatement, modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList): VariableStatement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 376,
+      "receiver_type_id": 9939,
+      "type": "Program",
+      "field": "isSourceFileDefaultLibrary",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 2558,
+        "column": 17
+      },
+      "read": "oldProgram.isSourceFileDefaultLibrary",
+      "call": "oldProgram.isSourceFileDefaultLibrary(newSourceFile)",
+      "utf16Start": 126325,
+      "utf16End": 126362,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "isSourceFileDefaultLibrary(file: SourceFile): boolean;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "Program"
+      ]
+    },
+    {
+      "rank": 379,
+      "receiver_type_id": 28206,
+      "type": "Scanner",
+      "field": "hasExtendedUnicodeEscape",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 2209,
+        "column": 71
+      },
+      "read": "scanner.hasExtendedUnicodeEscape",
+      "call": "scanner.hasExtendedUnicodeEscape()",
+      "utf16Start": 116171,
+      "utf16End": 116203,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "hasExtendedUnicodeEscape(): boolean;",
+      "declarationFile": "src/compiler/scanner.ts",
+      "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "inheritancePath": [
+        "Scanner"
+      ]
+    },
+    {
+      "rank": 394,
+      "receiver_type_id": 11233,
+      "type": "CompilerHost",
+      "field": "getCurrentDirectory",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1584,
+        "column": 30
+      },
+      "read": "host.getCurrentDirectory",
+      "call": "host.getCurrentDirectory()",
+      "utf16Start": 72836,
+      "utf16End": 72860,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "getCurrentDirectory(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "CompilerHost"
+      ]
+    },
+    {
+      "rank": 397,
+      "receiver_type_id": 65136,
+      "type": "ConvertToTSConfigHost",
+      "field": "getCurrentDirectory",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2657,
+        "column": 80
+      },
+      "read": "host.getCurrentDirectory",
+      "call": "host.getCurrentDirectory()",
+      "utf16Start": 105219,
+      "utf16End": 105243,
+      "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "declaration": "getCurrentDirectory(): string;",
+      "declarationFile": "src/compiler/commandLineParser.ts",
+      "declarationSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "inheritancePath": [
+        "ConvertToTSConfigHost"
+      ]
+    },
+    {
+      "rank": 400,
+      "receiver_type_id": 12054,
+      "type": "EmitHelperFactory",
+      "field": "createMetadataHelper",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1127,
+        "column": 38
+      },
+      "read": "emitHelpers().createMetadataHelper",
+      "call": "emitHelpers().createMetadataHelper(\"design:type\", typeSerializer.serializeTypeOfNode({ currentLexicalScope, currentNameScope: container }, node, container))",
+      "utf16Start": 45059,
+      "utf16End": 45093,
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declaration": "createMetadataHelper(metadataKey: string, metadataValue: Expression): Expression;",
+      "declarationFile": "src/compiler/factory/emitHelpers.ts",
+      "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "inheritancePath": [
+        "EmitHelperFactory"
+      ]
+    },
+    {
+      "rank": 412,
+      "receiver_type_id": 67516,
+      "type": "IterationTypesResolver",
+      "field": "getGlobalIterableIteratorType",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 39306,
+        "column": 48
+      },
+      "read": "resolver.getGlobalIterableIteratorType",
+      "call": "resolver.getGlobalIterableIteratorType(/*reportErrors*/ false)",
+      "utf16Start": 2324313,
+      "utf16End": 2324351,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "getGlobalIterableIteratorType: (reportErrors: boolean) => GenericType;",
+      "declarationFile": "src/compiler/checker.ts",
+      "declarationSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "inheritancePath": [
+        "IterationTypesResolver"
+      ]
+    },
+    {
+      "rank": 427,
+      "receiver_type_id": 11732,
+      "type": "NodeConverters",
+      "field": "convertToFunctionBlock",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 530,
+        "column": 23
+      },
+      "read": "context.factory.converters.convertToFunctionBlock",
+      "call": "context.factory.converters.convertToFunctionBlock(updated)",
+      "utf16Start": 22124,
+      "utf16End": 22173,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "convertToFunctionBlock(node: ConciseBody, multiLine?: boolean): Block;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeConverters"
+      ]
+    },
+    {
+      "rank": 481,
+      "receiver_type_id": 9942,
+      "type": "SourceFileMayBeEmittedHost",
+      "field": "getCurrentDirectory",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6683,
+        "column": 97
+      },
+      "read": "host.getCurrentDirectory",
+      "call": "host.getCurrentDirectory()",
+      "utf16Start": 261589,
+      "utf16End": 261613,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "getCurrentDirectory(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "SourceFileMayBeEmittedHost"
+      ]
+    },
+    {
+      "rank": 622,
+      "receiver_type_id": 9939,
+      "type": "Program",
+      "field": "getCommonSourceDirectory",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 54262,
+        "column": 37
+      },
+      "read": "(host as Program).getCommonSourceDirectory",
+      "call": "!(host as Program).getCommonSourceDirectory",
+      "utf16Start": 3144203,
+      "utf16End": 3144245,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "getCommonSourceDirectory(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "Program"
+      ]
+    },
+    {
+      "rank": 634,
+      "receiver_type_id": 28206,
+      "type": "Scanner",
+      "field": "isUnterminated",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7262,
+        "column": 9
+      },
+      "read": "rawTextScanner.isUnterminated",
+      "call": "rawTextScanner.isUnterminated()",
+      "utf16Start": 323834,
+      "utf16End": 323863,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "isUnterminated(): boolean;",
+      "declarationFile": "src/compiler/scanner.ts",
+      "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "inheritancePath": [
+        "Scanner"
+      ]
+    },
+    {
+      "rank": 748,
+      "receiver_type_id": 12279,
+      "type": "DocumentPositionMapperHost",
+      "field": "log",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/sourcemap.ts",
+        "line": 742,
+        "column": 21
+      },
+      "read": "host.log",
+      "call": "if (host.log) {\r\n                    host.log(`Encountered error while decoding sourcemap: ${decoder.error}`);\r\n                }",
+      "utf16Start": 28893,
+      "utf16End": 28901,
+      "fileSha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4",
+      "declaration": "log(text: string): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "DocumentPositionMapperHost"
+      ]
+    },
+    {
+      "rank": 778,
+      "receiver_type_id": 10351,
+      "type": "EmitTextWriter",
+      "field": "writeProperty",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6461,
+        "column": 13
+      },
+      "read": "writer.writeProperty",
+      "call": "writer.writeProperty(s)",
+      "utf16Start": 251371,
+      "utf16End": 251391,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "writeProperty(text: string): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "EmitTextWriter",
+        "SymbolWriter"
+      ]
+    }
+  ]
+}

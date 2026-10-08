@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface CallExpression { readonly value: number; }
+interface Base {readonly createFunctionApplyCall:unknown;}
+interface Target {createFunctionApplyCall(target: Expression, thisArg: Expression, argumentsExpression: Expression): CallExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createFunctionApplyCall({value:3},{value:3},{value:3}).value}`);}
+probe({createFunctionApplyCall:(target: Expression, thisArg: Expression, argumentsExpression: Expression):number=>9});

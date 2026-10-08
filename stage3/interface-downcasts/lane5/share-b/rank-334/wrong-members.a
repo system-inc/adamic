@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly writeComment:unknown;}
+interface Target {writeComment(text: string): void;}
+function probe(value:Base):void {const writer=value as Target;writer.writeComment("value3");}
+probe({writeComment:(text:number):void=>{}});

@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly log:unknown;}
+interface Target {log(text: string): void;}
+function probe(value:Base):void {const host=value as Target;host.log("value3");}
+probe({log:(text:number):void=>{}});

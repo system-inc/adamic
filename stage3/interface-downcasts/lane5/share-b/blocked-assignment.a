@@ -1,0 +1,17 @@
+// Original overloaded callable declaration; adjacent carriers reduced.
+interface Expression { readonly value: number; }
+interface ObjectLiteralExpression extends Expression {}
+interface ArrayLiteralExpression extends Expression {}
+interface DestructuringAssignment extends Expression {}
+interface EqualsToken { readonly value: number; }
+interface AssignmentExpression<T> extends Expression { readonly token?: T; }
+interface Base { readonly createAssignment: unknown; }
+interface Target {
+ createAssignment(left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment;
+ createAssignment(left: Expression, right: Expression): AssignmentExpression<EqualsToken>;
+}
+function probe(value:Base):void {
+ const factory=value as Target;
+ console.log(`${factory.createAssignment({value:3},{value:4}).value}`);
+}
+probe({createAssignment:(left:Expression,right:Expression):Expression=>({value:left.value+right.value})});

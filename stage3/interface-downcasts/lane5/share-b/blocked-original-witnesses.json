@@ -1,0 +1,75 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "complete original member declarations and reads; adjacent data carriers reduced",
+  "members": [
+    {
+      "rank": 4,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createAssignment",
+      "candidateReads": 143,
+      "witness": {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "line": 108,
+        "column": 25
+      },
+      "read": "factory.createAssignment",
+      "call": "factory.createAssignment(expression, element.initializer)",
+      "utf16Start": 3687,
+      "utf16End": 3711,
+      "fileSha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+      "declaration": "createAssignment(left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment;\ncreateAssignment(left: Expression, right: Expression): AssignmentExpression<EqualsToken>;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 10,
+      "receiver_type_id": 1277,
+      "type": "string[]",
+      "field": "push",
+      "candidateReads": 94,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 1291,
+        "column": 13
+      },
+      "read": "keys.push",
+      "call": "keys.push(key)",
+      "utf16Start": 45293,
+      "utf16End": 45302,
+      "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "declaration": "push(...items: T[]): number;",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "Array"
+      ]
+    },
+    {
+      "rank": 37,
+      "receiver_type_id": 1277,
+      "type": "string[]",
+      "field": "join",
+      "candidateReads": 42,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 407,
+        "column": 24
+      },
+      "read": "result.join",
+      "call": "result.join(\"|\")",
+      "utf16Start": 17683,
+      "utf16End": 17694,
+      "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "declaration": "join(separator?: string): string;",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "Array"
+      ]
+    }
+  ]
+}

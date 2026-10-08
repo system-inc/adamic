@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly hasExtendedUnicodeEscape:unknown;}
+interface Target {hasExtendedUnicodeEscape(): boolean;}
+function probe(value:Base):void {const scanner=value as Target;console.log(`${scanner.hasExtendedUnicodeEscape()}`);}
+probe({hasExtendedUnicodeEscape:(extra:number):boolean=>{return true;}});

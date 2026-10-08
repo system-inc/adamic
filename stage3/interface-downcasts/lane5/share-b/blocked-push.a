@@ -1,0 +1,9 @@
+// Original Array<T>.push declaration and keys.push read; scalar instantiation.
+interface Base {readonly push:unknown;}
+interface Target<T> {push(...items: T[]): number;}
+function probe(value:Base):void {
+ const keys=value as Target<string>;
+ const key="second";
+ console.log(`${keys.push(key)}`);
+}
+probe(["first"]);

@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly getCommonSourceDirectory:unknown;}
+interface Target {getCommonSourceDirectory(): string;}
+interface Program extends Target {}
+function probe(value:Base):void {const host = value;console.log((host as Program).getCommonSourceDirectory());}
+probe({getCommonSourceDirectory:(extra:number):string=>{return "answer3";}});

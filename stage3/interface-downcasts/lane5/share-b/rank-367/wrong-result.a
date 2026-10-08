@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface VariableStatement { readonly value: number; }
+interface ModifierLike { readonly value: number; }
+interface VariableDeclarationList { readonly value: number; }
+interface Base {readonly updateVariableStatement:unknown;}
+interface Target {updateVariableStatement(node: VariableStatement, modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList): VariableStatement;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateVariableStatement({value:3},[{value:3}],{value:3}).value}`);}
+probe({updateVariableStatement:(node: VariableStatement, modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList):number=>9});
