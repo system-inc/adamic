@@ -1,0 +1,1 @@
+export function message(name:string):string {return `Unused state field: '${name}'. Nothing in this component reads it, so every write to it re-renders for a value no one looks at, and a reader has to search the whole class before they can be sure it is dead.`;}

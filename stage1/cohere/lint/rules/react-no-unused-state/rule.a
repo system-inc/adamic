@@ -1,0 +1,73 @@
+import type {RuleContext} from '../../context.ts';
+import {isComponentClass} from '../../helpers/rules-react/is_component_class.a';
+import {isCreateReactClassCall} from '../../helpers/rules-react/is_create_react_class_call.a';
+import {parametersOf} from '../../helpers/rules-react/parameters_of.a';
+import {functionBodyBlock} from '../../helpers/rules-react/function_body_block.a';
+import {message} from './messages.a';
+class Info {fields:{name:string,node:number}[]=[];used:string[]=[];aliases:string[]|undefined=undefined;}
+export class Rule {
+ readonly context:RuleContext;info:Info|undefined=undefined;
+ constructor(context:RuleContext){this.context=context;}
+ kind(index:number):string{return this.context.kind(index);}
+ child(index:number,pos:number):number{return index<0 ? -1 : this.context.node(index).children[pos] ?? -1;}
+ last(index:number):number{const children=this.context.node(index).children;return children[children.length-1] ?? -1;}
+ unwrap(index:number):number {while(index>=0){const kind=this.kind(index);if(kind==='TypeAssertionExpression'){index=this.last(index);}else if(['ParenthesizedExpression','AsExpression','SatisfiesExpression','NonNullExpression'].includes(kind)){index=this.child(index,0);}else{break;}}return index;}
+ literal(index:number):{name:string,found:boolean}{
+  const k=this.kind(index);if(['StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral'].includes(k)){return {name:this.context.node(index).text,found:true};}
+  if(k==='TrueKeyword'){return {name:'true',found:true};}if(k==='FalseKeyword'){return {name:'false',found:true};}if(k==='NullKeyword'){return {name:'null',found:true};}return {name:'',found:false};
+ }
+ key(index:number):{name:string,found:boolean}{if(index<0){return {name:'',found:false};}const k=this.kind(index);if(k==='Identifier'||k==='PrivateIdentifier'){return {name:this.context.node(index).text,found:true};}return this.literal(k==='ComputedPropertyName'?this.child(index,0):index);}
+ name(index:number):number {for(const n of this.context.node(index).children){const k=this.kind(n);if(k==='DotDotDotToken'||k==='Decorator'||k.endsWith('Keyword')){continue;}return n;}return -1;}
+ factory(index:number):boolean {const p=this.context.parent(index);return p>=0 && this.kind(p)==='CallExpression' && isCreateReactClassCall(this.context,p) && this.context.arguments(p)[0]===index;}
+ initial(index:number):boolean {let object=-1;let name=-1;const p=this.context.parent(index);if(this.kind(index)==='MethodDeclaration'){object=p;name=this.name(index);}else{if(p<0||this.kind(p)!=='PropertyAssignment'){return false;}object=this.context.parent(p);name=this.name(p);}return object>=0 && this.kind(object)==='ObjectLiteralExpression' && this.factory(object) && this.key(name).found && this.key(name).name==='getInitialState';}
+ static(index:number):boolean{return this.context.has(index,'StaticKeyword');}
+ add(info:Info,index:number):void {for(const p of this.context.node(index).children){if(!['PropertyAssignment','ShorthandPropertyAssignment'].includes(this.kind(p))){continue;}const key=this.key(this.name(p));if(key.found){info.fields.push({name:key.name,node:p});}}}
+ firstName(parameter:number):number {return this.name(parameter);}
+ lifecycle(index:number):boolean {
+  const name=this.context.node(index).text;
+  for(let current=this.context.parent(index);current>=0;current=this.context.parent(current)){
+   let member=-1;const k=this.kind(current);if(k==='MethodDeclaration'){member=current;}else if(k==='FunctionExpression'||k==='ArrowFunction'){const p=this.context.parent(current);if(p>=0&&this.kind(p)==='PropertyDeclaration'){member=p;}}
+   if(member<0){continue;}const key=this.key(this.name(member));if(!key.found){continue;}
+   if(key.name==='getDerivedStateFromProps'){if(!this.static(member)){continue;}}else if(!['shouldComponentUpdate','componentWillUpdate','UNSAFE_componentWillUpdate','getSnapshotBeforeUpdate','componentDidUpdate'].includes(key.name)){continue;}
+   const params=parametersOf(this.context,current);if(params.length<2){continue;}const second=this.firstName(params[1] ?? -1);if(second>=0&&this.kind(second)==='Identifier'&&this.context.node(second).text===name){return true;}
+  }return false;
+ }
+ thisState(index:number):boolean {if(index<0||this.kind(index)!=='PropertyAccessExpression'){return false;}const receiver=this.unwrap(this.child(index,0));const name=this.last(index);return receiver>=0&&this.kind(receiver)==='ThisKeyword'&&name>=0&&this.kind(name)==='Identifier'&&this.context.node(name).text==='state';}
+ reference(info:Info,index:number):boolean {if(index<0){return false;}if(this.thisState(index)){return true;}return this.kind(index)==='Identifier'&&((info.aliases!==undefined&&info.aliases.includes(this.context.node(index).text))||this.lifecycle(index));}
+ bindingValue(index:number):number {const children=this.context.node(index).children.filter((n)=>this.kind(n)!=='DotDotDotToken');const a=children[0] ?? -1;const b=children[1] ?? -1;return a>=0&&b>=0&&this.context.source.slice(this.context.node(a).end,this.context.node(b).pos).includes(':')?b:a;}
+ destructure(info:Info,index:number):void {for(const e of this.context.children(index,'BindingElement')){if(this.context.has(e,'DotDotDotToken')){const name=this.bindingValue(e);if(info.aliases!==undefined&&name>=0&&this.kind(name)==='Identifier'){info.aliases.push(this.context.node(name).text);}continue;}const key=this.key(this.child(e,0));if(key.found){info.used.push(key.name);}}}
+ assignment(info:Info,left:number,right:number):void {
+  if(left<0||right<0){return;}if(this.kind(left)==='Identifier'){if(info.aliases!==undefined&&this.reference(info,right)){info.aliases.push(this.context.node(left).text);}return;}
+  if(this.kind(left)!=='ObjectBindingPattern'){return;}if(this.reference(info,right)){this.destructure(info,left);return;}
+  if(this.kind(right)==='ThisKeyword'&&info.aliases!==undefined){for(const e of this.context.children(left,'BindingElement')){if(this.context.has(e,'DotDotDotToken')){continue;}const key=this.key(this.child(e,0));if(!key.found||key.name!=='state'){continue;}const value=this.bindingValue(e);if(value<0){continue;}if(this.kind(value)==='ObjectBindingPattern'){this.destructure(info,value);}else if(this.kind(value)==='Identifier'){info.aliases.push(this.context.node(value).text);}}}
+ }
+ constructorScope(index:number):boolean {for(let p=this.context.parent(index);p>=0;p=this.context.parent(p)){const k=this.kind(p);if(k==='Constructor'){return true;}if(['FunctionExpression','FunctionDeclaration','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','ClassDeclaration','ClassExpression','SourceFile'].includes(k)){return false;}}return false;}
+ functionExpression(info:Info,index:number):void {if(!this.initial(index)){return;}const body=functionBodyBlock(this.context,index);if(body<0){return;}const last=this.last(body);if(last<0||this.kind(last)!=='ReturnStatement'){return;}const result=this.child(last,0);if(result>=0&&this.kind(result)==='ObjectLiteralExpression'){this.add(info,result);}}
+ parameterReads(info:Info,index:number,param:string):void {if(this.kind(index)==='PropertyAccessExpression'){const object=this.child(index,0);if(object>=0&&this.kind(object)==='Identifier'&&this.context.node(object).text===param){const key=this.key(this.last(index));if(key.found){info.used.push(key.name);}}}for(const child of this.context.node(index).children){this.parameterReads(info,child,param);}}
+ property(info:Info,index:number):void {const key=this.key(this.name(index));const raw=this.context.initializer(index);const init=this.unwrap(raw);if(key.found&&key.name==='state'&&!this.static(index)&&init>=0&&this.kind(init)==='ObjectLiteralExpression'){this.add(info,init);}if(this.static(index)&&key.found&&key.name==='getDerivedStateFromProps'&&init>=0){const params=parametersOf(this.context,raw);if(params.length>=2){const name=this.firstName(params[1] ?? -1);if(name>=0&&this.kind(name)==='Identifier'){this.parameterReads(info,raw,this.context.node(name).text);}}}}
+ call(info:Info,index:number):void {const callee=this.unwrap(this.child(index,0));if(callee<0||this.kind(callee)!=='PropertyAccessExpression'){return;}const receiver=this.unwrap(this.child(callee,0));const key=this.key(this.last(callee));if(receiver<0||this.kind(receiver)!=='ThisKeyword'||!key.found||key.name!=='setState'){return;}const args=this.context.arguments(index);const first=this.unwrap(args[0] ?? -1);if(first<0){return;}if(this.kind(first)==='ObjectLiteralExpression'){this.add(info,first);return;}if(this.kind(first)!=='ArrowFunction'){return;}const body=this.unwrap(this.last(first));if(body>=0&&this.kind(body)==='ObjectLiteralExpression'){this.add(info,body);}const params=parametersOf(this.context,first);if(params.length===0||info.aliases===undefined){return;}const name=this.firstName(params[0] ?? -1);if(name>=0&&this.kind(name)==='ObjectBindingPattern'){this.destructure(info,name);}else if(name>=0&&this.kind(name)==='Identifier'){info.aliases.push(this.context.node(name).text);}}
+ member(info:Info,index:number):boolean {const object=this.unwrap(this.child(index,0));const property=this.last(index);if(this.reference(info,object)){if(this.kind(index)==='ElementAccessExpression'&&!['StringLiteral','NumericLiteral'].includes(this.kind(property))){return true;}const key=this.key(property);if(key.found){info.used.push(key.name);}return false;}const p=this.context.parent(index);return this.reference(info,index)&&p>=0&&this.kind(p)==='CallExpression'&&this.child(p,0)!==index;}
+ walk(index:number):void {
+  const k=this.kind(index);let entered=false;let restore=false;let aliases:string[]|undefined=undefined;
+  if((k==='ClassDeclaration'||k==='ClassExpression')&&isComponentClass(this.context,index)){this.info=new Info();entered=true;}
+  if(k==='ObjectLiteralExpression'&&this.factory(index)){this.info=new Info();entered=true;}
+  const info=this.info;
+  if(info!==undefined){
+   if(k==='MethodDeclaration'){this.functionExpression(info,index);if(!this.initial(index)){aliases=info.aliases;restore=true;const scope:string[]=[];info.aliases=scope;}}
+   else if(['Constructor','GetAccessor','SetAccessor'].includes(k)){aliases=info.aliases;restore=true;const scope:string[]=[];info.aliases=scope;}
+   else if(k==='PropertyDeclaration'){this.property(info,index);const init=this.context.initializer(index);if(!this.static(index)&&init>=0&&this.kind(init)==='ArrowFunction'){aliases=info.aliases;restore=true;const scope:string[]=[];info.aliases=scope;}}
+   else if(k==='FunctionExpression'){this.functionExpression(info,index);if(!this.initial(index)){aliases=info.aliases;restore=true;const scope:string[]=[];info.aliases=scope;}}
+   else if(k==='CallExpression'){this.call(info,index);}
+   else if(k==='BinaryExpression'&&this.kind(this.child(index,1))==='EqualsToken'){const left=this.unwrap(this.child(index,0));const right=this.unwrap(this.last(index));if(this.thisState(left)&&right>=0&&this.kind(right)==='ObjectLiteralExpression'){if(this.constructorScope(index)){this.add(info,right);}}else{this.assignment(info,left,right);}}
+   else if(k==='VariableDeclaration'){this.assignment(info,this.firstName(index),this.unwrap(this.context.initializer(index)));}
+   else if(k==='PropertyAccessExpression'||k==='ElementAccessExpression'){if(this.member(info,index)){this.info=undefined;}}
+   else if(['JsxSpreadAttribute','SpreadAssignment','SpreadElement'].includes(k)){if(this.reference(info,this.unwrap(this.child(index,0)))){this.info=undefined;}}
+  }
+  for(const child of this.context.node(index).children){this.walk(child);}
+  const current=this.info;if(restore&&current!==undefined){current.aliases=aliases;}
+  if(entered){if(current!==undefined){this.report(current);}this.info=undefined;}
+ }
+ report(info:Info):void {for(const field of info.fields){if(info.used.includes(field.name)){continue;}this.context.report(field.node,'react/no-unused-state','unusedStateField',message(field.name),'','','');}}
+ visit(index:number,parent:number):void {this.walk(index);}
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}
