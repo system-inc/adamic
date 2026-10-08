@@ -1,6 +1,6 @@
 --- a/internal/lower/object.go
 +++ b/internal/lower/object.go
-@@ -458,20 +458,6 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+@@ -458,20 +458,6 @@
  			return nil, err
  		}
  		optional := access.QuestionDotToken != nil
@@ -12,7 +12,7 @@
 -					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 -				}
 -				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
--				if l.acceptsUndefined(node) {
+-				if comparedWithUndefined(node) {
 -					return read, nil
 -				}
 -				return ir.Unwrap{Value: read}, nil
