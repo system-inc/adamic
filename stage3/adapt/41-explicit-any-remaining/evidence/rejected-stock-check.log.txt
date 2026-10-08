@@ -30,4 +30,3 @@ AFTER 4
 
 [7m493[0m     const compilerHost = createCompilerHostFromProgramHost(host, () => compilerOptions!, directoryStructureHost) as CompilerHost & ResolutionCacheHost;
 [7m   [0m [91m                                                           ~~~~[0m
-

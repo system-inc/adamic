@@ -92,7 +92,8 @@ Error: New baseline created at tests/baselines/local/forInStatement1.symbols
       at Object.doTypeAndSymbolBaseline (src/harness/harnessIO.ts:695:13)
       at _CompilerTest.verifyTypesAndSymbols (src/testRunner/compilerRunner.ts:327:18)
       at Context.<anonymous> (src/testRunner/compilerRunner.ts:104:80)
-      at processImmediate (node:internal/timers:534:21)  
+      at processImmediate (node:internal/timers:534:21)
+
   Error: New baseline created at tests/baselines/local/forInStatement1.symbols
       at writeComparison (src/harness/harnessIO.ts:1490:27)
       at Object.runBaseline2 [as runBaseline] (src/harness/harnessIO.ts:1509:9)

@@ -169,7 +169,10 @@ complete config and actual callers; their diagnostics are in stock-check.log.txt
 and rejected-stock-check.log.txt. Each minimal kind probe uses
 `go run ./cmd/adamic c /tmp/adaptation41-kind-probes/KIND.a`, with its own log.
 Python census-report.py independently deduplicates each raw stream and records
-exact reason/file/site ledgers. Targeted node --check and git diff --check pass.
+exact reason/file/site ledgers. Targeted node --check and final git diff --check pass. Raw upstream log whitespace
+initially fails the diff check; readable log copies are normalized and their
+original bytes are preserved in .raw.gz archives. The mutant diff is retained
+compressed without changing its CRLF bytes.
 
 Setup succeeds without a workaround: Node 0.022s; Go 0.034s; clang 0.277s;
 markdown dependencies ready 1.013s; submodules 15.065s; Go build 258.949s;
