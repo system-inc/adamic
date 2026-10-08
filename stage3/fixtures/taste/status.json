@@ -289,7 +289,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/taste/refused/21_truthy_loops.a:34:25: stage 0 can't lower checked view field objectType of type Type yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "22_assignment_once.a",

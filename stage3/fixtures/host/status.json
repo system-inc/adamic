@@ -124,7 +124,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/08_getDirectories.a:160:25: stage 0 can't lower node:fs.readdirSync yet"}
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/host/08_getDirectories.a:209:5: stage 0 can't lower node:fs.symlinkSync yet"}
   },
   {
     "file": "09_realpath.a",
@@ -140,10 +140,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "/workspace/adamic/stage3/fixtures/host/09_realpath.a:13:134: stage 0 can't lower a namespace object used as a value; use qualified members or named module imports yet"
-    }
+    "stage0": {"outcome": "Checker", "what": "stage3/fixtures/host/09_realpath.a:10:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/09_realpath.a:7:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/09_realpath.a:8:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/09_realpath.a:9:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."}
   },
   {
     "file": "10_getModifiedTime.a",
@@ -217,10 +214,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "/workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:16:24: Adamic 0.1 refuses the non-null assertion !; prove presence with a guard, or use a checked assertion in .ts"
-    }
+    "stage0": {"outcome": "Checker", "what": "stage3/fixtures/host/14_getCurrentDirectory.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."}
   },
   {
     "file": "15_getExecutingFilePath.a",
@@ -234,7 +228,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/15_getExecutingFilePath.a:20:52: stage 0 can't lower node:path.dirname yet"}
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/host/15_getExecutingFilePath.a:22:21: stage 0 can't lower node:path.basename yet"}
   },
   {
     "file": "16_getEnvironmentVariable.a",
@@ -247,7 +241,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower node:process.Process.env yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "17_write.a",
@@ -260,7 +254,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/17_write.a:12:5: stage 0 can't lower node:net.Socket.write yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "18_exit_0.a",
@@ -274,7 +268,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/18_exit_0.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "19_exit_1.a",
@@ -288,7 +282,7 @@
       "stderr": "",
       "exit": 1
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/19_exit_1.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "20_exit_2.a",
@@ -302,7 +296,7 @@
       "stderr": "",
       "exit": 2
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/20_exit_2.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "21_createHash.a",
@@ -344,7 +338,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower node:os.EOL yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
@@ -365,10 +359,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Compiles",
-      "what": ""
-    }
+    "stage0": {"outcome": "Checker", "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:12:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:13:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:14:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:15:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:18:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."}
   },
   {
     "file": "25_readDirectory.a",

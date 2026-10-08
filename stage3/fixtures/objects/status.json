@@ -128,10 +128,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/objects/10_build_options.a:7:20: stage 0 can't lower a value of type CompilerOptions with an unsupported index signature or named dictionary members yet"}
   },
   {
     "file": "12_decorator_descriptor.a",
@@ -251,10 +248,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/objects/19_identifier_multimap.a:87:33: stage 0 can't lower a class method through a view that erases its prototype origin yet"}
   },
   {
     "file": "23_factory_getters.a",
@@ -329,10 +323,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/objects/27_delete_substitution.a:12:47: stage 0 can't lower a value of type { [id: number]: string; } with an unsupported index signature or named dictionary members yet"}
   },
   {
     "file": "28_debugger.a",
@@ -379,6 +370,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/objects/30_host_optional_method.a:8:73: Adamic 0.1 refuses a checked view with callable field getCompilerHost; prove the callable body rather than asserting its signature"}
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"}
   }
 ]
