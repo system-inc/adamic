@@ -1,0 +1,921 @@
+{
+  "total_bytes": 69980,
+  "hidden_bytes": 41822,
+  "hidden_share": 0.5976278936839097,
+  "typescript_source_bytes": 69980,
+  "hidden_share_of_typescript_source": 0.5976278936839097,
+  "blocked_union_bytes": 66023,
+  "independently_examined_bytes": 24201,
+  "counts": {
+    "boundary_records": 175,
+    "independent_attempts": 63
+  },
+  "files": {
+    "transformers/es2018.ts": {
+      "bytes": 69980,
+      "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88",
+      "blocked_union_bytes": 66023,
+      "independently_examined_bytes": 24201,
+      "hidden_bytes": 41822,
+      "hidden_share": 0.5976278936839097,
+      "hidden_ranges": [
+        [
+          3955,
+          5445
+        ],
+        [
+          6654,
+          6819
+        ],
+        [
+          7043,
+          7104
+        ],
+        [
+          7877,
+          8168
+        ],
+        [
+          8230,
+          8286
+        ],
+        [
+          8793,
+          8864
+        ],
+        [
+          8910,
+          8981
+        ],
+        [
+          9027,
+          9098
+        ],
+        [
+          9145,
+          9218
+        ],
+        [
+          9272,
+          9359
+        ],
+        [
+          9406,
+          9505
+        ],
+        [
+          9555,
+          9660
+        ],
+        [
+          9702,
+          9765
+        ],
+        [
+          9813,
+          9888
+        ],
+        [
+          9938,
+          10017
+        ],
+        [
+          10450,
+          10560
+        ],
+        [
+          10603,
+          10880
+        ],
+        [
+          10925,
+          10994
+        ],
+        [
+          11036,
+          11327
+        ],
+        [
+          11375,
+          11656
+        ],
+        [
+          11698,
+          11989
+        ],
+        [
+          12031,
+          12322
+        ],
+        [
+          12372,
+          12657
+        ],
+        [
+          12706,
+          12989
+        ],
+        [
+          13033,
+          13302
+        ],
+        [
+          13342,
+          13412
+        ],
+        [
+          13462,
+          13541
+        ],
+        [
+          13595,
+          13708
+        ],
+        [
+          13763,
+          13852
+        ],
+        [
+          14043,
+          14116
+        ],
+        [
+          14135,
+          14199
+        ],
+        [
+          14253,
+          14516
+        ],
+        [
+          14881,
+          14945
+        ],
+        [
+          15150,
+          15482
+        ],
+        [
+          15493,
+          15549
+        ],
+        [
+          15770,
+          17032
+        ],
+        [
+          17047,
+          17599
+        ],
+        [
+          17610,
+          17668
+        ],
+        [
+          17850,
+          18116
+        ],
+        [
+          18127,
+          18185
+        ],
+        [
+          18387,
+          18716
+        ],
+        [
+          18727,
+          18783
+        ],
+        [
+          19137,
+          19224
+        ],
+        [
+          19335,
+          19408
+        ],
+        [
+          19443,
+          19793
+        ],
+        [
+          19847,
+          19926
+        ],
+        [
+          21711,
+          21786
+        ],
+        [
+          21955,
+          22050
+        ],
+        [
+          22140,
+          22207
+        ],
+        [
+          22233,
+          22289
+        ],
+        [
+          22387,
+          22469
+        ],
+        [
+          22827,
+          22946
+        ],
+        [
+          23351,
+          23842
+        ],
+        [
+          23879,
+          23903
+        ],
+        [
+          25085,
+          25427
+        ],
+        [
+          25438,
+          25494
+        ],
+        [
+          25872,
+          25958
+        ],
+        [
+          26074,
+          26420
+        ],
+        [
+          26431,
+          26611
+        ],
+        [
+          26906,
+          27910
+        ],
+        [
+          27921,
+          27977
+        ],
+        [
+          28273,
+          28342
+        ],
+        [
+          28415,
+          28444
+        ],
+        [
+          28455,
+          28511
+        ],
+        [
+          29887,
+          29943
+        ],
+        [
+          30030,
+          30421
+        ],
+        [
+          30488,
+          30570
+        ],
+        [
+          31296,
+          31544
+        ],
+        [
+          31581,
+          31605
+        ],
+        [
+          31690,
+          33504
+        ],
+        [
+          33648,
+          34513
+        ],
+        [
+          34737,
+          34794
+        ],
+        [
+          34916,
+          34957
+        ],
+        [
+          34968,
+          35214
+        ],
+        [
+          35284,
+          35526
+        ],
+        [
+          35690,
+          41768
+        ],
+        [
+          41822,
+          41868
+        ],
+        [
+          41996,
+          42476
+        ],
+        [
+          42556,
+          43068
+        ],
+        [
+          43079,
+          43135
+        ],
+        [
+          43301,
+          43604
+        ],
+        [
+          44058,
+          44300
+        ],
+        [
+          44464,
+          44489
+        ],
+        [
+          44915,
+          45250
+        ],
+        [
+          45414,
+          45439
+        ],
+        [
+          45865,
+          46167
+        ],
+        [
+          46331,
+          46356
+        ],
+        [
+          46772,
+          47858
+        ],
+        [
+          48022,
+          48047
+        ],
+        [
+          48467,
+          49445
+        ],
+        [
+          49609,
+          49634
+        ],
+        [
+          50042,
+          50393
+        ],
+        [
+          50557,
+          50582
+        ],
+        [
+          51000,
+          51977
+        ],
+        [
+          52141,
+          52166
+        ],
+        [
+          52381,
+          52456
+        ],
+        [
+          52605,
+          53286
+        ],
+        [
+          53451,
+          53593
+        ],
+        [
+          53770,
+          53816
+        ],
+        [
+          53908,
+          56233
+        ],
+        [
+          56361,
+          56386
+        ],
+        [
+          56393,
+          56632
+        ],
+        [
+          56712,
+          57741
+        ],
+        [
+          57946,
+          62877
+        ],
+        [
+          63152,
+          64143
+        ],
+        [
+          64758,
+          65517
+        ],
+        [
+          66420,
+          66482
+        ],
+        [
+          66664,
+          66758
+        ],
+        [
+          66812,
+          66904
+        ],
+        [
+          66949,
+          67023
+        ],
+        [
+          67213,
+          67526
+        ],
+        [
+          68271,
+          68590
+        ],
+        [
+          69205,
+          69631
+        ],
+        [
+          69658,
+          69957
+        ],
+        [
+          69975,
+          69978
+        ]
+      ]
+    }
+  },
+  "largest_regions": [
+    {
+      "file": "transformers/es2018.ts",
+      "start": 35690,
+      "end": 41768,
+      "bytes": 6078,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:829:39: stage 0 can't lower reading expression yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:830:37: stage 0 can't lower reading expression yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:831:29: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:832:22: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:833:29: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:834:31: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:835:30: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:836:41: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:837:26: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:838:25: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:839:26: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:840:28: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:842:34: stage 0 can't lower reading errorRecord yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:843:34: stage 0 can't lower reading returnMethod yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:847:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:852:17: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:876:25: stage 0 can't lower reading forStatement yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:878:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "transformers/es2018.ts:827:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 57946,
+      "end": 62877,
+      "bytes": 4931,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1244:33: stage 0 can't lower for...of over an object yet",
+          "transformers/es2018.ts:1242:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 53908,
+      "end": 56233,
+      "bytes": 2325,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1174:25: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1175:9: stage 0 can't lower assigning to an Identifier yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1177:33: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1194:77: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1195:13: stage 0 can't lower reading emitSuperHelpers yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1202:30: stage 0 can't lower reading returnStatement yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1204:23: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1205:13: stage 0 can't lower reading emitSuperHelpers yet",
+          "transformers/es2018.ts:1164:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 31690,
+      "end": 33504,
+      "bytes": 1814,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:745:42: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "transformers/es2018.ts:744:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:746:39: stage 0 can't lower reading initializerWithoutParens yet",
+          "transformers/es2018.ts:744:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 3955,
+      "end": 5445,
+      "bytes": 1490,
+      "causes": [
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 15770,
+      "end": 17032,
+      "bytes": 1262,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:415:25: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:408:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "transformers/es2018.ts:408:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 46772,
+      "end": 47858,
+      "bytes": 1086,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1043:25: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1038:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 56712,
+      "end": 57741,
+      "bytes": 1029,
+      "causes": [
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:1222:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 26906,
+      "end": 27910,
+      "bytes": 1004,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:649:26: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:643:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:650:33: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:643:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:651:65: stage 0 can't lower reading updatedDecl yet",
+          "transformers/es2018.ts:643:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:653:22: stage 0 can't lower reading visitedBindings yet",
+          "transformers/es2018.ts:643:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:659:20: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:643:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "transformers/es2018.ts:643:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "start": 63152,
+      "end": 64143,
+      "bytes": 991,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1338:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1339:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1340:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1343:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1344:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1345:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1346:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1347:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1349:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+          "transformers/es2018.ts:1332:5"
+        ],
+        [
+          "Boundary",
+          "function signature or prologue failed; continued at next declaration",
+          "/tmp/hidden-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+          "transformers/es2018.ts:154:1"
+        ]
+      ]
+    }
+  ]
+}
