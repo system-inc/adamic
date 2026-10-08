@@ -1,14 +1,16 @@
-import { panic, programArguments, readTextFile } from 'adamic';
+import { panic, programArguments, readTextFile, writeTextFile } from 'adamic';
 import { written } from '../../typescript/parser/nodes.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { Linter } from './lint.ts';
 import { Settings } from './settings.ts';
+import { Checker, openProgram, releaseProgram, type ProgramResult } from './checker.a';
+import { hash } from './checker_hash.a';
 
 // Test only: see Linter.junkRows.
 const junkRows = programArguments().includes('--junk-rows');
 
-function run(row: string, countOnly: boolean): number {
+function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', recordPrefix = '', caseNumber = 0): number {
     const fields = row.split('\t');
     const path = fields[0] ?? panic('missing path');
     const source = readTextFile(path);
@@ -17,6 +19,16 @@ function run(row: string, countOnly: boolean): number {
     }
     const parser = new Parser(source.text, path);
     const scanner = new Scanner(source.text);
+    let replay: string | undefined = undefined;
+    let replayError = '';
+    const rowHeader = recordPrefix === '' && replayPrefix === '' ? '' : `${path}\n${hash(source.text)}\n`;
+    if(replayPrefix !== '') {
+        const transcript = readTextFile(`${replayPrefix}.${caseNumber}`);
+        if(transcript.kind === 'Error') { replay = ''; replayError = transcript.message; }
+        else if(!transcript.text.startsWith(rowHeader)) { replay = ''; replayError = 'transcript row differs'; }
+        else { replay = transcript.text.slice(rowHeader.length); }
+    }
+    const checker = program === 0 && replayPrefix === '' ? undefined : new Checker(program, path, parser, source.text, replay, recordPrefix !== '');
     const settings = new Settings();
     settings.load(fields[5] ?? '');
     const linter = new Linter(
@@ -28,9 +40,18 @@ function run(row: string, countOnly: boolean): number {
         settings.read('null', fields[3] ?? ''),
         settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true',
         settings,
+        checker,
     );
     linter.junkRows = junkRows;
     linter.run();
+    if(checker !== undefined) {
+        if(replayError !== '') { checker.refuse(0, 0, replayError); }
+        if(recordPrefix !== '') { save(`${recordPrefix}.${caseNumber}`, rowHeader + checker.transcript()); }
+        for(const refusal of checker.refusals) {
+            console.log(`refused ${refusal.rule} ${path} ${refusal.start} ${refusal.end} ${written(refusal.reason)}`);
+        }
+    }
+    if(!countOnly && program === 0 && replayPrefix === '') { for(const skipped of linter.skipped) { console.log(skipped); } }
     if(countOnly) {
         return linter.findings.length;
     }
@@ -146,6 +167,10 @@ function run(row: string, countOnly: boolean): number {
     return linter.findings.length;
 }
 
+function save(path: string, text: string): void {
+    const result = writeTextFile(path, text);
+    if(result.kind === 'Error') { panic(result.message); }
+}
 const args = programArguments();
 const first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');
 if(first === '--manifest') {
@@ -169,19 +194,50 @@ if(first === '--manifest') {
             panic('shard must be <index>/<count> with 0 <= index < count');
         }
     }
+    const rows = manifest.text.split('\n').filter((row) => row !== '');
+    const declaration = rows[0] ?? '';
+    const config = declaration.startsWith('program ') ? declaration.slice(8) : '';
+    if(rows.slice(1).some((row) => row.startsWith('program '))) { panic('program must precede every row'); }
+    const recordAt = args.indexOf('--record');
+    const replayAt = args.indexOf('--replay');
+    const recordPrefix = recordAt < 0 ? '' : args[recordAt + 1] ?? panic('missing recording prefix');
+    const replayPrefix = replayAt < 0 ? '' : args[replayAt + 1] ?? panic('missing replay prefix');
+    if(recordPrefix !== '' && replayPrefix !== '') { panic('record and replay are exclusive'); }
+    if(config === '' && (recordPrefix !== '' || replayPrefix !== '')) { panic('transcript requires a program'); }
+    let header = '';
+    if(config !== '') {
+        const contents = readTextFile(config);
+        if(contents.kind === 'Error') { panic(contents.message); }
+        header = `checker transcript 1\nprogram ${config}\nsha256 ${hash(contents.text)}\n`;
+    }
+    if(recordPrefix !== '') { save(`${recordPrefix}.header`, header); }
+    let headerError = '';
+    if(replayPrefix !== '') {
+        const recorded = readTextFile(`${replayPrefix}.header`);
+        if(recorded.kind === 'Error') { headerError = recorded.message; }
+        else if(recorded.text !== header) { headerError = 'transcript program differs'; }
+    }
+    const opened: ProgramResult = config === '' || replayPrefix !== '' ? { kind: 'Ok', value: 0 } : openProgram(config, []);
+    const program = opened.kind === 'Ok' ? opened.value : 0;
+    if(opened.kind === 'Error') { headerError = opened.message; }
     let count = 0;
     let caseNumber = 0;
-    for(const row of manifest.text.split('\n')) {
-        if(row === '') {
+    for(const row of rows) {
+        if(row === '' || row.startsWith('program ')) {
             continue;
         }
         if(caseNumber % shardCount === shardIndex) {
             if(!countOnly) {
                 console.log(`case ${caseNumber}`);
             }
-            count += run(row, countOnly);
+            if(headerError !== '') { console.log(`refused ${row.split('\t')[1] ?? 'all'} ${row.split('\t')[0] ?? ''} 0 0 ${written(headerError)}`); }
+        else { count += run(row, countOnly, program, replayPrefix, recordPrefix, caseNumber); }
         }
         caseNumber++;
+    }
+    if(program !== 0) {
+        const released = releaseProgram(program);
+        if(released.kind === 'Error') { console.log(`refused checker ${config} 0 0 ${written(released.message)}`); }
     }
     if(countOnly) {
         console.log(`${count}`);

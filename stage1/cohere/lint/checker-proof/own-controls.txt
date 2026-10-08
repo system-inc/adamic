@@ -1,0 +1,36 @@
+=== RUN   TestCheckerNoProgramCoverage
+    checker_pending_test.go:31: before: coverage check caught mutant: case 0
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare ignored
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+    checker_pending_test.go:36: after: coverage check passes: case 0
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+--- PASS: TestCheckerNoProgramCoverage (7.28s)
+=== RUN   TestCheckerBridgeRefusalPending
+    checker_pending_test.go:49: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer
+--- SKIP: TestCheckerBridgeRefusalPending (0.00s)
+=== RUN   TestCheckerReplayEntryControl
+    checker_pending_test.go:209: before: removed entry fails Node comparison: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl2372381350/001/source.ts 30 31 missing transcript entry
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+    checker_pending_test.go:214: after: complete live-bridge transcript matches Go: case 0
+        /tmp/adamic-gate/TestCheckerReplayEntryControl2372381350/001/source.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    checker_pending_test.go:219: reverse guard rejects an unasked entry
+    checker_pending_test.go:230: program header mismatch refuses replay; restoring it passes
+    checker_pending_test.go:238: pilot type-verdict mutant caught only by findings comparison on Node
+    checker_pending_test.go:245: pilot's harness-owned refusal reaches the wire: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl2372381350/001/source.ts 0 45 undeclared program read ReadsOtherFiles
+        /tmp/adamic-gate/TestCheckerReplayEntryControl2372381350/001/source.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+--- PASS: TestCheckerReplayEntryControl (8.63s)
+=== RUN   TestCheckerHashes
+--- PASS: TestCheckerHashes (0.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	16.746s
