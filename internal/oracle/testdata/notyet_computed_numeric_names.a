@@ -1,0 +1,3 @@
+const enum Key { Positive = 3, Negative = -2 }
+const value = { [Key.Positive]: 'positive'.repeat(2), [Key.Negative]: 'negative'.repeat(2) };
+console.log(Object.keys(value).join(','));

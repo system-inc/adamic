@@ -1,0 +1,6 @@
+enum RuntimeField { Low = 250 }
+let order = '';
+function receiver(): typeof RuntimeField { order += 'k'; return RuntimeField; }
+function fieldValue(): string { order += 'v'; return 'value'.repeat(2); }
+const table = { [receiver().Low]: fieldValue() };
+console.log(`${Object.keys(table).join(',')} ${order}`);

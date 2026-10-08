@@ -50,10 +50,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "a string field with the reserved iterator slot name")
 			}
 			fieldName, known := l.methodName(property)
-			if !known {
+			var key, constant ir.Expression
+			if !known && name.Kind == ast.KindComputedPropertyName {
+				var err error
+				fieldName, key, constant, known, err = l.runtimeEnumFieldName(name.AsComputedPropertyName().Expression)
+				if err != nil {
+					return nil, err
+				}
+			}
+			if !known || fieldName == iteratorSlot && key != nil {
 				return nil, l.notYet(name, "a computed field name")
 			}
-			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
+			if property.Kind == ast.KindPropertyAssignment && name.Kind != ast.KindComputedPropertyName && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
 			var value ir.Expression
@@ -75,6 +83,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			if slotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
+			}
+			if key != nil {
+				// Both branches give the same value. The comparison sequences the enum
+				// read before that value, without inventing a second expression form.
+				value = ir.Conditional{Condition: ir.Binary{Operator: ir.Equal, Left: key, Right: constant}, WhenTrue: value, WhenNot: value, Of: value.Type()}
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
 		default:

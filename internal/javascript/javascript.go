@@ -640,7 +640,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			fields = append(fields, "..."+e.value(expression.Spread))
 		}
 		for _, field := range expression.Fields {
-			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
+			name := quote(field.Name)
+			if field.Name == "__proto__" {
+				// IR fields are own data properties, including computed source keys.
+				name = "[" + name + "]"
+			}
+			fields = append(fields, name+": "+e.value(field.Value))
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {

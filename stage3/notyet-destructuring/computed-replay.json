@@ -1,0 +1,65 @@
+[
+  {
+    "site": "src_compiler_parser.ts_506_5",
+    "next_findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/parser.ts:506:33",
+        "reason": "a generic function expression"
+      }
+    ]
+  },
+  {
+    "site": "src_compiler_scanner.ts_150_5",
+    "next_findings": []
+  },
+  {
+    "site": "src_compiler_sys.ts_123_9",
+    "next_findings": []
+  },
+  {
+    "site": "src_compiler_transformers_declarations_diagnostics.ts_608_9",
+    "next_findings": [
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:607:5",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      }
+    ]
+  },
+  {
+    "site": "src_compiler_transformers_declarations_diagnostics.ts_623_9",
+    "next_findings": [
+      {
+        "kind": "panic",
+        "where": "/tmp/destructuring-adapted/src/compiler/transformers/declarations/diagnostics.ts:607:5",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      }
+    ]
+  },
+  {
+    "site": "src_compiler_visitorPublic.ts_624_5",
+    "next_findings": [
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:625:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:633:16",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      }
+    ]
+  }
+]
