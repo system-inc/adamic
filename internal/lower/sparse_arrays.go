@@ -53,6 +53,15 @@ func (l *lowering) sparseCall(node *ast.Node) error {
 		switch callee.Name().Text() {
 		case "fill", "push", "at":
 			return nil
+		case "indexOf", "lastIndexOf", "includes", "join", "map", "filter", "some", "every", "forEach", "reduce":
+			// The host's checkArrayHoles pass owns these established hole contracts.
+			return nil
+		case "sort":
+			if len(call.Arguments.Nodes) == 0 {
+				if element, err := l.elementType(receiver); err == nil && element == ir.String {
+					return nil
+				}
+			}
 		}
 		return l.notYet(node, "array methods other than fill, push and at in a program with sparse arrays")
 	}
