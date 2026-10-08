@@ -1,0 +1,18 @@
+FIRST FAILURE (tests, at 1129.9 s):
+github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+    counts_test.go:215: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+--- FAIL: TestCountsAreRecorded (91.02s)
+
+red: 0c99fc545e0f49d8407467321355fd45e2934c21 fast gate, first failure at tests after 1129.9 s (coverage=0.0s catalog=0.0s tools=0.1s catalog-apply=0.4s vet=11.0s a-check-build=14.2s build=16.1s smoke=19.4s a-check=25.8s stage3=734.6s tests=1596.5s; deferred to full gate: 10 tests (TestCaseMappingMatchesNode, TestMapHashProbeCatchesMutants, TestNormalizeMatchesNode, TestNormalizeRandomMatchesNode, TestRecordMutants, TestRecordReadMutants, TestRegExpBytecodeRandomNode, TestRegExpBytecodeTest262, TestSplitTSGoAgrees, TestWASI); branch cloud/land-area-next-auto-4885cec5, session none; sampled: TestMarkdownAstPath 4070/4070 files, stride 1, offset 0; TestMarkdownCodeBlockLayout 559/4070 files, stride 9, offset 1; TestMarkdownHTMLBlockLayout 559/4070 files, stride 9, offset 1; TestMarkdownLeafComposition 559/4070 files, stride 9, offset 1; TestMarkdownListLayout 559/4070 files, stride 9, offset 1; TestMarkdownQuoteLayout 559/4070 files, stride 9, offset 1; TestMarkdownRootLayout 559/4070 files, stride 9, offset 1; TestMarkdownStructureLayout 559/4070 files, stride 9, offset 1; TestMarkdownTableLayout 559/4070 files, stride 9, offset 1; TestMarkdownWhitespaceLayout 559/4070 files, stride 9, offset 1), 1 fail, 1024 pass
+stopped: superseded by cloud/land-area-next-auto-d733e4fe f445fa4eee3df66b8fe8a79cc4400b2d414093f1
+darwin leg: green: darwin build and compile of internal/oracle/testdata/047cb0d_n_arrayindex.a on Sun2 in 3 s
+remote: 
+remote: Create a pull request for 'gate-logs/0c99fc545e0f/20261008T174115Z/fast' on GitHub by visiting:        
+remote:      https://github.com/system-inc/adamic/pull/new/gate-logs/0c99fc545e0f/20261008T174115Z/fast        
+remote: 
+published gate-logs/0c99fc545e0f/20261008T174115Z/fast (1f7fd97c9d786c18a0fd4a227a26116749c2d424)
+red: 0c99fc545e0f49d8407467321355fd45e2934c21 fast gate, first failure at tests after 1129.9 s (coverage=0.0s catalog=0.0s tools=0.1s catalog-apply=0.4s vet=11.0s a-check-build=14.2s build=16.1s smoke=19.4s a-check=25.8s stage3=734.6s tests=1596.5s; deferred to full gate: 10 tests (TestCaseMappingMatchesNode, TestMapHashProbeCatchesMutants, TestNormalizeMatchesNode, TestNormalizeRandomMatchesNode, TestRecordMutants, TestRecordReadMutants, TestRegExpBytecodeRandomNode, TestRegExpBytecodeTest262, TestSplitTSGoAgrees, TestWASI); branch cloud/land-area-next-auto-4885cec5, session none; sampled: TestMarkdownAstPath 4070/4070 files, stride 1, offset 0; TestMarkdownCodeBlockLayout 559/4070 files, stride 9, offset 1; TestMarkdownHTMLBlockLayout 559/4070 files, stride 9, offset 1; TestMarkdownLeafComposition 559/4070 files, stride 9, offset 1; TestMarkdownListLayout 559/4070 files, stride 9, offset 1; TestMarkdownQuoteLayout 559/4070 files, stride 9, offset 1; TestMarkdownRootLayout 559/4070 files, stride 9, offset 1; TestMarkdownStructureLayout 559/4070 files, stride 9, offset 1; TestMarkdownTableLayout 559/4070 files, stride 9, offset 1; TestMarkdownWhitespaceLayout 559/4070 files, stride 9, offset 1), 1 fail, 1024 pass
+stopped: superseded by cloud/land-area-next-auto-d733e4fe f445fa4eee3df66b8fe8a79cc4400b2d414093f1
