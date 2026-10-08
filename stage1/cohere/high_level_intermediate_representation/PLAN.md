@@ -96,7 +96,7 @@ Native compilation feedback during this slice was on port expressions, not an un
 
 ## Unit 2 continuation
 
-See [PROGRESS.md](PROGRESS.md) and [REPORT.md](REPORT.md) for the current certificate: 1,442/1,465 originals on native and Node (all 1,442 non-Flow graphs), plus 72/72 path probes. The optional-field ruling is applied. Static-components' owned rule certificate is recorded there. Unit 2 is stopped on the isolated native CloneFunction static-constructor/spread gap, with its Node-only certificate kept separate. The parallel pass assignments below supersede implementation sequencing while preserving Go's integrated execution order.
+See [PROGRESS.md](PROGRESS.md) and [REPORT.md](REPORT.md) for the current certificate: 1,442/1,465 originals on native and Node (all 1,442 non-Flow graphs), plus 72/72 path probes. The optional-field ruling is applied. Static-components' owned rule certificate is recorded there. Unit 2 is complete: the authorized spread workaround closes CloneFunction to native = Node on all admitted graphs, with the exact compiler gap test retained. The parallel pass assignments below supersede implementation sequencing while preserving Go's integrated execution order.
 
 
 ## Parallel pass lanes after unit 2 (step 08 / step 28)
@@ -114,8 +114,8 @@ checker availability and query facts separately from analysis answers.
 ### Replay bootstrap and the limit of today's dump
 
 The current `hir-v1` **construction** oracle is byte-identical on the admitted
-corpus. It is a printer, not yet a decoder, and its `scopes -` line is a
-placeholder. It does not yet print `AliasingEffects`, mutable ranges, disjoint
+corpus. The shared fresh-arena decoder/encoder now round-trips all 1,465 Go inputs on
+native and Node; its `scopes -` line describes construction state only. It does not yet print `AliasingEffects`, mutable ranges, disjoint
 representatives, scope alignment/dependencies, reactive trees or preservation
 findings. Calling those later lanes immediately oracle-certified would be false.
 They are **ready to staff for Go-input development today**, with the shared replay
@@ -155,7 +155,7 @@ validate. In particular unit 9's flattening runs before units 7 and 8.
 
 | Unit / exclusive write directory | Go entry point(s) and before state | Output in hir-v1 checkpoint terms | Shared files / modules read; writes reserved to integration owner | Can start from Go input today? |
 | --- | --- | --- | --- | --- |
-| **3 memo / rewrites**, `passes/unit-3/` | `drop_manual_memoization.go:198 DropManualMemoization`; `inline_iife.go:81 InlineImmediatelyInvokedFunctionExpressions` / `:116 ...IncludingMemoCallbacks`; `inline_remap.go:67 CopyNestedBodyInto`; `outline_functions.go:38 OutlineFunctions`; `dead_code_elimination.go:43 EliminateDeadCode`; `merge_consecutive_blocks.go:62 MergeConsecutiveBlocks`; cache entry `ForFunctionWithoutManualMemoization`. Supply constructed SSA graph, captures, callee origins and source dependency facts. Preservation's drop checkpoint is after outline + InferReactive; export each subpass separately. | Rewritten instruction/identifier/block tables, memo Start/Finish markers and source dependencies, nested/outlined identities, remap tables and rewrite/DCE counts. Rebuild SSA with imported module at Go's corresponding checkpoint. | Read core/dump/graph, shared arena, SSA and symbol facts. Only owner adds missing Memo/DeclareContext variants or the public cache hook; worker writes its own memo cache module. | **Ready for isolated Go-input work.** Needs replay graph + AST/memo sidecars, not unit 4's Adamic code. The pending native CloneFunction gap blocks integration through that clone, not fresh-arena replay. |
+| **3 memo / rewrites**, `passes/unit-3/` | `drop_manual_memoization.go:198 DropManualMemoization`; `inline_iife.go:81 InlineImmediatelyInvokedFunctionExpressions` / `:116 ...IncludingMemoCallbacks`; `inline_remap.go:67 CopyNestedBodyInto`; `outline_functions.go:38 OutlineFunctions`; `dead_code_elimination.go:43 EliminateDeadCode`; `merge_consecutive_blocks.go:62 MergeConsecutiveBlocks`; cache entry `ForFunctionWithoutManualMemoization`. Supply constructed SSA graph, captures, callee origins and source dependency facts. Preservation's drop checkpoint is after outline + InferReactive; export each subpass separately. | Rewritten instruction/identifier/block tables, memo Start/Finish markers and source dependencies, nested/outlined identities, remap tables and rewrite/DCE counts. Rebuild SSA with imported module at Go's corresponding checkpoint. | Read core/dump/graph, shared arena, SSA and symbol facts. Only owner adds missing Memo/DeclareContext variants or the public cache hook; worker writes its own memo cache module. | **Ready for isolated Go-input work.** Needs replay graph + AST/memo sidecars, not unit 4's Adamic code. Native CloneFunction and the shared memo/copy/cache APIs are now available; no earlier Adamic analysis is required for isolated replay. |
 | **4 effects / reactive facts**, `passes/unit-4/` | `effects.go:493 InferAliasingEffects`, `:523 InferAliasingEffectsForNested`, `:1189 ProjectEffects`; `reactive.go:189 InferReactive`. Supply appropriate prepass graph, hook origins, imported/callee signatures, AST/type-checker facts and nil-checker context where originally nil. ProjectEffects receives Go-produced ranges at its own independent checkpoint. | Place effect/reactive flags; ordered alias effect records, captures and closure/custom-hook summaries, value kinds, primitive constraints and projected effect map. | Read frozen core, SSA and symbol-query bridge; mutation_aliasing types for projection. Unit 4 owns all effects/primitive/reactive-fact types. Owner alone extends generic replay fact selectors. | **Ready for isolated Go-input work.** Graph and checker-fact codec required; no prior Adamic pass. Full native import must use the area's mutation_aliasing module where projection requires it. |
 | **5 ranges / disjoint**, `passes/unit-5/` | `ranges.go:31 InferMutableRangesWithEffects`, `:44 RangesForNested`, `:115 MutationSites`; `disjoint.go:331 FindDisjointMutableValuesWithRanges` (wrappers at `ranges.go:20`, `disjoint.go:315`). Input is graph + Go-produced alias effects, closure value kinds and nested summaries; disjoint's input additionally has Go ranges. | Mutable intervals keyed by function path/identifier, frozen/value-kind facts, closure widening and mutation sites; deterministic disjoint representative and union membership rows. Preserve separate nested tables. | Import `static_single_assignment` and `mutation_aliasing` **by reference**. Read core, unit-4 public fact types and replay codecs. Worker owns its adapters and disjoint state; does not edit either analysis module. | **Prepare Go-input adapters now; execution BLOCKED on the mutation_aliasing import in this checkout.** The promised lint-area pin/module bump is not present here (`stage1/cohere/mutation_aliasing/` is absent). No Adamic unit 4 algorithm is needed once that existing module lands; never copy the Go algorithm to bypass it. |
 | **6 scopes / alignment**, `passes/unit-6/` | `scopes.go:264 AssignReactiveScopesWithSets`, `:409 ValidateScopes`; `align_method_calls.go:44 AlignMethodCallScopes`; `align_scopes.go:375 AlignThenMergeReactiveScopes`; `scope_terminals.go:335 BuildReactiveScopeTerminals`. Input: graph + Go ranges/disjoint representatives, then scopes/alignment at each subpass boundary. | Scope assignments and intervals, aligned/merged identity maps, declarations/outputs and memoization graph levels; inserted scope terminals, including structured edge IDs and validation results. | Read frozen core/arena, unit-5 range/disjoint schema and shared framing. Scope index class/core terminal variants are added once by owner. Unit 6 owns ScopeIdentity and all scope/alignment data types. | **Ready for isolated Go-input work.** Needs scope sidecars and decoder, not Adamic ranges/effects. Current `scopes -` alone is insufficient input or output. |
@@ -174,3 +174,17 @@ lane must land its complete 1,465-record checkpoint comparison and a semantic
 mutant before claiming completion; native and Node counts remain separate until
 both execute. Shared schemas land before dependent lane imports, but schema
 availability is distinct from waiting for the earlier algorithm.
+
+## Replay bootstrap delivered
+
+The sole replay/integration owner supplies `replay/index.ts` and its documented
+Go overlay hooks (see replay/README.md). Native = Node: all 1,465 original Go
+checkpoint graphs plus 72 probes, byte-identical after fresh decode and re-encode;
+corrupt instruction-ID mutant caught. Construction/clone cover all 1,442 non-Flow
+originals. Units 3 and 4 can import the shared framing, facts, memo/outlined
+records, copy/remap/rewrite/cache APIs and scope/reactive indices now. Each
+worker still supplies its own actual pre/post-pass graph and analysis sidecars.
+Later pass terminal/analysis schemas must be requested from this owner as their
+Go producers expose them; no later pass result certificate is implied by this
+construction round-trip. mutation_aliasing remains a separately owned missing
+area import (latest fetched area 6bf7bcec); its API is never guessed or copied.

@@ -159,6 +159,12 @@ func oracleValue(v reflect.Value) any {
 	}
 	if v.CanInterface() {
 		switch x := v.Interface().(type) {
+		case *StartMemoize:
+			var deps any
+			if x.Deps != nil {
+				deps = oracleValue(reflect.ValueOf(x.Deps))
+			}
+			return map[string]any{"ManualMemoId": x.ManualMemoId, "Deps": deps}
 		case Place:
 			return oraclePlace(x)
 		case core.TextRange:
@@ -242,4 +248,30 @@ func oracleInstruction(i *Instruction) string {
 	}
 	fmt.Fprintf(&out, "instruction %d %d %s %d:%d %s %s\n", i.Id, i.Order, oraclePlace(i.LValue), i.Range.Pos(), i.Range.End(), kind, payload)
 	return out.String()
+}
+
+func TestStage1CentralInstructionVariants(t *testing.T) {
+	destination := os.Getenv("HIR_CENSUS")
+	if destination == "" {
+		t.Skip("census exporter only")
+	}
+	p := Place{}
+	values := []InstructionValue{
+		&DeclareContext{LValue: p, Kind: 0},
+		&StartMemoize{ManualMemoId: 1},
+		&StartMemoize{ManualMemoId: 2, Deps: []ManualMemoDependency{}},
+		&StartMemoize{ManualMemoId: 3, Deps: []ManualMemoDependency{{Root: ManualMemoRoot{Place: p}, Path: []DependencyPathEntry{{Property: "x", Optional: true}}}, {Root: ManualMemoRoot{IsGlobal: true, Place: p, Name: "React"}, Path: []DependencyPathEntry{}}}},
+		&FinishMemoize{ManualMemoId: 3, Value: p},
+		&FinishMemoize{ManualMemoId: 2, Value: p, Pruned: true},
+	}
+	var out strings.Builder
+	for id, value := range values {
+		out.WriteString(oracleInstruction(&Instruction{Id: InstructionId(id), LValue: p, Value: value}))
+	}
+	if err := os.MkdirAll(destination, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(destination+"/central-instructions.dump", []byte(out.String()), 0600); err != nil {
+		t.Fatal(err)
+	}
 }

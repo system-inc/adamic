@@ -25,22 +25,24 @@ import (
 )
 
 type constructionRecord struct {
-	CloneBeforeSSA bool     `json:"cloneBeforeSSA"`
-	Extension      string   `json:"extension"`
-	Key            string   `json:"key"`
-	Source         string   `json:"source"`
-	Start          int      `json:"start"`
-	End            int      `json:"end"`
-	Checker        bool     `json:"checker"`
-	Dump           string   `json:"dump"`
-	Functions      int      `json:"functions"`
-	Eligible       bool     `json:"eligible"`
-	Calls          []string `json:"calls"`
-	Symbols        string   `json:"symbols"`
-	RootStart      int      `json:"rootStart"`
-	RootEnd        int      `json:"rootEnd"`
-	NestedPath     string   `json:"nestedPath"`
-	Excluded       string   `json:"excluded"`
+	ExtraIdentities []OracleExtraIdentity `json:"extraIdentities"`
+	InputSidecars   []OracleSidecarRow    `json:"inputSidecars"`
+	CloneBeforeSSA  bool                  `json:"cloneBeforeSSA"`
+	Extension       string                `json:"extension"`
+	Key             string                `json:"key"`
+	Source          string                `json:"source"`
+	Start           int                   `json:"start"`
+	End             int                   `json:"end"`
+	Checker         bool                  `json:"checker"`
+	Dump            string                `json:"dump"`
+	Functions       int                   `json:"functions"`
+	Eligible        bool                  `json:"eligible"`
+	Calls           []string              `json:"calls"`
+	Symbols         string                `json:"symbols"`
+	RootStart       int                   `json:"rootStart"`
+	RootEnd         int                   `json:"rootEnd"`
+	NestedPath      string                `json:"nestedPath"`
+	Excluded        string                `json:"excluded"`
 }
 
 var constructionRecords = map[string]*constructionRecord{}
@@ -352,9 +354,10 @@ func constructionObserve(f *Function, typeChecker *checker.Checker, caller strin
 	if !constructed {
 		Construct(clone)
 	}
-	constructionStore(clone, typeChecker != nil, constructionSymbols(source, typeChecker), caller, clone.Node, "", !constructed)
+	constructionStore(clone, typeChecker, constructionSymbols(source, typeChecker), caller, clone.Node, "", !constructed)
 }
-func constructionStore(clone *Function, checked bool, symbols string, caller string, root *ast.Node, path string, cloneBeforeSSA bool) {
+func constructionStore(clone *Function, typeChecker *checker.Checker, symbols string, caller string, root *ast.Node, path string, cloneBeforeSSA bool) {
+	checked := typeChecker != nil
 	source := ast.GetSourceFileOfNode(clone.Node)
 	if source == nil {
 		return
@@ -385,6 +388,7 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 		rootStart, rootEnd, nestedPath = root.Pos(), root.End(), path
 	}
 	constructionMutex.Lock()
+	firstObservation := constructionRecords[key] == nil
 	if old := constructionRecords[key]; old != nil {
 		old.Calls = append(old.Calls, caller)
 		if eligible && !old.Eligible {
@@ -394,15 +398,20 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 			old.NestedPath = nestedPath
 		}
 	} else {
-		constructionRecords[key] = &constructionRecord{CloneBeforeSSA: cloneBeforeSSA, Extension: extension, Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
+		constructionRecords[key] = &constructionRecord{ExtraIdentities: OracleDormantIdentities(clone), InputSidecars: append(OracleInputFacts(clone, typeChecker), append(OracleSourceFacts(source.Text(), extension), OracleSidecarRow{Namespace: "input.source", FunctionPath: "$", AnchorKind: "function", Key: "symbols", Payload: symbols})...), CloneBeforeSSA: cloneBeforeSSA, Extension: extension, Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
 	}
 	constructionMutex.Unlock()
+	if firstObservation {
+		if err := OracleObserveConstruction(key, clone, typeChecker, caller); err != nil {
+			panic(err)
+		}
+	}
 	for index, nested := range clone.Functions {
 		next := fmt.Sprint(index)
 		if path != "" {
 			next = path + "," + next
 		}
-		constructionStore(nested, checked, symbols, caller+"/nested", root, next, cloneBeforeSSA)
+		constructionStore(nested, typeChecker, symbols, caller+"/nested", root, next, cloneBeforeSSA)
 	}
 }
 
@@ -471,6 +480,7 @@ func TestMain(m *testing.M) {
 		}
 		sort.Strings(keys)
 		var manifest strings.Builder
+		var checkpoints strings.Builder
 		records := []*constructionRecord{}
 		total, eligible := 0, 0
 		for _, key := range keys {
@@ -490,6 +500,18 @@ func TestMain(m *testing.M) {
 				panic(err)
 			}
 			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\t%s\t%s\t%d\t%d\t%s\t%t\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible, symbolsPath, r.Excluded, r.RootStart, r.RootEnd, r.NestedPath, r.CloneBeforeSSA)
+			checkpointPath := filepath.Join(destination, key+".checkpoint")
+			if err := os.WriteFile(checkpointPath, []byte(OracleWriteCheckpoint(constructionCheckpoint(r))), 0600); err != nil {
+				panic(err)
+			}
+			probe := true
+			for _, call := range r.Calls {
+				if !strings.HasPrefix(call, "probe:") {
+					probe = false
+				}
+			}
+			fmt.Fprintf(&checkpoints, "%s\t%s\t%d\t%t\n", key, checkpointPath, r.Functions, probe)
+
 			total += r.Functions
 			if r.Eligible {
 				eligible += r.Functions
@@ -510,6 +532,9 @@ func TestMain(m *testing.M) {
 			panic(err)
 		}
 		if err := os.WriteFile(filepath.Join(destination, "manifest.tsv"), []byte(manifest.String()), 0600); err != nil {
+			panic(err)
+		}
+		if err := os.WriteFile(filepath.Join(destination, "checkpoint-manifest.tsv"), []byte(checkpoints.String()), 0600); err != nil {
 			panic(err)
 		}
 		fmt.Printf("HIR construction census: %d context-distinct functions in %d records; %d eligible; %d fixtures (%d Flow exclusions)\n", total, len(keys), eligible, constructionFixtures, len(constructionFlow))
@@ -680,4 +705,11 @@ func constructionSymbols(source *ast.SourceFile, c *checker.Checker) string {
 	}
 	walk(source.AsNode())
 	return constructionFrame(fmt.Sprint(len(records))) + strings.Join(records, "") + constructionFrame(SymbolGraph(c, source, ids))
+}
+
+func constructionCheckpoint(r *constructionRecord) OracleCheckpoint {
+	c := OracleIdentityFixture(r.Key, r.Dump)
+	c.Sidecars = append(c.Sidecars, r.InputSidecars...)
+	c.Identities = append(c.Identities, r.ExtraIdentities...)
+	return c
 }

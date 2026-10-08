@@ -1,114 +1,87 @@
-# Unit 2 report — full construction and static-components; clone native stop
+# Unit 2 complete and shared replay bootstrap
 
-Roadmap step 28. This stopped unit is on `stage1-hir/wip`; the watched plan branch
-is not pushed. The lint-area merge remains `c7dab335` from `ad7bd066`; cohere stays
-pinned at `7945d102a6c18dd36adf9114a758ce646e8b2359`. HIR made no parser change.
+Roadmap steps 08 and 28. This finished unit is pushed once to `stage1-hir/wip`.
+Cohere remains pinned at `7945d102a6c18dd36adf9114a758ce646e8b2359`; no parser
+or Go production source is changed. The previous area merge is retained.
 
 ## Coverage
 
 | Certificate | Native | Node |
-| --- | --- | --- |
-| Original construction functions | **1,442 / 1,465** | **1,442 / 1,465** |
-| Admitted non-Flow originals | **1,442 / 1,442** | **1,442 / 1,442** |
-| Construction path probes | **72 / 72** | **72 / 72** |
-| Combined constructed observations | **1,514 / 1,537** | **1,514 / 1,537** |
-| Static-components upstream cases | **22 / 22** | **22 / 22** |
-| Static-components owned witnesses | **3 / 3** | **3 / 3** |
-| Pending CloneFunction observations | **0 — compiler refusal** | **1,514 / 1,537** |
+| --- | ---: | ---: |
+| Construction and cached ForFunction originals | 1,442 / 1,465 | 1,442 / 1,465 |
+| Admitted non-Flow originals | 1,442 / 1,442 | 1,442 / 1,442 |
+| CloneFunction admitted originals | 1,442 / 1,442 | 1,442 / 1,442 |
+| Construction and clone path probes | 72 / 72 | 72 / 72 |
+| Fresh-arena checkpoint decode / dump / re-encode originals | 1,465 / 1,465 | 1,465 / 1,465 |
+| Checkpoint path probes | 72 / 72 | 72 / 72 |
+| Static-components upstream / owned cases | 22 / 22 + 3 / 3 | 22 / 22 + 3 / 3 |
 
-Every admitted graph is byte-identical to Go hir-v1, through direct construction
-and cached ForFunction. Static-components compares complete findings to the
-unchanged Go rule; emitted JavaScript matches too. The 23 Flow graphs and 40 Flow
-fixtures remain catalogued exclusions. All 45 original Go test skips retain
-their per-group out-of-rule-reach / later-unit classification in SKIPPED.md and
-the checked census summary. No admitted failure was dropped.
+Every admitted constructed and cloned graph matches Go hir-v1 byte for byte.
+The 23 Flow graphs remain excluded from AST construction and catalogued; they
+are included in replay, which reads Go-produced input without parsing Flow.
+The 45 original skipped Go tests retain the classifications in SKIPPED.md.
+Static-components findings also match in emitted JavaScript.
 
-Construction now covers methods/accessors and computed names, closures and
-capture writes, all statement/control-flow/JSX paths in the admitted corpus,
-optional chains, typed/default/rest parameters, patterns and destructuring,
-catch patterns, casts and unsupported targets, debugger/meta/unsupported nodes.
-Patterns have their own checked arena; no cyclic object links are introduced.
-Go's Lower→Clone→Construct versus ForFunction→Clone invocation distinction is
-recorded independently as cloneBeforeSSA, preserving both pattern views.
+The spread/static-constructor compiler ruling is applied as explicit typed
+copies, with `gap 2 (GAPS.md)` comments. The shortest proving program and exact
+selector-style refusal test remain: that test fails when the compiler fixes
+lowering. Gap 1's presence/value workaround and proving test are also retained.
+Neither ruling weakens private minting or checked arena reads.
 
-## Mutants and local validation
+## Shared pass contract
 
-Static-components' creation mutant **fails against Go on native and Node**.
-The HIR semantic matrix has **79 / 79 mutants caught** on native and Node,
-combining the full run with the repaired-anchor complete-corpus reruns. FunctionIndex and PatternIndex off-by-one mutants stop at checked
-reads on both runtimes. Private minting and cross-brand misuse are rejected;
-foreign arena handles also fail. The ForFunction cache-hit mutant is caught on
-native and Node. Pending CloneFunction's alias mutant fails on Node at
-`BlockIndex belongs to another arena`; native clone is not certified.
+Workers import `../../replay/index.ts` from their pass directory. README.md in
+replay/ documents the framing, identity reader, fresh decoder, output encoder,
+AST/type/checker selectors and Go overlay hooks. Canonical hir-checkpoint-v1
+bundles contain unchanged hir-v1 graphs plus ordered namespaced sidecars, linked
+by nesting path and existing identifiers, blocks and instructions; scope and
+reactive identities are registered explicitly. Nil and empty memo dependencies,
+outlined identities, detached/nil blocks and allocator high-water marks survive
+round-trip. Internal invalid UTF-8 checker-name bytes use reversible surrogate
+escapes, preventing Node's replacement character from changing Go bytes.
 
-The rule certificate is reproducible with its owned `certify.sh`, which overlays
-its owned test beside the generic lint harness. It captures every upstream case
-for the exact descriptor name and uses the harness's native checker transcript
-for Node/emitted-JS replay, including the mutant. No shared registration list or
-parser code was patched. Two old object-mutant anchors moved with object method
-lowering; their targeted complete-corpus rerun passes after reanchoring.
+All 43 Go instruction variants are central, including DeclareContext and
+StartMemoize/FinishMemoize. ScopeIndex and ReactiveIndex have private minting and
+checked reads in the single shared arena home. The decoder's JSON syntax graph
+also uses a checked PayloadIndex arena. Copy/remap, instruction replacement,
+existing declaration reuse and the distinct manual-memo cache contract are
+public APIs. The cache invokes worker-supplied drop/inclusive-inline callbacks
+at Go's boundaries; this bootstrap does not implement those algorithms.
 
-## Rulings and new language stop
+Requests read: unit 3 STOPPED.md at 9cc68732 and unit 4 REPORT.md at 9519c348.
+The framing, memo/outlined records, copy/rewrite/cache hooks, checkpoint decoder
+and checker-fact selectors are supplied. Pass workers retain ownership of their
+before/after exports, analysis sidecars and implementations; the shared Go
+encoder and construction-observation hook connect their tagged adapters without
+inventing a pass order. No pass algorithm's certificate is claimed here.
 
-The 09:44 optional-boolean ruling (a) is applied: an optional record holds required
-boolean presence/value fields. Every site is marked `gap 1 (GAPS.md)`. The original
-proving program and exact selector-style test stay in GAPS.md / gaps_test.go,
-failing when step 17 (#qgr7mm4) lowers the field. Go dumps identify **74 / 1,465**
-original graphs requiring that field and **1,391** without it; the retained impact
-JSON names every key and original test call. The authorized workaround restores
-the whole native construction build.
+**Declined:** landing or inventing mutation_aliasing's port/API. Latest fetched
+lint area 6bf7bcec still has no stage1/cohere/mutation_aliasing directory. That
+module belongs to the existing analysis lane and must be imported, never copied.
+Unit 4's dependent imports/projection and unit 5 need its actual landed API.
+Later scope/reactive analysis record codecs remain worker-owned, with requests
+for shared core schema changes routed to this owner.
 
-Unit 2 stops on the **isolated native CloneFunction** gap, GAPS.md gap 2.
-Go `clone.go:96` copies `Instruction.Value: InstructionValue`, through the deep
-copy at `inline_remap.go:271`. Adamic `clone.ts` copies `ValueType` records and
-owned arrays into fresh checked arenas. The compiler refuses object spread in
-the same program as the required private-index static constructor objects:
+## Mutants and local verification
 
-```
-adamic: clone_main.ts: stage 0 can't lower spreading in a program with static constructor objects yet
-```
-
-The three-line proving program is `testdata/static-constructor-spread-gap.a`;
-Node prints `0\n`, and its exact `lower.NotYet.What` is
-`spreading in a program with static constructor objects`. The gap test passes on
-that refusal and fails as soon as it closes. No workaround is applied.
-The pending clone is isolated behind clone_main.ts / clone_coverage.ts, with no
-import from ordinary construction or the rule. Its Node count is separate from
-the native = Node construction certificate. Unit 2 is not declared complete.
+Fresh certificates in validation/replay-bootstrap/ cover the full checkpoint
+census on both runtimes, its corrupt instruction-index mutant, central Go memo
+variants, typed declaration/copy/rewrite/cache contracts, the full construction
+and clone census, clone storage-alias mutant, return-lowering mutant, FunctionIndex
+mutant, both compiler gap tests, cache-hit mutant, and static-components creation
+mutant. ScopeIndex and ReactiveIndex off-by-one, private-constructor and cross-brand
+checks pass. The prior 79 / 79 HIR semantic matrix remains recorded in
+validation/unit2-step28/; this push reruns focused mutants and full unmutated
+corpus certificates rather than claiming a fresh run of all 79.
 
 ## Allocations
 
-The same byte-identical **12-function** native probe:
-
-| Metric | Current |
-| --- | ---: |
-| Allocations / frees | **4,161 / 4,161** |
-| Delta from original 3,212 | **+949** |
-| Delta from shared-index 3,869 | **+292** |
-| Delta from typed checkpoint 4,124 | **+37** |
-| Retains / releases | 16,250 / 14,835 |
-| Peak live / regions | 237 / 0 |
-
+The same byte-identical 12-function native probe has **4,164 allocations and
+4,164 frees**, **+952** from original 3,212, **+295** from shared-index 3,869,
+and **+40** from typed-checkpoint 4,124. Retains/releases: **16,323 / 14,901**;
+peak live: **240**; regions: **0**. Previous measurement was 4,161: this bootstrap
+adds three index classes, but the +3 is not claimed as an isolated attribution.
 Known causes of earlier growth are boxed concrete indices, canonical handle
-arrays and owner-bound SSA callbacks. This slice additionally creates pattern
-node and handle arrays per function. No isolated share of the +37 is claimed;
-the brand remains enforced. Full current admitted corpus: **4,300,331 allocations
-and frees**, retains 19,518,706, releases 18,665,838, peak 11,969, regions 0.
-Its denominator differs from older full-corpus measurements, so that total is
-not presented as a like-for-like delta.
-
-## Next work and parallel lanes
-
-After the ruling/fix, certify CloneFunction on native and rerun its integrated
-certificate. Static-components itself is green. PLAN.md now names, for units
-3–10, exact Go entry points, input/output checkpoint states, exclusive owned
-directories and shared-file ownership. Units 3, 4, 6–10 can start isolated Go-input
-work without earlier Adamic algorithms. Unit 5 and unit 4's projection require
-the promised mutation_aliasing area import, absent in this checkout. A shared
-replay owner must first provide the decoder and missing pass-state sidecars:
-today's printer has `scopes -`, not a complete later-pass replay schema.
-Only the composed unit 10 pipeline genuinely needs the earlier Adamic passes.
-
-Retained certificates and the aggregate mutant receipt are in `validation/unit2-step28/`.
-Final metadata verification also preserves source handles on conditional/logical/optional
-temporaries, needed for exact static-components creation spans; hir-v1 is unchanged.
+arrays, owner-bound SSA callbacks and pattern node/handle arrays. The brand is
+preserved. The old 4,300,331 full-corpus allocation measurement in the prior
+certificate is historical; no current full-corpus delta is claimed.
