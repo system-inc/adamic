@@ -61,6 +61,15 @@ func (l *lowering) namespaceReceiverProof(function *ast.Node) error {
 			return false
 		}
 		if l.namespaceValueNode(node) && l.symbol(node) == target {
+			use := node
+			for use.Parent != nil && use.Parent.Kind == ast.KindParenthesizedExpression {
+				use = use.Parent
+			}
+			if use.Parent != nil {
+				if _, _, known := l.namespaceFunctionIdentityOperands(use.Parent); known {
+					return false
+				}
+			}
 			if called(node) {
 				if node.Kind != ast.KindPropertyAccessExpression || l.namespaceDeclaration(node.Expression()) != declaration {
 					found = &Refused{Where: l.program.Where(node), What: "a detached call to namespace function " + function.Name().Text() + "; qualified and detached calls have different receivers", Fix: "call it through its declaring namespace"}

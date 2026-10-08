@@ -1,0 +1,6 @@
+let compare:()=>boolean=()=>Debug.log===Debug.log;
+console.log(`${compare()}`);
+namespace Debug {
+ export function log():void{}
+ export namespace log {export const level:number=1;}
+}

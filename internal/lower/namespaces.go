@@ -81,6 +81,9 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled := l.namespaceFunctionIdentity(node); handled {
+		return value, true, nil
+	}
 	if value, handled, err := l.namespaceReceiverRead(node); handled {
 		return value, true, err
 	}
@@ -157,7 +160,8 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			}
 			switch declaration.Kind {
 			case ast.KindFunctionDeclaration:
-				return l.notYet(node, "a namespace merged with a function; callable object properties, identity and receivers are not represented")
+				// Qualified fixed properties and direct calls do not observe a callable container.
+				continue
 			case ast.KindClassDeclaration:
 				return l.notYet(node, "a namespace merged with a class; constructor identity and staged static properties are not represented")
 			default:
@@ -206,6 +210,24 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 	}
 	if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
 		parent := node.Parent
+		if l.namespaceMergedFunction(node) {
+			if called(node) {
+				return nil
+			}
+			use := node
+			for use.Parent != nil && use.Parent.Kind == ast.KindParenthesizedExpression {
+				use = use.Parent
+			}
+			if use.Parent != nil {
+				if _, _, known := l.namespaceFunctionIdentityOperands(use.Parent); known {
+					return nil
+				}
+			}
+			if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Expression() == node && l.namespaceMember(parent) {
+				return nil
+			}
+			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members and canonical function identity comparisons are represented")
+		}
 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
 			return l.notYet(node, "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports")
 		}

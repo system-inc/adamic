@@ -373,3 +373,20 @@ cover ordered static and instance initialization, distinct instances and
 instanceof in both backends. Constructor identity/namespace merging retains
 its separate NotYet boundary. Debug's normalized shape next stops at Debug.log
 merging rather than the class. Details: `debug-groups/CLASSES.md`.
+
+## Callable namespace subset
+
+A namespace merged with a function now lowers direct calls and fixed qualified
+properties. Canonical identity comparisons of fixed declared namespace
+functions compare symbols while preserving receiver-read readiness and source
+order. This also supports void-returning Debug.log without fabricating a
+first-class callable object. Qualified property methods use the receiver proof
+described above; they can read live singleton exports through this.
+
+Callable-object escape, alias properties, reflection and implicit constructor
+properties remain NotYet with a named missing-container reason. Class merging
+and namespace reopening retain their earlier limits. The exact front24
+callable declaration probe and expanded calls, properties, identity and
+receiver fixture match Node in both backends. The normalized Debug.log shape
+now lowers; Debug's complete normalized shape still reaches bodyless overloads.
+See `debug-groups/CALLABLE.md`.

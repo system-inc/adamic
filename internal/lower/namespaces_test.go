@@ -17,7 +17,6 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"object value", "namespace N {export const x=1;} const value=N;", "namespace object"},
 		{"reflection", "namespace N {export const x=1;} console.log(Object.keys(N).join(' '));", "namespace object"},
 		{"reopening", "namespace N {export const x=1;} namespace N {export const y=2;}", "reopened namespace"},
-		{"function merge", "function N():number{return 1;} namespace N {export const x=1;}", "namespace merged with a function"},
 		{"class merge", "class N {} namespace N {export const x=1;}", "namespace merged with a class"},
 		{"nested object var", "namespace N {var {inner:{x}}={inner:{x:1}};}", "destructuring inside a namespace"},
 		{"rest object var", "namespace N {var {x,...rest}={x:1,y:2};}", "destructuring inside a namespace"},
@@ -78,7 +77,6 @@ func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
 
 func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
 	for _, test := range []struct{ name, reason string }{
-		{"debug_log.a", "callable object properties"},
 		{"class_merge.a", "constructor identity"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
@@ -221,6 +219,20 @@ func TestNamespaceReceiverLimits(t *testing.T) {
 		var ny *NotYet
 		if !errors.As(err, &ny) || !strings.Contains(err.Error(), test.reason) {
 			t.Fatalf("receiver boundary lost: %v", err)
+		}
+	}
+}
+
+func TestCallableNamespaceBoundaries(t *testing.T) {
+	for _, source := range []string{
+		"function log():void{} namespace log {export const level=1;} const escaped=log;",
+		"function log():void{} namespace log {export const level=1;} console.log(log.name);",
+		"function log():void{} namespace log {export const level=1;} console.log(Object.keys(log).join(','));",
+	} {
+		_, err := lowerSource(t, source)
+		var ny *NotYet
+		if !errors.As(err, &ny) || !strings.Contains(err.Error(), "callable namespace object") {
+			t.Fatalf("callable object boundary lost: %v", err)
 		}
 	}
 }
