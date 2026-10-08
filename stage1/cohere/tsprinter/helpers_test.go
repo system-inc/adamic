@@ -164,29 +164,3 @@ type run struct {
 	stdout, stderr []byte
 	exitCode       int
 }
-
-// upstreamTypeScriptInputs holds TypeScript's own test inputs, byte for byte, for stage 3's tsc
-// driver. They aren't Adamic sources, so the repository corpus leaves them out by name.
-const upstreamTypeScriptInputs = "stage3/drivers/tsc/corpus"
-
-// excludedUpstreamInputs is the directory the repository corpus skips. It fails when that directory
-// is missing or holds no .ts files, so a rename can't make the exclusion quietly cover nothing.
-func excludedUpstreamInputs(t *testing.T, root string) string {
-	t.Helper()
-	directory := filepath.Join(root, upstreamTypeScriptInputs)
-	count := 0
-	err := filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-			count++
-		}
-		return nil
-	})
-	if err != nil || count == 0 {
-		t.Fatalf("the repository corpus excludes %s by name, but it holds no .ts files (%v)", upstreamTypeScriptInputs, err)
-	}
-	t.Logf("repository corpus: left out %d upstream TypeScript inputs under %s", count, upstreamTypeScriptInputs)
-	return directory
-}
