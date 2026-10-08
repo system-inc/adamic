@@ -329,6 +329,9 @@ func (l *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expression,
 
 // Aliases cannot change the native storage kind, even when tsc accepts the structural view.
 func (l *lowering) recordStorageView(node *ast.Node) error {
+	if l.dictionaryReferenceConversion(node) {
+		return nil
+	}
 	var source *ast.Node
 	var target *checker.Type
 	if node.Kind == ast.KindVariableDeclaration {

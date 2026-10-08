@@ -97,6 +97,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 }
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+	if l.dictionaryReferenceConversion(node) {
+		return castProof{view: true}, nil
+	}
 	as := node.AsAsExpression()
 	if l.viewCallableDiscardedMarker(node) {
 		return castProof{}, nil

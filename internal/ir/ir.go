@@ -376,6 +376,7 @@ type (
 		DictionaryKey Expression
 		// DictionaryPrimitive retains the original type ID but checks only scalar/nullish arms; reference arms stop at this read.
 		DictionaryPrimitive bool
+		DictionaryReference bool // Complete immediate selector; descendants remain checked read obligations.
 		// View names a required field read whose presence, readiness and representation are checked.
 		Nullish            bool
 		NullAllowed        bool
@@ -521,6 +522,7 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
+		Dictionary     bool // Readonly dictionary: each lookup checks representation before slot access.
 		Value          Expression
 		Tuple          bool // Native object slots; JavaScript array identity.
 		Undefined      bool

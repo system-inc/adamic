@@ -14,6 +14,9 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
+	if l.dictionaryReferenceConversion(node) {
+		return l.checkedDictionaryReferenceConversion(node)
+	}
 	if l.nodeRequirePerformanceProjection(node) {
 		return l.expression(as.Expression)
 	}
