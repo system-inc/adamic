@@ -113,8 +113,6 @@ func TestEnumLimitsStayLoud(t *testing.T) {
 		}
 	}
 	for _, source := range []string{
-		"namespace N { export const value = 1; }",
-		"class Box { constructor(public value: number) {} }",
 		"enum E { '__proto__' = 'bad' }",
 		"enum E { NaN = 0 }",
 		"enum E { Infinity = 0 }",

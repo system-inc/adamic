@@ -13,7 +13,6 @@ import (
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	for _, gap := range []struct{ path, stdout, refusal string }{
 		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
-		{"gaps/3_optional_boolean_condition.ts", "important\n", "a boolean | undefined as a condition"},
 		{"gaps/4_empty_array_union.ts", "0\n", "an array of never"},
 		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},
 	} {
@@ -52,6 +51,28 @@ func TestClosedParserRegexGap(t *testing.T) {
 		{"native", nativeRun}, {"Node", onNode(t, path)}, {"JavaScript backend", onJavaScriptBackend(t, program)},
 	} {
 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "Parsed\nOk\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+func TestClosedOptionalBooleanConditionGap(t *testing.T) {
+	path, err := filepath.Abs("gaps/3_optional_boolean_condition.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"Node", onNode(t, path)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "important\n" {
 			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
 		}
 	}

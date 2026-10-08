@@ -124,6 +124,7 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 		t.Fatal(err)
 	}
 	text := string(source)
+	// Parameter properties may already require transform mode in the source oracle.
 	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
 	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
 	if erasable+transformedCalls != 1 || strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
