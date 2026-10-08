@@ -1,0 +1,26 @@
+function bindPattern(log: string[], label: string): void {
+	log.push(label);
+}
+function bindElement(pattern: boolean, log: string[], label: string): void {
+	if (pattern) {
+		return bindPattern(log, label);
+	}
+	log.push('element');
+}
+function argument(log: string[], label: string): string {
+	log.push('argument');
+	return label;
+}
+const log: string[] = [];
+console.log(String(bindElement(true, log, argument(log, 'pattern')) === undefined));
+console.log(String(bindElement(false, log, argument(log, 'ignored')) === undefined));
+console.log(log.join(','));
+function fail(log: string[]): void {
+	log.push('throw');
+	throw new Error('stop');
+}
+try {
+	console.log(String(fail(log) === undefined));
+} catch (error) {
+	console.log(log.join(','));
+}
