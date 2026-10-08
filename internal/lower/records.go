@@ -17,6 +17,9 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	if t.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(t) || checker.IsTupleType(t) || isClassInstance(t) {
 		return nil
 	}
+	if element := l.finitePartialRecordElement(t); element != nil {
+		return element
+	}
 	infos := l.checker.GetIndexInfosOfType(t)
 	for _, info := range infos {
 		if declaration := info.Declaration(); declaration != nil {
