@@ -17,8 +17,8 @@ func init() {
 	}
 }
 
-// These expected outcomes are independent of both emitters, so a shared lowering mistake
-// cannot turn a green native-versus-JavaScript comparison into a false proof.
+// Historical .a assertion fixtures now pin the refusal instead of a runtime check.
+// Checked .ts mutants live in TestCheckedNonNullTypeScript.
 func TestReadinessMutants(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, fixture, stdout, stderr string }{
@@ -36,72 +36,8 @@ func TestReadinessMutants(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			want := run{stdout: []byte(probe.stdout), stderr: []byte("adamic: panic: " + probe.stderr + "\n"), exitCode: 70}
-			baseline, _ := nativelyUncached(t, program)
-			if difference := disagreement(want, baseline); difference != "" {
-				t.Fatal(difference)
-			}
-			if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "" {
-				t.Fatal(difference)
-			}
-			changes := 0
-			program.Main = mutateReadiness(program.Main, func(node any) any {
-				switch value := node.(type) {
-				case ir.Read:
-					if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
-						value.Readiness = ""
-						changes++
-						return value
-					}
-				case ir.Declare:
-					if probe.name == "initialize-to-zero" && value.Uninitialized {
-						value.Uninitialized = false
-						changes++
-						return value
-					}
-				case ir.WeakTarget:
-					if probe.name == "weak-generic-message" && !value.Present {
-						value.Present = true
-						changes++
-						return value
-					}
-				}
-				return node
-			})
-			for i := range program.Functions {
-				program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
-					switch value := node.(type) {
-					case ir.Read:
-						if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
-							value.Readiness = ""
-							changes++
-							return value
-						}
-					case ir.Declare:
-						if probe.name == "initialize-to-zero" && value.Uninitialized {
-							value.Uninitialized = false
-							changes++
-							return value
-						}
-					}
-					return node
-				})
-			}
-			if changes == 0 {
-				t.Fatal("mutant changed nothing")
-			}
-			mutant, _ := nativelyUncached(t, program)
-			if disagreement(want, mutant) == "" {
-				t.Fatal("mutant escaped pinned assertion")
-			}
-			if mutant.exitCode != 0 && mutant.exitCode != 70 {
-				t.Fatalf("mutant caught only by a crash: exit %d stderr %s", mutant.exitCode, mutant.stderr)
-			}
-			t.Logf("caught by pinned output: exit %d stdout %q stderr %q", mutant.exitCode, mutant.stdout, mutant.stderr)
+			_, err = lowered(t, path)
+			assertAdamicNonNullRefusal(t, err)
 		})
 	}
 }
@@ -112,37 +48,8 @@ func TestUninitializedIsNotNullishMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	want := onNode(t, path)
-	baseline, _ := nativelyUncached(t, program)
-	if difference := disagreement(want, baseline); difference != "" {
-		t.Fatal(difference)
-	}
-	message := len(program.Strings)
-	program.Strings = append(program.Strings, "non-null assertion failed: undefined! is null or undefined")
-	changes := 0
-	for i := range program.Functions {
-		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
-			if declaration, ok := node.(ir.Declare); ok && declaration.Uninitialized && program.Locals[declaration.Local].Type == ir.Number && changes == 0 {
-				declaration.Uninitialized = false
-				declaration.Value = ir.Coalesce{Value: ir.MaybeOf{Of: ir.MaybeNumber}, Panic: ir.StringConstant{Index: message}, Of: ir.Number}
-				changes++
-				return declaration
-			}
-			return node
-		})
-	}
-	if changes != 1 {
-		t.Fatal("ordinary-nullish mutant did not replace one initializer")
-	}
-	mutant, _ := nativelyUncached(t, program)
-	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
-		t.Fatalf("ordinary-nullish mutant escaped Node: %#v", mutant)
-	}
-	t.Logf("ordinary-nullish initializer mutant caught by Node output: %s", mutant.stderr)
+	_, err = lowered(t, path)
+	assertAdamicNonNullRefusal(t, err)
 }
 
 func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.Statement {
@@ -178,46 +85,15 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 	return transform(reflect.ValueOf(statements)).Interface().([]ir.Statement)
 }
 
-// Native Weak lifetime is already ruled to differ from Node's tracing collector.
-// Pin both observations, including this assertion's expression-specific native diagnostic.
+// The historical Weak assertion is refused in .a under the source-mode ruling.
 func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	node := run{stdout: []byte("before\nlivelive\n")}
-	for _, got := range []run{onNode(t, path), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(node, got); difference != "" {
-			t.Fatal(difference)
-		}
-	}
-	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed: holder.value! is null or undefined\n"), exitCode: 70}
-	actual, _ := nativelyUncached(t, program)
-	if difference := disagreement(want, actual); difference != "" {
-		t.Fatal(difference)
-	}
-	changes := 0
-	program.Main = mutateReadiness(program.Main, func(node any) any {
-		if target, ok := node.(ir.WeakTarget); ok && !target.Present {
-			target.Present = true
-			changes++
-			return target
-		}
-		return node
-	})
-	if changes == 0 {
-		t.Fatal("Weak diagnostic mutant changed nothing")
-	}
-	mutant, _ := nativelyUncached(t, program)
-	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
-		t.Fatal("freed Weak diagnostic mutant escaped pinned output")
-	}
-	t.Logf("freed Weak diagnostic mutant caught: %s", mutant.stderr)
+	_, err = lowered(t, path)
+	assertAdamicNonNullRefusal(t, err)
 }
 
 func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
@@ -226,44 +102,6 @@ func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	node := onNode(t, path)
-	baseline, _ := nativelyUncached(t, program)
-	if difference := disagreement(node, baseline); difference != "" {
-		t.Fatal(difference)
-	}
-	changed := false
-	for fi := range program.Functions {
-		body := program.Functions[fi].Body
-		for i := 1; i < len(body); i++ {
-			declaration, ok := body[i].(ir.Declare)
-			if !ok || !declaration.Uninitialized || program.Locals[declaration.Local].InitializerExpression != "textInitial!" {
-				continue
-			}
-			operand, ok := body[i-1].(ir.Declare)
-			if !ok {
-				t.Fatal("initializer operand was not held once")
-			}
-			index := len(program.Strings)
-			program.Strings = append(program.Strings, "non-null assertion failed: textInitial! is null or undefined")
-			declaration.Uninitialized = false
-			declaration.Value = ir.Coalesce{Value: ir.Read{Local: operand.Local, Of: program.Locals[operand.Local].Type}, Panic: ir.StringConstant{Index: index}, Of: program.Locals[declaration.Local].Type}
-			body[i] = declaration
-			changed = true
-		}
-	}
-	if !changed {
-		t.Fatal("eager initializer mutant changed nothing")
-	}
-	mutant, _ := nativelyUncached(t, program)
-	if mutant.exitCode != 70 {
-		t.Fatalf("mutant failed without a runtime panic: %#v", mutant)
-	}
-	if disagreement(node, mutant) == "" {
-		t.Fatal("eager initializer survived Node comparison")
-	}
-	t.Logf("eager initializer caught by Node output: %s", mutant.stderr)
+	_, err = lowered(t, path)
+	assertAdamicNonNullRefusal(t, err)
 }

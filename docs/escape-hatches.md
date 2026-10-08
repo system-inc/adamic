@@ -1440,3 +1440,52 @@ No submodule change is committed. Root disk exhaustion initially interrupted the
 checkout; an isolated worktree kept the baseline intact. Only reproducible build
 cache artifacts were moved or discarded through task scratch paths to finish
 verification. The complete repository gate, census and scanner slice were not run.
+
+## Checked non-null port onto area-next
+
+The port on `codex/non-null-checked-next` starts at `compiler/area-next` commit
+`337aa466`. Its first two commits cherry-pick only this worker's `ae4fe9e6` and
+`c41c0e06`, with conflicts resolved hunk by hunk. The base already carries
+closure conventions, predicates and readiness. Those remain, with one
+`internal/lower/non_null.go` and the existing source text helper in
+`internal/lower/readiness.go`. The minimal narrowing rule keeps `ir.Narrow`
+and narrowing calls in their result representations with their checks intact.
+The initializer gates in `locals.go`, `functions.go`, `class_inheritance.go`,
+`class_static.go` and `object.go` keep `.ts` assertions eager. The base's admitted
+var assertion declaration remains admitted, so both var and let controls now
+exercise the inserted check. Definite-assignment declaration syntax remains
+distinct and retains readiness checks.
+
+Ordinary `.a` assertions, including historical storage markers, now pin the
+ruled refusal without rewriting their source. Twelve lower readiness controls,
+two predicate runtime controls, the historical oracle controls, and seven
+interface-storage controls change their expectations accordingly. Backend field
+readiness primitives and their mutants still pass. This retires historical
+runtime mutant coverage for the refused syntax; it does not claim those old
+mutants were run against admitted programs.
+
+The before/after comparison against clean `337aa466` is recorded in
+`docs/verification/non-null-next-port.json`, including every added and removed
+test name, changed expectation, count row and log hash. Lower, IR and flow pass
+on both sides. All 3,272 shared named cases retain their pass/skip results;
+69 new cases pass. Flow excludes 36 refused `.a` programs from each of its
+three runtime analyses, totaling 108 removed runtime cases. Their sources remain
+refusal controls. The uncached filtered oracle retains all 107 existing fixture
+cases and adds eight passing `.ts` cases. No shared test changes pass/fail/skip
+status. Both original mutants are caught: omitting the check changes the pinned
+undefined panic to successful output, and stripping the narrowing violates the
+number return representation before either backend.
+
+Count regeneration and the complete table check pass. Eight rows are added and
+44 are retired because their `.a` source is now refused: 35 ordinary oracle
+rows, one nested checker row, seven interface-storage rows and one predicate
+direction row. All 775 surviving rows keep identical measurements. Command
+explanations retain the base's predicate report and add non-null and aggregate
+counts. Formatting, patch checks and vet of the five changed packages pass.
+
+Setup printed Go ready at 0.032s, Node at 0.033s, markdown dependencies at 0.099s
+and clang at 0.179s; nproc is 5. It stopped on the same local submodule symlink
+restriction described above. Both comparisons use the matching pinned checkout
+and `GOFLAGS=-buildvcs=false`, with no committed submodule change. The clean base
+also needed its pinned Node API dependencies installed before comparison.
+The full repository gate, census replay and scanner slice were not run.

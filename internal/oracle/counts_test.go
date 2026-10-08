@@ -138,7 +138,7 @@ func TestCountsAreRecorded(t *testing.T) {
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
-			if !fixture.lowers || uncounted[fixture.path] {
+			if !fixture.lowers || uncounted[fixture.path] || refusedAdamicNonNullFixture(fixture.path) {
 				continue
 			}
 			t.Run(fixture.path, func(t *testing.T) {

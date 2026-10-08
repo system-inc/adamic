@@ -59,19 +59,18 @@ func programs(t *testing.T) []string {
 	return paths
 }
 
-// These new controls pin compile-time refusals, rather than runnable graphs.
-// The TypeScript literal controls remain runnable with inserted checks.
+// Ordinary .a assertions are refusal controls; definite declarations still lower.
+// All TypeScript assertion controls remain runnable with inserted checks.
 func refusedNonNullFixture(path string) bool {
 	name := filepath.Base(path)
-	if filepath.Ext(path) == ".a" && strings.HasPrefix(name, "non_null_refuse_") {
-		return true
+	if filepath.Ext(path) != ".a" || !strings.HasPrefix(name, "non_null") {
+		return false
 	}
 	switch name {
-	case "non_null_initialized.a", "non_null_literal_statement.a", "non_null_literal_return.a", "non_null_uninitialized_default.a",
-		"non_null_possible_read.a", "non_null_possible_typeerror.a", "non_null_checked_initializer.ts":
-		return true
+	case "non_null_definite.a", "non_null_definite_local.a", "non_null_definite_field.a":
+		return false
 	}
-	return false
+	return true
 }
 
 func lowered(t *testing.T, path string) *ir.Program {

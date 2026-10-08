@@ -1,7 +1,7 @@
 package lower
 
 import (
-	"github.com/system-inc/adamic/internal/ir"
+	"errors"
 	"testing"
 )
 
@@ -26,30 +26,10 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.source)
-			if err != nil {
-				t.Fatal(err)
-			}
-			checked := 0
-			count := func(node any) bool {
-				switch read := node.(type) {
-				case ir.Read:
-					if read.Readiness != "" {
-						checked++
-					}
-				case ir.Property:
-					if read.Readiness != "" {
-						checked++
-					}
-				}
-				return true
-			}
-			walk(program.Main, count)
-			for _, function := range program.Functions {
-				walk(function.Body, count)
-			}
-			if checked != probe.checked {
-				t.Fatalf("%d readiness checks, want %d", checked, probe.checked)
+			_, err := lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+				t.Fatalf("want historical .a assertion refused, got %v", err)
 			}
 		})
 	}

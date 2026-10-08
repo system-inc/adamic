@@ -2,6 +2,7 @@ package lower
 
 import (
 	"bytes"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -71,6 +72,13 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowerSource(t, string(source))
+			if probe.name == "parser_every_result" || probe.name == "overload_every" {
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+					t.Fatalf("want .a assertion refused, got %v", err)
+				}
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
 			}

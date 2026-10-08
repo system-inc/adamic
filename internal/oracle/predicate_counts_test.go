@@ -29,6 +29,11 @@ func predicateCountsTable(t *testing.T) string {
 	var table strings.Builder
 	table.WriteString(predicateCountsHeader)
 	for _, path := range paths {
+		if filepath.Base(path) == "overload_every.a" {
+			_, err := lowered(t, path)
+			assertAdamicNonNullRefusal(t, err)
+			continue
+		}
 		program, err := lowered(t, path)
 		if err != nil {
 			t.Fatalf("%s: %v", path, err)
