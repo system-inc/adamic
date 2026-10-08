@@ -24,22 +24,22 @@ var runtime embed.FS
 // character after it the way \x can, and quote, backslash and question mark are escaped too, the last
 // so no ?? can ever read as a trigraph.
 func cString(value string) string {
-	var builder strings.Builder
-	builder.WriteByte('"')
+	var literal strings.Builder
+	literal.WriteByte('"')
 	for index := 0; index < len(value); index++ {
 		octet := value[index]
 		switch {
 		case octet == '"' || octet == '\\' || octet == '?':
-			builder.WriteByte('\\')
-			builder.WriteByte(octet)
+			literal.WriteByte('\\')
+			literal.WriteByte(octet)
 		case octet >= 0x20 && octet < 0x7f:
-			builder.WriteByte(octet)
+			literal.WriteByte(octet)
 		default:
-			fmt.Fprintf(&builder, "\\%03o", octet)
+			fmt.Fprintf(&literal, "\\%03o", octet)
 		}
 	}
-	builder.WriteByte('"')
-	return builder.String()
+	literal.WriteByte('"')
+	return literal.String()
 }
 
 // Options says how to compile.
