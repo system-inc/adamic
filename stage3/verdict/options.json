@@ -1,0 +1,1229 @@
+{
+  "version": "6.0.3",
+  "options": {
+    "help": {
+      "name": "help",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "watch": {
+      "name": "watch",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "preservewatchoutput": {
+      "name": "preserveWatchOutput",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "listfiles": {
+      "name": "listFiles",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "explainfiles": {
+      "name": "explainFiles",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "listemittedfiles": {
+      "name": "listEmittedFiles",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "pretty": {
+      "name": "pretty",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "traceresolution": {
+      "name": "traceResolution",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "diagnostics": {
+      "name": "diagnostics",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "extendeddiagnostics": {
+      "name": "extendedDiagnostics",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "generatecpuprofile": {
+      "name": "generateCpuProfile",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "generatetrace": {
+      "name": "generateTrace",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "incremental": {
+      "name": "incremental",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "declaration": {
+      "name": "declaration",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "declarationmap": {
+      "name": "declarationMap",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "emitdeclarationonly": {
+      "name": "emitDeclarationOnly",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "sourcemap": {
+      "name": "sourceMap",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "inlinesourcemap": {
+      "name": "inlineSourceMap",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nocheck": {
+      "name": "noCheck",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "noemit": {
+      "name": "noEmit",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "assumechangesonlyaffectdirectdependencies": {
+      "name": "assumeChangesOnlyAffectDirectDependencies",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "locale": {
+      "name": "locale",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "all": {
+      "name": "all",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "version": {
+      "name": "version",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "init": {
+      "name": "init",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "project": {
+      "name": "project",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "showconfig": {
+      "name": "showConfig",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "listfilesonly": {
+      "name": "listFilesOnly",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "ignoreconfig": {
+      "name": "ignoreConfig",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "target": {
+      "name": "target",
+      "type": "enum",
+      "values": {
+        "es3": 0,
+        "es5": 1,
+        "es6": 2,
+        "es2015": 2,
+        "es2016": 3,
+        "es2017": 4,
+        "es2018": 5,
+        "es2019": 6,
+        "es2020": 7,
+        "es2021": 8,
+        "es2022": 9,
+        "es2023": 10,
+        "es2024": 11,
+        "es2025": 12,
+        "esnext": 99
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "module": {
+      "name": "module",
+      "type": "enum",
+      "values": {
+        "none": 0,
+        "commonjs": 1,
+        "amd": 2,
+        "system": 4,
+        "umd": 3,
+        "es6": 5,
+        "es2015": 5,
+        "es2020": 6,
+        "es2022": 7,
+        "esnext": 99,
+        "node16": 100,
+        "node18": 101,
+        "node20": 102,
+        "nodenext": 199,
+        "preserve": 200
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "lib": {
+      "name": "lib",
+      "type": "list",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "allowjs": {
+      "name": "allowJs",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "checkjs": {
+      "name": "checkJs",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "jsx": {
+      "name": "jsx",
+      "type": "enum",
+      "values": {
+        "preserve": 1,
+        "react-native": 3,
+        "react-jsx": 4,
+        "react-jsxdev": 5,
+        "react": 2
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "outfile": {
+      "name": "outFile",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "outdir": {
+      "name": "outDir",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "rootdir": {
+      "name": "rootDir",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "composite": {
+      "name": "composite",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": true,
+      "vary": true
+    },
+    "tsbuildinfofile": {
+      "name": "tsBuildInfoFile",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "removecomments": {
+      "name": "removeComments",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "importhelpers": {
+      "name": "importHelpers",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "importsnotusedasvalues": {
+      "name": "importsNotUsedAsValues",
+      "type": "enum",
+      "values": {
+        "remove": 0,
+        "preserve": 1,
+        "error": 2
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "downleveliteration": {
+      "name": "downlevelIteration",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "isolatedmodules": {
+      "name": "isolatedModules",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "verbatimmodulesyntax": {
+      "name": "verbatimModuleSyntax",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "isolateddeclarations": {
+      "name": "isolatedDeclarations",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "erasablesyntaxonly": {
+      "name": "erasableSyntaxOnly",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "libreplacement": {
+      "name": "libReplacement",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "strict": {
+      "name": "strict",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noimplicitany": {
+      "name": "noImplicitAny",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "strictnullchecks": {
+      "name": "strictNullChecks",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "strictfunctiontypes": {
+      "name": "strictFunctionTypes",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "strictbindcallapply": {
+      "name": "strictBindCallApply",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "strictpropertyinitialization": {
+      "name": "strictPropertyInitialization",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "strictbuiltiniteratorreturn": {
+      "name": "strictBuiltinIteratorReturn",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "stabletypeordering": {
+      "name": "stableTypeOrdering",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noimplicitthis": {
+      "name": "noImplicitThis",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "useunknownincatchvariables": {
+      "name": "useUnknownInCatchVariables",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "alwaysstrict": {
+      "name": "alwaysStrict",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nounusedlocals": {
+      "name": "noUnusedLocals",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nounusedparameters": {
+      "name": "noUnusedParameters",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "exactoptionalpropertytypes": {
+      "name": "exactOptionalPropertyTypes",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noimplicitreturns": {
+      "name": "noImplicitReturns",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nofallthroughcasesinswitch": {
+      "name": "noFallthroughCasesInSwitch",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nouncheckedindexedaccess": {
+      "name": "noUncheckedIndexedAccess",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noimplicitoverride": {
+      "name": "noImplicitOverride",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nopropertyaccessfromindexsignature": {
+      "name": "noPropertyAccessFromIndexSignature",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "moduleresolution": {
+      "name": "moduleResolution",
+      "type": "enum",
+      "values": {
+        "node10": 2,
+        "node": 2,
+        "classic": 1,
+        "node16": 3,
+        "nodenext": 99,
+        "bundler": 100
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "baseurl": {
+      "name": "baseUrl",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "paths": {
+      "name": "paths",
+      "type": "object",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": true,
+      "vary": false
+    },
+    "rootdirs": {
+      "name": "rootDirs",
+      "type": "list",
+      "filePath": false,
+      "elementPath": true,
+      "configOnly": true,
+      "vary": false
+    },
+    "typeroots": {
+      "name": "typeRoots",
+      "type": "list",
+      "filePath": false,
+      "elementPath": true,
+      "configOnly": false,
+      "vary": false
+    },
+    "types": {
+      "name": "types",
+      "type": "list",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "allowsyntheticdefaultimports": {
+      "name": "allowSyntheticDefaultImports",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "esmoduleinterop": {
+      "name": "esModuleInterop",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "preservesymlinks": {
+      "name": "preserveSymlinks",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "allowumdglobalaccess": {
+      "name": "allowUmdGlobalAccess",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "modulesuffixes": {
+      "name": "moduleSuffixes",
+      "type": "list",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "allowimportingtsextensions": {
+      "name": "allowImportingTsExtensions",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "rewriterelativeimportextensions": {
+      "name": "rewriteRelativeImportExtensions",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "resolvepackagejsonexports": {
+      "name": "resolvePackageJsonExports",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "resolvepackagejsonimports": {
+      "name": "resolvePackageJsonImports",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "customconditions": {
+      "name": "customConditions",
+      "type": "list",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "nouncheckedsideeffectimports": {
+      "name": "noUncheckedSideEffectImports",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "sourceroot": {
+      "name": "sourceRoot",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "maproot": {
+      "name": "mapRoot",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "inlinesources": {
+      "name": "inlineSources",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "experimentaldecorators": {
+      "name": "experimentalDecorators",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "emitdecoratormetadata": {
+      "name": "emitDecoratorMetadata",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "jsxfactory": {
+      "name": "jsxFactory",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "jsxfragmentfactory": {
+      "name": "jsxFragmentFactory",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "jsximportsource": {
+      "name": "jsxImportSource",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "resolvejsonmodule": {
+      "name": "resolveJsonModule",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "allowarbitraryextensions": {
+      "name": "allowArbitraryExtensions",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "out": {
+      "name": "out",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "reactnamespace": {
+      "name": "reactNamespace",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "skipdefaultlibcheck": {
+      "name": "skipDefaultLibCheck",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "charset": {
+      "name": "charset",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "emitbom": {
+      "name": "emitBOM",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "newline": {
+      "name": "newLine",
+      "type": "enum",
+      "values": {
+        "crlf": 0,
+        "lf": 1
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noerrortruncation": {
+      "name": "noErrorTruncation",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "nolib": {
+      "name": "noLib",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noresolve": {
+      "name": "noResolve",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "stripinternal": {
+      "name": "stripInternal",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "disablesizelimit": {
+      "name": "disableSizeLimit",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "disablesourceofprojectreferenceredirect": {
+      "name": "disableSourceOfProjectReferenceRedirect",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": true,
+      "vary": false
+    },
+    "disablesolutionsearching": {
+      "name": "disableSolutionSearching",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": true,
+      "vary": false
+    },
+    "disablereferencedprojectload": {
+      "name": "disableReferencedProjectLoad",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": true,
+      "vary": false
+    },
+    "noimplicitusestrict": {
+      "name": "noImplicitUseStrict",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noemithelpers": {
+      "name": "noEmitHelpers",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "noemitonerror": {
+      "name": "noEmitOnError",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "preserveconstenums": {
+      "name": "preserveConstEnums",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "declarationdir": {
+      "name": "declarationDir",
+      "type": "string",
+      "filePath": true,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "skiplibcheck": {
+      "name": "skipLibCheck",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "allowunusedlabels": {
+      "name": "allowUnusedLabels",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "allowunreachablecode": {
+      "name": "allowUnreachableCode",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "suppressexcesspropertyerrors": {
+      "name": "suppressExcessPropertyErrors",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "suppressimplicitanyindexerrors": {
+      "name": "suppressImplicitAnyIndexErrors",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "forceconsistentcasinginfilenames": {
+      "name": "forceConsistentCasingInFileNames",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "maxnodemodulejsdepth": {
+      "name": "maxNodeModuleJsDepth",
+      "type": "number",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "nostrictgenericchecks": {
+      "name": "noStrictGenericChecks",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "usedefineforclassfields": {
+      "name": "useDefineForClassFields",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "preservevalueimports": {
+      "name": "preserveValueImports",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "keyofstringsonly": {
+      "name": "keyofStringsOnly",
+      "type": "boolean",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    },
+    "plugins": {
+      "name": "plugins",
+      "type": "list",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": true,
+      "vary": false
+    },
+    "moduledetection": {
+      "name": "moduleDetection",
+      "type": "enum",
+      "values": {
+        "auto": 2,
+        "legacy": 1,
+        "force": 3
+      },
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": true
+    },
+    "ignoredeprecations": {
+      "name": "ignoreDeprecations",
+      "type": "string",
+      "filePath": false,
+      "elementPath": false,
+      "configOnly": false,
+      "vary": false
+    }
+  },
+  "declarationSources": {
+    "transformers/declarations.ts": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+    "transformers/declarations/diagnostics.ts": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721"
+  },
+  "declarationErrors": [
+    2527,
+    2742,
+    2883,
+    4000,
+    4002,
+    4004,
+    4006,
+    4008,
+    4010,
+    4012,
+    4014,
+    4016,
+    4019,
+    4020,
+    4021,
+    4022,
+    4023,
+    4024,
+    4025,
+    4026,
+    4027,
+    4028,
+    4029,
+    4030,
+    4031,
+    4032,
+    4033,
+    4034,
+    4035,
+    4036,
+    4037,
+    4038,
+    4039,
+    4040,
+    4041,
+    4042,
+    4043,
+    4044,
+    4045,
+    4046,
+    4047,
+    4048,
+    4049,
+    4050,
+    4051,
+    4052,
+    4053,
+    4054,
+    4055,
+    4056,
+    4057,
+    4058,
+    4059,
+    4060,
+    4061,
+    4062,
+    4063,
+    4064,
+    4065,
+    4066,
+    4067,
+    4068,
+    4069,
+    4070,
+    4071,
+    4072,
+    4073,
+    4074,
+    4075,
+    4076,
+    4077,
+    4078,
+    4081,
+    4082,
+    4083,
+    4084,
+    4085,
+    4091,
+    4092,
+    4094,
+    4095,
+    4096,
+    4097,
+    4098,
+    4099,
+    4100,
+    4101,
+    4102,
+    4103,
+    4106,
+    4107,
+    4108,
+    4118,
+    5088,
+    6232,
+    6233,
+    7056,
+    9005,
+    9006,
+    9007,
+    9008,
+    9009,
+    9010,
+    9011,
+    9012,
+    9013,
+    9014,
+    9015,
+    9016,
+    9017,
+    9018,
+    9019,
+    9020,
+    9021,
+    9022,
+    9023,
+    9025,
+    9026,
+    9027,
+    9028,
+    9029,
+    9030,
+    9031,
+    9032,
+    9033,
+    9034,
+    9035,
+    9036,
+    9037,
+    9038,
+    9039
+  ]
+}

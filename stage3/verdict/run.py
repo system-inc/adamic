@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import time
@@ -13,7 +14,9 @@ import time
 ROOT = Path(__file__).resolve().parent
 DRIVER = ROOT.parent / 'drivers/tsc'
 sys.path.insert(0, str(DRIVER))
-from corpus import PIN, materialize, baseline_output
+from corpus import PIN
+from cases import parse, configurations, arguments, layout, expected_exit, pretty_diagnostics, config_options, has_type_packages, diagnostics as map_diagnostics
+from census import summary_bytes
 
 
 def write_json(path, value):
@@ -93,23 +96,38 @@ def baseline_diagnostics(stdout, folder):
 
 def validate_manifest(manifest):
     rows = manifest['cases'] + manifest['exclusions']
+    selected_sources = {row['source'] for row in manifest['cases']}
+    excluded_sources = {row['source'] for row in manifest['exclusions']}
+    identities = {(row['source'], row.get('configuration', '')) for row in manifest['cases']}
+    skipped = manifest.get('configuration_exclusions', [])
+    skipped_identities = {(row['source'], row['configuration']) for row in skipped}
     if (manifest['upstream_commit'] != PIN
-            or manifest['selected'] != len(manifest['cases'])
+            or manifest['selected'] != len(selected_sources)
+            or manifest.get('configurations', len(manifest['cases'])) != len(manifest['cases'])
             or manifest['excluded'] != len(manifest['exclusions'])
-            or manifest['total'] != len(rows)
-            or len({row['source'] for row in rows}) != len(rows)):
+            or manifest['total'] != len(selected_sources) + len(excluded_sources)
+            or selected_sources & excluded_sources
+            or len(excluded_sources) != len(manifest['exclusions'])
+            or len(identities) != len(manifest['cases'])
+            or identities & skipped_identities
+            or len(skipped_identities) != len(skipped)
+            or any(row['source'] not in selected_sources | excluded_sources for row in skipped)):
         raise RuntimeError('invalid baseline census')
 
 
-def baseline_suite(binary, tree, output, limit):
+def baseline_suite(binary, tree, output, limit, manifest=None):
     started = time.monotonic()
     output.mkdir()
-    manifest = json.loads((ROOT / 'selection.json').read_text())
+    for ancestor in output.parents:
+        if (ancestor / 'node_modules').exists() or (ancestor / 'package.json').exists():
+            raise RuntimeError(f'outside package metadata at {ancestor}; choose an isolated output directory such as /tmp')
+    manifest = manifest or json.loads((ROOT / 'selection.json').read_text())
     validate_manifest(manifest)
     rows = manifest['cases'] if limit is None else manifest['cases'][:limit]
     if not rows:
         raise RuntimeError('empty baseline suite')
     write_json(output / 'exclusions.json', manifest['exclusions'])
+    write_json(output / 'configuration-exclusions.json', manifest.get('configuration_exclusions', []))
     write_json(output / 'selection.json', rows)
     def execute(item):
         index, row = item
@@ -118,7 +136,8 @@ def baseline_suite(binary, tree, output, limit):
         raw = (tree / row['source']).read_bytes()
         if hashlib.sha256(raw).hexdigest() != row['source_sha256']:
             raise RuntimeError(f'source hash mismatch: {row["source"]}')
-        content, options = materialize(raw)
+        units, settings, roots = parse(raw, row['name'])
+        options = dict(configurations(settings))[row.get('configuration', '')]
         if options != row['options']:
             raise RuntimeError('header options changed')
         expected = b''
@@ -126,38 +145,85 @@ def baseline_suite(binary, tree, output, limit):
             raw_baseline = (tree / row['baseline']).read_bytes()
             if hashlib.sha256(raw_baseline).hexdigest() != row['baseline_sha256']:
                 raise RuntimeError(f'baseline hash mismatch: {row["baseline"]}')
-            expected = baseline_output(raw_baseline)
+            expected = summary_bytes(raw_baseline)
         if hashlib.sha256(expected).hexdigest() != row['expected_sha256']:
             raise RuntimeError('baseline summary changed')
-        (folder / row['name']).write_text(content)
-        config = {'compilerOptions': {'types': [], 'skipDefaultLibCheck': True,
-                  'noErrorTruncation': True, 'ignoreDeprecations': '6.0', **options},
-                  'files': [row['name']]}
-        write_json(folder / 'tsconfig.json', config)
-        argv = [str(binary), '--project', 'tsconfig.json', '--noEmit', '--pretty', 'false']
+        cwd, physical, mapped_options = layout(units, options, folder, settings)
+        for unit in units:
+            destination = physical(unit['name'])
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(unit['content'])
+        for target, destination in settings['__links']:
+            link = physical(destination)
+            link.parent.mkdir(parents=True, exist_ok=True)
+            link.symlink_to(physical(target), target_is_directory=True)
+        write_json(folder / 'units.json', {'units': units, 'roots': roots, 'options': options})
+        mapped_roots = [str(physical(name)) if cwd != folder else name for name in roots]
+        project = row.get('project')
+        effective = row.get('effective_options', options)
+        config_values = config_options(mapped_options)
+        synthetic = None
+        if config_values:
+            synthetic = (physical(project).parent if project else cwd) / '__verdict_options__.json'
+            if synthetic.exists():
+                raise RuntimeError('upstream unit collides with generated option config')
+            config = {'compilerOptions': config_values}
+            if project:
+                config['extends'] = './' + physical(project).name
+            else:
+                config['files'] = [os.path.relpath(physical(name), cwd) for name in roots]
+            write_json(synthetic, config)
+            mapped_options = {key: value for key, value in mapped_options.items() if key not in config_values}
+        ambient_roots = not project or 'typeRoots' not in effective or 'typeRoots' in options
+        if (has_type_packages(units, settings) or effective.get('types')) and 'typeRoots' not in effective:
+            # Explicit typeRoots enables a resolver fallback that bypasses
+            # package exports. With provided @types, preserve inferred roots.
+            ambient_roots = False
+        if not ambient_roots:
+            mapped_options.pop('typeRoots', None)
+        argv = [str(binary), *arguments(mapped_options, [] if project or synthetic else mapped_roots,
+                                       ambient_roots, effective if project else None)]
+        if project or synthetic:
+            argv += ['--project', os.path.relpath(synthetic or physical(project), cwd)]
+        write_json(folder / 'working-directory.json', str(cwd))
         write_json(folder / 'command.json', argv)
         timed_out = False
         with (folder / 'actual.stdout').open('wb') as stdout, (folder / 'actual.stderr').open('wb') as stderr:
             try:
-                completed = subprocess.run(argv, cwd=folder, stdout=stdout, stderr=stderr,
+                completed = subprocess.run(argv, cwd=cwd, stdout=stdout, stderr=stderr,
                                            timeout=float(os.environ.get('TSC_TIMEOUT', '60')))
                 code = completed.returncode
             except subprocess.TimeoutExpired:
                 code, timed_out = 124, True
         (folder / 'actual.exit').write_text(str(code) + '\n')
-        wanted = {'stdout': expected, 'stderr': b'', 'exit': b'2\n' if expected else b'0\n'}
+        # CLI reports outputs-skipped only when emit returns emitSkipped. noEmit
+        # itself returns false; noEmitOnError with diagnostics returns true.
+        exit_code = expected_exit(row.get('effective_options', options), expected)
+        wanted = {'stdout': expected, 'stderr': b'', 'exit': f'{exit_code}\n'.encode()}
         for suffix, value in wanted.items():
             (folder / ('expected.' + suffix)).write_bytes(value)
-        diagnostics = baseline_diagnostics((folder / 'actual.stdout').read_bytes(), folder)
+        diagnostics = map_diagnostics((folder / 'actual.stdout').read_bytes(), folder, cwd, units, settings)
+        if synthetic:
+            # This location belongs to generated plumbing, never a test unit.
+            # Preserve option codes/messages; upstream API options have no AST.
+            synthetic_name = os.path.relpath(synthetic, cwd).encode()
+            diagnostics = re.sub(rb'^' + re.escape(synthetic_name) + rb'\(\d+,\d+\): ', b'', diagnostics, flags=re.M)
+        if options.get('pretty'):
+            # Upstream stores the diagnostic formatter block before annotated
+            # sources and its footer after them. Judge that formatter block.
+            diagnostics = pretty_diagnostics(diagnostics)
         (folder / 'actual.diagnostics').write_bytes(diagnostics)
         differences = compare(folder, wanted, {'stdout': diagnostics})
         if timed_out:
             differences['timeout'] = {'seconds': float(os.environ.get('TSC_TIMEOUT', '60'))}
-        return {'case': row['source'], 'capture': folder.name, 'differences': differences} if differences else None
+        return {'case': row['source'], 'configuration': row.get('configuration', ''),
+                'capture': folder.name, 'differences': differences} if differences else None
     with ThreadPoolExecutor(max_workers=int(os.environ.get('TSC_JOBS', '4'))) as executor:
         failures = [result for result in executor.map(execute, enumerate(rows, 1)) if result]
     report = {'total': len(rows), 'passed': len(rows) - len(failures), 'failed': len(failures),
-              'excluded': manifest['excluded'], 'deferred': manifest['selected'] - len(rows),
+              'excluded': manifest['excluded'], 'deferred': len(manifest['cases']) - len(rows),
+              'selected_inputs': manifest['selected'], 'configurations': len(manifest['cases']),
+              'excluded_configurations': len(manifest.get('configuration_exclusions', [])),
               'census_total': manifest['total'], 'exclusion_reasons': manifest['reasons'],
               'failures': failures, 'seconds': round(time.monotonic() - started, 3)}
     write_json(output / 'report.json', report)

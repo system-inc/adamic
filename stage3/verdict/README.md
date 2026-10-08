@@ -14,6 +14,9 @@ pass/fail counts, exclusions, and the first differing byte with surrounding text
 Exit 0 means every selected case passed, 1 means compiler differences, and 2
 means a harness/infrastructure error. All three suites are attempted even when
 an earlier suite fails. A harness error is never a pass.
+Use an isolated output location such as `/tmp`: ancestor `package.json` or
+`node_modules` entries would change the real CLI's package and ambient-type
+resolution, so the harness rejects those locations.
 
 `STAGE3_VERDICT_UPSTREAM=/absolute/pinned-checkout` reuses a TypeScript checkout.
 Otherwise the command clones v6.0.3 into the output directory, from the existing
@@ -40,22 +43,30 @@ expected streams as well. A timeout fails even if its partial output matches.
 `selection.json` enumerates every `.ts` and `.tsx` compiler/conformance case,
 recursively, at the pin. It records selected inputs and every excluded filename
 with its reason and source SHA256. Each run copies the exclusions and selection
-into `baselines/`. Counts are input files; excluded option variants are not
-expanded into separate configurations. Exclusions are scope decisions, never
-compiler passes.
-Selection uses stock TypeScript's parser for syntax eligibility, never the tested
+into `baselines/`. Pass/fail totals count compiler configurations. The census
+separately counts selected input files and wholly excluded input files;
+`configuration-exclusions.json` records every known excluded configuration,
+including variants of partially admitted inputs. Exclusions are scope decisions,
+never compiler passes. Unknown configurations of host-only inputs are not counted
+as runs. Selection uses stock TypeScript's parser for syntax eligibility, never the tested
 binary's diagnostic results. There is no source size bound. The early version
 bounded sources to 80 lines and 8192 bytes; that bound was removed after its runnable smoke proof was pushed.
 
-Supported single-valued compiler directives are the existing driver's
-`corpus.CANONICAL` allowlist. `materialize` follows upstream
-`src/harness/harnessIO.ts:makeUnitsFromTest`: removes metadata, uses LF, discards
-leading empty content, and preserves the resulting diagnostic positions.
+`cases.py` follows upstream `src/harness/harnessIO.ts:makeUnitsFromTest`: splits
+`@filename` units, removes metadata, uses LF, discards leading empty content,
+decodes UTF-8/UTF-16 BOMs, and preserves diagnostic positions. Root-file selection
+follows `compilerRunner.ts`, including its last-unit rule for require, reference
+path and noImplicitReferences. JSON units remain on disk but are not source roots.
+Compiler directives use the pinned compiler's option declarations in `options.json`.
+Variants expand as the harness does: Cartesian products, aliases deduplicated,
+wildcards and exclusions, at most 25 configurations, and sorted baseline suffixes.
+Lists such as `lib` remain lists. Metadata for other baselines is ignored.
 The runner uses upstream's `skipDefaultLibCheck: true` and
-`noErrorTruncation: true`, overridden by headers; `types: []` prevents ambient
-packages in the real filesystem from contaminating the virtual-host equivalent.
-`ignoreDeprecations: "6.0"` enables the older test targets. `--noEmit --pretty false`
-selects the CLI semantic-diagnostics domain. Libraries come from the supplied
+`noErrorTruncation: true`, overridden by headers. Provided type packages use
+inferred type roots; otherwise the CLI searches only the case's local type root.
+Deprecation diagnostics are preserved. Emit, declaration, noEmit and noEmitOnError
+follow the case settings; expected exits follow pinned emitSkipped behavior.
+Libraries come from the supplied
 binary's installation; missing or wrong libraries are observable failures.
 
 The upstream harness uses `getPreEmitDiagnostics` and emit diagnostics, and its
@@ -66,18 +77,29 @@ newline. Raw stdout is retained byte for byte. For this baseline suite only,
 upstream `src/harness/util.ts:removeTestPathPrefixes`, which removes `/.src/`
 from the summary, including quoted module names. No other paths, filenames,
 locations, codes, text, spacing or actual newlines are normalized. Acceptance
-and tiny still compare entirely raw bytes. An absent baseline means clean,
+and tiny still compare entirely raw bytes. Rooted units, working directories,
+path options and symlinks use an isolated filesystem tree. Exact known path
+translations reproduce the virtual names; source text remains unchanged.
+Embedded projects use `--project`. Config-only options and literal string `null`
+use a small generated option config; only its synthetic diagnostic location is
+removed, since API options have no config AST. Real test config locations remain
+checked. Traces, file listings and performance statistics belong to other
+baselines and are disabled for this diagnostic projection.
+Pretty cases retain ANSI colors and context: only the CLI's one extra reporter
+newline per diagnostic and its separate footer are removed to match the API
+formatter block. Internal whitespace remains byte checked.
+An absent baseline means clean,
 following upstream convention. Locations, diagnostic codes, message chains,
-ordering and spacing must match. Baseline exit is 0 when clean, 2 on diagnostics.
+ordering and spacing must match. Baseline exit is 0 when clean, 1 when diagnostics
+skip outputs, and 2 when outputs are generated in the presence of diagnostics.
 
-The first version excludes virtual `@filename` units, all external module
-specifiers and triple-slash references, option variants, unsupported directives
-(including symlinks, currentDirectory, baselineFile and captureSuggestions),
-declaration emit, syntax-error inputs, non-file/global diagnostic summaries,
-diagnostics outside the single source (including standard-library `(--,--)`
-placeholders), TS18027 emit-resolver errors, non-UTF8
-sources. These exclusions avoid claiming CLI
-faithfulness for the API/virtual-host scenarios not implemented here. It does
+The remaining exclusions are enumerated by reason in [UPSTREAM.md](UPSTREAM.md):
+API diagnostics that the CLI suppresses, pre/post-emit harness assertions,
+suggestions, internal output-path overrides, compiler-version overrides,
+Windows/case-insensitive virtual hosts, mounted absolute references, and library
+placeholder diagnostics. Syntax-only and global-only cases are supported.
+The noEmitOnError path also admits cases where emit collects exhaustive diagnostics.
+The harness does
 not compare annotated source, emitted JS, types/symbols, suggestions or traces.
 `--baseline-limit N` is an explicit smoke mode; it reports eligible but unrun
 cases as **deferred**, separately from exclusions. It is not a full measurement.
@@ -85,6 +107,8 @@ cases as **deferred**, separately from exclusions. It is not a full measurement.
 To regenerate the census, using the stock 6.0.3 API installed by `stage3/apply.sh`:
 
 ```sh
+node stage3/verdict/options_schema.cjs /absolute/stock/typescript/lib/typescript.js \
+  /absolute/pristine-pinned-tree > stage3/verdict/options.json
 PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/census.py /absolute/pinned-tree \
   /absolute/stock/typescript/lib/typescript.js stage3/verdict/selection.json > /tmp/census.log 2>&1
 ```
@@ -103,7 +127,7 @@ export STAGE3_VERDICT_UPSTREAM=/tmp/verdict-adapted
 PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/prove.py /tmp/new-proof > /tmp/proof.log 2>&1
 ```
 
-A forwards to Node. B forwards to the same CLI and changes exactly one `e` to
+A forwards to Node. B forwards to the same CLI and changes exactly one diagnostic byte. For error diagnostics it changes `e` to
 `E` in one diagnostic, preserving stderr, exit and length. The proof restricts
 it to `argument.ts` (tiny, also in acceptance) and
 `ArrowFunctionExpression1.ts` (upstream). It verifies the newly failing captures
@@ -111,6 +135,22 @@ differ from A by exactly one byte and fail only stdout. C exits 1 without output
 the proof requires zero passes in every suite. `prove.py --baseline-limit 40`
 provides a smaller first-run demonstration. This is executable plumbing and
 Node behavior evidence, not native compiler correctness.
+
+The expanded coverage proof measures every newly admitted configuration with A,
+then runs B on one diagnostic configuration per reason group. It requires a
+stdout-only failure and checks raw B output against a same-directory Node
+control for exactly one changed byte, unchanged stderr and unchanged exit:
+
+```sh
+git show 85740c95:stage3/verdict/selection.json > /tmp/verdict-before.json
+PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/prove_groups.py \
+  /tmp/verdict-before.json stage3/verdict/selection.json /absolute/pinned-tree \
+  /tmp/new-group-proof > /tmp/group-proof.log 2>&1
+```
+
+`audit_cli_mutants.py <manifest> <tree> <new output>` deliberately breaks the
+literal-null bridge, declaration exit rule and inferred type-root handling;
+each must fail its designated byte comparison on a real pinned case.
 
 Focused comparison checks:
 

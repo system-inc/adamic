@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/abstractPropertyBasics.ts",
+      "configuration": "target=es5",
+      "capture": "00001_abstractPropertyBasics",
+      "differences": {
+        "stdout": {
+          "byte_offset": 0,
+          "expected_size": 169,
+          "actual_size": 169,
+          "expected_context": "b\"error TS5107: Option 'target=ES5' is deprecated and will stop functioning in Typ\"",
+          "actual_context": "b\"Error TS5107: Option 'target=ES5' is deprecated and will stop functioning in Typ\""
+        }
+      }
+    }
+  ],
+  "seconds": 0.421
+}

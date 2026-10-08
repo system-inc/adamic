@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/aliasAssignments.ts",
+      "configuration": "",
+      "capture": "00001_aliasAssignments",
+      "differences": {
+        "stdout": {
+          "byte_offset": 28,
+          "expected_size": 393,
+          "actual_size": 393,
+          "expected_context": "b'aliasAssignments_1.ts(3,1): error TS2322: Type \\'number\\' is not assignable to type \\'typeof import(\"aliasAssig'",
+          "actual_context": "b'aliasAssignments_1.ts(3,1): Error TS2322: Type \\'number\\' is not assignable to type \\'typeof import(\"aliasAssig'"
+        }
+      }
+    }
+  ],
+  "seconds": 0.517
+}

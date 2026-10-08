@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/SystemModuleForStatementNoInitializer.ts",
+      "configuration": "",
+      "capture": "00001_SystemModuleForStatementNoInitializer",
+      "differences": {
+        "stdout": {
+          "byte_offset": 0,
+          "expected_size": 172,
+          "actual_size": 172,
+          "expected_context": "b\"error TS5107: Option 'module=System' is deprecated and will stop functioning in \"",
+          "actual_context": "b\"Error TS5107: Option 'module=System' is deprecated and will stop functioning in \""
+        }
+      }
+    }
+  ],
+  "seconds": 2.215
+}

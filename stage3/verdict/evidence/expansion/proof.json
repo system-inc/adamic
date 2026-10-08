@@ -1,0 +1,105 @@
+{
+  "proved": true,
+  "A_configurations_passed": 13453,
+  "A_inputs_covered": 11610,
+  "A_coverage": "union of successful captured configurations, keyed by source and configuration; source/reference/expected-summary hashes match final manifest",
+  "regression_observation": "6259/6260 initially; literal-null correction passes in options-fix-v2, two restored JSDoc cases pass in supplement-v2; all original 6262 covered",
+  "groups": [
+    {
+      "group": "option-variants",
+      "inputs": 1477,
+      "configurations": 3145,
+      "A_passed": 3145,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/abstractPropertyBasics.ts",
+      "mutant_configuration": "target=es5",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "filename",
+      "inputs": 1290,
+      "configurations": 1305,
+      "A_passed": 1305,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/aliasAssignments.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "declaration-emit",
+      "inputs": 1008,
+      "configurations": 1041,
+      "A_passed": 1041,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/accessorDeclarationEmitVisibilityErrors.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "compiler-directives",
+      "inputs": 627,
+      "configurations": 752,
+      "A_passed": 752,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/allowJscheckJsTypeParameterNoCrash.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "message-diagnostics",
+      "inputs": 2,
+      "configurations": 2,
+      "A_passed": 2,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/conformance/importAssertion/importAssertion1.ts",
+      "mutant_configuration": "module=esnext",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "references",
+      "inputs": 154,
+      "configurations": 154,
+      "A_passed": 154,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/ambientExternalModuleInAnotherExternalModule.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "global-diagnostics",
+      "inputs": 56,
+      "configurations": 56,
+      "A_passed": 56,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/SystemModuleForStatementNoInitializer.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "syntax-only",
+      "inputs": 736,
+      "configurations": 736,
+      "A_passed": 736,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "mutant_source": "tests/cases/compiler/ClassDeclaration26.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    }
+  ]
+}
