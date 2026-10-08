@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TryStatement {readonly value:number;readonly kind:259;}
+interface Block {readonly value:number;readonly kind:242;}
+interface CatchClause {readonly value:number;readonly kind:300;}
+interface Base {readonly updateTryStatement:unknown;}
+interface Target {updateTryStatement(node: TryStatement, tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateTryStatement({value:3,kind:259},{value:3,kind:242},{value:3,kind:300},{value:3,kind:242});console.log("completed");}
+probe({updateTryStatement:(node: TryStatement,tryBlock: Block,catchClause: CatchClause | undefined,finallyBlock: Block | undefined):TryStatement=>({value:3,kind:259})});

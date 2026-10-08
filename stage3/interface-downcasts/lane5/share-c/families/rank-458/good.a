@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface WhileStatement {readonly value:number;readonly kind:248;}
+interface Expression {readonly value:number;}
+interface Statement {readonly value:number;}
+interface Base {readonly updateWhileStatement:unknown;}
+interface Target {updateWhileStatement(node: WhileStatement, expression: Expression, statement: Statement): WhileStatement;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateWhileStatement({value:3,kind:248},{value:3},{value:3});console.log("completed");}
+probe({updateWhileStatement:(node: WhileStatement,expression: Expression,statement: Statement):WhileStatement=>({value:3,kind:248})});

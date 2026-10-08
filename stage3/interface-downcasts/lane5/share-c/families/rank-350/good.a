@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface EmptyStatement {readonly value:number;readonly kind:243;}
+interface Base {readonly createEmptyStatement:unknown;}
+interface Target {createEmptyStatement(): EmptyStatement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createEmptyStatement();console.log("completed");}
+probe({createEmptyStatement:():EmptyStatement=>({value:3,kind:243})});

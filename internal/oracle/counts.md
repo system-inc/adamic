@@ -2615,3 +2615,43 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-146/good.a | 9 | 9 | 8 | 15 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-146/wrong-arity.a | 3 | 0 | 3 | 0 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-248/good.a | 8 | 8 | 7 | 13 | 8 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-248/wrong-arity.a | 3 | 0 | 3 | 0 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-266/good.a | 2 | 2 | 4 | 5 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-266/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-329/good.a | 2 | 2 | 4 | 5 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-329/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-332/good.a | 4 | 4 | 3 | 6 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-332/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-350/good.a | 3 | 3 | 2 | 4 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-350/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-353/good.a | 4 | 4 | 3 | 6 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-353/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-359/good.a | 6 | 6 | 5 | 9 | 6 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-359/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-365/good.a | 6 | 6 | 5 | 9 | 6 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-365/wrong-arity.a | 3 | 0 | 3 | 0 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-374/good.a | 3 | 3 | 3 | 4 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-374/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-398/good.a | 4 | 4 | 3 | 5 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-398/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-401/good.a | 2 | 2 | 4 | 5 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-401/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-404/good.a | 2 | 2 | 2 | 3 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-404/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-431/good.a | 6 | 6 | 5 | 9 | 6 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-431/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-434/good.a | 4 | 4 | 4 | 7 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-434/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-443/good.a | 3 | 3 | 2 | 4 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-443/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-446/good.a | 5 | 5 | 4 | 7 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-446/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-452/good.a | 9 | 9 | 8 | 15 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-452/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-455/good.a | 8 | 8 | 7 | 13 | 8 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-455/wrong-arity.a | 3 | 0 | 3 | 0 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-458/good.a | 7 | 7 | 6 | 11 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-c/families/rank-458/wrong-arity.a | 3 | 0 | 3 | 0 | 3 | 0 | 0 | 0 |

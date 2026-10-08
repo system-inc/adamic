@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface PostfixUnaryExpression {readonly value:number;readonly kind:226;}
+interface Expression {readonly value:number;}
+interface Base {readonly updatePostfixUnaryExpression:unknown;}
+interface Target {updatePostfixUnaryExpression(node: PostfixUnaryExpression, operand: Expression): PostfixUnaryExpression;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updatePostfixUnaryExpression({value:3,kind:226},{value:3});console.log("completed");}
+probe({updatePostfixUnaryExpression:(node: PostfixUnaryExpression,operand: Expression):PostfixUnaryExpression=>({value:3,kind:226})});

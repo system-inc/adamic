@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface Statement {readonly value:number;}
+interface CaseClause {readonly value:number;readonly kind:297;}
+interface Base {readonly createCaseClause:unknown;}
+interface Target {createCaseClause(expression: Expression, statements: readonly Statement[]): CaseClause;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createCaseClause({value:3},[{value:3}]);console.log("completed");}
+probe({createCaseClause:(): CaseClause=>({value:3,kind:297})});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getRootFileNames:unknown;}
+interface Target {getRootFileNames(): readonly string[];}
+function probe(value:Base):void {const program=value as Target;const result=program.getRootFileNames();console.log("completed");}
+probe({getRootFileNames:():readonly string[]=>(["abc"])});

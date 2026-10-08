@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeNode {readonly value:number;}
+interface NamedTupleMember {readonly value:number;readonly kind:203;}
+interface TupleTypeNode {readonly value:number;readonly kind:190;}
+interface Base {readonly createTupleTypeNode:unknown;}
+interface Target {createTupleTypeNode(elements: readonly (TypeNode | NamedTupleMember)[]): TupleTypeNode;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createTupleTypeNode([{value:3}]);console.log("completed");}
+probe({createTupleTypeNode:(): TupleTypeNode=>({value:3,kind:190})});

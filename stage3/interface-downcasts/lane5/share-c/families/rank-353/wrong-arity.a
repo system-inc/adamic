@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface InferTypeNode {readonly value:number;readonly kind:196;}
+interface Base {readonly createInferTypeNode:unknown;}
+interface Target {createInferTypeNode(typeParameter: TypeParameterDeclaration): InferTypeNode;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createInferTypeNode({value:3,kind:169});console.log("completed");}
+probe({createInferTypeNode:(): InferTypeNode=>({value:3,kind:196})});

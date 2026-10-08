@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly isAtStartOfLine:unknown;}
+interface Target {isAtStartOfLine(): boolean;}
+function probe(value:Base):void {const writer=value as Target;const result=writer.isAtStartOfLine();console.log("completed");}
+probe({isAtStartOfLine:(extra:number): boolean=>(true)});

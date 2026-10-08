@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SuperExpression {readonly value:number;readonly kind:108;}
+interface Base {readonly createSuper:unknown;}
+interface Target {createSuper(): SuperExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createSuper();console.log("completed");}
+probe({createSuper:(extra:number): SuperExpression=>({value:3,kind:108})});

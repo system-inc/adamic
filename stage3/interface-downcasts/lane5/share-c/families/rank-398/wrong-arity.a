@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Diagnostic {readonly value:number;}
+interface Base {readonly getGlobalDiagnostics:unknown;}
+interface Target {getGlobalDiagnostics(): Diagnostic[];}
+function probe(value:Base):void {const diagnostics=value as Target;const result=diagnostics.getGlobalDiagnostics();console.log("completed");}
+probe({getGlobalDiagnostics:(extra:number): Diagnostic[]=>([{value:3}])});

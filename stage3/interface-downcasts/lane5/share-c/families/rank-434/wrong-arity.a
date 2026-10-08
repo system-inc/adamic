@@ -1,0 +1,22 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type PropertyName =
+    | Identifier
+    | StringLiteral
+    | NoSubstitutionTemplateLiteral
+    | NumericLiteral
+    | ComputedPropertyName
+    | PrivateIdentifier
+    | BigIntLiteral;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface StringLiteral {readonly value:number;readonly kind:11;}
+interface NoSubstitutionTemplateLiteral {readonly value:number;readonly kind:15;}
+interface NumericLiteral {readonly value:number;readonly kind:9;}
+interface ComputedPropertyName {readonly value:number;readonly kind:168;}
+interface PrivateIdentifier {readonly value:number;readonly kind:81;}
+interface BigIntLiteral {readonly value:number;readonly kind:10;}
+interface Expression {readonly value:number;}
+interface EnumMember {readonly value:number;readonly kind:307;}
+interface Base {readonly createEnumMember:unknown;}
+interface Target {createEnumMember(name: string | PropertyName, initializer?: Expression): EnumMember;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createEnumMember("abc",{value:3});console.log("completed");}
+probe({createEnumMember:(): EnumMember=>({value:3,kind:307})});

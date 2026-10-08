@@ -1,0 +1,10 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type EntityName = Identifier | QualifiedName;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface QualifiedName {readonly value:number;readonly kind:167;}
+interface TypeNode {readonly value:number;}
+interface TypeQueryNode {readonly value:number;readonly kind:187;}
+interface Base {readonly createTypeQueryNode:unknown;}
+interface Target {createTypeQueryNode(exprName: EntityName, typeArguments?: readonly TypeNode[]): TypeQueryNode;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createTypeQueryNode({value:3,kind:80},[{value:3}]);console.log("completed");}
+probe({createTypeQueryNode:(): TypeQueryNode=>({value:3,kind:187})});
