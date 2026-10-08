@@ -688,6 +688,9 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if prefix.Operator == ast.KindExclamationToken {
+		operand = libraryIteratorDoneTruth(operand)
+	}
 	switch {
 	case prefix.Operator == ast.KindMinusToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
@@ -1134,7 +1137,10 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
-	closure, err := l.expression(node.AsCallExpression().Expression)
+	closure, handled, err := l.libraryIteratorNextClosure(node)
+	if !handled {
+		closure, err = l.expression(node.AsCallExpression().Expression)
+	}
 	if err != nil {
 		return nil, err
 	}
