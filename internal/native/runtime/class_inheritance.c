@@ -28,6 +28,14 @@ static void release_field(adamic_object *object, size_t index, void (*release)(v
 }
 
 void adamic_object_free_children(adamic_object *object, void (*release)(void *)) {
+<<<<<<< HEAD
+=======
+	if (object->prototype != NULL && object->prototype->heap.references != 0) { release(object->prototype); }
+	if (object->has_captured_stack) {
+		adamic_heap *stack = object->captured_stack.reference;
+		if (stack != NULL && stack->references != 0) { release(stack); }
+	}
+>>>>>>> 3cad8010 (Admit proven heap prototype links with lifetime fixtures)
 	if (object->class == NULL) {
 		for (size_t index = 0; index < object->shape->count; index++) {
 			release_field(object, index, release);

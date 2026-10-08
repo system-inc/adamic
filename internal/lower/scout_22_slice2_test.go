@@ -18,8 +18,8 @@ func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(paths) != 11 {
-		t.Fatalf("want 11 site witnesses, got %d", len(paths))
+	if len(paths) != 12 {
+		t.Fatalf("want 12 site witnesses, got %d", len(paths))
 	}
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
@@ -47,6 +47,9 @@ func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
 						t.Fatalf("missing %q: %v", reason, err)
 					}
 				}
+			}
+			if filepath.Base(path) == "prototype-region-lifetimes.a" && !strings.Contains(err.Error(), "prototype link across region lifetimes; compiler graph-region proof is the way out") {
+				t.Fatal(err)
 			}
 			t.Log(err)
 		})

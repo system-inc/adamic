@@ -35,7 +35,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				}
 			}
 		}
-		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
+		return l.objectPrototypeLink(node, name)
 	case "fromEntries":
 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
 	case "groupBy":
