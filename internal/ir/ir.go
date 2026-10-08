@@ -659,10 +659,14 @@ type (
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
 		// Direct is a sibling code target plus one, sharing Closure as its environment.
-		Direct    int
-		Closure   Expression
-		Arguments []Expression
-		Returns   Type
+		// CheckedDiscard releases the independently recorded producer result after a checked marker call.
+		CheckedDiscard  bool
+		DiscardContract ViewContractID
+		DiscardView     string
+		Direct          int
+		Closure         Expression
+		Arguments       []Expression
+		Returns         Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the

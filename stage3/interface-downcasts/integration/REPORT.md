@@ -1,7 +1,7 @@
-Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
+Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-106 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+120 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -525,3 +525,41 @@ full IR 50.966s, uncached filtered oracle 231.796s, vet exit 0.
 Supplemental existing Map/Set/record regressions: native 71.781s and oracle
 49.497s, both pass. Original declaration suite was enabled. No new failure or
 additional exclusion; sole recorded array-callback baseline exclusion remains.
+
+
+Callable source and stored markers, b6e53fb46bc623c7017ba8d86b9e995ff4a1d912
+
+Three conflict hunks resolved separately: plan append keeps both lane hook lists;
+interface_cast.go uses callableViewContract while preserving the owner's nullable
+admission and guards; object.go prepares the callable property before retaining
+all owner Nullish/Narrow metadata and object-primitive exclusions. No whole-file
+resolution. Group1 direct/stored/callback/arity/result controls, nullable selection
+controls, and stored-marker string/arity controls prove the combined behavior.
+
+Cross-lane repairs keep nullable callable implementation proofs and add callable
+producer certification after nullish readiness, presence and membership checks
+in both emitters. callable-undefined-arity.a pins an arity-one producer against
+() => string | undefined at the root-only read; two executed backend IR mutants
+remove only its callable certificate and print present instead of the expected
+exit-70 arity diagnostic. UndefinedAllowed is passed alongside optional absence
+when checking signatures. Existing nullish proof refusals remain active.
+
+Ten source implementation mutants were caught: stored-marker shape omission and
+discarded string-result release omission, read-contract omission, native shape
+omission, both arity omissions, JavaScript shape omission, native method-signature
+omission, lower required-marker proof omission, and write-back guard omission.
+Two executable component kind mutants (native number acceptance and JavaScript
+number invocation) were independently caught by TestViewCallableShape*/number.
+The first helper runner used the wrong Go executable and failed before executing;
+that toolchain failure is not credited. All production files were restored.
+
+Behavioral overlap preflight found only a count-row mismatch: optional-absent now
+performs seven releases rather than six through the owner's nullish path. The
+measured row was regenerated; allocations/frees remain balanced (1/1).
+The count update passed in 4.051s. Original declarations remain enabled in the
+final gate. Optional-boolean hold stays active until the user explicitly lifts it.
+
+Final callable gates: lower 17.979s, native 41.340s, JavaScript 4.392s,
+full IR 37.933s, uncached filtered oracle 208.411s; vet exit 0.
+Original declaration controls ran. The sole array-callback baseline exclusion
+remains; no new failure or further exclusion. Evidence: callable-* logs.

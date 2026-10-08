@@ -1208,11 +1208,20 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if l.viewCallableDiscardedMarker(callee) {
+		source := callee.AsAsExpression().Expression
+		closure, err := l.expression(source)
+		if err != nil {
+			return nil, err
+		}
+		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(source), checker.SignatureKindCall)
+		returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0]))
+		return ir.CallClosure{Closure: closure, Returns: returns}, nil
+	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
-		// never[] admits a zero-argument call in TypeScript. The erased slot does
-		// not retain a source signature to prove its required arguments or ABI.
-		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+		return l.viewCallableStoredMarkerCall(node, signatures[0])
 	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {
