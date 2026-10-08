@@ -1,0 +1,70 @@
+=== RUN   TestCheckedViewNullableSelection
+=== RUN   TestCheckedViewNullableSelection/scalar-null
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="string:false:false\nallowed\nobject:true:false\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/scalar-null-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="string:false:false\nnot-allowed\nobject:true:false\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/scalar-undefined
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="string:false:false\nallowed\nundefined:false:true\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/scalar-undefined-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="string:false:false\nnot-allowed\nundefined:false:true\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/scalar-both
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="string:false:false\nallowed\nobject:true:false\nundefined:false:true\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/scalar-both-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="string:false:false\nnot-allowed\nobject:true:false\nundefined:false:true\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/tagged-null
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nmade-here\nobject:true:false\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/tagged-null-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nundefined\nobject:true:false\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/tagged-null-nested
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\n42\nobject:true:false\n"; mutation="-nested"
+=== RUN   TestCheckedViewNullableSelection/tagged-undefined
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nmade-here\nundefined:false:true\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/tagged-undefined-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nundefined\nundefined:false:true\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/tagged-undefined-nested
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\n42\nundefined:false:true\n"; mutation="-nested"
+=== RUN   TestCheckedViewNullableSelection/tagged-both
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nmade-here\nobject:true:false\nundefined:false:true\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/tagged-both-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nundefined\nobject:true:false\nundefined:false:true\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/tagged-both-nested
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\n42\nobject:true:false\nundefined:false:true\n"; mutation="-nested"
+=== RUN   TestCheckedViewNullableSelection/object-null
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nmade-here\nobject:true:false\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/object-null-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="number:false:false\nundefined\nobject:true:false\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/object-undefined
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nmade-here\nundefined:false:true\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/object-undefined-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="number:false:false\nundefined\nundefined:false:true\n"; mutation="-wrong"
+=== RUN   TestCheckedViewNullableSelection/object-both
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="object:false:false\nmade-here\nobject:true:false\nundefined:false:true\n"; mutation=""
+=== RUN   TestCheckedViewNullableSelection/object-both-wrong
+    checked_views_nullish_selection_test.go:34: Node exit=0 stdout="number:false:false\nundefined\nobject:true:false\nundefined:false:true\n"; mutation="-wrong"
+--- PASS: TestCheckedViewNullableSelection (12.24s)
+    --- PASS: TestCheckedViewNullableSelection/scalar-null (0.92s)
+    --- PASS: TestCheckedViewNullableSelection/scalar-null-wrong (0.59s)
+    --- PASS: TestCheckedViewNullableSelection/scalar-undefined (0.74s)
+    --- PASS: TestCheckedViewNullableSelection/scalar-undefined-wrong (0.67s)
+    --- PASS: TestCheckedViewNullableSelection/scalar-both (0.51s)
+    --- PASS: TestCheckedViewNullableSelection/scalar-both-wrong (0.54s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-null (0.51s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-null-wrong (0.43s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-null-nested (0.44s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-undefined (0.45s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-undefined-wrong (0.42s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-undefined-nested (0.42s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-both (0.55s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-both-wrong (0.82s)
+    --- PASS: TestCheckedViewNullableSelection/tagged-both-nested (0.63s)
+    --- PASS: TestCheckedViewNullableSelection/object-null (0.63s)
+    --- PASS: TestCheckedViewNullableSelection/object-null-wrong (0.50s)
+    --- PASS: TestCheckedViewNullableSelection/object-undefined (0.71s)
+    --- PASS: TestCheckedViewNullableSelection/object-undefined-wrong (0.57s)
+    --- PASS: TestCheckedViewNullableSelection/object-both (0.51s)
+    --- PASS: TestCheckedViewNullableSelection/object-both-wrong (0.69s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=42
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.253s

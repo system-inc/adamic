@@ -70,16 +70,16 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && !l.callableViewContract(l.checker.GetTypeOfSymbol(field)) {
-					if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
-						found = l.lazyReadRefusal(part, part.Name().Text(), "nullish")
-					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
 
-					if !l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
-						family := "representation conversion"
+					if (!l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean && !(of == ir.Union && (l.includesNull(l.checker.GetTypeOfSymbol(field)) || l.includesUndefined(l.checker.GetTypeOfSymbol(field)))) && !(of == ir.Closure && l.callableViewContract(l.checker.GetTypeOfSymbol(field)))) && !l.objectPrimitiveViewType(l.checker.GetTypeOfSymbol(field)) || accessorSymbol(field) {
+						family := l.unsupportedViewFamily(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeOfSymbol(field))))
+						if family == "" {
+							family = "representation conversion"
+						}
 						if accessorSymbol(field) {
 							family = "accessor"
 						}
@@ -301,7 +301,7 @@ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
-			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 				continue
 			}
 			values := l.viewLiterals(member)

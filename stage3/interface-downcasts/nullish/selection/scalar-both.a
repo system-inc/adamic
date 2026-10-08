@@ -1,0 +1,15 @@
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:"allowed" | number | null | undefined}
+function make(which:number):Base {
+ if(which===0) {const raw={kind:'box',value:['allow','ed'].join('')};return raw;}
+ if(which===2){const raw={kind:'box',value:undefined};return raw;}
+ const raw={kind:'box',value:null};return raw;
+}
+function read(node:Target):void {
+ const value=node.value;
+ console.log(typeof value+':'+String(value===null)+':'+String(value===undefined));
+ if(value!==null && value!==undefined) {console.log(String(value));}
+}
+read(make(0) as Target);
+read(make(1) as Target);
+read(make(2) as Target);

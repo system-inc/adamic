@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewNodeArrayRecords (0.00s)
+    --- FAIL: TestCheckedViewNodeArrayRecords/node-array-wrong-own (0.45s)
+        checked_views_array_records_test.go:50: exit codes differ; got oracle.run{stdout:[]uint8{0x77, 0x72, 0x6f, 0x6e, 0x67, 0xa}, stderr:[]uint8{}, exitCode:0}
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.462s
+FAIL

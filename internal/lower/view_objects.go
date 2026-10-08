@@ -59,6 +59,9 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 }
 
 func (l *lowering) viewDataType(target *checker.Type) bool {
+	if l.viewArrayBase(target) != nil {
+		return true
+	}
 	if base := l.phantomBase(target); base != nil {
 		return interfaceScalar(base)
 	}
@@ -70,7 +73,7 @@ func (l *lowering) viewDataType(target *checker.Type) bool {
 		}
 		return true
 	}
-	return target.Flags()&checker.TypeFlagsUndefined != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
+	return target.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
 }
 
 func viewInterfaceType(target *checker.Type) bool {

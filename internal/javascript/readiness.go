@@ -32,6 +32,20 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
 };
+const adamicLogicalKind = value => value === undefined ? 13 : value === null ? 12 : typeof value === "number" ? 1 : typeof value === "boolean" ? 2 : typeof value === "string" ? 3 : value instanceof AdamicClosure ? 8 : Array.isArray(value) ? 5 : value instanceof Map ? 6 : typeof value === "object" ? 4 : 0;
+const adamicNarrow = (value, wanted) => {
+ const kind=adamicLogicalKind(value);
+ if (wanted === 10 || kind === wanted || (wanted === 7 && (kind === 1 || kind === 13)) || (wanted === 9 && (kind === 2 || kind === 13))) return value;
+ panic("a union value does not match its narrowed type");
+};
+const adamicViewNullish = (object, name, expression, expected, kinds, nullAllowed, undefinedAllowed, allowed, absent, optional) => {
+ const value=adamicReadField(object,name,expression,optional,absent,expected);
+ if (value === undefined && (optional && (object === undefined || object === null) || absent && !Object.hasOwn(object,name))) return undefined;
+ const kind=adamicLogicalKind(value);
+ const valid=kind === 12 ? nullAllowed : kind === 13 ? undefinedAllowed : (kinds & (1 << kind)) !== 0 && (!allowed.length || allowed.includes(value));
+ if (!valid) panic("field read failed: " + expression + " matches no member of " + expected + "; expected " + expected + ", found " + (kind === 12 ? "null" : kind === 13 ? "undefined" : kind === 5 ? "array" : kind === 6 ? "Map" : kind === 8 ? "function" : kind === 0 ? "unsupported representation" : typeof value));
+ return value;
+};
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
 const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordSlotContracts(adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}), {...adamicSlotContracts.get(object)}, "record"); };

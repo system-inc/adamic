@@ -112,3 +112,18 @@ func TestCheckedViewCallablePendingBoundaries(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckedViewCallableNullableArity(t *testing.T) {
+	program, path := interfaceFixture(t, "lane5/probes/nullable-wrong-arity")
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "function\n/bad\n" {
+		t.Fatalf("Node: %#v", truth)
+	}
+	sanitized, _ := nativelyUncached(t, program)
+	for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+		expected := "adamic: panic: field read failed: node.value expected () => string, found function with arity 1\n"
+		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+			t.Fatalf("nullable callable: %#v want %q", got, expected)
+		}
+	}
+}

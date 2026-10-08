@@ -52,7 +52,7 @@ func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, p
 	if err != nil {
 		return err
 	}
-	wanted := l.checker.GetTypeOfSymbol(property)
+	wanted := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeOfSymbol(property)))
 	proven, implementations, called := true, 0, false
 	var visit ast.Visitor
 	visit = func(part *ast.Node) bool {
