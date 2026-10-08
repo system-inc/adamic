@@ -3,7 +3,6 @@ package oracle
 import (
 	"bytes"
 	"compress/gzip"
-	"context"
 	"encoding/binary"
 	"encoding/json"
 	"errors"
@@ -13,7 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/native"
 	reference "github.com/system-inc/adamic/internal/regexp"
@@ -177,7 +175,7 @@ let results=[];for(const i of q.Selected){const p=c.Patterns[i],r=new RegExp(tex
 	var expected, nodeErrors bytes.Buffer
 	command.Stdout = &expected
 	command.Stderr = &nodeErrors
-	if err := command.Run(); err != nil {
+	if err := runChild(command); err != nil {
 		t.Fatalf("Node corpus: %v %s", err, nodeErrors.Bytes())
 	}
 	syntax = strings.Count(nodeErrors.String(), "SYNTAX ")
@@ -206,14 +204,12 @@ let results=[];for(const i of q.Selected){const p=c.Patterns[i],r=new RegExp(tex
 	if err := native.Build(source, binaryPath, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-	defer cancel()
-	command = exec.CommandContext(ctx, binaryPath, input)
+	command = exec.Command(binaryPath, input)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var actual, errors bytes.Buffer
 	command.Stdout = &actual
 	command.Stderr = &errors
-	if err := command.Run(); err != nil {
+	if err := runChild(command); err != nil {
 		t.Fatalf("runtime corpus stopped: %v %s", err, errors.Bytes())
 	}
 	if errors.Len() != 0 {

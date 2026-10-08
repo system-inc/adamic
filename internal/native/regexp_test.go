@@ -3,10 +3,10 @@ package native
 import (
 	"bytes"
 	"compress/gzip"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
 	regex "github.com/system-inc/adamic/internal/regexp"
 	"math/rand"
 	"os"
@@ -156,6 +156,7 @@ int main(int argc,char **argv) {
   }
   if(!same) {printf("DISAGREEMENT case=%zu test=%d expected=%d lastIndex=%.0f expected=%llu captures=%zu expected=%zu\n",index,tested,p->count!=0,regex->slots[1].number,(unsigned long long)p->final,match==NULL?0:match->length,p->count);disagreements++;}
   adamic_release(match);adamic_release(regex);adamic_release(input);
+  if((index+1)%128==0 || index+1==sizeof probes/sizeof probes[0]) {printf("native regex progress: %zu/%zu\n",index+1,sizeof probes/sizeof probes[0]);fflush(stdout);}
  }
  printf("native execution totals: %zu cases, %zu disagreements\n",sizeof probes/sizeof probes[0],disagreements);return disagreements==0?0:1;
 }
@@ -171,7 +172,7 @@ int main(int argc,char **argv) {
 		if goruntime.GOOS == "linux" {
 			environment = "ASAN_OPTIONS=detect_leaks=1"
 		}
-		output, err := runRegExpChild(t, binary, arguments, environment, 5*time.Minute, 2*time.Minute)
+		output, err := runRegExpChild(t, binary, arguments, environment, childguard.Options{}, 2*time.Minute)
 		if err != nil {
 			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
 		}
@@ -222,26 +223,29 @@ func TestRegExpBytecodeRandomNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := exec.Command("node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+const fs=require('fs');fs.writeSync(2,'regex progress: start\n');
+let completed=0;
 for(const c of cases) {
  const r=new RegExp(c.pattern,c.flags.includes('d')?c.flags:c.flags+'d');
  r.lastIndex=c.lastIndex;
  const m=r.exec(String.fromCharCode(...c.input));
  c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
+ if(++completed%128===0) fs.writeSync(2,'regex progress: '+completed+'/'+cases.length+'\n');
 }
 process.stdout.write(JSON.stringify(cases));`)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("Node oracle: %v\\n%s", err, output)
+	var output, progress bytes.Buffer
+	command.Stdout, command.Stderr = &output, &progress
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
+		t.Fatalf("Node oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
 	}
-	if err = json.Unmarshal(output, &cases); err != nil {
+	if err = json.Unmarshal(output.Bytes(), &cases); err != nil {
 		t.Fatal(err)
 	}
+
 	runRegexCases(t, cases)
 }
 func TestRegExpNativeStepLimit(t *testing.T) {
@@ -265,7 +269,7 @@ int main(int argc,char **argv) {
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	output, err := runRegExpChild(t, binary, nil, "ASAN_OPTIONS=detect_leaks=0", 5*time.Minute, 10*time.Second)
+	output, err := runRegExpChild(t, binary, nil, "ASAN_OPTIONS=detect_leaks=0", childguard.Options{}, 10*time.Second)
 	var exit *exec.ExitError
 	if !errors.As(err, &exit) || exit.ExitCode() != 70 || !bytes.Contains(output, []byte("regexp: instruction step limit exceeded")) {
 		t.Fatalf("native catastrophic backtracking: exit=%v output=%s", err, output)

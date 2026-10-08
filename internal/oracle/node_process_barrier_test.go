@@ -30,6 +30,8 @@ console.log('cached ' + (process.cwd() === first));
 `), 0600); err != nil {
 		t.Fatal(err)
 	}
+	// execute watches the driver's child-output activity separately from its
+	// JSON, so scheduler pauses do not truncate an otherwise valid observation.
 	observe := func(harness string, command ...string) run {
 		result := execute(t, "python3", append([]string{harness}, command...)...)
 		if result.exitCode != 0 || len(result.stderr) != 0 {

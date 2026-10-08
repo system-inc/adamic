@@ -2,7 +2,6 @@ package oracle
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -10,7 +9,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
 
@@ -83,11 +81,7 @@ func checkParallelVariants(t *testing.T, program *ir.Program, oracle run) {
 					}
 					started := time.Now()
 					for attempt := 0; attempt < attempts; attempt++ {
-						deadline := time.Minute
-						if build.options.ThreadSanitize {
-							deadline = 5 * time.Minute
-						}
-						observed := executeParallelDeadline(t, threads, false, deadline, binary)
+						observed := executeParallel(t, threads, false, binary)
 						if difference := disagreement(oracle, observed); difference != "" {
 							t.Fatalf("%s: Node exit %d stdout %q stderr %q; native exit %d stdout %q stderr %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, observed.exitCode, observed.stdout, observed.stderr)
 						}
@@ -117,19 +111,7 @@ func checkParallelVariants(t *testing.T, program *ir.Program, oracle run) {
 // An unset override really is unset, even when the test's shell set ADAMIC_THREADS.
 func executeParallel(t *testing.T, threads string, leaks bool, name string, arguments ...string) run {
 	t.Helper()
-	return executeParallelDeadline(t, threads, leaks, time.Minute, name, arguments...)
-}
-
-// TSan instruments the full benchmark and can exceed a minute under gate load.
-// Every execution remains bounded and must still match Node without a race report.
-func executeParallelDeadline(t *testing.T, threads string, leaks bool, deadline time.Duration, name string, arguments ...string) run {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), deadline)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
+	command := bounded(t, name, arguments...)
 	command.Env = []string{}
 	for _, entry := range os.Environ() {
 		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") || strings.HasPrefix(entry, "ADAMIC_TSAN_PERTURB=") {
@@ -150,7 +132,7 @@ func executeParallelDeadline(t *testing.T, threads string, leaks bool, deadline 
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	err := runChild(command)
 	var failure *exec.ExitError
 	if err != nil && !errors.As(err, &failure) {
 		t.Fatalf("%s: %v", name, err)

@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -70,7 +71,7 @@ func longRegExpRun(t *testing.T, environment []string, name string, arguments ..
 	if name == "leaks" {
 		budget = 0
 	}
-	result, cpu, err := regExpCPUCommand(environment, name, arguments, 5*time.Minute, budget)
+	result, cpu, err := regExpCPUCommand(environment, name, arguments, childguard.Options{}, budget)
 	if err != nil {
 		t.Fatal(err)
 	}
