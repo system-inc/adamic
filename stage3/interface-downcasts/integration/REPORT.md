@@ -333,3 +333,17 @@ skip-callable-proof by the callable-signature-mutant read refusal. Every mutant
 fails an executed oracle assertion, with no build failure; individual logs and
 the runner summary are preserved. Source wrong/missing/opposite/nested fixtures
 also run in the standard oracle, distinct from these implementation mutants.
+
+## Newest lazy owner finite literals follow-up
+
+Tip d115cfd5abc8274164b5ea29fbe26f9a25b78ce3 merges cleanly on f56c432e1.
+No conflicted hunk or compiler change is present. Nullable finite string members
+now have explicit dynamic-string source controls: literal-both agrees with Node
+for present/null/undefined; literal-both-wrong constructs not-allowed at runtime
+and must exit 70 at node.value naming the finite declared type in both backends.
+The owner reports 57 source mutations across the nullable matrix, callable proof,
+nested reads and this literal control; these are distinct from the four restored
+implementation mutations rerun above. All source tests run in the filtered gate.
+
+Finite-literal owner gates pass: lower 9.476s, native 14.583s, JavaScript
+2.377s, full IR 3.172s, uncached filtered oracle 85.780s, vet exit 0.

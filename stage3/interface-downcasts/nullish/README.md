@@ -121,3 +121,14 @@ awaiting successful lowering and reaching-view proof. None are subtracted based
 on fixture coverage. Callable overlap remains 224 pairs/392 reads as an inventory,
 not a remaining language-gap count; the wrapper now has fixture evidence.
 Inserted option checks still await the ledger's only-under-Adamic-options rows.
+
+## Finite literal follow-up
+
+A nullable two-string-literal field matches Node for present, null and undefined.
+Its mutant constructs not-allowed at runtime, preserving the string storage kind:
+all three compiled runs exit 70 at node.value and name the allowed literal type.
+This proves nullable logical-kind admission cannot skip finite value membership.
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewNullishLiterals$' -v -count=1`
+passes in 0.876s. Its first attempted source mutation changed no bytes; that test
+failed its expected-trap assertion. The corrected real-input mutant is committed.
+Production pairs/reads remain 2,018/9,101 unverified; the exact inventory is unchanged.
