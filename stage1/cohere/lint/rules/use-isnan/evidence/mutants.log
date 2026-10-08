@@ -1,0 +1,3 @@
+    lint_test.go:855: source shadows ignored caught on native: case 1 line 16: port "/tmp/adamic-gate/TestMutantssource_shadows_ignored234194062/017/use-isnan-1.ts:1:41", Go "fixed\tvalue === NaN; function f(NaN) { return value === NaN; }\\u000a"
+    lint_test.go:855: source shadows ignored caught on Node: case 1 line 16: port "/tmp/adamic-gate/TestMutantssource_shadows_ignored234194062/017/use-isnan-1.ts:1:41", Go "fixed\tvalue === NaN; function f(NaN) { return value === NaN; }\\u000a"
+    lint_test.go:855: source shadows ignored caught on emitted JavaScript: case 1 line 16: port "/tmp/adamic-gate/TestMutantssource_shadows_ignored234194062/017/use-isnan-1.ts:1:41", Go "fixed\tvalue === NaN; function f(NaN) { return value === NaN; }\\u000a"

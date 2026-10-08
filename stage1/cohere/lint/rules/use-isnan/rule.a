@@ -1,0 +1,71 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { messageComparisonWithNaN, messageCaseWithNaN, messageSwitchOnNaN } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        // The registry delivers only the three upstream listener kinds.
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.context.kind(node.children[1] ?? -1);
+            if(['LessThanToken','LessThanEqualsToken','GreaterThanToken','GreaterThanEqualsToken','EqualsEqualsToken','EqualsEqualsEqualsToken','ExclamationEqualsToken','ExclamationEqualsEqualsToken'].includes(operator) &&
+                (this.reference(node.children[0] ?? -1) || this.reference(node.children[2] ?? -1)))
+                this.context.reportNode(index, 'use-isnan', 'comparisonWithNaN', messageComparisonWithNaN);
+            return;
+        }
+        if(node.kind === 'SwitchStatement') {
+            if(this.context.settings.read('enforceforswitchcase','true') !== 'true') return;
+            if(this.reference(node.children[0] ?? -1)) this.context.reportNode(index, 'use-isnan', 'switchOnNaN', messageSwitchOnNaN);
+            const block = node.children.find((child) => this.context.kind(child) === 'CaseBlock') ?? -1;
+            if(block < 0) return;
+            for(const clause of this.context.node(block).children) {
+                const item = this.context.node(clause);
+                if(item.kind === 'CaseClause' && this.reference(item.children[0] ?? -1))
+                    this.context.reportNode(clause, 'use-isnan', 'caseWithNaN', messageCaseWithNaN);
+            }
+            return;
+        }
+        if(this.context.settings.read('enforceforindexof','false') !== 'true') return;
+        const method = this.method(this.context.unwrap(node.children[0] ?? -1));
+        if(method !== 'indexOf' && method !== 'lastIndexOf') return;
+        const arguments_ = this.context.arguments(index);
+        if(arguments_.length === 0 || arguments_.length > 2 || !this.reference(arguments_[0] ?? -1)) return;
+        const replacement = method === 'lastIndexOf' ? 'findLastIndex' : 'findIndex';
+        this.context.reportNode(index, 'use-isnan', 'indexOfNaN', `\`${method}\` cannot find NaN, so this call returns -1 whatever the array holds. It searches with strict equality, and NaN is not equal to itself. Search with Number.isNaN instead: \`${replacement}(Number.isNaN)\`.`);
+    }
+    method(index: number): string {
+        if(index < 0) return '';
+        const node = this.context.node(index);
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(node.kind === 'PropertyAccessExpression' && this.context.kind(key) === 'Identifier') return this.context.node(key).text;
+        if(node.kind === 'ElementAccessExpression') {
+            const unwrapped = this.context.unwrap(key);
+            if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(this.context.kind(unwrapped))) return this.context.node(unwrapped).text;
+        }
+        return '';
+    }
+    reference(index: number): boolean {
+        if(index < 0) return false;
+        const node = this.context.node(index);
+        if(node.kind === 'Identifier') return node.text === 'NaN' && this.unshadowed(index);
+        if(node.kind === 'ParenthesizedExpression') return this.reference(node.children[0] ?? -1);
+        if(node.kind === 'BinaryExpression') return this.context.kind(node.children[1] ?? -1) === 'CommaToken' && this.reference(node.children[2] ?? -1);
+        if(node.kind !== 'PropertyAccessExpression' && node.kind !== 'ElementAccessExpression') return false;
+        const object = node.children[0] ?? -1;
+        if(this.context.kind(object) !== 'Identifier' || this.context.node(object).text !== 'Number' || !this.unshadowed(object)) return false;
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(node.kind === 'PropertyAccessExpression') return key >= 0 && this.context.node(key).text === 'NaN';
+        const unwrapped = this.context.unwrap(key);
+        return ['StringLiteral','NoSubstitutionTemplateLiteral'].includes(this.context.kind(unwrapped)) && this.context.node(unwrapped).text === 'NaN';
+    }
+    unshadowed(index: number): boolean {
+        const checker = this.context.checker;
+        if(checker === undefined) return true;
+        const answer = checker.ask(index, 'node-symbol-details');
+        if(answer.value === undefined) return false;
+        const facts = new SymbolDetails(answer.value);
+        return !facts.declarations.some((declaration) => !declaration.declarationFile);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

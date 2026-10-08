@@ -1,0 +1,5 @@
+panic: program: the tsconfig named 883 files but only 554 matched the program's own paths. This is a path-canonicalization mismatch, not an empty project: the compiler lowercases Path() on a case-insensitive filesystem while the config keeps its original casing. Linting the 554 that matched would silently skip the other 329.
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:258 +0x7c5

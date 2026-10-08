@@ -1,0 +1,16 @@
+{
+  "name": "use-isnan",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "BinaryExpression",
+    "SwitchStatement",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave16UseIsnan",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestUseIsNaN"
+}

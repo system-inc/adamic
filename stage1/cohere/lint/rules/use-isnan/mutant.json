@@ -1,0 +1,5 @@
+{
+  "name": "source shadows ignored",
+  "from": "return !facts.declarations.some((declaration) => !declaration.declarationFile);",
+  "to": "return true;"
+}
