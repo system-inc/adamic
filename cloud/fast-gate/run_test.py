@@ -586,6 +586,7 @@ class LongestFirst(unittest.TestCase):
             self.assertEqual(gate.exits["tests"], 1)
 
 
+@unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
 class StopTests(unittest.TestCase):
     setUp = FailClosed.setUp
 
