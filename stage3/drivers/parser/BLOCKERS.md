@@ -1,3 +1,55 @@
+# Land-area-next 28285421: fresh scratch, native red
+
+records-maplike-library 2648ad33 conflicts in 44 paths, including lowering,
+loading and native. Merge aborted as instructed; compiler is land-area-next
+28285421 alone. No compiler merge is pushed. Adaptations 65 and 76 remain applied,
+sameMap remains unchanged. Both split modes now stop in the checker at
+**debug.ts:113:19 TS2339 captureStackTrace missing on ErrorConstructor**, with the
+second use at 114:19. The previous library scratch's Error fact is absent here.
+No C, clang time, native parser dump or native acceptance corpus is reached.
+
+Earlier families, measured by isolated probes: core.ts:11:52 enum initialization
+persists; all three namespace forms persist. Predicate overload and callback
+result probes now pass, but the predicate callback-parameter probe still refuses.
+arguments.length and its function-value witness both match Node, with byte mutants
+caught (the latter prints 1). Six of twenty focused probes pass; every green has
+identical stdout, stderr and exit, plus a caught one-byte output mutant.
+MapLike and the sameMap/key-array casts still refuse in focused probes.
+
+The fresh byte-audited slice has 27 declaration files, 1993 code declarations,
+41857 copied-span lines and 2082 spans across 79 modules. Extended full/slice Node
+dumps are identical: 36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Node-end and both JSDoc mutants are caught on both trees. 76's contract mutants
+and 32 local lane tests pass. No adaptation changes or new API sanctions; prior
+full landing-lane proof remains the baseline. Error-recovery manifest not rerun.
+
+Ten ordered source stops follow, all after row 1 behind uncommitted throwing
+placeholders. Rows 9-10 are observed on helper calls after the enum placeholders;
+the unchanged Map-before-namespace minimal reproduces that namespace preflight.
+Observed column 109 on row 10 maps to original cache initializer column 29.
+Further stubs create TS2454 and an inferred void-result TS2339; an earlier attempt
+also duplicated a helper. These artifacts are excluded, and discovery stops here
+rather than claiming fifteen source failures. Exact diagnostics, failed attempts,
+placeholder patches and merge paths: [front33 evidence](evidence/front33/README.md).
+
+| Order | Original slice location | Exact diagnostic | Minimal program |
+|---|---|---|---|
+| 1 | src/compiler/debug.ts:113:19 | error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'. | [native-error-capture-stack.a](native-error-capture-stack.a) |
+| 2 | src/compiler/core.ts:11:52 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 3 | src/compiler/debug.ts:333:29 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 4 | src/compiler/performanceCore.ts:37:37 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-call-before-enum.a](native-call-before-enum.a) |
+| 5 | src/compiler/performance.ts:15:18 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-call-before-enum.a](native-call-before-enum.a) |
+| 6 | src/compiler/performance.ts:16:15 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 7 | src/compiler/performance.ts:17:16 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 8 | src/compiler/performance.ts:18:19 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 9 | src/compiler/core.ts:11:52 | stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet | [native-map-before-namespace.a](native-map-before-namespace.a) |
+| 10 | src/compiler/debug.ts:333:29 | stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet | [native-map-before-namespace.a](native-map-before-namespace.a) |
+
+Earlier units below are historical evidence, not this scratch’s green claims.
+
+---
+
 # Current unit: library merge and permanent finite-key contract
 
 Native red on scratch 2d7c31ac (main ffe6efc1 + area/library b05a9306).

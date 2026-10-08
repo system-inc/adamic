@@ -7,7 +7,7 @@
   },
   "summary": {
     "typescript": "6.0.3",
-    "tree": "/workspace/scratch/parser-front32-lane-76/adapted-tree",
+    "tree": "/workspace/scratch/parser-front33-adapted",
     "entries": [
       "src/compiler/parser.ts:createSourceFile",
       "src/compiler/parser.ts:forEachChild",
@@ -32,7 +32,7 @@
     "declaration_bytes": 2358778,
     "rewritten_import_lines": 236
   },
-  "archive_sha256": "1a415c8628b32e21e2af8ae40b9148434aeac5f5e1f9dc0b1befee2fe5822f8f",
+  "archive_sha256": "c20de5f301be551fadb3d2d55c4a673a8d1bf89fb1a46334fad9fe3d83b08e5a",
   "temporary_adaptations_retained": [
     60,
     61,
@@ -45,7 +45,9 @@
   "retired_scanner_temporary_80": "absent from current area and not reapplied",
   "dump_reference": "../reference.json",
   "case_reference": "../cases-reference.json",
-  "warning": "Current main plus temporary 65 and permanent 76; byte-audited, no discovery stubs. 81-file extended Node dump revalidated. Existing 10,406-case manifest not rerun in this unit.",
+  "warning": "Fresh adapted tree with 65 and 76; ten source stops, discovery copies excluded. Extended 81-file dump revalidated; 10406-case corpus and native acceptance unreached.",
   "source_base": "origin/main",
-  "permanent_adaptation_76": "six assertion-cache keys only; sameMap proposal not applied"
+  "permanent_adaptation_76": "six assertion-cache keys only; sameMap proposal not applied",
+  "compiler_scratch": "28285421bf59ea46269545144c19123156c00c91",
+  "adaptation_source": "codex/stage3-parser-proof 4dca4e4c; unchanged adaptation pipeline from completed prior unit"
 }
