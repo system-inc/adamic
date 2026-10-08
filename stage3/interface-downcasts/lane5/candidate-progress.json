@@ -1,0 +1,19 @@
+{
+  "basis": "lane2 static candidate inventory, not exact runtime reachability",
+  "exactReachability": null,
+  "groups": [
+    {
+      "name": "group1",
+      "type_id": 9918,
+      "type": "Program",
+      "fields": [
+        "getCurrentDirectory",
+        "getCommonSourceDirectory"
+      ],
+      "pairs": 2,
+      "candidateReads": 11,
+      "fixtureDirectory": "stage3/interface-downcasts/lane5/group1",
+      "productionProgramCertified": false
+    }
+  ]
+}

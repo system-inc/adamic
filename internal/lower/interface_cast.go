@@ -69,7 +69,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+				if field != nil && !l.callableViewContract(l.checker.GetTypeOfSymbol(field)) {
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")

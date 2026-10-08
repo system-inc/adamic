@@ -42,6 +42,8 @@ type ViewContract struct {
 	Functions     []int
 	Parameters    []ViewContractID
 	Result        ViewContractID
+	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
+	DiscardResult bool
 }
 
 type ViewFieldContract struct {

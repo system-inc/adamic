@@ -1,0 +1,4 @@
+type AnyFunction = (...args: never[]) => void;
+const callback: AnyFunction = (): boolean => true;
+const value = callback();
+console.log('observed');

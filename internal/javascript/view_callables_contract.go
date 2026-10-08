@@ -13,7 +13,7 @@ const viewCallableShapeRuntime = `const adamicViewCallableShape = (value, record
         if (recorded !== undefined && recorded !== null && expected !== undefined && expected !== null) {
             if (recorded.parameters.length !== expected.parameters.length) found = "function with arity " + recorded.parameters.length;
             else if (recorded.result === 0 || expected.result === 0) found = "function with unknown signature";
-            else if (recorded.result !== expected.result) found = "function with incompatible result representation";
+            else if (expected.result !== 255 && recorded.result !== expected.result) found = "function with incompatible result representation";
             else if (recorded.parameters.every((representation, index) => representation !== 0 && expected.parameters[index] !== 0 && representation === expected.parameters[index])) return value;
             else found = "function with incompatible parameter representations";
         }
