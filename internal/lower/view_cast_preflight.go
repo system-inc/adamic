@@ -15,6 +15,7 @@ const (
 	castLoweringViews
 	castLoweringPhantom
 	castLoweringNodeProjection
+	castLoweringOptionalPresence
 )
 
 type castLowerer struct {
@@ -25,6 +26,7 @@ type castLowerer struct {
 }
 
 var deferredCastLowerers = []castLowerer{
+	{castLoweringOptionalPresence, true, (*lowering).optionalPresenceViewCandidate, (*lowering).optionalPresenceViewCast},
 	{castLoweringViews, false, func(l *lowering, node *ast.Node, source, target *checker.Type) bool {
 		return l.viewCastCandidate(source, target) || l.nullableReadonlyArrayCast(node, source, target)
 	}, (*lowering).deferredViewCast},
