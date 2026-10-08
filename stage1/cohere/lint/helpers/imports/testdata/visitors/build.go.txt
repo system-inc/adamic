@@ -1,0 +1,27 @@
+package main
+
+import (
+	"context"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
+)
+
+func main() {
+	p, e := load.Load([]string{os.Args[1]})
+	if e != nil {
+		panic(e)
+	}
+	l, e := lower.Lower(context.Background(), p)
+	if e != nil {
+		panic(e)
+	}
+	if e = os.WriteFile(os.Args[2]+".mjs", []byte(javascript.JavaScript(l)), 0644); e != nil {
+		panic(e)
+	}
+	if e = native.Build(native.C(l), os.Args[2], native.Options{Sanitize: true}); e != nil {
+		panic(e)
+	}
+}

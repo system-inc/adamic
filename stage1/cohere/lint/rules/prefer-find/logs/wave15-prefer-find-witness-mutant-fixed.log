@@ -1,0 +1,51 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/prefer-find_array_verdict_suppressed
+=== PAUSE TestMutants/prefer-find_array_verdict_suppressed
+=== CONT  TestMutants/prefer-find_array_verdict_suppressed
+    lint_test.go:832: checker compilation phases: load=195.345374ms lower=2.977687914s C=543.549512ms JavaScript=29.738063ms
+    lint_test.go:832: checker native mutant build: 39.363214088s
+    lint_test.go:855: prefer-find array verdict suppressed caught on native: case 0 line 2: port "fixed\tconst array = [1, 2, 3];\\u000aconst predicate = (value: number) => value > 1;\\u000aconst zero = 0;\\u000aarray.filter(predicate)[zero];\\u000aarray['filter'](predicate).at('0');\\u000a(array.filter(predicate), array.filter(predicate))[0];\\u000a(true ? array.filter(predicate) : array.filter(predicate))[0];\\u000aarray.filter(predicate) /* [ . ?. */ .at('invalid');\\u000aarray.filter(predicate).at('1junk');\\u000aarray.filter(predicate).at(' 1');\\u000aarray.filter(predicate).at('0x1p0');\\u000aarray.filter(predicate).at('1_0');\\u000aarray.filter(predicate)?.[0];\\u000aarray.filter?.(predicate)[0];\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:4:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:4:1
+          @typescript-eslint/prefer-find  Prefer .find(...) instead of .filter(...)[0].
+        
+        range 89 118 preferFind suggestion-edits:preferFindSuggestion	95:101:find|112:118:	Use .find(...) instead of .filter(...)[0].	89 118
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:5:1
+    lint_test.go:855: prefer-find array verdict suppressed caught on Node: case 0 line 2: port "fixed\tconst array = [1, 2, 3];\\u000aconst predicate = (value: number) => value > 1;\\u000aconst zero = 0;\\u000aarray.filter(predicate)[zero];\\u000aarray['filter'](predicate).at('0');\\u000a(array.filter(predicate), array.filter(predicate))[0];\\u000a(true ? array.filter(predicate) : array.filter(predicate))[0];\\u000aarray.filter(predicate) /* [ . ?. */ .at('invalid');\\u000aarray.filter(predicate).at('1junk');\\u000aarray.filter(predicate).at(' 1');\\u000aarray.filter(predicate).at('0x1p0');\\u000aarray.filter(predicate).at('1_0');\\u000aarray.filter(predicate)?.[0];\\u000aarray.filter?.(predicate)[0];\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:4:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:4:1
+          @typescript-eslint/prefer-find  Prefer .find(...) instead of .filter(...)[0].
+        
+        range 89 118 preferFind suggestion-edits:preferFindSuggestion	95:101:find|112:118:	Use .find(...) instead of .filter(...)[0].	89 118
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:5:1
+    lint_test.go:855: prefer-find array verdict suppressed caught on emitted JavaScript: case 0 line 2: port "fixed\tconst array = [1, 2, 3];\\u000aconst predicate = (value: number) => value > 1;\\u000aconst zero = 0;\\u000aarray.filter(predicate)[zero];\\u000aarray['filter'](predicate).at('0');\\u000a(array.filter(predicate), array.filter(predicate))[0];\\u000a(true ? array.filter(predicate) : array.filter(predicate))[0];\\u000aarray.filter(predicate) /* [ . ?. */ .at('invalid');\\u000aarray.filter(predicate).at('1junk');\\u000aarray.filter(predicate).at(' 1');\\u000aarray.filter(predicate).at('0x1p0');\\u000aarray.filter(predicate).at('1_0');\\u000aarray.filter(predicate)?.[0];\\u000aarray.filter?.(predicate)[0];\\u000a", Go "/tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:4:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:4:1
+          @typescript-eslint/prefer-find  Prefer .find(...) instead of .filter(...)[0].
+        
+        range 89 118 preferFind suggestion-edits:preferFindSuggestion	95:101:find|112:118:	Use .find(...) instead of .filter(...)[0].	89 118
+        /tmp/adamic-gate/TestMutantsprefer-find_array_verdict_suppressed2077465982/016/prefer-find-0.ts:5:1
+--- PASS: TestMutants (2.82s)
+    --- PASS: TestMutants/prefer-find_array_verdict_suppressed (45.46s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:54: checker compilation phases: load=155.684042ms lower=2.946661115s C=454.229074ms JavaScript=25.766308ms
+    registration_test.go:54: checker native build: 3.996789226s
+    registration_test.go:54: typed runtime time: Go program and lint=87.300269ms native program, lint and recording=137.787691ms
+    registration_test.go:54: typed runtime time: native=137.787691ms
+    registration_test.go:54: typed runtime time: Node=359.53377ms
+    registration_test.go:54: typed runtime time: emitted JavaScript=68.837948ms
+    registration_test.go:54: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:54: checker native build: 7.275053ms
+    registration_test.go:54: typed runtime time: Go program and lint=127.232532ms native program, lint and recording=117.809536ms
+    registration_test.go:54: typed runtime time: native=117.809536ms
+    registration_test.go:54: typed runtime time: Node=337.949061ms
+    registration_test.go:54: typed runtime time: emitted JavaScript=85.110604ms
+    registration_test.go:54: live Go, native, Node and emitted JavaScript replay identical: 5286 bytes
+    registration_test.go:70: checker native build: 13.080052ms
+    registration_test.go:70: Go, Node, emitted JavaScript, native identical: 314626 bytes
+--- PASS: TestOwnedWitnesses (12.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	60.355s

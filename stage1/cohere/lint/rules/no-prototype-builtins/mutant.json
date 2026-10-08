@@ -1,0 +1,5 @@
+{
+  "name": "omit-is-prototype-of",
+  "from": "name !== 'isPrototypeOf'",
+  "to": "true"
+}
