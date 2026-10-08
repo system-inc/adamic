@@ -1,0 +1,4 @@
+// JSX spelling is case-sensitive; no normalization, folding or substring matching.
+export function matchExactly(candidate: string, wanted: string): boolean {
+    return candidate === wanted;
+}
