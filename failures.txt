@@ -4,3 +4,17 @@ census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 
     wasi_test.go:132: fixture does not lower
 --- SKIP: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.07s)
 
+== github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees (skipped; the census table classes it required-input)
+census: ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md.
+=== RUN   TestSplitTSGoAgrees
+    units_tsgo_test.go:19: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgrees (0.00s)
+
+== github.com/system-inc/adamic/internal/native TestWASI (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASI
+    wasm_test.go:41: WASI toolchain missing or unusable (sysroot, linker, builtins): exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestWASI (0.06s)
+
