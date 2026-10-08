@@ -1,0 +1,471 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	1186.802s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.572s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+ok  	github.com/system-inc/adamic/cloud	40.419s
+?   	github.com/system-inc/adamic/cloud/reports/decode-ascii	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic	18.724s
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-gate	1.391s
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	6.286s
+?   	github.com/system-inc/adamic/cmd/adamic-reduce	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.640s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	201.356s
+?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+?   	github.com/system-inc/adamic/cmd/lint-shards	[no test files]
+--- FAIL: TestEveryFunctionIsInSingleAssignment (38.28s)
+    flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+--- FAIL: TestLivenessHoldsOnEveryPath (440.22s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.22s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/process_exit_default.a (0.38s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/process_exit.a (0.47s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/process_bad_code.a (0.45s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/process_bad_code.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_process_cwd_error.a (2.34s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_process_cwd_error.a:5:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_file.a (2.50s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_buffer.a (3.00s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_rm.a (2.41s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:10:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdtemp.a (3.53s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:13:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/nbody_field_values.a (0.22s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/nbody_field_values.a:18:47: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/iterators_sym_keys_view.a (0.22s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/iterators_override_this.a (0.27s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/iterators_hidden_return.a (0.30s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_static_private_method.a (0.47s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_static_private_instance.a (0.34s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_init_super_number.a (0.48s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_init_super_getter.a (0.36s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_init_super.a (0.39s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/census_small_boolean.a (0.30s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/census_overload_contracts.a (0.13s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+    trace_test.go:426: 61949194 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (440.21s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.35s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/process_exit_default.a (0.11s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/process_exit.a (0.31s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/process_bad_code.a (0.30s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/process_bad_code.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_process_cwd_error.a (1.70s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_process_cwd_error.a:5:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a (1.18s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a (1.45s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_rm.a (1.23s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:10:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdtemp.a (1.94s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:13:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/nbody_field_values.a (0.28s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/nbody_field_values.a:18:47: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/iterators_override_this.a (0.23s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/iterators_sym_keys_view.a (0.31s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/iterators_hidden_return.a (0.41s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_static_private_method.a (0.20s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_static_private_instance.a (0.25s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_init_super_getter.a (0.21s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_init_super_number.a (0.30s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_init_super.a (0.33s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/census_small_boolean.a (0.35s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/census_overload_contracts.a (0.30s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+    ranges_test.go:78: 99667 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.35s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_static_private_method.a (0.25s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super_number.a (0.11s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super_getter.a (0.07s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_static_private_instance.a (0.45s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super.a (0.27s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/census_small_boolean.a (0.40s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/census_overload_contracts.a (0.13s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_exit_default.a (0.18s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_exit.a (0.36s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a (0.29s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/process_bad_code.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_process_cwd_error.a (2.31s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_process_cwd_error.a:5:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_buffer.a (1.36s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_file.a (1.67s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_rm.a (1.03s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:10:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdtemp.a (1.66s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:13:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/nbody_field_values.a (0.13s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/nbody_field_values.a:18:47: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/iterators_sym_keys_view.a (0.15s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/iterators_hidden_return.a (0.19s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/iterators_override_this.a (0.25s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	440.840s
+--- FAIL: TestEveryWriteIsRecordedAndKnown (207.20s)
+    fresh_test.go:63: ../oracle/testdata/phantom_array_brands.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_array_brands.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_brands.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_overload_results.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_overload_results.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:63: ../oracle/testdata/phantom_undefined.a: ir.PhantomMember is a node the cycle finder doesn't know
+    fresh_test.go:70: 1741 writes in 766 programs, 1553 proven not to close a cycle
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	207.356s
+--- FAIL: TestOverridesShapesAndLower (13.00s)
+    overrides_test.go:51: seed 30: lower: /tmp/adamic-gate/TestOverridesShapesAndLower2068329307/001/program.a:178:10: stage 0 can't lower a BinaryExpression with a number and a number yet
+        interface Holder {
+        	value: number;
+        	name: string;
+        	list: number[];
+        }
+        class Counter {
+        	count = 0;
+        	label = 'c';
+        	bump(amount: number): number {
+        		holder.value = this.count;
+        		return this.count + amount;
+        	}
+        }
+        const holder: Holder = { value: 4294967295, name: 'hello', list: [100, 2] };
+        const counter = new Counter();
+        let text1: string = ('hello').slice(0, 40);
+        const numbers2: number[] = [0, 2.25, 10];
+        let number3: number = 123.456;
+        let flag4: boolean = false;
+        const table = new Map<string, number>();
+        let captured = 1;
+        const capture = (step: number): number => {
+        	captured += step;
+        	return captured;
+        };
+        function makeTally(start: number): (step: number) => number {
+        	let total = start;
+        	return (step) => {
+        		total = total * 2 + step;
+        		return total;
+        	};
+        }
+        const tally5 = makeTally(1);
+        function effect6(parameter7: number): number {
+        	counter.count = captured;
+        	console.log(`${[`${tally5(Math.round(parameter7))}`, `${((3) ** -1)}`].join('|')}|${(holder.value > holder.list.length)}`);
+        	for (let index8 = 0; index8 < 1; index8++) {
+        		if (flag4) {
+        			return number3;
+        		}
+        		if (flag4) {
+        			return counter.label.padStart(8, 'ab').length;
+        		}
+        	}
+        	return tally5((0 / number3));
+        }
+        function effect9(): number {
+        	holder.name = (counter.label).slice(0, 40);
+        	let text10: string = ((holder.name + counter.label).padStart(8, 'ab')).slice(0, 40);
+        	return number3;
+        }
+        function effect11(parameter12: number, parameter13: number): number {
+        	text1 = ((holder.name + counter.label.slice(number3, counter.count))).slice(0, 40);
+        	console.log(text1);
+        	return counter.count;
+        }
+        function effect14(parameter15: number): string {
+        	for (let index16 = 0; index16 < 2; index16++) {
+        		holder.list.pop();
+        		console.log(`n=${2.25}`.trim());
+        		if (flag4) {
+        			return (counter.label.trim()).slice(0, 40);
+        		}
+        	}
+        	return (text1).slice(0, 40);
+        }
+        interface OverrideBox { v: string; }
+        interface OverrideWorker { run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox ; }
+        let overrideGlobal: OverrideBox = { v: `global${7}` };
+        let overrideNarrowed: OverrideBox | undefined = { v: `narrowed${5}` };
+        const overrideArray: OverrideBox[] = [];
+        const overrideMap = new Map<string, OverrideBox>();
+        const overrideClosures: (() => string)[] = [];
+        class OverrideBase implements OverrideWorker {
+        	saved: OverrideBox = { v: `field${3}` };
+        	run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox {
+        		return { v: `${box.v}:${items.length}` };
+        	}
+        }
+        class OverrideChild extends OverrideBase {
+        	run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox {
+        		items[0] = { v: `write${2}` };
+        		box.v = `${box.v}!`;
+        		return { v: `${box.v}:${items.length}` };
+        	}
+        	throughSuper(): void {
+        		const items: OverrideBox[] = [{ v: `super${3}` }];
+        		const borrowed = items[0] ?? { v: `fallback${4}` };
+        		console.log(super.run(borrowed, items, () => {}).v);
+        		console.log(borrowed.v);
+        	}
+        }
+        class OverrideReader implements OverrideWorker {
+        	run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox {
+        		return { v: `${box.v}:${items.length}` };
+        	}
+        }
+        function overrideViaBase(worker: OverrideBase): void {
+        	const items: OverrideBox[] = [{ v: `first${5}` }, { v: `second${4}` }];
+        	const borrowed = items[0] ?? { v: `fallback${0}` };
+        	const callback = (): void => {
+        	};
+        	if (overrideNarrowed !== undefined) {
+        		try {
+        			const result = worker.run({ v: `literal${0}` }, items, callback);
+        			console.log(result.v);
+        		} catch (error) {
+        			console.log('override caught');
+        		}
+        	}
+        	console.log(borrowed.v);
+        }
+        function overrideViaInterface(worker: OverrideWorker): void {
+        	const items: OverrideBox[] = [{ v: `first${5}` }, { v: `second${4}` }];
+        	const borrowed = items[0] ?? { v: `fallback${0}` };
+        	const callback = (): void => {
+        	};
+        	if (overrideNarrowed !== undefined) {
+        		try {
+        			const result = worker.run({ v: `literal${0}` }, items, callback);
+        			console.log(result.v);
+        		} catch (error) {
+        			console.log('override caught');
+        		}
+        	}
+        	console.log(borrowed.v);
+        }
+        const overrideChild = new OverrideChild();
+        overrideViaBase(new OverrideBase());
+        overrideViaBase(overrideChild);
+        console.log(overrideChild.saved.v);
+        console.log(overrideGlobal.v);
+        for (const [key, kept] of overrideMap) {
+        	console.log(`${key}:${kept.v}`);
+        }
+        overrideViaInterface(new OverrideReader());
+        overrideViaInterface(overrideChild);
+        overrideChild.throughSuper();
+        console.log(overrideChild.saved.v);
+        console.log(overrideGlobal.v);
+        for (const kept of overrideArray) {
+        	console.log(kept.v);
+        }
+        for (const [key, kept] of overrideMap) {
+        	console.log(`${key}:${kept.v}`);
+        }
+        for (const later of overrideClosures) {
+        	console.log(later());
+        }
+        if (holder.list.length < 24) {
+        	holder.list.push(holder.value);
+        }
+        if (((counter.label.codePointAt(counter.count) ?? 100) >= -3)) {
+        	if (numbers2.length < 24) {
+        		numbers2.push((table.get('b') ?? 123.456));
+        	}
+        	let number17: number = captured;
+        } else {
+        }
+        for (let index18 = 0; index18 < 2; index18++) {
+        	{
+        		let round19 = 0;
+        		while (round19 < 2) {
+        			round19++;
+        			console.log(effect14(tally5((-(captured)))));
+        			effect11(1, Math.max(round19, 3));
+        		}
+        	}
+        	for (let index20 = 0; index20 < 2; index20++) {
+        		effect9();
+        	}
+        }
+        {
+        	let round21 = 0;
+        	while (round21 < 3) {
+        		round21++;
+        		if (flag4) {
+        			if (((flag4 && flag4) && flag4)) {
+        				for (const item22 of numbers2) {
+        					holder.value = (table.get(`k${Math.abs(Math.trunc('hello'.charCodeAt(item22))) % 4}`) ?? -3);
+        					counter.count = (Math.pow(1.5, item22) % counter.count);
+        					table.delete(`k${Math.abs(Math.trunc(effect9())) % 4}`);
+        				}
+        				console.log((holder.name.trim() + text1));
+        			} else {
+        			}
+        		} else {
+        		}
+        	}
+        }
+        counter.bump(tally5(counter.bump(123.456)));
+        {
+        	let round23 = 0;
+        	while (round23 < 1) {
+        		round23++;
+        		if (holder.list.length < 24) {
+        			holder.list.push((flag4 ? effect11(counter.count, round23) : counter.count));
+        		}
+        	}
+        }
+        if ((100 === number3)) {
+        	console.log((text1 + effect14(effect11(holder.name.indexOf(counter.label), effect6(holder.value)))));
+        	for (let index24 = 0; index24 < 2; index24++) {
+        		if (flag4) {
+        			let number25: number = (Math.pow(0, holder.value) % holder.value);
+        		} else {
+        			for (const item26 of numbers2) {
+        				table.delete('c');
+        				captured *= `n=${holder.value}>`.indexOf(`n=${index24} `);
+        			}
+        		}
+        		console.log(effect14(7));
+        	}
+        } else {
+        }
+        counter.bump(effect6(('a'.codePointAt(number3) ?? 2)));
+        for (let index27 = 0; index27 < 3; index27++) {
+        	table.delete(`k${Math.abs(Math.trunc((1 / holder.value))) % 4}`);
+        }
+        tally5(captured);
+        if (numbers2.length < 24) {
+        	numbers2.push(tally5(capture(effect6(holder.value))));
+        }
+        console.log(('xy'.split('').join(',') + (number3).toFixed(1)));
+        table.set('c', table.size);
+        for (let index28 = 0; index28 < 2; index28++) {
+        	if (holder.list.length < 24) {
+        		holder.list.push(((holder.value) ** -1));
+        	}
+        }
+        holder.value = number3;
+        {
+        	let round29 = 0;
+        	while (round29 < 1) {
+        		round29++;
+        		console.log('a');
+        	}
+        }
+        console.log((counter.label.trim() + `${((-1) ** 3)}`));
+        console.log(`${holder.value}`);
+        console.log(holder.name);
+        console.log(holder.list.join(','));
+        console.log(`${counter.count}`);
+        console.log(counter.label);
+        console.log(text1);
+        console.log(numbers2.join(','));
+        console.log(`${number3}`);
+        console.log(`${flag4}`);
+        console.log(`${table.size}`);
+        console.log(`${captured}`);
+        console.log(`a=${table.get('a') ?? -1}`);
+        console.log(`b=${table.get('b') ?? -1}`);
+        console.log(`c=${table.get('c') ?? -1}`);
+        console.log(`k0=${table.get('k0') ?? -1}`);
+        console.log(`k1=${table.get('k1') ?? -1}`);
+        console.log(`k2=${table.get('k2') ?? -1}`);
+        console.log(`k3=${table.get('k3') ?? -1}`);
+--- FAIL: TestReduceKeepsTheSignature (18.46s)
+    reduce_test.go:79: it doesn't fail: agreed
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fuzz	60.618s
+ok  	github.com/system-inc/adamic/internal/ir	7.433s
+ok  	github.com/system-inc/adamic/internal/javascript	5.899s
+?   	github.com/system-inc/adamic/internal/leakcheck	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	21.295s
+--- FAIL: TestCensusMarkerResultIsAssignable (0.19s)
+    census_marker_test.go:15: expected result relation refusal, got <nil>
+--- FAIL: TestCensusMarkerZeroCallIsNotAssumedSafe (0.21s)
+    census_marker_test.go:25: expected explicit erased-call boundary, got <nil>
+--- FAIL: TestOverloadedShorthandFunctionValueStaysNotYet (0.13s)
+    census_optional_values_test.go:28: got <nil>, want overload-value diagnostic
+--- FAIL: TestCensusPredicateMarkerKeepsProofBoundaries (0.34s)
+    census_predicate_marker_test.go:19: unobservable marker exception escaped its boundary: <nil>
+--- FAIL: TestCensusPredicateMarkerCallStaysNotYet (0.19s)
+    census_predicate_marker_test.go:30: expected erased marker call refusal, got <nil>
+--- FAIL: TestCensusOverloadRelation (0.65s)
+    --- FAIL: TestCensusOverloadRelation/result_covariance (0.13s)
+        census_small_test.go:41: expected strict overload refusal naming "overload 1 of ensureTrailingDirectorySeparator result"; got /tmp/adamic-gate/TestCensusOverloadRelationresult_covariance790938617/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestCensusSmallFiniteKeyBoundary (0.16s)
+    census_small_test.go:54: expected the computed finite-key access boundary, got <nil>
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.72s)
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayCastsAreErased (0.62s)
+    phantom_array_brands_test.go:74: array brands or casts changed the unbranded IR
+--- FAIL: TestNestedFunctionGapsAreLoud (3.07s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/optional (0.41s)
+        nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+    --- FAIL: TestNestedFunctionGapsAreLoud/default (0.46s)
+        nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+    --- FAIL: TestNestedFunctionGapsAreLoud/rest (0.39s)
+        nested_functions_test.go:28: want NotYet "parameter that isn't a plain name", got /tmp/adamic-gate/TestNestedFunctionGapsAreLoudrest576980624/001/main.a:1:41: stage 0 can't lower a rest parameter in a named closure yet
+--- FAIL: TestPhantomCastsAreErased (0.53s)
+    phantom_brands_test.go:71: casts must leave identical IR:
+        got []ir.Function{ir.Function{CallableMasks:[]uint16{0x8, 0x0}, GraphClosure:false, Name:"into", Parameters:[]int{0}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:0, Of:3, Checked:false, Readiness:""}}}, Closure:false, Environment:[]int(nil), NestedParent:0, FrameEnvironment:[]int(nil), NestedFrame:false, Receiver:false, MayThrow:false}, ir.Function{CallableMasks:[]uint16{0x0, 0x8}, GraphClosure:false, Name:"out", Parameters:[]int{1}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:1, Of:3, Checked:false, Readiness:""}}}, Closure:false, Environment:[]int(nil), NestedParent:0, FrameEnvironment:[]int(nil), NestedFrame:false, Receiver:false, MayThrow:false}}
+        want []ir.Function{ir.Function{CallableMasks:[]uint16{0x8, 0x8}, GraphClosure:false, Name:"into", Parameters:[]int{0}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:0, Of:3, Checked:false, Readiness:""}}}, Closure:false, Environment:[]int(nil), NestedParent:0, FrameEnvironment:[]int(nil), NestedFrame:false, Receiver:false, MayThrow:false}, ir.Function{CallableMasks:[]uint16{0x8, 0x8}, GraphClosure:false, Name:"out", Parameters:[]int{1}, Returns:3, Body:[]ir.Statement{ir.Return{Value:ir.Read{Local:1, Of:3, Checked:false, Readiness:""}}}, Closure:false, Environment:[]int(nil), NestedParent:0, FrameEnvironment:[]int(nil), NestedFrame:false, Receiver:false, MayThrow:false}}
+--- FAIL: TestNodeBufferRefusals (0.00s)
+    --- FAIL: TestNodeBufferRefusals/typed_array_view (4.12s)
+        library_node_buffer_test.go:30: want "another object type", got /tmp/adamic-gate/TestNodeBufferRefusalstyped_array_view3269013219/001/main.a:1:45: stage 0 can't lower a value of type Uint8Array<ArrayBufferLike> yet
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- FAIL: TestPhantomArrayProofs/cycle (0.42s)
+        phantom_array_brands_test.go:93: got <nil>, want refusal containing adamic/cycle-capable
+--- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_union_a_function_value_takes (0.47s)
+        lower_test.go:104: got <nil>, want an error ending "main.a:1:15: stage 0 can't lower a function value taking string | number yet"
+    --- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from's_undefined_as_a_union (0.49s)
+        lower_test.go:104: got <nil>, want an error ending "main.a:1:41: stage 0 can't lower a function value taking string | number | undefined yet"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	219.906s

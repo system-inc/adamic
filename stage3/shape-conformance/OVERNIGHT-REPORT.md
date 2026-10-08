@@ -1,8 +1,8 @@
-Built: views-only integration refresh and complete recheck of the reported graph/runtime and lower harness blockers.
-Commits: views ffe428ab26eefb73154adbf570ad99e9c1b4f872 merged as 1e4964e6; evidence checkpoint follows.
-Commands and outputs: uncached owned shape oracle PASS in 17.859s; focused shape/allocation/closure/native checks PASS; seven inherited lower tests and five inherited native graph harnesses remain red.
-Mutants: existing unsafe field erasure mutants remain caught by pinned successful wrong output versus exit 70 in both backends.
-Not covered: full gate; checker-ledger repairs; production array-result temporary remains Unknown; refreshed census is running against the exact adaptation.
+Built: views blocker recheck, represented callback joins, generic callable identities, constructor dependency provenance, and specific negative-fixture gate declarations.
+Commits: views-only merge 1e4964e6; callback e54ecd6a; generic b2ed7966; constructor/proof f9aa4548; expected-error fixture unit follows.
+Commands and outputs: eight runtime graph fixtures and 43 count rows PASS; 12 eraser cases PASS; 67 analysis controls PASS; shared a-check PASS for 13 fixtures.
+Mutants: ten built flow mutants, unsafe field-erasure execution mutants, and 26 expected-error header mutants are caught by independent outcome/runtime/shared-gate checks.
+Not covered: whole fast gate pending; inherited harness failures; checker-ledger repairs; generic callable production lowering and array-result producer remain blocked; audited fixed-source census comparisons are running.
 
 The corrected instruction excludes codex/non-null-checked-area. Its in-progress merge was aborted, the unpublished ancestry-only merge discarded, and two untracked merge-resolution files removed. Nothing from that branch was pushed. The owned branch contains only the requested views integration dependency. No main or area reference was changed.
 
@@ -59,3 +59,11 @@ Six new controls pass: plain and clean-argument constructors remain unsupported 
 The strengthened production proof test confirms proven-callback-join has zero remaining casts and zero checked reads, and nonconforming-callback-join retains two casts and two checked reads. All 12 existing/new eraser cases pass in 1.670s. This certifies erasure for the new represented callback join, not merely successful checked execution.
 
 The broad uncached `go test -count=1 -timeout 30m ./...` triggered concurrent large cohere toolchain builds. The cgroup recorded two OOM kills, and the baseline and first callback census exited 137 without outputs. The broad gate already reported inherited lower failures and is not green. Its identified process tree was stopped to preserve the two surviving measurement jobs. Failed measurements supply no counts and will be rerun with bounded concurrency; successful controls and mutants are independent of those jobs. No partial output is treated as evidence.
+
+## Expected-error fixture gate unit
+
+All 13 authored analysis fixtures deliberately contain a module-level number/string mismatch so the measurement loader operates on a checker-rejected program. The ordinary compiler actually reports TS2322 for every file. They now declare that exact outcome with `// a-check: type error TS2322`; no source statement or production admission changed. Regenerated maps and all 67 independent controls pass, including the 35 latent, ten dynamic-key, ten callback-join, six generic-callable and six constructor controls.
+
+`python3 stage3/shape-conformance/check-fixture-headers.py --mutants --out /tmp/shape-fixture-headers` invokes the unchanged `Gate.aCheck` method from developer-tool commit 1247da58f065ba1a29737bf010cdd1e43090d519. It imports that tool by Git object and does not merge the unlanded tool branch. The method builds the real compiler and accepts all 13 specific declarations. For each fixture, both replacing TS2322 with TS999999 and deleting its header are independently caught: 26/26 mutants, with TS2322 still observed. Scratch copies isolate each mutant from the working tree. Raw pre-header diagnostics, shared-gate classifications and catches, and rechecked flow-control output are retained in overnight/fixture-headers-before.json, fixture-headers-results.json, fixture-headers.log and fixture-header-controls.log.
+
+The latest standing instruction supersedes intermediate-checkpoint pushes and worker-branch merges. This is one finished fixture unit, pushed only after its controls and mutants pass. No unlanded worker branch will be merged going forward. The shared gate tooling is a named dependency, not a green whole-gate claim; there is no published gate-log ref for f9aa45487321 at the time of this check. The earlier broad local gate is stopped and red. Its first recorded failure is TestEveryFunctionIsInSingleAssignment at flow_test.go:95, refusing census_overload_contracts.a:13:16 because the overload supplies more arguments than its implementation. That lowering dependency is outside this unit; the refusal remains intact. No more broad local gate is scheduled tonight. Focused IR and JavaScript package tests also pass, and owned-package vet exits zero.

@@ -1,0 +1,67 @@
+{
+  "stage3/shape-conformance/callback-joins/clean.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/callback-joins/clean.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/callback-joins/opaque.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/callback-joins/opaque.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/callback-joins/spread.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/callback-joins/spread.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/constructor-frontiers/clean.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/constructor-frontiers/clean.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/constructor-frontiers/diagnosed.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/constructor-frontiers/diagnosed.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/constructor-frontiers/diagnosed.a:5:53: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/constructor-frontiers/diagnosed.a:6:42: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/constructor-frontiers/host.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/constructor-frontiers/host.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/dynamic-keys/fixtures/clean.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/dynamic-keys/fixtures/clean.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/dynamic-keys/fixtures/diagnosed.a:5:33: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/dynamic-keys/fixtures/host.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/dynamic-keys/fixtures/host.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/dynamic-keys/fixtures/mutation.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/dynamic-keys/fixtures/mutation.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/generic-callables/clean.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/generic-callables/clean.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/generic-callables/host.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/generic-callables/host.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  },
+  "stage3/shape-conformance/latent/fixtures/main.a": {
+    "exit": 1,
+    "stderr": "stage3/shape-conformance/latent/fixtures/main.a:11:44: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:13:31: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:13:70: error TS2353: Object literal may only specify known properties, and 'ready' does not exist in type 'Base'.\nstage3/shape-conformance/latent/fixtures/main.a:21:8: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:25:47: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:35:66: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:3:7: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:60:65: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/shape-conformance/latent/fixtures/main.a:68:58: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+    "stdout_bytes": 0
+  }
+}
