@@ -207,7 +207,9 @@ class Gate:
         with self.lock:
             if self.failure is not None:
                 raise SystemExit(1)
-            process = subprocess.Popen(command, cwd=self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True)
+            # Uncached: the oracle's result caches would otherwise answer a test without running it.
+            process = subprocess.Popen(command, cwd=self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True,
+                                       env=dict(os.environ, ADAMIC_GATE_UNCACHED="1"))
             self.processes.append(process)
         return process
 
