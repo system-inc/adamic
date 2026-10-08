@@ -1,0 +1,5 @@
+// Standalone nested kinds do not require boxed callable adapters.
+function optionalRun(): number { function inner(value?: number): number { return value ?? 1; } return inner(); }
+function defaultRun(): number { function inner(value = 1): number { return value; } return inner(); }
+console.log(String(optionalRun()));
+console.log(String(defaultRun()));

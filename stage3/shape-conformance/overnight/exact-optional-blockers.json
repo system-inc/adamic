@@ -1,0 +1,26 @@
+[
+  {
+    "name": "nested-optional",
+    "source": "function run(): number { function inner(value?: number): number { return value ?? 1; } return inner(); } console.log(String(run()));",
+    "node_stdout": "1\n",
+    "native_build_exit": 0,
+    "native_exit": 0,
+    "native_stdout": "1\n"
+  },
+  {
+    "name": "nested-default",
+    "source": "function run(): number { function inner(value = 1): number { return value; } return inner(); } console.log(String(run()));",
+    "node_stdout": "1\n",
+    "native_build_exit": 0,
+    "native_exit": 0,
+    "native_stdout": "1\n"
+  },
+  {
+    "name": "boxed-optional-interaction",
+    "source": "// Exact formerly blocked kinds, with observable calls and ownership at exit.\nfunction f(x: number): number;\nfunction f(x: number): number { return x; }\nconst object = { f };\nconsole.log(String(object.f(1)));\nfunction optionalRun(): number { function inner(value?: number): number { return value ?? 1; } return inner(); }\nfunction defaultRun(): number { function inner(value = 1): number { return value; } return inner(); }\nconsole.log(String(optionalRun()));\nconsole.log(String(defaultRun()));\nfunction isText(value: string | number): value is string { return typeof value === 'string'; }\nfunction describe(test: (value: string | number) => value is string): boolean { return test(1); }\nconsole.log(String(describe(isText)));\ntype Brand = number[] & { marker: void };\nfunction into(values: number[]): Brand { return values as Brand; }\nfunction out(values: Brand): number[] { return values as number[]; }\nconsole.log(out(into([3, 1])).join(','));\ninterface RequiredBrand<T> extends ReadonlyArray<T> { marker: undefined; }\nfunction requiredInto<T>(values: readonly T[]): RequiredBrand<T> { return values as RequiredBrand<T>; }\nfunction requiredOut<T>(values: RequiredBrand<T>): readonly T[] { return values as readonly T[]; }\nconsole.log(requiredOut(requiredInto([3, 1])).join(','));\ninterface Links extends Array<Link> { marker: void; }\ninterface Link { readonly links: Links; }\nconst root: Link = { links: [] as Link[] as Links };\nroot.links.push(root);\nconsole.log(String(root.links[0] === root));\n",
+    "node_stdout": "1\n1\n1\nfalse\n3,1\n3,1\ntrue\n",
+    "native_build_exit": 1,
+    "native_build_stdout": "",
+    "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-3110844471/main.c:86:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required\n   86 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));\n      |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n/tmp/adamic-gate/adamic-build-3110844471/main.c:94:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required\n   94 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));\n      |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 errors generated.\n\n"
+  }
+]

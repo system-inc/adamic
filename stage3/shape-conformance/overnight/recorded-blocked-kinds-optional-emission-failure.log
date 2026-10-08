@@ -1,0 +1,21 @@
+=== RUN   TestShapeRecordedBlockedKinds
+    shape_blocked_kinds_test.go:16: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1802076834/main.c:86:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required
+           86 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));
+              |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-1802076834/main.c:94:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required
+           94 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));
+              |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        2 errors generated.
+        
+--- FAIL: TestShapeRecordedBlockedKinds (0.66s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.688s
+FAIL
+
+real	0m26.541s
+user	0m17.576s
+sys	0m2.053s

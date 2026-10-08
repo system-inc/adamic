@@ -1,0 +1,21 @@
+// Exact formerly blocked kinds, with observable calls and ownership at exit.
+function f(x: number): number;
+function f(x: number): number { return x; }
+const object = { f };
+console.log(String(object.f(1)));
+function isText(value: string | number): value is string { return typeof value === 'string'; }
+function describe(test: (value: string | number) => value is string): boolean { return test(1); }
+console.log(String(describe(isText)));
+type Brand = number[] & { marker: void };
+function into(values: number[]): Brand { return values as Brand; }
+function out(values: Brand): number[] { return values as number[]; }
+console.log(out(into([3, 1])).join(','));
+interface RequiredBrand<T> extends ReadonlyArray<T> { marker: undefined; }
+function requiredInto<T>(values: readonly T[]): RequiredBrand<T> { return values as RequiredBrand<T>; }
+function requiredOut<T>(values: RequiredBrand<T>): readonly T[] { return values as readonly T[]; }
+console.log(requiredOut(requiredInto([3, 1])).join(','));
+interface Links extends Array<Link> { marker: void; }
+interface Link { readonly links: Links; }
+const root: Link = { links: [] as Link[] as Links };
+root.links.push(root);
+console.log(String(root.links[0] === root));

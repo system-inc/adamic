@@ -1,0 +1,34 @@
+[
+  {
+    "name": "predicate-marker-always-true",
+    "source": "function isText(value: string | undefined): value is string { return true; }\nconst marker: (...args: never[]) => void = isText; console.log(typeof marker);",
+    "exit": 1,
+    "emitted_c_bytes": 0,
+    "emitted_c_sha256": null,
+    "diagnostic": "adamic: /tmp/shape-exact-blocker-probes/predicate-marker-always-true.a:1:63: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to string | undefined, not string); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+  },
+  {
+    "name": "predicate-callback-call",
+    "source": "function describe(test: (value: string | number) => value is string): boolean { return test(1); }",
+    "exit": 0,
+    "emitted_c_bytes": 1107,
+    "emitted_c_sha256": "6d3d4190558c36e4eeb683ea877dbded37fd7e88f62f10738dd294b398e2a6b1",
+    "diagnostic": ""
+  },
+  {
+    "name": "predicate-callback-return",
+    "source": "function describe(test: (value: string | number) => value is string): typeof test { return test; }",
+    "exit": 0,
+    "emitted_c_bytes": 562,
+    "emitted_c_sha256": "b51af0474150b5e4492e51dee71d116abaf56534297ceb83af68593a74c5ba3d",
+    "diagnostic": ""
+  },
+  {
+    "name": "predicate-callback-hold",
+    "source": "function hold(marker: (...args: number[]) => void): void {} function describe(test: (value: number | string) => value is string): void { hold(test); }",
+    "exit": 1,
+    "emitted_c_bytes": 0,
+    "emitted_c_sha256": null,
+    "diagnostic": "adamic: /tmp/shape-exact-blocker-probes/predicate-callback-hold.a:1:143: Adamic 0.1 refuses a function taking string | number seen as one taking number[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+  }
+]

@@ -1,0 +1,17 @@
+=== RUN   TestShapeRecordedBlockedKinds
+    shape_blocked_kinds_test.go:48: wrong-overload-result caught by Node stdout comparison: exit=0 stdout="2\nfalse\n3,1\n3,1\ntrue\n"
+    shape_blocked_kinds_test.go:48: wrong-overload-result caught by Node stdout comparison: exit=0 stdout="2\nfalse\n3,1\n3,1\ntrue\n"
+--- PASS: TestShapeRecordedBlockedKinds (1.61s)
+=== RUN   TestShapeRecordedOptionalKinds
+    shape_blocked_kinds_test.go:90: wrong-optional-result caught by Node stdout comparison: exit=0 stdout="2\n1\n"
+    shape_blocked_kinds_test.go:90: wrong-optional-result caught by Node stdout comparison: exit=0 stdout="2\n1\n"
+--- PASS: TestShapeRecordedOptionalKinds (1.41s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.099s
+
+real	0m31.009s
+user	0m20.439s
+sys	0m2.235s
