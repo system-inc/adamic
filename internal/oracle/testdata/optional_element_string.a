@@ -1,0 +1,25 @@
+function first(word: string | undefined): string {
+	return word?.[0] ?? 'none';
+}
+function at(word: string | undefined, index: number): string {
+	return word?.[index] ?? 'none';
+}
+console.log(first(undefined));
+console.log(first(''));
+console.log(first('abc'));
+console.log(at('abc', 3));
+console.log(at('abc', 0.5));
+console.log(at('abc', -1));
+let reads = 0;
+let indexes = 0;
+function receiver(word: string | undefined): string | undefined {
+	reads += 1;
+	return word;
+}
+function index(): number {
+	indexes += 1;
+	return 1;
+}
+console.log(receiver(undefined)?.[index()] ?? 'none');
+console.log(receiver('abc')?.[index()] ?? 'none');
+console.log(`${reads} ${indexes}`);
