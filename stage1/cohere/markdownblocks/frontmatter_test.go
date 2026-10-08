@@ -81,7 +81,7 @@ func TestFrontMatterStage(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-parser")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go build: %v\n%s", err, output)
 	}
 	want := execute(t, nil, goBinary, cases)

@@ -1,6 +1,5 @@
+// a-check: type error TS2307
 // Run from the adapted tree root. run.sh stages this driver there.
-// Activate the loader's pinned Node declarations; erased on Node.
-import type {} from 'node:fs';
 import { panic, programArguments, readTextFile } from 'adamic';
 import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
 import { flattenDiagnosticMessageText } from './src/compiler/program.ts';
@@ -26,6 +25,8 @@ function nodeText(node: Node): string {
             return unescapeLeadingUnderscores((node as Identifier).escapedText);
         case SyntaxKind.PrivateIdentifier:
             return unescapeLeadingUnderscores((node as PrivateIdentifier).escapedText);
+        case SyntaxKind.JsxText:
+        case SyntaxKind.JsxTextAllWhiteSpaces:
         case SyntaxKind.NumericLiteral:
         case SyntaxKind.BigIntLiteral:
         case SyntaxKind.StringLiteral:
@@ -67,9 +68,17 @@ function jsDocDetails(node: Node): string {
 }
 
 function dump(node: Node): void {
-    console.log(`${kindNames[node.kind] ?? panic('unknown node kind')} ${node.pos} ${node.end} ${node.flags}\t${written(nodeText(node))}${jsDocDetails(node)}`);
-    for (const doc of (node as JSDocContainer).jsDoc ?? []) { dump(doc); }
-    forEachChild(node, child => { dump(child); });
+    const pending: Node[] = [node];
+    while (pending.length > 0) {
+        const current = pending.pop() ?? panic('missing pending node');
+        console.log(`${kindNames[current.kind] ?? panic('unknown node kind')} ${current.pos} ${current.end} ${current.flags}\t${written(nodeText(current))}${jsDocDetails(current)}`);
+        const children: Node[] = [];
+        for (const doc of (current as JSDocContainer).jsDoc ?? []) { children.push(doc); }
+        forEachChild(current, child => { children.push(child); });
+        for (let index = children.length - 1; index >= 0; index--) {
+            pending.push(children[index] ?? panic('missing child node'));
+        }
+    }
 }
 
 const args = programArguments();
@@ -80,7 +89,10 @@ for(const name of manifest.text.split('\n')) {
     if(name === '') { continue; }
     const input = readTextFile(`${tree}/src/compiler/${name}`);
     if(input.kind === 'Error') { panic(input.message); }
-    const kind = name.endsWith('.js') ? ScriptKind.JS : ScriptKind.TS;
+    const kind = name.endsWith('.tsx') ? ScriptKind.TSX
+        : name.endsWith('.jsx') ? ScriptKind.JSX
+        : name.endsWith('.js') || name.endsWith('.mjs') || name.endsWith('.cjs') ? ScriptKind.JS
+        : ScriptKind.TS;
     const file = createSourceFile(name, input.text, ScriptTarget.Latest, false, kind);
     console.log(`file\t${written(name)}`);
     dump(file);

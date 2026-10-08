@@ -25,6 +25,7 @@ type engine struct {
 	test262          string
 	work             string
 	adamic           string
+	runtimeRegex     []string
 	runtime          []string
 	include          string
 	flags            []string
@@ -363,7 +364,13 @@ func (e *engine) attempt(test classified) result {
 	}
 	binary := filepath.Join(directory, "program.bin")
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
-	arguments = append(arguments, e.runtime...)
+	objects, err := e.regexpRuntime(lowered.Stdout)
+	if err != nil {
+		base.Kind = outcomeCrashed
+		base.Reason = err.Error()
+		return base
+	}
+	arguments = append(arguments, objects...)
 	arguments = append(arguments, "-lm")
 	nativeCommand := cacheKey(cacheKey(arguments...), binary, e.executionTimeout().String()+"-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)

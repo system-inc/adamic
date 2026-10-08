@@ -81,7 +81,7 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-decode")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go decoder %v %s", err, output)
 	}
 	want := execute(t, nil, goBinary, cases)
@@ -188,7 +188,7 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 	}
 	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check", "-formatter", cohereFormatter(t))
 	command.Dir = root
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("regeneration %v %s", err, output)
 	}
 	t.Logf("%d source strings: %d repository files, %d named entities in six contexts, 256 escape units, all numeric code points in decimal/hex plus boundaries", len(inputs), files, entities)

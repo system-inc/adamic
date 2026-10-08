@@ -106,6 +106,14 @@ func processOutputProgram(t *testing.T, source, mutation string) (string, string
 			runtimeSource = strings.ReplaceAll(runtimeSource, name, "mutant_"+name)
 			code = strings.ReplaceAll(code, name, "mutant_"+name)
 		}
+		// The signal-loop startup now calls panic before its definition. The
+		// included header declares the original public name, so declare the
+		// renamed mutant before those calls as well.
+		include := "#include \"adamic.h\""
+		if strings.Count(runtimeSource, include) != 1 {
+			t.Fatal("mutant runtime header anchor changed")
+		}
+		runtimeSource = strings.Replace(runtimeSource, include, include+"\n_Noreturn void mutant_adamic_panic(const char *message, size_t length);", 1)
 		code = strings.ReplaceAll(code, "adamic_process_exit(", "mutant_exit(")
 		code = runtimeSource + "\nstatic void mutant_exit(adamic_maybe_number code) { adamic_process_set_exit_code(code); mutant_adamic_process_exit_now(adamic_process_status()); }\n" + code
 	}

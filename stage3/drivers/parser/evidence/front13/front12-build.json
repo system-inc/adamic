@@ -1,0 +1,44 @@
+{
+  "jobs": 5,
+  "cache": "/workspace/scratch/parser-front12-build-modes/cache",
+  "generated_c": null,
+  "attempts": [
+    {
+      "mode": "unsplit",
+      "exit": 1,
+      "attempt_wall_seconds": 0.8593097310003941,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: checking/lowering failed before C emission",
+      "cache_files_after": 0
+    },
+    {
+      "mode": "split",
+      "exit": 1,
+      "attempt_wall_seconds": 0.8441142849987955,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: checking/lowering failed before C emission",
+      "cache_files_after": 0
+    },
+    {
+      "mode": "split-repeat",
+      "exit": 1,
+      "attempt_wall_seconds": 0.9045595020070323,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: checking/lowering failed before C emission",
+      "cache_files_after": 0
+    }
+  ],
+  "emit_exit": 1,
+  "split_repeat_is_warm": false,
+  "first_failure": "adamic: /workspace/scratch/parser-temp65-slice/src/compiler/core.ts:195:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+  "slice": "/workspace/scratch/parser-temp65-slice",
+  "source_adaptations": "validated 60-65; no discovery stubs",
+  "native_reference_comparisons": "not run: no generated C or parser binary",
+  "nproc": 5
+}

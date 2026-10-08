@@ -91,7 +91,7 @@ plain-scalar(is-flow, min)
   [else] -> plain-scalar(min)
 */
 function isEmpty(unit: string): boolean {
-    return isEmptyCode(unit === '' ? -1 : unit.charCodeAt(0));
+    return isEmptyCode(!unit ? -1 : unit.charCodeAt(0));
 }
 
 const hexDigits = '0123456789ABCDEFabcdef';
@@ -211,7 +211,7 @@ export class Lexer {
             first >= 0xd800 && first <= 0xdbff && peeked.charCodeAt(1) >= 0xdc00 && peeked.charCodeAt(1) <= 0xdfff
                 ? ''
                 : character(peeked, 1);
-        if(nextUnit === '' && !this.atEnd) return this.setNext('block-start');
+        if(!nextUnit && !this.atEnd) return this.setNext('block-start');
         if((firstUnit === '-' || firstUnit === '?' || firstUnit === ':') && isEmpty(nextUnit)) {
             const count = this.pushCount(1) + this.pushSpaces(true);
             this.indentNext = this.indentValue + 1;
@@ -222,7 +222,7 @@ export class Lexer {
     }
     parseLineStart(): string {
         const unit = this.charAt(0);
-        if(unit === '' && !this.atEnd) return this.setNext('line-start');
+        if(!unit && !this.atEnd) return this.setNext('line-start');
         if(unit === '-' || unit === '.') {
             if(!this.atEnd && !this.hasChars(4)) return this.setNext('line-start');
             const piece = this.peek(3);
@@ -318,7 +318,7 @@ export class Lexer {
     pushUntil(header: boolean): number {
         let index = this.pos;
         let unit = character(this.buffer, index);
-        while(!(header ? isEmpty(unit) || unit === '#' : unit === '' || member(invalidAnchorChars, unit))) {
+        while(!(header ? isEmpty(unit) || unit === '#' : !unit || member(invalidAnchorChars, unit))) {
             index += 1;
             unit = character(this.buffer, index);
         }
@@ -529,7 +529,7 @@ export class Lexer {
         const line = this.getLine();
         if(!this.lineAvailable) return this.setNext('doc');
         let count = this.pushIndicators();
-        if(character(line, count) === '#' || character(line, count) === '') {
+        if(character(line, count) === '#' || !character(line, count)) {
             if(character(line, count) === '#') this.pushCount(line.length - count);
             this.pushNewline();
             return this.parseLineStart();

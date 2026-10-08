@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -54,7 +55,7 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 				var ok bool
 				pattern, ok = l.constantPattern(args[0], 0)
 				if !ok {
-					return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+					return l.dynamicRegExp(node, args)
 				}
 			}
 		}
@@ -62,7 +63,7 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			var ok bool
 			flags, ok = l.constantPattern(args[1], 0)
 			if !ok {
-				return nil, l.notYet(args[1], "RegExp with nonconstant flags")
+				return l.dynamicRegExp(node, args)
 			}
 		}
 		for _, arg := range args {
@@ -75,6 +76,10 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
+		var divergence *regex.V8DivergenceError
+		if errors.As(err, &divergence) {
+			return nil, l.notYet(node, divergence.Error())
+		}
 		return nil, l.notYet(node, "a RegExp constructor that throws SyntaxError: "+err.Error())
 	}
 	index := len(l.result.Regexps)

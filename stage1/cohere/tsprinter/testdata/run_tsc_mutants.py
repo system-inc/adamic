@@ -1,9 +1,15 @@
 """Undo each tsc-corpus fix in scratch and require a file-named oracle failure."""
 import argparse
 import json
+import resource
 from pathlib import Path
 import subprocess
 import tempfile
+
+
+def limit_cpu():
+    # A hang guard consumes CPU time, independent of contention on the gate slot.
+    resource.setrlimit(resource.RLIMIT_CPU, (30 * 60, 30 * 60))
 
 
 def main():
@@ -34,9 +40,9 @@ def main():
                 overlay.write_text(json.dumps({"Replace": {str(port / "upstream_protocol_test.go"): str(side)}}))
                 log = options.logs / (name + ".log")
                 with log.open("w") as output:
-                    result = subprocess.run(["go", "test", "-v", "-count=1", "-overlay=" + str(overlay),
+                    result = subprocess.run(["go", "test", "-v", "-count=1", "-timeout", "0", "-overlay=" + str(overlay),
                                              "-run", "^TestTSCCorpusUpstreamDifferences$", "./stage1/cohere/tsprinter"],
-                                            cwd=repository, stdout=output, stderr=subprocess.STDOUT)
+                                            cwd=repository, stdout=output, stderr=subprocess.STDOUT, preexec_fn=limit_cpu)
                 text = log.read_text()
                 if result.returncode != 1 or row["Label"] not in text or "exit 1 stderr" in text:
                     raise RuntimeError(f"{name}: external outcome mutation escaped; see {log}")
@@ -79,11 +85,11 @@ def main():
             side.write_text(audit)
             overlay = scratch / "overlay.json"
             overlay.write_text(json.dumps({"Replace": {str(port / "tsc_corpus_test.go"): str(side)}}))
-            command = ["go", "test", "-v", "-count=1", "-timeout", "30m", "-overlay=" + str(overlay),
+            command = ["go", "test", "-v", "-count=1", "-timeout", "0", "-overlay=" + str(overlay),
                        "./stage1/cohere/tsprinter", "-run", "^TestTSCCorpusAgreement/" + family + "$"]
             log = options.logs / (name + ".log")
             with log.open("w") as output:
-                result = subprocess.run(command, cwd=repository, stdout=output, stderr=subprocess.STDOUT)
+                result = subprocess.run(command, cwd=repository, stdout=output, stderr=subprocess.STDOUT, preexec_fn=limit_cpu)
             text = log.read_text()
             file = "stage3/drivers/tsc/corpus/" + witness
             if result.returncode != 1 or any(side + " " + file not in text for side in ["Node", "native", "backend"]):
@@ -96,8 +102,8 @@ def main():
     controls = [
         ("missing-root", roots.replace("if err != nil || !info.IsDir() {", "if info != nil && false {", 1)
          .replace("if len(files) == 0 {", "if false {", 1), "missing root was not named"),
-        ("untracked-input", roots.replace("data, err := command.Output()",
-         'data, err := command.Output()\n\tdata = append(data, []byte(root+"/untracked.ts\\x00")...)', 1), "untracked.ts"),
+        ("untracked-input", roots.replace("data, err := output(command)",
+         'data, err := output(command)\n\tdata = append(data, []byte(root+"/untracked.ts\\x00")...)', 1), "untracked.ts"),
     ]
     for name, mutant, witness in controls:
         with tempfile.TemporaryDirectory(prefix="tsprinter-root-mutant-") as scratch:
@@ -108,9 +114,9 @@ def main():
             overlay.write_text(json.dumps({"Replace": {str(port / "corpus_test.go"): str(side)}}))
             log = options.logs / (name + ".log")
             with log.open("w") as output:
-                result = subprocess.run(["go", "test", "-v", "-count=1", "-overlay=" + str(overlay),
+                result = subprocess.run(["go", "test", "-v", "-count=1", "-timeout", "0", "-overlay=" + str(overlay),
                                          "./stage1/cohere/tsprinter", "-run", "^TestTrackedCorpusRoots$"],
-                                        cwd=repository, stdout=output, stderr=subprocess.STDOUT)
+                                        cwd=repository, stdout=output, stderr=subprocess.STDOUT, preexec_fn=limit_cpu)
             if result.returncode != 1 or witness not in log.read_text():
                 raise RuntimeError(f"{name}: root control escaped; see {log}")
             print(f"{name}: caught by TestTrackedCorpusRoots; {log}", flush=True)

@@ -1,6 +1,0 @@
-=== RUN   TestRegExpOracleCPUBudget
-    regexp_cpu_test.go:85: CPU overrun escaped budget: <nil>
---- FAIL: TestRegExpOracleCPUBudget (0.25s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.256s
-FAIL

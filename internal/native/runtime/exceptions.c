@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-adamic_object *adamic_thrown;
+_Thread_local adamic_object *adamic_thrown;
 
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_references[] = {true, true, true};

@@ -14,7 +14,7 @@ node:perf_hooks includes performance.now, timeOrigin, mark, measure, clearMarks 
 
 All 25 audited host fixtures match Node and their recorded compiler stages. For this unit, 14_getCurrentDirectory, 15_getExecutingFilePath, 16_getEnvironmentVariable, 17_write, 18_exit_0, 19_exit_1, 20_exit_2 and 23_newLine each remain NotYet at node:fs.mkdtempSync. Passing the recorded-stage check does not mean native source execution is green.
 
-Verification logs are under logs/library-merge/. The full oracle passed before witness relocation; the complete process subset and counts are rerun after relocation. The original failing flow log is retained alongside the successful rerun.
+Verification output belongs with the unit task outside the repository. The full oracle passed before witness relocation; the complete process subset and counts are rerun after relocation. The original failing flow log is retained alongside the successful rerun.
 
 | Check | Command | Result |
 | --- | --- | --- |

@@ -1,0 +1,116 @@
+{
+  "probes": [
+    {
+      "file": "native-same-map-return-cast.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a"
+        ],
+        "exit": 0,
+        "stdout": "2\nundefined\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front19-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a",
+          "-o",
+          "/workspace/scratch/parser-front19-array-witnesses-probes/native-same-map-return-cast.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front19-array-witnesses-probes/native-same-map-return-cast.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "2\nundefined\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 440632,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-sorted-empty-conditional.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-sorted-empty-conditional.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n1\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front19-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-sorted-empty-conditional.a",
+          "-o",
+          "/workspace/scratch/parser-front19-array-witnesses-probes/native-sorted-empty-conditional.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front19-array-witnesses-probes/native-sorted-empty-conditional.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0\n1\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 440736,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-map-before-namespace.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a"
+        ],
+        "exit": 0,
+        "stdout": "0:false\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front19-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a",
+          "-o",
+          "/workspace/scratch/parser-front19-array-witnesses-probes/native-map-before-namespace.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a:4:45: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+      },
+      "pass": false
+    }
+  ],
+  "passing": 2,
+  "total": 3,
+  "full_slice": "Validated slice actually rerun; first stop core.ts:11:52 before C emission. These are standalone witnesses."
+}

@@ -124,7 +124,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"a string as a condition", "const name = 'x';\nif (name) {\n\tconsole.log(name);\n}\n", "main.a:2:5: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"},
 		{"a number as a loop condition", "let count = 3;\nwhile (count) {\n\tcount -= 1;\n}\n", "main.a:2:8: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"},
 		{"var", "var old = 1;\n", "main.a:1:1: Adamic 0.1 refuses var; use const or let"},
-		{"async", "async function wait(): Promise<void> {}\n", "main.a:1:1: Adamic 0.1 refuses an async function;"},
+		{"unawaited async", "async function wait(): Promise<void> {}\nwait();\n", "main.a:2:1: Adamic 0.1 refuses an unawaited async task;"},
 		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: Adamic 0.1 refuses throwing a \"stopped\"; throw an Error: throw new Error(String(value))"},
 		{"throwing a number", "function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: Adamic 0.1 refuses throwing a number; throw an Error"},
 		{"==", "const same = 1 == 1;\n", "main.a:1:16: Adamic 0.1 refuses ==;"},
