@@ -315,7 +315,7 @@ func (e *engine) attempt(test classified) result {
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
 	arguments = append(arguments, e.runtime...)
 	arguments = append(arguments, "-lm")
-	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s", "2m", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
+	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
@@ -327,7 +327,7 @@ func (e *engine) attempt(test classified) result {
 			return linked, false
 		}
 		defer os.Remove(binary)
-		return profile.command("native", func() execution { return runCommand(15*time.Second, nativeEnvironment, binary) }), true
+		return profile.command("native", func() execution { return runProgram(15*time.Second, nativeEnvironment, binary) }), true
 	})
 	// A link failure is a compiler crash rather than a native execution verdict.
 	// Only successful links publish observations, so a hit always holds a real execution.
@@ -337,10 +337,10 @@ func (e *engine) attempt(test classified) result {
 		base.Reason = "clang: " + firstLine(nativeRun.Stderr)
 		return base
 	}
-	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s", fmt.Sprint(outputLimit))
+	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
-		return runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
+		return runProgram(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
@@ -369,6 +369,16 @@ var nativeEnvironment = []string{
 // reached 18s compilation and 19s clang; 2m leaves substantial margin. Node
 // and native mini-fixture maxima were 84ms and 6ms, versus the existing 15s.
 const outputLimit = 256 << 10
+
+// Test programs get a CPU budget; time waiting for a core does not spend it.
+// Keep a wall-clock backstop for programs that block without consuming CPU.
+func runProgram(cpuLimit time.Duration, extra []string, name string, args ...string) execution {
+	seconds := int64((cpuLimit + time.Second - 1) / time.Second)
+	// Set only the soft limit so the kernel delivers SIGXCPU, not SIGKILL.
+	wrapper := fmt.Sprintf(`ulimit -S -t %d || exit; exec "$0" "$@"`, seconds)
+	arguments := append([]string{"-c", wrapper, name}, args...)
+	return runCommand(2*time.Minute, extra, "/bin/sh", arguments...)
+}
 
 func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
 	return runCommandWithLimit(timeout, extra, outputLimit, name, args...)
@@ -411,6 +421,11 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	}
 	if status, ok := exit.Sys().(syscall.WaitStatus); ok {
 		if status.Signaled() {
+			if status.Signal() == syscall.SIGXCPU {
+				result.TimedOut = true
+				result.Exit = -1
+				return result
+			}
 			result.Signal = status.Signal().String()
 			result.Exit = -1
 			return result

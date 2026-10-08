@@ -89,6 +89,13 @@ class ReportTests(unittest.TestCase):
                                          'reason': 'area-only blocker', 'text': 'area-only blocker'}
                                         for line in range(1, 11)]
             (self.run / label / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
+        entry = self.tree / 'src/tsc/tsc.ts'
+        entry.parent.mkdir(parents=True)
+        entry.write_text('export {};\n')
+        from entry_test import write_entry
+        for label in ['main', 'area']:
+            write_entry(self.tree, self.run / label / 'tsc',
+                        diagnostics=[] if label == 'main' else ['error TS2307: entry-only missing module'])
         result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha')
         self.assertEqual(result['files'], result['trees']['area']['files'])
         text = (self.run / 'report.md').read_text()
@@ -249,7 +256,7 @@ class LatentCensusTests(unittest.TestCase):
             compiler.mkdir(parents=True)
             (compiler / 'main.a').write_text('function target(): number { return 1; }\n'
                                              'function existing(value: any): number { return value; }\n'
-                                             'function asserted(value: number | undefined): number { return value!; }\n'
+                                             'function asserted(value: number | undefined): number { debugger; return value!; }\n'
                                              'function bad(): number { return "wrong"; }\n')
             observations = []
             for label in ['before', 'planted']:

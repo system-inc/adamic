@@ -383,15 +383,27 @@ func difference(expected Run, actual Run) string {
 	return ""
 }
 
-// execute runs a command in its own process group, killed whole at the deadline, so a program that
-// loops is stopped rather than orphaned.
-// Retain the established 30s compiler and 20s program limits. The measured
-// mini-fixture compile/Node/native maxima were 77ms/84ms/6ms; generated-program
-// package checks completed in 10.9s, so these limits retain ample margin.
+// execute limits a child's CPU time, with a wall-clock backstop for a child blocked without using
+// CPU, and runs it in its own process group, killed whole at the backstop, so a program that loops is
+// stopped rather than orphaned. The 30 s compiler and 20 s program limits are CPU seconds: time a
+// loaded box spends waiting for a core doesn't count against them.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	ctx, cancel := boundedrun.WithTimeout(context.Background(), limit)
+	path, err := exec.LookPath(name)
+	if err != nil {
+		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
+	}
+	ctx, cancel := boundedrun.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := boundedrun.CommandContext(ctx, name, arguments...)
+	// Set both limits so children that ignore SIGXCPU (including Go programs)
+	// are still stopped by the kernel. Some kernels send SIGKILL at the hard
+	// limit; distinguish that CPU death using the child's recorded CPU usage.
+	// The portable shell interface accepts whole seconds, rounded up.
+	seconds := limit / time.Second
+	if limit%time.Second != 0 {
+		seconds++
+	}
+	script := fmt.Sprintf(`ulimit -t %d || exit; exec "$0" "$@"`, seconds)
+	command := boundedrun.CommandContext(ctx, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
 	defer boundedrun.Kill(command.Cmd)
 	command.Dir = directory
 	if profile := coverageProfile(); profile != "" {
@@ -403,7 +415,7 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err = command.Run()
 	run := Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), TimedOut: ctx.Err() != nil}
 	if run.TimedOut {
 		run.Stderr = append(run.Stderr, []byte(fmt.Sprintf("child %s: deadline exceeded; process group killed\n", name))...)
@@ -414,6 +426,10 @@ func execute(directory string, environment []string, limit time.Duration, name s
 		run.ExitCode = command.ProcessState.ExitCode()
 		if status, ok := command.ProcessState.Sys().(syscall.WaitStatus); ok && status.Signaled() {
 			run.Signal = status.Signal().String()
+			cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
+			if status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
+				run.TimedOut = true
+			}
 		}
 	default:
 		run.ExitCode = -1
