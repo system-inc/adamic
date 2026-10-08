@@ -1,0 +1,9 @@
+// The finite scanner keyword table from scout 22, scanner.ts:141-153.
+// Exercise serialization of the compiler-shaped keys and dynamically built text.
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const encoded = JSON.stringify({ break: 83, const: 87, continue: 88, if: 101, text: `source${turn}` }) ?? '';
+    if (turn === 0) console.log(encoded);
+    checksum += encoded.length;
+}
+console.log(`${checksum}`);

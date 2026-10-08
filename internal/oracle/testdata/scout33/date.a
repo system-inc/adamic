@@ -1,0 +1,6 @@
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const date = new Date(turn + 0.75);
+    checksum += date.getTime() + date.valueOf();
+}
+console.log(`${checksum}`);

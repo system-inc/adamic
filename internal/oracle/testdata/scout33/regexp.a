@@ -1,0 +1,12 @@
+// parser.ts:10707; cache omitted to isolate owned dynamic pattern/capture behavior.
+function getNamedArgRegEx(name: string): RegExp {
+    return new RegExp(`(\\s${name}\\s*=\\s*)(?:(?:'([^']*)')|(?:"([^"]*)"))`, "im");
+}
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const expression = getNamedArgRegEx('path');
+    const text = `/// <reference PATH="source${turn}.ts" />`;
+    const match = expression.exec(text);
+    if (match !== null) checksum += (match[0] ?? '').length + (match[3] ?? '').length;
+}
+console.log(`${checksum}`);

@@ -1,0 +1,11 @@
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const items = [`a${turn}`, `b${turn}`, `c${turn}`];
+    const copy = items.toReversed();
+    copy.push(`d${turn}`);
+    copy.splice(1, 1);
+    const joined = copy.join(':');
+    if (turn === 0) console.log(joined);
+    checksum += joined.length + copy.slice(1).length;
+}
+console.log(`${checksum}`);

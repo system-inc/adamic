@@ -1,0 +1,26 @@
+// TypeScript d92d9bfe: builder.ts:710-717 and checker.ts:15787-15793.
+// From scout 19; repeat the same mutation/identity consumers with dynamic keys.
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const prefix = `${turn}`;
+    const affectedFilesPendingEmit = new Map<string, number>([[prefix + 'a', 0], [prefix + 'b', 3], [prefix + 'c', 0], [prefix + 'd', 2]]);
+    affectedFilesPendingEmit.forEach((emitKind, path) => {
+        const pending = emitKind & 1;
+        if (pending === 0) affectedFilesPendingEmit.delete(path);
+        else affectedFilesPendingEmit.set(path, pending);
+    });
+    interface Node { readonly kind: number }
+    const first: Node = { kind: 1 };
+    const second: Node = { kind: 2 };
+    const third: Node = { kind: 3 };
+    const equalShape: Node = { kind: 1 };
+    const commonDeclarations = new Set<Node>([first, second, third]);
+    const declarations: readonly Node[] = [equalShape, second, third];
+    commonDeclarations.forEach(declaration => {
+        if (!declarations.includes(declaration)) commonDeclarations.delete(declaration);
+    });
+    checksum += affectedFilesPendingEmit.size + commonDeclarations.size;
+    affectedFilesPendingEmit.clear();
+    commonDeclarations.clear();
+}
+console.log(`${checksum}`);

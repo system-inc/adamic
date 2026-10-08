@@ -1,0 +1,5 @@
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    checksum += (new Number(turn + 0.5)).toString(16).length + (new Number(turn + 0.5)).toFixed(2).length;
+}
+console.log(`${checksum}`);

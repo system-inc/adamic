@@ -1,0 +1,5 @@
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    checksum += Math.clz32(turn) + Math.imul(turn, 3) + Math.min(turn, 7);
+}
+console.log(`${checksum}`);

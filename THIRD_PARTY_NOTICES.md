@@ -238,6 +238,12 @@ maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_l
 which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
 cohere's THIRD_PARTY_NOTICES.md.
 
+The scout 33 fixtures in `internal/oracle/testdata/scout33/` derive their collection
+mutation and identity consumers, borrowed own-property consumer, scanner keyword-table shape, and dynamic named-argument
+pattern from TypeScript d92d9bfe, via scouts 19, 22 and 23. Source locations are
+recorded beside each excerpt. Copyright (c) Microsoft Corporation; Apache License 2.0.
+The surrounding repetition loops and checksum consumers are Adamic scout code.
+
 ### @types/node
 
 - Source: https://registry.npmjs.org/@types/node

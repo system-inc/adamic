@@ -1,0 +1,7 @@
+import { basename, dirname } from 'node:path';
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const path = `/compiler/${turn}/source.ts`;
+    checksum += basename(path, '.ts').length + dirname(path).length;
+}
+console.log(`${checksum}`);

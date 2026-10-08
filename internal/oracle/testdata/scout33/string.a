@@ -1,0 +1,11 @@
+// Build the dynamic parser.ts:10707 pattern from scout 23 as text.
+let checksum = 0;
+for (let turn = 0; turn < 10000; turn += 1) {
+    const name = `path${turn}`;
+    const pattern = `(\\s${name}\\s*=\\s*)(?:(?:'([^']*)')|(?:"([^"]*)"))`;
+    let built = '';
+    for (let part = 0; part < 8; part += 1) built += pattern;
+    if (turn === 0) console.log(built.replaceAll('path', 'name'));
+    checksum += built.slice(1).length + built.replaceAll('path', 'name').length;
+}
+console.log(`${checksum}`);

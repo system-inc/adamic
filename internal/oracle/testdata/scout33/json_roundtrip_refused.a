@@ -1,0 +1,5 @@
+// JSON.parse intentionally retains its compile-time type-proof refusal.
+for (let turn = 0; turn < 10000; turn += 1) {
+    JSON.parse(JSON.stringify({ break: 83, const: 87, text: `source${turn}` }) ?? '');
+}
+console.log('round trips complete');
