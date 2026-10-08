@@ -192,7 +192,7 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	if name == "replace" || name == "replaceAll" {
 		if len(arguments) == 2 && arguments[1].Type() == ir.Closure {
 			signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(args[1]), checker.SignatureKindCall)
-			if len(signatures) != 1 || len(signatures[0].Parameters()) > 1 {
+			if len(signatures) != 1 || len(signatures[0].Parameters()) > 3 {
 				return nil, true, l.notYet(node, "regex replacement callback taking captures, offset or input")
 			}
 			if returned := l.checker.GetReturnTypeOfSignature(signatures[0]); l.includesUndefined(returned) || returned.Flags()&checker.TypeFlagsNull != 0 {
@@ -201,10 +201,29 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 			if returns, known := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); !known || returns != ir.String {
 				return nil, true, l.notYet(node, "regex replacement callback with a non-string result")
 			}
-			if len(signatures[0].Parameters()) == 1 {
+			if len(signatures[0].Parameters()) >= 1 {
 				parameter := signatures[0].Parameters()[0]
 				if takes, known := l.representation(l.checker.GetTypeOfSymbol(parameter)); !known || takes != ir.String || !l.checker.IsTypeAssignableTo(l.checker.GetStringType(), l.checker.GetTypeOfSymbol(parameter)) {
 					return nil, true, l.notYet(node, "regex replacement callback with a non-string match parameter")
+				}
+			}
+			parameters := signatures[0].Parameters()
+			if len(parameters) > 1 {
+				if !l.regexCallbackNoCaptures(args[0], 0) {
+					return nil, true, l.notYet(node, "regex replacement offset callback without a proven capture-free pattern")
+				}
+				for index, expected := range []ir.Type{ir.Number, ir.String} {
+					if index+1 >= len(parameters) {
+						break
+					}
+					takes := l.checker.GetTypeOfSymbol(parameters[index+1])
+					primitive := l.checker.GetNumberType()
+					if expected == ir.String {
+						primitive = l.checker.GetStringType()
+					}
+					if actual, known := l.representation(takes); !known || actual != expected || !l.checker.IsTypeAssignableTo(primitive, takes) {
+						return nil, true, l.notYet(node, "regex replacement callback with incompatible offset or input parameters")
+					}
 				}
 			}
 			b := l.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
@@ -236,8 +255,14 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 			matched := ir.ArrayIndex{Array: b.read(item), Index: ir.NumberConstant{Value: 0}, Element: ir.String}
 			position := ir.RegExpProperty{Array: b.read(item), Name: "index", Of: ir.Number}
 			call := ir.CallClosure{Closure: callback, Returns: ir.String}
-			if len(signatures[0].Parameters()) == 1 {
-				call.Arguments = []ir.Expression{matched}
+			if len(parameters) >= 1 {
+				call.Arguments = append(call.Arguments, matched)
+			}
+			if len(parameters) >= 2 {
+				call.Arguments = append(call.Arguments, position)
+			}
+			if len(parameters) >= 3 {
+				call.Arguments = append(call.Arguments, input)
 			}
 			b.body = append(b.body, ir.ForOf{Iterable: b.read(matches), Local: item, Element: ir.Array, Body: []ir.Statement{
 				ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{b.read(text), ir.StringCall{Value: input, Method: "slice", Arguments: []ir.Expression{b.read(previous), position}}, call}}},
