@@ -1,5 +1,7 @@
 # Group 4 host delivery
 
+Catalog on c9cc35939dac2509ed2b08dd8c730123a4122495: exit 0, 238.959s; all 11 applicable undo patches were caught. The same five historical entries remain nonapplicable. No undo patch drifted. Controls, mutant failures and results are retained under evidence/group4-host/catalog.
+
 Built destination-typed empty array literals and debugger statements, and added the Source representation boundary proof without changing its production admission.
 Commits: 8f6674046 and 49fe63477 replay array-literal-never-element's two own commits; 6c38c3059 and 234c3791e replay debugger-statement's two own commits; 963e7c538 replays Source commit 19bcb8ee.
 Checks: lower 56.045s, IR passed from its unchanged cached run, flow 166.618s, JavaScript has no tests; focused Node oracle 4.284s and refreshed counts 90.059s both passed. Catalog follows.
