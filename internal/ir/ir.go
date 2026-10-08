@@ -201,11 +201,10 @@ const (
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
 
-	// Typed arrays hold converted numbers in one flat numeric buffer.
+	// Typed arrays hold numbers in one flat buffer of the element width.
 	Uint8Array
 	Int32Array
 	Float64Array
-	Uint16Array
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |

@@ -1,3 +1,5 @@
+Uint16Array coverage in this historical report is withdrawn. See [UINT16-WITHDRAWN.md](UINT16-WITHDRAWN.md) for the current NotYet and runtime-review disposition.
+
 Built Uint16Array lowering after the territory clarification, covering one identifier root.
 Started from 39cfcae6; the new commit SHA is reported with the push.
 Node differential fixture passed in 10.675s; touched package tests all passed; counts refreshed in 21.518s.
