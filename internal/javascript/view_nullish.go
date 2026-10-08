@@ -9,13 +9,7 @@ import (
 func (e *emitter) nullishViewField(property ir.Property) string {
 	value := fmt.Sprintf("adamicViewNullish(%s, %s, %s, %s, %d, %t, %t, [%s], %t, %t)", e.value(property.Object), quote(property.Name), quote(property.View), quote(property.ViewType), property.NullishKinds, property.NullAllowed, property.UndefinedAllowed, e.values(property.ViewAllowed), property.Absent, property.Optional)
 	value = e.mapViewCertificate(property, e.nullishMemberSelection(property, value))
-	if property.Of == ir.Closure && property.ViewContract != 0 {
-		contract := e.program.ViewContracts[property.ViewContract-1]
-		if contract.Result != 0 || contract.DiscardResult {
-			value = e.emitViewCallableCertificate(property, value)
-		}
-	}
-	return value
+	return e.viewCallableNullishCertificate(property, value)
 }
 
 func (e *emitter) nullishMemberSelection(property ir.Property, value string) string {

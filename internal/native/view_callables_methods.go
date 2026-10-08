@@ -27,7 +27,7 @@ func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method
 			for i, local := range function.Parameters[1:] {
 				parameters[i] = e.program.Locals[local].Type
 			}
-			signature := e.viewCallableSignature(parameters, function.Returns, function.Name)
+			signature := e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name)
 			thunk := e.methodThunk(index)
 			e.line("if (%s == %s) %s = %s;", method, thunk, recorded, signature)
 		}

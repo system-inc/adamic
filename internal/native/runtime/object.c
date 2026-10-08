@@ -2,6 +2,7 @@
 
 #include "adamic.h"
 #include "view_nullish.h"
+#include "view_unions_mixed.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -153,6 +154,32 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 
 adamic_value *adamic_object_read_contract(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *expected, const adamic_object **owner) {
  return adamic_object_read_mode(object,name,cache,expression,expected,owner);
+}
+
+// Lane 4 probe: preserve the actual storage owner's evidence and shared readiness.
+adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
+    adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+    if (object != NULL && slot == NULL && absent) {
+        return (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}};
+    }
+    const adamic_object *owner = NULL;
+    slot = adamic_object_read_mode(object, name, cache, expression, declared, &owner);
+    unsigned char storage = adamic_object_field_types(owner)[cache->index];
+    adamic_view_union_value value = {adamic_view_union_unknown, *slot};
+    if (storage == 1) { value.kind = adamic_view_union_number; }
+    else if (storage == 2) { value.kind = adamic_view_union_boolean; }
+    else if (storage == 7) {
+        adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
+        value.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
+        value.payload.number = number.number;
+    } else if (storage == 12) { value.kind = adamic_view_union_null; }
+    else if (storage == 13) { value.kind = adamic_view_union_undefined; }
+    else if ((storage >= 3 && storage <= 6) || storage == 8 || storage == 9 || storage == 10 || storage == 11) {
+        value = adamic_view_union_heap(slot->reference);
+        adamic_view_union_kind expected = storage == 3 ? adamic_view_union_string : storage == 4 || storage == 11 ? adamic_view_union_object : storage == 5 ? adamic_view_union_array : storage == 6 ? adamic_view_union_map : storage == 8 ? adamic_view_union_function : storage == 9 ? adamic_view_union_boolean : value.kind;
+        if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
+    }
+    return value;
 }
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {

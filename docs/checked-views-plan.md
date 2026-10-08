@@ -1098,6 +1098,10 @@ JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
 
+Lane 5 next group adds known-void signature metadata at the owned read adapter
+and runtime shape selection, including native method producer certificates.
+Void remains distinct from unknown and discarded-result contracts. Original
+FileWatcher.close witnesses pin this fixed zero-argument shape.
 ### Dictionary boxed-record helper checkpoint after ba59427c
 
 The dictionary lane supplies `runtime/view_dictionaries.c/.h` and
@@ -1184,6 +1188,7 @@ reads/writes and lazy object element reads. It does not certify reference elemen
 writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.
 
 
+
 ## Lane 5 source hooks on ba59427 (October 8)
 
 The user's hook rule supersedes the prior handoff-only restrictions. Lane 5
@@ -1234,3 +1239,82 @@ Original candidate witnesses are verified against upstream TypeScript commit
 050880ce59e30b356b686bd3144efe24f875ebc8 in an independent source checkout, never
 by copying cohere files. Intrinsic and stored-callable evidence will be reported
 separately and counts remain candidates until exact reachability is measured.
+
+### Lane 4 named primitive read hooks under the direct-hook ruling
+
+The user now authorizes minimal named shared hooks per lane, reconciled by the
+integrator. Lane 4 adds viewStringUndefined(property) in its native and JavaScript
+view_unions_mixed.go files. Shared native viewField calls it to select the existing
+optional payload reader while retaining the required-field presence flags.
+Shared JavaScript Property dispatch supplies its result as undefinedMember to
+adamicViewField; the readiness helper accepts undefined payloads independently
+of optional absence and retains null rejection. Tagged object-union dispatch is
+restricted to object-valued fields. These are executable source-read hooks,
+not flow erasure or a second readiness state.
+
+Shared strictViewContract classifies phantomUndefined as ViewUndefined;
+unsupportedViewFamily permits that approved phantom erasure, and viewDataType
+recognizes it in read preflight. No other intersection, brand member, nominal,
+callable or dictionary contract is enabled by these hooks. The two leading
+candidate pairs are pinned by TestCheckedViewCompleteBrand and both backend
+undefined-admission overlay mutants. Integration consumes this lane tip through
+the user; no individual lane branch is merged.
+
+### Lane 4 staged boxed primitive probe
+
+Lane 4 owns the named adamic_view_union_heap normalizer in its mixed-union
+runtime and adamic_object_view_union_snapshot in shared object.c, declared in
+view_unions_mixed.h. The latter calls the existing readiness/static-owner resolver,
+then classifies only source storage evidence. Optional absence stays separate
+from present uninitialized storage. Unknown storage remains unknown. No cast
+admission or read dispatch is enabled by these probe-only changes. Dedicated
+release and sanitizer probes cover storage formats and inherited owners before
+source dispatch is enabled. The integrator reconciles these minimal named hooks.
+
+Lane 4 also owns internal/ir/view_primitives.go and its tests: the named
+PrimitiveViewMembers planner preserves literal/undefined alternatives and
+rejects missing, unsupported, object and recursive member graphs. It does not
+enable source admission or a second flow graph. The primitive array adapter
+remains an unapplied review artifact in lane4/primitive-array-adapter-review.patch,
+with its staged hooks and validation gate in lane4/ADAPTER-REVIEW.md. Automatic
+approval review rejected enabling that cross-layer work on memory-safety and
+silent-miscompile risk. Accepted probe work remains separately reviewable.
+
+Census correction: the reduced finite CompilerOptions key fixtures in 0bae12f8
+omitted tsc's string index signature and therefore did not complete either
+skippedOn pair. The corrected lane 4 candidate ledger has nine mixed primitive
+pairs / twenty-seven reads remaining. The __String family remains complete,
+fourteen candidate pairs / five hundred eleven reads. Candidate counts are not
+certified production reachability. The full key gaps inherit a library Record
+index signature and checker-validate a numeric keyof key without constructing
+runtime dictionary storage. They remain compile refusals, not completions.
+
+### Lane 4 dictionary scalar and nullish element selection
+
+Lane 6 GROUP4 at ce4eeaa4 hands lane 4 the scalar/nullish selection portion of
+CompilerOptions and BuildOptions dynamic element extraction, two candidate pairs /
+eleven reads. Lane 6 retains lookup, absence, enumeration and storage; lane 4b
+retains object/array alternatives and descendant contracts. The ranked lane 4
+ledger now has eleven pending scheduling pairs / thirty-eight candidate reads,
+including nine original mixed primitive pairs / twenty-seven reads. Full shared
+extraction remains pending; container certification is not child-read coverage.
+See stage3/interface-downcasts/lane4/DICTIONARY-HANDOFF.md. No new hook or second
+flow analysis is added by this scheduling checkpoint.
+
+Lane 4 integration reconciliation: lower/view_unions_mixed.go owns
+viewBrandedStringUndefined, called by lower/object.go to retain the scalar
+undefined-payload certificate for approved string/phantom-void contracts.
+Null-containing and ordinary nullable contracts retain the lazy owner's reader.
+Open-key reduced witnesses use that owner's now-present primitive member selector;
+they do not certify the full original CompilerOptions dictionary extraction.
+
+Lane 5 integration nullable-callable hook: native/view_nullish.go and
+javascript/view_nullish.go invoke owned viewCallableNullishCertificate helpers
+after the owner presence/readiness/kind checks. Non-null callable values retain
+the same signature check; permitted null/undefined preserve their identities.
+
+The nullable-callable reconciliation also attaches complete fixed signatures to
+boxed Union reads in prepareViewCallableProperty. Otherwise the new same-name
+proof exemption would admit nullable function reads without a signature check.
+TestCheckedViewNullishCallableSignatureMutant now pins the runtime wrong-result
+refusal in both backends rather than the older compile-time refusal.

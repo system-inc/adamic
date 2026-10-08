@@ -95,13 +95,22 @@ func TestCheckedViewNullishCallableSignatureMutant(t *testing.T) {
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}
-	_, err := lowered(t, path)
+	program, err := lowered(t, path)
 	truth := onNode(t, path)
-	t.Logf("Node source: exit=%d stdout=%q", truth.exitCode, truth.stdout)
-	if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "callable") {
-		t.Fatalf("signature mutant escaped read refusal: %v", err)
+	if truth.exitCode != 0 || !strings.Contains(string(truth.stdout), "42\n") {
+		t.Fatalf("Node control: %#v", truth)
 	}
-	t.Logf("caught signature mutant: %v", err)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sanitized, _ := nativelyUncached(t, program)
+	for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+		expected := "adamic: panic: field read failed: node.value expected () => string, found function with incompatible result representation\n"
+		if got.exitCode != 70 || string(got.stdout) != "function:false:false\nordinary\n" || string(got.stderr) != expected {
+			t.Fatalf("nullable signature: %#v want %q", got, expected)
+		}
+	}
+
 }
 
 func TestCheckedViewNullishMapUnread(t *testing.T) {
