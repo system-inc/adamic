@@ -208,6 +208,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{returned}, nil
 	}
 	expression = ast.SkipParentheses(expression)
+	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
+		return statements, err
+	}
 	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 		return l.returnAssignment(expression)
 	}
@@ -222,9 +225,6 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 		return append(statements, ir.Return{}), nil
-	}
-	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
-		return statements, err
 	}
 	value, err := l.expression(expression)
 	if err != nil {

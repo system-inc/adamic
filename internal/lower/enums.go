@@ -390,7 +390,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		}
 	}
 	if node.Kind == ast.KindEnumDeclaration {
-		if node.Parent.Kind != ast.KindSourceFile {
+		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())

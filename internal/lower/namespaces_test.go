@@ -19,7 +19,7 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"reopening", "namespace N {export const x=1;} namespace N {export const y=2;}", "reopened namespace"},
 		{"function merge escape", "function N():number{return 1;} namespace N {export const x=1;} const alias=N;", "callable namespace object"},
 		{"class merge", "class N {} namespace N {export const x=1;}", "merged with a runtime value"},
-		{"destructured state", "namespace N {const [x]=[1];}", "plain initialized name"},
+		{"destructured state", "namespace N {const [x]=[1];}", "destructuring inside a namespace"},
 		{"nested object var", "namespace N {var {inner:{x}}={inner:{x:1}};}", "destructuring inside a namespace"},
 		{"rest object var", "namespace N {var {x,...rest}={x:1,y:2};}", "destructuring inside a namespace"},
 		{"default object var", "namespace N {var {x=1}={x:2};}", "destructuring inside a namespace"},
@@ -76,11 +76,11 @@ func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
 	}
 }
 
-func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
+func TestDebugNamespaceMergedCapabilities(t *testing.T) {
 	for _, test := range []struct{ name, reason string }{
-		{"debug_log.a", "callable object properties"},
-		{"class_merge.a", "constructor identity"},
-		{"debug_class.a", "constructor registration"},
+		{"debug_log.a", ""},
+		{"class_merge.a", "merged with a runtime value"},
+		{"debug_class.a", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			source, err := os.ReadFile("testdata/namespaces_notyet/" + test.name)
@@ -88,6 +88,12 @@ func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
 				t.Fatal(err)
 			}
 			_, err = lowerSource(t, string(source))
+			if test.reason == "" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				return
+			}
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, test.reason)

@@ -446,6 +446,21 @@ func (l *lowering) namespaceReadyCall(node *ast.Node, value ir.Expression) ir.Ex
 	if len(checks) == 0 {
 		return value
 	}
+	if call, closure := value.(ir.CallClosure); closure {
+		operands := append(checks, call.Closure)
+		b := l.libraryArrayBuilder(append(operands, call.Arguments...))
+		call.Closure = b.read(b.parameters[len(checks)])
+		call.Arguments = nil
+		for _, parameter := range b.parameters[len(checks)+1:] {
+			call.Arguments = append(call.Arguments, b.read(parameter))
+		}
+		if call.Returns != 0 {
+			return b.finish("namespace_call", call)
+		}
+		b.body = append(b.body, ir.Evaluate{Value: call}, ir.Return{})
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "namespace_call", Parameters: b.parameters, Body: b.body})
+		return ir.Call{Function: b.function, Arguments: b.arguments}
+	}
 	call := value.(ir.Call)
 	b := l.libraryArrayBuilder(append(checks, call.Arguments...))
 	call.Arguments = nil
