@@ -1,0 +1,6 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: scanner.ts:222:31
+interface MapLike<T> { [key: string]: T; }
+const textToKeywordObj: MapLike<number> = {if: 1, for: 2, while: 3};
+textToKeywordObj['keyword' + String(1)] = 4;
+const entries = Object.entries(textToKeywordObj);
+for (const [word, token] of entries) console.log(word + ':' + String(token));

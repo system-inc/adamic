@@ -798,5 +798,101 @@
     },
     "outcome": "Compiles",
     "diagnostic": ""
+  },
+  {
+    "rank": 51,
+    "batch": 6,
+    "source": "program.ts:4149:33",
+    "function": "verifyCompilerOptions",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/verifyCompilerOptions.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "@name1 2\nstring src/1\nstring types/1\nempty 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 52,
+    "batch": 6,
+    "source": "program.ts:4154:39",
+    "function": "verifyCompilerOptions",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/verifyCompilerOptions.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "@name1 2\nstring src/1\nstring types/1\nempty 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 53,
+    "batch": 6,
+    "source": "core.ts:1279:12",
+    "function": "getProperty",
+    "static_calls": 0,
+    "fixture": "stage3/maplike-records/sites/fixtures/getProperty.a",
+    "adaptation": "Original generic read, own-membership call and undefined fallback retained.",
+    "node": {
+      "stdout": "made1 undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 54,
+    "batch": 6,
+    "source": "core.ts:1279:44",
+    "function": "getProperty",
+    "static_calls": 0,
+    "fixture": "stage3/maplike-records/sites/fixtures/getProperty.a",
+    "adaptation": "Original generic read, own-membership call and undefined fallback retained.",
+    "node": {
+      "stdout": "made1 undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 55,
+    "batch": 6,
+    "source": "parser.ts:2356:38",
+    "function": "top level",
+    "static_calls": 0,
+    "fixture": "stage3/maplike-records/sites/fixtures/parser_top.a",
+    "adaptation": "Original keys/filter retained; numeric token table reduced and given a dynamic key.",
+    "node": {
+      "stdout": "for,while,return,keyword1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 56,
+    "batch": 6,
+    "source": "scanner.ts:222:31",
+    "function": "top level",
+    "static_calls": 0,
+    "fixture": "stage3/maplike-records/sites/fixtures/scanner_top.a",
+    "adaptation": "Original entries retained; numeric tokens and consumers reduced to a loop that prints each pair.",
+    "node": {
+      "stdout": "if:1\nfor:2\nwhile:3\nkeyword1:4\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
   }
 ]

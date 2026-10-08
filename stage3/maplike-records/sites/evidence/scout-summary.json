@@ -1,0 +1,25 @@
+{
+  "typescript": "6.0.3",
+  "files": 77,
+  "diagnostics": 22,
+  "counts": {
+    "Object.entries": 75,
+    "template object conversion": 14,
+    "toString call": 20,
+    "for...in": 27,
+    "Object.keys": 4,
+    "JSON.stringify": 19,
+    "prototype access": 12,
+    "hasOwnProperty member": 1,
+    "cached hasOwnProperty.call": 12,
+    "Object.getPrototypeOf": 1,
+    "+ object conversion": 9,
+    "Object.setPrototypeOf": 5,
+    "Object.create": 4,
+    "Object.assign": 1
+  },
+  "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "scout_commit": "6945a8a40b2a288b97e969ee9626ff3a77c8db46",
+  "selected_object_operations": 22,
+  "selected_string_index_operations": 34
+}

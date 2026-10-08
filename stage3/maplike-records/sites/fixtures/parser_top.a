@@ -1,0 +1,6 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: parser.ts:2356:38
+interface MapLike<T> { [key: string]: T; }
+const textToKeywordObj: MapLike<number> = {if: 1, for: 2, while: 3, return: 4};
+textToKeywordObj['keyword' + String(1)] = 5;
+const viableKeywordSuggestions = Object.keys(textToKeywordObj).filter(keyword => keyword.length > 2);
+console.log(viableKeywordSuggestions.join(','));
