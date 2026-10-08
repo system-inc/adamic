@@ -127,3 +127,139 @@ roots, increment units, invent a witness, or omit a source file each fail their
 corresponding assertion. The historical audit verifies six reasons against the
 pinned ranking; byte, root, witness and boundary mutations each fail. No byte
 credits from different compiler bases are added together.
+
+
+## Ruling and implementation design
+
+@system_adamic's step 20 ruling (#yvgst44) authorizes this design. The original
+proposal requirement has been satisfied by that ruling. The implementation must
+still prove each represented operation against Node and test262; authorization
+does not make an unimplemented operation compile correctly.
+
+The contract follows [0.1.md](0.1.md), [escape-hatches.md](escape-hatches.md) and
+[memory.md](memory.md). There is no unchecked cast, erased type, garbage collector
+or fallback that guesses an object's layout. Current generator refusals are an
+observed compiler outcome, not a request for another policy decision.
+
+| Shape | Representation and lowering |
+| --- | --- |
+| Array and inherited readonly-array view | Keep the original counted array, identity, element storage and live length. Instantiate interface bases through the checker. Evaluate the RHS once, retain it across mutation and source reassignment, and give each iteration fresh lexical bindings. Keep metadata on the same value; an unsupported metadata operation stops with NotYet. |
+| Structural Iterable | Specialize a known concrete type in the closed program; otherwise dispatch its own `[Symbol.iterator]`. Method receivers and arrow fields use the runtime's receiver-aware closure convention. No additional origin proof is required. |
+| Iterator record | Own the iterator; look up and cache its `next` once. Keep the yielded T and completed TReturn in separate typed payloads beside `done`. Boolean and undefined-only payloads use their ordinary representations. Read `done` before the selected `value`. |
+| Map and Set | Own the collection and maintain a live insertion-order cursor and sticky exhaustion. Saved iterators retain their progress. Entries allocate fresh tuples; the two elements of a Set entry have the same identity. Mutation cannot be replaced by a snapshot. |
+| Built-in iterator object | Counted iterator state, stable identity, `[Symbol.iterator]()` returning itself, and protocol methods inherited from a shared iterator prototype. Refuse own-property reflection and copying until their layouts are implemented. |
+| String | Counted string and code-point cursor. A supplementary pair yields one string; a lone surrogate yields one string. Preserve UTF-16 behavior for all operations on each yielded string. |
+| Typed array | Counted iterator retaining the typed view and backing storage. Read the current indexed value, preserve view bounds and sticky exhaustion, and use the element's ordinary number representation. Unsupported backing-store resize behavior stops explicitly. |
+| Object binding | Hold the current yielded object, then lower existing destructuring in source order before the body. Renamed properties retain their names; getters keep their receiver and throw at the corresponding read. Each capture belongs to that iteration. |
+| Generator | Counted heap frame containing the program counter, suspension state, typed parameters and live slots, pending completion, and owned delegate iterator. Captures count like closures. Program-region members are plain pointers because that region outlives the frame. |
+
+### Intrinsic proof and storage boundaries
+
+The whole-program refusal pass rejects writes to `Symbol.iterator` on Array,
+String, Map, Set and typed-array values or their prototypes, including checker-
+identified symbol aliases. This is the proof for their fast paths. Property
+expansion and prototype mutation retain their existing boundaries.
+
+`NodeArray<T>` extends `ReadonlyArray<T>` and carries compiler metadata. An array
+view preserves its original storage rather than projecting it into a plain object.
+Additional fields still participate in ownership compatibility and cycle analysis;
+the instantiated element type participates too. A structural record that satisfies
+an array interface needs protocol dispatch rather than a native array cast. Until
+that path exists, object construction through such a view is NotYet. Unsupported
+metadata construction or access also stays NotYet. No metadata is silently copied,
+zeroed or discarded. Mutable and intersection array aliases need their own storage
+and variance checks before extending this first shape.
+
+### Generator frames
+
+Frame states are new, suspended, executing and completed. The frame's RC header,
+resume function and program counter identify which typed slots are live. A live-slot
+mask or statically selected destruction path releases exactly the initialized owned
+slots. Suspension never keeps a stack address. Reentrant resume must throw as Node
+does. Each resume returns a fresh result, with separately typed yield and completion
+payloads; a returned value may differ physically from the yielded value.
+
+`next`, `return`, `throw` and `yield*` follow ECMA-262. A pending completion carries
+its kind and typed return/error payload through suspended `finally` bodies. A call
+to `return()` runs finally, including finally bodies that themselves yield. Delegation
+owns the delegate and forwards each operation with the specified presence and
+result checks. Throwing into a new or completed frame, returning from a new frame,
+and resuming a completed frame have their distinct specified outcomes.
+
+Dropping the last reference to an abandoned frame releases its owned slots but
+does not run finally or call user `return`. That distinction is observable on Node.
+Frame and closure captures remain subject to the existing owning-cycle refusal
+and explicit Weak cuts. Synchronous generators do not authorize async iteration.
+
+### IteratorClose and exceptions
+
+The iterator's `next` is cached once; `return` is looked up at close time. Missing
+or null return means no close call. Continue within the loop and normal exhaustion
+do not close. Break, return, outer transfer, and a throw during binding or the body
+close an active iterator. Failures in iterator advancement, `done` or `value` reads
+must be distinguished from a subsequent binding failure.
+
+The incoming throw wins over a failing close, including a failing return lookup.
+A close failure replaces a break or return completion. A nonthrowing close must
+validate that the return result is an object. Close inner iterators before outer
+ones. Cleanup releases owned iterator, result and value references on every path;
+reference destruction itself invokes no user code. The existing active-flag lowering
+must be audited before admitting additional throwing binding shapes.
+
+### Library setting and retained refusals
+
+The project's TypeScript lib setting decides whether iterator helpers exist. The
+compiler does not invent declarations for them. Custom Set-shaped objects that
+return generators use protocol dispatch. Optional numeric conditions use exact
+JavaScript ToBoolean in both `.ts` and `.a`; explicit comparison is a taste rule.
+
+Non-iterable records remain checker errors. Unsound casts, `any`, owning cycles,
+prototype mutation and unsupported symbol-key reflection retain their soundness
+boundaries. This structural symbol-key view still needs refusal until its own-key
+representation is complete:
+
+```a
+const iterable = { value: 1, [Symbol.iterator]() {
+    return { next() { return { done: true, value: 1 }; } };
+} };
+console.log(Object.keys(iterable));
+```
+
+Generator admission is authorized, including these previously refused programs;
+none may be enabled by skipping the frame or unwind behavior:
+
+```a
+function* empty(): Generator<number, void, unknown> {}
+function* single(value: number): Generator<number, void, unknown> { yield value; }
+function* delegated(values: number[]): Generator<number, void, unknown> {
+    try { yield* values; } finally { console.log("close"); }
+}
+for (const value of single(1)) { console.log(String(value)); break; }
+```
+
+### Silent-miscompile audit
+
+- Preserve symbol identity, dynamic receivers, inherited methods, getter effects,
+  and cached-next lookup. A source string key cannot impersonate a symbol slot.
+- Evaluate the RHS and factory once. Read done before value, binding fields from
+  left to right, and allocate fresh bindings and capture cells on each pass.
+- Keep array and collection owners alive across pop, splice, clear, deletion,
+  reinsertion, source reassignment, callbacks, throws and nested closing.
+- Preserve live lengths, insertion-order cursors, sticky exhaustion, fresh entry
+  tuples and Set entry identity. Do not materialize the remaining iterator values.
+- Keep declared element storage through generic interfaces, including Weak slots;
+  narrowing never converts a weak handle into a strong storage slot.
+- Preserve metadata, discriminated result payloads, optional done semantics,
+  undefined-only payloads, and ABI compatibility at every view and call boundary.
+- Distinguish advancement failure from binding/body failure and preserve exception
+  precedence through closing, delegation and suspended finally bodies.
+- Retain surrogate pairs and lone surrogates exactly as Node does. Byte or code-unit
+  iteration is not a substitute for code-point iteration.
+- Free an abandoned frame without running finally. A literal string cannot stand
+  in for a runtime allocation in an ownership fixture.
+- Deduplicate diagnostic sites and attempted units separately. Historical hidden
+  credits do not establish that a whole source function or entry now compiles.
+
+Every implemented piece needs source Node, both backends, native sanitizers, release
+and leak checks, and a mutant caught by the specific acceptance check. Report other
+implementation boundaries directly; do not relabel them as a new policy decision.
