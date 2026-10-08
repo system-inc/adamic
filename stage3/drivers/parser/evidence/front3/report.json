@@ -1,0 +1,80 @@
+{
+  "compiler": "/tmp/parser-front3-adamic",
+  "scratch": "/tmp/parser-front2-scratch",
+  "entry": "/tmp/parser-front-driver-slice/parser-proof-main.a",
+  "corpus": "/tmp/parser-adapted10",
+  "oracle": {
+    "bytes": 35456964,
+    "sha256": "2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5"
+  },
+  "build": {
+    "exit": 1,
+    "user_seconds": 0.9159029999999999
+  },
+  "node_runs": [
+    {
+      "exit": 0,
+      "user_seconds": 5.888736,
+      "comparison": 0
+    },
+    {
+      "exit": 0,
+      "user_seconds": 5.916100000000001,
+      "comparison": 0
+    },
+    {
+      "exit": 0,
+      "user_seconds": 5.727305000000001,
+      "comparison": 0
+    }
+  ],
+  "node_best_user_seconds": 5.727305000000001,
+  "native_runs": [],
+  "native_binary_bytes": null,
+  "native_best_user_seconds": null,
+  "native_byte_mutant_cmp": null,
+  "instructions": "not measured: build failed; perf executable not installed",
+  "status": "red",
+  "first_failure": "adamic: /tmp/parser-front-driver-slice/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+  "build_stage": "lowering NotYet, strict checking accepted",
+  "inputs": {
+    "origin/area/stage3": "4ad53a4ee46c25e876414391081f51ac4b80103f",
+    "origin/compiler/stage3-front-2": "80fb9b75ec951e50aee46bfe07d609802d9ae021",
+    "779ff9d": "779ff9d337ed3e1f3b27d71dd3152dcb1ca8614b",
+    "origin/library/qualified-as-const": "8280fd0873a3d5c425f8a1a342b44af20cf883d9"
+  },
+  "scratch_merge_sha": "d9d9ebd7552e546bc24d098f137135525ac2315a",
+  "minimal": {
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-enum-map.a:3:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "exit": "1\n",
+    "node": {
+      "stdout": "0\n",
+      "stderr": "",
+      "exit": "0\n"
+    },
+    "node_runner": "scratch oracle/node.mjs from merged flag-enums, transform mode"
+  },
+  "conflicts": {
+    "import_cycles": [
+      "internal/oracle/counts.md"
+    ],
+    "node_loader": [
+      "internal/load/load.go",
+      "internal/load/source_fs.go",
+      "internal/lower/cast.go",
+      "internal/oracle/counts.md"
+    ]
+  },
+  "focused_tests_command": "GOWORK=off go test ./internal/load ./internal/lower -run 'Test.*(Node|Cast|ImportCycle)' -count=1",
+  "focused_tests_output": "ok  \tgithub.com/system-inc/adamic/internal/load\t0.747s\nok  \tgithub.com/system-inc/adamic/internal/lower\t3.037s\n",
+  "separate_native_comparator_control": {
+    "program": "native-output-control.a",
+    "cmp_exit": {
+      "control": 0,
+      "mutant": 1
+    },
+    "changed_bytes": 1,
+    "scope": "Not the parser output; parser build failed."
+  }
+}

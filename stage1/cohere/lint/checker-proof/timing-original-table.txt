@@ -1,0 +1,34 @@
+| Top-level test | Active time (s) | Paused | Result |
+|---|---:|:---:|---|
+| TestCheckerNoProgramCoverage | 4.79 | no | PASS |
+| TestCheckerBridgeRefusalPending | 0.00 | no | SKIP |
+| TestCheckerReplayEntryControl | 5.61 | no | PASS |
+| TestCheckerHashes | 0.52 | no | PASS |
+| TestNestedConstructorGap | 0.13 | no | PASS |
+| TestEmittedJavaScriptMismatch | 98.83 | no | PASS |
+| TestDotARename | 92.32 | no | PASS |
+| TestCompleteSuggestionSerialization | 137.72 | no | PASS |
+| TestSuggestionAlongsideAutomaticFix | 75.98 | no | PASS |
+| TestWitnessScriptKind | 14.52 | no | PASS |
+| TestJsxLintReleaseAndThroughput | 0.00 | no | SKIP |
+| TestJsxLintTrees | 44.20 | no | PASS |
+| TestRulesAgree | 136.50 | no | PASS |
+| TestCompilerAndStage1Agree | 546.55 | no | PASS |
+| TestLegacyMutants | 80.10 | no | PASS |
+| TestThroughput | 0.00 | no | SKIP |
+| TestNodeTableIsLinkOnly | 69.49 | no | PASS |
+| TestShardsAgree | 291.60 | no | PASS |
+| TestMutants | 7.36 | no | PASS |
+| TestProfileArtifacts | 81.35 | no | PASS |
+| TestProfileCompilation | 79.19 | no | PASS |
+| TestProfileSnapshotsAgree | 294.56 | no | PASS |
+| TestOwnedWitnesses | 31.83 | no | PASS |
+| TestRegistrationMutant | 69.15 | no | PASS |
+| TestFactoryHooks | 135.13 | no | PASS |
+| TestNestedOutsideModuleCopy | 0.86 | no | PASS |
+| TestDecodedOptionsAndMutant | 81.79 | no | PASS |
+| TestOptionAndComparatorGaps | 0.78 | yes | PASS |
+| TestCommentFoldMutant | 96.05 | yes | PASS |
+| TestCountGuardMutant | 103.01 | yes | PASS |
+| TestPositionIndexMutant | 108.47 | yes | PASS |
+| TestDecorationOptionMutant | 109.74 | yes | PASS |

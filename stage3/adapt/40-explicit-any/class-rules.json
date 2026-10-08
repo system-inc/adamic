@@ -1,256 +1,267 @@
 {
+  "filesystem": [
+    {
+      "id": 138,
+      "file": "src/compiler/sys.ts",
+      "line": 1853,
+      "column": 31,
+      "originalLine": "                    let stat: any;",
+      "replacement": "import(\"fs\").Stats | import(\"fs\").Dirent | undefined",
+      "parentKind": "VariableDeclaration"
+    }
+  ],
   "brands": [
     {
       "id": 1,
       "file": "src/compiler/builder.ts",
       "key": "__incrementalBuildInfoFileIdBrand",
       "line": 1074,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 2,
       "file": "src/compiler/builder.ts",
       "key": "__incrementalBuildInfoFileIdListIdBrand",
       "line": 1076,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 3,
       "file": "src/compiler/checker.ts",
       "key": "_symbolLinksBrand",
       "line": 1452,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 62,
       "file": "src/compiler/corePublic.ts",
       "key": " __sortedArrayBrand",
       "line": 18,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 63,
       "file": "src/compiler/corePublic.ts",
       "key": " __sortedArrayBrand",
       "line": 22,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 96,
       "file": "src/compiler/moduleNameResolver.ts",
       "key": "__compilerOptionsKey",
       "line": 975,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 97,
       "file": "src/compiler/moduleNameResolver.ts",
       "key": "__modeAwareCacheKey",
       "line": 1113,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 103,
       "file": "src/compiler/path.ts",
       "key": "__pathComponensBrand",
       "line": 457,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 142,
       "file": "src/compiler/transformers/esnext.ts",
       "key": "_usingBrand",
       "line": 774,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 147,
       "file": "src/compiler/types.ts",
       "key": "__pathBrand",
       "line": 23,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 148,
       "file": "src/compiler/types.ts",
       "key": "_jsdocContainerBrand",
       "line": 958,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 149,
       "file": "src/compiler/types.ts",
       "key": "_localsContainerBrand",
       "line": 968,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 150,
       "file": "src/compiler/types.ts",
       "key": "_flowContainerBrand",
       "line": 974,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 151,
       "file": "src/compiler/types.ts",
       "key": "_declarationBrand",
       "line": 1757,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 152,
       "file": "src/compiler/types.ts",
       "key": "_autoAccessorBrand",
       "line": 1944,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 153,
       "file": "src/compiler/types.ts",
       "key": "_objectLiteralBrand",
       "line": 1981,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 154,
       "file": "src/compiler/types.ts",
       "key": "_functionLikeDeclarationBrand",
       "line": 2064,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 155,
       "file": "src/compiler/types.ts",
       "key": "_typeNodeBrand",
       "line": 2185,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 156,
       "file": "src/compiler/types.ts",
       "key": "_expressionBrand",
       "line": 2397,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 157,
       "file": "src/compiler/types.ts",
       "key": "_unaryExpressionBrand",
       "line": 2412,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 158,
       "file": "src/compiler/types.ts",
       "key": "_updateExpressionBrand",
       "line": 2418,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 159,
       "file": "src/compiler/types.ts",
       "key": "_leftHandSideExpressionBrand",
       "line": 2449,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 160,
       "file": "src/compiler/types.ts",
       "key": "_memberExpressionBrand",
       "line": 2453,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 161,
       "file": "src/compiler/types.ts",
       "key": "_primaryExpressionBrand",
       "line": 2457,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 162,
       "file": "src/compiler/types.ts",
       "key": "_literalExpressionBrand",
       "line": 2785,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 163,
       "file": "src/compiler/types.ts",
       "key": "_optionalChainBrand",
       "line": 2982,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 164,
       "file": "src/compiler/types.ts",
       "key": "_propertyAccessExpressionLikeQualifiedNameBrand",
       "line": 2997,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 165,
       "file": "src/compiler/types.ts",
       "key": "_optionalChainBrand",
       "line": 3010,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 166,
       "file": "src/compiler/types.ts",
       "key": "_optionalChainBrand",
       "line": 3034,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 167,
       "file": "src/compiler/types.ts",
       "key": "_optionalChainBrand",
       "line": 3168,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 168,
       "file": "src/compiler/types.ts",
       "key": "_statementBrand",
       "line": 3322,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 169,
       "file": "src/compiler/types.ts",
       "key": "_classElementBrand",
       "line": 3568,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 170,
       "file": "src/compiler/types.ts",
       "key": "_typeElementBrand",
       "line": 3573,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 171,
       "file": "src/compiler/types.ts",
       "key": "_jsDocTypeBrand",
       "line": 3903,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 172,
       "file": "src/compiler/types.ts",
       "key": "_symbolLinksBrand",
       "line": 6059,
-      "replacement": "undefined"
+      "replacement": "void"
     },
     {
       "id": 179,
       "file": "src/compiler/utilities.ts",
       "key": "_prototypePropertyAssignmentBrand",
       "line": 4289,
-      "replacement": "undefined"
+      "replacement": "void"
     }
   ],
   "enum-display": [

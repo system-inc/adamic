@@ -10,6 +10,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	wave10next "github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next"
 )
 
@@ -63,7 +64,7 @@ func (p *Program) exact(file string, start, end uint64, kind string) (*ast.Sourc
 	if err != nil {
 		return nil, nil, err
 	}
-	source := p.Compiler.GetSourceFile(path)
+	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(path))
 	if source == nil {
 		return nil, nil, fmt.Errorf("file is not in this program: %s", path)
 	}
@@ -365,7 +366,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		file := ""
 		if symbol != nil && symbol.ValueDeclaration != nil {
 			if f := ast.GetSourceFileOfNode(symbol.ValueDeclaration); f != nil {
-				file = f.FileName()
+				file = f.FileName().AsString()
 			}
 		}
 		out.text(file)
@@ -507,7 +508,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 				if f == nil {
 					panic("declaration has no source")
 				}
-				out.text(f.FileName())
+				out.text(f.FileName().AsString())
 				if name := declaration.Name(); name != nil {
 					out.number(uint64(scanner.GetTokenPosOfNode(name, source, false)))
 					out.number(uint64(name.End()))

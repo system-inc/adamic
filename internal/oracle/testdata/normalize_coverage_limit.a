@@ -1,0 +1,4 @@
+// One FDFA above the largest repeat whose eighteen-unit compatibility expansion fits V8.
+const text = 'ﷺ'.repeat(29826161);
+console.log(`${text.length}`);
+console.log(`${text.normalize('NFKD').length}`);

@@ -141,12 +141,12 @@ var mutants = []mutant{
 		from: "return character === ' ' || character === '\\t' || character === '\\n' || character === '\\r';",
 		to:   "return character === ' ' || character === '\\t' || character === '\\n' || character === '\\r' || character === '\\v';",
 	},
-	// An edge of a class or a keyword's case: only a space or a tab ends the word, as ESLint measured.
+	// Restore the old boundary that wrongly rejected JavaScript whitespace after a directive word.
 	{
-		name: "a no-break space ending a directive word",
+		name: "only space or tab ending a directive word",
 		file: "directives.ts",
-		from: "return rest === '' || rest.startsWith(' ') || rest.startsWith('\\t');",
-		to:   "return rest === '' || rest.startsWith(' ') || rest.startsWith('\\t') || rest.startsWith('\\u00a0');",
+		from: "return rest === '' || isJavaScriptSpace(rest.charCodeAt(0));",
+		to:   "return rest === '' || rest.startsWith(' ') || rest.startsWith('\\t');",
 	},
 	// An edge of a class or a keyword's case: `ESLINT-DISABLE-LINE` is no directive.
 	{
@@ -177,13 +177,12 @@ var mutants = []mutant{
 		from: "if (scopeRead.scope === 'file' && isLineComment(commentText)) {",
 		to:   "if (scopeRead.scope === 'file' && isLineComment(commentText) && false) {",
 	},
-	// U+0085 no longer space to Go's TrimSpace, as it isn't to JavaScript's trim, so a reason ending in
-	// one keeps it.
+	// Restore Go's whitespace set, which wrongly trims U+0085 and leaves U+FEFF.
 	{
-		name: "U+0085 not trimmed",
+		name: "Go whitespace instead of JavaScript whitespace",
 		file: "directives.ts",
-		from: "\t\tcase 0x85:\n",
-		to:   "",
+		from: "\t\tcase 0xfeff:\n",
+		to:   "\t\tcase 0x85:\n",
 	},
 	// A rule name matched by any suffix, not one on a `/`, so `no-enum` names `consistency-no-enum`.
 	{

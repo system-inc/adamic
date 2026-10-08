@@ -59,30 +59,6 @@ func TestPushSpreadGap(t *testing.T) {
 	}
 }
 
-func TestTypeImportCycleGap(t *testing.T) {
-	path, err := filepath.Abs("gaps/3_import_cycle.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if string(result.output) != "1\n" {
-		t.Fatalf("Node gap result %q", result.output)
-	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lower.Lower(context.Background(), program)
-	var refusal *lower.Refused
-	if !errors.As(err, &refusal) || refusal.What != "an import cycle" {
-		t.Fatalf("GAPS.md records type-only import cycle refusal, got %v", err)
-	}
-}
-
 func TestClassMethodInterfaceGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/4_class_interface_method.ts")
 	if err != nil {

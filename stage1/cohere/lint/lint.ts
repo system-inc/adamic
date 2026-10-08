@@ -1,5 +1,6 @@
 // The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
 // stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
+import type { Checker } from './checker.a';
 import { RuleContext } from './context.ts';
 import { createRuleSet, type RuleSet } from './.generated/registry.ts';
 import { panic, utf8Length } from 'adamic';
@@ -7,9 +8,13 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 
-import type { Finding } from './finding.ts';
+import { Finding } from './finding.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
+
+// passBudget and passBudgetMessage are cohere's edit engine's DefaultMaxPasses and ReasonPassesReached.
+const passBudget = 10;
+const passBudgetMessage = 'the pass budget was exhausted before the file converged';
 
 // compareFindings orders by position alone. The sort is stable, so findings at one position keep the order
 // they were collected in: walk order, and descriptor order within one node's visit.
@@ -29,11 +34,21 @@ function compareEdits(left: Finding, right: Finding): number {
 }
 
 export class Linter {
+    readonly checker: Checker | undefined;
+    readonly skipped: string[] = [];
     readonly source: string;
     readonly parser: Parser;
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
     readonly rejected: string[] = [];
+    // The rules still proposing fixes on the pass that exhausted the budget, in the order they first
+    // propose, as cohere's edit engine names them. Empty when the fixes converge.
+    readonly unconverged: string[] = [];
+    // junkRows appends a copy of every row to the node table after parsing, attached to nothing. Stage 1
+    // reads the table only by following links from the root, and the flat copy of typescript-go's tree
+    // (#k4fm1vf) relies on it: its tables hold rows no link reaches. TestNodeTableIsLinkOnly sets this
+    // and requires the same findings, so a rule that walks the table by row fails there first.
+    junkRows = false;
     parents: number[] = [];
     root = -1;
     readonly selected: string;
@@ -50,7 +65,9 @@ export class Linter {
         nullPolicy: string,
         allowCatch: boolean,
         settings: Settings,
+        checker: Checker | undefined = undefined,
     ) {
+        this.checker = checker;
         this.settings = settings;
         this.source = source;
         this.parser = parser;
@@ -62,6 +79,13 @@ export class Linter {
     }
     run(): void {
         this.root = this.parser.file();
+        if(this.checker !== undefined) { this.checker.root = this.root; }
+        if(this.junkRows) {
+            const attached = this.parser.nodes.length;
+            for(let index = 0; index < attached; index++) {
+                this.parser.nodes.push(this.parser.node(index));
+            }
+        }
         this.parents = this.parser.nodes.map(() => -1);
         this.ancestry(this.root, -1);
         const context = new RuleContext(
@@ -75,11 +99,14 @@ export class Linter {
             this.parents,
             this.settings,
             this.root,
+            this.checker,
         );
         const rules = createRuleSet(context);
         rules.prepare(this.root);
         this.walk(this.root, -1, rules);
         rules.finish(this.root);
+        for(const skipped of context.skipped) { this.skipped.push(skipped); }
+        if(this.checker !== undefined) { this.checker.finish(); }
         for(const finding of context.findings) {
             this.findings.push(finding);
         }
@@ -103,8 +130,30 @@ export class Linter {
     fixed(): string {
         let current = this.source;
         let findings = this.findings;
-        for(let pass = 0; pass < 10; pass++) {
-            const proposals = findings.filter((finding) => finding.repair === 'fix');
+        let lastProposals: Finding[] = [];
+        for(let pass = 0; pass < passBudget; pass++) {
+            const proposals: Finding[] = [];
+            for(const finding of findings) {
+                if(finding.repair === 'fix') {
+                    proposals.push(finding);
+                    for(const extra of finding.extraFixes) {
+                        const fix = new Finding(
+                            finding.rule,
+                            finding.id,
+                            finding.message,
+                            finding.start,
+                            finding.end,
+                            'fix',
+                            extra.text,
+                            '',
+                        );
+                        fix.editStart = extra.start;
+                        fix.editEnd = extra.end;
+                        proposals.push(fix);
+                    }
+                }
+            }
+            lastProposals = proposals;
             proposals.sort(compareEdits);
             const applied: Finding[] = [];
             let previous = -1;
@@ -132,12 +181,21 @@ export class Linter {
             if(applied.length === 0) {
                 return current;
             }
-            let result = current;
-            for(let index = applied.length - 1; index >= 0; index--) {
-                const finding = applied[index] ?? panic('missing fix');
-                result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
+            // The applied fixes are sorted and disjoint, so the new text is built in one pass from the pieces
+            // between them. Splicing each fix into the whole text instead copied the file once per fix, which
+            // on checker.ts (3.1 MB, 708 fixes) was most of the run's instructions.
+            const pieces: string[] = [];
+            let copied = 0;
+            for(const finding of applied) {
+                pieces.push(current.slice(copied, finding.editStart));
+                pieces.push(finding.replacement);
+                copied = finding.editEnd;
             }
-            const parser = new Parser(result, 'fixed source');
+            pieces.push(current.slice(copied));
+            const result = pieces.join('');
+            // The parser takes its JSX and JavaScript modes from the path, so each pass reparses under the
+            // file's own path: a .tsx file's fixed source is still TSX.
+            const parser = new Parser(result, this.parser.path);
             const scanner = new SourceScanner(result);
             const next = new Linter(
                 result,
@@ -149,10 +207,21 @@ export class Linter {
                 this.allowCatch,
                 this.settings,
             );
+            next.junkRows = this.junkRows;
             next.run();
             current = result;
             findings = next.findings;
         }
-        panic('fix pass budget exhausted');
+        // The budget ran out with fixes still landing. Cohere's edit engine discards the whole run and
+        // leaves the file as it was found, because a fixpoint it did not reach is not a result it may
+        // write, and it names the rules still proposing on the last pass, since a rule whose fix does not
+        // silence its own finding is the defect, not the file.
+        this.rejected.push(`rejected fix-engine 0 0  ${passBudgetMessage} (${passBudget} passes)`);
+        for(const finding of lastProposals) {
+            if(!this.unconverged.includes(finding.rule)) {
+                this.unconverged.push(finding.rule);
+            }
+        }
+        return this.source;
     }
 }

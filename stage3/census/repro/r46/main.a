@@ -1,1 +1,2 @@
+// a-check: type error TS2420
 interface Value { count: number; } class Empty implements Value {}
