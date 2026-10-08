@@ -1,0 +1,17 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: core.ts:1470:27
+interface MapLike<T> { [key: string]: T; }
+function groupBy<T>(values: readonly T[] | undefined, keySelector: (value: T) => string): Record<string, T[]> {
+    const result: Record<string, T[]> = {};
+    if (values !== undefined) {
+        for (let i = 0; i < values.length; i++) {
+            const value = values[i];
+            const key = `${keySelector(value)}`;
+            const array = result[key] ??= [];
+            array.push(value);
+        }
+    }
+    return result;
+}
+const result = groupBy(['two' + String(1), 'ten', 'two' + String(2)], value => value.startsWith('two') ? '2' : '10');
+for (const [key, values] of Object.entries(result)) console.log(key + ':' + values.join(','));
+console.log(Object.keys(groupBy(undefined, (value: string) => value)).length);

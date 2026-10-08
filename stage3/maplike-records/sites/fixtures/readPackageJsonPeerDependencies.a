@@ -1,0 +1,7 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:2428:5
+interface MapLike<T> { [key: string]: T; }
+const peerDependencies: MapLike<string> = {};
+peerDependencies['pkg' + String(1)] = '^1'; peerDependencies['pkg' + String(2)] = '^2';
+let result = '';
+for (const key in peerDependencies) result += '+' + key + '@' + peerDependencies[key];
+console.log(result);

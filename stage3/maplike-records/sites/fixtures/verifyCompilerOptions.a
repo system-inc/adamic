@@ -1,0 +1,17 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: program.ts:4141:13, program.ts:4148:29, program.ts:4149:33, program.ts:4154:39
+interface MapLike<T> { [key: string]: T; }
+const paths: MapLike<string[]> = {};
+paths['@name' + String(1)] = ['src/' + String(1), 'types/' + String(1)]; paths['empty'] = [];
+const options = {paths};
+if (options.paths) {
+    for (const key in options.paths) {
+        if (Array.isArray(options.paths[key])) {
+            const len = options.paths[key].length;
+            console.log(key + ' ' + String(len));
+            for (let i = 0; i < len; i++) {
+                const subst = options.paths[key][i];
+                console.log(typeof subst + ' ' + String(subst));
+            }
+        }
+    }
+}

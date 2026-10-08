@@ -1,0 +1,6 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:432:9
+interface MapLike<T> { [key: string]: T; }
+const typesVersions: MapLike<MapLike<string[]>> = {};
+const paths: MapLike<string[]> = {}; paths['*'] = ['ts/' + String(1)];
+typesVersions['>=1'] = paths; typesVersions['invalid'] = {};
+for (const key in typesVersions) console.log(key + ' ' + String(key.startsWith('>=')));

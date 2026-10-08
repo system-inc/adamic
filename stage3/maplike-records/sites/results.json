@@ -638,5 +638,165 @@
     },
     "outcome": "Checker",
     "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 41,
+    "batch": 5,
+    "source": "core.ts:1381:13",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 42,
+    "batch": 5,
+    "source": "core.ts:1382:18",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 43,
+    "batch": 5,
+    "source": "core.ts:1470:27",
+    "function": "groupBy",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/groupBy.a",
+    "adaptation": "Original allocation, loop, template key and nullish write retained; keySelector specialized to string and mapped return replaced by its Record storage type.",
+    "node": {
+      "stdout": "2:two1,two2\n10:ten\n0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/groupBy.a:10:24: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/maplike-records/sites/fixtures/groupBy.a:17:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\nstage3/maplike-records/sites/fixtures/groupBy.a:8:40: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 44,
+    "batch": 5,
+    "source": "moduleNameResolver.ts:432:9",
+    "function": "readPackageJsonTypesVersionPaths",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/readPackageJsonTypesVersionPaths.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper. Observation prints combine arguments into one string, preserving Node bytes.",
+    "node": {
+      "stdout": "\u003e=1 true\ninvalid false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 45,
+    "batch": 5,
+    "source": "moduleNameResolver.ts:2295:46",
+    "function": "loadEntrypointsFromExportMap",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadEntrypointsFromExportMap.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./one1\n./two1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadEntrypointsFromExportMap.a:5:21: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 46,
+    "batch": 5,
+    "source": "moduleNameResolver.ts:2428:5",
+    "function": "readPackageJsonPeerDependencies",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/readPackageJsonPeerDependencies.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "+pkg1@^1+pkg2@^2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 47,
+    "batch": 5,
+    "source": "moduleSpecifiers.ts:1134:122",
+    "function": "tryGetModuleNameFromExports",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromExports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./one:./one1\n./two:./two1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromExports.a:5:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 48,
+    "batch": 5,
+    "source": "moduleSpecifiers.ts:1165:121",
+    "function": "tryGetModuleNameFromPackageJsonImports",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPackageJsonImports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "#one:./one1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPackageJsonImports.a:4:29: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 49,
+    "batch": 5,
+    "source": "program.ts:4141:13",
+    "function": "verifyCompilerOptions",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/verifyCompilerOptions.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper. Observation prints combine arguments into one string, preserving Node bytes.",
+    "node": {
+      "stdout": "@name1 2\nstring src/1\nstring types/1\nempty 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 50,
+    "batch": 5,
+    "source": "program.ts:4148:29",
+    "function": "verifyCompilerOptions",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/verifyCompilerOptions.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper. Observation prints combine arguments into one string, preserving Node bytes.",
+    "node": {
+      "stdout": "@name1 2\nstring src/1\nstring types/1\nempty 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
   }
 ]

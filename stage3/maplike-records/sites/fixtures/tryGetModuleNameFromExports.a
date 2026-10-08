@@ -1,0 +1,9 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleSpecifiers.ts:1134:122
+interface MapLike<T> { [key: string]: T; }
+const exports: unknown = {'./one': './one' + String(1), './two': './two' + String(1)};
+if (typeof exports === 'object' && exports !== null && !Array.isArray(exports)) {
+    for (const k of Object.keys(exports as MapLike<unknown>)) {
+        const target = (exports as MapLike<unknown>)[k];
+        if (typeof target === 'string') console.log(k + ':' + target);
+    }
+}

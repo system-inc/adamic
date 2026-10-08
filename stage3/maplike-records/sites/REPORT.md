@@ -1,6 +1,6 @@
-Built: Step 22 (#p9v82wa), source reductions for 40 of 56 MapLike and Record operation sites, in static-use order.
+Built: Step 22 (#p9v82wa), source reductions for 50 of 56 MapLike and Record operation sites, in static-use order.
 Commits: continued from e379d2321c081e0e3b02a0dad326eb1a7b3d9a8a on codex/maplike-records; delivery tips are reported after each batch push.
-Commands and outputs: 14 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 16 stop in the checker, 7 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
+Commands and outputs: 18 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 19 stop in the checker, 10 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
 Mutants: removing an integer dictionary input is caught only by Node stdout in both backends, with valid builds, exit 0 and clean leaks; the earlier step 22 ordering and entries omission mutants remain available.
 Not covered: complete tsc functions, host filesystem/package resolution, runtime frequency, or backends for reductions that stop before emission; the full gate was not run.
 
@@ -64,7 +64,17 @@ The evidence log for each batch names every outcome. Compiles means its Node std
 | 38 | 1 | core.ts:1376:35 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
 | 39 | 1 | core.ts:1376:46 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
 | 40 | 1 | core.ts:1380:5 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 41 | 1 | core.ts:1381:13 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 42 | 1 | core.ts:1382:18 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 43 | 1 | core.ts:1470:27 | Checker | stage3/maplike-records/sites/fixtures/groupBy.a:10:24: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 44 | 1 | moduleNameResolver.ts:432:9 | Compiles |  |
+| 45 | 1 | moduleNameResolver.ts:2295:46 | Refused | stage3/maplike-records/sites/fixtures/loadEntrypointsFromExportMap.a:5:21: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 46 | 1 | moduleNameResolver.ts:2428:5 | Compiles |  |
+| 47 | 1 | moduleSpecifiers.ts:1134:122 | Refused | stage3/maplike-records/sites/fixtures/tryGetModuleNameFromExports.a:5:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 48 | 1 | moduleSpecifiers.ts:1165:121 | Refused | stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPackageJsonImports.a:4:29: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 49 | 1 | program.ts:4141:13 | Compiles |  |
+| 50 | 1 | program.ts:4148:29 | Compiles |  |
 
 The concrete Node observations and each reduction adaptation are in results.json.
 
-Observation corrections in batch 3: ranks 1, 20, 21, 28, 29 and 30 now compile after prints were combined into single arguments and optional output reads were guarded. The source operations were retained and all recorded Node bytes stayed unchanged. Their prior checker stops were artifacts of the reductions. See evidence/observer-corrections.log.
+Observation corrections: ranks 1, 20, 21, 28, 29 and 30 in batch 3, and 44, 49 and 50 in batch 5, now compile after prints were combined into single arguments and optional output reads were guarded. The source operations were retained and all recorded Node bytes stayed unchanged. Their prior checker stops were artifacts of the reductions. See the observer-corrections evidence logs.
