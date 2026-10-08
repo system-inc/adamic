@@ -360,8 +360,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage yet"
     }
   },
   {

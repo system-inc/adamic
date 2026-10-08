@@ -108,7 +108,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
 	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
-		if err != nil { return nil, err }
+		if err != nil {
+			return nil, err
+		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
 	if value, handled, err := l.recordExpression(expression); handled {

@@ -191,7 +191,7 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 			adamic_string *key = w->key_list ? w->keys[index] : ordered->elements[index].reference;
 			const adamic_value *slot = adamic_record_get_own(record, key);
 			if (slot == NULL) { continue; }
-			json_scalar item = scalar(*slot, schema->element->kind);
+			json_scalar item = scalar(*slot, schema->element);
 			if (item.kind == adamic_json_undefined || item.kind == adamic_json_function) { continue; }
 			if (written++ != 0) { ascii(w, ","); }
 			indent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? ": " : ":");
