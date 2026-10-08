@@ -1,0 +1,2 @@
+const values = new Uint8Array(0);
+console.log(`${values[0] ?? 'undefined'}`);

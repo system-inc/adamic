@@ -1,0 +1,9 @@
+try {
+	throw 'boom';
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.message);
+	} else {
+		console.log('not Error');
+	}
+}

@@ -1,0 +1,2 @@
+const values: Record<string, number> = {};
+console.log(`${values['missing'] ?? 'undefined'}`);
