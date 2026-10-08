@@ -1746,3 +1746,10 @@ from the pinned upstream AST, with source/declaration hashes. It does not reduce
 fields or alter upstream code. Oracle binding validates those hashes separately
 from the 78 emitted declarations and pins the complete SourceFile field set.
 No new production hook is needed for module tuple positions.
+
+Lane 4b direct tuple cast remains a separate boundary: the handed-off mutable
+(number|string)[] source casts directly to the original fixed emit tuple. Its
+exact input still receives adamic/no-unchecked-cast before reading a position.
+The existing tuple-object certificate cannot establish that homogeneous array
+storage is tuple storage. An alias-preserving source/read bridge would be needed;
+no copying adapter or broader mixed-array admission is added by this unit.

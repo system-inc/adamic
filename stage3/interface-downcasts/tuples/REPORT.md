@@ -1,3 +1,25 @@
+Built: preserve and pin the exact lane 4b direct array-to-tuple cast frontier; no new runtime certificate.
+Commits: frontier witness follows Map expectation refresh 75c9ef06.
+Checks: source Node prints string; exact compiler adamic/no-unchecked-cast refusal PASS 0.399s.
+Mutants: none claimed for this blocker; the compiler cannot emit its runtime program.
+Remaining: one blocked overlapping direct-cast frontier (four candidate reads), plus the outSignature frontier still being certified; primary 10 pairs / 15 reads remain complete.
+
+Command: TestCheckedViewTupleLane4bCastFrontier -count=1 -v with original
+declarations (/tmp/views-tuples-lane4b-cast-frontier.log). The .a input is the
+exact handoff fixture from 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2.
+Observed: refusal at its direct cast, line 5 column 18, before node[1].
+Inference from the current representation rules: homogeneous mixed-scalar
+array storage needs an alias-preserving bridge to tuple object slots. Existing
+checked field tuple certificates cannot prove that representation conversion.
+A snapshot copy could lose later source mutations and identity, and broad
+mixed-union array admission would violate this unit's narrowed dispatch scope.
+Neither is introduced. This nested blocker fixture cannot emit native code, so
+it has no runtime counts, release/sanitizer/leak runs or acceptance mutant.
+It is kept outside the runtime-certified fixture census; its absent count row
+is explicit rather than invented. The next overlapping frontier is independent.
+
+---
+
 Built: refresh the two legacy optional/rest tuple Map admission expectations; primary total remains 10 pairs / 15 reads.
 Commits: this test-only patch follows final primary kind pair 3c32b869.
 Checks: all six Map boundary cases PASS 2.413s; two now-supported forms match Node in both backends with finishing leak checks; owned counts PASS 47.278s.

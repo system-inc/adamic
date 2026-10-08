@@ -9,8 +9,9 @@
       "candidate_reads": 4,
       "dependency": "tuple cast admission and positional contract",
       "probe": "incremental-tuple-element-frontier",
-      "status": "queued",
-      "overlaps_primary": true
+      "status": "blocked: exact source reaches adamic/no-unchecked-cast before its tuple read",
+      "overlaps_primary": true,
+      "evidence": "frontiers/incremental-tuple-element-frontier.a and TestCheckedViewTupleLane4bCastFrontier"
     },
     {
       "type_id": 97934,
