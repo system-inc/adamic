@@ -86,3 +86,18 @@
         ok  	github.com/system-inc/cohere/internal/format/javascript	0.097s
 --- FAIL: TestThreePortMutantsAreCaught (3.87s)
 
+== github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere
+=== RUN   TestPortMatchesGoCohere
+=== PAUSE TestPortMatchesGoCohere
+=== CONT  TestPortMatchesGoCohere
+    port_test.go:200: repository groups: map[Adamic:1420 TypeScript:203 cohere:839]; generated 34; total 2496
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2496 texts in 28.745s
+        --- PASS: TestAdamicJSONAudit (48.10s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	48.185s
+    port_test.go:226: native: compiling runtime adamic.c: exit status 1
+        clang: error: unsupported option '-fsanitize=address' for target 'wasm32-unknown-wasi'
+        
+--- FAIL: TestPortMatchesGoCohere (91.99s)
+
