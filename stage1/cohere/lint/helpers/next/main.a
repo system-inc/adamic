@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { urlQueryValue } from './url_query_value.a';
+const input = readTextFile(programArguments()[0] ?? panic('path'));
+if(input.kind === 'Error') { panic(input.message); }
+const corpus = new OptionsJson(input.text);
+const root = corpus.parse();
+if(root < 0) { panic(corpus.error); }
+for(const row of corpus.node(root).children) {
+    const node = corpus.node(row);
+    const url = corpus.node(node.children[node.keys.indexOf('url')] ?? panic('url')).text;
+    const key = corpus.node(node.children[node.keys.indexOf('key')] ?? panic('key')).text;
+    const result = urlQueryValue(url, key);
+    console.log(`${result.value}|${result.present}`);
+}

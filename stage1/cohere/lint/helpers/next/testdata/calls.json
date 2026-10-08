@@ -1,0 +1,754 @@
+[
+  {
+    "url": "",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "x?display=swap",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "x?display=swap",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "x?display=swap",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "x?display=swap",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "//x?display=swap",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "//x?display=swap",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "//x?display=swap",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "//x?display=swap",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "HTTP://x?display=swap",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "HTTP://x?display=swap",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "HTTP://x?display=swap",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "HTTP://x?display=swap",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "http://x",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "http://x",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "http://x",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "http://x",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=",
+    "key": "display",
+    "value": "",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=swap&display=block",
+    "key": "display",
+    "value": "swap",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=swap&display=block",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=swap&display=block",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=swap&display=block",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?other=first&display=block",
+    "key": "display",
+    "value": "block",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?other=first&display=block",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?other=first&display=block",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?other=first&display=block",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=a=b?c#d",
+    "key": "display",
+    "value": "a=b?c#d",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=a=b?c#d",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=a=b?c#d",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=a=b?c#d",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?%64isplay=swap&display=%2C+",
+    "key": "display",
+    "value": "%2C+",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?%64isplay=swap&display=%2C+",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?%64isplay=swap&display=%2C+",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?%64isplay=swap&display=%2C+",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?=empty&&display=\ud83c\udf0d&features=Promise%2CSet",
+    "key": "display",
+    "value": "\ud83c\udf0d",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?=empty&&display=\ud83c\udf0d&features=Promise%2CSet",
+    "key": "features",
+    "value": "Promise%2CSet",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?=empty&&display=\ud83c\udf0d&features=Promise%2CSet",
+    "key": "",
+    "value": "empty",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?=empty&&display=\ud83c\udf0d&features=Promise%2CSet",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=\u00e9&features=Promise%2cSet",
+    "key": "display",
+    "value": "\u00e9",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=\u00e9&features=Promise%2cSet",
+    "key": "features",
+    "value": "Promise%2cSet",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=\u00e9&features=Promise%2cSet",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=\u00e9&features=Promise%2cSet",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=x\ny",
+    "key": "display",
+    "value": "x\ny",
+    "present": true,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=x\ny",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=x\ny",
+    "key": "",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://x?display=x\ny",
+    "key": "missing",
+    "value": "",
+    "present": false,
+    "caller": "adamic_query_test.go",
+    "line": 6
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=AbortController",
+    "key": "features",
+    "value": "AbortController",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display=block",
+    "key": "display",
+    "value": "block",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display=optional",
+    "key": "display",
+    "value": "optional",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://polyfill-fastly.io/v3/p.js?features=Promise",
+    "key": "features",
+    "value": "Promise",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display=block",
+    "key": "display",
+    "value": "block",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2",
+    "key": "display",
+    "value": "",
+    "present": false,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Array.prototype",
+    "key": "features",
+    "value": "Array.prototype",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=AbortController&features=Promise",
+    "key": "features",
+    "value": "AbortController",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=",
+    "key": "features",
+    "value": "",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Promise%2cSet",
+    "key": "features",
+    "value": "Promise%2cSet",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=promise",
+    "key": "features",
+    "value": "promise",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver",
+    "key": "features",
+    "value": "IntersectionObserver",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js",
+    "key": "features",
+    "value": "",
+    "present": false,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver",
+    "key": "features",
+    "value": "IntersectionObserver",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin",
+    "key": "features",
+    "value": "Array.prototype.copyWithin",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin",
+    "key": "features",
+    "value": "Array.prototype.copyWithin",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Number.Epsilon,Number.EPSILON",
+    "key": "features",
+    "value": "Number.Epsilon,Number.EPSILON",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Array.prototype.@@iterator",
+    "key": "features",
+    "value": "Array.prototype.@@iterator",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Foo,Promise",
+    "key": "features",
+    "value": "Foo,Promise",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://polyfill-fastly.net/v3/p.js?features=Promise",
+    "key": "features",
+    "value": "Promise",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=Promise%2CObject.fromEntries",
+    "key": "features",
+    "value": "Promise%2CObject.fromEntries",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin",
+    "key": "features",
+    "value": "Array.prototype.copyWithin",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display=something",
+    "key": "display",
+    "value": "something",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Krona+One&display=swap",
+    "key": "display",
+    "value": "swap",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display=optional",
+    "key": "display",
+    "value": "optional",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?display=fallback&family=Krona+One",
+    "key": "display",
+    "value": "fallback",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Krona+One&display=auto",
+    "key": "display",
+    "value": "auto",
+    "present": true,
+    "caller": "google_font_display.go",
+    "line": 72
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Promise%2CObject.fromEntries",
+    "key": "features",
+    "value": "Promise%2CObject.fromEntries",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://polyfill-fastly.io/v3/p.js?features=Array.prototype.copyWithin",
+    "key": "features",
+    "value": "Array.prototype.copyWithin",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=es5,es6",
+    "key": "features",
+    "value": "es5,es6",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Number.Epsilon,Number.EPSILON",
+    "key": "features",
+    "value": "Number.Epsilon,Number.EPSILON",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  },
+  {
+    "url": "https://polyfill-fastly.io/v3/p.js?features=Promise",
+    "key": "features",
+    "value": "Promise",
+    "present": true,
+    "caller": "no_unwanted_polyfillio.go",
+    "line": 165
+  }
+]
