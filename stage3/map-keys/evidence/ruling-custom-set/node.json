@@ -1,0 +1,9 @@
+{
+  "bodyIdentical": true,
+  "coreSha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+  "sourceSha256": "09f3fbb67590937fd1ea35ee7872fda182f679949c64db2c67694c7f1f83ef00",
+  "original": "2:true\nfirst\ncollision\ntrue:true:first\ntrue:true:collision\ntrue:1\ntrue:collision\n[object Map]\n0:false\n",
+  "mutant": "3:false\nfirst\nequal\ncollision\ntrue:true:first\ntrue:true:equal\ntrue:true:collision\ntrue:2\ntrue:first\ntrue:collision\n[object Set]\n0:false\n",
+  "mutantCaught": true,
+  "nativeStatus": "generator ownership refusal; no native execution"
+}

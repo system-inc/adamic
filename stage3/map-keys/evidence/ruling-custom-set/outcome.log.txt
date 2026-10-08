@@ -1,0 +1,5 @@
+=== RUN   TestScoutOriginalCustomSetOutcome
+    map_keys_scout_test.go:218: /tmp/adamic-gate/TestScoutOriginalCustomSetOutcome4142706853/001/main.a:26:5: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)
+--- PASS: TestScoutOriginalCustomSetOutcome (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.046s

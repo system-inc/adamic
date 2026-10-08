@@ -372,3 +372,28 @@ go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -
 ```
 
 All pass. The lifetime oracle records three native misses and two Node misses, zero hits. Evidence is preserved under ruling-strong. This piece holds the existing strong ownership contract; it does not implement Program-region allocation.
+
+### Piece 6: original custom-equality Set acceptance boundary
+
+custom_set.a retains the original createSet declaration/body from core.ts:1622-1743. The Node verifier compares that declaration against the pinned adapted source before executing it. Only its supporting helpers and driver are reduced. A local Set protocol describes the operations this collection actually supplies; the newer checker library's built-in Set additionally demands union, intersection, difference and other operations absent from tsc's original object. This fixture-local protocol keeps the original body and its own collection identity; it is not a global adaptation or an intrinsic Set replacement.
+
+Source Node observes custom equality despite hash collisions, first representative retention, bucket iteration, callback receiver identity, equality-based deletion, paired entries, the original Map string tag and clear. Replacing the factory call with built-in Set changes size from 2 to 3, makes membership on a fresh equal-span object false, retains the duplicate representative and changes the string tag. The comparator catches this mutant. This is source behavior evidence; no generated-backend execution or sanitizer/leak success is claimed for the refused collection.
+
+Native observation: the fixture loads, then lowering refuses its generator function with the existing suspended-frame ownership and cancellation diagnostic. The explicit outcome test and source Node contract pass. The generic hash/union bucket representation and the full protocol have not been implemented. The step 06 Program-region lifetime is also absent from this base. Inference: the original forEach method captures the returned collection through a closure; accepting this structure on the counted heap would require an ownership solution, rather than weakening its edges or replacing its protocol. The ruling specifies the desired semantics but does not supply those missing implementations. This part is blocked until Program-region and suspended-iterator ownership support are available; it remains a loud refusal.
+
+Exact scoped commands, after sourcing the environment and redirecting output:
+
+```sh
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/map-keys/verify_custom_set.cjs /tmp/scout-map-keys-adapted /tmp/scout19-custom-set-node.json > /tmp/scout19-custom-set-node.log 2>&1
+go test ./internal/lower -run '^TestScoutOriginalCustomSetOutcome$' -count=1 -v > /tmp/scout19-custom-set-outcome.log 2>&1
+go test ./internal/lower -run '^(TestScout.*|TestGeneratorsAreRefusedEvenWithoutYield)$' -count=1 -v > /tmp/scout19-custom-set-lower.log 2>&1
+go test ./internal/oracle -run '^(TestScoutOwnCustomSetSourceContract|TestScoutCollectionStrongEdgeMutants)$' -count=1 -v > /tmp/scout19-custom-set-contract.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/oracle > /tmp/scout19-custom-set-vet.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout19-custom-set-counts.log 2>&1
+```
+
+All pass. Counts are refreshed; the refused custom collection has no native count row. It is held by explicit Refused tests, since the standard non-lowering oracle registry accepts NotYet only. Frozen census roots retired by this boundary fixture: zero. Evidence is preserved under ruling-custom-set.
+
+### Remaining step 19 work
+
+The string brand representation, concrete presence proof, checked required reads, lexical array range proof and composed add/remove helpers are implemented. The stage 3 MultiMap factory adaptation is written, guarded and verified against Node, with unchanged extracted declarations; its complete native class still stops at the computed string-tag accessor. Program-region collection allocation remains a step 06 implementation dependency. Original createSet needs its own union bucket representation, suspended iterators and region-safe ownership; it stays refused and is never lowered as built-in Set. Mixed/nullish union keys and MapLike remain the separately recorded representation/index-signature work. No complete tsc entry root or hidden-byte recovery is claimed.

@@ -264,3 +264,20 @@ func TestScoutCollectionStrongEdgeMutants(t *testing.T) {
 		})
 	}
 }
+
+func TestScoutOwnCustomSetSourceContract(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/map-keys/custom_set.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, path)
+	if err == nil || !strings.Contains(err.Error(), "refuses a generator function") {
+		t.Fatalf("want explicit current generator dependency, got %v", err)
+	}
+	actual := onNode(t, path)
+	want := run{stdout: []byte("2:true\nfirst\ncollision\ntrue:true:first\ntrue:true:collision\ntrue:1\ntrue:collision\n[object Map]\n0:false\n")}
+	if difference := disagreement(want, actual); difference != "" {
+		t.Fatalf("original custom protocol: %s; exit %d stdout %q stderr %q", difference, actual.exitCode, actual.stdout, actual.stderr)
+	}
+	t.Log("source Node verifies own equality/protocol; native remains explicitly refused, no built-in Set replacement")
+}

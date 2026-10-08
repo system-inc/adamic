@@ -1,0 +1,87 @@
+=== RUN   TestGeneratorsAreRefusedEvenWithoutYield
+=== PAUSE TestGeneratorsAreRefusedEvenWithoutYield
+=== RUN   TestScoutMapKeyOutcomes
+=== RUN   TestScoutMapKeyOutcomes/branded_map
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_map236428225/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/branded_set
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_set2202910214/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/mixed_map
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesmixed_map972895831/001/main.a:2:13: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet
+=== RUN   TestScoutMapKeyOutcomes/nullish_set
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesnullish_set3299710833/001/main.a:2:13: stage 0 can't lower a Set of null | undefined (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet
+=== RUN   TestScoutMapKeyOutcomes/maplike
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesmaplike3601983433/001/main.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+=== RUN   TestScoutMapKeyOutcomes/reused_pair_mutation
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesreused_pair_mutation1752689606/001/main.a:10:21: stage 0 can't lower assigning an element of a value yet
+--- PASS: TestScoutMapKeyOutcomes (0.17s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_map (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/mixed_map (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/nullish_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/maplike (0.02s)
+    --- PASS: TestScoutMapKeyOutcomes/reused_pair_mutation (0.03s)
+=== RUN   TestScoutMapIteratorPairsLower
+--- PASS: TestScoutMapIteratorPairsLower (0.03s)
+=== RUN   TestScoutMapIteratorPairRepresentationGap
+--- PASS: TestScoutMapIteratorPairRepresentationGap (0.03s)
+=== RUN   TestScoutMapBrandBoundary
+=== RUN   TestScoutMapBrandBoundary/42
+=== RUN   TestScoutMapBrandBoundary/undefined
+=== RUN   TestScoutMapBrandBoundary/false
+=== RUN   TestScoutMapBrandBoundary/null
+--- PASS: TestScoutMapBrandBoundary (0.10s)
+    --- PASS: TestScoutMapBrandBoundary/42 (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/undefined (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/false (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/null (0.02s)
+=== RUN   TestScoutMapBrandRefinementRefused
+--- PASS: TestScoutMapBrandRefinementRefused (0.03s)
+=== RUN   TestScoutMapPresenceRules
+=== RUN   TestScoutMapPresenceRules/early_missing_return
+=== RUN   TestScoutMapPresenceRules/early_return_then_alias_write
+=== RUN   TestScoutMapPresenceRules/same_map/key
+=== RUN   TestScoutMapPresenceRules/different_key
+=== RUN   TestScoutMapPresenceRules/different_map
+=== RUN   TestScoutMapPresenceRules/alias_write
+=== RUN   TestScoutMapPresenceRules/unknown_call
+=== RUN   TestScoutMapPresenceRules/key_update
+=== RUN   TestScoutMapPresenceRules/optional_stored_undefined
+--- PASS: TestScoutMapPresenceRules (0.27s)
+    --- PASS: TestScoutMapPresenceRules/early_missing_return (0.03s)
+    --- PASS: TestScoutMapPresenceRules/early_return_then_alias_write (0.03s)
+    --- PASS: TestScoutMapPresenceRules/same_map/key (0.03s)
+    --- PASS: TestScoutMapPresenceRules/different_key (0.03s)
+    --- PASS: TestScoutMapPresenceRules/different_map (0.03s)
+    --- PASS: TestScoutMapPresenceRules/alias_write (0.03s)
+    --- PASS: TestScoutMapPresenceRules/unknown_call (0.02s)
+    --- PASS: TestScoutMapPresenceRules/key_update (0.03s)
+    --- PASS: TestScoutMapPresenceRules/optional_stored_undefined (0.04s)
+=== RUN   TestScoutArrayRangeRules
+=== RUN   TestScoutArrayRangeRules/range
+=== RUN   TestScoutArrayRangeRules/alias_mutation_before_read
+=== RUN   TestScoutArrayRangeRules/index_mutation_after_read
+=== RUN   TestScoutArrayRangeRules/hoisted_index
+=== RUN   TestScoutArrayRangeRules/negative_start
+=== RUN   TestScoutArrayRangeRules/different_array
+=== RUN   TestScoutArrayRangeRules/undefined_payload
+--- PASS: TestScoutArrayRangeRules (0.20s)
+    --- PASS: TestScoutArrayRangeRules/range (0.02s)
+    --- PASS: TestScoutArrayRangeRules/alias_mutation_before_read (0.03s)
+    --- PASS: TestScoutArrayRangeRules/index_mutation_after_read (0.03s)
+    --- PASS: TestScoutArrayRangeRules/hoisted_index (0.03s)
+    --- PASS: TestScoutArrayRangeRules/negative_start (0.03s)
+    --- PASS: TestScoutArrayRangeRules/different_array (0.03s)
+    --- PASS: TestScoutArrayRangeRules/undefined_payload (0.04s)
+=== RUN   TestScoutMultiMapFactoryNativeGap
+    map_keys_scout_test.go:195: /tmp/adamic-gate/TestScoutMultiMapFactoryNativeGap2579848082/001/main.a:6:5: stage 0 can't lower a method with a computed name yet
+--- PASS: TestScoutMultiMapFactoryNativeGap (0.03s)
+=== RUN   TestScoutMultiMapExpandoStaysRefused
+    map_keys_scout_test.go:205: /tmp/adamic-gate/TestScoutMultiMapExpandoStaysRefused758341216/001/main.a:1:100: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- PASS: TestScoutMultiMapExpandoStaysRefused (0.03s)
+=== RUN   TestScoutOriginalCustomSetOutcome
+    map_keys_scout_test.go:218: /tmp/adamic-gate/TestScoutOriginalCustomSetOutcome2393723128/001/main.a:26:5: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)
+--- PASS: TestScoutOriginalCustomSetOutcome (0.03s)
+=== CONT  TestGeneratorsAreRefusedEvenWithoutYield
+--- PASS: TestGeneratorsAreRefusedEvenWithoutYield (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.009s

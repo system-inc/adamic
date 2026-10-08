@@ -204,3 +204,16 @@ func TestScoutMultiMapExpandoStaysRefused(t *testing.T) {
 	}
 	t.Log(err)
 }
+
+func TestScoutOriginalCustomSetOutcome(t *testing.T) {
+	source, err := os.ReadFile(filepath.Join("..", "..", "stage3", "map-keys", "custom_set.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "generator") {
+		t.Fatalf("want the current generator dependency, got %v", err)
+	}
+	t.Log(err)
+}

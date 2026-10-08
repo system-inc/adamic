@@ -1,0 +1,17 @@
+=== RUN   TestScoutCollectionStrongEdgeMutants
+=== RUN   TestScoutCollectionStrongEdgeMutants/key
+    map_keys_scout_test.go:263: lost strong key edge caught by ASAN heap-use-after-free after producer returns
+=== RUN   TestScoutCollectionStrongEdgeMutants/value
+    map_keys_scout_test.go:263: lost strong value edge caught by ASAN heap-use-after-free after producer returns
+--- PASS: TestScoutCollectionStrongEdgeMutants (0.46s)
+    --- PASS: TestScoutCollectionStrongEdgeMutants/key (0.23s)
+    --- PASS: TestScoutCollectionStrongEdgeMutants/value (0.22s)
+=== RUN   TestScoutOwnCustomSetSourceContract
+    map_keys_scout_test.go:277: gate cache node hit
+    map_keys_scout_test.go:282: source Node verifies own equality/protocol; native remains explicitly refused, no built-in Set replacement
+--- PASS: TestScoutOwnCustomSetSourceContract (0.07s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.535s
