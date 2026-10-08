@@ -1,0 +1,6 @@
+=== RUN   TestCohereNamedGroupGuard
+    cohere_patterns_test.go:462: named-only mutant survived at case 92800
+--- FAIL: TestCohereNamedGroupGuard (0.81s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/regexp	0.829s
+FAIL

@@ -1,0 +1,8 @@
+flip expected capture: pattern=1, case=294
+expected-capture: killed, exit=1; /tmp/regex-cohere-mutants-final/expected-capture.log
+omit-named-comparison: killed, exit=1; /tmp/regex-cohere-mutants-final/omit-named-comparison.log
+omit-index-comparison: killed, exit=1; /tmp/regex-cohere-mutants-final/omit-index-comparison.log
+omit-value-comparison: killed, exit=1; /tmp/regex-cohere-mutants-final/omit-value-comparison.log
+omit-lastindex-comparison: killed, exit=1; /tmp/regex-cohere-mutants-final/omit-lastindex-comparison.log
+omit-named-value-comparison: killed, exit=1; /tmp/regex-cohere-mutants-final/omit-named-value-comparison.log
+All files restored. No matcher, compiler, or runtime source was mutated.

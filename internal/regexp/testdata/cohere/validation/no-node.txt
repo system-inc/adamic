@@ -1,0 +1,29 @@
+=== RUN   TestCoherePatterns
+    cohere_patterns_test.go:304: native: 128542 executions, 14727555 C bytes
+    cohere_patterns_test.go:304: native bounded: 128542 comparisons, sanitizers and leak check passed
+    cohere_patterns_test.go:304: native unlimited: 128542 comparisons, sanitizers and leak check passed
+    cohere_patterns_test.go:304: native vm: 128542 comparisons, sanitizers and leak check passed
+    cohere_patterns_test.go:355: 13425 files; 875 patterns; 17 unresolved constructors; 238 Node rejected; 239 not executable by Adamic; 128542 Go comparisons; 385626 native comparisons; 876 named-group executions; 243 pinned issue rows
+--- PASS: TestCoherePatterns (52.31s)
+=== RUN   TestCohereNamedGroupGuard
+    cohere_patterns_test.go:467: named-only sentinel from corpus pattern 425 case 92800 catches omission of the named dictionary comparison
+--- PASS: TestCohereNamedGroupGuard (0.99s)
+=== RUN   TestCohereCaptureGuard
+    cohere_patterns_test.go:603: recorded capture mutant caught at pattern 1 case 294
+--- PASS: TestCohereCaptureGuard (0.79s)
+=== RUN   TestCohereObservationGuards
+=== RUN   TestCohereObservationGuards/index
+    cohere_patterns_test.go:647: index-only mutant caught using corpus pattern 0 case 0
+=== RUN   TestCohereObservationGuards/values
+    cohere_patterns_test.go:647: values-only mutant caught using corpus pattern 0 case 0
+=== RUN   TestCohereObservationGuards/named_values
+    cohere_patterns_test.go:647: named values-only mutant caught using corpus pattern 425 case 92800
+=== RUN   TestCohereObservationGuards/lastIndex
+    cohere_patterns_test.go:647: lastIndex-only mutant caught using corpus pattern 0 case 0
+--- PASS: TestCohereObservationGuards (0.66s)
+    --- PASS: TestCohereObservationGuards/index (0.00s)
+    --- PASS: TestCohereObservationGuards/values (0.00s)
+    --- PASS: TestCohereObservationGuards/named_values (0.00s)
+    --- PASS: TestCohereObservationGuards/lastIndex (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/regexp	54.768s

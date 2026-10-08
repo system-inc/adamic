@@ -1,0 +1,857 @@
+[
+  {
+    "text": "",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 111
+  },
+  {
+    "text": "   ",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 112
+  },
+  {
+    "text": "div",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 113
+  },
+  {
+    "text": ".a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 114
+  },
+  {
+    "text": "#id",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 115
+  },
+  {
+    "text": "*",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 116
+  },
+  {
+    "text": "&",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 117
+  },
+  {
+    "text": "&.active > &:hover",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 118
+  },
+  {
+    "text": "a.b#c.d",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 119
+  },
+  {
+    "text": "a 'b' \"c\"",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 120
+  },
+  {
+    "text": "@media a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 121
+  },
+  {
+    "text": "@b.c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 122
+  },
+  {
+    "text": "a /* c */ b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 123
+  },
+  {
+    "text": "/* c */ a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 124
+  },
+  {
+    "text": "a/**/b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 125
+  },
+  {
+    "text": "a /*\n multi\n line */ > b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 126
+  },
+  {
+    "text": "0%, 50.5%, to",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 127
+  },
+  {
+    "text": "a b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 130
+  },
+  {
+    "text": "a > b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 131
+  },
+  {
+    "text": "a+b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 132
+  },
+  {
+    "text": "a ~ b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 133
+  },
+  {
+    "text": "a   >   b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 134
+  },
+  {
+    "text": "a\n>\tb",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 135
+  },
+  {
+    "text": "a >b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 136
+  },
+  {
+    "text": "a> b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 137
+  },
+  {
+    "text": "a>>b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 138
+  },
+  {
+    "text": "a || b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 139
+  },
+  {
+    "text": "> a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 140
+  },
+  {
+    "text": "a\n  b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 141
+  },
+  {
+    "text": "a,\r\nb \r\n c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 142
+  },
+  {
+    "text": "a\fb",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 143
+  },
+  {
+    "text": "  a  ",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 144
+  },
+  {
+    "text": " a , b ,c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 145
+  },
+  {
+    "text": "a,b,",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 146
+  },
+  {
+    "text": "a ,",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 147
+  },
+  {
+    "text": "a, ,b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 148
+  },
+  {
+    "text": ",a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 149
+  },
+  {
+    "text": "a,,b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 150
+  },
+  {
+    "text": "[a]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 153
+  },
+  {
+    "text": "[a=b]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 154
+  },
+  {
+    "text": "[a='b']",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 155
+  },
+  {
+    "text": "[a=\"b\"]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 156
+  },
+  {
+    "text": "[a~=b][a|=b][a^=b][a$=b][a*=b]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 157
+  },
+  {
+    "text": "[a=b i]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 158
+  },
+  {
+    "text": "[a='b' i]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 159
+  },
+  {
+    "text": "[a=b\ti ]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 160
+  },
+  {
+    "text": "[a=\"b\"  I]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 161
+  },
+  {
+    "text": "[ a = b ]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 162
+  },
+  {
+    "text": "[ a ]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 163
+  },
+  {
+    "text": "[ns|a=b]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 164
+  },
+  {
+    "text": "[|a]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 165
+  },
+  {
+    "text": "[*|a]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 166
+  },
+  {
+    "text": "[a=\"\"]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 167
+  },
+  {
+    "text": "[a=]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 168
+  },
+  {
+    "text": "[a==b]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 169
+  },
+  {
+    "text": "[a='b]c']",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 170
+  },
+  {
+    "text": "[data-foo=\"bar baz\" i]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 171
+  },
+  {
+    "text": "[a=b\"c\"]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 172
+  },
+  {
+    "text": "[a= i]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 173
+  },
+  {
+    "text": "input[type=\"checkbox\"]:checked + label",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 174
+  },
+  {
+    "text": "[]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 175
+  },
+  {
+    "text": ":hover",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 178
+  },
+  {
+    "text": "::before",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 179
+  },
+  {
+    "text": "a:hover::before",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 180
+  },
+  {
+    "text": ":::a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 181
+  },
+  {
+    "text": ":not(.a)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 182
+  },
+  {
+    "text": ":not(.a, .b)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 183
+  },
+  {
+    "text": ":is(a, b)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 184
+  },
+  {
+    "text": ":where(.dark, .dark *)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 185
+  },
+  {
+    "text": ":nth-child(2n + 1)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 186
+  },
+  {
+    "text": ":nth-child(2n + 1 of .x)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 187
+  },
+  {
+    "text": ":nth-child( 2n+1 )",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 188
+  },
+  {
+    "text": "li:nth-last-child(-n+3)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 189
+  },
+  {
+    "text": ":hover.foo",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 190
+  },
+  {
+    "text": ":is(:not(a))",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 191
+  },
+  {
+    "text": ":is(:not(:has(> img, + a)), b) c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 192
+  },
+  {
+    "text": "a:not([href]):hover",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 193
+  },
+  {
+    "text": ":host(.x) ::slotted(span)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 194
+  },
+  {
+    "text": "::part(foo):lang(en):dir(rtl)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 195
+  },
+  {
+    "text": "a:has(> img)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 196
+  },
+  {
+    "text": ":not()",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 197
+  },
+  {
+    "text": ":not( )",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 198
+  },
+  {
+    "text": ":not(,)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 199
+  },
+  {
+    "text": "a, :not(b,)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 200
+  },
+  {
+    "text": ":--heading",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 201
+  },
+  {
+    "text": ":is(\n  a,\n  b\n)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 202
+  },
+  {
+    "text": ":not(/* x */ a)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 203
+  },
+  {
+    "text": ":contains('a b')",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 204
+  },
+  {
+    "text": "a(b)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 207
+  },
+  {
+    "text": ":not(a(b))",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 208
+  },
+  {
+    "text": "[a](x)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 209
+  },
+  {
+    "text": "&(x (y))",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 210
+  },
+  {
+    "text": "ns|a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 213
+  },
+  {
+    "text": "|a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 214
+  },
+  {
+    "text": "*|a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 215
+  },
+  {
+    "text": "ns|*",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 216
+  },
+  {
+    "text": "*|*",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 217
+  },
+  {
+    "text": "a|b|c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 218
+  },
+  {
+    "text": "ns|a.b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 219
+  },
+  {
+    "text": "a > ns|b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 220
+  },
+  {
+    "text": "a | b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 221
+  },
+  {
+    "text": "a |b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 222
+  },
+  {
+    "text": ".hover\\:bg-red:hover",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 225
+  },
+  {
+    "text": ".a\\:b.c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 226
+  },
+  {
+    "text": ".md\\:w-1\\/2",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 227
+  },
+  {
+    "text": "#\\31 23",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 228
+  },
+  {
+    "text": ".\\31 0",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 229
+  },
+  {
+    "text": ".a\\ b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 230
+  },
+  {
+    "text": "\\@media",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 231
+  },
+  {
+    "text": ".w-\\[10px\\]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 232
+  },
+  {
+    "text": ".group:hover .group-hover\\:opacity-100",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 233
+  },
+  {
+    "text": ".a\\\\b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 234
+  },
+  {
+    "text": ".\\[\\&_svg\\]\\:size-4",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 235
+  },
+  {
+    "text": "a\\",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 236
+  },
+  {
+    "text": "a\\/b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 237
+  },
+  {
+    "text": "a\\\nb",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 238
+  },
+  {
+    "text": "\\ b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 239
+  },
+  {
+    "text": ".a\\.b.c#d",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 240
+  },
+  {
+    "text": ".\\ *",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 242
+  },
+  {
+    "text": ":a\\ ,b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 243
+  },
+  {
+    "text": "a.b\\ ",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 244
+  },
+  {
+    "text": "a\\ b c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 245
+  },
+  {
+    "text": "a!b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 246
+  },
+  {
+    "text": "a{b}",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 247
+  },
+  {
+    "text": "#{$a}",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 250
+  },
+  {
+    "text": ".a#{b}#c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 251
+  },
+  {
+    "text": ".café > .ü",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 254
+  },
+  {
+    "text": ".😀 > .ü, #😀",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 255
+  },
+  {
+    "text": "[title=\"日本\"] a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 256
+  },
+  {
+    "text": ".a😀.b#c",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 257
+  },
+  {
+    "text": ".😀\\:x.y",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 258
+  },
+  {
+    "text": "a /* é😀 */ b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 259
+  },
+  {
+    "text": "[a=b i]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 260
+  },
+  {
+    "text": ".a\\😀b:hover",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 262
+  },
+  {
+    "text": "[a=\\😀]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 263
+  },
+  {
+    "text": "a(\\😀)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 264
+  },
+  {
+    "text": "\\😀|a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 265
+  },
+  {
+    "text": "[a=\"x\"😀]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 266
+  },
+  {
+    "text": "\"unclosed",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 269
+  },
+  {
+    "text": "a 'x",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 270
+  },
+  {
+    "text": "a 'x\\'",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 271
+  },
+  {
+    "text": "a /* x",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 272
+  },
+  {
+    "text": "[a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 273
+  },
+  {
+    "text": "[a=b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 274
+  },
+  {
+    "text": "a]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 275
+  },
+  {
+    "text": ")",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 276
+  },
+  {
+    "text": "a)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 277
+  },
+  {
+    "text": ":not(a))",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 278
+  },
+  {
+    "text": ":not(a",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 279
+  },
+  {
+    "text": "a(b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 280
+  },
+  {
+    "text": "a;b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 281
+  },
+  {
+    "text": ":",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 282
+  },
+  {
+    "text": "a:",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 283
+  },
+  {
+    "text": ":hover.foo(",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 284
+  },
+  {
+    "text": "::(a)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 285
+  },
+  {
+    "text": "a:[x]",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 286
+  },
+  {
+    "text": "a:@b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 287
+  },
+  {
+    "text": "a: b",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 288
+  },
+  {
+    "text": ".a|",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 289
+  },
+  {
+    "text": "|",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 290
+  },
+  {
+    "text": "(a)",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 291
+  },
+  {
+    "text": ":not(())",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 292
+  },
+  {
+    "text": "[a=\"]\"",
+    "file": "cohere/internal/format/css/selector/oracle_test.go",
+    "line": 293
+  },
+  {
+    "text": ".hover\\:bg-red:hover",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 30
+  },
+  {
+    "text": "[ns|data-x='b' i]",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 53
+  },
+  {
+    "text": "[a]",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 72
+  },
+  {
+    "text": " a  >\tb , c",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 83
+  },
+  {
+    "text": "a,",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 105
+  },
+  {
+    "text": ":nth-child(2n + 1 of .x)",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 112
+  },
+  {
+    "text": ".é > .ü",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 138
+  },
+  {
+    "text": ".😀\\:x.y",
+    "file": "cohere/internal/format/css/selector/parse_test.go",
+    "line": 148
+  }
+]
