@@ -60,5 +60,8 @@ errors sink. The proposed-file runtime fingerprint check remains unchanged.
 The wrong-expected-type mutant replaces this plan's return with string and is
 refused by the exact shape guard. A proposed errors.push(undefined) runtime
 edit is separately refused by the unchanged file fingerprint check before any
-source write; all source hashes remain identical. These focused proofs isolate
-the authorized sink from convertToJson's separately stale return expectation.
+source write; all source hashes remain identical. The convertToJson plan likewise expects exactly one signature returning
+AdamicJsonRecoveryValue | undefined from 43, retaining that return in both
+patterns and changing only its errors sink. Each sink has an independent
+wrong-expected-type mutant; the unchanged runtime guards reject proposed body
+edits in all three plan families.
