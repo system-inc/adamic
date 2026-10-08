@@ -137,14 +137,14 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 			}
 		}
 	}
-	var found *optionalWidening
+	var widening *optionalWidening
 	switch node.Kind {
 	case ast.KindAsExpression:
-		found = l.optionalValue(node.AsAsExpression().Expression, l.checker.GetTypeAtLocation(node))
+		widening = l.optionalValue(node.AsAsExpression().Expression, l.checker.GetTypeAtLocation(node))
 	case ast.KindShorthandPropertyAssignment:
 		target := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
 		if target != nil {
-			found = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))
+			widening = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))
 		}
 	case ast.KindSpreadAssignment:
 		target := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
@@ -162,7 +162,7 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		}
 		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
 		if expression.Kind != ast.KindObjectLiteralExpression {
-			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
+			widening = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
 		}
 	default:
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || l.genericFunction(node) {
@@ -178,9 +178,9 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		if target == nil {
 			return nil
 		}
-		found = l.optionalValue(node, target)
+		widening = l.optionalValue(node, target)
 	}
-	return found
+	return widening
 }
 
 func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
