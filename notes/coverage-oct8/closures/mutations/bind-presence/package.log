@@ -1,0 +1,6 @@
+--- FAIL: TestLibraryMethodValueSafety (0.81s)
+    --- FAIL: TestLibraryMethodValueSafety/bind_absent_receiver (0.05s)
+        library_method_values_test.go:80: unsafe method value was admitted
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	34.612s
+FAIL
