@@ -10,5 +10,6 @@
   "class": "Rule",
   "oracle": "oracleNoUndefInit",
   "upstreamPackage": "core",
-  "upstreamTest": "TestNoUndefInit"
+  "upstreamTest": "TestNoUndefInit",
+  "programReads": []
 }

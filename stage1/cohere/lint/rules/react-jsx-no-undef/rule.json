@@ -11,5 +11,6 @@
   "class": "Rule",
   "oracle": "oracleJsxNoUndef",
   "upstreamPackage": "react",
-  "upstreamTest": "TestJsxNoUndef"
+  "upstreamTest": "TestJsxNoUndef",
+  "programReads": []
 }

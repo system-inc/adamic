@@ -3,7 +3,7 @@ import { preferIndexSignature, preferRecord } from './messages.a';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { Bindings } from './bindings.a';
 import { waveNode } from './node.a';
-import { WaveSymbol } from './symbol.a';
+import { SymbolDetails } from '../../checker_declarations.a';
 import { TypeReferenceGraph } from './type_reference_graph.a';
 import { Suggestion, SuggestionEdit } from '../../suggestions.a';
 import { isSpace,isLineBreak } from '../../../../typescript/scanner/characters.ts';
@@ -53,7 +53,9 @@ export class Rule {
         if(name < 0) {
             return false;
         }
-        const anchor = new WaveSymbol(this.bindings.rules.context, name).identity;
+        const answer=this.bindings.rules.context.checker?.ask(name, 'node-symbol-details');
+        if(answer === undefined || answer.value === undefined) { return false; }
+        const anchor = new SymbolDetails(answer.value).symbolId;
         if(anchor === 0) {
             return false;
         }

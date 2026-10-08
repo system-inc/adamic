@@ -13,5 +13,6 @@
   "class": "Rule",
   "oracle": "oracleConsistentIndexedObjectStyle",
   "upstreamPackage": "typescript",
-  "upstreamTest": "TestConsistentIndexedObjectStyle"
+  "upstreamTest": "TestConsistentIndexedObjectStyle",
+  "programReads": []
 }

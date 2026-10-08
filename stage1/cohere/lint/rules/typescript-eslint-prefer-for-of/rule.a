@@ -1,18 +1,18 @@
 import type { RuleContext } from '../../context.ts';
 import { preferForOf } from './messages.a';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { Bindings, waveNode } from './bindings.a';
-import { WaveSymbol } from './symbol.a';
+import { waveNode } from './bindings.a';
+import { SymbolDetails } from '../../checker_declarations.a';
 export class Rule {
-    readonly bindings: Bindings;
+    readonly context: RuleContext;
 
-    constructor(context: RuleContext) { this.bindings=new Bindings(context); }
+    constructor(context: RuleContext) { this.context=context; }
     identifier(index: number, name: string): boolean {
-        const node = waveNode(this.bindings.rules, index);
+        const node = waveNode(this.context, index);
         return node.kind === 'Identifier' && node.text === name;
     }
     numeric(index: number, value: number): boolean {
-        const node = waveNode(this.bindings.rules, index);
+        const node = waveNode(this.context, index);
         const text = node.text.replaceAll('_', '').toLowerCase();
         const parsed = text.startsWith('0x')
             ? Number.parseInt(text.slice(2), 16)
@@ -24,34 +24,34 @@ export class Rule {
         return node.kind === 'NumericLiteral' && parsed === value;
     }
     increment(index: number, name: string): boolean {
-        const node = waveNode(this.bindings.rules, index);
+        const node = waveNode(this.context, index);
         if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(node.kind)) {
             return node.operator === 'PlusPlusToken' && this.identifier(node.children[0] ?? -1, name);
         }
         if(node.kind !== 'BinaryExpression' || !this.identifier(node.children[0] ?? -1, name)) {
             return false;
         }
-        const operator = waveNode(this.bindings.rules, node.children[1] ?? -1).kind;
+        const operator = waveNode(this.context, node.children[1] ?? -1).kind;
         const right = node.children[2] ?? -1;
         if(operator === 'PlusEqualsToken') {
             return this.numeric(right, 1);
         }
-        const sum = waveNode(this.bindings.rules, right);
+        const sum = waveNode(this.context, right);
         return (
             operator === 'EqualsToken' &&
             sum.kind === 'BinaryExpression' &&
-            waveNode(this.bindings.rules, sum.children[1] ?? -1).kind === 'PlusToken' &&
+            waveNode(this.context, sum.children[1] ?? -1).kind === 'PlusToken' &&
             ((this.identifier(sum.children[0] ?? -1, name) && this.numeric(sum.children[2] ?? -1, 1)) ||
                 (this.numeric(sum.children[0] ?? -1, 1) && this.identifier(sum.children[2] ?? -1, name)))
         );
     }
     assigned(index: number): boolean {
-        const parentIndex = this.bindings.parent(index);
-        const parent = waveNode(this.bindings.rules, parentIndex);
+        const parentIndex = this.context.parent(index);
+        const parent = waveNode(this.context, parentIndex);
         if(parent.kind === 'BinaryExpression') {
             return (
                 parent.children[0] === index &&
-                this.assignment(waveNode(this.bindings.rules, parent.children[1] ?? -1).kind)
+                this.assignment(waveNode(this.context, parent.children[1] ?? -1).kind)
             );
         }
         if(parent.kind === 'DeleteExpression' || parent.kind === 'PostfixUnaryExpression') {
@@ -74,33 +74,31 @@ export class Rule {
             return this.assigned(parentIndex);
         }
         if(parent.kind === 'PropertyAssignment' && parent.children[parent.children.length - 1] === index) {
-            const objectIndex = this.bindings.parent(parentIndex);
-            const object = waveNode(this.bindings.rules, objectIndex);
-            const above = waveNode(this.bindings.rules, this.bindings.parent(objectIndex));
+            const objectIndex = this.context.parent(parentIndex);
+            const object = waveNode(this.context, objectIndex);
+            const above = waveNode(this.context, this.context.parent(objectIndex));
             const pattern =
                 above.kind === 'BinaryExpression' &&
                 above.children[0] === objectIndex &&
-                this.assignment(waveNode(this.bindings.rules, above.children[1] ?? -1).kind);
+                this.assignment(waveNode(this.context, above.children[1] ?? -1).kind);
             return object.kind === 'ObjectLiteralExpression' && !pattern && this.assigned(objectIndex);
         }
         return false;
     }
     body(index: number, declaration: number, array: string): boolean {
-        const node = waveNode(this.bindings.rules, index);
+        const node = waveNode(this.context, index);
         if(
             node.kind === 'Identifier' &&
-            new WaveSymbol(this.bindings.rules, index).declarations.includes(
-                `${this.bindings.rules.checker?.path ?? ''}:VariableDeclaration:${this.byte(waveNode(this.bindings.rules, declaration).pos)}:${this.byte(waveNode(this.bindings.rules, declaration).end)}`,
-            )
+            this.references(index, declaration)
         ) {
-            const accessIndex = this.bindings.parent(index);
-            const access = waveNode(this.bindings.rules, accessIndex);
-            const receiver = waveNode(this.bindings.rules, access.children[0] ?? -1);
+            const accessIndex = this.context.parent(index);
+            const access = waveNode(this.context, accessIndex);
+            const receiver = waveNode(this.context, access.children[0] ?? -1);
             if(
                 access.kind !== 'ElementAccessExpression' ||
                 access.children[access.children.length - 1] !== index ||
                 receiver.kind === 'ThisKeyword' ||
-                this.bindings.rules.raw(access.children[0] ?? -1) !== array ||
+                this.context.raw(access.children[0] ?? -1) !== array ||
                 this.assigned(accessIndex)
             ) {
                 return false;
@@ -112,7 +110,7 @@ export class Rule {
         if(node.children.length !== 4) {
             return;
         }
-        const list = waveNode(this.bindings.rules, node.children[0] ?? -1);
+        const list = waveNode(this.context, node.children[0] ?? -1);
         if(
             list.kind !== 'VariableDeclarationList' ||
             ['2', '6'].includes(list.semantic) ||
@@ -121,16 +119,16 @@ export class Rule {
             return;
         }
         const declaration = list.children[0] ?? -1;
-        const nameIndex = this.bindings.name(declaration);
-        const name = waveNode(this.bindings.rules, nameIndex);
-        if(name.kind !== 'Identifier' || !this.numeric(this.bindings.initializer(declaration), 0)) {
+        const nameIndex = this.context.name(declaration);
+        const name = waveNode(this.context, nameIndex);
+        if(name.kind !== 'Identifier' || !this.numeric(this.context.initializer(declaration), 0)) {
             return;
         }
-        const condition = waveNode(this.bindings.rules, node.children[1] ?? -1);
-        const length = waveNode(this.bindings.rules, condition.children[2] ?? -1);
+        const condition = waveNode(this.context, node.children[1] ?? -1);
+        const length = waveNode(this.context, condition.children[2] ?? -1);
         if(
             condition.kind !== 'BinaryExpression' ||
-            waveNode(this.bindings.rules, condition.children[1] ?? -1).kind !== 'LessThanToken' ||
+            waveNode(this.context, condition.children[1] ?? -1).kind !== 'LessThanToken' ||
             !this.identifier(condition.children[0] ?? -1, name.text) ||
             length.kind !== 'PropertyAccessExpression' ||
             length.optional ||
@@ -139,12 +137,22 @@ export class Rule {
         ) {
             return;
         }
-        const array = this.bindings.rules.raw(length.children[0] ?? -1);
+        const array = this.context.raw(length.children[0] ?? -1);
         if(this.body(node.children[3] ?? -1, declaration, array)) {
-            this.bindings.rules.reportNode(index,'@typescript-eslint/prefer-for-of','preferForOf',preferForOf);
+            this.context.reportNode(index,'@typescript-eslint/prefer-for-of','preferForOf',preferForOf);
         }
     }
-    byte(position: number): number { const checker=this.bindings.rules.checker;return checker === undefined ? 0 : (checker.offsets[position] ?? 0); }
+    references(index: number, declaration: number): boolean {
+        const checker=this.context.checker;
+        if(checker === undefined) { return false; }
+        const answer=checker.ask(index, 'node-symbol-details');
+        if(answer.value === undefined) { return false; }
+        const node=this.context.node(declaration);
+        const first=checker.offsets[node.pos] ?? -1;
+        const last=checker.offsets[node.end] ?? -1;
+        return new SymbolDetails(answer.value).declarations.some((value)=>value.declarationPath === checker.path && value.declarationKind === 'VariableDeclaration' && value.declarationStart === first && value.declarationEnd === last);
+    }
+    byte(position: number): number { const checker=this.context.checker;return checker === undefined ? 0 : (checker.offsets[position] ?? 0); }
     assignment(operator: string): boolean { return ['EqualsToken','PlusEqualsToken','MinusEqualsToken','AsteriskEqualsToken','AsteriskAsteriskEqualsToken','SlashEqualsToken','PercentEqualsToken','LessThanLessThanEqualsToken','GreaterThanGreaterThanEqualsToken','GreaterThanGreaterThanGreaterThanEqualsToken','AmpersandEqualsToken','BarEqualsToken','CaretEqualsToken','AmpersandAmpersandEqualsToken','BarBarEqualsToken','QuestionQuestionEqualsToken'].includes(operator); }
 }
 export function create(context: RuleContext): Rule { return new Rule(context); }

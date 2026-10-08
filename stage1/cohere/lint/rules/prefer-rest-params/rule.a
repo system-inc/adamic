@@ -1,14 +1,16 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { WaveSymbol } from './symbol.a';
+import { SymbolDetails } from '../../checker_declarations.a';
 import { preferRestParams } from './messages.a';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context=context; }
     visit(node: ParseNode,index: number): void {
         if(node.text !== 'arguments') { return; }
-        const symbol=new WaveSymbol(this.context,index);
-        if(symbol.identity === 0 || symbol.declarations.length !== 0) { return; }
+        const answer=this.context.checker?.ask(index, 'node-symbol-details');
+        if(answer === undefined || answer.value === undefined) { return; }
+        const symbol=new SymbolDetails(answer.value);
+        if(!symbol.present || symbol.declarations.length !== 0) { return; }
         const parentIndex=this.context.parent(index);
         if(parentIndex >= 0) {
             const parent=this.context.node(parentIndex);

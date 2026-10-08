@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { WaveSymbol } from './symbol.a';
+import { SymbolDetails } from '../../checker_declarations.a';
 import { jsxIdentifierNotDefined } from './messages.a';
 export class Rule {
     readonly context: RuleContext;
@@ -22,10 +22,12 @@ export class Rule {
             if(tag.kind !== 'Identifier') { return; }
         }
         else { return; }
-        const symbol=new WaveSymbol(this.context,reference);
+        const answer=this.context.checker?.ask(reference, 'node-symbol-details');
+        if(answer === undefined || answer.value === undefined) { return; }
+        const symbol=new SymbolDetails(answer.value);
         const path=this.context.checker?.path ?? '';
         const globals=this.context.settings.read('allowglobals','false') === 'true' || path.endsWith('.cjs');
-        if(symbol.identity !== 0 && (globals || symbol.declarations.some((declaration)=>declaration.startsWith(`${path}:`)))) { return; }
+        if(symbol.present && (globals || symbol.declarations.some((declaration)=>declaration.declarationPath === path))) { return; }
         this.context.reportNode(reference,'react/jsx-no-undef','jsxIdentifierNotDefined',jsxIdentifierNotDefined);
     }
 }

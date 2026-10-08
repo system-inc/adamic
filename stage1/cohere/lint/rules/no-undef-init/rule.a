@@ -1,7 +1,7 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { SuggestionEdit } from '../../suggestions.a';
-import { WaveSymbol } from './symbol.a';
+import { SymbolDetails } from '../../checker_declarations.a';
 import { Bindings, waveNode } from './bindings.a';
 import { unnecessaryUndefinedInit } from './messages.a';
 export class Rule {
@@ -9,12 +9,14 @@ export class Rule {
     readonly bindings: Bindings;
     constructor(context: RuleContext) { this.context=context; this.bindings=new Bindings(context); }
     visit(node: ParseNode,index: number): void {
-        const list=waveNode(this.context,this.bindings.parent(index));
+        const list=waveNode(this.context,this.context.parent(index));
         if(list.kind !== 'VariableDeclarationList' || ['2','4','6'].includes(list.semantic)) { return; }
-        const initializer=this.bindings.initializer(index);
+        const initializer=this.context.initializer(index);
         const value=waveNode(this.context,initializer);
         if(value.kind !== 'Identifier' || value.text !== 'undefined') { return; }
-        if(new WaveSymbol(this.context,initializer).sourceDeclarations) { return; }
+        const answer=this.context.checker?.ask(initializer, 'node-symbol-details');
+        if(answer === undefined || answer.value === undefined) { return; }
+        if(new SymbolDetails(answer.value).declarations.some((declaration)=>!declaration.declarationFile)) { return; }
         const nameIndex=this.bindings.name(index);
         if(nameIndex < 0) { return; }
         const name=this.context.node(nameIndex);

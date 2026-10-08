@@ -1,10 +1,13 @@
-# prefer-rest-params: waiting on lint-checker/facts
+# prefer-rest-params: certified on shared checker facts
 
-Ported from codex/typeaware-wave-07 at 2a15504f. There, with that branch's own checker bridge, it
-matched unchanged Go cohere on 23 captured `TestPreferRestParams` cases.
+Source: ba85c35ba; shared facts: d845dccde (already an ancestor, merge reports up to date).
+All 23 captured upstream cases and the firing witness match unchanged Go byte for byte on source Node, emitted JavaScript and ASan/UBSan native, including findings, fixes and suggestions.
+The owned message mutant compiles, runs and is caught by the differential comparison on all three runtimes.
+SymbolDetails from checker_declarations.a replaces the private symbol decoder; queries use the run's RuleContext.checker, with no private program or recorded-answer stand-in.
+The unused private bindings module and private symbol decoder are deleted.
+programReads is explicitly empty, exactly as cohere/internal/lint/rules/core/prefer_rest_params.go:68 declares at the pinned cohere commit.
+Matrix evidence: /workspace/wave-23/facts-wave07-evidence/result.json and events.jsonl.
+Complete lint log: /workspace/wave-23/facts-wave07-lint-complete.jsonl; mutant lines: /workspace/wave-23/facts-wave07-mutants.log.
+Registry, gofmt and vet pass. The aggregate gate retains the shared inventory, graph and recovery failures described in /workspace/wave-23/facts-wave07-final-report.md.
 
-This area's checker does not answer the questions below yet, so every run of this rule stops with
-`unsupported checker question`. The facts land only through lint-checker/facts; the rule is
-certified when they do. Checker questions it asks:
-
-- `node-symbol-details` (symbol.a): `ctx.TypeChecker.GetSymbolAtLocation(identifier)` and `len(symbol.Declarations) == 0`, cohere/internal/lint/rules/core/prefer_rest_params.go:114 and :118 (is `arguments` the implicit object).
+Full package: 26 top-level passes, 8 shared failures, one TestCheckerBridgeRefusalPending skip; 84 registered mutants caught and the indexed mutant blocked. Wall 2400.15s, nproc 5. No input skips or relaxed checks.
