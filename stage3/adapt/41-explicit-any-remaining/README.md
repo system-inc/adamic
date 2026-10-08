@@ -66,12 +66,50 @@ The source identity proof is specific to the any-only tree. Void adaptations
 have a separate evaluation/return proof and full oracle comparison. See the
 final report for commands, completed measurements, decisions and remaining work.
 
-Final result: 15 void expressions removed, lane PASS, and full oracle identical to
+Historical result before the October 8 ruling: 15 void expressions removed, lane PASS, and full oracle identical to
 main with its one sanctioned API failure. See [REPORT.md](REPORT.md),
 [RANKED.md](RANKED.md), [REMAINING.md](REMAINING.md), [DEBUGGER.md](DEBUGGER.md),
 [ANY-RETURNS.md](ANY-RETURNS.md), [ANY-CALLS.md](ANY-CALLS.md) and [DROPPED.md](DROPPED.md).
 
 To reconstruct the any-only input, use adapter commit 07aacdf9 in a separate
-checkout and apply its pipeline. Current apply includes void as well, so the
-any-only source identity proof must use the separately retained any-only tree.
-The final current pipeline is independently exercised by the landing lane.
+checkout and apply its pipeline. Batch 4 now retains the type edits and drops all void rewrites. The earlier
+any-only source identity proof refers to its separately retained tree.
+The batch pipeline is independently exercised by the landing lane.
+
+## October 8 void ruling
+
+Void was ruled a compiler lesson on October 8. The compiler's area-next admits
+it with Node agreement. Tsc's source stays as written: all 15 void rewrites are
+dropped outright from adaptation 41, while its type edits remain active.
+Any void site still stopping after area-next lands is a compiler bug.
+
+The void adapter, rewrite rules and adapter proof are removed. Historical
+receipts remain under evidence/ and in REPORT.md; they describe the superseded
+proposal, not the current adaptation. The removed proposal's 15 source sites
+are listed below for provenance. These coordinates precede later adaptations.
+
+| Site | Source | Expression |
+|---|---|---|
+| 1 | src/compiler/checker.ts:9062 | `getTypeFromTypeReference(existing)` |
+| 2 | src/compiler/checker.ts:9293 | `getTypeFromImportTypeNode(existing)` |
+| 3 | src/compiler/checker.ts:9395 | `getInternalSymbolName(symbol, baseName)` |
+| 4 | src/compiler/checker.ts:9605 | `getPropertiesOfType(getTypeOfSymbol(symbol))` |
+| 5 | src/compiler/checker.ts:21958 | `instantiateType(sourceRestType &#124;&#124; targetRestType, reportUnreliableMarkers)` |
+| 6 | src/compiler/checker.ts:23539 | `mappedKeys.push(instantiateType(nameType, appendTypeMapping(targetType.mapper, getTypeParameterFromMappedType(targetType), t)))` |
+| 7 | src/compiler/checker.ts:48699 | `resolveExternalModuleName(node, node.moduleSpecifier, /*ignoreErrors*/ undefined, Diagnostics.Cannot_find_module_or_type_declarations_for_side_effect_import_of_0)` |
+| 8 | src/compiler/checker.ts:50792 | `resolveExternalModuleSymbol(fileSymbol)` |
+| 9 | src/compiler/checker.ts:51078 | `checkExpressionCached(node)` |
+| 10 | src/compiler/moduleNameResolver.ts:610 | `diagnostics.push(diag)` |
+| 11 | src/compiler/moduleNameResolver.ts:1838 | `diagnostics.push(diag)` |
+| 12 | src/compiler/moduleNameResolver.ts:3277 | `diagnostics.push(diag)` |
+| 13 | src/compiler/moduleNameResolver.ts:3382 | `diagnostics.push(diag)` |
+| 14 | src/compiler/transformers/declarations.ts:274 | `0` |
+| 15 | src/compiler/utilities.ts:9004 | `(file.externalModuleIndicator = combined(file, options))` |
+
+Batch 4 verification: all 23 type-edit rules still apply. The fresh landing lane
+passes with 106366 passing, one sanctioned API acknowledgement failure and zero
+pending, matching main. All ten built JavaScript artifacts and typescript.d.ts
+are byte-identical to main. The prior real build with void rewrites fails the
+same comparison on three bundles. Type adapter idempotence and LF reconstruction
+pass in an isolated 41 control; both retained anchor mutants are caught. See
+[evidence/batch4-ruling.json](evidence/batch4-ruling.json).

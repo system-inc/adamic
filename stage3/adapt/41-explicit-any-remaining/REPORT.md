@@ -1,3 +1,7 @@
+Historical report, superseded for void on October 8: all 15 void rewrites are
+dropped as a compiler lesson. Current adaptation 41 retains its type edits.
+See README.md for the ruling and preserved source sites.
+
 Built: partial adaptation 41 removes 11 explicit-any tokens and all 15 void expressions in nine source files; no compiler edits.
 Commits: any 07aacdf9; debugger decision 79674909; return handoff a4978dfd; void 760ccaa6; call handoff d96ef1e0; dropped kinds ffc600a8.
 Commands/results: apply and builds exit 0; main/final oracle 106,366 passing, one sanctioned failure, zero pending; lane PASS; tokens 135 to 124, direct any 37 to 36, void refusals four to zero.
