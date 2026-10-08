@@ -1,0 +1,1 @@
+export const messageUnusedLabel = 'This label is declared and nothing jumps to it. A label only does anything when a `break` or `continue` names it, so an unnamed one is dead syntax, and it is usually what is left over when the jump that used it was removed or rewritten.';
