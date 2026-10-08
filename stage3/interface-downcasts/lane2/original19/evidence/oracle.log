@@ -1,0 +1,331 @@
+=== RUN   TestCheckedViewRanked19OriginalArrays
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:118: gate cache node hit
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-175-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-178-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-179-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-177-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-219-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-220-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:118: gate cache node hit
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-good
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-lazy
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-wrong-array
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-wrong-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-missing-pos
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-lazy-element
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-wrong-kind
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-map
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-232-map-bad
+    checked_views_original_ranked_arrays_test.go:89: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:118: gate cache node miss
+--- PASS: TestCheckedViewRanked19OriginalArrays (106.60s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-good (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-lazy (1.00s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-wrong-array (1.05s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos (1.03s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-missing-pos (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-lazy-element (1.10s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-wrong-kind (1.00s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-map (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-map-bad (1.05s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-good (1.07s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-lazy (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-wrong-array (0.97s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-wrong-pos (1.04s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-missing-pos (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-lazy-element (1.13s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-wrong-kind (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-map (1.09s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-175-map-bad (1.11s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-good (1.26s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-lazy (1.57s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-wrong-array (2.31s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-wrong-pos (1.12s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-missing-pos (1.35s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-lazy-element (1.85s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-wrong-kind (1.99s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-map (1.78s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-178-map-bad (1.98s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-good (2.05s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-lazy (1.87s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-wrong-array (1.77s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-wrong-pos (1.81s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-missing-pos (1.80s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-lazy-element (1.95s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-wrong-kind (1.85s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-map (1.92s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-179-map-bad (1.95s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-good (1.94s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-lazy (1.63s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-wrong-array (1.64s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-wrong-pos (1.83s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-missing-pos (1.77s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-lazy-element (2.00s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-wrong-kind (1.76s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-map (1.71s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-177-map-bad (1.78s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-good (1.70s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-lazy (1.60s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-wrong-array (1.08s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-wrong-pos (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-missing-pos (1.08s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-lazy-element (1.12s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-wrong-kind (1.10s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-map (1.14s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-219-map-bad (1.05s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-good (1.11s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-lazy (1.03s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-wrong-array (1.03s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-wrong-pos (1.05s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-missing-pos (1.04s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-lazy-element (1.10s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-wrong-kind (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-map (1.11s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-220-map-bad (1.09s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-good (0.99s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-lazy (1.04s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-wrong-array (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-wrong-pos (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-missing-pos (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-lazy-element (1.09s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-wrong-kind (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-map (1.09s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-map-bad (1.03s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-good (1.08s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-lazy (1.02s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-wrong-array (1.00s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-wrong-pos (1.06s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-missing-pos (1.05s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-lazy-element (1.09s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-wrong-kind (1.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-map (1.21s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-232-map-bad (1.09s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=158
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	106.610s

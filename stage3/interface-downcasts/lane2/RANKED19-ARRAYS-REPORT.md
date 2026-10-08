@@ -1,5 +1,5 @@
 Held FunctionLikeDeclaration.parameters and ClassDeclaration | ClassExpression.members against complete original declarations; no compiler change was needed.
-Commits: based on ffe428ab26eefb73154adbf570ad99e9c1b4f872; this report and its fixtures are committed together on codex/views-arrays-callables-parser.
+Commits: based on ffe428ab26eefb73154adbf570ad99e9c1b4f872; certification pushed as bbbb2f4694e303534d168ddc7cb1bbb0069356d5; the next evidence commit retains the ignored log files.
 Validation: 81 probes pass Node, sanitized/release native and JavaScript; 36 finishing probes pass leaks; 81 measured count rows; final oracle and counts pass in 140.243s; vet passes.
 Mutants: native and JavaScript numeric-field bypasses caught for both union targets by wrong-pos witnesses, four executed failures; restored witnesses pass in 2.432s.
 Limits: IncrementalBuildInfo.fileNames remains blocked at union admission; production reachability, tuples and other pending candidates are unmeasured; global counts still fail in existing fixtures.
