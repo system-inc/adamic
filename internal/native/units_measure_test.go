@@ -14,6 +14,7 @@ import (
 func TestMeasureClangUnits(t *testing.T) {
 	directory := os.Getenv("ADAMIC_CLANG_MEASURE")
 	if directory == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_CLANG_MEASURE to emitted C evidence directory")
 	}
 	cache := filepath.Join(directory, "cache")

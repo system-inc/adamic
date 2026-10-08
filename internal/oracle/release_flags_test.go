@@ -15,6 +15,7 @@ import (
 // always fresh; the existing Node cache has the gate's uncached bypass.
 func TestNativeReleaseFlagsAgreeWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_RELEASE_LANE") != "1" {
+		// census: opt-in-lane Dedicated shipping-build verification lane opts in with ADAMIC_RELEASE_LANE=1. The lane traces production release options; missing tools or failed builds fail the opted-in lane rather than skipping it.
 		t.Skip("set ADAMIC_RELEASE_LANE=1 for the full shipping-build lane")
 	}
 	t.Parallel()
@@ -25,6 +26,7 @@ func TestNativeReleaseFlagsAgreeWithNode(t *testing.T) {
 // ADAMIC_GATE_UNCACHED=1 makes both sides build and execute every binary anew.
 func TestNativeExistingReleaseAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_RELEASE_MEASURE") != "1" {
+		// census: measurement Opt-in timing control: ADAMIC_RELEASE_MEASURE=1 compares the existing release variant on finishing fixtures; not a substitute for the shipping-build verification lane.
 		t.Skip("set ADAMIC_RELEASE_MEASURE=1 for the timing control")
 	}
 	t.Parallel()

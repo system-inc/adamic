@@ -1,0 +1,351 @@
+=== RUN   TestAnnotationMutants
+=== PAUSE TestAnnotationMutants
+=== RUN   TestStableHelperAndAliases
+=== PAUSE TestStableHelperAndAliases
+=== RUN   TestOptInAnnotations
+=== PAUSE TestOptInAnnotations
+=== RUN   TestCodemodLossless
+=== PAUSE TestCodemodLossless
+=== RUN   TestCensus
+--- PASS: TestCensus (0.33s)
+=== RUN   TestLogClassesAndMutants
+=== PAUSE TestLogClassesAndMutants
+=== RUN   TestLogUsesReasonForMultipleSites
+=== PAUSE TestLogUsesReasonForMultipleSites
+=== RUN   TestHistoricalPlainSkips
+=== PAUSE TestHistoricalPlainSkips
+=== RUN   TestFormattedSkipReason
+=== PAUSE TestFormattedSkipReason
+=== CONT  TestAnnotationMutants
+=== RUN   TestAnnotationMutants/unannotated
+    annotations_test.go:31: probe_test.go:4 (TestProbe): missing census annotation
+=== RUN   TestAnnotationMutants/bad_class
+    annotations_test.go:31: probe_test.go:5 (TestProbe): unknown census class optional
+=== RUN   TestAnnotationMutants/no_variable
+    annotations_test.go:31: probe_test.go:5 (TestProbe): required-input annotation must name its variable or source field and provider
+=== RUN   TestAnnotationMutants/blank_gap
+    annotations_test.go:31: probe_test.go:4: census annotation must immediately precede a skip call on its own line
+=== RUN   TestAnnotationMutants/orphan
+    annotations_test.go:31: probe_test.go:4: census annotation must immediately precede a skip call on its own line
+--- PASS: TestAnnotationMutants (0.00s)
+    --- PASS: TestAnnotationMutants/unannotated (0.00s)
+    --- PASS: TestAnnotationMutants/bad_class (0.00s)
+    --- PASS: TestAnnotationMutants/no_variable (0.00s)
+    --- PASS: TestAnnotationMutants/blank_gap (0.00s)
+    --- PASS: TestAnnotationMutants/orphan (0.00s)
+=== CONT  TestFormattedSkipReason
+--- PASS: TestFormattedSkipReason (0.00s)
+=== CONT  TestHistoricalPlainSkips
+=== CONT  TestCodemodLossless
+--- PASS: TestCodemodLossless (0.00s)
+=== CONT  TestLogUsesReasonForMultipleSites
+--- PASS: TestLogUsesReasonForMultipleSites (0.00s)
+=== CONT  TestLogClassesAndMutants
+--- PASS: TestLogClassesAndMutants (0.00s)
+=== CONT  TestOptInAnnotations
+--- PASS: TestOptInAnnotations (0.00s)
+=== CONT  TestStableHelperAndAliases
+--- PASS: TestStableHelperAndAliases (0.00s)
+=== NAME  TestHistoricalPlainSkips
+    census_test.go:117: skips=33 required-input=17 unknown=0; TestWholeCompilerAgrees included
+--- PASS: TestHistoricalPlainSkips (0.25s)
+PASS
+ok  	github.com/system-inc/adamic/internal/skipcensus	0.593s
+?   	github.com/system-inc/adamic/internal/skipcensus/cmd	[no test files]
+?   	github.com/system-inc/adamic/internal/skipcensus/cmd/annotate	[no test files]
+=== RUN   TestKnownAffinitiesStayWhole
+--- PASS: TestKnownAffinitiesStayWhole (0.00s)
+=== RUN   TestVolumeParentStaysWhole
+--- PASS: TestVolumeParentStaysWhole (0.00s)
+=== RUN   TestPartialAffinityRejected
+--- PASS: TestPartialAffinityRejected (0.00s)
+=== RUN   TestOracleMeasuredTestsMaySpread
+--- PASS: TestOracleMeasuredTestsMaySpread (0.00s)
+=== RUN   TestArchiveLightestAndMissingInput
+--- PASS: TestArchiveLightestAndMissingInput (0.00s)
+=== RUN   TestArchiveCountsRepeatedParentSetup
+--- PASS: TestArchiveCountsRepeatedParentSetup (0.00s)
+=== RUN   TestFleetTwentyTwoArchiveBriefs
+--- PASS: TestFleetTwentyTwoArchiveBriefs (0.06s)
+=== RUN   TestComplementRunsInitRegisteredFixture
+    complement_test.go:48: Go stderr kept separate: go: warning: ignoring go.mod in $GOPATH /tmp/adamic-gate/TestComplementRunsInitRegisteredFixture3647464524/002
+    complement_test.go:48: Go stderr kept separate: go: warning: ignoring go.mod in $GOPATH /tmp/adamic-gate/TestComplementRunsInitRegisteredFixture3647464524/002
+--- PASS: TestComplementRunsInitRegisteredFixture (0.32s)
+=== RUN   TestComplementRequiredAndDuplicatesRefused
+--- PASS: TestComplementRequiredAndDuplicatesRefused (0.00s)
+=== RUN   TestComplementCheckpointRequiresParentTerminal
+--- PASS: TestComplementCheckpointRequiresParentTerminal (0.00s)
+=== RUN   TestComplementPlacementWithRequiredWASI
+--- PASS: TestComplementPlacementWithRequiredWASI (0.00s)
+=== RUN   TestConcurrencyBudgetAndResumeIdentity
+=== PAUSE TestConcurrencyBudgetAndResumeIdentity
+=== RUN   TestConcurrencyCheckpointMatchesActualInvocation
+=== PAUSE TestConcurrencyCheckpointMatchesActualInvocation
+=== RUN   TestProbeDeadlineKillsGrandchild
+child /tmp/adamic-gate/TestProbeDeadlineKillsGrandchild4173885212/001/fake-go [list ./...]: deadline/cancellation expired; killing process group; descendants=[]
+    deadline_test.go:21: child=/tmp/adamic-gate/TestProbeDeadlineKillsGrandchild4173885212/001/fake-go killed_seconds=0.301 diagnostic=/tmp/adamic-gate/TestProbeDeadlineKillsGrandchild4173885212/001/fake-go [list ./...]: child /tmp/adamic-gate/TestProbeDeadlineKillsGrandchild4173885212/001/fake-go: context deadline exceeded; process group killed
+--- PASS: TestProbeDeadlineKillsGrandchild (0.32s)
+=== RUN   TestShardDeadlineKillsGrandchild
+child go [test ./...]: deadline/cancellation expired; killing process group; descendants=[]
+    deadline_test.go:38: child=go killed_seconds=0.301 diagnostic=child /tmp/adamic-gate/TestShardDeadlineKillsGrandchild2074342079/001/go: context deadline exceeded; process group killed
+--- PASS: TestShardDeadlineKillsGrandchild (0.32s)
+=== RUN   TestJSONCommandDeadlineKillsGrandchild
+child /tmp/adamic-gate/TestJSONCommandDeadlineKillsGrandchild2220293978/001/fake-go-json [test]: deadline/cancellation expired; killing process group; descendants=[]
+    deadline_test.go:53: child=/tmp/adamic-gate/TestJSONCommandDeadlineKillsGrandchild2220293978/001/fake-go-json killed_seconds=0.301 diagnostic=/tmp/adamic-gate/TestJSONCommandDeadlineKillsGrandchild2220293978/002/test.jsonl: child /tmp/adamic-gate/TestJSONCommandDeadlineKillsGrandchild2220293978/001/fake-go-json: context deadline exceeded; process group killed; stderr in /tmp/adamic-gate/TestJSONCommandDeadlineKillsGrandchild2220293978/002/test.stderr
+--- PASS: TestJSONCommandDeadlineKillsGrandchild (0.32s)
+=== RUN   TestFixtureDiscoveryDeadlineKillsGrandchild
+child go [test -overlay=/tmp/adamic-gate/adamic-fixture-discovery-2353591254/overlay.json -count=1 -json -run ^TestAdamicGateRegisteredFixtures$ .//tmp/adamic-gate/TestFixtureDiscoveryDeadlineKillsGrandchild1840463888/002]: deadline/cancellation expired; killing process group; descendants=[]
+    deadline_test.go:69: child=/tmp/adamic-gate/TestFixtureDiscoveryDeadlineKillsGrandchild1840463888/001/go killed_seconds=0.301 diagnostic=fixture discovery failed: /tmp/adamic-gate/adamic-fixture-discovery-2353591254/discovery.jsonl: child /tmp/adamic-gate/TestFixtureDiscoveryDeadlineKillsGrandchild1840463888/001/go: context deadline exceeded; process group killed; stderr in /tmp/adamic-gate/adamic-fixture-discovery-2353591254/discovery.stderr
+         <nil>
+--- PASS: TestFixtureDiscoveryDeadlineKillsGrandchild (0.32s)
+=== RUN   TestFrozenPlanRefusalAndEquivalentEvents
+shard 0 disk before=23179698176 bytes scratch=/home/agent/.cache/gate-frozen-scratch-720226332 /tmp_free=9200914432 bytes /tmp_tmpfs=true
+finished github.com/system-inc/adamic/probe free=23179665408 bytes
+shard 0 pass=2 fail=0 skip=0 wall=0.790s disk after=23179665408 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=3b46bf84518017261d7de19be952909b761af61e nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.35 0.56 0.38 1/229 26519" load_after="0.40 0.57 0.39 1/229 26687" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 0 disk before=23179665408 bytes scratch=/home/agent/.cache/gate-frozen-scratch-720226332 /tmp_free=9200889856 bytes /tmp_tmpfs=true
+finished github.com/system-inc/adamic/probe free=23179665408 bytes
+shard 0 pass=2 fail=0 skip=0 wall=1.323s disk after=23179665408 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=3b46bf84518017261d7de19be952909b761af61e nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.40 0.57 0.39 2/229 26695" load_after="0.40 0.57 0.39 3/229 26804" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 disk before=23179665408 bytes scratch=/home/agent/.cache/gate-frozen-scratch-720226332 /tmp_free=9200857088 bytes /tmp_tmpfs=true
+finished github.com/system-inc/adamic/probe free=23179661312 bytes
+finished github.com/system-inc/adamic/another free=23179665408 bytes
+shard 1 pass=2 fail=0 skip=0 wall=0.734s disk after=23179665408 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=3b46bf84518017261d7de19be952909b761af61e nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.40 0.57 0.39 1/229 26812" load_after="0.40 0.57 0.39 1/229 26978" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 disk before=23179665408 bytes scratch=/home/agent/.cache/gate-frozen-scratch-720226332 /tmp_free=9200816128 bytes /tmp_tmpfs=true
+finished github.com/system-inc/adamic/another free=23176200192 bytes
+finished github.com/system-inc/adamic/probe free=23179665408 bytes
+shard 1 pass=2 fail=0 skip=0 wall=1.281s disk after=23179665408 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=3b46bf84518017261d7de19be952909b761af61e nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.40 0.57 0.39 2/229 26986" load_after="0.40 0.57 0.39 3/229 27103" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+GREEN pass=4 fail=0 skip=0 test_events=4 raw_terminal_events=4
+GATE census=checked required_input=0 not_applicable="" measurement="" opt_in_lane=""
+shard 0 wall=1.323s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=3b46bf84518017261d7de19be952909b761af61e nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.40 0.57 0.39 2/229 26695" load_after="0.40 0.57 0.39 3/229 26804" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 wall=1.281s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=3b46bf84518017261d7de19be952909b761af61e nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.40 0.57 0.39 2/229 26986" load_after="0.40 0.57 0.39 3/229 27103" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+--- PASS: TestFrozenPlanRefusalAndEquivalentEvents (8.86s)
+=== RUN   TestFrozenInputGitMetadataAndBytes
+--- PASS: TestFrozenInputGitMetadataAndBytes (0.01s)
+=== RUN   TestHistoricalRequiredInputAuthority
+--- PASS: TestHistoricalRequiredInputAuthority (0.00s)
+=== RUN   TestHostMetadataWithoutGNUCommandsOnDarwin
+--- PASS: TestHostMetadataWithoutGNUCommandsOnDarwin (0.00s)
+=== RUN   TestFixtureDiscoveryKeepsGoWarningOffJSON
+--- PASS: TestFixtureDiscoveryKeepsGoWarningOffJSON (0.35s)
+=== RUN   TestLiteralChildrenRequireRunBinding
+=== PAUSE TestLiteralChildrenRequireRunBinding
+=== RUN   TestPlannerDoesNotInventLintBackendChildren
+--- PASS: TestPlannerDoesNotInventLintBackendChildren (0.33s)
+=== RUN   TestAnchoredSelectors
+--- PASS: TestAnchoredSelectors (0.18s)
+=== RUN   TestCoverageRejectsOverlapAndUnplannedTests
+--- PASS: TestCoverageRejectsOverlapAndUnplannedTests (0.00s)
+=== RUN   TestRawEvidenceKeepsSkipReasonsAndFailures
+--- PASS: TestRawEvidenceKeepsSkipReasonsAndFailures (0.00s)
+=== RUN   TestPackageFeedDescending
+--- PASS: TestPackageFeedDescending (0.00s)
+=== RUN   TestCompareLocalProvenance
+=== PAUSE TestCompareLocalProvenance
+=== RUN   TestCompareGateLogsReference
+plain reference=git:origin:gate-logs/4a6c6d62752d/plain evidence_commit=77d4123288d48b8d79c38a312a44475baabe6ae4 tested_commit=4a6c6d62752d5d3c0fd68b239b8bef9b535e2083
+merged pass=1 fail=0 skip=1 events=2
+whole pass=1 fail=0 skip=1 events=2 raw_terminal_events=2
+diff: empty
+plain reference=git:origin:gate-logs/4a6c6d62752d/plain evidence_commit=7a5cde05753aa3bb965acffd9bb890fbe51f24a3 tested_commit=4a6c6d62752d5d3c0fd68b239b8bef9b535e2083
+merged pass=1 fail=0 skip=1 events=2
+whole pass=0 fail=1 skip=1 events=2 raw_terminal_events=2
+p::TestPass merged="pass" whole="fail"
+--- PASS: TestCompareGateLogsReference (0.07s)
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence
+=== RUN   TestRequiredEnvironmentConstAudit
+=== PAUSE TestRequiredEnvironmentConstAudit
+=== RUN   TestMergeRefusesConstRequiredGateSkip
+shard 0 disk before=23178629120 bytes scratch=/home/agent/.cache/gate-required-environment-3797702003 /tmp_free=9200943104 bytes /tmp_tmpfs=true
+shard 0 pass=0 fail=0 skip=0 wall=0.650s disk after=23178620928 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=d08392e644fce0c63230d6beacd9c16354ef740c nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 3/240 27581" load_after="0.45 0.58 0.39 1/240 27690" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 disk before=23178620928 bytes scratch=/home/agent/.cache/gate-required-environment-3797702003 /tmp_free=9200934912 bytes /tmp_tmpfs=true
+finished github.com/system-inc/adamic/constgateprobe free=23178620928 bytes
+shard 1 pass=1 fail=0 skip=0 wall=0.725s disk after=23178620928 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=d08392e644fce0c63230d6beacd9c16354ef740c nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 2/240 27698" load_after="0.45 0.58 0.39 2/240 27808" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+GREEN pass=1 fail=0 skip=0 test_events=1 raw_terminal_events=1
+GATE census=checked required_input=0 not_applicable="" measurement="" opt_in_lane=""
+shard 0 wall=0.650s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=d08392e644fce0c63230d6beacd9c16354ef740c nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 3/240 27581" load_after="0.45 0.58 0.39 1/240 27690" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 wall=0.725s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=d08392e644fce0c63230d6beacd9c16354ef740c nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 2/240 27698" load_after="0.45 0.58 0.39 2/240 27808" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+RED pass=0 fail=0 skip=1 test_events=1 raw_terminal_events=1
+GATE census=checked required_input=1 not_applicable="" measurement="" opt_in_lane=""
+shard 0 wall=0.650s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=d08392e644fce0c63230d6beacd9c16354ef740c nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 3/240 27581" load_after="0.45 0.58 0.39 1/240 27690" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 wall=0.725s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=d08392e644fce0c63230d6beacd9c16354ef740c nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 2/240 27698" load_after="0.45 0.58 0.39 2/240 27808" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+required-input skip github.com/system-inc/adamic/constgateprobe::TestRequired; input: ADAMIC_GATE_COHERE=1 fixture input
+gate skipped 1 required-input tests; 0 unclassified skips
+    required_environment_test.go:171: required-input skip github.com/system-inc/adamic/constgateprobe::TestRequired; input: ADAMIC_GATE_COHERE=1 fixture input
+        gate skipped 1 required-input tests; 0 unclassified skips
+--- PASS: TestMergeRefusesConstRequiredGateSkip (2.26s)
+=== RUN   TestCurrentCohereGateIsRequired
+=== PAUSE TestCurrentCohereGateIsRequired
+=== RUN   TestCheckpointKeysIncludeAllExecutionInputs
+--- PASS: TestCheckpointKeysIncludeAllExecutionInputs (0.00s)
+=== RUN   TestPackageCheckpointRequiresIntactCompleteEvidence
+--- PASS: TestPackageCheckpointRequiresIntactCompleteEvidence (0.00s)
+=== RUN   TestTypeAwareChildrenAndParentCost
+--- PASS: TestTypeAwareChildrenAndParentCost (0.00s)
+=== RUN   TestResumeCleanupPreservesForeignPaths
+--- PASS: TestResumeCleanupPreservesForeignPaths (0.00s)
+=== RUN   TestSkipCensusChecksTreeAndLog
+=== PAUSE TestSkipCensusChecksTreeAndLog
+=== RUN   TestShardRefusesStaleRecursiveSubmodules
+    submodules_test.go:32: submodule cohere: checked-out commit 7a5afa4e2a1f152c50b36f94b32d642c830bc41a differs from pin ff20680488bdbf698f6bf4b283300773c9570b4e
+        submodule cohere: working tree is dirty
+--- PASS: TestShardRefusesStaleRecursiveSubmodules (0.23s)
+=== RUN   TestUninitializedSubmoduleIsNamed
+=== PAUSE TestUninitializedSubmoduleIsNamed
+=== RUN   TestSubmoduleSummaryDisagreement
+=== PAUSE TestSubmoduleSummaryDisagreement
+=== RUN   TestMergeRejectsDifferentCohereCommits
+shard 0 disk before=23178612736 bytes scratch=/home/agent/.cache/gate-submodule-scratch-3029228515 /tmp_free=9200685056 bytes /tmp_tmpfs=true
+finished provenanceprobe free=23178403840 bytes
+shard 0 pass=1 fail=0 skip=0 wall=0.820s disk after=23178403840 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=a982afb97d62e3d52220ed8706bd55fab35e022a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 2/253 28375" load_after="0.45 0.58 0.39 3/253 28564" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 disk before=23178403840 bytes scratch=/home/agent/.cache/gate-submodule-scratch-3029228515 /tmp_free=9200660480 bytes /tmp_tmpfs=true
+shard 1 pass=0 fail=0 skip=0 wall=0.613s disk after=23178403840 bytes
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=a982afb97d62e3d52220ed8706bd55fab35e022a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 3/253 28572" load_after="0.45 0.58 0.39 1/253 28662" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+GREEN pass=1 fail=0 skip=0 test_events=1 raw_terminal_events=1
+GATE census=not-landed required_input=0 not_applicable="" measurement="" opt_in_lane=""
+shard 0 wall=0.820s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=a982afb97d62e3d52220ed8706bd55fab35e022a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 2/253 28375" load_after="0.45 0.58 0.39 3/253 28564" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 wall=0.613s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=a982afb97d62e3d52220ed8706bd55fab35e022a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 3/253 28572" load_after="0.45 0.58 0.39 1/253 28662" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+RED pass=1 fail=0 skip=0 test_events=1 raw_terminal_events=1
+GATE census=not-landed required_input=0 not_applicable="" measurement="" opt_in_lane=""
+shard 0 wall=0.820s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=a982afb97d62e3d52220ed8706bd55fab35e022a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 2/253 28375" load_after="0.45 0.58 0.39 3/253 28564" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1 wall=0.613s
+concurrency="auto" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=a982afb97d62e3d52220ed8706bd55fab35e022a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.45 0.58 0.39 3/253 28572" load_after="0.45 0.58 0.39 1/253 28662" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+shard 1: submodule cohere: checked-out commit ef6985fd05f79b95ec189e9ec7601ebe8ee933e8 differs from pin 5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5
+shards 0 and 1 disagree on submodule cohere: pin/checkout 5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5/5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5 versus 5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5/ef6985fd05f79b95ec189e9ec7601ebe8ee933e8
+    submodules_test.go:195: shard 1: submodule cohere: checked-out commit ef6985fd05f79b95ec189e9ec7601ebe8ee933e8 differs from pin 5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5
+        shards 0 and 1 disagree on submodule cohere: pin/checkout 5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5/5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5 versus 5bcce9e1a89bfbe0d023559e62b9bec1a9a6c9e5/ef6985fd05f79b95ec189e9ec7601ebe8ee933e8
+--- PASS: TestMergeRejectsDifferentCohereCommits (1.98s)
+=== RUN   TestGitFixtureOwnsItsObjectDirectory
+=== PAUSE TestGitFixtureOwnsItsObjectDirectory
+=== RUN   TestTimingsRetainRepeatedParentSetupOnce
+--- PASS: TestTimingsRetainRepeatedParentSetupOnce (0.00s)
+=== RUN   TestTimingsPriceLayoutSetupOnce
+--- PASS: TestTimingsPriceLayoutSetupOnce (0.00s)
+=== RUN   TestTimingsPreserveParallelParentSpan
+--- PASS: TestTimingsPreserveParallelParentSpan (0.00s)
+=== RUN   TestTimingsRejectMalformedLog
+--- PASS: TestTimingsRejectMalformedLog (0.00s)
+=== RUN   TestTimingsMergedLogPreservesInvocations
+--- PASS: TestTimingsMergedLogPreservesInvocations (0.00s)
+=== RUN   TestTimingsReorderingIsByteIdentical
+--- PASS: TestTimingsReorderingIsByteIdentical (0.02s)
+=== RUN   TestWASISourceGates
+--- PASS: TestWASISourceGates (0.00s)
+=== RUN   TestRequiredWASISkips
+--- PASS: TestRequiredWASISkips (0.00s)
+=== RUN   TestWASIPreflight
+--- PASS: TestWASIPreflight (0.00s)
+=== RUN   TestWASICompilerSelectors
+--- PASS: TestWASICompilerSelectors (0.00s)
+=== RUN   TestWASISDKResumeIdentity
+--- PASS: TestWASISDKResumeIdentity (1.59s)
+=== RUN   TestWASICurrentSourceAudit
+--- PASS: TestWASICurrentSourceAudit (2.34s)
+=== CONT  TestConcurrencyBudgetAndResumeIdentity
+--- PASS: TestConcurrencyBudgetAndResumeIdentity (0.00s)
+=== CONT  TestCurrentCohereGateIsRequired
+=== CONT  TestSkipCensusChecksTreeAndLog
+=== CONT  TestGitFixtureOwnsItsObjectDirectory
+=== CONT  TestSubmoduleSummaryDisagreement
+=== RUN   TestSubmoduleSummaryDisagreement/pin
+    submodules_test.go:114: shard 7 submodule cohere: pin other differs from tested tree pin a
+        shard 7: submodule cohere: checked-out commit a differs from pin other
+        shards 0 and 7 disagree on submodule cohere: pin/checkout a/a versus other/a
+=== RUN   TestSubmoduleSummaryDisagreement/checkout
+=== CONT  TestRequiredEnvironmentConstAudit
+=== NAME  TestSubmoduleSummaryDisagreement/checkout
+    submodules_test.go:114: shard 7: submodule cohere: checked-out commit other differs from pin a
+        shards 0 and 7 disagree on submodule cohere: pin/checkout a/a versus a/other
+=== RUN   TestSubmoduleSummaryDisagreement/nested
+    submodules_test.go:114: shard 7: submodule cohere/typescript-go: checked-out commit other differs from pin b
+        shards 0 and 7 disagree on submodule cohere/typescript-go: pin/checkout b/b versus b/other
+=== RUN   TestSubmoduleSummaryDisagreement/missing
+    submodules_test.go:114: shard 7 submodule cohere: missing provenance
+        shard 7 submodule cohere/typescript-go: missing provenance
+=== RUN   TestSubmoduleSummaryDisagreement/dirty
+    submodules_test.go:114: shard 7: submodule cohere/typescript-go: working tree is dirty
+=== RUN   TestSubmoduleSummaryDisagreement/duplicate
+    submodules_test.go:114: shard 7 submodule cohere: duplicate record
+--- PASS: TestSubmoduleSummaryDisagreement (0.00s)
+    --- PASS: TestSubmoduleSummaryDisagreement/pin (0.00s)
+    --- PASS: TestSubmoduleSummaryDisagreement/checkout (0.00s)
+    --- PASS: TestSubmoduleSummaryDisagreement/nested (0.00s)
+    --- PASS: TestSubmoduleSummaryDisagreement/missing (0.00s)
+    --- PASS: TestSubmoduleSummaryDisagreement/dirty (0.00s)
+    --- PASS: TestSubmoduleSummaryDisagreement/duplicate (0.00s)
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-notes
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-notes
+=== CONT  TestLiteralChildrenRequireRunBinding
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-log
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-log
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-log
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-log
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/symlink-log
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/symlink-log
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-commit
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-commit
+=== RUN   TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/wrong-commit
+=== PAUSE TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/wrong-commit
+--- PASS: TestRequiredEnvironmentConstAudit (0.00s)
+=== CONT  TestConcurrencyCheckpointMatchesActualInvocation
+--- PASS: TestLiteralChildrenRequireRunBinding (0.00s)
+=== CONT  TestCompareLocalProvenance
+--- PASS: TestConcurrencyCheckpointMatchesActualInvocation (0.00s)
+=== CONT  TestUninitializedSubmoduleIsNamed
+=== RUN   TestCompareLocalProvenance/matching
+merged pass=1 fail=0 skip=0 events=1
+whole pass=1 fail=0 skip=0 events=1 raw_terminal_events=1
+diff: empty
+=== RUN   TestCompareLocalProvenance/other-commit
+--- PASS: TestSkipCensusChecksTreeAndLog (0.00s)
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-notes
+=== RUN   TestCompareLocalProvenance/other-node
+=== RUN   TestCompareLocalProvenance/other-go
+=== RUN   TestCompareLocalProvenance/missing-node
+=== RUN   TestCompareLocalProvenance/missing-go
+merged pass=1 fail=0 skip=0 events=1
+whole pass=1 fail=0 skip=0 events=1 raw_terminal_events=1
+diff: empty
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/wrong-commit
+merged pass=1 fail=0 skip=0 events=1
+whole pass=1 fail=0 skip=0 events=1 raw_terminal_events=1
+diff: empty
+--- PASS: TestCompareLocalProvenance (0.00s)
+    --- PASS: TestCompareLocalProvenance/matching (0.00s)
+    --- PASS: TestCompareLocalProvenance/other-commit (0.00s)
+    --- PASS: TestCompareLocalProvenance/other-node (0.00s)
+    --- PASS: TestCompareLocalProvenance/other-go (0.00s)
+    --- PASS: TestCompareLocalProvenance/missing-node (0.00s)
+    --- PASS: TestCompareLocalProvenance/missing-go (0.00s)
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-commit
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/symlink-log
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-log
+=== CONT  TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-log
+--- PASS: TestGitFixtureOwnsItsObjectDirectory (0.01s)
+--- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence (0.00s)
+    --- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-notes (0.00s)
+    --- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-commit (0.00s)
+    --- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/symlink-log (0.00s)
+    --- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/wrong-commit (0.01s)
+    --- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/duplicate-log (0.00s)
+    --- PASS: TestPlainArchiveRefusesMissingDuplicateAndLinkedEvidence/missing-log (0.00s)
+--- PASS: TestUninitializedSubmoduleIsNamed (0.22s)
+--- PASS: TestCurrentCohereGateIsRequired (2.32s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-gate	22.248s

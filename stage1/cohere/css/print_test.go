@@ -105,6 +105,7 @@ func TestCSSPrinterAgreesWithGo(t *testing.T) {
 				repo, _ := filepath.Abs(repository)
 				comparePrinterLibrary(t, cases, expected, filepath.Join(repo, "cohere", "internal", "format", "prettier", "bundles"), mode, "fork")
 			} else {
+				// census: required-input ADAMIC_CSS_PRINTER_LIBRARY: npm directory with prettier@3.9.6; see docs/gate-inputs.md.
 				t.Skip("set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6")
 			}
 		})
@@ -201,6 +202,7 @@ func comparePrinterLibrary(t *testing.T, cases, expected, library, mode, variant
 // Not parallel: run only on request, with the semantic corpus checked first.
 func TestCSSPrinterThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_CSS_PRINTER_BENCH") == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_CSS_PRINTER_BENCH=1")
 	}
 	library := os.Getenv("ADAMIC_CSS_PRINTER_LIBRARY")
@@ -316,6 +318,7 @@ func TestCSSPrinterBoundaryProofs(t *testing.T) {
 	t.Logf("Go and Node direct-printer proofs:\n%s", answers.String())
 	library := os.Getenv("ADAMIC_CSS_PRINTER_LIBRARY")
 	if library == "" {
+		// census: required-input ADAMIC_CSS_PRINTER_LIBRARY: npm directory with prettier@3.9.6; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_CSS_PRINTER_LIBRARY")
 	}
 	script, _ := filepath.Abs("gaps/printer_library.mjs")

@@ -4,8 +4,9 @@ This is the setup worker's inventory for the AST census at area/developer-tools
 `10e709cef5b6190c42fe8249f83d2cde20f5a402`, with the post-opt-in rule applied. A missing correctness input is
 `required-input`, including debug bypasses and harness request files. Benchmark
 and profile switches belong to `measurement` and do not satisfy verification.
-The machine-readable declaration is
-[skips.json](../internal/skipcensus/testdata/skips.json).
+Declarations now live directly above their skip calls as `// census:` comments.
+`go run ./internal/skipcensus/cmd -scan` emits the machine-readable inventory;
+[the README](../internal/skipcensus/README.md) defines the grammar.
 
 Run `bash cloud/setup.sh`, then source the env.sh it creates. In this worker that
 is `/workspace/adamic-tools/env.sh`. The observed tools are Go 1.27.1, clang

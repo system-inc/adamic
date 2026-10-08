@@ -116,6 +116,7 @@ func TestEnumCleanupMutant(t *testing.T) {
 	t.Parallel()
 	// The oracle uses LeakSanitizer on Linux and the leaks tool on macOS.
 	if runtime.GOOS != "linux" {
+		// census: not-applicable macOS only: AddressSanitizer there has no leak detector; Linux runs this mutant with LeakSanitizer.
 		t.Skip("LeakSanitizer detect_leaks is not supported on this platform")
 	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums.a"))

@@ -21,7 +21,7 @@ func optInAnnotations(root string, rows []Row) error {
 	files := map[string]bool{}
 	for index, row := range rows {
 		files[row.File] = true
-		locations[fmt.Sprintf("%s:%d", row.File, row.Line)] = index
+		locations[fmt.Sprintf("%s:%d:%d", row.File, row.Line, row.column)] = index
 	}
 	// Include callers in other test files even when those files have no skip.
 	for file := range files {
@@ -83,7 +83,7 @@ func optInAnnotations(root string, rows []Row) error {
 			if selector, ok := n.Fun.(*ast.SelectorExpr); ok && isSkipName(selector.Sel.Name) {
 				position := set.Position(n.Pos())
 				file, _ := filepath.Rel(root, position.Filename)
-				if index, ok := locations[fmt.Sprintf("%s:%d", filepath.ToSlash(file), position.Line)]; ok {
+				if index, ok := locations[fmt.Sprintf("%s:%d:%d", filepath.ToSlash(file), position.Line, position.Column)]; ok {
 					for variable := range on {
 						rows[index].OptInOn = append(rows[index].OptInOn, variable)
 					}

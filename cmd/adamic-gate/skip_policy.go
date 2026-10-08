@@ -12,8 +12,6 @@ import (
 	"github.com/system-inc/adamic/internal/skipcensus"
 )
 
-const skipCensusTable = "internal/skipcensus/testdata/skips.json"
-
 type skipCensusSummary struct {
 	Status                                                        string
 	NotApplicable, Measurement, OptInLane, RequiredInput, Unknown []string
@@ -25,23 +23,8 @@ func censusDeclarations(root string) ([]skipcensus.Row, bool, error) {
 	} else if err != nil {
 		return nil, true, err
 	}
-	actual, err := skipcensus.Scan(root)
-	if err != nil {
-		return nil, true, err
-	}
-	file, err := os.Open(filepath.Join(root, skipCensusTable))
-	if err != nil {
-		return nil, true, err
-	}
-	rows, err := skipcensus.Load(file)
-	file.Close()
-	if err != nil {
-		return nil, true, err
-	}
-	if err := skipcensus.Validate(actual, rows); err != nil {
-		return nil, true, fmt.Errorf("skip census table does not match tree: %w", err)
-	}
-	return rows, true, nil
+	rows, err := skipcensus.Scan(root)
+	return rows, true, err
 }
 
 // The concatenated shard streams are exactly the merged test.jsonl stream.

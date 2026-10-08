@@ -37,6 +37,7 @@ func sameAnswer(left, right answer) bool {
 func TestUpstreamNumericSeparatorGap(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
+		// census: required-input ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
 	}
 	fixture, err := os.ReadFile("gaps/numeric-separators.json")
@@ -133,6 +134,7 @@ func corpusCases(t *testing.T) []textCase {
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
+		// census: required-input ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
 	cases := corpusCases(t)
@@ -278,6 +280,7 @@ type printerMutation struct{ name, file, from, to string }
 func TestExternalComparisonCatchesThreePrinterMutants(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
+		// census: required-input ADAMIC_JSON_PRETTIER: npm directory with prettier@3.9.6; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
 	}
 	cases := []textCase{

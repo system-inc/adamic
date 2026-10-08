@@ -71,6 +71,7 @@ func buildNative(t *testing.T, entry string, sanitize bool) string {
 // Not parallel: fresh-process throughput is measured after correctness on the same sources.
 func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
+		// census: measurement ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.
 		t.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
 	}
 	directory, err := filepath.Abs(".")

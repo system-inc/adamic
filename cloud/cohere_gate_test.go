@@ -17,6 +17,7 @@ const cohereGateVariable = "ADAMIC_GATE_COHERE"
 func TestRepositoryPassesCohereBaseline(t *testing.T) {
 	t.Parallel()
 	if os.Getenv(cohereGateVariable) != "1" {
+		// census: required-input The dedicated cohere gate shard sets ADAMIC_GATE_COHERE=1 and runs TestRepositoryPassesCohereBaseline. cloud/cohere_gate.py builds the pinned cohere submodule and checks repository sources and docs against cloud/cohere-baseline.json; setup supplies Node v24.19.0, Go and Python 3.
 		t.Skipf("%s is not 1: the cohere baseline runs in the gate, not in ordinary loops", cohereGateVariable)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)

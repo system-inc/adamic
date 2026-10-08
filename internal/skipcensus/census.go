@@ -12,25 +12,28 @@ import (
 	"go/token"
 	"io"
 	"io/fs"
+	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 )
 
 type Row struct {
-	File      string   `json:"file"`
-	Test      string   `json:"test"`
-	ID        string   `json:"id"`
-	Line      int      `json:"line"`
-	Condition string   `json:"condition"`
-	Reads     []string `json:"reads"`
-	Callers   []string `json:"callers"`
-	Message   string   `json:"message"`
-	Class     string   `json:"class"`
-	Provides  string   `json:"provides"`
-	OptInOn   []string `json:"opt_in_on,omitempty"`
-	OptInOff  []string `json:"opt_in_off,omitempty"`
+	column, offset int
+	File           string   `json:"file"`
+	Test           string   `json:"test"`
+	ID             string   `json:"id"`
+	Line           int      `json:"line"`
+	Condition      string   `json:"condition"`
+	Reads          []string `json:"reads"`
+	Callers        []string `json:"callers"`
+	Message        string   `json:"message"`
+	Class          string   `json:"class"`
+	Provides       string   `json:"provides"`
+	OptInOn        []string `json:"opt_in_on,omitempty"`
+	OptInOff       []string `json:"opt_in_off,omitempty"`
 }
 
 type function struct {
@@ -89,6 +92,19 @@ func testingReceiver(set *token.FileSet, expression ast.Expr, alias string, seen
 // separately pinned cohere submodule is a different repository, outside this gate.
 // Build constraints are deliberately ignored: platform skips must be declared too.
 func Scan(root string) ([]Row, error) {
+	rows, err := Inventory(root)
+	if err != nil {
+		return nil, err
+	}
+	if err := Audit(rows); err != nil {
+		return nil, err
+	}
+	return rows, nil
+}
+
+// Inventory is an unaudited AST inventory for the annotation migration only.
+// Production consumers must use Scan, which validates all declarations.
+func Inventory(root string) ([]Row, error) {
 	set := token.NewFileSet()
 	functions := map[string]*function{}
 	var rows []Row
@@ -105,7 +121,11 @@ func Scan(root string) ([]Row, error) {
 		if !strings.HasSuffix(path, "_test.go") {
 			return nil
 		}
-		tree, err := parser.ParseFile(set, path, nil, 0)
+		source, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		tree, err := parser.ParseFile(set, path, source, parser.ParseComments)
 		if err != nil {
 			return err
 		}
@@ -118,6 +138,17 @@ func Scan(root string) ([]Row, error) {
 		}
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
+		comments := map[int]*ast.Comment{}
+		var orderedComments []*ast.Comment
+		for _, group := range tree.Comments {
+			for _, comment := range group.List {
+				if strings.HasPrefix(comment.Text, "// census:") {
+					comments[set.Position(comment.Pos()).Line] = comment
+					orderedComments = append(orderedComments, comment)
+				}
+			}
+		}
+		used := map[*ast.Comment]bool{}
 		for _, decl := range tree.Decls {
 			f, ok := decl.(*ast.FuncDecl)
 			if !ok || f.Body == nil {
@@ -171,7 +202,24 @@ func Scan(root string) ([]Row, error) {
 							if len(call.Args) > 0 {
 								message = printed(set, call.Args[0])
 							}
-							rows = append(rows, Row{File: relative, Test: f.Name.Name, ID: fmt.Sprintf("%s:%x", f.Name.Name, sum[:]), Line: set.Position(call.Pos()).Line, Condition: condition, Message: message})
+							position := set.Position(call.Pos())
+							row := Row{column: position.Column, offset: position.Offset, File: relative, Test: f.Name.Name, ID: fmt.Sprintf("%s:%x", f.Name.Name, sum[:]), Line: position.Line, Condition: condition, Message: message}
+							if comment := comments[position.Line-1]; comment != nil {
+								start := strings.LastIndex(string(source[:position.Offset]), "\n") + 1
+								if strings.TrimSpace(string(source[start:position.Offset])) != "" {
+									comment = nil
+								}
+								if comment != nil {
+									declaration := strings.TrimSpace(strings.TrimPrefix(comment.Text, "// census:"))
+									parts := strings.SplitN(declaration, " ", 2)
+									row.Class = parts[0]
+									if len(parts) > 1 {
+										row.Provides = strings.TrimSpace(parts[1])
+									}
+									used[comment] = true
+								}
+							}
+							rows = append(rows, row)
 						}
 					}
 				}
@@ -187,6 +235,11 @@ func Scan(root string) ([]Row, error) {
 				})
 			}
 			walk(f.Body, nil)
+		}
+		for _, comment := range orderedComments {
+			if !used[comment] {
+				return fmt.Errorf("%s:%d: census annotation must immediately precede a skip call on its own line", relative, set.Position(comment.Pos()).Line)
+			}
 		}
 		return nil
 	})
@@ -241,10 +294,6 @@ func Scan(root string) ([]Row, error) {
 			}
 		}
 		row.Callers = unique(row.Callers)
-		if len(row.Callers) > 0 {
-			sum := sha256.Sum256([]byte(row.Condition))
-			row.ID = fmt.Sprintf("%s:%x", strings.Join(row.Callers, ","), sum[:])
-		}
 	}
 	if err := optInAnnotations(root, rows); err != nil {
 		return nil, err
@@ -276,55 +325,47 @@ func Load(r io.Reader) ([]Row, error) {
 }
 func key(row Row) string { return row.File + ":" + row.ID }
 
-// Validate ignores line numbers. Moving a skip does not change its identity.
-func Validate(actual, declared []Row) error {
-	remaining := map[string]Row{}
-	for _, r := range declared {
-		k := key(r)
-		if _, ok := remaining[k]; ok {
-			return fmt.Errorf("duplicate declaration %s", k)
-		}
-		switch r.Class {
-		case "required-input", "measurement", "not-applicable", "opt-in-lane":
-		default:
-			return fmt.Errorf("invalid class for %s", k)
-		}
-		if len(r.OptInOn) > 0 && r.Class != "required-input" {
-			return fmt.Errorf("skip after opt-in %s (%s) must be required-input", k, strings.Join(r.OptInOn, ", "))
-		}
-		if r.Provides == "" {
-			return fmt.Errorf("missing provision or rationale for %s", k)
-		}
-		remaining[k] = r
-	}
-	var errors []string
-	for _, r := range actual {
-		k := key(r)
-		d, ok := remaining[k]
-		if !ok {
-			errors = append(errors, fmt.Sprintf("undeclared skip %s (%s:%d)", k, r.Test, r.Line))
+// Audit checks declarations without consulting a central inventory.
+func Audit(rows []Row) error {
+	var problems []string
+	seen := map[string]bool{}
+	for _, row := range rows {
+		where := fmt.Sprintf("%s:%d (%s)", row.File, row.Line, row.Test)
+		fail := func(message string) { problems = append(problems, where+": "+message) }
+		if row.Class == "" {
+			fail("missing census annotation")
 			continue
 		}
-		delete(remaining, k)
-		a, b := r, d
-		a.Line = 0
-		b.Line = 0
-		a.Class = ""
-		b.Class = ""
-		a.Provides = ""
-		b.Provides = ""
-		aj, _ := json.Marshal(a)
-		bj, _ := json.Marshal(b)
-		if !bytes.Equal(aj, bj) {
-			errors = append(errors, "stale metadata "+k)
+		switch row.Class {
+		case "measurement":
+		case "required-input":
+			if !namesInput(row.Provides) {
+				fail("required-input annotation must name its variable or source field and provider")
+			}
+		case "not-applicable", "opt-in-lane":
+			if row.Provides == "" {
+				fail("annotation must state its applicability reason")
+			}
+		default:
+			fail("unknown census class " + row.Class)
 		}
+		if len(row.OptInOn) > 0 && row.Class != "required-input" {
+			fail("skip after opt-in must be required-input")
+		}
+		if seen[key(row)] {
+			fail("duplicate skip identity")
+		}
+		seen[key(row)] = true
 	}
-	for k := range remaining {
-		errors = append(errors, "removed skip "+k)
-	}
-	sort.Strings(errors)
-	if len(errors) > 0 {
-		return fmt.Errorf("%s", strings.Join(errors, "\n"))
+	sort.Strings(problems)
+	if len(problems) > 0 {
+		return fmt.Errorf("%s", strings.Join(problems, "\n"))
 	}
 	return nil
+}
+
+var inputName = regexp.MustCompile(`\b(?:[A-Z][A-Z0-9_]+|[a-z][A-Za-z0-9_]*\.[A-Z][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*)\b`)
+
+func namesInput(text string) bool {
+	return len(strings.Fields(text)) > 1 && inputName.MatchString(text)
 }

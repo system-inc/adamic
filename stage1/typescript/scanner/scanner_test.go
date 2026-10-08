@@ -390,6 +390,7 @@ func TestScannerAgreesWithTypescriptGo(t *testing.T) {
 
 func TestPerformance(t *testing.T) {
 	if os.Getenv("ADAMIC_SCANNER_BENCH") == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput")
 	}
 	asked := askedCorpus(t)

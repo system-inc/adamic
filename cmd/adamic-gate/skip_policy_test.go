@@ -1,13 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/skipcensus"
 )
 
 func declareFixtureCensus(t *testing.T, root string) {
@@ -19,25 +16,7 @@ func declareFixtureCensus(t *testing.T, root string) {
 	if err := os.WriteFile(marker, []byte("//go:build census_marker\n\npackage skipcensus\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	rows, err := skipcensus.Scan(root)
-	if err != nil {
-		t.Fatal(err)
-	}
-	for i := range rows {
-		rows[i].Class = "required-input"
-		rows[i].Provides = "ADAMIC_GATE_COHERE=1 fixture input"
-	}
-	table := filepath.Join(root, skipCensusTable)
-	if err := os.MkdirAll(filepath.Dir(table), 0755); err != nil {
-		t.Fatal(err)
-	}
-	b, err := json.Marshal(rows)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(table, b, 0600); err != nil {
-		t.Fatal(err)
-	}
+
 }
 
 func TestSkipCensusChecksTreeAndLog(t *testing.T) {
@@ -49,28 +28,27 @@ func TestSkipCensusChecksTreeAndLog(t *testing.T) {
 	file := filepath.Join(root, "probe/probe_test.go")
 	source := `package probe
 import "testing"
-func TestRequired(t *testing.T){t.Skip("source input missing")}
-func TestNA(t *testing.T){t.Skip("platform")}
-func TestMeasurement(t *testing.T){t.Skip("measurement")}
-func TestLane(t *testing.T){t.Skip("separate lane")}
+func TestRequired(t *testing.T){
+ // census: required-input ADAMIC_TYPESCRIPT_SOURCE fixture provision
+ t.Skip("source input missing")
+}
+func TestNA(t *testing.T){
+ // census: not-applicable platform witness
+ t.Skip("platform")
+}
+func TestMeasurement(t *testing.T){
+ // census: measurement
+ t.Skip("measurement")
+}
+func TestLane(t *testing.T){
+ // census: opt-in-lane separate lane
+ t.Skip("separate lane")
+}
 `
 	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
 		t.Fatal(err)
 	}
 	declareFixtureCensus(t, root)
-	rows, err := skipcensus.Scan(root)
-	if err != nil {
-		t.Fatal(err)
-	}
-	classes := map[string]string{"TestRequired": "required-input", "TestNA": "not-applicable", "TestMeasurement": "measurement", "TestLane": "opt-in-lane"}
-	for i := range rows {
-		rows[i].Class = classes[rows[i].Test]
-		rows[i].Provides = "ADAMIC_TYPESCRIPT_SOURCE fixture provision"
-	}
-	b, _ := json.Marshal(rows)
-	if err := os.WriteFile(filepath.Join(root, skipCensusTable), b, 0600); err != nil {
-		t.Fatal(err)
-	}
 	log := filepath.Join(t.TempDir(), "test.jsonl")
 	allowed := `{"Action":"skip","Package":"github.com/system-inc/adamic/probe","Test":"TestNA"}
 {"Action":"skip","Package":"github.com/system-inc/adamic/probe","Test":"TestMeasurement"}
@@ -93,7 +71,7 @@ func TestLane(t *testing.T){t.Skip("separate lane")}
 	if err := os.WriteFile(file, []byte(source+"\nfunc TestNew(t *testing.T){t.Skip(\"new\")}\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := checkSkipCensus(root, log); err == nil || !strings.Contains(err.Error(), "undeclared skip") {
-		t.Fatal("stale table accepted", err)
+	if _, err := checkSkipCensus(root, log); err == nil || !strings.Contains(err.Error(), "missing census annotation") {
+		t.Fatal("unannotated skip accepted", err)
 	}
 }

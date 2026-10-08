@@ -201,6 +201,7 @@ func TestPortMatchesGoCohere(t *testing.T) {
 	}
 	compare(t, "Node", nodeRun, expected, cases)
 	if os.Getenv("ADAMIC_JSON_NODE_ONLY") != "" {
+		// census: required-input Gate must leave ADAMIC_JSON_NODE_ONLY unset so native parity verification runs.
 		t.Skip("debug run requested Node only; no native parity claim")
 	}
 	program := lowered(t, entry)
@@ -328,6 +329,7 @@ func TestAdditionalJSONBoundaries(t *testing.T) {
 	}
 	compare(t, "Node boundaries", result, expected, cases)
 	if os.Getenv("ADAMIC_JSON_NODE_ONLY") != "" {
+		// census: required-input Gate must leave ADAMIC_JSON_NODE_ONLY unset so native parity verification runs.
 		t.Skip("debug Node only")
 	}
 	program := lowered(t, entry)

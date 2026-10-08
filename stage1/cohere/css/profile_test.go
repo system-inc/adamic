@@ -16,6 +16,7 @@ import (
 func TestCSSProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_CSS_PROFILE_DIR")
 	if directory == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_CSS_PROFILE_DIR")
 	}
 	if err := os.MkdirAll(directory, 0755); err != nil {
@@ -131,6 +132,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 func TestCSSProfileSnapshotsAgree(t *testing.T) {
 	asked := os.Getenv("ADAMIC_CSS_PROFILE_SNAPSHOTS")
 	if asked == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_CSS_PROFILE_SNAPSHOTS")
 	}
 	cases, _ := askedCases(t)

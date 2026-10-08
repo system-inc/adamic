@@ -12,6 +12,7 @@ func TestStage3FixtureHook(t *testing.T) {
 	t.Parallel()
 	path := os.Getenv("ADAMIC_STAGE3_FIXTURE")
 	if path == "" {
+		// census: not-applicable Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
 		t.Skip("called only by the Stage 3 fixture runner")
 	}
 	program, err := lowered(t, path)

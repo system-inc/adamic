@@ -1,0 +1,29 @@
+{
+  "samples": {
+    "before": [
+      0.22959014600201044,
+      0.20128624600329204,
+      0.1954716939944774
+    ],
+    "after": [
+      0.24444537800445687,
+      0.21265928599314066,
+      0.19572714700188953
+    ]
+  },
+  "best": {
+    "before": 0.1954716939944774,
+    "after": 0.19572714700188953
+  },
+  "build-flags": {
+    "base": "f8dc89f215febd29f2b523edfab987428b82776a",
+    "nproc": "5",
+    "cpu.max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "load-before": "0.03 0.51 0.35 1/166 22871",
+    "load-after": "0.35 0.57 0.37 1/166 22915",
+    "cache": "no census cache; compiled binaries; ordinary and uncached identical"
+  }
+}

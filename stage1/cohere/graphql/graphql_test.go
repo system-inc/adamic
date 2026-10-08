@@ -110,6 +110,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 		t.Parallel()
 		library := os.Getenv("ADAMIC_GRAPHQL_LIBRARY")
 		if library == "" {
+			// census: required-input ADAMIC_GRAPHQL_LIBRARY: npm directory with graphql@17.0.2; see docs/gate-inputs.md.
 			t.Skip("set ADAMIC_GRAPHQL_LIBRARY to a directory where `npm install graphql@17.0.2` ran, to compare with the library itself")
 		}
 		script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))

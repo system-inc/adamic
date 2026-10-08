@@ -92,6 +92,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 		t.Parallel()
 		library := os.Getenv("ADAMIC_MEDIA_QUERY_LIBRARY")
 		if library == "" {
+			// census: required-input ADAMIC_MEDIA_QUERY_LIBRARY: npm directory with postcss-media-query-parser@0.2.3; see docs/gate-inputs.md.
 			t.Skip("set ADAMIC_MEDIA_QUERY_LIBRARY to a directory where `npm install postcss-media-query-parser@0.2.3` ran, to compare with the library itself")
 		}
 		script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))

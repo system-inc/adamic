@@ -16,9 +16,11 @@ import (
 // slab chunks stay reachable, so LeakSanitizer cannot account for individual slots.
 func TestNativeSlabsAgreeWithNode(t *testing.T) {
 	if runtime.GOOS == "darwin" {
+		// census: not-applicable Slab correctness lane requires its Linux shard. macOS Node fuses multiply-adds on navigation.a; other non-Linux platforms are outside this witness.
 		t.Skip("Linux is the gate of record; macOS Node fuses multiply-adds, so navigation.a differs there (#myatdyv), and this lane gets its own Linux shard")
 	}
 	if runtime.GOOS != "linux" {
+		// census: not-applicable Slab correctness lane requires its Linux shard. macOS Node fuses multiply-adds on navigation.a; other non-Linux platforms are outside this witness.
 		t.Skip("the slab lane has its own Linux gate shard")
 	}
 	t.Parallel()
@@ -28,6 +30,7 @@ func TestNativeSlabsAgreeWithNode(t *testing.T) {
 // This optional control measures the same work with the existing malloc allocator.
 func TestNativeMallocAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_SLAB_MEASURE") != "1" {
+		// census: measurement ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane.
 		t.Skip("set ADAMIC_SLAB_MEASURE=1 for the timing control")
 	}
 	t.Parallel()

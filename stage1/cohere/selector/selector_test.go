@@ -83,6 +83,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 		t.Parallel()
 		library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 		if library == "" {
+			// census: required-input ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md.
 			t.Skip("set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself")
 		}
 		script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
@@ -385,6 +386,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 // Not parallel: throughput is measured alone, not while other ports compile.
 func TestSelectorThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_SELECTOR_BENCH") == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_SELECTOR_BENCH=1 to time parser throughput")
 	}
 	casesPath, answers := askedCases(t)
@@ -440,6 +442,7 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	t.Parallel()
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 	if library == "" {
+		// census: required-input setup --gate-inputs provides ADAMIC_SELECTOR_LIBRARY (the pinned postcss-selector-parser install).
 		t.Skip("set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading")
 	}
 	root := t.TempDir()
@@ -500,6 +503,7 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	t.Parallel()
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 	if library == "" {
+		// census: required-input ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_SELECTOR_LIBRARY to prove upstream nontermination")
 	}
 	for _, text := range []string{"a| b", ":is(a|)", "a|@x", "*|)"} {

@@ -145,6 +145,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	t.Run("PostCSS", func(t *testing.T) {
 		library := os.Getenv("ADAMIC_CSS_LIBRARY")
 		if library == "" {
+			// census: required-input ADAMIC_CSS_LIBRARY: npm directory with postcss@8.5.16 and postcss-scss@4.0.9; see docs/gate-inputs.md.
 			t.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
 		}
 		script, _ := filepath.Abs("testdata/library.mjs")
@@ -402,6 +403,7 @@ func TestCompositionMatchesGo(t *testing.T) {
 // Not parallel: parser throughput runs alone, after agreement has been checked.
 func TestCSSThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_CSS_BENCH") == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_CSS_BENCH=1 for throughput")
 	}
 	cases, answers := askedCases(t)

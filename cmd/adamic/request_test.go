@@ -75,6 +75,7 @@ func TestWASIRequestSelection(t *testing.T) {
 // Not parallel: this calls the command in-process, whose checker and diagnostics are shared.
 func TestWASIRequest(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	for _, fixture := range []string{"request.a", "request_alias.a"} {
@@ -150,6 +151,7 @@ func TestWASIRequestModuleSelection(t *testing.T) {
 // Not parallel: uses the command's shared checker and diagnostics.
 func TestWASIRequestThrows(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	output := filepath.Join(t.TempDir(), "request.wasm")

@@ -129,6 +129,7 @@ type lintPhase struct {
 
 func TestRule(t *testing.T) {
 	if *ruleSlug == "" {
+		// census: not-applicable Selected-rule entry point: runs only with -args -rule <slug> or through cmd/adamic-lint-check; the full lint suite checks every rule.
 		t.Skip("use cmd/adamic-lint-check <slug> or -args -rule <slug>")
 	}
 	started := time.Now()

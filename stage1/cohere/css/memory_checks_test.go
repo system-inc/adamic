@@ -15,6 +15,7 @@ import (
 // The access and arithmetic probes likewise preserve ordinary native output.
 func TestComposedMemoryChecksCanFail(t *testing.T) {
 	if runtime.GOOS != "linux" {
+		// census: not-applicable Requires Linux sanitizer harness.
 		t.Skip("Linux sanitizer harness proof")
 	}
 	cases := filepath.Join(t.TempDir(), "cases.txt")

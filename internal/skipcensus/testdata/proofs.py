@@ -1,30 +1,33 @@
-import pathlib,shutil,subprocess,os,json
-repo=pathlib.Path(__file__).resolve().parents[3];scratch=pathlib.Path('/tmp/skip-census-source-copy');scratch.mkdir(exist_ok=True)
-files=subprocess.check_output(['git','ls-files','*_test.go'],cwd=repo,text=True).splitlines()
-files += [str(p.relative_to(repo)) for p in (repo/'internal/skipcensus').rglob('*_test.go')]
-for name in files:
- p=scratch/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(repo/name,p)
-(scratch/'internal/skipcensus/new_skip_test.go').write_text('package skipcensus\nimport "testing"\nfunc TestUndeclaredWitness(t *testing.T) { t.Skip("the gate forgot this input") }\n')
-env=dict(os.environ,ADAMIC_SKIP_CENSUS_ROOT=str(scratch))
-with open('/tmp/skip-census-new-skip-mutant.log','w') as log:
- result=subprocess.run(['/tmp/skip-census.test','-test.run=^TestCensus$','-test.v'],cwd=repo/'internal/skipcensus',env=env,stdout=log,stderr=subprocess.STDOUT)
-assert result.returncode==1
-text=pathlib.Path('/tmp/skip-census-new-skip-mutant.log').read_text();assert 'undeclared skip internal/skipcensus/new_skip_test.go:TestUndeclaredWitness:' in text
-print('scratch new t.Skip: exit 1; TestCensus named TestUndeclaredWitness')
-mutants=[('allow-required','log.go','if required+unknown > 0 {','if unknown > 0 {','TestLogClassesAndMutants'),('allow-added','census.go','errors = append(errors, fmt.Sprintf("undeclared skip %s (%s:%d)", k, r.Test, r.Line))','// mutant allows added skip','TestASTAndDriftMutants'),('allow-removed','census.go','errors = append(errors, "removed skip "+k)','_ = k // mutant allows removed skip','TestASTAndDriftMutants')]
-for name,file,old,new,test in mutants:
- root=pathlib.Path('/tmp/skip-census-mutant-'+name);root.mkdir(exist_ok=True)
- for p in (repo/'internal/skipcensus').glob('*.go'):shutil.copyfile(p,root/p.name)
- (root/'go.mod').write_text('module mutant\ngo 1.27\n')
- p=root/file;source=p.read_text();assert source.count(old)==1;(root/file).write_text(source.replace(old,new,1))
- with open('/tmp/skip-census-'+name+'-mutant.log','w') as log:
-  result=subprocess.run(['go','test','-v','-count=1','-run=^'+test+'$','.'],cwd=root,stdout=log,stderr=subprocess.STDOUT)
- text=pathlib.Path('/tmp/skip-census-'+name+'-mutant.log').read_text();assert result.returncode==1 and '--- FAIL: '+test in text,text
- print(name+': exit 1; '+test+' caught the implementation mutant')
-with open('/tmp/skip-census-plain-check.log','w') as log:
- result=subprocess.run(['/tmp/skip-census-command','/tmp/skip-census-plain/gate-out/test.jsonl'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
-text=pathlib.Path('/tmp/skip-census-plain-check.log').read_text();assert result.returncode==1;assert 'skips=33 required-input=17 unknown=0' in text
-required=[line.split('\t')[2] for line in text.splitlines() if line.startswith('required-input\t')]
-expected=['TestSplitTSGoAgrees','TestThePortParsesAsGoCohereDoes/PostCSS','TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower','TestThePortParsesAsGoCohereDoes/as_graphql-js','TestUpstreamNumericSeparatorGap','TestExternalComparisonCatchesThreePrinterMutants','TestUpstreamRepositoryCorpusParity','TestCompilerAndStage1Agree','TestCSSPrinterAgreesWithGo/default','TestCSSPrinterAgreesWithGo/narrow','TestCSSPrinterBoundaryProofs','TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser','TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars','TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser','TestThePortParsesAsGoCohereDoes/as_postcss-values-parser','TestCompilerExpressionsAgree','TestWholeCompilerAgrees']
-assert sorted(required)==sorted(expected),required
-print('historical plain log: exit 1; all 17 exact expected required-input skips; TestWholeCompilerAgrees included')
+"""Run TestCensus against real source-copy annotation mutants."""
+import os
+import pathlib
+import shutil
+import subprocess
+import tempfile
+
+repo = pathlib.Path(__file__).resolve().parents[3]
+root = pathlib.Path(tempfile.mkdtemp(prefix="census-annotations-mutants-"))
+for name in subprocess.check_output(["git", "ls-files", "*_test.go"], cwd=repo, text=True).splitlines():
+    target = root / name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(repo / name, target)
+for path in (repo / "internal/skipcensus").rglob("*_test.go"):
+    target = root / path.relative_to(repo)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(path, target)
+binary = root / "census.test"
+with (root / "build.log").open("w") as log:
+    subprocess.run(["go", "test", "-c", "-o", str(binary), "./internal/skipcensus"], cwd=repo, stdout=log, stderr=subprocess.STDOUT, check=True)
+for name, annotation, expected in [
+    ("missing", "", "missing census annotation"),
+    ("bad-class", "// census: optional unknown", "unknown census class optional"),
+    ("no-variable", "// census: required-input setup supplies corpus", "must name its variable"),
+]:
+    target = root / "internal/skipcensus/new_skip_test.go"
+    target.write_text('package skipcensus\nimport "testing"\nfunc TestAnnotationWitness(t *testing.T) {\n' + annotation + '\n t.Skip("missing")\n}\n')
+    logfile = root / (name + ".log")
+    with logfile.open("w") as log:
+        result = subprocess.run([str(binary), "-test.run=^TestCensus$", "-test.v"], cwd=repo / "internal/skipcensus", env=dict(os.environ, ADAMIC_SKIP_CENSUS_ROOT=str(root)), stdout=log, stderr=subprocess.STDOUT)
+    output = logfile.read_text()
+    assert result.returncode == 1 and expected in output and "new_skip_test.go:5 (TestAnnotationWitness)" in output, output
+    print(name + ": TestCensus exit 1, named file:5 and TestAnnotationWitness; " + str(logfile))

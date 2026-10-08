@@ -92,6 +92,7 @@ func TestAdamicPortCases(t *testing.T) {
 	var request struct{ Cases, Answers, Repository, Fixtures string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
+		// census: required-input stage1/cohere/css/css_test.go askedCases writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere.
 		t.Skip("run by Adamic CSS slice")
 	}
 	data, err := os.ReadFile(path)

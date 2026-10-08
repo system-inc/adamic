@@ -13,6 +13,7 @@ import (
 func TestProfileSnapshotsAgree(t *testing.T) {
 	snapshots := os.Getenv("ADAMIC_JSON_PROFILE_BINARIES")
 	if snapshots == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_JSON_PROFILE_BINARIES to profile snapshot binaries")
 	}
 	cases := corpusCases(t)

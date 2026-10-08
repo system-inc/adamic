@@ -61,7 +61,7 @@ func TestMergeRefusesConstRequiredGateSkip(t *testing.T) {
 	for name, source := range map[string]string{
 		"go.mod":                       "module github.com/system-inc/adamic\n\ngo 1.27\n",
 		"constgateprobe/gate.go":       "package constgateprobe\nconst gateVariable = \"ADAMIC_GATE_COHERE\"\n",
-		"constgateprobe/probe_test.go": "package constgateprobe\nimport (\"os\";\"testing\")\nfunc TestRequired(t *testing.T) { if os.Getenv(gateVariable) != \"1\" { t.Skip(\"required input absent\") } }\n",
+		"constgateprobe/probe_test.go": "package constgateprobe\nimport (\"os\";\"testing\")\nfunc TestRequired(t *testing.T) { if os.Getenv(gateVariable) != \"1\" {\n// census: required-input ADAMIC_GATE_COHERE=1 fixture input\nt.Skip(\"required input absent\")\n} }\n",
 		timingPath:                     "{}\n",
 	} {
 		if err := os.WriteFile(name, []byte(source), 0600); err != nil {

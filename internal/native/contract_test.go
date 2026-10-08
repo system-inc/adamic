@@ -60,6 +60,7 @@ func TestArithmeticIsNeverFused(t *testing.T) {
 	cpu, why, ok := fusingProcessor()
 	if !ok {
 		// Never on arm64, where it matters most: there FMA is always there and this always runs.
+		// census: not-applicable Requires an FMA-capable arm64 or amd64 CPU; amd64 capability is read from /proc/cpuinfo on Linux or sysctl hw.optional.fma on macOS.
 		t.Skip(why)
 	}
 	source := filepath.Join(t.TempDir(), "fused.c")

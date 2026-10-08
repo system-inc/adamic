@@ -496,6 +496,7 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 func TestCompilerAndStage1Agree(t *testing.T) {
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
+		// census: required-input ADAMIC_TYPESCRIPT_SOURCE: TypeScript v6.0.3 source checkout at 050880ce59e30b356b686bd3144efe24f875ebc8, including src/compiler/*.ts; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
 	}
 	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
@@ -663,6 +664,7 @@ func TestCountGuardMutant(t *testing.T) {
 // Not parallel: interleaved timing samples must not compete with tests in this package.
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_LINT_BENCH=1")
 	}
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")

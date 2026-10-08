@@ -75,6 +75,7 @@ func TestRuntimeCacheKeepsCountFlags(t *testing.T) {
 func TestRuntimeCacheKeepsCoverageApart(t *testing.T) {
 	t.Parallel()
 	if CoverageRequested() {
+		// census: required-input The normal correctness gate must leave ADAMIC_C_COVERAGE unset (or not equal to 1). CoverageRequested in internal/native/native.go reads this variable; forcing coverage on every build prevents the covered/ordinary runtime cache separation proof.
 		t.Skip("ADAMIC_C_COVERAGE=1 puts coverage in every build")
 	}
 	const source = "int main(void) { return 0; }\n"

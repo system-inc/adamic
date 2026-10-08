@@ -16,6 +16,7 @@ import (
 func TestSplitTSGoAgrees(t *testing.T) {
 	archive := os.Getenv("ADAMIC_CLANG_TSGO_ARCHIVE")
 	if archive == "" {
+		// census: required-input ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md.
 		t.Skip("set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive")
 	}
 	program, err := load.Load([]string{"../../stage1/cohere/typeaware/main.ts"})

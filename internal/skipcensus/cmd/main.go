@@ -12,14 +12,18 @@ import (
 
 func main() {
 	root := flag.String("root", ".", "repository root")
-	table := flag.String("table", "internal/skipcensus/testdata/skips.json", "declarations")
+	audit := flag.Bool("audit", false, "audit source declarations without checking a log")
 	scan := flag.Bool("scan", false, "print AST census instead of checking a log")
 	flag.Parse()
+	rows, err := skipcensus.Scan(*root)
+	if err != nil {
+		fatal(err)
+	}
+	if *audit {
+		fmt.Printf("census: %d annotated sites\n", len(rows))
+		return
+	}
 	if *scan {
-		rows, err := skipcensus.Scan(*root)
-		if err != nil {
-			fatal(err)
-		}
 		encoder := json.NewEncoder(os.Stdout)
 		encoder.SetIndent("", "  ")
 		if err := encoder.Encode(rows); err != nil {
@@ -28,23 +32,7 @@ func main() {
 		return
 	}
 	if flag.NArg() != 1 {
-		fatal(fmt.Errorf("usage: skipcensus [-root directory] [-table file] log.jsonl"))
-	}
-	f, err := os.Open(*table)
-	if err != nil {
-		fatal(err)
-	}
-	rows, err := skipcensus.Load(f)
-	f.Close()
-	if err != nil {
-		fatal(err)
-	}
-	actual, err := skipcensus.Scan(*root)
-	if err != nil {
-		fatal(err)
-	}
-	if err := skipcensus.Validate(actual, rows); err != nil {
-		fatal(err)
+		fatal(fmt.Errorf("usage: skipcensus [-root directory] log.jsonl"))
 	}
 	log, err := os.Open(flag.Arg(0))
 	if err != nil {

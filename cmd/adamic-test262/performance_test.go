@@ -17,6 +17,7 @@ import (
 // Opt in so ordinary correctness gates do not spend time measuring process startup.
 func TestCompilerStartupMeasurement(t *testing.T) {
 	if os.Getenv("ADAMIC_TEST262_MEASURE") != "1" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("measurement only")
 	}
 	directory := t.TempDir()
