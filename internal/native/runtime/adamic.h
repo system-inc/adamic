@@ -256,6 +256,11 @@ extern char adamic_literal_mark;
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
 #define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+// The _UNITS forms carry the literal's UTF-16 length, worked out when it's emitted. An immortal literal
+// can be read by any worker, so nothing caches into it at run time (string_index.c); without its units
+// every length or index read rescanned it, which made walking a long literal quadratic.
+#define ADAMIC_STRING_UNITS(text, units) {{0, adamic_kind_string, 0}, sizeof text - 1, text, (units) + 1, ADAMIC_LITERAL_INDEX, NULL, 0}
+#define ADAMIC_STRING_BYTES_UNITS(array, size, units) {{0, adamic_kind_string, 0}, size, array, (units) + 1, ADAMIC_LITERAL_INDEX, NULL, 0}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 //
