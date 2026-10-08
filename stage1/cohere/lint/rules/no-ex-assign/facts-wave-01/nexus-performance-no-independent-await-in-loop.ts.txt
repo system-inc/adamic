@@ -1,0 +1,1 @@
+namespace N { export async function work(){} } import work=N.work; async function f(xs:number[]){for(const x of xs){await work();}}

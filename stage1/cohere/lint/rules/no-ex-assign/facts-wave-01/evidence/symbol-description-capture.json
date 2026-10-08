@@ -1,0 +1,614 @@
+[
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "isNaN();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "isNaN();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Number();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Number();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "String();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "String();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Boolean();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Boolean();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "parseInt();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "parseInt();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Object();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Object();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Date();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Date();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Array();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Array();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "new Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "new Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "(Symbol)();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 11,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "(Symbol)();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 11,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "(Symbol)();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 11,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "class Symbol {}; Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "class Symbol {}; Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "let x = Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "globalThis.Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "globalThis.Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol.call(null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol.call(null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol.iterator;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol.iterator;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(...args);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(...args);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol.for();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol.for();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(undefined);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(undefined);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(\"Foo\");\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(\"Foo\");\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "let x = Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "let x = Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "{ let Symbol = 1; } Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 21,
+        "endLine": 1,
+        "endColumn": 29,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "{ let Symbol = 1; } Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 21,
+        "endLine": 1,
+        "endColumn": 29,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(); Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      },
+      {
+        "line": 1,
+        "column": 11,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(); Symbol();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      },
+      {
+        "line": 1,
+        "column": 11,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "foo(Symbol());\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "foo(Symbol());\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "function bar(Symbol) { Symbol(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "function bar(Symbol) { Symbol(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "function bar() { var Symbol = function () {}; Symbol(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "function bar() { var Symbol = function () {}; Symbol(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(); var Symbol = function () {};\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(); var Symbol = function () {};\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "var Symbol = function () {}; Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "var Symbol = function () {}; Symbol();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "var foo = \"foo\"; Symbol(foo);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "var foo = \"foo\"; Symbol(foo);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(); Symbol = function () {};\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  },
+  {
+    "rule": "symbol-description",
+    "file": "/repository/source/SymbolDescription.ts",
+    "source": "Symbol(); Symbol = function () {};\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "expected",
+        "message": "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one."
+      }
+    ]
+  }
+]
