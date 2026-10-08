@@ -19,7 +19,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
-			if family := l.viewIntersectionReadFamily(id); family != "" {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
 				l.result.ViewContracts[id-1].Unsupported = family
 			}
 			return id, nil

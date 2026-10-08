@@ -122,11 +122,31 @@ func (l *lowering) internStructuralViewIntersection(node *ast.Node, target *chec
 
 // Do not admit combinations the production matcher cannot validate yet. This
 // metadata is consumed by lazy demand, so unread casts still remain admitted.
-func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID) string {
+func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID, target *checker.Type) string {
 	root := l.result.ViewContracts[id-1]
 	if root.Kind == ir.ViewUnion {
+		hasIntersection := false
+		for _, member := range root.Members {
+			hasIntersection = hasIntersection || l.result.ViewContracts[member-1].Intersection
+		}
+		if tag := l.viewIntersectionUnionTagCandidate(id, hasIntersection || root.Unsupported == "untagged object union"); tag != "" && !l.recursiveIntersectionPayload(target) {
+			l.result.ViewContracts[id-1].IntersectionTag = tag
+			if root.Unsupported == "untagged object union" {
+				l.result.ViewContracts[id-1].Unsupported = ""
+			}
+			return ""
+		}
 		for _, member := range root.Members {
 			if l.result.ViewContracts[member-1].Intersection {
+				for _, part := range target.Types() {
+					if l.recursiveIntersectionPayload(part) {
+						return "union intersection"
+					}
+				}
+				if tag := l.viewIntersectionUnionTag(id); tag != "" {
+					l.result.ViewContracts[id-1].IntersectionTag = tag
+					return ""
+				}
 				return "union intersection"
 			}
 		}
@@ -176,6 +196,14 @@ func (l *lowering) recursiveIntersectionPayload(target *checker.Type) bool {
 	var visit func(*checker.Type) bool
 	visit = func(target *checker.Type) bool {
 		target = l.checker.GetNonNullableType(target)
+		if target.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, part := range target.Types() {
+				if visit(part) {
+					return true
+				}
+			}
+			return false
+		}
 		if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || l.checker.IsArrayType(target) || l.callableViewContract(target) {
 			return false
 		}
@@ -196,4 +224,121 @@ func (l *lowering) recursiveIntersectionPayload(target *checker.Type) bool {
 		return false
 	}
 	return visit(target)
+}
+
+// A shared tag may select an arm only if its literal sets are disjoint and
+// every selected arm is in the finite runtime family already implemented.
+func (l *lowering) viewIntersectionUnionTag(id ir.ViewContractID) string {
+	root := l.result.ViewContracts[id-1]
+	if root.Kind != ir.ViewUnion || root.Of != ir.Object || len(root.Members) == 0 {
+		return ""
+	}
+	var finite func(ir.ViewContractID, map[ir.ViewContractID]bool) bool
+	finite = func(id ir.ViewContractID, active map[ir.ViewContractID]bool) bool {
+		c := l.result.ViewContracts[id-1]
+		if c.Unsupported != "" {
+			return false
+		}
+		if active[id] {
+			return false
+		}
+		active[id] = true
+		defer delete(active, id)
+		if c.Kind == ir.ViewScalar {
+			return c.Of != ir.Union
+		}
+		if c.Kind != ir.ViewObject {
+			return false
+		}
+		for _, f := range c.Fields {
+			child := l.result.ViewContracts[f.Contract-1]
+			if child.Unsupported != "" {
+				continue
+			}
+			if !finite(f.Contract, active) {
+				return false
+			}
+		}
+		return true
+	}
+	// The checker may retain Identifier and LHS & Identifier as two arms.
+	// Coalesce only byte-identical field obligations; overlapping unequal arms
+	// still require a general selector and remain refused.
+	members := []ir.ViewContractID{}
+	for _, candidate := range root.Members {
+		own := l.result.ViewContracts[candidate-1]
+		duplicate := false
+		for i, existing := range members {
+			prior := l.result.ViewContracts[existing-1]
+			same := own.Kind == prior.Kind && own.Unsupported == prior.Unsupported && len(own.Fields) == len(prior.Fields)
+			for _, field := range own.Fields {
+				found := false
+				for _, other := range prior.Fields {
+					if field == other {
+						found = true
+					}
+				}
+				same = same && found
+			}
+			if same {
+				duplicate = true
+				if own.Intersection {
+					members[i] = candidate
+				}
+				break
+			}
+		}
+		if !duplicate {
+			members = append(members, candidate)
+		}
+	}
+	root.Members = members
+	for _, member := range root.Members {
+		if !finite(member, map[ir.ViewContractID]bool{}) {
+			return ""
+		}
+	}
+	for _, field := range root.Fields {
+		tag := l.result.ViewContracts[field.Contract-1]
+		if field.Optional || tag.Kind != ir.ViewScalar || tag.Of != ir.Number && tag.Of != ir.String && tag.Of != ir.Boolean {
+			continue
+		}
+		used := map[ir.ViewLiteral]bool{}
+		valid := true
+		for _, member := range root.Members {
+			c := l.result.ViewContracts[member-1]
+			found := false
+			for _, own := range c.Fields {
+				if own.Name != field.Name {
+					continue
+				}
+				part := l.result.ViewContracts[own.Contract-1]
+				if own.Optional || part.Kind != ir.ViewScalar || part.Of != tag.Of || len(part.Allowed) == 0 {
+					break
+				}
+				found = true
+				for _, literal := range part.Allowed {
+					if used[literal] {
+						valid = false
+					}
+					used[literal] = true
+				}
+			}
+			if !found {
+				valid = false
+			}
+		}
+		if valid {
+			l.result.ViewContracts[id-1].Members = root.Members
+			return field.Name
+		}
+	}
+	return ""
+}
+
+func (l *lowering) viewIntersectionUnionTagCandidate(id ir.ViewContractID, eligible bool) string {
+	if !eligible {
+		return ""
+	}
+	return l.viewIntersectionUnionTag(id)
 }

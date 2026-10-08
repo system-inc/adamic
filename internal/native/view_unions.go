@@ -18,6 +18,10 @@ func (e *emitter) viewObjectUnion(property ir.Property, object string) {
 		e.viewObjectIntersection(property, object)
 		return
 	}
+	if contract.IntersectionTag != "" {
+		e.viewIntersectionUnion(property, object)
+		return
+	}
 	if contract.Kind != ir.ViewUnion {
 		return
 	}

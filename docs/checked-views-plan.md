@@ -1095,3 +1095,24 @@ lane7/lazy-pair-progress.json. Full upstream pairs certified remain zero;
 reduced source shapes are not subtracted. Recursive checker-type traversal also
 prevents optional recursive descriptor copies with temporarily empty Fields
 from bypassing the demanded-read refusal.
+
+
+Lane 7 selected-arm hook group, October 8: IR IntersectionTag and the native /
+JavaScript view_unions dispatch call lane-owned viewIntersectionUnion methods.
+view_lazy calls viewIntersectionReadFamily with the checker type. A finite
+object union with intersection arms, or a previously refused enum-tag alias,
+can select disjoint literal-tag arms and validate every selected field with one
+tag snapshot. Equal field obligations may be coalesced; overlapping unequal
+arms, recursive union payloads and untagged selection remain refused at demand.
+Existing supported plain union dispatch keeps its diagnostics. No protected
+emit.go, lower.go, native.go or oracle_test.go edits are needed.
+
+Original source witness metadata verifies 22 candidate pairs / 77 reads against
+pinned TypeScript git objects without copying upstream files. Builder declaration
+spans classify five overlap pairs / 11 reads as numeric-brand or array work;
+two overlap pairs / 2 reads involve FileInfo object intersections behind callback
+unions and remain in lane 7. The revised queue is 17 object candidates / 66 reads,
+28 delegated candidates / 703 reads, zero unclassified overlaps. Full upstream
+certifications still zero: finite declaration fragments do not cover complete
+tsc interfaces. Original-read-witnesses.json preserves exact UTF-16 spans and
+source hashes; overlap-classification.json records the declaration evidence.

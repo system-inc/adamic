@@ -13,7 +13,7 @@ func (e *emitter) viewObjectIntersection(property ir.Property, object string) {
 	e.viewIntersectionFields(property.ViewContract, object, property.View, map[ir.ViewContractID]bool{})
 }
 
-func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expression string, active map[ir.ViewContractID]bool) {
+func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expression string, active map[ir.ViewContractID]bool, skip ...string) {
 	if active[id] {
 		return
 	} // Recursive descendants keep their checks on subsequent reads.
@@ -21,6 +21,9 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 	defer delete(active, id)
 	contract := e.program.ViewContracts[id-1]
 	for _, field := range contract.Fields {
+		if len(skip) > 0 && field.Name == skip[0] {
+			continue
+		}
 		child := e.program.ViewContracts[field.Contract-1]
 		// Unsupported descendants are refused by lazy demand at their own reads.
 		if child.Unsupported != "" || child.Kind == ir.ViewUnknown || child.Kind == ir.ViewCallable || child.Kind == ir.ViewUndefined || child.Of == ir.Union {
@@ -87,4 +90,49 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 			e.line("if (!(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", test, cString(path), cString(child.Name), literalType, actualSlot)
 		}
 	}
+}
+
+// Validate the selector snapshot once; it then discharges the selected arm's
+// tag obligation without reevaluating the physical slot during the field walk.
+func (e *emitter) viewIntersectionUnion(property ir.Property, object string) {
+	root := e.program.ViewContracts[property.ViewContract-1]
+	var tag ir.ViewContract
+	for _, field := range root.Fields {
+		if field.Name == root.IntersectionTag {
+			tag = e.program.ViewContracts[field.Contract-1]
+		}
+	}
+	slot := e.temporary()
+	path := property.View + "." + root.IntersectionTag
+	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(root.IntersectionTag), e.cache(), tag.Of, cString(tag.Name), cString(path))
+	for index, member := range root.Members {
+		arm := e.program.ViewContracts[member-1]
+		var allowed []ir.ViewLiteral
+		for _, field := range arm.Fields {
+			if field.Name == root.IntersectionTag {
+				allowed = e.program.ViewContracts[field.Contract-1].Allowed
+			}
+		}
+		tests := []string{}
+		for _, literal := range allowed {
+			switch literal.Of {
+			case ir.Number:
+				tests = append(tests, fmt.Sprintf("%s.number == %s", slot, strconv.FormatFloat(literal.Number, 'g', -1, 64)))
+			case ir.Boolean:
+				tests = append(tests, fmt.Sprintf("%s.boolean == %t", slot, literal.Boolean))
+			case ir.String:
+				name := e.temporary()
+				e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(%s);", name, cString(literal.String)))
+				tests = append(tests, fmt.Sprintf("adamic_string_equal((const adamic_string *)%s.reference, &%s)", slot, name))
+			}
+		}
+		prefix := "if"
+		if index != 0 {
+			prefix = "else if"
+		}
+		e.line("%s (%s) {", prefix, strings.Join(tests, " || "))
+		e.viewIntersectionFields(member, object, property.View, map[ir.ViewContractID]bool{}, root.IntersectionTag)
+		e.line("}")
+	}
+	e.line("else { adamic_view_literal_failure(%s, %s, %d, %s); }", cString(path), cString(tag.Name), tag.Of, slot)
 }

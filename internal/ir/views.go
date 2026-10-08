@@ -21,6 +21,8 @@ const (
 type ViewContract struct {
 	// Intersection marks conjunctive object members, distinct from union selection.
 	Intersection bool
+	// IntersectionTag selects disjoint object arms before validating their fields.
+	IntersectionTag string
 
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string

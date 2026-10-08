@@ -239,7 +239,7 @@ func TestCheckedViewIntersectionCompoundDemand(t *testing.T) {
 			t.Fatal(difference)
 		}
 	}
-	readPath, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane7/compound-read.a"))
+	readPath, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane7/compound-untagged-read.a"))
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}
@@ -269,5 +269,85 @@ func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 	_, err = lowered(t, readPath)
 	if err == nil || !strings.Contains(err.Error(), "field value with unsupported recursive intersection payload") {
 		t.Fatalf("recursive demand must refuse, got %v", err)
+	}
+}
+
+func TestCheckedViewIntersectionSelectedArms(t *testing.T) {
+	for _, test := range []struct{ name, diagnostic string }{
+		{"leading-access-identifier", ""}, {"leading-access-element", ""}, {"leading-access-property", ""},
+		{"leading-access-wrong", "field read failed: node.expression.argumentExpression.text is not a string; expected string, found boolean"},
+		{"leading-access-unknown-tag", "field read failed: node.expression.kind expected SyntaxKind, found number 999"},
+		{"leading-access-missing", "field read failed: node.expression.escapedText is not initialized; expected string, found missing"},
+		{"compound-read", "field read failed: view.value.common is not a number; expected number, found boolean"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane7/"+test.name)
+			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+				t.Fatal("Node: " + difference)
+			}
+			if kind := os.Getenv("ADAMIC_INTERSECTION_ARM_MUTANT"); kind != "" && test.name == "leading-access-wrong" {
+				intersectionArmMutant(t, program, kind)
+			}
+			want := run{stdout: []byte("true\n")}
+			if test.diagnostic != "" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + test.diagnostic + "\n")}
+			}
+			actual, binary := nativelyUncached(t, program)
+			if want.exitCode == 0 {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s; got %#v", difference, got)
+				}
+			}
+		})
+	}
+}
+
+// Root-only demand makes each deleted obligation observable in every backend.
+func intersectionArmMutant(t *testing.T, program *ir.Program, kind string) {
+	t.Helper()
+	changed := false
+	for i := range program.ViewContracts {
+		c := &program.ViewContracts[i]
+		if kind == "skip" && c.IntersectionTag != "" {
+			for _, member := range c.Members {
+				arm := &program.ViewContracts[member-1]
+				fields := []ir.ViewFieldContract{}
+				for _, f := range arm.Fields {
+					if f.Name == c.IntersectionTag {
+						fields = append(fields, f)
+					}
+				}
+				arm.Fields = fields
+			}
+			changed = true
+		}
+		if kind == "nested" {
+			for _, f := range c.Fields {
+				if f.Name == "argumentExpression" {
+					program.ViewContracts[f.Contract-1].Fields = nil
+					changed = true
+				}
+			}
+		}
+		if kind == "shape" {
+			for j, f := range c.Fields {
+				if f.Name == "text" {
+					child := program.ViewContracts[f.Contract-1]
+					child.Of = ir.Boolean
+					child.Name = "boolean"
+					c.Fields[j].Contract = ir.ViewContractID(len(program.ViewContracts) + 1)
+					program.ViewContracts = append(program.ViewContracts, child)
+					changed = true
+				}
+			}
+		}
+	}
+	if !changed {
+		t.Fatal("arm mutant found no obligation")
 	}
 }

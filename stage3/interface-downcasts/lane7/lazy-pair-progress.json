@@ -7385,11 +7385,11 @@
       ]
     }
   ],
-  "lane7_object_candidate_pairs": 15,
-  "lane7_object_candidate_reads": 64,
-  "builder_array_overlap_pairs": 7,
-  "builder_array_overlap_reads": 13,
-  "ownership_basis": "Explicit object alias queue; primitive brand displays (__String, Path, BuildOrder/ResolvedConfigFileName) delegated; private builder/array alias overlaps not classified as phantom from display alone.",
+  "lane7_object_candidate_pairs": 17,
+  "lane7_object_candidate_reads": 66,
+  "builder_array_overlap_pairs": 0,
+  "builder_array_overlap_reads": 0,
+  "ownership_basis": "Original builder.ts declarations pinned at 050880ce; five overlaps are primitive brand/tuple/array paths and two are callable consumers of object intersections. See overlap-classification.json; no phantom proof inferred from any-brand displays.",
   "lane7_object_candidate_keys": [
     {
       "type_id": 9474,
@@ -7465,6 +7465,18 @@
       "type_id": 92175,
       "field": "class",
       "read_count": 1
+    },
+    {
+      "type_id": 97923,
+      "field": "forEach",
+      "read_count": 1
+    },
+    {
+      "type_id": 98493,
+      "field": "forEach",
+      "read_count": 1
     }
-  ]
+  ],
+  "primitive_or_array_candidates_delegated_pairs": 28,
+  "primitive_or_array_candidates_delegated_reads": 703
 }
