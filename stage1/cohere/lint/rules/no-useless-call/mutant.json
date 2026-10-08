@@ -1,0 +1,5 @@
+{
+  "name": "no-useless-call-single-argument-lost",
+  "from": "if(node.list < 1)",
+  "to": "if(node.list < 2)"
+}

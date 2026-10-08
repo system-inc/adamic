@@ -1,0 +1,14 @@
+{
+  "name": "no-useless-call",
+  "kinds": [
+    "CallExpression"
+  ],
+  "node": true,
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUselessCall",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUselessCall"
+}
