@@ -1,0 +1,299 @@
+=== before: array-index loop entry ===
+    0.00 :   405b:   mov    %r13,-0x70(%rbp)
+    0.00 :   405f:   jmp    4092 <main+0xa82>
+    0.00 :   4061:   data16 data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+    0.00 :   4070:   call   9980 <adamic_release_slow>
+    0.00 :   4075:   inc    %rbx
+    0.12 :   4078:   xorps  %xmm2,%xmm2
+    0.00 :   407b:   cvtsi2sd %rbx,%xmm2
+    0.00 :   4080:   movapd -0x90(%rbp),%xmm0
+    0.00 :   4088:   ucomisd %xmm2,%xmm0
+    0.00 :   408c:   jbe    49b0 <main+0x13a0>
+    0.00 :   4092:   movsd  0x10(%r13),%xmm0
+    0.36 :   4098:   unpcklps -0x2e1f(%rip),%xmm0        # 1280 <_IO_stdin_used+0x180>
+    0.00 :   409f:   subpd  -0x2e47(%rip),%xmm0        # 1260 <_IO_stdin_used+0x160>
+    0.00 :   40a7:   movapd %xmm0,%xmm1
+    0.00 :   40ab:   unpckhpd %xmm0,%xmm1
+    0.12 :   40af:   addsd  %xmm0,%xmm1
+    0.24 :   40b3:   ucomisd %xmm1,%xmm2
+    0.12 :   40b7:   mov    %rbx,-0xa0(%rbp)
+    0.97 :   40be:   jae    4110 <main+0xb00>
+    0.00 :   40c0:   cvttsd2si %xmm2,%rcx
+    0.00 :   40c5:   mov    %rcx,%rdx
+    0.00 :   40c8:   sar    $0x3f,%rdx
+    0.00 :   40cc:   movapd %xmm2,%xmm0
+    0.00 :   40d0:   subsd  -0x2f50(%rip),%xmm0        # 1188 <_IO_stdin_used+0x88>
+    0.00 :   40d8:   cvttsd2si %xmm0,%rax
+    0.24 :   40dd:   and    %rdx,%rax
+    0.00 :   40e0:   or     %rcx,%rax
+    0.00 :   40e3:   movq   %rax,%xmm0
+    0.00 :   40e8:   punpckldq -0x2e70(%rip),%xmm0        # 1280 <_IO_stdin_used+0x180>
+    0.24 :   40f0:   subpd  -0x2e98(%rip),%xmm0        # 1260 <_IO_stdin_used+0x160>
+    0.24 :   40f8:   movapd %xmm0,%xmm1
+    0.85 :   40fc:   unpckhpd %xmm0,%xmm1
+    0.12 :   4100:   addsd  %xmm0,%xmm1
+    0.48 :   4104:   ucomisd %xmm1,%xmm2
+    0.36 :   4108:   jne    4110 <main+0xb00>
+    0.48 :   410a:   jnp    497a <main+0x136a>
+    0.00 :   4110:   xorpd  %xmm0,%xmm0
+    0.00 :   4114:   xorpd  %xmm1,%xmm1
+    0.00 :   4118:   movapd %xmm2,-0x40(%rbp)
+    0.00 :   411d:   xorpd  %xmm2,%xmm2
+    0.00 :   4121:   xorpd  %xmm3,%xmm3
+    0.00 :   4125:   xorpd  %xmm4,%xmm4
+    0.00 :   4129:   xorpd  %xmm5,%xmm5
+    0.00 :   412d:   xorps  %xmm6,%xmm6
+    0.00 :   4130:   call   5150 <adamic_function_4_Body_new>
+    0.00 :   4135:   movapd -0x40(%rbp),%xmm2
+    0.00 :   413a:   mov    %rax,%r13
+    0.00 :   413d:   mov    %rax,-0x78(%rbp)
+    0.00 :   4141:   addsd  -0x2fd1(%rip),%xmm2        # 1178 <_IO_stdin_used+0x78>
+    0.00 :   4149:   cvttsd2si %xmm2,%r15
+    0.24 :   414e:   xorps  %xmm0,%xmm0
+    0.00 :   4151:   cvtsi2sd %r15,%xmm0
+    0.24 :   4156:   movapd -0x90(%rbp),%xmm1
+    0.00 :   415e:   ucomisd %xmm0,%xmm1
+    0.00 :   4162:   jbe    4940 <main+0x1330>
+    0.12 :   4168:   lea    0x28(%r13),%rax
+    0.00 :   416c:   mov    %rax,-0x60(%rbp)
+    0.00 :   4170:   lea    0x40(%r13),%rax
+    0.00 :   4174:   mov    %rax,-0xc0(%rbp)
+    0.00 :   417b:   lea    0x48(%r13),%rax
+    0.00 :   417f:   mov    %rax,-0xb8(%rbp)
+    0.12 :   4186:   lea    0x50(%r13),%rax
+    0.00 :   418a:   mov    %rax,-0xb0(%rbp)
+    0.00 :   4191:   jmp    41c2 <main+0xbb2>
+    0.00 :   4193:   data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+    0.00 :   41a0:   call   9980 <adamic_release_slow>
+    0.00 :   41a5:   inc    %r15
+    0.00 :   41a8:   xorps  %xmm0,%xmm0
+    0.60 :   41ab:   cvtsi2sd %r15,%xmm0
+    0.12 :   41b0:   movapd -0x90(%rbp),%xmm1
+    1.33 :   41b8:   ucomisd %xmm0,%xmm1
+    0.00 :   41bc:   jbe    4940 <main+0x1330>
+    0.00 :   41c2:   test   %r15,%r15
+    0.00 :   41c5:   js     4241 <main+0xc31>
+    0.00 :   41c7:   mov    -0x70(%rbp),%rax
+    0.24 :   41cb:   movsd  0x10(%rax),%xmm1
+    0.00 :   41d0:   unpcklps -0x2f57(%rip),%xmm1        # 1280 <_IO_stdin_used+0x180>
+    0.00 :   41d7:   subpd  -0x2f7f(%rip),%xmm1        # 1260 <_IO_stdin_used+0x160>
+    0.73 :   41df:   movapd %xmm1,%xmm2
+    0.00 :   41e3:   unpckhpd %xmm1,%xmm2
+    0.12 :   41e7:   addsd  %xmm1,%xmm2
+
+=== before: sqrt/division and write guards ===
+    0.00 :   4364:   or     %rcx,%rdx
+    0.00 :   4367:   cmp    $0x10000,%rdi
+    0.00 :   436e:   mov    $0x0,%ecx
+    0.00 :   4373:   cmovae %rcx,%rdx
+    0.00 :   4377:   mov    %rdx,0x9b0a(%rip)        # de88 <adamic_cache_72.0>
+    0.00 :   437e:   movsd  -0x68(%rbp),%xmm3
+    1.09 :   4383:   movapd %xmm3,%xmm0
+    0.12 :   4387:   mulsd  %xmm3,%xmm0
+    1.81 :   438b:   movsd  -0x40(%rbp),%xmm1
+    0.12 :   4390:   mulsd  %xmm1,%xmm1
+    0.60 :   4394:   addsd  %xmm0,%xmm1
+    1.45 :   4398:   movsd  -0x30(%rbp),%xmm0
+    0.00 :   439d:   mulsd  %xmm0,%xmm0
+    0.48 :   43a1:   addsd  %xmm1,%xmm0
+    1.33 :   43a5:   xorps  %xmm1,%xmm1
+    0.12 :   43a8:   sqrtsd %xmm0,%xmm1
+   21.28 :   43ac:   mulsd  %xmm0,%xmm1
+    4.59 :   43b0:   movsd  -0x3288(%rip),%xmm2        # 1130 <_IO_stdin_used+0x30>
+    0.00 :   43b8:   divsd  %xmm1,%xmm2
+   18.62 :   43bc:   mulsd  %xmm3,%xmm5
+    0.00 :   43c0:   mulsd  %xmm2,%xmm5
+    4.96 :   43c4:   subsd  %xmm5,%xmm4
+    1.33 :   43c8:   movsd  %xmm4,(%rax)
+    1.81 :   43cc:   movsd  0x48(%r13),%xmm0
+    0.00 :   43d2:   movsd  0x58(%rbx),%xmm1
+    0.00 :   43d7:   cmpb   $0x1,0x20(%r13)
+    0.00 :   43dc:   movsd  %xmm2,-0x58(%rbp)
+    0.12 :   43e1:   jne    440b <main+0xdfb>
+    0.00 :   43e3:   mov    %r13,%rdi
+    0.00 :   43e6:   lea    -0x30ad(%rip),%rsi        # 1340 <.str.1.llvm.17466740583778280824+0x2e>
+    0.00 :   43ed:   movsd  %xmm0,-0x50(%rbp)
+    0.00 :   43f2:   movsd  %xmm1,-0x48(%rbp)
+    0.00 :   43f7:   call   9fe0 <adamic_object_check_write>
+    0.00 :   43fc:   movsd  -0x48(%rbp),%xmm1
+    0.00 :   4401:   movsd  -0x50(%rbp),%xmm0
+    0.00 :   4406:   movsd  -0x58(%rbp),%xmm2
+    0.00 :   440b:   mov    0x10(%r13),%rax
+    0.00 :   440f:   mov    -0xb8(%rbp),%rcx
+    0.00 :   4416:   lea    0x8633(%rip),%rdx        # ca50 <adamic_shape_0>
+    0.97 :   441d:   cmp    %rdx,%rax
+    0.00 :   4420:   je     44be <main+0xeae>
+    0.00 :   4426:   mov    0x9a63(%rip),%rcx        # de90 <adamic_cache_77.0>
+    0.00 :   442d:   lea    -0x1(%r14),%rdx
+    0.00 :   4431:   and    %rcx,%rdx
+    0.00 :   4434:   cmp    %rax,%rdx
+    0.00 :   4437:   jne    4450 <main+0xe40>
+    0.00 :   4439:   shr    $0x30,%rcx
+    0.00 :   443d:   mov    -0x60(%rbp),%rax
+    0.00 :   4441:   lea    (%rax,%rcx,8),%rcx
+    0.00 :   4445:   jmp    44be <main+0xeae>
+    0.00 :   4447:   nopw   0x0(%rax,%rax,1)
+    0.00 :   4450:   mov    (%rax),%rsi
+    0.00 :   4453:   test   %rsi,%rsi
+    0.00 :   4456:   je     4c98 <main+0x1688>
+    0.00 :   445c:   mov    0x8(%rax),%r8
+    0.00 :   4460:   xor    %edx,%edx
+    0.00 :   4462:   mov    -0x60(%rbp),%rcx
+    0.00 :   4466:   xor    %edi,%edi
+    0.00 :   4468:   jmp    4483 <main+0xe73>
+    0.00 :   446a:   nopw   0x0(%rax,%rax,1)
+    0.00 :   4470:   inc    %rdi
+    0.00 :   4473:   add    $0x8,%rcx
+    0.00 :   4477:   add    %r14,%rdx
+    0.00 :   447a:   cmp    %rdi,%rsi
+    0.00 :   447d:   je     4c98 <main+0x1688>
+
+=== after: array-index loop entry ===
+    0.00 :   405b:   mov    %r13,-0x70(%rbp)
+    0.00 :   405f:   jmp    4092 <main+0xa82>
+    0.00 :   4061:   data16 data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+    0.00 :   4070:   call   97b0 <adamic_release_slow>
+    0.00 :   4075:   inc    %rbx
+    0.61 :   4078:   xorps  %xmm1,%xmm1
+    0.46 :   407b:   cvtsi2sd %rbx,%xmm1
+    0.00 :   4080:   movapd -0x90(%rbp),%xmm0
+    0.00 :   4088:   ucomisd %xmm1,%xmm0
+    0.15 :   408c:   jbe    48c0 <main+0x12b0>
+    0.00 :   4092:   cmp    0x10(%r13),%rbx
+    0.61 :   4096:   mov    %rbx,-0xa0(%rbp)
+    0.00 :   409d:   jae    40c0 <main+0xab0>
+    0.00 :   409f:   mov    -0x70(%rbp),%rax
+    0.00 :   40a3:   mov    0x28(%rax),%rax
+    0.00 :   40a7:   test   %rax,%rax
+    0.00 :   40aa:   je     40c0 <main+0xab0>
+    0.00 :   40ac:   mov    (%rax,%rbx,8),%r13
+    0.15 :   40b0:   test   %r13,%r13
+    0.00 :   40b3:   je     40c0 <main+0xab0>
+    0.00 :   40b5:   movq   $0x0,-0x78(%rbp)
+    0.00 :   40bd:   jmp    40f1 <main+0xae1>
+    0.00 :   40bf:   nop
+    0.00 :   40c0:   xorpd  %xmm0,%xmm0
+    0.00 :   40c4:   movsd  %xmm1,-0x40(%rbp)
+    0.00 :   40c9:   xorpd  %xmm1,%xmm1
+    0.00 :   40cd:   xorpd  %xmm2,%xmm2
+    0.00 :   40d1:   xorpd  %xmm3,%xmm3
+    0.00 :   40d5:   xorpd  %xmm4,%xmm4
+    0.00 :   40d9:   xorpd  %xmm5,%xmm5
+    0.00 :   40dd:   xorps  %xmm6,%xmm6
+    0.00 :   40e0:   call   4f80 <adamic_function_4_Body_new>
+    0.00 :   40e5:   movsd  -0x40(%rbp),%xmm1
+    0.00 :   40ea:   mov    %rax,%r13
+    0.00 :   40ed:   mov    %rax,-0x78(%rbp)
+    0.76 :   40f1:   addsd  -0x2f81(%rip),%xmm1        # 1178 <_IO_stdin_used+0x78>
+    0.30 :   40f9:   cvttsd2si %xmm1,%r15
+    0.00 :   40fe:   xorps  %xmm0,%xmm0
+    0.00 :   4101:   cvtsi2sd %r15,%xmm0
+    0.76 :   4106:   movapd -0x90(%rbp),%xmm1
+    0.15 :   410e:   ucomisd %xmm0,%xmm1
+    1.52 :   4112:   jbe    4880 <main+0x1270>
+    1.07 :   4118:   lea    0x28(%r13),%rax
+    0.00 :   411c:   mov    %rax,-0x60(%rbp)
+    0.00 :   4120:   lea    0x40(%r13),%rax
+    0.00 :   4124:   mov    %rax,-0xc0(%rbp)
+    0.00 :   412b:   lea    0x48(%r13),%rax
+    0.00 :   412f:   mov    %rax,-0xb8(%rbp)
+    0.46 :   4136:   lea    0x50(%r13),%rax
+    0.00 :   413a:   mov    %rax,-0xb0(%rbp)
+    0.00 :   4141:   jmp    4172 <main+0xb62>
+    0.00 :   4143:   data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+    0.00 :   4150:   call   97b0 <adamic_release_slow>
+    0.00 :   4155:   inc    %r15
+    0.00 :   4158:   xorps  %xmm0,%xmm0
+    0.00 :   415b:   cvtsi2sd %r15,%xmm0
+    0.00 :   4160:   movapd -0x90(%rbp),%xmm1
+    1.22 :   4168:   ucomisd %xmm0,%xmm1
+    0.00 :   416c:   jbe    4880 <main+0x1270>
+    0.00 :   4172:   test   %r15,%r15
+    0.00 :   4175:   js     41a0 <main+0xb90>
+    0.00 :   4177:   mov    -0x70(%rbp),%rax
+    0.30 :   417b:   cmp    0x10(%rax),%r15
+    0.00 :   417f:   jae    41a0 <main+0xb90>
+    0.00 :   4181:   mov    -0x70(%rbp),%rax
+    0.00 :   4185:   mov    0x28(%rax),%rax
+    1.22 :   4189:   test   %rax,%rax
+    0.00 :   418c:   je     41a0 <main+0xb90>
+    0.00 :   418e:   mov    (%rax,%r15,8),%rbx
+    0.15 :   4192:   test   %rbx,%rbx
+    0.46 :   4195:   je     41a0 <main+0xb90>
+    0.00 :   4197:   xor    %r12d,%r12d
+    0.00 :   419a:   jmp    41c6 <main+0xbb6>
+    0.00 :   419c:   nopl   0x0(%rax)
+    0.00 :   41a0:   xorpd  %xmm0,%xmm0
+    0.00 :   41a4:   xorpd  %xmm1,%xmm1
+    0.00 :   41a8:   xorpd  %xmm2,%xmm2
+    0.00 :   41ac:   xorpd  %xmm3,%xmm3
+    0.00 :   41b0:   xorpd  %xmm4,%xmm4
+    0.00 :   41b4:   xorpd  %xmm5,%xmm5
+    0.00 :   41b8:   xorps  %xmm6,%xmm6
+
+=== after: sqrt/division and write guards ===
+    0.00 :   42c4:   or     %rcx,%rdx
+    0.00 :   42c7:   cmp    $0x10000,%rdi
+    0.00 :   42ce:   mov    $0x0,%ecx
+    0.00 :   42d3:   cmovae %rcx,%rdx
+    0.00 :   42d7:   mov    %rdx,0x99da(%rip)        # dcb8 <adamic_cache_72.0>
+    0.00 :   42de:   movsd  -0x68(%rbp),%xmm3
+    1.52 :   42e3:   movapd %xmm3,%xmm0
+    0.15 :   42e7:   mulsd  %xmm3,%xmm0
+    1.98 :   42eb:   movsd  -0x40(%rbp),%xmm1
+    0.15 :   42f0:   mulsd  %xmm1,%xmm1
+    0.30 :   42f4:   addsd  %xmm0,%xmm1
+    0.00 :   42f8:   movsd  -0x30(%rbp),%xmm0
+    0.00 :   42fd:   mulsd  %xmm0,%xmm0
+    0.46 :   4301:   addsd  %xmm1,%xmm0
+    1.37 :   4305:   xorps  %xmm1,%xmm1
+    0.00 :   4308:   sqrtsd %xmm0,%xmm1
+   16.16 :   430c:   mulsd  %xmm0,%xmm1
+    5.03 :   4310:   movsd  -0x31e8(%rip),%xmm2        # 1130 <_IO_stdin_used+0x30>
+    0.00 :   4318:   divsd  %xmm1,%xmm2
+   25.30 :   431c:   mulsd  %xmm3,%xmm5
+    0.00 :   4320:   mulsd  %xmm2,%xmm5
+    5.64 :   4324:   subsd  %xmm5,%xmm4
+    1.52 :   4328:   movsd  %xmm4,(%rax)
+    3.05 :   432c:   movsd  0x48(%r13),%xmm0
+    0.00 :   4332:   movsd  0x58(%rbx),%xmm1
+    0.00 :   4337:   cmpb   $0x1,0x20(%r13)
+    0.00 :   433c:   movsd  %xmm2,-0x58(%rbp)
+    0.00 :   4341:   jne    436b <main+0xd5b>
+    0.00 :   4343:   mov    %r13,%rdi
+    0.00 :   4346:   lea    -0x300d(%rip),%rsi        # 1340 <.str.1.llvm.17466740583778280824+0x2e>
+    0.00 :   434d:   movsd  %xmm0,-0x50(%rbp)
+    0.00 :   4352:   movsd  %xmm1,-0x48(%rbp)
+    0.00 :   4357:   call   9e10 <adamic_object_check_write>
+    0.00 :   435c:   movsd  -0x48(%rbp),%xmm1
+    0.00 :   4361:   movsd  -0x50(%rbp),%xmm0
+    0.00 :   4366:   movsd  -0x58(%rbp),%xmm2
+    0.00 :   436b:   mov    0x10(%r13),%rax
+    0.00 :   436f:   mov    -0xb8(%rbp),%rcx
+    0.15 :   4376:   lea    0x8503(%rip),%rdx        # c880 <adamic_shape_0>
+    1.37 :   437d:   cmp    %rdx,%rax
+    0.00 :   4380:   je     441e <main+0xe0e>
+    0.00 :   4386:   mov    0x9933(%rip),%rcx        # dcc0 <adamic_cache_77.0>
+    0.00 :   438d:   lea    -0x1(%r14),%rdx
+    0.00 :   4391:   and    %rcx,%rdx
+    0.00 :   4394:   cmp    %rax,%rdx
+    0.00 :   4397:   jne    43b0 <main+0xda0>
+    0.00 :   4399:   shr    $0x30,%rcx
+    0.00 :   439d:   mov    -0x60(%rbp),%rax
+    0.00 :   43a1:   lea    (%rax,%rcx,8),%rcx
+    0.00 :   43a5:   jmp    441e <main+0xe0e>
+    0.00 :   43a7:   nopw   0x0(%rax,%rax,1)
+    0.00 :   43b0:   mov    (%rax),%rsi
+    0.00 :   43b3:   test   %rsi,%rsi
+    0.00 :   43b6:   je     4ba8 <main+0x1598>
+    0.00 :   43bc:   mov    0x8(%rax),%r8
+    0.00 :   43c0:   xor    %edx,%edx
+    0.00 :   43c2:   mov    -0x60(%rbp),%rcx
+    0.00 :   43c6:   xor    %edi,%edi
+    0.00 :   43c8:   jmp    43e3 <main+0xdd3>
+    0.00 :   43ca:   nopw   0x0(%rax,%rax,1)
+    0.00 :   43d0:   inc    %rdi
+    0.00 :   43d3:   add    $0x8,%rcx
+    0.00 :   43d7:   add    %r14,%rdx
+    0.00 :   43da:   cmp    %rdi,%rsi
+    0.00 :   43dd:   je     4ba8 <main+0x1598>

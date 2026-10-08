@@ -205,15 +205,8 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 	if hasFallback {
 		value = coalesce.Value
 	}
-	element := value.(ir.ArrayIndex)
-	array := e.value(element.Array)
-	index := e.value(element.Index)
-	slot := e.temporary()
-	lookup := "adamic_array_at"
-	if element.Relative {
-		lookup = "adamic_array_at_relative"
-	}
-	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
+	// Share the ordinary lookup's integer-counter and relative-index rules.
+	slot := e.arrayIndexSlot(value.(ir.ArrayIndex))
 	name := e.localName(declare.Local)
 	e.line("%s %s = %s == NULL ? NULL : (%s)%s->reference;", cType(local.Type), name, slot, cType(local.Type), slot)
 	if hasFallback {
