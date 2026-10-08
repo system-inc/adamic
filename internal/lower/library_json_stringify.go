@@ -84,11 +84,6 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			if name == "toJSON" || name == "__proto__" {
 				return l.notYet(v, "JSON.stringify a literal with "+name+" semantics")
 			}
-			for _, f := range literal.Fields {
-				if f.Name == name {
-					return l.notYet(v, "JSON.stringify duplicate literal keys")
-				}
-			}
 			value, child, err := l.jsonInput(v)
 			if err != nil {
 				return err
@@ -157,7 +152,15 @@ func jsonIndex(name string) (uint64, bool) {
 	return n, err == nil && n < 4294967295 && strconv.FormatUint(n, 10) == name
 }
 func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
+	generic := t.Flags()&checker.TypeFlagsTypeParameter != 0
 	t = l.concrete(t)
+	// Generic instantiations with the same Union representation share a body. Even a scalar
+	// first call could therefore supply its descriptor to a later container union (probe B).
+	// Refuse generic boxed unions before that body is cached. Nullable references have
+	// a complete concrete schema and must retain their proven empty-case bit.
+	if held, known := l.representation(t); generic && known && held == ir.Union {
+		return nil, l.notYet(node, "JSON.stringify a generic union without per-instantiation container metadata")
+	}
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
 	}

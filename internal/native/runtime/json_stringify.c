@@ -237,7 +237,18 @@ adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schem
 	bool pretty = false;
 	if (space_schema != NULL) {
 		json_scalar s = scalar(space, space_schema);
-		if (s.kind == adamic_json_string) { gap = adamic_string_slice(s.value.reference, 0, 10, true); pretty = gap->length != 0; }
+		if (s.kind == adamic_json_string) {
+			const adamic_string *text = s.value.reference;
+			double width = fmin(10, adamic_string_length(text));
+			pretty = width != 0;
+			// ECMA-262 25.5.2 sets gap to the first ten code units, including NUL. V8's
+			// SerializeJSONProperty indentation buffer instead ends at its first NUL.
+			// Match Node, retaining the multiline path even when NUL is the first unit.
+			for (double index = 0; index < width; index++) {
+				if (adamic_string_char_code_at(text, index) == 0) { width = index; break; }
+			}
+			gap = adamic_string_slice((adamic_string *)text, 0, width, true);
+		}
 		else if (s.kind == adamic_json_number) {
 			// Node 24.19 (V8) enables its multiline path before truncating a positive fraction.
 			// Thus 0 < space < 1 writes newlines with an empty gap, as the Node oracle observes.
