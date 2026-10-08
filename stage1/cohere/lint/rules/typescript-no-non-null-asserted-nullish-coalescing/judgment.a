@@ -1,0 +1,66 @@
+import { panic } from 'adamic';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { Wave22SymbolFacts } from '../../../typeaware/symbol_facts_wave_22.a';
+import { Reassign } from '../../../typeaware/reassign.ts';
+import { Suggestion } from '../../../typeaware/suggestion.ts';
+import { Repair } from '../../../typeaware/repair.ts';
+
+export class NoNonNullAssertedNullishCoalescing {
+    readonly bindings: Bindings;
+    readonly facts: Wave22SymbolFacts;
+    readonly writes: Reassign;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+        this.facts = new Wave22SymbolFacts(bindings);
+        this.writes = new Reassign(bindings.rules);
+    }
+    assigned(identifier: number, assertion: number): boolean {
+        const rules = this.bindings.rules;
+        const symbol = this.facts.nodeSymbol(identifier);
+        if(!symbol.present) { return true; }
+        const end = rules.parser.node(assertion).end;
+        for(const declaration of this.bindings.list(identifier, 'binding-declarations', false)) {
+            const node = rules.parser.node(declaration);
+            if(node.kind === 'VariableDeclaration' && node.end < end &&
+                (this.bindings.shape.initializer(declaration) >= 0 ||
+                node.children.some((child) => rules.parser.node(child).kind === 'ExclamationToken'))) {
+                return true;
+            }
+        }
+        const name = rules.parser.node(identifier).text;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind === 'Identifier' && node.text === name && node.end < end &&
+                this.writes.writes(index) && this.facts.nodeSymbol(index).identity === symbol.identity) {
+                return true;
+            }
+        }
+        return false;
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'BinaryExpression' ||
+                rules.parser.node(node.children[1] ?? -1).kind !== 'QuestionQuestionToken') { continue; }
+            const assertion = rules.skip(node.children[0] ?? -1);
+            const asserted = rules.parser.node(assertion);
+            if(asserted.kind !== 'NonNullExpression') { continue; }
+            const inner = asserted.children[0] ?? panic('missing assertion operand');
+            if(rules.parser.node(inner).kind === 'Identifier' && !this.assigned(inner, assertion)) { continue; }
+            const finding = rules.add('no-non-null-asserted-nullish-coalescing',
+                'noNonNullAssertedNullishCoalescing',
+                'The nullish coalescing operator is designed to handle undefined and null - using a non-null assertion is not needed.', assertion);
+            rules.scanner.pos = rules.parser.node(inner).end;
+            while(rules.scanner.pos < asserted.end) {
+                rules.scanner.scan();
+                if(rules.scanner.kind === 'ExclamationToken') {
+                    const repair = new Repair(rules.byte(rules.scanner.start), rules.byte(rules.scanner.pos), '');
+                    finding.suggestions.push(new Suggestion('suggestRemovingNonNull', 'Remove the non-null assertion.', [repair]));
+                    break;
+                }
+                if(rules.scanner.kind === 'EndOfFileToken') { break; }
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "wave22-spread-parens",
+  "file": "judgment.a",
+  "from": "wrap ? '})' : '}'",
+  "to": "wrap ? '} /* mutant */)' : '}'"
+}

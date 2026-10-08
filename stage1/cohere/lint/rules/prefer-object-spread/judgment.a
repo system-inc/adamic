@@ -1,0 +1,100 @@
+import type { Bindings } from '../../../typeaware/bindings.ts';
+import type { Repair } from '../../../typeaware/repair.ts';
+import { PreferenceSupport } from '../../../typeaware/wave_22_preference_support.a';
+import { ObjectAssignReferences } from '../../../typeaware/object_assign_references.a';
+import { NoGlobalAssign } from '../../../typeaware/no_global_assign.a';
+export class PreferObjectSpread {
+    readonly support: PreferenceSupport;
+    readonly writes: NoGlobalAssign;
+    constructor(bindings: Bindings) { this.support = new PreferenceSupport(bindings); this.writes = new NoGlobalAssign(bindings); }
+    space(character: string): boolean { return [' ', '\t', '\n', '\r', '\v', '\f'].includes(character); }
+    wrap(index: number): boolean {
+        const bindings = this.support.bindings; const rules = bindings.rules; const parentIndex = bindings.parent(index); if(parentIndex < 0) { return true; }
+        const parent = rules.parser.node(parentIndex);
+        if(['VariableDeclaration', 'ArrayLiteralExpression', 'ReturnStatement', 'CallExpression', 'PropertyAssignment'].includes(parent.kind)) { return false; }
+        if(parent.kind === 'BinaryExpression' && this.support.kind(parent.children[1] ?? -1) === 'EqualsToken' && parent.children[0] !== index) { return false; }
+        return parent.kind !== 'ParenthesizedExpression';
+    }
+    semicolon(index: number): boolean {
+        const bindings = this.support.bindings; const rules = bindings.rules; const text = rules.scanner.text;
+        while(bindings.parent(index) >= 0 && this.support.kind(bindings.parent(index)) !== 'ExpressionStatement') {
+            const parent = bindings.parent(index); if(rules.start(rules.parser.node(parent)) !== rules.start(rules.parser.node(index))) { return false; } index = parent;
+        }
+        const parent = bindings.parent(index); if(parent < 0 || this.support.kind(parent) !== 'ExpressionStatement') { return false; }
+        let position = rules.start(rules.parser.node(parent)) - 1; while(position >= 0 && this.space(text[position] ?? '')) { position--; }
+        return position >= 0 && ![';', '{', '}'].includes(text[position] ?? '');
+    }
+    lineComment(newline: number): boolean {
+        const text = this.support.bindings.rules.scanner.text; let start = newline; while(start > 0 && text[start - 1] !== '\n') { start--; }
+        let quote = '';
+        for(let at = start; at + 1 < newline; at++) {
+            const character = text[at] ?? '';
+            if(quote !== '') { if(character === '\\') { at++; continue; } if(character === quote) { quote = ''; } continue; }
+            if(["'", '"', '`'].includes(character)) { quote = character; }
+            else if(character === '/' && text[at + 1] === '/') { return true; }
+        }
+        return false;
+    }
+    rightSpace(end: number): number {
+        const text = this.support.bindings.rules.scanner.text; let start = end; while(start > 0 && this.space(text[start - 1] ?? '')) { start--; }
+        for(let at = start; at < end; at++) { if(text[at] === '\n') { if(this.lineComment(at)) { return end; } break; } }
+        return start;
+    }
+    comma(from: number, end: number): number {
+        const text = this.support.bindings.rules.scanner.text;
+        for(let at = from; at < end; at++) { if(text[at] === ',') { return at; } if(!this.space(text[at] ?? '')) { return -1; } } return -1;
+    }
+    argument(index: number, left: number, right: number, repairs: Repair[]): boolean {
+        const support = this.support; const rules = support.bindings.rules; const text = rules.scanner.text;
+        const outer = rules.parser.node(index); const start = rules.start(outer); if(start <= left || outer.end > right) { return false; }
+        const wrappers: number[] = []; let innerIndex = index;
+        while(support.kind(innerIndex) === 'ParenthesizedExpression') { wrappers.push(innerIndex); innerIndex = rules.parser.node(innerIndex).children[0] ?? -1; if(innerIndex < 0) { return false; } }
+        const inner = rules.parser.node(innerIndex);
+        if(inner.kind === 'ObjectLiteralExpression') {
+            const begin = rules.start(inner); const end = inner.end - 1;
+            if(begin >= end || text[begin] !== '{' || text[end] !== '}') { return false; }
+            let open = begin; let close = end;
+            if(wrappers.length > 0) {
+                open = start; close = outer.end - 1;
+                repairs.push(support.repair(begin, begin + 1, '')); repairs.push(support.repair(end, end + 1, ''));
+                for(const wrapper of wrappers.slice(1)) { const node = rules.parser.node(wrapper); const from = rules.start(node); repairs.push(support.repair(from, from + 1, '')); repairs.push(support.repair(node.end - 1, node.end, '')); }
+            }
+            let leftEnd = open + 1; while(leftEnd < text.length && this.space(text[leftEnd] ?? '')) { leftEnd++; }
+            const rightStart = Math.max(leftEnd, this.rightSpace(close));
+            repairs.push(support.repair(open, leftEnd, '')); repairs.push(support.repair(rightStart, close + 1, ''));
+            const last = inner.children[inner.children.length - 1] ?? -1;
+            if(last < 0 || this.comma(rules.parser.node(last).end, end) >= 0) { const comma = this.comma(outer.end, right); if(comma >= 0) { repairs.push(support.repair(comma, comma + 1, '')); } }
+            return true;
+        }
+        const wrap = wrappers.length === 0 && (['ArrowFunction', 'ConditionalExpression'].includes(inner.kind) || (inner.kind === 'BinaryExpression' && this.writes.assignment(support.kind(inner.children[1] ?? -1))));
+        repairs.push(support.repair(start, start, wrap ? '...(' : '...'));
+        if(wrap) { repairs.push(support.repair(outer.end, outer.end, ')')); } return true;
+    }
+    fix(index: number, operands: readonly number[]): Repair[] {
+        const support = this.support; const rules = support.bindings.rules; const text = rules.scanner.text; const node = rules.parser.node(index); const callee = rules.parser.node(node.children[0] ?? -1);
+        let left = -1; for(let at = callee.end; at < node.end; at++) { if(text[at] === '(') { left = at; break; } }
+        const right = node.end - 1; if(left < 0 || right <= left || text[right] !== ')') { return []; }
+        const repairs: Repair[] = [support.repair(rules.start(node), left, '')];
+        const wrap = this.wrap(index); const prefix = wrap ? this.semicolon(index) ? ';({' : '({' : '{';
+        repairs.push(support.repair(left, left + 1, prefix)); repairs.push(support.repair(right, right + 1, wrap ? '})' : '}'));
+        for(const argument of operands) { if(!this.argument(argument, left, right, repairs)) { return []; } } return repairs;
+    }
+    run(): void {
+        const support = this.support; const rules = support.bindings.rules;
+        for(const index of new ObjectAssignReferences(support.bindings).run()) {
+            const node = rules.parser.node(index); if(!support.call(index) || node.list <= 0) { continue; }
+            const operands = node.children.slice(node.children.length - node.list); const first = rules.skip(operands[0] ?? -1);
+            if(support.kind(first) !== 'ObjectLiteralExpression' || operands.some((argument) => support.kind(argument) === 'SpreadElement')) { continue; }
+            let accessor = false;
+            if(operands.length > 1) {
+                for(const argument of operands) { const inner = rules.parser.node(rules.skip(argument)); if(inner.kind === 'ObjectLiteralExpression' && inner.children.some((child) => ['GetAccessor', 'SetAccessor'].includes(support.kind(child)))) { accessor = true; } }
+            }
+            if(accessor) { continue; }
+            const literal = operands.length === 1;
+            const finding = support.report(index, 'prefer-object-spread', literal ? 'useLiteralMessage' : 'useSpreadMessage', literal ?
+                'Use an object literal instead of `Object.assign`. eg: `{ foo: bar }`. Copying an object literal into a fresh object achieves nothing the literal did not already do.' :
+                'Use an object spread instead of `Object.assign` eg: `{ ...foo }`. The spread says the result is a new object at a glance, where the call has to be read to find out whether it mutates its first argument.');
+            for(const repair of this.fix(index, operands)) { finding.repairs.push(repair); }
+        }
+    }
+}

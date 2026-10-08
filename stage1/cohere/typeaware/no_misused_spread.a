@@ -1,0 +1,130 @@
+import { unionFlag, intersectionFlag, stringLike } from './flags.ts';
+import type { Bindings } from './bindings.ts';
+import type { Types } from './types.ts';
+import type { OperationOrigin, OperationMetadata } from './type_operations.a';
+import { TypeOperations } from './type_operations.a';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+
+export class NoMisusedSpread {
+    readonly bindings: Bindings;
+    readonly operations: TypeOperations;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.operations = new TypeOperations(bindings); }
+    leaves(facts: Types, identity: number): number[] {
+        const type = facts.type(identity);
+        if((type.flags & (unionFlag | intersectionFlag)) === 0) { return [identity]; }
+        const leaves: number[] = [];
+        for(const part of type.parts) { for(const leaf of this.leaves(facts, part)) { leaves.push(leaf); } }
+        return leaves;
+    }
+    builtin(index: number, facts: Types, identity: number, names: readonly string[], seen: readonly number[] = []): boolean {
+        if(seen.includes(identity)) { return false; }
+        const type = facts.type(identity); const visited = seen.slice(); visited.push(identity);
+        if((type.flags & intersectionFlag) !== 0) { return type.parts.some((part) => this.builtin(index, facts, part, names, visited)); }
+        if((type.flags & unionFlag) !== 0) { return type.parts.every((part) => this.builtin(index, facts, part, names, visited)); }
+        if((type.flags & 524288) !== 0) {
+            return type.constraint !== 0 && this.builtin(index, facts, type.constraint, names, visited);
+        }
+        const meta = this.operations.metadata(index, identity);
+        if(meta.symbol === 0) { return false; }
+        if(names.includes(meta.name) && meta.declarations.some((declaration) => declaration.library)) { return true; }
+        const bases = this.operations.type(index, 'bases', identity);
+        return bases.roots.some((base) => this.builtin(index, bases, base, names, visited));
+    }
+    instance(meta: OperationMetadata): boolean {
+        return meta.constructors === 0 && meta.symbol !== 0 && meta.declarations.some((declaration) => declaration.constructors > 0);
+    }
+    own(file: string, declaration: boolean, flags: number): boolean {
+        return !declaration && (flags & 8388608) === 0 && !file.includes('/node_modules/');
+    }
+    complete(index: number, identity: number, seen: readonly number[] = []): boolean {
+        const meta = this.operations.metadata(index, identity);
+        if(meta.symbol === 0 || seen.includes(meta.symbol) || meta.declarations.length === 0) { return false; }
+        for(const declaration of meta.declarations) {
+            if(!['ClassDeclaration', 'ClassExpression'].includes(declaration.kind) || !this.own(declaration.file, declaration.declaration, declaration.flags)) { return false; }
+            for(const member of declaration.members) {
+                if((member.flags & 256) !== 0) { continue; }
+                if(['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(member.kind) ||
+                    (member.flags & 512) !== 0 || member.nameKind === 'PrivateIdentifier') { return false; }
+            }
+            for(const decorator of declaration.decorators) {
+                if(decorator.length === 0 || !decorator.every((origin) => this.own(origin.file, origin.declaration, origin.flags))) { return false; }
+            }
+        }
+        const bases = this.operations.type(index, 'bases', identity);
+        if(bases.roots.length === 0) { return true; }
+        if(bases.roots.length !== 1) { return false; }
+        const visited = seen.slice(); visited.push(meta.symbol);
+        return this.complete(index, bases.roots[0] ?? 0, visited);
+    }
+    higherAwait(index: number): boolean {
+        const kind = this.bindings.rules.parser.node(index).kind;
+        return !['BinaryExpression', 'ConditionalExpression', 'YieldExpression', 'ArrowFunction', 'AwaitExpression',
+            'PrefixUnaryExpression', 'DeleteExpression', 'TypeOfExpression', 'VoidExpression', 'AsExpression', 'SatisfiesExpression',
+            'TypeAssertionExpression'].includes(kind);
+    }
+    strong(index: number): boolean {
+        return ['NumericLiteral', 'BigIntLiteral', 'StringLiteral', 'NoSubstitutionTemplateLiteral', 'TrueKeyword', 'FalseKeyword',
+            'NullKeyword', 'RegularExpressionLiteral', 'ParenthesizedExpression', 'Identifier', 'TypeReference', 'TypeOperator',
+            'ArrayLiteralExpression', 'ObjectLiteralExpression', 'PropertyAccessExpression', 'ElementAccessExpression',
+            'CallExpression', 'NewExpression', 'TaggedTemplateExpression', 'ExpressionWithTypeArguments'].includes(this.bindings.rules.parser.node(index).kind);
+    }
+    check(index: number, argument: number): void {
+        const rules = this.bindings.rules;
+        const facts = this.operations.type(argument, 'constrained');
+        if(facts.roots.length === 0) { return; }
+        const leaves = this.leaves(facts, facts.roots[0] ?? 0);
+        let id = ''; let message = '';
+        if(leaves.some((part) => this.builtin(argument, facts, part, ['Promise']))) {
+            id = 'noPromiseSpreadInObject'; message = 'Using the spread operator on Promise in an object can cause unexpected behavior. Did you forget to await the promise?';
+        } else if(leaves.some((part) => this.operations.signatures(argument, part).signatures.length > 0 && this.operations.metadata(argument, part).properties === 0)) {
+            id = 'noFunctionSpreadInObject'; message = 'Using the spread operator on a function without additional properties can cause unexpected behavior. Did you forget to call the function?';
+        } else if(leaves.some((part) => this.builtin(argument, facts, part, ['Map', 'ReadonlyMap', 'WeakMap']))) {
+            id = 'noMapSpreadInObject'; message = 'Using the spread operator on a Map in an object will result in an empty object. Did you mean to use `Object.fromEntries(map)` instead?';
+        } else if(leaves.some((part) => facts.type(part).array || facts.type(part).tuple >= 0)) {
+            id = 'noArraySpreadInObject'; message = 'Using the spread operator on an array in an object will result in a list of indices.';
+        } else if(leaves.some((part) => this.operations.iterator(argument, part)) && !leaves.some((part) => (facts.type(part).flags & stringLike) !== 0)) {
+            id = 'noIterableSpreadInObject'; message = 'Using the spread operator on an Iterable in an object can cause unexpected behavior.';
+        } else if(leaves.some((part) => this.instance(this.operations.metadata(argument, part)) && !this.complete(argument, part))) {
+            id = 'noClassInstanceSpreadInObject'; message = 'Using the spread operator on class instances will lose their class prototype.';
+        } else if(leaves.some((part) => {
+            const meta = this.operations.metadata(argument, part);
+            return !this.instance(meta) && (((facts.type(part).flags & 1048576) !== 0 && (meta.objectFlags & 16777216) !== 0) ||
+                ['ClassDeclaration', 'ClassExpression'].includes(meta.valueKind));
+        })) {
+            id = 'noClassDeclarationSpreadInObject'; message = 'Using the spread operator on class declarations will spread only their static properties, and will lose their class prototype.';
+        }
+        if(id === '') { return; }
+        const finding = rules.add('no-misused-spread', id, message, index);
+        const inner = rules.skip(argument);
+        if(id === 'noPromiseSpreadInObject') {
+            const repairs: Repair[] = [];
+            if(this.higherAwait(inner)) {
+                const start = rules.byte(rules.start(rules.parser.node(argument)));
+                repairs.push(new Repair(start, start, 'await '));
+            } else {
+                const start = rules.byte(rules.start(rules.parser.node(inner))); const end = rules.byte(rules.parser.node(inner).end);
+                repairs.push(new Repair(start, start, 'await (')); repairs.push(new Repair(end, end, ')'));
+            }
+            finding.suggestions.push(new Suggestion('addAwait', 'Add await operator.', repairs));
+        } else if(id === 'noMapSpreadInObject' && facts.parts(facts.root()).every((part) =>
+            this.leaves(facts, part).some((leaf) => this.builtin(argument, facts, leaf, ['Map', 'ReadonlyMap', 'WeakMap'])))) {
+            let text = rules.text(rules.parser.node(inner)); if(!this.strong(inner)) { text = `(${text})`; }
+            const parent = this.bindings.parent(index);
+            const target = parent >= 0 && rules.parser.node(parent).kind === 'ObjectLiteralExpression' &&
+                rules.parser.node(parent).children.length === 1 ? parent : inner;
+            finding.suggestions.push(new Suggestion('replaceMapSpreadInObject', 'Replace map spread in object with `Object.fromEntries()`',
+                [new Repair(rules.byte(rules.start(rules.parser.node(target))), rules.byte(rules.parser.node(target).end), `Object.fromEntries(${text})`)]));
+        }
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind === 'SpreadAssignment' || node.kind === 'JsxSpreadAttribute') {
+                const argument = node.children[node.children.length - 1] ?? -1;
+                if(argument >= 0) { this.check(index, argument); }
+            }
+        }
+    }
+}

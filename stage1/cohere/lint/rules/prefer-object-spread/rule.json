@@ -1,0 +1,17 @@
+{
+  "name": "prefer-object-spread",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22PreferObjectSpread",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferObjectSpread",
+  "programReads": [
+    "ReadsCompilerOptions"
+  ]
+}

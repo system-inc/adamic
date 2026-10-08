@@ -1,0 +1,51 @@
+import { Kind } from '../common/kinds.a';
+import type { Node } from '../common/node.a';
+import type { Context } from '../common/context.a';
+export class Rule {
+    readonly context: Context;
+    constructor(context: Context){this.context=context;}
+    source(node: Node): boolean {
+        const context=this.context;
+        if(node.kind===Kind.Identifier){return node.text==='React';}
+        if(node.kind===Kind.PropertyAccessExpression) {
+            const object=context.first(node);const name=context.last(node);
+            return object.kind===Kind.Identifier&&object.text==='React'&&name.kind===Kind.Identifier&&name.text==='Fragment';
+        }
+        return context.requireReact(node,true);
+    }
+    declaration(node: Node): boolean {
+        const context=this.context;
+        if(node.kind===Kind.ImportSpecifier) {
+            const imported=context.first(node);
+            return imported.kind===Kind.Identifier&&imported.text==='Fragment'&&context.importModule(node)==='react';
+        }
+        if(node.kind===Kind.BindingElement) {
+            if(node.parent<0){return false;}const pattern=context.node(node.parent);
+            if(pattern.kind!==Kind.ObjectBindingPattern||pattern.parent<0){return false;}
+            const variable=context.node(pattern.parent);
+            return variable.kind===Kind.VariableDeclaration&&variable.initializer>=0&&this.source(context.initializer(variable));
+        }
+        return node.kind===Kind.VariableDeclaration&&node.initializer>=0&&this.source(context.initializer(node));
+    }
+    fragment(tag: Node): boolean {
+        const context=this.context;
+        if(tag.kind===Kind.PropertyAccessExpression) {
+            const object=context.first(tag);const name=context.last(tag);
+            return object.kind===Kind.Identifier&&object.text==='React'&&name.kind===Kind.Identifier&&name.text==='Fragment';
+        }
+        if(tag.kind!==Kind.Identifier){return false;}
+        return context.declarations(tag).some((id)=>this.declaration(context.node(id)));
+    }
+    visit(node: Node): void {
+        const context=this.context;
+        if(node.kind===Kind.JsxFragment) {
+            if(context.fragmentElement){context.report(node,'jsx-fragments','preferPragma','Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.');}
+            return;
+        }
+        if(context.fragmentElement){return;}
+        const opening=context.opening(node);
+        if(!this.fragment(context.first(opening))||context.attributes(opening).children.length>0){return;}
+        context.report(node,'jsx-fragments','preferFragment','Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.');
+    }
+}
+export function create(context: Context): Rule { return new Rule(context); }

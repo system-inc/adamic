@@ -1,0 +1,6 @@
+// Shared table row react/no_unstable_nested_components.go:450 at 071fb0128.
+// Go dot excludes LF; the final assertion is absolute end. The literal omits
+// global state because the rule calls test, rather than an all-match iterator.
+export const hookName=/^use[A-Z0-9][^\n]*(?![\s\S])/u;
+// Default expansion of Go buildPropNamePattern("render*").
+export const defaultPropName=/^render[^\n]*(?![\s\S])/u;

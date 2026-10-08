@@ -1,0 +1,42 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+--- PASS: TestTheOracleCatchesOneByte (23.58s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a (36.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (36.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (36.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (36.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a (25.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (25.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (25.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (27.21s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	63.365s

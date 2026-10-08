@@ -1,0 +1,33 @@
+package main
+
+import (
+	"fmt"
+	"github.com/system-inc/adamic/bridge/tsgo/checker"
+	"os"
+	"path/filepath"
+)
+
+func main() {
+	directory, err := os.MkdirTemp("", "wave22-question-gaps-")
+	if err != nil {
+		panic(err)
+	}
+	defer os.RemoveAll(directory)
+	path := filepath.Join(directory, "source.ts")
+	source := "declare const p: Promise<number> | number; if(p) {}\n"
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		panic(err)
+	}
+	config := filepath.Join(directory, "tsconfig.json")
+	if err := os.WriteFile(config, []byte(`{"compilerOptions":{"strict":true},"files":["source.ts"]}`), 0600); err != nil {
+		panic(err)
+	}
+	program, err := checker.Open(config, nil)
+	if err != nil {
+		panic(err)
+	}
+	for _, question := range []string{"type-operations\nraw\n0", "type-operations\nawaited\n0", "type-operations\nalias-metadata\n0"} {
+		_, err := program.Inspect(path, 13, 15, "Identifier", question)
+		fmt.Printf("question=%q error=%v\n", question, err)
+	}
+}

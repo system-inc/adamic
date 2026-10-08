@@ -1,0 +1,6 @@
+=== RUN   TestTypeOperations
+    type_operations_test.go:60: metadata differs: ["1" "type-operations" "5" "2" "0" "1" "" "D" "32" "ClassDeclaration" "1" "ClassDeclaration" "/tmp/adamic-gate/TestTypeOperations3007907232/001/input.ts" "0" "0" "0" "1" "2" "PropertyDeclaration" "0" "Identifier" "MethodDeclaration" "1024" "Identifier" "0" "1" "type-operations" "1" "0" "0" "0" "0"]; direct flags 2097157 properties 2
+--- FAIL: TestTypeOperations (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.020s
+FAIL

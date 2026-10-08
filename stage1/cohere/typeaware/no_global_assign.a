@@ -1,0 +1,41 @@
+import type { Bindings } from './bindings.ts';
+import { coreFinding } from './wave_22_core_finding.a';
+import { globalBinding } from './global_binding.a';
+
+// Production defaults: no exceptions. Provenance comes from the checker;
+// every write and report decision runs on Adamic's tree.
+export class NoGlobalAssign {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken',
+            'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken',
+            'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    writes(index: number): boolean {
+        const rules = this.bindings.rules; let current = index;
+        while(this.bindings.parent(current) >= 0) {
+            const parentIndex = this.bindings.parent(current); const parent = rules.parser.node(parentIndex);
+            if(parent.kind === 'PropertyAccessExpression') { return false; }
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(parent.kind)) { current = parentIndex; continue; }
+            if(parent.kind === 'PropertyAssignment') { if(parent.children[parent.children.length - 1] !== current) { return false; } current = parentIndex; continue; }
+            if(parent.kind === 'ShorthandPropertyAssignment') { if(parent.children[0] !== current) { return false; } current = parentIndex; continue; }
+            if(parent.kind === 'BinaryExpression') { return parent.children[0] === current && this.assignment(rules.parser.node(parent.children[1] ?? -1).kind); }
+            if(parent.kind === 'PrefixUnaryExpression' || parent.kind === 'PostfixUnaryExpression') { return ['PlusPlusToken', 'MinusMinusToken'].includes(parent.operator); }
+            return ['ForInStatement', 'ForOfStatement'].includes(parent.kind) &&
+                parent.children[rules.parser.node(parent.children[0] ?? -1).kind === 'AwaitKeyword' ? 1 : 0] === current;
+        }
+        return false;
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'Identifier' || !this.writes(index)) { continue; }
+            const facts = globalBinding(this.bindings, index, true).symbol;
+            if(!facts.present || facts.files[0] !== true || facts.declarations[0] !== true) { continue; }
+            coreFinding(this.bindings, 'no-global-assign', 'noGlobalAssign', `This assigns to \`${node.text}\`, which is a read-only global that the whole program shares. Nothing fails here: the failure lands later and elsewhere, when other code reaches for \`${node.text}\` and gets whatever was written instead. In a module or a class body the write throws instead of landing at all. Use a local variable.`, index);
+        }
+    }
+}

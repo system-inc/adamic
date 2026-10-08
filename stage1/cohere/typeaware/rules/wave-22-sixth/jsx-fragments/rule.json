@@ -1,0 +1,19 @@
+{
+  "name": "react/jsx-fragments",
+  "kinds": [
+    "JsxFragment",
+    "JsxElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "source": "rule.a",
+  "class": "Rule",
+  "factory": "create",
+  "nodeArgument": true,
+  "needsChecker": true,
+  "kindNumbers": [
+    289,
+    285,
+    286
+  ]
+}

@@ -1,0 +1,1 @@
+export function message(name: string): string { return `This assigns to \`${name}\`, which is a read-only global that the whole program shares. Nothing fails here: the failure lands later and elsewhere, when other code reaches for \`${name}\` and gets whatever was written instead. In a module or a class body the write throws instead of landing at all. Use a local variable.`; }

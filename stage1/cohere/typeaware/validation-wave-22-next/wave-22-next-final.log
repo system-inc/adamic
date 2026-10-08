@@ -1,0 +1,18 @@
+=== RUN   TestWave22NextAgreement
+    wave_22_next_test.go:224: controls: 546 accepted, 16 rejected by independent parser (including JSX under .a)
+    wave_22_next_test.go:226: controls: 101550 identical finding bytes; findings 346
+    wave_22_next_test.go:237: controls-asan: 101550 identical finding bytes; findings 346
+    wave_22_next_test.go:248: promise-condition: exit 0, empty stderr, byte oracle catches byte 14024
+    wave_22_next_test.go:248: spread-await-edit: exit 0, empty stderr, byte oracle catches byte 18782
+    wave_22_next_test.go:248: lost-write-span: exit 0, empty stderr, byte oracle catches byte 56328
+    wave_22_next_test.go:264: binding-state released handle: panic 70; retained-registry mutant caught
+    wave_22_next_test.go:264: type-operations
+        raw
+        0 released handle: panic 70; retained-registry mutant caught
+    wave_22_next_test.go:287: repository: 18485 identical finding bytes; findings 0
+    wave_22_next_test.go:288: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_next_test.go:287: compiler: 5857 identical finding bytes; findings 0
+    wave_22_next_test.go:288: compiler-asan: 5857 identical finding bytes; findings 0
+--- PASS: TestWave22NextAgreement (285.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	285.713s

@@ -1,0 +1,6 @@
+{
+  "name": "wave22-numeric-prefix",
+  "file": "judgment.a",
+  "from": "radix === 2 ? '0b'",
+  "to": "radix === 2 ? '0o'"
+}

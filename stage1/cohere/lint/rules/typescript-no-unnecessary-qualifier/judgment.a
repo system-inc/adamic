@@ -1,0 +1,55 @@
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { Wave22SymbolFacts } from '../../../typeaware/symbol_facts_wave_22.a';
+import type { Wave22Symbol } from '../../../typeaware/symbol_facts_wave_22.a';
+import { ScopeExportSymbols } from '../../../typeaware/scope_export_symbols.a';
+
+export class NoUnnecessaryQualifier {
+    readonly bindings: Bindings;
+    readonly facts: Wave22SymbolFacts;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.facts = new Wave22SymbolFacts(bindings); }
+    inScope(symbol: Wave22Symbol, stack: readonly number[]): boolean {
+        const rules = this.bindings.rules;
+        return symbol.declarations.some((declaration) => declaration.file === rules.path &&
+            stack.some((index) => {
+                const node = rules.parser.node(index);
+                return node.kind === declaration.kind && rules.byte(node.pos) === declaration.start &&
+                    rules.byte(node.end) === declaration.end;
+            }));
+    }
+    entity(index: number): boolean {
+        const node = this.bindings.rules.parser.node(index);
+        return node.kind === 'Identifier' || (node.kind === 'PropertyAccessExpression' && this.entity(node.children[0] ?? -1));
+    }
+    visit(index: number, stack: readonly number[]): void {
+        const rules = this.bindings.rules;
+        const node = rules.parser.node(index);
+        if(node.kind === 'EnumDeclaration' || node.kind === 'ModuleDeclaration') {
+            const nested = stack.slice(); nested.push(index);
+            for(const child of node.children) { this.visit(child, nested); }
+            return;
+        }
+        if(stack.length > 0 && ['QualifiedName', 'PropertyAccessExpression'].includes(node.kind)) {
+            const qualifier = node.kind === 'QualifiedName' ? node.children[0] ?? -1 : rules.skip(node.children[0] ?? -1);
+            const name = node.children[node.children.length - 1] ?? -1;
+            if(node.kind === 'QualifiedName' || this.entity(qualifier)) {
+                const accessed = this.facts.nodeSymbol(name);
+                if(accessed.present) {
+                    const facts = new ScopeExportSymbols(this.bindings, qualifier, accessed.flags, rules.parser.node(name).text);
+                    if((this.inScope(facts.own, stack) || this.inScope(facts.alias, stack)) && facts.scoped === accessed.identity) {
+                        const finding = rules.add('no-unnecessary-qualifier', 'unnecessaryQualifier',
+                            `Qualifier is unnecessary since '${rules.parser.node(name).text}' is in scope.`, qualifier);
+                        const parent = this.bindings.parent(qualifier);
+                        if(parent < 0 || rules.parser.node(parent).kind !== 'ParenthesizedExpression') {
+                            finding.fixStart = rules.byte(rules.start(rules.parser.node(qualifier)));
+                            finding.fixEnd = rules.byte(rules.start(rules.parser.node(name)));
+                            finding.replacement = '';
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+        for(const child of node.children) { this.visit(child, stack); }
+    }
+    run(): void { this.visit(this.bindings.rules.parser.nodes.length - 1, []); }
+}

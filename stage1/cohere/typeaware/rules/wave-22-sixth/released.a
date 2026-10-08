@@ -1,0 +1,5 @@
+import { panic, programArguments, tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
+const args=programArguments();
+const config=args[0]??panic('missing config');const path=args[1]??panic('missing path');const question=args[2]??panic('missing question');
+const program=tsgoProgram(config,[path]);tsgoRelease(program);
+console.log(tsgoInspect(program,path,0,1,'Identifier',question));

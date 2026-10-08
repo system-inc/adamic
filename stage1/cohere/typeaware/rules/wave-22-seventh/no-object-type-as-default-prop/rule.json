@@ -1,0 +1,12 @@
+{
+  "name": "react/no-object-type-as-default-prop",
+  "kinds": [
+    "SourceFile"
+  ],
+  "source": "rule.a",
+  "class": "Rule",
+  "factory": "create",
+  "visit": "visit",
+  "node": true,
+  "needsChecker": true
+}

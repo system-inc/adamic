@@ -1,0 +1,17 @@
+{
+  "name": "no-implicit-globals",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22NoImplicitGlobals",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoImplicitGlobals",
+  "programReads": [
+    "ReadsCompilerOptions"
+  ]
+}

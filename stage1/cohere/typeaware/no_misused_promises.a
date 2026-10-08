@@ -1,0 +1,227 @@
+import type { Bindings } from './bindings.ts';
+import type { Types } from './types.ts';
+import { PromiseTypes } from './promise_types.a';
+import { types } from './facts.ts';
+
+export class NoMisusedPromises {
+    readonly bindings: Bindings;
+    readonly promises: PromiseTypes;
+    readonly checked = new Map<number, boolean>();
+    constructor(bindings: Bindings) { this.bindings = bindings; this.promises = new PromiseTypes(bindings); }
+    returns(index: number): boolean {
+        if(index < 0) { return false; }
+        const facts = this.promises.operations.type(index, 'raw');
+        return facts.present && this.promises.returns(index, facts.roots[0] ?? 0);
+    }
+    report(index: number, id: string, message: string): void { this.bindings.rules.add('no-misused-promises', id, message, index); }
+    operator(index: number): string {
+        const node = this.bindings.rules.parser.node(index);
+        return node.kind === 'BinaryExpression' ? this.bindings.rules.parser.node(node.children[1] ?? -1).kind : node.operator;
+    }
+    assignment(index: number): boolean {
+        const node = this.bindings.rules.parser.node(index);
+        return node.kind === 'BinaryExpression' && ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+            'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken',
+            'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+            'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(this.operator(index));
+    }
+    conditional(index: number, test: boolean): void {
+        if(index < 0 || this.assignment(index) || this.checked.has(index)) { return; }
+        this.checked.set(index, true);
+        const rules = this.bindings.rules; index = rules.skip(index); const node = rules.parser.node(index);
+        if(node.kind === 'BinaryExpression' && ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(this.operator(index))) {
+            if(this.operator(index) !== 'QuestionQuestionToken' || test) { this.conditional(node.children[0] ?? -1, test); }
+            if(test) { this.conditional(node.children[node.children.length - 1] ?? -1, test); }
+            return;
+        }
+        const facts = this.promises.operations.type(index, 'raw');
+        if(facts.present && this.promises.thenable(index, facts.roots[0] ?? 0, true)) {
+            this.report(index, 'conditional', 'Expected non-Promise value in a boolean conditional.');
+        }
+    }
+    args(index: number): number[] {
+        const node = this.bindings.rules.parser.node(index);
+        return node.list <= 0 ? [] : node.children.slice(node.children.length - node.list);
+    }
+    arguments(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index); const args = this.args(index);
+        const thenable = args.map((argument) => this.returns(argument));
+        if(!thenable.some((value) => value)) { return; }
+        const callee = node.children[0] ?? -1; const facts = this.promises.operations.type(callee, 'raw');
+        const permits: number[] = []; const voids: number[] = [];
+        for(const part of facts.parts(facts.root())) {
+            const calls = this.promises.operations.signatures(callee, part, node.kind === 'NewExpression');
+            for(const signature of calls.signatures) {
+                for(let p = 0; p < signature.parameters.length; p++) {
+                    const parameter = calls.types.type(signature.parameters[p] ?? 0);
+                    if(signature.rests[p] === true) {
+                        if(parameter.array) {
+                            const element = parameter.arguments[0] ?? 0;
+                            if(element !== 0) { for(let at = p; at < args.length; at++) { this.argumentType(index, calls.types, element, at, permits, voids); } }
+                        } else if(parameter.tuple >= 0) {
+                            for(let at = p; at < args.length && at - p < parameter.arguments.length; at++) {
+                                this.argumentType(index, calls.types, parameter.arguments[at - p] ?? 0, at, permits, voids);
+                            }
+                        }
+                    } else { this.argumentType(index, calls.types, parameter.id, p, permits, voids); }
+                }
+            }
+        }
+        for(let at = 0; at < args.length; at++) {
+            if(thenable[at] === true && voids.includes(at) && !permits.includes(at)) {
+                this.report(args[at] ?? -1, 'voidReturnArgument', 'Promise returned in function argument where a void return was expected.');
+            }
+        }
+    }
+    argumentType(index: number, facts: Types, identity: number, at: number, permits: number[], voids: number[]): void {
+        const callee = this.bindings.rules.parser.node(index).children[0] ?? -1;
+        if(this.promises.returns(callee, identity)) { permits.push(at); }
+        else if(this.promises.void(callee, facts, identity) && !permits.includes(at)) { voids.push(at); }
+        // Contextual types come from the resolved call while every overload is considered above.
+        if(at >= this.args(index).length) { return; }
+        const contextual = this.promises.operations.type(index, 'argument', at);
+        if(contextual.present && contextual.roots[0] !== identity) {
+            const type = contextual.roots[0] ?? 0;
+            if(this.promises.returns(callee, type)) { permits.push(at); }
+            else if(this.promises.void(callee, contextual, type) && !permits.includes(at)) { voids.push(at); }
+        }
+    }
+    contextual(index: number): boolean {
+        const facts = this.promises.operations.type(index, 'contextual');
+        return facts.present && this.promises.void(index, facts, facts.roots[0] ?? 0);
+    }
+    annotation(index: number): number {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        const initializer = this.bindings.shape.initializer(index); const name = this.bindings.shape.name(index);
+        const body = this.bindings.functionKind(node.kind) ? node.children[node.children.length - 1] ?? -1 : -1;
+        return node.children.find((child) => child !== initializer && child !== name && child !== body && !['Parameter', 'TypeParameter',
+            'Block', 'EqualsGreaterThanToken', 'AsteriskToken', 'QuestionToken', 'ExclamationToken', 'AsyncKeyword', 'PublicKeyword',
+            'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'StaticKeyword', 'AbstractKeyword', 'DeclareKeyword', 'OverrideKeyword',
+            'ExportKeyword', 'DefaultKeyword', 'Decorator'].includes(rules.parser.node(child).kind)) ?? -1;
+    }
+    possible(index: number): boolean {
+        if(index < 0) { return true; }
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'TypeLiteral') { return node.children.some((child) => ['CallSignature', 'ConstructSignature'].includes(this.bindings.rules.parser.node(child).kind)); }
+        return ['ConditionalType', 'ConstructorType', 'FunctionType', 'ImportType', 'IndexedAccessType', 'InferType',
+            'IntersectionType', 'QualifiedName', 'ThisType', 'TypeOperator', 'TypeQuery', 'TypeReference', 'UnionType'].includes(node.kind);
+    }
+    property(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'PropertyAssignment') {
+            const value = node.children[node.children.length - 1] ?? -1;
+            if(this.contextual(value) && this.returns(value)) {
+                const annotation = this.bindings.functionKind(rules.parser.node(value).kind) ? this.annotation(value) : -1;
+                this.report(annotation >= 0 ? annotation : value, 'voidReturnProperty', 'Promise-returning function provided to property where a void return was expected.');
+            }
+        } else if(node.kind === 'ShorthandPropertyAssignment') {
+            const name = node.children[0] ?? -1;
+            if(this.contextual(name) && this.returns(name)) { this.report(name, 'voidReturnProperty', 'Promise-returning function provided to property where a void return was expected.'); }
+        } else {
+            const name = this.bindings.shape.name(index); const parent = this.bindings.parent(index);
+            if(name < 0 || rules.parser.node(name).kind === 'ComputedPropertyName' || parent < 0 ||
+                rules.parser.node(parent).kind !== 'ObjectLiteralExpression' || !this.returns(index)) { return; }
+            const object = this.promises.operations.type(parent, 'contextual');
+            if(!object.present) { return; }
+            const member = this.promises.operations.type(name, 'property', object.roots[0] ?? 0, rules.parser.node(name).text);
+            if(member.present && this.promises.void(name, member, member.roots[0] ?? 0)) {
+                const annotation = this.annotation(index);
+                this.report(annotation >= 0 ? annotation : index, 'voidReturnProperty', 'Promise-returning function provided to property where a void return was expected.');
+            }
+        }
+    }
+    heritage(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(!node.children.some((child) => rules.parser.node(child).kind === 'HeritageClause')) { return; }
+        const heritage = this.promises.operations.type(index, 'heritage');
+        for(const member of node.children) {
+            const child = rules.parser.node(member); const name = child.children.find((part) => ['Identifier', 'PrivateIdentifier',
+                'StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'ComputedPropertyName'].includes(rules.parser.node(part).kind)) ?? -1;
+            if(name < 0 || rules.parser.node(name).kind === 'ComputedPropertyName' ||
+                child.children.some((part) => rules.parser.node(part).kind === 'StaticKeyword') || !this.returns(member)) { continue; }
+            for(const base of heritage.roots) {
+                const property = this.promises.operations.type(member, 'member', base, rules.parser.node(name).text);
+                if(property.present && this.promises.void(member, property, property.roots[0] ?? 0)) {
+                    this.report(member, 'voidReturnInheritedMethod', `Promise-returning method provided where a void return was expected by extended/implemented type '${rules.name(heritage.type(base), member)}'.`);
+                }
+            }
+        }
+    }
+    forCondition(index: number): number {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        for(const child of node.children.slice(0, -1)) {
+            const childStart = rules.start(rules.parser.node(child)); rules.scanner.pos = node.pos; let parentheses = 0; let semicolons = 0;
+            while(rules.scanner.pos <= rules.parser.node(child).pos) {
+                const kind = rules.scanner.scan();
+                if(rules.scanner.start >= childStart) { break; }
+                if(kind === 'OpenParenToken') { parentheses++; } else if(kind === 'CloseParenToken') { parentheses--; }
+                if(kind === 'SemicolonToken' && parentheses === 1) { semicolons++; }
+                if(kind === 'EndOfFileToken') { break; }
+            }
+            if(semicolons === 1) { return child; }
+        }
+        return -1;
+    }
+    visit(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'BinaryExpression') {
+            this.conditional(index, false);
+            if(this.assignment(index)) {
+                const left = node.children[0] ?? -1; const right = node.children[node.children.length - 1] ?? -1;
+                const facts = this.promises.operations.type(left, 'raw');
+                if(facts.present && this.promises.void(left, facts, facts.roots[0] ?? 0) && this.returns(right)) {
+                    this.report(right, 'voidReturnVariable', 'Promise-returning function provided to variable where a void return was expected.');
+                }
+            }
+        } else if(['IfStatement', 'WhileStatement', 'ConditionalExpression'].includes(node.kind)) { this.conditional(node.children[0] ?? -1, true); }
+        else if(node.kind === 'DoStatement') { this.conditional(node.children[node.children.length - 1] ?? -1, true); }
+        else if(node.kind === 'ForStatement') { this.conditional(this.forCondition(index), true); }
+        else if(node.kind === 'PrefixUnaryExpression' && this.operator(index) === 'ExclamationToken') { this.conditional(node.children[node.children.length - 1] ?? -1, true); }
+        else if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const parent = this.bindings.parent(index);
+            if(parent >= 0 && rules.parser.node(parent).kind === 'CallExpression') {
+                const args = this.args(parent); const receiver = node.children[0] ?? -1;
+                if(args.length > 0 && ['every', 'filter', 'find', 'findIndex', 'findLast', 'findLastIndex', 'some'].includes(this.promises.operations.accessName(index))) {
+                    const facts = this.promises.operations.type(receiver, 'constrained');
+                    if(facts.present && this.array(facts, facts.roots[0] ?? 0) && this.returns(args[0] ?? -1)) {
+                        this.report(args[0] ?? -1, 'predicate', 'Expected a non-Promise value to be returned.');
+                    }
+                }
+            }
+        } else if(node.kind === 'CallExpression' || node.kind === 'NewExpression') { this.arguments(index); }
+        else if(node.kind === 'SpreadElement' || node.kind === 'SpreadAssignment') {
+            const argument = node.children[node.children.length - 1] ?? -1; const facts = this.promises.operations.type(argument, 'raw');
+            if(facts.present && this.promises.thenable(argument, facts.roots[0] ?? 0)) { this.report(argument, 'spread', 'Expected a non-Promise value to be spreaded in an object.'); }
+        } else if(node.kind === 'VariableDeclaration') {
+            const initializer = this.bindings.shape.initializer(index); const annotation = this.annotation(index); const name = this.bindings.shape.name(index);
+            if(initializer >= 0 && annotation >= 0 && name >= 0 && this.possible(annotation)) {
+                const facts = this.promises.operations.type(name, 'raw');
+                if(facts.present && this.promises.void(initializer, facts, facts.roots[0] ?? 0) && this.returns(initializer)) {
+                    this.report(initializer, 'voidReturnVariable', 'Promise-returning function provided to variable where a void return was expected.');
+                }
+            }
+        } else if(['PropertyAssignment', 'ShorthandPropertyAssignment', 'MethodDeclaration'].includes(node.kind)) { this.property(index); }
+        else if(['ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration'].includes(node.kind)) { this.heritage(index); }
+        else if(node.kind === 'ReturnStatement' && node.children.length > 0) {
+            let owner = this.bindings.parent(index); while(owner >= 0 && !this.bindings.functionKind(rules.parser.node(owner).kind)) { owner = this.bindings.parent(owner); }
+            const value = node.children[0] ?? -1;
+            if(owner >= 0 && this.possible(this.annotation(owner)) && this.contextual(value) && this.returns(value)) {
+                this.report(value, 'voidReturnReturnValue', 'Promise-returning function provided to return value where a void return was expected.');
+            }
+        } else if(node.kind === 'JsxAttribute') {
+            const initializer = node.children[node.children.length - 1] ?? -1;
+            if(initializer >= 0 && rules.parser.node(initializer).kind === 'JsxExpression') {
+                const expression = rules.parser.node(initializer).children[0] ?? -1;
+                if(expression >= 0 && this.returns(expression) && this.contextual(initializer)) {
+                    this.report(initializer, 'voidReturnAttribute', 'Promise-returning function provided to attribute where a void return was expected.');
+                }
+            }
+        }
+        for(const child of node.children) { this.visit(child); }
+    }
+    array(facts: Types, identity: number): boolean {
+        const type = facts.type(identity);
+        return type.parts.length > 0 && (type.flags & 402653184) !== 0 ? type.parts.some((part) => this.array(facts, part)) : type.array || type.tuple >= 0;
+    }
+    run(): void { this.visit(this.bindings.rules.parser.nodes.length - 1); }
+}

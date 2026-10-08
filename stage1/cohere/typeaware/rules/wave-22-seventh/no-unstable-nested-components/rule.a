@@ -1,0 +1,82 @@
+import type { Context } from '../common/context.a';
+import { Components } from '../common/components.a';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import { Kind } from '../../wave-22-sixth/common/kinds.a';
+import { hookName, defaultPropName } from './patterns.a';
+export class Rule {
+    readonly statelessParents=new Map<number,number>();
+    readonly context: Context;readonly components: Components;readonly allowAsProps: boolean;
+    constructor(context: Context,components: Components,allowAsProps=false){this.context=context;this.components=components;this.allowAsProps=allowAsProps;}
+    closest(node: Node,match: (node: Node)=>boolean): Node|undefined {
+        let current=this.context.parent(node);while(current!==undefined&&current.kind!==Kind.SourceFile){if(match(current)){return current;}current=this.context.parent(current);}return undefined;
+    }
+    propName(name: Node|undefined): boolean {return name!==undefined&&name.kind===Kind.Identifier&&defaultPropName.test(name.text);}
+    attribute(node: Node): boolean {const initial=this.context.init(node);return node.kind===Kind.JsxAttribute&&initial!==undefined&&initial.kind===Kind.JsxExpression;}
+    inProp(node: Node): boolean {
+        const c=this.context;const parent=c.parent(node);
+        if(parent?.kind===Kind.PropertyAssignment){return this.components.returns(node);}
+        if(c.hasJsxAttributes&&this.closest(node,(n)=>this.attribute(n))!==undefined){return this.components.returns(node);}
+        if(!this.components.detected.has(node.index)){return false;}
+        const call=this.closest(node,(n)=>n.kind===Kind.CallExpression&&this.components.elements.createElement(n));
+        if(call===undefined||call.list<2){return false;}const object=this.closest(node,(n)=>n.kind===Kind.ObjectLiteralExpression);
+        return object!==undefined&&c.skip(c.node(c.args(call)[1]??-1)).index===object.index;
+    }
+    renderProp(node: Node): boolean {
+        const c=this.context;const parent=c.parent(node);
+        if(parent?.kind===Kind.PropertyAssignment&&this.propName(c.key(parent))){return true;}
+        if(parent?.kind===Kind.JsxExpression&&c.parent(parent)?.kind===Kind.JsxElement){return true;}
+        const container=this.closest(node,(n)=>n.kind===Kind.JsxExpression);if(container===undefined){return false;}
+        const attribute=c.parent(container);if(attribute?.kind!==Kind.JsxAttribute){return false;}
+        const name=c.key(attribute);return this.propName(name)||(name?.kind===Kind.Identifier&&name.text==='children');
+    }
+    map(node: Node|undefined): boolean {if(node===undefined||node.kind!==Kind.CallExpression){return false;}const c=this.context;const callee=c.skip(c.first(node));return callee.kind===Kind.PropertyAccessExpression&&c.last(callee).kind===Kind.Identifier&&c.last(callee).text==='map';}
+    hook(node: Node): boolean {
+        const c=this.context;if(c.parent(node)?.kind!==Kind.ReturnStatement){return false;}
+        const call=this.closest(node,(n)=>n.kind===Kind.CallExpression);if(call===undefined){return false;}
+        const callee=c.skip(c.first(call));return callee.kind===Kind.Identifier&&hookName.test(callee.text);
+    }
+    statelessParent(node: Node): Node|undefined {
+        const cached=this.statelessParents.get(node.index);if(cached!==undefined){return cached<0?undefined:this.context.node(cached);}
+        let result:Node|undefined;
+        if([Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction].includes(node.kind)){result=this.components.stateless(node,false);}
+        if(result===undefined){const parent=this.context.parent(node);if(parent!==undefined){result=this.statelessParent(parent);}}
+        this.statelessParents.set(node.index,result===undefined?-1:result.index);return result;
+    }
+    recovered(node: Node): boolean {
+        if(!this.components.hasReactClass){return false;}
+        let current:Node|undefined=node;let parent:Node|undefined;
+        while(current!==undefined){if(this.components.class(current)||this.components.factory(current)){parent=current;break;}current=this.context.parent(current);}
+        if(parent===undefined){parent=this.statelessParent(node);}
+        if(parent===undefined||![Kind.ClassDeclaration,Kind.ClassExpression].includes(parent.kind)){return false;}
+        const stateless=this.statelessParent(node);return stateless!==undefined&&this.components.stateless(stateless,false)!==undefined&&this.components.returns(node);
+    }
+    name(node: Node): Node|undefined {
+        if([Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ClassDeclaration,Kind.ClassExpression].includes(node.kind)){const name=this.context.name(node);if(name?.kind===Kind.Identifier){return name;}}
+        if(node.kind===Kind.ArrowFunction){const parent=this.context.parent(node);if(parent?.kind===Kind.VariableDeclaration){const name=this.context.name(parent);if(name?.kind===Kind.Identifier){return name;}}}return undefined;
+    }
+    uppercase(name: Node): boolean {
+        const code=name.text.charCodeAt(0);if(code<128){return code>=65&&code<=90;}
+        const cases=this.context.cases(name);return cases[0]!==cases[2];
+    }
+    validate(node: Node): void {
+        const c=this.context;if(node.parent<0){return;}const inProp=this.inProp(node);
+        if(!this.components.detected.has(node.index)&&!this.recovered(node)&&!inProp){return;}
+        if(inProp&&(this.allowAsProps||this.renderProp(node))){return;}
+        if(this.map(node)||this.map(c.parent(node))||this.hook(node)){return;}
+        const parent=c.parent(node);if(parent?.kind===Kind.PropertyAssignment&&this.propName(c.key(parent))){return;}
+        // Go's method-value guard has no subject in this parser: methods own their bodies.
+        const stateless=this.components.stateless(node,false);if(stateless!==undefined&&!this.components.returns(stateless)){return;}
+        const outer=this.closest(node,(n)=>this.components.detected.has(n.index));if(outer===undefined){return;}
+        const name=this.name(outer);if(name!==undefined&&!this.uppercase(name)){return;}
+        const wording=name===undefined?' ':` “${name.text}” `;
+        let message=`Do not define components during render. React will see a new component type on every render and destroy the entire subtree’s DOM nodes and state (https://reactjs.org/docs/reconciliation.html#elements-of-different-types). Instead, move this component definition out of the parent component${wording}and pass data as props.`;
+        if(inProp&&!this.allowAsProps){message+=' If you want to allow component creation in props, set allowAsProps option to true.';}
+        c.report(node,'no-unstable-nested-components','unstableNestedComponent',message);
+    }
+    walk(node: Node): void {
+        if([Kind.FunctionDeclaration,Kind.ArrowFunction,Kind.FunctionExpression,Kind.ClassDeclaration,Kind.CallExpression].includes(node.kind)){this.validate(node);}
+        for(const id of node.children){this.walk(this.context.node(id));}
+    }
+    visit(node: Node): void {this.components.walk(node);this.walk(node);}
+}
+export function create(context: Context): Rule {return new Rule(context,new Components(context));}

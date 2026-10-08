@@ -1,0 +1,6 @@
+{
+  "name": "wave22-private-read",
+  "file": "judgment.a",
+  "from": "if(member.used) { continue; }",
+  "to": "if(!member.used) { continue; }"
+}

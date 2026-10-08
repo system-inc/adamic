@@ -1,0 +1,730 @@
+=== RUN   TestJsxFragmentsStaysSilent
+=== PAUSE TestJsxFragmentsStaysSilent
+=== RUN   TestJsxFragmentsFires
+=== PAUSE TestJsxFragmentsFires
+=== RUN   TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten
+=== PAUSE TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten
+=== RUN   TestJsxFragmentsSpans
+=== PAUSE TestJsxFragmentsSpans
+=== RUN   TestJsxFragmentsMessageText
+=== PAUSE TestJsxFragmentsMessageText
+=== RUN   TestDecodeJsxFragmentsOptions
+=== PAUSE TestDecodeJsxFragmentsOptions
+=== RUN   TestJsxFragmentsNilOptionsUsesTheDefault
+=== PAUSE TestJsxFragmentsNilOptionsUsesTheDefault
+=== RUN   TestJsxFragmentsRequiresTheTypedHarness
+=== PAUSE TestJsxFragmentsRequiresTheTypedHarness
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite
+=== RUN   TestJsxFragmentsVersionArmIsNotPorted
+=== PAUSE TestJsxFragmentsVersionArmIsNotPorted
+=== RUN   TestJsxFragmentsSurvivorShapes
+=== PAUSE TestJsxFragmentsSurvivorShapes
+=== RUN   TestJsxFragmentsNonReactSources
+=== PAUSE TestJsxFragmentsNonReactSources
+=== RUN   TestJsxFragmentsDecoderRefusesWhatUpstreamRefuses
+=== PAUSE TestJsxFragmentsDecoderRefusesWhatUpstreamRefuses
+=== RUN   TestJsxNoUndefFires
+=== PAUSE TestJsxNoUndefFires
+=== RUN   TestJsxNoUndefStaysSilent
+=== PAUSE TestJsxNoUndefStaysSilent
+=== RUN   TestJsxNoUndefNeedsTheTypedHarness
+=== PAUSE TestJsxNoUndefNeedsTheTypedHarness
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier
+=== RUN   TestJsxNoUndefAllowGlobals
+=== PAUSE TestJsxNoUndefAllowGlobals
+=== RUN   TestNoAdjacentInlineElementsFires
+=== PAUSE TestNoAdjacentInlineElementsFires
+=== RUN   TestNoAdjacentInlineElementsStaysSilent
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent
+=== RUN   TestNoAdjacentInlineElementsHasNoFileSuffixGate
+=== PAUSE TestNoAdjacentInlineElementsHasNoFileSuffixGate
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement
+=== RUN   TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes
+=== PAUSE TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes
+=== RUN   TestNoAdjacentInlineElementsReportsOncePerContainer
+=== PAUSE TestNoAdjacentInlineElementsReportsOncePerContainer
+=== RUN   TestNoAdjacentInlineElementsNameMatching
+=== PAUSE TestNoAdjacentInlineElementsNameMatching
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes
+=== RUN   TestNoAdjacentInlineElementsAnchorsOnTheContainer
+=== PAUSE TestNoAdjacentInlineElementsAnchorsOnTheContainer
+=== RUN   TestNoAdjacentInlineElementsRequiresTheTypedHarness
+=== PAUSE TestNoAdjacentInlineElementsRequiresTheTypedHarness
+=== RUN   TestNoAdjacentInlineElementsMessageExplainsTheRendering
+=== PAUSE TestNoAdjacentInlineElementsMessageExplainsTheRendering
+=== CONT  TestJsxFragmentsStaysSilent
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_0
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_0
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_1
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_1
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_2
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_2
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_3
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_3
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_4
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_4
+=== CONT  TestJsxNoUndefNeedsTheTypedHarness
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_5
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_5
+=== CONT  TestJsxNoUndefStaysSilent
+=== RUN   TestJsxNoUndefStaysSilent/an_uppercase_component_declared_in_the_same_var_statement
+=== PAUSE TestJsxNoUndefStaysSilent/an_uppercase_component_declared_in_the_same_var_statement
+=== CONT  TestJsxNoUndefFires
+=== CONT  TestJsxFragmentsDecoderRefusesWhatUpstreamRefuses
+--- PASS: TestJsxFragmentsDecoderRefusesWhatUpstreamRefuses (0.00s)
+=== CONT  TestJsxFragmentsNonReactSources
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_6
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_6
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_7
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_7
+=== RUN   TestJsxFragmentsStaysSilent/upstream_valid_8
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_valid_8
+=== RUN   TestJsxFragmentsStaysSilent/upstream_invalid_0
+=== PAUSE TestJsxFragmentsStaysSilent/upstream_invalid_0
+=== RUN   TestJsxFragmentsNonReactSources/require_of_another_module_is_not_the_fragment_source
+=== CONT  TestJsxFragmentsSurvivorShapes
+=== PAUSE TestJsxFragmentsNonReactSources/require_of_another_module_is_not_the_fragment_source
+=== RUN   TestJsxFragmentsSurvivorShapes/a_merged_interface_written_above_the_import_still_resolves
+=== RUN   TestJsxFragmentsNonReactSources/a_member_access_on_another_namespace_is_not_the_fragment_source
+=== PAUSE TestJsxFragmentsSurvivorShapes/a_merged_interface_written_above_the_import_still_resolves
+=== PAUSE TestJsxFragmentsNonReactSources/a_member_access_on_another_namespace_is_not_the_fragment_source
+=== RUN   TestJsxNoUndefStaysSilent/a_lowercase_intrinsic_element
+=== PAUSE TestJsxNoUndefStaysSilent/a_lowercase_intrinsic_element
+=== RUN   TestJsxNoUndefStaysSilent/a_dashed_custom_element
+=== PAUSE TestJsxNoUndefStaysSilent/a_dashed_custom_element
+=== RUN   TestJsxNoUndefStaysSilent/a_lowercase_member_object_that_is_declared
+=== PAUSE TestJsxNoUndefStaysSilent/a_lowercase_member_object_that_is_declared
+=== RUN   TestJsxNoUndefStaysSilent/a_lowercase_member_object_declared,_two_levels_deep
+=== PAUSE TestJsxNoUndefStaysSilent/a_lowercase_member_object_declared,_two_levels_deep
+=== RUN   TestJsxNoUndefStaysSilent/a_namespaced_name
+=== PAUSE TestJsxNoUndefStaysSilent/a_namespaced_name
+=== RUN   TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_inside_a_class
+=== PAUSE TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_inside_a_class
+=== RUN   TestJsxNoUndefStaysSilent/a_component_imported_by_default_import
+=== PAUSE TestJsxNoUndefStaysSilent/a_component_imported_by_default_import
+=== RUN   TestJsxNoUndefStaysSilent/a_var_declared_before_an_enum_of_the_same_member_name
+=== PAUSE TestJsxNoUndefStaysSilent/a_var_declared_before_an_enum_of_the_same_member_name
+=== RUN   TestJsxNoUndefStaysSilent/an_enum_before_a_var_of_the_same_name
+=== PAUSE TestJsxNoUndefStaysSilent/an_enum_before_a_var_of_the_same_name
+=== RUN   TestJsxNoUndefStaysSilent/an_import-equals_require_binding
+=== PAUSE TestJsxNoUndefStaysSilent/an_import-equals_require_binding
+=== RUN   TestJsxNoUndefStaysSilent/an_import-equals_alias_of_an_imported_namespace_member
+=== PAUSE TestJsxNoUndefStaysSilent/an_import-equals_alias_of_an_imported_namespace_member
+=== RUN   TestJsxNoUndefStaysSilent/a_dashed_name_whose_first_letter_is_uppercase
+=== PAUSE TestJsxNoUndefStaysSilent/a_dashed_name_whose_first_letter_is_uppercase
+=== RUN   TestJsxNoUndefStaysSilent/a_dashed_custom_element_with_an_uppercase_tail
+=== PAUSE TestJsxNoUndefStaysSilent/a_dashed_custom_element_with_an_uppercase_tail
+=== RUN   TestJsxNoUndefStaysSilent/a_bare_this_tag
+=== PAUSE TestJsxNoUndefStaysSilent/a_bare_this_tag
+=== RUN   TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_at_module_top_level
+=== PAUSE TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_at_module_top_level
+=== RUN   TestJsxNoUndefStaysSilent/a_declared_object_under_a_four-deep_member_expression
+=== PAUSE TestJsxNoUndefStaysSilent/a_declared_object_under_a_four-deep_member_expression
+=== RUN   TestJsxNoUndefStaysSilent/a_component_declared_in_an_ambient_declare_statement
+=== PAUSE TestJsxNoUndefStaysSilent/a_component_declared_in_an_ambient_declare_statement
+=== RUN   TestJsxNoUndefStaysSilent/a_component_declared_as_a_function
+=== PAUSE TestJsxNoUndefStaysSilent/a_component_declared_as_a_function
+=== RUN   TestJsxNoUndefFires/an_undeclared_uppercase_component
+=== PAUSE TestJsxNoUndefFires/an_undeclared_uppercase_component
+=== RUN   TestJsxNoUndefFires/an_undeclared_uppercase_member_object
+=== PAUSE TestJsxNoUndefFires/an_undeclared_uppercase_member_object
+=== RUN   TestJsxNoUndefFires/an_undeclared_lowercase_member_object
+=== PAUSE TestJsxNoUndefFires/an_undeclared_lowercase_member_object
+=== RUN   TestJsxNoUndefFires/an_undeclared_lowercase_member_object,_two_levels_deep
+=== PAUSE TestJsxNoUndefFires/an_undeclared_lowercase_member_object,_two_levels_deep
+=== RUN   TestJsxNoUndefFires/another_undeclared_uppercase_component
+=== PAUSE TestJsxNoUndefFires/another_undeclared_uppercase_component
+=== RUN   TestJsxNoUndefFires/an_undeclared_name_mentioned_as_a_bare_expression_too
+=== PAUSE TestJsxNoUndefFires/an_undeclared_name_mentioned_as_a_bare_expression_too
+=== RUN   TestJsxNoUndefFires/a_binding_declared_only_inside_a_nested_block
+=== PAUSE TestJsxNoUndefFires/a_binding_declared_only_inside_a_nested_block
+=== RUN   TestJsxNoUndefFires/an_enum_member_that_is_not_a_value_binding
+=== PAUSE TestJsxNoUndefFires/an_enum_member_that_is_not_a_value_binding
+=== RUN   TestJsxNoUndefFires/an_undeclared_member_object_with_no_surrounding_code
+=== PAUSE TestJsxNoUndefFires/an_undeclared_member_object_with_no_surrounding_code
+=== RUN   TestJsxNoUndefFires/an_underscore-led_name,_which_upstream_treats_as_a_reference
+=== PAUSE TestJsxNoUndefFires/an_underscore-led_name,_which_upstream_treats_as_a_reference
+=== RUN   TestJsxNoUndefFires/a_dollar-led_name,_which_upstream_treats_as_a_reference
+=== PAUSE TestJsxNoUndefFires/a_dollar-led_name,_which_upstream_treats_as_a_reference
+=== RUN   TestJsxNoUndefFires/a_non-ASCII_name,_always_a_reference_whatever_its_case
+=== PAUSE TestJsxNoUndefFires/a_non-ASCII_name,_always_a_reference_whatever_its_case
+=== RUN   TestJsxNoUndefFires/a_four-deep_member_expression_reports_on_its_leftmost_object
+=== PAUSE TestJsxNoUndefFires/a_four-deep_member_expression_reports_on_its_leftmost_object
+=== RUN   TestJsxNoUndefFires/a_lowercase_leftmost_object_with_an_undeclared_name
+=== PAUSE TestJsxNoUndefFires/a_lowercase_leftmost_object_with_an_undeclared_name
+=== RUN   TestJsxNoUndefFires/a_component_bound_only_by_an_interface_declaration
+=== PAUSE TestJsxNoUndefFires/a_component_bound_only_by_an_interface_declaration
+=== RUN   TestJsxNoUndefFires/a_component_bound_only_by_a_type_alias
+=== PAUSE TestJsxNoUndefFires/a_component_bound_only_by_a_type_alias
+=== RUN   TestJsxNoUndefFires/an_undeclared_component_written_with_a_closing_tag
+=== PAUSE TestJsxNoUndefFires/an_undeclared_component_written_with_a_closing_tag
+=== CONT  TestJsxFragmentsVersionArmIsNotPorted
+=== RUN   TestJsxFragmentsSurvivorShapes/a_merged_interface_written_below_the_import_still_resolves
+=== PAUSE TestJsxFragmentsSurvivorShapes/a_merged_interface_written_below_the_import_still_resolves
+=== RUN   TestJsxFragmentsSurvivorShapes/a_member_access_on_a_name_other_than_the_pragma_is_silent
+=== PAUSE TestJsxFragmentsSurvivorShapes/a_member_access_on_a_name_other_than_the_pragma_is_silent
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/two_nested_named_fragments_both_report
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/two_nested_named_fragments_both_report
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/a_named_fragment_nested_inside_an_ordinary_element_reports
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/a_named_fragment_nested_inside_an_ordinary_element_reports
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/an_empty_named_fragment_reports
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/an_empty_named_fragment_reports
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/a_spread_attribute_counts_as_a_prop_and_is_left_alone
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/a_spread_attribute_counts_as_a_prop_and_is_left_alone
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/a_three_segment_member_access_is_not_the_pragma
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/a_three_segment_member_access_is_not_the_pragma
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/a_fragment_imported_from_another_module_is_not_the_pragma
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/a_fragment_imported_from_another_module_is_not_the_pragma
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/an_unresolved_bare_tag_name_is_not_the_pragma
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/an_unresolved_bare_tag_name_is_not_the_pragma
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/the_shorthand_is_silent_under_the_default
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/the_shorthand_is_silent_under_the_default
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/the_named_form_is_silent_under_the_element_mode
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/the_named_form_is_silent_under_the_element_mode
+=== RUN   TestJsxFragmentsShapesUpstreamDoesNotWrite/a_nested_shorthand_pair_both_report_under_the_element_mode
+=== PAUSE TestJsxFragmentsShapesUpstreamDoesNotWrite/a_nested_shorthand_pair_both_report_under_the_element_mode
+=== RUN   TestJsxFragmentsNonReactSources/destructuring_another_namespace_is_not_the_fragment_source
+=== PAUSE TestJsxFragmentsNonReactSources/destructuring_another_namespace_is_not_the_fragment_source
+=== CONT  TestJsxFragmentsRequiresTheTypedHarness
+=== CONT  TestJsxFragmentsNilOptionsUsesTheDefault
+=== CONT  TestDecodeJsxFragmentsOptions
+=== RUN   TestDecodeJsxFragmentsOptions/absent_configuration_falls_back_to_the_default
+=== PAUSE TestDecodeJsxFragmentsOptions/absent_configuration_falls_back_to_the_default
+=== RUN   TestDecodeJsxFragmentsOptions/the_explicit_default
+=== PAUSE TestDecodeJsxFragmentsOptions/the_explicit_default
+=== RUN   TestDecodeJsxFragmentsOptions/the_element_mode
+=== PAUSE TestDecodeJsxFragmentsOptions/the_element_mode
+=== CONT  TestJsxFragmentsMessageText
+--- PASS: TestJsxFragmentsRequiresTheTypedHarness (0.03s)
+=== CONT  TestJsxFragmentsSpans
+=== RUN   TestJsxFragmentsSpans/the_paired_named_form_spans_the_whole_element
+=== PAUSE TestJsxFragmentsSpans/the_paired_named_form_spans_the_whole_element
+=== RUN   TestJsxFragmentsSpans/the_self_closing_named_form_spans_the_whole_element
+=== PAUSE TestJsxFragmentsSpans/the_self_closing_named_form_spans_the_whole_element
+=== RUN   TestJsxFragmentsSpans/the_shorthand_spans_the_whole_fragment
+=== PAUSE TestJsxFragmentsSpans/the_shorthand_spans_the_whole_fragment
+=== CONT  TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten
+=== RUN   TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_paired_tag
+=== PAUSE TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_paired_tag
+=== RUN   TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_self_closing_tag
+=== PAUSE TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_self_closing_tag
+=== RUN   TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/no_type_argument,_the_ordinary_shape
+=== PAUSE TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/no_type_argument,_the_ordinary_shape
+=== CONT  TestJsxFragmentsFires
+--- PASS: TestJsxNoUndefNeedsTheTypedHarness (0.03s)
+=== CONT  TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes
+=== RUN   TestJsxFragmentsFires/upstream_invalid_1
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_1
+=== RUN   TestJsxFragmentsFires/upstream_invalid_2
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_2
+=== RUN   TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_before_an_inline_child
+=== PAUSE TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_before_an_inline_child
+=== CONT  TestNoAdjacentInlineElementsNameMatching
+=== RUN   TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_after_an_inline_child
+=== PAUSE TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_after_an_inline_child
+--- PASS: TestJsxFragmentsNilOptionsUsesTheDefault (0.03s)
+--- PASS: TestJsxFragmentsMessageText (0.03s)
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes
+=== RUN   TestJsxFragmentsFires/upstream_invalid_3
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_3
+=== RUN   TestNoAdjacentInlineElementsNameMatching/capitalised_components_are_not_on_the_list
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/capitalised_components_are_not_on_the_list
+=== RUN   TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_call_inside_a_jsx_expression_container_is_not_a_child_upstream_reads
+=== PAUSE TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_call_inside_a_jsx_expression_container_is_not_a_child_upstream_reads
+=== RUN   TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/two_guarded_calls_still_report_nothing
+=== PAUSE TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/two_guarded_calls_still_report_nothing
+=== RUN   TestNoAdjacentInlineElementsNameMatching/a_member_named_tag_has_no_plain_name
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/a_member_named_tag_has_no_plain_name
+=== RUN   TestNoAdjacentInlineElementsNameMatching/a_block_element_is_not_on_the_list
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/a_block_element_is_not_on_the_list
+=== RUN   TestNoAdjacentInlineElementsNameMatching/a_block_before_an_inline_does_not_report
+=== CONT  TestNoAdjacentInlineElementsReportsOncePerContainer
+=== RUN   TestNoAdjacentInlineElementsReportsOncePerContainer/three_in_a_row_report_once
+=== PAUSE TestNoAdjacentInlineElementsReportsOncePerContainer/three_in_a_row_report_once
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/a_block_before_an_inline_does_not_report
+=== RUN   TestNoAdjacentInlineElementsReportsOncePerContainer/two_separated_pairs_report_once
+=== PAUSE TestNoAdjacentInlineElementsReportsOncePerContainer/two_separated_pairs_report_once
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/a_foreign_outer_namespace_declines
+=== CONT  TestNoAdjacentInlineElementsStaysSilent
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/a_foreign_outer_namespace_declines
+=== RUN   TestNoAdjacentInlineElementsNameMatching/an_inline_before_a_block_does_not_report
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/an_inline_before_a_block_does_not_report
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_0_an_element_with_no_children
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_0_an_element_with_no_children
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_1_two_block_elements
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_1_two_block_elements
+=== RUN   TestNoAdjacentInlineElementsNameMatching/self_closing_inline_elements_report
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/self_closing_inline_elements_report
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/a_bare_outer_call_with_no_import_declines
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/a_bare_outer_call_with_no_import_declines
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/a_destructured_react_import_reports
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/a_destructured_react_import_reports
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/a_third_argument_that_is_not_an_array_yields_no_children
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/a_third_argument_that_is_not_an_array_yields_no_children
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/only_two_arguments_yields_no_children
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/only_two_arguments_yields_no_children
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/foreign_inner_calls_still_count_as_inline
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/foreign_inner_calls_still_count_as_inline
+=== RUN   TestNoAdjacentInlineElementsCreateElementShapes/an_inner_call_whose_tag_is_an_identifier_is_not_inline
+=== PAUSE TestNoAdjacentInlineElementsCreateElementShapes/an_inner_call_whose_tag_is_an_identifier_is_not_inline
+=== RUN   TestJsxFragmentsFires/upstream_invalid_4
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_4
+=== RUN   TestJsxFragmentsFires/upstream_invalid_5
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_5
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_2_a_paragraph_then_a_block
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_2_a_paragraph_then_a_block
+=== RUN   TestNoAdjacentInlineElementsNameMatching/button_is_on_upstream's_list
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/button_is_on_upstream's_list
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_single_space_separates
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_single_space_separates
+=== RUN   TestNoAdjacentInlineElementsNameMatching/input_is_on_upstream's_list
+=== PAUSE TestNoAdjacentInlineElementsNameMatching/input_is_on_upstream's_list
+=== RUN   TestJsxFragmentsFires/upstream_invalid_6
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/trailing_whitespace_is_enough
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_6
+=== RUN   TestJsxFragmentsFires/upstream_invalid_7
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_7
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/trailing_whitespace_is_enough
+=== RUN   TestJsxFragmentsFires/upstream_invalid_8
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_8
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/leading_whitespace_is_enough
+=== RUN   TestJsxFragmentsFires/upstream_invalid_9
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/leading_whitespace_is_enough
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_9
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_bare_word_does_not_separate
+=== RUN   TestJsxFragmentsFires/upstream_invalid_10
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_10
+=== RUN   TestJsxFragmentsFires/upstream_invalid_11
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_11
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_bare_word_does_not_separate
+=== RUN   TestJsxFragmentsFires/upstream_invalid_12
+=== PAUSE TestJsxFragmentsFires/upstream_invalid_12
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_space_separates
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_space_separates
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_single_non_space_character_separates_just_as_well
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_single_non_space_character_separates_just_as_well
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_non_breaking_space_separates
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_non_breaking_space_separates
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/an_expression_container_separates
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/an_expression_container_separates
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_comment_container_separates
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_comment_container_separates
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_newline_separates
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_newline_separates
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/an_empty_string_does_not_separate
+=== CONT  TestNoAdjacentInlineElementsHasNoFileSuffixGate
+=== RUN   TestNoAdjacentInlineElementsHasNoFileSuffixGate/.tsx
+=== PAUSE TestNoAdjacentInlineElementsHasNoFileSuffixGate/.tsx
+=== RUN   TestNoAdjacentInlineElementsHasNoFileSuffixGate/.ts
+=== PAUSE TestNoAdjacentInlineElementsHasNoFileSuffixGate/.ts
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_3_a_paragraph_then_an_anchor
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_3_a_paragraph_then_an_anchor
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_4_a_non_breaking_space_between_anchors
+=== RUN   TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/nothing_between_them_reports
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_4_a_non_breaking_space_between_anchors
+=== CONT  TestJsxNoUndefAllowGlobals
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_5_a_non_breaking_space_and_text
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_5_a_non_breaking_space_and_text
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_6_a_non_breaking_space_then_text
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_6_a_non_breaking_space_then_text
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_7_a_plain_space_between_anchors
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_7_a_plain_space_between_anchors
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_8_anchors_nested_in_separate_list_items
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_8_anchors_nested_in_separate_list_items
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_9_text_between_anchors
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_9_text_between_anchors
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_10_a_createElement_call_with_only_text
+=== PAUSE TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/nothing_between_them_reports
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/an_empty_string_does_not_separate
+=== RUN   TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_number_is_inline
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_10_a_createElement_call_with_only_text
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_11_a_padded_string_between_two_createElement_children
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_11_a_padded_string_between_two_createElement_children
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_12_a_single_space_between_two_createElement_children
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_12_a_single_space_between_two_createElement_children
+=== RUN   TestNoAdjacentInlineElementsStaysSilent/valid_13_a_createElement_call_with_no_children_argument
+=== PAUSE TestNoAdjacentInlineElementsStaysSilent/valid_13_a_createElement_call_with_no_children_argument
+=== RUN   TestJsxNoUndefAllowGlobals/a_global_under_the_default
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier
+=== PAUSE TestJsxNoUndefAllowGlobals/a_global_under_the_default
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier/a_bare_component_name
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier/a_bare_component_name
+=== RUN   TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals_false
+=== CONT  TestNoAdjacentInlineElementsFires
+=== PAUSE TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals_false
+=== RUN   TestNoAdjacentInlineElementsFires/invalid_0_two_identical_anchors
+=== PAUSE TestNoAdjacentInlineElementsFires/invalid_0_two_identical_anchors
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier/the_object_of_a_member_expression,_not_the_whole_name
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier/the_object_of_a_member_expression,_not_the_whole_name
+--- PASS: TestJsxFragmentsVersionArmIsNotPorted (0.03s)
+=== RUN   TestNoAdjacentInlineElementsFires/invalid_1_an_anchor_and_a_span
+=== PAUSE TestNoAdjacentInlineElementsFires/invalid_1_an_anchor_and_a_span
+=== RUN   TestNoAdjacentInlineElementsFires/invalid_2_two_createElement_children_in_an_array
+=== PAUSE TestNoAdjacentInlineElementsFires/invalid_2_two_createElement_children_in_an_array
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier/a_lowercase_object_of_a_member_expression
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier/a_lowercase_object_of_a_member_expression
+=== RUN   TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals
+=== PAUSE TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals
+=== CONT  TestNoAdjacentInlineElementsRequiresTheTypedHarness
+=== RUN   TestJsxNoUndefAllowGlobals/a_lib_global_under_the_default
+=== PAUSE TestJsxNoUndefAllowGlobals/a_lib_global_under_the_default
+=== RUN   TestJsxNoUndefAllowGlobals/a_lib_global_under_allowGlobals
+=== PAUSE TestJsxNoUndefAllowGlobals/a_lib_global_under_allowGlobals
+=== RUN   TestJsxNoUndefAllowGlobals/an_import_under_allowGlobals_false
+=== PAUSE TestJsxNoUndefAllowGlobals/an_import_under_allowGlobals_false
+=== RUN   TestJsxNoUndefAllowGlobals/a_declare_global_member_in_the_same_file
+=== PAUSE TestJsxNoUndefAllowGlobals/a_declare_global_member_in_the_same_file
+=== RUN   TestJsxNoUndefAllowGlobals/an_undeclared_name_under_allowGlobals
+=== PAUSE TestJsxNoUndefAllowGlobals/an_undeclared_name_under_allowGlobals
+=== PAUSE TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_number_is_inline
+=== CONT  TestNoAdjacentInlineElementsMessageExplainsTheRendering
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_0
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_two-level_member_expression
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_two-level_member_expression
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_three-level_member_expression
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_three-level_member_expression
+=== RUN   TestJsxNoUndefPointsAtTheReferencedIdentifier/the_tag_name_and_not_the_closing_tag
+=== PAUSE TestJsxNoUndefPointsAtTheReferencedIdentifier/the_tag_name_and_not_the_closing_tag
+=== CONT  TestNoAdjacentInlineElementsAnchorsOnTheContainer
+=== RUN   TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_jsx_container,_not_either_child
+=== PAUSE TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_jsx_container,_not_either_child
+=== RUN   TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_whole_createElement_call
+=== PAUSE TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_whole_createElement_call
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_6
+--- PASS: TestNoAdjacentInlineElementsRequiresTheTypedHarness (0.00s)
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_4
+--- PASS: TestNoAdjacentInlineElementsMessageExplainsTheRendering (0.00s)
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_3
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_2
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_1
+=== CONT  TestJsxFragmentsStaysSilent/upstream_invalid_0
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_7
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_5
+=== CONT  TestJsxFragmentsStaysSilent/upstream_valid_8
+=== CONT  TestJsxNoUndefStaysSilent/an_uppercase_component_declared_in_the_same_var_statement
+=== CONT  TestJsxNoUndefFires/an_undeclared_uppercase_component
+=== CONT  TestJsxNoUndefStaysSilent/a_component_declared_as_a_function
+=== CONT  TestJsxNoUndefStaysSilent/a_component_declared_in_an_ambient_declare_statement
+=== CONT  TestJsxNoUndefStaysSilent/a_declared_object_under_a_four-deep_member_expression
+=== CONT  TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_at_module_top_level
+=== CONT  TestJsxNoUndefStaysSilent/a_bare_this_tag
+=== CONT  TestJsxNoUndefStaysSilent/a_dashed_custom_element_with_an_uppercase_tail
+=== CONT  TestJsxNoUndefStaysSilent/a_dashed_name_whose_first_letter_is_uppercase
+=== CONT  TestJsxNoUndefStaysSilent/an_import-equals_alias_of_an_imported_namespace_member
+=== CONT  TestJsxNoUndefStaysSilent/an_import-equals_require_binding
+=== CONT  TestJsxNoUndefStaysSilent/an_enum_before_a_var_of_the_same_name
+=== CONT  TestJsxNoUndefStaysSilent/a_var_declared_before_an_enum_of_the_same_member_name
+=== CONT  TestJsxNoUndefStaysSilent/a_component_imported_by_default_import
+=== CONT  TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_inside_a_class
+=== CONT  TestJsxNoUndefStaysSilent/a_namespaced_name
+=== CONT  TestJsxNoUndefStaysSilent/a_lowercase_member_object_declared,_two_levels_deep
+--- PASS: TestJsxFragmentsStaysSilent (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_0 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_4 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_6 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_invalid_0 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_1 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_2 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_7 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_8 (0.00s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_3 (0.01s)
+    --- PASS: TestJsxFragmentsStaysSilent/upstream_valid_5 (0.01s)
+=== CONT  TestJsxNoUndefStaysSilent/a_lowercase_member_object_that_is_declared
+=== CONT  TestJsxNoUndefStaysSilent/a_dashed_custom_element
+=== CONT  TestJsxNoUndefStaysSilent/a_lowercase_intrinsic_element
+=== CONT  TestJsxFragmentsSurvivorShapes/a_merged_interface_written_above_the_import_still_resolves
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/two_nested_named_fragments_both_report
+=== CONT  TestJsxNoUndefFires/an_undeclared_component_written_with_a_closing_tag
+=== CONT  TestJsxNoUndefFires/a_component_bound_only_by_a_type_alias
+=== CONT  TestJsxNoUndefFires/a_component_bound_only_by_an_interface_declaration
+=== CONT  TestJsxNoUndefFires/a_lowercase_leftmost_object_with_an_undeclared_name
+=== CONT  TestJsxNoUndefFires/a_four-deep_member_expression_reports_on_its_leftmost_object
+=== CONT  TestJsxNoUndefFires/a_non-ASCII_name,_always_a_reference_whatever_its_case
+=== CONT  TestJsxNoUndefFires/a_dollar-led_name,_which_upstream_treats_as_a_reference
+--- PASS: TestJsxNoUndefStaysSilent (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/an_uppercase_component_declared_in_the_same_var_statement (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_declared_object_under_a_four-deep_member_expression (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_component_declared_in_an_ambient_declare_statement (0.01s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_component_declared_as_a_function (0.01s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_bare_this_tag (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_at_module_top_level (0.01s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_dashed_name_whose_first_letter_is_uppercase (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_dashed_custom_element_with_an_uppercase_tail (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/an_import-equals_alias_of_an_imported_namespace_member (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/an_enum_before_a_var_of_the_same_name (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/an_import-equals_require_binding (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_var_declared_before_an_enum_of_the_same_member_name (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_component_imported_by_default_import (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_lowercase_member_object_that_is_declared (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_namespaced_name (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_lowercase_member_object_declared,_two_levels_deep (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_dashed_custom_element (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_lowercase_intrinsic_element (0.00s)
+    --- PASS: TestJsxNoUndefStaysSilent/a_this-rooted_member_expression_inside_a_class (0.01s)
+=== CONT  TestJsxNoUndefFires/an_underscore-led_name,_which_upstream_treats_as_a_reference
+=== CONT  TestJsxNoUndefFires/an_undeclared_member_object_with_no_surrounding_code
+=== CONT  TestJsxNoUndefFires/an_enum_member_that_is_not_a_value_binding
+=== CONT  TestJsxNoUndefFires/a_binding_declared_only_inside_a_nested_block
+=== CONT  TestJsxNoUndefFires/an_undeclared_name_mentioned_as_a_bare_expression_too
+=== CONT  TestJsxNoUndefFires/another_undeclared_uppercase_component
+=== CONT  TestJsxNoUndefFires/an_undeclared_lowercase_member_object
+=== CONT  TestJsxNoUndefFires/an_undeclared_lowercase_member_object,_two_levels_deep
+=== CONT  TestJsxNoUndefFires/an_undeclared_uppercase_member_object
+=== CONT  TestJsxFragmentsNonReactSources/require_of_another_module_is_not_the_fragment_source
+=== CONT  TestJsxFragmentsSurvivorShapes/a_member_access_on_a_name_other_than_the_pragma_is_silent
+=== CONT  TestJsxFragmentsSurvivorShapes/a_merged_interface_written_below_the_import_still_resolves
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/a_nested_shorthand_pair_both_report_under_the_element_mode
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/the_named_form_is_silent_under_the_element_mode
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/the_shorthand_is_silent_under_the_default
+--- PASS: TestJsxFragmentsSurvivorShapes (0.00s)
+    --- PASS: TestJsxFragmentsSurvivorShapes/a_merged_interface_written_above_the_import_still_resolves (0.00s)
+    --- PASS: TestJsxFragmentsSurvivorShapes/a_merged_interface_written_below_the_import_still_resolves (0.00s)
+    --- PASS: TestJsxFragmentsSurvivorShapes/a_member_access_on_a_name_other_than_the_pragma_is_silent (0.00s)
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/an_unresolved_bare_tag_name_is_not_the_pragma
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/a_fragment_imported_from_another_module_is_not_the_pragma
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/a_three_segment_member_access_is_not_the_pragma
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/a_spread_attribute_counts_as_a_prop_and_is_left_alone
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/an_empty_named_fragment_reports
+--- PASS: TestJsxNoUndefFires (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_uppercase_component (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_component_written_with_a_closing_tag (0.00s)
+    --- PASS: TestJsxNoUndefFires/a_lowercase_leftmost_object_with_an_undeclared_name (0.00s)
+    --- PASS: TestJsxNoUndefFires/a_component_bound_only_by_an_interface_declaration (0.01s)
+    --- PASS: TestJsxNoUndefFires/a_four-deep_member_expression_reports_on_its_leftmost_object (0.01s)
+    --- PASS: TestJsxNoUndefFires/a_dollar-led_name,_which_upstream_treats_as_a_reference (0.01s)
+    --- PASS: TestJsxNoUndefFires/a_non-ASCII_name,_always_a_reference_whatever_its_case (0.01s)
+    --- PASS: TestJsxNoUndefFires/a_component_bound_only_by_a_type_alias (0.01s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_member_object_with_no_surrounding_code (0.01s)
+    --- PASS: TestJsxNoUndefFires/a_binding_declared_only_inside_a_nested_block (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_underscore-led_name,_which_upstream_treats_as_a_reference (0.01s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_lowercase_member_object (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_name_mentioned_as_a_bare_expression_too (0.00s)
+    --- PASS: TestJsxNoUndefFires/another_undeclared_uppercase_component (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_uppercase_member_object (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_undeclared_lowercase_member_object,_two_levels_deep (0.00s)
+    --- PASS: TestJsxNoUndefFires/an_enum_member_that_is_not_a_value_binding (0.01s)
+=== CONT  TestJsxFragmentsShapesUpstreamDoesNotWrite/a_named_fragment_nested_inside_an_ordinary_element_reports
+=== CONT  TestDecodeJsxFragmentsOptions/absent_configuration_falls_back_to_the_default
+=== CONT  TestJsxFragmentsNonReactSources/destructuring_another_namespace_is_not_the_fragment_source
+=== CONT  TestJsxFragmentsNonReactSources/a_member_access_on_another_namespace_is_not_the_fragment_source
+=== CONT  TestDecodeJsxFragmentsOptions/the_element_mode
+=== CONT  TestDecodeJsxFragmentsOptions/the_explicit_default
+--- PASS: TestDecodeJsxFragmentsOptions (0.00s)
+    --- PASS: TestDecodeJsxFragmentsOptions/absent_configuration_falls_back_to_the_default (0.00s)
+    --- PASS: TestDecodeJsxFragmentsOptions/the_element_mode (0.00s)
+    --- PASS: TestDecodeJsxFragmentsOptions/the_explicit_default (0.00s)
+=== CONT  TestJsxFragmentsSpans/the_paired_named_form_spans_the_whole_element
+=== CONT  TestJsxFragmentsSpans/the_shorthand_spans_the_whole_fragment
+=== CONT  TestJsxFragmentsSpans/the_self_closing_named_form_spans_the_whole_element
+--- PASS: TestJsxFragmentsNonReactSources (0.00s)
+    --- PASS: TestJsxFragmentsNonReactSources/require_of_another_module_is_not_the_fragment_source (0.00s)
+    --- PASS: TestJsxFragmentsNonReactSources/destructuring_another_namespace_is_not_the_fragment_source (0.00s)
+    --- PASS: TestJsxFragmentsNonReactSources/a_member_access_on_another_namespace_is_not_the_fragment_source (0.00s)
+=== CONT  TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/no_type_argument,_the_ordinary_shape
+=== CONT  TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_self_closing_tag
+--- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/two_nested_named_fragments_both_report (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/the_shorthand_is_silent_under_the_default (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/the_named_form_is_silent_under_the_element_mode (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/a_nested_shorthand_pair_both_report_under_the_element_mode (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/a_fragment_imported_from_another_module_is_not_the_pragma (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/an_unresolved_bare_tag_name_is_not_the_pragma (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/a_spread_attribute_counts_as_a_prop_and_is_left_alone (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/a_named_fragment_nested_inside_an_ordinary_element_reports (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/a_three_segment_member_access_is_not_the_pragma (0.00s)
+    --- PASS: TestJsxFragmentsShapesUpstreamDoesNotWrite/an_empty_named_fragment_reports (0.01s)
+=== CONT  TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_paired_tag
+=== CONT  TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/two_guarded_calls_still_report_nothing
+=== CONT  TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_before_an_inline_child
+--- PASS: TestJsxFragmentsSpans (0.00s)
+    --- PASS: TestJsxFragmentsSpans/the_paired_named_form_spans_the_whole_element (0.00s)
+    --- PASS: TestJsxFragmentsSpans/the_shorthand_spans_the_whole_fragment (0.00s)
+    --- PASS: TestJsxFragmentsSpans/the_self_closing_named_form_spans_the_whole_element (0.00s)
+=== CONT  TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_call_inside_a_jsx_expression_container_is_not_a_child_upstream_reads
+=== CONT  TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_after_an_inline_child
+--- PASS: TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten (0.00s)
+    --- PASS: TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/no_type_argument,_the_ordinary_shape (0.00s)
+    --- PASS: TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_paired_tag (0.00s)
+    --- PASS: TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten/type_argument_on_a_self_closing_tag (0.00s)
+=== CONT  TestNoAdjacentInlineElementsReportsOncePerContainer/three_in_a_row_report_once
+=== CONT  TestNoAdjacentInlineElementsReportsOncePerContainer/two_separated_pairs_report_once
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/only_two_arguments_yields_no_children
+--- PASS: TestNoAdjacentInlineElementsReportsOncePerContainer (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsReportsOncePerContainer/three_in_a_row_report_once (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsReportsOncePerContainer/two_separated_pairs_report_once (0.00s)
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/foreign_inner_calls_still_count_as_inline
+--- PASS: TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/two_guarded_calls_still_report_nothing (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_call_inside_a_jsx_expression_container_is_not_a_child_upstream_reads (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_after_an_inline_child (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsDoesNotCrashWhereUpstreamDoes/a_no_argument_call_before_an_inline_child (0.01s)
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/a_third_argument_that_is_not_an_array_yields_no_children
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/a_bare_outer_call_with_no_import_declines
+=== CONT  TestNoAdjacentInlineElementsNameMatching/capitalised_components_are_not_on_the_list
+=== CONT  TestNoAdjacentInlineElementsNameMatching/input_is_on_upstream's_list
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/a_destructured_react_import_reports
+=== CONT  TestNoAdjacentInlineElementsNameMatching/button_is_on_upstream's_list
+=== CONT  TestNoAdjacentInlineElementsNameMatching/self_closing_inline_elements_report
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/a_foreign_outer_namespace_declines
+=== CONT  TestNoAdjacentInlineElementsCreateElementShapes/an_inner_call_whose_tag_is_an_identifier_is_not_inline
+=== CONT  TestNoAdjacentInlineElementsNameMatching/an_inline_before_a_block_does_not_report
+=== CONT  TestNoAdjacentInlineElementsNameMatching/a_block_element_is_not_on_the_list
+=== CONT  TestNoAdjacentInlineElementsNameMatching/a_member_named_tag_has_no_plain_name
+=== CONT  TestNoAdjacentInlineElementsNameMatching/a_block_before_an_inline_does_not_report
+--- PASS: TestNoAdjacentInlineElementsCreateElementShapes (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/only_two_arguments_yields_no_children (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/foreign_inner_calls_still_count_as_inline (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/a_third_argument_that_is_not_an_array_yields_no_children (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/a_bare_outer_call_with_no_import_declines (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/a_foreign_outer_namespace_declines (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/a_destructured_react_import_reports (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsCreateElementShapes/an_inner_call_whose_tag_is_an_identifier_is_not_inline (0.00s)
+=== CONT  TestJsxFragmentsFires/upstream_invalid_1
+=== CONT  TestJsxFragmentsFires/upstream_invalid_7
+=== CONT  TestJsxFragmentsFires/upstream_invalid_12
+=== CONT  TestJsxFragmentsFires/upstream_invalid_11
+=== CONT  TestJsxFragmentsFires/upstream_invalid_10
+=== CONT  TestJsxFragmentsFires/upstream_invalid_9
+=== CONT  TestJsxFragmentsFires/upstream_invalid_8
+=== CONT  TestJsxFragmentsFires/upstream_invalid_6
+=== CONT  TestJsxFragmentsFires/upstream_invalid_3
+=== CONT  TestJsxFragmentsFires/upstream_invalid_5
+=== CONT  TestJsxFragmentsFires/upstream_invalid_4
+=== CONT  TestJsxFragmentsFires/upstream_invalid_2
+=== CONT  TestNoAdjacentInlineElementsHasNoFileSuffixGate/.tsx
+=== CONT  TestNoAdjacentInlineElementsHasNoFileSuffixGate/.ts
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_space_separates
+--- PASS: TestNoAdjacentInlineElementsNameMatching (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/capitalised_components_are_not_on_the_list (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/button_is_on_upstream's_list (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/input_is_on_upstream's_list (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/an_inline_before_a_block_does_not_report (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/a_member_named_tag_has_no_plain_name (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/a_block_before_an_inline_does_not_report (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/a_block_element_is_not_on_the_list (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsNameMatching/self_closing_inline_elements_report (0.01s)
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/nothing_between_them_reports
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_newline_separates
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_comment_container_separates
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/an_expression_container_separates
+--- PASS: TestNoAdjacentInlineElementsHasNoFileSuffixGate (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsHasNoFileSuffixGate/.tsx (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsHasNoFileSuffixGate/.ts (0.00s)
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_single_non_space_character_separates_just_as_well
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_0_an_element_with_no_children
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_8_anchors_nested_in_separate_list_items
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_7_a_plain_space_between_anchors
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_6_a_non_breaking_space_then_text
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_5_a_non_breaking_space_and_text
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_4_a_non_breaking_space_between_anchors
+=== CONT  TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_non_breaking_space_separates
+--- PASS: TestJsxFragmentsFires (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_1 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_7 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_11 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_10 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_9 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_3 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_5 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_4 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_8 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_6 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_2 (0.00s)
+    --- PASS: TestJsxFragmentsFires/upstream_invalid_12 (0.01s)
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_3_a_paragraph_then_an_anchor
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_1_two_block_elements
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_11_a_padded_string_between_two_createElement_children
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_13_a_createElement_call_with_no_children_argument
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_12_a_single_space_between_two_createElement_children
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_2_a_paragraph_then_a_block
+--- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_space_separates (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_newline_separates (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_comment_container_separates (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/an_expression_container_separates (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/nothing_between_them_reports (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_single_non_space_character_separates_just_as_well (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsIgnoresWhitespaceInJsx/a_non_breaking_space_separates (0.00s)
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_10_a_createElement_call_with_only_text
+=== CONT  TestNoAdjacentInlineElementsStaysSilent/valid_9_text_between_anchors
+=== CONT  TestNoAdjacentInlineElementsFires/invalid_0_two_identical_anchors
+=== CONT  TestNoAdjacentInlineElementsFires/invalid_2_two_createElement_children_in_an_array
+=== CONT  TestNoAdjacentInlineElementsFires/invalid_1_an_anchor_and_a_span
+=== CONT  TestJsxNoUndefAllowGlobals/a_global_under_the_default
+=== CONT  TestJsxNoUndefAllowGlobals/an_undeclared_name_under_allowGlobals
+--- PASS: TestNoAdjacentInlineElementsStaysSilent (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_7_a_plain_space_between_anchors (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_6_a_non_breaking_space_then_text (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_8_anchors_nested_in_separate_list_items (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_0_an_element_with_no_children (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_5_a_non_breaking_space_and_text (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_4_a_non_breaking_space_between_anchors (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_1_two_block_elements (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_3_a_paragraph_then_an_anchor (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_11_a_padded_string_between_two_createElement_children (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_13_a_createElement_call_with_no_children_argument (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_9_text_between_anchors (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_2_a_paragraph_then_a_block (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_10_a_createElement_call_with_only_text (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsStaysSilent/valid_12_a_single_space_between_two_createElement_children (0.00s)
+=== CONT  TestJsxNoUndefAllowGlobals/an_import_under_allowGlobals_false
+=== CONT  TestJsxNoUndefAllowGlobals/a_declare_global_member_in_the_same_file
+=== CONT  TestJsxNoUndefAllowGlobals/a_lib_global_under_allowGlobals
+=== CONT  TestJsxNoUndefAllowGlobals/a_lib_global_under_the_default
+--- PASS: TestNoAdjacentInlineElementsFires (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsFires/invalid_0_two_identical_anchors (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsFires/invalid_2_two_createElement_children_in_an_array (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsFires/invalid_1_an_anchor_and_a_span (0.00s)
+=== CONT  TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals
+=== CONT  TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals_false
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_single_space_separates
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/an_empty_string_does_not_separate
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/leading_whitespace_is_enough
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_bare_word_does_not_separate
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_number_is_inline
+=== CONT  TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/trailing_whitespace_is_enough
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier/a_bare_component_name
+=== CONT  TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_jsx_container,_not_either_child
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier/a_lowercase_object_of_a_member_expression
+--- PASS: TestJsxNoUndefAllowGlobals (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/a_global_under_the_default (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/a_declare_global_member_in_the_same_file (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/a_global_under_allowGlobals_false (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/a_lib_global_under_allowGlobals (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/a_lib_global_under_the_default (0.00s)
+    --- PASS: TestJsxNoUndefAllowGlobals/an_import_under_allowGlobals_false (0.01s)
+    --- PASS: TestJsxNoUndefAllowGlobals/an_undeclared_name_under_allowGlobals (0.01s)
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier/the_tag_name_and_not_the_closing_tag
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_three-level_member_expression
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_two-level_member_expression
+=== CONT  TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_whole_createElement_call
+=== CONT  TestJsxNoUndefPointsAtTheReferencedIdentifier/the_object_of_a_member_expression,_not_the_whole_name
+--- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_single_space_separates (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/an_empty_string_does_not_separate (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/leading_whitespace_is_enough (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_bare_word_does_not_separate (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/trailing_whitespace_is_enough (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsWhitespaceMattersInCreateElement/a_number_is_inline (0.00s)
+--- PASS: TestNoAdjacentInlineElementsAnchorsOnTheContainer (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_jsx_container,_not_either_child (0.00s)
+    --- PASS: TestNoAdjacentInlineElementsAnchorsOnTheContainer/the_whole_createElement_call (0.00s)
+--- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier (0.00s)
+    --- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier/a_lowercase_object_of_a_member_expression (0.00s)
+    --- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_two-level_member_expression (0.00s)
+    --- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier/the_tag_name_and_not_the_closing_tag (0.00s)
+    --- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier/the_leftmost_object_of_a_three-level_member_expression (0.00s)
+    --- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier/a_bare_component_name (0.00s)
+    --- PASS: TestJsxNoUndefPointsAtTheReferencedIdentifier/the_object_of_a_member_expression,_not_the_whole_name (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.129s

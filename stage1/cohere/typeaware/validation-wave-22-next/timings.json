@@ -1,0 +1,138 @@
+{
+  "repository": {
+    "runs": {
+      "native": [
+        {
+          "elapsed_seconds": 1.0809049360000245,
+          "counters": {
+            "load_ns": 112386149,
+            "query_ns": 441532520,
+            "queries": 54870,
+            "first_query_ns": 361157,
+            "run_ns": 953966261
+          }
+        },
+        {
+          "elapsed_seconds": 1.1340647749998425,
+          "counters": {
+            "load_ns": 166235538,
+            "query_ns": 428060972,
+            "queries": 54870,
+            "first_query_ns": 398863,
+            "run_ns": 956127237
+          }
+        },
+        {
+          "elapsed_seconds": 1.1640548769996713,
+          "counters": {
+            "load_ns": 122400481,
+            "query_ns": 483492104,
+            "queries": 54870,
+            "first_query_ns": 391999,
+            "run_ns": 1028042226
+          }
+        }
+      ],
+      "go": [
+        {
+          "elapsed_seconds": 0.35404563500014774,
+          "counters": {
+            "load_ns": 115437029,
+            "rule_ns": 128343748,
+            "run_ns": 217243985
+          }
+        },
+        {
+          "elapsed_seconds": 0.3438836899999842,
+          "counters": {
+            "load_ns": 114244014,
+            "rule_ns": 133923650,
+            "run_ns": 208778916
+          }
+        },
+        {
+          "elapsed_seconds": 0.4425871839998763,
+          "counters": {
+            "load_ns": 137875939,
+            "rule_ns": 174383870,
+            "run_ns": 286368800
+          }
+        }
+      ]
+    },
+    "median_seconds": {
+      "native": 1.1340647749998425,
+      "go": 0.35404563500014774
+    },
+    "native_over_go": 3.2031598836103976,
+    "diagnostic_sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "compiler": {
+    "runs": {
+      "native": [
+        {
+          "elapsed_seconds": 15.730381590999968,
+          "counters": {
+            "load_ns": 373143980,
+            "query_ns": 8337933542,
+            "queries": 838626,
+            "first_query_ns": 8993432,
+            "run_ns": 15310312815
+          }
+        },
+        {
+          "elapsed_seconds": 13.32803544799981,
+          "counters": {
+            "load_ns": 366006389,
+            "query_ns": 6484256605,
+            "queries": 838626,
+            "first_query_ns": 8360449,
+            "run_ns": 12896819831
+          }
+        },
+        {
+          "elapsed_seconds": 12.946368483999777,
+          "counters": {
+            "load_ns": 345073657,
+            "query_ns": 6162514455,
+            "queries": 838626,
+            "first_query_ns": 7342467,
+            "run_ns": 12533462461
+          }
+        }
+      ],
+      "go": [
+        {
+          "elapsed_seconds": 2.8671336040001734,
+          "counters": {
+            "load_ns": 424120270,
+            "rule_ns": 2301291881,
+            "run_ns": 2406208039
+          }
+        },
+        {
+          "elapsed_seconds": 2.3890953869999976,
+          "counters": {
+            "load_ns": 321192532,
+            "rule_ns": 1939712228,
+            "run_ns": 2034704818
+          }
+        },
+        {
+          "elapsed_seconds": 2.4483172840000407,
+          "counters": {
+            "load_ns": 329749910,
+            "rule_ns": 1994877508,
+            "run_ns": 2088521470
+          }
+        }
+      ]
+    },
+    "median_seconds": {
+      "native": 13.32803544799981,
+      "go": 2.4483172840000407
+    },
+    "native_over_go": 5.4437533628094865,
+    "diagnostic_sha256": "fffa7388c7e8c5107f48f899878cf299685af8a41d32b0ec108eb40abff56af1"
+  }
+}

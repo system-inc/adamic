@@ -1,0 +1,89 @@
+import { panic } from 'adamic';
+import { unicodeNodeText } from './unicode_node_text.a';
+import { Context as Base } from '../../wave-22-sixth/common/context.a';
+import { Kind, kindNumbers } from '../../wave-22-sixth/common/kinds.a';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import type { Bindings } from '../../../bindings.ts';
+export class Context extends Base {
+    readonly operators=new Map<number,number>();
+    readonly starts=new Map<number,number>();
+    readonly fullStarts:number[]=[];
+    readonly ends=new Map<number,number>();
+    readonly nativeRanges=new Map<string,number>();
+    readonly initializers=new Map<number,number>();
+    readonly names=new Map<number,number>();
+    readonly caseCache=new Map<number,number[]>();
+    readonly source: string;
+    hasJsxAttributes=false;
+    constructor(bindings: Bindings) {
+        super(bindings);this.source=bindings.rules.scanner.text;
+        const kinds=kindNumbers();
+        for(let i=0;i<this.sourceCount;i++) {
+            const raw=bindings.rules.parser.node(i);const node=this.node(i);
+            if(node.kind===Kind.JsxAttribute){this.hasJsxAttributes=true;}
+            this.fullStarts.push(raw.pos);
+            this.operators.set(i,node.kind===Kind.BinaryExpression&&node.children.length===3?this.node(node.children[1]??-1).kind:kinds.get(raw.operator)??0);this.starts.set(i,bindings.rules.start(raw));this.ends.set(i,raw.end);
+            this.nativeRanges.set(`${node.kind}:${node.pos}:${node.end}`,i);
+            this.initializers.set(i,bindings.shape.initializer(i));this.names.set(i,bindings.shape.name(i));
+        }
+    }
+    local(node: Node): Node {
+        if(node.index<this.sourceCount){return node;}
+        const found=this.nativeRanges.get(`${node.kind}:${node.pos}:${node.end}`);return found===undefined?node:this.node(found);
+    }
+    op(node: Node): number { return this.operators.get(this.local(node).index)??0; }
+    name(node: Node): Node|undefined {
+        node=this.local(node);const id=this.names.get(node.index);
+        if(id!==undefined){return id<0?undefined:this.node(id);}
+        return node.children.length===0?undefined:this.first(node);
+    }
+    key(node: Node): Node|undefined {
+        node=this.local(node);
+        for(const id of node.children){const child=this.node(id);if(child.kind!==Kind.DotDotDotToken&&![Kind.StaticKeyword,Kind.PublicKeyword,Kind.PrivateKeyword,Kind.ProtectedKeyword,Kind.ReadonlyKeyword,Kind.DeclareKeyword,Kind.AbstractKeyword,Kind.AsyncKeyword,Kind.AsteriskToken,Kind.ExportKeyword,Kind.DefaultKeyword].includes(child.kind)){return child;}}
+        return undefined;
+    }
+    init(node: Node): Node|undefined {
+        node=this.local(node);const id=this.initializers.get(node.index);
+        if(id!==undefined&&id>=0){return this.node(id);}
+        if(node.initializer>=0){return this.node(node.initializer);}
+        if((node.kind===Kind.PropertyAssignment||node.kind===Kind.JsxAttribute)&&node.children.length>1){return this.last(node);}
+        return undefined;
+    }
+    parent(node: Node): Node|undefined {
+        let parent=node.parent<0?undefined:this.node(node.parent);
+        while(parent!==undefined&&parent.kind===Kind.ParenthesizedExpression){parent=parent.parent<0?undefined:this.node(parent.parent);}
+        return parent;
+    }
+    body(node: Node): Node|undefined {
+        if(node.kind===Kind.ArrowFunction){return node.children.length===0?undefined:this.last(node);}
+        for(const id of node.children){const child=this.node(id);if(child.kind===Kind.Block){return child;}}
+        return undefined;
+    }
+    fullRaw(node: Node): string {
+        node=this.local(node);const start=this.fullStarts[node.index]??panic('full source start absent from syntax cache');const end=this.ends.get(node.index)??panic('source end absent from syntax cache');return this.source.slice(start,end);
+    }
+    raw(node: Node): string {
+        node=this.local(node);const start=this.starts.get(node.index)??panic('raw key absent from native syntax cache');const end=this.ends.get(node.index)??panic('raw key absent from native syntax cache');
+        return this.source.slice(start,end);
+    }
+    parameters(node: Node): Node[] { return node.children.map((i)=>this.node(i)).filter((n)=>n.kind===Kind.Parameter); }
+    cases(node: Node): number[] {
+        const cached=this.caseCache.get(node.index);if(cached!==undefined){return cached;}
+        const values=unicodeNodeText(this.bindings.rules,node);this.caseCache.set(node.index,values);return values;
+    }
+    wordCompare(a: string,b: string): number {
+        // Go string ordering compares UTF-8 scalar order, including supplementary names.
+        let i=0;let j=0;
+        while(i<a.length&&j<b.length){let x=a.charCodeAt(i);i++;let y=b.charCodeAt(j);j++;
+            if(x>=55296&&x<=56319&&i<a.length){x=65536+(x-55296)*1024+a.charCodeAt(i)-56320;i++;}
+            if(y>=55296&&y<=56319&&j<b.length){y=65536+(y-55296)*1024+b.charCodeAt(j)-56320;j++;}
+            if(x!==y){return x<y?-1:1;}
+        }
+        return i<a.length?1:j<b.length?-1:0;
+    }
+    lower(text: string): string {
+        let result='';for(let i=0;i<text.length;i++){let width=1;const code=text.charCodeAt(i);if(code>=55296&&code<=56319&&i+1<text.length){width=2;}
+            const character=text.slice(i,i+width);result+=character==='İ'?'i':character.toLowerCase();i+=width-1;}
+        return result;
+    }
+}

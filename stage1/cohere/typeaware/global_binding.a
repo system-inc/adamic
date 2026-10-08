@@ -1,0 +1,24 @@
+import { Frames, header } from './frames.ts';
+import type { Bindings } from './bindings.ts';
+export class GlobalOrigins {
+    readonly present: boolean;
+    readonly files: readonly boolean[];
+    readonly declarations: readonly boolean[];
+    constructor(present: boolean, files: readonly boolean[], declarations: readonly boolean[]) {
+        this.present = present; this.files = files; this.declarations = declarations;
+    }
+}
+export class GlobalBinding {
+    readonly symbol: GlobalOrigins;
+    readonly local: GlobalOrigins;
+    constructor(symbol: GlobalOrigins, local: GlobalOrigins) { this.symbol = symbol; this.local = local; }
+}
+function origins(frames: Frames): GlobalOrigins {
+    const present = frames.yes(); const count = frames.natural(); const files: boolean[] = []; const declarations: boolean[] = [];
+    for(let at = 0; at < count; at++) { files.push(frames.yes()); declarations.push(frames.yes()); }
+    return new GlobalOrigins(present, files, declarations);
+}
+export function globalBinding(bindings: Bindings, index: number, value = false): GlobalBinding {
+    const frames = new Frames(bindings.rules.ask(index, `global-binding\n${value ? 'value' : 'node'}`)); header(frames, 'global-binding');
+    const result = new GlobalBinding(origins(frames), origins(frames)); frames.end(); return result;
+}

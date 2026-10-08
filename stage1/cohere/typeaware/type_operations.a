@@ -1,0 +1,122 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+import type { Types } from './types.ts';
+import type { Bindings } from './bindings.ts';
+
+export class OperationSignature {
+    readonly returned: number;
+    readonly parameters: readonly number[];
+    readonly rests: readonly boolean[];
+    constructor(returned: number, parameters: readonly number[], rests: readonly boolean[]) {
+        this.returned = returned; this.parameters = parameters; this.rests = rests;
+    }
+}
+export class OperationMember {
+    readonly kind: string;
+    readonly flags: number;
+    readonly nameKind: string;
+    constructor(kind: string, flags: number, nameKind: string) { this.kind = kind; this.flags = flags; this.nameKind = nameKind; }
+}
+export class OperationDecoratorOrigin {
+    readonly decoratorOriginTag = true;
+    readonly file: string;
+    readonly declaration: boolean;
+    readonly flags: number;
+    constructor(file: string, declaration: boolean, flags: number) { this.file = file; this.declaration = declaration; this.flags = flags; }
+}
+export class OperationOrigin {
+    readonly operationOriginTag = true;
+    readonly kind: string;
+    readonly file: string;
+    readonly declaration: boolean;
+    readonly library: boolean;
+    readonly flags: number;
+    readonly constructors: number;
+    readonly members: readonly OperationMember[];
+    readonly decorators: readonly OperationDecoratorOrigin[][];
+    constructor(kind: string, file: string, declaration: boolean, library: boolean, flags: number, constructors: number,
+        members: readonly OperationMember[], decorators: readonly OperationDecoratorOrigin[][]) {
+        this.kind = kind; this.file = file; this.declaration = declaration; this.library = library; this.flags = flags;
+        this.constructors = constructors; this.members = members; this.decorators = decorators;
+    }
+}
+export class OperationMetadata {
+    readonly objectFlags: number;
+    readonly properties: number;
+    readonly constructors: number;
+    readonly symbol: number;
+    readonly name: string;
+    readonly flags: number;
+    readonly valueKind: string;
+    readonly declarations: readonly OperationOrigin[];
+    constructor(objectFlags: number, properties: number, constructors: number, symbol: number, name: string,
+        flags: number, valueKind: string, declarations: readonly OperationOrigin[]) {
+        this.objectFlags = objectFlags; this.properties = properties; this.constructors = constructors; this.symbol = symbol;
+        this.name = name; this.flags = flags; this.valueKind = valueKind; this.declarations = declarations;
+    }
+}
+export class OperationSignatures {
+    readonly signatures: readonly OperationSignature[];
+    readonly types: Types;
+    constructor(signatures: readonly OperationSignature[], facts: Types) { this.signatures = signatures; this.types = facts; }
+}
+export class TypeOperations {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    frames(index: number, operation: string, identity = 0, name = ''): Frames {
+        const frames = new Frames(this.bindings.rules.ask(index,
+            `type-operations\n${operation}\n${identity}${operation === 'property' || operation === 'member' ? `\n${name}` : ''}`));
+        header(frames, 'type-operations'); return frames;
+    }
+    graph(frames: Frames): Types { return types(frames.text.slice(frames.cursor), 'type-operations'); }
+    type(index: number, operation: string, identity = 0, name = ''): Types { return this.graph(this.frames(index, operation, identity, name)); }
+    signatures(index: number, identity: number, construct = false): OperationSignatures {
+        const frames = this.frames(index, construct ? 'construct' : 'signatures', identity);
+        const signatures: OperationSignature[] = [];
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const returned = frames.natural(); const length = frames.natural();
+            const parameters: number[] = []; const rests: boolean[] = [];
+            for(let p = 0; p < length; p++) { parameters.push(frames.natural()); rests.push(frames.yes()); }
+            signatures.push(new OperationSignature(returned, parameters, rests));
+        }
+        const facts = this.graph(frames);
+        for(const signature of signatures) {
+            facts.type(signature.returned);
+            for(const parameter of signature.parameters) { facts.type(parameter); }
+        }
+        return new OperationSignatures(signatures, facts);
+    }
+    iterator(index: number, identity: number): boolean {
+        const frames = this.frames(index, 'iterator', identity); const answer = frames.yes(); this.graph(frames); return answer;
+    }
+    accessName(index: number): string {
+        const frames = this.frames(index, 'access-name'); const present = frames.yes(); const name = frames.field();
+        this.graph(frames); return present ? name : '';
+    }
+    metadata(index: number, identity: number): OperationMetadata {
+        const frames = this.frames(index, 'metadata', identity);
+        const objectFlags = frames.natural(); const properties = frames.natural(); const constructors = frames.natural();
+        const symbol = frames.natural(); frames.field(); const name = frames.field(); const flags = frames.natural();
+        const valueKind = frames.field(); const count = frames.natural(); const declarations: OperationOrigin[] = [];
+        for(let at = 0; at < count; at++) {
+            const kind = frames.field(); const file = frames.field(); const declaration = frames.yes(); const library = frames.yes();
+            const nodeFlags = frames.natural(); const declaredConstructors = frames.natural();
+            const members: OperationMember[] = []; const size = frames.natural();
+            for(let member = 0; member < size; member++) { members.push(new OperationMember(frames.field(), frames.natural(), frames.field())); }
+            const decorators: OperationDecoratorOrigin[][] = []; const decorated = frames.natural();
+            for(let d = 0; d < decorated; d++) {
+                const origins: OperationDecoratorOrigin[] = []; const length = frames.natural();
+                for(let n = 0; n < length; n++) {
+                    origins.push(new OperationDecoratorOrigin(frames.field(), frames.yes(), frames.natural()));
+                }
+                decorators.push(origins);
+            }
+            declarations.push(new OperationOrigin(kind, file, declaration, library, nodeFlags, declaredConstructors, members, decorators));
+        }
+        this.graph(frames);
+        if(symbol === 0 && declarations.length !== 0) { panic('declarations without type symbol'); }
+        return new OperationMetadata(objectFlags, properties, constructors, symbol, name, flags, valueKind, declarations);
+    }
+}

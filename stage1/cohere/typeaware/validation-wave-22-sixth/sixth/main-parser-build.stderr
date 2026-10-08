@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/stage1/typescript/parser/parser.ts:34:20: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this

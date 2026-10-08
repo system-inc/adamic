@@ -1,0 +1,451 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { BindingState, bindingState } from './binding_state.a';
+import { LostGraph } from './lost_update_graph.a';
+import { Diagnostic } from './diagnostic.ts';
+
+class LostPath {
+    readonly root: number;
+    readonly isThis: boolean;
+    readonly names: readonly string[];
+    readonly store: string;
+    constructor(root: number, isThis: boolean, names: readonly string[], store = '') {
+        this.root = root; this.isThis = isThis; this.names = names; this.store = store;
+    }
+    sameRoot(other: LostPath): boolean { return this.isThis || other.isThis ? this.isThis && other.isThis : this.root === other.root; }
+    same(other: LostPath): boolean { return this.sameRoot(other) && this.store === other.store && this.names.join('\0') === other.names.join('\0'); }
+    key(): string { return `${this.root}:${this.isThis ? 1 : 0}:${this.names.join('\0')}\0\0${this.store}`; }
+}
+class LostLocal {
+    readonly identity: number;
+    readonly name: number;
+    readonly initializer: number;
+    readonly element: LostPath | undefined;
+    constructor(identity: number, name: number, initializer: number, element: LostPath | undefined = undefined) {
+        this.identity = identity; this.name = name; this.initializer = initializer; this.element = element;
+    }
+}
+class LostAccess {
+    readonly target: LostPath;
+    readonly write: boolean;
+    readonly value: number;
+    constructor(target: LostPath, write: boolean, value: number) { this.target = target; this.write = write; this.value = value; }
+}
+class LostOutcome {
+    dependencies: number;
+    suspended: boolean;
+    during: boolean;
+    constructor(dependencies: number, suspended: boolean, during = false) { this.dependencies = dependencies; this.suspended = suspended; this.during = during; }
+}
+function staled(value: number): number { return (value & 12) | ((value & 1) !== 0 ? 4 : 0) | ((value & 2) !== 0 ? 8 : 0); }
+function modified(value: number): number { return (value & 10) | ((value & 1) !== 0 ? 2 : 0) | ((value & 4) !== 0 ? 8 : 0); }
+function unique(values: readonly LostOutcome[]): LostOutcome[] {
+    const result: LostOutcome[] = [];
+    for(const value of values) {
+        if(!result.some((other) => other.dependencies === value.dependencies && other.suspended === value.suspended && other.during === value.during)) { result.push(value); }
+    }
+    return result;
+}
+class LostPosition {
+    readonly block: number;
+    readonly start: number;
+    readonly suspended: boolean;
+    constructor(block: number, start: number, suspended: boolean) { this.block = block; this.start = start; this.suspended = suspended; }
+}
+class LostAnalysis {
+    readonly bindings: Bindings;
+    readonly root: number;
+    readonly graph: LostGraph;
+    readonly own: number[] = [];
+    readonly names: number[];
+    readonly locals = new Map<number, LostLocal>();
+    readonly symbols = new Map<number, BindingState>();
+    readonly memo = new Map<string, number>();
+    readonly progress = new Map<string, boolean>();
+    readonly betweenMemo = new Map<string, boolean>();
+    readonly nested = new Map<number, number>();
+    readonly stable = new Map<number, boolean>();
+    readonly accesses = new Map<number, LostAccess | undefined>();
+    built = false;
+    constructor(bindings: Bindings, root: number, graph: LostGraph, names: number[]) {
+        this.bindings = bindings; this.root = root; this.graph = graph; this.names = names;
+    }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+            'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+            'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+            'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken',
+            'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    written(index: number): boolean {
+        let current = index;
+        while((this.bindings.rules.parents[current] ?? -1) >= 0) {
+            const parentIndex = this.bindings.rules.parents[current] ?? -1;
+            const parent = this.bindings.rules.parser.node(parentIndex);
+            if(parent.kind === 'PropertyAccessExpression' && parent.children[parent.children.length - 1] === current) {
+                return false;
+            }
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression',
+                'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(parent.kind)) {
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'PropertyAssignment') {
+                if(parent.children[parent.children.length - 1] !== current) {
+                    return false;
+                }
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'ShorthandPropertyAssignment') {
+                if(parent.children[0] !== current) {
+                    return false;
+                }
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'BinaryExpression') {
+                return parent.children[0] === current &&
+                    this.assignment(this.bindings.rules.parser.node(parent.children[1] ?? -1).kind);
+            }
+            if(parent.kind === 'PrefixUnaryExpression' || parent.kind === 'PostfixUnaryExpression') {
+                return parent.operator === 'PlusPlusToken' || parent.operator === 'MinusMinusToken';
+            }
+            return (parent.kind === 'ForInStatement' || parent.kind === 'ForOfStatement') &&
+                parent.children[0] === current;
+        }
+        return false;
+    }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    identity(index: number): BindingState {
+        if(!this.symbols.has(index)) { this.symbols.set(index, bindingState(this.bindings, index)); }
+        return this.symbols.get(index) ?? panic('missing lost-update symbol');
+    }
+    collect(index: number): void {
+        if(this.graph.root(index)) { return; }
+        this.own.push(index); const node = this.bindings.rules.parser.node(index);
+        for(const child of node.children) { this.collect(child); }
+    }
+    staticName(index: number): string | undefined {
+        if(index < 0) { return undefined; } const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'ComputedPropertyName') { return this.staticName(node.children[0] ?? -1); }
+        if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(node.kind)) { return node.text; }
+        return undefined;
+    }
+    path(index: number): LostPath | undefined {
+        index = this.graph.transparent(index); if(index < 0) { return undefined; }
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'Identifier') { const identity = this.identity(index).identity; return identity === 0 ? undefined : new LostPath(identity, false, []); }
+        if(node.kind === 'ThisKeyword') { return new LostPath(0, true, []); }
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const nameNode = node.children[node.children.length - 1] ?? -1;
+            const name = node.kind === 'ElementAccessExpression' && this.kind(nameNode) === 'Identifier' ? undefined : this.staticName(nameNode);
+            const root = this.path(node.children[0] ?? -1); if(root === undefined || name === undefined) { return undefined; }
+            const names = root.names.slice(); names.push(name); return new LostPath(root.root, root.isThis, names);
+        }
+        return undefined;
+    }
+    compound(index: number): LostPath | undefined {
+        let current = this.graph.transparent(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.kind(current))) { return undefined; }
+        while(['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.kind(current))) {
+            current = this.graph.transparent(this.bindings.rules.parser.node(current).children[0] ?? -1);
+        }
+        const root = this.path(current); return root === undefined ? undefined : new LostPath(root.root, root.isThis, ['\0computed']);
+    }
+    collectLocal(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind !== 'VariableDeclaration') { return; }
+        const parent = this.bindings.parent(index); if(parent < 0 || rules.parser.node(parent).semantic !== '2') { return; }
+        const initializer = this.bindings.shape.initializer(index); const name = this.bindings.shape.name(index);
+        if(initializer < 0 || name < 0) { return; }
+        if(this.kind(name) === 'Identifier') {
+            const identity = this.identity(name).identity;
+            if(identity !== 0) { this.locals.set(identity, new LostLocal(identity, name, initializer)); this.names.push(name); }
+        } else if(this.kind(name) === 'ObjectBindingPattern') {
+            const source = this.path(initializer); if(source === undefined) { return; }
+            for(const element of rules.parser.node(name).children) {
+                const binding = rules.parser.node(element); const target = this.bindings.shape.name(element);
+                if(binding.kind !== 'BindingElement' || target < 0 || this.kind(target) !== 'Identifier' || binding.children.some((child) => this.kind(child) === 'DotDotDotToken')) { continue; }
+                const initializer = this.bindings.shape.initializer(element);
+                const keys = binding.children.filter((child) => child !== target && child !== initializer);
+                const property = keys.length === 0 ? rules.parser.node(target).text : this.staticName(keys[0] ?? -1);
+                if(property === undefined) { continue; } const identity = this.identity(target).identity;
+                if(identity === 0) { continue; } const names = source.names.slice(); names.push(property);
+                this.locals.set(identity, new LostLocal(identity, target, -1, new LostPath(source.root, source.isThis, names))); this.names.push(target);
+            }
+        }
+    }
+    inside(state: BindingState): boolean {
+        const rules = this.bindings.rules; const root = rules.parser.node(this.root); const origin = state.origin;
+        return origin.file === rules.path && origin.start >= rules.byte(root.pos) && origin.end <= rules.byte(root.end);
+    }
+    usage(identity: number): number {
+        if(this.nested.has(identity)) { return this.nested.get(identity) ?? 0; }
+        const value = this.nestedVisit(this.root, identity, false, true); this.nested.set(identity, value); return value;
+    }
+    nestedVisit(index: number, identity: number, nested: boolean, initial = false): number {
+        if(!initial && this.graph.root(index)) { nested = true; }
+        let value = 0; const node = this.bindings.rules.parser.node(index);
+        if(nested && node.kind === 'Identifier' && this.identity(index).identity === identity) { value = 1 | (this.written(index) ? 2 : 0); }
+        for(const child of node.children) { value |= this.nestedVisit(child, identity, nested); }
+        return value;
+    }
+    stateFor(identity: number): BindingState | undefined {
+        for(const index of this.own) { if(this.kind(index) === 'Identifier') { const state = this.identity(index); if(state.identity === identity) { return state; } } }
+        return undefined;
+    }
+    shared(target: LostPath): boolean {
+        if(target.isThis || (target.store !== '' && target.root === 0)) { return true; }
+        const state = this.stateFor(target.root); if(state === undefined || !state.origin.present) { return false; }
+        if(!this.inside(state)) { return true; }
+        if(target.names.length === 0 && target.store === '') { return (this.usage(target.root) & 2) !== 0; }
+        const root = this.bindings.rules.parser.node(this.root); const origin = state.origin;
+        if(origin.kind === 'Parameter' && origin.parentStart === this.bindings.rules.byte(root.pos) && origin.parentEnd === this.bindings.rules.byte(root.end)) { return true; }
+        return (this.usage(target.root) & 1) !== 0;
+    }
+    holds(identity: number): boolean {
+        if(this.stable.has(identity)) { return this.stable.get(identity) ?? false; }
+        const state = this.stateFor(identity); let result = false;
+        if(state !== undefined) {
+            const origin = state.origin;
+            result = (state.flags & 2097152) !== 0 || (origin.kind === 'VariableDeclaration' && origin.constant) ||
+                (['Parameter', 'VariableDeclaration'].includes(origin.kind) && this.inside(state) && !this.writtenVisit(this.root, identity, origin.start, origin.end));
+        }
+        this.stable.set(identity, result); return result;
+    }
+    writtenVisit(index: number, identity: number, start: number, end: number): boolean {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'Identifier' && this.identity(index).identity === identity && this.written(index)) { return true; }
+        return node.children.some((child) => this.writtenVisit(child, identity, start, end));
+    }
+    key(index: number): string | undefined {
+        index = this.graph.transparent(index); if(index < 0) { return undefined; } const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral') { return `string\0${node.text}`; }
+        if(node.kind === 'NumericLiteral') { return `number\0${node.text}`; }
+        if(node.kind === 'Identifier') { const identity = this.identity(index).identity; return identity !== 0 && this.holds(identity) ? `binding\0${identity}` : undefined; }
+        return undefined;
+    }
+    noun(name: string, verbs: readonly string[]): string | undefined {
+        for(const verb of verbs) { if(name.startsWith(verb)) { const noun = name.slice(verb.length); const first = noun.charCodeAt(0); if(noun === '' || (first >= 65 && first <= 90)) { return noun; } } }
+        return undefined;
+    }
+    access(index: number): LostAccess | undefined {
+        if(this.accesses.has(index)) { return this.accesses.get(index); }
+        const result = this.computeAccess(index); this.accesses.set(index, result); return result;
+    }
+    computeAccess(index: number): LostAccess | undefined {
+        const rules = this.bindings.rules; const call = rules.parser.node(index);
+        if(call.kind !== 'CallExpression') { return undefined; }
+        const callee = this.graph.transparent(call.children[0] ?? -1); if(callee < 0) { return undefined; } const node = rules.parser.node(callee);
+        let name = ''; let owner = ''; let target = new LostPath(0, false, []);
+        if(node.kind === 'Identifier') {
+            name = node.text; const state = this.identity(callee); if(state.identity === 0 || !state.aliasOrigin.present) { return undefined; }
+            owner = `function\0${state.aliasOrigin.file}`;
+        } else if(node.kind === 'PropertyAccessExpression') {
+            const nameNode = node.children[node.children.length - 1] ?? -1; if(this.kind(nameNode) !== 'Identifier') { return undefined; }
+            name = rules.parser.node(nameNode).text; const receiver = this.path(node.children[0] ?? -1); if(receiver === undefined) { return undefined; }
+            target = receiver; owner = 'method';
+        } else { return undefined; }
+        let noun = this.noun(name, ['get', 'read', 'load']); let write = false;
+        if(noun === undefined) { noun = this.noun(name, ['set', 'update', 'write', 'save', 'put', 'store']); write = true; }
+        if(noun === undefined || (noun === '' && owner !== 'method')) { return undefined; }
+        const arguments_: number[] = call.list <= 0 ? [] : call.children.slice(call.children.length - call.list);
+        if(write && arguments_.length === 0) { return undefined; }
+        const value = write ? arguments_[arguments_.length - 1] ?? -1 : -1;
+        if(write && this.kind(value) === 'SpreadElement') { return undefined; }
+        const keys: string[] = [];
+        for(const argument of write ? arguments_.slice(0, -1) : arguments_) { const key = this.key(argument); if(key === undefined) { return undefined; } keys.push(key); }
+        return new LostAccess(new LostPath(target.root, target.isThis, target.names, `${owner}\0${noun}\0${keys.join('\0')}`), write, value);
+    }
+    targetRead(index: number, target: LostPath): boolean {
+        if(target.store === '' || this.kind(index) !== 'CallExpression') { return false; }
+        const access = this.access(index); return access !== undefined && !access.write && access.target.same(target);
+    }
+    writesTarget(index: number, target: LostPath): boolean {
+        if(this.kind(index) === 'CallExpression') { const access = this.access(index); return access !== undefined && access.write && access.target.same(target); }
+        if(target.store !== '' || this.kind(index) !== 'BinaryExpression') { return false; }
+        const written = this.path(this.bindings.rules.parser.node(index).children[0] ?? -1); return written !== undefined && written.same(target);
+    }
+    dependencies(local: LostLocal, target: LostPath): number {
+        const evaluator = new LostEvaluator(this, target, local.name);
+        if(local.element !== undefined) { return evaluator.match(local.element); }
+        const key = `${local.identity}:${target.key()}`; if(this.memo.has(key)) { return this.memo.get(key) ?? 0; }
+        if(this.progress.get(key) === true) { return 0; } this.progress.set(key, true);
+        let dependencies = 0; for(const outcome of evaluator.evaluate(local.initializer, false)) { dependencies |= outcome.dependencies; }
+        this.progress.set(key, false); this.memo.set(key, dependencies); return dependencies;
+    }
+    between(local: LostLocal, anchor: number, target: LostPath): boolean {
+        const key = `${local.identity}:${anchor}:${target.key()}`; if(this.betweenMemo.has(key)) { return this.betweenMemo.get(key) ?? false; }
+        if(!this.built) { this.graph.build(this.root); this.built = true; }
+        const queue: LostPosition[] = []; const visited = new Map<string, boolean>();
+        for(let at = 0; at < this.graph.blocks.length; at++) { const block = this.graph.block(at); if(!block.reachable) { continue; }
+            for(let p = 0; p < block.events.length; p++) { const event = block.events[p] ?? panic('missing event'); if(event.kind === 2 && event.node === local.name) { queue.push(new LostPosition(at, p + 1, false)); } }
+        }
+        let answer = false;
+        for(let at = 0; at < queue.length && !answer; at++) {
+            const current = queue[at] ?? panic('missing position'); const block = this.graph.block(current.block); let suspended = current.suspended; let stopped = false;
+            for(const event of block.events.slice(current.start)) {
+                if(event.kind === 0 && (event.node < 0 || !this.bindings.contains(event.node, anchor))) { suspended = true; }
+                else if(event.kind === 2 && event.node === local.name) { stopped = true; }
+                else if(event.kind === 1 && event.node === anchor && suspended) { answer = true; break; }
+                else if(event.kind === 3) {
+                    if(event.node === anchor) { if(suspended) { answer = true; break; } }
+                    else if(this.writesTarget(event.node, target)) { stopped = true; }
+                }
+                if(stopped) { break; }
+            }
+            if(stopped) { continue; }
+            for(const successor of block.successors) {
+                if(!this.graph.block(successor).reachable) { continue; } const state = `${successor}:${suspended ? 1 : 0}`;
+                if(!visited.has(state)) { visited.set(state, true); queue.push(new LostPosition(successor, 0, suspended)); }
+            }
+        }
+        this.betweenMemo.set(key, answer); return answer;
+    }
+    report(index: number, text: string): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        rules.findings.push(new Diagnostic('concurrency-no-lost-update', 'lostUpdate', `This write loses updates. Its new value is computed from ${text}`,
+            rules.byte(rules.start(node)), rules.byte(node.end), 'nexus/'));
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(const child of rules.parser.node(this.root).children) { this.collect(child); }
+        for(const index of this.own) { this.collectLocal(index); }
+        if(!this.own.some((index) => ['AwaitExpression', 'YieldExpression'].includes(this.kind(index)) ||
+            (this.kind(index) === 'ForOfStatement' && rules.parser.node(index).children.some((child) => this.kind(child) === 'AwaitKeyword')))) { return; }
+        for(const index of this.own) {
+            const node = rules.parser.node(index);
+            if(node.kind === 'BinaryExpression' && this.graph.assignment(this.graph.operator(index)) && !['QuestionQuestionEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken'].includes(this.graph.operator(index))) {
+                const target = this.path(node.children[0] ?? -1) ?? this.compound(node.children[0] ?? -1);
+                if(target === undefined || !this.shared(target)) { continue; }
+                const outcomes = new LostEvaluator(this, target, index).evaluate(node.children[node.children.length - 1] ?? -1, false);
+                const lost = outcomes.some((outcome) => this.graph.operator(index) === 'EqualsToken' ? (outcome.dependencies & 8) !== 0 : outcome.during || (outcome.dependencies & 12) !== 0);
+                if(lost) {
+                    const text = rules.text(rules.parser.node(node.children[0] ?? -1));
+                    this.report(index, `\`${text}\` as it was before an await or a yield, and the function is suspended in between, so anything else that changes \`${text}\` during the suspension is overwritten by this line. Read \`${text}\` after the suspension, or keep the whole read, compute and write on one side of it.`);
+                }
+            }
+        }
+        for(const index of this.own) {
+            if(this.kind(index) !== 'CallExpression') { continue; } const access = this.access(index);
+            if(access === undefined || !access.write || !this.shared(access.target)) { continue; }
+            if(new LostEvaluator(this, access.target, index).evaluate(access.value, false).some((outcome) => (outcome.dependencies & 8) !== 0)) {
+                const write = rules.parser.node(index); const read = this.own.find((candidate) => rules.parser.node(candidate).pos < write.end && this.targetRead(candidate, access.target)) ?? write.children[0] ?? -1;
+                this.report(index, `what \`${rules.text(rules.parser.node(read))}\` returned before an await or a yield, and the function is suspended in between, so anything else that writes that entry during the suspension is overwritten by this call. Read it again after the suspension and change only what this function owns, or keep the whole read, compute and write on one side of it.`);
+            }
+        }
+    }
+}
+class LostEvaluator {
+    readonly analysis: LostAnalysis;
+    readonly target: LostPath;
+    readonly anchor: number;
+    constructor(analysis: LostAnalysis, target: LostPath, anchor: number) { this.analysis = analysis; this.target = target; this.anchor = anchor; }
+    leaf(dependencies: number, suspended: boolean): LostOutcome[] { return [new LostOutcome(dependencies, suspended)]; }
+    match(path: LostPath): number {
+        if(this.target.store !== '' || !path.sameRoot(this.target) || path.names.length < this.target.names.length) { return 0; }
+        for(let at = 0; at < this.target.names.length; at++) { if(path.names[at] !== this.target.names[at]) { return 0; } }
+        return path.names.length === this.target.names.length ? 1 : 2;
+    }
+    identifier(index: number, suspended: boolean): number {
+        const symbol = this.analysis.identity(index).identity; if(symbol === 0) { return 0; }
+        if(!this.target.isThis && this.target.store === '' && this.target.root === symbol && this.target.names.length === 0) { return 1; }
+        const local = this.analysis.locals.get(symbol); if(local === undefined || local.name === index) { return 0; }
+        let dependencies = this.analysis.dependencies(local, this.target);
+        if(dependencies !== 0 && (suspended || this.analysis.between(local, this.anchor, this.target))) { dependencies = staled(dependencies); }
+        return dependencies;
+    }
+    sequence(nodes: readonly number[], suspended: boolean): LostOutcome[] {
+        let states = this.leaf(0, suspended);
+        for(const index of nodes) {
+            if(index < 0) { continue; } const next: LostOutcome[] = [];
+            for(const state of states) { for(const result of this.evaluate(index, state.suspended)) {
+                next.push(new LostOutcome((result.during ? staled(state.dependencies) : state.dependencies) | result.dependencies,
+                    result.suspended, state.during || result.during));
+            } }
+            states = unique(next);
+        }
+        return states;
+    }
+    modified(outcomes: readonly LostOutcome[]): LostOutcome[] { for(const outcome of outcomes) { outcome.dependencies = modified(outcome.dependencies); } return unique(outcomes); }
+    then(first: readonly LostOutcome[], second: number): LostOutcome[] {
+        const outcomes: LostOutcome[] = [];
+        for(const state of first) { for(const result of this.evaluate(second, state.suspended)) { result.during = result.during || state.during; outcomes.push(result); } }
+        return outcomes;
+    }
+    evaluate(index: number, suspended: boolean): LostOutcome[] {
+        const analysis = this.analysis; const rules = analysis.bindings.rules;
+        if(index < 0 || analysis.graph.root(index) || analysis.kind(index) === 'ClassExpression') { return this.leaf(0, suspended); }
+        const node = rules.parser.node(index);
+        if(node.kind.endsWith('Type') || ['TypeReference', 'TypeLiteral', 'TypeQuery', 'TypeOperator', 'TypePredicate', 'ExpressionWithTypeArguments'].includes(node.kind)) { return this.leaf(0, suspended); }
+        const transparent = analysis.graph.transparent(index); if(transparent !== index) { return this.evaluate(transparent, suspended); }
+        if(node.kind === 'Identifier') { return this.leaf(this.identifier(index, suspended), suspended); }
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const path = analysis.path(index);
+            if(path !== undefined) {
+                const matched = this.match(path); if(matched !== 0) { return this.leaf(matched, suspended); }
+                let root = index;
+                while(['PropertyAccessExpression', 'ElementAccessExpression'].includes(analysis.kind(root))) { root = analysis.graph.transparent(rules.parser.node(root).children[0] ?? -1); }
+                return this.leaf(analysis.kind(root) === 'Identifier' ? modified(this.identifier(root, suspended)) : 0, suspended);
+            }
+            return this.modified(node.kind === 'PropertyAccessExpression' ? this.evaluate(node.children[0] ?? -1, suspended) : this.sequence(node.children, suspended));
+        }
+        if(node.kind === 'AwaitExpression' || node.kind === 'YieldExpression') {
+            const operand = node.children[node.children.length - 1] ?? -1; const outcomes = this.evaluate(operand, suspended);
+            const inner = analysis.graph.transparent(operand); const read = analysis.targetRead(inner, this.target);
+            const callee = ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(analysis.kind(inner));
+            for(const outcome of outcomes) {
+                if(node.kind === 'YieldExpression' || (callee && !read)) { outcome.dependencies = 0; }
+                if(!read || node.kind === 'YieldExpression') { outcome.dependencies = staled(outcome.dependencies); }
+                outcome.suspended = true; outcome.during = true;
+            }
+            return unique(outcomes);
+        }
+        if(node.kind === 'BinaryExpression') {
+            const left = node.children[0] ?? -1; const right = node.children[node.children.length - 1] ?? -1;
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(analysis.graph.operator(index))) {
+                const first = this.evaluate(left, suspended); const outcomes = first.slice(); for(const value of this.then(first, right)) { outcomes.push(value); } return unique(outcomes);
+            }
+            if(analysis.graph.operator(index) === 'CommaToken') { return unique(this.then(this.evaluate(left, suspended), right)); }
+            if(analysis.graph.operator(index) === 'EqualsToken') { return this.evaluate(right, suspended); }
+            return this.modified(this.sequence([left, right], suspended));
+        }
+        if(node.kind === 'ConditionalExpression') {
+            const condition = this.evaluate(node.children[0] ?? -1, suspended); const outcomes = this.then(condition, node.children[2] ?? -1);
+            for(const result of this.then(condition, node.children[4] ?? -1)) { outcomes.push(result); } return unique(outcomes);
+        }
+        if(node.kind === 'ObjectLiteralExpression') {
+            const parts: number[] = [];
+            for(const member of node.children) {
+                const property = rules.parser.node(member);
+                if(property.kind === 'PropertyAssignment') {
+                    const name = property.children[0] ?? -1; if(analysis.kind(name) === 'ComputedPropertyName') { parts.push(rules.parser.node(name).children[0] ?? -1); }
+                    parts.push(property.children[property.children.length - 1] ?? -1);
+                } else if(property.kind === 'ShorthandPropertyAssignment') { parts.push(property.children[0] ?? -1); }
+                else if(property.kind === 'SpreadAssignment') { parts.push(property.children[property.children.length - 1] ?? -1); }
+            }
+            return this.modified(this.sequence(parts, suspended));
+        }
+        if(node.kind === 'CallExpression' && analysis.targetRead(index, this.target)) {
+            const outcomes = this.sequence(node.children, suspended); for(const outcome of outcomes) { outcome.dependencies = 1; } return unique(outcomes);
+        }
+        return this.modified(this.sequence(node.children, suspended));
+    }
+}
+export class ConcurrencyNoLostUpdate {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind)) { continue; }
+            if(!node.children.some((child) => ['AsyncKeyword', 'AsteriskToken'].includes(rules.parser.node(child).kind))) { continue; }
+            const names: number[] = []; const graph = new LostGraph(this.bindings, names); const analysis = new LostAnalysis(this.bindings, index, graph, names);
+            // The graph borrows the local-name table; numeric links own no analysis objects.
+            analysis.run();
+        }
+    }
+}

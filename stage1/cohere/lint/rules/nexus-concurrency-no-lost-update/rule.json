@@ -1,0 +1,14 @@
+{
+  "name": "nexus/concurrency-no-lost-update",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22ConcurrencyNoLostUpdate",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConcurrencyNoLostUpdate"
+}

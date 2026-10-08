@@ -1,0 +1,13 @@
+{
+  "name": "react/sort-default-props",
+  "kinds": [
+    "PropertyDeclaration",
+    "BinaryExpression"
+  ],
+  "source": "rule.a",
+  "class": "Rule",
+  "factory": "create",
+  "visit": "visit",
+  "node": true,
+  "needsChecker": true
+}

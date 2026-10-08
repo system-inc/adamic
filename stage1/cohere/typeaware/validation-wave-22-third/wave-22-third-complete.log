@@ -1,0 +1,32 @@
+=== RUN   TestWave22ThirdAgreement
+    wave_22_third_test.go:187: controls: 620 accepted, 0 rejected by independent parser
+    wave_22_third_test.go:189: controls: 92857 identical finding bytes; findings 183
+    wave_22_third_test.go:200: controls-asan: 92857 identical finding bytes; findings 183
+    wave_22_third_test.go:210: isolated-0-js: 1836 identical finding bytes; findings 5
+    wave_22_third_test.go:211: isolated-0-js-asan: 1836 identical finding bytes; findings 5
+    wave_22_third_test.go:210: isolated-0-a: 1835 identical finding bytes; findings 5
+    wave_22_third_test.go:211: isolated-0-a-asan: 1835 identical finding bytes; findings 5
+    wave_22_third_test.go:210: isolated-1-js: 1038 identical finding bytes; findings 4
+    wave_22_third_test.go:211: isolated-1-js-asan: 1038 identical finding bytes; findings 4
+    wave_22_third_test.go:210: isolated-1-a: 1037 identical finding bytes; findings 4
+    wave_22_third_test.go:211: isolated-1-a-asan: 1037 identical finding bytes; findings 4
+    wave_22_third_test.go:210: isolated-2-js: 1284 identical finding bytes; findings 4
+    wave_22_third_test.go:211: isolated-2-js-asan: 1284 identical finding bytes; findings 4
+    wave_22_third_test.go:210: isolated-2-a: 995 identical finding bytes; findings 3
+    wave_22_third_test.go:211: isolated-2-a-asan: 995 identical finding bytes; findings 3
+    wave_22_third_test.go:210: isolated-3-js: 685 identical finding bytes; findings 2
+    wave_22_third_test.go:211: isolated-3-js-asan: 685 identical finding bytes; findings 2
+    wave_22_third_test.go:210: isolated-3-a: 684 identical finding bytes; findings 2
+    wave_22_third_test.go:211: isolated-3-a-asan: 684 identical finding bytes; findings 2
+    wave_22_third_test.go:225: global-provenance: exit 0, empty stderr, byte oracle catches byte 5478
+    wave_22_third_test.go:225: global-declaration-span: exit 0, empty stderr, byte oracle catches byte 74522
+    wave_22_third_test.go:225: timer-string: exit 0, empty stderr, byte oracle catches byte 56758
+    wave_22_third_test.go:245: "global-binding\nnode" released handle: panic 70; registry retention checked separately
+    wave_22_third_test.go:245: "global-source" released handle: panic 70; registry retention checked separately
+    wave_22_third_test.go:268: repository: 18485 identical finding bytes; findings 0
+    wave_22_third_test.go:269: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_third_test.go:268: compiler: 5857 identical finding bytes; findings 0
+    wave_22_third_test.go:269: compiler-asan: 5857 identical finding bytes; findings 0
+--- PASS: TestWave22ThirdAgreement (125.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	125.335s

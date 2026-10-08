@@ -1,0 +1,2 @@
+// Cohere noAdjacentInlineElementsHasEdgeWhitespace mirrors the upstream JavaScript expression.
+export const edgeWhitespace = /(?:^\s|\s$)/u;

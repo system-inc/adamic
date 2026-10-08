@@ -1,0 +1,749 @@
+{
+  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "integration": "b84a9d9314b65d3d0261ee017e233287b4f071da",
+  "compiler_revision": "01255f6a411ce8ec4af3879d0a1dc119008aef10",
+  "setup_seconds": 296,
+  "nproc": 5,
+  "batches": {
+    "sixth": {
+      "adjacent-judgment-build": {
+        "command": [
+          "/workspace/wave-22-sixth-adamic",
+          "build",
+          "/workspace/wave-22-sixth-work/source/stage1/cohere/typeaware/rules/wave-22-sixth/driver.a",
+          "-o",
+          "/workspace/wave-22-sixth-work/adjacent-judgment",
+          "--tsgo",
+          "/workspace/wave-22-sixth-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 27.196736387002602
+      },
+      "adjacent-judgment-run": {
+        "command": [
+          "/workspace/wave-22-sixth-work/adjacent-judgment",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.29977773200153024
+      },
+      "archive-asan": {
+        "command": [
+          "go",
+          "build",
+          "-buildmode=c-archive",
+          "-asan",
+          "-o",
+          "/workspace/wave-22-sixth-work/checker-asan.a",
+          "./bridge/tsgo/archive"
+        ],
+        "exit": 0,
+        "seconds": 12.82822161600052
+      },
+      "compiler-asan-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-sixth-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 1.2687868529974367
+      },
+      "compiler-asan-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native-asan",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-sixth-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 33.535829775999446
+      },
+      "compiler-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-sixth-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.5778580559999682
+      },
+      "compiler-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-sixth-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 8.27124130700031
+      },
+      "controls-asan-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.330423333998624
+      },
+      "controls-asan-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native-asan",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.9435058800008846
+      },
+      "controls-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.7390248900010192
+      },
+      "controls-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.7958428530000674
+      },
+      "element-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest",
+          "--element"
+        ],
+        "exit": 0,
+        "seconds": 0.48015637199932826
+      },
+      "element-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest",
+          "--element"
+        ],
+        "exit": 0,
+        "seconds": 0.3698296399998071
+      },
+      "extract": {
+        "command": [
+          "/workspace/wave-22-sixth-work/extract",
+          "/workspace/adamic/cohere/internal/lint/rules/react/jsx_fragments_test.go",
+          "/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+          "/workspace/adamic/cohere/internal/lint/rules/react/no_adjacent_inline_elements_test.go"
+        ],
+        "exit": 0,
+        "seconds": 0.028238547998626018
+      },
+      "extract-build": {
+        "command": [
+          "go",
+          "build",
+          "-o",
+          "/workspace/wave-22-sixth-work/extract",
+          "/workspace/wave-22-sixth-work/extract.go"
+        ],
+        "exit": 0,
+        "seconds": 0.31970353099677595
+      },
+      "fragment-id-build": {
+        "command": [
+          "/workspace/wave-22-sixth-adamic",
+          "build",
+          "/workspace/wave-22-sixth-work/source/stage1/cohere/typeaware/rules/wave-22-sixth/driver.a",
+          "-o",
+          "/workspace/wave-22-sixth-work/fragment-id",
+          "--tsgo",
+          "/workspace/wave-22-sixth-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 15.599531603002106
+      },
+      "fragment-id-run": {
+        "command": [
+          "/workspace/wave-22-sixth-work/fragment-id",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.16845788700084086
+      },
+      "globals-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest",
+          "--allow-globals"
+        ],
+        "exit": 0,
+        "seconds": 0.8040803789990605
+      },
+      "globals-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest",
+          "--allow-globals"
+        ],
+        "exit": 0,
+        "seconds": 0.8332839399990917
+      },
+      "native-asan-build": {
+        "command": [
+          "/workspace/wave-22-sixth-adamic",
+          "build",
+          "/workspace/wave-22-sixth-work/source/stage1/cohere/typeaware/rules/wave-22-sixth/driver.a",
+          "-o",
+          "/workspace/wave-22-sixth-work/native-asan",
+          "--tsgo",
+          "/workspace/wave-22-sixth-work/checker-asan.a",
+          "--sanitize"
+        ],
+        "exit": 0,
+        "seconds": 62.64920279299986
+      },
+      "native-build": {
+        "command": [
+          "/workspace/wave-22-sixth-adamic",
+          "build",
+          "/workspace/wave-22-sixth-work/source/stage1/cohere/typeaware/rules/wave-22-sixth/driver.a",
+          "-o",
+          "/workspace/wave-22-sixth-work/native",
+          "--tsgo",
+          "/workspace/wave-22-sixth-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 87.90534734700122
+      },
+      "oracle-build": {
+        "command": [
+          "go",
+          "build",
+          "-overlay",
+          "/workspace/wave-22-sixth-work/oracle-overlay.json",
+          "-o",
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/adamic/cohere/adamic_wave22_sixth_oracle.go"
+        ],
+        "exit": 0,
+        "seconds": 1.385875443000259
+      },
+      "repository-asan-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-sixth-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.37821003399949404
+      },
+      "repository-asan-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native-asan",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-sixth-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 8.239508683000167
+      },
+      "repository-go": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-sixth-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.37636701299925335
+      },
+      "repository-native": {
+        "command": [
+          "/workspace/wave-22-sixth-work/native",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-sixth-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 1.4811538439971628
+      },
+      "undef-id-build": {
+        "command": [
+          "/workspace/wave-22-sixth-adamic",
+          "build",
+          "/workspace/wave-22-sixth-work/source/stage1/cohere/typeaware/rules/wave-22-sixth/driver.a",
+          "-o",
+          "/workspace/wave-22-sixth-work/undef-id",
+          "--tsgo",
+          "/workspace/wave-22-sixth-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 25.15285175399913
+      },
+      "undef-id-run": {
+        "command": [
+          "/workspace/wave-22-sixth-work/undef-id",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.41853341400201316
+      },
+      "valid-sources": {
+        "command": [
+          "/workspace/wave-22-sixth-work/oracle",
+          "/workspace/wave-22-sixth-work/tsconfig.json",
+          "/workspace/wave-22-sixth-work/controls.manifest",
+          "--valid-sources"
+        ],
+        "exit": 0,
+        "seconds": 0.7681657430002815
+      }
+    },
+    "seventh": {
+      "allow-as-props-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest",
+          "--allow-as-props"
+        ],
+        "exit": 0,
+        "seconds": 2.383556241999031
+      },
+      "allow-as-props-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest",
+          "--allow-as-props"
+        ],
+        "exit": 0,
+        "seconds": 1.760415759999887
+      },
+      "archive-asan": {
+        "command": [
+          "go",
+          "build",
+          "-buildmode=c-archive",
+          "-asan",
+          "-o",
+          "/workspace/wave-22-seventh-work/checker-asan.a",
+          "./bridge/tsgo/archive"
+        ],
+        "exit": 0,
+        "seconds": 73.89181477900274
+      },
+      "class-fallback-flag-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/class-fallback-flag",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 21.603203497001232
+      },
+      "class-fallback-flag-run": {
+        "command": [
+          "/workspace/wave-22-seventh-work/class-fallback-flag",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.6663831110017782
+      },
+      "compiler-asan-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-seventh-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.5757130830024835
+      },
+      "compiler-asan-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native-asan",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-seventh-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 144.8405251630029
+      },
+      "compiler-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-seventh-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.812212515000283
+      },
+      "compiler-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native",
+          "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+          "/workspace/wave-22-seventh-work/compiler.manifest"
+        ],
+        "exit": 0,
+        "seconds": 39.62864015100058
+      },
+      "computed-trivia-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/computed-trivia",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 18.145098992001294
+      },
+      "computed-trivia-run": {
+        "command": [
+          "/workspace/wave-22-seventh-work/computed-trivia",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.47622508499989635
+      },
+      "controls-asan-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.36202140800014604
+      },
+      "controls-asan-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native-asan",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 2.3665778009999485
+      },
+      "controls-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 1.4984212820018001
+      },
+      "controls-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 2.500153108001541
+      },
+      "default-id-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/default-id",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 24.06853435800076
+      },
+      "default-id-run": {
+        "command": [
+          "/workspace/wave-22-seventh-work/default-id",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.5020177769984002
+      },
+      "extract": {
+        "command": [
+          "/workspace/wave-22-seventh-work/extract",
+          "/workspace/adamic/cohere/internal/lint/rules/react/no_object_type_as_default_prop_test.go",
+          "/workspace/adamic/cohere/internal/lint/rules/react/no_unstable_nested_components_test.go",
+          "/workspace/adamic/cohere/internal/lint/rules/react/sort_default_props_test.go"
+        ],
+        "exit": 0,
+        "seconds": 0.027728360997571144
+      },
+      "extract-build": {
+        "command": [
+          "go",
+          "build",
+          "-o",
+          "/workspace/wave-22-seventh-work/extract",
+          "/workspace/wave-22-seventh-work/extract.go"
+        ],
+        "exit": 0,
+        "seconds": 0.346714213002997
+      },
+      "ignore-case-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest",
+          "--ignore-case"
+        ],
+        "exit": 0,
+        "seconds": 1.245399613999325
+      },
+      "ignore-case-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest",
+          "--ignore-case"
+        ],
+        "exit": 0,
+        "seconds": 2.451431307999883
+      },
+      "jsx-attribute-flag-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/jsx-attribute-flag",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 21.54978376800136
+      },
+      "jsx-attribute-flag-run": {
+        "command": [
+          "/workspace/wave-22-seventh-work/jsx-attribute-flag",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.4995360519969836
+      },
+      "native-asan-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/native-asan",
+          "--tsgo",
+          "/workspace/wave-22-seventh-work/checker-asan.a",
+          "--sanitize"
+        ],
+        "exit": 0,
+        "seconds": 87.15361315200062
+      },
+      "native-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/native",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 58.42492287599816
+      },
+      "nested-id-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/nested-id",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 23.218270612000197
+      },
+      "nested-id-run": {
+        "command": [
+          "/workspace/wave-22-seventh-work/nested-id",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.6933180550004181
+      },
+      "oracle-build": {
+        "command": [
+          "go",
+          "build",
+          "-overlay",
+          "/workspace/wave-22-seventh-work/oracle-overlay.json",
+          "-o",
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/adamic/cohere/adamic_wave22_seventh_oracle.go"
+        ],
+        "exit": 0,
+        "seconds": 1.2440594479994616
+      },
+      "repository-asan-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-seventh-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 0.6223100010029157
+      },
+      "repository-asan-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native-asan",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-seventh-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 30.852738509001938
+      },
+      "repository-go": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-seventh-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 2.083997076002561
+      },
+      "repository-native": {
+        "command": [
+          "/workspace/wave-22-seventh-work/native",
+          "/workspace/adamic/tsconfig.json",
+          "/workspace/wave-22-seventh-work/repository.manifest"
+        ],
+        "exit": 0,
+        "seconds": 9.034132198998122
+      },
+      "sort-id-build": {
+        "command": [
+          "/workspace/wave-22-seventh-adamic",
+          "build",
+          "/workspace/wave-22-seventh-work/source/stage1/cohere/typeaware/rules/wave-22-seventh/driver.a",
+          "-o",
+          "/workspace/wave-22-seventh-work/sort-id",
+          "--tsgo",
+          "/workspace/wave-22-seventh-checker.a"
+        ],
+        "exit": 0,
+        "seconds": 25.80100113500157
+      },
+      "sort-id-run": {
+        "command": [
+          "/workspace/wave-22-seventh-work/sort-id",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest"
+        ],
+        "exit": 0,
+        "seconds": 1.0977976760004822
+      },
+      "valid-sources": {
+        "command": [
+          "/workspace/wave-22-seventh-work/oracle",
+          "/workspace/wave-22-seventh-work/tsconfig.json",
+          "/workspace/wave-22-seventh-work/controls.manifest",
+          "--valid-sources"
+        ],
+        "exit": 0,
+        "seconds": 1.0561847630015109
+      }
+    }
+  },
+  "mutants": {
+    "fragment-id": {
+      "first_difference": 735,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "undef-id": {
+      "first_difference": 358,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "adjacent-judgment": {
+      "first_difference": 32497,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "default-id": {
+      "first_difference": 772,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "nested-id": {
+      "first_difference": 18310,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "sort-id": {
+      "first_difference": 53364,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "computed-trivia": {
+      "first_difference": 66117,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "jsx-attribute-flag": {
+      "first_difference": 18244,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "class-fallback-flag": {
+      "first_difference": 933,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    }
+  },
+  "old_twelve_seconds": 1002.893,
+  "old_rule_mutants": {
+    "numeric-prefix": 14792,
+    "has-own-fix-span": 18785,
+    "spread-parens": 314,
+    "promise-condition": 16849,
+    "spread-await-edit": 22057,
+    "lost-write-span": 65053,
+    "nullish-suggestion": 361,
+    "qualifier-fix": 22460,
+    "private-read": 4152,
+    "scope-export-mutant": 29967,
+    "global-provenance": 5940,
+    "global-declaration-span": 85544,
+    "timer-string": 63292
+  },
+  "compiler_sha256": "7ac8cc46953525a330a8dfd1fecbb13076e44964187a775808aff17f218e809a",
+  "checker_archive_sha256": "f3fbc62350aedd426b0248b04f458991b70ca1a65fa618812214ab47a2198549"
+}

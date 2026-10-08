@@ -1,0 +1,9 @@
+import { panic } from 'adamic';
+import type { Rules } from '../../../rules.ts';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import { Frames, header } from '../../../frames.ts';
+export function unicodeNodeText(checker: Rules,node: Node): number[] {
+    const f=new Frames(checker.askAt(node.file,node.pos,node.end,node.kindName,'unicode-node-text'));
+    header(f,'unicode-node-text');const count=f.natural();const values:number[]=[];
+    for(let i=0;i<count;i++){values.push(f.natural());values.push(f.natural());values.push(f.natural());}f.end();return values;
+}

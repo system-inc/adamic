@@ -1,0 +1,1032 @@
+[
+  {
+    "name": "control-000.a",
+    "source": "\nfunction foo() {\n  let x!: string;\n  return x! ?? '';\n}\n      \nexport {};\n",
+    "sha256": "289036de80241f724a68ba07e123884d18ff15d1a63bf798baa908a0fb130bb1"
+  },
+  {
+    "name": "control-001.a",
+    "source": "\nfunction foo() {\n  let x: string;\n  return x ?? '';\n}\n    \nexport {};\n",
+    "sha256": "a7628b189e86b384fa5a8e6a87be2338bb475f63c5f0bc5d356c465a98d6536a"
+  },
+  {
+    "name": "control-002.a",
+    "source": "\nlet x = foo();\nx  ! ?? '';\n      \nexport {};\n",
+    "sha256": "4d799ddaa2530531071b42a03a744bf19268f3aa218f295eebb0d24f8545ae62"
+  },
+  {
+    "name": "control-003.a",
+    "source": "\nlet x = foo();\nx ?? '';\n    \nexport {};\n",
+    "sha256": "9e7468d4681be25fc83c758e086413542560c41f7d5e0c0ed0c687df8512b730"
+  },
+  {
+    "name": "control-004.a",
+    "source": "\nlet x = foo();\nx! ?? '';\n      \nexport {};\n",
+    "sha256": "eb59ca5f345aea0d72fd0a9e83105393d490f3ad34dcad5029d068227dbcc6da"
+  },
+  {
+    "name": "control-005.a",
+    "source": "\nlet x!: string;\nfunction foo() {\n  return x! ?? '';\n}\n      \nexport {};\n",
+    "sha256": "ea55987ba3d34a06a5183210b241d65a6a433287ebdd20dbdcf7e729edae2e09"
+  },
+  {
+    "name": "control-006.a",
+    "source": "\nlet x!: string;\nx ?? '';\n    \nexport {};\n",
+    "sha256": "40e40a85979d9b24b795e0276c7b0fb35edc9f79e5d501d408a568dd75638eeb"
+  },
+  {
+    "name": "control-007.a",
+    "source": "\nlet x!: string;\nx! ?? '';\n      \nexport {};\n",
+    "sha256": "67c040db14f4c96bb1cf7771d84548fcf4616692e8d198bb68be3587d496ffd8"
+  },
+  {
+    "name": "control-008.a",
+    "source": "\nlet x: string;\nfoo(x);\nx! ?? '';\n    \nexport {};\n",
+    "sha256": "57dfdb4e10e130c9621cc5579f5b04660513bfd2d4ccdc00dbba79b90297ca3f"
+  },
+  {
+    "name": "control-009.a",
+    "source": "\nlet x: string;\nfoo(x);\nx! ?? '';\nx = foo();\n    \nexport {};\n",
+    "sha256": "80f274a69b4f969a75a147fe8176e27ab9f5afb0e393a514dd84ff77c1117d1e"
+  },
+  {
+    "name": "control-010.a",
+    "source": "\nlet x: string;\nfunction foo() {\n  return x ?? '';\n}\n    \nexport {};\n",
+    "sha256": "7baaffd01b84d52d827ce77aef70a5a2fc9d7e9a54479b1121204c4b2faa86b1"
+  },
+  {
+    "name": "control-011.a",
+    "source": "\nlet x: string;\nx = foo();\nx! ?? '';\n      \nexport {};\n",
+    "sha256": "8b7ae785742b6decc28ccd2c591264ca06a690144ddb8b3204861808d31337b1"
+  },
+  {
+    "name": "control-012.a",
+    "source": "\nlet x: string;\nx = foo();\nx! ?? '';\nx = foo();\n      \nexport {};\n",
+    "sha256": "ef77b8dc013a25c2a40a970bb6534ee5f1fc7553de1e52e8af6df6f089364937"
+  },
+  {
+    "name": "control-013.a",
+    "source": "\nlet x: string;\nx ?? '';\n    \nexport {};\n",
+    "sha256": "386c8aeaca45ba43f5489aa5e892c2316b6884136ce8b02c18d49e135a53b992"
+  },
+  {
+    "name": "control-014.a",
+    "source": "\nlet x: string;\nx! ?? '';\n    \nexport {};\n",
+    "sha256": "d06303a5087ba4687333289f3b70c7d0e12f7f8fcf285d84a0f1aed168338ed4"
+  },
+  {
+    "name": "control-015.a",
+    "source": "\nlet x: string;\nx! ?? '';\nx = foo();\n    \nexport {};\n",
+    "sha256": "ee188e1bfb5bebdecca710665091f3ec10d74b8e94da07f6ee162fa7e43fec73"
+  },
+  {
+    "name": "control-016.a",
+    "source": "(foo ?? bar)!;\nexport {};\n",
+    "sha256": "4fdc4a98bc7db0b6d41bcea6b06ea84b1117ca2c3f51610b6bdd2dbd2a204fd4"
+  },
+  {
+    "name": "control-017.a",
+    "source": "(foo!) ?? bar;\nexport {};\n",
+    "sha256": "7aa72e2bd28216f847662c1cbbbf9eedf61c6137caf6c9eb23516bf754d54336"
+  },
+  {
+    "name": "control-018.a",
+    "source": "/* \u4e16\u754c \ud83c\udf0d */\nlet \u00e9:string|undefined='a'; (\u00e9 /* mark */ !) ?? '\u4e16\u754c';\n\nexport {};\n",
+    "sha256": "518d3ccbef6801ee7cabb779ed1d358992a288fd04c6f05900967d83bc892d93"
+  },
+  {
+    "name": "control-019.a",
+    "source": "class C {\n  #privateMember;\n\n  foo() {\n    bar((this.#privateMember += 1));\n  }\n}\n\nexport {};\n",
+    "sha256": "5c5e3de877ddd1cc950a0118d9df5c733e8b922f4262c94facfff096b67d1ca7"
+  },
+  {
+    "name": "control-020.a",
+    "source": "class C {\n  #privateMember;\n\n  foo() {\n    return class {};\n  }\n\n  bar() {\n    return this.#privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "0f7f5c48a2a098bda9c173469c088f10377bb9c76fdccd96de1b52fa5fe2372c"
+  },
+  {
+    "name": "control-021.a",
+    "source": "class C {\n  #privateMember;\n\n  foo() {\n    this.#privateMember++;\n  }\n}\n\nexport {};\n",
+    "sha256": "f0841166dc64e7ddf69f6a2e87a1a6a2bbfa6b3bfa0fddd80602cb0c8f2ffd42"
+  },
+  {
+    "name": "control-022.a",
+    "source": "class C {\n  #privateMember;\n\n  method() {\n    ({ [this.#privateMember]: a } = foo);\n  }\n}\n\nexport {};\n",
+    "sha256": "066f69d841aa69f13f23e2e54767f893138ecebe0220490d0a87cd3112360407"
+  },
+  {
+    "name": "control-023.a",
+    "source": "class C {\n  #unusedInOuterClass;\n\n  foo() {\n    return class D {\n      #unusedInOuterClass;\n\n      bar() {\n        return this.#unusedInOuterClass;\n      }\n    };\n  }\n}\n\nexport {};\n",
+    "sha256": "c310634cf3d997c9505403d1704f9cd845c6ec64f3cf4a41a10fe788fb2d5b1b"
+  },
+  {
+    "name": "control-024.a",
+    "source": "class C {\n  #unusedOnlyInSecondNestedClass;\n\n  foo() {\n    return class {\n      #unusedOnlyInSecondNestedClass;\n\n      bar() {\n        return this.#unusedOnlyInSecondNestedClass;\n      }\n    };\n  }\n\n  baz() {\n    return this.#unusedOnlyInSecondNestedClass;\n  }\n\n  bar() {\n    return class {\n      #unusedOnlyInSecondNestedClass;\n    };\n  }\n}\n\nexport {};\n",
+    "sha256": "5ac8a534b9ede3ab723c6c151ef22ef23d6322dbf412eebecbf6893628c8499d"
+  },
+  {
+    "name": "control-025.a",
+    "source": "class C {\n  #usedInInnerClass;\n\n  method(a) {\n    return class {\n      foo = a.#usedInInnerClass;\n    };\n  }\n}\n\nexport {};\n",
+    "sha256": "754459d53b8211c8d7b52844b29acdaf02e4dc189565d064e44f84d06fa6a96c"
+  },
+  {
+    "name": "control-026.a",
+    "source": "class C {\n  #usedOnlyInTheSecondInnerClass;\n\n  method(a) {\n    return class {\n      #usedOnlyInTheSecondInnerClass;\n\n      method2(b) {\n        foo = b.#usedOnlyInTheSecondInnerClass;\n      }\n\n      method3(b) {\n        foo = b.#usedOnlyInTheSecondInnerClass;\n      }\n    };\n  }\n}\n\nexport {};\n",
+    "sha256": "068ab3646cd46b86107fcdd342bfaf9cc75032bc923c395cf97b120b385baca4"
+  },
+  {
+    "name": "control-027.a",
+    "source": "class C {\n  get #privateMember() {\n    return something();\n  }\n  set #privateMember(value) {\n    doSomething(value);\n  }\n  method() {\n    this.#privateMember += 1;\n  }\n}\n\nexport {};\n",
+    "sha256": "4bb10817df2a06f5ab60178874e6bf99ae4e53fdc6db625a818a044dc7c3705a"
+  },
+  {
+    "name": "control-028.a",
+    "source": "class C {\n  private a = 1;\n  m() {\n    return class D {\n      n() { return this.a; }\n    };\n  }\n}\n\nexport {};\n",
+    "sha256": "729914aab187aef64cce3fbbc0ba38c9529a2059f016be428e866b4d9958738c"
+  },
+  {
+    "name": "control-029.a",
+    "source": "class C {\n  private a = 1;\n  m() {\n    return class D {\n      private a = 2;\n      n() { return this.a; }\n    };\n  }\n}\n\nexport {};\n",
+    "sha256": "0d11f84010fe6ac601f56947b22af6c4b55b698b2b03bbb1dc5f670cb5714f56"
+  },
+  {
+    "name": "control-030.a",
+    "source": "class C {\n  private accessor accessorMember = 42;\n\n  method() {\n    return this.accessorMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "ad1111d4f317196f4276bba2668266d2e6c0ced3300f28089be01af11c30ad4c"
+  },
+  {
+    "name": "control-031.a",
+    "source": "class C {\n  private accessor accessorMember = 42;\n}\n\nexport {};\n",
+    "sha256": "711e82f43ff47815c09dd3e955b5f0e7a60c9b949f5c564660fa7a42a89593f1"
+  },
+  {
+    "name": "control-032.a",
+    "source": "class C {\n  private get privateMember() {\n    return something();\n  }\n  private set privateMember(value) {\n    doSomething(value);\n  }\n  method() {\n    this.privateMember += 1;\n  }\n}\n\nexport {};\n",
+    "sha256": "539a89e96fac67b25ddcd66034d9ad2e731e9cd170912405230de9c59d55ad22"
+  },
+  {
+    "name": "control-033.a",
+    "source": "class C {\n  private privateMember;\n\n  foo() {\n    bar((this.privateMember += 1));\n  }\n}\n\nexport {};\n",
+    "sha256": "b10f29236d57c244e70c419410fef48e88cdfb1505ee3a531582716d6eda487a"
+  },
+  {
+    "name": "control-034.a",
+    "source": "class C {\n  private privateMember;\n\n  foo() {\n    return class {};\n  }\n\n  bar() {\n    return this.privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "8e1018ba1fbf0cc8cc389b6f1efdb4257daa73d4a7cf95f95f4264eb267cd65d"
+  },
+  {
+    "name": "control-035.a",
+    "source": "class C {\n  private privateMember;\n\n  foo() {\n    this.privateMember++;\n  }\n}\n\nexport {};\n",
+    "sha256": "fac3ddea95d4ec55f6e145ddff53e93bc9e6a699e3bf23b43119526bf50da26c"
+  },
+  {
+    "name": "control-036.a",
+    "source": "class C {\n  private privateMember;\n\n  method() {\n    ({ [this.privateMember]: a } = foo);\n  }\n}\n\nexport {};\n",
+    "sha256": "0c48213166d01d7e2b063f3936e758affe031bc1aa414ef63300e7f96db3976d"
+  },
+  {
+    "name": "control-037.a",
+    "source": "class C {\n  private set privateMember(value) {\n    doSomething(value);\n  }\n\n  foo() {\n    this.privateMember = 1;\n  }\n}\n\nexport {};\n",
+    "sha256": "85164a2a1696682ce5b52616e871e10e95607f401e7025ee726197b9c0e614a1"
+  },
+  {
+    "name": "control-038.a",
+    "source": "class C {\n  private set privateMember(value) {\n    doSomething(value);\n  }\n  private get privateMember() {\n    return something();\n  }\n  method() {\n    this.privateMember += 1;\n  }\n}\n\nexport {};\n",
+    "sha256": "1e2523bb31b5f9f7f3f77c4814b767b82789d63789d42a9a0b6311472cb3b441"
+  },
+  {
+    "name": "control-039.a",
+    "source": "class C {\n  private static staticMember = 42;\n\n  method() {\n    return C.staticMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "32552bb4b298f371e517c6fd0e3f6499441e0f857214d93f2bc0fe656bb4c053"
+  },
+  {
+    "name": "control-040.a",
+    "source": "class C {\n  private static staticMember = 42;\n\n  static method() {\n    return this.staticMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "f81e55c3bb9698b166a85846013a5f12eb88360570131fc85b7460eb934116ad"
+  },
+  {
+    "name": "control-041.a",
+    "source": "class C {\n  private static staticMember = 42;\n}\n\nexport {};\n",
+    "sha256": "ca695e1205344e106216b673a0ad4e69b01695793278e8b3d292dce54693c046"
+  },
+  {
+    "name": "control-042.a",
+    "source": "class C {\n  private usedOutsideClass;\n}\n\nconst instance = new C();\nconsole.log(instance.usedOutsideClass);\n\nexport {};\n",
+    "sha256": "1450db08f22c79806a3272ed3c3ab090344430368e58bec56e6fabda261edf13"
+  },
+  {
+    "name": "control-043.a",
+    "source": "class C {\n  private usedOutsideClass;\n}\n\nconst instance = new C();\nconsole.log(instance['usedOutsideClass']);\n\nexport {};\n",
+    "sha256": "955099cd26e96c1afdc2d849a4973305fb64a6c34893d3b7f4409a116cab06d3"
+  },
+  {
+    "name": "control-044.a",
+    "source": "class C {\n  set #privateMember(value) {\n    doSomething(value);\n  }\n\n  foo() {\n    this.#privateMember = 1;\n  }\n}\n\nexport {};\n",
+    "sha256": "5f3467c402a63dd7efdfc295ddf1dbfb4c12f9e9695d484a954bb7ea47d4302c"
+  },
+  {
+    "name": "control-045.a",
+    "source": "class C {\n  set #privateMember(value) {\n    doSomething(value);\n  }\n  get #privateMember() {\n    return something();\n  }\n  method() {\n    this.#privateMember += 1;\n  }\n}\n\nexport {};\n",
+    "sha256": "cb62fea8365fbebc5fe8c3df7706cc35cf5149545605fb34f4f70283a7335da0"
+  },
+  {
+    "name": "control-046.a",
+    "source": "class C {#a=1;method(){return class D{#a=2;read(){return this.#a;}};}}\nexport {};\n",
+    "sha256": "fe7e7ae02d11c82a73b0a063046eb7c82a6b5dee6266c6d862fcdffed122cbcb"
+  },
+  {
+    "name": "control-047.a",
+    "source": "class C {declare private readonly brand:'C';private ['computed']=1;private 123=1;private 'literal'=1;}\nexport {};\n",
+    "sha256": "ffdc12869f696c8bb97b5a33945bd9484c8a9e983f28bf9bc7ad78f89d8ab976"
+  },
+  {
+    "name": "control-048.a",
+    "source": "class C {private a=1;method(){class Inner{read(o:C){return o.a;}}}}\nexport {};\n",
+    "sha256": "bd898c9a86b297debf59c08d96b7180d7a5b479e2bd86406c53b85d172635d47"
+  },
+  {
+    "name": "control-049.a",
+    "source": "class C {private a=1;method(){this.a++;return (this.a+=1);}}\nexport {};\n",
+    "sha256": "d4580189a6af18f3ed65c70710bd480b693d8f92b8cf02797fecdb75b3edd9bd"
+  },
+  {
+    "name": "control-050.a",
+    "source": "class C {private a=1;method(){this.a++;}}\nexport {};\n",
+    "sha256": "53a2d1b714316ee12f84217a5e9b738fc2952ea4c33d08cf7c193e46d6484d73"
+  },
+  {
+    "name": "control-051.a",
+    "source": "class C {}\nnamespace C {\n  export const x = 3;\n}\nconst y = C.x;\n\nexport {};\n",
+    "sha256": "85b9353a21779be412faf42c36e7810992163597d9b33f0225636f6fffb955ff"
+  },
+  {
+    "name": "control-052.a",
+    "source": "class Decimal {\n  private padded(places: number): string {\n    return String(places);\n  }\n  render(places: number): string {\n    const rounded = this.round(places);\n    return rounded.padded(places);\n  }\n  round(places: number): Decimal {\n    return this;\n  }\n}\n\nexport {};\n",
+    "sha256": "207ff750ae449a909f5cfe71858213b0620bbd6e6e81cd4135e75685360df1ac"
+  },
+  {
+    "name": "control-053.a",
+    "source": "class First {\n  #privateMember = 5;\n  #privateMember2 = 5;\n}\n\nexport {};\n",
+    "sha256": "41485a1102fc48bf91679e578a1504c2d771786d7fc900bb7f1d6c63bb25f120"
+  },
+  {
+    "name": "control-054.a",
+    "source": "class First {\n  #privateMember = 5;\n}\nclass Second {}\n\nexport {};\n",
+    "sha256": "931ea9dd39f8b34e47473a36dbbb47841623775d9b43ff90022dae488f4a86e3"
+  },
+  {
+    "name": "control-055.a",
+    "source": "class First {\n  private privateMember = 5;\n  private privateMember2 = 5;\n}\n\nexport {};\n",
+    "sha256": "c2605449ce46e6728b8b103ad9566158b8dddfaf6e34ce1b650410570cb3a2f5"
+  },
+  {
+    "name": "control-056.a",
+    "source": "class First {\n  private privateMember = 5;\n}\nclass Second {}\n\nexport {};\n",
+    "sha256": "2ae8ff1d988f662a8cbb656c107fba0152ed5a4a1d821d61ec96e7c5985d7cc7"
+  },
+  {
+    "name": "control-057.a",
+    "source": "class First {}\nclass Second {\n  #privateMember = 5;\n}\n\nexport {};\n",
+    "sha256": "9533144d9f63be02f7480ea155d0edd1a0f9c687018d0bd746e94f42b4a06065"
+  },
+  {
+    "name": "control-058.a",
+    "source": "class First {}\nclass Second {\n  private privateMember = 5;\n}\n\nexport {};\n",
+    "sha256": "d428dbca510b6ab625185f5d7aa52a4f6c5c653d562113c710cf13e8b7ccb714"
+  },
+  {
+    "name": "control-059.a",
+    "source": "class Foo {\n  #privateMember = 42;\n  anotherMember = this.#privateMember;\n}\n\nexport {};\n",
+    "sha256": "138a1241e9711a69451d88e804521fd45914b8c9356bf18d148c662f8416baab"
+  },
+  {
+    "name": "control-060.a",
+    "source": "class Foo {\n  #privateMember = 42;\n  foo() {\n    anotherMember = this.#privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "c9c4acbaba8123dc6b679eb4717711c97758fcc5f831b12589f133280d19eb05"
+  },
+  {
+    "name": "control-061.a",
+    "source": "class Foo {\n  #privateMember = 42;\n  method() {\n    return someGlobalMethod(this.#privateMember);\n  }\n}\n\nexport {};\n",
+    "sha256": "445c27e026b33dd5d09e241369120f36873b5bfef97fe042e4efa8a2276aef6a"
+  },
+  {
+    "name": "control-062.a",
+    "source": "class Foo {\n  #privateMember = 42;\n  method() {\n    return this.#privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "6a1fdca11bc3db6cd68d830a114cabb572c09c26dc02c25d15f9cfe513c68ffe"
+  },
+  {
+    "name": "control-063.a",
+    "source": "class Foo {\n  #privateMember = 5;\n  method() {\n    this.#privateMember += 42;\n  }\n}\n\nexport {};\n",
+    "sha256": "eda2c22c7b4aa953bc80b3ce2df59ab17a74299b3ecc07be9c8b08fa4634603e"
+  },
+  {
+    "name": "control-064.a",
+    "source": "class Foo {\n  #privateMember = 5;\n  method() {\n    this.#privateMember = 42;\n  }\n}\n\nexport {};\n",
+    "sha256": "b095ce75716dcebfae71fd1cd70af8a0572b5b9291078f9f4e712c5046d1a88b"
+  },
+  {
+    "name": "control-065.a",
+    "source": "class Foo {\n  #privateMember = 5;\n}\n\nexport {};\n",
+    "sha256": "34c49ecfd2c86ae06e9b6c26d310570271279a73589a082e7b0494bdacc0abfa"
+  },
+  {
+    "name": "control-066.a",
+    "source": "class Foo {\n  #privateMember() {\n    return 42;\n  }\n  anotherMethod() {\n    return this.#privateMember();\n  }\n}\n\nexport {};\n",
+    "sha256": "26d460880b16b3525b183e8b0bc266ae4618f52ba2b60708e92804eeb457f02a"
+  },
+  {
+    "name": "control-067.a",
+    "source": "class Foo {\n  #privateMember() {}\n  #privateMemberUsed() {\n    return 42;\n  }\n  publicMethod() {\n    return this.#privateMemberUsed();\n  }\n}\n\nexport {};\n",
+    "sha256": "b032f0ba50db922ebbedc647ee8b4ed9c7d17ca2508f561ce5952564b901bf86"
+  },
+  {
+    "name": "control-068.a",
+    "source": "class Foo {\n  #privateMember() {}\n}\n\nexport {};\n",
+    "sha256": "8871853ef9eca5f7589c09f2a31948c0a026af3724c80caca2f8272c24ef3aaf"
+  },
+  {
+    "name": "control-069.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    ({ x: this.#privateMember } = bar);\n  }\n}\n\nexport {};\n",
+    "sha256": "3e429fc7a195ab0e9ffdbc2634bea6ddb8849e231f8bb0d83c2853b8c4fda679"
+  },
+  {
+    "name": "control-070.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    [...this.#privateMember] = bar;\n  }\n}\n\nexport {};\n",
+    "sha256": "c8520ff13a5f7b43acc9b7e8c163473a5a7d49697ac874de419224eeed5b9e1b"
+  },
+  {
+    "name": "control-071.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    [bar = 1] = this.#privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "0c274436752ee2183e16f33fe71b6ea0d7aab14441c78cf993c2d998bc0ba5ac"
+  },
+  {
+    "name": "control-072.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    [bar] = this.#privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "8e2fba02de1b3e563c9748f649d2f07bb02401724c3a394d546d4576baae0b82"
+  },
+  {
+    "name": "control-073.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    [this.#privateMember = 1] = bar;\n  }\n}\n\nexport {};\n",
+    "sha256": "f34c0426dc39aec3f3c6d1f9e7780bc65b3bf5fd39f5b0247a45f408d984980f"
+  },
+  {
+    "name": "control-074.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    [this.#privateMember] = bar;\n  }\n}\n\nexport {};\n",
+    "sha256": "d333e36be3325fe59db0c8e160945ebd1e4a920193f673051dcf695c7180b8c8"
+  },
+  {
+    "name": "control-075.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    for (const bar in this.#privateMember) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "00207389f33bd872aff6df06cab3835571783dc6e5225628792273a84ceb8eb1"
+  },
+  {
+    "name": "control-076.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    for (const bar of this.#privateMember) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "4649c1bf70d6b8ba0ec20fb127dafe697221efa2f06008c4095b58bfc731421a"
+  },
+  {
+    "name": "control-077.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    for (this.#privateMember in bar) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "cd1240c522920a021aff3ff99b82c2e9819126ae57299a201f292400322f024c"
+  },
+  {
+    "name": "control-078.a",
+    "source": "class Foo {\n  #privateMember;\n  method() {\n    for (this.#privateMember of bar) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "8a5f3dd91b90abcc891d955be7485c8e2a3a6c95a13e21a9384c400c8bfec688"
+  },
+  {
+    "name": "control-079.a",
+    "source": "class Foo {\n  private privateMember = 1;\n\n  method() {\n    const foo = ({ privateMember } = this) => {};\n  }\n}\n\nexport {};\n",
+    "sha256": "99a6badcbaced8343513bf3093e4a0daa260939f5d7d55f3a0f3af1bbd47f80a"
+  },
+  {
+    "name": "control-080.a",
+    "source": "class Foo {\n  private privateMember = 1;\n\n  method() {\n    let privateMember;\n    ({ privateMember } = this);\n  }\n}\n\nexport {};\n",
+    "sha256": "05edde18c95933fcd6bc68d544d6363fa85bf9432aeae88b282186e4dc69bc75"
+  },
+  {
+    "name": "control-081.a",
+    "source": "class Foo {\n  private privateMember = 1;\n  method() {\n    const { privateMember } = this;\n  }\n}\n\nexport {};\n",
+    "sha256": "cbf4d95a04a7c4884150a83f67dc139136e6db56ab0ba9cc7cdf55ee185bf94c"
+  },
+  {
+    "name": "control-082.a",
+    "source": "class Foo {\n  private privateMember = 1;\n  method() {\n    const { privateMember: privateMember2 } = this;\n  }\n}\n\nexport {};\n",
+    "sha256": "4b45497d3378637ce6225f1aa253b7ae65fdb10b5c763454bcd432fb9189b2ea"
+  },
+  {
+    "name": "control-083.a",
+    "source": "class Foo {\n  private privateMember = 42;\n  anotherMember = this.privateMember;\n}\n\nexport {};\n",
+    "sha256": "c949a1a61dbedd1192f5c54e3712e601589384147f8b16ae3a250fb15ce70f9d"
+  },
+  {
+    "name": "control-084.a",
+    "source": "class Foo {\n  private privateMember = 42;\n  foo() {\n    anotherMember = this.privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "5e537e9c0b5d081a7d9daeb41abd70a4d3d316b2fe3071ab7b9677e37f80c5d9"
+  },
+  {
+    "name": "control-085.a",
+    "source": "class Foo {\n  private privateMember = 42;\n  method() {\n    return someGlobalMethod(this.privateMember);\n  }\n}\n\nexport {};\n",
+    "sha256": "c0507072eedd20e41eec6c1c1476b3b279c1eb3090dcd782d54c8f0ee09fa6fa"
+  },
+  {
+    "name": "control-086.a",
+    "source": "class Foo {\n  private privateMember = 42;\n  method() {\n    return this.privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "3cb8d1d57746a11cf9cc9862edba3733a068fb3b5c7d63332eb7c5b150776647"
+  },
+  {
+    "name": "control-087.a",
+    "source": "class Foo {\n  private privateMember = 5;\n  method() {\n    this.privateMember += 42;\n  }\n}\n\nexport {};\n",
+    "sha256": "698b56414b5f0c71b6c2b7bbfec4c7bf01007f9475d2f82ece246433dee2f6e6"
+  },
+  {
+    "name": "control-088.a",
+    "source": "class Foo {\n  private privateMember = 5;\n  method() {\n    this.privateMember = 42;\n  }\n}\n\nexport {};\n",
+    "sha256": "c2c5fff0d59a67d6c3cda6bf833d17f396d6ccfb079ab99a6a21e84d7f6ddc29"
+  },
+  {
+    "name": "control-089.a",
+    "source": "class Foo {\n  private privateMember = 5;\n}\n\nexport {};\n",
+    "sha256": "d16cee91a4495e67ede7cc7f27cc4ebb41878ac64b84b4dd478fdbb296e98a8c"
+  },
+  {
+    "name": "control-090.a",
+    "source": "class Foo {\n  private privateMember() {\n    return 42;\n  }\n  anotherMethod() {\n    return this.privateMember();\n  }\n}\n\nexport {};\n",
+    "sha256": "4ed85dfc92ece33c24df2ab9a70aa368a01d5cf452c55995a392968fd253d03c"
+  },
+  {
+    "name": "control-091.a",
+    "source": "class Foo {\n  private privateMember() {}\n  private privateMemberUsed() {\n    return 42;\n  }\n  publicMethod() {\n    return this.privateMemberUsed();\n  }\n}\n\nexport {};\n",
+    "sha256": "164d4b91de00f2633daa9e79f44e4b3159ce280ed2a9b2e329292fee957d3eeb"
+  },
+  {
+    "name": "control-092.a",
+    "source": "class Foo {\n  private privateMember() {}\n}\n\nexport {};\n",
+    "sha256": "4f3a794a585086647eae9061d656f62d01edcfec602ac34a6ca6fd2e099ef044"
+  },
+  {
+    "name": "control-093.a",
+    "source": "class Foo {\n  private privateMember;\n\n  method() {\n    const { privateMember: used } = this;\n  }\n}\n\nexport {};\n",
+    "sha256": "0d1a5e67e0d56ae0357d45636657706e39b1d4a73c822f37cbc9fd637d47acf8"
+  },
+  {
+    "name": "control-094.a",
+    "source": "class Foo {\n  private privateMember;\n\n  method() {\n    const { unused: privateMember } = this;\n  }\n}\n\nexport {};\n",
+    "sha256": "3514372ea8106d2eb3f3f3da1e7958e722462d4d5d9872cc70a7814e30f97c86"
+  },
+  {
+    "name": "control-095.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    ({ x: this.privateMember } = bar);\n  }\n}\n\nexport {};\n",
+    "sha256": "118e55de71d244c6a045261aa24dd2d3e024b2f24a594b2d78c51cf698d250fb"
+  },
+  {
+    "name": "control-096.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    [...this.privateMember] = bar;\n  }\n}\n\nexport {};\n",
+    "sha256": "06a28c108475f1dcb6b8bbec4ab4c4421ffd62df5b74a28856dff75db588f50b"
+  },
+  {
+    "name": "control-097.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    [bar = 1] = this.privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "84a4b8d55bbd4087a815ca5113a610e8770da8014103c9a3889cc52d1cfe85a3"
+  },
+  {
+    "name": "control-098.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    [bar] = this.privateMember;\n  }\n}\n\nexport {};\n",
+    "sha256": "310707030859d3e772d9fdac1c976c8e24f976ffa9a326b8538fdb35a27d086d"
+  },
+  {
+    "name": "control-099.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    [this.privateMember = 1] = bar;\n  }\n}\n\nexport {};\n",
+    "sha256": "79937d0a6f82214340128b14a8affe673a37239669b39469f57528503be9749c"
+  },
+  {
+    "name": "control-100.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    [this.privateMember] = bar;\n  }\n}\n\nexport {};\n",
+    "sha256": "0b81180aee35fd06ee07f580c9c9ceaec29dd242e0a26e9f47bf302da91c8794"
+  },
+  {
+    "name": "control-101.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    for (const bar in this.privateMember) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "1905d4f6cb994d7fd7dfc01afb477c08b7f84d927b4802ee5000c6a9376027c4"
+  },
+  {
+    "name": "control-102.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    for (const bar of this.privateMember) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "59c9444b690d348b0e82ac46f445946ba58aa5fcf42ecf56baf26d654a96ab3a"
+  },
+  {
+    "name": "control-103.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    for (this.privateMember in bar) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "7d8d4c62e8d056fcb017c449b866d9dad428a24df021084cfde9b47a4c0dc878"
+  },
+  {
+    "name": "control-104.a",
+    "source": "class Foo {\n  private privateMember;\n  method() {\n    for (this.privateMember of bar) {\n    }\n  }\n}\n\nexport {};\n",
+    "sha256": "531883ae2322a41c9f90f2d3e7e0e68a35b2102bf82b208e578a3a9d543527a4"
+  },
+  {
+    "name": "control-105.a",
+    "source": "class Foo {\n  private privateMember;\n  private privateMember2;\n\n  method() {\n    const { privateMember, privateMember2 } = this;\n    console.log(privateMember, privateMember2);\n  }\n}\n\nexport {};\n",
+    "sha256": "114e7aa82bb75dbd06f1382564c1d32658def88a3bae6e00a4252cf69e9755b7"
+  },
+  {
+    "name": "control-106.a",
+    "source": "class Foo {\n  private prop: number = 1;\n  method() {\n    const a = this;\n    const b = a;\n    const c = b;\n    return c.prop;\n  }\n}\n\nexport {};\n",
+    "sha256": "77c30513862844bd7bb8358ec9d8111ca45fb94b97fd3033cf32e0841409eda6"
+  },
+  {
+    "name": "control-107.a",
+    "source": "class Foo {\n  private prop: number = 1;\n  method() {\n    const self1 = this;\n    const self2 = self1;\n    return self2.prop;\n  }\n}\n\nexport {};\n",
+    "sha256": "7e891e22d8cb5dcf9ee9e46eb8e3ea0e7a6693f29a9c5675cbba2715192e952c"
+  },
+  {
+    "name": "control-108.a",
+    "source": "class Foo {\n  private prop: number = 1;\n  method() {\n    const self1 = this;\n    return self1.prop;\n  }\n}\n\nexport {};\n",
+    "sha256": "262a9a82bff47ae0ce524885b8947dc52d0c88602c597daea822ddf00cf8f846"
+  },
+  {
+    "name": "control-109.a",
+    "source": "class Foo {\n  private prop: number;\n\n  method() {\n    const self = this;\n    return self.prop;\n  }\n}\n\nexport {};\n",
+    "sha256": "7a6803e8adb1029676eebbbb9f9f03ca53fc55f236fce8cbe3f9c44dc10ad840"
+  },
+  {
+    "name": "control-110.a",
+    "source": "class Foo {\n  private prop: number;\n\n  method(thing: Foo) {\n    return thing.prop;\n  }\n}\n\nexport {};\n",
+    "sha256": "bd626f83b264184f75054883cd17df7e0a22a27261de12dc0469831f7f994bc9"
+  },
+  {
+    "name": "control-111.a",
+    "source": "class Foo {\n  private set privateMember(value) {}\n\n  method(a) {\n    [this.privateMember] = a;\n  }\n}\n\nexport {};\n",
+    "sha256": "a8f3080ff856eb6c933e64a04e56d19bf6e3c8d990191ed8f6d9d875f7f1cc3a"
+  },
+  {
+    "name": "control-112.a",
+    "source": "class Foo {\n  private set privateMember(value) {}\n}\n\nexport {};\n",
+    "sha256": "00d0b9415dcd5d6465b648380093fda2e7df5f3033c7ba937a9ff7a599367be9"
+  },
+  {
+    "name": "control-113.a",
+    "source": "class Foo {\n  private static staticMember = 1;\n  static method() {\n    const { staticMember } = this;\n    console.log(staticMember);\n  }\n}\n\nexport {};\n",
+    "sha256": "57a1481a6272db2724cb5eed95ad59021ad00756fc616b55f13c3d25fccf45c5"
+  },
+  {
+    "name": "control-114.a",
+    "source": "class Foo {\n  private static staticProp: number;\n\n  method(thing: typeof Foo) {\n    return thing.staticProp;\n  }\n}\n\nexport {};\n",
+    "sha256": "cb4ef01e207741c4a2bcc7dac31fbfd3684a08c620dce46de8e4c6362b2783a2"
+  },
+  {
+    "name": "control-115.a",
+    "source": "class Foo {\n  protected publicMember = 42;\n}\n\nexport {};\n",
+    "sha256": "b5bd4f0991c2e34b5a990e9652b41474acce3729e13becf61efcff407a632492"
+  },
+  {
+    "name": "control-116.a",
+    "source": "class Foo {\n  public publicMember = 42;\n}\n\nexport {};\n",
+    "sha256": "4a669dc30f676877325c6471df166831ce8c91872b81287a5783318a25e1d2cd"
+  },
+  {
+    "name": "control-117.a",
+    "source": "class Foo {\n  publicMember = 42;\n}\n\nexport {};\n",
+    "sha256": "8dbf3af5f9e306ae3c1f93c035d1af356078a3faf9c4d6145171f94ec79a1ca6"
+  },
+  {
+    "name": "control-118.a",
+    "source": "class Foo {\n  set #privateMember(value) {}\n\n  method(a) {\n    [this.#privateMember] = a;\n  }\n}\n\nexport {};\n",
+    "sha256": "26b7a3b9308dc1b2f8bbbb37670ff16e5e76a68e44819028b6dc78b7050daa48"
+  },
+  {
+    "name": "control-119.a",
+    "source": "class Foo {\n  set #privateMember(value) {}\n}\n\nexport {};\n",
+    "sha256": "ac35f2f120f663abe8d6dfc8403e4e8742682f89e6b35082776d778e7c7fdd02"
+  },
+  {
+    "name": "control-120.a",
+    "source": "class Foo {}\n\nexport {};\n",
+    "sha256": "7d127b4b39368cb439cd8ad438db22ab996572a3b47b97ee8c7b4aa02c3b4b6a"
+  },
+  {
+    "name": "control-121.a",
+    "source": "class K { m(x?: string) { return x! ?? ''; } }\nexport {};\n",
+    "sha256": "7ca510992dbd77147e0e59fa726982d5a3e3b22895661a0c3819169913fdf07a"
+  },
+  {
+    "name": "control-122.a",
+    "source": "class Test1 {\n  constructor(private parameterProperty: number) {}\n  method() {\n    return this.parameterProperty;\n  }\n}\n\nexport {};\n",
+    "sha256": "2d2423891b518a90651e9213a7ef0ff6335f61ea20fe02f5705253040cead0d3"
+  },
+  {
+    "name": "control-123.a",
+    "source": "class Test1 {\n  constructor(private parameterProperty: number) {}\n}\n\nexport {};\n",
+    "sha256": "193d23429663ed0711f706609273b2051d829d1cefca2fb70aad0edd11359117"
+  },
+  {
+    "name": "control-124.a",
+    "source": "class Test1 {\n  constructor(private readonly parameterProperty: number = 1) {}\n  method() {\n    return this.parameterProperty;\n  }\n}\n\nexport {};\n",
+    "sha256": "9ad8fd7c562d422d9cf601dcb77127b4f5a55d97e89a7ec7cf51904793db040a"
+  },
+  {
+    "name": "control-125.a",
+    "source": "class Test1 {\n  constructor(private readonly parameterProperty: number = 1) {}\n}\n\nexport {};\n",
+    "sha256": "486977bb723665fcd348aefcf04bcbfb04578d7e733c6517901c734723750ea7"
+  },
+  {
+    "name": "control-126.a",
+    "source": "class Test1 {\n  constructor(private readonly parameterProperty: number) {}\n  method() {\n    return this.parameterProperty;\n  }\n}\n\nexport {};\n",
+    "sha256": "358fad3f3e458ea47704231efd7a90bb86c16d9e36bc7a760f3c209a2e5d1ca9"
+  },
+  {
+    "name": "control-127.a",
+    "source": "class Test1 {\n  constructor(private readonly parameterProperty: number) {}\n}\n\nexport {};\n",
+    "sha256": "d7904d211bbf4a0d0c6670b15949a2f2f453c363e2d47d3d1aa2834b4d847b8d"
+  },
+  {
+    "name": "control-128.a",
+    "source": "class TypedBinding {\n  declare private readonly __brand: 'TypedBinding';\n  read() {\n    return this.__brand;\n  }\n}\n\nexport {};\n",
+    "sha256": "7840c6fdcb440517d54252d24dd2ab397fe9f1bc60a0ae7ce24fcd3b494291d7"
+  },
+  {
+    "name": "control-129.a",
+    "source": "class TypedBinding {\n  declare private readonly __brand: 'TypedBinding';\n}\n\nexport {};\n",
+    "sha256": "a4bd4f85c7100b4ad919d97761f13a0490a1666fd5599b95242d8f811b9eb50c"
+  },
+  {
+    "name": "control-130.a",
+    "source": "class TypedBinding {\n  declare private static readonly __brand: 'TypedBinding';\n}\n\nexport {};\n",
+    "sha256": "0072c003fed9108e11f837394ec43afb80d1956d11e57516a2e6b5bd33b25fdc"
+  },
+  {
+    "name": "control-131.a",
+    "source": "class TypedBinding {\n  declare readonly __brand: 'TypedBinding';\n}\n\nexport {};\n",
+    "sha256": "fc5350c600a864b767a7c609cd483aef585ef0ce9b09134bef8cd1e8a9179658"
+  },
+  {
+    "name": "control-132.a",
+    "source": "class Unicode { private \u00e9=1;constructor(private \u4e16\u754c:string='\ud83c\udf0d'){} }\nexport {};\n",
+    "sha256": "d4728db299bbd6d7261de4e7781cfbbb02a2e2b901f9e0b661bfd04328961ef3"
+  },
+  {
+    "name": "control-133.a",
+    "source": "const foo = 'bar';\nclass Foo {\n  private foo = 1;\n\n  method() {\n    const { [foo]: test } = this;\n  }\n}\n\nexport {};\n",
+    "sha256": "974dd21a7bf03ef858ffe97d765627da47a31303d4f6de461ba5bf1872d16384"
+  },
+  {
+    "name": "control-134.a",
+    "source": "const foo = 'bar';\nclass Foo {\n  private foo = 1;\n  private bar = 2;\n\n  method() {\n    const { [foo]: test } = this;\n  }\n}\n\nexport {};\n",
+    "sha256": "622f24666d0fdafd949d31eb3b60d6b0188662157c8b45617cdefa6198941687"
+  },
+  {
+    "name": "control-135.a",
+    "source": "const x: A.B = 3;\n\nexport {};\n",
+    "sha256": "ae2f84e61ae1b6dcdf592e432452ced5e78b88bf66ccd3c2ba3304230e1b1931"
+  },
+  {
+    "name": "control-136.a",
+    "source": "declare const foo: any;\nfoo!! ?? 1;\nexport {};\n",
+    "sha256": "b3b884dd358e6b0c0544601b1010e9998ab319e99b42a5bb722fbc6d7c3c4b99"
+  },
+  {
+    "name": "control-137.a",
+    "source": "declare global {\n  var g: number;\n}\nconst y = globalThis.g;\n\nexport {};\n",
+    "sha256": "d6d5441049e28498d66fe52f8cac6231250af432c667996a265f7a8339853f0e"
+  },
+  {
+    "name": "control-138.a",
+    "source": "enum A {\n  B,\n  C = A.B,\n}\n\nexport {};\n",
+    "sha256": "ab5fe97adc19dc9b371e7927b531e5b1be9957dbee7a50fa4ffa7680f2621e4f"
+  },
+  {
+    "name": "control-139.a",
+    "source": "enum A {\n  X,\n  Y,\n}\n\nenum B {\n  Z = A.X,\n}\n\nexport {};\n",
+    "sha256": "95541d96d35a4959b85d2da056f6da511a15fa456a8351da7ed666607baf96ac"
+  },
+  {
+    "name": "control-140.a",
+    "source": "enum Foo {\n  One,\n}\n\nnamespace Foo {\n  export function bar() {\n    return Foo.One;\n  }\n}\n\nexport {};\n",
+    "sha256": "b7ab71c6e3fac5c258834455920e4aae612da34c63f3a191c4aab99965caeab1"
+  },
+  {
+    "name": "control-141.a",
+    "source": "foo ?? bar! ?? baz;\nexport {};\n",
+    "sha256": "a06b96d23d1292d2c71c7d0e7344ede2691e83088a139cb2860094fbdd5c72df"
+  },
+  {
+    "name": "control-142.a",
+    "source": "foo ?? bar!;\nexport {};\n",
+    "sha256": "6c72f98bbf4c33ceb5b2d68b708bff873388b61f1b9e281c4861d9a8032e3f98"
+  },
+  {
+    "name": "control-143.a",
+    "source": "foo ?? bar;\nexport {};\n",
+    "sha256": "d80a7ae25fd8985b348e1abe8bc608970a6e1dcbc0421c08d190079342e0cfcc"
+  },
+  {
+    "name": "control-144.a",
+    "source": "foo!\n ?? bar;\nexport {};\n",
+    "sha256": "25f1bad84375a202e304e9162240acee09564565936f6f479ace38d82f70f6d4"
+  },
+  {
+    "name": "control-145.a",
+    "source": "foo! && bar;\nexport {};\n",
+    "sha256": "6cb4893e7786a0ef4f923866a76889de71b3931a57d81727fe3ca52af0efa1b9"
+  },
+  {
+    "name": "control-146.a",
+    "source": "foo! ?? bar ?? baz;\nexport {};\n",
+    "sha256": "77b61cd4fbd91c19f32a0334f9e9709d670c0b251f174c0575c3acf0b03aee2a"
+  },
+  {
+    "name": "control-147.a",
+    "source": "foo! ?? bar!;\nexport {};\n",
+    "sha256": "c5c8f224e94260e06b8b9a67f338ee26b87a43e6f2ef8a8925e02239ab827d84"
+  },
+  {
+    "name": "control-148.a",
+    "source": "foo! ?? bar;\nexport {};\n",
+    "sha256": "4d86d395fd87c8a6d471618d66ddebe97b6636ca50bc5fd08720b4bd340d5f55"
+  },
+  {
+    "name": "control-149.a",
+    "source": "foo! || bar;\nexport {};\n",
+    "sha256": "9b5d3a5948a2a1993c59f047faf030d1d370883debdb439bf6768e671c850155"
+  },
+  {
+    "name": "control-150.a",
+    "source": "foo!.bazz ?? bar!;\nexport {};\n",
+    "sha256": "ad5c30b8f6223a541fd0d6697695ff603e82b09698ea9782abdfaedef2f6fb90"
+  },
+  {
+    "name": "control-151.a",
+    "source": "foo!.bazz ?? bar;\nexport {};\n",
+    "sha256": "d3432cb5d7f2d9b91e31dd40fcd36db5829636b3f95f7cd94727b908100c8647"
+  },
+  {
+    "name": "control-152.a",
+    "source": "foo!.bazz! ?? bar!;\nexport {};\n",
+    "sha256": "c67a64e0f6669c14721e89b9b24c5f86c23e3cfe3de2ebc91576ee5155e6b7d5"
+  },
+  {
+    "name": "control-153.a",
+    "source": "foo!.bazz! ?? bar;\nexport {};\n",
+    "sha256": "fd80269ae3f591522cd9f391cdaef847011dbc983306d2229bba0053ab7ff1b0"
+  },
+  {
+    "name": "control-154.a",
+    "source": "foo() ?? bar!;\nexport {};\n",
+    "sha256": "faba2921c0a742f3bcc4e8bfccccc5c363cdf69a65d3ea6b8481b11ec9185d25"
+  },
+  {
+    "name": "control-155.a",
+    "source": "foo() ?? bar;\nexport {};\n",
+    "sha256": "defdd1d86e4e23c7dd3c232961579f8625b3a65270714fa128370b22ccbba102"
+  },
+  {
+    "name": "control-156.a",
+    "source": "foo()! ?? bar!;\nexport {};\n",
+    "sha256": "f620ee00c3b712abc86f9bbc27bb21acdb1247c8017f97979e91992f14289293"
+  },
+  {
+    "name": "control-157.a",
+    "source": "foo()! ?? bar;\nexport {};\n",
+    "sha256": "3e2e082e4f0788a5885cf03f7a4758aaeee04d69066ec4a39b1a2dc0a6901e5a"
+  },
+  {
+    "name": "control-158.a",
+    "source": "foo.bazz ?? bar!;\nexport {};\n",
+    "sha256": "97e84c9207d001afed72d431c8e713f9c6c42bcd6ca8a26b2c58a9d955e40ebd"
+  },
+  {
+    "name": "control-159.a",
+    "source": "foo.bazz ?? bar;\nexport {};\n",
+    "sha256": "a45d7ab11c50aed040b05b38baef6438e3c4d9f8813140dbbec8510f3d0c5283"
+  },
+  {
+    "name": "control-160.a",
+    "source": "foo.bazz! ?? bar!;\nexport {};\n",
+    "sha256": "1a61b531017599df0d750f51e48d875a1063ba313dfb675e5b7dd87e19cb1038"
+  },
+  {
+    "name": "control-161.a",
+    "source": "foo.bazz! ?? bar;\nexport {};\n",
+    "sha256": "750cf7ebfb946ba271953f764aaf4a812c31b56f8e3640bd8306c19199301b59"
+  },
+  {
+    "name": "control-162.a",
+    "source": "function F() {}\nnamespace F {\n  export const x = 3;\n}\nconst y = F.x;\n\nexport {};\n",
+    "sha256": "1bc9a8e098f8ef5a279ac2b54bbd18a95ddd18db6a76697b01528de85892fa35"
+  },
+  {
+    "name": "control-163.a",
+    "source": "function f() { return x! ?? ''; }\nlet x!: string;\nexport {};\n",
+    "sha256": "f5f0fb6e802e43e1d660e64ce29f17ffa48a3b992a3c32f6cfe6d866d5e33da6"
+  },
+  {
+    "name": "control-164.a",
+    "source": "function f() { return x! ?? ''; }\nvar x = 1;\nexport {};\n",
+    "sha256": "558fa45a7b5e854ad4e55d1add31f1403f28e272286ed7d28be3882eb3ad1616"
+  },
+  {
+    "name": "control-165.a",
+    "source": "function f(x?: string) { return x! ?? ''; }\nexport {};\n",
+    "sha256": "549b358a27c27e297754346bff7b365b3ab41c63b2b585e73d2d0b86504b0313"
+  },
+  {
+    "name": "control-166.a",
+    "source": "let x = 1;\n{ let x: string; x! ?? ''; }\nexport {};\n",
+    "sha256": "5cd44166b6bfe62bdbff77e7f4be3167e3446704bd45d861e31c4697b2f9ec38"
+  },
+  {
+    "name": "control-167.a",
+    "source": "let x: string;\nfunction g() { let x = 1; x = 2; }\nx! ?? '';\nexport {};\n",
+    "sha256": "0de48f6b7e94aa3a90ffcc6d26091f6caa4df4bd93c833d8f776106df8dbeb74"
+  },
+  {
+    "name": "control-168.a",
+    "source": "let x: string;\nfunction g() { x = 'a'; }\nx! ?? '';\nexport {};\n",
+    "sha256": "3c40c18364004f5d59b8382d89e3762f08b48dce670727598fcd547f9e87d2a6"
+  },
+  {
+    "name": "control-169.a",
+    "source": "let x: string;\nfunction g(x: number) { x = 2; }\nx! ?? '';\nexport {};\n",
+    "sha256": "2a922b45aeb4fc48d4011e8d823e6117640c962d71d44cd6e2117c95e134ecf1"
+  },
+  {
+    "name": "control-170.a",
+    "source": "let x: string;\nx = 'a';\nx! ?? '';\nexport {};\n",
+    "sha256": "7cabc7031f7668cec1a89c68ebe835985951d261b0679611edae75af4a42d047"
+  },
+  {
+    "name": "control-171.a",
+    "source": "let x: string;\nx! ?? '';\nfunction g() { x = 'a'; }\nexport {};\n",
+    "sha256": "64aa01efd86c97215878aadf2b2d057a70bc99cc8a97d894b414e140fd72eaf4"
+  },
+  {
+    "name": "control-172.a",
+    "source": "let x: string;\n{ let x = 1; x = 2; }\nx! ?? '';\nexport {};\n",
+    "sha256": "723abd6a9e1a12a7100a5d3ea1dea258b39fc3f30a23f3103ffcf18f024d8c00"
+  },
+  {
+    "name": "control-173.a",
+    "source": "let x: string;\n{ let x = 1; }\nx! ?? '';\nexport {};\n",
+    "sha256": "33ce8e93cbfb9a35b2bc2de36de177f7569ad20ef91d491f38c9d446edfa6086"
+  },
+  {
+    "name": "control-174.a",
+    "source": "let x:string;({a:x}={a:'x'});x!??'';\nexport {};\n",
+    "sha256": "ca4aea3ea4a358bf8c92255447831cf78a86ebc8e03e70fd7787c90ca914db50"
+  },
+  {
+    "name": "control-175.a",
+    "source": "let x:string;({a=x}={});x!??'';\nexport {};\n",
+    "sha256": "f6ca0c93c1ced2d58ee7f9e90cae1a3dc534005096925e5abc2df3c08ea73b6c"
+  },
+  {
+    "name": "control-176.a",
+    "source": "let x:string;[...x]=[];x!??'';\nexport {};\n",
+    "sha256": "3847edb8daa5a8c233facc2b6bcebeb670144511ca003a272ad003f4af1c03da"
+  },
+  {
+    "name": "control-177.a",
+    "source": "let x:string;function g(){let x='y';x='z';}x!??'';\nexport {};\n",
+    "sha256": "1127cea98fc6d78cb4f5c4b588106f3435f56dd0dcc915d4ecf53ed83ef2738d"
+  },
+  {
+    "name": "control-178.a",
+    "source": "let x:string;function g(){x='z';}x!??'';\nexport {};\n",
+    "sha256": "a159066858d3bfad2a54c462cfd5ded5453900668c1df7fda5dfea4fc321ccee"
+  },
+  {
+    "name": "control-179.a",
+    "source": "namespace A {\n  export const x = 3;\n  const y = ((A)).x;\n}\n\nexport {};\n",
+    "sha256": "9ce0817b037a09492c5e74948d3922b62c219c0f8e79de4b0cb59a2d60984fa4"
+  },
+  {
+    "name": "control-180.a",
+    "source": "namespace A {\n  export const x = 3;\n  const y = (A).x;\n}\n\nexport {};\n",
+    "sha256": "954e5d0e60076622ec4293920616b7542ed5a6689fbb8210601e9a3d6626d0e5"
+  },
+  {
+    "name": "control-181.a",
+    "source": "namespace A {\n  export const x = 3;\n  export const y = A.x;\n}\n\nexport {};\n",
+    "sha256": "04f93255c20c65aceed1af4db397475871783bb9566f4867f7df56fb67e01b3a"
+  },
+  {
+    "name": "control-182.a",
+    "source": "namespace A {\n  export const x = 3;\n  export const y = A['x'];\n}\n\nexport {};\n",
+    "sha256": "93eab118a27d635d9a4d379e3917385a10fd0835c88c5a3061837870e4c8ad60"
+  },
+  {
+    "name": "control-183.a",
+    "source": "namespace A {\n  export const x = 3;\n  export namespace B {\n    const y = A.x;\n  }\n}\n\nexport {};\n",
+    "sha256": "f2ce25e3c567194ce6e0a6bf4a4d5b521cbf07f8e9e64113ad85c0f3186568b9"
+  },
+  {
+    "name": "control-184.a",
+    "source": "namespace A {\n  export const x = 3;\n}\nimport B = A;\nnamespace A {\n  const y = B.x;\n}\n\nexport {};\n",
+    "sha256": "bcbe00b0940a3a4aa95c0f17d8cead9dbfadd6dad289118e4cc1433564687451"
+  },
+  {
+    "name": "control-185.a",
+    "source": "namespace A {\n  export const x = 3;\n}\nnamespace A {\n  const y = A.x;\n}\n\nexport {};\n",
+    "sha256": "b41ff0c7086270e1aa66fcb1f7abee5b9e4174931300feba105a2f2a9b85ea66"
+  },
+  {
+    "name": "control-186.a",
+    "source": "namespace A {\n  export namespace B {\n    export const x = 3;\n    const y = A.B.x;\n  }\n}\n\nexport {};\n",
+    "sha256": "325cf36e656dc4b42bba811fd0b7773e5ea92fb56541fb49c64d5410490b1ba6"
+  },
+  {
+    "name": "control-187.a",
+    "source": "namespace A {\n  export namespace B {\n    export const x = 3;\n  }\n  const y = ((A).B).x;\n}\n\nexport {};\n",
+    "sha256": "cadc1a36f5bf524115a1be9545251ffcc1d3a7799e346881deef3fe236960ee8"
+  },
+  {
+    "name": "control-188.a",
+    "source": "namespace A {\n  export namespace B {\n    export const x = 3;\n  }\n  const y = (A.B).x;\n}\n\nexport {};\n",
+    "sha256": "7e8581d67fc671ec294ab39322869590ee47b110d7c4c7a09395383e585bc901"
+  },
+  {
+    "name": "control-189.a",
+    "source": "namespace A {\n  export namespace B {\n    export type T = number;\n    const x: A.B.T = 3;\n  }\n}\n\nexport {};\n",
+    "sha256": "b339786beb70ee2a6ed436c960f6ce684e86c6db0fc546d6568e2ed55b6fa82f"
+  },
+  {
+    "name": "control-190.a",
+    "source": "namespace A {\n  export namespace B.C {\n    export type D = number;\n    const x: A.B.C.D = 3;\n  }\n}\n\nexport {};\n",
+    "sha256": "1c07d995568aa7a74823cc807be58ff528e650a8bfb2466d109d9352096459e3"
+  },
+  {
+    "name": "control-191.a",
+    "source": "namespace A {\n  export type B = number;\n  const x: A.B = 3;\n}\n\nexport {};\n",
+    "sha256": "eb1b080872f197308d70b32e3ec96699fcc9e82da8d3faf1096e333b4f0c850f"
+  },
+  {
+    "name": "control-192.a",
+    "source": "namespace A {\n  export type T = number;\n  const x: (A.T) = 3;\n}\n\nexport {};\n",
+    "sha256": "5fa3f00105b214ef7bfedc681f385e70c75d2dea9c45bb63093f21b03253c7f4"
+  },
+  {
+    "name": "control-193.a",
+    "source": "namespace A {\n  export type T = number;\n  export namespace B {\n    const x: A.T = 3;\n  }\n}\n\nexport {};\n",
+    "sha256": "7265bef95af4e236d5917a49df73ed54b5502a9966481810a2d00c02be75ca91"
+  },
+  {
+    "name": "control-194.a",
+    "source": "namespace A {\n  export type T = number;\n}\nnamespace B {\n  export type T = string;\n  const x: A.T = 3;\n}\n\nexport {};\n",
+    "sha256": "0bfee7a390969f877cad653aaec22f1517235f1147cd45cbd4e46bcaf65e15e9"
+  },
+  {
+    "name": "control-195.a",
+    "source": "namespace A { export type B<T> = T; export type C = number; const x: A.B<A.C> = 3; }\n\nexport {};\n",
+    "sha256": "5b4bc5f82510f6cafbabfdcc43430d3d4a9fc6fd8be5a5f7182a0d4e915db467"
+  },
+  {
+    "name": "control-196.a",
+    "source": "namespace A {export const x=1;} import B=A; namespace A {const y=B.x;}\nexport {};\n",
+    "sha256": "335320852c9353a192d51747e856e63245342bd70ca8739d3d96d8d2c91b44f7"
+  },
+  {
+    "name": "control-197.a",
+    "source": "namespace A {export namespace B {export const x=1;const y=A.B.x;} const y=A.B.x;}\nexport {};\n",
+    "sha256": "b62be271b7bc4a635f1ae88c9606e01983c50b9c76497307b95c584a66ab82a4"
+  },
+  {
+    "name": "control-198.a",
+    "source": "namespace A {}\nnamespace A.B {\n  export type Z = 1;\n}\n\nexport {};\n",
+    "sha256": "9b166022e8071a20e95dad2558de2b5d978476310a2a53b32c434ffb5ae5cbb1"
+  },
+  {
+    "name": "control-199.a",
+    "source": "namespace Foo {\n  export enum A {\n    B,\n    C = Foo.A.B,\n  }\n}\n\nexport {};\n",
+    "sha256": "7ec9c4ac95876bc4af62457a747bab4768c091c2823c8d79aeff1b331c901515"
+  },
+  {
+    "name": "control-200.a",
+    "source": "namespace Foo {\n  export enum Foo {\n    One,\n  }\n}\n\nnamespace Foo {\n  export function bar() {\n    return Foo.One;\n  }\n}\n\nexport {};\n",
+    "sha256": "255b268c4916906ca1dfb2803c942a4608e9785f328edfee5d251f992d1a911f"
+  },
+  {
+    "name": "control-201.a",
+    "source": "namespace X {\n  const z = X.y;\n}\n\nexport {};\n",
+    "sha256": "a6baab1f77c4b42fe13dbfbd97fa3c4c909dc178cb2f1f2cb121cc96f86b8b39"
+  },
+  {
+    "name": "control-202.a",
+    "source": "namespace X {\n  export type T = number;\n  namespace Y {\n    type T = string;\n    const x: X.T = 0;\n  }\n}\n\nexport {};\n",
+    "sha256": "ff34e62b0cbc4ff593ad7077cf58ce6f75014c3f28fdee22cef2c43ae0d095b5"
+  },
+  {
+    "name": "control-203.a",
+    "source": "namespace X {\n  export type T = number;\n}\n\nnamespace Y {\n  export const x: X.T = 3;\n}\n\nexport {};\n",
+    "sha256": "1f71d1d1de07945831b2a09eb7b6bd94c05baffa8b94a24e543c45403d332236"
+  },
+  {
+    "name": "control-204.a",
+    "source": "namespace \u6f22 { export type T=number; export const \u00e9=1;const x:\u6f22.T=\u6f22.\u00e9; }\nexport {};\n",
+    "sha256": "50493ab86960b6bf5813757d8ab55874f1abd30e35a91fcf8fb5ad8b9a521492"
+  },
+  {
+    "name": "control-205.a",
+    "source": "x! ?? '';\nvar x = 1;\nexport {};\n",
+    "sha256": "53e29d0d0fe37a09353bd5c733eb2461cc3d0295e5f7971b873225465e33d6bd"
+  }
+]

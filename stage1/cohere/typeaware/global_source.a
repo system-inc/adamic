@@ -1,0 +1,12 @@
+import { Frames, header } from './frames.ts';
+import type { Bindings } from './bindings.ts';
+export class GlobalSource {
+    readonly module: boolean;
+    readonly javascript: boolean;
+    readonly alwaysStrict: boolean;
+    constructor(module: boolean, javascript: boolean, alwaysStrict: boolean) { this.module = module; this.javascript = javascript; this.alwaysStrict = alwaysStrict; }
+}
+export function globalSource(bindings: Bindings, index: number): GlobalSource {
+    const frames = new Frames(bindings.rules.ask(index, 'global-source')); header(frames, 'global-source');
+    const result = new GlobalSource(frames.yes(), frames.yes(), frames.yes()); frames.end(); return result;
+}

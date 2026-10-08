@@ -1,0 +1,3222 @@
+[
+  {
+    "file": "control-000.js",
+    "accepted": true,
+    "source": "\n                const Foo = require('foo');\n                Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-000.a",
+    "accepted": true,
+    "source": "\n                const Foo = require('foo');\n                Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-001.js",
+    "accepted": true,
+    "source": "\n                const Foo = require('foo');\n                Object.assign({}, Foo);\n            \nexport {};\n"
+  },
+  {
+    "file": "control-001.a",
+    "accepted": true,
+    "source": "\n                const Foo = require('foo');\n                Object.assign({}, Foo);\n            \nexport {};\n"
+  },
+  {
+    "file": "control-002.js",
+    "accepted": true,
+    "source": "\n                const Foo = require('foo');\n                globalThis.Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-002.a",
+    "accepted": true,
+    "source": "\n                const Foo = require('foo');\n                globalThis.Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-003.js",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    (\n                        {\n                            onChangeInput: this.handleChangeInput\n                        }\n                    ),\n                    (\n                        this.props.actions\n                    )\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-003.a",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    (\n                        {\n                            onChangeInput: this.handleChangeInput\n                        }\n                    ),\n                    (\n                        this.props.actions\n                    )\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-004.js",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    {\n                        onChangeInput: this.handleChangeInput //\n                    },\n                    this.props.actions\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-004.a",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    {\n                        onChangeInput: this.handleChangeInput //\n                    },\n                    this.props.actions\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-005.js",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    {\n                        onChangeInput: this.handleChangeInput,\n                    },\n                    this.props.actions\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-005.a",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    {\n                        onChangeInput: this.handleChangeInput,\n                    },\n                    this.props.actions\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-006.js",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    {\n                        onChangeInput: this.handleChangeInput, //\n                    },\n                    this.props.actions\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-006.a",
+    "accepted": true,
+    "source": "\n                const actions = Object.assign(\n                    {\n                        onChangeInput: this.handleChangeInput, //\n                    },\n                    this.props.actions\n                );\n            \nexport {};\n"
+  },
+  {
+    "file": "control-007.js",
+    "accepted": true,
+    "source": "\n                const foo = 'bar';\n                Object.assign({ foo: bar })\n            \nexport {};\n"
+  },
+  {
+    "file": "control-007.a",
+    "accepted": true,
+    "source": "\n                const foo = 'bar';\n                Object.assign({ foo: bar })\n            \nexport {};\n"
+  },
+  {
+    "file": "control-008.js",
+    "accepted": true,
+    "source": "\n                const someVar = 'foo';\n                Object.assign({}, a ? b : {}, b => c, a = 2)\n            \nexport {};\n"
+  },
+  {
+    "file": "control-008.a",
+    "accepted": true,
+    "source": "\n                const someVar = 'foo';\n                Object.assign({}, a ? b : {}, b => c, a = 2)\n            \nexport {};\n"
+  },
+  {
+    "file": "control-009.js",
+    "accepted": true,
+    "source": "\n                eventData = Object.assign({}, eventData, { outsideLocality: `${originLocality} - ${destinationLocality}` })\n            \nexport {};\n"
+  },
+  {
+    "file": "control-009.a",
+    "accepted": true,
+    "source": "\n                eventData = Object.assign({}, eventData, { outsideLocality: `${originLocality} - ${destinationLocality}` })\n            \nexport {};\n"
+  },
+  {
+    "file": "control-010.js",
+    "accepted": true,
+    "source": "\n                foo = 'bar';\n                Object.assign({ foo: bar })\n            \nexport {};\n"
+  },
+  {
+    "file": "control-010.a",
+    "accepted": true,
+    "source": "\n                foo = 'bar';\n                Object.assign({ foo: bar })\n            \nexport {};\n"
+  },
+  {
+    "file": "control-011.js",
+    "accepted": true,
+    "source": "\n                function foo () { var globalThis = bar; }\n                globalThis.Object.assign({ });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-011.a",
+    "accepted": true,
+    "source": "\n                function foo () { var globalThis = bar; }\n                globalThis.Object.assign({ });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-012.js",
+    "accepted": true,
+    "source": "\n                import Foo from 'foo';\n                Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-012.a",
+    "accepted": true,
+    "source": "\n                import Foo from 'foo';\n                Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-013.js",
+    "accepted": true,
+    "source": "\n                import Foo from 'foo';\n                Object.assign({}, Foo);\n            \nexport {};\n"
+  },
+  {
+    "file": "control-013.a",
+    "accepted": true,
+    "source": "\n                import Foo from 'foo';\n                Object.assign({}, Foo);\n            \nexport {};\n"
+  },
+  {
+    "file": "control-014.js",
+    "accepted": true,
+    "source": "\n                import { Something as somethingelse } from 'foo';\n                Object.assign({}, somethingelse);\n            \nexport {};\n"
+  },
+  {
+    "file": "control-014.a",
+    "accepted": true,
+    "source": "\n                import { Something as somethingelse } from 'foo';\n                Object.assign({}, somethingelse);\n            \nexport {};\n"
+  },
+  {
+    "file": "control-015.js",
+    "accepted": true,
+    "source": "\n                import { foo } from 'foo';\n                Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-015.a",
+    "accepted": true,
+    "source": "\n                import { foo } from 'foo';\n                Object.assign({ foo: Foo });\n            \nexport {};\n"
+  },
+  {
+    "file": "control-016.js",
+    "accepted": true,
+    "source": "\n                someVar = 'foo';\n                Object.assign({}, a ? b : {}, b => c, a = 2)\n            \nexport {};\n"
+  },
+  {
+    "file": "control-016.a",
+    "accepted": true,
+    "source": "\n                someVar = 'foo';\n                Object.assign({}, a ? b : {}, b => c, a = 2)\n            \nexport {};\n"
+  },
+  {
+    "file": "control-017.js",
+    "accepted": true,
+    "source": "\n                var globalThis = foo;\n                globalThis.Object.assign({}, foo)\n                \nexport {};\n"
+  },
+  {
+    "file": "control-017.a",
+    "accepted": true,
+    "source": "\n                var globalThis = foo;\n                globalThis.Object.assign({}, foo)\n                \nexport {};\n"
+  },
+  {
+    "file": "control-018.js",
+    "accepted": true,
+    "source": "\n        Object = {};\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-018.a",
+    "accepted": true,
+    "source": "\n        Object = {};\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-019.js",
+    "accepted": true,
+    "source": "\n        Object = {};\n        Object.assign({}, foo);\n        \nexport {};\n"
+  },
+  {
+    "file": "control-019.a",
+    "accepted": true,
+    "source": "\n        Object = {};\n        Object.assign({}, foo);\n        \nexport {};\n"
+  },
+  {
+    "file": "control-020.js",
+    "accepted": true,
+    "source": "\n        const Object = require('foo');\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-020.a",
+    "accepted": true,
+    "source": "\n        const Object = require('foo');\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-021.js",
+    "accepted": true,
+    "source": "\n        const Object = {};\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-021.a",
+    "accepted": true,
+    "source": "\n        const Object = {};\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-022.js",
+    "accepted": true,
+    "source": "\n        const Object = {};\n        Object.assign({}, foo);\n        \nexport {};\n"
+  },
+  {
+    "file": "control-022.a",
+    "accepted": true,
+    "source": "\n        const Object = {};\n        Object.assign({}, foo);\n        \nexport {};\n"
+  },
+  {
+    "file": "control-023.js",
+    "accepted": true,
+    "source": "\n        import Object from 'foo';\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-023.a",
+    "accepted": true,
+    "source": "\n        import Object from 'foo';\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-024.js",
+    "accepted": true,
+    "source": "\n        import { Object, Array } from 'globals';\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-024.a",
+    "accepted": true,
+    "source": "\n        import { Object, Array } from 'globals';\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-025.js",
+    "accepted": true,
+    "source": "\n        import { Something as Object } from 'foo';\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-025.a",
+    "accepted": true,
+    "source": "\n        import { Something as Object } from 'foo';\n        Object.assign({ foo: 'bar' });\n        \nexport {};\n"
+  },
+  {
+    "file": "control-026.js",
+    "accepted": true,
+    "source": "\n        let obj = {};\n        Object.hasOwn(obj,\"\");\n        \nexport {};\n"
+  },
+  {
+    "file": "control-026.a",
+    "accepted": true,
+    "source": "\n        let obj = {};\n        Object.hasOwn(obj,\"\");\n        \nexport {};\n"
+  },
+  {
+    "file": "control-027.js",
+    "accepted": true,
+    "source": "((Object: any) => ({}).hasOwnProperty.call(obj, prop))(null);\nexport {};\n"
+  },
+  {
+    "file": "control-027.a",
+    "accepted": true,
+    "source": "((Object: any) => ({}).hasOwnProperty.call(obj, prop))(null);\nexport {};\n"
+  },
+  {
+    "file": "control-028.js",
+    "accepted": true,
+    "source": "((Object: any) => Object.prototype.hasOwnProperty.call(obj, prop))(null);\nexport {};\n"
+  },
+  {
+    "file": "control-028.a",
+    "accepted": true,
+    "source": "((Object: any) => Object.prototype.hasOwnProperty.call(obj, prop))(null);\nexport {};\n"
+  },
+  {
+    "file": "control-029.js",
+    "accepted": true,
+    "source": "(Number.parseInt)('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-029.a",
+    "accepted": true,
+    "source": "(Number.parseInt)('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-030.js",
+    "accepted": true,
+    "source": "(Number?.parseInt)(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-030.a",
+    "accepted": true,
+    "source": "(Number?.parseInt)(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-031.js",
+    "accepted": true,
+    "source": "(Number?.parseInt)?.(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-031.a",
+    "accepted": true,
+    "source": "(Number?.parseInt)?.(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-032.js",
+    "accepted": true,
+    "source": "(Object) => ({}).hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-032.a",
+    "accepted": true,
+    "source": "(Object) => ({}).hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-033.js",
+    "accepted": true,
+    "source": "(Object) => Object.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-033.a",
+    "accepted": true,
+    "source": "(Object) => Object.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-034.js",
+    "accepted": true,
+    "source": "(Object) => Object.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-034.a",
+    "accepted": true,
+    "source": "(Object) => Object.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-035.js",
+    "accepted": true,
+    "source": "(parseInt('A', 16))in foo\nexport {};\n"
+  },
+  {
+    "file": "control-035.a",
+    "accepted": true,
+    "source": "(parseInt('A', 16))in foo\nexport {};\n"
+  },
+  {
+    "file": "control-036.js",
+    "accepted": true,
+    "source": "({ foo }.hasOwnProperty.call(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-036.a",
+    "accepted": true,
+    "source": "({ foo }.hasOwnProperty.call(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-037.js",
+    "accepted": true,
+    "source": "({}(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-037.a",
+    "accepted": true,
+    "source": "({}(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-038.js",
+    "accepted": true,
+    "source": "({})\nexport {};\n"
+  },
+  {
+    "file": "control-038.a",
+    "accepted": true,
+    "source": "({})\nexport {};\n"
+  },
+  {
+    "file": "control-039.js",
+    "accepted": true,
+    "source": "({}).hasOwnProperty.call(obj, 'foo')\nexport {};\n"
+  },
+  {
+    "file": "control-039.a",
+    "accepted": true,
+    "source": "({}).hasOwnProperty.call(obj, 'foo')\nexport {};\n"
+  },
+  {
+    "file": "control-040.js",
+    "accepted": true,
+    "source": "({}).hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-040.a",
+    "accepted": true,
+    "source": "({}).hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-041.js",
+    "accepted": true,
+    "source": "({}).hasOwnProperty[call](object, property)\nexport {};\n"
+  },
+  {
+    "file": "control-041.a",
+    "accepted": true,
+    "source": "({}).hasOwnProperty[call](object, property)\nexport {};\n"
+  },
+  {
+    "file": "control-042.js",
+    "accepted": true,
+    "source": "({}).prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-042.a",
+    "accepted": true,
+    "source": "({}).prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-043.js",
+    "accepted": true,
+    "source": "({})['hasOwnProperty']['call'](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-043.a",
+    "accepted": true,
+    "source": "({})['hasOwnProperty']['call'](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-044.js",
+    "accepted": true,
+    "source": "({})[`hasOwnProperty`][`call`](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-044.a",
+    "accepted": true,
+    "source": "({})[`hasOwnProperty`][`call`](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-045.js",
+    "accepted": true,
+    "source": "({})[hasOwnProperty].call(object, property)\nexport {};\n"
+  },
+  {
+    "file": "control-045.a",
+    "accepted": true,
+    "source": "({})[hasOwnProperty].call(object, property)\nexport {};\n"
+  },
+  {
+    "file": "control-046.js",
+    "accepted": true,
+    "source": "({}.foo.call(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-046.a",
+    "accepted": true,
+    "source": "({}.foo.call(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-047.js",
+    "accepted": true,
+    "source": "({}.hasOwnProperty(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-047.a",
+    "accepted": true,
+    "source": "({}.hasOwnProperty(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-048.js",
+    "accepted": true,
+    "source": "({}.hasOwnProperty(prop))\nexport {};\n"
+  },
+  {
+    "file": "control-048.a",
+    "accepted": true,
+    "source": "({}.hasOwnProperty(prop))\nexport {};\n"
+  },
+  {
+    "file": "control-049.js",
+    "accepted": true,
+    "source": "({}.hasOwnProperty)\nexport {};\n"
+  },
+  {
+    "file": "control-049.a",
+    "accepted": true,
+    "source": "({}.hasOwnProperty)\nexport {};\n"
+  },
+  {
+    "file": "control-050.js",
+    "accepted": true,
+    "source": "({}.hasOwnProperty.call)\nexport {};\n"
+  },
+  {
+    "file": "control-050.a",
+    "accepted": true,
+    "source": "({}.hasOwnProperty.call)\nexport {};\n"
+  },
+  {
+    "file": "control-051.js",
+    "accepted": true,
+    "source": "({}.hasOwnProperty.foo(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-051.a",
+    "accepted": true,
+    "source": "({}.hasOwnProperty.foo(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-052.js",
+    "accepted": true,
+    "source": "({}.hasOwnProperty[call](obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-052.a",
+    "accepted": true,
+    "source": "({}.hasOwnProperty[call](obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-053.js",
+    "accepted": true,
+    "source": "({}[hasOwnProperty].call(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-053.a",
+    "accepted": true,
+    "source": "({}[hasOwnProperty].call(obj, prop))\nexport {};\n"
+  },
+  {
+    "file": "control-054.js",
+    "accepted": true,
+    "source": "/* comment */Number.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-054.a",
+    "accepted": true,
+    "source": "/* comment */Number.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-055.js",
+    "accepted": true,
+    "source": "/* \u4e16\u754c \ud83c\udf0d */\nparseInt('11',2);Number?.parseInt(`77`,8);Number['parseInt']('fF',0x10);\nexport {};\n"
+  },
+  {
+    "file": "control-055.a",
+    "accepted": true,
+    "source": "/* \u4e16\u754c \ud83c\udf0d */\nparseInt('11',2);Number?.parseInt(`77`,8);Number['parseInt']('fF',0x10);\nexport {};\n"
+  },
+  {
+    "file": "control-056.js",
+    "accepted": true,
+    "source": "0b111110111 === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-056.a",
+    "accepted": true,
+    "source": "0b111110111 === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-057.js",
+    "accepted": true,
+    "source": "0o767 === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-057.a",
+    "accepted": true,
+    "source": "0o767 === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-058.js",
+    "accepted": true,
+    "source": "0x1F7 === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-058.a",
+    "accepted": true,
+    "source": "0x1F7 === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-059.js",
+    "accepted": true,
+    "source": "5+parseInt('A', 16)\nexport {};\n"
+  },
+  {
+    "file": "control-059.a",
+    "accepted": true,
+    "source": "5+parseInt('A', 16)\nexport {};\n"
+  },
+  {
+    "file": "control-060.js",
+    "accepted": true,
+    "source": "Array.prototype.hasOwnProperty.call(obj, prop);\nexport {};\n"
+  },
+  {
+    "file": "control-060.a",
+    "accepted": true,
+    "source": "Array.prototype.hasOwnProperty.call(obj, prop);\nexport {};\n"
+  },
+  {
+    "file": "control-061.js",
+    "accepted": true,
+    "source": "JSON.hasOwnProperty.call(obj, prop);\nexport {};\n"
+  },
+  {
+    "file": "control-061.a",
+    "accepted": true,
+    "source": "JSON.hasOwnProperty.call(obj, prop);\nexport {};\n"
+  },
+  {
+    "file": "control-062.js",
+    "accepted": true,
+    "source": "Math.hasOwnProperty.call(obj, prop);\nexport {};\n"
+  },
+  {
+    "file": "control-062.a",
+    "accepted": true,
+    "source": "Math.hasOwnProperty.call(obj, prop);\nexport {};\n"
+  },
+  {
+    "file": "control-063.js",
+    "accepted": true,
+    "source": "Number./**/parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-063.a",
+    "accepted": true,
+    "source": "Number./**/parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-064.js",
+    "accepted": true,
+    "source": "Number.isInteger('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-064.a",
+    "accepted": true,
+    "source": "Number.isInteger('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-065.js",
+    "accepted": true,
+    "source": "Number.parseFloat('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-065.a",
+    "accepted": true,
+    "source": "Number.parseFloat('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-066.js",
+    "accepted": true,
+    "source": "Number.parseInt(\"111110111\", 2) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-066.a",
+    "accepted": true,
+    "source": "Number.parseInt(\"111110111\", 2) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-067.js",
+    "accepted": true,
+    "source": "Number.parseInt(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-067.a",
+    "accepted": true,
+    "source": "Number.parseInt(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-068.js",
+    "accepted": true,
+    "source": "Number.parseInt(\"767\", 8) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-068.a",
+    "accepted": true,
+    "source": "Number.parseInt(\"767\", 8) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-069.js",
+    "accepted": true,
+    "source": "Number.parseInt('0_0', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-069.a",
+    "accepted": true,
+    "source": "Number.parseInt('0_0', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-070.js",
+    "accepted": true,
+    "source": "Number.parseInt('11', '8');\nexport {};\n"
+  },
+  {
+    "file": "control-070.a",
+    "accepted": true,
+    "source": "Number.parseInt('11', '8');\nexport {};\n"
+  },
+  {
+    "file": "control-071.js",
+    "accepted": true,
+    "source": "Number.parseInt('11', /**/2);\nexport {};\n"
+  },
+  {
+    "file": "control-071.a",
+    "accepted": true,
+    "source": "Number.parseInt('11', /**/2);\nexport {};\n"
+  },
+  {
+    "file": "control-072.js",
+    "accepted": true,
+    "source": "Number.parseInt('11', 2)/* comment */;\nexport {};\n"
+  },
+  {
+    "file": "control-072.a",
+    "accepted": true,
+    "source": "Number.parseInt('11', 2)/* comment */;\nexport {};\n"
+  },
+  {
+    "file": "control-073.js",
+    "accepted": true,
+    "source": "Number.parseInt('11', 2, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-073.a",
+    "accepted": true,
+    "source": "Number.parseInt('11', 2, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-074.js",
+    "accepted": true,
+    "source": "Number.parseInt('11', 8n);\nexport {};\n"
+  },
+  {
+    "file": "control-074.a",
+    "accepted": true,
+    "source": "Number.parseInt('11', 8n);\nexport {};\n"
+  },
+  {
+    "file": "control-075.js",
+    "accepted": true,
+    "source": "Number.parseInt('1234', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-075.a",
+    "accepted": true,
+    "source": "Number.parseInt('1234', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-076.js",
+    "accepted": true,
+    "source": "Number.parseInt('1234.5', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-076.a",
+    "accepted": true,
+    "source": "Number.parseInt('1234.5', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-077.js",
+    "accepted": true,
+    "source": "Number.parseInt('17', 8)+5\nexport {};\n"
+  },
+  {
+    "file": "control-077.a",
+    "accepted": true,
+    "source": "Number.parseInt('17', 8)+5\nexport {};\n"
+  },
+  {
+    "file": "control-078.js",
+    "accepted": true,
+    "source": "Number.parseInt('17', 8)/**/in foo\nexport {};\n"
+  },
+  {
+    "file": "control-078.a",
+    "accepted": true,
+    "source": "Number.parseInt('17', 8)/**/in foo\nexport {};\n"
+  },
+  {
+    "file": "control-079.js",
+    "accepted": true,
+    "source": "Number.parseInt('17', 8)in foo\nexport {};\n"
+  },
+  {
+    "file": "control-079.a",
+    "accepted": true,
+    "source": "Number.parseInt('17', 8)in foo\nexport {};\n"
+  },
+  {
+    "file": "control-080.js",
+    "accepted": true,
+    "source": "Number.parseInt('1\ufe0f\u20e33\ufe0f\u20e33\ufe0f\u20e37\ufe0f\u20e3', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-080.a",
+    "accepted": true,
+    "source": "Number.parseInt('1\ufe0f\u20e33\ufe0f\u20e33\ufe0f\u20e37\ufe0f\u20e3', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-081.js",
+    "accepted": true,
+    "source": "Number.parseInt('5_000', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-081.a",
+    "accepted": true,
+    "source": "Number.parseInt('5_000', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-082.js",
+    "accepted": true,
+    "source": "Number.parseInt('67', 8)\nexport {};\n"
+  },
+  {
+    "file": "control-082.a",
+    "accepted": true,
+    "source": "Number.parseInt('67', 8)\nexport {};\n"
+  },
+  {
+    "file": "control-083.js",
+    "accepted": true,
+    "source": "Number.parseInt('767', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-083.a",
+    "accepted": true,
+    "source": "Number.parseInt('767', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-084.js",
+    "accepted": true,
+    "source": "Number.parseInt('7999', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-084.a",
+    "accepted": true,
+    "source": "Number.parseInt('7999', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-085.js",
+    "accepted": true,
+    "source": "Number.parseInt(/**/'11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-085.a",
+    "accepted": true,
+    "source": "Number.parseInt(/**/'11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-086.js",
+    "accepted": true,
+    "source": "Number.parseInt(1);\nexport {};\n"
+  },
+  {
+    "file": "control-086.a",
+    "accepted": true,
+    "source": "Number.parseInt(1);\nexport {};\n"
+  },
+  {
+    "file": "control-087.js",
+    "accepted": true,
+    "source": "Number.parseInt(1, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-087.a",
+    "accepted": true,
+    "source": "Number.parseInt(1, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-088.js",
+    "accepted": true,
+    "source": "Number.parseInt(1, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-088.a",
+    "accepted": true,
+    "source": "Number.parseInt(1, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-089.js",
+    "accepted": true,
+    "source": "Number.parseInt(foo);\nexport {};\n"
+  },
+  {
+    "file": "control-089.a",
+    "accepted": true,
+    "source": "Number.parseInt(foo);\nexport {};\n"
+  },
+  {
+    "file": "control-090.js",
+    "accepted": true,
+    "source": "Number.parseInt(foo, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-090.a",
+    "accepted": true,
+    "source": "Number.parseInt(foo, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-091.js",
+    "accepted": true,
+    "source": "Number/**/.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-091.a",
+    "accepted": true,
+    "source": "Number/**/.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-092.js",
+    "accepted": true,
+    "source": "Number//\n.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-092.a",
+    "accepted": true,
+    "source": "Number//\n.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-093.js",
+    "accepted": true,
+    "source": "Number?.parseInt(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-093.a",
+    "accepted": true,
+    "source": "Number?.parseInt(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-094.js",
+    "accepted": true,
+    "source": "Number?.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-094.a",
+    "accepted": true,
+    "source": "Number?.parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-095.js",
+    "accepted": true,
+    "source": "Number?.parseInt?.(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-095.a",
+    "accepted": true,
+    "source": "Number?.parseInt?.(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-096.js",
+    "accepted": true,
+    "source": "Object\nexport {};\n"
+  },
+  {
+    "file": "control-096.a",
+    "accepted": true,
+    "source": "Object\nexport {};\n"
+  },
+  {
+    "file": "control-097.js",
+    "accepted": true,
+    "source": "Object(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-097.a",
+    "accepted": true,
+    "source": "Object(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-098.js",
+    "accepted": true,
+    "source": "Object.assign  ({}, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-098.a",
+    "accepted": true,
+    "source": "Object.assign  ({}, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-099.js",
+    "accepted": true,
+    "source": "Object.assign(  {},  a,      b,   )\nexport {};\n"
+  },
+  {
+    "file": "control-099.a",
+    "accepted": true,
+    "source": "Object.assign(  {},  a,      b,   )\nexport {};\n"
+  },
+  {
+    "file": "control-100.js",
+    "accepted": true,
+    "source": "Object.assign(({a:1,}),(((x))),{b:2});()=>Object.assign({},a=b);()=>Object.assign({},()=>x);\nexport {};\n"
+  },
+  {
+    "file": "control-100.a",
+    "accepted": true,
+    "source": "Object.assign(({a:1,}),(((x))),{b:2});()=>Object.assign({},a=b);()=>Object.assign({},()=>x);\nexport {};\n"
+  },
+  {
+    "file": "control-101.js",
+    "accepted": true,
+    "source": "Object.assign()\nexport {};\n"
+  },
+  {
+    "file": "control-101.a",
+    "accepted": true,
+    "source": "Object.assign()\nexport {};\n"
+  },
+  {
+    "file": "control-102.js",
+    "accepted": true,
+    "source": "Object.assign(...foo)\nexport {};\n"
+  },
+  {
+    "file": "control-102.a",
+    "accepted": true,
+    "source": "Object.assign(...foo)\nexport {};\n"
+  },
+  {
+    "file": "control-103.js",
+    "accepted": true,
+    "source": "Object.assign(a, b)\nexport {};\n"
+  },
+  {
+    "file": "control-103.a",
+    "accepted": true,
+    "source": "Object.assign(a, b)\nexport {};\n"
+  },
+  {
+    "file": "control-104.js",
+    "accepted": true,
+    "source": "Object.assign(foo, { bar: baz })\nexport {};\n"
+  },
+  {
+    "file": "control-104.a",
+    "accepted": true,
+    "source": "Object.assign(foo, { bar: baz })\nexport {};\n"
+  },
+  {
+    "file": "control-105.js",
+    "accepted": true,
+    "source": "Object.assign({\n                boo: \"lol\",\n                // I'm a comment\n                dog: \"cat\"\n             }, {\n                // this is a bar\n                foo: 'bar',\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-105.a",
+    "accepted": true,
+    "source": "Object.assign({\n                boo: \"lol\",\n                // I'm a comment\n                dog: \"cat\"\n             }, {\n                // this is a bar\n                foo: 'bar',\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-106.js",
+    "accepted": true,
+    "source": "Object.assign({\n});\nexport {};\n"
+  },
+  {
+    "file": "control-106.a",
+    "accepted": true,
+    "source": "Object.assign({\n});\nexport {};\n"
+  },
+  {
+    "file": "control-107.js",
+    "accepted": true,
+    "source": "Object.assign({ ...bar }, {\n                // this is a bar\n                foo: 'bar',\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-107.a",
+    "accepted": true,
+    "source": "Object.assign({ ...bar }, {\n                // this is a bar\n                foo: 'bar',\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-108.js",
+    "accepted": true,
+    "source": "Object.assign({ ...bar }, { ...baz })\nexport {};\n"
+  },
+  {
+    "file": "control-108.a",
+    "accepted": true,
+    "source": "Object.assign({ ...bar }, { ...baz })\nexport {};\n"
+  },
+  {
+    "file": "control-109.js",
+    "accepted": true,
+    "source": "Object.assign({ foo }, bar, {}, { baz: 'quux', set a(val) {}, quuux }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-109.a",
+    "accepted": true,
+    "source": "Object.assign({ foo }, bar, {}, { baz: 'quux', set a(val) {}, quuux }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-110.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, Object.assign({ bar: 'foo' }, Object.assign({}, { superNested: 'butwhy' })))\nexport {};\n"
+  },
+  {
+    "file": "control-110.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, Object.assign({ bar: 'foo' }, Object.assign({}, { superNested: 'butwhy' })))\nexport {};\n"
+  },
+  {
+    "file": "control-111.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, Object.assign({ bar: 'foo' }, baz))\nexport {};\n"
+  },
+  {
+    "file": "control-111.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, Object.assign({ bar: 'foo' }, baz))\nexport {};\n"
+  },
+  {
+    "file": "control-112.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, baz)\nexport {};\n"
+  },
+  {
+    "file": "control-112.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, baz)\nexport {};\n"
+  },
+  {
+    "file": "control-113.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, cats, dogs, trees, birds)\nexport {};\n"
+  },
+  {
+    "file": "control-113.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar' }, cats, dogs, trees, birds)\nexport {};\n"
+  },
+  {
+    "file": "control-114.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar', get a() {}, baz: 'quux' }, quuux)\nexport {};\n"
+  },
+  {
+    "file": "control-114.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar', get a() {}, baz: 'quux' }, quuux)\nexport {};\n"
+  },
+  {
+    "file": "control-115.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar', set a(val) {} }, { baz: 'quux' })\nexport {};\n"
+  },
+  {
+    "file": "control-115.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: 'bar', set a(val) {} }, { baz: 'quux' })\nexport {};\n"
+  },
+  {
+    "file": "control-116.js",
+    "accepted": true,
+    "source": "Object.assign({ foo: bar })\nexport {};\n"
+  },
+  {
+    "file": "control-116.a",
+    "accepted": true,
+    "source": "Object.assign({ foo: bar })\nexport {};\n"
+  },
+  {
+    "file": "control-117.js",
+    "accepted": true,
+    "source": "Object.assign({ get a() {} }, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-117.a",
+    "accepted": true,
+    "source": "Object.assign({ get a() {} }, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-118.js",
+    "accepted": true,
+    "source": "Object.assign({ get a() {} }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-118.a",
+    "accepted": true,
+    "source": "Object.assign({ get a() {} }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-119.js",
+    "accepted": true,
+    "source": "Object.assign({ get a() {}, set b(val) {} })\nexport {};\n"
+  },
+  {
+    "file": "control-119.a",
+    "accepted": true,
+    "source": "Object.assign({ get a() {}, set b(val) {} })\nexport {};\n"
+  },
+  {
+    "file": "control-120.js",
+    "accepted": true,
+    "source": "Object.assign({ set a(val) {} }, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-120.a",
+    "accepted": true,
+    "source": "Object.assign({ set a(val) {} }, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-121.js",
+    "accepted": true,
+    "source": "Object.assign({ set a(val) {} }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-121.a",
+    "accepted": true,
+    "source": "Object.assign({ set a(val) {} }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-122.js",
+    "accepted": true,
+    "source": "Object.assign({ });\nexport {};\n"
+  },
+  {
+    "file": "control-122.a",
+    "accepted": true,
+    "source": "Object.assign({ });\nexport {};\n"
+  },
+  {
+    "file": "control-123.js",
+    "accepted": true,
+    "source": "Object.assign({a:1 //c\n},x);Object.assign({},/*c*/x);Object.assign<T>({},x);\nexport {};\n"
+  },
+  {
+    "file": "control-123.a",
+    "accepted": true,
+    "source": "Object.assign({a:1 //c\n},x);Object.assign({},/*c*/x);Object.assign<T>({},x);\nexport {};\n"
+  },
+  {
+    "file": "control-124.js",
+    "accepted": true,
+    "source": "Object.assign({foo: 'bar', ...bar}, baz)\nexport {};\n"
+  },
+  {
+    "file": "control-124.a",
+    "accepted": true,
+    "source": "Object.assign({foo: 'bar', ...bar}, baz)\nexport {};\n"
+  },
+  {
+    "file": "control-125.js",
+    "accepted": true,
+    "source": "Object.assign({get a(){return 1}});Object.assign({},{get a(){return 1}});Object.assign({},...sources);\nexport {};\n"
+  },
+  {
+    "file": "control-125.a",
+    "accepted": true,
+    "source": "Object.assign({get a(){return 1}});Object.assign({},{get a(){return 1}});Object.assign({},...sources);\nexport {};\n"
+  },
+  {
+    "file": "control-126.js",
+    "accepted": true,
+    "source": "Object.assign({})\nexport {};\n"
+  },
+  {
+    "file": "control-126.a",
+    "accepted": true,
+    "source": "Object.assign({})\nexport {};\n"
+  },
+  {
+    "file": "control-127.js",
+    "accepted": true,
+    "source": "Object.assign({}, ...objects)\nexport {};\n"
+  },
+  {
+    "file": "control-127.a",
+    "accepted": true,
+    "source": "Object.assign({}, ...objects)\nexport {};\n"
+  },
+  {
+    "file": "control-128.js",
+    "accepted": true,
+    "source": "Object.assign({}, a ? b : {}, b => c, a = 2)\nexport {};\n"
+  },
+  {
+    "file": "control-128.a",
+    "accepted": true,
+    "source": "Object.assign({}, a ? b : {}, b => c, a = 2)\nexport {};\n"
+  },
+  {
+    "file": "control-129.js",
+    "accepted": true,
+    "source": "Object.assign({}, baz, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-129.a",
+    "accepted": true,
+    "source": "Object.assign({}, baz, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-130.js",
+    "accepted": true,
+    "source": "Object.assign({}, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-130.a",
+    "accepted": true,
+    "source": "Object.assign({}, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-131.js",
+    "accepted": true,
+    "source": "Object.assign({}, { [bar]: 'foo' })\nexport {};\n"
+  },
+  {
+    "file": "control-131.a",
+    "accepted": true,
+    "source": "Object.assign({}, { [bar]: 'foo' })\nexport {};\n"
+  },
+  {
+    "file": "control-132.js",
+    "accepted": true,
+    "source": "Object.assign({}, { foo, bar, baz })\nexport {};\n"
+  },
+  {
+    "file": "control-132.a",
+    "accepted": true,
+    "source": "Object.assign({}, { foo, bar, baz })\nexport {};\n"
+  },
+  {
+    "file": "control-133.js",
+    "accepted": true,
+    "source": "Object.assign({}, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-133.a",
+    "accepted": true,
+    "source": "Object.assign({}, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-134.js",
+    "accepted": true,
+    "source": "Object.assign({}, { foo: 'bar', baz: 'foo' })\nexport {};\n"
+  },
+  {
+    "file": "control-134.a",
+    "accepted": true,
+    "source": "Object.assign({}, { foo: 'bar', baz: 'foo' })\nexport {};\n"
+  },
+  {
+    "file": "control-135.js",
+    "accepted": true,
+    "source": "Object.assign({}, { foo: 'bar', get a() {} }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-135.a",
+    "accepted": true,
+    "source": "Object.assign({}, { foo: 'bar', get a() {} }, {})\nexport {};\n"
+  },
+  {
+    "file": "control-136.js",
+    "accepted": true,
+    "source": "Object.assign({}, { get a() {} })\nexport {};\n"
+  },
+  {
+    "file": "control-136.a",
+    "accepted": true,
+    "source": "Object.assign({}, { get a() {} })\nexport {};\n"
+  },
+  {
+    "file": "control-137.js",
+    "accepted": true,
+    "source": "Object.assign({}, { set a(val) {} })\nexport {};\n"
+  },
+  {
+    "file": "control-137.a",
+    "accepted": true,
+    "source": "Object.assign({}, { set a(val) {} })\nexport {};\n"
+  },
+  {
+    "file": "control-138.js",
+    "accepted": true,
+    "source": "Object.assign({},x);Object=custom;\nexport {};\n"
+  },
+  {
+    "file": "control-138.a",
+    "accepted": true,
+    "source": "Object.assign({},x);Object=custom;\nexport {};\n"
+  },
+  {
+    "file": "control-139.js",
+    "accepted": true,
+    "source": "Object.assign<{}, A>({}, foo);\nexport {};\n"
+  },
+  {
+    "file": "control-139.a",
+    "accepted": true,
+    "source": "Object.assign<{}, A>({}, foo);\nexport {};\n"
+  },
+  {
+    "file": "control-140.js",
+    "accepted": true,
+    "source": "Object.assign=custom;Object.assign({},x);\nexport {};\n"
+  },
+  {
+    "file": "control-140.a",
+    "accepted": true,
+    "source": "Object.assign=custom;Object.assign({},x);\nexport {};\n"
+  },
+  {
+    "file": "control-141.js",
+    "accepted": true,
+    "source": "Object.foo.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-141.a",
+    "accepted": true,
+    "source": "Object.foo.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-142.js",
+    "accepted": true,
+    "source": "Object.foo.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-142.a",
+    "accepted": true,
+    "source": "Object.foo.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-143.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty\nexport {};\n"
+  },
+  {
+    "file": "control-143.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty\nexport {};\n"
+  },
+  {
+    "file": "control-144.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty(prop)\nexport {};\n"
+  },
+  {
+    "file": "control-144.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty(prop)\nexport {};\n"
+  },
+  {
+    "file": "control-145.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call\nexport {};\n"
+  },
+  {
+    "file": "control-145.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call\nexport {};\n"
+  },
+  {
+    "file": "control-146.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call(obj, 'foo')\nexport {};\n"
+  },
+  {
+    "file": "control-146.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call(obj, 'foo')\nexport {};\n"
+  },
+  {
+    "file": "control-147.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call(obj, property)\nexport {};\n"
+  },
+  {
+    "file": "control-147.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call(obj, property)\nexport {};\n"
+  },
+  {
+    "file": "control-148.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-148.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.call.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-149.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-149.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-150.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-150.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty.prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-151.js",
+    "accepted": true,
+    "source": "Object.hasOwnProperty[call](obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-151.a",
+    "accepted": true,
+    "source": "Object.hasOwnProperty[call](obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-152.js",
+    "accepted": true,
+    "source": "Object.prototype\nexport {};\n"
+  },
+  {
+    "file": "control-152.a",
+    "accepted": true,
+    "source": "Object.prototype\nexport {};\n"
+  },
+  {
+    "file": "control-153.js",
+    "accepted": true,
+    "source": "Object.prototype(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-153.a",
+    "accepted": true,
+    "source": "Object.prototype(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-154.js",
+    "accepted": true,
+    "source": "Object.prototype.foo.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-154.a",
+    "accepted": true,
+    "source": "Object.prototype.foo.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-155.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty\nexport {};\n"
+  },
+  {
+    "file": "control-155.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty\nexport {};\n"
+  },
+  {
+    "file": "control-156.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-156.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-157.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call\nexport {};\n"
+  },
+  {
+    "file": "control-157.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call\nexport {};\n"
+  },
+  {
+    "file": "control-158.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call(obj, 'foo')\nexport {};\n"
+  },
+  {
+    "file": "control-158.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call(obj, 'foo')\nexport {};\n"
+  },
+  {
+    "file": "control-159.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-159.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-160.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-160.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.call.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-161.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-161.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty.foo(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-162.js",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty[call](obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-162.a",
+    "accepted": true,
+    "source": "Object.prototype.hasOwnProperty[call](obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-163.js",
+    "accepted": true,
+    "source": "Object.prototype.prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-163.a",
+    "accepted": true,
+    "source": "Object.prototype.prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-164.js",
+    "accepted": true,
+    "source": "Object.prototype[hasOwnProperty].call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-164.a",
+    "accepted": true,
+    "source": "Object.prototype[hasOwnProperty].call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-165.js",
+    "accepted": true,
+    "source": "Object/* comment */.prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-165.a",
+    "accepted": true,
+    "source": "Object/* comment */.prototype.hasOwnProperty.call(a, b);\nexport {};\n"
+  },
+  {
+    "file": "control-166.js",
+    "accepted": true,
+    "source": "Object/*c*/.prototype.hasOwnProperty.call(a,b);((Object['prototype']['hasOwnProperty']['call']))(a,b);\nexport {};\n"
+  },
+  {
+    "file": "control-166.a",
+    "accepted": true,
+    "source": "Object/*c*/.prototype.hasOwnProperty.call(a,b);((Object['prototype']['hasOwnProperty']['call']))(a,b);\nexport {};\n"
+  },
+  {
+    "file": "control-167.js",
+    "accepted": true,
+    "source": "Object['as'+'sign']({},x);globalThis[`Obj${'ect'}`][`as${'sign'}`]({},y);\nexport {};\n"
+  },
+  {
+    "file": "control-167.a",
+    "accepted": true,
+    "source": "Object['as'+'sign']({},x);globalThis[`Obj${'ect'}`][`as${'sign'}`]({},y);\nexport {};\n"
+  },
+  {
+    "file": "control-168.js",
+    "accepted": true,
+    "source": "Object['hasOwnProperty']['call'](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-168.a",
+    "accepted": true,
+    "source": "Object['hasOwnProperty']['call'](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-169.js",
+    "accepted": true,
+    "source": "Object['prototype']['hasOwnProperty']['call'](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-169.a",
+    "accepted": true,
+    "source": "Object['prototype']['hasOwnProperty']['call'](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-170.js",
+    "accepted": true,
+    "source": "Object[`hasOwnProperty`][`call`](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-170.a",
+    "accepted": true,
+    "source": "Object[`hasOwnProperty`][`call`](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-171.js",
+    "accepted": true,
+    "source": "Object[`prototype`][`hasOwnProperty`][`call`](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-171.a",
+    "accepted": true,
+    "source": "Object[`prototype`][`hasOwnProperty`][`call`](object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-172.js",
+    "accepted": true,
+    "source": "Object[hasOwnProperty].call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-172.a",
+    "accepted": true,
+    "source": "Object[hasOwnProperty].call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-173.js",
+    "accepted": true,
+    "source": "Object[prototype].hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-173.a",
+    "accepted": true,
+    "source": "Object[prototype].hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-174.js",
+    "accepted": true,
+    "source": "[1, 2, Object.assign({}, a)]\nexport {};\n"
+  },
+  {
+    "file": "control-174.a",
+    "accepted": true,
+    "source": "[1, 2, Object.assign({}, a)]\nexport {};\n"
+  },
+  {
+    "file": "control-175.js",
+    "accepted": true,
+    "source": "a[parseInt](1,2);\nexport {};\n"
+  },
+  {
+    "file": "control-175.a",
+    "accepted": true,
+    "source": "a[parseInt](1,2);\nexport {};\n"
+  },
+  {
+    "file": "control-176.js",
+    "accepted": true,
+    "source": "async function foo(){return await/*comment*/{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-176.a",
+    "accepted": true,
+    "source": "async function foo(){return await/*comment*/{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-177.js",
+    "accepted": true,
+    "source": "async function foo(){return await{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-177.a",
+    "accepted": true,
+    "source": "async function foo(){return await{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-178.js",
+    "accepted": true,
+    "source": "class C { #assign; foo() { Object.#assign({}, foo); } }\nexport {};\n"
+  },
+  {
+    "file": "control-178.a",
+    "accepted": true,
+    "source": "class C { #assign; foo() { Object.#assign({}, foo); } }\nexport {};\n"
+  },
+  {
+    "file": "control-179.js",
+    "accepted": true,
+    "source": "class C { #call; foo() { ({}.hasOwnProperty.#call(obj, prop)) } }\nexport {};\n"
+  },
+  {
+    "file": "control-179.a",
+    "accepted": true,
+    "source": "class C { #call; foo() { ({}.hasOwnProperty.#call(obj, prop)) } }\nexport {};\n"
+  },
+  {
+    "file": "control-180.js",
+    "accepted": true,
+    "source": "class C { #call; foo() { Object.hasOwnProperty.#call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-180.a",
+    "accepted": true,
+    "source": "class C { #call; foo() { Object.hasOwnProperty.#call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-181.js",
+    "accepted": true,
+    "source": "class C { #call; foo() { Object.prototype.hasOwnProperty.#call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-181.a",
+    "accepted": true,
+    "source": "class C { #call; foo() { Object.prototype.hasOwnProperty.#call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-182.js",
+    "accepted": true,
+    "source": "class C { #hasOwnProperty; foo() { ({}.#hasOwnProperty.call(obj, prop)) } }\nexport {};\n"
+  },
+  {
+    "file": "control-182.a",
+    "accepted": true,
+    "source": "class C { #hasOwnProperty; foo() { ({}.#hasOwnProperty.call(obj, prop)) } }\nexport {};\n"
+  },
+  {
+    "file": "control-183.js",
+    "accepted": true,
+    "source": "class C { #hasOwnProperty; foo() { Object.#hasOwnProperty.call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-183.a",
+    "accepted": true,
+    "source": "class C { #hasOwnProperty; foo() { Object.#hasOwnProperty.call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-184.js",
+    "accepted": true,
+    "source": "class C { #hasOwnProperty; foo() { Object.prototype.#hasOwnProperty.call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-184.a",
+    "accepted": true,
+    "source": "class C { #hasOwnProperty; foo() { Object.prototype.#hasOwnProperty.call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-185.js",
+    "accepted": true,
+    "source": "class C { #parseInt; foo() { Number.#parseInt(\"111110111\", 2); } }\nexport {};\n"
+  },
+  {
+    "file": "control-185.a",
+    "accepted": true,
+    "source": "class C { #parseInt; foo() { Number.#parseInt(\"111110111\", 2); } }\nexport {};\n"
+  },
+  {
+    "file": "control-186.js",
+    "accepted": true,
+    "source": "class C { #prototype; foo() { Object.#prototype.hasOwnProperty.call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-186.a",
+    "accepted": true,
+    "source": "class C { #prototype; foo() { Object.#prototype.hasOwnProperty.call(obj, prop) } }\nexport {};\n"
+  },
+  {
+    "file": "control-187.js",
+    "accepted": true,
+    "source": "const A=Object;A.assign({},x);const {assign: B}=Object;B({},y);let C;C=Object.assign;C({},z);\nexport {};\n"
+  },
+  {
+    "file": "control-187.a",
+    "accepted": true,
+    "source": "const A=Object;A.assign({},x);const {assign: B}=Object;B({},y);let C;C=Object.assign;C({},z);\nexport {};\n"
+  },
+  {
+    "file": "control-188.js",
+    "accepted": true,
+    "source": "const A=Object;A=A;A.assign({},x);const {...B}=Object;B.assign({},x);\nexport {};\n"
+  },
+  {
+    "file": "control-188.a",
+    "accepted": true,
+    "source": "const A=Object;A=A;A.assign({},x);const {...B}=Object;B.assign({},x);\nexport {};\n"
+  },
+  {
+    "file": "control-189.js",
+    "accepted": true,
+    "source": "const A=globalThis;const {Object:{assign: B}}=A;B({},x);(true?Object:Object).assign({},y);\nexport {};\n"
+  },
+  {
+    "file": "control-189.a",
+    "accepted": true,
+    "source": "const A=globalThis;const {Object:{assign: B}}=A;B({},x);(true?Object:Object).assign({},y);\nexport {};\n"
+  },
+  {
+    "file": "control-190.js",
+    "accepted": true,
+    "source": "const bar = { ...foo }\nexport {};\n"
+  },
+  {
+    "file": "control-190.a",
+    "accepted": true,
+    "source": "const bar = { ...foo }\nexport {};\n"
+  },
+  {
+    "file": "control-191.js",
+    "accepted": true,
+    "source": "const foo = Object.assign({}, a)\nexport {};\n"
+  },
+  {
+    "file": "control-191.a",
+    "accepted": true,
+    "source": "const foo = Object.assign({}, a)\nexport {};\n"
+  },
+  {
+    "file": "control-192.js",
+    "accepted": true,
+    "source": "const has = Object.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-192.a",
+    "accepted": true,
+    "source": "const has = Object.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-193.js",
+    "accepted": true,
+    "source": "const hasProperty = (( Object )).prototype.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-193.a",
+    "accepted": true,
+    "source": "const hasProperty = (( Object )).prototype.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-194.js",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype )).hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-194.a",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype )).hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-195.js",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype.hasOwnProperty )).call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-195.a",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype.hasOwnProperty )).call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-196.js",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype.hasOwnProperty.call ))(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-196.a",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype.hasOwnProperty.call ))(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-197.js",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype.hasOwnProperty.call(object, property) ));\nexport {};\n"
+  },
+  {
+    "file": "control-197.a",
+    "accepted": true,
+    "source": "const hasProperty = (( Object.prototype.hasOwnProperty.call(object, property) ));\nexport {};\n"
+  },
+  {
+    "file": "control-198.js",
+    "accepted": true,
+    "source": "const hasProperty = (( {} )).hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-198.a",
+    "accepted": true,
+    "source": "const hasProperty = (( {} )).hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-199.js",
+    "accepted": true,
+    "source": "const hasProperty = (( {}.hasOwnProperty )).call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-199.a",
+    "accepted": true,
+    "source": "const hasProperty = (( {}.hasOwnProperty )).call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-200.js",
+    "accepted": true,
+    "source": "const hasProperty = (( {}.hasOwnProperty.call ))(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-200.a",
+    "accepted": true,
+    "source": "const hasProperty = (( {}.hasOwnProperty.call ))(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-201.js",
+    "accepted": true,
+    "source": "const hasProperty = (( {}.hasOwnProperty.call(object, property) ));\nexport {};\n"
+  },
+  {
+    "file": "control-201.a",
+    "accepted": true,
+    "source": "const hasProperty = (( {}.hasOwnProperty.call(object, property) ));\nexport {};\n"
+  },
+  {
+    "file": "control-202.js",
+    "accepted": true,
+    "source": "const hasProperty = Object.hasOwn(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-202.a",
+    "accepted": true,
+    "source": "const hasProperty = Object.hasOwn(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-203.js",
+    "accepted": true,
+    "source": "const hasProperty = Object.prototype.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-203.a",
+    "accepted": true,
+    "source": "const hasProperty = Object.prototype.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-204.js",
+    "accepted": true,
+    "source": "const hasProperty = {}.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-204.a",
+    "accepted": true,
+    "source": "const hasProperty = {}.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-205.js",
+    "accepted": true,
+    "source": "const hasProperty={}.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-205.a",
+    "accepted": true,
+    "source": "const hasProperty={}.hasOwnProperty.call(object, property);\nexport {};\n"
+  },
+  {
+    "file": "control-206.js",
+    "accepted": false,
+    "source": "const obj = Object.assign<{}, Record<string, string[]>>({}, getObject());\nexport {};\n"
+  },
+  {
+    "file": "control-206.a",
+    "accepted": true,
+    "source": "const obj = Object.assign<{}, Record<string, string[]>>({}, getObject());\nexport {};\n"
+  },
+  {
+    "file": "control-207.js",
+    "accepted": true,
+    "source": "const result = doSomething()\nObject.assign({}, myData)\nexport {};\n"
+  },
+  {
+    "file": "control-207.a",
+    "accepted": true,
+    "source": "const result = doSomething()\nObject.assign({}, myData)\nexport {};\n"
+  },
+  {
+    "file": "control-208.js",
+    "accepted": true,
+    "source": "const test = Object.assign({ ...bar }, {\n                /**\n                 * foo\n                 */\n                foo: 'bar',\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-208.a",
+    "accepted": true,
+    "source": "const test = Object.assign({ ...bar }, {\n                /**\n                 * foo\n                 */\n                foo: 'bar',\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-209.js",
+    "accepted": false,
+    "source": "const test = Object.assign({ ...bar }, {\n                <!-- html comment\n                foo: 'bar',\n                baz: \"cats\"\n                --> weird\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-209.a",
+    "accepted": false,
+    "source": "const test = Object.assign({ ...bar }, {\n                <!-- html comment\n                foo: 'bar',\n                baz: \"cats\"\n                --> weird\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-210.js",
+    "accepted": true,
+    "source": "const test = Object.assign({ ...bar }, {\n                foo: 'bar', // inline comment\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-210.a",
+    "accepted": true,
+    "source": "const test = Object.assign({ ...bar }, {\n                foo: 'bar', // inline comment\n                baz: \"cats\"\n            })\nexport {};\n"
+  },
+  {
+    "file": "control-211.js",
+    "accepted": true,
+    "source": "const x = [1]\nObject.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-211.a",
+    "accepted": true,
+    "source": "const x = [1]\nObject.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-212.js",
+    "accepted": true,
+    "source": "const x = { foo: 'bar', baz: Object.assign({}, a) }\nexport {};\n"
+  },
+  {
+    "file": "control-212.a",
+    "accepted": true,
+    "source": "const x = { foo: 'bar', baz: Object.assign({}, a) }\nexport {};\n"
+  },
+  {
+    "file": "control-213.js",
+    "accepted": true,
+    "source": "foo\nObject.assign({ foo: bar })\nexport {};\n"
+  },
+  {
+    "file": "control-213.a",
+    "accepted": true,
+    "source": "foo\nObject.assign({ foo: bar })\nexport {};\n"
+  },
+  {
+    "file": "control-214.js",
+    "accepted": true,
+    "source": "foo\nObject.assign({}, bar), 2\nexport {};\n"
+  },
+  {
+    "file": "control-214.a",
+    "accepted": true,
+    "source": "foo\nObject.assign({}, bar), 2\nexport {};\n"
+  },
+  {
+    "file": "control-215.js",
+    "accepted": true,
+    "source": "foo\nObject.assign({}, bar).doSomething()\nexport {};\n"
+  },
+  {
+    "file": "control-215.a",
+    "accepted": true,
+    "source": "foo\nObject.assign({}, bar).doSomething()\nexport {};\n"
+  },
+  {
+    "file": "control-216.js",
+    "accepted": true,
+    "source": "foo\nObject.assign({}, bar).x\nexport {};\n"
+  },
+  {
+    "file": "control-216.a",
+    "accepted": true,
+    "source": "foo\nObject.assign({}, bar).x\nexport {};\n"
+  },
+  {
+    "file": "control-217.js",
+    "accepted": true,
+    "source": "foo\nObject.assign({},x).f();foo\nObject.assign({},x),2;\nexport {};\n"
+  },
+  {
+    "file": "control-217.a",
+    "accepted": true,
+    "source": "foo\nObject.assign({},x).f();foo\nObject.assign({},x),2;\nexport {};\n"
+  },
+  {
+    "file": "control-218.js",
+    "accepted": true,
+    "source": "foo\nx + Object.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-218.a",
+    "accepted": true,
+    "source": "foo\nx + Object.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-219.js",
+    "accepted": true,
+    "source": "foo();\nObject.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-219.a",
+    "accepted": true,
+    "source": "foo();\nObject.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-220.js",
+    "accepted": true,
+    "source": "foo(Object.assign({}, a));\nexport {};\n"
+  },
+  {
+    "file": "control-220.a",
+    "accepted": true,
+    "source": "foo(Object.assign({}, a));\nexport {};\n"
+  },
+  {
+    "file": "control-221.js",
+    "accepted": true,
+    "source": "foo({ foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-221.a",
+    "accepted": true,
+    "source": "foo({ foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-222.js",
+    "accepted": true,
+    "source": "foo.Object.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-222.a",
+    "accepted": true,
+    "source": "foo.Object.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-223.js",
+    "accepted": true,
+    "source": "foo.Object.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-223.a",
+    "accepted": true,
+    "source": "foo.Object.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-224.js",
+    "accepted": true,
+    "source": "foo.call(Object.prototype.hasOwnProperty, Object.prototype.hasOwnProperty.call)\nexport {};\n"
+  },
+  {
+    "file": "control-224.a",
+    "accepted": true,
+    "source": "foo.call(Object.prototype.hasOwnProperty, Object.prototype.hasOwnProperty.call)\nexport {};\n"
+  },
+  {
+    "file": "control-225.js",
+    "accepted": true,
+    "source": "foo.hasOwnProperty(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-225.a",
+    "accepted": true,
+    "source": "foo.hasOwnProperty(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-226.js",
+    "accepted": true,
+    "source": "foo.hasOwnProperty(prop)\nexport {};\n"
+  },
+  {
+    "file": "control-226.a",
+    "accepted": true,
+    "source": "foo.hasOwnProperty(prop)\nexport {};\n"
+  },
+  {
+    "file": "control-227.js",
+    "accepted": true,
+    "source": "foo.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-227.a",
+    "accepted": true,
+    "source": "foo.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-228.js",
+    "accepted": true,
+    "source": "foo.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-228.a",
+    "accepted": true,
+    "source": "foo.prototype.hasOwnProperty.call(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-229.js",
+    "accepted": true,
+    "source": "for (const x in/*comment*/{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-229.a",
+    "accepted": true,
+    "source": "for (const x in/*comment*/{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-230.js",
+    "accepted": true,
+    "source": "for (const x in{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-230.a",
+    "accepted": true,
+    "source": "for (const x in{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-231.js",
+    "accepted": true,
+    "source": "for (const x of/*comment*/{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-231.a",
+    "accepted": true,
+    "source": "for (const x of/*comment*/{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-232.js",
+    "accepted": true,
+    "source": "for (const x of{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-232.a",
+    "accepted": true,
+    "source": "for (const x of{}.hasOwnProperty.call(object, property).toString());\nexport {};\n"
+  },
+  {
+    "file": "control-233.js",
+    "accepted": true,
+    "source": "function *f(){ yield Number.parseInt('11', 2) }\nexport {};\n"
+  },
+  {
+    "file": "control-233.a",
+    "accepted": true,
+    "source": "function *f(){ yield Number.parseInt('11', 2) }\nexport {};\n"
+  },
+  {
+    "file": "control-234.js",
+    "accepted": true,
+    "source": "function *f(){ yield(Number).parseInt('11', 2) }\nexport {};\n"
+  },
+  {
+    "file": "control-234.a",
+    "accepted": true,
+    "source": "function *f(){ yield(Number).parseInt('11', 2) }\nexport {};\n"
+  },
+  {
+    "file": "control-235.js",
+    "accepted": true,
+    "source": "function *f(){ yield(Number.parseInt)('67', 8) }\nexport {};\n"
+  },
+  {
+    "file": "control-235.a",
+    "accepted": true,
+    "source": "function *f(){ yield(Number.parseInt)('67', 8) }\nexport {};\n"
+  },
+  {
+    "file": "control-236.js",
+    "accepted": true,
+    "source": "function *f(){ yield(parseInt('A', 16)) }\nexport {};\n"
+  },
+  {
+    "file": "control-236.a",
+    "accepted": true,
+    "source": "function *f(){ yield(parseInt('A', 16)) }\nexport {};\n"
+  },
+  {
+    "file": "control-237.js",
+    "accepted": true,
+    "source": "function *f(){ yield(parseInt)('A', 16) }\nexport {};\n"
+  },
+  {
+    "file": "control-237.a",
+    "accepted": true,
+    "source": "function *f(){ yield(parseInt)('A', 16) }\nexport {};\n"
+  },
+  {
+    "file": "control-238.js",
+    "accepted": true,
+    "source": "function *f(){ yield/**/Number.parseInt('67', 8) }\nexport {};\n"
+  },
+  {
+    "file": "control-238.a",
+    "accepted": true,
+    "source": "function *f(){ yield/**/Number.parseInt('67', 8) }\nexport {};\n"
+  },
+  {
+    "file": "control-239.js",
+    "accepted": true,
+    "source": "function f(Object){return({}).hasOwnProperty.call(a,b);}function g(){return{}.hasOwnProperty.call(a,b);}({/*c*/}).hasOwnProperty.call(a,b);\nexport {};\n"
+  },
+  {
+    "file": "control-239.a",
+    "accepted": true,
+    "source": "function f(Object){return({}).hasOwnProperty.call(a,b);}function g(){return{}.hasOwnProperty.call(a,b);}({/*c*/}).hasOwnProperty.call(a,b);\nexport {};\n"
+  },
+  {
+    "file": "control-240.js",
+    "accepted": true,
+    "source": "function f(Object: any) { Object.hasOwnProperty.call(obj, prop); }\nexport {};\n"
+  },
+  {
+    "file": "control-240.a",
+    "accepted": true,
+    "source": "function f(Object: any) { Object.hasOwnProperty.call(obj, prop); }\nexport {};\n"
+  },
+  {
+    "file": "control-241.js",
+    "accepted": true,
+    "source": "function foo() { return Object.assign({}, a) }\nexport {};\n"
+  },
+  {
+    "file": "control-241.a",
+    "accepted": true,
+    "source": "function foo() { return Object.assign({}, a) }\nexport {};\n"
+  },
+  {
+    "file": "control-242.js",
+    "accepted": true,
+    "source": "function foo() { var Number; Number.parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-242.a",
+    "accepted": true,
+    "source": "function foo() { var Number; Number.parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-243.js",
+    "accepted": true,
+    "source": "function foo() { var parseInt; parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-243.a",
+    "accepted": true,
+    "source": "function foo() { var parseInt; parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-244.js",
+    "accepted": true,
+    "source": "function foo(){return {}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-244.a",
+    "accepted": true,
+    "source": "function foo(){return {}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-245.js",
+    "accepted": true,
+    "source": "function foo(){return({}.hasOwnProperty.call)(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-245.a",
+    "accepted": true,
+    "source": "function foo(){return({}.hasOwnProperty.call)(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-246.js",
+    "accepted": true,
+    "source": "function foo(){return/*comment*/{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-246.a",
+    "accepted": true,
+    "source": "function foo(){return/*comment*/{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-247.js",
+    "accepted": true,
+    "source": "function foo(){return{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-247.a",
+    "accepted": true,
+    "source": "function foo(){return{}.hasOwnProperty.call(object, property)}\nexport {};\n"
+  },
+  {
+    "file": "control-248.js",
+    "accepted": true,
+    "source": "function foo(Number) { Number.parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-248.a",
+    "accepted": true,
+    "source": "function foo(Number) { Number.parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-249.js",
+    "accepted": true,
+    "source": "function foo(parseInt) { parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-249.a",
+    "accepted": true,
+    "source": "function foo(parseInt) { parseInt(\"111110111\", 2); }\nexport {};\n"
+  },
+  {
+    "file": "control-250.js",
+    "accepted": true,
+    "source": "globalThis.Object.assign({\n});\nexport {};\n"
+  },
+  {
+    "file": "control-250.a",
+    "accepted": true,
+    "source": "globalThis.Object.assign({\n});\nexport {};\n"
+  },
+  {
+    "file": "control-251.js",
+    "accepted": true,
+    "source": "globalThis.Object.assign({ });\nexport {};\n"
+  },
+  {
+    "file": "control-251.a",
+    "accepted": true,
+    "source": "globalThis.Object.assign({ });\nexport {};\n"
+  },
+  {
+    "file": "control-252.js",
+    "accepted": true,
+    "source": "globalThis.Object.assign({}, baz, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-252.a",
+    "accepted": true,
+    "source": "globalThis.Object.assign({}, baz, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-253.js",
+    "accepted": true,
+    "source": "globalThis.Object.assign({}, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-253.a",
+    "accepted": true,
+    "source": "globalThis.Object.assign({}, foo)\nexport {};\n"
+  },
+  {
+    "file": "control-254.js",
+    "accepted": true,
+    "source": "globalThis.Object.assign({}, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-254.a",
+    "accepted": true,
+    "source": "globalThis.Object.assign({}, { foo: 'bar' })\nexport {};\n"
+  },
+  {
+    "file": "control-255.js",
+    "accepted": true,
+    "source": "hasOwnProperty(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-255.a",
+    "accepted": true,
+    "source": "hasOwnProperty(obj, prop)\nexport {};\n"
+  },
+  {
+    "file": "control-256.js",
+    "accepted": true,
+    "source": "isNaN('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-256.a",
+    "accepted": true,
+    "source": "isNaN('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-257.js",
+    "accepted": true,
+    "source": "let A;({assign:A}=Object);A({},x);function f(A=Object){A.assign({},x)}\nexport {};\n"
+  },
+  {
+    "file": "control-257.a",
+    "accepted": true,
+    "source": "let A;({assign:A}=Object);A({},x);function f(A=Object){A.assign({},x)}\nexport {};\n"
+  },
+  {
+    "file": "control-258.js",
+    "accepted": true,
+    "source": "let a = Object.assign   ({}, a)\nexport {};\n"
+  },
+  {
+    "file": "control-258.a",
+    "accepted": true,
+    "source": "let a = Object.assign   ({}, a)\nexport {};\n"
+  },
+  {
+    "file": "control-259.js",
+    "accepted": true,
+    "source": "let a = Object.assign(a, b)\nexport {};\n"
+  },
+  {
+    "file": "control-259.a",
+    "accepted": true,
+    "source": "let a = Object.assign(a, b)\nexport {};\n"
+  },
+  {
+    "file": "control-260.js",
+    "accepted": true,
+    "source": "let a = Object.assign(b, { c: 1 })\nexport {};\n"
+  },
+  {
+    "file": "control-260.a",
+    "accepted": true,
+    "source": "let a = Object.assign(b, { c: 1 })\nexport {};\n"
+  },
+  {
+    "file": "control-261.js",
+    "accepted": true,
+    "source": "let a = Object.assign({ a: 1 }, b)\nexport {};\n"
+  },
+  {
+    "file": "control-261.a",
+    "accepted": true,
+    "source": "let a = Object.assign({ a: 1 }, b)\nexport {};\n"
+  },
+  {
+    "file": "control-262.js",
+    "accepted": true,
+    "source": "let a = Object.assign({})\nexport {};\n"
+  },
+  {
+    "file": "control-262.a",
+    "accepted": true,
+    "source": "let a = Object.assign({})\nexport {};\n"
+  },
+  {
+    "file": "control-263.js",
+    "accepted": true,
+    "source": "let a = Object.assign({}, a)\nexport {};\n"
+  },
+  {
+    "file": "control-263.a",
+    "accepted": true,
+    "source": "let a = Object.assign({}, a)\nexport {};\n"
+  },
+  {
+    "file": "control-264.js",
+    "accepted": true,
+    "source": "let a = foo + Object.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-264.a",
+    "accepted": true,
+    "source": "let a = foo + Object.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-265.js",
+    "accepted": true,
+    "source": "let foo = function() {};\nfoo\nObject.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-265.a",
+    "accepted": true,
+    "source": "let foo = function() {};\nfoo\nObject.assign({}, bar)\nexport {};\n"
+  },
+  {
+    "file": "control-266.js",
+    "accepted": true,
+    "source": "parseFloat('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-266.a",
+    "accepted": true,
+    "source": "parseFloat('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-267.js",
+    "accepted": true,
+    "source": "parseInt(\"111110111\", 2) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-267.a",
+    "accepted": true,
+    "source": "parseInt(\"111110111\", 2) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-268.js",
+    "accepted": true,
+    "source": "parseInt(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-268.a",
+    "accepted": true,
+    "source": "parseInt(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-269.js",
+    "accepted": true,
+    "source": "parseInt(\"767\", 8) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-269.a",
+    "accepted": true,
+    "source": "parseInt(\"767\", 8) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-270.js",
+    "accepted": true,
+    "source": "parseInt('', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-270.a",
+    "accepted": true,
+    "source": "parseInt('', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-271.js",
+    "accepted": true,
+    "source": "parseInt('-11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-271.a",
+    "accepted": true,
+    "source": "parseInt('-11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-272.js",
+    "accepted": true,
+    "source": "parseInt('0011', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-272.a",
+    "accepted": true,
+    "source": "parseInt('0011', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-273.js",
+    "accepted": true,
+    "source": "parseInt('0_1', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-273.a",
+    "accepted": true,
+    "source": "parseInt('0_1', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-274.js",
+    "accepted": true,
+    "source": "parseInt('1010', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-274.a",
+    "accepted": true,
+    "source": "parseInt('1010', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-275.js",
+    "accepted": true,
+    "source": "parseInt('11', '2');\nexport {};\n"
+  },
+  {
+    "file": "control-275.a",
+    "accepted": true,
+    "source": "parseInt('11', '2');\nexport {};\n"
+  },
+  {
+    "file": "control-276.js",
+    "accepted": true,
+    "source": "parseInt('11', 16n);\nexport {};\n"
+  },
+  {
+    "file": "control-276.a",
+    "accepted": true,
+    "source": "parseInt('11', 16n);\nexport {};\n"
+  },
+  {
+    "file": "control-277.js",
+    "accepted": true,
+    "source": "parseInt('11', 2 /**/);\nexport {};\n"
+  },
+  {
+    "file": "control-277.a",
+    "accepted": true,
+    "source": "parseInt('11', 2 /**/);\nexport {};\n"
+  },
+  {
+    "file": "control-278.js",
+    "accepted": true,
+    "source": "parseInt('11', 2)\nexport {};\n"
+  },
+  {
+    "file": "control-278.a",
+    "accepted": true,
+    "source": "parseInt('11', 2)\nexport {};\n"
+  },
+  {
+    "file": "control-279.js",
+    "accepted": true,
+    "source": "parseInt('11', 2) in foo\nexport {};\n"
+  },
+  {
+    "file": "control-279.a",
+    "accepted": true,
+    "source": "parseInt('11', 2) in foo\nexport {};\n"
+  },
+  {
+    "file": "control-280.js",
+    "accepted": true,
+    "source": "parseInt('11', 2)+5\nexport {};\n"
+  },
+  {
+    "file": "control-280.a",
+    "accepted": true,
+    "source": "parseInt('11', 2)+5\nexport {};\n"
+  },
+  {
+    "file": "control-281.js",
+    "accepted": true,
+    "source": "parseInt('11', 2)//comment\n;\nexport {};\n"
+  },
+  {
+    "file": "control-281.a",
+    "accepted": true,
+    "source": "parseInt('11', 2)//comment\n;\nexport {};\n"
+  },
+  {
+    "file": "control-282.js",
+    "accepted": true,
+    "source": "parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-282.a",
+    "accepted": true,
+    "source": "parseInt('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-283.js",
+    "accepted": true,
+    "source": "parseInt('11', 2)in foo\nexport {};\n"
+  },
+  {
+    "file": "control-283.a",
+    "accepted": true,
+    "source": "parseInt('11', 2)in foo\nexport {};\n"
+  },
+  {
+    "file": "control-284.js",
+    "accepted": true,
+    "source": "parseInt('11', 2, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-284.a",
+    "accepted": true,
+    "source": "parseInt('11', 2, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-285.js",
+    "accepted": true,
+    "source": "parseInt('11', 2, 3, 4);\nexport {};\n"
+  },
+  {
+    "file": "control-285.a",
+    "accepted": true,
+    "source": "parseInt('11', 2, 3, 4);\nexport {};\n"
+  },
+  {
+    "file": "control-286.js",
+    "accepted": true,
+    "source": "parseInt('11', 2n);\nexport {};\n"
+  },
+  {
+    "file": "control-286.a",
+    "accepted": true,
+    "source": "parseInt('11', 2n);\nexport {};\n"
+  },
+  {
+    "file": "control-287.js",
+    "accepted": true,
+    "source": "parseInt('11'/**/, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-287.a",
+    "accepted": true,
+    "source": "parseInt('11'/**/, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-288.js",
+    "accepted": true,
+    "source": "parseInt('11111111111111111111111111111111111111111111111111111111111111111',2);parseInt('ffffffffffffffff',16);parseInt('10000000000000000',16);parseInt('1_0',2);\nexport {};\n"
+  },
+  {
+    "file": "control-288.a",
+    "accepted": true,
+    "source": "parseInt('11111111111111111111111111111111111111111111111111111111111111111',2);parseInt('ffffffffffffffff',16);parseInt('10000000000000000',16);parseInt('1_0',2);\nexport {};\n"
+  },
+  {
+    "file": "control-289.js",
+    "accepted": true,
+    "source": "parseInt('1234', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-289.a",
+    "accepted": true,
+    "source": "parseInt('1234', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-290.js",
+    "accepted": true,
+    "source": "parseInt('1234.5', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-290.a",
+    "accepted": true,
+    "source": "parseInt('1234.5', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-291.js",
+    "accepted": true,
+    "source": "parseInt('1F7', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-291.a",
+    "accepted": true,
+    "source": "parseInt('1F7', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-292.js",
+    "accepted": true,
+    "source": "parseInt('1_0', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-292.a",
+    "accepted": true,
+    "source": "parseInt('1_0', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-293.js",
+    "accepted": true,
+    "source": "parseInt('1\ufe0f\u20e33\ufe0f\u20e33\ufe0f\u20e37\ufe0f\u20e3', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-293.a",
+    "accepted": true,
+    "source": "parseInt('1\ufe0f\u20e33\ufe0f\u20e33\ufe0f\u20e37\ufe0f\u20e3', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-294.js",
+    "accepted": true,
+    "source": "parseInt('777', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-294.a",
+    "accepted": true,
+    "source": "parseInt('777', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-295.js",
+    "accepted": true,
+    "source": "parseInt('7999', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-295.a",
+    "accepted": true,
+    "source": "parseInt('7999', 8);\nexport {};\n"
+  },
+  {
+    "file": "control-296.js",
+    "accepted": true,
+    "source": "parseInt('A', 16)+5\nexport {};\n"
+  },
+  {
+    "file": "control-296.a",
+    "accepted": true,
+    "source": "parseInt('A', 16)+5\nexport {};\n"
+  },
+  {
+    "file": "control-297.js",
+    "accepted": true,
+    "source": "parseInt('A', 16)in foo\nexport {};\n"
+  },
+  {
+    "file": "control-297.a",
+    "accepted": true,
+    "source": "parseInt('A', 16)in foo\nexport {};\n"
+  },
+  {
+    "file": "control-298.js",
+    "accepted": true,
+    "source": "parseInt('\\x31\\u0031',2);parseInt('00',8);parseInt('',16);parseInt(' +11',2);parseInt(('11'),2);parseInt('11',(2));\nexport {};\n"
+  },
+  {
+    "file": "control-298.a",
+    "accepted": true,
+    "source": "parseInt('\\x31\\u0031',2);parseInt('00',8);parseInt('',16);parseInt(' +11',2);parseInt(('11'),2);parseInt('11',(2));\nexport {};\n"
+  },
+  {
+    "file": "control-299.js",
+    "accepted": true,
+    "source": "parseInt('ff', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-299.a",
+    "accepted": true,
+    "source": "parseInt('ff', 16);\nexport {};\n"
+  },
+  {
+    "file": "control-300.js",
+    "accepted": true,
+    "source": "parseInt(//\n'11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-300.a",
+    "accepted": true,
+    "source": "parseInt(//\n'11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-301.js",
+    "accepted": true,
+    "source": "parseInt(/foo/, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-301.a",
+    "accepted": true,
+    "source": "parseInt(/foo/, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-302.js",
+    "accepted": true,
+    "source": "parseInt(1);\nexport {};\n"
+  },
+  {
+    "file": "control-302.a",
+    "accepted": true,
+    "source": "parseInt(1);\nexport {};\n"
+  },
+  {
+    "file": "control-303.js",
+    "accepted": true,
+    "source": "parseInt(1, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-303.a",
+    "accepted": true,
+    "source": "parseInt(1, 3);\nexport {};\n"
+  },
+  {
+    "file": "control-304.js",
+    "accepted": true,
+    "source": "parseInt(11, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-304.a",
+    "accepted": true,
+    "source": "parseInt(11, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-305.js",
+    "accepted": true,
+    "source": "parseInt(1e5, 16);\nexport {};\n"
+  },
+  {
+    "file": "control-305.a",
+    "accepted": true,
+    "source": "parseInt(1e5, 16);\nexport {};\n"
+  },
+  {
+    "file": "control-306.js",
+    "accepted": true,
+    "source": "parseInt(1n, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-306.a",
+    "accepted": true,
+    "source": "parseInt(1n, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-307.js",
+    "accepted": true,
+    "source": "parseInt(`11${foo}`, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-307.a",
+    "accepted": true,
+    "source": "parseInt(`11${foo}`, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-308.js",
+    "accepted": true,
+    "source": "parseInt(`111110111`, 2) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-308.a",
+    "accepted": true,
+    "source": "parseInt(`111110111`, 2) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-309.js",
+    "accepted": true,
+    "source": "parseInt(`11`, 16n);\nexport {};\n"
+  },
+  {
+    "file": "control-309.a",
+    "accepted": true,
+    "source": "parseInt(`11`, 16n);\nexport {};\n"
+  },
+  {
+    "file": "control-310.js",
+    "accepted": true,
+    "source": "parseInt(`11`/**/, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-310.a",
+    "accepted": true,
+    "source": "parseInt(`11`/**/, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-311.js",
+    "accepted": true,
+    "source": "parseInt(`1234.5`, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-311.a",
+    "accepted": true,
+    "source": "parseInt(`1234.5`, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-312.js",
+    "accepted": true,
+    "source": "parseInt(`1234`, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-312.a",
+    "accepted": true,
+    "source": "parseInt(`1234`, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-313.js",
+    "accepted": true,
+    "source": "parseInt(`1F7`, 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-313.a",
+    "accepted": true,
+    "source": "parseInt(`1F7`, 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-314.js",
+    "accepted": true,
+    "source": "parseInt(`767`, 8) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-314.a",
+    "accepted": true,
+    "source": "parseInt(`767`, 8) === 503;\nexport {};\n"
+  },
+  {
+    "file": "control-315.js",
+    "accepted": true,
+    "source": "parseInt(`7999`, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-315.a",
+    "accepted": true,
+    "source": "parseInt(`7999`, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-316.js",
+    "accepted": true,
+    "source": "parseInt(``, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-316.a",
+    "accepted": true,
+    "source": "parseInt(``, 8);\nexport {};\n"
+  },
+  {
+    "file": "control-317.js",
+    "accepted": true,
+    "source": "parseInt(foo);\nexport {};\n"
+  },
+  {
+    "file": "control-317.a",
+    "accepted": true,
+    "source": "parseInt(foo);\nexport {};\n"
+  },
+  {
+    "file": "control-318.js",
+    "accepted": true,
+    "source": "parseInt(foo, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-318.a",
+    "accepted": true,
+    "source": "parseInt(foo, 2);\nexport {};\n"
+  },
+  {
+    "file": "control-319.js",
+    "accepted": true,
+    "source": "parseInt/**/('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-319.a",
+    "accepted": true,
+    "source": "parseInt/**/('11', 2);\nexport {};\n"
+  },
+  {
+    "file": "control-320.js",
+    "accepted": true,
+    "source": "parseInt?.(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-320.a",
+    "accepted": true,
+    "source": "parseInt?.(\"1F7\", 16) === 255;\nexport {};\n"
+  },
+  {
+    "file": "control-321.js",
+    "accepted": true,
+    "source": "{ const Object: any = {}; Object.prototype.hasOwnProperty.call(obj, prop); }\nexport {};\n"
+  },
+  {
+    "file": "control-321.a",
+    "accepted": true,
+    "source": "{ const Object: any = {}; Object.prototype.hasOwnProperty.call(obj, prop); }\nexport {};\n"
+  }
+]

@@ -1,0 +1,19 @@
+import { Wave22SymbolFacts } from './symbol_facts_wave_22.a';
+import { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+import type { Wave22Symbol } from './symbol_facts_wave_22.a';
+
+export class ScopeExportSymbols {
+    readonly own: Wave22Symbol;
+    readonly alias: Wave22Symbol;
+    readonly scoped: number;
+    constructor(bindings: Bindings, index: number, flags: number, name: string) {
+        const decoder = new Wave22SymbolFacts(bindings);
+        const frames = new Frames(bindings.rules.ask(index, `scope-export-symbols\n${flags}\n${name}`));
+        header(frames, 'scope-export-symbols');
+        this.own = decoder.symbol(frames);
+        this.alias = decoder.symbol(frames);
+        this.scoped = frames.natural();
+        frames.end();
+    }
+}

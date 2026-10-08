@@ -48,6 +48,8 @@ export class Checker {
     constructor(program: number, path: string, parser: Parser, source: string, replay: string | undefined, record: boolean) {
         this.program = program; this.path = path; this.parser = parser; this.record = record;
         this.replay = replay === undefined ? undefined : new Frames(replay);
+        this.offsets = [0]; this.refusals = []; this.recorded = [];
+        this.root = -1; this.rule = ''; this.reads = [];
         let bytes = 0;
         for(let index = 0; index < source.length; index++) {
             const code = source.codePointAt(index) ?? 0;
@@ -72,7 +74,14 @@ export class Checker {
         const node = this.parser.node(index);
         const start = this.offsets[node.pos] ?? panic('checker span outside source');
         const end = this.offsets[node.end] ?? panic('checker span outside source');
-        const key = this.record || this.replay !== undefined ? frame(this.path) + frame(`${start}`) + frame(`${end}`) + frame(node.kind) + frame(question) : '';
+        return this.askAt(this.path, start, end, node.kind, question);
+    }
+    // Declaration facts can refer to a node in another source file of this same program.
+    askAt(path: string, start: number, end: number, kind: string, question: string): Answer {
+        if(path !== this.path && !this.reads.includes('ReadsOtherFiles')) {
+            return this.refuse(start, end, 'undeclared program read ReadsOtherFiles');
+        }
+        const key = this.record || this.replay !== undefined ? frame(path) + frame(`${start}`) + frame(`${end}`) + frame(kind) + frame(question) : '';
         let value = '';
         if(this.replay !== undefined) {
             if(this.replay.cursor === this.replay.text.length) { return this.refuse(start, end, 'missing transcript entry'); }
@@ -85,7 +94,7 @@ export class Checker {
         }
         else {
             // Library's result envelope preserves the C error buffer verbatim.
-            const inspected = inspect(this.program, this.path, start, end, node.kind, question);
+            const inspected = inspect(this.program, path, start, end, kind, question);
             if(inspected.kind === 'Error') {
                 if(this.record) { this.recorded.push(frame(key) + frame('Error') + frame(inspected.message)); }
                 return this.refuse(start, end, inspected.message);

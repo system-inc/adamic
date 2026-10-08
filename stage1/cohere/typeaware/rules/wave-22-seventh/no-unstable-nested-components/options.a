@@ -1,0 +1,13 @@
+// Go's glob is translated once, then passed to the required runtime constructor.
+// Stage 0 currently refuses dynamic construction; the default uses patterns.a.
+export function optionPattern(pattern: string): RegExp {
+    if(pattern===''){pattern='render*';}
+    let source='^';const escaped=/[\\.+()[\]{}^$|]/u;
+    for(let index=0;index<pattern.length;index++) {
+        const character=pattern.slice(index,index+1);
+        if(character==='*'){source+='[^\\n]*';}
+        else if(character==='?'){source+='[^\\n]';}
+        else {source+=escaped.test(character)?'\\'+character:character;}
+    }
+    source+='(?![\\s\\S])';return new RegExp(source,'u');
+}

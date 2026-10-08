@@ -1,0 +1,8 @@
+=== RUN   TestWave22NextAgreement
+    wave_22_next_test.go:168: wave-22-next: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/reassign.ts:50:21: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- FAIL: TestWave22NextAgreement (3.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	3.144s
+FAIL

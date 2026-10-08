@@ -1,0 +1,17 @@
+=== RUN   TestGlobalSource
+=== RUN   TestGlobalSource/script
+    global_source_test.go:41: accepted global-source suffix
+=== RUN   TestGlobalSource/module
+    global_source_test.go:41: accepted global-source suffix
+=== RUN   TestGlobalSource/sloppy-option
+    global_source_test.go:41: accepted global-source suffix
+=== RUN   TestGlobalSource/javascript
+    global_source_test.go:41: accepted global-source suffix
+--- FAIL: TestGlobalSource (0.28s)
+    --- FAIL: TestGlobalSource/script (0.08s)
+    --- FAIL: TestGlobalSource/module (0.07s)
+    --- FAIL: TestGlobalSource/sloppy-option (0.05s)
+    --- FAIL: TestGlobalSource/javascript (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.292s
+FAIL

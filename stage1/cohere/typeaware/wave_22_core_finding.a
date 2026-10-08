@@ -1,0 +1,6 @@
+import type { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+export function coreFinding(bindings: Bindings, rule: string, id: string, message: string, index: number): void {
+    const rules = bindings.rules; const node = rules.parser.node(index);
+    rules.findings.push(new Diagnostic(rule, id, message, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+}

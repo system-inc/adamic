@@ -1,0 +1,95 @@
+{
+  "main": "b8fb957aa839a9e8cb0b54279dd9864fa317bd30",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "native_jsx_parser": "a8a62d62ca49db7415e14c3887dd305022b17309",
+  "accepted_controls": 272,
+  "comparisons": {
+    "controls": {
+      "bytes": 73462,
+      "last_line": "findings 181",
+      "go_seconds": 0.13540135299990652,
+      "native_seconds": 0.35701853100181324
+    },
+    "ignore-case": {
+      "bytes": 73739,
+      "last_line": "findings 182",
+      "go_seconds": 0.15905566699802876,
+      "native_seconds": 0.37481499500063364
+    },
+    "allow-as-props": {
+      "bytes": 58964,
+      "last_line": "findings 152",
+      "go_seconds": 0.1808764160014107,
+      "native_seconds": 0.34975994900014484
+    },
+    "controls-asan": {
+      "bytes": 73462,
+      "last_line": "findings 181",
+      "go_seconds": 0.17769902700092643,
+      "native_seconds": 1.6773046210000757
+    },
+    "repository": {
+      "bytes": 18485,
+      "last_line": "findings 0",
+      "go_seconds": 0.2204239669990784,
+      "native_seconds": 4.086045730997284
+    },
+    "repository-asan": {
+      "bytes": 18485,
+      "last_line": "findings 0",
+      "go_seconds": 0.18477891400107183,
+      "native_seconds": 15.150722037997184
+    },
+    "compiler": {
+      "bytes": 5857,
+      "last_line": "findings 0",
+      "go_seconds": 0.4658772190014133,
+      "native_seconds": 26.728235141999903
+    },
+    "compiler-asan": {
+      "bytes": 5857,
+      "last_line": "findings 0",
+      "go_seconds": 0.6273111880000215,
+      "native_seconds": 108.10600285499822
+    }
+  },
+  "mutants": {
+    "default-id": {
+      "first_difference": 772,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "nested-id": {
+      "first_difference": 18310,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "sort-id": {
+      "first_difference": 53364,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "jsx-attribute-flag": {
+      "first_difference": 18244,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "class-fallback-flag": {
+      "first_difference": 933,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    },
+    "computed-trivia": {
+      "first_difference": 66117,
+      "build_exit": 0,
+      "run_exit": 0,
+      "stderr_bytes": 0
+    }
+  }
+}

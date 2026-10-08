@@ -1,0 +1,38 @@
+import { Frames, header } from './frames.ts';
+import type { Bindings } from './bindings.ts';
+export class BindingOrigin {
+    readonly present: boolean;
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly constant: boolean;
+    readonly parentKind: string;
+    readonly parentStart: number;
+    readonly parentEnd: number;
+    constructor(present: boolean, file: string, kind: string, start: number, end: number, constant: boolean,
+        parentKind: string, parentStart: number, parentEnd: number) {
+        this.present = present; this.file = file; this.kind = kind; this.start = start; this.end = end; this.constant = constant;
+        this.parentKind = parentKind; this.parentStart = parentStart; this.parentEnd = parentEnd;
+    }
+}
+export class BindingState {
+    readonly identity: number;
+    readonly flags: number;
+    readonly alias: number;
+    readonly origin: BindingOrigin;
+    readonly aliasOrigin: BindingOrigin;
+    constructor(identity: number, flags: number, alias: number, origin: BindingOrigin, aliasOrigin: BindingOrigin) {
+        this.identity = identity; this.flags = flags; this.alias = alias; this.origin = origin; this.aliasOrigin = aliasOrigin;
+    }
+}
+export function bindingOrigin(frames: Frames): BindingOrigin {
+    if(!frames.yes()) { return new BindingOrigin(false, '', '', 0, 0, false, '', 0, 0); }
+    return new BindingOrigin(true, frames.field(), frames.field(), frames.natural(), frames.natural(), frames.yes(),
+        frames.field(), frames.natural(), frames.natural());
+}
+export function bindingState(bindings: Bindings, index: number): BindingState {
+    const frames = new Frames(bindings.rules.ask(index, 'binding-state')); header(frames, 'binding-state');
+    const identity = frames.natural(); const flags = frames.natural(); const alias = frames.natural();
+    const result = new BindingState(identity, flags, alias, bindingOrigin(frames), bindingOrigin(frames)); frames.end(); return result;
+}

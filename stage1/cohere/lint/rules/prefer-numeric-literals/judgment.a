@@ -1,0 +1,50 @@
+import type { Bindings } from '../../../typeaware/bindings.ts';
+import { PreferenceSupport } from '../../../typeaware/wave_22_preference_support.a';
+export class PreferNumericLiterals {
+    readonly support: PreferenceSupport;
+    constructor(bindings: Bindings) { this.support = new PreferenceSupport(bindings); }
+    parseInt(index: number): boolean {
+        const support = this.support; const rules = support.bindings.rules; index = rules.skip(index); const node = rules.parser.node(index);
+        if(node.kind === 'Identifier') { return node.text === 'parseInt' && support.global(index); }
+        if(support.property(index) !== 'parseInt') { return false; }
+        const receiver = rules.skip(node.children[0] ?? -1); if(receiver < 0) { return false; }
+        const root = rules.parser.node(receiver); return root.kind === 'Identifier' && root.text === 'Number' && support.global(receiver);
+    }
+    digit(code: number): number {
+        return code >= 48 && code <= 57 ? code - 48 : code >= 65 && code <= 90 ? code - 55 : code >= 97 && code <= 122 ? code - 87 : -1;
+    }
+    // ParseUint's uint64 result is kept in two exact 32-bit limbs. Conversion
+    // to a double happens once, while the production parseInt accumulates doubles.
+    equivalent(text: string, radix: number): boolean {
+        if(text.length === 0) { return false; }
+        let high = 0; let low = 0; let sequential = 0;
+        for(let at = 0; at < text.length; at++) {
+            const digit = this.digit(text.charCodeAt(at)); if(digit < 0 || digit >= radix) { return false; }
+            const product = low * radix + digit; const carry = Math.floor(product / 4294967296);
+            low = product - carry * 4294967296; high = high * radix + carry;
+            if(high >= 4294967296) { return false; }
+            sequential = sequential * radix + digit;
+        }
+        return high * 4294967296 + low === sequential;
+    }
+    run(): void {
+        const support = this.support; const rules = support.bindings.rules; const text = rules.scanner.text;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index); if(!support.call(index) || node.list !== 2) { continue; }
+            const value = rules.parser.node(node.children[node.children.length - 2] ?? -1);
+            const base = rules.parser.node(node.children[node.children.length - 1] ?? -1);
+            if(!['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(value.kind) || base.kind !== 'NumericLiteral') { continue; }
+            const radix = Number.parseFloat(base.text); if(![2, 8, 16].includes(radix) || !this.parseInt(node.children[0] ?? -1)) { continue; }
+            const system = radix === 2 ? 'binary' : radix === 8 ? 'octal' : 'hexadecimal'; const prefix = radix === 2 ? '0b' : radix === 8 ? '0o' : '0x';
+            const callee = rules.parser.node(node.children[0] ?? -1); const functionName = text.slice(rules.start(callee), callee.end);
+            const finding = support.report(index, 'prefer-numeric-literals', 'useLiteral', `Use ${system} literals instead of ${functionName}(). A literal says the value in the base it was written in, with no call to read and no radix argument to get wrong, and the engine reads it at parse time rather than at every evaluation.`);
+            const start = rules.start(node);
+            if(!support.comment(start, node.end) && this.equivalent(value.text, radix)) {
+                let replacement = prefix + value.text;
+                if(support.identifier(start - 1, true)) { replacement = ' ' + replacement; }
+                if(support.identifier(node.end)) { replacement += ' '; }
+                finding.repairs.push(support.repair(start, node.end, replacement));
+            }
+        }
+    }
+}

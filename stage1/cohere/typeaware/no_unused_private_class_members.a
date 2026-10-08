@@ -1,0 +1,187 @@
+import { Bindings } from './bindings.ts';
+import { Wave22SymbolFacts } from './symbol_facts_wave_22.a';
+import type { Wave22Symbol } from './symbol_facts_wave_22.a';
+import { Reassign } from './reassign.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+export class PrivateMember {
+    readonly name: number;
+    readonly declaration: number;
+    readonly end: number;
+    readonly accessor: boolean;
+    readonly hash: boolean;
+    used = false;
+    constructor(name: number, declaration: number, end: number, accessor: boolean, hash: boolean) {
+        this.name = name; this.declaration = declaration; this.end = end;
+        this.accessor = accessor; this.hash = hash;
+    }
+}
+
+export class NoUnusedPrivateClassMembers {
+    readonly bindings: Bindings;
+    readonly facts: Wave22SymbolFacts;
+    readonly assignments: Reassign;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings; this.facts = new Wave22SymbolFacts(bindings); this.assignments = new Reassign(bindings.rules);
+    }
+    name(index: number): number {
+        const rules = this.bindings.rules;
+        for(const child of rules.parser.node(index).children) {
+            if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName',
+                'ObjectBindingPattern', 'ArrayBindingPattern'].includes(rules.parser.node(child).kind)) { return child; }
+        }
+        return -1;
+    }
+    modifier(index: number, kind: string): boolean {
+        return this.bindings.rules.parser.node(index).children.some((child) => this.bindings.rules.parser.node(child).kind === kind);
+    }
+    collect(classIndex: number): PrivateMember[] {
+        const rules = this.bindings.rules; const result: PrivateMember[] = [];
+        for(const member of rules.parser.node(classIndex).children) {
+            const node = rules.parser.node(member);
+            if(['PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind)) {
+                const name = this.name(member);
+                if(name < 0 || rules.parser.node(name).kind === 'ComputedPropertyName' || this.modifier(member, 'DeclareKeyword')) { continue; }
+                const hash = rules.parser.node(name).kind === 'PrivateIdentifier';
+                if(!hash && !this.modifier(member, 'PrivateKeyword')) { continue; }
+                result.push(new PrivateMember(name, member, rules.parser.node(name).end,
+                    node.kind === 'GetAccessor' || node.kind === 'SetAccessor', hash));
+            }
+            if(node.kind === 'Constructor') {
+                for(const parameter of node.children) {
+                    if(rules.parser.node(parameter).kind !== 'Parameter' || !this.modifier(parameter, 'PrivateKeyword')) { continue; }
+                    const name = this.name(parameter);
+                    if(name < 0 || rules.parser.node(name).kind !== 'Identifier') { continue; }
+                    const initialized = this.bindings.shape.initializer(parameter);
+                    let end = rules.parser.node(parameter).end;
+                    if(initialized >= 0) { end = rules.parser.node(name).end; }
+                    for(const child of rules.parser.node(parameter).children.slice(rules.parser.node(parameter).children.indexOf(name) + 1)) {
+                        if(child === initialized) { break; }
+                        if(!['QuestionToken', 'ExclamationToken'].includes(rules.parser.node(child).kind)) { end = rules.parser.node(child).end; }
+                    }
+                    result.push(new PrivateMember(name, parameter, end, false, false));
+                }
+            }
+        }
+        return result;
+    }
+    destructuring(index: number): boolean {
+        const rules = this.bindings.rules; let current = index;
+        while(this.bindings.parent(current) >= 0) {
+            const parentIndex = this.bindings.parent(current); const parent = rules.parser.node(parentIndex);
+            if(['ArrayLiteralExpression', 'ObjectLiteralExpression', 'PropertyAssignment', 'SpreadElement',
+                'ParenthesizedExpression', 'BindingElement'].includes(parent.kind)) { current = parentIndex; continue; }
+            return parent.kind === 'BinaryExpression' && parent.children[0] === current &&
+                this.assignments.assignment(rules.parser.node(parent.children[1] ?? -1).kind);
+        }
+        return false;
+    }
+    writeOnly(index: number): boolean {
+        const rules = this.bindings.rules; const parentIndex = this.bindings.parent(index);
+        if(parentIndex < 0) { return false; }
+        const parent = rules.parser.node(parentIndex); const grand = this.bindings.parent(parentIndex);
+        const discarded = grand >= 0 && rules.parser.node(grand).kind === 'ExpressionStatement';
+        if(parent.kind === 'BinaryExpression') {
+            const operator = rules.parser.node(parent.children[1] ?? -1).kind;
+            return parent.children[0] === index && this.assignments.assignment(operator) &&
+                (operator === 'EqualsToken' || discarded);
+        }
+        if(parent.kind === 'PrefixUnaryExpression') { return ['PlusPlusToken', 'MinusMinusToken'].includes(parent.operator) && discarded; }
+        if(parent.kind === 'PostfixUnaryExpression') { return discarded; }
+        if(['ForInStatement', 'ForOfStatement'].includes(parent.kind)) { return parent.children[0] === index; }
+        if(['ArrayLiteralExpression', 'SpreadElement', 'BindingElement'].includes(parent.kind)) { return this.destructuring(parentIndex); }
+        return parent.kind === 'PropertyAssignment' && parent.children[parent.children.length - 1] === index && this.destructuring(parentIndex);
+    }
+    shadowed(index: number, text: string, outer: number): boolean {
+        const rules = this.bindings.rules; let current = this.bindings.parent(index);
+        while(current >= 0 && current !== outer) {
+            if(['ClassDeclaration', 'ClassExpression'].includes(rules.parser.node(current).kind)) {
+                for(const member of rules.parser.node(current).children) {
+                    const name = this.name(member);
+                    if(name >= 0 && rules.parser.node(name).kind === 'PrivateIdentifier' && rules.parser.node(name).text === text) { return true; }
+                }
+            }
+            current = this.bindings.parent(current);
+        }
+        return false;
+    }
+    resolved(symbol: Wave22Symbol, candidates: readonly PrivateMember[]): void {
+        const rules = this.bindings.rules;
+        for(const candidate of candidates) {
+            if(candidate.hash) { continue; }
+            const node = rules.parser.node(candidate.declaration);
+            if(symbol.declarations.some((declaration) => declaration.file === rules.path && declaration.kind === node.kind &&
+                declaration.start === rules.byte(node.pos) && declaration.end === rules.byte(node.end))) { candidate.used = true; }
+        }
+    }
+    source(index: number, binding: boolean): number {
+        const rules = this.bindings.rules; let current = this.bindings.parent(index);
+        while(current >= 0) {
+            const node = rules.parser.node(current);
+            if((binding ? ['ObjectBindingPattern', 'ArrayBindingPattern', 'BindingElement'] :
+                ['ObjectLiteralExpression', 'ArrayLiteralExpression', 'PropertyAssignment', 'ParenthesizedExpression']).includes(node.kind)) {
+                current = this.bindings.parent(current); continue;
+            }
+            if(node.kind === 'Parameter' || (binding && node.kind === 'VariableDeclaration')) { return this.bindings.shape.initializer(current); }
+            if(!binding && node.kind === 'BinaryExpression' && rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') { return node.children[2] ?? -1; }
+            return -1;
+        }
+        return -1;
+    }
+    visit(index: number, outer: number, nested: boolean, members: readonly PrivateMember[]): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = node.children[node.children.length - 1] ?? -1; const key = rules.parser.node(name);
+            const candidates = members.filter((member) => rules.parser.node(member.name).text === key.text && !member.used &&
+                (member.accessor || !this.writeOnly(index)));
+            if(key.kind === 'Identifier' && candidates.some((member) => !member.hash)) { this.resolved(this.facts.nodeSymbol(name), candidates); }
+            if(key.kind === 'PrivateIdentifier' && !this.shadowed(index, key.text, outer)) {
+                for(const member of candidates) { if(member.hash) { member.used = true; } }
+            }
+        }
+        if(node.kind === 'PrivateIdentifier' &&
+            (this.bindings.parent(index) < 0 || rules.parser.node(this.bindings.parent(index)).kind !== 'PropertyAccessExpression') &&
+            !this.shadowed(index, node.text, outer)) {
+            for(const member of members) { if(member.hash && member.name !== index && rules.parser.node(member.name).text === node.text) { member.used = true; } }
+        }
+        if(!nested && ['BindingElement', 'ShorthandPropertyAssignment'].includes(node.kind)) {
+            const binding = node.kind === 'BindingElement'; const name = binding ? this.bindings.shape.name(index) : this.name(index);
+            const property = binding && node.children[0] !== name && rules.parser.node(node.children[0] ?? -1).kind !== 'DotDotDotToken' ? node.children[0] ?? -1 : -1;
+            if(property >= 0) {
+                if(rules.parser.node(property).kind === 'Identifier') {
+                    const candidates = members.filter((member) => !member.hash && rules.parser.node(member.name).text === rules.parser.node(property).text);
+                    if(candidates.length > 0) { this.resolved(this.facts.nodeSymbol(property), candidates); }
+                }
+            }
+            else if(name >= 0 && rules.parser.node(name).kind === 'Identifier') {
+                const candidates = members.filter((member) => !member.hash && rules.parser.node(member.name).text === rules.parser.node(name).text);
+                const source = this.source(index, binding);
+                if(candidates.length > 0 && source >= 0) {
+                    const type = types(rules.ask(source, 'raw-shape'), 'raw-shape').root();
+                    const frames = new Frames(rules.ask(source, `property-declarations\n${type.id}\n${rules.parser.node(name).text}`));
+                    header(frames, 'property-declarations'); const symbol = this.facts.symbol(frames); frames.end();
+                    this.resolved(symbol, candidates);
+                }
+            }
+        }
+        const inside = nested || (index !== outer && ['ClassDeclaration', 'ClassExpression'].includes(node.kind));
+        for(const child of node.children) { this.visit(child, outer, inside, members); }
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(!['ClassDeclaration', 'ClassExpression'].includes(rules.parser.node(index).kind)) { continue; }
+            const members = this.collect(index);
+            if(members.length === 0) { continue; }
+            this.visit(index, index, false, members);
+            for(const member of members) {
+                if(member.used) { continue; }
+                const name = rules.parser.node(member.name);
+                rules.findings.push(new Diagnostic('no-unused-private-class-members', 'unusedPrivateClassMember',
+                    `Private class member '${name.text}' is defined but never used.`, rules.byte(rules.start(name)), rules.byte(member.end)));
+            }
+        }
+    }
+}

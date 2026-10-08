@@ -1,0 +1,29 @@
+[
+  {
+    "rule": "no-unstable-nested-components",
+    "file": "react/no_unstable_nested_components.go",
+    "line": 450,
+    "call": "MustCompile",
+    "expression": "`^use[A-Z0-9].*$`",
+    "go_pattern": "^use[A-Z0-9].*$",
+    "feature": "plain",
+    "id": "react/no_unstable_nested_components.go:450",
+    "js_pattern": "^use[A-Z0-9][^\\n]*(?![\\s\\S])",
+    "js_flags": "gu",
+    "status": "candidate, differential gate required"
+  },
+  {
+    "rule": "no-unstable-nested-components",
+    "file": "react/no_unstable_nested_components.go",
+    "line": 893,
+    "call": "Compile",
+    "expression": "builder.String()",
+    "go_pattern": null,
+    "feature": "dynamic",
+    "id": "react/no_unstable_nested_components.go:893",
+    "js_constructor": "new RegExp(pattern, 'u')",
+    "js_pattern": null,
+    "js_flags": "u",
+    "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+  }
+]

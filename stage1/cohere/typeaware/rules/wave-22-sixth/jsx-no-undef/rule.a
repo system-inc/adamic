@@ -1,0 +1,24 @@
+import { Kind } from '../common/kinds.a';
+import type { Node } from '../common/node.a';
+import type { Context } from '../common/context.a';
+export class Rule {
+    readonly context: Context;
+    constructor(context: Context){this.context=context;}
+    component(name: string): boolean {
+        if(name===''||name.includes('-')){return false;}
+        const first=name.charCodeAt(0);return first>=128||first<97||first>122;
+    }
+    visit(node: Node): void {
+        const context=this.context;let reference=context.first(node);
+        if(reference.kind===Kind.Identifier) {
+            if(!this.component(reference.text)){return;}
+        } else if(reference.kind===Kind.PropertyAccessExpression) {
+            while(reference.kind===Kind.PropertyAccessExpression){reference=context.first(reference);}
+            if(reference.kind!==Kind.Identifier){return;}
+        } else { return; }
+        const symbol=context.symbol(reference);
+        if(symbol.present&&(context.allowGlobals||reference.file.endsWith('.cjs')||symbol.files.includes(reference.file))){return;}
+        context.report(reference,'jsx-no-undef','jsxIdentifierNotDefined','This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.');
+    }
+}
+export function create(context: Context): Rule { return new Rule(context); }

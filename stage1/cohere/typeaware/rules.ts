@@ -1,5 +1,6 @@
 // Default production cohere judgments. The external library supplies facts only.
-import { panic, tsgoInspect } from 'adamic';
+import { panic } from 'adamic';
+import { Checker } from '../lint/checker.a';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
@@ -62,6 +63,12 @@ export function unsafeAssignment(
     return false;
 }
 
+function checkerFor(program: number, path: string, parser: Parser): Checker {
+    const checker = new Checker(program, path, parser, parser.scanner.text, undefined, false);
+    checker.enter('legacy-wave22', ['ReadsOtherFiles']);
+    return checker;
+}
+
 export class Rules {
     readonly program: number;
     readonly path: string;
@@ -71,6 +78,9 @@ export class Rules {
     readonly unary: UnaryMinus;
     readonly parents: number[] = [];
     readonly findings: Diagnostic[] = [];
+    readonly sharedChecker: Checker | undefined;
+    readonly inspectNode: ((index: number, question: string) => string) | undefined;
+    readonly inspectSelector: ((path: string, start: number, end: number, kind: string, question: string) => string) | undefined;
     queries = 0;
     constructor(
         program: number,
@@ -79,7 +89,12 @@ export class Rules {
         scanner: Scanner,
         offsets: readonly number[],
         unary: UnaryMinus,
+        inspectNode: ((index: number, question: string) => string) | undefined = undefined,
+        inspectSelector: ((path: string, start: number, end: number, kind: string, question: string) => string) | undefined = undefined,
     ) {
+        this.inspectNode = inspectNode;
+        this.inspectSelector = inspectSelector;
+        this.sharedChecker = inspectNode === undefined ? checkerFor(program, path, parser) : undefined;
         this.program = program;
         this.path = path;
         this.parser = parser;
@@ -99,9 +114,17 @@ export class Rules {
         return this.scanner.text.slice(this.start(node), node.end);
     }
     ask(index: number, question: string): string {
-        const node = this.parser.node(index);
         this.queries++;
-        return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.kind, question);
+        if(this.inspectNode !== undefined) { return this.inspectNode(index, question); }
+        const checker = this.sharedChecker ?? panic('missing standalone checker');
+        const answer = checker.ask(index, question);
+        return answer.value ?? panic(answer.reason);
+    }
+    askAt(path: string, start: number, end: number, kind: string, question: string): string {
+        if(this.inspectSelector !== undefined) { return this.inspectSelector(path, start, end, kind, question); }
+        const checker = this.sharedChecker ?? panic('missing standalone checker');
+        const answer = checker.askAt(path, start, end, kind, question);
+        return answer.value ?? panic(answer.reason);
     }
     name(type: TypeFact, index: number): string {
         const frames = new Frames(this.ask(index, `name\n${type.id}`));

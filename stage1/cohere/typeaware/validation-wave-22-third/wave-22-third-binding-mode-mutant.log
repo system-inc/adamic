@@ -1,0 +1,6 @@
+=== RUN   TestGlobalBinding
+    global_binding_test.go:80: accepted malformed global-binding "global-binding"
+--- FAIL: TestGlobalBinding (0.22s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.267s
+FAIL

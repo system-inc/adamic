@@ -1,0 +1,45 @@
+package lint
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Keep each rule independent when the shared package gate stops on a project-input gap.
+// JavaScript roots are inputs too; allowJs loads them, it does not suppress a check.
+func TestWave22RemainingRuleAgreement(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	module := emittedJavaScript(t, directory)
+	rows := upstream(t)
+	for _, name := range []string{"no-implicit-globals", "prefer-numeric-literals", "prefer-object-has-own", "prefer-object-spread", "react/jsx-fragments", "react/jsx-no-undef", "react/no-adjacent-inline-elements", "react/no-object-type-as-default-prop", "react/sort-default-props"} {
+		t.Run(name, func(t *testing.T) {
+			count := 0
+			for _, row := range rows {
+				fields := strings.Split(row, "\t")
+				if len(fields) < 2 || fields[1] != name {
+					continue
+				}
+				count++
+				t.Logf("case %d path %s", count, fields[0])
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options := fmt.Sprintf(`{"compilerOptions":{"strict":true,"allowJs":true},"files":[%q]}`, fields[0])
+				if err := os.WriteFile(config, []byte(options), 0600); err != nil {
+					t.Fatal(err)
+				}
+				compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+			}
+			if count == 0 {
+				t.Fatal("no upstream cases")
+			}
+			t.Logf("complete rule: %d captured cases", count)
+		})
+	}
+}

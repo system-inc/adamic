@@ -1,0 +1,79 @@
+import { panic } from 'adamic';
+import type { Bindings } from '../../../bindings.ts';
+import { Diagnostic } from '../../../diagnostic.ts';
+import { Frames, header } from '../../../frames.ts';
+import { Kind, kindNumbers } from './kinds.a';
+import { Node } from './node.a';
+import { declarationSyntax } from './symbol_declaration_syntax.a';
+export class SymbolSummary {
+    readonly present: boolean;
+    readonly files: readonly string[];
+    constructor(present: boolean, files: readonly string[]) { this.present=present;this.files=files; }
+}
+// The adapter translates parser kinds once. Visitors receive this cached node;
+// they neither refetch their subject nor dispatch on a textual kind.
+export class Context {
+    readonly bindings: Bindings;
+    readonly nodes: Node[]=[];
+    readonly sourceCount: number;
+    readonly fragmentElement: boolean;
+    readonly allowGlobals: boolean;
+    readonly declarationsByReference=new Map<number,number[]>();
+    constructor(bindings: Bindings, fragmentElement=false, allowGlobals=false) {
+        this.bindings=bindings;this.sourceCount=bindings.rules.parser.nodes.length;
+        this.fragmentElement=fragmentElement;this.allowGlobals=allowGlobals;
+        const kinds=kindNumbers();const rules=bindings.rules;
+        for(let index=0;index<this.sourceCount;index++) {
+            const raw=rules.parser.node(index);
+            this.nodes.push(new Node(index,kinds.get(raw.kind)??0,raw.kind,rules.path,rules.byte(raw.pos),rules.byte(raw.end),
+                rules.byte(rules.start(raw)),raw.text,raw.children,raw.list,bindings.parent(index)));
+        }
+    }
+    node(index: number): Node { return this.nodes[index]??panic('missing JSX node'); }
+    first(node: Node): Node { return this.node(node.children[0]??panic('missing first child')); }
+    last(node: Node): Node { return this.node(node.children[node.children.length-1]??panic('missing last child')); }
+    skip(node: Node): Node { let current=node;while(current.kind===Kind.ParenthesizedExpression){current=this.first(current);}return current; }
+    args(node: Node): number[] { return node.list<=0?[]:node.children.slice(node.children.length-node.list); }
+    report(node: Node, name: string, id: string, message: string): void {
+        this.bindings.rules.findings.push(new Diagnostic(name,id,message,node.start,node.end,'react/'));
+    }
+    declarations(reference: Node): number[] {
+        const cached=this.declarationsByReference.get(reference.index);if(cached!==undefined){return cached;}
+        const result=declarationSyntax(this.bindings.rules,reference,this.nodes);
+        this.declarationsByReference.set(reference.index,result);return result;
+    }
+    symbol(reference: Node): SymbolSummary {
+        const frames=new Frames(this.bindings.rules.askAt(reference.file,reference.pos,reference.end,reference.kindName,'node-symbol-details'));
+        header(frames,'node-symbol-details');const present=frames.yes();const files:string[]=[];
+        if(present) {
+            frames.natural();frames.natural();frames.field();const count=frames.natural();
+            for(let at=0;at<count;at++) {
+                files.push(frames.field());frames.field();frames.natural();frames.natural();frames.yes();frames.yes();frames.field();frames.field();frames.natural();frames.natural();
+                const tags=frames.natural();for(let tag=0;tag<tags;tag++){frames.field();frames.field();frames.natural();frames.natural();frames.field();}
+                const parameters=frames.natural();for(let parameter=0;parameter<parameters;parameter++){frames.field();}
+            }
+        }
+        frames.end();return new SymbolSummary(present,files);
+    }
+    opening(node: Node): Node { return node.kind===Kind.JsxElement?this.first(node):node; }
+    attributes(opening: Node): Node {
+        for(const child of opening.children){const candidate=this.node(child);if(candidate.kind===Kind.JsxAttributes){return candidate;}}
+        panic('missing JSX attributes');
+    }
+    importModule(declaration: Node): string {
+        let current=declaration;
+        for(const expected of [Kind.NamedImports,Kind.ImportClause,Kind.ImportDeclaration]) {
+            if(current.parent<0){return '';}
+            current=this.node(current.parent);if(current.kind!==expected){return '';}
+        }
+        const module=this.last(current);
+        return module.kind===Kind.StringLiteral||module.kind===Kind.NoSubstitutionTemplateLiteral?module.text:'';
+    }
+    initializer(declaration: Node): Node { return this.node(declaration.initializer); }
+    requireReact(node: Node, template=false): boolean {
+        if(node.kind!==Kind.CallExpression||node.list<=0){return false;}
+        const callee=this.first(node);if(callee.kind!==Kind.Identifier||callee.text!=='require'){return false;}
+        const first=this.node(this.args(node)[0]??-1);
+        return (first.kind===Kind.StringLiteral||(template&&first.kind===Kind.NoSubstitutionTemplateLiteral))&&first.text==='react';
+    }
+}

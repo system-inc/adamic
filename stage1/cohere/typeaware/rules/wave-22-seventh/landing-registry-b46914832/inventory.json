@@ -1,0 +1,1751 @@
+{
+  "origin_refs": 640,
+  "claim_blobs": 33,
+  "ranked": 197,
+  "available": [],
+  "refs": [
+    "origin",
+    "origin/apple/app",
+    "origin/apple/bridge",
+    "origin/apple/generator-sdk",
+    "origin/apple/json-decode-coverage",
+    "origin/area/apple",
+    "origin/area/compiler",
+    "origin/area/developer-tools",
+    "origin/area/library",
+    "origin/area/platforms",
+    "origin/area/runtime",
+    "origin/area/stage1-format",
+    "origin/area/stage1-lint",
+    "origin/area/stage3",
+    "origin/claude/adamic-file-input-args-r5tzc1",
+    "origin/claude/cycle-finder-fresh-writes-ssz3oh",
+    "origin/claude/port-cohere-second-slice-050g6a",
+    "origin/claude/port-gitignore-adamic-1bstfd",
+    "origin/claude/release-globals-at-exit-uqmaf6",
+    "origin/claude/review-afternoon-merges-8la3q9",
+    "origin/claude/stage1-language-gaps-o3lbxx",
+    "origin/claude/task-k9saws",
+    "origin/cloud/036s1yh",
+    "origin/cloud/0aja3b1",
+    "origin/cloud/0aja3b1-tokenizer",
+    "origin/cloud/1t32deq",
+    "origin/cloud/20d7ptt",
+    "origin/cloud/8abq3fp",
+    "origin/cloud/8abq3fp-write",
+    "origin/cloud/apple-generator",
+    "origin/cloud/apple-naming",
+    "origin/cloud/b2-notyets",
+    "origin/cloud/base-5d4c801",
+    "origin/cloud/codex-bitwise",
+    "origin/cloud/codex-distance-meter",
+    "origin/cloud/codex-generic-gaps",
+    "origin/cloud/codex-generics-values",
+    "origin/cloud/codex-regex-parser",
+    "origin/cloud/collections-fs",
+    "origin/cloud/counts-and-gaps",
+    "origin/cloud/exceptions-closures",
+    "origin/cloud/fixes-3-failures",
+    "origin/cloud/gate-log-e011f8f",
+    "origin/cloud/grok-class-features-coverage",
+    "origin/cloud/grok-coverage-release-fast-path",
+    "origin/cloud/grok-coverage-slab-checks",
+    "origin/cloud/grok-coverage-stdout-edges",
+    "origin/cloud/grok-date-coverage",
+    "origin/cloud/grok-enums-coverage",
+    "origin/cloud/grok-fnexpr-coverage",
+    "origin/cloud/grok-generator-oct6",
+    "origin/cloud/grok-hasown-panic",
+    "origin/cloud/grok-json-stringify-coverage",
+    "origin/cloud/grok-map-set-coverage",
+    "origin/cloud/grok-object-coverage",
+    "origin/cloud/grok-ownership",
+    "origin/cloud/grok-parallel",
+    "origin/cloud/grok-params-namespaces-coverage",
+    "origin/cloud/grok-regex-canonicalize",
+    "origin/cloud/grok-regex-cycle-coverage",
+    "origin/cloud/grok-regex-native-coverage",
+    "origin/cloud/grok-regions",
+    "origin/cloud/grok-shared-slices",
+    "origin/cloud/grok-test262-adapt",
+    "origin/cloud/grok-test262-runner",
+    "origin/cloud/grok-unicode-properties",
+    "origin/cloud/hx74vgw",
+    "origin/cloud/hx74vgw-alloc",
+    "origin/cloud/hx74vgw-cohere",
+    "origin/cloud/hx74vgw-index",
+    "origin/cloud/hx74vgw-loops",
+    "origin/cloud/hx74vgw-loops2",
+    "origin/cloud/hx74vgw-reads",
+    "origin/cloud/integrate-1",
+    "origin/cloud/integrate-10",
+    "origin/cloud/integrate-11",
+    "origin/cloud/integrate-12",
+    "origin/cloud/integrate-13",
+    "origin/cloud/integrate-14",
+    "origin/cloud/integrate-15",
+    "origin/cloud/integrate-15-final",
+    "origin/cloud/integrate-16",
+    "origin/cloud/integrate-2",
+    "origin/cloud/integrate-3",
+    "origin/cloud/integrate-4",
+    "origin/cloud/integrate-5",
+    "origin/cloud/integrate-6",
+    "origin/cloud/integrate-7",
+    "origin/cloud/integrate-7-flow",
+    "origin/cloud/integrate-7-reuse-fixtures",
+    "origin/cloud/integrate-8",
+    "origin/cloud/integrate-9",
+    "origin/cloud/integrate-c-1",
+    "origin/cloud/integrate-fix-658",
+    "origin/cloud/integrate-fix-ist",
+    "origin/cloud/integrate-fix-ist-2",
+    "origin/cloud/integrate-fix-ist-3",
+    "origin/cloud/integrate-fixes",
+    "origin/cloud/integrate-fixes-2",
+    "origin/cloud/integrate-fixes-3",
+    "origin/cloud/integrate-l-1",
+    "origin/cloud/integrate-r-1",
+    "origin/cloud/integrate-s2-1",
+    "origin/cloud/integrate-s2-2",
+    "origin/cloud/integrate-s3-1",
+    "origin/cloud/integrate-s3-2",
+    "origin/cloud/integrate-s3-3",
+    "origin/cloud/integrate-stack-0205",
+    "origin/cloud/integrate-typeof-null",
+    "origin/cloud/integrate-typeof-null-3",
+    "origin/cloud/json-decode",
+    "origin/cloud/json-decode-landing",
+    "origin/cloud/k9saws-shortest",
+    "origin/cloud/library-with-runtime",
+    "origin/cloud/merge-tree",
+    "origin/cloud/probes-10",
+    "origin/cloud/review-fixes",
+    "origin/cloud/rskcbts",
+    "origin/cloud/s2n8gc6",
+    "origin/cloud/s2n8gc6-flow",
+    "origin/cloud/set",
+    "origin/cloud/speculate-0050-1",
+    "origin/cloud/speculate-0050-2",
+    "origin/cloud/speculate-0145-1",
+    "origin/cloud/speculate-0145-2",
+    "origin/cloud/speculate-2210-1",
+    "origin/cloud/speculate-2245-1",
+    "origin/cloud/speculate-2245-2",
+    "origin/cloud/speculate-2310d-1",
+    "origin/cloud/speculate-2310d-2",
+    "origin/cloud/speculate-2310r-1",
+    "origin/cloud/speculate-2310r-2",
+    "origin/cloud/speculate-2340-1",
+    "origin/cloud/speculate-2340-2",
+    "origin/cloud/speculate-selftest-2",
+    "origin/cloud/vvwg423",
+    "origin/codex-lint-helpers-from-codex-lint-wave1-14",
+    "origin/codex/accessors",
+    "origin/codex/accessors-2",
+    "origin/codex/apple-step-1",
+    "origin/codex/arenas-iteration",
+    "origin/codex/arrow-block-view-site",
+    "origin/codex/async-ordinary",
+    "origin/codex/async-typeof",
+    "origin/codex/bench-strings-maps",
+    "origin/codex/borrow-chains",
+    "origin/codex/borrow-conventions",
+    "origin/codex/borrowed-element-reads",
+    "origin/codex/borrowed-loop-bindings",
+    "origin/codex/branch-shape",
+    "origin/codex/call-targets",
+    "origin/codex/call-targets-maythrow",
+    "origin/codex/census-generic-returns",
+    "origin/codex/census-small-families",
+    "origin/codex/checked-downcasts",
+    "origin/codex/class-features",
+    "origin/codex/class-inheritance",
+    "origin/codex/class-instance-key",
+    "origin/codex/cohere-bump",
+    "origin/codex/cohere-bump-ca939db",
+    "origin/codex/cohere-dry-guard",
+    "origin/codex/cohere-on-adamic",
+    "origin/codex/concurrency",
+    "origin/codex/concurrency-area",
+    "origin/codex/concurrency-async",
+    "origin/codex/concurrency-compiler",
+    "origin/codex/concurrency-moves",
+    "origin/codex/concurrency-scaling",
+    "origin/codex/concurrency-stack",
+    "origin/codex/coverage-oct6",
+    "origin/codex/cycle-iterator-slots",
+    "origin/codex/decode-ascii",
+    "origin/codex/devirtualize",
+    "origin/codex/diagnostics-audit",
+    "origin/codex/discriminant-writes",
+    "origin/codex/dot-a",
+    "origin/codex/emitter-speed",
+    "origin/codex/enums",
+    "origin/codex/environment-placement",
+    "origin/codex/error-classes",
+    "origin/codex/error-classes-counts",
+    "origin/codex/escape-hatches",
+    "origin/codex/fallthrough-and-implicit-returns",
+    "origin/codex/fast-gate-4core",
+    "origin/codex/flag-enums",
+    "origin/codex/flow-ranges-callback-alias",
+    "origin/codex/flow-stale-comments",
+    "origin/codex/fresh-clobbered-loads",
+    "origin/codex/function-expressions-for-in",
+    "origin/codex/fuzz-moves",
+    "origin/codex/fuzz-overrides",
+    "origin/codex/generic-maybe-undefined",
+    "origin/codex/graph-regions",
+    "origin/codex/grok-date-coverage-flow",
+    "origin/codex/grok-date-coverage-flow-land",
+    "origin/codex/host-buffer-crypto",
+    "origin/codex/host-buffer-crypto-land",
+    "origin/codex/host-fs-directory",
+    "origin/codex/host-fs-directory-land",
+    "origin/codex/host-fs-file",
+    "origin/codex/host-fs-file-land",
+    "origin/codex/host-fs-file-scratch-land",
+    "origin/codex/host-fs-fresh",
+    "origin/codex/host-node-types",
+    "origin/codex/host-node-types-land",
+    "origin/codex/host-process",
+    "origin/codex/host-process-land",
+    "origin/codex/host-promises",
+    "origin/codex/host-promises-typeof",
+    "origin/codex/import-cycles",
+    "origin/codex/imported-const-case",
+    "origin/codex/inherited-static-fields",
+    "origin/codex/integer-fast-paths",
+    "origin/codex/integer-fields",
+    "origin/codex/interface-downcasts",
+    "origin/codex/json-encode",
+    "origin/codex/jsx-variant-gate",
+    "origin/codex/library-array",
+    "origin/codex/library-array-2",
+    "origin/codex/library-array-2-land",
+    "origin/codex/library-array-3",
+    "origin/codex/library-date",
+    "origin/codex/library-date-3",
+    "origin/codex/library-date-land",
+    "origin/codex/library-date-refusals",
+    "origin/codex/library-date-refusals-land",
+    "origin/codex/library-error-value",
+    "origin/codex/library-function",
+    "origin/codex/library-iterator",
+    "origin/codex/library-json-2",
+    "origin/codex/library-json-2-land",
+    "origin/codex/library-json-number",
+    "origin/codex/library-json-stringify",
+    "origin/codex/library-map-set",
+    "origin/codex/library-map-set-2",
+    "origin/codex/library-map-set-iterators",
+    "origin/codex/library-math-number",
+    "origin/codex/library-number-math",
+    "origin/codex/library-object",
+    "origin/codex/library-object-3",
+    "origin/codex/library-object-prototype",
+    "origin/codex/library-object-prototype-land",
+    "origin/codex/library-string",
+    "origin/codex/library-string-2",
+    "origin/codex/library-string-3",
+    "origin/codex/library-string-3-land",
+    "origin/codex/lint-cost-split",
+    "origin/codex/lint-harness-dot-a",
+    "origin/codex/lint-helpers",
+    "origin/codex/lint-helpers-01",
+    "origin/codex/lint-helpers-02",
+    "origin/codex/lint-helpers-03",
+    "origin/codex/lint-helpers-04",
+    "origin/codex/lint-helpers-05",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-03",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-14",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-02",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-04",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-06",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-09",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-10",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-11",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-15",
+    "origin/codex/lint-helpers-from-lint-wave1-01",
+    "origin/codex/lint-helpers-from-lint-wave1-05",
+    "origin/codex/lint-helpers-from-lint-wave1-08",
+    "origin/codex/lint-helpers-from-lint-wave1-12",
+    "origin/codex/lint-helpers-from-lint-wave1-13",
+    "origin/codex/lint-inventory",
+    "origin/codex/lint-regex",
+    "origin/codex/lint-registration",
+    "origin/codex/lint-runtime-fixes",
+    "origin/codex/lint-runtime-profile",
+    "origin/codex/lint-wave-check",
+    "origin/codex/lint-wave1-01",
+    "origin/codex/lint-wave1-02",
+    "origin/codex/lint-wave1-02-land",
+    "origin/codex/lint-wave1-03",
+    "origin/codex/lint-wave1-04",
+    "origin/codex/lint-wave1-05",
+    "origin/codex/lint-wave1-06",
+    "origin/codex/lint-wave1-07",
+    "origin/codex/lint-wave1-08",
+    "origin/codex/lint-wave1-09",
+    "origin/codex/lint-wave1-10",
+    "origin/codex/lint-wave1-11",
+    "origin/codex/lint-wave1-12",
+    "origin/codex/lint-wave1-13",
+    "origin/codex/lint-wave1-14",
+    "origin/codex/lint-wave1-15",
+    "origin/codex/literal-optional-absent",
+    "origin/codex/literal-undefined-field",
+    "origin/codex/loop-array-hold",
+    "origin/codex/map-foreach-keys",
+    "origin/codex/map-hash-probe",
+    "origin/codex/map-number-hash",
+    "origin/codex/map-small",
+    "origin/codex/memory-worked-examples",
+    "origin/codex/method-values",
+    "origin/codex/multi-root",
+    "origin/codex/namespaces-tsc",
+    "origin/codex/narrowed-elements-and-flow",
+    "origin/codex/narrowed-number-field",
+    "origin/codex/narrowed-union-member",
+    "origin/codex/nbody-speed",
+    "origin/codex/nested-functions",
+    "origin/codex/no-optional-widening",
+    "origin/codex/no-shared-lists",
+    "origin/codex/non-null-check",
+    "origin/codex/normalize-long",
+    "origin/codex/nullable-references",
+    "origin/codex/object-prototype-methods",
+    "origin/codex/optional-chain-after-call",
+    "origin/codex/optional-field-write",
+    "origin/codex/optional-widening-refusal",
+    "origin/codex/organization-sweep",
+    "origin/codex/override-representation",
+    "origin/codex/parameter-properties-namespaces",
+    "origin/codex/parse-speed",
+    "origin/codex/parser-parity-2",
+    "origin/codex/parser-recovery",
+    "origin/codex/parser-recovery-land",
+    "origin/codex/perf-css-runtime",
+    "origin/codex/perf-field-access",
+    "origin/codex/perf-utf16-cache",
+    "origin/codex/phantom-brands",
+    "origin/codex/process-exit-and-tty",
+    "origin/codex/process-exit-and-tty-land",
+    "origin/codex/progress",
+    "origin/codex/proven-predicates",
+    "origin/codex/proven-relations",
+    "origin/codex/proven-type-guards",
+    "origin/codex/race-checks-reliable",
+    "origin/codex/realpath-node-walk",
+    "origin/codex/realpath-node-walk-land",
+    "origin/codex/records-lowering",
+    "origin/codex/refusal-pass-rulings",
+    "origin/codex/refuse-definite-assignment",
+    "origin/codex/refuse-suppression-directives",
+    "origin/codex/refuse-ts-nocheck",
+    "origin/codex/regex-cohere-patterns",
+    "origin/codex/regex-cycle-proof",
+    "origin/codex/regex-matcher",
+    "origin/codex/regex-native-fixes",
+    "origin/codex/regex-native-fixes-land",
+    "origin/codex/regex-protocol",
+    "origin/codex/regex-protocol-land",
+    "origin/codex/regex-remaining",
+    "origin/codex/regex-runtime-compiler",
+    "origin/codex/regex-split-surrogate",
+    "origin/codex/regex-split-surrogate-land",
+    "origin/codex/regex-v8-divergences",
+    "origin/codex/regex-v8-divergences-land",
+    "origin/codex/region-end",
+    "origin/codex/release-lto",
+    "origin/codex/rename-documentation",
+    "origin/codex/require-builtins",
+    "origin/codex/require-builtins-2",
+    "origin/codex/route-call-targets",
+    "origin/codex/runtime-records",
+    "origin/codex/runtime-statics",
+    "origin/codex/shared-ssa",
+    "origin/codex/split-hot-files",
+    "origin/codex/spread-any-position",
+    "origin/codex/stable-emitter-names",
+    "origin/codex/stack-check-scc",
+    "origin/codex/stage1-command",
+    "origin/codex/stage1-config",
+    "origin/codex/stage1-css",
+    "origin/codex/stage1-css-numbers",
+    "origin/codex/stage1-css-printer",
+    "origin/codex/stage1-css-selector",
+    "origin/codex/stage1-estree",
+    "origin/codex/stage1-formatter-slice",
+    "origin/codex/stage1-graphql-printer",
+    "origin/codex/stage1-json-format",
+    "origin/codex/stage1-jsx-lint",
+    "origin/codex/stage1-lint-batch2",
+    "origin/codex/stage1-lint-batch3",
+    "origin/codex/stage1-lint-batch4",
+    "origin/codex/stage1-lint-batch4-typescript",
+    "origin/codex/stage1-lint-batch5",
+    "origin/codex/stage1-lint-batch6",
+    "origin/codex/stage1-lint-batch6-perf",
+    "origin/codex/stage1-lint-batch8",
+    "origin/codex/stage1-lint-output",
+    "origin/codex/stage1-lint-output-land",
+    "origin/codex/stage1-markdown-blocks",
+    "origin/codex/stage1-markdown-escape",
+    "origin/codex/stage1-nextjs-lint",
+    "origin/codex/stage1-progress",
+    "origin/codex/stage1-ts-printer",
+    "origin/codex/stage1-yaml",
+    "origin/codex/stage3-api-node-types",
+    "origin/codex/stage3-base",
+    "origin/codex/stage3-contracts",
+    "origin/codex/stage3-contracts-ledger",
+    "origin/codex/stage3-diagnostics-oracle",
+    "origin/codex/stage3-explicit-any",
+    "origin/codex/stage3-fixtures-assertions",
+    "origin/codex/stage3-fixtures-cycles",
+    "origin/codex/stage3-fixtures-enums",
+    "origin/codex/stage3-fixtures-host",
+    "origin/codex/stage3-fixtures-namespaces",
+    "origin/codex/stage3-fixtures-nested-functions",
+    "origin/codex/stage3-fixtures-objects",
+    "origin/codex/stage3-fixtures-predicates",
+    "origin/codex/stage3-fixtures-records",
+    "origin/codex/stage3-fixtures-runner",
+    "origin/codex/stage3-fixtures-runner-2",
+    "origin/codex/stage3-fixtures-taste",
+    "origin/codex/stage3-host-errors",
+    "origin/codex/stage3-indexed-reads",
+    "origin/codex/stage3-indexed-reads-checker",
+    "origin/codex/stage3-indexed-reads-emit",
+    "origin/codex/stage3-indexed-reads-program",
+    "origin/codex/stage3-latent-census",
+    "origin/codex/stage3-meter-lowering",
+    "origin/codex/stage3-meter-two-lines",
+    "origin/codex/stage3-optional-declarations",
+    "origin/codex/stage3-parser-proof",
+    "origin/codex/stage3-readonly-views",
+    "origin/codex/stage3-regex-captures",
+    "origin/codex/stage3-scanner-proof",
+    "origin/codex/stage3-type-imports",
+    "origin/codex/static-methods",
+    "origin/codex/stdout-edges",
+    "origin/codex/stdout-edges-area",
+    "origin/codex/string-build-speed",
+    "origin/codex/string-views",
+    "origin/codex/string-views-concurrency",
+    "origin/codex/structural-library-view",
+    "origin/codex/super-early-this",
+    "origin/codex/switch-empty-cases",
+    "origin/codex/taste-not-soundness",
+    "origin/codex/test262-ts-validity",
+    "origin/codex/tsc-allocation-profile",
+    "origin/codex/tsc-census",
+    "origin/codex/tsc-cycle-census",
+    "origin/codex/tsc-strictness-survey",
+    "origin/codex/tsgo-c-library",
+    "origin/codex/tuple-length-views",
+    "origin/codex/typeaware-wave-01",
+    "origin/codex/typeaware-wave-02",
+    "origin/codex/typeaware-wave-03",
+    "origin/codex/typeaware-wave-04",
+    "origin/codex/typeaware-wave-05",
+    "origin/codex/typeaware-wave-06",
+    "origin/codex/typeaware-wave-07",
+    "origin/codex/typeaware-wave-08",
+    "origin/codex/typeaware-wave-09",
+    "origin/codex/typeaware-wave-10",
+    "origin/codex/typeaware-wave-11",
+    "origin/codex/typeaware-wave-12",
+    "origin/codex/typeaware-wave-13",
+    "origin/codex/typeaware-wave-14",
+    "origin/codex/typeaware-wave-15",
+    "origin/codex/typeaware-wave-16",
+    "origin/codex/typeaware-wave-17",
+    "origin/codex/typeaware-wave-18",
+    "origin/codex/typeaware-wave-19",
+    "origin/codex/typeaware-wave-20",
+    "origin/codex/typeaware-wave-21",
+    "origin/codex/typeaware-wave-22",
+    "origin/codex/typeaware-wave-23",
+    "origin/codex/typeaware-wave-24",
+    "origin/codex/typeaware-wave-25",
+    "origin/codex/typeaware-wave-26",
+    "origin/codex/typeaware-wave-27",
+    "origin/codex/typeaware-wave-28",
+    "origin/codex/typeaware-wave-29",
+    "origin/codex/typeaware-wave-30",
+    "origin/codex/typed-arrays",
+    "origin/codex/typed-arrays-runtime",
+    "origin/codex/typeof-null",
+    "origin/codex/typeof-null-2",
+    "origin/codex/typescript-scanner",
+    "origin/codex/unknown-narrowing",
+    "origin/codex/user-iterators",
+    "origin/codex/utf16-views",
+    "origin/codex/wasi-agreement",
+    "origin/codex/wasi-empty-path",
+    "origin/codex/wasm-engines",
+    "origin/codex/wasm-exports",
+    "origin/codex/wasm-landing",
+    "origin/codex/wasm-landing-b",
+    "origin/codex/wasm-release-flags",
+    "origin/codex/wasm-requests",
+    "origin/codex/wasm-requests-profile",
+    "origin/codex/wasm-shim",
+    "origin/codex/wasm-size",
+    "origin/codex/wasm-threads",
+    "origin/codex/wasm32-driver",
+    "origin/codex/wasm32-runtime",
+    "origin/codex/weak-narrowed-callback",
+    "origin/codex/weak-union-narrowed",
+    "origin/codex/weak-view-methods",
+    "origin/codex/workers-bench",
+    "origin/codex/workers-bridge",
+    "origin/codex/workers-compute-a",
+    "origin/codex/workers-day6-table",
+    "origin/codex/workers-decode-json",
+    "origin/codex/workers-json-schema-names",
+    "origin/codex/workers-split",
+    "origin/codex/workers-split-refine",
+    "origin/codex/workers-twin",
+    "origin/codex/workers-two-backends",
+    "origin/codex/workers-wasm-crossing",
+    "origin/codex/workers-wasm-host",
+    "origin/compiler/inherited-not-yet",
+    "origin/compiler/input-spread",
+    "origin/compiler/landing-batch-1",
+    "origin/compiler/liveness-throw",
+    "origin/compiler/private-generic",
+    "origin/compiler/private-generic-2",
+    "origin/compiler/reland-fixes-3",
+    "origin/compiler/stage3-front",
+    "origin/compiler/super-closure",
+    "origin/coverage/accessors",
+    "origin/coverage/borrow-chains",
+    "origin/coverage/devirtualize",
+    "origin/coverage/enums",
+    "origin/coverage/environment-placement",
+    "origin/coverage/error-classes",
+    "origin/coverage/error-names",
+    "origin/coverage/graph-regions",
+    "origin/coverage/host-promises-typeof",
+    "origin/coverage/input-spread",
+    "origin/coverage/integer-fast-paths",
+    "origin/coverage/json-decode",
+    "origin/coverage/library-array",
+    "origin/coverage/library-object",
+    "origin/coverage/lint-runtime-fixes",
+    "origin/coverage/loop-array-hold",
+    "origin/coverage/map-foreach-keys",
+    "origin/coverage/method-values",
+    "origin/coverage/nbody-speed",
+    "origin/coverage/non-null-check",
+    "origin/coverage/normalize-long",
+    "origin/coverage/nullable-references",
+    "origin/coverage/parameter-properties-namespaces",
+    "origin/coverage/proven-guards-relations",
+    "origin/coverage/records-lowering",
+    "origin/coverage/regex",
+    "origin/coverage/route-call-targets",
+    "origin/coverage/string-build-speed",
+    "origin/coverage/string-views",
+    "origin/devtools/affected-gate",
+    "origin/devtools/child-deadlines",
+    "origin/devtools/clang-units",
+    "origin/devtools/darwin-leaks",
+    "origin/devtools/detection-table",
+    "origin/devtools/gate-fleet",
+    "origin/devtools/gate-inputs",
+    "origin/devtools/gate-shards",
+    "origin/devtools/gcc-lane",
+    "origin/devtools/generator-families",
+    "origin/devtools/generator-judge",
+    "origin/devtools/generator-liveness-fields",
+    "origin/devtools/generator-liveness-fields-merge",
+    "origin/devtools/generator-operators",
+    "origin/devtools/generators-i16",
+    "origin/devtools/judge-severity",
+    "origin/devtools/lint-rule-check",
+    "origin/devtools/o0-experiment",
+    "origin/devtools/parallel-schedules",
+    "origin/devtools/reduce",
+    "origin/devtools/refusal-lies",
+    "origin/devtools/refusal-probes",
+    "origin/devtools/regression-catalog",
+    "origin/devtools/release-lane",
+    "origin/devtools/setup-fast",
+    "origin/devtools/skip-census",
+    "origin/devtools/slab-lane",
+    "origin/devtools/slab-quarantine",
+    "origin/devtools/stage1-leaks",
+    "origin/devtools/test262-fast",
+    "origin/devtools/unicode-canonicalize-speed",
+    "origin/devtools/with-runtime",
+    "origin/gate-logs/2e165469ec95/compare-plain",
+    "origin/gate-logs/2e165469ec95/merge",
+    "origin/gate-logs/2e165469ec95/plain",
+    "origin/gate-logs/2e165469ec95/shard-0",
+    "origin/gate-logs/2e165469ec95/shard-1",
+    "origin/gate-logs/2e165469ec95/shard-2",
+    "origin/gate-logs/2e165469ec95/shard-3",
+    "origin/gate-logs/2e165469ec95/shard-4",
+    "origin/gate-logs/2e165469ec95/shard-5",
+    "origin/gate-logs/2e165469ec95/shard-6",
+    "origin/gate-logs/2e165469ec95/shard-7",
+    "origin/gate-logs/2e165469ec95/whole",
+    "origin/gate/node-pin",
+    "origin/land/stage3",
+    "origin/library/mac-leak-checks",
+    "origin/library/merge-host-node-types",
+    "origin/library/merge-map-small",
+    "origin/library/merge-regex-native-fixes",
+    "origin/library/regex-refused-fixture",
+    "origin/library/unfused-everywhere",
+    "origin/library/with-runtime",
+    "origin/lint-fix/static-single-assignment",
+    "origin/lint-fix/static-single-assignment-dominance",
+    "origin/lint-rules/harness",
+    "origin/lint-rules/legacy",
+    "origin/locks/area-stage1-lint",
+    "origin/main",
+    "origin/runtime/area-coverage-merges",
+    "origin/runtime/area-merge-nbody",
+    "origin/runtime/area-take-borrow",
+    "origin/runtime/area-take-concurrency2",
+    "origin/runtime/area-take-decode",
+    "origin/runtime/area-take-envplace",
+    "origin/runtime/area-take-lintfix",
+    "origin/runtime/area-take-regions",
+    "origin/runtime/area-take-regionscov",
+    "origin/runtime/area-take-stdoutarea",
+    "origin/runtime/area-take-string",
+    "origin/runtime/area-take-views",
+    "origin/runtime/aside-throw",
+    "origin/runtime/borrowed-array-move",
+    "origin/runtime/defined-lent",
+    "origin/runtime/error-spread",
+    "origin/runtime/fresh-probes",
+    "origin/runtime/handover-throw",
+    "origin/runtime/integrate6-fixtures",
+    "origin/runtime/length-check-fixtures",
+    "origin/runtime/long-names",
+    "origin/runtime/memory-guard-fixtures",
+    "origin/runtime/region-ctor-capture",
+    "origin/runtime/release-fast-path",
+    "origin/runtime/shared-slice-append",
+    "origin/runtime/slab-checks",
+    "origin/runtime/spread-method",
+    "origin/runtime/stack-arguments",
+    "origin/runtime/stack-arguments-linux",
+    "origin/runtime/stdout-edges-usr1",
+    "origin/runtime/stdout-edges-usr1-counts",
+    "origin/runtime/uncaught-name",
+    "origin/wasm/integrate",
+    "origin/wasm/limits"
+  ],
+  "claim_documents": {
+    "f3bd01c066ec8264ab5d38402b03deb2ea1333ae": [
+      [
+        "origin/codex/typeaware-wave-01",
+        "stage1/cohere/typeaware/claims/wave-01.md"
+      ]
+    ],
+    "5ed966992618a7956883f53a925861e868ec21b3": [
+      [
+        "origin/codex/typeaware-wave-02",
+        "stage1/cohere/typeaware/claims/wave-02.md"
+      ]
+    ],
+    "5241017017e6b93296014cdfe5dcbca42c408dc5": [
+      [
+        "origin/codex/typeaware-wave-03",
+        "stage1/cohere/typeaware/claims/wave-03.md"
+      ]
+    ],
+    "ebedcf43fc5174e77f3c6ec9d3eaa3daf9c9dc06": [
+      [
+        "origin/codex/typeaware-wave-04",
+        "stage1/cohere/typeaware/claims/wave-04-evidence/commands.md"
+      ]
+    ],
+    "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17": [
+      [
+        "origin/codex/typeaware-wave-04",
+        "stage1/cohere/typeaware/claims/wave-04-report.md"
+      ]
+    ],
+    "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e": [
+      [
+        "origin/codex/typeaware-wave-04",
+        "stage1/cohere/typeaware/claims/wave-04.md"
+      ]
+    ],
+    "491184bb19878012fa9ead583bc134a026ba7b07": [
+      [
+        "origin/codex/typeaware-wave-05",
+        "stage1/cohere/typeaware/claims/wave-05-report.md"
+      ]
+    ],
+    "180efd843347ab20fd47595730994890b283851e": [
+      [
+        "origin/codex/typeaware-wave-05",
+        "stage1/cohere/typeaware/claims/wave-05.md"
+      ]
+    ],
+    "a9b8796c501d3b30ce02c9ad04b9d8e066110f89": [
+      [
+        "origin/codex/typeaware-wave-06",
+        "stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    ],
+    "f42d37ba71b6e888a8cca705b30de57da4f23139": [
+      [
+        "origin/codex/typeaware-wave-07",
+        "stage1/cohere/typeaware/claims/wave-07.md"
+      ]
+    ],
+    "3d36e05619a7015727be179706506027384ae9d3": [
+      [
+        "origin/codex/typeaware-wave-08",
+        "stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    ],
+    "8117b3f862a003a83d2295b78d9b31caa1db3086": [
+      [
+        "origin/codex/typeaware-wave-09",
+        "stage1/cohere/typeaware/claims/wave-09.md"
+      ]
+    ],
+    "e91b35927bff09978c01f4fa052e4aa1eda56750": [
+      [
+        "origin/codex/typeaware-wave-10",
+        "stage1/cohere/typeaware/claims/wave-10.md"
+      ]
+    ],
+    "0eb8633bfc3a110693dd149764b77125e6e20b23": [
+      [
+        "origin/codex/typeaware-wave-11",
+        "stage1/cohere/typeaware/claims/wave-11.md"
+      ]
+    ],
+    "da36a40da7161b54d74a7a68560a910ad469f737": [
+      [
+        "origin/codex/typeaware-wave-12",
+        "stage1/cohere/typeaware/claims/wave-12.md"
+      ]
+    ],
+    "1e88fc63a56c45b1ae39ab477843137e0aef9681": [
+      [
+        "origin/codex/typeaware-wave-13",
+        "stage1/cohere/typeaware/claims/wave-13.md"
+      ]
+    ],
+    "c8191a93ac3ef5809d20fd071cedced9b1df9c71": [
+      [
+        "origin/codex/typeaware-wave-14",
+        "stage1/cohere/typeaware/claims/wave-14.md"
+      ]
+    ],
+    "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44": [
+      [
+        "origin/codex/typeaware-wave-15",
+        "stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    ],
+    "622e04c88dd563f035c77eacb41366f08ae1ec07": [
+      [
+        "origin/codex/typeaware-wave-16",
+        "stage1/cohere/typeaware/claims/wave-16.md"
+      ]
+    ],
+    "e0feb0e4e971f8fc45b8c127d07747073b5b2d70": [
+      [
+        "origin/codex/typeaware-wave-17",
+        "stage1/cohere/typeaware/claims/wave-17.md"
+      ]
+    ],
+    "33fc4b0af9a74f82543a169439270e5f25e463a7": [
+      [
+        "origin/codex/typeaware-wave-18",
+        "stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    ],
+    "977f480af97f1942ee5e70df243a518734feb664": [
+      [
+        "origin/codex/typeaware-wave-19",
+        "stage1/cohere/typeaware/claims/wave-19.md"
+      ]
+    ],
+    "6ea72ac7b97e2818775d752a98b2d718c9ac64b6": [
+      [
+        "origin/codex/typeaware-wave-20",
+        "stage1/cohere/typeaware/claims/wave-20.md"
+      ]
+    ],
+    "b5b0f673a5b088fc16e261c6c9e8782c55cc5966": [
+      [
+        "origin/codex/typeaware-wave-21",
+        "stage1/cohere/typeaware/claims/wave-21.md"
+      ]
+    ],
+    "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0": [
+      [
+        "origin/codex/typeaware-wave-22",
+        "stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    ],
+    "fc881cea1cdd3f0523aa688864eb2d371c923e8f": [
+      [
+        "origin/codex/typeaware-wave-23",
+        "stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    ],
+    "14eeabd6e293246fbe78f1d57de5acb588c82db5": [
+      [
+        "origin/codex/typeaware-wave-24",
+        "stage1/cohere/typeaware/claims/wave-24.md"
+      ]
+    ],
+    "575b94baba2872bd906dacc0c0f85b89b7adc311": [
+      [
+        "origin/codex/typeaware-wave-25",
+        "stage1/cohere/typeaware/claims/wave-25.md"
+      ]
+    ],
+    "73da77b625906a4f3966bf1b316d71e4345a3504": [
+      [
+        "origin/codex/typeaware-wave-26",
+        "stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    ],
+    "190a602a7a6252c23466ba0f6cb326169725ef9b": [
+      [
+        "origin/codex/typeaware-wave-27",
+        "stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    ],
+    "c6436e8074db3738f0c2662b8c888d682ef1e4aa": [
+      [
+        "origin/codex/typeaware-wave-28",
+        "stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    ],
+    "31677e4c1827625263d74522484af0d1ecf2c31d": [
+      [
+        "origin/codex/typeaware-wave-29",
+        "stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    ],
+    "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7": [
+      [
+        "origin/codex/typeaware-wave-30",
+        "stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    ]
+  },
+  "claimed": {
+    "no-use-before-define": [],
+    "@typescript-eslint/no-unsafe-type-assertion": [],
+    "adamic/no-unchecked-cast": [],
+    "@typescript-eslint/no-unsafe-member-access": [],
+    "@typescript-eslint/no-unsafe-argument": [],
+    "@typescript-eslint/prefer-nullish-coalescing": [],
+    "@typescript-eslint/no-shadow": [],
+    "@typescript-eslint/no-unsafe-enum-comparison": [],
+    "no-implicit-coercion": [],
+    "nexus/correctness-no-caller-data-mutation": [],
+    "no-param-reassign": [],
+    "@typescript-eslint/no-unsafe-assignment": [],
+    "adamic/invariant-mutable": [],
+    "@typescript-eslint/no-confusing-void-expression": [],
+    "@typescript-eslint/consistent-return": [],
+    "@typescript-eslint/switch-exhaustiveness-check": [],
+    "adamic/no-optional-widening": [],
+    "nexus/consistency-no-property-alias": [],
+    "@typescript-eslint/unbound-method": [],
+    "@typescript-eslint/no-unused-vars": [],
+    "nexus/correctness-no-implicit-return": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6"
+    ],
+    "@typescript-eslint/no-deprecated": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6"
+    ],
+    "no-else-return": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6"
+    ],
+    "logical-assignment-operators": [
+      "5ed966992618a7956883f53a925861e868ec21b3"
+    ],
+    "@typescript-eslint/no-unsafe-return": [
+      "5ed966992618a7956883f53a925861e868ec21b3"
+    ],
+    "nexus/correctness-no-nullish-stripping-assertion": [
+      "5ed966992618a7956883f53a925861e868ec21b3"
+    ],
+    "@typescript-eslint/no-unsafe-call": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5"
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5"
+    ],
+    "@typescript-eslint/no-unnecessary-template-expression": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5"
+    ],
+    "nexus/consistency-require-constant-casing": [
+      "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e"
+    ],
+    "nexus/consistency-require-matching-return-type": [
+      "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e"
+    ],
+    "@typescript-eslint/strict-void-return": [
+      "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e"
+    ],
+    "@typescript-eslint/no-unnecessary-type-parameters": [
+      "180efd843347ab20fd47595730994890b283851e"
+    ],
+    "no-useless-assignment": [
+      "491184bb19878012fa9ead583bc134a026ba7b07",
+      "180efd843347ab20fd47595730994890b283851e"
+    ],
+    "@typescript-eslint/restrict-template-expressions": [
+      "180efd843347ab20fd47595730994890b283851e"
+    ],
+    "adamic/nominal-class": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89"
+    ],
+    "@typescript-eslint/no-duplicate-type-constituents": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89"
+    ],
+    "no-useless-return": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89"
+    ],
+    "no-undef-init": [
+      "f42d37ba71b6e888a8cca705b30de57da4f23139"
+    ],
+    "@typescript-eslint/prefer-for-of": [
+      "f42d37ba71b6e888a8cca705b30de57da4f23139"
+    ],
+    "@typescript-eslint/consistent-indexed-object-style": [
+      "f42d37ba71b6e888a8cca705b30de57da4f23139"
+    ],
+    "no-loop-func": [
+      "3d36e05619a7015727be179706506027384ae9d3"
+    ],
+    "nexus/correctness-no-import-cycle-load-time-read": [
+      "3d36e05619a7015727be179706506027384ae9d3"
+    ],
+    "@typescript-eslint/no-require-imports": [
+      "3d36e05619a7015727be179706506027384ae9d3"
+    ],
+    "prefer-const": [
+      "8117b3f862a003a83d2295b78d9b31caa1db3086"
+    ],
+    "radix": [
+      "8117b3f862a003a83d2295b78d9b31caa1db3086"
+    ],
+    "@typescript-eslint/non-nullable-type-assertion-style": [
+      "8117b3f862a003a83d2295b78d9b31caa1db3086"
+    ],
+    "no-unmodified-loop-condition": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "@typescript-eslint/no-redundant-type-constituents": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "@typescript-eslint/prefer-includes": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "@typescript-eslint/prefer-regexp-exec": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "nexus/correctness-no-identical-branches": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "@typescript-eslint/no-for-in-array": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "@typescript-eslint/no-redeclare": [
+      "da36a40da7161b54d74a7a68560a910ad469f737"
+    ],
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare": [],
+    "@typescript-eslint/no-unsafe-unary-minus": [],
+    "nexus/correctness-no-test-on-global-regex": [
+      "da36a40da7161b54d74a7a68560a910ad469f737"
+    ],
+    "nexus/correctness-no-write-only-collection": [
+      "da36a40da7161b54d74a7a68560a910ad469f737"
+    ],
+    "no-unassigned-vars": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+    ],
+    "preserve-caught-error": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+    ],
+    "@typescript-eslint/consistent-type-exports": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+    ],
+    "@typescript-eslint/no-array-delete": [
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71"
+    ],
+    "@typescript-eslint/no-base-to-string": [
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71"
+    ],
+    "@typescript-eslint/no-extraneous-class": [
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71"
+    ],
+    "@typescript-eslint/no-useless-default-assignment": [
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "@typescript-eslint/prefer-find": [
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "@typescript-eslint/require-array-sort-compare": [
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "@typescript-eslint/restrict-plus-operands": [],
+    "no-import-assign": [
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-exponentiation-operator": [
+      "622e04c88dd563f035c77eacb41366f08ae1ec07"
+    ],
+    "use-isnan": [
+      "622e04c88dd563f035c77eacb41366f08ae1ec07"
+    ],
+    "@next/next/no-async-client-component": [
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70"
+    ],
+    "@next/next/no-duplicate-head": [
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70"
+    ],
+    "@next/next/no-script-component-in-head": [
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70"
+    ],
+    "@next/next/no-title-in-document-head": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "@typescript-eslint/await-thenable": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "@typescript-eslint/class-literal-property-style": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "@typescript-eslint/consistent-generic-constructors": [
+      "977f480af97f1942ee5e70df243a518734feb664"
+    ],
+    "@typescript-eslint/dot-notation": [
+      "977f480af97f1942ee5e70df243a518734feb664"
+    ],
+    "@typescript-eslint/no-array-constructor": [
+      "977f480af97f1942ee5e70df243a518734feb664"
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6"
+    ],
+    "@typescript-eslint/no-implied-eval": [
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6"
+    ],
+    "@typescript-eslint/no-meaningless-void-operator": [
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6"
+    ],
+    "@typescript-eslint/no-misused-promises": [
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "@typescript-eslint/no-misused-spread": [
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "@typescript-eslint/no-mixed-enums": [
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966"
+    ],
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "@typescript-eslint/no-unnecessary-qualifier": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "@typescript-eslint/no-unsafe-declaration-merging": [],
+    "@typescript-eslint/no-unused-private-class-members": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "@typescript-eslint/only-throw-error": [
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "@typescript-eslint/prefer-promise-reject-errors": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "@typescript-eslint/prefer-reduce-type-parameter": [
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "@typescript-eslint/prefer-return-this-type": [
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "@typescript-eslint/related-getter-setter-pairs": [],
+    "@typescript-eslint/return-await": [
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "@typescript-eslint/use-unknown-in-catch-callback-variable": [
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "accessor-pairs": [
+      "575b94baba2872bd906dacc0c0f85b89b7adc311"
+    ],
+    "base/correctness-require-graphql-nullable-parity": [
+      "575b94baba2872bd906dacc0c0f85b89b7adc311"
+    ],
+    "base/correctness-require-matching-inject-type": [
+      "575b94baba2872bd906dacc0c0f85b89b7adc311"
+    ],
+    "base/correctness-require-matching-operation-context": [
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "base/correctness-require-matching-provider-return": [
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "base/correctness-require-optional-relation": [
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "base/correctness-require-orm-column-nullable-parity": [
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "base/correctness-require-serializable-nullable-parity": [
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "base/correctness-require-verify-array-parity": [
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "base/correctness-require-verify-optional-parity": [
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "block-scoped-var": [
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "getter-return": [
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "id-denylist": [
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "id-match": [
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "nexus/concurrency-no-check-then-write": [
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "nexus/concurrency-no-lost-update": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/consistency-no-iso-string-date-cut": [
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-callback-in-parse-try": [
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-collection-misuse": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-discarded-outcome": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-discarded-pure-result": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-global-listener-target-assertion": [
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "nexus/correctness-no-leaked-number-render": [
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "nexus/correctness-no-mock-on-module-namespace": [
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "nexus/correctness-no-process-exit-after-output": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "180efd843347ab20fd47595730994890b283851e",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "8117b3f862a003a83d2295b78d9b31caa1db3086",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-uncleared-race-timeout": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "180efd843347ab20fd47595730994890b283851e",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "8117b3f862a003a83d2295b78d9b31caa1db3086",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-require-blocking-standard-streams": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "180efd843347ab20fd47595730994890b283851e",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "8117b3f862a003a83d2295b78d9b31caa1db3086",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-require-child-process-error-listener": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89"
+    ],
+    "nexus/correctness-require-response-status-check": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89"
+    ],
+    "nexus/performance-no-independent-await-in-loop": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89"
+    ],
+    "nexus/security-no-interpolated-shell-command": [
+      "622e04c88dd563f035c77eacb41366f08ae1ec07"
+    ],
+    "nexus/security-no-interpolated-sql-string": [
+      "622e04c88dd563f035c77eacb41366f08ae1ec07"
+    ],
+    "no-alert": [
+      "622e04c88dd563f035c77eacb41366f08ae1ec07"
+    ],
+    "no-class-assign": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "no-const-assign": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "no-constant-binary-expression": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "no-eval": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "no-extend-native": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "no-func-assign": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "no-global-assign": [
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-implicit-globals": [
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-implied-eval": [
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "no-invalid-regexp": [
+      "8117b3f862a003a83d2295b78d9b31caa1db3086",
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "no-label-var": [
+      "8117b3f862a003a83d2295b78d9b31caa1db3086",
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "no-misleading-character-class": [
+      "8117b3f862a003a83d2295b78d9b31caa1db3086",
+      "c8191a93ac3ef5809d20fd071cedced9b1df9c71",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "no-new-func": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "no-new-native-nonconstructor": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "no-new-wrappers": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "no-obj-calls": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-object-constructor": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-promise-executor-return": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-restricted-globals": [
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "no-setter-return": [
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "no-shadow-restricted-names": [
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "no-throw-literal": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "no-useless-backreference": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "prefer-arrow-callback": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "prefer-numeric-literals": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-object-has-own": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-object-spread": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-promise-reject-errors": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "prefer-regex-literals": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "73da77b625906a4f3966bf1b316d71e4345a3504",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "prefer-rest-params": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "73da77b625906a4f3966bf1b316d71e4345a3504",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "react-hooks/exhaustive-deps": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "react-hooks/globals": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "180efd843347ab20fd47595730994890b283851e",
+      "3d36e05619a7015727be179706506027384ae9d3"
+    ],
+    "react-hooks/immutability": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "180efd843347ab20fd47595730994890b283851e",
+      "3d36e05619a7015727be179706506027384ae9d3"
+    ],
+    "react-hooks/no-deriving-state-in-effects": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "180efd843347ab20fd47595730994890b283851e",
+      "3d36e05619a7015727be179706506027384ae9d3"
+    ],
+    "react-hooks/preserve-manual-memoization": [
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react-hooks/purity": [
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react-hooks/refs": [
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react-hooks/set-state-in-effect": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "73da77b625906a4f3966bf1b316d71e4345a3504",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "react-hooks/set-state-in-render": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "73da77b625906a4f3966bf1b316d71e4345a3504",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "react-hooks/static-components": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "73da77b625906a4f3966bf1b316d71e4345a3504",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "31677e4c1827625263d74522484af0d1ecf2c31d"
+    ],
+    "react-hooks/unsupported-syntax": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311"
+    ],
+    "react-hooks/use-memo": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311"
+    ],
+    "react/boolean-prop-naming": [
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "575b94baba2872bd906dacc0c0f85b89b7adc311"
+    ],
+    "react/button-has-type": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "react/checked-requires-onchange-or-readonly": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "react/display-name": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "73da77b625906a4f3966bf1b316d71e4345a3504"
+    ],
+    "react/forbid-elements": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "react/forbid-prop-types": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "react/iframe-missing-sandbox": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "react/jsx-fragments": [
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "31677e4c1827625263d74522484af0d1ecf2c31d",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react/jsx-no-constructed-context-values": [
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "31677e4c1827625263d74522484af0d1ecf2c31d",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react/jsx-no-undef": [
+      "ba15a57edfdcb0b0a2d9cfc1ebdbe94009c0540e",
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "da36a40da7161b54d74a7a68560a910ad469f737",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "622e04c88dd563f035c77eacb41366f08ae1ec07",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "6ea72ac7b97e2818775d752a98b2d718c9ac64b6",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "31677e4c1827625263d74522484af0d1ecf2c31d",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react/no-adjacent-inline-elements": [
+      "a9b8796c501d3b30ce02c9ad04b9d8e066110f89",
+      "f42d37ba71b6e888a8cca705b30de57da4f23139",
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "react/no-array-index-key": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "react/no-danger-with-children": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70"
+    ],
+    "react/no-multi-comp": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70"
+    ],
+    "react/no-namespace": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70"
+    ],
+    "react/no-object-type-as-default-prop": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "react/no-unstable-nested-components": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "react/sort-default-props": [
+      "63a30d7a9d9c06cc8e2dadaf430c6238bde57ec0"
+    ],
+    "react/static-property-placement": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7"
+    ],
+    "react/style-prop-object": [
+      "33fc4b0af9a74f82543a169439270e5f25e463a7",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966"
+    ],
+    "require-atomic-updates": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "180efd843347ab20fd47595730994890b283851e",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "e0feb0e4e971f8fc45b8c127d07747073b5b2d70",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "require-await": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "180efd843347ab20fd47595730994890b283851e",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "structure/react-hook-no-any-type": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "symbol-description": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5241017017e6b93296014cdfe5dcbca42c408dc5",
+      "180efd843347ab20fd47595730994890b283851e",
+      "3d36e05619a7015727be179706506027384ae9d3",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "valid-typeof": [
+      "180efd843347ab20fd47595730994890b283851e",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ]
+  },
+  "ported": [
+    "@typescript-eslint/consistent-return",
+    "@typescript-eslint/method-signature-style",
+    "@typescript-eslint/no-confusing-void-expression",
+    "@typescript-eslint/no-shadow",
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "@typescript-eslint/no-unsafe-argument",
+    "@typescript-eslint/no-unsafe-assignment",
+    "@typescript-eslint/no-unsafe-declaration-merging",
+    "@typescript-eslint/no-unsafe-enum-comparison",
+    "@typescript-eslint/no-unsafe-member-access",
+    "@typescript-eslint/no-unsafe-type-assertion",
+    "@typescript-eslint/no-unsafe-unary-minus",
+    "@typescript-eslint/no-unused-vars",
+    "@typescript-eslint/prefer-nullish-coalescing",
+    "@typescript-eslint/related-getter-setter-pairs",
+    "@typescript-eslint/restrict-plus-operands",
+    "@typescript-eslint/switch-exhaustiveness-check",
+    "@typescript-eslint/unbound-method",
+    "adamic/invariant-mutable",
+    "adamic/no-optional-widening",
+    "adamic/no-unchecked-cast",
+    "nexus/consistency-no-property-alias",
+    "nexus/correctness-no-caller-data-mutation",
+    "no-implicit-coercion",
+    "no-param-reassign",
+    "no-use-before-define"
+  ]
+}

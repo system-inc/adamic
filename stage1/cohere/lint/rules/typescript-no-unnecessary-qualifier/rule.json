@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/no-unnecessary-qualifier",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22NoUnnecessaryQualifier",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUnnecessaryQualifier"
+}

@@ -1,0 +1,37 @@
+import type { Context } from '../common/context.a';
+import { Components } from '../common/components.a';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import { Kind } from '../../wave-22-sixth/common/kinds.a';
+export class Rule {
+    readonly context: Context;readonly components: Components;
+    constructor(context: Context,components: Components){this.context=context;this.components=components;}
+    forbidden(initial: Node|undefined): string {
+        if(initial===undefined){return '';}const c=this.context;initial=c.skip(initial);
+        if(initial.kind===Kind.ObjectLiteralExpression){return 'object literal';}
+        if(initial.kind===Kind.ArrayLiteralExpression){return 'array literal';}
+        if(initial.kind===Kind.ArrowFunction){return 'arrow function';}
+        if(initial.kind===Kind.FunctionExpression){return 'function expression';}
+        if(initial.kind===Kind.ClassExpression){return 'class expression';}
+        if(initial.kind===Kind.NewExpression){return 'construction expression';}
+        if(initial.kind===Kind.JsxElement||initial.kind===Kind.JsxSelfClosingElement){return 'JSX element';}
+        if(initial.kind===Kind.RegularExpressionLiteral){return 'regex literal';}
+        if(initial.kind===Kind.CallExpression){const callee=c.skip(c.first(initial));if(callee.kind===Kind.Identifier&&callee.text==='Symbol'){return 'Symbol literal';}}
+        return '';
+    }
+    trim(text: string): string { return text.trim(); }
+    defaults(component: Node): void {
+        if(![Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction,Kind.MethodDeclaration].includes(component.kind)){return;}
+        const c=this.context;const parameter=c.parameters(component)[0];if(parameter===undefined){return;}
+        const pattern=c.name(parameter);if(pattern===undefined||pattern.kind!==Kind.ObjectBindingPattern){return;}
+        for(const id of pattern.children){const element=c.node(id);const initial=c.init(element);const type=this.forbidden(initial);if(type===''){continue;}
+            const key=c.key(element);let name='';
+            if(key!==undefined){if(key.kind===Kind.ComputedPropertyName){const inner=key.children.length>0?c.first(key):undefined;name=inner===undefined?'[]':inner.kind===Kind.Identifier?inner.text:this.trim(c.fullRaw(inner));}
+                else if([Kind.Identifier,Kind.StringLiteral,Kind.NumericLiteral].includes(key.kind)){name=key.text;}}
+            c.report(element,'no-object-type-as-default-prop','forbiddenTypeDefaultParam',`${name} has a/an ${type} as default prop. This could lead to potential infinite render loop in React. Use a variable reference instead of ${type}.`);
+        }
+    }
+    visit(node: Node): void {
+        this.components.walk(node);for(const index of this.components.detected){this.defaults(this.context.node(index));}
+    }
+}
+export function create(context: Context): Rule { return new Rule(context,new Components(context)); }

@@ -1,0 +1,141 @@
+import type { Context } from './context.a';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import { Kind } from '../../wave-22-sixth/common/kinds.a';
+import { Rule as Elements } from '../../wave-22-sixth/no-adjacent-inline-elements/rule.a';
+export class Components {
+    readonly context: Context;readonly elements: Elements;
+    ready=false;
+    hasReactClass=false;
+    readonly returned=new Map<number,boolean>();
+    readonly reactImports=new Map<string,boolean>();
+    readonly unnamedStateless=new Map<number,number>();
+    readonly detected=new Set<number>();readonly names=new Set<string>();
+    constructor(context: Context){this.context=context;this.elements=new Elements(context);}
+    capital(node: Node): boolean {
+        let at=0;while(node.text.charCodeAt(at)===95){at++;}if(at>=node.text.length){return false;}
+        const code=node.text.charCodeAt(at);if(code<128){return code<97||code>122;}
+        const values=this.context.cases(node);const offset=at*3;
+        return values[offset]===values[offset+1];
+    }
+    function(node: Node): boolean {return node.kind===Kind.FunctionExpression||node.kind===Kind.ArrowFunction;}
+    asyncGenerator(node: Node): boolean {return node.children.some((i)=>this.context.node(i).kind===Kind.AsyncKeyword)&&node.children.some((i)=>this.context.node(i).kind===Kind.AsteriskToken);}
+    value(node: Node|undefined,acceptNull: boolean): boolean {
+        if(node===undefined){return false;}const c=this.context;node=c.skip(node);
+        if([Kind.JsxElement,Kind.JsxSelfClosingElement,Kind.JsxFragment].includes(node.kind)){return true;}
+        if(node.kind===Kind.NullKeyword){return acceptNull;}
+        if(node.kind===Kind.ConditionalExpression){return this.value(c.node(node.children[node.children.length-2]??-1),acceptNull)||this.value(c.last(node),acceptNull);}
+        if(node.kind===Kind.BinaryExpression){const op=c.op(node);
+            if([Kind.AmpersandAmpersandToken,Kind.BarBarToken,Kind.QuestionQuestionToken].includes(op)){return this.value(c.first(node),acceptNull)||this.value(c.last(node),acceptNull);}
+            return op===Kind.CommaToken&&this.value(c.last(node),acceptNull);
+        }
+        return node.kind===Kind.CallExpression&&this.elements.createElement(node);
+    }
+    statements(node: Node,acceptNull: boolean): boolean {
+        const c=this.context;if(node.kind===Kind.ReturnStatement){return this.value(node.children.length>0?c.first(node):undefined,acceptNull);}
+        if(![Kind.Block,Kind.IfStatement,Kind.ForStatement,Kind.WhileStatement,Kind.SwitchStatement,Kind.CaseBlock,Kind.CaseClause,Kind.DefaultClause].includes(node.kind)){return false;}
+        return node.children.some((i)=>this.statements(c.node(i),acceptNull));
+    }
+    returns(node: Node,acceptNull=false): boolean {
+        const key=node.index*2+(acceptNull?1:0);const cached=this.returned.get(key);if(cached!==undefined){return cached;}
+        const result=this.computeReturns(node,acceptNull);this.returned.set(key,result);return result;
+    }
+    computeReturns(node: Node,acceptNull: boolean): boolean {
+        const body=this.context.body(node);if(body===undefined){return false;}
+        if(node.kind===Kind.ArrowFunction&&body.kind!==Kind.Block){return this.value(body,acceptNull);}
+        return body.kind===Kind.Block&&this.statements(body,acceptNull);
+    }
+    fromReact(name: string): boolean {
+        const cached=this.reactImports.get(name);if(cached!==undefined){return cached;}
+        const result=this.computeFromReact(name);this.reactImports.set(name,result);return result;
+    }
+    computeFromReact(name: string): boolean {
+        const c=this.context;
+        for(let i=0;i<c.sourceCount;i++){const node=c.node(i);if(node.parent<0){continue;}
+            if(node.kind===Kind.ImportSpecifier){const local=c.name(node);if(local!==undefined&&local.text===name&&c.importModule(node)==='react'){return true;}}
+            if(node.kind!==Kind.VariableDeclaration){continue;}const initial=c.init(node);const target=c.name(node);if(initial===undefined||target===undefined){continue;}
+            if(target.kind===Kind.Identifier&&target.text===name&&initial.kind===Kind.PropertyAccessExpression&&c.last(initial).text===name&&this.reactValue(c.first(initial))){return true;}
+            if(target.kind===Kind.ObjectBindingPattern&&this.reactValue(initial)&&target.children.some((id)=>c.name(c.node(id))?.text===name)){return true;}
+        }
+        return false;
+    }
+    reactValue(node: Node): boolean {const c=this.context;node=c.skip(node);return (node.kind===Kind.Identifier&&node.text==='React')||(node.kind===Kind.CallExpression&&node.list===1&&c.requireReact(node,true));}
+    tag(wrapped: Node): string {
+        const c=this.context;let body=c.body(wrapped);if(body===undefined){return '';}
+        if(body.kind===Kind.Block){let returned:Node|undefined;for(const id of body.children){const n=c.node(id);if(n.kind===Kind.ReturnStatement){returned=n.children.length>0?c.first(n):undefined;break;}}body=returned;}
+        if(body===undefined){return '';}body=c.skip(body);if(body.kind===Kind.JsxElement){body=c.first(body);}
+        if(body.kind!==Kind.JsxOpeningElement&&body.kind!==Kind.JsxSelfClosingElement){return '';}
+        const tag=c.first(body);return tag.kind===Kind.Identifier?tag.text:'';
+    }
+    wrapper(node: Node,useNames=true): boolean {
+        const c=this.context;if(node.kind!==Kind.CallExpression||node.list<=0){return false;}
+        const callee=c.first(node);
+        if(callee.kind===Kind.PropertyAccessExpression){const object=c.skip(c.first(callee));const property=c.last(callee);
+            if(object.kind!==Kind.Identifier||object.text!=='React'||!['memo','forwardRef'].includes(property.text)){return false;}
+            const first=c.node(c.args(node)[0]??-1);return !useNames||!this.names.has(this.tag(first));
+        }
+        return callee.kind===Kind.Identifier&&['memo','forwardRef'].includes(callee.text)&&this.fromReact(callee.text);
+    }
+    wrapping(node: Node,useNames=true): Node|undefined {
+        let current=node.parent<0?undefined:this.context.node(node.parent);let result:Node|undefined;
+        while(current!==undefined&&this.wrapper(current,useNames)){result=current;current=current.parent<0?undefined:this.context.node(current.parent);}
+        return result;
+    }
+    class(node: Node): boolean {
+        if(node.kind!==Kind.ClassDeclaration&&node.kind!==Kind.ClassExpression){return false;}const c=this.context;
+        for(const id of node.children){const clause=c.node(id);if(clause.kind!==Kind.HeritageClause||c.op(clause)!==Kind.ExtendsKeyword){continue;}
+            for(const t of clause.children){const type=c.node(t);if(type.kind!==Kind.ExpressionWithTypeArguments||type.children.length===0){continue;}
+                const base=c.skip(c.first(type));if(base.kind===Kind.Identifier&&['Component','PureComponent'].includes(base.text)){return true;}
+                if(base.kind===Kind.PropertyAccessExpression){const object=c.skip(c.first(base));if(object.kind===Kind.Identifier&&object.text==='React'&&['Component','PureComponent'].includes(c.last(base).text)){return true;}}
+            }
+        }return false;
+    }
+    factory(node: Node): boolean {
+        const c=this.context;if(node.kind!==Kind.CallExpression){return false;}const callee=c.skip(c.first(node));
+        if(callee.kind===Kind.Identifier){return callee.text==='createReactClass';}
+        if(callee.kind!==Kind.PropertyAccessExpression){return false;}const object=c.skip(c.first(callee));return object.kind===Kind.Identifier&&object.text==='React'&&c.last(callee).text==='createReactClass';
+    }
+    allowed(node: Node): boolean {
+        const c=this.context;const parent=c.parent(node);if(parent===undefined){return false;}
+        if([Kind.VariableDeclaration,Kind.PropertyAssignment,Kind.ReturnStatement,Kind.ExportAssignment,Kind.ArrowFunction].includes(parent.kind)){return true;}
+        if(parent.kind!==Kind.BinaryExpression){return false;}return c.op(parent)===Kind.EqualsToken||(c.op(parent)===Kind.CommaToken&&c.skip(c.last(parent)).index===node.index&&this.allowed(parent));
+    }
+    stateless(node: Node,useNames=true): Node|undefined {
+        if(useNames){return this.classifyStateless(node,true);}
+        const cached=this.unnamedStateless.get(node.index);if(cached!==undefined){return cached<0?undefined:this.context.node(cached);}
+        const result=this.classifyStateless(node,false);this.unnamedStateless.set(node.index,result===undefined?-1:result.index);return result;
+    }
+    classifyStateless(node: Node,useNames: boolean): Node|undefined {
+        const c=this.context;
+        if(node.kind===Kind.FunctionDeclaration){const name=c.name(node);return !this.asyncGenerator(node)&&(name===undefined||this.capital(name))&&this.returns(node,true)?node:undefined;}
+        if(!this.function(node)||(node.kind===Kind.FunctionExpression&&this.asyncGenerator(node))){return undefined;}
+        const parent=c.parent(node);if(parent===undefined){return undefined;}
+        if((parent.kind===Kind.ReturnStatement||(parent.kind===Kind.ArrowFunction&&c.body(parent)?.index===node.index))&&!this.returns(node)){return undefined;}
+        if(parent.kind===Kind.ExportAssignment){return this.returns(node)?node:undefined;}
+        if(parent.kind===Kind.VariableDeclaration&&this.returns(node,true)){const name=c.name(parent);return name!==undefined&&name.kind===Kind.Identifier&&this.capital(name)?node:undefined;}
+        if(parent.kind===Kind.PropertyAssignment&&!(node.kind===Kind.FunctionExpression&&c.name(node)!==undefined)){const key=c.key(parent);return key!==undefined&&key.kind===Kind.Identifier&&this.capital(key)&&this.returns(node)?node:undefined;}
+        const wrapper=this.wrapping(node,useNames);if(wrapper!==undefined&&this.returns(node,true)){return wrapper;}
+        if(parent.kind===Kind.MethodDeclaration){const key=c.key(parent);return key!==undefined&&key.kind===Kind.Identifier&&this.capital(key)&&this.returns(node)?node:undefined;}
+        if(!this.allowed(node)||!this.returns(node,true)){return undefined;}
+        const own=c.name(node);if(node.kind===Kind.FunctionExpression&&own!==undefined){return this.capital(own)?node:undefined;}
+        if(parent.kind===Kind.BinaryExpression&&c.op(parent)===Kind.EqualsToken){const target=c.skip(c.first(parent));
+            if(target.kind===Kind.Identifier){return this.capital(target)?node:undefined;}
+            if(target.kind===Kind.PropertyAccessExpression){const object=c.skip(c.first(target));const name=c.last(target);return ((object.kind===Kind.Identifier&&object.text==='module'&&name.text==='exports')||this.capital(name))?node:undefined;}
+        }return node;
+    }
+    add(node: Node): void {
+        if(this.detected.has(node.index)){return;}this.detected.add(node.index);const c=this.context;
+        if(node.kind===Kind.ClassDeclaration||node.kind===Kind.ClassExpression){this.hasReactClass=true;}
+        if(node.kind===Kind.ClassDeclaration){const name=c.name(node);if(name!==undefined){this.names.add(name.text);}}
+        if(node.kind===Kind.ArrowFunction){const parent=c.parent(node);if(parent?.kind===Kind.VariableDeclaration){const name=c.name(parent);if(name?.kind===Kind.Identifier){this.names.add(name.text);}}}
+    }
+    walk(node: Node): void {
+        if(node.kind===Kind.SourceFile){if(this.ready){return;}this.ready=true;}
+        const c=this.context;
+        if(this.class(node)){this.add(node);}
+        if(node.kind===Kind.CallExpression){if(this.wrapper(node)&&node.list>0&&this.function(c.skip(c.node(c.args(node)[0]??-1)))){this.add(node);}
+            if(this.factory(node)&&node.list>0){const first=c.node(c.args(node)[0]??-1);if(first.kind===Kind.ObjectLiteralExpression){this.add(first);}}}
+        if(node.kind===Kind.MethodDeclaration&&c.parent(node)?.kind===Kind.ObjectLiteralExpression){const name=c.key(node);if(name?.kind===Kind.Identifier&&this.capital(name)&&this.returns(node)){this.add(node);}}
+        if([Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction].includes(node.kind)){const found=this.stateless(node);if(found!==undefined){this.add(found);}}
+        for(const id of node.children){this.walk(c.node(id));}
+    }
+}

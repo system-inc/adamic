@@ -1,0 +1,3 @@
+import { programArguments } from 'adamic';
+import { optionPattern } from '../options.a';
+const args=programArguments();console.log(`${optionPattern(args[0]??'render*').test(args[1]??'renderFooter')}`);

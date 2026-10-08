@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/no-unused-private-class-members",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22NoUnusedPrivateClassMembers",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUnusedPrivateClassMembers"
+}

@@ -1,0 +1,79 @@
+import type { Bindings } from './bindings.ts';
+import { coreFinding } from './wave_22_core_finding.a';
+import { globalBinding } from './global_binding.a';
+import { globalSource } from './global_source.a';
+export class NoImplicitGlobals {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    nonlexical(index: number): void {
+        coreFinding(this.bindings, 'no-implicit-globals', 'globalNonLexicalBinding', 'This declaration lands in the global scope, where every other script on the page can see it and any of them can replace it. Wrap it in an immediately invoked function for a local, or assign it as a property of the global object if it is meant to be shared.', index);
+    }
+    bound(index: number): void {
+        if(index < 0) { return; } const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'Identifier') { this.nonlexical(index); }
+        else if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(node.kind)) {
+            for(const element of node.children) { if(this.kind(element) === 'BindingElement') { this.bound(this.bindings.shape.name(element)); } }
+        }
+    }
+    directive(index: number): boolean {
+        const rules = this.bindings.rules;
+        for(const statement of rules.parser.node(index).children) {
+            const node = rules.parser.node(statement); if(node.kind !== 'ExpressionStatement') { return false; }
+            const expression = rules.parser.node(node.children[0] ?? -1); if(expression.kind !== 'StringLiteral') { return false; }
+            if(expression.text === 'use strict') { return true; }
+        }
+        return false;
+    }
+    strict(index: number, root: number, module: boolean, implied: boolean): boolean {
+        for(let current = index; current >= 0; current = this.bindings.parent(current)) {
+            const kind = this.kind(current);
+            if(['ClassDeclaration', 'ClassExpression'].includes(kind)) { return true; }
+            if(current === root) { if(module || implied || this.directive(current)) { return true; } }
+            else if(kind === 'Block' && this.bindings.functionKind(this.kind(this.bindings.parent(current))) && this.directive(current)) { return true; }
+        }
+        return false;
+    }
+    target(index: number): void {
+        if(index < 0) { return; } const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            if(!globalBinding(this.bindings, index).symbol.present) {
+                coreFinding(this.bindings, 'no-implicit-globals', 'globalVariableLeak', 'This assigns to a name that was never declared, which creates a global at run time rather than the local the code reads as. Declare the variable if it is meant to be local, which is almost always what a bare assignment like this intended.', index);
+            }
+        } else if(node.kind === 'ArrayLiteralExpression') { for(const child of node.children) { this.target(child); } }
+        else if(node.kind === 'ObjectLiteralExpression') {
+            for(const child of node.children) {
+                const property = rules.parser.node(child);
+                if(property.kind === 'ShorthandPropertyAssignment') { this.target(property.children[0] ?? -1); }
+                else if(property.kind === 'PropertyAssignment') { this.target(property.children[property.children.length - 1] ?? -1); }
+            }
+        } else if(node.kind === 'SpreadElement') { this.target(node.children[node.children.length - 1] ?? -1); }
+    }
+    run(): void {
+        const rules = this.bindings.rules; const root = rules.parser.nodes.length - 1; const context = globalSource(this.bindings, root);
+        if(!context.module) {
+            for(const statement of rules.parser.node(root).children) {
+                const node = rules.parser.node(statement);
+                if(node.kind === 'FunctionDeclaration' && this.bindings.shape.name(statement) >= 0) { this.nonlexical(statement); }
+                else if(node.kind === 'VariableStatement') {
+                    const list = node.children.find((child) => this.kind(child) === 'VariableDeclarationList') ?? -1;
+                    if(list < 0 || !['0', '4'].includes(rules.parser.node(list).semantic)) { continue; }
+                    for(const declaration of rules.parser.node(list).children) {
+                        const name = this.bindings.shape.name(declaration);
+                        if(this.kind(name) === 'Identifier') { this.nonlexical(declaration); } else { this.bound(name); }
+                    }
+                }
+            }
+        }
+        if(context.module || (!context.javascript && context.alwaysStrict)) { return; }
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind === 'BinaryExpression' && this.kind(node.children[1] ?? -1) === 'EqualsToken') {
+                if(!this.strict(index, root, context.module, !context.javascript && context.alwaysStrict)) { this.target(node.children[0] ?? -1); }
+            } else if(['ForInStatement', 'ForOfStatement'].includes(node.kind)) {
+                const target = node.children[this.kind(node.children[0] ?? -1) === 'AwaitKeyword' ? 1 : 0] ?? -1;
+                if(this.kind(target) !== 'VariableDeclarationList' && !this.strict(index, root, context.module, !context.javascript && context.alwaysStrict)) { this.target(target); }
+            }
+        }
+    }
+}

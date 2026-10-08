@@ -1,0 +1,1962 @@
+{
+  "refs": [
+    "refs/remotes/origin/HEAD",
+    "refs/remotes/origin/apple/app",
+    "refs/remotes/origin/apple/bridge",
+    "refs/remotes/origin/apple/generator-sdk",
+    "refs/remotes/origin/apple/json-decode-coverage",
+    "refs/remotes/origin/area/apple",
+    "refs/remotes/origin/area/compiler",
+    "refs/remotes/origin/area/developer-tools",
+    "refs/remotes/origin/area/library",
+    "refs/remotes/origin/area/platforms",
+    "refs/remotes/origin/area/runtime",
+    "refs/remotes/origin/area/stage1-format",
+    "refs/remotes/origin/area/stage1-lint",
+    "refs/remotes/origin/area/stage3",
+    "refs/remotes/origin/claude/adamic-file-input-args-r5tzc1",
+    "refs/remotes/origin/claude/cycle-finder-fresh-writes-ssz3oh",
+    "refs/remotes/origin/claude/port-cohere-second-slice-050g6a",
+    "refs/remotes/origin/claude/port-gitignore-adamic-1bstfd",
+    "refs/remotes/origin/claude/release-globals-at-exit-uqmaf6",
+    "refs/remotes/origin/claude/review-afternoon-merges-8la3q9",
+    "refs/remotes/origin/claude/stage1-language-gaps-o3lbxx",
+    "refs/remotes/origin/claude/task-k9saws",
+    "refs/remotes/origin/cloud/036s1yh",
+    "refs/remotes/origin/cloud/0aja3b1",
+    "refs/remotes/origin/cloud/0aja3b1-tokenizer",
+    "refs/remotes/origin/cloud/1t32deq",
+    "refs/remotes/origin/cloud/20d7ptt",
+    "refs/remotes/origin/cloud/8abq3fp",
+    "refs/remotes/origin/cloud/8abq3fp-write",
+    "refs/remotes/origin/cloud/apple-generator",
+    "refs/remotes/origin/cloud/apple-naming",
+    "refs/remotes/origin/cloud/b2-notyets",
+    "refs/remotes/origin/cloud/base-5d4c801",
+    "refs/remotes/origin/cloud/codex-bitwise",
+    "refs/remotes/origin/cloud/codex-distance-meter",
+    "refs/remotes/origin/cloud/codex-generic-gaps",
+    "refs/remotes/origin/cloud/codex-generics-values",
+    "refs/remotes/origin/cloud/codex-regex-parser",
+    "refs/remotes/origin/cloud/collections-fs",
+    "refs/remotes/origin/cloud/counts-and-gaps",
+    "refs/remotes/origin/cloud/exceptions-closures",
+    "refs/remotes/origin/cloud/fixes-3-failures",
+    "refs/remotes/origin/cloud/gate-log-e011f8f",
+    "refs/remotes/origin/cloud/grok-class-features-coverage",
+    "refs/remotes/origin/cloud/grok-coverage-release-fast-path",
+    "refs/remotes/origin/cloud/grok-coverage-slab-checks",
+    "refs/remotes/origin/cloud/grok-coverage-stdout-edges",
+    "refs/remotes/origin/cloud/grok-date-coverage",
+    "refs/remotes/origin/cloud/grok-enums-coverage",
+    "refs/remotes/origin/cloud/grok-fnexpr-coverage",
+    "refs/remotes/origin/cloud/grok-generator-oct6",
+    "refs/remotes/origin/cloud/grok-hasown-panic",
+    "refs/remotes/origin/cloud/grok-json-stringify-coverage",
+    "refs/remotes/origin/cloud/grok-map-set-coverage",
+    "refs/remotes/origin/cloud/grok-object-coverage",
+    "refs/remotes/origin/cloud/grok-ownership",
+    "refs/remotes/origin/cloud/grok-parallel",
+    "refs/remotes/origin/cloud/grok-params-namespaces-coverage",
+    "refs/remotes/origin/cloud/grok-regex-canonicalize",
+    "refs/remotes/origin/cloud/grok-regex-cycle-coverage",
+    "refs/remotes/origin/cloud/grok-regex-native-coverage",
+    "refs/remotes/origin/cloud/grok-regions",
+    "refs/remotes/origin/cloud/grok-shared-slices",
+    "refs/remotes/origin/cloud/grok-test262-adapt",
+    "refs/remotes/origin/cloud/grok-test262-runner",
+    "refs/remotes/origin/cloud/grok-unicode-properties",
+    "refs/remotes/origin/cloud/hx74vgw",
+    "refs/remotes/origin/cloud/hx74vgw-alloc",
+    "refs/remotes/origin/cloud/hx74vgw-cohere",
+    "refs/remotes/origin/cloud/hx74vgw-index",
+    "refs/remotes/origin/cloud/hx74vgw-loops",
+    "refs/remotes/origin/cloud/hx74vgw-loops2",
+    "refs/remotes/origin/cloud/hx74vgw-reads",
+    "refs/remotes/origin/cloud/integrate-1",
+    "refs/remotes/origin/cloud/integrate-10",
+    "refs/remotes/origin/cloud/integrate-11",
+    "refs/remotes/origin/cloud/integrate-12",
+    "refs/remotes/origin/cloud/integrate-13",
+    "refs/remotes/origin/cloud/integrate-14",
+    "refs/remotes/origin/cloud/integrate-15",
+    "refs/remotes/origin/cloud/integrate-15-final",
+    "refs/remotes/origin/cloud/integrate-16",
+    "refs/remotes/origin/cloud/integrate-2",
+    "refs/remotes/origin/cloud/integrate-3",
+    "refs/remotes/origin/cloud/integrate-4",
+    "refs/remotes/origin/cloud/integrate-5",
+    "refs/remotes/origin/cloud/integrate-6",
+    "refs/remotes/origin/cloud/integrate-7",
+    "refs/remotes/origin/cloud/integrate-7-flow",
+    "refs/remotes/origin/cloud/integrate-7-reuse-fixtures",
+    "refs/remotes/origin/cloud/integrate-8",
+    "refs/remotes/origin/cloud/integrate-9",
+    "refs/remotes/origin/cloud/integrate-c-1",
+    "refs/remotes/origin/cloud/integrate-fix-658",
+    "refs/remotes/origin/cloud/integrate-fix-ist",
+    "refs/remotes/origin/cloud/integrate-fix-ist-2",
+    "refs/remotes/origin/cloud/integrate-fix-ist-3",
+    "refs/remotes/origin/cloud/integrate-fixes",
+    "refs/remotes/origin/cloud/integrate-fixes-2",
+    "refs/remotes/origin/cloud/integrate-fixes-3",
+    "refs/remotes/origin/cloud/integrate-l-1",
+    "refs/remotes/origin/cloud/integrate-r-1",
+    "refs/remotes/origin/cloud/integrate-s2-1",
+    "refs/remotes/origin/cloud/integrate-s2-2",
+    "refs/remotes/origin/cloud/integrate-s3-1",
+    "refs/remotes/origin/cloud/integrate-s3-2",
+    "refs/remotes/origin/cloud/integrate-s3-3",
+    "refs/remotes/origin/cloud/integrate-stack-0205",
+    "refs/remotes/origin/cloud/integrate-typeof-null",
+    "refs/remotes/origin/cloud/integrate-typeof-null-3",
+    "refs/remotes/origin/cloud/json-decode",
+    "refs/remotes/origin/cloud/json-decode-landing",
+    "refs/remotes/origin/cloud/k9saws-shortest",
+    "refs/remotes/origin/cloud/library-with-runtime",
+    "refs/remotes/origin/cloud/merge-tree",
+    "refs/remotes/origin/cloud/probes-10",
+    "refs/remotes/origin/cloud/review-fixes",
+    "refs/remotes/origin/cloud/rskcbts",
+    "refs/remotes/origin/cloud/s2n8gc6",
+    "refs/remotes/origin/cloud/s2n8gc6-flow",
+    "refs/remotes/origin/cloud/set",
+    "refs/remotes/origin/cloud/speculate-0050-1",
+    "refs/remotes/origin/cloud/speculate-0050-2",
+    "refs/remotes/origin/cloud/speculate-0145-1",
+    "refs/remotes/origin/cloud/speculate-0145-2",
+    "refs/remotes/origin/cloud/speculate-2210-1",
+    "refs/remotes/origin/cloud/speculate-2245-1",
+    "refs/remotes/origin/cloud/speculate-2245-2",
+    "refs/remotes/origin/cloud/speculate-2310d-1",
+    "refs/remotes/origin/cloud/speculate-2310d-2",
+    "refs/remotes/origin/cloud/speculate-2310r-1",
+    "refs/remotes/origin/cloud/speculate-2310r-2",
+    "refs/remotes/origin/cloud/speculate-2340-1",
+    "refs/remotes/origin/cloud/speculate-2340-2",
+    "refs/remotes/origin/cloud/speculate-selftest-2",
+    "refs/remotes/origin/cloud/vvwg423",
+    "refs/remotes/origin/codex-lint-helpers-from-codex-lint-wave1-14",
+    "refs/remotes/origin/codex/accessors",
+    "refs/remotes/origin/codex/accessors-2",
+    "refs/remotes/origin/codex/apple-step-1",
+    "refs/remotes/origin/codex/arenas-iteration",
+    "refs/remotes/origin/codex/arrow-block-view-site",
+    "refs/remotes/origin/codex/async-ordinary",
+    "refs/remotes/origin/codex/async-typeof",
+    "refs/remotes/origin/codex/bench-strings-maps",
+    "refs/remotes/origin/codex/borrow-chains",
+    "refs/remotes/origin/codex/borrow-conventions",
+    "refs/remotes/origin/codex/borrowed-element-reads",
+    "refs/remotes/origin/codex/borrowed-loop-bindings",
+    "refs/remotes/origin/codex/branch-shape",
+    "refs/remotes/origin/codex/call-targets",
+    "refs/remotes/origin/codex/call-targets-maythrow",
+    "refs/remotes/origin/codex/census-generic-returns",
+    "refs/remotes/origin/codex/census-small-families",
+    "refs/remotes/origin/codex/checked-downcasts",
+    "refs/remotes/origin/codex/class-features",
+    "refs/remotes/origin/codex/class-inheritance",
+    "refs/remotes/origin/codex/class-instance-key",
+    "refs/remotes/origin/codex/cohere-bump",
+    "refs/remotes/origin/codex/cohere-bump-ca939db",
+    "refs/remotes/origin/codex/cohere-dry-guard",
+    "refs/remotes/origin/codex/cohere-on-adamic",
+    "refs/remotes/origin/codex/concurrency",
+    "refs/remotes/origin/codex/concurrency-area",
+    "refs/remotes/origin/codex/concurrency-async",
+    "refs/remotes/origin/codex/concurrency-compiler",
+    "refs/remotes/origin/codex/concurrency-moves",
+    "refs/remotes/origin/codex/concurrency-scaling",
+    "refs/remotes/origin/codex/concurrency-stack",
+    "refs/remotes/origin/codex/coverage-oct6",
+    "refs/remotes/origin/codex/cycle-iterator-slots",
+    "refs/remotes/origin/codex/decode-ascii",
+    "refs/remotes/origin/codex/devirtualize",
+    "refs/remotes/origin/codex/diagnostics-audit",
+    "refs/remotes/origin/codex/discriminant-writes",
+    "refs/remotes/origin/codex/dot-a",
+    "refs/remotes/origin/codex/emitter-speed",
+    "refs/remotes/origin/codex/enums",
+    "refs/remotes/origin/codex/environment-placement",
+    "refs/remotes/origin/codex/error-classes",
+    "refs/remotes/origin/codex/error-classes-counts",
+    "refs/remotes/origin/codex/escape-hatches",
+    "refs/remotes/origin/codex/fallthrough-and-implicit-returns",
+    "refs/remotes/origin/codex/fast-gate-4core",
+    "refs/remotes/origin/codex/flag-enums",
+    "refs/remotes/origin/codex/flow-ranges-callback-alias",
+    "refs/remotes/origin/codex/flow-stale-comments",
+    "refs/remotes/origin/codex/fresh-clobbered-loads",
+    "refs/remotes/origin/codex/function-expressions-for-in",
+    "refs/remotes/origin/codex/fuzz-moves",
+    "refs/remotes/origin/codex/fuzz-overrides",
+    "refs/remotes/origin/codex/generic-maybe-undefined",
+    "refs/remotes/origin/codex/graph-regions",
+    "refs/remotes/origin/codex/grok-date-coverage-flow",
+    "refs/remotes/origin/codex/grok-date-coverage-flow-land",
+    "refs/remotes/origin/codex/host-buffer-crypto",
+    "refs/remotes/origin/codex/host-buffer-crypto-land",
+    "refs/remotes/origin/codex/host-fs-directory",
+    "refs/remotes/origin/codex/host-fs-directory-land",
+    "refs/remotes/origin/codex/host-fs-file",
+    "refs/remotes/origin/codex/host-fs-file-land",
+    "refs/remotes/origin/codex/host-fs-file-scratch-land",
+    "refs/remotes/origin/codex/host-fs-fresh",
+    "refs/remotes/origin/codex/host-node-types",
+    "refs/remotes/origin/codex/host-node-types-land",
+    "refs/remotes/origin/codex/host-process",
+    "refs/remotes/origin/codex/host-process-land",
+    "refs/remotes/origin/codex/host-promises",
+    "refs/remotes/origin/codex/host-promises-typeof",
+    "refs/remotes/origin/codex/import-cycles",
+    "refs/remotes/origin/codex/imported-const-case",
+    "refs/remotes/origin/codex/inherited-static-fields",
+    "refs/remotes/origin/codex/integer-fast-paths",
+    "refs/remotes/origin/codex/integer-fields",
+    "refs/remotes/origin/codex/interface-downcasts",
+    "refs/remotes/origin/codex/json-encode",
+    "refs/remotes/origin/codex/jsx-variant-gate",
+    "refs/remotes/origin/codex/library-array",
+    "refs/remotes/origin/codex/library-array-2",
+    "refs/remotes/origin/codex/library-array-2-land",
+    "refs/remotes/origin/codex/library-array-3",
+    "refs/remotes/origin/codex/library-date",
+    "refs/remotes/origin/codex/library-date-3",
+    "refs/remotes/origin/codex/library-date-land",
+    "refs/remotes/origin/codex/library-date-refusals",
+    "refs/remotes/origin/codex/library-date-refusals-land",
+    "refs/remotes/origin/codex/library-error-value",
+    "refs/remotes/origin/codex/library-function",
+    "refs/remotes/origin/codex/library-iterator",
+    "refs/remotes/origin/codex/library-json-2",
+    "refs/remotes/origin/codex/library-json-2-land",
+    "refs/remotes/origin/codex/library-json-number",
+    "refs/remotes/origin/codex/library-json-stringify",
+    "refs/remotes/origin/codex/library-map-set",
+    "refs/remotes/origin/codex/library-map-set-2",
+    "refs/remotes/origin/codex/library-map-set-iterators",
+    "refs/remotes/origin/codex/library-math-number",
+    "refs/remotes/origin/codex/library-number-math",
+    "refs/remotes/origin/codex/library-object",
+    "refs/remotes/origin/codex/library-object-3",
+    "refs/remotes/origin/codex/library-object-prototype",
+    "refs/remotes/origin/codex/library-object-prototype-land",
+    "refs/remotes/origin/codex/library-string",
+    "refs/remotes/origin/codex/library-string-2",
+    "refs/remotes/origin/codex/library-string-3",
+    "refs/remotes/origin/codex/library-string-3-land",
+    "refs/remotes/origin/codex/lint-cost-split",
+    "refs/remotes/origin/codex/lint-harness-dot-a",
+    "refs/remotes/origin/codex/lint-helpers",
+    "refs/remotes/origin/codex/lint-helpers-01",
+    "refs/remotes/origin/codex/lint-helpers-02",
+    "refs/remotes/origin/codex/lint-helpers-03",
+    "refs/remotes/origin/codex/lint-helpers-04",
+    "refs/remotes/origin/codex/lint-helpers-05",
+    "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-03",
+    "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-14",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-02",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-04",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-06",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-09",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-10",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-11",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-15",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-01",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-05",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-08",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-12",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-13",
+    "refs/remotes/origin/codex/lint-inventory",
+    "refs/remotes/origin/codex/lint-regex",
+    "refs/remotes/origin/codex/lint-registration",
+    "refs/remotes/origin/codex/lint-runtime-fixes",
+    "refs/remotes/origin/codex/lint-runtime-profile",
+    "refs/remotes/origin/codex/lint-wave-check",
+    "refs/remotes/origin/codex/lint-wave1-01",
+    "refs/remotes/origin/codex/lint-wave1-02",
+    "refs/remotes/origin/codex/lint-wave1-02-land",
+    "refs/remotes/origin/codex/lint-wave1-03",
+    "refs/remotes/origin/codex/lint-wave1-04",
+    "refs/remotes/origin/codex/lint-wave1-05",
+    "refs/remotes/origin/codex/lint-wave1-06",
+    "refs/remotes/origin/codex/lint-wave1-07",
+    "refs/remotes/origin/codex/lint-wave1-08",
+    "refs/remotes/origin/codex/lint-wave1-09",
+    "refs/remotes/origin/codex/lint-wave1-10",
+    "refs/remotes/origin/codex/lint-wave1-11",
+    "refs/remotes/origin/codex/lint-wave1-12",
+    "refs/remotes/origin/codex/lint-wave1-13",
+    "refs/remotes/origin/codex/lint-wave1-14",
+    "refs/remotes/origin/codex/lint-wave1-15",
+    "refs/remotes/origin/codex/literal-optional-absent",
+    "refs/remotes/origin/codex/literal-undefined-field",
+    "refs/remotes/origin/codex/loop-array-hold",
+    "refs/remotes/origin/codex/map-foreach-keys",
+    "refs/remotes/origin/codex/map-hash-probe",
+    "refs/remotes/origin/codex/map-number-hash",
+    "refs/remotes/origin/codex/map-small",
+    "refs/remotes/origin/codex/memory-worked-examples",
+    "refs/remotes/origin/codex/method-values",
+    "refs/remotes/origin/codex/multi-root",
+    "refs/remotes/origin/codex/namespaces-tsc",
+    "refs/remotes/origin/codex/narrowed-elements-and-flow",
+    "refs/remotes/origin/codex/narrowed-number-field",
+    "refs/remotes/origin/codex/narrowed-union-member",
+    "refs/remotes/origin/codex/nbody-speed",
+    "refs/remotes/origin/codex/nested-functions",
+    "refs/remotes/origin/codex/no-optional-widening",
+    "refs/remotes/origin/codex/no-shared-lists",
+    "refs/remotes/origin/codex/non-null-check",
+    "refs/remotes/origin/codex/normalize-long",
+    "refs/remotes/origin/codex/nullable-references",
+    "refs/remotes/origin/codex/object-prototype-methods",
+    "refs/remotes/origin/codex/optional-chain-after-call",
+    "refs/remotes/origin/codex/optional-field-write",
+    "refs/remotes/origin/codex/optional-widening-refusal",
+    "refs/remotes/origin/codex/organization-sweep",
+    "refs/remotes/origin/codex/override-representation",
+    "refs/remotes/origin/codex/parameter-properties-namespaces",
+    "refs/remotes/origin/codex/parse-speed",
+    "refs/remotes/origin/codex/parser-parity-2",
+    "refs/remotes/origin/codex/parser-recovery",
+    "refs/remotes/origin/codex/parser-recovery-land",
+    "refs/remotes/origin/codex/perf-css-runtime",
+    "refs/remotes/origin/codex/perf-field-access",
+    "refs/remotes/origin/codex/perf-utf16-cache",
+    "refs/remotes/origin/codex/phantom-brands",
+    "refs/remotes/origin/codex/process-exit-and-tty",
+    "refs/remotes/origin/codex/process-exit-and-tty-land",
+    "refs/remotes/origin/codex/progress",
+    "refs/remotes/origin/codex/proven-predicates",
+    "refs/remotes/origin/codex/proven-relations",
+    "refs/remotes/origin/codex/proven-type-guards",
+    "refs/remotes/origin/codex/race-checks-reliable",
+    "refs/remotes/origin/codex/realpath-node-walk",
+    "refs/remotes/origin/codex/realpath-node-walk-land",
+    "refs/remotes/origin/codex/records-lowering",
+    "refs/remotes/origin/codex/refusal-pass-rulings",
+    "refs/remotes/origin/codex/refuse-definite-assignment",
+    "refs/remotes/origin/codex/refuse-suppression-directives",
+    "refs/remotes/origin/codex/refuse-ts-nocheck",
+    "refs/remotes/origin/codex/regex-cohere-patterns",
+    "refs/remotes/origin/codex/regex-cycle-proof",
+    "refs/remotes/origin/codex/regex-matcher",
+    "refs/remotes/origin/codex/regex-native-fixes",
+    "refs/remotes/origin/codex/regex-native-fixes-land",
+    "refs/remotes/origin/codex/regex-protocol",
+    "refs/remotes/origin/codex/regex-protocol-land",
+    "refs/remotes/origin/codex/regex-remaining",
+    "refs/remotes/origin/codex/regex-runtime-compiler",
+    "refs/remotes/origin/codex/regex-split-surrogate",
+    "refs/remotes/origin/codex/regex-split-surrogate-land",
+    "refs/remotes/origin/codex/regex-v8-divergences",
+    "refs/remotes/origin/codex/regex-v8-divergences-land",
+    "refs/remotes/origin/codex/region-end",
+    "refs/remotes/origin/codex/release-lto",
+    "refs/remotes/origin/codex/rename-documentation",
+    "refs/remotes/origin/codex/require-builtins",
+    "refs/remotes/origin/codex/require-builtins-2",
+    "refs/remotes/origin/codex/route-call-targets",
+    "refs/remotes/origin/codex/runtime-records",
+    "refs/remotes/origin/codex/runtime-statics",
+    "refs/remotes/origin/codex/shared-ssa",
+    "refs/remotes/origin/codex/split-hot-files",
+    "refs/remotes/origin/codex/spread-any-position",
+    "refs/remotes/origin/codex/stable-emitter-names",
+    "refs/remotes/origin/codex/stack-check-scc",
+    "refs/remotes/origin/codex/stage1-command",
+    "refs/remotes/origin/codex/stage1-config",
+    "refs/remotes/origin/codex/stage1-css",
+    "refs/remotes/origin/codex/stage1-css-numbers",
+    "refs/remotes/origin/codex/stage1-css-printer",
+    "refs/remotes/origin/codex/stage1-css-selector",
+    "refs/remotes/origin/codex/stage1-estree",
+    "refs/remotes/origin/codex/stage1-formatter-slice",
+    "refs/remotes/origin/codex/stage1-graphql-printer",
+    "refs/remotes/origin/codex/stage1-json-format",
+    "refs/remotes/origin/codex/stage1-jsx-lint",
+    "refs/remotes/origin/codex/stage1-lint-batch2",
+    "refs/remotes/origin/codex/stage1-lint-batch3",
+    "refs/remotes/origin/codex/stage1-lint-batch4",
+    "refs/remotes/origin/codex/stage1-lint-batch4-typescript",
+    "refs/remotes/origin/codex/stage1-lint-batch5",
+    "refs/remotes/origin/codex/stage1-lint-batch6",
+    "refs/remotes/origin/codex/stage1-lint-batch6-perf",
+    "refs/remotes/origin/codex/stage1-lint-batch8",
+    "refs/remotes/origin/codex/stage1-lint-output",
+    "refs/remotes/origin/codex/stage1-lint-output-land",
+    "refs/remotes/origin/codex/stage1-markdown-blocks",
+    "refs/remotes/origin/codex/stage1-markdown-escape",
+    "refs/remotes/origin/codex/stage1-nextjs-lint",
+    "refs/remotes/origin/codex/stage1-progress",
+    "refs/remotes/origin/codex/stage1-ts-printer",
+    "refs/remotes/origin/codex/stage1-yaml",
+    "refs/remotes/origin/codex/stage3-api-node-types",
+    "refs/remotes/origin/codex/stage3-base",
+    "refs/remotes/origin/codex/stage3-contracts",
+    "refs/remotes/origin/codex/stage3-contracts-ledger",
+    "refs/remotes/origin/codex/stage3-diagnostics-oracle",
+    "refs/remotes/origin/codex/stage3-explicit-any",
+    "refs/remotes/origin/codex/stage3-fixtures-assertions",
+    "refs/remotes/origin/codex/stage3-fixtures-cycles",
+    "refs/remotes/origin/codex/stage3-fixtures-enums",
+    "refs/remotes/origin/codex/stage3-fixtures-host",
+    "refs/remotes/origin/codex/stage3-fixtures-namespaces",
+    "refs/remotes/origin/codex/stage3-fixtures-nested-functions",
+    "refs/remotes/origin/codex/stage3-fixtures-objects",
+    "refs/remotes/origin/codex/stage3-fixtures-predicates",
+    "refs/remotes/origin/codex/stage3-fixtures-records",
+    "refs/remotes/origin/codex/stage3-fixtures-runner",
+    "refs/remotes/origin/codex/stage3-fixtures-runner-2",
+    "refs/remotes/origin/codex/stage3-fixtures-taste",
+    "refs/remotes/origin/codex/stage3-host-errors",
+    "refs/remotes/origin/codex/stage3-indexed-reads",
+    "refs/remotes/origin/codex/stage3-indexed-reads-checker",
+    "refs/remotes/origin/codex/stage3-indexed-reads-emit",
+    "refs/remotes/origin/codex/stage3-indexed-reads-program",
+    "refs/remotes/origin/codex/stage3-latent-census",
+    "refs/remotes/origin/codex/stage3-meter-lowering",
+    "refs/remotes/origin/codex/stage3-meter-two-lines",
+    "refs/remotes/origin/codex/stage3-optional-declarations",
+    "refs/remotes/origin/codex/stage3-parser-proof",
+    "refs/remotes/origin/codex/stage3-readonly-views",
+    "refs/remotes/origin/codex/stage3-regex-captures",
+    "refs/remotes/origin/codex/stage3-scanner-proof",
+    "refs/remotes/origin/codex/stage3-type-imports",
+    "refs/remotes/origin/codex/static-methods",
+    "refs/remotes/origin/codex/stdout-edges",
+    "refs/remotes/origin/codex/stdout-edges-area",
+    "refs/remotes/origin/codex/string-build-speed",
+    "refs/remotes/origin/codex/string-views",
+    "refs/remotes/origin/codex/string-views-concurrency",
+    "refs/remotes/origin/codex/structural-library-view",
+    "refs/remotes/origin/codex/super-early-this",
+    "refs/remotes/origin/codex/switch-empty-cases",
+    "refs/remotes/origin/codex/taste-not-soundness",
+    "refs/remotes/origin/codex/test262-ts-validity",
+    "refs/remotes/origin/codex/tsc-allocation-profile",
+    "refs/remotes/origin/codex/tsc-census",
+    "refs/remotes/origin/codex/tsc-cycle-census",
+    "refs/remotes/origin/codex/tsc-strictness-survey",
+    "refs/remotes/origin/codex/tsgo-c-library",
+    "refs/remotes/origin/codex/tuple-length-views",
+    "refs/remotes/origin/codex/typeaware-wave-01",
+    "refs/remotes/origin/codex/typeaware-wave-02",
+    "refs/remotes/origin/codex/typeaware-wave-03",
+    "refs/remotes/origin/codex/typeaware-wave-04",
+    "refs/remotes/origin/codex/typeaware-wave-05",
+    "refs/remotes/origin/codex/typeaware-wave-06",
+    "refs/remotes/origin/codex/typeaware-wave-07",
+    "refs/remotes/origin/codex/typeaware-wave-08",
+    "refs/remotes/origin/codex/typeaware-wave-09",
+    "refs/remotes/origin/codex/typeaware-wave-10",
+    "refs/remotes/origin/codex/typeaware-wave-11",
+    "refs/remotes/origin/codex/typeaware-wave-12",
+    "refs/remotes/origin/codex/typeaware-wave-13",
+    "refs/remotes/origin/codex/typeaware-wave-14",
+    "refs/remotes/origin/codex/typeaware-wave-15",
+    "refs/remotes/origin/codex/typeaware-wave-16",
+    "refs/remotes/origin/codex/typeaware-wave-17",
+    "refs/remotes/origin/codex/typeaware-wave-18",
+    "refs/remotes/origin/codex/typeaware-wave-19",
+    "refs/remotes/origin/codex/typeaware-wave-20",
+    "refs/remotes/origin/codex/typeaware-wave-21",
+    "refs/remotes/origin/codex/typeaware-wave-22",
+    "refs/remotes/origin/codex/typeaware-wave-23",
+    "refs/remotes/origin/codex/typeaware-wave-24",
+    "refs/remotes/origin/codex/typeaware-wave-25",
+    "refs/remotes/origin/codex/typeaware-wave-26",
+    "refs/remotes/origin/codex/typeaware-wave-27",
+    "refs/remotes/origin/codex/typeaware-wave-28",
+    "refs/remotes/origin/codex/typeaware-wave-29",
+    "refs/remotes/origin/codex/typeaware-wave-30",
+    "refs/remotes/origin/codex/typed-arrays",
+    "refs/remotes/origin/codex/typed-arrays-runtime",
+    "refs/remotes/origin/codex/typeof-null",
+    "refs/remotes/origin/codex/typeof-null-2",
+    "refs/remotes/origin/codex/typescript-scanner",
+    "refs/remotes/origin/codex/unknown-narrowing",
+    "refs/remotes/origin/codex/user-iterators",
+    "refs/remotes/origin/codex/utf16-views",
+    "refs/remotes/origin/codex/wasi-agreement",
+    "refs/remotes/origin/codex/wasi-empty-path",
+    "refs/remotes/origin/codex/wasm-engines",
+    "refs/remotes/origin/codex/wasm-exports",
+    "refs/remotes/origin/codex/wasm-landing",
+    "refs/remotes/origin/codex/wasm-landing-b",
+    "refs/remotes/origin/codex/wasm-release-flags",
+    "refs/remotes/origin/codex/wasm-requests",
+    "refs/remotes/origin/codex/wasm-requests-profile",
+    "refs/remotes/origin/codex/wasm-shim",
+    "refs/remotes/origin/codex/wasm-size",
+    "refs/remotes/origin/codex/wasm-threads",
+    "refs/remotes/origin/codex/wasm32-driver",
+    "refs/remotes/origin/codex/wasm32-runtime",
+    "refs/remotes/origin/codex/weak-narrowed-callback",
+    "refs/remotes/origin/codex/weak-union-narrowed",
+    "refs/remotes/origin/codex/weak-view-methods",
+    "refs/remotes/origin/codex/workers-bench",
+    "refs/remotes/origin/codex/workers-bridge",
+    "refs/remotes/origin/codex/workers-compute-a",
+    "refs/remotes/origin/codex/workers-day6-table",
+    "refs/remotes/origin/codex/workers-decode-json",
+    "refs/remotes/origin/codex/workers-json-schema-names",
+    "refs/remotes/origin/codex/workers-split",
+    "refs/remotes/origin/codex/workers-split-refine",
+    "refs/remotes/origin/codex/workers-twin",
+    "refs/remotes/origin/codex/workers-two-backends",
+    "refs/remotes/origin/codex/workers-wasm-crossing",
+    "refs/remotes/origin/codex/workers-wasm-host",
+    "refs/remotes/origin/compiler/inherited-not-yet",
+    "refs/remotes/origin/compiler/input-spread",
+    "refs/remotes/origin/compiler/landing-batch-1",
+    "refs/remotes/origin/compiler/landing-batch-2",
+    "refs/remotes/origin/compiler/liveness-throw",
+    "refs/remotes/origin/compiler/private-generic",
+    "refs/remotes/origin/compiler/private-generic-2",
+    "refs/remotes/origin/compiler/reland-fixes-3",
+    "refs/remotes/origin/compiler/stage3-front",
+    "refs/remotes/origin/compiler/super-closure",
+    "refs/remotes/origin/compiler/taste-land",
+    "refs/remotes/origin/coverage/accessors",
+    "refs/remotes/origin/coverage/borrow-chains",
+    "refs/remotes/origin/coverage/devirtualize",
+    "refs/remotes/origin/coverage/enums",
+    "refs/remotes/origin/coverage/environment-placement",
+    "refs/remotes/origin/coverage/error-classes",
+    "refs/remotes/origin/coverage/error-names",
+    "refs/remotes/origin/coverage/graph-regions",
+    "refs/remotes/origin/coverage/host-promises-typeof",
+    "refs/remotes/origin/coverage/input-spread",
+    "refs/remotes/origin/coverage/integer-fast-paths",
+    "refs/remotes/origin/coverage/json-decode",
+    "refs/remotes/origin/coverage/library-array",
+    "refs/remotes/origin/coverage/library-object",
+    "refs/remotes/origin/coverage/lint-runtime-fixes",
+    "refs/remotes/origin/coverage/loop-array-hold",
+    "refs/remotes/origin/coverage/map-foreach-keys",
+    "refs/remotes/origin/coverage/method-values",
+    "refs/remotes/origin/coverage/nbody-speed",
+    "refs/remotes/origin/coverage/non-null-check",
+    "refs/remotes/origin/coverage/normalize-long",
+    "refs/remotes/origin/coverage/nullable-references",
+    "refs/remotes/origin/coverage/parameter-properties-namespaces",
+    "refs/remotes/origin/coverage/proven-guards-relations",
+    "refs/remotes/origin/coverage/records-lowering",
+    "refs/remotes/origin/coverage/regex",
+    "refs/remotes/origin/coverage/route-call-targets",
+    "refs/remotes/origin/coverage/string-build-speed",
+    "refs/remotes/origin/coverage/string-views",
+    "refs/remotes/origin/devtools/affected-gate",
+    "refs/remotes/origin/devtools/child-deadlines",
+    "refs/remotes/origin/devtools/clang-units",
+    "refs/remotes/origin/devtools/darwin-leaks",
+    "refs/remotes/origin/devtools/detection-table",
+    "refs/remotes/origin/devtools/gate-fleet",
+    "refs/remotes/origin/devtools/gate-inputs",
+    "refs/remotes/origin/devtools/gate-shards",
+    "refs/remotes/origin/devtools/gcc-lane",
+    "refs/remotes/origin/devtools/generator-coverage",
+    "refs/remotes/origin/devtools/generator-families",
+    "refs/remotes/origin/devtools/generator-judge",
+    "refs/remotes/origin/devtools/generator-liveness-fields",
+    "refs/remotes/origin/devtools/generator-liveness-fields-merge",
+    "refs/remotes/origin/devtools/generator-operators",
+    "refs/remotes/origin/devtools/generators-i16",
+    "refs/remotes/origin/devtools/judge-severity",
+    "refs/remotes/origin/devtools/lint-rule-check",
+    "refs/remotes/origin/devtools/o0-experiment",
+    "refs/remotes/origin/devtools/parallel-schedules",
+    "refs/remotes/origin/devtools/reduce",
+    "refs/remotes/origin/devtools/refusal-catalog-predicate",
+    "refs/remotes/origin/devtools/refusal-lies",
+    "refs/remotes/origin/devtools/refusal-probes",
+    "refs/remotes/origin/devtools/regression-catalog",
+    "refs/remotes/origin/devtools/release-lane",
+    "refs/remotes/origin/devtools/setup-fast",
+    "refs/remotes/origin/devtools/skip-census",
+    "refs/remotes/origin/devtools/slab-lane",
+    "refs/remotes/origin/devtools/slab-quarantine",
+    "refs/remotes/origin/devtools/stage1-leaks",
+    "refs/remotes/origin/devtools/test262-fast",
+    "refs/remotes/origin/devtools/unicode-canonicalize-speed",
+    "refs/remotes/origin/devtools/with-runtime",
+    "refs/remotes/origin/gate-logs/2e165469ec95/compare-plain",
+    "refs/remotes/origin/gate-logs/2e165469ec95/merge",
+    "refs/remotes/origin/gate-logs/2e165469ec95/plain",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-0",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-1",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-2",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-3",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-4",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-5",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-6",
+    "refs/remotes/origin/gate-logs/2e165469ec95/shard-7",
+    "refs/remotes/origin/gate-logs/2e165469ec95/whole",
+    "refs/remotes/origin/gate-logs/7f0164cfd257/20261007T082555/shard-1",
+    "refs/remotes/origin/gate-logs/7f0164cfd257/20261007T082555/shard-2",
+    "refs/remotes/origin/gate-logs/7f0164cfd257/20261007T082555/shard-3",
+    "refs/remotes/origin/gate-logs/7f0164cfd257/20261007T082555/shard-5",
+    "refs/remotes/origin/gate-logs/7f0164cfd257/20261007T082555/shard-6",
+    "refs/remotes/origin/gate-logs/7f0164cfd257/20261007T082555/shard-7",
+    "refs/remotes/origin/gate/node-pin",
+    "refs/remotes/origin/land/stage3",
+    "refs/remotes/origin/library/mac-leak-checks",
+    "refs/remotes/origin/library/merge-host-node-types",
+    "refs/remotes/origin/library/merge-map-small",
+    "refs/remotes/origin/library/merge-regex-native-fixes",
+    "refs/remotes/origin/library/regex-refused-fixture",
+    "refs/remotes/origin/library/unfused-everywhere",
+    "refs/remotes/origin/library/with-runtime",
+    "refs/remotes/origin/lint-fix/logical-assignment-never",
+    "refs/remotes/origin/lint-fix/mutation-aliasing",
+    "refs/remotes/origin/lint-fix/static-single-assignment",
+    "refs/remotes/origin/lint-fix/static-single-assignment-dominance",
+    "refs/remotes/origin/lint-rules/harness",
+    "refs/remotes/origin/lint-rules/legacy",
+    "refs/remotes/origin/locks/area-stage1-lint",
+    "refs/remotes/origin/main",
+    "refs/remotes/origin/runtime/area-coverage-merges",
+    "refs/remotes/origin/runtime/area-merge-nbody",
+    "refs/remotes/origin/runtime/area-take-borrow",
+    "refs/remotes/origin/runtime/area-take-concurrency2",
+    "refs/remotes/origin/runtime/area-take-decode",
+    "refs/remotes/origin/runtime/area-take-envplace",
+    "refs/remotes/origin/runtime/area-take-lintfix",
+    "refs/remotes/origin/runtime/area-take-regions",
+    "refs/remotes/origin/runtime/area-take-regionscov",
+    "refs/remotes/origin/runtime/area-take-stdoutarea",
+    "refs/remotes/origin/runtime/area-take-string",
+    "refs/remotes/origin/runtime/area-take-views",
+    "refs/remotes/origin/runtime/aside-throw",
+    "refs/remotes/origin/runtime/borrowed-array-move",
+    "refs/remotes/origin/runtime/defined-lent",
+    "refs/remotes/origin/runtime/error-spread",
+    "refs/remotes/origin/runtime/fresh-probes",
+    "refs/remotes/origin/runtime/handover-throw",
+    "refs/remotes/origin/runtime/integrate6-fixtures",
+    "refs/remotes/origin/runtime/length-check-fixtures",
+    "refs/remotes/origin/runtime/long-names",
+    "refs/remotes/origin/runtime/memory-guard-fixtures",
+    "refs/remotes/origin/runtime/read-all-defined",
+    "refs/remotes/origin/runtime/region-ctor-capture",
+    "refs/remotes/origin/runtime/release-fast-path",
+    "refs/remotes/origin/runtime/shared-slice-append",
+    "refs/remotes/origin/runtime/slab-checks",
+    "refs/remotes/origin/runtime/spread-method",
+    "refs/remotes/origin/runtime/stack-arguments",
+    "refs/remotes/origin/runtime/stack-arguments-linux",
+    "refs/remotes/origin/runtime/stdout-edges-usr1",
+    "refs/remotes/origin/runtime/stdout-edges-usr1-counts",
+    "refs/remotes/origin/runtime/uncaught-name",
+    "refs/remotes/origin/wasm/integrate",
+    "refs/remotes/origin/wasm/limits"
+  ],
+  "claim_blobs": {
+    "f3bd01c066ec8264ab5d38402b03deb2ea1333ae": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-01",
+        "path": "stage1/cohere/typeaware/claims/wave-01.md"
+      }
+    ],
+    "5ed966992618a7956883f53a925861e868ec21b3": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-02",
+        "path": "stage1/cohere/typeaware/claims/wave-02.md"
+      }
+    ],
+    "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-03",
+        "path": "stage1/cohere/typeaware/claims/wave-03.md"
+      }
+    ],
+    "ebedcf43fc5174e77f3c6ec9d3eaa3daf9c9dc06": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-04",
+        "path": "stage1/cohere/typeaware/claims/wave-04-evidence/commands.md"
+      }
+    ],
+    "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-04",
+        "path": "stage1/cohere/typeaware/claims/wave-04-report.md"
+      }
+    ],
+    "a24a7ec0d7d90ebe148b9e743d39831511624130": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-04",
+        "path": "stage1/cohere/typeaware/claims/wave-04.md"
+      }
+    ],
+    "491184bb19878012fa9ead583bc134a026ba7b07": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-05",
+        "path": "stage1/cohere/typeaware/claims/wave-05-report.md"
+      }
+    ],
+    "708b391d44b39676449479a579a0567e5856e3d9": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-05",
+        "path": "stage1/cohere/typeaware/claims/wave-05.md"
+      }
+    ],
+    "abbc330a2a0d7f50bc1635344612fb3b3c0c0752": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-06",
+        "path": "stage1/cohere/typeaware/claims/wave-06.md"
+      }
+    ],
+    "c4046a7994ad58066662bf0cd74e420ea9ea096c": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-07",
+        "path": "stage1/cohere/typeaware/claims/wave-07.md"
+      }
+    ],
+    "f613d2c025a4fc82b4ac5d7edbc251699620ff02": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-08",
+        "path": "stage1/cohere/typeaware/claims/wave-08.md"
+      }
+    ],
+    "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-09",
+        "path": "stage1/cohere/typeaware/claims/wave-09.md"
+      }
+    ],
+    "e91b35927bff09978c01f4fa052e4aa1eda56750": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-10",
+        "path": "stage1/cohere/typeaware/claims/wave-10.md"
+      }
+    ],
+    "0eb8633bfc3a110693dd149764b77125e6e20b23": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-11",
+        "path": "stage1/cohere/typeaware/claims/wave-11.md"
+      }
+    ],
+    "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-12",
+        "path": "stage1/cohere/typeaware/claims/wave-12.md"
+      }
+    ],
+    "1e88fc63a56c45b1ae39ab477843137e0aef9681": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-13",
+        "path": "stage1/cohere/typeaware/claims/wave-13.md"
+      }
+    ],
+    "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-14",
+        "path": "stage1/cohere/typeaware/claims/wave-14.md"
+      }
+    ],
+    "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-15",
+        "path": "stage1/cohere/typeaware/claims/wave-15.md"
+      }
+    ],
+    "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-16",
+        "path": "stage1/cohere/typeaware/claims/wave-16.md"
+      }
+    ],
+    "60febcc8a8463183b0cfd583b2d8873171420b0a": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-17",
+        "path": "stage1/cohere/typeaware/claims/wave-17.md"
+      }
+    ],
+    "84161dde381f80e79e6a499a347178bd1b5c8d44": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-18",
+        "path": "stage1/cohere/typeaware/claims/wave-18.md"
+      }
+    ],
+    "977f480af97f1942ee5e70df243a518734feb664": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-19",
+        "path": "stage1/cohere/typeaware/claims/wave-19.md"
+      }
+    ],
+    "5b7b0d0a646094edf99c11ff566f27060af2593f": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-20",
+        "path": "stage1/cohere/typeaware/claims/wave-20.md"
+      }
+    ],
+    "b5b0f673a5b088fc16e261c6c9e8782c55cc5966": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-21",
+        "path": "stage1/cohere/typeaware/claims/wave-21.md"
+      }
+    ],
+    "1991db709e29011dccbea99f0e85ee6d2f44572e": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-22",
+        "path": "stage1/cohere/typeaware/claims/wave-22.md"
+      }
+    ],
+    "fc881cea1cdd3f0523aa688864eb2d371c923e8f": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-23",
+        "path": "stage1/cohere/typeaware/claims/wave-23.md"
+      }
+    ],
+    "14eeabd6e293246fbe78f1d57de5acb588c82db5": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-24",
+        "path": "stage1/cohere/typeaware/claims/wave-24.md"
+      }
+    ],
+    "a47bab3b3d399c23dbf71f711e013e32e6627f37": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-25",
+        "path": "stage1/cohere/typeaware/claims/wave-25.md"
+      }
+    ],
+    "20b300262d053cad6954da56b3b4f1d07b595d59": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-26",
+        "path": "stage1/cohere/typeaware/claims/wave-26.md"
+      }
+    ],
+    "190a602a7a6252c23466ba0f6cb326169725ef9b": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-27",
+        "path": "stage1/cohere/typeaware/claims/wave-27.md"
+      }
+    ],
+    "c6436e8074db3738f0c2662b8c888d682ef1e4aa": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-28",
+        "path": "stage1/cohere/typeaware/claims/wave-28.md"
+      }
+    ],
+    "9982dafdf498647fc3ff5cef9769831b669534a1": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-29",
+        "path": "stage1/cohere/typeaware/claims/wave-29.md"
+      }
+    ],
+    "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7": [
+      {
+        "ref": "refs/remotes/origin/codex/typeaware-wave-30",
+        "path": "stage1/cohere/typeaware/claims/wave-30.md"
+      }
+    ]
+  },
+  "ranked": [
+    "no-use-before-define",
+    "@typescript-eslint/no-unsafe-type-assertion",
+    "adamic/no-unchecked-cast",
+    "@typescript-eslint/no-unsafe-member-access",
+    "@typescript-eslint/no-unsafe-argument",
+    "@typescript-eslint/prefer-nullish-coalescing",
+    "@typescript-eslint/no-shadow",
+    "@typescript-eslint/no-unsafe-enum-comparison",
+    "no-implicit-coercion",
+    "nexus/correctness-no-caller-data-mutation",
+    "no-param-reassign",
+    "@typescript-eslint/no-unsafe-assignment",
+    "adamic/invariant-mutable",
+    "@typescript-eslint/no-confusing-void-expression",
+    "@typescript-eslint/consistent-return",
+    "@typescript-eslint/switch-exhaustiveness-check",
+    "adamic/no-optional-widening",
+    "nexus/consistency-no-property-alias",
+    "@typescript-eslint/unbound-method",
+    "@typescript-eslint/no-unused-vars",
+    "nexus/correctness-no-implicit-return",
+    "@typescript-eslint/no-deprecated",
+    "no-else-return",
+    "logical-assignment-operators",
+    "@typescript-eslint/no-unsafe-return",
+    "nexus/correctness-no-nullish-stripping-assertion",
+    "@typescript-eslint/no-unsafe-call",
+    "@typescript-eslint/consistent-type-imports",
+    "@typescript-eslint/no-unnecessary-template-expression",
+    "nexus/consistency-require-constant-casing",
+    "nexus/consistency-require-matching-return-type",
+    "@typescript-eslint/strict-void-return",
+    "@typescript-eslint/no-unnecessary-type-parameters",
+    "no-useless-assignment",
+    "@typescript-eslint/restrict-template-expressions",
+    "adamic/nominal-class",
+    "@typescript-eslint/no-duplicate-type-constituents",
+    "no-useless-return",
+    "no-undef-init",
+    "@typescript-eslint/prefer-for-of",
+    "@typescript-eslint/consistent-indexed-object-style",
+    "no-loop-func",
+    "nexus/correctness-no-import-cycle-load-time-read",
+    "@typescript-eslint/no-require-imports",
+    "prefer-const",
+    "radix",
+    "@typescript-eslint/non-nullable-type-assertion-style",
+    "no-unmodified-loop-condition",
+    "@typescript-eslint/no-redundant-type-constituents",
+    "@typescript-eslint/prefer-includes",
+    "@typescript-eslint/prefer-regexp-exec",
+    "nexus/correctness-no-identical-branches",
+    "@typescript-eslint/no-for-in-array",
+    "@typescript-eslint/no-redeclare",
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "@typescript-eslint/no-unsafe-unary-minus",
+    "nexus/correctness-no-test-on-global-regex",
+    "nexus/correctness-no-write-only-collection",
+    "no-unassigned-vars",
+    "preserve-caught-error",
+    "@typescript-eslint/consistent-type-exports",
+    "@typescript-eslint/no-array-delete",
+    "@typescript-eslint/no-base-to-string",
+    "@typescript-eslint/no-extraneous-class",
+    "@typescript-eslint/no-useless-default-assignment",
+    "@typescript-eslint/prefer-find",
+    "@typescript-eslint/require-array-sort-compare",
+    "@typescript-eslint/restrict-plus-operands",
+    "no-import-assign",
+    "prefer-exponentiation-operator",
+    "use-isnan",
+    "@next/next/no-async-client-component",
+    "@next/next/no-duplicate-head",
+    "@next/next/no-script-component-in-head",
+    "@next/next/no-title-in-document-head",
+    "@typescript-eslint/await-thenable",
+    "@typescript-eslint/class-literal-property-style",
+    "@typescript-eslint/consistent-generic-constructors",
+    "@typescript-eslint/dot-notation",
+    "@typescript-eslint/no-array-constructor",
+    "@typescript-eslint/no-floating-promises",
+    "@typescript-eslint/no-implied-eval",
+    "@typescript-eslint/no-meaningless-void-operator",
+    "@typescript-eslint/no-misused-promises",
+    "@typescript-eslint/no-misused-spread",
+    "@typescript-eslint/no-mixed-enums",
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+    "@typescript-eslint/no-unnecessary-qualifier",
+    "@typescript-eslint/no-unsafe-declaration-merging",
+    "@typescript-eslint/no-unused-private-class-members",
+    "@typescript-eslint/only-throw-error",
+    "@typescript-eslint/prefer-promise-reject-errors",
+    "@typescript-eslint/prefer-reduce-type-parameter",
+    "@typescript-eslint/prefer-return-this-type",
+    "@typescript-eslint/related-getter-setter-pairs",
+    "@typescript-eslint/return-await",
+    "@typescript-eslint/use-unknown-in-catch-callback-variable",
+    "accessor-pairs",
+    "base/correctness-require-graphql-nullable-parity",
+    "base/correctness-require-matching-inject-type",
+    "base/correctness-require-matching-operation-context",
+    "base/correctness-require-matching-provider-return",
+    "base/correctness-require-optional-relation",
+    "base/correctness-require-orm-column-nullable-parity",
+    "base/correctness-require-serializable-nullable-parity",
+    "base/correctness-require-verify-array-parity",
+    "base/correctness-require-verify-optional-parity",
+    "block-scoped-var",
+    "getter-return",
+    "id-denylist",
+    "id-match",
+    "nexus/concurrency-no-check-then-write",
+    "nexus/concurrency-no-lost-update",
+    "nexus/consistency-no-iso-string-date-cut",
+    "nexus/correctness-no-callback-in-parse-try",
+    "nexus/correctness-no-collection-misuse",
+    "nexus/correctness-no-discarded-outcome",
+    "nexus/correctness-no-discarded-pure-result",
+    "nexus/correctness-no-global-listener-target-assertion",
+    "nexus/correctness-no-leaked-number-render",
+    "nexus/correctness-no-mock-on-module-namespace",
+    "nexus/correctness-no-process-exit-after-output",
+    "nexus/correctness-no-uncleared-race-timeout",
+    "nexus/correctness-require-blocking-standard-streams",
+    "nexus/correctness-require-child-process-error-listener",
+    "nexus/correctness-require-response-status-check",
+    "nexus/performance-no-independent-await-in-loop",
+    "nexus/security-no-interpolated-shell-command",
+    "nexus/security-no-interpolated-sql-string",
+    "no-alert",
+    "no-class-assign",
+    "no-const-assign",
+    "no-constant-binary-expression",
+    "no-eval",
+    "no-extend-native",
+    "no-func-assign",
+    "no-global-assign",
+    "no-implicit-globals",
+    "no-implied-eval",
+    "no-invalid-regexp",
+    "no-label-var",
+    "no-misleading-character-class",
+    "no-new-func",
+    "no-new-native-nonconstructor",
+    "no-new-wrappers",
+    "no-obj-calls",
+    "no-object-constructor",
+    "no-promise-executor-return",
+    "no-restricted-globals",
+    "no-setter-return",
+    "no-shadow-restricted-names",
+    "no-throw-literal",
+    "no-useless-backreference",
+    "prefer-arrow-callback",
+    "prefer-numeric-literals",
+    "prefer-object-has-own",
+    "prefer-object-spread",
+    "prefer-promise-reject-errors",
+    "prefer-regex-literals",
+    "prefer-rest-params",
+    "react-hooks/exhaustive-deps",
+    "react-hooks/globals",
+    "react-hooks/immutability",
+    "react-hooks/no-deriving-state-in-effects",
+    "react-hooks/preserve-manual-memoization",
+    "react-hooks/purity",
+    "react-hooks/refs",
+    "react-hooks/set-state-in-effect",
+    "react-hooks/set-state-in-render",
+    "react-hooks/static-components",
+    "react-hooks/unsupported-syntax",
+    "react-hooks/use-memo",
+    "react/boolean-prop-naming",
+    "react/button-has-type",
+    "react/checked-requires-onchange-or-readonly",
+    "react/display-name",
+    "react/forbid-elements",
+    "react/forbid-prop-types",
+    "react/iframe-missing-sandbox",
+    "react/jsx-fragments",
+    "react/jsx-no-constructed-context-values",
+    "react/jsx-no-undef",
+    "react/no-adjacent-inline-elements",
+    "react/no-array-index-key",
+    "react/no-danger-with-children",
+    "react/no-multi-comp",
+    "react/no-namespace",
+    "react/no-object-type-as-default-prop",
+    "react/no-unstable-nested-components",
+    "react/sort-default-props",
+    "react/static-property-placement",
+    "react/style-prop-object",
+    "require-atomic-updates",
+    "require-await",
+    "structure/react-hook-no-any-type",
+    "symbol-description",
+    "valid-typeof"
+  ],
+  "previously_verified_ported": [
+    "@typescript-eslint/consistent-return",
+    "@typescript-eslint/method-signature-style",
+    "@typescript-eslint/no-confusing-void-expression",
+    "@typescript-eslint/no-shadow",
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "@typescript-eslint/no-unsafe-argument",
+    "@typescript-eslint/no-unsafe-assignment",
+    "@typescript-eslint/no-unsafe-declaration-merging",
+    "@typescript-eslint/no-unsafe-enum-comparison",
+    "@typescript-eslint/no-unsafe-member-access",
+    "@typescript-eslint/no-unsafe-type-assertion",
+    "@typescript-eslint/no-unsafe-unary-minus",
+    "@typescript-eslint/no-unused-vars",
+    "@typescript-eslint/prefer-nullish-coalescing",
+    "@typescript-eslint/related-getter-setter-pairs",
+    "@typescript-eslint/restrict-plus-operands",
+    "@typescript-eslint/switch-exhaustiveness-check",
+    "@typescript-eslint/unbound-method",
+    "adamic/invariant-mutable",
+    "adamic/no-optional-widening",
+    "adamic/no-unchecked-cast",
+    "nexus/consistency-no-property-alias",
+    "nexus/correctness-no-caller-data-mutation",
+    "no-implicit-coercion",
+    "no-param-reassign",
+    "no-use-before-define"
+  ],
+  "claimed": {
+    "no-use-before-define": [],
+    "@typescript-eslint/no-unsafe-type-assertion": [],
+    "adamic/no-unchecked-cast": [],
+    "@typescript-eslint/no-unsafe-member-access": [],
+    "@typescript-eslint/no-unsafe-argument": [],
+    "@typescript-eslint/prefer-nullish-coalescing": [],
+    "@typescript-eslint/no-shadow": [],
+    "@typescript-eslint/no-unsafe-enum-comparison": [],
+    "no-implicit-coercion": [],
+    "nexus/correctness-no-caller-data-mutation": [],
+    "no-param-reassign": [],
+    "@typescript-eslint/no-unsafe-assignment": [],
+    "adamic/invariant-mutable": [],
+    "@typescript-eslint/no-confusing-void-expression": [],
+    "@typescript-eslint/consistent-return": [],
+    "@typescript-eslint/switch-exhaustiveness-check": [],
+    "adamic/no-optional-widening": [],
+    "nexus/consistency-no-property-alias": [],
+    "@typescript-eslint/unbound-method": [],
+    "@typescript-eslint/no-unused-vars": [],
+    "nexus/correctness-no-implicit-return": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f"
+    ],
+    "@typescript-eslint/no-deprecated": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f"
+    ],
+    "no-else-return": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f"
+    ],
+    "logical-assignment-operators": [
+      "5ed966992618a7956883f53a925861e868ec21b3"
+    ],
+    "@typescript-eslint/no-unsafe-return": [
+      "5ed966992618a7956883f53a925861e868ec21b3"
+    ],
+    "nexus/correctness-no-nullish-stripping-assertion": [
+      "5ed966992618a7956883f53a925861e868ec21b3"
+    ],
+    "@typescript-eslint/no-unsafe-call": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5"
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5"
+    ],
+    "@typescript-eslint/no-unnecessary-template-expression": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5"
+    ],
+    "nexus/consistency-require-constant-casing": [
+      "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+      "a24a7ec0d7d90ebe148b9e743d39831511624130"
+    ],
+    "nexus/consistency-require-matching-return-type": [
+      "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+      "a24a7ec0d7d90ebe148b9e743d39831511624130"
+    ],
+    "@typescript-eslint/strict-void-return": [
+      "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+      "a24a7ec0d7d90ebe148b9e743d39831511624130"
+    ],
+    "@typescript-eslint/no-unnecessary-type-parameters": [
+      "708b391d44b39676449479a579a0567e5856e3d9"
+    ],
+    "no-useless-assignment": [
+      "491184bb19878012fa9ead583bc134a026ba7b07",
+      "708b391d44b39676449479a579a0567e5856e3d9"
+    ],
+    "@typescript-eslint/restrict-template-expressions": [
+      "708b391d44b39676449479a579a0567e5856e3d9"
+    ],
+    "adamic/nominal-class": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752"
+    ],
+    "@typescript-eslint/no-duplicate-type-constituents": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752"
+    ],
+    "no-useless-return": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752"
+    ],
+    "no-undef-init": [
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c"
+    ],
+    "@typescript-eslint/prefer-for-of": [
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c"
+    ],
+    "@typescript-eslint/consistent-indexed-object-style": [
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c"
+    ],
+    "no-loop-func": [
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02"
+    ],
+    "nexus/correctness-no-import-cycle-load-time-read": [
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02"
+    ],
+    "@typescript-eslint/no-require-imports": [
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02"
+    ],
+    "prefer-const": [
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885"
+    ],
+    "radix": [
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885"
+    ],
+    "@typescript-eslint/non-nullable-type-assertion-style": [
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885"
+    ],
+    "no-unmodified-loop-condition": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "@typescript-eslint/no-redundant-type-constituents": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "@typescript-eslint/prefer-includes": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "@typescript-eslint/prefer-regexp-exec": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "nexus/correctness-no-identical-branches": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "@typescript-eslint/no-for-in-array": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "@typescript-eslint/no-redeclare": [
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd"
+    ],
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare": [],
+    "@typescript-eslint/no-unsafe-unary-minus": [],
+    "nexus/correctness-no-test-on-global-regex": [
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd"
+    ],
+    "nexus/correctness-no-write-only-collection": [
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd"
+    ],
+    "no-unassigned-vars": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+    ],
+    "preserve-caught-error": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+    ],
+    "@typescript-eslint/consistent-type-exports": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+    ],
+    "@typescript-eslint/no-array-delete": [
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0"
+    ],
+    "@typescript-eslint/no-base-to-string": [
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0"
+    ],
+    "@typescript-eslint/no-extraneous-class": [
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0"
+    ],
+    "@typescript-eslint/no-useless-default-assignment": [
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "@typescript-eslint/prefer-find": [
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "@typescript-eslint/require-array-sort-compare": [
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "@typescript-eslint/restrict-plus-operands": [],
+    "no-import-assign": [
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-exponentiation-operator": [
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de"
+    ],
+    "use-isnan": [
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de"
+    ],
+    "@next/next/no-async-client-component": [
+      "60febcc8a8463183b0cfd583b2d8873171420b0a"
+    ],
+    "@next/next/no-duplicate-head": [
+      "60febcc8a8463183b0cfd583b2d8873171420b0a"
+    ],
+    "@next/next/no-script-component-in-head": [
+      "60febcc8a8463183b0cfd583b2d8873171420b0a"
+    ],
+    "@next/next/no-title-in-document-head": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "@typescript-eslint/await-thenable": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "@typescript-eslint/class-literal-property-style": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "@typescript-eslint/consistent-generic-constructors": [
+      "977f480af97f1942ee5e70df243a518734feb664"
+    ],
+    "@typescript-eslint/dot-notation": [
+      "977f480af97f1942ee5e70df243a518734feb664"
+    ],
+    "@typescript-eslint/no-array-constructor": [
+      "977f480af97f1942ee5e70df243a518734feb664"
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      "5b7b0d0a646094edf99c11ff566f27060af2593f"
+    ],
+    "@typescript-eslint/no-implied-eval": [
+      "5b7b0d0a646094edf99c11ff566f27060af2593f"
+    ],
+    "@typescript-eslint/no-meaningless-void-operator": [
+      "5b7b0d0a646094edf99c11ff566f27060af2593f"
+    ],
+    "@typescript-eslint/no-misused-promises": [
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "@typescript-eslint/no-misused-spread": [
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "@typescript-eslint/no-mixed-enums": [
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966"
+    ],
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "@typescript-eslint/no-unnecessary-qualifier": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "@typescript-eslint/no-unsafe-declaration-merging": [],
+    "@typescript-eslint/no-unused-private-class-members": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "@typescript-eslint/only-throw-error": [
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "@typescript-eslint/prefer-promise-reject-errors": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "@typescript-eslint/prefer-reduce-type-parameter": [
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "@typescript-eslint/prefer-return-this-type": [
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "@typescript-eslint/related-getter-setter-pairs": [],
+    "@typescript-eslint/return-await": [
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "@typescript-eslint/use-unknown-in-catch-callback-variable": [
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "accessor-pairs": [
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37"
+    ],
+    "base/correctness-require-graphql-nullable-parity": [
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37"
+    ],
+    "base/correctness-require-matching-inject-type": [
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37"
+    ],
+    "base/correctness-require-matching-operation-context": [
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "base/correctness-require-matching-provider-return": [
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "base/correctness-require-optional-relation": [
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "base/correctness-require-orm-column-nullable-parity": [
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "base/correctness-require-serializable-nullable-parity": [
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "base/correctness-require-verify-array-parity": [
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "base/correctness-require-verify-optional-parity": [
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "block-scoped-var": [
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "getter-return": [
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "id-denylist": [
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "id-match": [
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "nexus/concurrency-no-check-then-write": [
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "nexus/concurrency-no-lost-update": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/consistency-no-iso-string-date-cut": [
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-callback-in-parse-try": [
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-collection-misuse": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-discarded-outcome": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-discarded-pure-result": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-global-listener-target-assertion": [
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "nexus/correctness-no-leaked-number-render": [
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "nexus/correctness-no-mock-on-module-namespace": [
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "nexus/correctness-no-process-exit-after-output": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-no-uncleared-race-timeout": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-require-blocking-standard-streams": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "nexus/correctness-require-child-process-error-listener": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752"
+    ],
+    "nexus/correctness-require-response-status-check": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752"
+    ],
+    "nexus/performance-no-independent-await-in-loop": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752"
+    ],
+    "nexus/security-no-interpolated-shell-command": [
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de"
+    ],
+    "nexus/security-no-interpolated-sql-string": [
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de"
+    ],
+    "no-alert": [
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de"
+    ],
+    "no-class-assign": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "no-const-assign": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "no-constant-binary-expression": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "no-eval": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "no-extend-native": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "no-func-assign": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "no-global-assign": [
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-implicit-globals": [
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-implied-eval": [
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "no-invalid-regexp": [
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885",
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "no-label-var": [
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885",
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "no-misleading-character-class": [
+      "e2ebbf52aed9360fd2e34d4ae13512ad5bf9c885",
+      "6ce9a6ec3514acbc4d0cafa0dc4b27177cc818c0",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+    ],
+    "no-new-func": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "no-new-native-nonconstructor": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "no-new-wrappers": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "no-obj-calls": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-object-constructor": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-promise-executor-return": [
+      "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "no-restricted-globals": [
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "no-setter-return": [
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "no-shadow-restricted-names": [
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "no-throw-literal": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "no-useless-backreference": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "prefer-arrow-callback": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa"
+    ],
+    "prefer-numeric-literals": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-object-has-own": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-object-spread": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f"
+    ],
+    "prefer-promise-reject-errors": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "prefer-regex-literals": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "20b300262d053cad6954da56b3b4f1d07b595d59",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "prefer-rest-params": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "20b300262d053cad6954da56b3b4f1d07b595d59",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "react-hooks/exhaustive-deps": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "react-hooks/globals": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02"
+    ],
+    "react-hooks/immutability": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02"
+    ],
+    "react-hooks/no-deriving-state-in-effects": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02"
+    ],
+    "react-hooks/preserve-manual-memoization": [
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react-hooks/purity": [
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react-hooks/refs": [
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react-hooks/set-state-in-effect": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "20b300262d053cad6954da56b3b4f1d07b595d59",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "react-hooks/set-state-in-render": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "20b300262d053cad6954da56b3b4f1d07b595d59",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "react-hooks/static-components": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "20b300262d053cad6954da56b3b4f1d07b595d59",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "9982dafdf498647fc3ff5cef9769831b669534a1"
+    ],
+    "react-hooks/unsupported-syntax": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37"
+    ],
+    "react-hooks/use-memo": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37"
+    ],
+    "react/boolean-prop-naming": [
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "a47bab3b3d399c23dbf71f711e013e32e6627f37"
+    ],
+    "react/button-has-type": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "react/checked-requires-onchange-or-readonly": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "react/display-name": [
+      "5ed966992618a7956883f53a925861e868ec21b3",
+      "20b300262d053cad6954da56b3b4f1d07b595d59"
+    ],
+    "react/forbid-elements": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "react/forbid-prop-types": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "react/iframe-missing-sandbox": [
+      "e91b35927bff09978c01f4fa052e4aa1eda56750"
+    ],
+    "react/jsx-fragments": [
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "9982dafdf498647fc3ff5cef9769831b669534a1",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react/jsx-no-constructed-context-values": [
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "9982dafdf498647fc3ff5cef9769831b669534a1",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react/jsx-no-undef": [
+      "a24a7ec0d7d90ebe148b9e743d39831511624130",
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "8d0a467233f4ec8a74f2c59f5a2bac8e26a218dd",
+      "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+      "8b4efde4e6b3f8a9f3e3a82d8d7ff8b042f764de",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "5b7b0d0a646094edf99c11ff566f27060af2593f",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e",
+      "fc881cea1cdd3f0523aa688864eb2d371c923e8f",
+      "c6436e8074db3738f0c2662b8c888d682ef1e4aa",
+      "9982dafdf498647fc3ff5cef9769831b669534a1",
+      "a6f77e05c2257b5f43e775e95dfd8b67af7b56b7"
+    ],
+    "react/no-adjacent-inline-elements": [
+      "abbc330a2a0d7f50bc1635344612fb3b3c0c0752",
+      "c4046a7994ad58066662bf0cd74e420ea9ea096c",
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "react/no-array-index-key": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23"
+    ],
+    "react/no-danger-with-children": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a"
+    ],
+    "react/no-multi-comp": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a"
+    ],
+    "react/no-namespace": [
+      "0eb8633bfc3a110693dd149764b77125e6e20b23",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a"
+    ],
+    "react/no-object-type-as-default-prop": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "react/no-unstable-nested-components": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "react/sort-default-props": [
+      "1991db709e29011dccbea99f0e85ee6d2f44572e"
+    ],
+    "react/static-property-placement": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44"
+    ],
+    "react/style-prop-object": [
+      "84161dde381f80e79e6a499a347178bd1b5c8d44",
+      "b5b0f673a5b088fc16e261c6c9e8782c55cc5966"
+    ],
+    "require-atomic-updates": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "60febcc8a8463183b0cfd583b2d8873171420b0a",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "require-await": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "structure/react-hook-no-any-type": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5"
+    ],
+    "symbol-description": [
+      "f3bd01c066ec8264ab5d38402b03deb2ea1333ae",
+      "19c0dc9541c9fdb4a3e0f037e1d79370cb46c4c5",
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "f613d2c025a4fc82b4ac5d7edbc251699620ff02",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ],
+    "valid-typeof": [
+      "708b391d44b39676449479a579a0567e5856e3d9",
+      "e91b35927bff09978c01f4fa052e4aa1eda56750",
+      "977f480af97f1942ee5e70df243a518734feb664",
+      "14eeabd6e293246fbe78f1d57de5acb588c82db5",
+      "190a602a7a6252c23466ba0f6cb326169725ef9b"
+    ]
+  },
+  "available": [],
+  "base_main": "b6b1538b0cebc4ba6741ac34f1aedb60293c1d06",
+  "base_area": "d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898"
+}

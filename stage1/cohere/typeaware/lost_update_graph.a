@@ -1,0 +1,386 @@
+// Native control-flow layout follows cohere's rslint-derived builder.
+// Copyright (c) 2025 Bytedance Inc and its affiliates and typescript-eslint contributors.
+// MIT licensed, as recorded in this directory's LICENSE and NOTICE.
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+
+export class LostEvent {
+    readonly kind: number;
+    readonly node: number;
+    constructor(kind: number, node: number) { this.kind = kind; this.node = node; }
+}
+export class LostBlock {
+    readonly events: LostEvent[] = [];
+    readonly successors: number[] = [];
+    incoming = false;
+    reachable = false;
+}
+class LostJump {
+    readonly labels: readonly string[];
+    readonly after: number;
+    readonly next: number;
+    readonly breakable: boolean;
+    constructor(labels: readonly string[], after: number, next: number, breakable: boolean) {
+        this.labels = labels; this.after = after; this.next = next; this.breakable = breakable;
+    }
+}
+class LostTry {
+    readonly caught: number;
+    readonly final: number;
+    position = 0;
+    forked = false;
+    thrown = false;
+    returned = false;
+    constructor(caught: number, final: number) { this.caught = caught; this.final = final; }
+}
+export class LostGraph {
+    readonly bindings: Bindings;
+    readonly names: readonly number[];
+    readonly blocks: LostBlock[] = [];
+    readonly jumps: LostJump[] = [];
+    readonly tries: LostTry[] = [];
+    readonly chains: number[] = [];
+    current = 0;
+    constructor(bindings: Bindings, names: readonly number[]) { this.bindings = bindings; this.names = names; }
+    block(index: number): LostBlock { return this.blocks[index] ?? panic('missing lost-update block'); }
+    newBlock(): number { const at = this.blocks.length; this.blocks.push(new LostBlock()); return at; }
+    link(from: number, to: number): void {
+        if(from < 0 || to < 0) { return; }
+        this.block(from).successors.push(to); if(this.block(from).reachable) { this.block(to).incoming = true; }
+    }
+    enter(index: number): void { this.current = index; this.block(index).reachable = this.block(index).incoming; }
+    unreachable(): void { const next = this.newBlock(); this.block(this.current).successors.push(next); this.current = next; }
+    event(kind: number, node: number): void { this.block(this.current).events.push(new LostEvent(kind, node)); }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    root(index: number): boolean {
+        return this.bindings.functionKind(this.kind(index)) || ['SourceFile', 'ClassStaticBlockDeclaration'].includes(this.kind(index)) ||
+            (this.kind(index) === 'PropertyDeclaration' && this.bindings.shape.initializer(index) >= 0);
+    }
+    operator(index: number): string {
+        const node = this.bindings.rules.parser.node(index);
+        return node.kind === 'BinaryExpression' ? this.bindings.rules.parser.node(node.children[1] ?? -1).kind : node.operator;
+    }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken',
+            'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken',
+            'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    transparent(index: number): number {
+        let current = index;
+        while(['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression'].includes(this.kind(current))) {
+            const node = this.bindings.rules.parser.node(current);
+            current = node.kind === 'TypeAssertionExpression' ? node.children[node.children.length - 1] ?? -1 : node.children[0] ?? -1;
+        }
+        return current;
+    }
+    throwFrame(): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) { const frame = this.tries[at] ?? panic('missing try'); if(frame.position === 0 || frame.final >= 0) { return at; } }
+        return -1;
+    }
+    returnFrame(): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) { if((this.tries[at]?.final ?? -1) >= 0) { return at; } } return -1;
+    }
+    throwTarget(frame: LostTry): number { return frame.position === 0 && frame.caught >= 0 ? frame.caught : frame.final; }
+    throwable(index: number): boolean {
+        const parent = this.bindings.parent(index); const kind = this.kind(parent);
+        if(parent < 0 || ['LabeledStatement', 'BreakStatement', 'ContinueStatement', 'ArrayBindingPattern', 'ImportSpecifier',
+            'ExportSpecifier', 'ImportClause', 'NamespaceImport', 'NamespaceExport', 'JsxAttribute', 'JsxNamespacedName', 'CatchClause'].includes(kind)) { return false; }
+        if(kind === 'BindingElement') {
+            const node = this.bindings.rules.parser.node(parent);
+            return !node.children.some((child) => this.kind(child) === 'DotDotDotToken') && this.bindings.shape.name(parent) === index &&
+                this.kind(this.bindings.parent(parent)) === 'ObjectBindingPattern';
+        }
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'ClassDeclaration', 'ClassExpression', 'VariableDeclaration',
+            'PropertyAssignment', 'PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'EnumDeclaration',
+            'ModuleDeclaration', 'InterfaceDeclaration', 'TypeAliasDeclaration'].includes(kind)) { return this.bindings.shape.name(parent) !== index; }
+        let owner = index;
+        while(owner >= 0 && this.kind(owner) !== 'SourceFile') { if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(this.kind(owner))) { return false; } owner = this.bindings.parent(owner); }
+        return true;
+    }
+    fork(): void {
+        if(!this.block(this.current).reachable) { return; }
+        const at = this.throwFrame(); if(at < 0) { return; }
+        const frame = this.tries[at] ?? panic('missing try'); if(frame.forked) { return; }
+        frame.forked = true; frame.thrown = true; this.link(this.current, this.throwTarget(frame));
+        const next = this.newBlock(); this.link(this.current, next); this.enter(next);
+    }
+    abrupt(throwing: boolean, yielding = false): void {
+        if(!this.block(this.current).reachable) { return; }
+        if(!throwing || yielding) {
+            const at = this.returnFrame(); if(at >= 0) { const frame = this.tries[at] ?? panic('missing try'); frame.returned = true; this.link(this.current, frame.final); }
+        }
+        if(throwing || yielding) {
+            const at = this.throwFrame(); if(at >= 0) { const frame = this.tries[at] ?? panic('missing try'); frame.thrown = true; this.link(this.current, this.throwTarget(frame)); }
+        }
+        if(yielding) { const next = this.newBlock(); this.link(this.current, next); this.enter(next); } else { this.unreachable(); }
+    }
+    read(index: number): void { if(this.names.includes(index)) { this.event(1, index); } if(this.throwable(index)) { this.fork(); } }
+    write(index: number): void { if(this.names.includes(index)) { this.event(2, index); } }
+    patternReads(index: number): void {
+        if(index < 0) { return; } const inner = this.transparent(index);
+        if(this.kind(inner) === 'Identifier') { this.read(inner); } else { this.expr(inner); }
+    }
+    patternWrites(index: number): void { const inner = this.transparent(index); if(this.kind(inner) === 'Identifier') { this.write(inner); } }
+    defaultBind(target: number, fallback: number): void {
+        if(fallback >= 0) {
+            const join = this.newBlock(); const alternative = this.newBlock(); this.link(this.current, join); this.link(this.current, alternative);
+            this.enter(alternative); this.expr(fallback); this.link(this.current, join); this.enter(join);
+        }
+        this.patternBind(target);
+    }
+    patternBind(index: number): void {
+        index = this.transparent(index); if(index < 0) { return; }
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'Identifier') { this.read(index); this.write(index); }
+        else if(node.kind === 'ObjectBindingPattern' || node.kind === 'ArrayBindingPattern') {
+            for(const element of node.children) {
+                if(this.kind(element) !== 'BindingElement') { continue; }
+                const binding = this.bindings.rules.parser.node(element);
+                const computed = binding.children.find((child) => this.kind(child) === 'ComputedPropertyName') ?? -1;
+                if(computed >= 0) { this.expr(this.bindings.rules.parser.node(computed).children[0] ?? -1); }
+                this.defaultBind(this.bindings.shape.name(element), this.bindings.shape.initializer(element));
+            }
+        } else if(node.kind === 'ObjectLiteralExpression') {
+            for(const member of node.children) {
+                const property = this.bindings.rules.parser.node(member);
+                if(property.kind === 'PropertyAssignment') {
+                    const name = property.children[0] ?? -1;
+                    if(this.kind(name) === 'ComputedPropertyName') { this.expr(this.bindings.rules.parser.node(name).children[0] ?? -1); }
+                    this.patternBind(property.children[property.children.length - 1] ?? -1);
+                } else if(property.kind === 'ShorthandPropertyAssignment') { this.defaultBind(property.children[0] ?? -1, property.children[1] ?? -1); }
+                else if(property.kind === 'SpreadAssignment') { this.patternBind(property.children[property.children.length - 1] ?? -1); }
+            }
+        } else if(node.kind === 'ArrayLiteralExpression') { for(const child of node.children) { this.patternBind(child); } }
+        else if(node.kind === 'SpreadElement') { this.patternBind(node.children[node.children.length - 1] ?? -1); }
+        else if(node.kind === 'BinaryExpression' && this.operator(index) === 'EqualsToken') { this.defaultBind(node.children[0] ?? -1, node.children[node.children.length - 1] ?? -1); }
+        else if(node.kind !== 'OmittedExpression') { this.expr(index); }
+    }
+    expressionEvent(index: number): void {
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'AwaitExpression' || node.kind === 'YieldExpression') { this.event(0, index); }
+        if(node.kind === 'CallExpression' || (node.kind === 'BinaryExpression' && this.assignment(this.operator(index)))) { this.event(3, index); }
+    }
+    member(index: number): void {
+        const node = this.bindings.rules.parser.node(index);
+        for(const child of node.children) {
+            const kind = this.kind(child);
+            if(kind === 'Decorator' || kind === 'ComputedPropertyName') { this.expr(this.bindings.rules.parser.node(child).children[0] ?? -1); }
+            if(kind === 'Parameter') {
+                for(const part of this.bindings.rules.parser.node(child).children) { if(this.kind(part) === 'Decorator') { this.expr(this.bindings.rules.parser.node(part).children[0] ?? -1); } }
+            }
+        }
+    }
+    expr(index: number): void {
+        if(index < 0) { return; } const rules = this.bindings.rules; const node = rules.parser.node(index); this.expressionEvent(index);
+        if(node.kind === 'Identifier') { this.read(index); return; }
+        if(node.kind === 'ParenthesizedExpression') { this.expr(node.children[0] ?? -1); return; }
+        if(node.kind === 'BinaryExpression') {
+            const left = node.children[0] ?? -1; const right = node.children[node.children.length - 1] ?? -1;
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(this.operator(index))) {
+                if(this.assignment(this.operator(index))) { this.patternReads(left); } else { this.expr(left); }
+                const join = this.newBlock(); const branch = this.newBlock(); this.link(this.current, join); this.link(this.current, branch);
+                this.enter(branch); this.expr(right); if(this.assignment(this.operator(index))) { this.patternWrites(left); }
+                this.link(this.current, join); this.enter(join); return;
+            }
+            if(this.assignment(this.operator(index))) {
+                if(this.operator(index) === 'EqualsToken' && ['ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(this.kind(rules.skip(left)))) { this.expr(right); this.patternBind(left); }
+                else { this.patternReads(left); this.expr(right); this.patternWrites(left); }
+            } else { this.expr(left); this.expr(right); }
+            return;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            this.expr(node.children[0] ?? -1); const previous = this.current; const join = this.newBlock();
+            const yes = this.newBlock(); const no = this.newBlock(); this.link(previous, yes); this.enter(yes); this.expr(node.children[2] ?? -1); this.link(this.current, join);
+            this.link(previous, no); this.enter(no); this.expr(node.children[4] ?? -1); this.link(this.current, join); this.enter(join); return;
+        }
+        if(node.kind === 'PrefixUnaryExpression' || node.kind === 'PostfixUnaryExpression') {
+            const operand = node.children[node.children.length - 1] ?? -1;
+            if(this.operator(index) === 'PlusPlusToken' || this.operator(index) === 'MinusMinusToken') { this.patternReads(operand); this.patternWrites(operand); } else { this.expr(operand); }
+            return;
+        }
+        if(['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(node.kind)) {
+            const parent = this.bindings.parent(index);
+            const chain = node.optional && (parent < 0 || !rules.parser.node(parent).optional || !['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression'].includes(this.kind(parent)));
+            if(chain) { this.chains.push(this.newBlock()); }
+            this.expr(node.children[0] ?? -1);
+            if(node.optional && this.chains.length > 0 && rules.text(node).includes('?.')) {
+                // Only the token on this link forks; an earlier link is already modelled recursively.
+                const first = rules.parser.node(node.children[0] ?? -1);
+                const nextStart = node.children.length > 1 ? rules.parser.node(node.children[1] ?? -1).pos : node.end;
+                if(rules.scanner.text.slice(first.end, nextStart).includes('?.')) {
+                    this.link(this.current, this.chains[this.chains.length - 1] ?? -1); const next = this.newBlock(); this.link(this.current, next); this.enter(next);
+                }
+            }
+            if(node.kind !== 'PropertyAccessExpression') { for(const child of node.children.slice(1)) { this.expr(child); } }
+            this.fork();
+            if(chain) { const join = this.chains.pop() ?? -1; this.link(this.current, join); this.enter(join); }
+            return;
+        }
+        if(node.kind === 'YieldExpression') { this.expr(node.children[node.children.length - 1] ?? -1); this.abrupt(false, true); return; }
+        if(node.kind === 'ClassExpression' || node.kind === 'ClassDeclaration') {
+            this.member(index);
+            for(const child of node.children) { if(this.kind(child) === 'HeritageClause') { for(const type of rules.parser.node(child).children) { this.expr(type); } } else { this.member(child); } }
+            return;
+        }
+        if(this.root(index)) { this.member(index); return; }
+        for(const child of node.children) { this.unknown(child); }
+    }
+    condition(index: number, yes: number, no: number): void {
+        if(index < 0) { this.link(this.current, yes); this.link(this.current, no); return; }
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'ParenthesizedExpression') { this.expressionEvent(index); this.condition(node.children[0] ?? -1, yes, no); }
+        else if(node.kind === 'PrefixUnaryExpression' && this.operator(index) === 'ExclamationToken') { this.expressionEvent(index); this.condition(node.children[node.children.length - 1] ?? -1, no, yes); }
+        else if(node.kind === 'BinaryExpression' && ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(this.operator(index))) {
+            this.expressionEvent(index); const right = this.newBlock(); const left = node.children[0] ?? -1;
+            if(this.operator(index) === 'AmpersandAmpersandToken') { this.condition(left, right, no); }
+            else if(this.operator(index) === 'BarBarToken') { this.condition(left, yes, right); }
+            else { this.expr(left); this.link(this.current, yes); this.link(this.current, no); this.link(this.current, right); }
+            this.enter(right); this.condition(node.children[node.children.length - 1] ?? -1, yes, no);
+        } else if(node.kind === 'ConditionalExpression') {
+            this.expressionEvent(index); const a = this.newBlock(); const b = this.newBlock(); this.condition(node.children[0] ?? -1, a, b);
+            this.enter(a); this.condition(node.children[2] ?? -1, yes, no); this.enter(b); this.condition(node.children[4] ?? -1, yes, no);
+        } else { this.expr(index); this.link(this.current, yes); this.link(this.current, no); }
+    }
+    truth(index: number): boolean {
+        if(index < 0) { return false; } const node = this.bindings.rules.parser.node(this.bindings.rules.skip(index));
+        if(node.kind === 'TrueKeyword' || node.kind === 'RegularExpressionLiteral') { return true; }
+        if(node.kind === 'NumericLiteral') {
+            let digits = node.text.replaceAll('_', '').toLowerCase();
+            if(digits.startsWith('0x') || digits.startsWith('0o') || digits.startsWith('0b')) { digits = digits.slice(2); }
+            else if(digits.includes('e')) { digits = digits.slice(0, digits.indexOf('e')); }
+            return digits.split('').some((digit) => digit !== '0' && digit !== '.');
+        }
+        if(node.kind === 'BigIntLiteral') { let digits = node.text.slice(0, -1).replaceAll('_', ''); if(digits.startsWith('0x') || digits.startsWith('0o') || digits.startsWith('0b')) { digits = digits.slice(2); } return digits.split('').some((digit) => digit !== '0'); }
+        return node.kind === 'StringLiteral' && node.text !== '';
+    }
+    forParts(index: number): number[] {
+        const rules = this.bindings.rules; const node = rules.parser.node(index); const result = [-1, -1, -1];
+        for(const child of node.children.slice(0, -1)) {
+            const start = rules.start(rules.parser.node(child)); rules.scanner.pos = node.pos; let depth = 0; let semis = 0;
+            while(true) { const kind = rules.scanner.scan(); if(rules.scanner.start >= start || kind === 'EndOfFileToken') { break; }
+                if(kind === 'OpenParenToken') { depth++; } else if(kind === 'CloseParenToken') { depth--; }
+                if(kind === 'SemicolonToken' && depth === 1) { semis++; }
+            }
+            if(semis <= 2) { result[semis] = child; }
+        }
+        return result;
+    }
+    jump(node: number, after: number, next: number, breakable = true): void {
+        const labels: string[] = []; let current = node; let parent = this.bindings.parent(current);
+        while(this.kind(parent) === 'LabeledStatement') {
+            const ancestor = this.bindings.rules.parser.node(parent);
+            if(ancestor.children[ancestor.children.length - 1] !== current) { break; }
+            labels.push(this.bindings.rules.parser.node(ancestor.children[0] ?? -1).text); current = parent; parent = this.bindings.parent(current);
+        }
+        this.jumps.push(new LostJump(labels, after, next, breakable));
+    }
+    variable(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index); const name = this.bindings.shape.name(index); const initializer = this.bindings.shape.initializer(index);
+        if(name < 0) { return; }
+        for(const child of node.children) { if(child !== name && child !== initializer) { this.expr(child); } }
+        if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(this.kind(name))) { this.expr(initializer); this.patternBind(name); }
+        else { this.patternReads(name); if(initializer >= 0) { this.expr(initializer); this.patternWrites(name); } }
+    }
+    statement(index: number): void {
+        if(index < 0) { return; } const rules = this.bindings.rules; const node = rules.parser.node(index); const kind = node.kind;
+        if(kind === 'ForOfStatement' && node.children.some((child) => this.kind(child) === 'AwaitKeyword')) { this.event(0, -1); }
+        if(kind === 'Block' || kind === 'VariableStatement' || kind === 'VariableDeclarationList' || kind === 'SourceFile') { for(const child of node.children) { this.unknown(child); } }
+        else if(kind === 'VariableDeclaration') { this.variable(index); }
+        else if(kind === 'ExpressionStatement' || kind === 'ExportAssignment') { this.expr(node.children[0] ?? -1); }
+        else if(kind === 'IfStatement') {
+            const after = this.newBlock(); const yes = this.newBlock(); const no = node.children.length > 2 ? this.newBlock() : after;
+            this.condition(node.children[0] ?? -1, yes, no); this.enter(yes); this.statement(node.children[1] ?? -1); this.link(this.current, after);
+            if(node.children.length > 2) { this.enter(no); this.statement(node.children[2] ?? -1); this.link(this.current, after); } this.enter(after);
+        } else if(kind === 'WhileStatement' || kind === 'DoStatement' || kind === 'ForStatement') {
+            const parts = kind === 'ForStatement' ? this.forParts(index) : [-1, node.children[kind === 'DoStatement' ? 1 : 0] ?? -1, -1];
+            const bodyNode = kind === 'DoStatement' ? node.children[0] ?? -1 : node.children[node.children.length - 1] ?? -1;
+            if(kind === 'ForStatement') { this.unknown(parts[0] ?? -1); }
+            const test = this.newBlock(); const after = this.newBlock(); const body = this.newBlock();
+            if(kind === 'DoStatement') {
+                this.link(this.current, body); this.jump(index, after, test); this.enter(body); this.statement(bodyNode); this.link(this.current, test); this.jumps.pop();
+                this.enter(test); this.expr(parts[1] ?? -1); this.link(this.current, body); if(!this.truth(parts[1] ?? -1)) { this.link(this.current, after); }
+            } else if(kind === 'ForStatement' && parts[1] === -1 && parts[2] === -1) {
+                this.link(this.current, body); this.jump(index, after, body); this.enter(body); this.statement(bodyNode); this.link(this.current, body); this.jumps.pop();
+            } else {
+                this.link(this.current, test); this.enter(test); this.condition(parts[1] ?? -1, body, (kind === 'ForStatement' && parts[1] === -1) || this.truth(parts[1] ?? -1) ? -1 : after);
+                let update = test;
+                if((parts[2] ?? -1) >= 0) { update = this.newBlock(); this.block(update).incoming = this.block(this.current).reachable; this.enter(update); this.expr(parts[2] ?? -1); this.link(this.current, test); }
+                this.jump(index, after, update); this.enter(body); this.statement(bodyNode); this.link(this.current, update); this.jumps.pop();
+            }
+            this.enter(after);
+        } else if(kind === 'ForOfStatement' || kind === 'ForInStatement') {
+            const children = node.children.filter((child) => this.kind(child) !== 'AwaitKeyword'); this.expr(children[1] ?? -1);
+            const head = this.newBlock(); const after = this.newBlock(); const body = this.newBlock(); this.link(this.current, head); this.enter(head); this.link(head, after); this.link(head, body);
+            this.jump(index, after, head); this.enter(body); const initializer = children[0] ?? -1;
+            if(this.kind(initializer) === 'VariableDeclarationList') { for(const decl of rules.parser.node(initializer).children) { this.patternBind(this.bindings.shape.name(decl)); } }
+            else { this.patternBind(initializer); }
+            this.statement(children[2] ?? -1); this.link(this.current, head); this.jumps.pop(); this.enter(after);
+        } else if(kind === 'BreakStatement' || kind === 'ContinueStatement') {
+            if(!this.block(this.current).reachable) { return; } const label = node.children.length === 0 ? '' : rules.parser.node(node.children[0] ?? -1).text;
+            for(let at = this.jumps.length - 1; at >= 0; at--) {
+                const jump = this.jumps[at] ?? panic('missing jump'); const destination = kind === 'ContinueStatement' ? jump.next : jump.after;
+                if(destination < 0 || (label === '' && kind === 'BreakStatement' && !jump.breakable) || (label !== '' && !jump.labels.includes(label))) { continue; }
+                this.link(this.current, destination); break;
+            }
+            this.unreachable();
+        } else if(kind === 'ReturnStatement' || kind === 'ThrowStatement') { this.expr(node.children[0] ?? -1); this.abrupt(kind === 'ThrowStatement'); }
+        else if(kind === 'TryStatement') { this.tryStatement(index); }
+        else if(kind === 'SwitchStatement') {
+            this.expr(node.children[0] ?? -1); const after = this.newBlock(); const caseBlock = node.children[1] ?? -1;
+            const clauses: number[] = caseBlock < 0 ? [] : rules.parser.node(caseBlock).children; const bodies = clauses.map(() => this.newBlock()); let fallback = -1;
+            for(let at = 0; at < clauses.length; at++) { const clause = rules.parser.node(clauses[at] ?? -1);
+                if(clause.kind === 'DefaultClause') { fallback = at; continue; }
+                this.expr(clause.children[0] ?? -1); this.link(this.current, bodies[at] ?? -1); const next = this.newBlock(); this.link(this.current, next); this.enter(next);
+            }
+            this.link(this.current, fallback < 0 ? after : bodies[fallback] ?? -1); this.jump(index, after, -1);
+            let previous = -1;
+            for(let at = 0; at < clauses.length; at++) { this.link(previous, bodies[at] ?? -1); this.enter(bodies[at] ?? -1);
+                const clause = rules.parser.node(clauses[at] ?? -1); for(const child of clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0)) { this.statement(child); } previous = this.current;
+            }
+            this.link(previous, after); this.jumps.pop(); this.enter(after);
+        } else if(kind === 'LabeledStatement') {
+            const body = node.children[node.children.length - 1] ?? -1;
+            if(['SwitchStatement', 'WhileStatement', 'DoStatement', 'ForStatement', 'ForOfStatement', 'ForInStatement'].includes(this.kind(body))) { this.statement(body); }
+            else { const after = this.newBlock(); this.jumps.push(new LostJump([rules.parser.node(node.children[0] ?? -1).text], after, -1, false)); this.statement(body); this.jumps.pop(); this.link(this.current, after); this.enter(after); }
+        } else if(kind === 'ClassDeclaration') { this.expr(index); }
+        else if(!['EmptyStatement', 'DebuggerStatement', 'ImportDeclaration', 'ImportEqualsDeclaration', 'FunctionDeclaration', 'ExportDeclaration'].includes(kind)) { for(const child of node.children) { this.unknown(child); } }
+    }
+    tryStatement(index: number): void {
+        const rules = this.bindings.rules; const children = rules.parser.node(index).children; const caught = children.find((child) => this.kind(child) === 'CatchClause') ?? -1;
+        const final = children.length > 1 && this.kind(children[children.length - 1] ?? -1) === 'Block' ? children[children.length - 1] ?? -1 : -1;
+        const frame = new LostTry(caught < 0 ? -1 : this.newBlock(), final < 0 ? -1 : this.newBlock()); this.tries.push(frame);
+        this.statement(children[0] ?? -1); const ends: number[] = [];
+        if(caught >= 0) { this.link(this.current, frame.caught); ends.push(this.current); frame.position = 1; frame.forked = false; this.enter(frame.caught);
+            const clause = rules.parser.node(caught); for(const child of clause.children) { if(this.kind(child) === 'VariableDeclaration') { this.patternBind(this.bindings.shape.name(child)); } else { this.statement(child); } }
+        }
+        ends.push(this.current); this.tries.pop(); const after = this.newBlock();
+        if(final < 0) { for(const end of ends) { this.link(end, after); } this.enter(after); return; }
+        const snapshot = this.tries.map((entry) => entry.forked); const normal = this.newBlock(); for(const end of ends) { this.link(end, normal); }
+        this.enter(normal); this.statement(final); this.link(this.current, after);
+        if(this.block(frame.final).incoming) {
+            for(let at = 0; at < snapshot.length; at++) { const outer = this.tries[at] ?? panic('missing try'); outer.forked = snapshot[at] ?? false; }
+            this.enter(frame.final); this.statement(final);
+            if(this.block(this.current).reachable) {
+                if(frame.returned) { const at = this.returnFrame(); if(at >= 0) { const outer = this.tries[at] ?? panic('missing try'); outer.returned = true; this.link(this.current, outer.final); } }
+                if(frame.thrown) { const at = this.throwFrame(); if(at >= 0) { const outer = this.tries[at] ?? panic('missing try'); outer.thrown = true; this.link(this.current, this.throwTarget(outer)); } }
+            }
+        }
+        this.enter(after);
+    }
+    unknown(index: number): void {
+        if(index < 0) { return; } const kind = this.kind(index);
+        if(kind.endsWith('Statement') || ['Block', 'VariableDeclaration', 'VariableDeclarationList', 'SourceFile', 'ClassDeclaration', 'FunctionDeclaration'].includes(kind)) { this.statement(index); }
+        else { this.expr(index); }
+    }
+    build(root: number): void {
+        this.current = this.newBlock(); this.block(this.current).incoming = true; this.block(this.current).reachable = true;
+        const node = this.bindings.rules.parser.node(root);
+        for(const parameter of node.children.filter((child) => this.kind(child) === 'Parameter')) {
+            const name = this.bindings.shape.name(parameter); const initializer = this.bindings.shape.initializer(parameter);
+            for(const child of this.bindings.rules.parser.node(parameter).children) { if(child !== name && child !== initializer) { this.expr(child); } }
+            this.defaultBind(name, initializer);
+        }
+        const body = node.children[node.children.length - 1] ?? -1; this.unknown(body);
+    }
+}

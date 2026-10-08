@@ -1,0 +1,24 @@
+[
+  {
+    "label": "released",
+    "command": [
+      "/workspace/wave-22-seventh-work/released-asan",
+      "/workspace/wave-22-seventh-work/tsconfig.json",
+      "/workspace/wave-22-seventh-work/released-probe.tsx",
+      "unicode-node-text"
+    ],
+    "exit": 70,
+    "detector": "released refusal"
+  },
+  {
+    "label": "retained",
+    "command": [
+      "/workspace/wave-22-seventh-work/retained-handle",
+      "/workspace/wave-22-seventh-work/tsconfig.json",
+      "/workspace/wave-22-seventh-work/released-probe.tsx",
+      "unicode-node-text"
+    ],
+    "exit": 0,
+    "detector": "mutant violates required exit 70 while executing cleanly"
+  }
+]
