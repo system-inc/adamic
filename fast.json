@@ -1,0 +1,680 @@
+{
+  "sha": "2c251c33fc38a326dd92a714b55bf94fccc0cbdc",
+  "branch": "devtools/lint-parallel-compiler-and-stage1agree",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "bda1026b0dfa528fc5de612e0d8e45b3a18c062d",
+  "base_name": "area/stage1-lint",
+  "tools_sha": "3e339bbf06e0695f1b1223065ee8d4eef4813ba8",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "reads": [],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "stage1/cohere/lint/lint_test.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/stage1/cohere/lint"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools-4",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerCacheSourceByte",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerNoProgramCoverage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerBridgeRefusalPending",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerReplayEntryControl",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerHashes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCommandDiagnosticsDropOnlyModuleDownloads",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestExecuteFailsOnStderrOtherThanModuleDownloads",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerGuardBackend",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestChildCPUHangGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestChildWallBackstop",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestChildCPUWaitGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNestedConstructorGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestOptionAndComparatorGaps",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestEmittedJavaScriptMismatch",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestDotARename",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompleteSuggestionSerialization",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestSuggestionAlongsideAutomaticFix",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestWitnessScriptKind",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxLintReleaseAndThroughput",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxInventoryDiscovery",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRulesAgree",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestLegacyMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestDecorationOptionMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCountGuardMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestThroughput",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNonprogressingFix",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNonprogressingFixPanicMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNonprogressingFixPlanOrder",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProfileArtifacts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProfileCompilation",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCommentFoldMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestPositionIndexMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCapturedOracleRecovery",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestUnmarkedMalformedOracleInputStillFails",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRecoveryClassificationPreservesModes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestOwnedWitnesses",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRegistrationMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestFactoryHooks",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNestedOutsideModuleCopy",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestDecodedOptionsAndMutant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestTypedReplayKeepsUpstreamCompilerOptions",
+      "status": "passed"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestDotARename",
+      "expected_seconds": 539.33,
+      "slots": 1,
+      "after_seconds": 30.42
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRulesAgree",
+      "expected_seconds": 449.89,
+      "slots": 1,
+      "after_seconds": 30.422
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerCacheSourceByte",
+      "expected_seconds": 377.9904,
+      "slots": 4,
+      "after_seconds": 30.423
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestEmittedJavaScriptMismatch",
+      "expected_seconds": 285.408,
+      "slots": 1,
+      "after_seconds": 30.424
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompleteSuggestionSerialization",
+      "expected_seconds": 276.608,
+      "slots": 1,
+      "after_seconds": 30.427
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestSuggestionAlongsideAutomaticFix",
+      "expected_seconds": 266.336,
+      "slots": 1,
+      "after_seconds": 245.695
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestWitnessScriptKind",
+      "expected_seconds": 203.76,
+      "slots": 1,
+      "after_seconds": 266.197
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestDecodedOptionsAndMutant",
+      "expected_seconds": 188.352,
+      "slots": 1,
+      "after_seconds": 266.29
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestFactoryHooks",
+      "expected_seconds": 186.936,
+      "slots": 1,
+      "after_seconds": 387.797
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestOwnedWitnesses",
+      "expected_seconds": 180.376,
+      "slots": 1,
+      "after_seconds": 387.798
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProfileCompilation",
+      "expected_seconds": 165.656,
+      "slots": 1,
+      "after_seconds": 387.799
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestDecorationOptionMutant",
+      "expected_seconds": 129.74,
+      "slots": 1,
+      "after_seconds": 387.799
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNonprogressingFix",
+      "expected_seconds": 127.73,
+      "slots": 1,
+      "after_seconds": 402.553
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNonprogressingFixPlanOrder",
+      "expected_seconds": 125.22,
+      "slots": 1,
+      "after_seconds": 418.268
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNonprogressingFixPanicMutant",
+      "expected_seconds": 122.48,
+      "slots": 1,
+      "after_seconds": 436.153
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestLegacyMutants",
+      "expected_seconds": 117.77,
+      "slots": 1,
+      "after_seconds": 534.874
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCommentFoldMutant",
+      "expected_seconds": 112.27,
+      "slots": 1,
+      "after_seconds": 534.911
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestPositionIndexMutant",
+      "expected_seconds": 111.84,
+      "slots": 1,
+      "after_seconds": 543.302
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCountGuardMutant",
+      "expected_seconds": 111.41,
+      "slots": 1,
+      "after_seconds": 546.196
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCapturedOracleRecovery",
+      "expected_seconds": 48.816,
+      "slots": 1,
+      "after_seconds": 546.811
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRegistrationMutant",
+      "expected_seconds": 17.31,
+      "slots": 1,
+      "after_seconds": 563.783
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerNoProgramCoverage",
+      "expected_seconds": 12.072,
+      "slots": 1,
+      "after_seconds": 574.684
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerReplayEntryControl",
+      "expected_seconds": 11.176,
+      "slots": 1,
+      "after_seconds": 581.164
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestUnmarkedMalformedOracleInputStillFails",
+      "expected_seconds": 5.064,
+      "slots": 1,
+      "after_seconds": 582.457
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestMutants",
+      "expected_seconds": 4.77,
+      "slots": 1,
+      "after_seconds": 586.213
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestTypedReplayKeepsUpstreamCompilerOptions",
+      "expected_seconds": 4.07,
+      "slots": 1,
+      "after_seconds": 587.447
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestChildCPUHangGuard",
+      "expected_seconds": 3.5264,
+      "slots": 1,
+      "after_seconds": 589.834
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestChildCPUWaitGuard",
+      "expected_seconds": 1.62,
+      "slots": 1,
+      "after_seconds": 592.73
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNestedOutsideModuleCopy",
+      "expected_seconds": 1.1,
+      "slots": 1,
+      "after_seconds": 593.294
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerHashes",
+      "expected_seconds": 0.75,
+      "slots": 1,
+      "after_seconds": 594.467
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestOptionAndComparatorGaps",
+      "expected_seconds": 0.704,
+      "slots": 1,
+      "after_seconds": 594.49
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestChildWallBackstop",
+      "expected_seconds": 0.21,
+      "slots": 1,
+      "after_seconds": 595.146
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestExecuteFailsOnStderrOtherThanModuleDownloads",
+      "expected_seconds": 0.21,
+      "slots": 1,
+      "after_seconds": 595.289
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNestedConstructorGap",
+      "expected_seconds": 0.2,
+      "slots": 1,
+      "after_seconds": 595.478
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+      "expected_seconds": 0.1536,
+      "slots": 1,
+      "after_seconds": 595.595
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCheckerBridgeRefusalPending",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 595.805
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCommandDiagnosticsDropOnlyModuleDownloads",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 595.867
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerGuardBackend",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 595.946
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxInventoryDiscovery",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 596.02
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxLintReleaseAndThroughput",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 596.09
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProfileArtifacts",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 596.173
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRecoveryClassificationPreservesModes",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 596.224
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestThroughput",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 596.299
+    }
+  ],
+  "undeclared_tools": [],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "deferred_to_full_gate": [
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestProfileSnapshotsAgree",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree"
+  ],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/lint": 43
+  },
+  "split_tally": {
+    "packages": 1,
+    "planned": 43,
+    "passed": 43,
+    "touched": 1
+  },
+  "wall_seconds": 1682.5,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 2.3,
+    "smoke": 26.5,
+    "build": 32.7,
+    "tests": 1681.0,
+    "census": 0.4
+  },
+  "pass": 190,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 4,
+  "required_input_skips": [],
+  "unclassified_skips": [
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCheckerBridgeRefusalPending"
+  ],
+  "failure": {
+    "step": "census",
+    "detail": "unknown\tgithub.com/system-inc/adamic/stage1/cohere/lint\tTestCheckerBridgeRefusalPending\nmeasurement\tgithub.com/system-inc/adamic/stage1/cohere/lint\tTestJsxLintReleaseAndThroughput\tTestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf\tADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.\nmeasurement\tgithub.com/system-inc/adamic/stage1/cohere/lint\tTestProfileArtifacts\tTestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70\tOpt-in timing or profile artifact comparison; does not replace correctness verification.\nmeasurement\tgithub.com/system-inc/adamic/stage1/cohere/lint\tTestThroughput\tTestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf\tOpt-in timing or profile artifact comparison; does not replace correctness verification.\nskips=4 required-input=0 unknown=1\ngate skipped 0 required-input tests; 1 unclassified skips\nexit status 1\n",
+    "after_seconds": 1682.5
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "tests": 0,
+    "census": 1
+  },
+  "finished": true,
+  "planned_test_counts": {
+    "passed": 43,
+    "failed": 0,
+    "not run": 0
+  }
+}
