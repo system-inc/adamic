@@ -1,0 +1,9 @@
+{
+  "ids": [
+    "D060",
+    "D061"
+  ],
+  "read": "stack[0]",
+  "receiver": "array of variadic tuples, constant zero",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\ntype DiagnosticAndArguments = [message: number, ...args: number[]];\nconst stack: DiagnosticAndArguments[] = absent ? [] : [[7, 8]];\nconst value: DiagnosticAndArguments = stack[0];\nconsole.log(value === undefined ? \"undefined\" : `${value[0]}`);\n"
+}

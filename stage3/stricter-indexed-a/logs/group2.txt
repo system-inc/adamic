@@ -1,0 +1,59 @@
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D037
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=false
+    witness_test.go:97: BLOCKED [D037] receiver=object array input followed by optional function return: /tmp/adamic-gate/TestCheckerIndexedWitnessesD037absent=false684343526/001/main.ts:7:7: error TS2322: Type 'SourceFile | undefined' is not assignable to type 'SourceFile'.
+          Type 'undefined' is not assignable to type 'SourceFile'.; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=true
+    witness_test.go:97: BLOCKED [D037] receiver=object array input followed by optional function return: /tmp/adamic-gate/TestCheckerIndexedWitnessesD037absent=true2144155527/001/main.ts:7:7: error TS2322: Type 'SourceFile | undefined' is not assignable to type 'SourceFile'.
+          Type 'undefined' is not assignable to type 'SourceFile'.; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D060-D061
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=true
+    witness_test.go:164: [D060 D061] receiver=array of variadic tuples, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n"
+=== RUN   TestCheckerIndexedWitnesses/D069
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=true
+    witness_test.go:164: [D069] receiver=returned readonly object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout=""
+=== RUN   TestCheckerIndexedWitnesses/D071
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=false
+    witness_test.go:105: BLOCKED [D071] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=false3788489708/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=true
+    witness_test.go:105: BLOCKED [D071] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=true2148953067/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D072
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=false
+    witness_test.go:105: BLOCKED [D072] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=false1985278422/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=true
+    witness_test.go:105: BLOCKED [D072] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=true1544791931/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D073
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=false
+    witness_test.go:105: BLOCKED [D073] receiver=returned readonly object array, one-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD073absent=false3795860585/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=true
+    witness_test.go:105: BLOCKED [D073] receiver=returned readonly object array, one-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD073absent=true3886363088/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D077
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=true
+    witness_test.go:164: [D077] receiver=object field containing object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n"
+--- PASS: TestCheckerIndexedWitnesses (24.92s)
+    --- PASS: TestCheckerIndexedWitnesses/D037 (1.94s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=false (0.84s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=true (1.10s)
+    --- PASS: TestCheckerIndexedWitnesses/D060-D061 (3.12s)
+        --- PASS: TestCheckerIndexedWitnesses/D060-D061/absent=false (1.30s)
+        --- PASS: TestCheckerIndexedWitnesses/D060-D061/absent=true (1.82s)
+    --- PASS: TestCheckerIndexedWitnesses/D069 (3.25s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=false (1.44s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=true (1.81s)
+    --- PASS: TestCheckerIndexedWitnesses/D071 (2.33s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=false (0.93s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=true (1.40s)
+    --- PASS: TestCheckerIndexedWitnesses/D072 (4.09s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=false (3.17s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=true (0.92s)
+    --- PASS: TestCheckerIndexedWitnesses/D073 (2.10s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=false (1.07s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=true (1.03s)
+    --- PASS: TestCheckerIndexedWitnesses/D077 (3.72s)
+        --- PASS: TestCheckerIndexedWitnesses/D077/absent=false (1.76s)
+        --- PASS: TestCheckerIndexedWitnesses/D077/absent=true (1.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	24.944s
