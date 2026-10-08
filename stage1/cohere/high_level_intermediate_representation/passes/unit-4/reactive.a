@@ -1,0 +1,99 @@
+// Go reactive.go: InferReactive. Mutation/aliasing gaps intentionally match Go's API.
+import { panic } from 'adamic';
+import { InputFacts, IdentifierIndex } from '../../replay/index.ts';
+import type { ConstructedHIR, HIRFunction, FunctionIndex, PlaceInterface, Instruction, BlockIndex } from '../../core.ts';
+import { reactiveFrontiers } from './frontiers.a';
+import { instructionPlaces, valuePlaces, terminalPlaces } from './places.a';
+import { isHookName } from './hooks.a';
+export { isHookName } from './hooks.a';
+function stableHook(name: string): boolean { return ['useState','useReducer','useTransition','useOptimistic','useActionState'].includes(name); }
+export class ReactiveState {
+ private readonly graph: ConstructedHIR;
+ private readonly index: FunctionIndex;
+ private readonly fn: HIRFunction;
+ private readonly path: string;
+ private readonly facts: InputFacts;
+ private readonly reactive = new Set<IdentifierIndex>();
+ private readonly stable = new Set<IdentifierIndex>();
+ private readonly notStable = new Set<IdentifierIndex>();
+ private readonly refs = new Set<IdentifierIndex>();
+ private readonly hookResults = new Map<IdentifierIndex,string>();
+ private changed = false;
+ constructor(graph: ConstructedHIR,index: FunctionIndex,path: string,facts: InputFacts) { this.graph = graph; this.index = index; this.fn = graph.arena.read(index); this.path = path; this.facts = facts; }
+ private mark(id: IdentifierIndex): void { this.fn.identifier(id); if(!this.reactive.has(id)) { this.reactive.add(id); this.changed = true; } }
+ private nodeName(id: IdentifierIndex): string { const slot = IdentifierIndex.read(this.fn.identifierIndices,id); return this.facts.require('input.unit4-ast',this.path,'identifier',slot,'identifier-text'); }
+ private hook(id: IdentifierIndex): boolean { return isHookName(this.nodeName(id)); }
+ private callName(instruction: Instruction): string { return this.facts.require('input.unit4-ast',this.path,'instruction',instruction.id.slot,'callee-name'); }
+ private stableValue(id: IdentifierIndex): boolean {
+  if(this.stable.has(id)) { return true; } if(this.notStable.has(id)) { return false; }
+  const name = this.facts.stableTypeName(this.path,IdentifierIndex.read(this.fn.identifierIndices,id));
+  if(name === 'Dispatch' || name === 'ActionDispatch' || name === 'TransitionStartFunction' || (name === 'RefObject' && this.refs.has(id))) { this.stable.add(id); return true; }
+  this.notStable.add(id); return false;
+ }
+ private useRefResults(): void {
+  for(const id of this.fn.blockOrder) { for(const i of this.fn.block(id).instructions) { const instruction = this.fn.instruction(i); const value = instruction.value; if((value.kind === 'CallExpression' || value.kind === 'MethodCall') && this.callName(instruction) === 'useRef') { this.refs.add(instruction.lvalue.identifier); } } }
+  let grew = true; while(grew) { grew = false; for(const id of this.fn.blockOrder) { for(const i of this.fn.block(id).instructions) {
+   const instruction = this.fn.instruction(i); const value = instruction.value;
+   if(value.kind === 'StoreLocal') { if(this.refs.has(value.value.identifier) && !this.refs.has(value.lvalue.identifier)) { this.refs.add(value.lvalue.identifier); grew = true; } }
+   if(value.kind === 'LoadLocal') { if(this.refs.has(value.place.identifier) && !this.refs.has(instruction.lvalue.identifier)) { this.refs.add(instruction.lvalue.identifier); grew = true; } }
+  } } }
+ }
+ private recordHook(instruction: Instruction): void {
+  const value = instruction.value;
+  if(value.kind === 'CallExpression') { const name = this.nodeName(value.callee.identifier); if(stableHook(name)) { this.hookResults.set(instruction.lvalue.identifier,name); } }
+  if(value.kind === 'Destructure') {
+   const hook = this.hookResults.get(value.value.identifier); if(hook === undefined) { return; }
+   const pattern = this.fn.pattern(value.pattern); if(pattern.kind !== 'Array') { return; }
+   const element = pattern.elements[1]; if(element === undefined || element.value === undefined) { return; }
+   const place = this.fn.pattern(element.value); if(place.kind === 'Place') { this.stable.add(place.place.identifier); }
+  }
+ }
+ private terminalReactive(id: BlockIndex): boolean {
+  const block = this.fn.blockOrUndefined(id); if(block === undefined) { return false; } const terminal = block.terminal;
+  if(terminal.kind !== 'If' && terminal.kind !== 'Branch' && terminal.kind !== 'Switch') { return false; }
+  if(this.reactive.has((terminal.testPlace ?? panic('missing branch test')).identifier)) { return true; }
+  if(terminal.kind === 'Switch') { for(const item of terminal.cases ?? panic('missing cases')) { if(item.test !== undefined && this.reactive.has(item.test.identifier)) { return true; } } } return false;
+ }
+ run(): void {
+  for(const param of this.fn.params) { this.mark(param.identifier); } this.useRefResults(); const frontiers = reactiveFrontiers(this.fn); const controlled = new Set<BlockIndex>();
+  for(let rounds = 1; ; rounds++) {
+   if(rounds > 10000) { return; } this.changed = false;
+   for(const id of frontiers.keys()) { if(controlled.has(id)) { continue; } for(const controller of frontiers.get(id) ?? []) { if(this.terminalReactive(controller)) { controlled.add(id); break; } } }
+   for(const id of this.fn.blockOrder) {
+    const block = this.fn.block(id);
+    for(const phi of block.phis) { if(this.reactive.has(phi.place.identifier)) { continue; }
+     if(phi.operands.some((operand) => this.reactive.has(operand.place.identifier)) || phi.operands.some((operand) => controlled.has(this.fn.blockAt(operand.predecessor)))) { this.mark(phi.place.identifier); }
+    }
+    for(const i of block.instructions) {
+     const instruction = this.fn.instruction(i); this.recordHook(instruction); let input = false;
+     // EachPlace excludes the instruction's own lvalue, but includes value-level definitions.
+     valuePlaces(this.fn,instruction,(place,role) => { if(this.reactive.has(place.identifier)) { input = true; } return place; });
+     const value = instruction.value;
+     if(value.kind === 'CallExpression' && this.hook(value.callee.identifier)) { input = true; }
+     if(value.kind === 'MethodCall' && this.hook(value.property.identifier)) { input = true; }
+     if(input) { instructionPlaces(this.fn,instruction,(place,role) => { if(role === 'Define' && !this.stableValue(place.identifier)) { this.mark(place.identifier); } return place; }); }
+    }
+   } if(!this.changed) { break; }
+  } this.apply();
+ }
+ private place(place: PlaceInterface): PlaceInterface { return {identifier: place.identifier,effect: place.effect,reactive: this.reactive.has(place.identifier),start: place.start,end: place.end}; }
+ private child(index: FunctionIndex,ordinal: number,captures: readonly PlaceInterface[]): void {
+  const child = new ReactiveState(this.graph,index,`${this.path}/${ordinal}`,this.facts); const nested = this.graph.arena.read(index);
+  for(let i = 0; i < captures.length && i < nested.context.length; i++) { if(this.reactive.has((captures[i] ?? panic('missing capture')).identifier)) { child.reactive.add((nested.context[i] ?? panic('missing context')).identifier); } }
+  child.apply();
+ }
+ private apply(): void {
+  for(const id of this.fn.blockOrder) {
+   const block = this.fn.block(id); block.phis = block.phis.map((phi) => ({place: this.place(phi.place),operands: phi.operands.map((operand) => ({predecessor: operand.predecessor,place: this.place(operand.place)}))}));
+   for(const i of block.instructions) {
+    const instruction = this.fn.instruction(i); instructionPlaces(this.fn,instruction,(place,role) => this.place(place)); const value = instruction.value;
+    if(value.kind === 'FunctionExpression') { this.child(value.functionReference.index,value.functionReference.ordinal,value.captures); }
+    if(value.kind === 'ObjectMethod') { this.child(value.functionReference.index,value.functionReference.ordinal,[]); }
+   } terminalPlaces(block,(place,role) => this.place(place));
+  }
+  for(let i = 0; i < this.fn.params.length; i++) { this.fn.params[i] = this.place(this.fn.params[i] ?? panic('missing parameter')); }
+  for(let i = 0; i < this.fn.context.length; i++) { this.fn.context[i] = this.place(this.fn.context[i] ?? panic('missing context')); }
+  this.fn.returns = this.place(this.fn.returns);
+ }
+}
+export function InferReactive(graph: ConstructedHIR,facts: InputFacts): void { new ReactiveState(graph,graph.root,'$',facts).run(); }

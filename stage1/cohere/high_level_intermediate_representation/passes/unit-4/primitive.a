@@ -1,0 +1,68 @@
+// Go primitive_property_constraints.go. Keys retain both owning function and identifier.
+import { panic } from 'adamic';
+import { FunctionIndex, IdentifierIndex } from '../../replay/index.ts';
+import type { ConstructedHIR, HIRFunction, PlaceInterface } from '../../core.ts';
+interface ConstraintKey { readonly fn: FunctionIndex; readonly id: IdentifierIndex; }
+export class PrimitiveConstraints {
+ private readonly graph: ConstructedHIR;
+ private readonly parents = new Map<FunctionIndex,Map<IdentifierIndex,ConstraintKey>>();
+ private readonly kinds = new Map<FunctionIndex,Map<IdentifierIndex,number>>();
+ private readonly constants = new Map<FunctionIndex,Set<IdentifierIndex>>();
+ private readonly visited = new Set<FunctionIndex>();
+ constructor(graph: ConstructedHIR) { this.graph = graph; }
+ private key(fn: FunctionIndex,id: IdentifierIndex): ConstraintKey { this.graph.arena.read(fn).identifier(id); return {fn,id}; }
+ private root(key: ConstraintKey): ConstraintKey {
+  const table = this.parents.get(key.fn); const parent = table === undefined ? undefined : table.get(key.id);
+  if(parent === undefined) { return key; }
+  const root = this.root(parent); (table ?? panic('missing parent table')).set(key.id,root); return root;
+ }
+ private kind(key: ConstraintKey): number { const table = this.kinds.get(key.fn); return table === undefined ? 0 : table.get(key.id) ?? 0; }
+ private setKind(key: ConstraintKey,kind: number): void { let table = this.kinds.get(key.fn); if(table === undefined) { table = new Map<IdentifierIndex,number>(); this.kinds.set(key.fn,table); } table.set(key.id,kind); }
+ private bind(key: ConstraintKey,kind: number): void { const root = this.root(key); if(this.kind(root) === 0) { this.setKind(root,kind); } }
+ private alias(left: ConstraintKey,right: ConstraintKey): void {
+  left = this.root(left); right = this.root(right);
+  if(left.fn === right.fn && left.id === right.id) { return; }
+  const a = this.kind(left); const b = this.kind(right); if(a !== 0 && b !== 0 && a !== b) { return; }
+  let table = this.parents.get(left.fn); if(table === undefined) { table = new Map<IdentifierIndex,ConstraintKey>(); this.parents.set(left.fn,table); } table.set(left.id,right);
+  if(b === 0) { this.setKind(right,a); }
+ }
+ private constant(key: ConstraintKey): boolean { const table = this.constants.get(key.fn); return table !== undefined && table.has(key.id); }
+ private setConstant(key: ConstraintKey): void { let table = this.constants.get(key.fn); if(table === undefined) { table = new Set<IdentifierIndex>(); this.constants.set(key.fn,table); } table.add(key.id); }
+ visit(index: FunctionIndex): void {
+  if(this.visited.has(index)) { return; } this.visited.add(index); const fn = this.graph.arena.read(index);
+  const key = (place: PlaceInterface): ConstraintKey => this.key(index,place.identifier);
+  if(fn.kind === 'component') { for(const param of fn.params) { this.bind(key(param),2); } }
+  for(const blockIndex of fn.blockOrder) {
+   const block = fn.block(blockIndex); for(const phi of block.phis) { this.bind(key(phi.place),2); }
+   for(const instructionIndex of block.instructions) {
+    const instruction = fn.instruction(instructionIndex); const left = key(instruction.lvalue); const value = instruction.value;
+    switch(value.kind) {
+     case 'Primitive': case 'TemplateLiteral': case 'UnaryExpression': this.bind(left,1); break;
+     case 'LoadLocal': this.alias(left,key(value.place)); break;
+     case 'StoreLocal': this.alias(left,key(value.value)); this.alias(key(value.lvalue),key(value.value)); if(value.declarationKind === 0) { this.setConstant(key(value.lvalue)); } break;
+     case 'LoadContext': if(this.constant(key(value.place))) { this.alias(left,key(value.place)); } break;
+     case 'StoreContext': if(value.declarationKind === 0) { this.alias(key(value.lvalue),key(value.value)); this.setConstant(key(value.lvalue)); } break;
+     case 'BinaryExpression':
+      if(['+','-','/','%','*','**','&','|','>>','<<','^','>','<','>=','<=','|>'].includes(value.operator)) { this.bind(key(value.left),1); this.bind(key(value.right),1); } this.bind(left,1); break;
+     case 'PrefixUpdate': case 'PostfixUpdate': this.bind(key(value.value),1); this.bind(key(value.lvalue),1); this.bind(left,1); break;
+     case 'LoadGlobal': case 'ObjectExpression': case 'ArrayExpression': case 'RegExpLiteral': case 'ObjectMethod': case 'NewExpression': this.bind(left,2); break;
+     case 'PropertyLoad': if(value.property === 'current' || this.kind(this.root(key(value.object))) !== 0) { this.bind(left,2); } break;
+     case 'ComputedLoad': this.bind(left,2); break;
+     case 'CallExpression': this.bind(key(value.callee),2); if(value.origin.module === 'react' && ['useRef','useState','useReducer','useCallback'].includes(value.origin.exported)) { this.bind(left,2); } break;
+     case 'MethodCall': if(value.origin.module === 'react' && ['useRef','useState','useReducer','useCallback'].includes(value.origin.exported)) { this.bind(left,2); } break;
+     case 'FunctionExpression': {
+      this.bind(left,2); const nestedIndex = value.functionReference.index; const nested = this.graph.arena.read(nestedIndex);
+      if(nested.context.length === value.captures.length) { for(let i = 0; i < value.captures.length; i++) {
+       const capture = key(value.captures[i] ?? panic('missing capture'));
+       if(this.constant(capture)) { const context = this.key(nestedIndex,(nested.context[i] ?? panic('missing context')).identifier); this.setConstant(context); this.alias(context,capture); }
+      } } this.visit(nestedIndex); break;
+     }
+    }
+   }
+  }
+ }
+ propertyReads(index: FunctionIndex): Set<IdentifierIndex> {
+  this.visit(index); const result = new Set<IdentifierIndex>(); const fn = this.graph.arena.read(index);
+  for(const instruction of fn.instructions) { if(instruction.value.kind === 'PropertyLoad' && this.kind(this.root(this.key(index,instruction.lvalue.identifier))) === 1) { result.add(instruction.lvalue.identifier); } } return result;
+ }
+}

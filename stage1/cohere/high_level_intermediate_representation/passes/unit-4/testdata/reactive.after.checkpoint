@@ -1,0 +1,249 @@
+hir-checkpoint-v1
+case	001e942a4a411b593d5221cacb8b969ffd5f97a053340b10a1630aa3bb02e6b6	unit4.reactive
+graph-lines 46
+hir-v1
+function renderItem other entry=1 async=0 generator=0
+params 14:<unknown>:1:110:115
+context 2:<unknown>:0:0:0
+returns 26:<unknown>:1:0:0
+identifier 0 1 
+identifier 1 2 item
+identifier 2 3 ref
+identifier 3 4 
+identifier 4 5 aliasedRef
+identifier 5 6 
+identifier 6 7 
+identifier 7 8 
+identifier 8 9 current
+identifier 9 10 
+identifier 10 11 
+identifier 11 12 
+identifier 12 13 
+identifier 13 14 
+identifier 14 2 item
+identifier 15 4 
+identifier 16 6 
+identifier 17 5 aliasedRef
+identifier 18 7 
+identifier 19 8 
+identifier 20 10 
+identifier 21 9 current
+identifier 22 11 
+identifier 23 12 
+identifier 24 13 
+identifier 25 14 
+identifier 26 1 
+block 1 block predecessors=
+instruction 0 1 15:<unknown>:0:143:147 143:147 LoadContext {"Place":"2:\u003cunknown\u003e:0:143:147"}
+instruction 1 2 16:<unknown>:0:130:147 130:147 StoreLocal {"Kind":0,"LValue":"17:\u003cunknown\u003e:0:130:141","Value":"15:\u003cunknown\u003e:0:143:147"}
+instruction 2 3 18:<unknown>:0:168:179 168:179 LoadLocal 17:<unknown>:0:168:179
+instruction 3 4 19:<unknown>:0:168:187 168:187 PropertyLoad {"Object":"18:\u003cunknown\u003e:0:168:179","Optional":false,"Property":"current"}
+instruction 4 5 20:<unknown>:0:158:187 158:187 StoreLocal {"Kind":0,"LValue":"21:\u003cunknown\u003e:0:158:166","Value":"19:\u003cunknown\u003e:0:168:187"}
+instruction 5 6 22:<unknown>:0:201:204 201:204 LoadGlobal {"BindingKind":0,"Imported":"","Name":"Foo","Source":""}
+instruction 6 7 23:<unknown>:1:211:215 211:215 LoadLocal 14:<unknown>:1:211:215
+instruction 7 8 24:<unknown>:0:226:233 226:233 LoadLocal 21:<unknown>:0:226:233
+instruction 8 9 25:<unknown>:1:199:237 199:237 JsxExpression {"Children":[],"Props":[{"Name":"item","Spread":false,"Value":"23:\u003cunknown\u003e:1:211:215"},{"Name":"current","Spread":false,"Value":"24:\u003cunknown\u003e:0:226:233"}],"Tag":{"Name":"","Place":"22:\u003cunknown\u003e:0:201:204"}}
+instruction 9 10 26:<unknown>:1:0:0 188:238 LoadLocal 25:<unknown>:1:199:237
+terminal 11 Return 26:<unknown>:1:0:0
+scopes -
+end
+identities 0
+sidecars 197
+sidecar	input.ast	$	function	-	node	KindArrowFunction%0009110%0009242
+sidecar	input.ast	$	identifier	0	node	nil
+sidecar	input.ast	$	identifier	1	node	KindIdentifier%0009110%0009115
+sidecar	input.ast	$	identifier	2	node	nil
+sidecar	input.ast	$	identifier	3	node	KindIdentifier%0009143%0009147
+sidecar	input.ast	$	identifier	4	node	KindIdentifier%0009130%0009141
+sidecar	input.ast	$	identifier	5	node	KindVariableDeclaration%0009130%0009147
+sidecar	input.ast	$	identifier	6	node	KindIdentifier%0009168%0009179
+sidecar	input.ast	$	identifier	7	node	KindPropertyAccessExpression%0009168%0009187
+sidecar	input.ast	$	identifier	8	node	KindIdentifier%0009158%0009166
+sidecar	input.ast	$	identifier	9	node	KindVariableDeclaration%0009158%0009187
+sidecar	input.ast	$	identifier	10	node	KindIdentifier%0009201%0009204
+sidecar	input.ast	$	identifier	11	node	KindIdentifier%0009211%0009215
+sidecar	input.ast	$	identifier	12	node	KindIdentifier%0009226%0009233
+sidecar	input.ast	$	identifier	13	node	KindJsxSelfClosingElement%0009199%0009237
+sidecar	input.ast	$	identifier	14	node	KindIdentifier%0009110%0009115
+sidecar	input.ast	$	identifier	15	node	KindIdentifier%0009143%0009147
+sidecar	input.ast	$	identifier	16	node	KindVariableDeclaration%0009130%0009147
+sidecar	input.ast	$	identifier	17	node	KindIdentifier%0009130%0009141
+sidecar	input.ast	$	identifier	18	node	KindIdentifier%0009168%0009179
+sidecar	input.ast	$	identifier	19	node	KindPropertyAccessExpression%0009168%0009187
+sidecar	input.ast	$	identifier	20	node	KindVariableDeclaration%0009158%0009187
+sidecar	input.ast	$	identifier	21	node	KindIdentifier%0009158%0009166
+sidecar	input.ast	$	identifier	22	node	KindIdentifier%0009201%0009204
+sidecar	input.ast	$	identifier	23	node	KindIdentifier%0009211%0009215
+sidecar	input.ast	$	identifier	24	node	KindIdentifier%0009226%0009233
+sidecar	input.ast	$	identifier	25	node	KindJsxSelfClosingElement%0009199%0009237
+sidecar	input.ast	$	identifier	26	node	nil
+sidecar	input.ast	$	instruction	0	node	KindIdentifier%0009143%0009147
+sidecar	input.ast	$	instruction	1	node	KindVariableDeclaration%0009130%0009147
+sidecar	input.ast	$	instruction	2	node	KindIdentifier%0009168%0009179
+sidecar	input.ast	$	instruction	3	node	KindPropertyAccessExpression%0009168%0009187
+sidecar	input.ast	$	instruction	4	node	KindVariableDeclaration%0009158%0009187
+sidecar	input.ast	$	instruction	5	node	KindIdentifier%0009201%0009204
+sidecar	input.ast	$	instruction	6	node	KindIdentifier%0009211%0009215
+sidecar	input.ast	$	instruction	7	node	KindIdentifier%0009226%0009233
+sidecar	input.ast	$	instruction	8	node	KindJsxSelfClosingElement%0009199%0009237
+sidecar	input.ast	$	instruction	9	node	KindReturnStatement%0009188%0009238
+sidecar	input.checker	$	function	-	available	1
+sidecar	input.identity	$	function	-	next-block	2
+sidecar	input.source	$	function	-	kind	js
+sidecar	input.source	$	function	-	text	// @validateRefAccessDuringRender%000afunction Component(props) {%000a  const ref = useRef(null);%000a  const renderItem = item => {%000a    const aliasedRef = ref;%000a    const current = aliasedRef.current;%000a    return <Foo item={item} current={current} />;%000a  };%000a  return <Items>{props.items.map(item => renderItem(item))}</Items>;%000a}%000a
+sidecar	input.types	$	identifier	0	alias-present	0
+sidecar	input.types	$	identifier	0	alias-symbol	
+sidecar	input.types	$	identifier	0	type-present	0
+sidecar	input.types	$	identifier	0	type-symbol	
+sidecar	input.types	$	identifier	1	alias-present	0
+sidecar	input.types	$	identifier	1	alias-symbol	
+sidecar	input.types	$	identifier	1	type-present	0
+sidecar	input.types	$	identifier	1	type-symbol	
+sidecar	input.types	$	identifier	2	alias-present	0
+sidecar	input.types	$	identifier	2	alias-symbol	
+sidecar	input.types	$	identifier	2	type-present	0
+sidecar	input.types	$	identifier	2	type-symbol	
+sidecar	input.types	$	identifier	3	alias-present	0
+sidecar	input.types	$	identifier	3	alias-symbol	
+sidecar	input.types	$	identifier	3	type-present	0
+sidecar	input.types	$	identifier	3	type-symbol	
+sidecar	input.types	$	identifier	4	alias-present	0
+sidecar	input.types	$	identifier	4	alias-symbol	
+sidecar	input.types	$	identifier	4	type-present	0
+sidecar	input.types	$	identifier	4	type-symbol	
+sidecar	input.types	$	identifier	5	alias-present	0
+sidecar	input.types	$	identifier	5	alias-symbol	
+sidecar	input.types	$	identifier	5	type-present	0
+sidecar	input.types	$	identifier	5	type-symbol	
+sidecar	input.types	$	identifier	6	alias-present	0
+sidecar	input.types	$	identifier	6	alias-symbol	
+sidecar	input.types	$	identifier	6	type-present	0
+sidecar	input.types	$	identifier	6	type-symbol	
+sidecar	input.types	$	identifier	7	alias-present	0
+sidecar	input.types	$	identifier	7	alias-symbol	
+sidecar	input.types	$	identifier	7	type-present	0
+sidecar	input.types	$	identifier	7	type-symbol	
+sidecar	input.types	$	identifier	8	alias-present	0
+sidecar	input.types	$	identifier	8	alias-symbol	
+sidecar	input.types	$	identifier	8	type-present	0
+sidecar	input.types	$	identifier	8	type-symbol	
+sidecar	input.types	$	identifier	9	alias-present	0
+sidecar	input.types	$	identifier	9	alias-symbol	
+sidecar	input.types	$	identifier	9	type-present	0
+sidecar	input.types	$	identifier	9	type-symbol	
+sidecar	input.types	$	identifier	10	alias-present	0
+sidecar	input.types	$	identifier	10	alias-symbol	
+sidecar	input.types	$	identifier	10	type-present	0
+sidecar	input.types	$	identifier	10	type-symbol	
+sidecar	input.types	$	identifier	11	alias-present	0
+sidecar	input.types	$	identifier	11	alias-symbol	
+sidecar	input.types	$	identifier	11	type-present	0
+sidecar	input.types	$	identifier	11	type-symbol	
+sidecar	input.types	$	identifier	12	alias-present	0
+sidecar	input.types	$	identifier	12	alias-symbol	
+sidecar	input.types	$	identifier	12	type-present	0
+sidecar	input.types	$	identifier	12	type-symbol	
+sidecar	input.types	$	identifier	13	alias-present	0
+sidecar	input.types	$	identifier	13	alias-symbol	
+sidecar	input.types	$	identifier	13	type-present	0
+sidecar	input.types	$	identifier	13	type-symbol	
+sidecar	input.types	$	identifier	14	alias-present	0
+sidecar	input.types	$	identifier	14	alias-symbol	
+sidecar	input.types	$	identifier	14	type-present	0
+sidecar	input.types	$	identifier	14	type-symbol	
+sidecar	input.types	$	identifier	15	alias-present	0
+sidecar	input.types	$	identifier	15	alias-symbol	
+sidecar	input.types	$	identifier	15	type-present	0
+sidecar	input.types	$	identifier	15	type-symbol	
+sidecar	input.types	$	identifier	16	alias-present	0
+sidecar	input.types	$	identifier	16	alias-symbol	
+sidecar	input.types	$	identifier	16	type-present	0
+sidecar	input.types	$	identifier	16	type-symbol	
+sidecar	input.types	$	identifier	17	alias-present	0
+sidecar	input.types	$	identifier	17	alias-symbol	
+sidecar	input.types	$	identifier	17	type-present	0
+sidecar	input.types	$	identifier	17	type-symbol	
+sidecar	input.types	$	identifier	18	alias-present	0
+sidecar	input.types	$	identifier	18	alias-symbol	
+sidecar	input.types	$	identifier	18	type-present	0
+sidecar	input.types	$	identifier	18	type-symbol	
+sidecar	input.types	$	identifier	19	alias-present	0
+sidecar	input.types	$	identifier	19	alias-symbol	
+sidecar	input.types	$	identifier	19	type-present	0
+sidecar	input.types	$	identifier	19	type-symbol	
+sidecar	input.types	$	identifier	20	alias-present	0
+sidecar	input.types	$	identifier	20	alias-symbol	
+sidecar	input.types	$	identifier	20	type-present	0
+sidecar	input.types	$	identifier	20	type-symbol	
+sidecar	input.types	$	identifier	21	alias-present	0
+sidecar	input.types	$	identifier	21	alias-symbol	
+sidecar	input.types	$	identifier	21	type-present	0
+sidecar	input.types	$	identifier	21	type-symbol	
+sidecar	input.types	$	identifier	22	alias-present	0
+sidecar	input.types	$	identifier	22	alias-symbol	
+sidecar	input.types	$	identifier	22	type-present	0
+sidecar	input.types	$	identifier	22	type-symbol	
+sidecar	input.types	$	identifier	23	alias-present	0
+sidecar	input.types	$	identifier	23	alias-symbol	
+sidecar	input.types	$	identifier	23	type-present	0
+sidecar	input.types	$	identifier	23	type-symbol	
+sidecar	input.types	$	identifier	24	alias-present	0
+sidecar	input.types	$	identifier	24	alias-symbol	
+sidecar	input.types	$	identifier	24	type-present	0
+sidecar	input.types	$	identifier	24	type-symbol	
+sidecar	input.types	$	identifier	25	alias-present	0
+sidecar	input.types	$	identifier	25	alias-symbol	
+sidecar	input.types	$	identifier	25	type-present	0
+sidecar	input.types	$	identifier	25	type-symbol	
+sidecar	input.types	$	identifier	26	alias-present	0
+sidecar	input.types	$	identifier	26	alias-symbol	
+sidecar	input.types	$	identifier	26	type-present	0
+sidecar	input.types	$	identifier	26	type-symbol	
+sidecar	input.unit4-ast	$	identifier	0	identifier-text	
+sidecar	input.unit4-ast	$	identifier	1	identifier-text	item
+sidecar	input.unit4-ast	$	identifier	2	identifier-text	
+sidecar	input.unit4-ast	$	identifier	3	identifier-text	ref
+sidecar	input.unit4-ast	$	identifier	4	identifier-text	aliasedRef
+sidecar	input.unit4-ast	$	identifier	5	identifier-text	
+sidecar	input.unit4-ast	$	identifier	6	identifier-text	aliasedRef
+sidecar	input.unit4-ast	$	identifier	7	identifier-text	
+sidecar	input.unit4-ast	$	identifier	8	identifier-text	current
+sidecar	input.unit4-ast	$	identifier	9	identifier-text	
+sidecar	input.unit4-ast	$	identifier	10	identifier-text	Foo
+sidecar	input.unit4-ast	$	identifier	11	identifier-text	item
+sidecar	input.unit4-ast	$	identifier	12	identifier-text	current
+sidecar	input.unit4-ast	$	identifier	13	identifier-text	
+sidecar	input.unit4-ast	$	identifier	14	identifier-text	item
+sidecar	input.unit4-ast	$	identifier	15	identifier-text	ref
+sidecar	input.unit4-ast	$	identifier	16	identifier-text	
+sidecar	input.unit4-ast	$	identifier	17	identifier-text	aliasedRef
+sidecar	input.unit4-ast	$	identifier	18	identifier-text	aliasedRef
+sidecar	input.unit4-ast	$	identifier	19	identifier-text	
+sidecar	input.unit4-ast	$	identifier	20	identifier-text	
+sidecar	input.unit4-ast	$	identifier	21	identifier-text	current
+sidecar	input.unit4-ast	$	identifier	22	identifier-text	Foo
+sidecar	input.unit4-ast	$	identifier	23	identifier-text	item
+sidecar	input.unit4-ast	$	identifier	24	identifier-text	current
+sidecar	input.unit4-ast	$	identifier	25	identifier-text	
+sidecar	input.unit4-ast	$	identifier	26	identifier-text	
+sidecar	input.unit4-ast	$	instruction	0	callee-name	
+sidecar	input.unit4-ast	$	instruction	0	receiver-name	
+sidecar	input.unit4-ast	$	instruction	1	callee-name	
+sidecar	input.unit4-ast	$	instruction	1	receiver-name	
+sidecar	input.unit4-ast	$	instruction	2	callee-name	
+sidecar	input.unit4-ast	$	instruction	2	receiver-name	
+sidecar	input.unit4-ast	$	instruction	3	callee-name	
+sidecar	input.unit4-ast	$	instruction	3	receiver-name	
+sidecar	input.unit4-ast	$	instruction	4	callee-name	
+sidecar	input.unit4-ast	$	instruction	4	receiver-name	
+sidecar	input.unit4-ast	$	instruction	5	callee-name	
+sidecar	input.unit4-ast	$	instruction	5	receiver-name	
+sidecar	input.unit4-ast	$	instruction	6	callee-name	
+sidecar	input.unit4-ast	$	instruction	6	receiver-name	
+sidecar	input.unit4-ast	$	instruction	7	callee-name	
+sidecar	input.unit4-ast	$	instruction	7	receiver-name	
+sidecar	input.unit4-ast	$	instruction	8	callee-name	
+sidecar	input.unit4-ast	$	instruction	8	receiver-name	
+sidecar	input.unit4-ast	$	instruction	9	callee-name	
+sidecar	input.unit4-ast	$	instruction	9	receiver-name	
+end-checkpoint

@@ -1,0 +1,19 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { InputFacts, readCheckpoint, writeCheckpoint, decodeCheckpoint, encodeCheckpoint, IdentifierIndex } from '../../replay/index.ts';
+import type { SidecarRow } from '../../replay/index.ts';
+import { PrimitiveConstraints } from './primitive.a';
+
+const args = programArguments();
+const manifest = readTextFile(args[0] ?? panic('missing manifest')); if(manifest.kind === 'Error') { panic(manifest.message); }
+for(const line of manifest.text.split('\n')) {
+ if(line === '') { continue; } const fields = line.split('\t'); const key = fields[0] ?? panic('missing key');
+ const input = readTextFile(fields[1] ?? panic('missing before checkpoint')); if(input.kind === 'Error') { panic(input.message); }
+ const checkpoint = readCheckpoint(input.text); if(checkpoint.key !== key) { panic('census key differs'); }
+ const graph = decodeCheckpoint(checkpoint); const fn = graph.arena.read(graph.root); const reads = checkpoint.pass === 'unit4.primitive' ? new PrimitiveConstraints(graph).propertyReads(graph.root) : new Set<IdentifierIndex>();
+
+ const rows: SidecarRow[] = [];
+ for(const id of reads) { rows.push({namespace: 'unit4.primitive',functionPath: '$',anchorKind: 'identifier',anchorId: IdentifierIndex.read(fn.identifierIndices,id),key: 'property-read',payload: '1'}); }
+ for(const row of checkpoint.sidecars) { if(row.namespace === 'input.unit4-ast') { rows.push(row); } }
+ const output = writeCheckpoint(encodeCheckpoint(graph,checkpoint,checkpoint.pass,rows,[]));
+ console.log(`checkpoint\t${key}`); console.log(output.slice(0,-1));
+}

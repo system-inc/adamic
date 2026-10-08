@@ -1,0 +1,1 @@
+export function isHookName(name: string): boolean { const next = name.charCodeAt(3); return name.startsWith('use') && ((next >= 65 && next <= 90) || (next >= 48 && next <= 57)); }

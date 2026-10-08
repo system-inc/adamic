@@ -1,0 +1,387 @@
+hir-checkpoint-v1
+case	03673d30271430c0f32e282622a41440c7506e4f9528d1abe7d37caebc65c364	unit4.effects-nested
+graph-lines 83
+hir-v1
+function  other entry=1 async=0 generator=0
+params 
+context 3:<unknown>:0:0:0
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 3 
+identifier 3 4 items
+identifier 4 5 
+identifier 5 6 
+identifier 6 7 
+identifier 7 8 
+identifier 8 9 
+identifier 9 2 
+identifier 10 3 
+identifier 11 5 
+identifier 12 6 
+identifier 13 7 
+identifier 14 8 
+identifier 15 9 
+block 1 block predecessors=
+instruction 0 1 9:<unknown>:0:252:265 252:265 LoadGlobal {"BindingKind":0,"Imported":"","Name":"Object","Source":""}
+instruction 1 2 10:<unknown>:0:266:277 266:277 Primitive string:fromEntries
+instruction 2 3 11:<unknown>:0:278:292 278:292 LoadContext {"Place":"3:\u003cunknown\u003e:0:278:292"}
+instruction 3 4 12:<unknown>:0:293:296 293:296 Primitive string:map
+instruction 4 5 13:<unknown>:0:297:356 297:356 FunctionExpression {"Captures":[],"Function":0}
+instruction 5 6 14:<unknown>:0:278:357 278:357 MethodCall {"Args":[{"Place":"13:\u003cunknown\u003e:0:297:356","Spread":false}],"CalleeOrigin":{"Export":"","Module":""},"Optional":false,"Property":"12:\u003cunknown\u003e:0:293:296","Receiver":"11:\u003cunknown\u003e:0:278:292"}
+instruction 6 7 15:<unknown>:0:252:365 252:365 MethodCall {"Args":[{"Place":"14:\u003cunknown\u003e:0:278:357","Spread":false}],"CalleeOrigin":{"Export":"","Module":""},"Optional":false,"Property":"10:\u003cunknown\u003e:0:266:277","Receiver":"9:\u003cunknown\u003e:0:252:265"}
+terminal 8 Return 15:<unknown>:0:252:365
+nested 0
+hir-v1
+function  other entry=1 async=0 generator=0
+params 6:<unknown>:0:297:301
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 item
+identifier 2 3 
+identifier 3 4 
+identifier 4 5 
+identifier 5 6 
+identifier 6 2 item
+identifier 7 3 
+identifier 8 4 
+identifier 9 5 
+identifier 10 6 
+block 1 block predecessors=
+instruction 0 1 7:<unknown>:0:306:310 306:310 LoadLocal 6:<unknown>:0:306:310
+instruction 1 2 8:<unknown>:0:306:313 306:313 PropertyLoad {"Object":"7:\u003cunknown\u003e:0:306:310","Optional":false,"Property":"id"}
+instruction 2 3 9:<unknown>:0:314:355 314:355 FunctionExpression {"Captures":["6:\u003cunknown\u003e:0:0:0"],"Function":0}
+instruction 3 4 10:<unknown>:0:304:356 304:356 ArrayExpression {"Elements":[{"Hole":false,"Place":"8:\u003cunknown\u003e:0:306:313","Spread":false},{"Hole":false,"Place":"9:\u003cunknown\u003e:0:314:355","Spread":false}]}
+terminal 5 Return 10:<unknown>:0:304:356
+nested 0
+hir-v1
+function  other entry=1 async=0 generator=0
+params 7:<unknown>:0:314:318
+context 4:<unknown>:0:0:0
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 ref
+identifier 2 3 
+identifier 3 4 
+identifier 4 5 item
+identifier 5 6 
+identifier 6 7 
+identifier 7 2 ref
+identifier 8 3 
+identifier 9 4 
+identifier 10 6 
+identifier 11 7 
+block 1 block predecessors=
+instruction 0 1 8:<unknown>:0:323:332 323:332 LoadGlobal {"BindingKind":4,"Imported":"Stringify","Name":"Stringify","Source":"shared-runtime"}
+instruction 1 2 9:<unknown>:0:338:341 338:341 LoadLocal 7:<unknown>:0:338:341
+instruction 2 3 10:<unknown>:0:347:351 347:351 LoadContext {"Place":"4:\u003cunknown\u003e:0:347:351"}
+instruction 3 4 11:<unknown>:0:321:355 321:355 JsxExpression {"Children":[],"Props":[{"Name":"ref","Spread":false,"Value":"9:\u003cunknown\u003e:0:338:341"},{"Name":"","Spread":true,"Value":"10:\u003cunknown\u003e:0:347:351"}],"Tag":{"Name":"","Place":"8:\u003cunknown\u003e:0:323:332"}}
+terminal 5 Return 11:<unknown>:0:321:355
+scopes -
+end
+scopes -
+end
+scopes -
+end
+identities 0
+sidecars 298
+sidecar	input.ast	$	function	-	node	KindArrowFunction%0009242%0009365
+sidecar	input.ast	$	identifier	0	node	nil
+sidecar	input.ast	$	identifier	1	node	KindIdentifier%0009252%0009265
+sidecar	input.ast	$	identifier	2	node	KindIdentifier%0009266%0009277
+sidecar	input.ast	$	identifier	3	node	nil
+sidecar	input.ast	$	identifier	4	node	KindIdentifier%0009278%0009292
+sidecar	input.ast	$	identifier	5	node	KindIdentifier%0009293%0009296
+sidecar	input.ast	$	identifier	6	node	KindArrowFunction%0009297%0009356
+sidecar	input.ast	$	identifier	7	node	KindCallExpression%0009278%0009357
+sidecar	input.ast	$	identifier	8	node	KindCallExpression%0009252%0009365
+sidecar	input.ast	$	identifier	9	node	KindIdentifier%0009252%0009265
+sidecar	input.ast	$	identifier	10	node	KindIdentifier%0009266%0009277
+sidecar	input.ast	$	identifier	11	node	KindIdentifier%0009278%0009292
+sidecar	input.ast	$	identifier	12	node	KindIdentifier%0009293%0009296
+sidecar	input.ast	$	identifier	13	node	KindArrowFunction%0009297%0009356
+sidecar	input.ast	$	identifier	14	node	KindCallExpression%0009278%0009357
+sidecar	input.ast	$	identifier	15	node	KindCallExpression%0009252%0009365
+sidecar	input.ast	$	instruction	0	node	KindIdentifier%0009252%0009265
+sidecar	input.ast	$	instruction	1	node	KindIdentifier%0009266%0009277
+sidecar	input.ast	$	instruction	2	node	KindIdentifier%0009278%0009292
+sidecar	input.ast	$	instruction	3	node	KindIdentifier%0009293%0009296
+sidecar	input.ast	$	instruction	4	node	KindArrowFunction%0009297%0009356
+sidecar	input.ast	$	instruction	5	node	KindCallExpression%0009278%0009357
+sidecar	input.ast	$	instruction	6	node	KindCallExpression%0009252%0009365
+sidecar	input.ast	$/0	function	-	node	KindArrowFunction%0009297%0009356
+sidecar	input.ast	$/0	identifier	0	node	nil
+sidecar	input.ast	$/0	identifier	1	node	KindIdentifier%0009297%0009301
+sidecar	input.ast	$/0	identifier	2	node	KindIdentifier%0009306%0009310
+sidecar	input.ast	$/0	identifier	3	node	KindPropertyAccessExpression%0009306%0009313
+sidecar	input.ast	$/0	identifier	4	node	KindArrowFunction%0009314%0009355
+sidecar	input.ast	$/0	identifier	5	node	KindArrayLiteralExpression%0009304%0009356
+sidecar	input.ast	$/0	identifier	6	node	KindIdentifier%0009297%0009301
+sidecar	input.ast	$/0	identifier	7	node	KindIdentifier%0009306%0009310
+sidecar	input.ast	$/0	identifier	8	node	KindPropertyAccessExpression%0009306%0009313
+sidecar	input.ast	$/0	identifier	9	node	KindArrowFunction%0009314%0009355
+sidecar	input.ast	$/0	identifier	10	node	KindArrayLiteralExpression%0009304%0009356
+sidecar	input.ast	$/0	instruction	0	node	KindIdentifier%0009306%0009310
+sidecar	input.ast	$/0	instruction	1	node	KindPropertyAccessExpression%0009306%0009313
+sidecar	input.ast	$/0	instruction	2	node	KindArrowFunction%0009314%0009355
+sidecar	input.ast	$/0	instruction	3	node	KindArrayLiteralExpression%0009304%0009356
+sidecar	input.ast	$/0/0	function	-	node	KindArrowFunction%0009314%0009355
+sidecar	input.ast	$/0/0	identifier	0	node	nil
+sidecar	input.ast	$/0/0	identifier	1	node	KindIdentifier%0009314%0009318
+sidecar	input.ast	$/0/0	identifier	2	node	KindIdentifier%0009323%0009332
+sidecar	input.ast	$/0/0	identifier	3	node	KindIdentifier%0009338%0009341
+sidecar	input.ast	$/0/0	identifier	4	node	nil
+sidecar	input.ast	$/0/0	identifier	5	node	KindIdentifier%0009347%0009351
+sidecar	input.ast	$/0/0	identifier	6	node	KindJsxSelfClosingElement%0009321%0009355
+sidecar	input.ast	$/0/0	identifier	7	node	KindIdentifier%0009314%0009318
+sidecar	input.ast	$/0/0	identifier	8	node	KindIdentifier%0009323%0009332
+sidecar	input.ast	$/0/0	identifier	9	node	KindIdentifier%0009338%0009341
+sidecar	input.ast	$/0/0	identifier	10	node	KindIdentifier%0009347%0009351
+sidecar	input.ast	$/0/0	identifier	11	node	KindJsxSelfClosingElement%0009321%0009355
+sidecar	input.ast	$/0/0	instruction	0	node	KindIdentifier%0009323%0009332
+sidecar	input.ast	$/0/0	instruction	1	node	KindIdentifier%0009338%0009341
+sidecar	input.ast	$/0/0	instruction	2	node	KindIdentifier%0009347%0009351
+sidecar	input.ast	$/0/0	instruction	3	node	KindJsxSelfClosingElement%0009321%0009355
+sidecar	input.checker	$	function	-	available	1
+sidecar	input.checker	$/0	function	-	available	1
+sidecar	input.checker	$/0/0	function	-	available	1
+sidecar	input.identity	$	function	-	next-block	2
+sidecar	input.identity	$/0	function	-	next-block	2
+sidecar	input.identity	$/0/0	function	-	next-block	2
+sidecar	input.source	$	function	-	kind	js
+sidecar	input.source	$	function	-	text	// @validatePreserveExistingMemoizationGuarantees%000aimport {useMemo} from 'react';%000aimport {Stringify} from 'shared-runtime';%000a%000a// derived from https://github.com/facebook/react/issues/32261%000afunction Component({items}) {%000a  const record = useMemo(%000a    () =>%000a      Object.fromEntries(%000a        items.map(item => [item.id, ref => <Stringify ref={ref} {...item} />])%000a      ),%000a    [items]%000a  );%000a%000a  // Without a declaration for Object.entries(), this would be assumed to mutate%000a  // `record`, meaning existing memoization couldn't be preserved%000a  return (%000a    <div>%000a      {Object.entries(record).map(([id, render]) => (%000a        <Stringify key={id} render={render} />%000a      ))}%000a    </div>%000a  );%000a}%000a%000aexport const FIXTURE_ENTRYPOINT = {%000a  fn: Component,%000a  params: [%000a    {%000a      items: [%000a        {id: '0', name: 'Hello'},%000a        {id: '1', name: 'World!'},%000a      ],%000a    },%000a  ],%000a};%000a
+sidecar	input.types	$	identifier	0	alias-present	0
+sidecar	input.types	$	identifier	0	alias-symbol	
+sidecar	input.types	$	identifier	0	type-present	0
+sidecar	input.types	$	identifier	0	type-symbol	
+sidecar	input.types	$	identifier	1	alias-present	0
+sidecar	input.types	$	identifier	1	alias-symbol	
+sidecar	input.types	$	identifier	1	type-present	1
+sidecar	input.types	$	identifier	1	type-symbol	ObjectConstructor
+sidecar	input.types	$	identifier	2	alias-present	0
+sidecar	input.types	$	identifier	2	alias-symbol	
+sidecar	input.types	$	identifier	2	type-present	1
+sidecar	input.types	$	identifier	2	type-symbol	fromEntries
+sidecar	input.types	$	identifier	3	alias-present	0
+sidecar	input.types	$	identifier	3	alias-symbol	
+sidecar	input.types	$	identifier	3	type-present	0
+sidecar	input.types	$	identifier	3	type-symbol	
+sidecar	input.types	$	identifier	4	alias-present	0
+sidecar	input.types	$	identifier	4	alias-symbol	
+sidecar	input.types	$	identifier	4	type-present	0
+sidecar	input.types	$	identifier	4	type-symbol	
+sidecar	input.types	$	identifier	5	alias-present	0
+sidecar	input.types	$	identifier	5	alias-symbol	
+sidecar	input.types	$	identifier	5	type-present	0
+sidecar	input.types	$	identifier	5	type-symbol	
+sidecar	input.types	$	identifier	6	alias-present	0
+sidecar	input.types	$	identifier	6	alias-symbol	
+sidecar	input.types	$	identifier	6	type-present	1
+sidecar	input.types	$	identifier	6	type-symbol	%dcfefunction
+sidecar	input.types	$	identifier	7	alias-present	0
+sidecar	input.types	$	identifier	7	alias-symbol	
+sidecar	input.types	$	identifier	7	type-present	0
+sidecar	input.types	$	identifier	7	type-symbol	
+sidecar	input.types	$	identifier	8	alias-present	0
+sidecar	input.types	$	identifier	8	alias-symbol	
+sidecar	input.types	$	identifier	8	type-present	1
+sidecar	input.types	$	identifier	8	type-symbol	%dcfetype
+sidecar	input.types	$	identifier	9	alias-present	0
+sidecar	input.types	$	identifier	9	alias-symbol	
+sidecar	input.types	$	identifier	9	type-present	1
+sidecar	input.types	$	identifier	9	type-symbol	ObjectConstructor
+sidecar	input.types	$	identifier	10	alias-present	0
+sidecar	input.types	$	identifier	10	alias-symbol	
+sidecar	input.types	$	identifier	10	type-present	1
+sidecar	input.types	$	identifier	10	type-symbol	fromEntries
+sidecar	input.types	$	identifier	11	alias-present	0
+sidecar	input.types	$	identifier	11	alias-symbol	
+sidecar	input.types	$	identifier	11	type-present	0
+sidecar	input.types	$	identifier	11	type-symbol	
+sidecar	input.types	$	identifier	12	alias-present	0
+sidecar	input.types	$	identifier	12	alias-symbol	
+sidecar	input.types	$	identifier	12	type-present	0
+sidecar	input.types	$	identifier	12	type-symbol	
+sidecar	input.types	$	identifier	13	alias-present	0
+sidecar	input.types	$	identifier	13	alias-symbol	
+sidecar	input.types	$	identifier	13	type-present	1
+sidecar	input.types	$	identifier	13	type-symbol	%dcfefunction
+sidecar	input.types	$	identifier	14	alias-present	0
+sidecar	input.types	$	identifier	14	alias-symbol	
+sidecar	input.types	$	identifier	14	type-present	0
+sidecar	input.types	$	identifier	14	type-symbol	
+sidecar	input.types	$	identifier	15	alias-present	0
+sidecar	input.types	$	identifier	15	alias-symbol	
+sidecar	input.types	$	identifier	15	type-present	1
+sidecar	input.types	$	identifier	15	type-symbol	%dcfetype
+sidecar	input.types	$/0	identifier	0	alias-present	0
+sidecar	input.types	$/0	identifier	0	alias-symbol	
+sidecar	input.types	$/0	identifier	0	type-present	0
+sidecar	input.types	$/0	identifier	0	type-symbol	
+sidecar	input.types	$/0	identifier	1	alias-present	0
+sidecar	input.types	$/0	identifier	1	alias-symbol	
+sidecar	input.types	$/0	identifier	1	type-present	0
+sidecar	input.types	$/0	identifier	1	type-symbol	
+sidecar	input.types	$/0	identifier	2	alias-present	0
+sidecar	input.types	$/0	identifier	2	alias-symbol	
+sidecar	input.types	$/0	identifier	2	type-present	0
+sidecar	input.types	$/0	identifier	2	type-symbol	
+sidecar	input.types	$/0	identifier	3	alias-present	0
+sidecar	input.types	$/0	identifier	3	alias-symbol	
+sidecar	input.types	$/0	identifier	3	type-present	0
+sidecar	input.types	$/0	identifier	3	type-symbol	
+sidecar	input.types	$/0	identifier	4	alias-present	0
+sidecar	input.types	$/0	identifier	4	alias-symbol	
+sidecar	input.types	$/0	identifier	4	type-present	1
+sidecar	input.types	$/0	identifier	4	type-symbol	%dcfefunction
+sidecar	input.types	$/0	identifier	5	alias-present	0
+sidecar	input.types	$/0	identifier	5	alias-symbol	
+sidecar	input.types	$/0	identifier	5	type-present	1
+sidecar	input.types	$/0	identifier	5	type-symbol	Array
+sidecar	input.types	$/0	identifier	6	alias-present	0
+sidecar	input.types	$/0	identifier	6	alias-symbol	
+sidecar	input.types	$/0	identifier	6	type-present	0
+sidecar	input.types	$/0	identifier	6	type-symbol	
+sidecar	input.types	$/0	identifier	7	alias-present	0
+sidecar	input.types	$/0	identifier	7	alias-symbol	
+sidecar	input.types	$/0	identifier	7	type-present	0
+sidecar	input.types	$/0	identifier	7	type-symbol	
+sidecar	input.types	$/0	identifier	8	alias-present	0
+sidecar	input.types	$/0	identifier	8	alias-symbol	
+sidecar	input.types	$/0	identifier	8	type-present	0
+sidecar	input.types	$/0	identifier	8	type-symbol	
+sidecar	input.types	$/0	identifier	9	alias-present	0
+sidecar	input.types	$/0	identifier	9	alias-symbol	
+sidecar	input.types	$/0	identifier	9	type-present	1
+sidecar	input.types	$/0	identifier	9	type-symbol	%dcfefunction
+sidecar	input.types	$/0	identifier	10	alias-present	0
+sidecar	input.types	$/0	identifier	10	alias-symbol	
+sidecar	input.types	$/0	identifier	10	type-present	1
+sidecar	input.types	$/0	identifier	10	type-symbol	Array
+sidecar	input.types	$/0/0	identifier	0	alias-present	0
+sidecar	input.types	$/0/0	identifier	0	alias-symbol	
+sidecar	input.types	$/0/0	identifier	0	type-present	0
+sidecar	input.types	$/0/0	identifier	0	type-symbol	
+sidecar	input.types	$/0/0	identifier	1	alias-present	0
+sidecar	input.types	$/0/0	identifier	1	alias-symbol	
+sidecar	input.types	$/0/0	identifier	1	type-present	0
+sidecar	input.types	$/0/0	identifier	1	type-symbol	
+sidecar	input.types	$/0/0	identifier	2	alias-present	0
+sidecar	input.types	$/0/0	identifier	2	alias-symbol	
+sidecar	input.types	$/0/0	identifier	2	type-present	0
+sidecar	input.types	$/0/0	identifier	2	type-symbol	
+sidecar	input.types	$/0/0	identifier	3	alias-present	0
+sidecar	input.types	$/0/0	identifier	3	alias-symbol	
+sidecar	input.types	$/0/0	identifier	3	type-present	0
+sidecar	input.types	$/0/0	identifier	3	type-symbol	
+sidecar	input.types	$/0/0	identifier	4	alias-present	0
+sidecar	input.types	$/0/0	identifier	4	alias-symbol	
+sidecar	input.types	$/0/0	identifier	4	type-present	0
+sidecar	input.types	$/0/0	identifier	4	type-symbol	
+sidecar	input.types	$/0/0	identifier	5	alias-present	0
+sidecar	input.types	$/0/0	identifier	5	alias-symbol	
+sidecar	input.types	$/0/0	identifier	5	type-present	0
+sidecar	input.types	$/0/0	identifier	5	type-symbol	
+sidecar	input.types	$/0/0	identifier	6	alias-present	0
+sidecar	input.types	$/0/0	identifier	6	alias-symbol	
+sidecar	input.types	$/0/0	identifier	6	type-present	0
+sidecar	input.types	$/0/0	identifier	6	type-symbol	
+sidecar	input.types	$/0/0	identifier	7	alias-present	0
+sidecar	input.types	$/0/0	identifier	7	alias-symbol	
+sidecar	input.types	$/0/0	identifier	7	type-present	0
+sidecar	input.types	$/0/0	identifier	7	type-symbol	
+sidecar	input.types	$/0/0	identifier	8	alias-present	0
+sidecar	input.types	$/0/0	identifier	8	alias-symbol	
+sidecar	input.types	$/0/0	identifier	8	type-present	0
+sidecar	input.types	$/0/0	identifier	8	type-symbol	
+sidecar	input.types	$/0/0	identifier	9	alias-present	0
+sidecar	input.types	$/0/0	identifier	9	alias-symbol	
+sidecar	input.types	$/0/0	identifier	9	type-present	0
+sidecar	input.types	$/0/0	identifier	9	type-symbol	
+sidecar	input.types	$/0/0	identifier	10	alias-present	0
+sidecar	input.types	$/0/0	identifier	10	alias-symbol	
+sidecar	input.types	$/0/0	identifier	10	type-present	0
+sidecar	input.types	$/0/0	identifier	10	type-symbol	
+sidecar	input.types	$/0/0	identifier	11	alias-present	0
+sidecar	input.types	$/0/0	identifier	11	alias-symbol	
+sidecar	input.types	$/0/0	identifier	11	type-present	0
+sidecar	input.types	$/0/0	identifier	11	type-symbol	
+sidecar	input.unit4-ast	$	identifier	0	identifier-text	
+sidecar	input.unit4-ast	$	identifier	1	identifier-text	Object
+sidecar	input.unit4-ast	$	identifier	2	identifier-text	fromEntries
+sidecar	input.unit4-ast	$	identifier	3	identifier-text	
+sidecar	input.unit4-ast	$	identifier	4	identifier-text	items
+sidecar	input.unit4-ast	$	identifier	5	identifier-text	map
+sidecar	input.unit4-ast	$	identifier	6	identifier-text	
+sidecar	input.unit4-ast	$	identifier	7	identifier-text	
+sidecar	input.unit4-ast	$	identifier	8	identifier-text	
+sidecar	input.unit4-ast	$	identifier	9	identifier-text	Object
+sidecar	input.unit4-ast	$	identifier	10	identifier-text	fromEntries
+sidecar	input.unit4-ast	$	identifier	11	identifier-text	items
+sidecar	input.unit4-ast	$	identifier	12	identifier-text	map
+sidecar	input.unit4-ast	$	identifier	13	identifier-text	
+sidecar	input.unit4-ast	$	identifier	14	identifier-text	
+sidecar	input.unit4-ast	$	identifier	15	identifier-text	
+sidecar	input.unit4-ast	$	instruction	0	callee-name	
+sidecar	input.unit4-ast	$	instruction	0	receiver-name	
+sidecar	input.unit4-ast	$	instruction	1	callee-name	
+sidecar	input.unit4-ast	$	instruction	1	receiver-name	
+sidecar	input.unit4-ast	$	instruction	2	callee-name	
+sidecar	input.unit4-ast	$	instruction	2	receiver-name	
+sidecar	input.unit4-ast	$	instruction	3	callee-name	
+sidecar	input.unit4-ast	$	instruction	3	receiver-name	
+sidecar	input.unit4-ast	$	instruction	4	callee-name	
+sidecar	input.unit4-ast	$	instruction	4	receiver-name	
+sidecar	input.unit4-ast	$	instruction	5	callee-name	map
+sidecar	input.unit4-ast	$	instruction	5	receiver-name	items
+sidecar	input.unit4-ast	$	instruction	6	callee-name	fromEntries
+sidecar	input.unit4-ast	$	instruction	6	receiver-name	Object
+sidecar	input.unit4-ast	$/0	identifier	0	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	1	identifier-text	item
+sidecar	input.unit4-ast	$/0	identifier	2	identifier-text	item
+sidecar	input.unit4-ast	$/0	identifier	3	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	4	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	5	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	6	identifier-text	item
+sidecar	input.unit4-ast	$/0	identifier	7	identifier-text	item
+sidecar	input.unit4-ast	$/0	identifier	8	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	9	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	10	identifier-text	
+sidecar	input.unit4-ast	$/0	instruction	0	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	0	receiver-name	
+sidecar	input.unit4-ast	$/0	instruction	1	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	1	receiver-name	
+sidecar	input.unit4-ast	$/0	instruction	2	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	2	receiver-name	
+sidecar	input.unit4-ast	$/0	instruction	3	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	3	receiver-name	
+sidecar	input.unit4-ast	$/0/0	identifier	0	identifier-text	
+sidecar	input.unit4-ast	$/0/0	identifier	1	identifier-text	ref
+sidecar	input.unit4-ast	$/0/0	identifier	2	identifier-text	Stringify
+sidecar	input.unit4-ast	$/0/0	identifier	3	identifier-text	ref
+sidecar	input.unit4-ast	$/0/0	identifier	4	identifier-text	
+sidecar	input.unit4-ast	$/0/0	identifier	5	identifier-text	item
+sidecar	input.unit4-ast	$/0/0	identifier	6	identifier-text	
+sidecar	input.unit4-ast	$/0/0	identifier	7	identifier-text	ref
+sidecar	input.unit4-ast	$/0/0	identifier	8	identifier-text	Stringify
+sidecar	input.unit4-ast	$/0/0	identifier	9	identifier-text	ref
+sidecar	input.unit4-ast	$/0/0	identifier	10	identifier-text	item
+sidecar	input.unit4-ast	$/0/0	identifier	11	identifier-text	
+sidecar	input.unit4-ast	$/0/0	instruction	0	callee-name	
+sidecar	input.unit4-ast	$/0/0	instruction	0	receiver-name	
+sidecar	input.unit4-ast	$/0/0	instruction	1	callee-name	
+sidecar	input.unit4-ast	$/0/0	instruction	1	receiver-name	
+sidecar	input.unit4-ast	$/0/0	instruction	2	callee-name	
+sidecar	input.unit4-ast	$/0/0	instruction	2	receiver-name	
+sidecar	input.unit4-ast	$/0/0	instruction	3	callee-name	
+sidecar	input.unit4-ast	$/0/0	instruction	3	receiver-name	
+sidecar	unit4.effects	$/0	instruction	0	000000	assign%00096:<unknown>:0:306:310%00097:<unknown>:0:306:310%0009mutable
+sidecar	unit4.effects	$/0	instruction	1	000000	create-from%00097:<unknown>:0:306:310%00098:<unknown>:0:306:313%0009mutable
+sidecar	unit4.effects	$/0	instruction	1	000001	capture%00097:<unknown>:0:306:310%00098:<unknown>:0:306:313%0009mutable
+sidecar	unit4.effects	$/0	instruction	2	000000	create%00090:<unknown>:0:0:0%00099:<unknown>:0:314:355%0009mutable
+sidecar	unit4.effects	$/0	instruction	2	000001	capture%00096:<unknown>:0:0:0%00099:<unknown>:0:314:355%0009mutable
+sidecar	unit4.effects	$/0	instruction	3	000000	create%00090:<unknown>:0:0:0%000910:<unknown>:0:304:356%0009mutable
+sidecar	unit4.effects	$/0	instruction	3	000001	capture%00098:<unknown>:0:306:313%000910:<unknown>:0:304:356%0009mutable
+sidecar	unit4.effects	$/0	instruction	3	000002	capture%00099:<unknown>:0:314:355%000910:<unknown>:0:304:356%0009mutable
+end-checkpoint

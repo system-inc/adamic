@@ -1,0 +1,3 @@
+const table = new Map<number,number[]>();
+let list = table.get(0); if(list === undefined) { list = []; table.set(0,list); }
+console.log(String(list.length));

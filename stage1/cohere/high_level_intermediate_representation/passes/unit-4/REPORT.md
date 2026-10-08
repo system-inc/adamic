@@ -1,58 +1,88 @@
-# Unit 4: stopped on shared checkpoint inputs
+# Unit 4: source-Node certificate, native array-of-never stop
 
-Base: `3714b3198397502297cd298d3d497835dcdeaa49`, fetched from
-`origin/stage1-hir/wip`. Exclusive directory: `passes/unit-4/`.
+Merged `origin/stage1-hir/wip` checkpoint commit `9addb0e8` without rebasing.
+Cohere pin: `7945d102a6c18dd36adf9114a758ce646e8b2359`. Exclusive directory: `passes/unit-4/`.
 Read PLAN.md, PROGRESS.md, REPORT.md, the arena ruling at docs/memory.md:477,
 and the complete shared arena_index.a. No shared file was edited.
 
 ## Certificate
 
-Native: **0 / 1,465**. Source Node: **0 / 1,465**.
-Emitted JavaScript: **0 / 1,465**. Flow replay: **0 / 23**.
-No pass comparison or semantic mutant was executed. These are unexecuted
-observations, not passing or skipped tests. No implementation is certified.
-No independent language gap was observed.
+| Independent Go before/after checkpoint | Source Node | Sanitized native | Emitted JavaScript |
+| --- | ---: | ---: | ---: |
+| Primitive property constraints | 1,465 / 1,465 | 1,465 / 1,465 | 1,465 / 1,465 |
+| InferReactive | 1,465 / 1,465 | 0, compiler refusal | 0, compiler refusal |
+| InferAliasingEffects | 1,465 / 1,465 | 0, compiler refusal | 0, compiler refusal |
+| InferAliasingEffectsForNested | 1,465 / 1,465 | 0, compiler refusal | 0, compiler refusal |
+| ProjectEffects | 0, deferred import | 0, deferred import | 0, deferred import |
 
-## Requests to hir-01
+All 1,465 original census keys remain, including **23 / 23 Flow graphs** in each
+executed matrix row. No original error outcome is filtered. The 72 construction
+probes are exported but are not included in these counts. Comparisons include
+the complete graph and canonical sidecars, not an instruction count or checksum.
+The Go adapter invokes the actual pass on fresh Go state, writes immediately
+before and after, and repeats the after encoding to check determinism. Effects
+and reactive inference have separate input clones and retain nil checker state.
+No earlier Adamic pass or expected analysis answer is read as an input fact.
 
-1. Land the checkpoint bundle framing and decoder under `replay/`, with
-   canonical roundtrip and corrupt-index mutant. Export all 1,465 original census
-   keys, including the 23 Flow graphs and error outcomes, as Go input. Preserve
-   original nesting paths, source kind/span handles, function-local identities,
-   nil-checker availability and table order. Provide before/after boundaries for
-   `effects.go:493 InferAliasingEffects`, `:523 InferAliasingEffectsForNested`,
-   `:1189 ProjectEffects`, and `reactive.go:189 InferReactive` independently.
-2. Extend generic replay fact selectors for identifier source handles, hook and
-   module-export origins, callee signature inputs and the exact type-name facts
-   consumed by `reactive.go:662 stableTypeName` (`GetTypeAtLocation` at :670,
-   alias at :674, symbol at :679). Input facts must remain separate from the
-   expected reactive/effect answers. Preserve the original nil checker path.
-   I will own alias-effect, primitive-constraint and reactive sidecar records;
-   please publish the framing/import API before those records are implemented.
-3. Land the existing Adamic `mutation_aliasing` module by reference and publish
-   its exports corresponding to Go `AliasingEffect[P]`, `AliasingEffectKind`,
-   `EffectValueKind`, `CreateEffect`, `FlowEffect`, `MutationEffect`, and
-   `MutableRanges.Get`. Do not copy the Go analysis into this lane.
-   `effects.go:1189 ProjectEffects` needs the actual imported mutable ranges;
-   its aliasing branch at :1196 tests `ranges.Get(effect.Into.Identifier).End`.
+`primitive.a` uses checked function/identifier handles as two-part constraint
+keys. Effects retain sequence, from/into places, value kind, closure captures,
+custom-hook signatures and callback mutation summaries. All alias-effect records
+and primitive/reactive schemas are lane-owned. `input.unit4-ast` contains actual
+identifier text and syntax callee/receiver names; signatures are ported literals,
+not Go-computed effect answers. The shared replay module is imported by reference.
+No SSA or mutation_aliasing algorithm is copied. No shared file is edited.
 
-No new arena class or instruction variant is requested yet: that would be
-speculation before the checkpoint schema exists. Existing concrete index
-classes remain the contract, with private minting and checked arena reads.
-SSA will be imported from the existing module, never copied.
+## Mutants and verification
 
-## Reproducer and stopping point
+Four semantic source changes are caught by Go byte comparison after successful
+execution: primitive/other constraints swapped; parameter reactivity omitted;
+closure capture changed to immutable capture; custom-hook frozen result changed
+to mutable. The capture change is run separately for root and nested effects:
+**five source-Node mutant comparisons caught**, plus the primitive mutant on
+**sanitized native**. The blocked backends have no claimed mutant certificate.
+Definitions are in `mutants.json`; exact catches are in `validation/certificates.txt`.
 
-From the repository root, run:
+`TestUnit4Census` and `TestArrayNeverGap`: **2 pass, 0 fail, 0 skip**, 183.204s.
+`TestRetainedWitnesses`: **1 pass, 0 fail, 0 skip**, 0.818s. Each top-level test
+calls t.Parallel. gofmt and lane vet pass. The original Go census exporter retains
+its upstream skipped tests; their classifications belong to the shared census,
+not successful unit-4 observations. Retained fixtures are the Go checkpoints
+that catch the mutants; provenance names their original upstream calls.
+
+Reproduce from the repository root after sourcing the toolchain environment:
 
 ```sh
-git ls-tree -r --name-only HEAD stage1/cohere/high_level_intermediate_representation/replay
-git ls-tree -r --name-only HEAD stage1/cohere/mutation_aliasing
+HIR_UNIT4_CENSUS=/tmp/hir-unit4-census go test -v -count=1 -timeout=40m ./stage1/cohere/high_level_intermediate_representation/passes/unit-4 > /tmp/hir-unit4-tests.log 2>&1
+gofmt -l stage1/cohere/high_level_intermediate_representation/passes/unit-4
+go vet ./stage1/cohere/high_level_intermediate_representation/passes/unit-4
 ```
 
-Both commands produce no paths on the recorded base. `BLOCKERS.log` retains
-this inventory. The construction printer is not an analysis checkpoint decoder;
-using it would omit the very effects/reactive state this lane must compare.
-Stopped before fabricating a private replay codec, checker stand-in or copied
-mutation-aliasing implementation. Once the owner lands these inputs, merge the
-shared branch without rebasing and resume the full isolated pass certificate.
+## Requests and stopping point
+
+The replay, record and checker-selector requests are answered by `9addb0e8`.
+No further shared record, instruction variant or arena class is requested.
+
+Native and emitted-JavaScript lowering refuse **an array of never**, despite the
+source's contextual element type. No workaround is applied. The shortest inputs
+are `gaps/array-never.a:2:58` (optional map result assigned an empty array) and
+`gaps/array-never-coalesce.a:2:35` (optional map result iterated with an empty-array
+fallback). Node prints `0` and `1` respectively. Both backends report exactly:
+
+```text
+stage 0 can't lower an array of never yet
+```
+
+The affected port sites are `frontiers.a:10:116` and `effects.a:67:116`.
+They implement Go `postdominator.go:130`'s nil predecessor slice append and
+`effects.go:1454`'s absent instruction effect-list traversal, respectively.
+`TestArrayNeverGap` holds the exact refusal and fails when it closes. Full compiler
+output is retained in `validation/`; this is a language fix request, not permission
+to weaken a comparison. Reactive/effects native and emitted-JavaScript certificates
+remain stopped, with their complete source-Node certificates kept separate.
+
+Projection still waits for the real Adamic mutation_aliasing import/API, as
+instructed. Go `effects.go:1189 ProjectEffects` requires
+`MutableRanges.Get(effect.Into.Identifier).End` at :1196. The lane does not invent
+that module or substitute recorded ranges for its imported API. Once the language
+fix and module land, merge the shared branch, rerun every backend and mutant, and
+certify projection. This lane is not declared fully certified.

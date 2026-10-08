@@ -1,0 +1,12 @@
+=== RUN   TestUnit4Census
+=== PAUSE TestUnit4Census
+=== CONT  TestUnit4Census
+    comparison_test.go:132: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    comparison_test.go:164: primitive Node: 1465/1465
+    comparison_test.go:166: [go run ./cmd/adamic build /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/main.a -o /tmp/adamic-gate/TestUnit4Census420033670/002/primitive --sanitize]: exit status 1
+        adamic: /workspace/hir-unit-4/stage1/cohere/high_level_intermediate_representation/passes/unit-4/frontiers.a:10:116: stage 0 can't lower an array of never yet
+        exit status 1
+--- FAIL: TestUnit4Census (11.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	11.664s
+FAIL

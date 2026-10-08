@@ -1,0 +1,2 @@
+const table = new Map<number,number[]>(); table.set(0,[1]);
+for(const item of table.get(0) ?? []) { console.log(String(item)); }

@@ -1,0 +1,6 @@
+// Unit-4-owned effects record schema. Projection will import the analysis lane's real API.
+import type { PlaceInterface } from '../../core.ts';
+export type AliasingKind = 'create' | 'create-from' | 'assign' | 'alias' | 'maybe-alias' | 'capture' | 'immutable-capture' | 'mutate' | 'mutate-conditionally' | 'mutate-transitive' | 'mutate-transitive-conditionally' | 'freeze' | 'apply';
+export type ValueKind = 'mutable' | 'primitive' | 'frozen' | 'maybe-frozen' | 'global';
+export interface AliasingEffect { readonly kind: AliasingKind; readonly from: PlaceInterface | undefined; readonly into: PlaceInterface; readonly value: ValueKind; }
+export interface Signature { readonly receiver: string; readonly positional: readonly string[]; readonly rest: string; readonly hasRest: boolean; readonly result: ValueKind; readonly aliasing: string; }

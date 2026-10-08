@@ -1,0 +1,297 @@
+hir-checkpoint-v1
+case	01a2bb62caf7f3588eeb0f7d54565d0c8bfc0f0aae3f1efdadefc8332c9cf34f	unit4.effects
+graph-lines 58
+hir-v1
+function Component component entry=1 async=0 generator=0
+params 10:<unknown>:0:50:55
+context 
+returns 19:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 props
+identifier 2 3 
+identifier 3 4 
+identifier 4 5 
+identifier 5 6 
+identifier 6 7 result
+identifier 7 8 
+identifier 8 9 
+identifier 9 10 
+identifier 10 2 props
+identifier 11 3 
+identifier 12 4 
+identifier 13 5 
+identifier 14 6 
+identifier 15 8 
+identifier 16 7 result
+identifier 17 9 
+identifier 18 10 
+identifier 19 1 
+block 1 block predecessors=
+instruction 0 1 11:<unknown>:0:73:81 73:81 LoadGlobal {"BindingKind":4,"Imported":"useMemo","Name":"useMemo","Source":"react"}
+instruction 1 2 12:<unknown>:0:82:101 82:101 FunctionExpression {"Captures":["10:\u003cunknown\u003e:0:0:0"],"Function":0}
+instruction 2 3 13:<unknown>:0:102:105 102:105 ArrayExpression {"Elements":[]}
+instruction 3 4 14:<unknown>:0:73:106 73:106 CallExpression {"Args":[{"Place":"12:\u003cunknown\u003e:0:82:101","Spread":false},{"Place":"13:\u003cunknown\u003e:0:102:105","Spread":false}],"Callee":"11:\u003cunknown\u003e:0:73:81","CalleeOrigin":{"Export":"useMemo","Module":"react"},"Optional":false}
+instruction 4 5 15:<unknown>:0:64:106 64:106 StoreLocal {"Kind":0,"LValue":"16:\u003cunknown\u003e:0:64:71","Value":"14:\u003cunknown\u003e:0:73:106"}
+instruction 5 6 17:<unknown>:0:121:127 121:127 LoadLocal 16:<unknown>:0:121:127
+instruction 6 7 18:<unknown>:0:114:134 114:134 JsxExpression {"Children":["17:\u003cunknown\u003e:0:121:127"],"Props":[],"Tag":{"Name":"div","Place":null}}
+instruction 7 8 19:<unknown>:0:0:0 107:135 LoadLocal 18:<unknown>:0:114:134
+terminal 9 Return 19:<unknown>:0:0:0
+nested 0
+hir-v1
+function  other entry=1 async=0 generator=0
+params 
+context 1:<unknown>:0:0:0
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 props
+identifier 2 3 
+identifier 3 4 
+identifier 4 5 
+identifier 5 3 
+identifier 6 4 
+identifier 7 5 
+block 1 block predecessors=
+instruction 0 1 5:<unknown>:0:89:94 89:94 LoadContext {"Place":"1:\u003cunknown\u003e:0:89:94"}
+instruction 1 2 6:<unknown>:0:89:100 89:100 PropertyLoad {"Object":"5:\u003cunknown\u003e:0:89:94","Optional":false,"Property":"value"}
+instruction 2 3 7:<unknown>:0:87:101 87:101 ArrayExpression {"Elements":[{"Hole":false,"Place":"6:\u003cunknown\u003e:0:89:100","Spread":false}]}
+terminal 4 Return 7:<unknown>:0:87:101
+scopes -
+end
+scopes -
+end
+identities 0
+sidecars 233
+sidecar	input.ast	$	function	-	node	KindFunctionDeclaration%000930%0009137
+sidecar	input.ast	$	identifier	0	node	nil
+sidecar	input.ast	$	identifier	1	node	KindIdentifier%000950%000955
+sidecar	input.ast	$	identifier	2	node	KindIdentifier%000973%000981
+sidecar	input.ast	$	identifier	3	node	KindArrowFunction%000982%0009101
+sidecar	input.ast	$	identifier	4	node	KindArrayLiteralExpression%0009102%0009105
+sidecar	input.ast	$	identifier	5	node	KindCallExpression%000973%0009106
+sidecar	input.ast	$	identifier	6	node	KindIdentifier%000964%000971
+sidecar	input.ast	$	identifier	7	node	KindVariableDeclaration%000964%0009106
+sidecar	input.ast	$	identifier	8	node	KindIdentifier%0009121%0009127
+sidecar	input.ast	$	identifier	9	node	KindJsxElement%0009114%0009134
+sidecar	input.ast	$	identifier	10	node	KindIdentifier%000950%000955
+sidecar	input.ast	$	identifier	11	node	KindIdentifier%000973%000981
+sidecar	input.ast	$	identifier	12	node	KindArrowFunction%000982%0009101
+sidecar	input.ast	$	identifier	13	node	KindArrayLiteralExpression%0009102%0009105
+sidecar	input.ast	$	identifier	14	node	KindCallExpression%000973%0009106
+sidecar	input.ast	$	identifier	15	node	KindVariableDeclaration%000964%0009106
+sidecar	input.ast	$	identifier	16	node	KindIdentifier%000964%000971
+sidecar	input.ast	$	identifier	17	node	KindIdentifier%0009121%0009127
+sidecar	input.ast	$	identifier	18	node	KindJsxElement%0009114%0009134
+sidecar	input.ast	$	identifier	19	node	nil
+sidecar	input.ast	$	instruction	0	node	KindIdentifier%000973%000981
+sidecar	input.ast	$	instruction	1	node	KindArrowFunction%000982%0009101
+sidecar	input.ast	$	instruction	2	node	KindArrayLiteralExpression%0009102%0009105
+sidecar	input.ast	$	instruction	3	node	KindCallExpression%000973%0009106
+sidecar	input.ast	$	instruction	4	node	KindVariableDeclaration%000964%0009106
+sidecar	input.ast	$	instruction	5	node	KindIdentifier%0009121%0009127
+sidecar	input.ast	$	instruction	6	node	KindJsxElement%0009114%0009134
+sidecar	input.ast	$	instruction	7	node	KindReturnStatement%0009107%0009135
+sidecar	input.ast	$/0	function	-	node	KindArrowFunction%000982%0009101
+sidecar	input.ast	$/0	identifier	0	node	nil
+sidecar	input.ast	$/0	identifier	1	node	nil
+sidecar	input.ast	$/0	identifier	2	node	KindIdentifier%000989%000994
+sidecar	input.ast	$/0	identifier	3	node	KindPropertyAccessExpression%000989%0009100
+sidecar	input.ast	$/0	identifier	4	node	KindArrayLiteralExpression%000987%0009101
+sidecar	input.ast	$/0	identifier	5	node	KindIdentifier%000989%000994
+sidecar	input.ast	$/0	identifier	6	node	KindPropertyAccessExpression%000989%0009100
+sidecar	input.ast	$/0	identifier	7	node	KindArrayLiteralExpression%000987%0009101
+sidecar	input.ast	$/0	instruction	0	node	KindIdentifier%000989%000994
+sidecar	input.ast	$/0	instruction	1	node	KindPropertyAccessExpression%000989%0009100
+sidecar	input.ast	$/0	instruction	2	node	KindArrayLiteralExpression%000987%0009101
+sidecar	input.checker	$	function	-	available	1
+sidecar	input.checker	$/0	function	-	available	1
+sidecar	input.identity	$	function	-	next-block	2
+sidecar	input.identity	$/0	function	-	next-block	2
+sidecar	input.source	$	function	-	kind	tsx
+sidecar	input.source	$	function	-	text	import {useMemo} from 'react'; function Component(props) { const result = useMemo(() => [props.value], []); return <div>{result}</div>; }%000a
+sidecar	input.types	$	identifier	0	alias-present	0
+sidecar	input.types	$	identifier	0	alias-symbol	
+sidecar	input.types	$	identifier	0	type-present	0
+sidecar	input.types	$	identifier	0	type-symbol	
+sidecar	input.types	$	identifier	1	alias-present	0
+sidecar	input.types	$	identifier	1	alias-symbol	
+sidecar	input.types	$	identifier	1	type-present	0
+sidecar	input.types	$	identifier	1	type-symbol	
+sidecar	input.types	$	identifier	2	alias-present	0
+sidecar	input.types	$	identifier	2	alias-symbol	
+sidecar	input.types	$	identifier	2	type-present	1
+sidecar	input.types	$	identifier	2	type-symbol	useMemo
+sidecar	input.types	$	identifier	3	alias-present	0
+sidecar	input.types	$	identifier	3	alias-symbol	
+sidecar	input.types	$	identifier	3	type-present	1
+sidecar	input.types	$	identifier	3	type-symbol	%dcfefunction
+sidecar	input.types	$	identifier	4	alias-present	0
+sidecar	input.types	$	identifier	4	alias-symbol	
+sidecar	input.types	$	identifier	4	type-present	1
+sidecar	input.types	$	identifier	4	type-symbol	Array
+sidecar	input.types	$	identifier	5	alias-present	0
+sidecar	input.types	$	identifier	5	alias-symbol	
+sidecar	input.types	$	identifier	5	type-present	1
+sidecar	input.types	$	identifier	5	type-symbol	Array
+sidecar	input.types	$	identifier	6	alias-present	0
+sidecar	input.types	$	identifier	6	alias-symbol	
+sidecar	input.types	$	identifier	6	type-present	1
+sidecar	input.types	$	identifier	6	type-symbol	Array
+sidecar	input.types	$	identifier	7	alias-present	0
+sidecar	input.types	$	identifier	7	alias-symbol	
+sidecar	input.types	$	identifier	7	type-present	1
+sidecar	input.types	$	identifier	7	type-symbol	Array
+sidecar	input.types	$	identifier	8	alias-present	0
+sidecar	input.types	$	identifier	8	alias-symbol	
+sidecar	input.types	$	identifier	8	type-present	1
+sidecar	input.types	$	identifier	8	type-symbol	Array
+sidecar	input.types	$	identifier	9	alias-present	0
+sidecar	input.types	$	identifier	9	alias-symbol	
+sidecar	input.types	$	identifier	9	type-present	0
+sidecar	input.types	$	identifier	9	type-symbol	
+sidecar	input.types	$	identifier	10	alias-present	0
+sidecar	input.types	$	identifier	10	alias-symbol	
+sidecar	input.types	$	identifier	10	type-present	0
+sidecar	input.types	$	identifier	10	type-symbol	
+sidecar	input.types	$	identifier	11	alias-present	0
+sidecar	input.types	$	identifier	11	alias-symbol	
+sidecar	input.types	$	identifier	11	type-present	1
+sidecar	input.types	$	identifier	11	type-symbol	useMemo
+sidecar	input.types	$	identifier	12	alias-present	0
+sidecar	input.types	$	identifier	12	alias-symbol	
+sidecar	input.types	$	identifier	12	type-present	1
+sidecar	input.types	$	identifier	12	type-symbol	%dcfefunction
+sidecar	input.types	$	identifier	13	alias-present	0
+sidecar	input.types	$	identifier	13	alias-symbol	
+sidecar	input.types	$	identifier	13	type-present	1
+sidecar	input.types	$	identifier	13	type-symbol	Array
+sidecar	input.types	$	identifier	14	alias-present	0
+sidecar	input.types	$	identifier	14	alias-symbol	
+sidecar	input.types	$	identifier	14	type-present	1
+sidecar	input.types	$	identifier	14	type-symbol	Array
+sidecar	input.types	$	identifier	15	alias-present	0
+sidecar	input.types	$	identifier	15	alias-symbol	
+sidecar	input.types	$	identifier	15	type-present	1
+sidecar	input.types	$	identifier	15	type-symbol	Array
+sidecar	input.types	$	identifier	16	alias-present	0
+sidecar	input.types	$	identifier	16	alias-symbol	
+sidecar	input.types	$	identifier	16	type-present	1
+sidecar	input.types	$	identifier	16	type-symbol	Array
+sidecar	input.types	$	identifier	17	alias-present	0
+sidecar	input.types	$	identifier	17	alias-symbol	
+sidecar	input.types	$	identifier	17	type-present	1
+sidecar	input.types	$	identifier	17	type-symbol	Array
+sidecar	input.types	$	identifier	18	alias-present	0
+sidecar	input.types	$	identifier	18	alias-symbol	
+sidecar	input.types	$	identifier	18	type-present	0
+sidecar	input.types	$	identifier	18	type-symbol	
+sidecar	input.types	$	identifier	19	alias-present	0
+sidecar	input.types	$	identifier	19	alias-symbol	
+sidecar	input.types	$	identifier	19	type-present	0
+sidecar	input.types	$	identifier	19	type-symbol	
+sidecar	input.types	$/0	identifier	0	alias-present	0
+sidecar	input.types	$/0	identifier	0	alias-symbol	
+sidecar	input.types	$/0	identifier	0	type-present	0
+sidecar	input.types	$/0	identifier	0	type-symbol	
+sidecar	input.types	$/0	identifier	1	alias-present	0
+sidecar	input.types	$/0	identifier	1	alias-symbol	
+sidecar	input.types	$/0	identifier	1	type-present	0
+sidecar	input.types	$/0	identifier	1	type-symbol	
+sidecar	input.types	$/0	identifier	2	alias-present	0
+sidecar	input.types	$/0	identifier	2	alias-symbol	
+sidecar	input.types	$/0	identifier	2	type-present	0
+sidecar	input.types	$/0	identifier	2	type-symbol	
+sidecar	input.types	$/0	identifier	3	alias-present	0
+sidecar	input.types	$/0	identifier	3	alias-symbol	
+sidecar	input.types	$/0	identifier	3	type-present	0
+sidecar	input.types	$/0	identifier	3	type-symbol	
+sidecar	input.types	$/0	identifier	4	alias-present	0
+sidecar	input.types	$/0	identifier	4	alias-symbol	
+sidecar	input.types	$/0	identifier	4	type-present	1
+sidecar	input.types	$/0	identifier	4	type-symbol	Array
+sidecar	input.types	$/0	identifier	5	alias-present	0
+sidecar	input.types	$/0	identifier	5	alias-symbol	
+sidecar	input.types	$/0	identifier	5	type-present	0
+sidecar	input.types	$/0	identifier	5	type-symbol	
+sidecar	input.types	$/0	identifier	6	alias-present	0
+sidecar	input.types	$/0	identifier	6	alias-symbol	
+sidecar	input.types	$/0	identifier	6	type-present	0
+sidecar	input.types	$/0	identifier	6	type-symbol	
+sidecar	input.types	$/0	identifier	7	alias-present	0
+sidecar	input.types	$/0	identifier	7	alias-symbol	
+sidecar	input.types	$/0	identifier	7	type-present	1
+sidecar	input.types	$/0	identifier	7	type-symbol	Array
+sidecar	input.unit4-ast	$	identifier	0	identifier-text	
+sidecar	input.unit4-ast	$	identifier	1	identifier-text	props
+sidecar	input.unit4-ast	$	identifier	2	identifier-text	useMemo
+sidecar	input.unit4-ast	$	identifier	3	identifier-text	
+sidecar	input.unit4-ast	$	identifier	4	identifier-text	
+sidecar	input.unit4-ast	$	identifier	5	identifier-text	
+sidecar	input.unit4-ast	$	identifier	6	identifier-text	result
+sidecar	input.unit4-ast	$	identifier	7	identifier-text	
+sidecar	input.unit4-ast	$	identifier	8	identifier-text	result
+sidecar	input.unit4-ast	$	identifier	9	identifier-text	
+sidecar	input.unit4-ast	$	identifier	10	identifier-text	props
+sidecar	input.unit4-ast	$	identifier	11	identifier-text	useMemo
+sidecar	input.unit4-ast	$	identifier	12	identifier-text	
+sidecar	input.unit4-ast	$	identifier	13	identifier-text	
+sidecar	input.unit4-ast	$	identifier	14	identifier-text	
+sidecar	input.unit4-ast	$	identifier	15	identifier-text	
+sidecar	input.unit4-ast	$	identifier	16	identifier-text	result
+sidecar	input.unit4-ast	$	identifier	17	identifier-text	result
+sidecar	input.unit4-ast	$	identifier	18	identifier-text	
+sidecar	input.unit4-ast	$	identifier	19	identifier-text	
+sidecar	input.unit4-ast	$	instruction	0	callee-name	
+sidecar	input.unit4-ast	$	instruction	0	receiver-name	
+sidecar	input.unit4-ast	$	instruction	1	callee-name	
+sidecar	input.unit4-ast	$	instruction	1	receiver-name	
+sidecar	input.unit4-ast	$	instruction	2	callee-name	
+sidecar	input.unit4-ast	$	instruction	2	receiver-name	
+sidecar	input.unit4-ast	$	instruction	3	callee-name	useMemo
+sidecar	input.unit4-ast	$	instruction	3	receiver-name	
+sidecar	input.unit4-ast	$	instruction	4	callee-name	
+sidecar	input.unit4-ast	$	instruction	4	receiver-name	
+sidecar	input.unit4-ast	$	instruction	5	callee-name	
+sidecar	input.unit4-ast	$	instruction	5	receiver-name	
+sidecar	input.unit4-ast	$	instruction	6	callee-name	
+sidecar	input.unit4-ast	$	instruction	6	receiver-name	
+sidecar	input.unit4-ast	$	instruction	7	callee-name	
+sidecar	input.unit4-ast	$	instruction	7	receiver-name	
+sidecar	input.unit4-ast	$/0	identifier	0	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	1	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	2	identifier-text	props
+sidecar	input.unit4-ast	$/0	identifier	3	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	4	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	5	identifier-text	props
+sidecar	input.unit4-ast	$/0	identifier	6	identifier-text	
+sidecar	input.unit4-ast	$/0	identifier	7	identifier-text	
+sidecar	input.unit4-ast	$/0	instruction	0	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	0	receiver-name	
+sidecar	input.unit4-ast	$/0	instruction	1	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	1	receiver-name	
+sidecar	input.unit4-ast	$/0	instruction	2	callee-name	
+sidecar	input.unit4-ast	$/0	instruction	2	receiver-name	
+sidecar	unit4.effects	$	instruction	0	000000	create%00090:<unknown>:0:0:0%000911:<unknown>:0:73:81%0009global
+sidecar	unit4.effects	$	instruction	1	000000	create%00090:<unknown>:0:0:0%000912:<unknown>:0:82:101%0009mutable
+sidecar	unit4.effects	$	instruction	1	000001	capture%000910:<unknown>:0:0:0%000912:<unknown>:0:82:101%0009mutable
+sidecar	unit4.effects	$	instruction	2	000000	create%00090:<unknown>:0:0:0%000913:<unknown>:0:102:105%0009mutable
+sidecar	unit4.effects	$	instruction	3	000000	create%00090:<unknown>:0:0:0%000914:<unknown>:0:73:106%0009mutable
+sidecar	unit4.effects	$	instruction	3	000001	mutate-transitive-conditionally%00090:<unknown>:0:0:0%000911:<unknown>:0:73:81%0009mutable
+sidecar	unit4.effects	$	instruction	3	000002	maybe-alias%000911:<unknown>:0:73:81%000914:<unknown>:0:73:106%0009mutable
+sidecar	unit4.effects	$	instruction	3	000003	capture%000911:<unknown>:0:73:81%000912:<unknown>:0:82:101%0009mutable
+sidecar	unit4.effects	$	instruction	3	000004	capture%000911:<unknown>:0:73:81%000913:<unknown>:0:102:105%0009mutable
+sidecar	unit4.effects	$	instruction	3	000005	mutate-transitive-conditionally%00090:<unknown>:0:0:0%000912:<unknown>:0:82:101%0009mutable
+sidecar	unit4.effects	$	instruction	3	000006	maybe-alias%000912:<unknown>:0:82:101%000914:<unknown>:0:73:106%0009mutable
+sidecar	unit4.effects	$	instruction	3	000007	capture%000912:<unknown>:0:82:101%000911:<unknown>:0:73:81%0009mutable
+sidecar	unit4.effects	$	instruction	3	000008	capture%000912:<unknown>:0:82:101%000913:<unknown>:0:102:105%0009mutable
+sidecar	unit4.effects	$	instruction	3	000009	mutate-transitive-conditionally%00090:<unknown>:0:0:0%000913:<unknown>:0:102:105%0009mutable
+sidecar	unit4.effects	$	instruction	3	000010	maybe-alias%000913:<unknown>:0:102:105%000914:<unknown>:0:73:106%0009mutable
+sidecar	unit4.effects	$	instruction	3	000011	capture%000913:<unknown>:0:102:105%000911:<unknown>:0:73:81%0009mutable
+sidecar	unit4.effects	$	instruction	3	000012	capture%000913:<unknown>:0:102:105%000912:<unknown>:0:82:101%0009mutable
+sidecar	unit4.effects	$	instruction	4	000000	assign%000914:<unknown>:0:73:106%000916:<unknown>:0:64:71%0009mutable
+sidecar	unit4.effects	$	instruction	4	000001	assign%000914:<unknown>:0:73:106%000915:<unknown>:0:64:106%0009mutable
+sidecar	unit4.effects	$	instruction	5	000000	assign%000916:<unknown>:0:121:127%000917:<unknown>:0:121:127%0009mutable
+sidecar	unit4.effects	$	instruction	6	000000	create%00090:<unknown>:0:0:0%000918:<unknown>:0:114:134%0009frozen
+sidecar	unit4.effects	$	instruction	6	000001	freeze%00090:<unknown>:0:0:0%000917:<unknown>:0:121:127%0009mutable
+sidecar	unit4.effects	$	instruction	6	000002	capture%000917:<unknown>:0:121:127%000918:<unknown>:0:114:134%0009mutable
+sidecar	unit4.effects	$	instruction	7	000000	assign%000918:<unknown>:0:114:134%000919:<unknown>:0:0:0%0009mutable
+end-checkpoint

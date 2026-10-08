@@ -1,0 +1,160 @@
+// Go effects.go and effects_custom_hooks.go. No imported analysis algorithm is duplicated.
+import { panic } from 'adamic';
+import { InputFacts, Payload, IdentifierIndex } from '../../replay/index.ts';
+import type { InstructionIndex } from '../../replay/index.ts';
+import type { ConstructedHIR, HIRFunction, FunctionIndex, PlaceInterface, Instruction, ValueType, ArgumentInterface, PatternIndex } from '../../core.ts';
+import type { AliasingEffect, AliasingKind, ValueKind, Signature } from './effect_types.a';
+import { PrimitiveConstraints } from './primitive.a';
+import { isHookName } from './hooks.a';
+import { signature, methods, functions, qualified } from './signatures.a';
+function create(into: PlaceInterface,value: ValueKind): AliasingEffect { return {kind: 'create',from: undefined,into,value}; }
+function flow(kind: AliasingKind,from: PlaceInterface,into: PlaceInterface): AliasingEffect { return {kind,from,into,value: 'mutable'}; }
+function mutation(kind: AliasingKind,into: PlaceInterface): AliasingEffect { return {kind,from: undefined,into,value: 'mutable'}; }
+function primitiveName(value: ValueType | undefined): string | undefined {
+ if(value === undefined || value.kind !== 'Primitive' || !value.literal.startsWith('string:')) { return undefined; }
+ const raw = value.literal.slice(7); const payload = new Payload('"' + raw.replace(/"/g,'\\"') + '"'); return payload.textAt(payload.rootHandle());
+}
+export class EffectsPass {
+ readonly graph: ConstructedHIR;
+ readonly facts: InputFacts;
+ constructor(graph: ConstructedHIR,facts: InputFacts) { this.graph = graph; this.facts = facts; }
+ private path(index: FunctionIndex): string { if(index === this.graph.root) { return '$'; } const find = (id: FunctionIndex,path: string): string | undefined => { const fn = this.graph.arena.read(id); for(let i = 0; i < fn.functions.length; i++) { const child = fn.functions[i] ?? panic('missing nested index'); if(child === index) { return `${path}/${i}`; } const result = find(child,`${path}/${i}`); if(result !== undefined) { return result; } } return undefined; }; return find(this.graph.root,'$') ?? panic('function outside effects graph'); }
+ private ast(index: FunctionIndex,instruction: Instruction,key: string): string { return this.facts.require('input.unit4-ast',this.path(index),'instruction',instruction.id.slot,key); }
+ private producers(fn: HIRFunction): Map<IdentifierIndex,ValueType> { const table = new Map<IdentifierIndex,ValueType>(); for(const instruction of fn.instructions) { table.set(instruction.lvalue.identifier,instruction.value); if(instruction.value.kind === 'StoreLocal') { table.set(instruction.value.lvalue.identifier,instruction.value); } } return table; }
+ private moduleHook(fn: HIRFunction,instruction: Instruction,table: Map<IdentifierIndex,ValueType>): boolean {
+  const value = instruction.value; if(value.kind !== 'CallExpression' && value.kind !== 'MethodCall') { return false; } const seen = new Set<IdentifierIndex>();
+  const resolve = (id: IdentifierIndex,hook: boolean): boolean => {
+   if(seen.has(id)) { return false; } seen.add(id); const p = table.get(id); let result = false;
+   if(p !== undefined) {
+    if(p.kind === 'LoadGlobal') { result = p.bindingKind !== 0 && p.source !== 'react' && (!hook || isHookName(p.name) || isHookName(p.imported)); }
+    else if(p.kind === 'LoadLocal') { result = resolve(p.place.identifier,hook); }
+    else if(p.kind === 'StoreLocal') { result = resolve(p.value.identifier,hook); }
+    else if(p.kind === 'PropertyLoad') { result = (!hook || isHookName(p.property)) && resolve(p.object.identifier,false); }
+    else if(p.kind === 'ComputedLoad') { const name = primitiveName(table.get(p.property.identifier)); result = name !== undefined && (!hook || isHookName(name)) && resolve(p.object.identifier,false); }
+   } seen.delete(id); return result;
+  };
+  if(value.kind === 'MethodCall') { const name = primitiveName(table.get(value.property.identifier)); if(name !== undefined) { return isHookName(name) && resolve(value.receiver.identifier,false); } }
+  if(value.kind === 'CallExpression') { return resolve(value.callee.identifier,true); } return resolve(value.property.identifier,true);
+ }
+ private lookup(index: FunctionIndex,instruction: Instruction,table: Map<IdentifierIndex,ValueType>): Signature | undefined {
+  const fn = this.graph.arena.read(index); const value = instruction.value;
+  if(value.kind === 'CallExpression' || value.kind === 'MethodCall') {
+   if(value.origin.module === 'react') {
+    if(value.origin.exported === 'useState' || ['useLayoutEffect','useInsertionEffect','useImperativeHandle'].includes(value.origin.exported)) { return signature('read',[],'freeze',true,'frozen'); }
+    if(value.origin.exported === 'useEffect') { return signature('read',[],'freeze',true,'primitive'); }
+   } else if(this.moduleHook(fn,instruction,table)) { const line = this.facts.source().split('\n')[0] ?? ''; return line.includes('@enableAssumeHooksFollowRulesOfReact:false') ? signature('read',[],'mutate?',true,'mutable') : signature('read',[],'freeze',true,'frozen'); }
+  }
+  const name = this.ast(index,instruction,'callee-name'); if(name === '') { return undefined; }
+  if(value.kind === 'MethodCall') { return qualified.get(`${this.ast(index,instruction,'receiver-name')}.${name}`) ?? methods.get(name); } return functions.get(name);
+ }
+ private held(fn: HIRFunction,id: IdentifierIndex): FunctionIndex | undefined {
+  const held = new Map<IdentifierIndex,FunctionIndex>();
+  for(const b of fn.blockOrder) { for(const i of fn.block(b).instructions) {
+   const instruction = fn.instruction(i); const value = instruction.value;
+   if(value.kind === 'FunctionExpression') { held.set(instruction.lvalue.identifier,value.functionReference.index); }
+   else if(value.kind === 'LoadGlobal') {
+    const outlined = fn.outlined; let target = outlined === undefined ? undefined : outlined.get(instruction.lvalue.identifier);
+    if(target === undefined && value.name.startsWith('_temp')) { const suffix = value.name.slice(5); if(suffix === '') { target = fn.functions[0]; } else if(/^[+-]?[0-9]+$/.test(suffix)) { const ordinal = Number(suffix) - 1; if(Number.isInteger(ordinal) && ordinal >= 0) { target = fn.functions[ordinal]; } } }
+    if(target !== undefined) { held.set(instruction.lvalue.identifier,target); }
+   }
+   else if(value.kind === 'StoreLocal') { const target = held.get(value.value.identifier); if(target !== undefined) { held.set(value.lvalue.identifier,target); } }
+   else if(value.kind === 'LoadLocal') { const target = held.get(value.place.identifier); if(target !== undefined) { held.set(instruction.lvalue.identifier,target); } }
+  } } return held.get(id);
+ }
+ private mutates(index: FunctionIndex,parameter: boolean): boolean {
+  const fn = this.graph.arena.read(index); const seeds = parameter ? fn.params : fn.context; if(seeds.length === 0) { return false; }
+  const effects = this.infer(index); if(effects.size === 0) { return false; } const reaches = new Set<IdentifierIndex>(); for(const seed of seeds) { reaches.add(seed.identifier); } const mutated: IdentifierIndex[] = [];
+  for(const b of fn.blockOrder) { for(const i of fn.block(b).instructions) { for(const effect of effects.get(i) ?? []) {
+   if(effect.kind === 'assign' || effect.kind === 'alias' || effect.kind === 'create-from' || effect.kind === 'capture' || (!parameter && effect.kind === 'maybe-alias')) { if(effect.from !== undefined && reaches.has(effect.from.identifier)) { reaches.add(effect.into.identifier); } }
+   else if(['mutate','mutate-conditionally','mutate-transitive','mutate-transitive-conditionally'].includes(effect.kind)) { mutated.push(effect.into.identifier); }
+  } } } return mutated.some((id) => reaches.has(id));
+ }
+ private callbacks(index: FunctionIndex,receiver: PlaceInterface,args: readonly ArgumentInterface[]): AliasingEffect[] {
+  const fn = this.graph.arena.read(index); const out: AliasingEffect[] = []; if(fn.functions.length === 0) { return out; }
+  for(const argument of args) { if(argument.spread) { continue; } const nested = this.held(fn,argument.place.identifier); if(nested === undefined || !this.mutates(nested,true)) { continue; }
+   // Go NewIdentifier('',nil,0) gives its own declaration and a zero-span place.
+   const temp = fn.temporary(0,0); const into: PlaceInterface = {identifier: temp.identifier,effect: '<unknown>',reactive: receiver.reactive,start: 0,end: 0}; out.push(flow('create-from',receiver,into)); out.push(mutation('mutate-transitive',into));
+  } return out;
+ }
+ private unknown(receiver: PlaceInterface,callee: PlaceInterface,args: readonly ArgumentInterface[],lvalue: PlaceInterface,mutates: boolean): AliasingEffect[] {
+  const out = [create(lvalue,'mutable')]; const operands = [receiver]; if(callee.identifier !== receiver.identifier) { operands.push(callee); } for(const arg of args) { operands.push(arg.place); }
+  for(const operand of operands) { if(operand.identifier !== callee.identifier || mutates) { out.push(mutation('mutate-transitive-conditionally',operand)); } out.push(flow('maybe-alias',operand,lvalue)); for(const other of operands) { if(other.identifier !== operand.identifier) { out.push(flow('capture',operand,other)); } } } return out;
+ }
+ private call(index: FunctionIndex,table: Map<IdentifierIndex,ValueType>,instruction: Instruction,receiver: PlaceInterface,callee: PlaceInterface,args: readonly ArgumentInterface[],mutates: boolean): AliasingEffect[] {
+  const fn = this.graph.arena.read(index); const lvalue = instruction.lvalue; const spec = this.lookup(index,instruction,table); let out: AliasingEffect[];
+  if(spec === undefined) {
+   let mutateFunction = mutates;
+   if(args.length === 0 && mutates) { const nested = this.held(fn,callee.identifier); if(nested !== undefined && !this.mutates(nested,false)) { mutateFunction = false; } }
+   out = this.unknown(receiver,callee,args,lvalue,mutateFunction);
+  } else if(spec.aliasing !== '' && args.length > 0 && !(args[0] ?? panic('missing alias argument')).spread) {
+   out = [create(lvalue,spec.result),flow(spec.aliasing === 'capture' ? 'capture' : 'immutable-capture',(args[0] ?? panic('missing alias argument')).place,lvalue)];
+  } else {
+   out = [create(lvalue,spec.result)]; if(spec.receiver !== 'capture') { out.push(flow('alias',receiver,lvalue)); } const stores: PlaceInterface[] = []; const captures: PlaceInterface[] = [];
+   const visit = (place: PlaceInterface,effect: string): void => {
+    if(effect === 'store') { out.push(mutation('mutate',place)); stores.push(place); }
+    else if(effect === 'capture') { captures.push(place); }
+    else if(effect === 'mutate?') { out.push(mutation('mutate-transitive-conditionally',place)); }
+    else if(effect === 'mutate-iterator?') { out.push(mutation('mutate-transitive-conditionally',place)); out.push(flow('capture',place,lvalue)); }
+    else if(effect === 'freeze') { out.push(mutation('freeze',place)); }
+    else if(effect === 'mutate') { out.push(mutation('mutate-transitive',place)); }
+    else if(effect === 'read') { out.push(flow('immutable-capture',place,lvalue)); }
+   };
+   visit(receiver,spec.receiver);
+   for(let i = 0; i < args.length; i++) { const arg = args[i] ?? panic('missing call argument'); let effect = spec.rest;
+    if(!arg.spread && i < spec.positional.length) { effect = spec.positional[i] ?? panic('missing positional'); } else if(!spec.hasRest && i >= spec.positional.length) { effect = 'mutate?'; }
+    if(arg.spread && effect !== 'mutate' && effect !== 'mutate?') { effect = 'mutate-iterator?'; } visit(arg.place,effect);
+   }
+   for(const capture of captures) { if(stores.length === 0) { out.push(flow('alias',capture,lvalue)); } else { for(const store of stores) { out.push(flow('capture',capture,store)); } } }
+  }
+  for(const extra of this.callbacks(index,receiver,args)) { out.push(extra); } return out;
+ }
+ private bindings(fn: HIRFunction,index: PatternIndex,visit: (place: PlaceInterface,rest: boolean) => void): void {
+  const pattern = fn.pattern(index); if(pattern.kind === 'Place') { visit(pattern.place,false); return; }
+  if(pattern.kind === 'Object') { for(const p of pattern.properties) { this.bindings(fn,p.value,visit); } } else { for(const p of pattern.elements) { if(p.value !== undefined) { this.bindings(fn,p.value,visit); } } }
+  if(pattern.rest !== undefined) { visit(pattern.rest,true); }
+ }
+ private instruction(index: FunctionIndex,table: Map<IdentifierIndex,ValueType>,instruction: Instruction): AliasingEffect[] {
+  const fn = this.graph.arena.read(index); const l = instruction.lvalue; const v = instruction.value;
+  switch(v.kind) {
+   case 'Primitive': case 'RegExpLiteral': case 'Debugger': case 'MetaProperty': case 'JsxText': return [create(l,'primitive')];
+   case 'BinaryExpression': return [create(l,'primitive'),flow('immutable-capture',v.left,l),flow('immutable-capture',v.right,l)];
+   case 'UnaryExpression': return [create(l,'primitive'),flow('immutable-capture',v.value,l)];
+   case 'TemplateLiteral': return [create(l,'primitive'),...v.subexprs.map((p) => flow('immutable-capture',p,l))];
+   case 'PrefixUpdate': case 'PostfixUpdate': return [create(l,'primitive'),mutation('mutate',v.value)];
+   case 'LoadLocal': return [flow('assign',v.place,l)];
+   case 'LoadContext': return [flow('create-from',v.place,l)];
+   case 'StoreLocal': return [flow('assign',v.value,v.lvalue),flow('assign',v.value,l)];
+   case 'StoreContext': return [mutation('mutate',v.lvalue),flow('capture',v.value,v.lvalue),flow('assign',v.value,l)];
+   case 'DeclareLocal': case 'DeclareContext': return [create(l,'mutable')];
+   case 'LoadGlobal': return [create(l,'global')];
+   case 'StoreGlobal': return [mutation('mutate',v.value),create(l,'primitive')];
+   case 'PropertyLoad': return [flow('create-from',v.object,l),flow('capture',v.object,l)];
+   case 'ComputedLoad': return [flow('create-from',v.object,l),flow('capture',v.object,l),flow('immutable-capture',v.property,l)];
+   case 'PropertyStore': return [mutation('mutate',v.object),flow('capture',v.value,v.object),flow('assign',v.value,l)];
+   case 'ComputedStore': return [mutation('mutate',v.object),flow('capture',v.value,v.object),flow('immutable-capture',v.property,v.object),flow('assign',v.value,l)];
+   case 'PropertyDelete': case 'ComputedDelete': return [create(l,'primitive'),mutation('mutate',v.object)];
+   case 'ObjectExpression': { const out = [create(l,'mutable')]; for(const p of v.properties) { if(p.computedKey !== undefined) { out.push(flow('immutable-capture',p.computedKey,l)); } out.push(flow('capture',p.value,l)); } return out; }
+   case 'ArrayExpression': { const out = [create(l,'mutable')]; for(const e of v.elements) { if(e.hole) { continue; } if(e.spread) { out.push(mutation('mutate-transitive-conditionally',e.place)); } out.push(flow('capture',e.place,l)); } return out; }
+   case 'FunctionExpression': return [create(l,'mutable'),...v.captures.map((p) => flow('capture',p,l))];
+   case 'ObjectMethod': return [create(l,'mutable')];
+   case 'CallExpression': return this.call(index,table,instruction,v.callee,v.callee,v.args,true);
+   case 'MethodCall': return this.call(index,table,instruction,v.receiver,v.property,v.args,false);
+   case 'NewExpression': return this.call(index,table,instruction,v.callee,v.callee,v.args,false);
+   case 'TaggedTemplateExpression': return this.call(index,table,instruction,v.tag,v.tag,v.subexprs.map((p) => ({place: p,spread: false})),true);
+   case 'Await': case 'GetIterator': return [create(l,'mutable'),mutation('mutate-transitive-conditionally',v.value),flow('capture',v.value,l)];
+   case 'IteratorNext': return [create(l,'mutable'),mutation('mutate',v.iterator),flow('capture',v.collection,l)];
+   case 'NextPropertyOf': return [create(l,'primitive'),flow('immutable-capture',v.value,l)];
+   case 'JsxExpression': { const out = [create(l,'frozen')]; if(v.tag.place !== undefined) { out.push(mutation('freeze',v.tag.place)); } for(const prop of v.props) { out.push(mutation('freeze',prop.value)); out.push(flow('capture',prop.value,l)); } for(const child of v.children) { out.push(mutation('freeze',child)); out.push(flow('capture',child,l)); } return out; }
+   case 'JsxFragment': { const out = [create(l,'frozen')]; for(const child of v.children) { out.push(mutation('freeze',child)); out.push(flow('capture',child,l)); } return out; }
+   case 'StartMemoize': { const out = [create(l,'primitive')]; if(!(this.facts.source().split('\n')[0] ?? '').includes('@enablePreserveExistingMemoizationGuarantees:false')) { for(const dep of v.deps ?? []) { if(!dep.root.isGlobal) { out.push(mutation('freeze',dep.root.place)); } } } return out; }
+   case 'FinishMemoize': { const out = [create(l,'primitive')]; if(!(this.facts.source().split('\n')[0] ?? '').includes('@enablePreserveExistingMemoizationGuarantees:false')) { out.push(mutation('freeze',v.value)); } return out; }
+   case 'TypeCastExpression': return [flow('assign',v.value,l)];
+   case 'Destructure': { const out: AliasingEffect[] = []; this.bindings(fn,v.lvaluePattern,(p,rest) => { if(rest) { out.push(create(p,'mutable')); out.push(flow('capture',v.value,p)); } else { out.push(flow('create-from',v.value,p)); } }); out.push(flow('assign',v.value,l)); return out; }
+   case 'UnsupportedNode': return [];
+  }
+ }
+ infer(index: FunctionIndex): Map<InstructionIndex,AliasingEffect[]> {
+  const fn = this.graph.arena.read(index); const table = this.producers(fn); const primitives = new PrimitiveConstraints(this.graph).propertyReads(index); const out = new Map<InstructionIndex,AliasingEffect[]>();
+  for(const instruction of fn.instructions) { let list = this.instruction(index,table,instruction); if(instruction.value.kind === 'PropertyLoad' && primitives.has(instruction.lvalue.identifier)) { list = [create(instruction.lvalue,'primitive')]; } if(list.length > 0) { out.set(instruction.id,list); } } return out;
+ }
+}

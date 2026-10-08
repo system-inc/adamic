@@ -1,0 +1,22 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { InputFacts, readCheckpoint, writeCheckpoint, decodeCheckpoint, encodeCheckpoint } from '../../replay/index.ts';
+import type { SidecarRow, FunctionIndex, InstructionIndex } from '../../replay/index.ts';
+import type { AliasingEffect } from './effect_types.a';
+import { placeText } from '../../dump.ts';
+import { EffectsPass } from './effects.a';
+const args = programArguments(); const manifest = readTextFile(args[0] ?? panic('missing manifest')); if(manifest.kind === 'Error') { panic(manifest.message); }
+for(const line of manifest.text.split('\n')) {
+ if(line === '') { continue; } const fields = line.split('\t'); const key = fields[0] ?? panic('missing key'); const input = readTextFile(fields[1] ?? panic('missing input')); if(input.kind === 'Error') { panic(input.message); }
+ const checkpoint = readCheckpoint(input.text); if(checkpoint.key !== key) { panic('census key differs'); } const graph = decodeCheckpoint(checkpoint); const facts = new InputFacts(checkpoint); const pass = new EffectsPass(graph,facts); const rows: SidecarRow[] = [];
+ const record = (index: FunctionIndex,path: string,effects: Map<InstructionIndex,AliasingEffect[]>): void => {
+  const fn = graph.arena.read(index);
+  for(const instruction of fn.instructions) { const list = effects.get(instruction.id) ?? []; for(let i = 0; i < list.length; i++) { const e = list[i] ?? panic('missing effect'); rows.push({namespace: 'unit4.effects',functionPath: path,anchorKind: 'instruction',anchorId: instruction.id.slot,key: String(i).padStart(6,'0'),payload: `${e.kind}\t${e.from === undefined ? '0:<unknown>:0:0:0' : placeText(e.from)}\t${placeText(e.into)}\t${e.value}`}); } }
+ };
+ if(checkpoint.pass === 'unit4.effects') { record(graph.root,'$',pass.infer(graph.root)); }
+ else if(checkpoint.pass === 'unit4.effects-nested') { const fn = graph.arena.read(graph.root); for(let i = 0; i < fn.functions.length; i++) { const index = fn.functions[i] ?? panic('missing nested function'); record(index,`$/${i}`,pass.infer(index)); } }
+ else { panic('unknown effect pass'); }
+ for(const row of checkpoint.sidecars) { if(row.namespace === 'input.unit4-ast') { rows.push(row); } }
+ // A callback summary can mint new identifiers with nil syntax; emit their input facts afresh.
+ const visit = (index: FunctionIndex,path: string): void => { const fn = graph.arena.read(index); const before = checkpoint.graph.at(path); for(const identifier of fn.identifiers) { if(!before.identifierIds.includes(identifier.id.slot)) { rows.push({namespace: 'input.unit4-ast',functionPath: path,anchorKind: 'identifier',anchorId: identifier.id.slot,key: 'identifier-text',payload: ''}); } } for(let i = 0; i < fn.functions.length; i++) { visit(fn.functions[i] ?? panic('missing child'),`${path}/${i}`); } }; visit(graph.root,'$');
+ console.log(`checkpoint\t${key}`); console.log(writeCheckpoint(encodeCheckpoint(graph,checkpoint,checkpoint.pass,rows,[])).slice(0,-1));
+}
