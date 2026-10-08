@@ -110,6 +110,49 @@
     ]
   },
   {
+    "file": "internal/lower/import_cycle_ledger_test.go",
+    "test": "TestOriginalCycleLedger",
+    "id": "TestOriginalCycleLedger:da7324176e508bbe06d88e40d3c1a68ace2387bbb1468c4611df3044e9b9c591",
+    "line": 31,
+    "condition": "root == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_CYCLE_LEDGER_OUTPUT\")",
+      "os.Getenv(\"ADAMIC_CYCLE_LEDGER_ROOT\")",
+      "os.Open(filepath.Join(bucket, \"trace.json.gz\"))",
+      "os.ReadFile(filepath.Join(bucket, \"ledger.json\"))",
+      "os.ReadFile(filepath.Join(bucket, \"order.json\"))"
+    ],
+    "callers": [
+      "TestOriginalCycleLedger"
+    ],
+    "message": "\"set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to provide ADAMIC_CYCLE_LEDGER_ROOT as pristine TypeScript 6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8 with both generated diagnostic files, and ADAMIC_CYCLE_LEDGER_OUTPUT as a writable proof output.",
+    "opt_in_off": [
+      "ADAMIC_CYCLE_LEDGER_ROOT"
+    ]
+  },
+  {
+    "file": "internal/lower/optional_widening_census_test.go",
+    "test": "TestOptionalWideningCensus",
+    "id": "TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e",
+    "line": 28,
+    "condition": "configPath == \"\"",
+    "reads": [
+      "os.Getenv(\"OPTIONAL_WIDENING_CONFIG\")",
+      "os.Getenv(\"OPTIONAL_WIDENING_OUTPUT\")"
+    ],
+    "callers": [
+      "TestOptionalWideningCensus"
+    ],
+    "message": "\"set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project\"",
+    "class": "measurement",
+    "provides": "Opt-in project inventory: OPTIONAL_WIDENING_CONFIG selects a project and OPTIONAL_WIDENING_OUTPUT names its JSONL report. Counts and relation sites are observations, not a correctness oracle; neither variable is supplied by cloud/setup.sh or the gate.",
+    "opt_in_off": [
+      "OPTIONAL_WIDENING_CONFIG"
+    ]
+  },
+  {
     "file": "internal/lower/prototype_test.go",
     "test": "nodePrototypeMembers",
     "id": "TestInheritedLibraryReadsNeverLoadOwnFields,TestNullishPrototypeReadsAreRejectedByChecker:c7462b9a2227a7a13105687b1b5da770404c35e872a8a6f92c8fdc51eb949e59",
@@ -278,6 +321,25 @@
     ],
     "class": "required-input",
     "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/oracle/enums_test.go",
+    "test": "TestEnumCleanupMutant",
+    "id": "TestEnumCleanupMutant:1743f5368e290c06ba6735cab080c81df3d75b4eadbff4df11f133275a5beced",
+    "line": 119,
+    "condition": "runtime.GOOS != \"linux\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestEnumCleanupMutant"
+    ],
+    "message": "\"LeakSanitizer detect_leaks is not supported on this platform\"",
+    "class": "not-applicable",
+    "provides": "This cleanup mutant requires Linux LeakSanitizer detect_leaks; the stated witness is not supported on other platforms."
   },
   {
     "file": "internal/oracle/gcc_lane_test.go",
@@ -780,6 +842,215 @@
     ]
   },
   {
+    "file": "stage1/cohere/estree/corpus_test.go",
+    "test": "TestRepositoryAgreement",
+    "id": "TestRepositoryAgreement:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70",
+    "line": 18,
+    "condition": "directory == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_CORPUS\")",
+      "os.ReadFile(filepath.Join(directory, \"port-records.jsonl\"))",
+      "os.ReadFile(item.Answer)",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestRepositoryAgreement"
+    ],
+    "message": "\"set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory\"",
+    "class": "required-input",
+    "provides": "ADAMIC_ESTREE_CORPUS must name a completed frozen Go/Node corpus audit directory containing port-records.jsonl and its referenced source inputs. Neither cloud/setup.sh nor the gate currently builds this audit corpus or sets ADAMIC_ESTREE_CORPUS.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_CORPUS"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/corpus_test.go",
+    "test": "TestCorpusNativeRefusals",
+    "id": "TestCorpusNativeRefusals:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70",
+    "line": 84,
+    "condition": "directory == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_CORPUS\")",
+      "os.ReadFile(filepath.Join(directory, \"port-records.jsonl\"))",
+      "os.ReadFile(stderr.Name())",
+      "stdout.Stat()"
+    ],
+    "callers": [
+      "TestCorpusNativeRefusals"
+    ],
+    "message": "\"completed frozen corpus required\"",
+    "class": "required-input",
+    "provides": "ADAMIC_ESTREE_CORPUS must name a completed frozen Go/Node corpus audit directory containing port-records.jsonl and its referenced source inputs. Neither cloud/setup.sh nor the gate currently builds this audit corpus or sets ADAMIC_ESTREE_CORPUS.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_CORPUS"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/estree_test.go",
+    "test": "checkOriginalLibraries",
+    "id": "TestDecoratedExportLibraries,TestOriginalLibraries,TestRecoveryLibraryGaps,TestScalarOriginalLibraries,TestSyntaxLibraries:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 255,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestDecoratedExportLibraries",
+      "TestOriginalLibraries",
+      "TestRecoveryLibraryGaps",
+      "TestScalarOriginalLibraries",
+      "TestSyntaxLibraries"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/jsx_test.go",
+    "test": "TestJSXOriginalLibraries",
+    "id": "TestJSXOriginalLibraries:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 56,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestJSXOriginalLibraries"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/recovery_test.go",
+    "test": "TestRecoveryLibraryGaps",
+    "id": "TestRecoveryLibraryGaps:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 65,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestRecoveryLibraryGaps"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/scalars_test.go",
+    "test": "TestPinnedNumericGaps",
+    "id": "TestPinnedNumericGaps:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 47,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestPinnedNumericGaps"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/syntax_test.go",
+    "test": "TestSyntaxLibraries",
+    "id": "TestSyntaxLibraries:9cade7ba924f6ed08f401df7e3c2f1f41340ca749a7c28f6ee1f1601fd23a333",
+    "line": 92,
+    "condition": "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\") == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestSyntaxLibraries"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/syntax_test.go",
+    "test": "TestTypeMemberLibraryGap",
+    "id": "TestTypeMemberLibraryGap:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 100,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestTypeMemberLibraryGap"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/throughput_test.go",
+    "test": "TestThroughput",
+    "id": "TestThroughput:b18c5c4c1d30b0d2ed916a7feb1e3c3cdfbcb3406d42826d8dfdd75ce55b4a1f",
+    "line": 16,
+    "condition": "os.Getenv(\"ADAMIC_ESTREE_BENCHMARK\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_BENCHMARK\")",
+      "os.ReadFile(list)",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestThroughput"
+    ],
+    "message": "\"set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput\"",
+    "class": "measurement",
+    "provides": "ADAMIC_ESTREE_BENCHMARK=1 opts into full-output throughput timing; ordinary ESTree correctness checks run separately.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_BENCHMARK"
+    ]
+  },
+  {
+    "file": "stage1/cohere/estree/utf8_test.go",
+    "test": "TestCookedSurrogateLibraryGap",
+    "id": "TestCookedSurrogateLibraryGap:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 41,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ESTREE_LIBRARY\")",
+      "os.ReadFile(output.Name())"
+    ],
+    "callers": [
+      "TestCookedSurrogateLibraryGap"
+    ],
+    "message": "\"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_ESTREE_LIBRARY to the shared css-printer npm prefix containing @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_ESTREE_LIBRARY"
+    ]
+  },
+  {
     "file": "stage1/cohere/formatfiles/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:4fd418791213190c8c02147c8709ae05919a7aa60a46f77c98fc6a9fcb512052",
@@ -874,6 +1145,103 @@
     ],
     "class": "required-input",
     "provides": "ADAMIC_GRAPHQL_LIBRARY: npm directory with graphql@17.0.2; see docs/gate-inputs.md."
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "test": "TestPrinterWhitespaceGap",
+    "id": "TestPrinterWhitespaceGap:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70",
+    "line": 39,
+    "condition": "directory == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && entry.Name() == \".git\" {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".graphql\") {\n\t\tdata, err := os.ReadFile(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tsources = append(sources, string(data))\n\t\tfiles++\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRETTIER\")",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRINTER_KEEP\")",
+      "os.ReadFile(\"gaps/whitespace-cases.json\")",
+      "os.ReadFile(answers)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(filepath.Join(directory, name))",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestPrinterWhitespaceGap"
+    ],
+    "message": "\"set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_GRAPHQL_PRETTIER to the shared css-printer npm prefix containing prettier@3.9.6 and graphql@17.0.2 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_GRAPHQL_PRETTIER"
+    ]
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/performance_test.go",
+    "test": "TestPrinterThroughput",
+    "id": "TestPrinterThroughput:7913deb2bb218b5c8b24eb345bc3f95f94d85d107e1fdc2794cf7bc34ccc6c03",
+    "line": 17,
+    "condition": "os.Getenv(\"ADAMIC_GRAPHQL_PRINTER_BENCH\") == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && entry.Name() == \".git\" {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".graphql\") {\n\t\tdata, err := os.ReadFile(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tsources = append(sources, string(data))\n\t\tfiles++\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRETTIER\")",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRINTER_BENCH\")",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRINTER_KEEP\")",
+      "os.ReadFile(answers)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(filepath.Join(directory, name))",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestPrinterThroughput"
+    ],
+    "message": "\"set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput\"",
+    "class": "measurement",
+    "provides": "ADAMIC_GRAPHQL_PRINTER_BENCH=1 opts into verified printer throughput timing; ordinary printer correctness checks run separately.",
+    "opt_in_off": [
+      "ADAMIC_GRAPHQL_PRINTER_BENCH"
+    ]
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer_test.go",
+    "test": "TestPrinterUpstreamPreflight",
+    "id": "TestPrinterUpstreamPreflight:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70",
+    "line": 84,
+    "condition": "directory == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && entry.Name() == \".git\" {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".graphql\") {\n\t\tdata, err := os.ReadFile(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tsources = append(sources, string(data))\n\t\tfiles++\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRETTIER\")",
+      "os.Getenv(\"ADAMIC_GRAPHQL_PRINTER_KEEP\")",
+      "os.ReadFile(answers)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(filepath.Join(directory, name))",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestPrinterUpstreamPreflight"
+    ],
+    "message": "\"set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_GRAPHQL_PRETTIER to the shared css-printer npm prefix containing prettier@3.9.6 and graphql@17.0.2 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_GRAPHQL_PRETTIER"
+    ]
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/testdata/cohere_side_test.go",
+    "test": "TestAdamicPrinter",
+    "id": "TestAdamicPrinter:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
+    "line": 19,
+    "condition": "path == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_PRINTER_REQUEST\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestAdamicPrinter"
+    ],
+    "message": "\"stage 1 overlay\"",
+    "class": "not-applicable",
+    "provides": "Dormant cohere overlay entry point with no standalone request. stage1/cohere/graphql/printer printerCases writes the request and sets ADAMIC_PRINTER_REQUEST when invoking TestAdamicPrinter inside cohere; without that invocation the hook is not applicable.",
+    "opt_in_off": [
+      "ADAMIC_PRINTER_REQUEST"
+    ]
   },
   {
     "file": "stage1/cohere/graphql/testdata/cohere_side_test.go",
@@ -990,6 +1358,7 @@
     "reads": [
       "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && entry.Name() == \".git\" {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() || !strings.HasSuffix(entry.Name(), \".json\") {\n\t\treturn nil\n\t}\n\tencoded, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(encoded) {\n\t\treturn fmt.Errorf(\"non-UTF-8 corpus file %s: decoding needs its own oracle\", path)\n\t}\n\trelative, err := filepath.Rel(root, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\trelative = filepath.ToSlash(relative)\n\tgroup := \"Adamic\"\n\tif strings.HasPrefix(relative, \"cohere/\") {\n\t\tgroup = \"cohere\"\n\t}\n\tif strings.HasPrefix(relative, \"cohere/TypeScript/\") {\n\t\tgroup = \"TypeScript\"\n\t}\n\tgroups[group]++\n\tcases = append(cases, textCase{relative, string(encoded)})\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_JSON_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_JSON_BENCH\")",
       "os.Getenv(\"ADAMIC_JSON_NODE_ONLY\")",
       "os.Getenv(\"ADAMIC_JSON_PRETTIER\")",
       "os.ReadFile(name)",
@@ -1227,9 +1596,7 @@
       "os.Getenv(\"COHERE_MEDIAQUERY_SEED\")",
       "os.ReadFile(answersPath)",
       "os.ReadFile(casesPath)",
-      "os.ReadFile(filepath.Join(packageDirectory, cohereFix.file))",
-      "os.ReadFile(name)",
-      "os.ReadFile(unfixedCasesPath)"
+      "os.ReadFile(name)"
     ],
     "callers": [
       "TestThePortParsesAsGoCohereDoes"
@@ -1332,6 +1699,26 @@
     "provides": "ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md."
   },
   {
+    "file": "stage1/cohere/selector/selector_test.go",
+    "test": "TestCorpusKeepsEveryParseableFile",
+    "id": "TestCorpusKeepsEveryParseableFile:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 445,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")",
+      "os.ReadFile(corpus)"
+    ],
+    "callers": [
+      "TestCorpusKeepsEveryParseableFile"
+    ],
+    "message": "\"set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_SELECTOR_LIBRARY to the selector npm prefix containing postcss-selector-parser@2.2.3 and postcss@8.5.16 under the checked-in lockfile; the test creates its CSS corpus fixtures itself.",
+    "opt_in_off": [
+      "ADAMIC_SELECTOR_LIBRARY"
+    ]
+  },
+  {
     "file": "stage1/cohere/selector/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
@@ -1354,6 +1741,29 @@
     ]
   },
   {
+    "file": "stage1/cohere/static_single_assignment/testdata/cohere_side_test.go",
+    "test": "TestAdamicPortCases",
+    "id": "TestAdamicPortCases:4fd418791213190c8c02147c8709ae05919a7aa60a46f77c98fc6a9fcb512052",
+    "line": 43,
+    "condition": "requestPath == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_PORT_REQUEST\")",
+      "os.Open(path)",
+      "os.ReadFile(name)",
+      "os.ReadFile(requestPath)",
+      "os.Stat(path)"
+    ],
+    "callers": [
+      "TestAdamicPortCases"
+    ],
+    "message": "\"run by Adamic's static_single_assignment slice\"",
+    "class": "not-applicable",
+    "provides": "Dormant cohere overlay entry point with no standalone request. stage1/cohere/static_single_assignment cohereSide writes request.json and sets ADAMIC_PORT_REQUEST when invoking TestAdamicPortCases inside cohere; without that invocation the hook is not applicable.",
+    "opt_in_off": [
+      "ADAMIC_PORT_REQUEST"
+    ]
+  },
+  {
     "file": "stage1/cohere/suppression/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
@@ -1371,6 +1781,167 @@
     "provides": "stage1/cohere/suppression/suppression_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_PORT_REQUEST"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/doc_test.go",
+    "test": "TestDocumentsAgainstGoAndPrettier",
+    "id": "TestDocumentsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 51,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TS_PRETTIER\")",
+      "os.ReadFile(directory + \"/answers.txt\")"
+    ],
+    "callers": [
+      "TestDocumentsAgainstGoAndPrettier"
+    ],
+    "message": "\"set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_TS_PRETTIER to the shared css-printer npm prefix containing prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_TS_PRETTIER"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/expressions_test.go",
+    "test": "expressionCorpus",
+    "id": "TestExpressionsAgainstGoAndPrettier,TestMutants:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e",
+    "line": 19,
+    "condition": "source == \"\"",
+    "reads": [
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_TS_PRINTER_KEEP\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(directory + \"/\" + name)",
+      "os.ReadFile(directory + \"/answers.txt\")"
+    ],
+    "callers": [
+      "TestExpressionsAgainstGoAndPrettier",
+      "TestMutants"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to provide ADAMIC_TYPESCRIPT_SOURCE as a pristine TypeScript 6.0.3 checkout at 050880ce59e30b356b686bd3144efe24f875ebc8 for compiler-source expression and statement correctness corpora.",
+    "opt_in_off": [
+      "ADAMIC_TYPESCRIPT_SOURCE"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/expressions_test.go",
+    "test": "TestExpressionsAgainstGoAndPrettier",
+    "id": "TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 102,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_TS_PRETTIER\")",
+      "os.Getenv(\"ADAMIC_TS_PRINTER_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_TS_PRINTER_KEEP\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(directory + \"/\" + name)",
+      "os.ReadFile(directory + \"/answers.txt\")",
+      "os.ReadFile(gapDirectory + \"/gap-answers.txt\")"
+    ],
+    "callers": [
+      "TestExpressionsAgainstGoAndPrettier"
+    ],
+    "message": "\"set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_TS_PRETTIER to the shared css-printer npm prefix containing prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_TS_PRETTIER"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/statements_test.go",
+    "test": "statementCorpus",
+    "id": "TestMutants,TestStatementsAgainstGoAndPrettier:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e",
+    "line": 19,
+    "condition": "source == \"\"",
+    "reads": [
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_TS_STATEMENT_KEEP\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(directory + \"/\" + name)",
+      "os.ReadFile(directory + \"/answers.txt\")"
+    ],
+    "callers": [
+      "TestMutants",
+      "TestStatementsAgainstGoAndPrettier"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to provide ADAMIC_TYPESCRIPT_SOURCE as a pristine TypeScript 6.0.3 checkout at 050880ce59e30b356b686bd3144efe24f875ebc8 for compiler-source expression and statement correctness corpora.",
+    "opt_in_off": [
+      "ADAMIC_TYPESCRIPT_SOURCE"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/statements_test.go",
+    "test": "TestStatementsAgainstGoAndPrettier",
+    "id": "TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 120,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_TS_PRETTIER\")",
+      "os.Getenv(\"ADAMIC_TS_STATEMENT_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_TS_STATEMENT_KEEP\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(directory + \"/\" + name)",
+      "os.ReadFile(directory + \"/answers.txt\")"
+    ],
+    "callers": [
+      "TestStatementsAgainstGoAndPrettier"
+    ],
+    "message": "\"set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_TS_PRETTIER to the shared css-printer npm prefix containing prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_TS_PRETTIER"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/testdata/expressions_side_test.go",
+    "test": "TestAdamicExpressionBenchmark",
+    "id": "TestAdamicExpressionBenchmark:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
+    "line": 685,
+    "condition": "path == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TS_BENCH_CASES\")",
+      "os.Getenv(\"ADAMIC_TS_BENCH_OUTPUT\")",
+      "os.Getenv(\"ADAMIC_TS_BENCH_WIDTH\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestAdamicExpressionBenchmark"
+    ],
+    "message": "\"benchmark-only driver\"",
+    "class": "measurement",
+    "provides": "Optional compiled Go benchmark driver: ADAMIC_TS_BENCH_CASES selects its timed batch input, with ADAMIC_TS_BENCH_WIDTH optionally selecting print width. This entry is a throughput control, separate from expression correctness checks.",
+    "opt_in_off": [
+      "ADAMIC_TS_BENCH_CASES"
+    ]
+  },
+  {
+    "file": "stage1/cohere/tsprinter/upstream_test.go",
+    "test": "TestStatementUpstreamDifferences",
+    "id": "TestStatementUpstreamDifferences:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 58,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TS_PRETTIER\")",
+      "os.ReadFile(recordsPath)"
+    ],
+    "callers": [
+      "TestStatementUpstreamDifferences"
+    ],
+    "message": "\"set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_TS_PRETTIER to the shared css-printer npm prefix containing prettier@3.9.6 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_TS_PRETTIER"
     ]
   },
   {
@@ -1417,6 +1988,214 @@
     ],
     "class": "required-input",
     "provides": "ADAMIC_VALUES_LIBRARY: npm directory with postcss-values-parser@2.0.1; see docs/gate-inputs.md."
+  },
+  {
+    "file": "stage1/cohere/yaml/compose_test.go",
+    "test": "TestComposeMatchGo",
+    "id": "TestComposeMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 137,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(\"testdata/compose_exports.txt\")",
+      "os.ReadFile(binary)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(numbers)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestComposeMatchGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/cst_test.go",
+    "test": "TestCSTMatchesGo",
+    "id": "TestCSTMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 82,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestCSTMatchesGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/format_test.go",
+    "test": "TestFormatterMatchesGo",
+    "id": "TestFormatterMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 141,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(cases)",
+      "os.ReadFile(goBinary)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestFormatterMatchesGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/format_test.go",
+    "test": "TestBundledParserDifference",
+    "id": "TestBundledParserDifference:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 199,
+    "condition": "library == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")"
+    ],
+    "callers": [
+      "TestBundledParserDifference"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/lexer_test.go",
+    "test": "TestLexerMatchesGo",
+    "id": "TestLexerMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 225,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(binary)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestLexerMatchesGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/props_test.go",
+    "test": "TestPropsMatchGo",
+    "id": "TestPropsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 109,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(\"testdata/props_exports.txt\")",
+      "os.ReadFile(binary)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(numbers)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestPropsMatchGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/scalar_test.go",
+    "test": "TestScalarsMatchGo",
+    "id": "TestScalarsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 136,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(\"testdata/scalar_exports.txt\")",
+      "os.ReadFile(binary)",
+      "os.ReadFile(cases)",
+      "os.ReadFile(numbers)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestScalarsMatchGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/schema_test.go",
+    "test": "TestSchemaMatchesGo",
+    "id": "TestSchemaMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 106,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestSchemaMatchesGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
+  },
+  {
+    "file": "stage1/cohere/yaml/unist_test.go",
+    "test": "TestUnistMatchesGo",
+    "id": "TestUnistMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
+    "line": 84,
+    "condition": "library == \"\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" && entry.IsDir() {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() {\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".yaml\" && ext != \".yml\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"invalid UTF-8: %s\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_YAML_LIBRARY\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestUnistMatchesGo"
+    ],
+    "message": "\"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\"",
+    "class": "required-input",
+    "provides": "cloud/setup.sh --gate-inputs or --gate-inputs-no-archive, followed by sourcing its env.sh, uses cloud/setup-gate-inputs.py to set ADAMIC_YAML_LIBRARY to the shared css-printer npm prefix containing yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0 under the checked-in lockfile.",
+    "opt_in_off": [
+      "ADAMIC_YAML_LIBRARY"
+    ]
   },
   {
     "file": "stage1/typescript/parser/parser_test.go",
@@ -1564,5 +2343,25 @@
     "message": "\"fixture records platform %s; current platform is %s\"",
     "class": "not-applicable",
     "provides": "Fixture manifest explicitly names a different runtime.GOOS platform."
+  },
+  {
+    "file": "stage3/fixtures/runner_guard_test.go",
+    "test": "TestTransformedNodeRunnerGuardHook",
+    "id": "TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2",
+    "line": 13,
+    "condition": "repository == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_RUNNER_GUARD_REPOSITORY\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestTransformedNodeRunnerGuardHook"
+    ],
+    "message": "\"subprocess hook\"",
+    "class": "not-applicable",
+    "provides": "Dormant subprocess hook with no standalone repository request. TestTransformedNodeRunnerGuard creates runner-shape fixtures and sets ADAMIC_RUNNER_GUARD_REPOSITORY when invoking this hook; without that invocation the hook is not applicable.",
+    "opt_in_off": [
+      "ADAMIC_RUNNER_GUARD_REPOSITORY"
+    ]
   }
 ]
