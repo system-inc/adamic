@@ -127,17 +127,20 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
+			// Nullable references use NULL. A type also holding undefined needs a tag.
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
+			var nullable ir.Type
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 {
-					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
-						return 0, false
-					}
+				if member.Flags()&checker.TypeFlagsNull != 0 {
+					continue
 				}
+				of, known := l.representation(member)
+				if !known || !of.IsReference() || of == ir.String || of == ir.Union || (nullable != 0 && nullable != of) {
+					return 0, false
+				}
+				nullable = of
 			}
 		}
 		var shared ir.Type
@@ -223,6 +226,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.nullableReferenceObservation(node); err != nil {
+		return nil, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -684,8 +690,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		if lowered, handled := l.functionLogical(node, left, right); handled {
-			return lowered, nil
+		if lowered, handled, err := l.referenceLogical(node, left, right); handled {
+			return lowered, err
 		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			if text, known, err := l.dateStringAddition(node, left, right); known {

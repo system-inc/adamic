@@ -154,19 +154,3 @@ func (l *lowering) contextualGenericType(node *ast.Node, own *checker.Type) *che
 	}
 	return own
 }
-
-// Functions are truthy exactly when their nullable pointer is present. Reuse
-// the IR's lazy branches, so neither operand is evaluated twice or eagerly.
-func (l *lowering) functionLogical(node *ast.Node, left, right ir.Expression) (ir.Expression, bool) {
-	operator := node.AsBinaryExpression().OperatorToken.Kind
-	if left.Type() != ir.Closure || (right.Type() != ir.Closure) {
-		return nil, false
-	}
-	if operator == ast.KindBarBarToken {
-		return ir.Coalesce{Value: left, Fallback: fit(right, ir.Closure), Of: ir.Closure}, true
-	}
-	if operator == ast.KindAmpersandAmpersandToken {
-		return ir.Conditional{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: left}}, WhenTrue: fit(right, ir.Closure), WhenNot: ir.Undefined{Of: ir.Closure}, Of: ir.Closure}, true
-	}
-	return nil, false
-}

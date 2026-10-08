@@ -553,10 +553,13 @@ type (
 	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
 	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
 	Coalesce struct {
-		Value    Expression
-		Fallback Expression
-		Panic    Expression
-		Of       Type
+		// ReferenceAnd selects Fallback when the reference Value is present,
+		// and preserves its absent value otherwise. Value is evaluated once.
+		ReferenceAnd bool
+		Value        Expression
+		Fallback     Expression
+		Panic        Expression
+		Of           Type
 	}
 
 	// StringLength is string.length, in UTF-16 code units.

@@ -79,7 +79,7 @@ func borrowable(program *ir.Program, function int, declare ir.Declare, assigned 
 	}
 	value := declare.Value
 	if coalesce, ok := value.(ir.Coalesce); ok {
-		if coalesce.Panic != nil || coalesce.Fallback == nil || coalesce.Of != local.Type {
+		if coalesce.ReferenceAnd || coalesce.Panic != nil || coalesce.Fallback == nil || coalesce.Of != local.Type {
 			return false
 		}
 		value = coalesce.Value
