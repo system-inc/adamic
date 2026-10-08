@@ -38,3 +38,30 @@ Setup: Node ready 0.125s, Go 0.156s, clang 0.955s, markdown dependencies 1.827s,
 submodules 234.251s, Go build 1008.454s, cache warm 1008.701s, done 1009.044s.
 Go 1.27.1, clang 20.1.8, Node 24.19.0, nproc=5, CPU quota 4.
 Environment: /workspace/adamic-tools/env.sh. Checked-in logs retain the observations.
+
+Group 1 pushed as b7214299. Group 2 also proves D060/D061's shared stack[0]
+read, D069's returned-array read and D077's declarations[0] read. Its gate passes
+in 24.944s, including the refusal probes for D037 and D071 through D073.
+The D037 probe retains an ordinary optional-return TS2322 error, before lowering.
+The previous adaptation inventory independently calls checker.ts:12034:30 "Not
+an indexed read: getSourceFileOfNode has an optional return". This is an attribution
+question, not a proven indexed guard. D071, D072 and D073 refuse array destructuring
+with `stage 0 can't lower destructuring anything but a tuple into [names] yet`.
+The source Node present and absent observations still pass; CLI refuses and never
+counts these witnesses as checked.
+
+D069 keeps the optional receiving field already present. Its exact enclosing
+assignment expression first refused `a BinaryExpression with a value and a value`.
+A statement assignment with an initially absent field then compiled but its valid
+native run stopped with `compiler bug: a field the checker proved is there is missing`.
+That separate optional-field bug is retained in logs/optional-field-gap.txt and
+is not fixed here. Initializing the receiving field makes the indexed-read witness
+pass without changing its receiver or constant-zero index. This proves the array
+check, not support for initially absent optional-field writes or the exact full
+checker expression. Its erased check mutant exits 70 with a different panic,
+which fails the exact indexed-site stderr assertion.
+
+Group 2 pushed as 59257d6a. Group 3 adds independently observable parameter-use
+variants D082 through D086; all five pass in 24.516s. Each variant has exactly one
+node.parameters[0] guard. These ledger rows diagnose later uses of the same
+original parameter read; they are not five different original indexed expressions.

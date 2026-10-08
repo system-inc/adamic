@@ -20,10 +20,12 @@ import (
 )
 
 type witness struct {
-	IDs      []string `json:"ids"`
-	Read     string   `json:"read"`
-	Receiver string   `json:"receiver"`
-	Source   string   `json:"source"`
+	IDs        []string `json:"ids"`
+	Read       string   `json:"read"`
+	Receiver   string   `json:"receiver"`
+	Source     string   `json:"source"`
+	BlockStage string   `json:"block_stage"`
+	Block      string   `json:"block"`
 }
 
 type observation struct {
@@ -91,10 +93,18 @@ func TestCheckerIndexedWitnesses(t *testing.T) {
 						t.Fatalf("source Node: %+v, want %+v", node, want)
 					}
 					checked, err := load.Load([]string{path})
+					if fixture.BlockStage == "load" {
+						assertRefusal(t, cli, path, fixture, err)
+						return
+					}
 					if err != nil {
 						t.Fatal(err)
 					}
 					program, err := lower.Lower(context.Background(), checked)
+					if fixture.BlockStage == "lower" {
+						assertRefusal(t, cli, path, fixture, err)
+						return
+					}
 					if err != nil {
 						t.Fatal(err)
 					}
@@ -151,10 +161,24 @@ func TestCheckerIndexedWitnesses(t *testing.T) {
 						if got == want {
 							t.Fatal("erase guard mutant survived")
 						}
-						t.Logf("%v receiver=%s Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=%d stdout=%q", fixture.IDs, fixture.Receiver, got.code, got.stdout)
+						t.Logf("%v receiver=%s Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=%d stdout=%q stderr=%q", fixture.IDs, fixture.Receiver, got.code, got.stdout, got.stderr)
 					}
 				})
 			}
 		})
 	}
+}
+
+// A refusal is evidence of a gap, never evidence of a runtime check. If the gap
+// closes, this assertion fails so the witness must gain the full runtime proof.
+func assertRefusal(t *testing.T, cli, path string, fixture witness, err error) {
+	t.Helper()
+	if err == nil || !strings.Contains(err.Error(), fixture.Block) {
+		t.Fatalf("expected %s refusal %q, got %v", fixture.BlockStage, fixture.Block, err)
+	}
+	explain := run(cli, "--explain-checks", path)
+	if explain.code != 1 || !strings.Contains(explain.stderr, fixture.Block) || strings.Contains(explain.stdout, "checked indexed-presence") {
+		t.Fatalf("refused witness must not count as checked: %+v", explain)
+	}
+	t.Logf("BLOCKED %v receiver=%s: %v; source Node observations passed; CLI refuses and does not count a check", fixture.IDs, fixture.Receiver, err)
 }
